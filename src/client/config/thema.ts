@@ -53,7 +53,12 @@ export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
 export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
 export type DocumentTitlesConfig = {
-  [key in AppRoute]: string | ((config: TrackingConfig) => string);
+  [key in AppRoute]:
+    | string
+    | (<T extends Record<string, string>>(
+        config: TrackingConfig,
+        params: T | null
+      ) => string);
 };
 
 // Used in <html><head><title>{PageTitle}</title></head>
@@ -109,18 +114,26 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]:
     `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes['VAREN']]: `${ThemaTitles.VAREN} | overzicht`,
-  [generatePath(AppRoutes['VAREN/LIST'], { kind: 'lopende-aanvragen' })]:
-    `Lopende aanvragen | ${ThemaTitles.VAREN}`,
-  [generatePath(AppRoutes['VAREN/LIST'], { kind: 'afgehandelde-aanvragen' })]:
-    `Afgehandelde aanvragen | ${ThemaTitles.VAREN}`,
-  [generatePath(AppRoutes['VAREN/DETAIL'], {
-    id: 1,
-    caseType: 'ligplaatsvergunning',
-  })]: `Ligplaatsvergunning | ${ThemaTitles.VAREN}`,
-  [generatePath(AppRoutes['VAREN/DETAIL'], {
-    id: 1,
-    caseType: 'exploitatievergunning',
-  })]: `Exploitatievergunning | ${ThemaTitles.VAREN}`,
+  [AppRoutes['VAREN/LIST']]: (_config, params) => {
+    switch (params?.kind) {
+      case 'lopende-aanvragen':
+        return `Lopende aanvragen | ${ThemaTitles.VAREN}`;
+      case 'afgehandelde-aanvragen':
+        return `Afgehandelde aanvragen | ${ThemaTitles.VAREN}`;
+      default:
+        return `Vergunningaanvragen | ${ThemaTitles.VAREN}`;
+    }
+  },
+  [AppRoutes['VAREN/DETAIL']]: (_config, params) => {
+    switch (params?.caseType) {
+      case 'ligplaatsvergunning':
+        return `Ligplaatsvergunning | ${ThemaTitles.VAREN}`;
+      case 'exploitatievergunning':
+        return `Exploitatievergunning | ${ThemaTitles.VAREN}`;
+      default:
+        return `Vergunning | ${ThemaTitles.VAREN}`;
+    }
+  },
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
@@ -145,17 +158,20 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
   [AppRoutes.AFIS]: 'Facturen en betalen | overzicht',
-  [generatePath(AppRoutes['AFIS/FACTUREN'], { state: 'open' })]:
-    'Open facturen | Facturen en betalen',
-  [generatePath(AppRoutes['AFIS/FACTUREN'], { state: 'afgehandeld' })]:
-    'Afgehanelde facturen | Facturen en betalen',
-  [generatePath(AppRoutes['AFIS/FACTUREN'], { state: 'overgedragen' })]:
-    'Overgedragen aan belastingen facturen | Facturen en betalen',
-  [AppRoutes['AFIS/FACTUREN']]: 'Lijst met facturen | Facturen en betalen',
+  [AppRoutes['AFIS/FACTUREN']]: (_config, params) => {
+    switch (params?.state) {
+      case 'open':
+        return `Open facturen | ${ThemaTitles.AFIS}`;
+      case 'afgehandeld':
+        return `Afgehanelde facturen | ${ThemaTitles.AFIS}`;
+      case 'overgedragen':
+        return `Overgedragen aan belastingen facturen | ${ThemaTitles.AFIS}`;
+      default:
+        return `Facturen | ${ThemaTitles.AFIS}`;
+    }
+  },
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
-    'Betaalvoorkeuren | Facturen en betalen',
-  '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?': '',
-  '/passagiers-en-beroepsvaart/vergunning/:caseType/:id': '',
+    `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {

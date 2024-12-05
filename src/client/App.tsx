@@ -18,6 +18,7 @@ import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
 import { ThemaTitles } from './config/thema';
+import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -78,6 +79,7 @@ import Search from './pages/Search/Search';
 import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
 import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
+import Varen from './pages/Varen/Varen';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
 import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
@@ -87,8 +89,6 @@ import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import ZorgThemaPagina from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
-import { useMonitoring } from './helpers/monitoring';
-import Varen from './pages/Varen/Varen';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -303,6 +303,12 @@ function AppAuthenticated() {
               path={AppRoutes.TOERISTISCHE_VERHUUR}
               component={ToeristscheVerhuurThema}
             />
+          )}
+          {FeatureToggle.varenActive && (
+            <Route path={AppRoutes['VAREN/DETAIL']} component={Varen} />
+          )}
+          {FeatureToggle.varenActive && (
+            <Route path={AppRoutes['VAREN/LIST']} component={Varen} />
           )}
           {FeatureToggle.varenActive && (
             <Route path={AppRoutes.VAREN} component={Varen} />
