@@ -56,7 +56,7 @@ export const AppRoutes = {
   BFF_500_ERROR: '/server-error-500',
   BODEM: '/bodem',
   'BODEM/LIST': '/bodem/lijst/:kind/:page?',
-  'BODEM/LOOD_METING': '/lood-meting/:id',
+  'BODEM/LOOD_METING': '/bodem/lood-meting/:id',
 
   // Erfpacht v2
   ERFPACHTv2: '/erfpacht',

@@ -1,5 +1,4 @@
-import { tableConfig } from './config';
-import { LoodMeting } from '../../../server/services/bodem/types';
+import { linkListItems, tableConfig } from './config';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
