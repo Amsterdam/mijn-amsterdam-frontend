@@ -163,7 +163,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
       case 'open':
         return `Open facturen | ${ThemaTitles.AFIS}`;
       case 'afgehandeld':
-        return `Afgehanelde facturen | ${ThemaTitles.AFIS}`;
+        return `Afgehandelde facturen | ${ThemaTitles.AFIS}`;
       case 'overgedragen':
         return `Overgedragen aan belastingen facturen | ${ThemaTitles.AFIS}`;
       default:
