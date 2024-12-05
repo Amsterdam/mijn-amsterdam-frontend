@@ -30,7 +30,7 @@ async function fetchSSOURL(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const config = getApiConfig('PARKEREN', {
+  const config = getApiConfig('PARKEREN_FRONTOFFICE', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
     },
