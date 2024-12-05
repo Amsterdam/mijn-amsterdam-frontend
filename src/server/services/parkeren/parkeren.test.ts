@@ -6,7 +6,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
 const SUCCESS_URL = 'https://parkeren.nl/sso-login';
-const FALLBACK_URL = getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
+const EMPTY_URL = undefined;
 
 const MOCK_PARKING_PERMIT_REQUEST = {
   data: [
@@ -108,7 +108,7 @@ describe('fetchSSOParkerenURL', () => {
     });
   });
 
-  describe('when data is empty array but profileType is commercial', () => {
+  describe('when data is an empty array but profileType is commercial', () => {
     beforeEach(() => {
       vi.clearAllMocks();
       setupMocks('company', { data: [] }, { data: [] });
@@ -122,7 +122,7 @@ describe('fetchSSOParkerenURL', () => {
       expect(response).toStrictEqual({
         content: {
           isKnown: false,
-          url: FALLBACK_URL,
+          url: EMPTY_URL,
         },
         status: 'OK',
       });
@@ -136,68 +136,10 @@ describe('fetchSSOParkerenURL', () => {
       expect(response).toStrictEqual({
         content: {
           isKnown: false,
-          url: FALLBACK_URL,
+          url: EMPTY_URL,
         },
         status: 'OK',
       });
-    });
-  });
-
-  describe('Fallback url given', async () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
-
-      setupMocks(
-        'private',
-        MOCK_CLIENT_PRODUCT_DETAILS,
-        MOCK_PARKING_PERMIT_REQUEST
-      );
-    });
-
-    const ERROR_TRANSFORMED_RESPONSE = {
-      content: {
-        isKnown: false,
-        url: FALLBACK_URL,
-      },
-      status: 'OK',
-    };
-
-    test('When URL is null', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('private');
-
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=digid')
-        .reply(STATUS_OK_200, {
-          url: null,
-        });
-
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
-
-      expect(response).toStrictEqual(ERROR_TRANSFORMED_RESPONSE);
-    });
-
-    test('When no url in response', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('private');
-
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=digid')
-        .reply(200, { url: undefined });
-
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
-
-      expect(response).toStrictEqual(ERROR_TRANSFORMED_RESPONSE);
-    });
-
-    test('When status errors', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('private');
-
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=digid')
-        .reply(404);
-
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
-
-      expect(response).toStrictEqual(ERROR_TRANSFORMED_RESPONSE);
     });
   });
 });
