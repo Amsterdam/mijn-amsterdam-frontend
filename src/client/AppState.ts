@@ -85,7 +85,7 @@ export const PRISTINE_APPSTATE: AppState = {
     { isActive: FeatureToggle.overtredingenActive }
   ),
   PARKEREN: apiPristineResult(
-    { isKnown: true, url: null },
+    { isKnown: true, url: undefined },
     {
       isActive: FeatureToggle.parkerenActive,
       profileTypes: ['private', 'commercial'],

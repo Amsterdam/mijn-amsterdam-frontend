@@ -47,7 +47,6 @@ export default function VergunningenV2() {
             kind,
           })}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
       );
     }

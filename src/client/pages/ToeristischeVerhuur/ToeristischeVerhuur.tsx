@@ -109,7 +109,6 @@ export function ToeristscheVerhuurThema() {
             kind,
           })}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
           maxItems={maxItems}
         />
       );
@@ -123,7 +122,6 @@ export function ToeristscheVerhuurThema() {
       zaken={lvvRegistraties}
       maxItems={-1}
       displayProps={tableConfigLVVRegistraties.displayProps}
-      textNoContent={`U heeft geen ${tableConfigLVVRegistraties.title.toLowerCase()}`}
     />
   );
 

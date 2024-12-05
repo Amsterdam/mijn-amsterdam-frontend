@@ -32,7 +32,6 @@ export default function Parkeren() {
             kind,
           })}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
       );
     }
@@ -57,7 +56,7 @@ export default function Parkeren() {
               }}
             >
               Log in op Mijn Parkeren
-              <Icon svg={ExternalLinkIcon} size={'level-5'} />
+              <Icon svg={ExternalLinkIcon} size="level-5" />
             </Button>
           )}
         </Paragraph>

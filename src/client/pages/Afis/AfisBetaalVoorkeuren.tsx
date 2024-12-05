@@ -101,7 +101,6 @@ export function AfisBetaalVoorkeuren() {
             title={title}
             zaken={eMandates.filter(filter)}
             displayProps={displayProps}
-            textNoContent={`U heeft geen ${title.toLowerCase()}`}
             maxItems={-1}
           />
         );

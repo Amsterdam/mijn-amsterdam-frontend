@@ -13,12 +13,16 @@ interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
 }
 
+export type WithDetailLinkComponent<T> = T & {
+  detailLinkComponent?: ReactNode;
+};
+
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
   propertyName: keyof T = 'title',
   addDetailLinkComponentAttr = false,
   linkName = 'link'
-): Array<T & { detailLinkComponent?: ReactNode }> {
+): WithDetailLinkComponent<T>[] {
   return items.map((item) => {
     if (!item[linkName]?.to) {
       return item;

@@ -1,8 +1,9 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
 
+import { getAvgStatusLineItems } from './avg-status-line-items';
 import {
-  AVGRequest,
+  AVGRequestFrontend,
   AVGResponse,
   AvgThemesResponse,
   SmileAvgResponse,
@@ -16,6 +17,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -90,7 +92,8 @@ export async function enrichAvgResponse(
   const themasResponse = await fetchAVGRequestThemes(requestID, avgIds);
 
   if (themasResponse.status === 'OK') {
-    const enrichedAvgRequests: AVGRequest[] = [];
+    const enrichedAvgRequests: AVGRequestFrontend[] = [];
+
     for (const avgRequest of avgResponse.content.verzoeken) {
       const themasPerVerzoek = themasResponse.content.verzoeken.filter(
         (verzoek) => verzoek.avgVerzoekId === avgRequest.id
@@ -100,13 +103,15 @@ export async function enrichAvgResponse(
         ...avgRequest,
         themas: themasPerVerzoek
           .map((theme) => theme.themaOmschrijving)
-          .filter((theme: string | null): theme is string => theme !== null),
+          .filter((theme: string | null): theme is string => theme !== null)
+          .join(', '),
       };
 
       enrichedAvgRequests.push(enrichedAvgRequest);
     }
 
     return apiSuccessResult({
+      ...avgResponse.content,
       verzoeken: enrichedAvgRequests,
     });
   }
@@ -121,46 +126,54 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       verzoeken: [],
     };
   }
+  const verzoeken = data.List.map((verzoek) => {
+    const id = verzoek['avgverzoek_id']?.value || '';
+    const title = `AVG verzoek ${id}`;
+    const ontvangstDatum = smileDateParser(
+      verzoek['avgverzoek_datumbinnenkomst'].value || ''
+    );
+    const request: AVGRequestFrontend = {
+      id,
+      title,
+      status: verzoek['avgverzoek_statusavgverzoek_alias'].value || '',
+      registratieDatum: smileDateParser(
+        verzoek['avgverzoek_datuminbehandeling']?.value || ''
+      ),
+      type: verzoek['avgverzoek_typeverzoek'].value || '',
+      toelichting: verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
+      resultaat:
+        verzoek['avgverzoek_typeafhandelingvaststellen_resultaat']?.value || '',
+      ontvangstDatum: ontvangstDatum,
+      ontvangstDatumFormatted: ontvangstDatum
+        ? defaultDateFormat(ontvangstDatum)
+        : ontvangstDatum,
+      opschortenGestartOp: smileDateParser(
+        verzoek['avgverzoek_opschortengestartop']?.value || ''
+      ),
+      datumInBehandeling: smileDateParser(
+        verzoek['avgverzoek_datuminbehandeling']?.value || ''
+      ),
+      datumAfhandeling: smileDateParser(
+        verzoek['avgverzoek_werkelijkeeinddatum']?.value || ''
+      ),
+      // Is filled later on.
+      themas: '',
+      steps: [],
+      link: {
+        to: generatePath(AppRoutes['AVG/DETAIL'], {
+          id,
+        }),
+        title,
+      },
+    };
 
-  const response = {
-    verzoeken: data.List.map((verzoek) => {
-      const id = verzoek['avgverzoek_id']?.value || '';
+    const steps = getAvgStatusLineItems(request);
 
-      const request: AVGRequest = {
-        id,
-        status: verzoek['avgverzoek_statusavgverzoek_alias'].value || '',
-        registratieDatum: smileDateParser(
-          verzoek['avgverzoek_datuminbehandeling']?.value || ''
-        ),
-        type: verzoek['avgverzoek_typeverzoek'].value || '',
-        toelichting:
-          verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
-        resultaat:
-          verzoek['avgverzoek_typeafhandelingvaststellen_resultaat']?.value ||
-          '',
-        ontvangstDatum: smileDateParser(
-          verzoek['avgverzoek_datumbinnenkomst'].value || ''
-        ),
-        opschortenGestartOp: smileDateParser(
-          verzoek['avgverzoek_opschortengestartop']?.value || ''
-        ),
-        datumInBehandeling: smileDateParser(
-          verzoek['avgverzoek_datuminbehandeling']?.value || ''
-        ),
-        datumAfhandeling: smileDateParser(
-          verzoek['avgverzoek_werkelijkeeinddatum']?.value || ''
-        ),
-        themas: [],
-        link: {
-          to: generatePath(AppRoutes['AVG/DETAIL'], {
-            id,
-          }),
-          title: `AVG verzoek ${id}`,
-        },
-      };
+    return { ...request, steps };
+  });
 
-      return request;
-    }),
+  const response: AVGResponse = {
+    verzoeken,
     aantal: data.rowcount,
   };
 
@@ -249,7 +262,7 @@ export async function fetchAVGNotifications(
   return apiDependencyError({ AVG });
 }
 
-function createAVGNotification(verzoek: AVGRequest) {
+function createAVGNotification(verzoek: AVGRequestFrontend) {
   const isDone = !!verzoek.datumAfhandeling;
   const extraInfoActive = !!verzoek.opschortenGestartOp;
   const inProgressActive = !!verzoek.datumInBehandeling;

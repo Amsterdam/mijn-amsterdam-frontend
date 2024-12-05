@@ -18,6 +18,7 @@ import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
 import { ThemaTitles } from './config/thema';
+import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
@@ -36,8 +37,9 @@ import Accessibility from './pages/Accessibility/Accessibility';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
-import AVG from './pages/AVG/AVG';
-import AVGDetail from './pages/AVGDetail/AVGDetail';
+import { AVG } from './pages/AVG/AVG';
+import { AVGDetail } from './pages/AVG/AVGDetail';
+import { AVGList } from './pages/AVG/AVGList';
 import Bezwaren from './pages/Bezwaren/Bezwaren';
 import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
 import BFF500Error from './pages/BffError/BffError';
@@ -87,7 +89,6 @@ import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import ZorgThemaPagina from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
 import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
-import { useMonitoring } from './helpers/monitoring';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -193,7 +194,7 @@ function AppAuthenticated() {
             />
           )}
           {FeatureToggle.hliThemaActive && (
-            <Route path={AppRoutes['HLI']} component={HLI} />
+            <Route path={AppRoutes.HLI} component={HLI} />
           )}
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
@@ -326,6 +327,9 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.avgActive && (
             <Route path={AppRoutes['AVG/DETAIL']} component={AVGDetail} />
+          )}
+          {FeatureToggle.avgActive && (
+            <Route path={AppRoutes['AVG/LIST']} component={AVGList} />
           )}
           {FeatureToggle.avgActive && (
             <Route path={AppRoutes.AVG} component={AVG} />
