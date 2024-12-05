@@ -16,7 +16,7 @@ import {
 } from '../../../server/services/afis/afis-types';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
-import { LoodMeting } from '../../../server/services/bodem/types';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import {
   ErfpachtV2Dossier,
@@ -440,9 +440,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: FeatureToggle.bodemActive,
     stateKey: 'BODEM' as AppStateKey,
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: LoodMeting) {
-      return (term: string) =>
-        displayPath(term, [`Loodmeting ${item.aanvraagNummer}`]);
+    displayTitle(item: LoodMetingFrontend) {
+      return (term: string) => displayPath(term, [item.title, item.adres]);
     },
   },
   {

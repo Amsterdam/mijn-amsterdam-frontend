@@ -43,8 +43,9 @@ import { AVGList } from './pages/AVG/AVGList';
 import Bezwaren from './pages/Bezwaren/Bezwaren';
 import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
 import BFF500Error from './pages/BffError/BffError';
-import Bodem from './pages/Bodem/Bodem';
-import LoodMeting from './pages/Bodem/LoodMeting';
+import { Bodem } from './pages/Bodem/Bodem';
+import { BodemList } from './pages/Bodem/BodemList';
+import { LoodMeting } from './pages/Bodem/LoodMeting';
 import BurgerzakenIDKaart from './pages/BurgerzakenDetail/BurgerzakenIDKaart';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
@@ -335,13 +336,16 @@ function AppAuthenticated() {
             <Route path={AppRoutes.AVG} component={AVG} />
           )}
           {FeatureToggle.bodemActive && (
-            <Route path={AppRoutes.BODEM} component={Bodem} />
+            <Route path={AppRoutes['BODEM/LIST']} component={BodemList} />
           )}
           {FeatureToggle.bodemActive && (
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}
               component={LoodMeting}
             />
+          )}
+          {FeatureToggle.bodemActive && (
+            <Route path={AppRoutes.BODEM} component={Bodem} />
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route

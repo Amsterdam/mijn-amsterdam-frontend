@@ -1,5 +1,4 @@
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
-import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
 
 import styles from './ToeristischeVerhuurDetail.module.scss';
@@ -8,7 +7,7 @@ import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristi
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { LocationModal } from '../../components/LocationModal/LocationModal';
+import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -107,12 +106,10 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
       label: 'Adres',
       content: (
         <>
-          <span className={classNames(styles.Address, 'ams-mb--xs')}>
-            {vergunning.adres}
-          </span>
-          <LocationModal address={vergunning.adres} />
+          <AddressDisplayAndModal address={vergunning.adres ?? ''} />
         </>
       ),
+      isVisible: !!vergunning.adres,
     },
     {
       label: 'Resultaat',

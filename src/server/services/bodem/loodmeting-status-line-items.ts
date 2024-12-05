@@ -1,9 +1,9 @@
-import styles from './LoodMeting.module.scss';
-import type { LoodMeting } from '../../../server/services/bodem/types';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { StatusLineItem } from '../../../universal/types';
-import { StatusLine } from '../../components';
 
-export default function LoodStatusLines({ request }: { request: LoodMeting }) {
+export function getBodemStatusLineItems(
+  request: LoodMetingFrontend
+): StatusLineItem[] {
   const status = request.status.toLowerCase();
   const isInProgress = status === 'in behandeling';
   const isDenied = status === 'afgewezen';
@@ -43,12 +43,5 @@ export default function LoodStatusLines({ request }: { request: LoodMeting }) {
     isChecked: isDone,
   });
 
-  return (
-    <StatusLine
-      className={styles.LoodStatusLines}
-      trackCategory="Loodmeting detail / status"
-      items={statusLines}
-      id={`loodmeting-detail-${request.kenmerk}`}
-    />
-  );
+  return statusLines;
 }

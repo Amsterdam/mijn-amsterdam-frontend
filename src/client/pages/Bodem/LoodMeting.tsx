@@ -1,81 +1,57 @@
-import { generatePath, useParams } from 'react-router-dom';
+import { Grid } from '@amsterdam/design-system-react';
+import { generatePath } from 'react-router-dom';
 
-import LoodStatusLines from './LoodStatusLines';
+import { useBodemDetailData } from './useBodemDetailData.hook';
+import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import {
-  DetailPage,
-  ErrorAlert,
-  InfoDetail,
-  LoadingContent,
-  PageContent,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import { Datalist } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
+import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
+import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { Location } from '../VergunningDetail/Location';
+import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
-export default function LoodMeting() {
-  const { BODEM } = useAppStateGetter();
-  const { id } = useParams<{ id: string }>();
+export function LoodMeting() {
+  const { meting, isLoading, isError } = useBodemDetailData();
 
-  const meting = BODEM.content?.metingen?.find(
-    (meting) => meting.kenmerk === id
-  );
+  const BodemDetailRows = (meting: LoodMetingFrontend) => {
+    return [
+      { label: 'Kenmerk', content: meting.kenmerk },
+      {
+        label: 'Locatie',
+        content: !!meting.adres && (
+          <AddressDisplayAndModal address={meting.adres} />
+        ),
+      },
+      {
+        label: 'Document',
+        content: !!meting.document && (
+          <DocumentLink document={meting.document} />
+        ),
+      },
+    ].filter((row) => !!row.content);
+  };
 
-  const noContent = !isLoading(BODEM) && !meting;
+  function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
+    return (
+      <Grid.Cell span="all">
+        <Datalist rows={BodemDetailRows(meting)} />
+      </Grid.Cell>
+    );
+  }
 
   return (
-    <DetailPage>
-      <PageHeading
-        icon={<ThemaIcon />}
-        backLink={{
-          to: generatePath(AppRoutes.BODEM),
-          title: ThemaTitles.BODEM,
-        }}
-        isLoading={isLoading(BODEM)}
-      >
-        Lood in bodem-check
-      </PageHeading>
-
-      <PageContent>
-        {(isError(BODEM) || noContent) && (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
-        )}
-        {isLoading(BODEM) && <LoadingContent />}
-        {!!meting && (
-          <>
-            <InfoDetail label="Kenmerk" value={meting.aanvraagNummer || '-'} />
-            <Location location={meting.adres} />
-
-            {!!meting.document && (
-              <InfoDetail
-                valueWrapperElement="div"
-                label="Document"
-                value={
-                  <DocumentLink
-                    document={meting.document}
-                    label={meting.document.title}
-                    trackPath={() =>
-                      `loodmeting/document/${meting.document?.title}`
-                    }
-                  ></DocumentLink>
-                }
-              />
-            )}
-
-            {meting.redenAfwijzing && (
-              <InfoDetail
-                label="Reden afwijzing"
-                value={meting.redenAfwijzing}
-              />
-            )}
-          </>
-        )}
-      </PageContent>
-      {meting && <LoodStatusLines request={meting} />}
-    </DetailPage>
+    <ThemaDetailPagina
+      title="Lood in bodem-check"
+      icon={<ThemaIcon />}
+      zaak={meting}
+      backLink={{
+        to: generatePath(AppRoutes.BODEM),
+        title: ThemaTitles.BODEM,
+      }}
+      isError={isError}
+      isLoading={isLoading}
+      pageContentTop={!!meting && <BodemDetailContent meting={meting} />}
+    />
   );
 }

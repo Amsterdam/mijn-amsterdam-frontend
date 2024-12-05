@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 import { Button, Paragraph } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { LatLngLiteral } from 'leaflet';
 
 import styles from './LocationModal.module.scss';
@@ -71,7 +72,7 @@ export function LocationModal({
   children,
 }: LocationModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
-  const [hasLocationData, setHasLocationData] = useState(false);
+  const hasLocationData = !!(address || latlng);
   const [bagApi, fetchBag] = useDataApi<LatLngWithAddress[] | null>(
     {
       url: '',
@@ -82,12 +83,6 @@ export function LocationModal({
     },
     null
   );
-
-  useEffect(() => {
-    if (address || latlng) {
-      setHasLocationData(true);
-    }
-  }, [bagApi, address, latlng]);
 
   useEffect(() => {
     if (bagApi.isDirty || address === null) {
@@ -180,5 +175,24 @@ export function LocationModal({
         </Modal>
       </>
     )
+  );
+}
+
+export interface AddressDisplayAndModalProps {
+  address: string;
+  label?: string;
+}
+
+export function AddressDisplayAndModal({
+  address,
+  label,
+}: AddressDisplayAndModalProps) {
+  return (
+    <>
+      <span className={classNames(styles.Address, 'ams-mb--xs')}>
+        {label ?? address}
+      </span>
+      <LocationModal address={address} label={label} />
+    </>
   );
 }

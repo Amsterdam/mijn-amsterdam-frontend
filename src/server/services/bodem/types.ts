@@ -1,4 +1,8 @@
-import { GenericDocument, LinkProps } from '../../../universal/types';
+import {
+  GenericDocument,
+  LinkProps,
+  ZaakDetail,
+} from '../../../universal/types';
 
 export type Lood365Response = {
   '@onformdata.context': string;
@@ -40,12 +44,13 @@ type LoodMetingResearchLocationSource = {
 };
 
 export type LoodMetingen = {
-  metingen: LoodMeting[];
+  metingen: LoodMetingFrontend[];
 };
 
-export type LoodMeting = {
+export interface LoodMetingFrontend extends ZaakDetail {
   adres: string;
   datumAanvraag: string; // RequestedOn
+  datumAanvraagFormatted: string;
   datumInbehandeling: string | null; // Workordercreatedon
   datumAfgehandeld: string | null; // Reportsenton
   datumBeoordeling: string | null; // ReviewedOn
@@ -57,7 +62,7 @@ export type LoodMeting = {
   redenAfwijzing: string | null;
   rapportId: string | null;
   document: GenericDocument | null;
-};
+}
 
 export type LoodMetingDocument = {
   filename: string;

@@ -3,7 +3,7 @@ import {
   VergunningFrontendV2,
 } from '../../../../server/services/vergunningen-v2/config-and-types';
 import { Row, RowSet } from '../../../components/Datalist/Datalist';
-import { LocationModal } from '../../../components/LocationModal/LocationModal';
+import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 
 type DataListRowOptions = {
   endDateIncluded?: boolean;
@@ -22,11 +22,7 @@ export const commonRows: Record<string, VergunningDataListRow> = {
     'location' in vergunning && typeof vergunning.location === 'string'
       ? {
           label: 'Adres',
-          content: (
-            <LocationModal address={vergunning.location as string}>
-              {vergunning.location}
-            </LocationModal>
-          ),
+          content: <AddressDisplayAndModal address={vergunning.location} />,
         }
       : null,
   location2: (vergunning) =>
