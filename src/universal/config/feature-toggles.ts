@@ -101,6 +101,9 @@ export const FeatureToggle = {
   // B&B Downloads actief
   bbDocumentDownloadsActive: !IS_PRODUCTION,
 
+  //Varen (komt uit Decos)
+  varenActive: !IS_PRODUCTION,
+
   // Vergunningen V1 (met koppel api)
   vergunningenActive: true,
   // Vergunningen V2 met BFF integratie

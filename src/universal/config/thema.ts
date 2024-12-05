@@ -20,6 +20,7 @@ export type Thema =
   | 'SVWI'
   | 'KVK'
   | 'TOERISTISCHE_VERHUUR'
+  | 'VAREN'
   | 'SEARCH'
   | 'SUBSIDIE'
   | 'PARKEREN'
@@ -57,6 +58,7 @@ export const Themas: Record<Thema, Thema> = {
   SUBSIDIE: 'SUBSIDIE',
   SVWI: 'SVWI',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
+  VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
 };

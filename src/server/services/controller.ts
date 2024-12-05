@@ -136,6 +136,8 @@ const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const WMO = callAuthenticatedService(fetchWmo);
 const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
+const VAREN = callAuthenticatedService(fetchVergunningen);
+
 const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
 const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
@@ -151,6 +153,7 @@ const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
 const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
 const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
+
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const PROFILE = callAuthenticatedService(fetchProfile);
 const AVG = callAuthenticatedService(fetchAVG);
@@ -218,6 +221,7 @@ const SERVICES_INDEX = {
   SUBSIDIE,
   SVWI,
   TOERISTISCHE_VERHUUR,
+  VAREN,
   VERGUNNINGEN,
   VERGUNNINGENv2,
   WMO,
@@ -232,7 +236,7 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = Omit<ServicesType, 'PROFILE'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE' | 'VAREN'>;
 
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
@@ -259,6 +263,7 @@ type CommercialServices = Pick<
   | 'PARKEREN'
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
+  | 'VAREN'
   | 'VERGUNNINGEN'
   | 'VERGUNNINGENv2'
 >;
@@ -330,6 +335,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     PARKEREN,
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
+    VAREN,
     VERGUNNINGEN,
     VERGUNNINGENv2,
   },
