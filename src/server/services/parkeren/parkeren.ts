@@ -12,24 +12,18 @@ export async function fetchParkeren(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   // Mocking this function in different ways per test has issues, so this makes testing way easier.
-  hasPermitsOrPermitRequestsFn: (
+  hasPermitsOrProductsFn: (
     requestID: RequestID,
     authProfileAndToken: AuthProfileAndToken
   ) => Promise<boolean> = hasPermitsOrProducts
 ) {
-  let isKnown: boolean;
-  if (FeatureToggle.parkerenCheckForProductAndPermitsActive) {
-    isKnown = await hasPermitsOrPermitRequestsFn(
-      requestID,
-      authProfileAndToken
-    );
-  } else {
-    isKnown = true;
-  }
-
+  const [isKnown, url] = await Promise.all([
+    hasPermitsOrProductsFn(requestID, authProfileAndToken),
+    fetchSSOURL(requestID, authProfileAndToken),
+  ]);
   return apiSuccessResult({
     isKnown,
-    url: await fetchSSOURL(requestID, authProfileAndToken),
+    url,
   });
 }
 
