@@ -1,24 +1,16 @@
-import { tableConfig, linkListItems } from './config';
-import { LoodMeting } from '../../../server/services/bodem/types';
+import { linkListItems, tableConfig } from './config';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-
-function getFilteredBodemItems(items: LoodMeting[] | null) {
-  return addLinkElementToProperty(
-    (items ?? [])?.map((bodemItem) => ({
-      ...bodemItem,
-      datumAanvraag: defaultDateFormat(bodemItem.datumAanvraag),
-    })),
-    'adres'
-  );
-}
 
 export function useBodemData() {
   const { BODEM } = useAppStateGetter();
 
-  const items = getFilteredBodemItems(BODEM.content?.metingen ?? null);
+  const items = addLinkElementToProperty(
+    BODEM.content?.metingen ?? [],
+    'adres',
+    true
+  );
 
   return {
     tableConfig,

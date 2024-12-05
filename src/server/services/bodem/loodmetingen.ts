@@ -1,10 +1,11 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
 
+import { getBodemStatusLineItems } from './loodmeting-status-line-items';
 import {
   Lood365Response,
-  LoodMeting,
   LoodMetingDocument,
+  LoodMetingFrontend,
   LoodMetingRequestsSource,
   LoodMetingen,
 } from './types';
@@ -14,6 +15,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   isRecentNotification,
   sortAlpha,
@@ -50,7 +52,7 @@ function transformLood365Response(
   sessionID: SessionID,
   response: Lood365Response
 ): LoodMetingen {
-  let metingen: LoodMeting[] = [];
+  let metingen: LoodMetingFrontend[] = [];
 
   if (!response.responsedata) {
     return { metingen };
@@ -90,11 +92,16 @@ function transformLood365Response(
           };
         }
 
-        return {
+        const loodMetingBase: LoodMetingFrontend = {
+          id: location.Reference,
+          title: 'Lood in de bodem-check',
           adres: `${location.Street} ${location.Housenumber}${
             location?.Houseletter ?? ''
           }`,
           datumAanvraag: request.RequestedOn,
+          datumAanvraagFormatted: request.RequestedOn
+            ? defaultDateFormat(request.RequestedOn)
+            : '',
           datumInbehandeling: location?.Workordercreatedon,
           datumAfgehandeld: location?.Reportsenton,
           datumBeoordeling: location?.ReviewedOn,
@@ -111,6 +118,17 @@ function transformLood365Response(
             title: 'Bekijk loodmeting',
           },
           document,
+          steps: [],
+        };
+
+        const steps = getBodemStatusLineItems(loodMetingBase);
+
+        return {
+          ...loodMetingBase,
+          steps,
+          status:
+            steps.find((step) => step.isActive)?.status ??
+            loodMetingBase.status,
         };
       });
     });
@@ -227,7 +245,7 @@ export async function fetchLoodMetingNotifications(
   return apiDependencyError({ metingenResponse });
 }
 
-function createLoodNotification(meting: LoodMeting) {
+function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
   const status = meting.status.toLocaleLowerCase();
   const inProgress = status === 'in behandeling';
   const isDone = status === 'afgehandeld';
