@@ -335,13 +335,13 @@ function AppAuthenticated() {
             <Route path={AppRoutes['BODEM/LIST']} component={BodemList} />
           )}
           {FeatureToggle.bodemActive && (
-            <Route path={AppRoutes.BODEM} component={Bodem} />
-          )}
-          {FeatureToggle.bodemActive && (
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}
               component={LoodMeting}
             />
+          )}
+          {FeatureToggle.bodemActive && (
+            <Route path={AppRoutes.BODEM} component={Bodem} />
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route
