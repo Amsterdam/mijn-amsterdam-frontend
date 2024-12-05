@@ -49,7 +49,8 @@ export function useParkerenData() {
     parkeervergunningen,
     isLoading: isLoading(vergunningenState),
     isError: isError(vergunningenState),
-    parkerenUrlSSO: PARKEREN.content?.url,
+    parkerenUrlSSO:
+      PARKEREN.content?.url ?? import.meta.env.REACT_APP_SSO_URL_PARKEREN,
     isLoadingParkerenUrl: isLoading(PARKEREN),
   };
 }

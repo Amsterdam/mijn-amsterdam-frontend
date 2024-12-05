@@ -38,11 +38,7 @@ async function fetchSSOURL(
 
   const response = await requestData<{ url: string }>(config, requestID);
 
-  if (!response.content?.url) {
-    return getFromEnv('BFF_PARKEREN_EXTERNAL_FALLBACK_URL');
-  }
-
-  return response.content.url;
+  return response.content?.url;
 }
 
 type JWETokenSourceResponse = {
