@@ -1,0 +1,70 @@
+{
+    "_embedded": {
+        "energielabel": [
+            {
+                "_links": {
+                    "schema": "https://schemas.data.amsterdam.nl/datasets/duurzaamheid/dataset#energielabel",
+                    "self": {
+                        "href": "https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel/20210304~1103LZ~813~~~~0363010000898840~55,90/",
+                        "title": "20210304~1103LZ~813~~~~0363010000898840~55,90",
+                        "id": "20210304~1103LZ~813~~~~0363010000898840~55,90"
+                    }
+                },
+                "id": "20210304~1103LZ~813~~~~0363010000898840~55,90",
+                "registratiedatum": "2021-03-04",
+                "opnamedatum": "2021-03-04",
+                "metingGeldigTot": "2031-03-04",
+                "certificaathouder": "BuildingLabel B.V.",
+                "opnametype": "Basisopname",
+                "status": "Bestaand",
+                "berekeningstype": "NTA 8800:2020 (basisopname woningbouw)",
+                "isOpBasisVanReferentieGebouw": null,
+                "gebouwklasse": "W",
+                "gebouwtype": "Appartement",
+                "gebouwsubtype": "Hoekmidden",
+                "sbicode": null,
+                "postcode": "1103LZ",
+                "huisnummer": 813,
+                "huisletter": null,
+                "huisnummertoevoeging": null,
+                "detailaanduiding": null,
+                "bagVerblijfsobjectId": "0363010000898840",
+                "bagLigplaatsId": null,
+                "bagStandplaatsId": null,
+                "bagPandIds": [
+                    "0363100012103711"
+                ],
+                "projectnaam": null,
+                "projectobject": null,
+                "bouwjaar": 1975,
+                "gebruiksoppervlakteThermischeZone": "55,90",
+                "compactheid": "0,61",
+                "energieklasse": "G",
+                "energieindex": null,
+                "energieindexMetEmgForfaitair": null,
+                "eisEnergiebehoefte": null,
+                "primaireFossieleEnergie": "456,35",
+                "primaireFossieleEnergieEmgForfaitair": null,
+                "aandeelHernieuwbareEnergie": "0,0",
+                "aandeelHernieuwbareEnergieEmgForfaitair": null,
+                "temperatuuroverschrijding": "1,56",
+                "warmtebehoefte": "147,82",
+                "energiebehoefte": "152,03",
+                "eisPrimaireFossieleEnergie": null,
+                "eisAandeelHernieuwbareEnergie": null,
+                "eisTemperatuuroverschrijding": null,
+                "berekendeCo2Emissie": "85,50",
+                "berekendeEnergieverbruik": "456,35"
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel/?postcode=1103LZ&huisnummer=813"
+        }
+    },
+    "page": {
+        "number": 1,
+        "size": 20
+    }
+}
