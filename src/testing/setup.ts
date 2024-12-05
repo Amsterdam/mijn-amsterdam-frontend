@@ -105,6 +105,7 @@ process.env.BFF_AFIS_ENABLEU_ACTIVE = 'true';
 process.env.BFF_PARKEREN_FRONTOFFICE_BASE_URL = `${remoteApiHost}/parkeren`;
 process.env.BFF_PARKEREN_API_BASE_URL = `${remoteApiHost}/parkeren`;
 process.env.BFF_PARKEREN_EXTERNAL_FALLBACK_URL = `${remoteApiHost}/parkeren/fallback`;
+process.env.BFF_PARKEREN_API_TOKEN = 'xxxclientsecretxxx';
 
 // V2
 process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;
