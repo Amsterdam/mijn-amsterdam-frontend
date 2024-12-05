@@ -6,7 +6,7 @@ import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
-import { LocationModal } from '../../components/LocationModal/LocationModal';
+import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
 import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
 import { ThemaTitles } from '../../config/thema';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
@@ -19,7 +19,9 @@ export function LoodMeting() {
       { label: 'Kenmerk', content: meting.kenmerk },
       {
         label: 'Locatie',
-        content: !!meting.adres && <LocationModal address={meting.adres} />,
+        content: !!meting.adres && (
+          <AddressDisplayAndModal address={meting.adres} />
+        ),
       },
       {
         label: 'Document',

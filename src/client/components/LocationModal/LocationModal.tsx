@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 import { Button, Paragraph } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { LatLngLiteral } from 'leaflet';
 
 import styles from './LocationModal.module.scss';
@@ -174,5 +175,24 @@ export function LocationModal({
         </Modal>
       </>
     )
+  );
+}
+
+export interface AddressDisplayAndModalProps {
+  address: string;
+  label?: string;
+}
+
+export function AddressDisplayAndModal({
+  address,
+  label,
+}: AddressDisplayAndModalProps) {
+  return (
+    <>
+      <span className={classNames(styles.Address, 'ams-mb--xs')}>
+        {label ?? address}
+      </span>
+      <LocationModal address={address} label={label} />
+    </>
   );
 }

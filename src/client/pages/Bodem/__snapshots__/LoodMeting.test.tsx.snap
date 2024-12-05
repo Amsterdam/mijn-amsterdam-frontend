@@ -90,6 +90,11 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             <dd
               class="_Datalist__description_08bf39"
             >
+              <span
+                class="_Address_ae27d7 ams-mb--xs"
+              >
+                Schipluidenlaan 16A
+              </span>
               <button
                 class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
                 type="button"
@@ -385,6 +390,11 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             <dd
               class="_Datalist__description_08bf39"
             >
+              <span
+                class="_Address_ae27d7 ams-mb--xs"
+              >
+                Schipluidenlaan 16A
+              </span>
               <button
                 class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
                 type="button"
@@ -640,6 +650,11 @@ exports[`LoodMeting > with results > should show the correct detailpage for stat
             <dd
               class="_Datalist__description_08bf39"
             >
+              <span
+                class="_Address_ae27d7 ams-mb--xs"
+              >
+                Schipluidenlaan 12A
+              </span>
               <button
                 class="ams-button ams-button--secondary _LocationModalLink_ae27d7"
                 type="button"
