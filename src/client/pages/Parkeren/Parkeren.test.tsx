@@ -15,6 +15,7 @@ const testState = {
   PARKEREN: {
     content: {
       url: 'https://parkeervergunningen.amsterdam.nl/',
+      isKnown: true,
     },
   },
   VERGUNNINGENv2: {
