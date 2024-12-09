@@ -6,6 +6,7 @@ import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { usePageChange } from './usePageChange';
 import type { TrackingConfig } from '../config/routes';
 import { NOT_FOUND_TITLE } from '../config/thema';
+import { ReactNode } from 'react';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -20,14 +21,11 @@ vi.mock('react-router-dom', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,
-    useLocation: () => {
-      return { pathname: mocks.pathname };
-    },
     __setPathname: (name: string) => {
       mocks.pathname = name;
     },
     useHistory: () => {
-      return { action: 'PUSH' };
+      return { action: 'PUSH', location: { pathname: mocks.pathname } };
     },
   };
 });

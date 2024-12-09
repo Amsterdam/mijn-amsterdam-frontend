@@ -5,11 +5,9 @@ import { getRVVSloterwegLineItems } from './RvvSloterweg';
 import styles from './VergunningDetail.module.scss';
 import type { Vergunning } from '../../../../server/services/vergunningen/vergunningen';
 import { hasWorkflow } from '../../../../universal/helpers/vergunningen';
-import { GenericDocument } from '../../../../universal/types';
+import { GenericDocument, StatusLineItem } from '../../../../universal/types';
 import { CaseType } from '../../../../universal/types/vergunningen';
-import StatusLine, {
-  StatusLineItem,
-} from '../../../components/StatusLine/StatusLine';
+import StatusLine from '../../../components/StatusLine/StatusLine';
 
 function useVergunningStatusLineItems(vergunning?: Vergunning) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
