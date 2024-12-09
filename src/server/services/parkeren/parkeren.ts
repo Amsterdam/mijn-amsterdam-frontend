@@ -53,16 +53,16 @@ async function fetchJWEToken(
       ? 'bsn'
       : 'kvk_number';
 
+  const formData = new FormData();
+  formData.append(`data[${idNumberType}]`, authProfileAndToken.profile.id);
+
   const config = getApiConfig('PARKEREN', {
     method: 'POST',
     formatUrl: (config) => `${config.url}/v1/jwe/create`,
     transformResponse: (response: JWETokenSourceResponse): string => {
       return response.token;
     },
-    data: new FormData().append(
-      `data[${idNumberType}]`,
-      authProfileAndToken.profile.id
-    ),
+    data: formData,
   });
 
   return await requestData<JWETokenSourceResponse>(config, requestID);
