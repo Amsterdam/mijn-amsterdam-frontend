@@ -1,5 +1,21 @@
 const settings = require('../settings');
 
+const NO_DATA_VARIANT = {
+  id: 'no-data',
+  type: 'json',
+  options: {
+    status: 200,
+    body: {
+      result: 'success',
+      data: {
+        result: 'success',
+        count: 0,
+        data: [],
+      },
+    },
+  },
+};
+
 module.exports = [
   {
     id: 'get-parkeren-external-sso-url',
@@ -17,9 +33,26 @@ module.exports = [
     ],
   },
   {
-    id: 'get-private-active-permit-request',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/:profileType/active_permit_request`,
-    method: 'GET',
+    id: 'get-parkeren-create-jwe-token',
+    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/jwe/create`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {
+            token: 'xxxjwetokenxxx',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-parkeren-active-permit-request',
+    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/:profileType/active_permit_request`,
+    method: 'POST',
     variants: [
       {
         id: 'standard',
@@ -28,26 +61,30 @@ module.exports = [
           status: 200,
           body: {
             result: 'success',
-            data: [
-              {
-                link: 'example.org/permits',
-                id: 8702,
-                client_id: 8702,
-                status: 'in_progress',
-                permit_name: 'Bewonersvergunning',
-                permit_zone: 'CE02C Centrum-2c',
-              },
-            ],
+            data: {
+              result: 'success',
+              count: 1,
+              data: [
+                {
+                  link: 'example.org/permits',
+                  id: 9999,
+                  client_id: 9999,
+                  status: 'in_progress',
+                  permit_name: 'Bewonersvergunning',
+                  permit_zone: 'XX02X Centrum-1x',
+                },
+              ],
+            },
           },
         },
       },
+      NO_DATA_VARIANT,
     ],
   },
-
   {
-    id: 'get-private-client-product-details',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/:profileType/client_product_details`,
-    method: 'GET',
+    id: 'get-parkeren-client-product-details',
+    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/:profileType/client_product_details`,
+    method: 'POST',
     variants: [
       {
         id: 'standard',
@@ -72,6 +109,7 @@ module.exports = [
           },
         },
       },
+      NO_DATA_VARIANT,
     ],
   },
 ];

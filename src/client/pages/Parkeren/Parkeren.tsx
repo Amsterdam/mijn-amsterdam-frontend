@@ -14,7 +14,8 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 export default function Parkeren() {
   const {
     tableConfig,
-    parkeervergunningen,
+    decosParkeerVergunningen,
+    hasMijnParkerenVergunningen,
     isLoading,
     isError,
     parkerenUrlSSO,
@@ -27,7 +28,7 @@ export default function Parkeren() {
         <ThemaPaginaTable<VergunningFrontendV2 | Vergunning>
           key={kind}
           title={title}
-          zaken={parkeervergunningen.filter(filter).sort(sort)}
+          zaken={decosParkeerVergunningen.filter(filter).sort(sort)}
           listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
             kind,
           })}
@@ -37,31 +38,11 @@ export default function Parkeren() {
     }
   );
 
-  const pageContentTop = (
-    <>
-      <Alert severity="info" heading="Parkeervergunning voor bewoners">
-        <Paragraph>
-          Het inzien, aanvragen of wijzigen van een parkeervergunning voor
-          bewoners kan via Mijn Parkeren.
-        </Paragraph>
-        <Paragraph>
-          {isLoadingParkerenUrl && (
-            <LoadingContent barConfig={[['210px', '40px', '0']]} />
-          )}
-          {!isLoadingParkerenUrl && parkerenUrlSSO && (
-            <Button
-              variant="primary"
-              onClick={() => {
-                window.location.href = parkerenUrlSSO;
-              }}
-            >
-              Log in op Mijn Parkeren
-              <Icon svg={ExternalLinkIcon} size="level-5" />
-            </Button>
-          )}
-        </Paragraph>
-      </Alert>
-    </>
+  const pageContentTop = determinePageContentTop(
+    !!decosParkeerVergunningen.length,
+    hasMijnParkerenVergunningen,
+    isLoadingParkerenUrl,
+    parkerenUrlSSO
   );
 
   return (
@@ -79,5 +60,44 @@ export default function Parkeren() {
       ]}
       pageContentMain={tables}
     />
+  );
+}
+
+function determinePageContentTop(
+  hasDecosParkeerVergunningen: boolean,
+  hasMijnParkerenVergunningen: boolean,
+  isLoadingParkerenUrl: boolean,
+  parkerenUrlSSO: string
+) {
+  if (hasDecosParkeerVergunningen && hasMijnParkerenVergunningen) {
+    return (
+      <>
+        <Alert severity="info" heading="Parkeervergunning voor bewoners">
+          <Paragraph>
+            Het inzien, aanvragen of wijzigen van een parkeervergunning voor
+            bewoners kan via Mijn Parkeren.
+          </Paragraph>
+          <Paragraph>
+            {isLoadingParkerenUrl && (
+              <LoadingContent barConfig={[['210px', '40px', '0']]} />
+            )}
+            {!isLoadingParkerenUrl && parkerenUrlSSO && (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  window.location.href = parkerenUrlSSO;
+                }}
+              >
+                Log in op Mijn Parkeren
+                <Icon svg={ExternalLinkIcon} size="level-5" />
+              </Button>
+            )}
+          </Paragraph>
+        </Alert>
+      </>
+    );
+  }
+  return (
+    <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
   );
 }

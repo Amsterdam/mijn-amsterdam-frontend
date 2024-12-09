@@ -42,14 +42,17 @@ export function useParkerenData() {
     : VERGUNNINGEN;
   const vergunningen = vergunningenState.content;
 
-  const parkeervergunningen = getFilteredVergunningen(vergunningen);
+  const decosParkeerVergunningen = getFilteredVergunningen(vergunningen);
+  const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
   return {
     tableConfig,
-    parkeervergunningen,
+    decosParkeerVergunningen,
+    hasMijnParkerenVergunningen,
     isLoading: isLoading(vergunningenState),
     isError: isError(vergunningenState),
-    parkerenUrlSSO: PARKEREN.content?.url,
+    parkerenUrlSSO:
+      PARKEREN.content?.url ?? import.meta.env.REACT_APP_SSO_URL_PARKEREN,
     isLoadingParkerenUrl: isLoading(PARKEREN),
   };
 }

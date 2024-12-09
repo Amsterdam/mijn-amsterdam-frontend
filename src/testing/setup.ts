@@ -19,6 +19,7 @@ vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
+// Set every Featuretoggle to true.
 vi.mock('./universal/config/feature-toggles.ts', async (importOriginal) => {
   const featureToggleModule: {
     FeatureToggle: Record<string, string>;
@@ -101,8 +102,10 @@ process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 process.env.BFF_AFIS_ENABLEU_ACTIVE = 'true';
 
+process.env.BFF_PARKEREN_FRONTOFFICE_BASE_URL = `${remoteApiHost}/parkeren`;
 process.env.BFF_PARKEREN_API_BASE_URL = `${remoteApiHost}/parkeren`;
 process.env.BFF_PARKEREN_EXTERNAL_FALLBACK_URL = `${remoteApiHost}/parkeren/fallback`;
+process.env.BFF_PARKEREN_API_TOKEN = 'xxxclientsecretxxx';
 
 // V2
 process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;
