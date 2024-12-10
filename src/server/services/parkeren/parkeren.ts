@@ -8,15 +8,10 @@ import { captureMessage } from '../monitoring';
 
 export async function fetchParkeren(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  // Mocking this function in different ways per test has issues, so this makes testing way easier.
-  hasPermitsOrProductsFn: (
-    requestID: RequestID,
-    authProfileAndToken: AuthProfileAndToken
-  ) => Promise<boolean> = hasPermitsOrProducts
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const [isKnown, url] = await Promise.all([
-    hasPermitsOrProductsFn(requestID, authProfileAndToken),
+    hasPermitsOrProducts(requestID, authProfileAndToken),
     fetchSSOURL(requestID, authProfileAndToken),
   ]);
   return apiSuccessResult({
@@ -71,7 +66,7 @@ async function fetchJWEToken(
 /**
  * This function checks whether the user has a parkeren products or permit requests
  */
-export async function hasPermitsOrProducts(
+async function hasPermitsOrProducts(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -148,3 +143,5 @@ type ClientProductDetailsSourceResponse = BaseSourceResponse<
     vrns: string;
   }>
 >;
+
+export const forTesting = { hasPermitsOrProducts };

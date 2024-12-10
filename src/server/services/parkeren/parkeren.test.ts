@@ -1,12 +1,13 @@
-import { fetchParkeren, hasParkerenPermits } from './parkeren';
+import { fetchParkeren } from './parkeren';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
-import { getFromEnv } from '../../helpers/env';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import nock from 'nock';
 
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
 const SUCCESS_URL = 'https://parkeren.nl/sso-login';
 const EMPTY_URL = undefined;
+const BASE_ROUTE = '/parkeren';
 
 const MOCK_PARKING_PERMIT_REQUEST = {
   data: [
@@ -38,11 +39,18 @@ const MOCK_CLIENT_PRODUCT_DETAILS = {
 };
 
 const setupMocks = (
-  profileType: AuthProfileAndToken['profile']['profileType'],
+  authmethod: AuthProfileAndToken['profile']['authMethod'],
   mockDataClientProductDetails: { data: unknown[] },
   mockDataActivePermitRequest: { data: unknown[] }
 ) => {
-  vi.clearAllMocks();
+  const profileType = authmethod === 'digid' ? 'private' : 'eherkenning';
+
+  remoteApi
+    .get(`${BASE_ROUTE}/sso/get_authentication_url?service=${authmethod}`)
+    .reply(200, { url: SUCCESS_URL });
+  remoteApi.post(`${BASE_ROUTE}/v1/jwe/create`).reply(STATUS_OK_200, {
+    token: 'xxxtokenxxx',
+  });
   remoteApi
     .post(`/parkeren/v1/${profileType}/client_product_details`)
     .reply(STATUS_OK_200, mockDataClientProductDetails);
@@ -51,95 +59,52 @@ const setupMocks = (
     .reply(STATUS_OK_200, mockDataActivePermitRequest);
 };
 
-describe('fetchSSOParkerenURL', () => {
-  describe('with permit or permit requests', () => {
-    test('Calls with digid', async () => {
+describe('fetchParkeren', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  describe('Returns SSO URL', () => {
+    test('With digid', async () => {
+      setupMocks('digid', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=digid')
-        .reply(STATUS_OK_200, {
-          url: SUCCESS_URL,
-        });
-
-      const response = await fetchParkeren(
-        REQUEST_ID,
-        authProfileAndToken,
-        async () => true
-      );
-
-      expect(response).toStrictEqual({
-        content: {
-          isKnown: true,
-          url: SUCCESS_URL,
-        },
-        status: 'OK',
-      });
-      vi.restoreAllMocks();
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      expect(response.content.url).toBe(SUCCESS_URL);
     });
 
-    test('Calls with eherkenning', async () => {
-      setupMocks(
-        'commercial',
-        MOCK_CLIENT_PRODUCT_DETAILS,
-        MOCK_PARKING_PERMIT_REQUEST
-      );
+    test('With eherkenning', async () => {
+      setupMocks('eherkenning', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('commercial');
 
-      remoteApi
-        .get('/parkeren/sso/get_authentication_url?service=eherkenning')
-        .reply(STATUS_OK_200, {
-          url: SUCCESS_URL,
-        });
-
-      const response = await fetchParkeren(
-        REQUEST_ID,
-        authProfileAndToken,
-        async () => true
-      );
-
-      expect(response).toStrictEqual({
-        content: {
-          isKnown: true,
-          url: SUCCESS_URL,
-        },
-        status: 'OK',
-      });
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      expect(response.content.url).toBe(SUCCESS_URL);
     });
   });
 
-  describe('when data is an empty array but profileType is commercial', () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
-      setupMocks('company', { data: [] }, { data: [] });
-    });
-
-    test('Calls with eherkenning', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('commercial');
-
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
-
-      expect(response).toStrictEqual({
-        content: {
-          isKnown: false,
-          url: EMPTY_URL,
-        },
-        status: 'OK',
-      });
-    });
-
-    test('Calls with digid', async () => {
-      const authProfileAndToken = getAuthProfileAndToken('commercial');
+  describe('IsKnown is true when...', () => {
+    test('Parkeren has data in product details endpoint', async () => {
+      setupMocks(
+        'digid',
+        { data: [MOCK_CLIENT_PRODUCT_DETAILS] },
+        { data: [] }
+      );
+      const authProfileAndToken = getAuthProfileAndToken('private');
 
       const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      expect(response.content.isKnown).toBe(true);
+    });
 
-      expect(response).toStrictEqual({
-        content: {
-          isKnown: false,
-          url: EMPTY_URL,
-        },
-        status: 'OK',
-      });
+    test('Parkeren has data in parking permits endpoint', async () => {
+      setupMocks(
+        'digid',
+        { data: [] },
+        { data: [MOCK_PARKING_PERMIT_REQUEST] }
+      );
+      const authProfileAndToken = getAuthProfileAndToken('private');
+
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      expect(response.content.isKnown).toBe(true);
     });
   });
 });
