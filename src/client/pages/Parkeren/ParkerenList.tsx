@@ -10,7 +10,7 @@ import { ListPageParamKind } from '../VergunningenV2/config';
 export function ParkerenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
 
-  const { decosParkeerVergunningen, isLoading, isError, tableConfig } =
+  const { parkeerVergunningen, isLoading, isError, tableConfig } =
     useParkerenData();
   const appRouteBack = AppRoutes.PARKEREN;
 
@@ -19,7 +19,7 @@ export function ParkerenList() {
 
   return (
     <ListPagePaginated
-      items={decosParkeerVergunningen}
+      items={parkeerVergunningen}
       backLinkTitle={ThemaTitles.PARKEREN}
       title={title ?? ''}
       appRoute={AppRoutes['PARKEREN/LIST']}
