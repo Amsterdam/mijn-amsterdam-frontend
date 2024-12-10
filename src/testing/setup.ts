@@ -10,7 +10,7 @@ const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
-vi.mock('./server/helpers/env.ts', async (importOriginal) => {
+vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   const envModule: object = await importOriginal();
   return {
     ...envModule,
@@ -19,21 +19,21 @@ vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
-vi.mock('./universal/config/feature-toggles.ts', async (importOriginal) => {
+vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
   const featureToggleModule: {
     FeatureToggle: Record<string, string>;
   } = await importOriginal();
 
-  let featureTogglesOn = Object.entries(featureToggleModule.FeatureToggle).map(
-    ([keyName]) => {
-      return [keyName, true];
-    }
-  );
-  featureTogglesOn = Object.fromEntries(featureTogglesOn);
+  const featureTogglesOn = Object.entries(
+    featureToggleModule.FeatureToggle
+  ).map(([keyName]) => {
+    return [keyName, true];
+  });
+  const FeatureToggle = Object.fromEntries(featureTogglesOn);
 
   return {
     ...featureToggleModule,
-    featureTogglesOn,
+    FeatureToggle,
   };
 });
 

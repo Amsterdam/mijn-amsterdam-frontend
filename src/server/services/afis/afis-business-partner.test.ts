@@ -131,6 +131,7 @@ describe('Afis Business Partner services', () => {
           "email": "xxmail@arjanappel.nl",
           "fullName": "Taxon Expeditions BV",
           "id": 430844,
+          "phone": "+31622030313",
         },
         "status": "OK",
       }
