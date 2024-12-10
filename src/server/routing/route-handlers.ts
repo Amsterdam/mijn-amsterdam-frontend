@@ -10,7 +10,6 @@ import {
   isRequestAuthenticated,
 } from '../auth/auth-helpers';
 import { clearSessionCache } from '../helpers/source-api-request';
-import { getIsBlackListed } from '../services/session-blacklist';
 
 export function handleCheckProtectedRoute(
   req: Request,
@@ -21,23 +20,6 @@ export function handleCheckProtectedRoute(
   if (!isProtectedRoute(req.path)) {
     return next('router');
   }
-  return next();
-}
-
-export async function isBlacklistedHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const auth = getAuth(req);
-
-  if (auth?.profile?.sid) {
-    const isOnList = await getIsBlackListed(auth.profile.sid);
-    if (isOnList) {
-      return sendUnauthorized(res);
-    }
-  }
-
   return next();
 }
 

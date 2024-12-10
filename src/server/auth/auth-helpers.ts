@@ -22,7 +22,6 @@ import { AppRoutes } from '../../universal/config/routes';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
-import { addToBlackList } from '../services/session-blacklist';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -145,11 +144,6 @@ export function createLogoutHandler(
       !isIDPSessionExpired(auth.expiresAt) &&
       req.oidc.isAuthenticated()
     ) {
-      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
-      if (auth.profile.sid) {
-        await addToBlackList(auth.profile.sid);
-      }
-
       return res.oidc.logout({
         returnTo: postLogoutRedirectUrl,
         logoutParams: {

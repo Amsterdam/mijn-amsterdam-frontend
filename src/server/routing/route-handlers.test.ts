@@ -1,7 +1,6 @@
 import {
   clearRequestCache,
   isAuthenticated,
-  isBlacklistedHandler,
   requestID,
 } from './route-handlers';
 import {
@@ -12,7 +11,6 @@ import {
 } from '../../testing/utils';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import { cache } from '../helpers/source-api-request';
-import { addToBlackList } from '../services/session-blacklist';
 
 describe('routing.route-handlers', () => {
   const resMock = ResponseMock.new();
@@ -126,53 +124,5 @@ describe('routing.route-handlers', () => {
     expect(resMock.locals.requestID).toBeDefined();
     expect(typeof resMock.locals.requestID).toBe('string');
     expect(mockNext).toHaveBeenCalled();
-  });
-
-  test('isBlacklistedHandler: Add to blacklist', async () => {
-    const sessionID = 'test-session-id';
-    const nextMock = vi.fn();
-    const resMock = ResponseMock.new();
-
-    const reqMock = await getReqMockWithOidc({
-      sid: 'x123y',
-      authMethod: 'digid',
-      profileType: 'private',
-      id: '9988',
-    });
-
-    const mocks = vi.hoisted(() => {
-      return {
-        db: {
-          query: vi.fn(),
-          queryGET: vi.fn(),
-        },
-      };
-    });
-
-    vi.mock('../services/db/db', async () => {
-      return {
-        db: async () => mocks.db,
-      };
-    });
-
-    mocks.db.queryGET.mockResolvedValueOnce({ count: 0 });
-    await isBlacklistedHandler(reqMock, resMock, nextMock);
-    expect(mocks.db.queryGET).toHaveBeenCalledOnce();
-
-    expect(nextMock).toHaveBeenCalledTimes(1);
-
-    await addToBlackList(sessionID);
-    const mCalls = mocks.db.query.mock.calls;
-    expect(mCalls[mCalls.length - 1]).toStrictEqual([
-      'INSERT INTO session_blacklist (session_id) VALUES ($1) RETURNING id',
-      ['test-session-id'],
-    ]);
-
-    mocks.db.queryGET.mockResolvedValueOnce({ count: 1 });
-    await isBlacklistedHandler(reqMock, resMock, nextMock);
-    expect(mocks.db.queryGET).toHaveBeenCalledTimes(2);
-
-    expect(resMock.send).toHaveBeenCalled();
-    expect(resMock.status).toHaveBeenCalledWith(401);
   });
 });
