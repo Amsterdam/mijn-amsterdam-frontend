@@ -42,12 +42,12 @@ export function useParkerenData() {
     : VERGUNNINGEN;
   const vergunningen = vergunningenState.content;
 
-  const decosParkeerVergunningen = getFilteredVergunningen(vergunningen);
+  const parkeerVergunningen = getFilteredVergunningen(vergunningen);
   const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
   return {
     tableConfig,
-    decosParkeerVergunningen,
+    parkeerVergunningen,
     hasMijnParkerenVergunningen,
     isLoading: isLoading(vergunningenState),
     isError: isError(vergunningenState),
