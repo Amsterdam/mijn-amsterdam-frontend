@@ -139,10 +139,8 @@ export function createLogoutHandler(
     const auth = getAuth(req);
     if (
       doIDPLogout &&
-      auth &&
-      auth.expiresAt &&
-      !isIDPSessionExpired(auth.expiresAt) &&
-      req.oidc.isAuthenticated()
+      auth?.expiresAt &&
+      !isIDPSessionExpired(auth.expiresAt)
     ) {
       return res.oidc.logout({
         returnTo: postLogoutRedirectUrl,
@@ -158,8 +156,6 @@ export function createLogoutHandler(
     }
 
     if (hasSessionCookie(req)) {
-      // Destroy the session context
-      delete req[OIDC_SESSION_COOKIE_NAME];
       res.clearCookie(OIDC_SESSION_COOKIE_NAME);
     }
 
