@@ -14,7 +14,7 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 export default function Parkeren() {
   const {
     tableConfig,
-    decosParkeerVergunningen,
+    parkeerVergunningen,
     hasMijnParkerenVergunningen,
     isLoading,
     isError,
@@ -28,7 +28,7 @@ export default function Parkeren() {
         <ThemaPaginaTable<VergunningFrontendV2 | Vergunning>
           key={kind}
           title={title}
-          zaken={decosParkeerVergunningen.filter(filter).sort(sort)}
+          zaken={parkeerVergunningen.filter(filter).sort(sort)}
           listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
             kind,
           })}
@@ -39,7 +39,7 @@ export default function Parkeren() {
   );
 
   const pageContentTop = determinePageContentTop(
-    !!decosParkeerVergunningen.length,
+    !!parkeerVergunningen.length,
     hasMijnParkerenVergunningen,
     isLoadingParkerenUrl,
     parkerenUrlSSO
