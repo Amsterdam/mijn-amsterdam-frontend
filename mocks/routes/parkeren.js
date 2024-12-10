@@ -19,7 +19,7 @@ const NO_DATA_VARIANT = {
 module.exports = [
   {
     id: 'get-parkeren-external-sso-url',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/sso/get_authentication_url`,
+    url: `${settings.MOCK_BASE_PATH}/parkeren-frontoffice/sso/get_authentication_url`,
     method: 'GET',
     variants: [
       {
@@ -34,7 +34,7 @@ module.exports = [
   },
   {
     id: 'get-parkeren-create-jwe-token',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/jwe/create`,
+    url: `${settings.MOCK_BASE_PATH}/parkeren-api/v1/jwe/create`,
     method: 'POST',
     variants: [
       {
@@ -51,7 +51,7 @@ module.exports = [
   },
   {
     id: 'get-parkeren-active-permit-request',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/:profileType/active_permit_request`,
+    url: `${settings.MOCK_BASE_PATH}/parkeren-api/v1/:profileType/active_permit_request`,
     method: 'POST',
     variants: [
       {
@@ -83,7 +83,7 @@ module.exports = [
   },
   {
     id: 'get-parkeren-client-product-details',
-    url: `${settings.MOCK_BASE_PATH}/parkeren/v1/:profileType/client_product_details`,
+    url: `${settings.MOCK_BASE_PATH}/parkeren-api/v1/:profileType/client_product_details`,
     method: 'POST',
     variants: [
       {
