@@ -718,6 +718,67 @@
         "text9": "69BTR4"
       },
       "links": []
+    },
+    {
+      "key": "FEA9F714ED244867A0EE7386B7B11886",
+      "fields": {
+        "title": "<Een Status>",
+        "text45": "Varen ligplaatsvergunning",
+        "mark": "Z/24/2243238",
+        "dfunction": "<Afgehandeld | Geannuleerd>",
+        "SUBJECT1": "description",
+        "document_date": "2023-11-06T00:00:00",
+        "date5": "datum afhandeling",
+        "processed": false,
+        "text18": "Olibollenboot (naam vaartuig)",
+        "text6": "<Locatie > Ligplaats register>",
+        "date6": "2024-05-16T00:00:00",
+        "date7": "2026-05-16T00:00:00"
+      },
+      "links": []
+    },
+    {
+      "key": "HEHEFJSDIAJI4834278O8888B7B11886",
+      "fields": {
+        "title": "Besluit",
+        "text45": "Varen vergunning exploitatie",
+        "mark": "Z/24/3421789",
+        "dfunction": "Verleend",
+        "SUBJECT1": "description",
+        "document_date": "2023-11-06T00:00:00",
+        "date5": "datum afhandeling",
+        "processed": false,
+        "text18": "Pipo de Clown Boot",
+        "num3": "2,38",
+        "num4": "2,48",
+        "num5": "3,00",
+        "num7": "6,00",
+        "num8": 150,
+        "num10": "Ja",
+        "text10": "Onbemand",
+        "text15": 2
+      },
+      "links": []
+    },
+    {
+      "key": "HEKSJDHKCKEI4672828O8888B7B11886",
+      "fields": {
+        "title": "Besluit",
+        "text45": "Varen registratie reder",
+        "mark": "Z/24/2438721",
+        "dfunction": "In behandeling",
+        "SUBJECT1": "description",
+        "document_date": "2023-11-06T00:00:00",
+        "date5": "datum afhandeling",
+        "processed": false,
+        "company": "<Aanvrager>",
+        "num2": "<BSN/KVK>",
+        "mailaddress": "<Adres, eerste gedeelte is straat plus huisnummer>",
+        "zipcode city": "1234 ZG Amsterdam",
+        "phone1": "0612345678",
+        "email1": "myemailadres@example.com"
+      },
+      "links": []
     }
   ]
 }
