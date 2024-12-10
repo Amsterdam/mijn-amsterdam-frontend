@@ -1,0 +1,153 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<BurgerzakenAkte /> > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="_Page_47d7c0 _DetailPage_47d7c0"
+  >
+    <header
+      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+    >
+      <span
+        aria-hidden="true"
+        class="_Icon_3b337d"
+      >
+        <svg
+          aria-label="Burgerzaken"
+          class="_ChapterIcon_3ea2dd"
+          fill="black"
+          height="32px"
+          viewBox="0 0 32 32"
+          width="32px"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g
+            transform="translate(-5 0)"
+          >
+            <path
+              d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
+            />
+          </g>
+        </svg>
+      </span>
+      <div
+        class="_HeadingInner_3b337d"
+      >
+        <a
+          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
+          href="/burgerzaken"
+        >
+          <svg
+            aria-hidden="true"
+            class="_Icon_c3ab45 _Icon__left_c3ab45"
+            fill="#000"
+            focusable="false"
+            height="14px"
+            viewBox="0 0 32 32"
+            width="14px"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>
+              chevron-links-icoon
+            </title>
+            <polygon
+              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
+            />
+          </svg>
+          Burgerzaken
+        </a>
+        <h2
+          class="amsterdam-heading amsterdam-heading-1"
+        >
+          Huwelijksakte
+        </h2>
+      </div>
+    </header>
+    <div
+      class="_PageContent_47d7c0 _DetailPageContent_4b8286"
+    >
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+        >
+          Aktenummer
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          67YUHAK-IO
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+        >
+          Registerjaar
+        </h3>
+        <p
+          class="_Value_6f1df2"
+        >
+          2015
+        </p>
+      </div>
+      <div
+        class="_InfoDetail_6f1df2"
+      >
+        <h3
+          class="amsterdam-heading amsterdam-heading-4 _Label_6f1df2"
+        >
+          Download PDF
+        </h3>
+        <div
+          class="_Value_6f1df2"
+        >
+          <ul
+            class="_DocumentList_7ed0ad"
+          >
+            <li
+              class="_DocumentListItem_7ed0ad"
+            >
+              <span
+                class="_DocumentLinkWrap_7ed0ad"
+              >
+                <span
+                  class="_DownloadIcon_7ed0ad"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    height="14"
+                    viewBox="0 0 32 32"
+                    width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <title>
+                      download-icoon
+                    </title>
+                    <path
+                      d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
+                    />
+                  </svg>
+                </span>
+                <a
+                  class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _DocumentLink_7ed0ad"
+                  href="/bla/bla/bla.pdf"
+                >
+                  Huwelijksakte
+                </a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

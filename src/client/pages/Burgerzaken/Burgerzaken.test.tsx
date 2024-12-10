@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import { Burgerzaken } from './Burgerzaken';
+import Burgerzaken from './Burgerzaken';
 
 const identiteitsbewijzen = [
   {
@@ -94,16 +94,14 @@ describe('<Burgerzaken />', () => {
   const routeEntry = generatePath(AppRoutes.BURGERZAKEN);
   const routePath = AppRoutes.BURGERZAKEN;
 
-  function Component() {
-    return (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Burgerzaken}
-        initializeState={initializeState}
-      />
-    );
-  }
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={Burgerzaken}
+      initializeState={initializeState}
+    />
+  );
 
   it('Renders without crashing', () => {
     const { asFragment } = render(<Component />);

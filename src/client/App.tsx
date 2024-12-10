@@ -32,6 +32,7 @@ import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { AppRoutes } from '../universal/config/routes';
+import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
 import Accessibility from './pages/Accessibility/Accessibility';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
@@ -45,9 +46,7 @@ import BFF500Error from './pages/BffError/BffError';
 import { Bodem } from './pages/Bodem/Bodem';
 import { BodemList } from './pages/Bodem/BodemList';
 import { LoodMeting } from './pages/Bodem/LoodMeting';
-import { Burgerzaken } from './pages/Burgerzaken/Burgerzaken';
-import { BurgerZakenIDKaart } from './pages/Burgerzaken/BurgerzakenIDKaart';
-import { BurgerZakenList } from './pages/Burgerzaken/BurgerZakenList';
+import BurgerzakenIDKaart from './pages/BurgerzakenDetail/BurgerzakenIDKaart';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
 import Erfpacht from './pages/Erfpacht/Erfpacht';
@@ -234,12 +233,8 @@ function AppAuthenticated() {
           )}
 
           <Route
-            path={AppRoutes['BURGERZAKEN/LIST']}
-            component={BurgerZakenList}
-          />
-          <Route
             path={AppRoutes['BURGERZAKEN/ID-KAART']}
-            component={BurgerZakenIDKaart}
+            component={BurgerzakenIDKaart}
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           {FeatureToggle.garbageInformationPage && (
@@ -353,7 +348,6 @@ function AppAuthenticated() {
           {FeatureToggle.bodemActive && (
             <Route path={AppRoutes['BODEM/LIST']} component={BodemList} />
           )}
-
           {FeatureToggle.bodemActive && (
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}
