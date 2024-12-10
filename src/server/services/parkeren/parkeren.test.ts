@@ -107,4 +107,18 @@ describe('fetchParkeren', () => {
       expect(response.content.isKnown).toBe(true);
     });
   });
+
+  test('IsKnown is false when parkeren endpoints return an error', async () => {
+    const authProfileAndToken = getAuthProfileAndToken('private');
+    remoteApi.post(`${BASE_ROUTE}/v1/jwe/create`).reply(STATUS_OK_200, {
+      token: 'xxxtokenxxx',
+    });
+    remoteApi
+      .post(`/parkeren/v1/private/client_product_details`)
+      .reply(400, {});
+    remoteApi.post(`/parkeren/v1/private/active_permit_request`).reply(400, {});
+
+    const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+    expect(response.content.isKnown).toBe(false);
+  });
 });
