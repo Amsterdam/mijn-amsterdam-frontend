@@ -79,7 +79,7 @@ async function hasPermitsOrProducts(
   if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
     const errMsg = `Parkeren: Error in response. Content:\n${jweTokenResponse.content}`;
     captureMessage(errMsg, { severity: 'error' });
-    return false;
+    return true;
   }
 
   const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
@@ -108,8 +108,10 @@ async function hasPermitsOrProducts(
   ]);
 
   return (
-    !!clientProductsResponse?.content?.data?.length ||
-    !!permitRequestsResponse?.content?.data?.length
+    clientProductsResponse.status !== 'OK' ||
+    permitRequestsResponse.status !== 'OK' ||
+    !!clientProductsResponse.content.data.length ||
+    !!permitRequestsResponse.content.data.length
   );
 }
 

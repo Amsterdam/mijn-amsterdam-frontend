@@ -102,10 +102,7 @@ describe('ParkerenList', () => {
 
   it('should render the component and show the correct title', () => {
     render(<Component />);
-    console.dir(ThemaTitles.PARKEREN);
     const allText = screen.getAllByText(ThemaTitles.PARKEREN);
-    console.dir(allText);
-
     expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
   });
 

@@ -1,7 +1,6 @@
 import { fetchParkeren } from './parkeren';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import nock from 'nock';
 
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
@@ -106,17 +105,37 @@ describe('fetchParkeren', () => {
       const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
+
+    test('JWEtoken endpoint returns an error', async () => {
+      const authProfileAndToken = getAuthProfileAndToken('private');
+      remoteApi.post(`${BASE_ROUTE}/v1/jwe/create`).reply(400);
+      remoteApi
+        .post(`/parkeren/v1/private/client_product_details`)
+        .reply(200, [MOCK_CLIENT_PRODUCT_DETAILS]);
+      remoteApi
+        .post(`/parkeren/v1/private/active_permit_request`)
+        .reply(200, [MOCK_PARKING_PERMIT_REQUEST]);
+
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      expect(response.content.isKnown).toBe(true);
+    });
+
+    test('Parkeren endpoint returns an error', async () => {
+      const authProfileAndToken = getAuthProfileAndToken('private');
+      remoteApi
+        .post(`${BASE_ROUTE}/v1/jwe/create`)
+        .reply(STATUS_OK_200, { token: 'xxx1234xxx' });
+      remoteApi.post(`/parkeren/v1/private/client_product_details`).reply(400);
+      remoteApi.post(`/parkeren/v1/private/active_permit_request`).reply(400);
+
+      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      expect(response.content.isKnown).toBe(true);
+    });
   });
 
-  test('IsKnown is false when parkeren endpoints return an error', async () => {
+  test('IsKnown is false when there is no data from parkeren endpoints', async () => {
+    setupMocks('digid', { data: [] }, { data: [] });
     const authProfileAndToken = getAuthProfileAndToken('private');
-    remoteApi.post(`${BASE_ROUTE}/v1/jwe/create`).reply(STATUS_OK_200, {
-      token: 'xxxtokenxxx',
-    });
-    remoteApi
-      .post(`/parkeren/v1/private/client_product_details`)
-      .reply(400, {});
-    remoteApi.post(`/parkeren/v1/private/active_permit_request`).reply(400, {});
 
     const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
     expect(response.content.isKnown).toBe(false);
