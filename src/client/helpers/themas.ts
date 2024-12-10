@@ -30,6 +30,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
+    VAREN,
     VERGUNNINGEN,
     VERGUNNINGENv2,
     WMO,
@@ -212,6 +213,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
+      );
+
+    case Themas.VAREN:
+      return (
+        !isLoading(VAREN) &&
+        !!VAREN?.content?.length &&
+        FeatureToggle.varenActive
       );
 
     case Themas.HORECA:

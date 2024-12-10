@@ -43,6 +43,10 @@ export const AppRoutes = {
     '/toeristische-verhuur/vergunning/list/:kind/:page?',
   'TOERISTISCHE_VERHUUR/VERGUNNING':
     '/toeristische-verhuur/vergunning/:casetype/:id',
+  VAREN: '/passagiers-en-beroepsvaart',
+  'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?',
+  'VAREN/DETAIL':
+    '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   'PARKEREN/DETAIL': '/parkeren/:title/:id',
