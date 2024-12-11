@@ -6,15 +6,15 @@ import { Match } from '../../universal/types';
 export const AppRoutesRedirect = [
   {
     from: '/burgerzaken/document/:id',
-    to: AppRoutes['BURGERZAKEN/ID-KAART'],
+    to: AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'],
   },
   {
     from: '/stadspas',
-    to: AppRoutes['HLI'],
+    to: AppRoutes.HLI,
   },
   {
     from: '/stadspas/saldo/:pasnummer',
-    to: AppRoutes['HLI'],
+    to: AppRoutes.HLI,
   },
   {
     from: '/inkomen-en-stadspas/bijstandsuitkering/:id',
