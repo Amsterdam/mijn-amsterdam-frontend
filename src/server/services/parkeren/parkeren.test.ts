@@ -6,7 +6,11 @@ const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
 const SUCCESS_URL = 'https://parkeren.nl/sso-login';
 const EMPTY_URL = undefined;
+
 const BASE_ROUTE = '/parkeren';
+const PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE = `${BASE_ROUTE}/v1/private/client_product_details`;
+const PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE = `${BASE_ROUTE}/v1/private/active_permit_request`;
+const JWE_CREATE_ROUTE = `${BASE_ROUTE}/v1/jwe/create`;
 
 const MOCK_PARKING_PERMIT_REQUEST = {
   data: [
@@ -47,14 +51,14 @@ const setupMocks = (
   remoteApi
     .get(`${BASE_ROUTE}/sso/get_authentication_url?service=${authmethod}`)
     .reply(200, { url: SUCCESS_URL });
-  remoteApi.post(`${BASE_ROUTE}/v1/jwe/create`).reply(STATUS_OK_200, {
+  remoteApi.post(JWE_CREATE_ROUTE).reply(STATUS_OK_200, {
     token: 'xxxtokenxxx',
   });
   remoteApi
-    .post(`/parkeren/v1/${profileType}/client_product_details`)
+    .post(`${BASE_ROUTE}/v1/${profileType}/client_product_details`)
     .reply(STATUS_OK_200, mockDataClientProductDetails);
   remoteApi
-    .post(`/parkeren/v1/${profileType}/active_permit_request`)
+    .post(`${BASE_ROUTE}/v1/${profileType}/active_permit_request`)
     .reply(STATUS_OK_200, mockDataActivePermitRequest);
 };
 
@@ -108,12 +112,12 @@ describe('fetchParkeren', () => {
 
     test('JWEtoken endpoint returns an error', async () => {
       const authProfileAndToken = getAuthProfileAndToken('private');
-      remoteApi.post(`${BASE_ROUTE}/v1/jwe/create`).reply(400);
+      remoteApi.post(JWE_CREATE_ROUTE).reply(400);
       remoteApi
-        .post(`/parkeren/v1/private/client_product_details`)
+        .post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE)
         .reply(200, [MOCK_CLIENT_PRODUCT_DETAILS]);
       remoteApi
-        .post(`/parkeren/v1/private/active_permit_request`)
+        .post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE)
         .reply(200, [MOCK_PARKING_PERMIT_REQUEST]);
 
       const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
@@ -123,10 +127,10 @@ describe('fetchParkeren', () => {
     test('Parkeren endpoint returns an error', async () => {
       const authProfileAndToken = getAuthProfileAndToken('private');
       remoteApi
-        .post(`${BASE_ROUTE}/v1/jwe/create`)
+        .post(JWE_CREATE_ROUTE)
         .reply(STATUS_OK_200, { token: 'xxx1234xxx' });
-      remoteApi.post(`/parkeren/v1/private/client_product_details`).reply(400);
-      remoteApi.post(`/parkeren/v1/private/active_permit_request`).reply(400);
+      remoteApi.post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE).reply(400);
+      remoteApi.post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE).reply(400);
 
       const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
@@ -139,5 +143,24 @@ describe('fetchParkeren', () => {
 
     const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
     expect(response.content.isKnown).toBe(false);
+  });
+
+  test('Always returns a URL. Even when endpoint returns nothing', async () => {
+    remoteApi
+      .get(`${BASE_ROUTE}/sso/get_authentication_url?service=digid`)
+      .reply(400);
+    remoteApi.post(JWE_CREATE_ROUTE).reply(STATUS_OK_200, {
+      token: 'xxxtokenxxx',
+    });
+    remoteApi
+      .post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE)
+      .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
+    remoteApi
+      .post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE)
+      .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
+
+    const authProfileAndToken = getAuthProfileAndToken('private');
+    const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+    expect(response.content.url).toBeDefined();
   });
 });

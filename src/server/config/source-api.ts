@@ -266,9 +266,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   // Because for some reason they have one endpoint here for retrieving the SSO URL.
   PARKEREN_FRONTOFFICE: {
-    url: `${getFromEnv('BFF_PARKEREN_FRONTOFFICE_BASE_URL')}`,
+    url: `${getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL')}`,
     headers: {
-      host: new URL(getFromEnv('BFF_PARKEREN_FRONTOFFICE_BASE_URL') ?? '')
+      host: new URL(getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL') ?? '')
         .hostname,
     },
   },
