@@ -24,7 +24,6 @@ export function Burgerzaken() {
           zaken={documents.sort(sort)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}
-          textNoContent="Wij kunnen nog geen ID-kaarten tonen."
         />
       );
     }

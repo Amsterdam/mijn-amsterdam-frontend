@@ -13,6 +13,8 @@ import { defaultDateFormat } from '../../universal/helpers/date';
 import {
   BRPData,
   BRPDataFromSource,
+  IdentiteitsbewijsFromSource,
+  IdentiteitsbewijsFrontend,
   MyNotification,
 } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -184,10 +186,37 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   return notifications;
 }
 
+function transformIdentiteitsBewijzen(
+  identiteitsbewijzen: IdentiteitsbewijsFromSource[]
+): IdentiteitsbewijsFrontend[] {
+  return identiteitsbewijzen.map((document) => {
+    const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
+      id: document.id,
+    });
+    return Object.assign({}, document, {
+      title: BrpDocumentTitles[document.documentType] || document.documentType,
+      datumAfloop: document.datumAfloop,
+      datumAfloopFormatted: document.datumAfloop
+        ? defaultDateFormat(document.datumAfloop)
+        : '',
+      datumUitgifte: document.datumUitgifte,
+      datumUitgifteFormatted: document.datumUitgifte
+        ? defaultDateFormat(document.datumUitgifte)
+        : '',
+      link: {
+        to: route,
+        title: document.documentType,
+      },
+    });
+  });
+}
+
 export function transformBRPData(
   responseData: ApiSuccessResponse<BRPDataFromSource>
-) {
+): BRPData {
   const responseContent = responseData.content;
+  let identiteitsbewijzenTransformed: IdentiteitsbewijsFrontend[] = [];
+
   if (responseContent) {
     responseContent.fetchUrlAantalBewoners = generateFullApiUrlBFF(
       BffEndpoints.MKS_AANTAL_BEWONERS,
@@ -197,30 +226,18 @@ export function transformBRPData(
       }
     );
   }
+
   if (Array.isArray(responseContent?.identiteitsbewijzen)) {
     // Transform Identiteitsbewijzen
-    Object.assign(responseContent, {
-      identiteitsbewijzen: responseContent.identiteitsbewijzen.map(
-        (document) => {
-          const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
-            id: document.id,
-          });
-          return Object.assign({}, document, {
-            title:
-              BrpDocumentTitles[document.documentType] || document.documentType,
-            datumAfloop: document.datumAfloop,
-            datumUitgifte: document.datumUitgifte,
-            link: {
-              to: route,
-              title: document.documentType,
-            },
-          });
-        }
-      ),
-    });
+    identiteitsbewijzenTransformed = transformIdentiteitsBewijzen(
+      responseContent.identiteitsbewijzen
+    );
   }
 
-  return responseContent as BRPData;
+  return {
+    ...responseContent,
+    identiteitsbewijzen: identiteitsbewijzenTransformed,
+  };
 }
 
 export async function fetchBRP(

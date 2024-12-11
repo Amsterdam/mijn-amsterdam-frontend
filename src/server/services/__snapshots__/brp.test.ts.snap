@@ -45,7 +45,9 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
   "identiteitsbewijzen": [
     {
       "datumAfloop": "2025-10-15",
+      "datumAfloopFormatted": "15 oktober 2025",
       "datumUitgifte": "2015-10-15",
+      "datumUitgifteFormatted": "15 oktober 2015",
       "documentNummer": "PP57XKG54",
       "documentType": "paspoort",
       "id": "een-hash-van-documentnummer-1",
@@ -57,7 +59,9 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
     },
     {
       "datumAfloop": "2020-09-11",
+      "datumAfloopFormatted": "11 september 2020",
       "datumUitgifte": "2010-09-11",
+      "datumUitgifteFormatted": "11 september 2010",
       "documentNummer": "IE9962819",
       "documentType": "europese identiteitskaart",
       "id": "een-hash-van-documentnummer-2",
