@@ -13,7 +13,7 @@ export const DISPLAY_PROPS_IDENTITEITSBEWIJZEN: DisplayProps<
   WithDetailLinkComponent<IdentiteitsbewijsFrontend>
 > = {
   detailLinkComponent: 'Type',
-  datumAfloop: 'Geldig tot',
+  datumAfloopFormatted: 'Geldig tot',
 };
 
 export const listPageParamKind = {
@@ -22,7 +22,7 @@ export const listPageParamKind = {
 
 export const tableConfig = {
   [listPageParamKind.identiteitsbewijzen]: {
-    title: 'Mijn reisdocumenten',
+    title: 'Paspoort en ID-kaart',
     displayProps: DISPLAY_PROPS_IDENTITEITSBEWIJZEN,
     sort: dateSort('datumAfloop', 'desc'),
     filter: () => true,

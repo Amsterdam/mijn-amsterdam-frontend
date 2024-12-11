@@ -1,5 +1,6 @@
 import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 
 import { AppRoutes } from '../../universal/config/routes';
 import { Themas } from '../../universal/config/thema';
@@ -190,8 +191,9 @@ function transformIdentiteitsBewijzen(
   identiteitsbewijzen: IdentiteitsbewijsFromSource[]
 ): IdentiteitsbewijsFrontend[] {
   return identiteitsbewijzen.map((document) => {
-    const route = generatePath(AppRoutes['BURGERZAKEN/ID-KAART'], {
+    const route = generatePath(AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'], {
       id: document.id,
+      documentType: slug(document.documentType),
     });
     return Object.assign({}, document, {
       title: BrpDocumentTitles[document.documentType] || document.documentType,
@@ -207,6 +209,7 @@ function transformIdentiteitsBewijzen(
         to: route,
         title: document.documentType,
       },
+      steps: [], // Placeholder for status steps. Not used in this project.
     });
   });
 }

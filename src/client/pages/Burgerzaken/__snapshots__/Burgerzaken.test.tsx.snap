@@ -116,7 +116,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
           <h3
             class="ams-heading ams-heading--level-2"
           >
-            Mijn reisdocumenten
+            Paspoort en ID-kaart
           </h3>
           <div
             class="ams-table"
@@ -151,7 +151,12 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    paspoort
+                    <a
+                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                      href="/burgerzaken/paspoort/een-hash-van-documentnummer-1"
+                    >
+                      Paspoort
+                    </a>
                   </td>
                   <td
                     class="ams-table__cell"
@@ -165,38 +170,22 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    europese identiteitskaart
+                    <a
+                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                      href="/burgerzaken/europese-identiteitskaart/een-hash-van-documentnummer-2"
+                    >
+                      Europese identiteitskaart
+                    </a>
                   </td>
                   <td
                     class="ams-table__cell"
                   >
-                    11 september 2020
-                  </td>
-                </tr>
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    paspoort
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    15 oktober 2025
+                    9 november 2020
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <button
-            class="ams-button ams-button--tertiary"
-            style="transform: translateX(-1.4rem);"
-            type="button"
-          >
-            Toon meer
-          </button>
         </div>
       </div>
     </div>

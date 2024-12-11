@@ -53,8 +53,9 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
       "id": "een-hash-van-documentnummer-1",
       "link": {
         "title": "paspoort",
-        "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-1",
+        "to": "/burgerzaken/paspoort/een-hash-van-documentnummer-1",
       },
+      "steps": [],
       "title": "paspoort",
     },
     {
@@ -67,8 +68,9 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
       "id": "een-hash-van-documentnummer-2",
       "link": {
         "title": "europese identiteitskaart",
-        "to": "/burgerzaken/id-kaart/een-hash-van-documentnummer-2",
+        "to": "/burgerzaken/europese-identiteitskaart/een-hash-van-documentnummer-2",
       },
+      "steps": [],
       "title": "ID-kaart",
     },
   ],

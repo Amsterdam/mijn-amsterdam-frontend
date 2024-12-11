@@ -3,7 +3,7 @@ export const AppRoutes = {
   HOME: '/',
   BURGERZAKEN: '/burgerzaken',
   'BURGERZAKEN/LIST': '/burgerzaken/lijst/:kind/:page?',
-  'BURGERZAKEN/ID-KAART': '/burgerzaken/id-kaart/:id',
+  'BURGERZAKEN/IDENTITEITSBEWIJS': '/burgerzaken/:documentType/:id',
 
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENING': '/zorg-en-ondersteuning/voorziening/:id',
@@ -45,8 +45,7 @@ export const AppRoutes = {
     '/toeristische-verhuur/vergunning/:casetype/:id',
   VAREN: '/passagiers-en-beroepsvaart',
   'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?',
-  'VAREN/DETAIL':
-    '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
+  'VAREN/DETAIL': '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   'PARKEREN/DETAIL': '/parkeren/:title/:id',

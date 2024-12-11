@@ -46,7 +46,7 @@ import { Bodem } from './pages/Bodem/Bodem';
 import { BodemList } from './pages/Bodem/BodemList';
 import { LoodMeting } from './pages/Bodem/LoodMeting';
 import { Burgerzaken } from './pages/Burgerzaken/Burgerzaken';
-import { BurgerZakenIDKaart } from './pages/Burgerzaken/BurgerzakenIDKaart';
+import { BurgerzakenIdentiteitsbewijs } from './pages/Burgerzaken/BurgerzakenIdentiteitsbewijs';
 import { BurgerZakenList } from './pages/Burgerzaken/BurgerZakenList';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
@@ -238,8 +238,8 @@ function AppAuthenticated() {
             component={BurgerZakenList}
           />
           <Route
-            path={AppRoutes['BURGERZAKEN/ID-KAART']}
-            component={BurgerZakenIDKaart}
+            path={AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']}
+            component={BurgerzakenIdentiteitsbewijs}
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           {FeatureToggle.garbageInformationPage && (
