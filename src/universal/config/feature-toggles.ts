@@ -3,7 +3,8 @@ import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
 export const FeatureToggle = {
   // AFIS
   afisActive: !IS_PRODUCTION,
-  afisEmandatesActive: false,
+  afisEMandatesActive: !IS_PRODUCTION,
+  // Display of phone number is not needed atm.
   afisBusinesspartnerPhoneActive: false,
   // We don't filter out the undownloadable facturen for testing purposes.
   // We want to be able to test immediately and not wait until the evening.
