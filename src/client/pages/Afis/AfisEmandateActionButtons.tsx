@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { Button, Icon } from '@amsterdam/design-system-react';
 
-import styles from './AfisEmandateActionUrls.module.scss';
+import styles from './AfisEmandateActionButtons.module.scss';
 import {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
