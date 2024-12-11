@@ -64,12 +64,12 @@ export default function Parkeren() {
 }
 
 function determinePageContentTop(
-  hasDecosParkeerVergunningen: boolean,
+  hasOtherParkeerVergunningen: boolean,
   hasMijnParkerenVergunningen: boolean,
   isLoadingParkerenUrl: boolean,
   parkerenUrlSSO: string
 ) {
-  if (hasDecosParkeerVergunningen && hasMijnParkerenVergunningen) {
+  if (hasOtherParkeerVergunningen && hasMijnParkerenVergunningen) {
     return (
       <>
         <Alert severity="info" heading="Parkeervergunning voor bewoners">
