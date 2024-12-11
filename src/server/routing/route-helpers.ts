@@ -1,4 +1,5 @@
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
+import { ParamsDictionary, Request } from 'express-serve-static-core';
 import { generatePath, matchPath } from 'react-router-dom';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
@@ -6,17 +7,15 @@ import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
 
-export type RequestWithQueryParams<T extends Record<string, string>> = Request<
-  object,
-  object,
-  object,
-  T
->;
+export type RequestMA<
+  P extends ParamsDictionary = ParamsDictionary,
+  Q extends qs.ParsedQs = qs.ParsedQs,
+> = Request<P, object, object, Q>;
 
 export type RequestWithRouteAndQueryParams<
-  T extends Record<string, string> = Record<string, string>,
-  T2 extends Record<string, string> = Record<string, string>,
-> = Request<T, object, object, T2>;
+  P extends ParamsDictionary,
+  Q extends qs.ParsedQs,
+> = RequestMA<P, Q>;
 
 export function queryParams<T extends Record<string, unknown>>(req: Request) {
   return req.query as T;
@@ -98,7 +97,7 @@ export function sendMessage(
   res: Response,
   id: string,
   event: string = 'message',
-  data?: object
+  data?: object | string | number | null
 ) {
   const doStringify = typeof data !== 'string';
   const payload = doStringify ? JSON.stringify(data) : data;
