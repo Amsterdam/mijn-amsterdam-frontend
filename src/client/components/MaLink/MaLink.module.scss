@@ -6,3 +6,13 @@
 .MaRouterLink__no-default-underline:not(:hover) {
   --ams-link-standalone-text-decoration-line: none;
 }
+
+.MaButtonLink {
+  -webkit-appearance: button;
+  appearance: button;
+  text-decoration: none;
+  &:hover,
+  &:visited {
+    // color: var(--ams-color-primary-white);
+  }
+}

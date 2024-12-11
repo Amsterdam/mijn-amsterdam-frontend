@@ -1,26 +1,24 @@
-import { Alert, Button, Icon, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router-dom';
-import { Link } from '@amsterdam/design-system-react';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { Vergunning } from '../../../server/services';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { LoadingContent } from '../../components';
+import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-export default function Parkeren() {
+export function Parkeren() {
   const {
     tableConfig,
     parkeerVergunningenFromThemaVergunningen,
-    hasMijnParkerenVergunningen,
     isLoading,
     isError,
     parkerenUrlSSO,
-    isLoadingParkerenUrl,
+    linkListItems,
   } = useParkerenData();
 
   const tables = Object.entries(tableConfig).map(
@@ -43,7 +41,6 @@ export default function Parkeren() {
 
   const pageContentTop = determinePageContentTop(
     !!parkeerVergunningenFromThemaVergunningen.length,
-    hasMijnParkerenVergunningen,
     parkerenUrlSSO
   );
 
@@ -54,19 +51,13 @@ export default function Parkeren() {
       isPartialError={false}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      linkListItems={[
-        {
-          to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
-          title: 'Meer over parkeervergunningen',
-        },
-      ]}
+      linkListItems={linkListItems}
       pageContentMain={tables}
     />
   );
 }
 
 function determinePageContentTop(
-  hasParkeerVegunningenFromThemaVergunningen: boolean,
   hasMijnParkerenVergunningen: boolean,
   parkerenUrlSSO: string
 ) {
@@ -79,10 +70,10 @@ function determinePageContentTop(
             bewoners kan via Mijn Parkeren.
           </Paragraph>
           <Paragraph>
-            <Link inverseColor href={parkerenUrlSSO}>
-              Log in op Mijn Parkeren
+            <MaButtonLink href={parkerenUrlSSO}>
+              Ga naar Mijn Parkeren&nbsp;
               <Icon svg={ExternalLinkIcon} size="level-5" />
-            </Link>
+            </MaButtonLink>
           </Paragraph>
         </Alert>
       </>
