@@ -4,14 +4,11 @@ const NO_DATA_VARIANT = {
   id: 'no-data',
   type: 'json',
   options: {
-    status: 200,
     body: {
       result: 'success',
-      data: {
-        result: 'success',
-        count: 0,
-        data: [],
-      },
+      count: 0,
+      status: 200,
+      data: [],
     },
   },
 };
