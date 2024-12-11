@@ -338,9 +338,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
       ).some((vergunning) =>
         PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
       );
-      const urlExternal =
-        appState.PARKEREN.content?.url ??
-        import.meta.env.REACT_APP_SSO_URL_PARKEREN;
+      const urlExternal = appState.PARKEREN.content?.url ?? '/';
       return hasOtherParkeerVegunningen ? AppRoutes.PARKEREN : urlExternal;
     },
     profileTypes: ['private', 'commercial'],
