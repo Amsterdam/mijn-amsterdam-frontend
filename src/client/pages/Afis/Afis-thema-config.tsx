@@ -2,13 +2,14 @@ import { ReactNode } from 'react';
 
 import { generatePath, LinkProps } from 'react-router-dom';
 
+import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
+  AfisEMandateFrontend,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ZaakDetail } from '../../../universal/types';
 import { DisplayProps } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
@@ -43,8 +44,6 @@ export const listPageTitle: Record<AfisFactuurState, string> = {
   overgedragen:
     'Facturen in het incasso- en invorderingstraject van directie Belastingen',
 };
-
-export type AfisEmandateStub = ZaakDetail & Record<string, string>;
 
 export type AfisFactuurFrontend = AfisFactuur & {
   factuurNummerEl: ReactNode;
@@ -107,9 +106,20 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
   },
 } as const;
 
+// ==================
+// E-Mandates
+
+export type WithActionButtons<T> = T & { action: ReactNode };
+
 // Betaalvoorkeuren
-const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
-  name: 'Naam',
+const displayPropsEMandates: DisplayProps<
+  WithActionButtons<AfisEMandateFrontend>
+> = {
+  acceptant: 'Incassant',
+  senderName: 'Naam rekeninghouder',
+  senderIBAN: 'Van bankrekeningnummer',
+  displayStatus: 'Status',
+  action: 'Actie',
 };
 
 export const businessPartnerDetailsLabels = {
@@ -121,16 +131,9 @@ export const businessPartnerDetailsLabels = {
 };
 
 export const eMandateTableConfig = {
-  active: {
-    title: `Actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
-  inactive: {
-    title: `Niet actieve automatische incasso's`,
-    filter: (emandate: AfisEmandateStub) => !emandate.isActive,
-    displayProps: displayPropsEmandates,
-  },
+  title: `Automatische incasso's`,
+  displayProps: displayPropsEMandates,
+  className: styles.EMandatesTable,
 } as const;
 
 export const routes = {
