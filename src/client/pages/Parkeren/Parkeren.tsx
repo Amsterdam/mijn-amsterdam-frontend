@@ -44,7 +44,6 @@ export default function Parkeren() {
   const pageContentTop = determinePageContentTop(
     !!parkeerVergunningenFromThemaVergunningen.length,
     hasMijnParkerenVergunningen,
-    isLoadingParkerenUrl,
     parkerenUrlSSO
   );
 
@@ -69,13 +68,9 @@ export default function Parkeren() {
 function determinePageContentTop(
   hasParkeerVegunningenFromThemaVergunningen: boolean,
   hasMijnParkerenVergunningen: boolean,
-  isLoadingParkerenUrl: boolean,
   parkerenUrlSSO: string
 ) {
-  if (
-    hasParkeerVegunningenFromThemaVergunningen &&
-    hasMijnParkerenVergunningen
-  ) {
+  if (hasMijnParkerenVergunningen) {
     return (
       <>
         <Alert severity="info" heading="Parkeervergunning voor bewoners">
@@ -84,15 +79,10 @@ function determinePageContentTop(
             bewoners kan via Mijn Parkeren.
           </Paragraph>
           <Paragraph>
-            {isLoadingParkerenUrl && (
-              <LoadingContent barConfig={[['210px', '40px', '0']]} />
-            )}
-            {!isLoadingParkerenUrl && parkerenUrlSSO && (
-              <Link inverseColor href={parkerenUrlSSO}>
-                Log in op Mijn Parkeren
-                <Icon svg={ExternalLinkIcon} size="level-5" />
-              </Link>
-            )}
+            <Link inverseColor href={parkerenUrlSSO}>
+              Log in op Mijn Parkeren
+              <Icon svg={ExternalLinkIcon} size="level-5" />
+            </Link>
           </Paragraph>
         </Alert>
       </>
