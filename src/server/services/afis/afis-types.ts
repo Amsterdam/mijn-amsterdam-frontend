@@ -291,7 +291,7 @@ export type AfisEMandateCreatePayload = Omit<
   LifetimeTo: '9999-12-31T00:00:00';
 };
 
-export type AfisEMandateUpdatePayload = AfisEMandateSource;
+export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
 export type AfisEMandateCreateParams = {
   acceptantIBAN: AfisEMandateAcceptant['iban'];
