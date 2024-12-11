@@ -156,7 +156,8 @@ export function createLogoutHandler(
     }
 
     if (hasSessionCookie(req)) {
-      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+      // req[OIDC_SESSION_COOKIE_NAME] = undefined;
+      res.clearCookie(OIDC_SESSION_COOKIE_NAME, { path: '/' });
     }
 
     return res.redirect(postLogoutRedirectUrl);
