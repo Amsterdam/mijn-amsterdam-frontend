@@ -81,8 +81,6 @@ async function hasPermitsOrProducts(
 
   const jweTokenResponse = await fetchJWEToken(requestID, authProfileAndToken);
   if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
-    const errMsg = `Parkeren: Error in response. Content:\n${jweTokenResponse.content}`;
-    captureMessage(errMsg, { severity: 'error' });
     return true;
   }
 
