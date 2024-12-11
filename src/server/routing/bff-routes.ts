@@ -15,7 +15,6 @@ export const BffEndpoints = {
   CACHE_OVERVIEW: '/admin/cache',
   LOGIN_STATS: '/admin/visitors/:authMethod?',
   LOGIN_RAW: '/admin/visitors/table',
-  SESSION_BLACKLIST_RAW: '/admin/session-blacklist/table',
   STATUS_HEALTH: '/status/health',
   TEST_ACCOUNTS_OVERVIEW: '/admin/user-data-overview',
 

@@ -3,7 +3,6 @@ import basicAuth from 'express-basic-auth';
 
 import { BffEndpoints } from './bff-routes';
 import { cacheOverview } from '../helpers/file-cache';
-import { sessionBlacklistTable } from '../services/session-blacklist';
 import { loginStats, loginStatsTable } from '../services/visitors';
 
 export const adminRouter = express.Router();
@@ -20,7 +19,6 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
 
   adminRouter.get(BffEndpoints.LOGIN_RAW, loginStatsTable);
   adminRouter.get(BffEndpoints.LOGIN_STATS, loginStats);
-  adminRouter.get(BffEndpoints.SESSION_BLACKLIST_RAW, sessionBlacklistTable);
 
   adminRouter.get(
     BffEndpoints.CACHE_OVERVIEW,
