@@ -1,6 +1,7 @@
 import { Alert, Button, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router-dom';
+import { Link } from '@amsterdam/design-system-react';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { Vergunning } from '../../../server/services';
@@ -87,15 +88,10 @@ function determinePageContentTop(
               <LoadingContent barConfig={[['210px', '40px', '0']]} />
             )}
             {!isLoadingParkerenUrl && parkerenUrlSSO && (
-              <Button
-                variant="primary"
-                onClick={() => {
-                  window.location.href = parkerenUrlSSO;
-                }}
-              >
+              <Link inverseColor href={parkerenUrlSSO}>
                 Log in op Mijn Parkeren
                 <Icon svg={ExternalLinkIcon} size="level-5" />
-              </Button>
+              </Link>
             )}
           </Paragraph>
         </Alert>
