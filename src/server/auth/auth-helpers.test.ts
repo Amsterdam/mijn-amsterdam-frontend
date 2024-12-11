@@ -228,6 +228,17 @@ describe('auth-helpers', () => {
 
       await handler(reqMock, resMock);
 
+      expect(reqMock[OIDC_SESSION_COOKIE_NAME]).toBeUndefined();
+      expect(resMock.clearCookie).toHaveBeenCalledWith(
+        OIDC_SESSION_COOKIE_NAME,
+        {
+          path: '/',
+          secure: true,
+          sameSite: 'lax',
+          httpOnly: true,
+        }
+      );
+
       expect(resMock.oidc.logout).not.toHaveBeenCalled();
     });
 
@@ -235,7 +246,15 @@ describe('auth-helpers', () => {
       const handler2 = createLogoutHandler('http://foo.bar', false);
       await handler2(reqMock, resMock);
 
-      expect(resMock.clearCookie).toHaveBeenCalled();
+      expect(resMock.clearCookie).toHaveBeenCalledWith(
+        OIDC_SESSION_COOKIE_NAME,
+        {
+          path: '/',
+          secure: true,
+          sameSite: 'lax',
+          httpOnly: true,
+        }
+      );
       expect(resMock.redirect).toHaveBeenCalledWith('http://foo.bar');
     });
   });
