@@ -77,6 +77,7 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
   ) => ServiceResponse,
   payloadParamName: string = 'payload'
 ) {
+  // Return the route handler (middleware) that will handle the request.
   return async function handleEMandateApiRequest(
     req: RequestWithEncryptedPayloadParam<RouteParams>,
     res: Response
@@ -87,9 +88,11 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
       return sendUnauthorized(res);
     }
 
-    const queryParams = req.query[payloadParamName];
+    // Get the query parameter value for the encrypted payload.
+    const payloadParamValue = req.query[payloadParamName];
+
     const decryptResult = decryptPayloadAndValidateSessionID<QueryPayload>(
-      queryParams,
+      payloadParamValue,
       authProfileAndToken
     );
 
@@ -99,6 +102,7 @@ export function handleAfisRequestWithEncryptedPayloadQueryParam<
 
     const payloadDecrypted = decryptResult.content;
 
+    // Call the service method with the decrypted payload.
     const statusChangeResponse = await serviceMethod(
       res.locals.requestID,
       payloadDecrypted,
