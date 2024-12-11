@@ -61,20 +61,17 @@ module.exports = [
           status: 200,
           body: {
             result: 'success',
-            data: {
-              result: 'success',
-              count: 1,
-              data: [
-                {
-                  link: 'example.org/permits',
-                  id: 9999,
-                  client_id: 9999,
-                  status: 'in_progress',
-                  permit_name: 'Bewonersvergunning',
-                  permit_zone: 'XX02X Centrum-1x',
-                },
-              ],
-            },
+            count: 1,
+            data: [
+              {
+                link: 'example.org/permits',
+                id: 9999,
+                client_id: 9999,
+                status: 'in_progress',
+                permit_name: 'Bewonersvergunning',
+                permit_zone: 'XX02X Centrum-1x',
+              },
+            ],
           },
         },
       },
