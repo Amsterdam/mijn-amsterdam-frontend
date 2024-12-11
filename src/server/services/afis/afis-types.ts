@@ -236,16 +236,8 @@ export type AfisDocumentDownloadSource = {
 
 // E-Mandates
 // =================
-
-export type AfisEMandateSource = {
-  ABC: string;
-};
-
-export type AfisEMandatesResponseDataSource =
-  AfisApiFeedResponseSource<AfisEMandateSource>;
-
 // Static fixed values, loaded from ENV
-export type AfisEMandatePayloadBase = {
+export type AfisEMandateSourceStatic = {
   PayType: string;
   SndType: string;
   RefType: string;
@@ -254,9 +246,9 @@ export type AfisEMandatePayloadBase = {
   Status: string;
 };
 
-export type AfisEMandatePayloadCreate = AfisEMandatePayloadBase & {
+type EMandateSenderSource = {
   // Sender
-  SndId: AfisBusinessPartnerDetailsTransformed['businessPartnerId']; // Business partner ID
+  SndId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
   SndPostal: string;
   SndCountry: string; // Country code
   SndIban: string;
@@ -264,47 +256,92 @@ export type AfisEMandatePayloadCreate = AfisEMandatePayloadBase & {
   SndStreet: string;
   SndHouse: string; // House number
   SndCity: string;
-  SndName2: string; // Lastname
   SndName1: string; // Firstname
-  SndDebtorId: string; // Mandaat type e.g Parkin Permit ?!?!?!?!
-
-  // Recipient
-  RecName1: 'Name1';
-  RecPostal: '533';
-  RecStreet: 'Ran';
-  RecHouse: 'Sur';
-  RecCity: 'Kk';
-  RecCountry: 'NL';
-
-  // Mandate
-  LifetimeFrom: string;
-  LifetimeTo: '9999-12-31T00:00:00'; // Far in the future, Gem. Amsterdam only uses indefinite mandates.
-  SignDate: string;
-  SignCity: string;
-
-  // ID of the mandate in AFIS
-  IMandateId: string;
+  SndName2: string; // Lastname
+  SndDebtorId: string; // Acceptant reference ID (RefId)
 };
 
-export type AfisEMandatePayloadUpdate = AfisEMandatePayloadCreate;
+export type AfisEMandateSource = AfisEMandateSourceStatic &
+  EMandateSenderSource & {
+    // ID of the mandate in AFIS
+    IMandateId: string;
 
-export type AfisEMandate = {
-  name: string;
+    // Recipient
+    RecName1: string;
+    RecPostal: string;
+    RecStreet: string;
+    RecHouse: string;
+    RecCity: string;
+    RecCountry: string;
+
+    // Mandate
+    LifetimeFrom: string;
+    LifetimeTo: string; // '9999-12-31T00:00:00'; // Far in the future, Gem. Amsterdam only uses indefinite mandates. Change to today when deactivating eMandate.
+    SignDate: string;
+    SignCity: string;
+  };
+
+export type AfisEMandatesResponseDataSource =
+  AfisApiFeedResponseSource<AfisEMandateSource>;
+
+export type AfisEMandateCreatePayload = Omit<
+  AfisEMandateSource,
+  'IMandateId'
+> & {
+  LifetimeTo: '9999-12-31T00:00:00';
+};
+
+export type AfisEMandateUpdatePayload = AfisEMandateSource;
+
+export type AfisEMandateCreateParams = {
+  acceptantIBAN: AfisEMandateAcceptant['iban'];
+  sender: EMandateSenderSource;
+  eMandateSignDate: string;
+  eMandatesignCity: string;
+};
+
+export type AfisEMandateFrontend = {
+  acceptant: string;
+  status: string;
+  displayStatus: string;
+
+  // Sender properties
+  senderIBAN: string | null;
+  senderName: string | null;
+
+  // Properties from existing Afis mandates
+  dateValidFrom: string | null;
+  dateValidFromFormatted: string | null;
+
+  // Urls to interact with the mandate state
+  statusChangeUrl?: string;
+  signRequestUrl?: string;
+};
+
+export type AfisEMandateAcceptant = {
   iban: string;
+  name: string;
   subId: string;
-  IMandateId: string;
-  dateValidFrom: string;
-  dateValidFromFormatted: string;
+  refId: string;
 };
 
-export type AfisEMandateAcceptant = Pick<
-  AfisEMandate,
-  'name' | 'iban' | 'subId'
->;
+export type EMandateSignRequestPayload = {
+  acceptantIBAN: AfisEMandateAcceptant['iban'];
+  businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+};
 
-type EMandateSubId = AfisEMandate['subId'];
-export type EMandateTransactionKey =
-  `${EMandateSubId}-${AfisBusinessPartnerDetailsTransformed['businessPartnerId']}`;
+export type BusinessPartnerIdPayload = {
+  businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+};
+
+export type EMandateSignRequestStatusPayload = {
+  foo: string;
+};
+
+export type EMandateStatusChangePayload = {
+  status: '1' | '0'; // TODO: Add type
+  IMandateId: AfisEMandateSource['IMandateId'];
+};
 
 export type AfisEMandateSignRequestResponse = {
   redirectUrl: string;
