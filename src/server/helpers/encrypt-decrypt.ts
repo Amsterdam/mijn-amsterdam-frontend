@@ -1,6 +1,8 @@
 import { Buffer } from 'buffer';
 import crypto from 'crypto';
 
+import { DecryptedPayloadAndSessionID } from '../services/shared/decrypt-route-param';
+
 type Base64IvEncryptedValue = string;
 type EncryptedValue = Buffer;
 type Iv = Buffer;
@@ -53,5 +55,17 @@ export function encryptSessionIdWithRouteIdParam(
   routeIdParam: string
 ) {
   const [encrptedValue] = encrypt(`${sessionID}:${routeIdParam}`);
+  return encrptedValue;
+}
+
+export function encryptPayloadAndSessionID<T extends Record<string, unknown>>(
+  sessionID: SessionID,
+  payload: T
+) {
+  const payloadToEncrypt: DecryptedPayloadAndSessionID<T> = {
+    sessionID,
+    ...payload,
+  };
+  const [encrptedValue] = encrypt(JSON.stringify(payloadToEncrypt));
   return encrptedValue;
 }
