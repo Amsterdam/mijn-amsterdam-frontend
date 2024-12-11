@@ -28,10 +28,7 @@ import { entries } from '../../../universal/helpers/utils';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { BagThemas } from '../../config/thema';
-import {
-  generateBffApiUrl,
-  generateBffApiUrlWithEncryptedPayloadQuery,
-} from '../../helpers/api';
+import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../helpers/api';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
@@ -121,9 +118,11 @@ function useAfisFacturenApi(
       state !== 'open'
     ) {
       fetchFacturen({
-        url: `${generateBffApiUrl('AFIS_FACTUREN', {
-          state,
-        })}?id=${businessPartnerIdEncrypted}`,
+        url: generateBffApiUrlWithEncryptedPayloadQuery(
+          'AFIS_FACTUREN',
+          businessPartnerIdEncrypted,
+          { state }
+        ),
       });
     }
   }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
