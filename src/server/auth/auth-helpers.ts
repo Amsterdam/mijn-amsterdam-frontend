@@ -156,8 +156,12 @@ export function createLogoutHandler(
     }
 
     if (hasSessionCookie(req)) {
-      // req[OIDC_SESSION_COOKIE_NAME] = undefined;
+      console.dir(req.session);
+      console.dir(req[OIDC_SESSION_COOKIE_NAME]);
+      console.dir(req.cookies);
+      req[OIDC_SESSION_COOKIE_NAME] = undefined;
       res.clearCookie(OIDC_SESSION_COOKIE_NAME, { path: '/' });
+      console.dir(req.cookies);
     }
 
     return res.redirect(postLogoutRedirectUrl);
