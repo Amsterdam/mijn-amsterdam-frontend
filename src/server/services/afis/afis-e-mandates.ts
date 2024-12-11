@@ -28,10 +28,7 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfile } from '../../auth/auth-types';
-import {
-  encryptPayloadAndSessionID,
-  encryptSessionIdWithRouteIdParam,
-} from '../../helpers/encrypt-decrypt';
+import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -98,12 +95,12 @@ function transformUpdateEMandatesResponse(response: unknown) {
   return response;
 }
 
-export async function updateAfisEMandate(
+async function updateAfisEMandate(
   requestID: RequestID,
   payload: AfisEMandateUpdatePayload
 ) {
   const payloadFinal: AfisEMandateUpdatePayload = {
-    ...afisEMandatePostbodyStatic,
+    // ...afisEMandatePostbodyStatic, // TODO: Check if this is needed
     ...payload,
   };
 
@@ -150,11 +147,10 @@ function addStatusChangeUrls(
       : EMANDATE_STATUS.ON;
 
     const urlQueryParams = new URLSearchParams({
-      payload: encryptSessionIdWithRouteIdParam(
-        sessionID,
-        afisEMandateSource.IMandateId.toString()
-      ),
-      status: changeToStatus,
+      payload: encryptPayloadAndSessionID(sessionID, {
+        IMandateId: afisEMandateSource.IMandateId.toString(),
+        status: changeToStatus,
+      }),
     });
 
     eMandate.statusChangeUrl = `${generateFullApiUrlBFF(
@@ -285,8 +281,12 @@ export async function fetchAfisEMandates(
   return requestData<AfisEMandateFrontend[] | null>(config, requestID);
 }
 
-function transformEMandatesRedirectUrlResponse(responseData: any) {
-  return { redirectUrl: '' };
+type POMSignRequestUrlResponseSource = { url: string };
+
+function transformEMandatesRedirectUrlResponse(
+  responseData: POMSignRequestUrlResponseSource
+) {
+  return { redirectUrl: responseData.url };
 }
 
 export async function fetchEmandateRedirectUrlFromProvider(
@@ -323,7 +323,7 @@ export async function fetchEmandateRedirectUrlFromProvider(
   const config = await getApiConfig('POM', {
     method: 'POST',
     formatUrl: ({ url }) => {
-      return `${url}`;
+      return `${url}/sign-request-url`; // TODO: implement correct url, see POM documentation
     },
     transformResponse: transformEMandatesRedirectUrlResponse,
     data: eMandateProviderPayload,
@@ -347,9 +347,9 @@ export async function fetchEmandateSignRequestStatus(
 
 export async function changeEMandateStatus(
   requestID: RequestID,
-  eMandateTransactionKey: EMandateStatusChangePayload
+  eMandateStatusChangePayload: EMandateStatusChangePayload
 ) {
-  return apiSuccessResult({ status: 'SUCCESS' });
+  return updateAfisEMandate(requestID, eMandateStatusChangePayload);
 }
 
 export const forTesting = {
