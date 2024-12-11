@@ -131,6 +131,16 @@ function isIDPSessionExpired(expiresAtInSeconds: number) {
   return expiresAtInSeconds < millisecondsToSeconds(Date.now());
 }
 
+export function destroySession(req: AuthenticatedRequest, res: Response) {
+  req[OIDC_SESSION_COOKIE_NAME] = undefined;
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
+    path: '/',
+    secure: true,
+    sameSite: 'lax',
+    httpOnly: true,
+  });
+}
+
 export function createLogoutHandler(
   postLogoutRedirectUrl: string,
   doIDPLogout: boolean = true
@@ -156,17 +166,7 @@ export function createLogoutHandler(
     }
 
     if (hasSessionCookie(req)) {
-      console.dir(req.session);
-      console.dir(req[OIDC_SESSION_COOKIE_NAME]);
-      console.dir(req.cookies);
-      req[OIDC_SESSION_COOKIE_NAME] = undefined;
-      res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
-        path: '/',
-        secure: true,
-        sameSite: 'lax',
-        httpOnly: true,
-      });
-      console.dir(req.cookies);
+      destroySession(req, res);
     }
 
     return res.redirect(postLogoutRedirectUrl);

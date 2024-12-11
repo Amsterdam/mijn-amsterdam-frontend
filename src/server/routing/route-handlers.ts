@@ -3,12 +3,13 @@ import uid from 'uid-safe';
 
 import { isProtectedRoute, sendUnauthorized } from './route-helpers';
 import { apiSuccessResult } from '../../universal/helpers/api';
-import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
 import {
+  destroySession,
   getAuth,
   hasSessionCookie,
   isRequestAuthenticated,
 } from '../auth/auth-helpers';
+import { AuthenticatedRequest } from '../auth/auth-types';
 import { clearSessionCache } from '../helpers/source-api-request';
 
 export function handleCheckProtectedRoute(
@@ -38,7 +39,7 @@ export function verifyAuthenticated(
   authMethod: AuthMethod,
   profileType: ProfileType
 ) {
-  return async (req: Request, res: Response) => {
+  return async (req: AuthenticatedRequest, res: Response) => {
     if (await isRequestAuthenticated(req, authMethod)) {
       const auth = getAuth(req);
       return res.send(
@@ -50,7 +51,7 @@ export function verifyAuthenticated(
         })
       );
     }
-    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    destroySession(req, res);
     return sendUnauthorized(res);
   };
 }
