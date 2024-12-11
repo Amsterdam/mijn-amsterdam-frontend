@@ -5,6 +5,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
+import { getFromEnv } from '../../helpers/env';
 
 export async function fetchParkeren(
   requestID: RequestID,
@@ -16,7 +17,7 @@ export async function fetchParkeren(
   ]);
   return apiSuccessResult({
     isKnown,
-    url,
+    url: url ?? getFromEnv('BFF_PARKEREN_PORTAAL_URL'),
   });
 }
 
