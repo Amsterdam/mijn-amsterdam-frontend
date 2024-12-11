@@ -17,7 +17,7 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseType.TouringcarJaarontheffing,
 ]);
 
-function getFilteredVergunningen(
+function getVergunningenFromThemaVergunningen(
   content: VergunningFrontendV2[] | Vergunning[] | null
 ) {
   return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
@@ -42,14 +42,23 @@ export function useParkerenData() {
     : VERGUNNINGEN;
   const vergunningen = vergunningenState.content;
 
-  const parkeervergunningen = getFilteredVergunningen(vergunningen);
+  const parkeerVergunningenFromThemaVergunningen =
+    getVergunningenFromThemaVergunningen(vergunningen);
+  const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
   return {
     tableConfig,
-    parkeervergunningen,
-    isLoading: isLoading(vergunningenState),
-    isError: isError(vergunningenState),
-    parkerenUrlSSO: PARKEREN.content?.url,
+    parkeerVergunningenFromThemaVergunningen,
+    hasMijnParkerenVergunningen,
+    isLoading: isLoading(vergunningenState) || isLoading(PARKEREN),
+    isError: isError(vergunningenState) || isError(PARKEREN),
+    parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
+    linkListItems: [
+      {
+        to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
+        title: 'Meer over parkeervergunningen',
+      },
+    ],
   };
 }
