@@ -50,9 +50,15 @@ export function useParkerenData() {
     tableConfig,
     parkeerVergunningenFromThemaVergunningen,
     hasMijnParkerenVergunningen,
-    isLoading: isLoading(vergunningenState),
-    isError: isError(vergunningenState),
+    isLoading: isLoading(vergunningenState) || isLoading(PARKEREN),
+    isError: isError(vergunningenState) || isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
+    linkListItems: [
+      {
+        to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
+        title: 'Meer over parkeervergunningen',
+      },
+    ],
   };
 }
