@@ -1,12 +1,11 @@
 import FormData from 'form-data';
 
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { captureMessage } from '../monitoring';
-import { getFromEnv } from '../../helpers/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 export async function fetchParkeren(
   requestID: RequestID,
@@ -14,7 +13,7 @@ export async function fetchParkeren(
 ) {
   const [isKnown, url] = await Promise.all([
     FeatureToggle.parkerenCheckForProductAndPermitsActive
-      ? hasPermitsOrProducts(requestID, authProfileAndToken)
+      ? hasPermitsOrPermitRequests(requestID, authProfileAndToken)
       : true,
     fetchSSOURL(requestID, authProfileAndToken),
   ]);
@@ -68,9 +67,9 @@ async function fetchJWEToken(
 }
 
 /**
- * This function checks whether the user has a parkeren products or permit requests
+ * This function checks whether the user has a parkeren products or permit requests (Vergunning aanvragen).
  */
-async function hasPermitsOrProducts(
+async function hasPermitsOrPermitRequests(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -148,4 +147,4 @@ type ClientProductDetailsSourceResponse = BaseSourceResponse<
   }>
 >;
 
-export const forTesting = { hasPermitsOrProducts };
+export const forTesting = { hasPermitsOrPermitRequests };

@@ -5,7 +5,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 const REQUEST_ID = '123';
 const STATUS_OK_200 = 200;
 const SUCCESS_URL = 'https://parkeren.nl/sso-login';
-const EMPTY_URL = undefined;
 
 const BASE_ROUTE = '/parkeren';
 const PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE = `${BASE_ROUTE}/v1/private/client_product_details`;
