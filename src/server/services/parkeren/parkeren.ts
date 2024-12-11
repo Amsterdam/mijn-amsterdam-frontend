@@ -123,28 +123,32 @@ type BaseSourceResponse<T> = {
 };
 
 type ActivePermitSourceResponse = BaseSourceResponse<
-  Array<{
-    link: string;
-    id: number;
-    client_id: number;
-    status: string;
-    permit_name: string;
-    permit_zone: string;
-  }>
+  ActivePermitRequestProps[]
 >;
 
+type ActivePermitRequestProps = {
+  link: string;
+  id: number;
+  client_id: number;
+  status: string;
+  permit_name: string;
+  permit_zone: string;
+};
+
 type ClientProductDetailsSourceResponse = BaseSourceResponse<
-  Array<{
-    client_product_id: number;
-    object: string;
-    client_id: number;
-    status: string;
-    started_at: string;
-    ended_at: string;
-    zone: string;
-    link: string;
-    vrns: string;
-  }>
+  ClientProductDetailsProps[]
 >;
+
+type ClientProductDetailsProps = {
+  client_product_id: number;
+  object: string;
+  client_id: number;
+  status: string;
+  started_at: string;
+  ended_at: string;
+  zone: string;
+  link: string;
+  vrns: string;
+};
 
 export const forTesting = { hasPermitsOrPermitRequests };
