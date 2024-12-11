@@ -160,7 +160,12 @@ export function createLogoutHandler(
       console.dir(req[OIDC_SESSION_COOKIE_NAME]);
       console.dir(req.cookies);
       req[OIDC_SESSION_COOKIE_NAME] = undefined;
-      res.clearCookie(OIDC_SESSION_COOKIE_NAME, { path: '/' });
+      res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
+        path: '/',
+        secure: true,
+        sameSite: 'lax',
+        httpOnly: true,
+      });
       console.dir(req.cookies);
     }
 
