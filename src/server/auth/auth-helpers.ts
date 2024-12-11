@@ -82,7 +82,7 @@ function getSessionData(req: Request) {
   return reqWithSession?.[OIDC_SESSION_COOKIE_NAME] ?? null;
 }
 
-export function getAuth(req: Request) {
+export function getAuth<T extends Request>(req: T) {
   const tokenData = (req.oidc?.user as TokenData | null) ?? null;
   const oidcToken = req.oidc?.idToken ?? '';
   const maSession = getSessionData(req);
