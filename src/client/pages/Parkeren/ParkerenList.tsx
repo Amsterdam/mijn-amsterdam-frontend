@@ -10,8 +10,12 @@ import { ListPageParamKind } from '../VergunningenV2/config';
 export function ParkerenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
 
-  const { parkeerVergunningen, isLoading, isError, tableConfig } =
-    useParkerenData();
+  const {
+    parkeerVergunningenFromThemaVergunningen,
+    isLoading,
+    isError,
+    tableConfig,
+  } = useParkerenData();
   const appRouteBack = AppRoutes.PARKEREN;
 
   const title = tableConfig[params.kind].title;
@@ -19,7 +23,7 @@ export function ParkerenList() {
 
   return (
     <ListPagePaginated
-      items={parkeerVergunningen}
+      items={parkeerVergunningenFromThemaVergunningen}
       backLinkTitle={ThemaTitles.PARKEREN}
       title={title ?? ''}
       appRoute={AppRoutes['PARKEREN/LIST']}
