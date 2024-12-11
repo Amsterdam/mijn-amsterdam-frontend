@@ -45,6 +45,7 @@ const setupMocks = (
   mockDataClientProductDetails: { data: unknown[] },
   mockDataActivePermitRequest: { data: unknown[] }
 ) => {
+  // Not the same as profile type in AuthProfileAndToken.
   const profileType = authmethod === 'digid' ? 'private' : 'eherkenning';
 
   remoteApi

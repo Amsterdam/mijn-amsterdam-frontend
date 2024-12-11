@@ -63,7 +63,7 @@ async function fetchJWEToken(
     data: formData,
   });
 
-  return await requestData<JWETokenSourceResponse>(config, requestID);
+  return requestData<JWETokenSourceResponse>(config, requestID);
 }
 
 /**
