@@ -21,7 +21,7 @@ function AfisListPageBody({ state }: { state: AfisFactuurState }) {
   }
 }
 
-export const AfisFacturen = () => {
+export function AfisFacturen() {
   const { state } = useParams<{ state: AfisFactuurState }>();
   const {
     facturenListResponse,
@@ -51,4 +51,4 @@ export const AfisFacturen = () => {
       tableClassName={styles[listPageTableConfig.className]}
     />
   );
-};
+}

@@ -76,7 +76,10 @@ export const DocumentTitles: DocumentTitlesConfig = {
     }
   },
   [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
-  [AppRoutes['BURGERZAKEN/ID-KAART']]: `ID-Kaart | ${ThemaTitles.BURGERZAKEN}`,
+  [AppRoutes['BURGERZAKEN/LIST']]:
+    `Paspoort en ID-kaart | ${ThemaTitles.BURGERZAKEN}`,
+  [AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']]: (_config, params) =>
+    `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${ThemaTitles.BURGERZAKEN}`,
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
@@ -113,7 +116,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
     `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]:
     `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes['VAREN']]: `${ThemaTitles.VAREN} | overzicht`,
+  [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
   [AppRoutes['VAREN/LIST']]: (_config, params) => {
     switch (params?.kind) {
       case 'lopende-aanvragen':
@@ -143,11 +146,14 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
   [AppRoutes.HORECA]: 'Horeca | overzicht',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
+  [AppRoutes['AVG/LIST']]: `AVG verzoeken | ${ThemaTitles.AVG}`,
+  [AppRoutes['AVG/DETAIL']]: `AVG verzoek | ${ThemaTitles.AVG}`,
   [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
-  [AppRoutes['AVG/DETAIL']]: `${ThemaTitles.AVG} | verzoek`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
-  [AppRoutes.BODEM]: 'Bodem | overzicht',
-  [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
+  [AppRoutes['BODEM/LIST']]: `Lood in de bodem-checks | ${ThemaTitles.BODEM}`,
+  [AppRoutes['BODEM/LOOD_METING']]:
+    `Lood in de bodem-check | ${ThemaTitles.BODEM}`,
+  [AppRoutes.BODEM]: `${ThemaTitles.BODEM} | overzicht`,
   [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
   [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
   [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',

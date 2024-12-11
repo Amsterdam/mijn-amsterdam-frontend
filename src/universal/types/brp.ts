@@ -1,4 +1,4 @@
-import { LinkProps } from './App.types';
+import { LinkProps, ZaakDetail } from './App.types';
 
 export interface IdentiteitsbewijsFromSource {
   id: string;
@@ -8,7 +8,11 @@ export interface IdentiteitsbewijsFromSource {
   datumAfloop: string;
 }
 
-export interface Identiteitsbewijs extends IdentiteitsbewijsFromSource {
+export interface IdentiteitsbewijsFrontend
+  extends ZaakDetail,
+    IdentiteitsbewijsFromSource {
+  datumUitgifteFormatted: string;
+  datumAfloopFormatted: string;
   title: string;
   link: LinkProps;
 }
@@ -92,5 +96,5 @@ export interface BRPDataFromSource {
 }
 
 export interface BRPData extends BRPDataFromSource {
-  identiteitsbewijzen?: Identiteitsbewijs[];
+  identiteitsbewijzen?: IdentiteitsbewijsFrontend[];
 }
