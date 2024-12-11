@@ -111,11 +111,11 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
               <p
                 class="ams-paragraph"
               >
-                <button
-                  class="ams-button ams-button--primary"
-                  type="button"
+                <a
+                  class="_MaButtonLink_aa758a ams-button ams-button--primary"
+                  href="https://parkeervergunningen.amsterdam.nl/"
                 >
-                  Log in op Mijn Parkeren
+                  Ga naar Mijn Parkeren 
                   <span
                     class="ams-icon ams-icon--size-5"
                   >
@@ -131,7 +131,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                       />
                     </svg>
                   </span>
-                </button>
+                </a>
               </p>
             </div>
           </section>

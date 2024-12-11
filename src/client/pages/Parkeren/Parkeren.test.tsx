@@ -8,7 +8,7 @@ import { AppState } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
-import Parkeren from './Parkeren';
+import { Parkeren } from './Parkeren';
 import { appStateAtom } from '../../hooks/useAppState';
 
 const testState = {
@@ -87,14 +87,16 @@ describe('Parkeren', () => {
   const routeEntry = generatePath(AppRoutes.PARKEREN);
   const routePath = AppRoutes.PARKEREN;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Parkeren}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Parkeren}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('should render the component and show the correct title', () => {
     render(<Component />);
@@ -109,7 +111,7 @@ describe('Parkeren', () => {
       screen.getByText('Meer over parkeervergunningen')
     ).toBeInTheDocument();
 
-    expect(screen.getByText('Log in op Mijn Parkeren')).toBeInTheDocument();
+    expect(screen.getByText('Ga naar Mijn Parkeren')).toBeInTheDocument();
   });
 
   it('should display the list of parkeervergunningen', async () => {
