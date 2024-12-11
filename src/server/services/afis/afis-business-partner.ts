@@ -10,6 +10,7 @@ import {
   AfisBusinessPartnerEmailSource,
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
+  BusinessPartnerIdPayload,
 } from './afis-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
@@ -184,15 +185,15 @@ async function fetchEmail(
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
   requestID: RequestID,
-  businessPartnerId: string
+  payload: BusinessPartnerIdPayload
 ): Promise<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>> {
   const fullNameRequest = fetchBusinessPartnerFullName(
     requestID,
-    businessPartnerId
+    payload.businessPartnerId
   );
   const addressRequest = fetchBusinessPartnerAddress(
     requestID,
-    businessPartnerId
+    payload.businessPartnerId
   );
 
   const [fullNameResult, addressResult] = await Promise.allSettled([
@@ -230,7 +231,7 @@ export async function fetchAfisBusinessPartnerDetails(
   }
 
   const detailsCombined: AfisBusinessPartnerDetailsTransformed = {
-    businessPartnerId: businessPartnerId,
+    businessPartnerId: payload.businessPartnerId,
     ...addressResponse.content,
     ...fullNameResponse.content,
     ...phoneResponse.content,
