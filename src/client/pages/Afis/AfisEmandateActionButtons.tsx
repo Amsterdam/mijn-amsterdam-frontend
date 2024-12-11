@@ -72,7 +72,7 @@ export function AfisEMandateActionUrls({
     );
 
   useEffect(() => {
-    if (redirectUrlApi.data?.status === 'OK') {
+    if (statusChangeApi.data?.status === 'OK') {
       alert('Update eMandate');
     }
   }, [statusChangeApi.data]);
