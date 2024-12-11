@@ -6,13 +6,16 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
 import { getFromEnv } from '../../helpers/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 export async function fetchParkeren(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const [isKnown, url] = await Promise.all([
-    hasPermitsOrProducts(requestID, authProfileAndToken),
+    FeatureToggle.parkerenCheckForProductAndPermitsActive
+      ? hasPermitsOrProducts(requestID, authProfileAndToken)
+      : true,
     fetchSSOURL(requestID, authProfileAndToken),
   ]);
   return apiSuccessResult({
