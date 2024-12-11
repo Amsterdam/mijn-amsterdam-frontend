@@ -55,7 +55,7 @@ export function sanitizeCmsContent(
     allowedAttributes: ATTR_ALLOWED,
 
     // Filter out empty tags
-    exclusiveFilter: function (frame: any) {
+    exclusiveFilter: function (frame: { text: string }) {
       return !frame.text.trim();
     },
   }
@@ -101,8 +101,22 @@ function linkArray(input: FooterLink[] | FooterLink) {
   return Array.isArray(input) ? input : input ? [input] : [];
 }
 
-function transformFooterResponse(responseData: any) {
-  const items = responseData?.applicatie?.blok?.zijbalk[0]?.lijst;
+function transformFooterResponse(responseData: {
+  applicatie?: {
+    blok?: {
+      zijbalk?: {
+        lijst?: {
+          omschrijving: { tekst: string; titel: string };
+          verwijzing?: Array<{
+            intern: FooterLink | FooterLink[];
+            extern: FooterLink | FooterLink[];
+          }>;
+        }[];
+      }[];
+    };
+  };
+}) {
+  const items = responseData?.applicatie?.blok?.zijbalk?.[0]?.lijst;
 
   if (!Array.isArray(items)) {
     return [];
@@ -383,7 +397,7 @@ const config: SearchConfigRemote = {
 
 export async function fetchSearchConfig(
   requestID: RequestID,
-  query?: Record<string, string>
+  query?: { cache?: 'renew' }
 ) {
   const config =
     searchFileCache.getKey<ApiSuccessResponse<SearchConfigRemote>>('CONFIG');
