@@ -14,7 +14,7 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 export default function Parkeren() {
   const {
     tableConfig,
-    parkeerVergunningen,
+    parkeerVergunningenFromThemaVergunningen,
     hasMijnParkerenVergunningen,
     isLoading,
     isError,
@@ -28,7 +28,9 @@ export default function Parkeren() {
         <ThemaPaginaTable<VergunningFrontendV2 | Vergunning>
           key={kind}
           title={title}
-          zaken={parkeerVergunningen.filter(filter).sort(sort)}
+          zaken={parkeerVergunningenFromThemaVergunningen
+            .filter(filter)
+            .sort(sort)}
           listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
             kind,
           })}
@@ -39,7 +41,7 @@ export default function Parkeren() {
   );
 
   const pageContentTop = determinePageContentTop(
-    !!parkeerVergunningen.length,
+    !!parkeerVergunningenFromThemaVergunningen.length,
     hasMijnParkerenVergunningen,
     isLoadingParkerenUrl,
     parkerenUrlSSO
@@ -64,12 +66,15 @@ export default function Parkeren() {
 }
 
 function determinePageContentTop(
-  hasOtherParkeerVergunningen: boolean,
+  hasParkeerVegunningenFromThemaVergunningen: boolean,
   hasMijnParkerenVergunningen: boolean,
   isLoadingParkerenUrl: boolean,
   parkerenUrlSSO: string
 ) {
-  if (hasOtherParkeerVergunningen && hasMijnParkerenVergunningen) {
+  if (
+    hasParkeerVegunningenFromThemaVergunningen &&
+    hasMijnParkerenVergunningen
+  ) {
     return (
       <>
         <Alert severity="info" heading="Parkeervergunning voor bewoners">
