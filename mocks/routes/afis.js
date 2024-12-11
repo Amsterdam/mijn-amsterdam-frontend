@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const httpConstants = require('http2').constants;
 
+const eMandates = require('../fixtures/afis/e-mandates.json');
 const settings = require('../settings');
-
-const BASE = '/afis';
-const REST_BASE = `${BASE}/RESTAdapter`;
 
 module.exports = [
   {
     id: 'post-afis-auth-token',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/OAuthServer`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/OAuthServer`,
     method: 'POST',
     variants: [
       {
@@ -28,7 +26,7 @@ module.exports = [
   },
   {
     id: 'post-afis-businesspartner-bsn',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/businesspartner/BSN`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/businesspartner/BSN`,
     method: 'POST',
     variants: [
       {
@@ -49,7 +47,7 @@ module.exports = [
   },
   {
     id: 'post-afis-businesspartner-kvk',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/businesspartner/KVK`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/businesspartner/KVK`,
     method: 'POST',
     variants: [
       {
@@ -71,7 +69,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-details',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`,
     method: 'GET',
     variants: [
       {
@@ -100,7 +98,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-address',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`,
     method: 'GET',
     variants: [
       {
@@ -137,7 +135,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-phonenumber',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`,
     method: 'GET',
     variants: [
       {
@@ -165,7 +163,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-emailaddress',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`,
     method: 'GET',
     variants: [
       {
@@ -193,7 +191,7 @@ module.exports = [
   },
   {
     id: 'get-afis-facturen',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
     method: 'GET',
     variants: [
       {
@@ -243,7 +241,7 @@ module.exports = [
   },
   {
     id: 'get-afis-factuur-id',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
     method: 'POST',
     variants: [
       {
@@ -258,7 +256,7 @@ module.exports = [
   },
   {
     id: 'get-afis-factuur-document',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
     method: 'GET',
     variants: [
       {
@@ -290,15 +288,61 @@ module.exports = [
   },
   {
     id: 'get-afis-emandates',
-    url: `${settings.MOCK_BASE_PATH}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
     method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (_req, res) => {
+            return res.send(eMandates);
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'post-afis-emandates',
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (_req, res) => {
+            const body = req.body;
+            const mandate = eMandates.find(
+              (eMandate) => eMandate.IMandateId === body.IMandateId
+            );
+            const lastID =
+              eMandates.feed.entry[eMandates.feed.entry.length - 1].IMandateId;
+            const newMandete = {
+              ...mandate,
+              ...body,
+              id: lastID + 1,
+            };
+
+            eMandates.feed.entry.push(newMandete);
+
+            return res.send(newMandete);
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'put-afis-emandates',
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId=':mandateId')`,
+    method: 'PUT',
     variants: [
       {
         id: 'standard',
         type: 'json',
         options: {
           status: 200,
-          body: require('../fixtures/afis/e-mandates.json'),
+          body: {},
         },
       },
     ],
