@@ -187,17 +187,18 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Themas.PARKEREN: {
-      const hasDecosParkeerVergunningen =
+      const hasParkeerVergunningenFromThemaVergunningen =
         !isLoading(VERGUNNINGEN) &&
         (appState.VERGUNNINGEN?.content ?? []).some((vergunning) =>
           PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
         );
-      const hasEgisParkeerVergunningen =
+      const hasParkeerVergunningenFromThemaParkeren =
         !isLoading(PARKEREN) && !!PARKEREN?.content?.isKnown;
 
       return (
         FeatureToggle.parkerenActive &&
-        (hasEgisParkeerVergunningen || hasDecosParkeerVergunningen)
+        (hasParkeerVergunningenFromThemaParkeren ||
+          hasParkeerVergunningenFromThemaVergunningen)
       );
     }
 
