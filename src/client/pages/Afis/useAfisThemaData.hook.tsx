@@ -257,7 +257,6 @@ export function useAfisBetaalVoorkeurenData(
       businesspartnerDetailsApiResponse,
       false
     ),
-    hasEMandatesError: isError(eMandatesApiResponse, false),
     hasFailedEmailDependency: hasFailedDependency(
       businesspartnerDetailsApiResponse,
       'email'
@@ -272,6 +271,7 @@ export function useAfisBetaalVoorkeurenData(
     ),
     eMandateTableConfig,
     eMandates,
-    isLoadingEMandates: false,
+    hasEMandatesError: isError(eMandatesApiResponse, false),
+    isLoadingEMandates: isLoading(eMandatesApiResponse),
   };
 }
