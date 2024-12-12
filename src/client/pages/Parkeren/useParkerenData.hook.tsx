@@ -5,6 +5,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseType, DecosCaseType } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useVergunningenTransformed } from '../Vergunningen/useVergunningenTransformed.hook';
 import { tableConfig } from '../VergunningenV2/config';
 
 export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
@@ -40,7 +41,10 @@ export function useParkerenData() {
   const vergunningenState = FeatureToggle.vergunningenV2Active
     ? VERGUNNINGENv2
     : VERGUNNINGEN;
-  const vergunningen = vergunningenState.content;
+  const vergunningen =
+    (vergunningenState === VERGUNNINGEN
+      ? useVergunningenTransformed(VERGUNNINGEN)
+      : VERGUNNINGENv2.content) ?? [];
 
   const parkeerVergunningenFromThemaVergunningen =
     getVergunningenFromThemaVergunningen(vergunningen);
