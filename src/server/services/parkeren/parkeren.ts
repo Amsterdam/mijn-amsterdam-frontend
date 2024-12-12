@@ -2,21 +2,33 @@ import FormData from 'form-data';
 
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { fetchBRP } from '../brp';
 
 export async function fetchParkeren(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const [isKnown, url] = await Promise.all([
-    FeatureToggle.parkerenCheckForProductAndPermitsActive
-      ? hasPermitsOrPermitRequests(requestID, authProfileAndToken)
-      : true,
-    fetchSSOURL(requestID, authProfileAndToken),
-  ]);
+  const brpData = await fetchBRP(requestID, authProfileAndToken);
+  const livesInAmsterdam = isMokum(brpData?.content);
+  const isCommercial = authProfileAndToken.profile.profileType === 'commercial';
+
+  let isKnown = false;
+  if (!FeatureToggle.parkerenCheckForProductAndPermitsActive) {
+    isKnown = true;
+  } else if (isCommercial) {
+    isKnown = true;
+  } else if (livesInAmsterdam) {
+    isKnown = true;
+  } else {
+    isKnown = await hasPermitsOrPermitRequests(requestID, authProfileAndToken);
+  }
+
+  const url = await fetchSSOURL(requestID, authProfileAndToken);
   return apiSuccessResult({
     isKnown,
     url: url ?? getFromEnv('BFF_PARKEREN_PORTAAL_URL'),
