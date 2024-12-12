@@ -17,6 +17,7 @@ import {
   changeEMandateStatus,
   fetchAfisEMandates,
   fetchEmandateRedirectUrlFromProvider,
+  fetchEmandateSignRequestStatus,
 } from '../services/afis/afis-e-mandates';
 import {
   AfisFacturenRouteParams,
@@ -26,6 +27,7 @@ import {
 import {
   BusinessPartnerIdPayload,
   EMandateSignRequestPayload,
+  EMandateSignRequestStatusPayload,
   EMandateStatusChangePayload,
 } from '../services/afis/afis-types';
 import {
@@ -315,6 +317,19 @@ attachDocumentDownloadRoute(
       QueryPayload,
       ServiceReturnType
     >(fetchEmandateRedirectUrlFromProvider)
+  );
+}
+
+{
+  type QueryPayload = EMandateSignRequestStatusPayload;
+  type ServiceReturnType = ReturnType<typeof fetchEmandateSignRequestStatus>;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_STATUS,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(fetchEmandateSignRequestStatus)
   );
 }
 
