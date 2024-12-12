@@ -7,7 +7,8 @@ import {
   facturenTableConfig,
   listPageTitle,
   routes,
-  linkListItems,
+  linkListItemsThemaPagina,
+  linkListItemsBetaalvoorkeurenPagina,
 } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import {
@@ -176,6 +177,7 @@ export function useAfisThemaData() {
   const facturenByState = useTransformFacturen(AFIS.content?.facturen ?? null);
 
   return {
+    linkListItems: linkListItemsThemaPagina,
     businessPartnerIdEncrypted,
     facturenByState,
     facturenTableConfig,
@@ -245,7 +247,7 @@ export function useAfisBetaalVoorkeurenData(
   });
 
   return {
-    linkListItems,
+    linkListItems: linkListItemsBetaalvoorkeurenPagina,
     businesspartnerDetails: businesspartnerDetailsApiResponse.content,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: isLoading(

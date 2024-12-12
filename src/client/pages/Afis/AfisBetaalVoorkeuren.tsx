@@ -87,6 +87,7 @@ export function AfisBetaalVoorkeuren() {
     hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
     isLoadingEMandates,
+    linkListItems,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
   const isLoadingAllAPis =
@@ -217,12 +218,7 @@ export function AfisBetaalVoorkeuren() {
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
       backLink={{ to: AppRoutes.AFIS, title: ThemaTitles.AFIS }}
-      linkListItems={[
-        {
-          to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
-          title: 'Meer over betalen aan de gemeente',
-        },
-      ]}
+      linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}
     />
