@@ -1,3 +1,20 @@
+# Usage
+
+## Variant switching
+
+[Official Documentation](https://www.mocks-server.org/docs/usage/variants/)
+
+It can be handy to switch datasets for testing.
+For example, when you need to see what happens when an api would give no data, but another one does.
+
+To use different data sets.
+You can select a variant or collection with the arrow keys in the mock server menu or
+permanently in the `mocks.config.js` file.
+
+When adding a new variant try to group them under a name already present.
+So we don't end up with variants called `void`, `no-data` and `nothing` for the same thing.
+You can check what is already there in `collections.json` or in the menu.
+
 # Adding a router
 
 1. Add your endpoint in `/routes`. See example 1 below:
