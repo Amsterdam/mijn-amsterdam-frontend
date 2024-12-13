@@ -83,3 +83,5 @@ function determinePageContentTop(
     <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
   );
 }
+
+export const forTesting = { determinePageContentTop };

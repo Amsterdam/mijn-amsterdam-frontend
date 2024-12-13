@@ -9,7 +9,58 @@ import { CaseType } from '../../../universal/types/vergunningen';
 import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
 import { Parkeren } from './Parkeren';
+import { forTesting } from './Parkeren';
 import { appStateAtom } from '../../hooks/useAppState';
+
+describe('Parkeren', () => {
+  beforeAll(() => {
+    (window.scrollTo as any) = vi.fn();
+  });
+
+  it('should render the component and show the correct title', () => {
+    render(<Component />);
+
+    expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
+  });
+
+  it('should contain the correct links', () => {
+    render(<Component />);
+
+    expect(
+      screen.getByText('Meer over parkeervergunningen')
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Ga naar Mijn Parkeren')).toBeInTheDocument();
+  });
+
+  it('should display the list of parkeervergunningen', async () => {
+    const screen = render(<Component />);
+    expect(screen.asFragment()).toMatchSnapshot();
+
+    await waitFor(() => {
+      expect(screen.getByText('Vergunning 1')).toBeInTheDocument();
+      expect(screen.getByText('Vergunning 2')).toBeInTheDocument();
+    });
+  });
+});
+
+const routeEntry = generatePath(AppRoutes.PARKEREN);
+const routePath = AppRoutes.PARKEREN;
+
+function Component() {
+  return (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={Parkeren}
+      initializeState={initializeState}
+    />
+  );
+}
+
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
 
 const testState = {
   PARKEREN: {
@@ -74,53 +125,3 @@ const testState = {
     ],
   },
 } as unknown as AppState;
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
-describe('Parkeren', () => {
-  beforeAll(() => {
-    (window.scrollTo as any) = vi.fn();
-  });
-
-  const routeEntry = generatePath(AppRoutes.PARKEREN);
-  const routePath = AppRoutes.PARKEREN;
-
-  function Component() {
-    return (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Parkeren}
-        initializeState={initializeState}
-      />
-    );
-  }
-
-  it('should render the component and show the correct title', () => {
-    render(<Component />);
-
-    expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
-  });
-
-  it('should contain the correct links', () => {
-    render(<Component />);
-
-    expect(
-      screen.getByText('Meer over parkeervergunningen')
-    ).toBeInTheDocument();
-
-    expect(screen.getByText('Ga naar Mijn Parkeren')).toBeInTheDocument();
-  });
-
-  it('should display the list of parkeervergunningen', async () => {
-    const screen = render(<Component />);
-    expect(screen.asFragment()).toMatchSnapshot();
-
-    await waitFor(() => {
-      expect(screen.getByText('Vergunning 1')).toBeInTheDocument();
-      expect(screen.getByText('Vergunning 2')).toBeInTheDocument();
-    });
-  });
-});
