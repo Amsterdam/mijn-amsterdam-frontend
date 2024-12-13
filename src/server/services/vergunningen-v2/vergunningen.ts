@@ -10,8 +10,11 @@ import {
   VergunningFrontendV2,
   VergunningV2,
 } from './config-and-types';
-import { fetchDecosVergunning, fetchDecosVergunningen } from './decos-service';
-import { isExpired, toDateFormatted } from './helpers';
+import {
+  fetchDecosVergunning,
+  fetchDecosVergunningen,
+} from '../decos/decos-service';
+import { isExpired, toDateFormatted } from '../decos/helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';

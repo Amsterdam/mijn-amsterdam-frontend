@@ -4,7 +4,7 @@ import {
   DecosDocumentSource,
   DecosZaakSource,
   DecosZakenResponse,
-} from './config-and-types';
+} from '../vergunningen-v2/config-and-types';
 import {
   fetchDecosDocumentList,
   fetchDecosVergunningen,

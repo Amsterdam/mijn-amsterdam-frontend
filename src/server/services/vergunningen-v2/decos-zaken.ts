@@ -41,7 +41,7 @@ import {
   getCustomTitleForVergunningWithLicensePlates,
   transformBoolean,
   transformKenteken,
-} from './helpers';
+} from '../decos/helpers';
 import {
   caseNotificationLabelsDefault,
   caseNotificationLabelsExpirables,

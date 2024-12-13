@@ -4,7 +4,7 @@ import { DecosZaakSource } from './config-and-types';
 import {
   fetchDecosZaakFromSource,
   fetchDecosZakenFromSource,
-} from './decos-service';
+} from '../decos/decos-service';
 import { fetchVergunningV2 } from './vergunningen';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';

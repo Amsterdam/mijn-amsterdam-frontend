@@ -13,12 +13,12 @@ import {
   VergunningDocument,
   VergunningV2,
   adresBoekenByProfileType,
-} from './config-and-types';
+} from '../vergunningen-v2/config-and-types';
 import {
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
   decosZaakTransformers,
-} from './decos-zaken';
+} from '../vergunningen-v2/decos-zaken';
 import {
   getDecosZaakTypeFromSource,
   getUserKeysSearchQuery,

@@ -8,8 +8,8 @@ import {
   DecosZaakTypeTransformer,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   VergunningV2,
-} from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+} from '../vergunningen-v2/config-and-types';
+import { decosZaakTransformers } from '../vergunningen-v2/decos-zaken';
 import {
   defaultDateFormat,
   isDateInPast,

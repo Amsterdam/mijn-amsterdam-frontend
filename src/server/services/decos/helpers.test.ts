@@ -1,8 +1,8 @@
 import {
   DecosZaakSource,
   TouringcarDagontheffing,
-} from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+} from '../vergunningen-v2/config-and-types';
+import { decosZaakTransformers } from '../vergunningen-v2/decos-zaken';
 import {
   getCustomTitleForVergunningWithLicensePlates,
   getDecosZaakTypeFromSource,

@@ -10,7 +10,7 @@ import {
   VergunningFrontendV2,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
-import { isNearEndDate } from './helpers';
+import { isNearEndDate } from '../decos/helpers';
 import {
   FILTER_VERGUNNINGEN_DEFAULT,
   fetchVergunningenV2,
