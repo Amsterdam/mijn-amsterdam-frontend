@@ -15,6 +15,7 @@ export function Parkeren() {
   const {
     tableConfig,
     parkeerVergunningenFromThemaVergunningen,
+    hasMijnParkerenVergunningen,
     isLoading,
     isError,
     parkerenUrlSSO,
@@ -40,7 +41,7 @@ export function Parkeren() {
   );
 
   const pageContentTop = determinePageContentTop(
-    !!parkeerVergunningenFromThemaVergunningen.length,
+    hasMijnParkerenVergunningen,
     parkerenUrlSSO
   );
 

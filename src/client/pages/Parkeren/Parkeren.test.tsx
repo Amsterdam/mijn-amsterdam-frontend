@@ -12,7 +12,27 @@ import { Parkeren } from './Parkeren';
 import { forTesting } from './Parkeren';
 import { appStateAtom } from '../../hooks/useAppState';
 
+const linkButtonTxt = 'Ga naar Mijn Parkeren';
+const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';
+
 describe('Parkeren', () => {
+  const routeEntry = generatePath(AppRoutes.PARKEREN);
+  const routePath = AppRoutes.PARKEREN;
+
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Parkeren}
+        initializeState={initializeState}
+      />
+    );
+  }
+
+  function initializeState(snapshot: MutableSnapshot) {
+    snapshot.set(appStateAtom, testState);
+  }
   beforeAll(() => {
     window.scrollTo = vi.fn();
   });
@@ -30,7 +50,7 @@ describe('Parkeren', () => {
       screen.getByText('Meer over parkeervergunningen')
     ).toBeInTheDocument();
 
-    expect(screen.getByText('Ga naar Mijn Parkeren')).toBeInTheDocument();
+    expect(screen.getByText(linkButtonTxt)).toBeInTheDocument();
   });
 
   it('should display the list of parkeervergunningen', async () => {
@@ -44,28 +64,40 @@ describe('Parkeren', () => {
   });
 });
 
-const routeEntry = generatePath(AppRoutes.PARKEREN);
-const routePath = AppRoutes.PARKEREN;
+describe('determinePageContentTop', () => {
+  function determinePageContentTop(
+    hasMijnParkerenVergunningen: boolean,
+    parkerenUrlSSO: string
+  ) {
+    function Component() {
+      return forTesting.determinePageContentTop(
+        hasMijnParkerenVergunningen,
+        parkerenUrlSSO
+      );
+    }
+    return Component;
+  }
 
-function Component() {
-  return (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Parkeren}
-      initializeState={initializeState}
-    />
-  );
-}
+  test('Renders button with parkeer vergunningen', () => {
+    const PageContentTop = determinePageContentTop(true, EXTERNAL_PARKEREN_URL);
+    const screen = render(<PageContentTop />);
+    expect(screen.queryByText(linkButtonTxt)).toBeInTheDocument();
+  });
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
+  test('Does not render link when only vergunningen from another source then parkeren are present', () => {
+    const PageContentTop = determinePageContentTop(
+      false,
+      EXTERNAL_PARKEREN_URL
+    );
+    const screen = render(<PageContentTop />);
+    expect(screen.queryByText(linkButtonTxt)).not.toBeInTheDocument();
+  });
+});
 
 const testState = {
   PARKEREN: {
     content: {
-      url: 'https://parkeervergunningen.amsterdam.nl/',
+      url: EXTERNAL_PARKEREN_URL,
       isKnown: true,
     },
   },
