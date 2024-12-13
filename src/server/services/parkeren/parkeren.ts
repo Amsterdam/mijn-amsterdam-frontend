@@ -14,17 +14,17 @@ export async function fetchParkeren(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const brpData = await fetchBRP(requestID, authProfileAndToken);
-  const livesInAmsterdam = isMokum(brpData?.content);
-  const isCommercial = authProfileAndToken.profile.profileType === 'commercial';
+  const livesOutsideAmsterdam = !isMokum(brpData?.content);
+  const isDigidUser = authProfileAndToken.profile.profileType === 'private';
 
-  let isKnown = false;
-  if (!FeatureToggle.parkerenCheckForProductAndPermitsActive) {
-    isKnown = true;
-  } else if (isCommercial) {
-    isKnown = true;
-  } else if (livesInAmsterdam) {
-    isKnown = true;
-  } else {
+  const shouldCheckForPermitsOrPermitRequests =
+    isDigidUser &&
+    livesOutsideAmsterdam &&
+    FeatureToggle.parkerenCheckForProductAndPermitsActive;
+
+  let isKnown = true;
+
+  if (shouldCheckForPermitsOrPermitRequests) {
     isKnown = await hasPermitsOrPermitRequests(requestID, authProfileAndToken);
   }
 
@@ -80,6 +80,9 @@ async function fetchJWEToken(
 
 /**
  * This function checks whether the user has a parkeren products or permit requests (Vergunning aanvragen).
+ *
+ * We always return true when something goes wrong as to not deny the user a -
+ * potentially useful tile in the frontend.
  */
 async function hasPermitsOrPermitRequests(
   requestID: RequestID,
