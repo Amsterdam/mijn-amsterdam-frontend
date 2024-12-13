@@ -14,7 +14,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 
 describe('Parkeren', () => {
   beforeAll(() => {
-    (window.scrollTo as any) = vi.fn();
+    window.scrollTo = vi.fn();
   });
 
   it('should render the component and show the correct title', () => {
