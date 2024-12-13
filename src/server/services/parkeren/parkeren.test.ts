@@ -15,24 +15,25 @@ const setupMocks = (
   authmethod: AuthProfileAndToken['profile']['authMethod'],
   mockDataClientProductDetails: { data: unknown[] },
   mockDataActivePermitRequest: { data: unknown[] },
-  brpData: unknown = BRP_FIXTURES.mokumTrue
+  brpData: unknown = BRP_DATA.mokumTrue
 ) => {
-  if (!brpData) {
-    throw new Error('No BRP data. Add valid BRP data as an argument.');
-  }
-
   // Not the same as profile type in AuthProfileAndToken.
   const profileType = authmethod === 'digid' ? 'private' : 'eherkenning';
-  remoteApi.get('/brp/brp').reply(STATUS_OK_200, brpData);
+
+  remoteApi.get('/brp/brp').reply(STATUS_OK_200, brpData!); // brpData is a default argument.
+
   remoteApi
     .get(`${BASE_ROUTE}/sso/get_authentication_url?service=${authmethod}`)
     .reply(200, { url: SUCCESS_URL });
+
   remoteApi.post(JWE_CREATE_ROUTE).reply(STATUS_OK_200, {
     token: 'xxxtokenxxx',
   });
+
   remoteApi
     .post(`${BASE_ROUTE}/v1/${profileType}/client_product_details`)
     .reply(STATUS_OK_200, mockDataClientProductDetails);
+
   remoteApi
     .post(`${BASE_ROUTE}/v1/${profileType}/active_permit_request`)
     .reply(STATUS_OK_200, mockDataActivePermitRequest);
@@ -131,21 +132,16 @@ describe('fetchParkeren', () => {
       expect(response.content.isKnown).toBe(true);
     });
 
-    test('From eherkenning user', async () => {
-      setupMocks(
-        'eherkenning',
-        { data: [] },
-        { data: [] },
-        BRP_FIXTURES.mokumFalse
-      );
+    test('Liven in Amsterdam with digid login', async () => {
+      setupMocks('digid', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
       const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
 
-    test('No data from Parkeren and mokum is true', async () => {
-      setupMocks('digid', { data: [] }, { data: [] }, BRP_FIXTURES.mokumTrue);
+    test('From eherkenning user', async () => {
+      setupMocks('eherkenning', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
       const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
@@ -153,14 +149,19 @@ describe('fetchParkeren', () => {
     });
   });
 
-  test('IsKnown is false when no data from Parkeren and mokum is false', async () => {
-    setupMocks('digid', { data: [] }, { data: [] }, BRP_FIXTURES.mokumFalse);
+  test('Is Known is false when person does not live in Amsterdam and is logged in with Digid', async () => {
+    setupMocks('digid', { data: [] }, { data: [] }, BRP_DATA.mokumFalse);
     const authProfileAndToken = getAuthProfileAndToken('private');
 
     const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
     expect(response.content.isKnown).toBe(false);
   });
 });
+
+const BRP_DATA = {
+  mokumTrue: { status: 'OK', content: { persoon: { mokum: true } } },
+  mokumFalse: { status: 'OK', content: { persoon: { mokum: false } } },
+};
 
 const MOCK_PARKING_PERMIT_REQUEST = {
   data: [
@@ -189,23 +190,4 @@ const MOCK_CLIENT_PRODUCT_DETAILS = {
       vrns: '999123',
     },
   ],
-};
-
-const BRP_FIXTURES = {
-  mokumTrue: {
-    content: {
-      persoon: {
-        mokum: true,
-      },
-    },
-    status: 'OK',
-  },
-  mokumFalse: {
-    content: {
-      persoon: {
-        mokum: false,
-      },
-    },
-    status: 'OK',
-  },
 };
