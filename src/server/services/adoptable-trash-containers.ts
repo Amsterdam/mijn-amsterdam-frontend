@@ -107,7 +107,7 @@ export async function fetchAdoptableTrashContainers(
   );
 
   return apiSuccessResult({
-    tips: [buildNotification(age, bbox)],
+    tips: filteredFeatures.length ? [buildNotification(age, bbox)] : [],
   });
 }
 
