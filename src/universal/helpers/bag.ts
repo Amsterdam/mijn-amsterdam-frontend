@@ -1,7 +1,6 @@
 import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
 import { BAGSearchResult, BAGSourceData } from '../types/bag';
-import { Adres } from '../types/brp';
 
 // Quick and dirty see also: https://stackoverflow.com/a/68401047
 export function extractAddress(rawAddress: string) {
@@ -71,23 +70,6 @@ export function getLatLonByAddress(
     }
   }
   return null;
-}
-
-export function getBagSearchAddress(adres: Adres): BAGSearchAddress | null {
-  let bagZoekAdres =
-    adres.straatnaam && adres.huisnummer
-      ? `${adres.straatnaam} ${adres.huisnummer}`.trim()
-      : null;
-
-  if (bagZoekAdres && adres.huisletter) {
-    bagZoekAdres += `${adres.huisletter}`; // Bijvoorbeeld Herengracht 50C
-  }
-
-  if (bagZoekAdres && adres.huisnummertoevoeging) {
-    bagZoekAdres += `-${adres.huisnummertoevoeging}`; // Bijvoorbeeld Da Costakade 50-1
-  }
-
-  return bagZoekAdres;
 }
 
 export function isLocatedInWeesp(address: string) {
