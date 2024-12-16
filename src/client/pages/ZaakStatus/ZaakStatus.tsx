@@ -36,12 +36,28 @@ const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: {
     baseRoute: AppRoutes.VERGUNNINGEN,
     getRoute: (detailPageItemId, appState) => {
-      if (isError(appState.VERGUNNINGEN)) {
+      if (
+        isError(appState.VERGUNNINGEN) ||
+        isError(appState.TOERISTISCHE_VERHUUR)
+      ) {
         return STATE_ERROR;
       }
-      if (!isLoading(appState.VERGUNNINGEN)) {
+      if (
+        !isLoading(appState.VERGUNNINGEN) &&
+        !isLoading(appState.TOERISTISCHE_VERHUUR)
+      ) {
+        // Combine the toeristische verhuur vergunningen with the other vergunningen
+        const toeristischeVerhuurVergunningen = [
+          ...Object.values(appState.TOERISTISCHE_VERHUUR.content || {}).flat(),
+        ];
+
+        const combined = [
+          ...toeristischeVerhuurVergunningen,
+          ...(appState.VERGUNNINGEN.content || []),
+        ];
+
         return (
-          appState.VERGUNNINGEN.content?.find(
+          combined?.find(
             (vergunning) => vergunning.identifier === detailPageItemId
           )?.link.to ?? ITEM_NOT_FOUND
         );

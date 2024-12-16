@@ -171,7 +171,7 @@ export async function fetchVakantieverhuurVergunningen(
               id: ':id',
             });
           default:
-            return AppRoutes['TOERISTISCHE_VERHUUR'];
+            return AppRoutes.TOERISTISCHE_VERHUUR;
         }
       },
       filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>
