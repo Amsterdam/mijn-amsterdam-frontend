@@ -47,7 +47,7 @@ export function useParkerenData() {
       : VERGUNNINGENv2.content) ?? [];
 
   const parkeerVergunningenFromThemaVergunningen =
-    getParkeervergunningen(vergunningen);
+    getVergunningenFromThemaVergunningen(vergunningen);
   const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
   return {
