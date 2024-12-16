@@ -13,7 +13,9 @@ export function BurgerZakenList() {
 
   return (
     <ListPagePaginated
-      items={documents}
+      items={documents
+        .filter(tableConfig[params.kind].filter)
+        .sort(tableConfig[params.kind].sort)}
       backLinkTitle={ThemaTitles.BURGERZAKEN}
       title={tableConfig[params.kind].title}
       appRoute={AppRoutes['BURGERZAKEN/LIST']}

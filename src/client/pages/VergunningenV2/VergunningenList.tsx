@@ -28,11 +28,13 @@ export function VergunningenList() {
   const vergunningen =
     addLinkElementToProperty<VergunningFrontendV2>(vergunningenFiltered);
 
-  const appRouteBack = AppRoutes['VERGUNNINGEN'];
+  const appRouteBack = AppRoutes.VERGUNNINGEN;
 
   return (
     <ListPagePaginated
-      items={vergunningen}
+      items={vergunningen
+        .filter(tableConfig[params.kind].filter)
+        .sort(tableConfig[params.kind].sort)}
       backLinkTitle={ThemaTitles.VERGUNNINGEN}
       title={title}
       appRoute={AppRoutes['VERGUNNINGEN/LIST']}
