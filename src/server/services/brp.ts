@@ -34,17 +34,17 @@ const ID_BEWIJS_PEAK_DATE_END = new Date('2024-10-01');
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
   'europese identiteitskaart': 'ID-kaart',
-  'nederlandse identiteitskaart': 'ID-kaart',
-  //rijbewijs: 'rijbewijs',
+};
+
+const routeByDocumentType: Record<string, string> = {
+  paspoort: AppRoutes['BURGERZAKEN/PASPOORT'],
+  'europese identiteitskaart': AppRoutes['BURGERZAKEN/ID-KAART'],
 };
 
 const BrpDocumentCallToAction: Record<string, string> = {
   paspoort: 'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
   'europese identiteitskaart':
     'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
-  'nederlandse identiteitskaart':
-    'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
-  //rijbewijs: 'https://www.amsterdam.nl/burgerzaken/rijbewijs/',
 };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {

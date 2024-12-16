@@ -3,7 +3,7 @@ import { LinkProps, ZaakDetail } from './App.types';
 export interface IdentiteitsbewijsFromSource {
   id: string;
   documentNummer: string;
-  documentType: 'europese identiteitskaart' | 'paspoort' | string;
+  documentType: 'europese identiteitskaart' | 'paspoort';
   datumUitgifte: string;
   datumAfloop: string;
 }

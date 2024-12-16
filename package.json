@@ -43,7 +43,6 @@
     "@amsterdam/design-system-tokens": "^0.13.0",
     "@amsterdam/piwik-tracker": "^2.0.3",
     "@amsterdam/react-maps": "^1.1.1",
-    "@esbuild/win32-x64": "^0.24.0",
     "@microsoft/applicationinsights-react-js": "^17.3.4",
     "@microsoft/applicationinsights-web": "^3.3.4",
     "@react-spring/web": "^9.7.5",
