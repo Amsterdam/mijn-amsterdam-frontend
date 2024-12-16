@@ -36,11 +36,6 @@ const BrpDocumentTitles: Record<string, string> = {
   'europese identiteitskaart': 'ID-kaart',
 };
 
-const routeByDocumentType: Record<string, string> = {
-  paspoort: AppRoutes['BURGERZAKEN/PASPOORT'],
-  'europese identiteitskaart': AppRoutes['BURGERZAKEN/ID-KAART'],
-};
-
 const BrpDocumentCallToAction: Record<string, string> = {
   paspoort: 'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
   'europese identiteitskaart':
