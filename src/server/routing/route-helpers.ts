@@ -7,18 +7,18 @@ import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
 
 export type RequestWithQueryParams<T extends Record<string, string>> = Request<
-  {},
-  {},
-  {},
+  object,
+  object,
+  object,
   T
 >;
 
 export type RequestWithRouteAndQueryParams<
   T extends Record<string, string> = Record<string, string>,
   T2 extends Record<string, string> = Record<string, string>,
-> = Request<T, {}, {}, T2>;
+> = Request<T, object, object, T2>;
 
-export function queryParams<T extends Record<string, any>>(req: Request) {
+export function queryParams<T extends Record<string, unknown>>(req: Request) {
   return req.query as T;
 }
 
@@ -50,7 +50,7 @@ export function generateFullApiUrlBFF(
   return `${baseUrl}${generatePath(path, params)}`;
 } /** Sets the right statuscode and sends a response. */
 
-export function sendResponse(res: Response, apiResponse: ApiResponse<any>) {
+export function sendResponse(res: Response, apiResponse: ApiResponse<unknown>) {
   if (apiResponse.status === 'ERROR') {
     res.status(
       typeof apiResponse.code === 'number'
@@ -98,7 +98,7 @@ export function sendMessage(
   res: Response,
   id: string,
   event: string = 'message',
-  data?: any
+  data?: object
 ) {
   const doStringify = typeof data !== 'string';
   const payload = doStringify ? JSON.stringify(data) : data;

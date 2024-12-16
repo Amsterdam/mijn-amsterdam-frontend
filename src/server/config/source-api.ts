@@ -81,6 +81,7 @@ export type SourceApiKey =
   | 'LOOD_365_OAUTH'
   | 'PARKEREN'
   | 'PARKEREN_FRONTOFFICE'
+  | 'POM'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
@@ -202,6 +203,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },
   },
+  POM: { url: `${getFromEnv('BFF_POM_API_BASE_URL')}` },
   CMS_CONTENT_GENERAL_INFO: {
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,

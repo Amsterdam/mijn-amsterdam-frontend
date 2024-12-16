@@ -15,6 +15,7 @@ import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   ApiResponse,
+  ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -184,7 +185,7 @@ async function fetchEmail(
 export async function fetchAfisBusinessPartnerDetails(
   requestID: RequestID,
   businessPartnerId: string
-) {
+): Promise<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>> {
   const fullNameRequest = fetchBusinessPartnerFullName(
     requestID,
     businessPartnerId
