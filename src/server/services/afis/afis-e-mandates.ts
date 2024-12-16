@@ -35,6 +35,8 @@ import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
+const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
+
 function transformCreateEMandatesResponse(response: unknown) {
   return response;
 }
@@ -151,7 +153,10 @@ function addStatusChangeUrls(
     const payloadToEncrypt: EMandateStatusChangePayload = {
       IMandateId: afisEMandateSource.IMandateId.toString(),
       Status: changeToStatus,
-      LifetimeTo: new Date().toISOString(),
+      LifetimeTo:
+        changeToStatus === EMANDATE_STATUS.OFF
+          ? new Date().toISOString()
+          : AFIS_EMANDATE_RECURRING_DATE_END,
     };
 
     // In the case the mandate is active for only one day, we need to set the lifetimeFrom to the day before.
