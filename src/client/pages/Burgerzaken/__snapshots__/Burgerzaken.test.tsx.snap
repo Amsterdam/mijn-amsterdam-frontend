@@ -13,7 +13,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
         class="_Icon_3b337d"
       >
         <svg
-          aria-label="Burgerzaken"
+          aria-label="Paspoort en ID-kaart"
           class="_ThemaIcon_2fc54d"
           fill="black"
           height="32px"
@@ -59,7 +59,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
         <h2
           class="ams-heading ams-heading--level-1"
         >
-          Burgerzaken
+          Paspoort en ID-kaart
         </h2>
       </div>
     </header>
@@ -116,7 +116,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
           <h3
             class="ams-heading ams-heading--level-2"
           >
-            Paspoort en ID-kaart
+            Mijn reisdocumenten
           </h3>
           <div
             class="ams-table"
