@@ -23,10 +23,10 @@ async function fetchPrivate(
 
   if (BRP.status === 'OK') {
     if (isMokum(BRP.content)) {
-      const location = (await fetchBAG(requestID, BRP.content.adres))?.content;
+      const BAGLocation = (await fetchBAG(requestID, BRP.content.adres))
+        ?.content;
 
-      // No BAG location found
-      if (!location?.latlng) {
+      if (!BAGLocation?.latlng) {
         return apiSuccessResult([
           {
             latlng: {
@@ -38,13 +38,11 @@ async function fetchPrivate(
           },
         ]);
       } else {
-        // BAG Location found!
         return apiSuccessResult([
-          Object.assign(location, { profileType: 'private' }),
+          Object.assign(BAGLocation, { profileType: 'private' }),
         ]);
       }
     } else {
-      // Not a Mokum address
       return apiSuccessResult([
         {
           latlng: null,
