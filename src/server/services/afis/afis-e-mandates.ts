@@ -1,4 +1,4 @@
-import { parseISO } from 'date-fns';
+import { isSameDay, parseISO, subDays } from 'date-fns';
 import { firstBy } from 'thenby';
 
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
@@ -141,16 +141,27 @@ function addStatusChangeUrls(
   afisEMandateSource?: AfisEMandateSource
 ) {
   if (afisEMandateSource?.IMandateId) {
-    // Status is active, only provide an actiation link
     const changeToStatus = isEmandateActive(afisEMandateSource)
       ? EMANDATE_STATUS.OFF
       : EMANDATE_STATUS.ON;
 
+    const lifetimeTo = parseISO(afisEMandateSource.LifetimeTo);
+    const lifetimeFrom = parseISO(afisEMandateSource.LifetimeFrom);
+
+    const payloadToEncrypt: EMandateStatusChangePayload = {
+      IMandateId: afisEMandateSource.IMandateId.toString(),
+      Status: changeToStatus,
+      LifetimeTo: new Date().toISOString(),
+    };
+
+    // In the case the mandate is active for only one day, we need to set the lifetimeFrom to the day before.
+    // The api does not allow to set the lifetimeTo to the same day as the lifetimeFrom.
+    if (isSameDay(lifetimeFrom, lifetimeTo)) {
+      payloadToEncrypt.LifetimeFrom = subDays(lifetimeFrom, 1).toISOString();
+    }
+
     const urlQueryParams = new URLSearchParams({
-      payload: encryptPayloadAndSessionID(sessionID, {
-        IMandateId: afisEMandateSource.IMandateId.toString(),
-        status: changeToStatus,
-      }),
+      payload: encryptPayloadAndSessionID(sessionID, payloadToEncrypt),
     });
 
     eMandate.statusChangeUrl = `${generateFullApiUrlBFF(
