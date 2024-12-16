@@ -1,11 +1,7 @@
 import { LatLngLiteral } from 'leaflet';
 
 import { apiErrorResult } from '../../universal/helpers/api';
-import {
-  getMatchingBagResult,
-  getBagSearchAddress,
-  getLatLonByAddress,
-} from '../../universal/helpers/bag';
+import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
@@ -25,35 +21,31 @@ export async function fetchBAG(
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
 
-  const searchAddress = getBagSearchAddress(sourceAddress);
+  const params = {
+    openbareruimteNaam: sourceAddress.straatnaam,
+    huisnummer: sourceAddress.huisnummer,
+    huisletter: sourceAddress.huisletter,
+  };
 
-  if (!searchAddress) {
-    return apiErrorResult(`Kon geen correct zoek adres opmaken.`, null);
-  }
-
-  const params = { q: searchAddress, features: 2 }; // features=2 is een Feature flag zodat ook locaties in Weesp worden weergegeven.
   const config = getApiConfig('BAG', {
     params,
-    cacheKey: `${requestID}-${searchAddress}`,
+    cacheKey: `${requestID}-${sourceAddress.straatnaam}-${sourceAddress.huisnummer}${sourceAddress.huisletter}`,
     transformResponse: (responseData) => {
-      const isWeesp = sourceAddress.woonplaatsNaam === 'Weesp';
+      const data = responseData._embedded?.adresseerbareobjecten;
+      if (!data || data.length < 1) {
+        return {};
+      }
 
-      const latlng = getLatLonByAddress(
-        responseData?.results,
-        searchAddress,
-        isWeesp
+      // Multiple items can be found, but only the first we take as relevant.
+      const first_item = data[0];
+
+      const latlng = getLatLngCoordinates(
+        first_item.adresseerbaarObjectPuntGeometrieWgs84.coordinates
       );
-
-      const bagResult = getMatchingBagResult(
-        responseData?.results,
-        searchAddress,
-        isWeesp
-      );
-
       return {
         latlng,
         address: sourceAddress,
-        bagNummeraanduidingId: bagResult?.landelijk_id ?? null,
+        bagNummeraanduidingId: first_item.identificatie,
       };
     },
   });

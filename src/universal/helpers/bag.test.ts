@@ -1,10 +1,4 @@
-import { Adres } from '../types';
-import {
-  extractAddress,
-  getBagSearchAddress,
-  getLatLonByAddress,
-  isLocatedInWeesp,
-} from './bag';
+import { extractAddress, getLatLonByAddress, isLocatedInWeesp } from './bag';
 import { BAGSourceData } from '../types/bag';
 
 describe('getLatLonByAddress', () => {
@@ -84,52 +78,5 @@ describe('getLatLonByAddress', () => {
 
     // This is an exception. Currently no addresses including the word "amsterdam" exist in Weesp so for now this function is sufficient.
     expect(isLocatedInWeesp('Amsterdamse straatweg 999 Weesp')).toBe(false);
-  });
-
-  test('getBagSearchAddress', () => {
-    expect(
-      getBagSearchAddress({
-        straatnaam: 'Herengracht',
-        huisnummer: '23',
-        huisletter: null,
-        huisnummertoevoeging: null,
-      } as Adres)
-    ).toBe('Herengracht 23');
-
-    expect(
-      getBagSearchAddress({
-        straatnaam: 'Herengracht',
-        huisnummer: '23',
-        huisletter: null,
-        huisnummertoevoeging: '1',
-      } as Adres)
-    ).toBe('Herengracht 23-1');
-
-    expect(
-      getBagSearchAddress({
-        straatnaam: 'Herengracht',
-        huisnummer: '23',
-        huisletter: null,
-        huisnummertoevoeging: 'A',
-      } as Adres)
-    ).toBe('Herengracht 23-A');
-
-    expect(
-      getBagSearchAddress({
-        straatnaam: 'Herengracht',
-        huisnummer: '23',
-        huisletter: 'C',
-        huisnummertoevoeging: null,
-      } as Adres)
-    ).toBe('Herengracht 23C');
-
-    expect(
-      getBagSearchAddress({
-        straatnaam: 'Herengracht',
-        huisnummer: '23',
-        huisletter: 'C',
-        huisnummertoevoeging: '1',
-      } as Adres)
-    ).toBe('Herengracht 23C-1');
   });
 });

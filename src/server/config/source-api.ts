@@ -228,7 +228,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   BAG: {
-    url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
+    url: `https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/`,
   },
   ERFPACHTv2: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
