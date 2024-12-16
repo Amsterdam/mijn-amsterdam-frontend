@@ -38,7 +38,7 @@ describe('fetchAdoptableTrashContainers', () => {
     (fetchMyLocation as Mock).mockResolvedValue(
       apiSuccessResult([{ latlng: { lat: DEFAULT_LAT, lng: DEFAULT_LNG } }])
     );
-    const [c] = generateRandomPoints(
+    const [coord] = generateRandomPoints(
       { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
       90, // 90 meters
       1
@@ -47,7 +47,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiSuccessResult({
         features: [
           {
-            geometry: { coordinates: [c.lng, c.lat] },
+            geometry: { coordinates: [coord.lng, coord.lat] },
             properties: {
               datasetId: 'afvalcontainers',
               geadopteerd_ind: 'Nee',
@@ -132,7 +132,7 @@ describe('fetchAdoptableTrashContainers', () => {
     (fetchMyLocation as Mock).mockResolvedValue(
       apiSuccessResult([{ latlng: { lat, lng: DEFAULT_LNG } }])
     );
-    const [c] = generateRandomPoints(
+    const [coord] = generateRandomPoints(
       { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
       90, // 90 meters
       1
@@ -141,7 +141,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiSuccessResult({
         features: [
           {
-            geometry: { coordinates: [c.lng, c.lat] },
+            geometry: { coordinates: [coord.lng, coord.lat] },
             properties: {
               datasetId: 'afvalcontainers',
               geadopteerd_ind: 'Nee',
