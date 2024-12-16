@@ -18,7 +18,7 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseType.TouringcarJaarontheffing,
 ]);
 
-function getParkeervergunningen(
+function getVergunningenFromThemaVergunningen(
   content: VergunningFrontendV2[] | Vergunning[] | null
 ) {
   return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
