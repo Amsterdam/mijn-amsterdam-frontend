@@ -74,7 +74,7 @@ import Krefia from './pages/Krefia/Krefia';
 import { default as LandingPage } from './pages/Landing/Landing';
 import MyNotifications from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
-import Parkeren from './pages/Parkeren/Parkeren';
+import { Parkeren } from './pages/Parkeren/Parkeren';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';

@@ -16,6 +16,7 @@ const testState = {
   PARKEREN: {
     content: {
       url: 'https://parkeervergunningen.amsterdam.nl/',
+      isKnown: true,
     },
   },
   VERGUNNINGENv2: {
@@ -101,7 +102,7 @@ describe('ParkerenList', () => {
 
   it('should render the component and show the correct title', () => {
     render(<Component />);
-
+    const allText = screen.getAllByText(ThemaTitles.PARKEREN);
     expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
   });
 

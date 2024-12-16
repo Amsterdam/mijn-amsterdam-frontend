@@ -42,10 +42,9 @@
       "get-subsidie:standard",
       "get-svwi-tegel:standard",
       "get-parkeren-external-sso-url:standard",
-      "get-private-active-permit-request:standard",
-      "get-company-active-permit-request:standard",
-      "get-private-client-product-details:standard",
-      "get-company-client-product-details:standard",
+      "get-parkeren-create-jwe-token:standard",
+      "get-parkeren-active-permit-request:standard",
+      "get-parkeren-client-product-details:standard",
       "get-patroon-c:standard",
       "get-toeristische-verhuur-by-number:standard",
       "post-toeristische-verhuur-with-bsn:standard",
@@ -71,13 +70,19 @@
       "post-powerbrowser-search-requests:standard",
       "post-powerbrowser-zaak-status:standard",
       "get-powerbrowser-bb-zaak-attachment-download:standard",
-      "get-powerbrowser-bb-zaak-attachments:standard",
       "post-powerbrowser-token:standard",
       "get-powerbrowser-zaken:standard",
       "post-powerbrowser-personen-zaken:standard",
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",
       "post-zorgned-document:standard"
+    ]
+  },
+  {
+    "id": "no-data",
+    "routes": [
+      "get-parkeren-active-permit-request:no-data",
+      "get-parkeren-client-product-details:no-data"
     ]
   }
 ]

@@ -376,7 +376,7 @@ export function transformVergunningenData(
         ? generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS, {
             id: idEncrypted,
           })
-        : item.documentsUrl ?? null,
+        : (item.documentsUrl ?? null),
     });
     return vergunning;
   });

@@ -333,15 +333,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.PARKEREN,
     id: Themas.PARKEREN,
     to: (appState: AppState) => {
-      const hasParkerenVergunningen = (
+      const hasOtherParkeerVegunningen = (
         appState.VERGUNNINGEN?.content ?? []
       ).some((vergunning) =>
         PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
       );
-      const urlExternal =
-        appState.PARKEREN.content?.url ??
-        import.meta.env.REACT_APP_SSO_URL_PARKEREN;
-      return hasParkerenVergunningen ? AppRoutes.PARKEREN : urlExternal;
+      const urlExternal = appState.PARKEREN.content?.url ?? '/';
+      return hasOtherParkeerVegunningen ? AppRoutes.PARKEREN : urlExternal;
     },
     profileTypes: ['private', 'commercial'],
   },
