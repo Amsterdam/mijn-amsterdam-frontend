@@ -32,9 +32,7 @@ export function VergunningenList() {
 
   return (
     <ListPagePaginated
-      items={vergunningen
-        .filter(tableConfig[params.kind].filter)
-        .sort(tableConfig[params.kind].sort)}
+      items={vergunningen}
       backLinkTitle={ThemaTitles.VERGUNNINGEN}
       title={title}
       appRoute={AppRoutes['VERGUNNINGEN/LIST']}
