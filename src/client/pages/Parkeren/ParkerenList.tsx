@@ -23,7 +23,9 @@ export function ParkerenList() {
 
   return (
     <ListPagePaginated
-      items={parkeerVergunningenFromThemaVergunningen}
+      items={parkeerVergunningenFromThemaVergunningen
+        .filter(tableConfig[params.kind].filter)
+        .sort(tableConfig[params.kind].sort)}
       backLinkTitle={ThemaTitles.PARKEREN}
       title={title ?? ''}
       appRoute={AppRoutes['PARKEREN/LIST']}

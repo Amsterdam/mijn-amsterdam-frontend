@@ -18,7 +18,7 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseType.TouringcarJaarontheffing,
 ]);
 
-function getVergunningenFromThemaVergunningen(
+function getParkeervergunningen(
   content: VergunningFrontendV2[] | Vergunning[] | null
 ) {
   return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
@@ -47,7 +47,7 @@ export function useParkerenData() {
       : VERGUNNINGENv2.content) ?? [];
 
   const parkeerVergunningenFromThemaVergunningen =
-    getVergunningenFromThemaVergunningen(vergunningen);
+    getParkeervergunningen(vergunningen);
   const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
   return {
