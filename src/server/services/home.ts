@@ -99,7 +99,7 @@ async function fetchCommercial(
 export async function fetchMyLocation(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<(BAGData | null)[] | null>> {
   switch (authProfileAndToken.profile.profileType) {
     case 'commercial':
       return fetchCommercial(requestID, authProfileAndToken);
