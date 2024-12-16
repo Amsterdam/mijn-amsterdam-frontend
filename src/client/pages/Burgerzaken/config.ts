@@ -25,7 +25,6 @@ export const tableConfig = {
     title: 'Mijn reisdocumenten',
     displayProps: DISPLAY_PROPS_IDENTITEITSBEWIJZEN,
     sort: dateSort('datumAfloop', 'desc'),
-    filter: () => true,
     listPageRoute: generatePath(AppRoutes['BURGERZAKEN/LIST'], {
       kind: listPageParamKind.identiteitsbewijzen,
     }),
