@@ -339,8 +339,10 @@ export type EMandateSignRequestStatusPayload = {
 };
 
 export type EMandateStatusChangePayload = {
-  status: '1' | '0'; // TODO: Add type
+  Status: AfisEMandateSource['Status'];
   IMandateId: AfisEMandateSource['IMandateId'];
+  LifetimeTo: AfisEMandateSource['LifetimeTo'];
+  LifetimeFrom?: AfisEMandateSource['LifetimeFrom'];
 };
 
 export type AfisEMandateSignRequestResponse = {
