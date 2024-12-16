@@ -35,7 +35,7 @@ const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
   'europese identiteitskaart': 'ID-kaart',
   'nederlandse identiteitskaart': 'ID-kaart',
-  rijbewijs: 'rijbewijs',
+  //rijbewijs: 'rijbewijs',
 };
 
 const BrpDocumentCallToAction: Record<string, string> = {
@@ -44,7 +44,7 @@ const BrpDocumentCallToAction: Record<string, string> = {
     'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
   'nederlandse identiteitskaart':
     'https://www.amsterdam.nl/burgerzaken/paspoort-id-kaart-aanvragen/',
-  rijbewijs: 'https://www.amsterdam.nl/burgerzaken/rijbewijs/',
+  //rijbewijs: 'https://www.amsterdam.nl/burgerzaken/rijbewijs/',
 };
 
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
@@ -116,7 +116,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
         thema: Themas.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
-        id: `${document.documentType}-datum-afloop-binnekort`,
+        id: `${document.documentType}-datum-afloop-binnenkort`,
         title: `Voorkom vertraging en verleng uw ${docTitle} op tijd`,
         description: `Vanaf maart tot de zomervakantie wordt het erg druk op het Stadsloket. Uw huidige ${docTitle} verloopt op ${defaultDateFormat(
           document.datumAfloop
