@@ -132,6 +132,7 @@ export function transformVakantieverhuurVergunningen(
       adres: vergunning.location ?? '-',
       result: vergunning.decision as VakantieverhuurVergunning['result'],
       zaaknummer: vergunning.identifier,
+      identifier: vergunning.identifier,
       steps,
       documents: [],
       fetchDocumentsUrl: vergunning.documentsUrl,

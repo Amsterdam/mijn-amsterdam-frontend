@@ -461,6 +461,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     dateEndFormatted: dateEnd ? defaultDateFormat(dateEnd) : '-',
     result,
     id,
+    identifier: pbZaak.zaaknummer ?? zaak.id,
     zaaknummer: pbZaak.zaaknummer ?? zaak.id,
     link: {
       to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
