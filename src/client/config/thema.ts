@@ -23,7 +23,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
   BRP: 'Mijn gegevens',
-  BURGERZAKEN: 'Burgerzaken',
+  BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
   ERFPACHT: 'Erfpacht',
   ERFPACHTv2: 'Erfpacht V2',
