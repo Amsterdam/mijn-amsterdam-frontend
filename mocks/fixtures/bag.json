@@ -1,170 +1,149 @@
 {
+  "_embedded": {
+    "adresseerbareobjecten": [
+      {
+        "_links": {
+          "schema": "https://schemas.data.amsterdam.nl/datasets/benkagg/dataset#adresseerbareobjecten",
+          "self": {
+            "href": "https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/0363200012145295/?volgnummer=1",
+            "title": "0363200012145295",
+            "identificatie": "0363200012145295",
+            "volgnummer": 1
+          }
+        },
+        "identificatie": "0363200012145295",
+        "volgnummer": 1,
+        "huisnummer": 1,
+        "huisletter": null,
+        "huisnummertoevoeging": null,
+        "postcode": "1011PN",
+        "documentdatum": "2019-02-04",
+        "documentnummer": "SA00023201",
+        "beginGeldigheid": "2019-02-04T01:00:00",
+        "eindGeldigheid": null,
+        "statusOmschrijving": "Naamgeving uitgegeven",
+        "typeAdresseerbaarObjectOmschrijving": "Verblijfsobject",
+        "typeAdres": "Hoofdadres",
+        "adresseertVerblijfsobjectIdentificatie": "0363010012143319",
+        "openbareruimteIdentificatie": "0363300000002701",
+        "openbareruimteVolgnummer": 2,
+        "openbareruimteTypeOmschrijving": "Weg",
+        "openbareruimteNaam": "Amstel",
+        "openbareruimteNaamNen": "Amstel",
+        "woonplaatsIdentificatie": "3594",
+        "woonplaatsNaam": "Amsterdam",
+        "woonplaatsVolgnummer": 1,
+        "verblijfsobjectId": null,
+        "verblijfsobjectIdentificatie": "0363010012143319",
+        "verblijfsobjectVolgnummer": 5,
+        "verblijfsobjectGeconstateerd": false,
+        "verblijfsobjectGeometrie": {
+          "type": "Point",
+          "coordinates": [
+            121828.874,
+            486751.728
+          ]
+        },
+        "verblijfsobjectOppervlakte": 58673,
+        "verblijfsobjectStatusOmschrijving": "Verblijfsobject in gebruik",
+        "verblijfsobjectGebruiksdoelWoonfunctieOmschrijving": null,
+        "verblijfsobjectGebruiksdoelGezondheidszorgfunctieOmschrijving": null,
+        "verblijfsobjectAantalEenhedenComplex": null,
+        "verblijfsobjectVerdiepingToegang": 0,
+        "verblijfsobjectAantalBouwlagen": 7,
+        "verblijfsobjectHoogsteBouwlaag": 6,
+        "verblijfsobjectLaagsteBouwlaag": 0,
+        "verblijfsobjectAantalKamers": null,
+        "verblijfsobjectEigendomsverhoudingOmschrijving": null,
+        "verblijfsobjectFeitelijkGebruikOmschrijving": null,
+        "verblijfsobjectRedenopvoerOmschrijving": null,
+        "verblijfsobjectRedenafvoerOmschrijving": null,
+        "verblijfsobjectDocumentdatum": "2019-02-04",
+        "verblijfsobjectDocumentnummer": "SA00023201",
+        "verblijfsobjectBeginGeldigheid": "2019-02-04T01:00:00",
+        "verblijfsobjectEindGeldigheid": null,
+        "verblijfsobjectBagproces": "Benoemen nevenadres",
+        "kenmerkenInOnderzoek": [],
+        "ligplaatsIdentificatie": null,
+        "ligplaatsVolgnummer": null,
+        "ligplaatsGeconstateerd": null,
+        "ligplaatsStatusOmschrijving": null,
+        "ligplaatsGeometrie": null,
+        "ligplaatsBeginGeldigheid": null,
+        "ligplaatsEindGeldigheid": null,
+        "ligplaatsDocumentdatum": null,
+        "ligplaatsDocumentnummer": null,
+        "standplaatsIdentificatie": null,
+        "standplaatsVolgnummer": null,
+        "standplaatsGeconstateerd": null,
+        "standplaatsStatusOmschrijving": null,
+        "standplaatsGeometrie": null,
+        "standplaatsBeginGeldigheid": null,
+        "standplaatsEindGeldigheid": null,
+        "standplaatsDocumentdatum": null,
+        "standplaatsDocumentnummer": null,
+        "gebiedenBuurtIdentificatie": "03630980000061",
+        "gebiedenBuurtVolgnummer": 1,
+        "gebiedenBuurtNaam": "Waterloopleinbuurt",
+        "gebiedenBuurtCode": "AF09",
+        "gebiedenWijkIdentificatie": "03630970000013",
+        "gebiedenWijkVolgnummer": 1,
+        "gebiedenWijkNaam": "Nieuwmarkt/Lastage",
+        "gebiedenWijkCode": "AF",
+        "gebiedenStadsdeelIdentificatie": "03630000000018",
+        "gebiedenStadsdeelVolgnummer": 3,
+        "gebiedenStadsdeelNaam": "Centrum",
+        "gebiedenStadsdeelCode": "A",
+        "gebiedenGgwgebiedIdentificatie": "03630950000023",
+        "gebiedenGgwgebiedVolgnummer": 3,
+        "gebiedenGgwgebiedNaam": "Centrum-Oost",
+        "gebiedenGgwgebiedCode": "GA02",
+        "panden": [
+          "{\"identificatie\":\"0363100012186092\",\"volgnummer\":7,\"status Pand\":\"Pand in gebruik\",\"bouwjaar Pand\":1985,\"naam Pand\":\"Stopera\",\"aantal bouwlagen Pand\":7,\"laagste bouwlaag Pand\":0,\"hoogste bouwlaag Pand\":6,\"ligging Pand\":\"Vrijstaand gebouw\",\"bagproces Pand\":\"Correctie\",\"geconstateerd Pand\":false}"
+        ],
+        "gebiedenBouwblokken": [
+          "{\"identificatie\":\"03630012095942\",\"volgnummer\":1,\"code\":\"YG38\"}"
+        ],
+        "gebruiksdoelOmschrijvingen": [
+          "bijeenkomstfunctie",
+          "kantoorfunctie"
+        ],
+        "standplaatsGebruiksdoelOmschrijvingen": null,
+        "ligplaatsGebruiksdoelOmschrijvingen": null,
+        "toegangOmschrijvingen": [
+          "Centrale hal"
+        ],
+        "wozSoortObjectOmschrijving": [
+          "Cafe/bar",
+          "Opslag/magazijn",
+          "Opstal",
+          "Zaal/Collegezaal"
+        ],
+        "brkGemeenteNaam": "Amsterdam",
+        "adresseerbaarObjectPuntGeometrie": {
+          "type": "Point",
+          "coordinates": [
+            121828.87,
+            486751.73
+          ]
+        },
+        "adresseerbaarObjectPuntGeometrieWgs84": {
+          "type": "Point",
+          "coordinates": [
+            4.9001655,
+            52.3676456
+          ]
+        }
+      }
+    ]
+  },
   "_links": {
     "self": {
-      "href": "https://api.data.amsterdam.nl/atlas/search/adres/?q=Burgemeester%20R%C3%B6ellstr%201&page=1"
-    },
-    "next": {
-      "href": null
-    },
-    "prev": {
-      "href": null
+      "href": "https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/?openbareruimteNaam=Amstel&huisnummer=1"
     }
   },
-  "count_hits": 38,
-  "count": 38,
-  "results": [
-    {
-      "_links": {
-        "self": {
-          "href": "https://api.data.amsterdam.nl/bag/verblijfsobject/0363010000599756/"
-        }
-      },
-      "type": "verblijfsobject",
-      "dataset": "nummeraanduiding",
-      "adres": "Burgemeester Röellstraat 1",
-      "postcode": "1064BH",
-      "straatnaam": "Burgemeester Röellstraat",
-      "huisnummer": 1,
-      "toevoeging": "1",
-      "bag_huisletter": "",
-      "bag_toevoeging": "",
-      "woonplaats": "Amsterdam",
-      "hoofdadres": true,
-      "status": [
-        {
-          "code": "16",
-          "omschrijving": "Naamgeving uitgegeven"
-        }
-      ],
-      "landelijk_id": "0363200000062087",
-      "vbo_status": [
-        {
-          "code": "21",
-          "omschrijving": "Verblijfsobject in gebruik"
-        }
-      ],
-      "adresseerbaar_object_id": "0363010000599756",
-      "subtype": "verblijfsobject",
-      "centroid": [4.834586581980725, 52.372950494299445],
-      "subtype_id": "03630000599756",
-      "_display": "Burgemeester Röellstraat 1"
-    },
-    {
-      "_links": {
-        "self": {
-          "href": "https://api.data.amsterdam.nl/bag/verblijfsobject/0363010000599785/"
-        }
-      },
-      "type": "verblijfsobject",
-      "dataset": "nummeraanduiding",
-      "adres": "Burgemeester Röellstraat 10",
-      "postcode": "1064BM",
-      "straatnaam": "Burgemeester Röellstraat",
-      "huisnummer": 10,
-      "toevoeging": "10",
-      "bag_huisletter": "",
-      "bag_toevoeging": "",
-      "woonplaats": "Amsterdam",
-      "hoofdadres": true,
-      "status": [
-        {
-          "code": "16",
-          "omschrijving": "Naamgeving uitgegeven"
-        }
-      ],
-      "landelijk_id": "0363200000062116",
-      "vbo_status": [
-        {
-          "code": "21",
-          "omschrijving": "Verblijfsobject in gebruik"
-        }
-      ],
-      "adresseerbaar_object_id": "0363010000599785",
-      "subtype": "verblijfsobject",
-      "centroid": [4.834578743747967, 52.3735795998216],
-      "subtype_id": "03630000599785",
-      "_display": "Burgemeester Röellstraat 10"
-    },
-    {
-      "_links": {
-        "self": {
-          "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010000664346/"
-        }
-      },
-      "type": "verblijfsobject",
-      "dataset": "v11_nummeraanduiding",
-      "adres": "Herengracht 23-1",
-      "postcode": "1015BA",
-      "straatnaam": "Herengracht",
-      "straatnaam_no_ws": "Herengracht",
-      "huisnummer": 23,
-      "toevoeging": "23 1",
-      "bag_huisletter": "",
-      "bag_toevoeging": "1",
-      "woonplaats": "Amsterdam",
-      "type_adres": "Hoofdadres",
-      "status": "Naamgeving uitgegeven",
-      "landelijk_id": "0363200000126446",
-      "vbo_status": "Verblijfsobject in gebruik",
-      "adresseerbaar_object_id": "0363010000664346",
-      "subtype": "verblijfsobject",
-      "centroid": [4.891968036478453, 52.37873183842775],
-      "subtype_id": "0363010000664346",
-      "_display": "Herengracht 23-1"
-    },
-    {
-      "_links": {
-        "self": {
-          "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0457010000002241/"
-        }
-      },
-      "type": "verblijfsobject",
-      "dataset": "v11_nummeraanduiding",
-      "adres": "Herengracht 23",
-      "postcode": "1382AG",
-      "straatnaam": "Herengracht",
-      "straatnaam_no_ws": "Herengracht",
-      "huisnummer": 23,
-      "toevoeging": "23",
-      "bag_huisletter": "",
-      "bag_toevoeging": "",
-      "woonplaats": "Weesp",
-      "type_adres": "Hoofdadres",
-      "status": "Naamgeving uitgegeven",
-      "landelijk_id": "0457200000201571",
-      "vbo_status": "Verblijfsobject in gebruik",
-      "adresseerbaar_object_id": "0457010000002241",
-      "subtype": "verblijfsobject",
-      "centroid": [5.039817231849981, 52.30885683238395],
-      "subtype_id": "0457010000002241",
-      "_display": "Herengracht 23 (Weesp)"
-    },
-    {
-      "_links": {
-        "self": {
-          "href": "https://api.data.amsterdam.nl/bag/v1.1/verblijfsobject/0363010000755560/"
-        }
-      },
-      "type": "verblijfsobject",
-      "dataset": "v11_nummeraanduiding",
-      "adres": "Nieuwe Herengracht 23-1",
-      "postcode": "1011RL",
-      "straatnaam": "Nieuwe Herengracht",
-      "straatnaam_no_ws": "Nieuwe Herengracht",
-      "huisnummer": 23,
-      "toevoeging": "23 1",
-      "bag_huisletter": "",
-      "bag_toevoeging": "1",
-      "woonplaats": "Amsterdam",
-      "type_adres": "Hoofdadres",
-      "status": "Naamgeving uitgegeven",
-      "landelijk_id": "0363200000215998",
-      "vbo_status": "Verblijfsobject in gebruik",
-      "adresseerbaar_object_id": "0363010000755560",
-      "subtype": "verblijfsobject",
-      "centroid": [4.902795334609859, 52.36631966746123],
-      "subtype_id": "0363010000755560",
-      "_display": "Nieuwe Herengracht 23-1"
-    }
-  ]
+  "page": {
+    "number": 1,
+    "size": 20
+  }
 }
