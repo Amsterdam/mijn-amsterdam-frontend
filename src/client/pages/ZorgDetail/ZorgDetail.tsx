@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ThemaIcon } from '../../components';
+import { ErrorAlert, ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { ThemaTitles } from '../../config/thema';
@@ -28,6 +28,11 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
     <>
       {!!rows.length && (
         <Grid.Cell span="all">
+          {voorziening?.disclaimer && (
+            <ErrorAlert className="ams-mb--sm" severity="warning">
+              {voorziening.disclaimer}
+            </ErrorAlert>
+          )}
           <Datalist rows={rows} />
           {voorziening?.documents.length > 0 && (
             <DocumentListV2

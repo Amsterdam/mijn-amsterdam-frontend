@@ -1,6 +1,6 @@
 import Mockdate from 'mockdate';
 
-import { fetchWmo, forTesting } from './wmo';
+import { fetchWmo, forTesting, getDisclaimer } from './wmo';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
@@ -100,6 +100,78 @@ describe('Transform api items', () => {
           },
         ]
       `);
+    });
+  });
+
+  describe('getDisclaimer', () => {
+    const baseAanvraag: ZorgnedAanvraagTransformed = {
+      titel: 'Test Voorziening',
+      isActueel: true,
+      datumEindeGeldigheid: null,
+      datumIngangGeldigheid: null,
+      datumAanvraag: '2024-01-01',
+      datumBesluit: '2024-01-01',
+      datumBeginLevering: '2024-01-01',
+      datumEindeLevering: '2024-01-01',
+      datumToewijzing: '2024-01-01',
+      datumOpdrachtLevering: '2024-01-01',
+      leverancier: 'Test Leverancier',
+      leveringsVorm: 'Test LeveringsVorm',
+      productsoortCode: 'Test ProductSoortCode',
+      productIdentificatie: 'Test ProductIdentificatie',
+      resultaat: 'toegewezen',
+      betrokkenen: [],
+      documenten: [],
+      id: 'test-id',
+    };
+
+    const baseAanvragen = [baseAanvraag];
+
+    it('should return undefined when no matching conditions', () => {
+      const result = getDisclaimer(baseAanvraag, baseAanvragen);
+      expect(result).toBeUndefined();
+    });
+
+    it('should return disclaimer for actuele voorziening with matching eerdere voorziening', () => {
+      const aanvraag = {
+        ...baseAanvraag,
+        isActueel: true,
+      };
+
+      const aanvragen = [
+        aanvraag,
+        {
+          ...baseAanvraag,
+          isActueel: false,
+          datumEindeGeldigheid: '1-11-2024',
+        },
+      ];
+
+      const result = getDisclaimer(aanvraag, aanvragen);
+      expect(result).toBe(
+        'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.'
+      );
+    });
+
+    it('should return disclaimer for eerdere voorziening with matching actuele voorziening', () => {
+      const aanvraag = {
+        ...baseAanvraag,
+        isActueel: false,
+      };
+
+      const aanvragen = [
+        aanvraag,
+        {
+          ...baseAanvraag,
+          isActueel: true,
+          datumIngangGeldigheid: '31-10-2024',
+        },
+      ];
+
+      const result = getDisclaimer(aanvraag, aanvragen);
+      expect(result).toBe(
+        'Door een fout staat dit hulpmiddel ten onrechte bij Eerdere en afgewezen voorzieningen. Kijk bij "Huidige voorzieningen" of in de brief bovenaan.'
+      );
     });
   });
 });

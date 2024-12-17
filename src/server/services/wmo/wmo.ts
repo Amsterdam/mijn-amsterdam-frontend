@@ -127,6 +127,9 @@ function transformVoorzieningenForFrontend(
         status: getLatestStatus(lineItems),
         statusDate: getLatestStatusDate(lineItems),
         statusDateFormatted: getLatestStatusDate(lineItems, true),
+        ...(getDisclaimer(aanvraag, aanvragen) && {
+          disclaimer: getDisclaimer(aanvraag, aanvragen),
+        }),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
@@ -136,6 +139,33 @@ function transformVoorzieningenForFrontend(
   voorzieningenFrontend.sort(dateSort('statusDate', 'desc'));
 
   return voorzieningenFrontend;
+}
+
+export function getDisclaimer(
+  aanvraag: ZorgnedAanvraagTransformed,
+  aanvragen: ZorgnedAanvraagTransformed[]
+): string | undefined {
+  const matchActueleVoorziening = aanvragen.find(
+    (regeling) => regeling.titel === aanvraag.titel && regeling.isActueel
+  );
+
+  const matchEerdereVoorziening = aanvragen.find(
+    (regeling) => regeling.titel === aanvraag.titel && !regeling.isActueel
+  );
+
+  if (
+    aanvraag.isActueel &&
+    matchEerdereVoorziening?.datumEindeGeldigheid === '1-11-2024'
+  ) {
+    return 'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.';
+  } else if (
+    !aanvraag.isActueel &&
+    matchActueleVoorziening?.datumIngangGeldigheid === '31-10-2024'
+  ) {
+    return 'Door een fout staat dit hulpmiddel ten onrechte bij Eerdere en afgewezen voorzieningen. Kijk bij "Huidige voorzieningen" of in de brief bovenaan.';
+  }
+
+  return undefined;
 }
 
 export async function fetchWmo(
