@@ -27,6 +27,8 @@ export const BffEndpoints = {
   AFIS_EMANDATES_SIGN_REQUEST_URL: '/services/afis/e-mandates/sign-request-url',
   AFIS_EMANDATES_SIGN_REQUEST_STATUS:
     '/services/afis/e-mandates/sign-request-status',
+  AFIS_EMANDATES_SIGN_REQUEST_RETURNTO:
+    '/services/afis/e-mandates/sign-request-callback',
   AFIS_FACTUREN:
     '/services/afis/facturen/:state(open|afgehandeld|overgedragen)',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
@@ -91,6 +93,9 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:administratienummerEncrypted`,
     STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
     STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+
+    // Afis E-Mandates
+    AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `${BFF_BASE_PATH_PRIVATE}/services/afis/e-mandates/sign-request-status-notify`,
   },
 };
 
