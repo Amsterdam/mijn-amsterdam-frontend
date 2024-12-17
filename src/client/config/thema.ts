@@ -7,6 +7,10 @@ import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { DecosCaseType } from '../../universal/types/vergunningen';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { PARKEER_CASE_TYPES } from '../pages/Parkeren/useParkerenData.hook';
+import {
+  getThemaTitleBurgerzakenWithAppState,
+  getThemaUrlBurgerzakenWithAppState,
+} from '../pages/Burgerzaken/helpers';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -23,7 +27,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
   BRP: 'Mijn gegevens',
-  BURGERZAKEN: 'Burgerzaken',
+  BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
   ERFPACHT: 'Erfpacht',
   ERFPACHTv2: 'Erfpacht V2',
@@ -237,9 +241,11 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     isAlwaysVisible: true,
   },
   {
-    title: ThemaTitles.BURGERZAKEN,
+    title: (appState: AppState) => {
+      return getThemaTitleBurgerzakenWithAppState(appState);
+    },
     id: Themas.BURGERZAKEN,
-    to: AppRoutes.BURGERZAKEN,
+    to: (appState) => getThemaUrlBurgerzakenWithAppState(appState),
     profileTypes: ['private'],
   },
   {

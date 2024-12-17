@@ -1,9 +1,9 @@
 export const AppRoutes = {
   ROOT: '/',
   HOME: '/',
-  BURGERZAKEN: '/burgerzaken',
-  'BURGERZAKEN/LIST': '/burgerzaken/lijst/:kind/:page?',
-  'BURGERZAKEN/IDENTITEITSBEWIJS': '/burgerzaken/:documentType/:id',
+  BURGERZAKEN: '/paspoort-en-id-kaart',
+  'BURGERZAKEN/LIST': '/paspoort-en-id-kaart/lijst/:kind/:page?',
+  'BURGERZAKEN/IDENTITEITSBEWIJS': '/paspoort-en-id-kaart/:documentType/:id',
 
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENING': '/zorg-en-ondersteuning/voorziening/:id',
