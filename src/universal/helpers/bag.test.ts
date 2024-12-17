@@ -1,11 +1,11 @@
 import { extractAddress, getLatLonByAddress, isLocatedInWeesp } from './bag';
-import { BAGSourceData } from '../types/bag';
+import { BAGSourceDataResponse } from '../types/bag';
 
 describe('getLatLonByAddress', () => {
   const weesp = 'Herengracht 23';
   const amsterdam = 'Herengracht 23-1';
 
-  const response: BAGSourceData = {
+  const response: BAGSourceDataResponse = {
     results: [
       {
         adres: 'Herengracht 23-1',
@@ -63,13 +63,31 @@ describe('getLatLonByAddress', () => {
   });
 
   test('extractAddress', () => {
-    expect(extractAddress('Herengracht 23-1, 1015BA, Amsterdam _ ; ,')).toBe(
-      'Herengracht 23-1'
-    );
+    expect(
+      extractAddress('Herengracht 23-1, 1015BA, Amsterdam _ ; ,')
+    ).toStrictEqual({
+      openbareruimteNaam: 'Herengracht',
+      huisnummer: '23-1',
+      huisletter: undefined,
+    });
 
     expect(
       extractAddress('Burgemeester Röellstraat 44, 1015BA, Amsterdam _ ; ,')
-    ).toBe('Burgemeester Röellstraat 44');
+    ).toStrictEqual({
+      openbareruimteNaam: 'Burgemeester Röellstraat',
+      huisnummer: '44',
+      huisletter: undefined,
+    });
+
+    expect(
+      extractAddress('Burgemeester Röellstraat 44C, 1015BA, Amsterdam _ ; ,')
+        .huisletter
+    ).toStrictEqual('C');
+
+    expect(
+      extractAddress('Burgemeester Röellstraat 44 C, 1015BA, Amsterdam _ ; ,')
+        .huisletter
+    ).toStrictEqual('C');
   });
 
   test('isWeesp', () => {
