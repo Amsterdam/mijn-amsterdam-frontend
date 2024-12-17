@@ -308,7 +308,13 @@ export async function createBusinessPartnerBankAccount(
   );
 }
 
-export async function fetchBusinessPartnerBankAccount(
+function transformBusinessPartnerBankAccounts(
+  responseData: AfisApiFeedResponseSource<AfisBusinessPartnerBankAccount>
+) {
+  return [];
+}
+
+export async function fetchBusinessPartnerBankAccounts(
   requestID: RequestID,
   businessPartnerId: BusinessPartnerId
 ) {
@@ -316,6 +322,7 @@ export async function fetchBusinessPartnerBankAccount(
     formatUrl(config) {
       return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=BusinessPartner eq '${businessPartnerId}'`;
     },
+    transformResponse: transformBusinessPartnerBankAccounts,
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(
@@ -323,7 +330,7 @@ export async function fetchBusinessPartnerBankAccount(
     requestID
   );
 
-  return requestData<AfisBusinessPartnerBankAccount>(
+  return requestData<AfisBusinessPartnerBankAccount[]>(
     businessPartnerRequestConfig,
     requestID
   );
