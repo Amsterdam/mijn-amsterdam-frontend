@@ -250,8 +250,8 @@ async function transformDecosZakenResponse<
       (transformer) => transformer.caseType == zaakType
     );
 
+    // exclude decosZaakSources that do not have a matching decosZaakTransformer
     if (!decosZaakTransformer) {
-      captureMessage(`Decos: ${zaakType} transformer not passed`);
       continue;
     }
 
