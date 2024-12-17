@@ -22,10 +22,9 @@ export const listPageParamKind = {
 
 export const tableConfig = {
   [listPageParamKind.identiteitsbewijzen]: {
-    title: 'Paspoort en ID-kaart',
+    title: 'Mijn reisdocumenten',
     displayProps: DISPLAY_PROPS_IDENTITEITSBEWIJZEN,
     sort: dateSort('datumAfloop', 'desc'),
-    filter: () => true,
     listPageRoute: generatePath(AppRoutes['BURGERZAKEN/LIST'], {
       kind: listPageParamKind.identiteitsbewijzen,
     }),
