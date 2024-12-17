@@ -276,7 +276,7 @@ export type AfisEMandateSource = AfisEMandateSourceStatic &
 
     // Mandate
     LifetimeFrom: string;
-    LifetimeTo: string; // '9999-12-31T00:00:00'; // Far in the future, Gem. Amsterdam only uses indefinite mandates. Change to today when deactivating eMandate.
+    LifetimeTo: string;
     SignDate: string;
     SignCity: string;
   };
