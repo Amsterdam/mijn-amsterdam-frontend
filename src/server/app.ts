@@ -110,6 +110,10 @@ app.use(
   adminRouter
 );
 
+// Router that is only accessible from the hub/spoke network on azure.
+// Stadspas
+app.use(nocache, stadspasExternalConsumerRouter.privateNetwork);
+// Afis
 app.use(nocache, stadspasExternalConsumerRouter.privateNetwork);
 
 app.get(BffEndpoints.ROOT, (_req, res) => {
