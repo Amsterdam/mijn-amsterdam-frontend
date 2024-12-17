@@ -99,6 +99,35 @@ async function fetchCommercial(
 export async function fetchMyLocation(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<BAGData[] | null>> {
+
+  const {content: commercialAddresses} = await fetchCommercial(
+    requestID,
+    authProfileAndToken
+  );
+  
+  if (authProfileAndToken.profile.profileType === 'commercial') {
+    return apiSuccessResult((commercialAddresses || []).filter((location) => location !== null))
+  }
+  
+  const {content: privateAddresses} = await fetchPrivate(
+    requestID,
+    authProfileAndToken
+  );
+  
+  const locations: BAGData[] = [
+    ...(privateAddresses || []),
+    ...(commercialAddresses || []),
+  ].filter((location) => location !== null)
+  
+  if (locations.length === 0) {
+    return apiErrorResult('Could not fetch locations.', null);
+  }
+
+  return apiSuccessResult(locations)
+}
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<(BAGData | null)[] | null>> {
   switch (authProfileAndToken.profile.profileType) {
     case 'commercial':
