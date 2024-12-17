@@ -13,7 +13,9 @@ export function BodemList() {
 
   return (
     <ListPagePaginated
-      items={items}
+      items={items
+        .filter(tableConfig[params.kind].filter)
+        .sort(tableConfig[params.kind].sort)}
       backLinkTitle={ThemaTitles.BODEM}
       title={tableConfig[params.kind].title}
       appRoute={AppRoutes['BODEM/LIST']}
