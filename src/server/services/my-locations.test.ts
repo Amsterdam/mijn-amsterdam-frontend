@@ -23,7 +23,7 @@ vi.mock('./kvk', async (importOriginal) => ({
 }));
 
 const adres = { straatnaam: 'address1' } as Adres;
-const adres2 = { straatnaam: 'address1' } as Adres;
+const adres2 = { straatnaam: 'address2' } as Adres;
 
 describe('fetchPrivate', () => {
   const requestID = 'test-request-id';
