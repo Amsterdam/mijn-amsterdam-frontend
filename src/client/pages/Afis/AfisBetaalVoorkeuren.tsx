@@ -23,7 +23,12 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
-  labels: DisplayProps<AfisBusinessPartnerDetailsTransformed>;
+  labels: DisplayProps<
+    Omit<
+      AfisBusinessPartnerDetailsTransformed,
+      'address' | 'firstName' | 'lastName'
+    >
+  >;
   isLoading: boolean;
   startCollapsed: boolean;
 };
@@ -36,11 +41,9 @@ function AfisBusinessPartnerDetails({
 }: AfisBusinessPartnerProps) {
   const rows = businesspartner
     ? entries(labels)
-        .filter(
-          ([key]) => !!businesspartner[key as keyof typeof businesspartner]
-        )
+        .filter(([key]) => !!businesspartner[key])
         .map(([key, label]) => {
-          const value = businesspartner[key as keyof typeof businesspartner];
+          const value = businesspartner[key];
           return {
             label,
             content: value,
