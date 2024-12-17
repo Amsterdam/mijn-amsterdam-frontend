@@ -1,8 +1,11 @@
+import ibantools from 'ibantools';
+
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AfisApiFeedResponseSource,
   AfisBusinessPartnerAddress,
   AfisBusinessPartnerAddressSource,
+  AfisBusinessPartnerBankPayload,
   AfisBusinessPartnerDetails,
   AfisBusinessPartnerDetailsSource,
   AfisBusinessPartnerDetailsTransformed,
@@ -28,6 +31,8 @@ import {
   getRequestParamsFromQueryString,
   requestData,
 } from '../../helpers/source-api-request';
+
+const AFIS_IBAN_ACCOUNT_NUMBER_LENGTH = 8;
 
 function transformBusinessPartnerAddressResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerAddressSource>
@@ -220,5 +225,55 @@ export async function fetchAfisBusinessPartnerDetails(
       phone: phoneResponse,
       fullName: fullNameResponse,
     })
+  );
+}
+
+function extractBankAccountNumberFromIBAN(iban: string) {
+  // Extract the last 8 characters from the IBAN to get the account number.
+  return iban.slice(-AFIS_IBAN_ACCOUNT_NUMBER_LENGTH);
+}
+
+export async function createBusinessPartnerBankAccount(
+  requestID: RequestID,
+  payload: AfisBusinessPartnerBankPayload
+) {
+  const iban = ibantools.extractIBAN(payload.iban);
+  const createBankAccountPayload = {
+    BusinessPartner: payload.businessPartnerId,
+    BankIdentification: '0001', // How to?
+    BankCountryKey: iban.countryCode,
+    BankName: 'ING', // iban.bankIdentifier // TODO: What is this?
+    BankNumber: iban.bankIdentifier,
+    SWIFTCode: payload.swiftCode, //
+    BankControlKey: '', // TODO: What is this?
+    BankAccountHolderName: payload.senderName,
+    BankAccountName: '', // TODO: What is this?
+    ValidityStartDate: 'Date(1680825600000+0000)', // TODO: check if this is required, we can't possibly know this
+    ValidityEndDate: 'Date(253402300799000+0000)', // TODO: check if this is required, we can't possibly know this
+    IBAN: payload.iban,
+    IBANValidityStartDate: 'Date(1680825600000)', // TODO: What is this?
+    BankAccount: extractBankAccountNumberFromIBAN(payload.iban),
+    BankAccountReferenceText: '', // TODO: What is this?
+    CollectionAuthInd: false, // TODO: What is this?
+    CityName: 'amsterdam', // TODO: What is this?
+    AuthorizationGroup: '', // TODO: What is this?
+  };
+
+  const additionalConfig: DataRequestConfig = {
+    method: 'POST',
+    formatUrl(config) {
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
+    },
+    data: createBankAccountPayload,
+  };
+
+  const businessPartnerRequestConfig = await getAfisApiConfig(
+    additionalConfig,
+    requestID
+  );
+
+  return requestData<AfisBusinessPartnerEmail>(
+    businessPartnerRequestConfig,
+    requestID
   );
 }
