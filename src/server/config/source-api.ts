@@ -7,6 +7,7 @@ import { IS_TAP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
+import { PUBLIC_API_URLS } from '../../universal/config/url';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -228,7 +229,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   BAG: {
-    url: `https://api.data.amsterdam.nl/v1/benkagg/adresseerbareobjecten/`,
+    url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
   },
   ERFPACHTv2: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),

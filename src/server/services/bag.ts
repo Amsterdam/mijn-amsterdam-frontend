@@ -5,6 +5,7 @@ import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
+import { BAGQueryParams } from '../../universal/types/bag';
 
 export interface BAGData {
   latlng: LatLngLiteral | null;
@@ -17,14 +18,14 @@ export async function fetchBAG(
   requestID: RequestID,
   sourceAddress: Adres | null
 ) {
-  if (!sourceAddress) {
+  if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
 
-  const params = {
+  const params: BAGQueryParams = {
     openbareruimteNaam: sourceAddress.straatnaam,
     huisnummer: sourceAddress.huisnummer,
-    huisletter: sourceAddress.huisletter,
+    huisletter: sourceAddress.huisletter ?? '',
   };
 
   const config = getApiConfig('BAG', {
