@@ -61,10 +61,10 @@ async function fetchPrivate(
 async function fetchCommercial(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<BAGData[] | null>> {
   const KVK = await fetchKVK(requestID, authProfileAndToken);
 
-  let MY_LOCATION: ApiResponse<(BAGData | null)[] | null>;
+  let MY_LOCATION: ApiResponse<BAGData[] | null>;
 
   if (KVK.status === 'OK') {
     const addresses: Adres[] = getKvkAddresses(KVK.content);
@@ -73,13 +73,15 @@ async function fetchCommercial(
       const locations = await Promise.all(
         addresses.map((address) => fetchBAG(requestID, address))
       ).then((results) => {
-        return results.map((result) =>
-          result.content !== null
-            ? Object.assign(result.content, {
-                profileType: 'commercial',
-              })
-            : null
-        );
+        return results
+          .map((result) =>
+            result.content !== null
+              ? Object.assign(result.content, {
+                  profileType: 'commercial',
+                })
+              : null
+          )
+          .filter((location) => location !== null);
       });
 
       MY_LOCATION = apiSuccessResult(locations);
@@ -100,63 +102,33 @@ export async function fetchMyLocation(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<BAGData[] | null>> {
+  const commercialResponse = await fetchCommercial(
+    requestID,
+    authProfileAndToken
+  );
 
-  const {content: commercialAddresses} = await fetchCommercial(
-    requestID,
-    authProfileAndToken
-  );
-  
   if (authProfileAndToken.profile.profileType === 'commercial') {
-    return apiSuccessResult((commercialAddresses || []).filter((location) => location !== null))
+    return commercialResponse;
   }
-  
-  const {content: privateAddresses} = await fetchPrivate(
+
+  const { content: privateAddresses } = await fetchPrivate(
     requestID,
     authProfileAndToken
   );
-  
+
   const locations: BAGData[] = [
     ...(privateAddresses || []),
-    ...(commercialAddresses || []),
-  ].filter((location) => location !== null)
-  
+    ...(commercialResponse.content || []),
+  ].filter((location) => location !== null);
+
   if (locations.length === 0) {
     return apiErrorResult('Could not fetch locations.', null);
   }
 
-  return apiSuccessResult(locations)
+  return apiSuccessResult(locations);
 }
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<(BAGData | null)[] | null>> {
-  switch (authProfileAndToken.profile.profileType) {
-    case 'commercial':
-      return fetchCommercial(requestID, authProfileAndToken);
 
-    case 'private':
-    default: {
-      const privateAddresses = await fetchPrivate(
-        requestID,
-        authProfileAndToken
-      );
-      const commercialAddresses = await fetchCommercial(
-        requestID,
-        authProfileAndToken
-      );
-
-      switch (true) {
-        case privateAddresses.content !== null &&
-          commercialAddresses.content !== null: {
-          const locations: BAGData[] = [
-            ...privateAddresses.content!.filter((a) => a !== null),
-            ...commercialAddresses.content!.filter((a) => a !== null),
-          ];
-          return apiSuccessResult(locations);
-        }
-        case privateAddresses.content !== null:
-          return privateAddresses;
-      }
-      return apiErrorResult('Could not fetch locations.', null);
-    }
-  }
-}
+export const forTesting = {
+  fetchPrivate,
+  fetchCommercial,
+};

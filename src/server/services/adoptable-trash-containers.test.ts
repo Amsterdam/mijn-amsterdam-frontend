@@ -4,7 +4,7 @@ import { forTesting } from './adoptable-trash-containers';
 import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
 import { fetchBRP } from './brp';
 import { fetchDataset } from './buurt/buurt';
-import { fetchMyLocation } from './home';
+import { fetchMyLocation } from './my-locations';
 import {
   generateRandomPoints,
   getAuthProfileAndToken,
@@ -19,7 +19,7 @@ vi.mock('./brp', () => ({
   fetchBRP: vi.fn(),
 }));
 
-vi.mock('./home', () => ({
+vi.mock('./my-locations', () => ({
   fetchMyLocation: vi.fn(),
 }));
 
