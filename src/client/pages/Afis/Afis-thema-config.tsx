@@ -128,7 +128,7 @@ export const businessPartnerDetailsLabels = {
   businessPartnerId: 'Debiteurnummer',
   email: 'E-mailadres factuur',
   phone: 'Telefoonnummer',
-  address: 'Adres',
+  fullAddress: 'Adres',
 };
 
 export const eMandateTableConfig = {
