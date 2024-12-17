@@ -266,7 +266,7 @@ describe('fetchMyLocation', () => {
 
   it('should return an error if fetching commercial data fails', async () => {
     (fetchKVK as Mock).mockResolvedValueOnce(
-      apiErrorResult('Server down', null)
+      apiErrorResult('Oh Oh Server down', null)
     );
 
     const result = await fetchMyLocation(
@@ -281,7 +281,9 @@ describe('fetchMyLocation', () => {
       apiSuccessResult({ vestigingen: [] })
     );
     (getKvkAddresses as Mock).mockReturnValueOnce([]);
-    (fetchBRP as Mock).mockResolvedValueOnce(apiErrorResult('mwa', null));
+    (fetchBRP as Mock).mockResolvedValueOnce(
+      apiErrorResult('Server down!', null)
+    );
 
     const result = await fetchMyLocation(requestID, authProfileAndTokenPrivate);
     expect(result).toEqual({
