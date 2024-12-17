@@ -49,6 +49,10 @@ type AfisBusinessPartnerRecordCommercial = {
   Gevonden: JaOfNee;
 };
 
+export type BusinessPartnerId =
+  | AfisBusinessPartnerPrivateResponseSource['Zakenpartnernummer']
+  | AfisBusinessPartnerRecordCommercial['Zakenpartnernummer'];
+
 export type AfisBusinessPartnerCommercialResponseSource = {
   Record:
     | AfisBusinessPartnerRecordCommercial
@@ -93,6 +97,8 @@ export type AfisBusinessPartnerAddressSource = {
 export type AfisBusinessPartnerDetailsSource = {
   BusinessPartner: number;
   BusinessPartnerFullName: string;
+  FirstName: string;
+  LastName: string;
 };
 
 export type AfisBusinessPartnerPhoneSource = {
@@ -105,11 +111,14 @@ export type AfisBusinessPartnerEmailSource = {
 
 export type AfisBusinessPartnerDetails = {
   fullName: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type AfisBusinessPartnerAddress = {
   id: string;
-  address: string;
+  fullAddress: string;
+  address: AfisBusinessPartnerAddressSource;
 };
 
 export type AfisBusinessPartnerPhone = {
@@ -121,11 +130,14 @@ export type AfisBusinessPartnerEmail = {
 };
 
 export type AfisBusinessPartnerDetailsTransformed = {
-  businessPartnerId: string;
-  email?: string | null;
-  fullName?: string | null;
-  phone?: string | null;
-  address?: string | null;
+  businessPartnerId: BusinessPartnerId;
+  email?: AfisBusinessPartnerEmail['email'];
+  fullName?: AfisBusinessPartnerDetails['fullName'];
+  firstName?: AfisBusinessPartnerDetails['firstName'];
+  lastName?: AfisBusinessPartnerDetails['lastName'];
+  phone?: AfisBusinessPartnerPhone['phone'];
+  fullAddress?: AfisBusinessPartnerAddress['fullAddress'];
+  address?: AfisBusinessPartnerAddress['address'];
 };
 
 // Facturen
@@ -243,15 +255,13 @@ export type AfisFacturenByStateResponse = {
 export type AfisThemaResponse = {
   isKnown: boolean;
   businessPartnerIdEncrypted: string | null;
-  businessPartnerId?:
-    | AfisBusinessPartnerDetailsTransformed['businessPartnerId']
-    | null;
+  businessPartnerId?: BusinessPartnerId | null;
   facturen?: AfisFacturenByStateResponse | null;
 };
 
 export type AfisFacturenParams = {
   state: AfisFactuurState | 'deelbetalingen';
-  businessPartnerID: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  businessPartnerID: BusinessPartnerId;
   top?: string;
 };
 
@@ -290,7 +300,7 @@ export type AfisEMandateSourceStatic = {
 
 type EMandateSenderSource = {
   // Sender
-  SndId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  SndId: BusinessPartnerId;
   SndPostal: string;
   SndCountry: string; // Country code
   SndIban: string;
@@ -335,13 +345,6 @@ export type AfisEMandateCreatePayload = Omit<
 
 export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 
-export type AfisEMandateCreateParams = {
-  acceptantIBAN: AfisEMandateAcceptant['iban'];
-  sender: EMandateSenderSource;
-  eMandateSignDate: string;
-  eMandatesignCity: string;
-};
-
 export type AfisEMandateFrontend = {
   acceptant: string;
   status: string;
@@ -369,11 +372,12 @@ export type AfisEMandateAcceptant = {
 
 export type EMandateSignRequestPayload = {
   acceptantIBAN: AfisEMandateAcceptant['iban'];
-  businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  businessPartnerId: BusinessPartnerId;
+  eMandateSignDate: string;
 };
 
 export type BusinessPartnerIdPayload = {
-  businessPartnerId: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  businessPartnerId: BusinessPartnerId;
 };
 
 export type EMandateSignRequestStatusPayload = {
