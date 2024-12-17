@@ -1,7 +1,11 @@
 import { add, isSameDay, parseISO, subDays } from 'date-fns';
 import { firstBy } from 'thenby';
 
-import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
+import {
+  createBusinessPartnerBankAccount,
+  fetchAfisBusinessPartnerDetails,
+  fetchBusinessPartnerBankAccounts,
+} from './afis-business-partner';
 import {
   EMandateAcceptantenGemeenteAmsterdam,
   eMandateReceiver,
@@ -27,6 +31,7 @@ import {
   AfisEMandateSignRequestStatusResponse,
   BusinessPartnerId,
   EMandateSignRequestNotificationPayload,
+  AfisBusinessPartnerBankPayload,
 } from './afis-types';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
@@ -95,6 +100,38 @@ export async function createAfisEMandate(
 
   // TODO: Check if this bank account exists in the sender's bank account list.
   // If not add it to the list.
+  const bankAccountResponse = await fetchBusinessPartnerBankAccounts(
+    requestID,
+    payload.businessPartnerId
+  );
+
+  // TODO: Should we try to add the bank account if we cannnot check if it exists?
+  if (bankAccountResponse.status !== 'OK') {
+    return bankAccountResponse;
+  }
+
+  const bankAccountExists = !!bankAccountResponse.content.find(
+    (account) => account.IBAN === senderIban
+  );
+
+  if (!bankAccountExists) {
+    const bankAccountPayload: AfisBusinessPartnerBankPayload = {
+      businessPartnerId: payload.businessPartnerId,
+      iban: payload.senderIBAN,
+      bic: payload.senderBIC,
+      swiftCode: '',
+      senderName: payload.senderName,
+    };
+
+    const createBankAccountResponse = await createBusinessPartnerBankAccount(
+      requestID,
+      bankAccountPayload
+    );
+
+    if (createBankAccountResponse.status !== 'OK') {
+      return createBankAccountResponse;
+    }
+  }
 
   const payloadFinal: AfisEMandateCreatePayload = {
     // Fixed values needed for API (black box)
