@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+printenv > .env # Save all environment variables to a file
+
 # AZ AppService allows SSH into a App instance.
 if [ "$MA_CONTAINER_SSH_ENABLED" = "true" ]; then
     echo "Starting SSH ..."
