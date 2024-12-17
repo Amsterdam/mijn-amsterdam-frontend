@@ -120,21 +120,19 @@ describe('fetchAdoptableTrashContainers', () => {
     expect(result.content?.tips).toHaveLength(0);
   });
 
-  it('should return no tips if filteredFeatures length is 0', async () => {
+  it('should not return tips if there are no adoptable trashcontainers found within the given radius', async () => {
     (fetchBRP as Mock).mockResolvedValue(brpApiResponse);
     (fetchMyLocation as Mock).mockResolvedValue(locationApiResponse);
 
-    const [coord] = generateRandomPoints(
-      { lat: DEFAULT_LAT + 1, lng: DEFAULT_LNG },
-      90, // 90 meters
-      1
-    );
+    // A coord outside of the radius from the Home location returned by fetchMyLocation
+    const COORD_LAT_OFFSET = 5;
+    const coordinates = [DEFAULT_LNG, DEFAULT_LAT + COORD_LAT_OFFSET];
 
     (fetchDataset as Mock).mockResolvedValue(
       apiSuccessResult({
         features: [
           {
-            geometry: { coordinates: [coord.lng, coord.lat] },
+            geometry: { coordinates },
             properties: {
               datasetId: 'afvalcontainers',
               geadopteerd_ind: 'Nee',
