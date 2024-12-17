@@ -1,4 +1,13 @@
-import { AfisEMandateAcceptant } from './afis-types';
+import { AfisEMandateAcceptant, EMandateReceiverSource } from './afis-types';
+
+export const eMandateReceiver: EMandateReceiverSource = {
+  RecName1: 'Gemeente Amsterdam',
+  RecPostal: '1011 PN',
+  RecStreet: 'Amstel',
+  RecHouse: '1',
+  RecCity: 'Amsterdam',
+  RecCountry: 'NL',
+};
 
 // Public data, see also: https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa#m4bgm6izgl3skf8ue1p
 export const EMandateAcceptantenGemeenteAmsterdam: AfisEMandateAcceptant[] = [
