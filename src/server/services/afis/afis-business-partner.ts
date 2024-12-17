@@ -5,6 +5,7 @@ import {
   AfisApiFeedResponseSource,
   AfisBusinessPartnerAddress,
   AfisBusinessPartnerAddressSource,
+  AfisBusinessPartnerBankAccount,
   AfisBusinessPartnerBankPayload,
   AfisBusinessPartnerDetails,
   AfisBusinessPartnerDetailsSource,
@@ -238,12 +239,12 @@ export async function createBusinessPartnerBankAccount(
   payload: AfisBusinessPartnerBankPayload
 ) {
   const iban = ibantools.extractIBAN(payload.iban);
-  const createBankAccountPayload = {
+  const createBankAccountPayload: AfisBusinessPartnerBankAccount = {
     BusinessPartner: payload.businessPartnerId,
     BankIdentification: '0001', // How to?
-    BankCountryKey: iban.countryCode,
+    BankCountryKey: iban.countryCode ?? '',
     BankName: 'ING', // iban.bankIdentifier // TODO: What is this?
-    BankNumber: iban.bankIdentifier,
+    BankNumber: iban.bankIdentifier ?? '',
     SWIFTCode: payload.swiftCode, //
     BankControlKey: '', // TODO: What is this?
     BankAccountHolderName: payload.senderName,
@@ -273,6 +274,27 @@ export async function createBusinessPartnerBankAccount(
   );
 
   return requestData<AfisBusinessPartnerEmail>(
+    businessPartnerRequestConfig,
+    requestID
+  );
+}
+
+export async function fetchBusinessPartnerBankAccount(
+  requestID: RequestID,
+  businessPartnerId: BusinessPartnerId
+) {
+  const additionalConfig: DataRequestConfig = {
+    formatUrl(config) {
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=BusinessPartner eq '${businessPartnerId}'`;
+    },
+  };
+
+  const businessPartnerRequestConfig = await getAfisApiConfig(
+    additionalConfig,
+    requestID
+  );
+
+  return requestData<AfisBusinessPartnerBankAccount>(
     businessPartnerRequestConfig,
     requestID
   );
