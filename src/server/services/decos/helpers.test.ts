@@ -1,13 +1,9 @@
+import { DecosZaakSource } from './decos-types';
 import {
-  DecosZaakSource,
-  TouringcarDagontheffing,
-} from '../vergunningen-v2/config-and-types';
-import { decosZaakTransformers } from '../vergunningen-v2/decos-zaken';
-import {
-  getCustomTitleForVergunningWithLicensePlates,
+  getCustomTitleForDecosZaakWithLicensePlates,
   getDecosZaakTypeFromSource,
   hasInvalidDecision,
-  hasOtherActualVergunningOfSameType,
+  hasOtherActualDecosZaakOfSameType,
   isExcludedFromTransformation,
   isExpired,
   isNearEndDate,
@@ -18,103 +14,105 @@ import {
   transformKenteken,
 } from './helpers';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { TouringcarDagontheffing } from '../vergunningen-v2/config-and-types';
+import { decosCaseToZaakTransformers } from '../vergunningen-v2/decos-zaken';
 
-describe('helpers/Vergunningen', () => {
+describe('helpers/decos', () => {
   vi.useFakeTimers();
   vi.setSystemTime(new Date('2022-10-06'));
 
   test('isNearEndDate', () => {
     {
       // No end date
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: null,
       };
-      expect(isNearEndDate(vergunning)).toBe(false);
+      expect(isNearEndDate(decosZaak)).toBe(false);
     }
     {
       // Near end
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: '2022-10-28',
       };
-      expect(isNearEndDate(vergunning)).toBe(true);
+      expect(isNearEndDate(decosZaak)).toBe(true);
     }
     {
       // Not near end
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: '2023-10-28',
       };
-      expect(isNearEndDate(vergunning)).toBe(false);
+      expect(isNearEndDate(decosZaak)).toBe(false);
     }
   });
 
   test('isExpired', () => {
     {
       // Not expired
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: '2023-10-28',
       };
-      expect(isExpired(vergunning)).toBe(false);
+      expect(isExpired(decosZaak)).toBe(false);
     }
     {
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: '2022-10-07',
       };
-      expect(isExpired(vergunning)).toBe(false);
+      expect(isExpired(decosZaak)).toBe(false);
     }
     {
       // Is expired
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: '2022-10-06',
       };
-      expect(isExpired(vergunning)).toBe(true);
+      expect(isExpired(decosZaak)).toBe(true);
     }
     {
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: '2022-10-06',
       };
-      expect(isExpired(vergunning)).toBe(true);
+      expect(isExpired(decosZaak)).toBe(true);
     }
     {
-      const vergunning: any = {
+      const decosZaak: any = {
         dateEnd: '2022-09-28',
       };
-      expect(isExpired(vergunning)).toBe(true);
+      expect(isExpired(decosZaak)).toBe(true);
     }
   });
 
-  test('hasOtherActualVergunningOfSameType', () => {
-    const vergunning: any = {
+  test('hasOtherActualDecosZaakOfSameType', () => {
+    const decosZaak: any = {
       caseType: 'test1',
       dateEnd: null,
       identifier: 'xx1',
     };
 
     {
-      const vergunningen: any = [
+      const decosZaken: any = [
         { caseType: 'test1', dateEnd: null, identifier: 'xx2' },
-        vergunning,
+        decosZaak,
       ];
 
-      expect(hasOtherActualVergunningOfSameType(vergunningen, vergunning)).toBe(
+      expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
         true
       );
     }
 
     {
-      const vergunningen: any = [vergunning];
+      const decosZaken: any = [decosZaak];
 
-      expect(hasOtherActualVergunningOfSameType(vergunningen, vergunning)).toBe(
+      expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
         false
       );
     }
 
     {
-      const vergunningen: any = [
+      const decosZaken: any = [
         { caseType: 'test1', dateEnd: '2022-05-06', identifier: 'xx2' },
-        vergunning,
+        decosZaak,
       ];
 
-      expect(hasOtherActualVergunningOfSameType(vergunningen, vergunning)).toBe(
+      expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
         false
       );
     }
@@ -234,7 +232,7 @@ describe('helpers/Vergunningen', () => {
       expect(
         isExcludedFromTransformation(
           { fields: { subject1: '*verwijder' } } as DecosZaakSource,
-          decosZaakTransformers[CaseTypeV2.AanbiedenDiensten]
+          decosCaseToZaakTransformers[CaseTypeV2.AanbiedenDiensten]
         )
       ).toBe(true);
     });
@@ -243,7 +241,7 @@ describe('helpers/Vergunningen', () => {
       expect(
         isExcludedFromTransformation(
           { fields: { dfunction: 'buiten behandeling' } } as DecosZaakSource,
-          decosZaakTransformers[CaseTypeV2.AanbiedenDiensten]
+          decosCaseToZaakTransformers[CaseTypeV2.AanbiedenDiensten]
         )
       ).toBe(true);
     });
@@ -258,7 +256,7 @@ describe('helpers/Vergunningen', () => {
               text12: 'wacht op online betaling',
             },
           } as DecosZaakSource,
-          decosZaakTransformers[CaseTypeV2.WVOS]
+          decosCaseToZaakTransformers[CaseTypeV2.WVOS]
         )
       ).toBe(true);
     });
@@ -271,7 +269,7 @@ describe('helpers/Vergunningen', () => {
               text45: CaseTypeV2.WVOS,
             },
           } as DecosZaakSource,
-          { ...decosZaakTransformers[CaseTypeV2.WVOS], isActive: false }
+          { ...decosCaseToZaakTransformers[CaseTypeV2.WVOS], isActive: false }
         )
       ).toBe(true);
     });
@@ -284,7 +282,7 @@ describe('helpers/Vergunningen', () => {
               text45: CaseTypeV2.WVOS,
             },
           } as DecosZaakSource,
-          { ...decosZaakTransformers[CaseTypeV2.WVOS] }
+          { ...decosCaseToZaakTransformers[CaseTypeV2.WVOS] }
         )
       ).toBe(false);
     });
@@ -304,7 +302,7 @@ describe('helpers/Vergunningen', () => {
   describe('getCustomTitleForVergunningWithLicensePlates', () => {
     test('Single kenteken title', () => {
       expect(
-        getCustomTitleForVergunningWithLicensePlates({
+        getCustomTitleForDecosZaakWithLicensePlates({
           title: 'blaap',
           kentekens: 'AA-BB-CC',
         } as TouringcarDagontheffing)
@@ -313,7 +311,7 @@ describe('helpers/Vergunningen', () => {
 
     test('Multiple kenteken title', () => {
       expect(
-        getCustomTitleForVergunningWithLicensePlates({
+        getCustomTitleForDecosZaakWithLicensePlates({
           title: 'blaap',
           kentekens: 'AA-BB-CC | DDD-EE-F | ZZ-XX-00 | THJ-789-I',
         } as TouringcarDagontheffing)

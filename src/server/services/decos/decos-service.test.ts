@@ -1,20 +1,21 @@
 import uid from 'uid-safe';
 
 import {
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
-} from '../vergunningen-v2/config-and-types';
-import {
   fetchDecosDocumentList,
-  fetchDecosVergunningen,
+  fetchDecosZaken,
   fetchDecosWorkflowDate,
   fetchDecosZakenFromSource,
   forTesting,
 } from './decos-service';
+import {
+  DecosDocumentSource,
+  DecosZaakSource,
+  DecosZakenResponse,
+} from './decos-types';
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { decosZaakTransformers } from '../vergunningen-v2/decos-zaken';
 
 const zakenSource = {
   count: 1,
@@ -321,9 +322,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('Booksearch failed');
 
-      const responseData = await fetchDecosVergunningen(
+      const responseData = await fetchDecosZaken(
         reqID,
-        authProfileAndToken
+        authProfileAndToken,
+        decosZaakTransformers
       );
 
       expect(responseData).toMatchInlineSnapshot(`
@@ -350,9 +352,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
-      const responseData = await fetchDecosVergunningen(
+      const responseData = await fetchDecosZaken(
         reqID,
-        authProfileAndToken
+        authProfileAndToken,
+        decosZaakTransformers
       );
 
       expect(responseData.status).toBe('OK');
@@ -598,6 +601,7 @@ describe('decos-service', () => {
 
       const transformed = await forTesting.transformDecosZaakResponse(
         reqID,
+        decosZaakTransformers,
         zakenSource.content[0]
       );
 
@@ -629,6 +633,7 @@ describe('decos-service', () => {
 
       const transformed = await forTesting.transformDecosZaakResponse(
         reqID,
+        decosZaakTransformers,
         zaak
       );
       expect(transformed).toBe(null);
@@ -641,6 +646,7 @@ describe('decos-service', () => {
 
       const transformed = await forTesting.transformDecosZaakResponse(
         reqID,
+        decosZaakTransformers,
         zaak
       );
       expect(transformed).not.toBe(null);
@@ -662,6 +668,7 @@ describe('decos-service', () => {
 
       const transformed = await forTesting.transformDecosZaakResponse(
         reqID,
+        decosZaakTransformers,
         zaak
       );
       expect(transformed?.decision).toBe('Zie besluit');
@@ -682,6 +689,7 @@ describe('decos-service', () => {
       });
       const zakenTransformed = await forTesting.transformDecosZakenResponse(
         reqID,
+        decosZaakTransformers,
         zaken
       );
       expect(

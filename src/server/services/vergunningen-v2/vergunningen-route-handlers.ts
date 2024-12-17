@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { DecosZaakSource } from './config-and-types';
+import { DecosZaakSource } from '../decos/decos-types';
 import {
   fetchDecosZaakFromSource,
   fetchDecosZakenFromSource,

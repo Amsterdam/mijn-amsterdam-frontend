@@ -6,10 +6,10 @@ import {
   NotificationLabelByType,
   NotificationLabels,
   NotificationProperty,
-  VergunningFilter,
   VergunningFrontendV2,
 } from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+import { ZakenFilter } from '../decos/decos-types';
+import { decosCaseToZaakTransformers } from './decos-zaken';
 import { isNearEndDate } from '../decos/helpers';
 import {
   FILTER_VERGUNNINGEN_DEFAULT,
@@ -86,7 +86,7 @@ export function createVergunningNotification(
   vergunningen: VergunningFrontendV2[],
   thema: Thema
 ): MyNotification | null {
-  const zaakTypeTransformer = decosZaakTransformers[vergunning.caseType];
+  const zaakTypeTransformer = decosCaseToZaakTransformers[vergunning.caseType];
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
@@ -126,14 +126,12 @@ async function fetchVergunningenV2Notifications_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
-  filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT,
   thema: Thema = Themas.VERGUNNINGEN
 ) {
   const VERGUNNINGEN = await fetchVergunningenV2(
     requestID,
     authProfileAndToken,
-    appRoute,
-    filter
+    appRoute
   );
 
   if (VERGUNNINGEN.status === 'OK') {

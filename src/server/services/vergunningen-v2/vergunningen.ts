@@ -4,15 +4,15 @@ import slug from 'slugme';
 
 import {
   EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
-  VergunningCaseTypeFilter,
-  VergunningDocument,
-  VergunningFilter,
+  VergunningBase,
   VergunningFrontendV2,
-  VergunningV2,
 } from './config-and-types';
+import { DecosZaakDocument, ZakenFilter } from '../decos/decos-types';
+import { VergunningV2 } from './config-and-types';
 import {
-  fetchDecosVergunning,
-  fetchDecosVergunningen,
+  fetchDecosZaak,
+  fetchDecosZaken,
+  fetchDecosZaken_,
 } from '../decos/decos-service';
 import { isExpired, toDateFormatted } from '../decos/helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
@@ -25,9 +25,13 @@ import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt'
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
+import {
+  decosCaseToZaakTransformers,
+  decosZaakTransformers,
+} from './decos-zaken';
 
-export const FILTER_VERGUNNINGEN_DEFAULT: VergunningFilter = (
-  vergunning: VergunningV2
+export const FILTER_VERGUNNINGEN_DEFAULT: ZakenFilter = (
+  vergunning: VergunningBase
 ) => {
   return !EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
     vergunning.caseType
@@ -85,19 +89,19 @@ function transformVergunningFrontend(
   return vergunningFrontend;
 }
 
-async function fetchAndFilterVergunningenV2_(
+async function fetchVergunningenV2_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  appRoute: AppRoute,
-  caseTypeFilter?: VergunningCaseTypeFilter
+  appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
 ) {
-  const response = await fetchDecosVergunningen(requestID, authProfileAndToken);
+  const response = await fetchDecosZaken_(
+    requestID,
+    authProfileAndToken,
+    decosZaakTransformers
+  );
 
   if (response.status === 'OK') {
     let decosVergunningen = response.content;
-    if (caseTypeFilter) {
-      decosVergunningen = decosVergunningen.filter(caseTypeFilter);
-    }
     const vergunningenFrontend: VergunningFrontendV2[] = decosVergunningen.map(
       (vergunning) =>
         transformVergunningFrontend(
@@ -112,31 +116,14 @@ async function fetchAndFilterVergunningenV2_(
   return response;
 }
 
-export const fetchAndFilterVergunningenV2 = memoizee(
-  fetchAndFilterVergunningenV2_,
-  {
-    maxAge: DEFAULT_API_CACHE_TTL_MS,
-    length: 4,
-  }
-);
+export const fetchVergunningenV2 = memoizee(fetchVergunningenV2_, {
+  maxAge: DEFAULT_API_CACHE_TTL_MS,
+  length: 4,
+});
 
-export async function fetchVergunningenV2(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
-  filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT
-) {
-  return fetchAndFilterVergunningenV2(
-    requestID,
-    authProfileAndToken,
-    appRoute,
-    filter
-  );
-}
-
-function addEncryptedDocumentIdToUrl(
+function setEncryptedDocumentDownloadUrl(
   sessionID: SessionID,
-  document: VergunningDocument
+  document: DecosZaakDocument
 ) {
   const documentIdEncrypted = encryptSessionIdWithRouteIdParam(
     sessionID,
@@ -163,20 +150,24 @@ export async function fetchVergunningV2(
   );
 
   if (decryptResult.status === 'OK') {
-    const response = await fetchDecosVergunning(
+    const response = await fetchDecosZaak(
       requestID,
+      decosZaakTransformers,
       decryptResult.content
     );
-    if (response.status === 'OK' && response.content?.vergunning) {
-      const { vergunning, documents } = response.content;
+    if (response.status === 'OK' && response.content?.decosZaak) {
+      const { decosZaak, documents } = response.content;
       const documentsTransformed = documents.map((document) =>
-        addEncryptedDocumentIdToUrl(authProfileAndToken.profile.sid, document)
+        setEncryptedDocumentDownloadUrl(
+          authProfileAndToken.profile.sid,
+          document
+        )
       );
 
       return apiSuccessResult({
         vergunning: transformVergunningFrontend(
           authProfileAndToken.profile.id,
-          vergunning,
+          decosZaak,
           AppRoutes['VERGUNNINGEN/DETAIL']
         ),
         documents: documentsTransformed,

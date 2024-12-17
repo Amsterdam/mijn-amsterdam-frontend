@@ -1,14 +1,18 @@
-import { ApiResponse } from '../../../universal/helpers/api';
-import {
-  GenericDocument,
-  LinkProps,
-  ZaakDetail,
-} from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types';
 import {
   CaseTypeV2,
   DecosCaseType,
   GetCaseType,
 } from '../../../universal/types/vergunningen';
+import {
+  DecosZaakBase,
+  DecosZaakWithDateRange,
+  DecosZaakWithKentekens,
+  DecosZaakWithLocation,
+  DecosZaakWithDateTimeRange,
+  ZaakStatus,
+  ZakenFilter,
+} from '../decos/decos-types';
 
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
@@ -39,233 +43,16 @@ export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 = 'nogniet';
 export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
   'wacht op online betaling';
 
-const adresBoekenBSN =
-  process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
-
-const adresBoekenKVK =
-  process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK?.split(',') ?? [];
-
-export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
-  private: adresBoekenBSN,
-  commercial: adresBoekenKVK,
-  'private-attributes': [],
-};
-
-export const MA_DECISION_DEFAULT = 'Zie besluit';
-
-export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
-export type DecosZaakID = string;
-export type ZaakStatus =
-  | 'Ontvangen'
-  | 'In behandeling'
-  | 'Afgehandeld'
-  | string;
-
-type MADecision = string;
-type DecosDecision = string;
-
-export type DecosFieldNameSource = string;
-export type DecosFieldValue = string | number | boolean | null;
-
-type DecosTransformerOptions<T extends VergunningV2 = VergunningV2> = {
-  zaakTypeTransformer?: DecosZaakTypeTransformer<T>;
-  fetchDecosWorkflowDate?: (
-    stepTitle: DecosWorkflowStepTitle
-  ) => Promise<ApiResponse<string | null>>;
-};
-
-export type DecosFieldTransformer<T extends VergunningV2 = VergunningV2> = {
-  name: keyof T;
-  transform?: (
-    input: any,
-    options?: DecosTransformerOptions<T>
-  ) => DecosFieldValue;
-};
-
-export type DecosZaakTypeTransformer<T extends VergunningV2 = VergunningV2> = {
-  // The caseType (zaaktype) of the sourceData.
-  caseType: DecosCaseType;
-  // Title of the VergunningV2, mostly a slightly different variant of the $caseType
-  title: string;
-  // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
-  // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
-  // For example String operations like, trim, split, uppercase etc.
-  transformFields?: Partial<DecosFieldTransformerObject<T>>;
-  // After transform is used to perform additional transformations after the initial transform.
-  // Business logic is implemented at this point, also async calls to other services to enrich the data can be done here.
-  afterTransform?: (
-    vergunning: T,
-    decosZaakSource: DecosZaakSource,
-    options?: DecosTransformerOptions<T>
-  ) => Promise<T>;
-  // A function to check if the source data quality and/or prerequisites for showing the data to the user are valid.
-  // This function is run before transformation of the zaak.
-  hasValidSourceData?: (decosZaakSource: DecosZaakSource) => boolean;
-  // Indicate if the zaak requires payment to be processed and complete. This function is run before transformation of the zaak.
-  requirePayment?: boolean;
-  // Decision (resultaat) values are generalized here. For example. The sourceValues can be one of: `Toegekend met borden`, `Toegekend zonder dingen` which we want to show to the user as `Toegekend`.
-  decisionTranslations?: Record<MADecision, DecosDecision[]>;
-  // The title of the workflow step that is used to find a date for the InBehandeling status.
-  dateInBehandelingWorkflowStepTitle?: string;
-  // Indicates if the Zaak should be shown to the user / is expected to be transformed.
-  isActive: boolean;
-  // Initially we request a set of fields to be included in the responseData (?select=). For some cases we need a (few) custom field(s) included in the initial response.
-  // For example to show a kenteken in the Notifications. Sadly the requested fields cannot be specified on a case basis.
-  // This means even though we do not want, for example, date7 for case A we will receive it anyway.
-  // We select a specific set of fields because otherwise we receive all the fields of a zaak which are bloated and mostly unused.
-  addToSelectFieldsBase?: string[];
-  // Notifications for this specific
-  notificationLabels?: Partial<NotificationLabelByType>;
-};
-
-type DecosZaakBase = {
-  // status
-  title: string;
-  // caseType
-  text45: DecosCaseType | string;
-  // decision
-  dfunction?: string | null;
-  // identifier / zaaknummer
-  mark: string;
-  // processed
-  processed: boolean;
-  // dateDecision
-  date5?: string | null;
-  // dateRequest
-  document_date: string;
-  // dateStart
-  date6?: string | null;
-  // dateEnd
-  date7?: string | null;
-
-  subject1?: string;
-  // Info regarding possible payment
-  text11?: string | null;
-  // Info regarding possible payment
-  text12?: string | null;
-};
-
-type DecosDocumentBase = {
-  text39: string;
-  text40: string;
-  text41: string;
-  // identifier / zaaknummer
-  mark: string;
-  // datePublished
-  received_date: string;
-};
-
-type DecosDocumentBlobBase = {
-  // IS PDF
-  bol10: boolean;
-};
-
-export type DecosFieldsObject = Record<
-  DecosFieldNameSource,
-  string | boolean | null | number
->;
-
-export type DecosFieldTransformerObject<T extends VergunningV2 = VergunningV2> =
-  Record<DecosFieldNameSource, DecosFieldTransformer<T> | keyof T>;
-
-export type DecosZaakSource = {
-  key: DecosZaakID;
-  links: string[];
-  fields: DecosZaakBase & DecosFieldsObject;
-};
-
-export type DecosDocumentSource = {
-  key: DecosZaakID;
-  links: string[];
-  fields: DecosDocumentBase & DecosFieldsObject;
-};
-
-export type DecosDocumentBlobSource = {
-  key: DecosZaakID;
-  links: string[];
-  fields: DecosDocumentBlobBase & DecosFieldsObject;
-};
-
-export type DecosZakenResponse<T = DecosZaakSource[]> = {
-  count: number;
-  content: T;
-};
-
-export type DecosResponse<T> = {
-  itemDataResultSet: {
-    content: T[];
-  };
-};
-
-export type VergunningCaseTypeFilter = (vergunning: VergunningV2) => boolean;
-
-export type AddressBookEntry = {
-  key: string;
-};
-
-export type DecosWorkflowStepTitle = string;
-export type DecosWorkflowStepDate = string;
-
-export interface VergunningBase {
-  caseType: DecosCaseType;
-  dateDecision: string | null;
-  dateInBehandeling: string | null;
-  dateRequest: string;
-
-  // DateStart and DateEnd are not applicable to every single vergunning but general enough to but in base Type.
-  dateStart: string | null;
-  dateEnd: string | null;
-
-  decision: string | null;
-  description: string;
-
-  // Url to BFF Detail paga api
-  fetchUrl: string;
-
-  identifier: ZaakKenmerk;
-  title: string;
-  id: string;
-
-  // Decos key (uuid) used as primary id's in api communication.
-  key: string;
-
-  processed: boolean;
-  status: ZaakStatus;
-
-  paymentStatus: string | null;
-  paymentMethod: string | null;
-}
-
-export interface VergunningWithLocation extends VergunningBase {
-  location: string | null;
-}
-
-export interface VergunningWithKentekens extends VergunningBase {
-  kentekens: string | null;
-}
-
-export interface VergunningWithDateRange extends VergunningBase {
-  dateStart: string | null;
-  dateEnd: string | null;
-}
-
-export interface VergunningWithTimeRange extends VergunningBase {
-  timeStart: string | null;
-  timeEnd: string | null;
-}
-
-export interface VergunningWithDateTimeRange
-  extends VergunningWithDateRange,
-    VergunningWithTimeRange {}
+export type VergunningBase = DecosZaakBase;
 
 export interface TVMRVVObject
-  extends VergunningWithLocation,
-    VergunningWithDateTimeRange,
-    VergunningWithKentekens {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateTimeRange,
+    DecosZaakWithKentekens {
   caseType: GetCaseType<'TVMRVVObject'>;
 }
 
-export interface GPK extends VergunningWithLocation {
+export interface GPK extends DecosZaakWithLocation {
   caseType: GetCaseType<'GPK'>;
   cardType: 'driver' | 'passenger';
   cardNumber: number | null;
@@ -273,44 +60,44 @@ export interface GPK extends VergunningWithLocation {
   requestReason: string | null;
 }
 
-export interface GPP extends VergunningWithLocation {
+export interface GPP extends DecosZaakWithLocation {
   caseType: GetCaseType<'GPP'>;
   kentekens: string | null;
 }
 
 export interface EvenementMelding
-  extends VergunningWithLocation,
-    VergunningWithDateTimeRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateTimeRange {
   caseType: GetCaseType<'EvenementMelding'>;
 }
 
 export interface EvenementVergunning
-  extends VergunningWithLocation,
-    VergunningWithDateTimeRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateTimeRange {
   caseType: GetCaseType<'EvenementVergunning'>;
 }
 
-export interface Omzettingsvergunning extends VergunningWithLocation {
+export interface Omzettingsvergunning extends DecosZaakWithLocation {
   caseType: GetCaseType<'Omzettingsvergunning'>;
   dateInBehandeling: string | null;
 }
 
 export interface ERVV
-  extends VergunningWithLocation,
-    VergunningWithDateTimeRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateTimeRange {
   caseType: GetCaseType<'ERVV'>;
 }
 
 export interface VakantieverhuurVergunningaanvraag
-  extends VergunningWithLocation,
-    VergunningWithDateRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'VakantieverhuurVergunningaanvraag'>;
   title: 'VergunningV2 vakantieverhuur';
   decision: 'Verleend' | 'Ingetrokken';
 }
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
-export interface BZB extends VergunningWithDateRange {
+export interface BZB extends DecosZaakWithDateRange {
   caseType: GetCaseType<'BZB'>;
   companyName: string | null;
   numberOfPermits: string | null;
@@ -318,47 +105,47 @@ export interface BZB extends VergunningWithDateRange {
 }
 
 // BZP is short for Parkeerontheffingen Blauwe zone particulieren
-export interface BZP extends VergunningWithDateRange, VergunningWithKentekens {
+export interface BZP extends DecosZaakWithDateRange, DecosZaakWithKentekens {
   caseType: GetCaseType<'BZP'>;
   kentekens: string | null;
   decision: string | null;
 }
 
 export interface Flyeren
-  extends VergunningWithLocation,
-    VergunningWithDateTimeRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateTimeRange {
   caseType: GetCaseType<'Flyeren'>;
   decision: 'Verleend' | 'Niet verleend' | 'Ingetrokken';
 }
 
 export interface AanbiedenDiensten
-  extends VergunningWithLocation,
-    VergunningWithDateRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'AanbiedenDiensten'>;
 }
 
 export interface Nachtwerkontheffing
-  extends VergunningWithLocation,
-    VergunningWithDateTimeRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateTimeRange {
   caseType: GetCaseType<'NachtwerkOntheffing'>;
 }
 
 export interface ZwaarVerkeer
-  extends VergunningWithKentekens,
-    VergunningWithDateRange {
+  extends DecosZaakWithKentekens,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'ZwaarVerkeer'>;
   exemptionKind: string | null;
 }
 
 export interface RVVHeleStad
-  extends VergunningWithKentekens,
-    VergunningWithDateRange {
+  extends DecosZaakWithKentekens,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'RVVHeleStad'>;
 }
 
 export interface RVVSloterweg
-  extends VergunningWithKentekens,
-    VergunningWithDateRange {
+  extends DecosZaakWithKentekens,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'RVVSloterweg'>;
   vorigeKentekens: string | null;
   dateWorkflowVerleend: string | null;
@@ -369,49 +156,49 @@ export interface RVVSloterweg
 }
 
 export interface TouringcarDagontheffing
-  extends VergunningWithKentekens,
-    VergunningWithDateTimeRange {
+  extends DecosZaakWithKentekens,
+    DecosZaakWithDateTimeRange {
   caseType: GetCaseType<'TouringcarDagontheffing'>;
   destination: string | null;
 }
 
 export interface TouringcarJaarontheffing
-  extends VergunningWithKentekens,
-    VergunningWithDateRange {
+  extends DecosZaakWithKentekens,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'TouringcarJaarontheffing'>;
   destination: string | null;
   routetest: boolean;
 }
 
-export interface Samenvoegingsvergunning extends VergunningWithLocation {
+export interface Samenvoegingsvergunning extends DecosZaakWithLocation {
   caseType: GetCaseType<'Samenvoegingsvergunning'>;
 }
 
-export interface Onttrekkingsvergunning extends VergunningWithLocation {
+export interface Onttrekkingsvergunning extends DecosZaakWithLocation {
   caseType: GetCaseType<'Onttrekkingsvergunning'>;
 }
 
-export interface OnttrekkingsvergunningSloop extends VergunningWithLocation {
+export interface OnttrekkingsvergunningSloop extends DecosZaakWithLocation {
   caseType: GetCaseType<'OnttrekkingsvergunningSloop'>;
 }
 
-export interface VormenVanWoonruimte extends VergunningWithLocation {
+export interface VormenVanWoonruimte extends DecosZaakWithLocation {
   caseType: GetCaseType<'VormenVanWoonruimte'>;
 }
 
-export interface Splitsingsvergunning extends VergunningWithLocation {
+export interface Splitsingsvergunning extends DecosZaakWithLocation {
   caseType: GetCaseType<'Splitsingsvergunning'>;
 }
 
 export interface ExploitatieHorecabedrijf
-  extends VergunningWithLocation,
-    VergunningWithDateRange {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'ExploitatieHorecabedrijf'>;
   dateStartPermit: string | null;
   numberOfPermits: string | null;
 }
 
-export interface Ligplaatsvergunning extends VergunningWithLocation {
+export interface Ligplaatsvergunning extends DecosZaakWithLocation {
   caseType: GetCaseType<'VOB'>;
   requestKind: string | null;
   reason: string | null;
@@ -436,8 +223,8 @@ export type EigenParkeerplaatsRequestType =
 
 export interface EigenParkeerplaats
   extends VergunningBase,
-    VergunningWithKentekens,
-    VergunningWithDateRange {
+    DecosZaakWithKentekens,
+    DecosZaakWithDateRange {
   caseType: GetCaseType<'EigenParkeerplaats'>;
   vorigeKentekens: string | null;
   requestTypes: EigenParkeerplaatsRequestType[];
@@ -462,9 +249,9 @@ export type WVOSActiviteit =
   | 'Filmen';
 
 export interface WerkzaamhedenEnVervoerOpStraat
-  extends VergunningWithLocation,
-    VergunningWithDateRange,
-    VergunningWithKentekens {
+  extends DecosZaakWithLocation,
+    DecosZaakWithDateRange,
+    DecosZaakWithKentekens {
   caseType: GetCaseType<'WVOS'>;
   werkzaamheden: WVOSActiviteit[];
 }
@@ -506,14 +293,10 @@ export type VergunningenSourceData = {
   status: 'OK' | 'ERROR';
 };
 
-export type VergunningExpirable = VergunningV2 & { dateEnd?: string | null };
-
-export type VergunningDocument = GenericDocument & { key: string };
-
-export type VergunningenData = VergunningV2[];
+export type DecosZaakExpirable = VergunningV2 & { dateEnd?: string | null };
 
 export interface VergunningOptions {
-  filter?: (vergunning: VergunningV2) => boolean;
+  filter?: ZakenFilter;
   appRoute: string | ((vergunning: VergunningV2) => string);
 }
 
@@ -525,8 +308,6 @@ export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
   dateEndFormatted?: string | null;
   isExpired?: boolean;
 } & ZaakDetail;
-
-export type VergunningFilter = (vergunning: VergunningV2) => boolean;
 
 export type NotificationProperty =
   | 'title'
