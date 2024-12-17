@@ -324,7 +324,7 @@ function getEMandateSourceByAcceptant(
   acceptant: AfisEMandateAcceptant
 ): AfisEMandateSource | undefined {
   return sourceMandates.find((eMandateSource) => {
-    // TODO: Find out if the debtorId is the acceptant id?!??!?!?
+    // TODO: Find out / Confirm if the debtorId is the acceptant id?!??!?!?
     return eMandateSource.SndDebtorId === getSndDebtorId(acceptant);
   });
 }
