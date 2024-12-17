@@ -650,12 +650,8 @@ describe('decos-service', () => {
         zaak
       );
       expect(transformed).not.toBe(null);
-      expect(transformed !== null && 'werkzaamheden' in transformed).toBe(true);
-      expect(
-        transformed !== null && 'werkzaamheden' in transformed
-          ? transformed.werkzaamheden
-          : []
-      ).toStrictEqual([
+      expect(transformed!).toHaveProperty('werkzaamheden');
+      expect((transformed as any).werkzaamheden).toStrictEqual([
         'Werkzaamheden verrichten in de nacht',
         'Verhuizing tussen twee locaties binnen Amsterdam',
       ]);
@@ -672,6 +668,16 @@ describe('decos-service', () => {
         zaak
       );
       expect(transformed?.decision).toBe('Zie besluit');
+    });
+
+    test('Null response when no valid transformer', async () => {
+      const zaak: DecosZaakSource = jsonCopy(zakenSource.content[0]);
+      const transformed = await forTesting.transformDecosZaakResponse(
+        reqID,
+        [],
+        zaak
+      );
+      expect(transformed).toBe(null);
     });
   });
 
@@ -695,6 +701,16 @@ describe('decos-service', () => {
       expect(
         zakenTransformed.map(({ identifier }) => identifier)
       ).toStrictEqual(['3 - xxx', '2 - xxx', '1 - xxx', '0 - xxx']);
+    });
+
+    test('Empty response when no valid transformer', async () => {
+      const zaak: DecosZaakSource = jsonCopy(zakenSource.content[0]);
+      const zakenTransformed = await forTesting.transformDecosZakenResponse(
+        reqID,
+        [],
+        [zaak]
+      );
+      expect(zakenTransformed).toStrictEqual([]);
     });
   });
 });
