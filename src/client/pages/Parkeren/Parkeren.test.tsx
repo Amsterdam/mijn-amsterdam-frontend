@@ -8,13 +8,97 @@ import { AppState } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
-import Parkeren from './Parkeren';
+import { Parkeren } from './Parkeren';
+import { forTesting } from './Parkeren';
 import { appStateAtom } from '../../hooks/useAppState';
+
+const linkButtonTxt = 'Ga naar Mijn Parkeren';
+const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';
+
+describe('Parkeren', () => {
+  const routeEntry = generatePath(AppRoutes.PARKEREN);
+  const routePath = AppRoutes.PARKEREN;
+
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Parkeren}
+        initializeState={initializeState}
+      />
+    );
+  }
+
+  function initializeState(snapshot: MutableSnapshot) {
+    snapshot.set(appStateAtom, testState);
+  }
+  beforeAll(() => {
+    window.scrollTo = vi.fn();
+  });
+
+  it('should render the component and show the correct title', () => {
+    render(<Component />);
+
+    expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
+  });
+
+  it('should contain the correct links', () => {
+    render(<Component />);
+
+    expect(
+      screen.getByText('Meer over parkeervergunningen')
+    ).toBeInTheDocument();
+
+    expect(screen.getByText(linkButtonTxt)).toBeInTheDocument();
+  });
+
+  it('should display the list of parkeervergunningen', async () => {
+    const screen = render(<Component />);
+    expect(screen.asFragment()).toMatchSnapshot();
+
+    await waitFor(() => {
+      expect(screen.getByText('Vergunning 1')).toBeInTheDocument();
+      expect(screen.getByText('Vergunning 2')).toBeInTheDocument();
+    });
+  });
+});
+
+describe('determinePageContentTop', () => {
+  function determinePageContentTop(
+    hasMijnParkerenVergunningen: boolean,
+    parkerenUrlSSO: string
+  ) {
+    function Component() {
+      return forTesting.determinePageContentTop(
+        hasMijnParkerenVergunningen,
+        parkerenUrlSSO
+      );
+    }
+    return Component;
+  }
+
+  test('Renders button with parkeer vergunningen', () => {
+    const PageContentTop = determinePageContentTop(true, EXTERNAL_PARKEREN_URL);
+    const screen = render(<PageContentTop />);
+    expect(screen.queryByText(linkButtonTxt)).toBeInTheDocument();
+  });
+
+  test('Does not render link when only vergunningen from another source then parkeren are present', () => {
+    const PageContentTop = determinePageContentTop(
+      false,
+      EXTERNAL_PARKEREN_URL
+    );
+    const screen = render(<PageContentTop />);
+    expect(screen.queryByText(linkButtonTxt)).not.toBeInTheDocument();
+  });
+});
 
 const testState = {
   PARKEREN: {
     content: {
-      url: 'https://parkeervergunningen.amsterdam.nl/',
+      url: EXTERNAL_PARKEREN_URL,
+      isKnown: true,
     },
   },
   VERGUNNINGENv2: {
@@ -73,51 +157,3 @@ const testState = {
     ],
   },
 } as unknown as AppState;
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
-
-describe('Parkeren', () => {
-  beforeAll(() => {
-    (window.scrollTo as any) = vi.fn();
-  });
-
-  const routeEntry = generatePath(AppRoutes.PARKEREN);
-  const routePath = AppRoutes.PARKEREN;
-
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Parkeren}
-      initializeState={initializeState}
-    />
-  );
-
-  it('should render the component and show the correct title', () => {
-    render(<Component />);
-
-    expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
-  });
-
-  it('should contain the correct links', () => {
-    render(<Component />);
-
-    expect(
-      screen.getByText('Meer over parkeervergunningen')
-    ).toBeInTheDocument();
-
-    expect(screen.getByText('Log in op Mijn Parkeren')).toBeInTheDocument();
-  });
-
-  it('should display the list of parkeervergunningen', async () => {
-    const screen = render(<Component />);
-    expect(screen.asFragment()).toMatchSnapshot();
-
-    await waitFor(() => {
-      expect(screen.getByText('Vergunning 1')).toBeInTheDocument();
-      expect(screen.getByText('Vergunning 2')).toBeInTheDocument();
-    });
-  });
-});

@@ -4,7 +4,7 @@
 ########################################################################################################################
 ########################################################################################################################
 
-FROM node:23.2.0 AS updated-local
+FROM node:23.4.0 AS updated-local
 
 ENV TZ=Europe/Amsterdam
 ENV CI=true
@@ -104,9 +104,6 @@ ENV REACT_APP_SSO_URL_MILIEUZONE=$REACT_APP_SSO_URL_MILIEUZONE
 
 ARG REACT_APP_SSO_URL_SVWI=
 ENV REACT_APP_SSO_URL_SVWI=$REACT_APP_SSO_URL_SVWI
-
-ARG REACT_APP_SSO_URL_PARKEREN=
-ENV REACT_APP_SSO_URL_PARKEREN=$REACT_APP_SSO_URL_PARKEREN
 
 
 COPY public /build-space/public

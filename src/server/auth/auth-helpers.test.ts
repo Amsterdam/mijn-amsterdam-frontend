@@ -25,7 +25,6 @@ import {
   ResponseMock,
 } from '../../testing/utils';
 import { ONE_MINUTE_SECONDS } from '../config/app';
-import * as blacklist from '../services/session-blacklist';
 
 describe('auth-helpers', () => {
   test('isSessionCookieName', () => {
@@ -198,13 +197,10 @@ describe('auth-helpers', () => {
 
     const resMock = ResponseMock.new();
 
-    const addToBlackListSpy = vi.spyOn(blacklist, 'addToBlackList');
-
     const nowInSeconds = millisecondsToSeconds(Date.now());
 
     beforeEach(() => {
       resMock.oidc.logout.mockClear();
-      addToBlackListSpy.mockClear();
     });
 
     test('Authenticated IDP logout calls oidc.logout', async () => {
@@ -222,10 +218,6 @@ describe('auth-helpers', () => {
         },
         returnTo: 'http://foo.bar',
       });
-
-      expect(addToBlackListSpy).toHaveBeenCalledWith(
-        authProfileAndToken.profile.sid
-      );
     });
 
     test('Expired authenticated IDP logout should not call oidc.logout', async () => {
@@ -236,17 +228,34 @@ describe('auth-helpers', () => {
 
       await handler(reqMock, resMock);
 
+      expect(reqMock[OIDC_SESSION_COOKIE_NAME]).toBeUndefined();
+      expect(resMock.clearCookie).toHaveBeenCalledWith(
+        OIDC_SESSION_COOKIE_NAME,
+        {
+          path: '/',
+          secure: true,
+          sameSite: 'lax',
+          httpOnly: true,
+        }
+      );
+
       expect(resMock.oidc.logout).not.toHaveBeenCalled();
-      expect(addToBlackListSpy).not.toHaveBeenCalled();
     });
 
     test('Local logout should not call oidc.logout', async () => {
       const handler2 = createLogoutHandler('http://foo.bar', false);
       await handler2(reqMock, resMock);
 
-      expect(resMock.clearCookie).toHaveBeenCalled();
+      expect(resMock.clearCookie).toHaveBeenCalledWith(
+        OIDC_SESSION_COOKIE_NAME,
+        {
+          path: '/',
+          secure: true,
+          sameSite: 'lax',
+          httpOnly: true,
+        }
+      );
       expect(resMock.redirect).toHaveBeenCalledWith('http://foo.bar');
-      expect(addToBlackListSpy).not.toHaveBeenCalled();
     });
   });
 

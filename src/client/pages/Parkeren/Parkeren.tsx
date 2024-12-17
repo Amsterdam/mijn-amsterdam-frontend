@@ -1,4 +1,4 @@
-import { Alert, Button, Icon, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router-dom';
 
@@ -6,19 +6,20 @@ import { useParkerenData } from './useParkerenData.hook';
 import { Vergunning } from '../../../server/services';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { LoadingContent } from '../../components';
+import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-export default function Parkeren() {
+export function Parkeren() {
   const {
     tableConfig,
-    parkeervergunningen,
+    parkeerVergunningenFromThemaVergunningen,
+    hasMijnParkerenVergunningen,
     isLoading,
     isError,
     parkerenUrlSSO,
-    isLoadingParkerenUrl,
+    linkListItems,
   } = useParkerenData();
 
   const tables = Object.entries(tableConfig).map(
@@ -27,7 +28,9 @@ export default function Parkeren() {
         <ThemaPaginaTable<VergunningFrontendV2 | Vergunning>
           key={kind}
           title={title}
-          zaken={parkeervergunningen.filter(filter).sort(sort)}
+          zaken={parkeerVergunningenFromThemaVergunningen
+            .filter(filter)
+            .sort(sort)}
           listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
             kind,
           })}
@@ -37,31 +40,9 @@ export default function Parkeren() {
     }
   );
 
-  const pageContentTop = (
-    <>
-      <Alert severity="info" heading="Parkeervergunning voor bewoners">
-        <Paragraph>
-          Het inzien, aanvragen of wijzigen van een parkeervergunning voor
-          bewoners kan via Mijn Parkeren.
-        </Paragraph>
-        <Paragraph>
-          {isLoadingParkerenUrl && (
-            <LoadingContent barConfig={[['210px', '40px', '0']]} />
-          )}
-          {!isLoadingParkerenUrl && parkerenUrlSSO && (
-            <Button
-              variant="primary"
-              onClick={() => {
-                window.location.href = parkerenUrlSSO;
-              }}
-            >
-              Log in op Mijn Parkeren
-              <Icon svg={ExternalLinkIcon} size="level-5" />
-            </Button>
-          )}
-        </Paragraph>
-      </Alert>
-    </>
+  const pageContentTop = determinePageContentTop(
+    hasMijnParkerenVergunningen,
+    parkerenUrlSSO
   );
 
   return (
@@ -71,13 +52,37 @@ export default function Parkeren() {
       isPartialError={false}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
-      linkListItems={[
-        {
-          to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
-          title: 'Meer over parkeervergunningen',
-        },
-      ]}
+      linkListItems={linkListItems}
       pageContentMain={tables}
     />
   );
 }
+
+function determinePageContentTop(
+  hasMijnParkerenVergunningen: boolean,
+  parkerenUrlSSO: string
+) {
+  if (hasMijnParkerenVergunningen) {
+    return (
+      <>
+        <Alert severity="info" heading="Parkeervergunning voor bewoners">
+          <Paragraph>
+            Het inzien, aanvragen of wijzigen van een parkeervergunning voor
+            bewoners kan via Mijn Parkeren.
+          </Paragraph>
+          <Paragraph>
+            <MaButtonLink href={parkerenUrlSSO}>
+              Ga naar Mijn Parkeren&nbsp;
+              <Icon svg={ExternalLinkIcon} size="level-5" />
+            </MaButtonLink>
+          </Paragraph>
+        </Alert>
+      </>
+    );
+  }
+  return (
+    <Paragraph>Hieronder ziet u een overzicht van uw vergunningen.</Paragraph>
+  );
+}
+
+export const forTesting = { determinePageContentTop };

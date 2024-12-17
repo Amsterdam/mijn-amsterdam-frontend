@@ -8,11 +8,7 @@ import {
   fetchVergunningenDocumentsList,
 } from '../services';
 import { BffEndpoints } from './bff-routes';
-import {
-  handleCheckProtectedRoute,
-  isAuthenticated,
-  isBlacklistedHandler,
-} from './route-handlers';
+import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
@@ -49,7 +45,7 @@ export const router = express.Router();
 
 router.BFF_ID = 'router-protected';
 
-router.use(handleCheckProtectedRoute, isAuthenticated, isBlacklistedHandler);
+router.use(handleCheckProtectedRoute, isAuthenticated);
 
 router.get(
   BffEndpoints.SERVICES_ALL,

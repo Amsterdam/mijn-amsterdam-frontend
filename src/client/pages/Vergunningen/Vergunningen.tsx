@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 
+import { useVergunningenTransformed } from './useVergunningenTransformed.hook';
 import styles from './Vergunningen.module.scss';
 import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { getCustomTitleForVergunningWithLicensePlates } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
@@ -16,7 +15,6 @@ import {
   SectionCollapsible,
   Table,
   ThemaIcon,
-  addTitleLinkComponent,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
@@ -35,37 +33,10 @@ export const DISPLAY_PROPS_HISTORY = {
   decision: 'Resultaat',
 };
 
-const titleTransformMap: Record<string, any> = {
-  [CaseType.TouringcarJaarontheffing]:
-    getCustomTitleForVergunningWithLicensePlates,
-  [CaseType.TouringcarDagontheffing]:
-    getCustomTitleForVergunningWithLicensePlates,
-  [CaseType.EigenParkeerplaats]: getCustomTitleForVergunningWithLicensePlates,
-  [CaseType.EigenParkeerplaatsOpheffen]:
-    getCustomTitleForVergunningWithLicensePlates,
-};
-
 export default function Vergunningen() {
   const { VERGUNNINGEN } = useAppStateGetter();
 
-  const vergunningen: Vergunning[] = useMemo(() => {
-    if (!VERGUNNINGEN.content?.length) {
-      return [];
-    }
-    const items: Vergunning[] = VERGUNNINGEN.content
-      .filter((x) => x)
-      .map((item) => {
-        return {
-          ...item,
-          title:
-            item.caseType in titleTransformMap
-              ? titleTransformMap[item.caseType](item)
-              : item.title,
-          dateRequest: defaultDateFormat(item.dateRequest),
-        };
-      });
-    return addTitleLinkComponent(items, 'identifier');
-  }, [VERGUNNINGEN.content]);
+  const vergunningen: Vergunning[] = useVergunningenTransformed(VERGUNNINGEN);
 
   const vergunningenPrevious = useMemo(() => {
     return vergunningen

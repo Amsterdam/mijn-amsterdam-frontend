@@ -1,24 +1,24 @@
 import { useParams } from 'react-router-dom';
 
-import { useAVGData } from './useAVGData.hook';
+import { useBurgerZakenData } from './useBurgerZakenData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { ThemaTitles } from '../../config/thema';
 import { ListPageParamKind } from '../VergunningenV2/config';
 
-export function AVGList() {
-  const { avgVerzoeken, isLoading, isError, tableConfig } = useAVGData();
-  const appRouteBack = AppRoutes.AVG;
+export function BurgerZakenList() {
+  const { documents, isLoading, isError, tableConfig } = useBurgerZakenData();
   const params = useParams<{ kind: ListPageParamKind }>();
+  const appRouteBack = AppRoutes.BURGERZAKEN;
 
   return (
     <ListPagePaginated
-      items={avgVerzoeken
+      items={documents
         .filter(tableConfig[params.kind].filter)
         .sort(tableConfig[params.kind].sort)}
-      backLinkTitle={ThemaTitles.AVG}
+      backLinkTitle={ThemaTitles.BURGERZAKEN}
       title={tableConfig[params.kind].title}
-      appRoute={AppRoutes['AVG/LIST']}
+      appRoute={AppRoutes['BURGERZAKEN/LIST']}
       appRouteParams={params}
       appRouteBack={appRouteBack}
       displayProps={tableConfig[params.kind].displayProps}

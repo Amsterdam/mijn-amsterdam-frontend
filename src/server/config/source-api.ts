@@ -80,6 +80,7 @@ export type SourceApiKey =
   | 'LOOD_365'
   | 'LOOD_365_OAUTH'
   | 'PARKEREN'
+  | 'PARKEREN_FRONTOFFICE'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SUBSIDIE'
@@ -260,6 +261,15 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
     headers: {
       host: new URL(getFromEnv('BFF_PARKEREN_API_BASE_URL') ?? '').hostname,
+      'X-AUTH-TOKEN': getFromEnv('BFF_PARKEREN_API_TOKEN'),
+    },
+  },
+  // Because for some reason they have one endpoint here for retrieving the SSO URL.
+  PARKEREN_FRONTOFFICE: {
+    url: `${getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL')}`,
+    headers: {
+      host: new URL(getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL') ?? '')
+        .hostname,
     },
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {
