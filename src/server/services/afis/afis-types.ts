@@ -140,6 +140,14 @@ export type AfisBusinessPartnerDetailsTransformed = {
   address?: AfisBusinessPartnerAddress['address'];
 };
 
+export type AfisBusinessPartnerBankPayload = {
+  businessPartnerId: BusinessPartnerId;
+  iban: string;
+  bic: string;
+  swiftCode: string;
+  senderName: string;
+};
+
 // Facturen
 // ================
 
