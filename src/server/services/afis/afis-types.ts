@@ -271,18 +271,21 @@ type EMandateSenderSource = {
   SndDebtorId: string; // Acceptant reference ID (RefId)
 };
 
+export type EMandateReceiverSource = {
+  // Receiver
+  RecName1: string;
+  RecPostal: string;
+  RecStreet: string;
+  RecHouse: string;
+  RecCity: string;
+  RecCountry: string;
+};
+
 export type AfisEMandateSource = AfisEMandateSourceStatic &
+  EMandateReceiverSource &
   EMandateSenderSource & {
     // ID of the mandate in AFIS
     IMandateId: string;
-
-    // Recipient
-    RecName1: string;
-    RecPostal: string;
-    RecStreet: string;
-    RecHouse: string;
-    RecCity: string;
-    RecCountry: string;
 
     // Mandate
     LifetimeFrom: string;
@@ -332,6 +335,12 @@ export type EMandateSignRequestPayload = {
   acceptantIBAN: AfisEMandateAcceptant['iban'];
   businessPartnerId: BusinessPartnerId;
   eMandateSignDate: string;
+};
+
+export type EMandateSignRequestNotificationPayload = {
+  senderIBAN: string;
+  senderBIC: string;
+  senderName: string;
 };
 
 export type BusinessPartnerIdPayload = {
