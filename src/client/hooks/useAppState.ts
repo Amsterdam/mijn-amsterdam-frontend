@@ -126,7 +126,9 @@ const streamEndpoint = addParamsToStreamEndpoint(BFFApiUrls.SERVICES_SSE);
  */
 export function useAppStateRemote() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(true);
+  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
+    !hasEventSourceSupport
+  );
 
   const profileType = useProfileTypeValue();
   const [appState, setAppState] = useRecoilState(appStateAtom);
@@ -153,9 +155,9 @@ export function useAppStateRemote() {
     } else if (messageData === SSE_ERROR_MESSAGE) {
       setFallbackServiceEnabled(true);
     } else if (messageData === SSE_CLOSE_MESSAGE) {
-      console.log('close event source');
       setIsAppStateReady(true);
     } else {
+      // eslint-disable-next-line no-console
       console.log('event source', messageData);
     }
   }, []);
