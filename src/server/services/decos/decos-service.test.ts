@@ -15,7 +15,10 @@ import {
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { decosZaakTransformers } from '../vergunningen-v2/decos-zaken';
+import {
+  decosCaseToZaakTransformers,
+  decosZaakTransformers,
+} from '../vergunningen-v2/decos-zaken';
 
 const zakenSource = {
   count: 1,
@@ -516,7 +519,10 @@ describe('decos-service', () => {
       const responseData = await forTesting.getZakenByUserKey(
         reqID,
         '123456789',
-        ['Aanbieden van diensten', 'GPK']
+        [
+          decosCaseToZaakTransformers['Aanbieden van diensten'],
+          decosCaseToZaakTransformers.GPK,
+        ]
       );
 
       expect(responseData.content?.length).toBe(1);

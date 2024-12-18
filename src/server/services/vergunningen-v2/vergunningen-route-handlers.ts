@@ -65,7 +65,7 @@ export async function fetchZakenFromSource(
   const zakenResponseData = await fetchDecosZakenFromSource(
     res.locals.requestID,
     authProfileAndToken,
-    decosZaakTransformers.map((transformer) => transformer.caseType)
+    decosZaakTransformers
   );
 
   if (zakenResponseData.status === 'OK') {
