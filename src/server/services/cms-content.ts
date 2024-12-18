@@ -15,6 +15,7 @@ import {
 } from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
+import { isValidProfileType } from '../auth/auth-helpers';
 import FileCache from '../helpers/file-cache';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
@@ -285,10 +286,13 @@ async function fetchCmsBase(
   query?: QueryParamsCMSFooter
 ) {
   const forceRenew = query?.forceRenew === 'true';
-
+  const profileType =
+    query?.profileType && isValidProfileType(query?.profileType)
+      ? query.profileType
+      : undefined;
   const generalInfoPageRequest = getGeneralPage(
     requestID,
-    query?.profileType,
+    profileType,
     forceRenew
   );
 

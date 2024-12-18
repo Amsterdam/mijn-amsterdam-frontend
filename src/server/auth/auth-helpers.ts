@@ -19,6 +19,7 @@ import {
 } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
+import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
@@ -171,4 +172,8 @@ export function createLogoutHandler(
 
     return res.redirect(postLogoutRedirectUrl);
   };
+}
+
+export function isValidProfileType(profileType: unknown) {
+  return PROFILE_TYPES.includes(profileType as ProfileType);
 }
