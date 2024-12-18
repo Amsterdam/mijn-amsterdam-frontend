@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
 
+export const SSE_UNLOAD_MESSAGE = 'sse-unload';
+export const SSE_UNMOUNT_MESSAGE = 'sse-unmount';
 export const SSE_ERROR_MESSAGE = 'sse-error';
+export const SSE_CLOSE_MESSAGE = 'sse-close';
 export const MAX_CONNECTION_RETRY_COUNT = 3;
 
 interface useSSEProps {
   path: string;
   eventName: string;
-  callback: (message: any) => void;
+  callback: (message: object | string) => void;
   postpone: boolean;
 }
 
@@ -29,13 +32,18 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
     connectionCounter.current += 1;
   }, []);
 
-  const closeEventSource = useCallback(() => {
-    connectionCounter.current = 0;
-    es?.close();
-  }, [es]);
+  const closeEventSource = useCallback(
+    (message: string) => {
+      connectionCounter.current = 0;
+      es?.close();
+      callback(message);
+    },
+    [es, callback]
+  );
 
   const handleError = useCallback(
-    (error: any) => {
+    (_error: Event) => {
+      // eslint-disable-next-line no-console
       console.info(
         '[SSE] Error connecting, ES ReadyState:',
         es?.readyState,
@@ -46,14 +54,12 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
         // Trying to connect but responding with an error
         case EventSource.CONNECTING === es?.readyState &&
           connectionCounter.current >= MAX_CONNECTION_RETRY_COUNT:
-          closeEventSource();
-          callback(SSE_ERROR_MESSAGE);
+          closeEventSource(SSE_ERROR_MESSAGE);
           break;
         // We're open but an error occured during communication
         case EventSource.OPEN === es?.readyState &&
           connectionCounter.current <= MAX_CONNECTION_RETRY_COUNT:
-          closeEventSource();
-          callback(SSE_ERROR_MESSAGE);
+          closeEventSource(SSE_ERROR_MESSAGE);
           break;
         // Closed before reaching max retry means connection not possible
         case EventSource.CLOSED === es?.readyState &&
@@ -66,9 +72,9 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
   );
 
   const onMessageEvent = useCallback(
-    (message: any) => {
+    (message: MessageEvent) => {
       if (message.lastEventId === 'close') {
-        closeEventSource();
+        closeEventSource(SSE_CLOSE_MESSAGE);
         return;
       }
 
@@ -76,7 +82,8 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
 
       try {
         messageData = JSON.parse(message.data);
-      } catch (error) {
+      } catch (_error) {
+        // eslint-disable-next-line no-console
         console.error('[SSE] Parsing sse message data failed.');
       }
 
@@ -96,17 +103,20 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
 
     // This listener is here because Monitoring reports back errors of interrupted connections whilst the page is being refreshed.
     // If we close the event source before the unload Monitoring stays calm.
-    window.addEventListener('beforeunload', closeEventSource);
+    function closeOnUnload() {
+      closeEventSource(SSE_UNLOAD_MESSAGE);
+    }
+    window.addEventListener('beforeunload', closeOnUnload);
 
     return () => {
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
       es.removeEventListener(eventName, onMessageEvent);
 
-      window.removeEventListener('beforeunload', closeEventSource);
+      window.removeEventListener('beforeunload', closeOnUnload);
 
       // Close the EventSource when cleaning up this hook.
-      closeEventSource();
+      closeEventSource(SSE_UNMOUNT_MESSAGE);
     };
   }, [
     es,
