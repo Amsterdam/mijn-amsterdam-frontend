@@ -4,6 +4,7 @@ import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   apiErrorResult,
+  ApiResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../universal/helpers/api';
@@ -22,12 +23,12 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchHLI } from './hli/hli';
-import { fetchMyLocation } from './my-locations';
 import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
+import { fetchMyLocation } from './my-locations';
 import { fetchParkeren } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
 import {
@@ -48,6 +49,7 @@ import {
   sortNotifications,
 } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
+import { fetchVaren } from './varen/varen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchWmo } from './wmo/wmo';
@@ -90,26 +92,32 @@ function getServiceTipsMap(profileType: ProfileType) {
   return servicesTipsByProfileType[profileType] ?? {};
 }
 
-export function addServiceResultHandler(
-  res: Response,
-  servicePromise: Promise<any>,
-  serviceName: string
-) {
+export function addServiceResultHandler<
+  T extends Promise<Record<string, ApiResponse<unknown | null>>>,
+>(res: Response, servicePromise: T, serviceName: string) {
   if (IS_DEBUG) {
     console.log(
       'Service-controller: adding service result handler for ',
       serviceName
     );
   }
-  return servicePromise.then((data) => {
-    sendMessage(res, serviceName, 'message', data);
+  return servicePromise.then((serviceResponse) => {
+    const [apiResponse] = Object.values(serviceResponse ?? {});
+    if (
+      apiResponse !== null &&
+      typeof apiResponse === 'object' &&
+      'status' in apiResponse &&
+      apiResponse.status !== 'POSTPONE'
+    ) {
+      sendMessage(res, serviceName, 'message', serviceResponse);
+    }
     if (IS_DEBUG) {
       console.log(
         'Service-controller: service result message sent for',
         serviceName
       );
     }
-    return data;
+    return serviceResponse;
   });
 }
 
@@ -142,7 +150,7 @@ const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const WMO = callAuthenticatedService(fetchWmo);
 const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
-const VAREN = callAuthenticatedService(fetchVergunningen);
+const VAREN = callAuthenticatedService(fetchVaren);
 
 const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
 const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
@@ -371,7 +379,7 @@ export function loadServices(
 ) {
   return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
     // Return service result as Object like { SERVICE_ID: result }
-    return (fetchService(requestID, req) as Promise<any>)
+    return fetchService(requestID, req)
       .then((result) => ({
         [serviceID]: result,
       }))
