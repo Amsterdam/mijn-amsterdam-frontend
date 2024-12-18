@@ -29,7 +29,11 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
       {!!rows.length && (
         <Grid.Cell span="all">
           {voorziening?.disclaimer && (
-            <ErrorAlert className="ams-mb--sm" severity="warning">
+            <ErrorAlert
+              className="ams-mb--sm"
+              severity="warning"
+              title="Let op!"
+            >
               {voorziening.disclaimer}
             </ErrorAlert>
           )}
