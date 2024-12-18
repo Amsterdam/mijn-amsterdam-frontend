@@ -32,7 +32,6 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,

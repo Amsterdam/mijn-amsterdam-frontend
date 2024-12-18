@@ -7,10 +7,8 @@ import {
   VergunningBase,
   VergunningFrontendV2,
 } from './config-and-types';
-import { DecosZaakDocument, ZakenFilter } from '../decos/decos-types';
 import { VergunningV2 } from './config-and-types';
-import { fetchDecosZaak, fetchDecosZaken } from '../decos/decos-service';
-import { isExpired, toDateFormatted } from '../decos/helpers';
+import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -20,8 +18,10 @@ import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { fetchDecosZaak, fetchDecosZaken } from '../decos/decos-service';
+import { DecosZaakDocument, ZakenFilter } from '../decos/decos-types';
+import { isExpired, toDateFormatted } from '../decos/helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
-import { decosZaakTransformers } from './decos-zaken';
 
 export const FILTER_VERGUNNINGEN_DEFAULT: ZakenFilter = (
   vergunning: VergunningBase
@@ -94,7 +94,7 @@ async function fetchVergunningenV2_(
   );
 
   if (response.status === 'OK') {
-    let decosVergunningen = response.content;
+    const decosVergunningen = response.content;
     const vergunningenFrontend: VergunningFrontendV2[] = decosVergunningen.map(
       (vergunning) =>
         transformVergunningFrontend(
