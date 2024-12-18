@@ -1,94 +1,122 @@
 import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
-import {
-  BAGQueryParams,
-  BAGAdreseerbaarObject,
-  BAGSourceDataResponse,
-  BAGSourceData,
-} from '../types/bag';
+import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
 
 // Quick and dirty see also: https://stackoverflow.com/a/68401047
 export function extractAddress(rawAddress: string): BAGQueryParams {
   // Strip down to Street + Housenumber
   const address = rawAddress
     // Remove everything but alphanumeric, dash, dot and space
-    .replace(/[^0-9-\.\s\p{Script=Latin}+]/giu, '')
-    // Remove woonplaats
-    .replace(/(Amsterdam|Weesp)/gi, '')
-    // Remove postalcode
-    .replace(/([1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2})/i, '')
-    .trim();
+    .replace(/[^0-9-.\s\p{Script=Latin}+]/giu, '');
 
   const words = [];
   const s = address.split(' ');
+
+  if (s.length < 2) {
+    throw Error(
+      `Address should consist of minimally two parts. A streetname and a housenumber.
+      Address: '${address}'`
+    );
+  }
 
   let i = 0;
 
   for (; i < s.length; i++) {
     const word = s[i];
-    if (word.match(/\d.+/)) {
+    if (word[0].match(/\d/)) {
+      // The first housenumber found, so there are no more streetname words left.
       break;
     }
     words.push(word);
   }
   const openbareruimteNaam = words.join(' ');
-  // We know now that we're past the street name so now we can index into the house number.
-  const housenumber = s[i];
-  i++;
-
-  // eslint-disable-next-line prefer-const
-  let [huisnummer, huisletter] = splitHouseNumberFromLetter(housenumber);
-
-  // It might have a space after the housenumber, so check one index further.
-  if (!huisletter) {
-    huisletter = s[i] ?? undefined; // undefined params do not get rendered while empty ones do.
+  // We know now that we're past the street name so now we can index into the last identifying part.
+  const houseIdentifier = s[i];
+  if (!houseIdentifier) {
+    throw Error(
+      `No houseIdentifier part, can't parse incomplete address: '${address}'`
+    );
   }
+
+  const [huisnummer, huisnummertoevoeging] =
+    splitHuisnummerFromToevoeging(houseIdentifier);
 
   return {
     openbareruimteNaam,
-    huisnummer,
-    huisletter,
+    huisnummer: parseInt(huisnummer),
+    huisnummertoevoeging,
+    // RP TODO: Can huisletter come from vergunningen? how does it look?
+    huisletter: undefined,
   };
 }
 
-function splitHouseNumberFromLetter(s: string): string[] {
-  const last = s.length - 1;
-  if (s[last].match(/[a-z]/i)) {
-    return [s.slice(0, last), s[last]];
+function splitHuisnummerFromToevoeging(
+  s: string
+): [string, string | undefined] {
+  const split = s.split('-');
+  if (split && split.length === 2) {
+    return [split[0], split[1]];
   }
-  return [s, ''];
+  return [s, undefined];
 }
 
 export type BAGSearchAddress = string;
 
 export type LatLngWithAddress = LatLngLiteral & { address: string };
 
+/** Find a matching object in adresseerbareObjecten.
+ *
+ *  A Match is a object where both the same adres as residency is found.
+ *  It's possible for the same street name to exist in both Weesp and Amsterdam.
+ *  So this prevents selecting the wrong one.
+ */
 export function getMatchingBagResult(
-  results: BAGSourceDataResponse['results'] = [],
-  bagSearchAddress: BAGSearchAddress,
+  adresseerbareObjecten: BAGAdreseerbaarObject[] = [],
+  bagSearchAddress: BAGQueryParams,
   isWeesp: boolean
 ) {
-  const result1 = results.find((result) => {
-    const isWoonplaatsMatch =
-      result.woonplaats === (isWeesp ? 'Weesp' : 'Amsterdam');
+  const foundAdresseerbaarObject = adresseerbareObjecten.find(
+    (adresseerbaarObject) => {
+      const isWoonplaatsMatch =
+        adresseerbaarObject.woonplaatsNaam ===
+        (isWeesp ? 'Weesp' : 'Amsterdam');
 
-    const isAddressMatch = result.adres
-      .toLowerCase()
-      .includes(bagSearchAddress.toLowerCase());
+      const isAddressMatch =
+        adresseerbaarObject.openbareruimteNaam ===
+          bagSearchAddress.openbareruimteNaam &&
+        adresseerbaarObject.huisnummer === bagSearchAddress.huisnummer &&
+        adresseerbaarObject.huisletter ===
+          (bagSearchAddress.huisletter ?? null);
 
-    return isWeesp ? isWoonplaatsMatch && isAddressMatch : isAddressMatch;
-  });
+      return isWeesp ? isWoonplaatsMatch && isAddressMatch : isAddressMatch;
+    }
+  );
 
-  return result1 ?? null;
+  return foundAdresseerbaarObject ?? null;
 }
 
 export function getLatLngWithAddress(
   result: BAGAdreseerbaarObject
 ): LatLngWithAddress {
   return {
-    address: result.adres,
-    ...(getLatLngCoordinates(result.centroid) ?? null),
+    address: formatAddress(result),
+    ...(getLatLngCoordinates(
+      result.adresseerbaarObjectPuntGeometrieWgs84.coordinates
+    ) ?? null),
   };
+}
+
+function formatAddress(result: BAGAdreseerbaarObject) {
+  if (result.huisletter) {
+    throw Error(
+      `RP TODO: Huisletter found, how should this fit in formatting?
+And what if there is also a huisnummertoevoeging?`
+    );
+  }
+  if (result.huisnummertoevoeging) {
+    return `${result.openbareruimteNaam} ${result.huisnummer}-${result.huisnummertoevoeging}`;
+  }
+  return `${result.openbareruimteNaam} ${result.huisnummer}`;
 }
 
 export function getLatLngCoordinates(centroid: LatLngTuple) {
@@ -101,18 +129,22 @@ export function getLatLngCoordinates(centroid: LatLngTuple) {
 }
 
 export function getLatLonByAddress(
-  adresseerbareObjecten: BAGSourceData['_embedded']['adresseerbareobjecten'] = [],
-  bagSearchAddress: BAGSearchAddress,
+  adresseerbareObjecten: BAGAdreseerbaarObject[] = [],
+  bagSearchAddress: BAGQueryParams,
   isWeesp: boolean
 ): LatLngWithAddress | null {
   if (adresseerbareObjecten.length) {
-    const result1 = getMatchingBagResult(
+    const result = getMatchingBagResult(
       adresseerbareObjecten,
       bagSearchAddress,
       isWeesp
     );
-    if (result1 && result1.adres && result1.centroid) {
-      return getLatLngWithAddress(result1);
+    if (
+      result &&
+      result.openbareruimteNaam &&
+      result.adresseerbaarObjectPuntGeometrieWgs84.coordinates
+    ) {
+      return getLatLngWithAddress(result);
     }
   }
   return null;
