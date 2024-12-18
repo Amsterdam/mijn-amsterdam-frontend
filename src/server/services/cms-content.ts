@@ -211,12 +211,9 @@ async function getGeneralPage(
       };
     },
     formatUrl({ url }) {
-      const urls = {
-        private: `${url}/ziet-amsterdam/?AppIdt=app-data`,
-        'private-attributes': '', // Not used
-        commercial: `${url}/overzicht-producten-ondernemers/?AppIdt=app-data`,
-      };
-      return urls[profileType] || urls.private;
+      return profileType === 'commercial'
+        ? `${url}/overzicht-producten-ondernemers/?AppIdt=app-data`
+        : `${url}/ziet-amsterdam/?AppIdt=app-data`;
     },
   });
 
