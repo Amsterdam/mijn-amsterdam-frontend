@@ -10,6 +10,6 @@ export async function fetchVaren(
   _authProfileAndToken: AuthProfileAndToken
 ) {
   return FeatureToggle.varenActive
-    ? apiSuccessResult([])
+    ? apiSuccessResult([null])
     : apiPostponeResult([]);
 }
