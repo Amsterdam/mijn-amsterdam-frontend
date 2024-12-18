@@ -3,9 +3,9 @@ import { LatLngLiteral } from 'leaflet';
 import { apiErrorResult } from '../../universal/helpers/api';
 import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
+import { BAGQueryParams } from '../../universal/types/bag';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
-import { BAGQueryParams } from '../../universal/types/bag';
 
 export interface BAGData {
   latlng: LatLngLiteral | null;
@@ -22,10 +22,10 @@ export async function fetchBAG(
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
 
-  const params: BAGQueryParams = {
+  const params: BAGQueryParams<string> = {
     openbareruimteNaam: sourceAddress.straatnaam,
     huisnummer: sourceAddress.huisnummer,
-    huisletter: sourceAddress.huisletter ?? '',
+    huisletter: sourceAddress.huisletter || undefined,
   };
 
   const config = getApiConfig('BAG', {

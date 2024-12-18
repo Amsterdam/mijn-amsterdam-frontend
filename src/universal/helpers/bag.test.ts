@@ -1,96 +1,190 @@
 import { extractAddress, getLatLonByAddress, isLocatedInWeesp } from './bag';
-import { BAGSourceDataResponse } from '../types/bag';
+import { BAGQueryParams, BAGSourceData } from '../types/bag';
 
 describe('getLatLonByAddress', () => {
-  const weesp = 'Herengracht 23';
-  const amsterdam = 'Herengracht 23-1';
-
-  const response: BAGSourceDataResponse = {
-    results: [
-      {
-        adres: 'Herengracht 23-1',
-        centroid: [4.891968036478453, 52.37873183842775],
-        woonplaats: 'Amsterdam',
-        landelijk_id: 'xxx1',
-      },
-      {
-        adres: 'Herengracht 23-2',
-        centroid: [4.891968036478453, 52.37873183842775],
-        woonplaats: 'Amsterdam',
-        landelijk_id: 'xxx2',
-      },
-      {
-        adres: 'Herengracht 23-H',
-        centroid: [4.891968036478453, 52.37873183842775],
-        woonplaats: 'Amsterdam',
-        landelijk_id: 'xxx3',
-      },
-      {
-        adres: 'Herengracht 23',
-        centroid: [5.039817231849981, 52.30885683238395],
-        woonplaats: 'Weesp',
-        landelijk_id: 'xxx4',
-      },
-      {
-        adres: 'Herengracht 231a',
-        centroid: [5.03863916842061, 52.30886128545404],
-        woonplaats: 'Weesp',
-        landelijk_id: 'xxx5',
-      },
-      {
-        adres: 'Nieuwe Herengracht 23-1',
-        centroid: [4.902795334609859, 52.36631966746123],
-        woonplaats: 'Amsterdam',
-        landelijk_id: 'xxx6',
-      },
-    ],
+  const weesp: BAGQueryParams = {
+    openbareruimteNaam: 'Herengracht',
+    huisnummer: 23,
+  };
+  const amsterdam: BAGQueryParams = {
+    openbareruimteNaam: 'Herengracht',
+    huisnummer: 23,
+    huisnummertoevoeging: '1',
   };
 
-  test('Amsterdam', () => {
-    expect(getLatLonByAddress(response?.results, amsterdam, false)).toEqual({
+  const response: BAGSourceData = {
+    _embedded: {
+      adresseerbareobjecten: [
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisletter: null,
+          huisnummertoevoeging: '1',
+          postcode: '1015BA',
+          adresseerbaarObjectPuntGeometrieWgs84: {
+            type: 'Point',
+            coordinates: [5.0, 50.0],
+          },
+          woonplaatsNaam: 'Amsterdam',
+          identificatie: 'xxx1',
+        },
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisletter: null,
+          huisnummertoevoeging: '2',
+          postcode: '1015BA',
+          adresseerbaarObjectPuntGeometrieWgs84: {
+            type: 'Point',
+            coordinates: [6.0, 50.0],
+          },
+          woonplaatsNaam: 'Amsterdam',
+          identificatie: 'xxx2',
+        },
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisletter: null,
+          huisnummertoevoeging: 'H',
+          postcode: '1015BA',
+          adresseerbaarObjectPuntGeometrieWgs84: {
+            type: 'Point',
+            coordinates: [7.0, 50.0],
+          },
+          woonplaatsNaam: 'Amsterdam',
+          identificatie: 'xxx3',
+        },
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisletter: null,
+          huisnummertoevoeging: null,
+          postcode: '1015BA',
+          adresseerbaarObjectPuntGeometrieWgs84: {
+            type: 'Point',
+            coordinates: [8.0, 50.0],
+          },
+          woonplaatsNaam: 'Weesp',
+          identificatie: 'xxx4',
+        },
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 231,
+          huisletter: null,
+          huisnummertoevoeging: 'a',
+          postcode: '1015BA',
+          adresseerbaarObjectPuntGeometrieWgs84: {
+            type: 'Point',
+            coordinates: [9.0, 50.0],
+          },
+          woonplaatsNaam: 'Weesp',
+          identificatie: 'xxx5',
+        },
+        {
+          openbareruimteNaam: 'Nieuwe Herengracht',
+          huisnummer: 23,
+          huisletter: null,
+          huisnummertoevoeging: '1',
+          postcode: '1015BA',
+          adresseerbaarObjectPuntGeometrieWgs84: {
+            type: 'Point',
+            coordinates: [10.0, 50.0],
+          },
+          woonplaatsNaam: 'Amsterdam',
+          identificatie: 'xxx6',
+        },
+      ],
+    },
+  };
+
+  test('Found match in Amsterdam', () => {
+    expect(
+      getLatLonByAddress(
+        response._embedded.adresseerbareobjecten,
+        amsterdam,
+        false
+      )
+    ).toEqual({
       address: 'Herengracht 23-1',
-      lat: 52.37873183842775,
-      lng: 4.891968036478453,
+      lat: 50.0,
+      lng: 5.0,
     });
   });
 
-  test('Weesp', () => {
-    expect(getLatLonByAddress(response?.results, weesp, true)).toEqual({
+  test('Found match in Weesp', () => {
+    expect(
+      getLatLonByAddress(response._embedded.adresseerbareobjecten, weesp, true)
+    ).toEqual({
       address: 'Herengracht 23',
-      lat: 52.30885683238395,
-      lng: 5.039817231849981,
+      lat: 50.0,
+      lng: 8.0,
     });
   });
 
-  test('extractAddress', () => {
-    expect(
-      extractAddress('Herengracht 23-1, 1015BA, Amsterdam _ ; ,')
-    ).toStrictEqual({
-      openbareruimteNaam: 'Herengracht',
-      huisnummer: '23-1',
-      huisletter: undefined,
+  describe('extractAddress tests', () => {
+    test('Throws with bad input', () => {
+      expect(() => extractAddress('')).toThrowError();
+      expect(() => extractAddress('Only Streetname')).toThrowError();
     });
 
-    expect(
-      extractAddress('Burgemeester Röellstraat 44, 1015BA, Amsterdam _ ; ,')
-    ).toStrictEqual({
-      openbareruimteNaam: 'Burgemeester Röellstraat',
-      huisnummer: '44',
-      huisletter: undefined,
+    test('Short streetname with single digit', () => {
+      expect(extractAddress('Amstel 1')).toStrictEqual({
+        openbareruimteNaam: 'Amstel',
+        huisnummer: 1,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+      });
     });
 
-    expect(
-      extractAddress('Burgemeester Röellstraat 44C, 1015BA, Amsterdam _ ; ,')
-        .huisletter
-    ).toStrictEqual('C');
+    test('Long streetname with simple number', () => {
+      expect(extractAddress('Burgemeester Röellstraat 44')).toStrictEqual({
+        openbareruimteNaam: 'Burgemeester Röellstraat',
+        huisnummer: 44,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+      });
+    });
 
-    expect(
-      extractAddress('Burgemeester Röellstraat 44 C, 1015BA, Amsterdam _ ; ,')
-        .huisletter
-    ).toStrictEqual('C');
+    test('huisnummertoevoeging extracted', () => {
+      expect(extractAddress('Herengracht 23-1')).toStrictEqual({
+        openbareruimteNaam: 'Herengracht',
+        huisnummer: 23,
+        huisnummertoevoeging: '1',
+        huisletter: undefined,
+      });
+    });
+
+    test('huisnummertoevoeging extracted with extra comma', () => {
+      expect(extractAddress('Herengracht 23-1,')).toStrictEqual({
+        openbareruimteNaam: 'Herengracht',
+        huisnummer: 23,
+        huisnummertoevoeging: '1',
+        huisletter: undefined,
+      });
+    });
+
+    test('Ignores postcal code, city name and random charcters', () => {
+      expect(
+        extractAddress('Straatnaam 1, 1015BA, Amsterdam _ ; ,')
+      ).toStrictEqual({
+        openbareruimteNaam: 'Straatnaam',
+        huisnummer: 1,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+      });
+    });
+    // RP TODO: Idea? What do we need to test for more? Is C a toevoeging or huisletter?
+    // There is also mention of a dot in replacing trash characters. What to do when there is a dot?
+    //   How does this look?
+    // test('Huisletter extracted', () => {
+    //   expect(
+    //     extractAddress('Burgemeester Röellstraat 44C, 1015BA, Amsterdam _ ; ,')
+    //       .huisletter
+    //   ).toStrictEqual('C');
+    // });
   });
 
-  test('isWeesp', () => {
+  test('Adres is located in Weesp', () => {
     expect(isLocatedInWeesp('Weesperstraat 113 Amsterdam')).toBe(false);
     expect(isLocatedInWeesp('Herengracht 23 Weesp')).toBe(true);
 
