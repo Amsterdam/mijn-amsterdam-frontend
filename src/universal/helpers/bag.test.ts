@@ -154,11 +154,20 @@ describe('getLatLonByAddress', () => {
       });
     });
 
-    test('huisnummertoevoeging extracted with extra comma', () => {
+    test('huisnummertoevoeging extracted with trailing comma', () => {
       expect(extractAddress('Herengracht 23-1,')).toStrictEqual({
         openbareruimteNaam: 'Herengracht',
         huisnummer: 23,
         huisnummertoevoeging: '1',
+        huisletter: undefined,
+      });
+    });
+
+    test('Letter extracted as toevoeging', () => {
+      expect(extractAddress('Insulindeweg 26A')).toStrictEqual({
+        openbareruimteNaam: 'Insulindeweg',
+        huisnummer: 26,
+        huisnummertoevoeging: 'A',
         huisletter: undefined,
       });
     });
@@ -173,15 +182,6 @@ describe('getLatLonByAddress', () => {
         huisletter: undefined,
       });
     });
-    // RP TODO: Idea? What do we need to test for more? Is C a toevoeging or huisletter?
-    // There is also mention of a dot in replacing trash characters. What to do when there is a dot?
-    //   How does this look?
-    // test('Huisletter extracted', () => {
-    //   expect(
-    //     extractAddress('Burgemeester Röellstraat 44C, 1015BA, Amsterdam _ ; ,')
-    //       .huisletter
-    //   ).toStrictEqual('C');
-    // });
   });
 
   test('Adres is located in Weesp', () => {

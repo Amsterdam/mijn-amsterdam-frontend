@@ -45,7 +45,9 @@ export function extractAddress(rawAddress: string): BAGQueryParams {
     openbareruimteNaam,
     huisnummer: parseInt(huisnummer),
     huisnummertoevoeging,
-    // RP TODO: Can huisletter come from vergunningen? how does it look?
+    // RP TODO: What is huisletter in the query? I already added one with a letter but this counts
+    // as toevoeging.
+    // There is also mention of a dot in replacing trash characters. What to do when there is a dot?
     huisletter: undefined,
   };
 }
@@ -53,11 +55,35 @@ export function extractAddress(rawAddress: string): BAGQueryParams {
 function splitHuisnummerFromToevoeging(
   s: string
 ): [string, string | undefined] {
-  const split = s.split('-');
-  if (split && split.length === 2) {
-    return [split[0], split[1]];
+  const huisnummer = [];
+  const huisnummertoevoeging = [];
+  let i = 0;
+
+  for (; i < s.length; i++) {
+    if (!s[i].match(/\d/)) {
+      break;
+    }
+    huisnummer.push(s[i]);
   }
-  return [s, undefined];
+  if (s[i] === '-') {
+    // Consume the character.
+    i++;
+
+    for (; i < s.length; i++) {
+      huisnummertoevoeging.push(s[i]);
+    }
+  } else {
+    for (; i < s.length; i++) {
+      if (!s[i].match(/[a-z]/i)) {
+        throw Error(
+          `Unexpected character in huisnummer + toevoeging. Character: '${s[i]}'`
+        );
+      }
+      huisnummertoevoeging.push(s[i]);
+    }
+  }
+
+  return [huisnummer.join(''), huisnummertoevoeging.join('') || undefined];
 }
 
 export type BAGSearchAddress = string;
