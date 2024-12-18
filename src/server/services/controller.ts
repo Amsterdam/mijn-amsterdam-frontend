@@ -491,3 +491,7 @@ export async function getTipNotifications(
 
   return [];
 }
+
+export const forTesting = {
+  CMS_CONTENT,
+};
