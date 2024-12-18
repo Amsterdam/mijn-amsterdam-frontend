@@ -132,30 +132,10 @@ describe('Transform api items', () => {
       expect(result).toBeUndefined();
     });
 
-    it('should return disclaimer for actuele voorziening with matching eerdere voorziening', () => {
+    it('hasActueelMatch', () => {
       const aanvraag = {
         ...baseAanvraag,
-        isActueel: true,
-      };
-
-      const aanvragen = [
-        aanvraag,
-        {
-          ...baseAanvraag,
-          isActueel: false,
-          datumEindeGeldigheid: '1-11-2024',
-        },
-      ];
-
-      const result = getDisclaimer(aanvraag, aanvragen);
-      expect(result).toBe(
-        'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.'
-      );
-    });
-
-    it('should return disclaimer for eerdere voorziening with matching actuele voorziening', () => {
-      const aanvraag = {
-        ...baseAanvraag,
+        datumEindeGeldigheid: '2024-10-31',
         isActueel: false,
       };
 
@@ -163,14 +143,35 @@ describe('Transform api items', () => {
         aanvraag,
         {
           ...baseAanvraag,
-          isActueel: true,
-          datumIngangGeldigheid: '31-10-2024',
+          datumIngangGeldigheid: '2024-11-01',
         },
       ];
 
       const result = getDisclaimer(aanvraag, aanvragen);
       expect(result).toBe(
         'Door een fout staat dit hulpmiddel ten onrechte bij Eerdere en afgewezen voorzieningen. Kijk bij "Huidige voorzieningen" of in de brief bovenaan.'
+      );
+    });
+
+    it('hasNietActueelMatch', () => {
+      const aanvraag = {
+        ...baseAanvraag,
+        datumIngangGeldigheid: '2024-11-01',
+        isActueel: true,
+      };
+
+      const aanvragen = [
+        aanvraag,
+        {
+          ...baseAanvraag,
+          datumEindeGeldigheid: '2024-10-31',
+          isActueel: false,
+        },
+      ];
+
+      const result = getDisclaimer(aanvraag, aanvragen);
+      expect(result).toMatch(
+        'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.'
       );
     });
   });

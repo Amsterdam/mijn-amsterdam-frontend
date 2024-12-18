@@ -142,26 +142,35 @@ function transformVoorzieningenForFrontend(
 }
 
 export function getDisclaimer(
-  aanvraag: ZorgnedAanvraagTransformed,
+  detailAanvraag: ZorgnedAanvraagTransformed,
   aanvragen: ZorgnedAanvraagTransformed[]
 ): string | undefined {
-  const matchActueleVoorziening = aanvragen.find(
-    (regeling) => regeling.titel === aanvraag.titel && regeling.isActueel
-  );
+  const datumEindeGeldigheid = '2024-10-31';
+  const datumIngangGeldigheid = '2024-11-01';
 
-  const matchEerdereVoorziening = aanvragen.find(
-    (regeling) => regeling.titel === aanvraag.titel && !regeling.isActueel
-  );
+  const hasNietActueelMatch =
+    detailAanvraag.isActueel &&
+    detailAanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
+    aanvragen.some(
+      (aanvraag) =>
+        aanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
+        aanvraag.titel === detailAanvraag.titel &&
+        !aanvraag.isActueel
+    );
 
-  if (
-    aanvraag.isActueel &&
-    matchEerdereVoorziening?.datumEindeGeldigheid === '1-11-2024'
-  ) {
+  const hasActueelMatch =
+    !detailAanvraag.isActueel &&
+    detailAanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
+    aanvragen.some(
+      (aanvraag) =>
+        aanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
+        aanvraag.titel === detailAanvraag.titel &&
+        aanvraag.isActueel
+    );
+
+  if (hasNietActueelMatch) {
     return 'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.';
-  } else if (
-    !aanvraag.isActueel &&
-    matchActueleVoorziening?.datumIngangGeldigheid === '31-10-2024'
-  ) {
+  } else if (hasActueelMatch) {
     return 'Door een fout staat dit hulpmiddel ten onrechte bij Eerdere en afgewezen voorzieningen. Kijk bij "Huidige voorzieningen" of in de brief bovenaan.';
   }
 
