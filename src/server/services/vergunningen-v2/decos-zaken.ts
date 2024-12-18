@@ -44,11 +44,17 @@ import {
   DecosCaseType,
 } from '../../../universal/types/vergunningen';
 import {
-  DecosZaakTransformer,
-  DecosFieldTransformer,
+  dateEnd,
+  dateStart,
   DecosFieldNameSource,
-  DecosFieldTransformerObject,
+  DecosZaakTransformer,
   DecosZaakWithKentekens,
+  description,
+  destination,
+  location,
+  SELECT_FIELDS_TRANSFORM_BASE,
+  timeEnd,
+  timeStart,
 } from '../decos/decos-types';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
@@ -56,63 +62,11 @@ import {
   transformKenteken,
 } from '../decos/helpers';
 
-const decision: DecosFieldTransformer = {
-  name: 'decision',
-  transform: (decision: string, options) => {
-    const decisionTranslations =
-      options?.decosZaakTransformer?.decisionTranslations;
-
-    if (decisionTranslations) {
-      const maDecision = Object.entries(decisionTranslations).find(
-        ([maDecision, decosDecisions]) => {
-          return decosDecisions.includes(decision);
-        }
-      )?.[0];
-      return maDecision ?? decision;
-    }
-    return decision;
-  },
-};
-
-// A list of common readable api attributes
-const status = 'status';
-const caseType = 'caseType';
-const identifier = 'identifier';
-const processed = 'processed';
-const dateDecision = 'dateDecision';
-const dateRequest = 'dateRequest';
-const dateStart = 'dateStart';
-const dateEnd = 'dateEnd';
-const location = 'location';
-const timeStart = 'timeStart';
-const timeEnd = 'timeEnd';
-const destination = 'destination';
-const description = 'description';
-
 // 1 or multiple kenteken(s)
 const kentekens = {
   name: 'kentekens' as keyof DecosZaakWithKentekens, // TODO: Can this be typed stricter without casting?
   transform: transformKenteken,
 };
-
-// Fields are selected per case initially but don't end up in the data we send to front end.
-// These fields are fore example used to determine payment status.
-export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
-
-// The set of field transforms that applies to every case.
-// { $api_attribute_name_source: $api_attribute_name_mijn_amsterdam }
-export const SELECT_FIELDS_TRANSFORM_BASE: Partial<DecosFieldTransformerObject> =
-  {
-    title: status,
-    text45: caseType,
-    dfunction: decision,
-    mark: identifier,
-    processed: processed,
-    date5: dateDecision,
-    document_date: dateRequest,
-    date6: dateStart,
-    date7: dateEnd,
-  };
 
 export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
   isActive: true,

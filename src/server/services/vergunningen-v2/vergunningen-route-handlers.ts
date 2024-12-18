@@ -13,6 +13,7 @@ import {
   generateFullApiUrlBFF,
   sendUnauthorized,
 } from '../../routing/route-helpers';
+import { decosZaakTransformers } from './decos-zaken';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
   const authProfileAndToken = getAuth(req);
@@ -63,7 +64,8 @@ export async function fetchZakenFromSource(
 
   const zakenResponseData = await fetchDecosZakenFromSource(
     res.locals.requestID,
-    authProfileAndToken
+    authProfileAndToken,
+    decosZaakTransformers.map((transformer) => transformer.caseType)
   );
 
   if (zakenResponseData.status === 'OK') {

@@ -501,6 +501,27 @@ describe('decos-service', () => {
       `);
     });
 
+    test('Called with filter based on caseTypes', async () => {
+      remoteApi
+        .get(/\/decos\/items\/123456789\/folders/)
+        .query((queryObject) => {
+          return (
+            queryObject.filter ===
+            'text45 eq Aanbieden van diensten or text45 eq GPK'
+          );
+        })
+        .times(numberOfAddressBooksToSearch)
+        .reply(200, zakenSource);
+
+      const responseData = await forTesting.getZakenByUserKey(
+        reqID,
+        '123456789',
+        ['Aanbieden van diensten', 'GPK']
+      );
+
+      expect(responseData.content?.length).toBe(1);
+    });
+
     test('Success', async () => {
       remoteApi
         .get(/\/decos\/items\/123456789\/folders/)

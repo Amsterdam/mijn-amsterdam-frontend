@@ -9,11 +9,7 @@ import {
 } from './config-and-types';
 import { DecosZaakDocument, ZakenFilter } from '../decos/decos-types';
 import { VergunningV2 } from './config-and-types';
-import {
-  fetchDecosZaak,
-  fetchDecosZaken,
-  fetchDecosZaken_,
-} from '../decos/decos-service';
+import { fetchDecosZaak, fetchDecosZaken } from '../decos/decos-service';
 import { isExpired, toDateFormatted } from '../decos/helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
@@ -25,10 +21,7 @@ import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt'
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
-import {
-  decosCaseToZaakTransformers,
-  decosZaakTransformers,
-} from './decos-zaken';
+import { decosZaakTransformers } from './decos-zaken';
 
 export const FILTER_VERGUNNINGEN_DEFAULT: ZakenFilter = (
   vergunning: VergunningBase
@@ -94,7 +87,7 @@ async function fetchVergunningenV2_(
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
 ) {
-  const response = await fetchDecosZaken_(
+  const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
     decosZaakTransformers
@@ -118,7 +111,6 @@ async function fetchVergunningenV2_(
 
 export const fetchVergunningenV2 = memoizee(fetchVergunningenV2_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
-  length: 4,
 });
 
 function setEncryptedDocumentDownloadUrl(
