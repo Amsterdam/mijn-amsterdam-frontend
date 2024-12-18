@@ -285,11 +285,11 @@ async function fetchCmsBase(
   requestID: RequestID,
   query?: QueryParamsCMSFooter
 ) {
-  const forceRenew = !!(query?.forceRenew === 'true');
+  const forceRenew = query?.forceRenew === 'true';
 
   const generalInfoPageRequest = getGeneralPage(
     requestID,
-    query?.profileType as ProfileType,
+    query?.profileType,
     forceRenew
   );
 
@@ -310,10 +310,10 @@ async function fetchCmsBase(
   };
 }
 
-export interface QueryParamsCMSFooter extends Record<string, string> {
-  forceRenew: 'true';
-  profileType: ProfileType;
-}
+export type QueryParamsCMSFooter = {
+  forceRenew?: 'true';
+  profileType?: ProfileType;
+};
 
 export async function fetchCmsFooter(
   requestID: RequestID,
