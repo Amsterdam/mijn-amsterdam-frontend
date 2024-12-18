@@ -16,6 +16,7 @@ import {
 } from '../../../universal/helpers/bag';
 import {
   BAGAdreseerbaarObject,
+  BAGQueryParams,
   BAGSourceData,
 } from '../../../universal/types/bag';
 import { Modal } from '../../components';
@@ -27,19 +28,20 @@ import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 
 function transformBagSearchResultsResponse(
   response: BAGSourceData,
-  querySearchAddress: string,
+  querySearchAddress: BAGQueryParams,
   isWeesp: boolean
 ): LatLngWithAddress[] | null {
   const adresseerbareObjecten = response?._embedded.adresseerbareobjecten ?? [];
 
   // Try to get exact match
-  const latlng = getLatLonByAddress(
+  const latlngWithAddress = getLatLonByAddress(
     adresseerbareObjecten,
     querySearchAddress,
     isWeesp
   );
-  if (latlng && adresseerbareObjecten.length === 1) {
-    return [latlng];
+
+  if (latlngWithAddress && adresseerbareObjecten.length === 1) {
+    return [latlngWithAddress];
   }
 
   // No exact match, return all results
@@ -103,10 +105,10 @@ export function LocationModal({
       fetchBag({
         url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
         params: querySearchAddress,
-        transformResponse(responseData: BAGSourceDataResponse) {
+        transformResponse(responseData: BAGSourceData) {
           const latlngResults = transformBagSearchResultsResponse(
             responseData,
-            `${querySearchAddress.openbareruimteNaam} ${querySearchAddress.huisnummer}${querySearchAddress.huisletter}`,
+            querySearchAddress,
             isWeesp
           );
 

@@ -3,12 +3,12 @@
  */
 export type BAGAdreseerbaarObject = {
   identificatie: string;
-  volgnummer: number;
   huisnummer: number;
   huisletter: string | null;
   huisnummertoevoeging: string | null;
   postcode: string;
-  documentdatum: string; // In '2019-02-04' format
+  woonplaatsNaam: string;
+  openbareruimteNaam: string; // Also know as straatnaam.
   adresseerbaarObjectPuntGeometrieWgs84: {
     type: 'Point';
     coordinates: [number, number]; // In long lat order. (lowest number first)
@@ -22,15 +22,12 @@ export interface BAGSourceData {
   _embedded: {
     adresseerbareobjecten: BAGAdreseerbaarObject[];
   };
-  page: {
-    number: number;
-    size: number;
-  };
 }
 
 /** Query Parameters for doing Axios requests to BAG_ADRESSEERBARE_OBJECTEN. */
-export type BAGQueryParams = {
+export type BAGQueryParams<T = number> = {
   openbareruimteNaam: string;
-  huisnummer: string;
+  huisnummer: T;
   huisletter?: string;
+  huisnummertoevoeging?: string;
 };
