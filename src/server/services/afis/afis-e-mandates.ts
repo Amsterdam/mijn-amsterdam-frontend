@@ -54,6 +54,11 @@ const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
 const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
 const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
 
+const EMANDATE_STATUS = {
+  ON: '1',
+  OFF: '0',
+};
+
 function transformCreateEMandatesResponse(response: unknown) {
   return response;
 }
@@ -205,11 +210,6 @@ async function updateAfisEMandate(
 
   return requestData<unknown>(config, requestID);
 }
-
-const EMANDATE_STATUS = {
-  ON: '1',
-  OFF: '0',
-};
 
 function isEmandateActive(afisEMandateSource?: AfisEMandateSource) {
   const lifetimeTo = afisEMandateSource?.LifetimeTo;
