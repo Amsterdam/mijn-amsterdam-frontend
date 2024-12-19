@@ -309,11 +309,11 @@ async function getZakenByUserKey(
     .map((transformer) => `${caseField} eq ${transformer.caseType}`)
     .join(' or ');
 
-  const decosUrlParams = [
-    'top=50',
-    fields ? `select=${fields}` : '',
-    caseTypes ? `filter=${caseTypes}` : '',
-  ].join('&');
+  const decosUrlParams = new URLSearchParams({
+    top: '50',
+    ...(fields && { select: fields }),
+    ...(caseTypes && { filter: caseTypes }),
+  });
 
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
