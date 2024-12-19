@@ -71,7 +71,7 @@ const ROUTES = {
   },
   deelbetalingen: (uri: string) =>
     decodeURI(uri).includes(
-      `IsCleared eq false and InvoiceReference ne '' and (AccountingDocumentType eq 'AB')`
+      `IsCleared eq false and InvoiceReference ne '' and`
     ),
 };
 
@@ -699,13 +699,7 @@ describe('afis-facturen', async () => {
       },
     };
 
-    remoteApi
-      .get((uri) =>
-        decodeURI(uri).includes(
-          `IsCleared eq false and InvoiceReference ne '' and (AccountingDocumentType eq 'AB')`
-        )
-      )
-      .reply(200, deelbetalingenResponse);
+    remoteApi.get(ROUTES.deelbetalingen).reply(200, deelbetalingenResponse);
 
     const params: AfisFacturenParams = {
       state: 'deelbetalingen',

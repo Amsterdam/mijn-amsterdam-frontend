@@ -9,13 +9,19 @@ import {
   vi,
 } from 'vitest';
 
+import { fetchCMSCONTENT } from './cms-content';
 import {
   addServiceResultHandler,
+  forTesting,
   getServiceResultsForTips,
   getTipNotifications,
   servicesTipsByProfileType,
 } from './controller';
-import { getReqMockWithOidc, ResponseMock } from '../../testing/utils';
+import {
+  getReqMockWithOidc,
+  RequestMock,
+  ResponseMock,
+} from '../../testing/utils';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -32,6 +38,12 @@ const mocks = vi.hoisted(() => {
       reason: ['Omdat dit een fake tip is.'],
       title: 'Voor fake Amsterdammers',
     },
+  };
+});
+
+vi.mock('./cms-content', () => {
+  return {
+    fetchCMSCONTENT: vi.fn(),
   };
 });
 
@@ -190,5 +202,59 @@ describe('controller', () => {
     );
 
     expect(result).toEqual(data);
+  });
+});
+
+describe('request handlers', () => {
+  describe('CMS_CONTENT', async () => {
+    const reqID = 'xx-req-id-yy';
+
+    test('profileType: private', async () => {
+      const reqMock = await getReqMockWithOidc({
+        sid: 'x123y',
+        authMethod: 'digid',
+        profileType: 'private',
+        id: '9988',
+      });
+
+      await forTesting.CMS_CONTENT(reqID, reqMock);
+
+      expect(fetchCMSCONTENT).toHaveBeenCalledWith(reqID, {
+        profileType: 'private',
+      });
+    });
+
+    test('profileType: commercial', async () => {
+      const reqMock = await getReqMockWithOidc({
+        sid: 'x123y',
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+        id: '9988',
+      });
+
+      await forTesting.CMS_CONTENT(reqID, reqMock);
+
+      expect(fetchCMSCONTENT).toHaveBeenCalledWith(reqID, {
+        profileType: 'commercial',
+      });
+    });
+
+    test('arbitrary query params are passed', async () => {
+      const reqMock = await getReqMockWithOidc({
+        sid: 'x123y',
+        authMethod: 'eherkenning',
+        profileType: 'commercial',
+        id: '9988',
+      });
+
+      (reqMock as unknown as RequestMock).setQuery({ forceRenew: 'true' });
+
+      await forTesting.CMS_CONTENT(reqID, reqMock);
+
+      expect(fetchCMSCONTENT).toHaveBeenCalledWith(reqID, {
+        profileType: 'commercial',
+        forceRenew: 'true',
+      });
+    });
   });
 });
