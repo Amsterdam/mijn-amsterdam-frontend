@@ -38,7 +38,7 @@ export async function fetchBAG(
       }
 
       // Multiple items can be found, but only the first we take as relevant.
-      const first_item = data[0];
+      const firstItem = data[0];
 
       const latlng = getLatLngCoordinates(
         first_item.adresseerbaarObjectPuntGeometrieWgs84.coordinates
