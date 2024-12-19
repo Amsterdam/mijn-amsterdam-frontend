@@ -30,9 +30,6 @@ describe('Parkeren', () => {
     );
   }
 
-  function initializeState(snapshot: MutableSnapshot) {
-    snapshot.set(appStateAtom, testState);
-  }
   beforeAll(() => {
     window.scrollTo = vi.fn();
   });
@@ -80,7 +77,14 @@ describe('determinePageContentTop', () => {
 
   test('Renders button with parkeer vergunningen', () => {
     const PageContentTop = determinePageContentTop(true, EXTERNAL_PARKEREN_URL);
-    const screen = render(<PageContentTop />);
+    const screen = render(
+      <MockApp
+        routeEntry="/"
+        routePath="/"
+        component={PageContentTop}
+        initializeState={initializeState}
+      />
+    );
     expect(screen.queryByText(linkButtonTxt)).toBeInTheDocument();
   });
 
@@ -93,6 +97,10 @@ describe('determinePageContentTop', () => {
     expect(screen.queryByText(linkButtonTxt)).not.toBeInTheDocument();
   });
 });
+
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
 
 const testState = {
   PARKEREN: {
