@@ -13,7 +13,7 @@ import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen-v2/config-and-types';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { isNearEndDate } from '../decos/helpers';
 
 export function createToeristischeVerhuurNotification(

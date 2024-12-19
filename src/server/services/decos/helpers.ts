@@ -1,9 +1,17 @@
-import {
+import type {
   DecosZaakTransformer,
   DecosZaakSource,
   DecosZaakBase,
   DecosZaakWithKentekens,
 } from './decos-types';
+import {
+  DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
+  DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
+  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
+  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
+  DECOS_PENDING_REMOVAL_DFUNCTION,
+} from './decos-types';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import {
   defaultDateFormat,
   isDateInPast,
@@ -11,22 +19,12 @@ import {
 } from '../../../universal/helpers/date';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
-  DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
-  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
-  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
-  DECOS_PENDING_REMOVAL_DFUNCTION,
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-} from '../vergunningen-v2/config-and-types';
-import { decosCaseToZaakTransformers } from '../vergunningen-v2/decos-zaken';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(
-  decosZaakSource: DecosZaakSource
+  decosZaakSource: DecosZaakSource,
+  zaakTypeTransformer: DecosZaakTransformer<any>
 ) {
-  const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
-
   const isWaitingForPaymentConfirmation =
     decosZaakSource.fields.text11?.toLowerCase() ==
       DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 &&
@@ -40,7 +38,7 @@ export function isWaitingForPaymentConfirmation(
     );
 
   return (
-    !!decosCaseToZaakTransformers[zaakType]?.requirePayment &&
+    !!zaakTypeTransformer.requirePayment &&
     (isWaitingForPaymentConfirmation || isWaitingForPaymentConfirmation2)
   );
 }
@@ -67,7 +65,7 @@ export function isExcludedFromTransformation(
 ) {
   return (
     isScheduledForRemoval(zaakSource) ||
-    isWaitingForPaymentConfirmation(zaakSource) ||
+    isWaitingForPaymentConfirmation(zaakSource, zaakTypeTransformer) ||
     hasInvalidDecision(zaakSource) ||
     !zaakTypeTransformer.isActive ||
     // Check if we have data we want to transform or not.

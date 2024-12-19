@@ -14,34 +14,12 @@ import {
   ZakenFilter,
 } from '../decos/decos-types';
 
-export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 
 export const EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA: DecosCaseType[] = [
   CaseTypeV2.VakantieverhuurVergunningaanvraag,
   CaseTypeV2.ExploitatieHorecabedrijf,
 ];
-
-// Cases with this one of these dfunction values will not be included in the cases shown to the user.
-export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [
-  'buiten behandeling',
-  'geannuleerd',
-  'geen aanvraag of dubbel',
-];
-
-// Cases with one of these subject1 values will not be included in the cases shown to the user. Payment is not yet processed or failed.
-export const DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1 = [
-  'wacht op online betaling',
-  'wacht op ideal betaling',
-];
-
-// Cases with this dfunction value will not be included in the cases shown to the user.
-export const DECOS_PENDING_REMOVAL_DFUNCTION = '*verwijder';
-// Cases with this text11 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
-export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 = 'nogniet';
-// Cases with this text12 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
-export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
-  'wacht op online betaling';
 
 export type VergunningBase = DecosZaakBase;
 

@@ -15,6 +15,7 @@ import {
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen-v2/config-and-types';
 import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
@@ -241,8 +242,9 @@ describe('decos-service', () => {
 
       const workflowInstance2: typeof workflowInstance =
         jsonCopy(workflowInstance);
-      const [instance1] = workflowInstance2.content;
-      delete (instance1 as any).fields.text7;
+      const instance1 = workflowInstance2.content[0];
+      const fields = instance1.fields as Partial<typeof instance1.fields>;
+      delete fields.text7;
 
       remoteApi
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
@@ -421,25 +423,25 @@ describe('decos-service', () => {
     test('Niet definitief', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'foo.bar' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(false);
     });
     test('Niet openbaar', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'definitief', text40: 'geheim' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(false);
     });
     test('Niet van toepassing', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'definitief', text40: 'openbaar', text41: 'nvt' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(false);
     });
     test('Alles ok!', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'definitief', text40: 'openbaar', text41: 'ok' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(true);
     });
   });
@@ -566,7 +568,8 @@ describe('decos-service', () => {
     test('No date', () => {
       const workflowInstance2: typeof workflowInstance =
         jsonCopy(workflowInstance);
-      delete (workflowInstance2 as any).content[0].fields.date1;
+      const fields = workflowInstance2.content[0].fields;
+      delete (fields as Partial<typeof fields>).date1;
 
       const date = forTesting.transformDecosWorkflowDateResponse(
         'Zaak - behandelen',
@@ -671,14 +674,15 @@ describe('decos-service', () => {
       zaak.fields.bol17 = true;
       zaak.fields.bol8 = true;
 
-      const transformed = await forTesting.transformDecosZaakResponse(
-        reqID,
-        decosZaakTransformers,
-        zaak
-      );
+      const transformed: WerkzaamhedenEnVervoerOpStraat | null =
+        await forTesting.transformDecosZaakResponse(
+          reqID,
+          decosZaakTransformers,
+          zaak
+        );
       expect(transformed).not.toBe(null);
-      expect(transformed!).toHaveProperty('werkzaamheden');
-      expect((transformed as any).werkzaamheden).toStrictEqual([
+      expect(transformed).toHaveProperty('werkzaamheden');
+      expect(transformed?.werkzaamheden).toStrictEqual([
         'Werkzaamheden verrichten in de nacht',
         'Verhuizing tussen twee locaties binnen Amsterdam',
       ]);

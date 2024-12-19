@@ -1,4 +1,8 @@
-import { DecosZaakSource } from './decos-types';
+import {
+  DecosZaakBase,
+  DecosZaakSource,
+  DecosZaakTransformer,
+} from './decos-types';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
   getDecosZaakTypeFromSource,
@@ -24,21 +28,21 @@ describe('helpers/decos', () => {
   test('isNearEndDate', () => {
     {
       // No end date
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: null,
       };
       expect(isNearEndDate(decosZaak)).toBe(false);
     }
     {
       // Near end
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: '2022-10-28',
       };
       expect(isNearEndDate(decosZaak)).toBe(true);
     }
     {
       // Not near end
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: '2023-10-28',
       };
       expect(isNearEndDate(decosZaak)).toBe(false);
@@ -48,32 +52,32 @@ describe('helpers/decos', () => {
   test('isExpired', () => {
     {
       // Not expired
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: '2023-10-28',
       };
       expect(isExpired(decosZaak)).toBe(false);
     }
     {
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: '2022-10-07',
       };
       expect(isExpired(decosZaak)).toBe(false);
     }
     {
       // Is expired
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: '2022-10-06',
       };
       expect(isExpired(decosZaak)).toBe(true);
     }
     {
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: '2022-10-06',
       };
       expect(isExpired(decosZaak)).toBe(true);
     }
     {
-      const decosZaak: any = {
+      const decosZaak = {
         dateEnd: '2022-09-28',
       };
       expect(isExpired(decosZaak)).toBe(true);
@@ -81,17 +85,17 @@ describe('helpers/decos', () => {
   });
 
   test('hasOtherActualDecosZaakOfSameType', () => {
-    const decosZaak: any = {
+    const decosZaak = {
       caseType: 'test1',
       dateEnd: null,
       identifier: 'xx1',
-    };
+    } as unknown as DecosZaakBase;
 
     {
-      const decosZaken: any = [
+      const decosZaken = [
         { caseType: 'test1', dateEnd: null, identifier: 'xx2' },
         decosZaak,
-      ];
+      ] as unknown as DecosZaakBase[];
 
       expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
         true
@@ -99,7 +103,7 @@ describe('helpers/decos', () => {
     }
 
     {
-      const decosZaken: any = [decosZaak];
+      const decosZaken = [decosZaak];
 
       expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
         false
@@ -107,10 +111,10 @@ describe('helpers/decos', () => {
     }
 
     {
-      const decosZaken: any = [
+      const decosZaken = [
         { caseType: 'test1', dateEnd: '2022-05-06', identifier: 'xx2' },
         decosZaak,
-      ];
+      ] as unknown as DecosZaakBase[];
 
       expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
         false
@@ -128,7 +132,12 @@ describe('helpers/decos', () => {
         },
       } as DecosZaakSource;
 
-      expect(isWaitingForPaymentConfirmation(zaak)).toBe(true);
+      expect(
+        isWaitingForPaymentConfirmation(
+          zaak,
+          decosCaseToZaakTransformers['Werk en vervoer op straat']
+        )
+      ).toBe(true);
     });
 
     test('Is not waiting: wrong casetype', () => {
@@ -140,7 +149,12 @@ describe('helpers/decos', () => {
         },
       } as DecosZaakSource;
 
-      expect(isWaitingForPaymentConfirmation(zaak)).toBe(false);
+      expect(
+        isWaitingForPaymentConfirmation(
+          zaak,
+          {} as unknown as DecosZaakTransformer<DecosZaakBase>
+        )
+      ).toBe(false);
     });
 
     test('Is not waiting', () => {
@@ -152,7 +166,12 @@ describe('helpers/decos', () => {
         },
       } as DecosZaakSource;
 
-      expect(isWaitingForPaymentConfirmation(zaak)).toBe(false);
+      expect(
+        isWaitingForPaymentConfirmation(
+          zaak,
+          decosCaseToZaakTransformers['Werk en vervoer op straat']
+        )
+      ).toBe(false);
     });
 
     test('Is still waiting', () => {
@@ -163,7 +182,12 @@ describe('helpers/decos', () => {
         },
       } as DecosZaakSource;
 
-      expect(isWaitingForPaymentConfirmation(zaak)).toBe(true);
+      expect(
+        isWaitingForPaymentConfirmation(
+          zaak,
+          decosCaseToZaakTransformers['Werk en vervoer op straat']
+        )
+      ).toBe(true);
     });
   });
 
@@ -323,7 +347,7 @@ describe('helpers/decos', () => {
     expect(
       getDecosZaakTypeFromSource({
         fields: { text45: 'Werk en vervoer op straat' },
-      } as any)
+      } as unknown as DecosZaakSource)
     ).toBe(CaseTypeV2.WVOS);
   });
 
@@ -340,21 +364,21 @@ describe('helpers/decos', () => {
       const d = new Date();
       d.getDate();
       d.setDate(d.getDate() + 30);
-      expect(isNearEndDate({ dateEnd: d.toISOString() } as any)).toBe(true);
+      expect(isNearEndDate({ dateEnd: d.toISOString() })).toBe(true);
     });
 
     test('Not near', () => {
       const d = new Date();
       d.getDate();
       d.setDate(d.getDate() + 120);
-      expect(isNearEndDate({ dateEnd: d.toISOString() } as any)).toBe(false);
+      expect(isNearEndDate({ dateEnd: d.toISOString() })).toBe(false);
     });
 
     test('In past', () => {
       const d = new Date();
       d.getDate();
       d.setDate(d.getDate() - 120);
-      expect(isNearEndDate({ dateEnd: d.toISOString() } as any)).toBe(false);
+      expect(isNearEndDate({ dateEnd: d.toISOString() })).toBe(false);
     });
   });
 
@@ -363,24 +387,20 @@ describe('helpers/decos', () => {
       const d = new Date();
       d.getDate();
       d.setDate(d.getDate() + 1);
-      expect(isExpired({ dateEnd: new Date().toISOString() } as any, d)).toBe(
-        true
-      );
+      expect(isExpired({ dateEnd: new Date().toISOString() }, d)).toBe(true);
     });
 
     test('Is not expired', () => {
       const d = new Date();
       d.getDate();
       d.setDate(d.getDate() - 1);
-      expect(isExpired({ dateEnd: new Date().toISOString() } as any, d)).toBe(
-        false
-      );
+      expect(isExpired({ dateEnd: new Date().toISOString() }, d)).toBe(false);
     });
 
     test('Is expired same date', () => {
-      expect(
-        isExpired({ dateEnd: new Date().toISOString() } as any, new Date())
-      ).toBe(true);
+      expect(isExpired({ dateEnd: new Date().toISOString() }, new Date())).toBe(
+        true
+      );
     });
   });
 
