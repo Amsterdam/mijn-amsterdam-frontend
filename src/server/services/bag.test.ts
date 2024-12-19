@@ -30,7 +30,7 @@ const BAG_MOCK_DATA = {
   },
 };
 
-function setup_nock_response(reply: number, response?: object) {
+function setupNockResponse(reply: number, response?: object) {
   nock('https://api.data.amsterdam.nl')
     .get(
       '/v1/benkagg/adresseerbareobjecten/?openbareruimteNaam=straatje&huisnummer=25'
@@ -39,7 +39,7 @@ function setup_nock_response(reply: number, response?: object) {
 }
 
 describe('BAG service', () => {
-  setup_nock_response(200, BAG_MOCK_DATA);
+  setupNockResponse(200, BAG_MOCK_DATA);
 
   test('Bag api should reply correctly', async () => {
     const response = await fetchBAG(REQUEST_ID, ADDRESS);
@@ -58,7 +58,7 @@ describe('BAG service', () => {
   });
 
   test('No data in response', async () => {
-    setup_nock_response(200, {});
+    setupNockResponse(200, {});
     const response = await fetchBAG(REQUEST_ID, ADDRESS);
     expect(response).toStrictEqual({ status: 'OK', content: {} });
   });
