@@ -46,7 +46,7 @@ export async function fetchBAG(
       return {
         latlng,
         address: sourceAddress,
-        bagNummeraanduidingId: first_item.identificatie,
+        bagNummeraanduidingId: firstItem.identificatie,
       };
     },
   });
