@@ -127,6 +127,9 @@ function transformVoorzieningenForFrontend(
         status: getLatestStatus(lineItems),
         statusDate: getLatestStatusDate(lineItems),
         statusDateFormatted: getLatestStatusDate(lineItems, true),
+        ...(getDisclaimer(aanvraag, aanvragen) && {
+          disclaimer: getDisclaimer(aanvraag, aanvragen),
+        }),
       };
 
       voorzieningenFrontend.push(voorzieningFrontend);
@@ -136,6 +139,42 @@ function transformVoorzieningenForFrontend(
   voorzieningenFrontend.sort(dateSort('statusDate', 'desc'));
 
   return voorzieningenFrontend;
+}
+
+export function getDisclaimer(
+  detailAanvraag: ZorgnedAanvraagTransformed,
+  aanvragen: ZorgnedAanvraagTransformed[]
+): string | undefined {
+  const datumEindeGeldigheid = '2024-10-31';
+  const datumIngangGeldigheid = '2024-11-01';
+
+  const hasNietActueelMatch =
+    detailAanvraag.isActueel &&
+    detailAanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
+    aanvragen.some(
+      (aanvraag) =>
+        aanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
+        aanvraag.titel === detailAanvraag.titel &&
+        !aanvraag.isActueel
+    );
+
+  const hasActueelMatch =
+    !detailAanvraag.isActueel &&
+    detailAanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
+    aanvragen.some(
+      (aanvraag) =>
+        aanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
+        aanvraag.titel === detailAanvraag.titel &&
+        aanvraag.isActueel
+    );
+
+  if (hasNietActueelMatch) {
+    return 'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.';
+  } else if (hasActueelMatch) {
+    return 'Door een fout staat dit hulpmiddel ten onrechte bij Eerdere en afgewezen voorzieningen. Kijk bij "Huidige voorzieningen" of in de brief bovenaan.';
+  }
+
+  return undefined;
 }
 
 export async function fetchWmo(
