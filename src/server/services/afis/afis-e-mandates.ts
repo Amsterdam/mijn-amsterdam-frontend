@@ -100,8 +100,8 @@ export async function createAfisEMandate(
   }
 
   const sender = businessPartnerResponse.content;
-  const senderIban = payload.senderIBAN;
-  const senderBic = payload.senderBIC;
+  const senderIBAN = payload.senderIBAN;
+  const senderBIC = payload.senderBIC;
 
   // TODO: Check if this bank account exists in the sender's bank account list.
   // If not add it to the list.
@@ -116,14 +116,14 @@ export async function createAfisEMandate(
   }
 
   const bankAccountExists = !!bankAccountResponse.content.find(
-    (account) => account.IBAN === senderIban
+    (account) => account.IBAN === senderIBAN
   );
 
   if (!bankAccountExists) {
     const bankAccountPayload: AfisBusinessPartnerBankPayload = {
       businessPartnerId: payload.businessPartnerId,
-      iban: payload.senderIBAN,
-      bic: payload.senderBIC,
+      iban: senderIBAN,
+      bic: senderBIC,
       swiftCode: '',
       senderName: payload.senderName,
     };
@@ -149,8 +149,8 @@ export async function createAfisEMandate(
     SndId: payload.businessPartnerId,
 
     // Gegevens geleverd door Debtor bank via EMandaat request
-    SndIban: senderIban,
-    SndBic: senderBic,
+    SndIban: senderIBAN,
+    SndBic: senderBIC,
 
     // NOTE: These fields are always the same as BusinessPartnerDetails, not coupled to the bankaccount (IBAN) holder.
     SndCity: sender?.address?.CityName ?? '',
