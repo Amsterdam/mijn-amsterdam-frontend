@@ -30,18 +30,16 @@ function ApiActionButton<T>({
   errorMessage,
 }: ApiActionProps<T>) {
   return (
-    <span className={api.isError ? styles.DocumentDownloadError : ''}>
+    <span className={api.isError ? styles.Error : ''}>
       <Button variant="tertiary" onClick={() => fetch()}>
         {api.isLoading && <Spinner />}
         {!api.isLoading && api.isError && (
-          <Icon className={styles.LinkIcon} svg={IconAlert} size="level-5" />
+          <Icon className={styles.Icon} svg={IconAlert} size="level-5" />
         )}
         {label}
       </Button>
-      {api.isLoading && <span className={styles.DownloadInfo}>Bezig...</span>}
-      {api.isError && (
-        <span className={styles.DownloadInfo}>{errorMessage}</span>
-      )}
+      {api.isLoading && <span className={styles.Info}>Bezig...</span>}
+      {api.isError && <span className={styles.Info}>{errorMessage}</span>}
     </span>
   );
 }
