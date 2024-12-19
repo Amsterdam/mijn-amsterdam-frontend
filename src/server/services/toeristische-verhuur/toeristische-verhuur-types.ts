@@ -29,7 +29,6 @@ export interface LVVRegistratie {
   registrationNumber: string;
   agreementDate: string | null;
   agreementDateFormatted: string | null;
-  identifier?: string;
 }
 
 export interface LVVRegistratiesSourceData {
@@ -53,7 +52,6 @@ export interface VakantieverhuurVergunning extends ZaakDetail {
   status: string;
   title: 'Vergunning vakantieverhuur';
   zaaknummer: string;
-  identifier: string;
 }
 
 export type ToeristischeVerhuurVergunning =

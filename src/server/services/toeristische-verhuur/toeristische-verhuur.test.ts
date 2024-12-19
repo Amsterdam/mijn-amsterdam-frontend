@@ -256,7 +256,6 @@ describe('Toeristische verhuur service', () => {
       result: 'Verleend',
       id: 'Z-23-2130506',
       zaaknummer: 'Z/23/2130506',
-      identifier: 'Z/23/2130506',
       heeftOvergangsRecht: false,
       link: {
         to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',

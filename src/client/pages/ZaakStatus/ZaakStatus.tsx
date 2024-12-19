@@ -20,7 +20,7 @@ import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
 
-type ThemaQueryParam = 'vergunningen';
+type ThemaQueryParam = 'vergunningen' | 'toeristischeVerhuur';
 
 type PageRouteResolver = {
   baseRoute: AppRoute;
@@ -36,30 +36,35 @@ const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: {
     baseRoute: AppRoutes.VERGUNNINGEN,
     getRoute: (detailPageItemId, appState) => {
-      if (
-        isError(appState.VERGUNNINGEN) ||
-        isError(appState.TOERISTISCHE_VERHUUR)
-      ) {
+      if (isError(appState.VERGUNNINGEN)) {
         return STATE_ERROR;
       }
-      if (
-        !isLoading(appState.VERGUNNINGEN) &&
-        !isLoading(appState.TOERISTISCHE_VERHUUR)
-      ) {
-        // Combine the toeristische verhuur vergunningen with the other vergunningen
-        const toeristischeVerhuurVergunningen = [
-          ...Object.values(appState.TOERISTISCHE_VERHUUR.content || {}).flat(),
-        ];
-
-        const combined = [
-          ...toeristischeVerhuurVergunningen,
-          ...(appState.VERGUNNINGEN.content || []),
-        ];
-
+      if (!isLoading(appState.VERGUNNINGEN)) {
         return (
-          combined?.find(
+          appState.VERGUNNINGEN.content?.find(
             (vergunning) => vergunning.identifier === detailPageItemId
           )?.link.to ?? ITEM_NOT_FOUND
+        );
+      }
+    },
+  },
+  toeristischeVerhuur: {
+    baseRoute: AppRoutes.TOERISTISCHE_VERHUUR,
+    getRoute: (detailPageItemId, appState) => {
+      if (isError(appState.TOERISTISCHE_VERHUUR)) {
+        return STATE_ERROR;
+      }
+
+      if (!isLoading(appState.TOERISTISCHE_VERHUUR)) {
+        return (
+          (
+            appState.TOERISTISCHE_VERHUUR.content
+              ?.vakantieverhuurVergunningen || []
+          ).find((toeristischeVerhuur) => {
+            if (toeristischeVerhuur.zaaknummer === detailPageItemId) {
+              return toeristischeVerhuur;
+            }
+          })?.link.to ?? ITEM_NOT_FOUND
         );
       }
     },

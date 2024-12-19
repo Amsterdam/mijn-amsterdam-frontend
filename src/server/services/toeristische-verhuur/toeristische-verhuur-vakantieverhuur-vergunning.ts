@@ -132,7 +132,6 @@ export function transformVakantieverhuurVergunningen(
       adres: vergunning.location ?? '-',
       result: vergunning.decision as VakantieverhuurVergunning['result'],
       zaaknummer: vergunning.identifier,
-      identifier: vergunning.identifier,
       steps,
       documents: [],
       fetchDocumentsUrl: vergunning.documentsUrl,
@@ -172,7 +171,7 @@ export async function fetchVakantieverhuurVergunningen(
               id: ':id',
             });
           default:
-            return AppRoutes.TOERISTISCHE_VERHUUR;
+            return AppRoutes['TOERISTISCHE_VERHUUR'];
         }
       },
       filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>
