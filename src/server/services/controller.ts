@@ -22,7 +22,7 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchHLI } from './hli/hli';
-import { fetchMyLocation } from './home';
+import { fetchMyLocation } from './my-locations';
 import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';

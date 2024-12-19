@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { matchPath, useHistory } from 'react-router-dom';
+import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
@@ -25,7 +25,7 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
 
 export function usePageChange(isAuthenticated: boolean) {
   const history = useHistory();
-  const location = history.location;
+  const location = useLocation();
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
