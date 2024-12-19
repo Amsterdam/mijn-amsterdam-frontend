@@ -287,7 +287,7 @@ async function getZakenByUserKey(
   requestID: RequestID,
   userKey: string,
   zaakTypeTransformers: Pick<
-    DecosZaakTransformer<any>,
+    DecosZaakTransformer<DecosZaakBase>,
     'addToSelectFieldsBase' | 'caseType'
   >[] = []
 ) {
@@ -339,7 +339,7 @@ export async function fetchDecosZakenFromSource(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: Pick<
-    DecosZaakTransformer<any>,
+    DecosZaakTransformer<DecosZaakBase>,
     'addToSelectFieldsBase' | 'caseType'
   >[] = []
 ) {
