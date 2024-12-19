@@ -13,6 +13,25 @@ export const routerPrivateNetwork = express.Router();
 routerPrivateNetwork.BFF_ID = 'afis-external-consumer-private-network';
 
 function validateAndExtractPayload(xmlPayload: string) {
+  /**
+<?xml version="1.0"?>
+<response>
+  <id_client>1000</id_client>
+  <debtornumber>123456</debtornumber>
+  <cid>2345678910</cid>
+  <mpid>1234567890</mpid>
+  <payment_reference>123456789</payment_reference>
+  <id_request_client>test</id_request_client>
+  <event_type>payment</event_type>
+  <amount_total>45500</amount_total>
+  <id_bank>ABNANL2A</id_bank>
+  <iban>GB33BUKB20201555555555</iban>
+  <bic>INGBNL2A</bic>
+  <account_owner>John Doe</account_owner>
+  <event_date>2024-01-05</event_date>
+  <event_time>11:27</event_time>
+</response>
+   */
   return {
     debtornumber: 'xmlPayload.debtornumber',
     debtorIban: 'xmlPayload.iban',
