@@ -26,6 +26,7 @@ export interface WMOVoorzieningFrontend extends ZaakDetail {
   statusDate: string;
   statusDateFormatted: string;
   supplier: string | null; // Leverancier
+  disclaimer?: string;
 }
 
 export const DOCUMENT_TITLE_MEER_INFORMATIE_STARTS_WITH = 'Verzoek:'; // Documents starting with this token correspond to the 'meer informatie' step.

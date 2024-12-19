@@ -4,6 +4,35 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
 [
   {
     "betrokkenen": [
+      "123123123123",
+    ],
+    "datumAanvraag": "2024-08-29",
+    "datumBeginLevering": null,
+    "datumBesluit": "2024-08-29",
+    "datumEindeGeldigheid": "2025-10-31",
+    "datumEindeLevering": null,
+    "datumIngangGeldigheid": "2024-11-01",
+    "datumOpdrachtLevering": null,
+    "datumToewijzing": null,
+    "documenten": [
+      {
+        "datePublished": "2024-08-29T16:48:11.997",
+        "id": "B2814508",
+        "title": "Besluit: Naam in Inkijk-API",
+        "url": "",
+      },
+    ],
+    "id": "3271828893",
+    "isActueel": true,
+    "leverancier": "Carehouse - Leveo Care (huidig)",
+    "leveringsVorm": "PGB",
+    "productIdentificatie": "07A09",
+    "productsoortCode": "DBS",
+    "resultaat": "toegewezen",
+    "titel": "PGB: dagbesteding samenwerken",
+  },
+  {
+    "betrokkenen": [
       "123123123",
     ],
     "datumAanvraag": "2024-09-30",
@@ -1734,6 +1763,35 @@ exports[`zorgned-service > transformZorgnedAanvragen 1`] = `
     "productsoortCode": "DBS",
     "resultaat": "afgewezen",
     "titel": "dagbesteding meewerken",
+  },
+  {
+    "betrokkenen": [
+      "123123123123",
+    ],
+    "datumAanvraag": "2024-08-29",
+    "datumBeginLevering": null,
+    "datumBesluit": "2024-08-29",
+    "datumEindeGeldigheid": "2024-10-31",
+    "datumEindeLevering": null,
+    "datumIngangGeldigheid": null,
+    "datumOpdrachtLevering": null,
+    "datumToewijzing": null,
+    "documenten": [
+      {
+        "datePublished": "2024-08-29T16:48:11.997",
+        "id": "B2814508",
+        "title": "Besluit: Naam in Inkijk-API",
+        "url": "",
+      },
+    ],
+    "id": "759557662",
+    "isActueel": false,
+    "leverancier": "Carehouse - Leveo Care (afgewezen)",
+    "leveringsVorm": "PGB",
+    "productIdentificatie": "07A09",
+    "productsoortCode": "DBS",
+    "resultaat": "toegewezen1",
+    "titel": "PGB: dagbesteding samenwerken",
   },
 ]
 `;
