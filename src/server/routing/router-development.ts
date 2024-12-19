@@ -27,6 +27,7 @@ import { signDevelopmentToken } from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfile } from '../auth/auth-types';
 import { ONE_SECOND_MS } from '../config/app';
+import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
 
 export const authRouterDevelopment = express.Router();
@@ -151,14 +152,25 @@ authRouterDevelopment.get(
   }
 );
 
-authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-  const redirectUrl = `${process.env.MA_FRONTEND_URL}`;
-  return res.redirect(redirectUrl);
-});
+authRouterDevelopment.get(
+  [
+    authRoutes.AUTH_LOGOUT,
+    authRoutes.AUTH_LOGOUT_EHERKENNING,
+    authRoutes.AUTH_LOGOUT_DIGID,
+  ],
+  async (req, res) => {
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    const returnTo = getReturnToUrl(req.query, getFromEnv('MA_FRONTEND_URL'));
+    return res.redirect(returnTo);
+  }
+);
 
 authRouterDevelopment.get(
-  DevelopmentRoutes.DEV_AUTH_CHECK,
+  [
+    authRoutes.AUTH_CHECK,
+    authRoutes.AUTH_CHECK_EHERKENNING,
+    authRoutes.AUTH_CHECK_DIGID,
+  ],
   async (req, res) => {
     if (hasSessionCookie(req)) {
       const auth = getAuth(req);

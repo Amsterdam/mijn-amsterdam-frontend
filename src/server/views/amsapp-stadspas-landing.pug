@@ -1,0 +1,32 @@
+doctype html
+html(lang="nl")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    title Stadspas
+    link(href=urlToCSS rel="stylesheet")
+
+  body
+    header
+      img(id="amsterdam-logo" src=urlToImage)
+
+    div(class='main')
+      h1 Inloggen
+      p Open de Amsterdam App om verder te gaan.
+
+      if error
+        p Foutmelding: #{error.code} - #{error.message}
+
+      a(href=appHref id='protocol-link-button') Open Amsterdam App
+
+    script(type='text/javascript' nonce=nonce).
+      async function openApp() {
+        document.getElementById('protocol-link-button').click();
+      }
+
+      document.addEventListener('DOMContentLoaded', openApp);
+
+
+
+

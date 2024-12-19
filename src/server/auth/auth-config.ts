@@ -9,8 +9,12 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { ONE_HOUR_MS, ONE_MINUTE_SECONDS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 
+// Amsterdam App return to url config
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
   'amsapp-stadspas-administratienummer';
+export const RETURNTO_AMSAPP_STADSPAS_APP_LANDING = 'amsapp-stadspas-landing';
+
+// Mijn Amsterdam return to url config
 export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
 export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
 

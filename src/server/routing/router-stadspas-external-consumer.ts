@@ -4,12 +4,15 @@ import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
 import {
   generateFullApiUrlBFF,
+  RequestWithQueryParams,
   sendBadRequest,
   sendResponse,
 } from './route-helpers';
-import { IS_PRODUCTION } from '../../universal/config/env';
 import { apiSuccessResult } from '../../universal/helpers/api';
-import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../auth/auth-config';
+import {
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+} from '../auth/auth-config';
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -82,10 +85,18 @@ type RenderProps = {
   nonce: string;
   urlToImage: string;
   urlToCSS: string;
-  appHref: string;
+  appHref?: string;
   error?: ApiError;
   administratienummerEncrypted?: string; // Only included in debug build.
 };
+
+function getAmsterdamAppLogoutUrl(appHref: string) {
+  return `${generateFullApiUrlBFF(
+    authRoutes.AUTH_LOGOUT_DIGID,
+    {},
+    getFromEnv('BFF_OIDC_BASE_URL')
+  )}?${new URLSearchParams({ returnTo: RETURNTO_AMSAPP_STADSPAS_APP_LANDING, appHref })}`;
+}
 
 async function sendAdministratienummerResponse(
   req: Request<{ token: string }>,
@@ -97,20 +108,6 @@ async function sendAdministratienummerResponse(
   if (!authProfileAndToken) {
     apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
-
-  const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
-  const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-  const logoutUrl = generateFullApiUrlBFF(
-    authRoutes.AUTH_LOGOUT_DIGID,
-    {},
-    getFromEnv('BFF_OIDC_BASE_URL')
-  );
-  const baseRenderProps = {
-    nonce,
-    urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
-    urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
-    logoutUrl,
-  };
 
   if (
     authProfileAndToken?.profile.id &&
@@ -147,14 +144,9 @@ async function sendAdministratienummerResponse(
         deliveryResponse.status === 'OK' &&
         deliveryResponse.content.detail === 'Success'
       ) {
-        const renderProps: RenderProps = {
-          ...baseRenderProps,
-          appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
-          administratienummerEncrypted: !IS_PRODUCTION
-            ? administratienummerEncrypted
-            : '',
-        };
-        return res.render('amsapp-stadspas-administratienummer', renderProps);
+        return res.redirect(
+          getAmsterdamAppLogoutUrl(`${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`)
+        );
       }
 
       if (
@@ -179,17 +171,66 @@ async function sendAdministratienummerResponse(
 
   captureMessage(`AMSAPP Stadspas: ${apiResponseError.message}`);
 
-  const renderProps: RenderProps = {
-    ...baseRenderProps,
-    error: apiResponseError,
-    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
-  };
-  return res.render('amsapp-stadspas-administratienummer', renderProps);
+  return res.redirect(
+    getAmsterdamAppLogoutUrl(
+      `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`
+    )
+  );
 }
 
 routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   sendAdministratienummerResponse
+);
+
+function getAppStadspasDeepLink(appHref?: string) {
+  let appHrefParsed: URL | undefined;
+  if (appHref) {
+    appHrefParsed = new URL(appHref);
+  }
+  const deepLink = appHrefParsed?.href.startsWith(AMSAPP_STADSPAS_DEEP_LINK)
+    ? appHref
+    : AMSAPP_STADSPAS_DEEP_LINK;
+
+  return {
+    deepLink,
+    queryParams: appHrefParsed?.searchParams
+      ? Object.fromEntries(appHrefParsed?.searchParams)
+      : null,
+  };
+}
+
+async function sendAppLandingResponse(
+  req: RequestWithQueryParams<{ appHref: string }>,
+  res: Response
+) {
+  const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
+  const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
+  const baseRenderProps = {
+    nonce,
+    urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
+    urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
+  };
+
+  const { deepLink, queryParams } = getAppStadspasDeepLink(req.query.appHref);
+
+  const renderProps: RenderProps = {
+    ...baseRenderProps,
+    appHref: deepLink,
+    error: queryParams?.errorCode
+      ? {
+          code: queryParams.errorCode as string,
+          message: queryParams.errorMessage as string,
+        }
+      : undefined,
+  };
+
+  return res.render('amsapp-stadspas-landing', renderProps);
+}
+
+routerInternet.get(
+  ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING,
+  sendAppLandingResponse
 );
 
 async function sendStadspassenResponse(
@@ -301,4 +342,5 @@ export const forTesting = {
   sendStadspassenResponse,
   sendDiscountTransactionsResponse,
   sendBudgetTransactionsResponse,
+  getAppStadspasDeepLink,
 };
