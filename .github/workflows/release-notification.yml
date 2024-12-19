@@ -59,22 +59,31 @@ jobs:
           grep -iE 'BUG:|MIJN-[0-9]+-BUG' release_notes.txt > bugs.txt || true
           grep -iE 'MIJN-[0-9]+($|[^-])' release_notes.txt > mijn.txt || true
 
-          echo "chores<<EOF" >> $GITHUB_OUTPUT
-          cat chores.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Output Categorized Notes
+        run: |
+          if [ -s chores.txt ]; then
+            echo "chores<<EOF" >> $GITHUB_OUTPUT
+            cat chores.txt >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
 
-          echo "features<<EOF" >> $GITHUB_OUTPUT
-          cat features.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          if [ -s features.txt ]; then
+            echo "features<<EOF" >> $GITHUB_OUTPUT
+            cat features.txt >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
 
-          echo "bugs<<EOF" >> $GITHUB_OUTPUT
-          cat bugs.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          if [ -s bugs.txt ]; then
+            echo "bugs<<EOF" >> $GITHUB_OUTPUT
+            cat bugs.txt >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
 
-          echo "mijn<<EOF" >> $GITHUB_OUTPUT
-          cat mijn.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-        shell: bash
+          if [ -s mijn.txt ]; then
+            echo "mijn<<EOF" >> $GITHUB_OUTPUT
+            cat mijn.txt >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create Customized Release Notes
         id: custom_release_notes
