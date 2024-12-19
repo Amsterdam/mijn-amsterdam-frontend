@@ -472,33 +472,31 @@ function createEMandateProviderPayload(
     .toISOString()
     .split('T')[0];
 
-  return `
-  <?xml version="1.0" encoding="utf-8" ?>
-	<request>
-    <firstname>${businessPartner.firstName}</firstname>
-    <lastname>${businessPartner.lastName}</lastname>
-    <debtornumber>${businessPartner.businessPartnerId}</debtornumber>
-    <payment_reference>${paymentReference}</payment_reference>
-    <concerning>Automatische incasso ${acceptant.name}</concerning>
-    <id_batch>${idBatch}</id_batch>
-    <id_request_client>${idRequestClient}</id_request_client>
-    <company_name>${AFIS_EMANDATE_COMPANY_NAME}</company_name>
-    <module_ideal>0</module_ideal>
-    <module_emandate>1</module_emandate>
-    <due_date>${dueDate}</due_date>
-    <return_url>${returnUrl}</return_url>
-    <variable1>${signRequestPayload.acceptantIBAN}</variable1>
-    <invoices>
-      <invoice>
-        <invoice_number>${invoiceNumber}</invoice_number>
-        <invoice_description>${invoiceDescription}</invoice_description>
-        <invoice_amount>${invoiceAmount}</invoice_amount>
-        <invoice_date>${invoiceDate}</invoice_date>
-        <invoice_date_due>${AFIS_EMANDATE_RECURRING_DATE_END}</invoice_date_due>
-      </invoice>
-    </invoices>
-	</request>
-  `;
+  return `<?xml version="1.0" encoding="utf-8" ?>
+<request>
+  <firstname>${businessPartner.firstName}</firstname>
+  <lastname>${businessPartner.lastName}</lastname>
+  <debtornumber>${businessPartner.businessPartnerId}</debtornumber>
+  <payment_reference>${paymentReference}</payment_reference>
+  <concerning>Automatische incasso ${acceptant.name}</concerning>
+  <id_batch>${idBatch}</id_batch>
+  <id_request_client>${idRequestClient}</id_request_client>
+  <company_name>${AFIS_EMANDATE_COMPANY_NAME}</company_name>
+  <module_ideal>0</module_ideal>
+  <module_emandate>1</module_emandate>
+  <due_date>${dueDate}</due_date>
+  <return_url>${returnUrl}</return_url>
+  <variable1>${signRequestPayload.acceptantIBAN}</variable1>
+  <invoices>
+    <invoice>
+      <invoice_number>${invoiceNumber}</invoice_number>
+      <invoice_description>${invoiceDescription}</invoice_description>
+      <invoice_amount>${invoiceAmount}</invoice_amount>
+      <invoice_date>${invoiceDate}</invoice_date>
+      <invoice_date_due>${AFIS_EMANDATE_RECURRING_DATE_END}</invoice_date_due>
+    </invoice>
+  </invoices>
+</request>`;
 }
 
 export async function fetchEmandateRedirectUrlFromProvider(
