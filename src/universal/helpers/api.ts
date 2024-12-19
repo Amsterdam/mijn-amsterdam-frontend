@@ -29,8 +29,8 @@ export interface PristineStageConfig {
 }
 
 // Used of the request to the api must be postponed, for example when using a feature toggle.
-export type ApiPostponeResponse = {
-  content: null;
+export type ApiPostponeResponse<T> = {
+  content: T;
   status: 'POSTPONE';
 };
 
@@ -52,14 +52,14 @@ export type ApiResponse<T> =
   | ApiErrorResponse<null>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>
-  | ApiPostponeResponse
+  | ApiPostponeResponse<T>
   | ApiDependencyErrorResponse;
 
 export function isLoading(apiResponseData: ApiResponse<unknown>) {
   // If no responseData was found, assumes it's still loading
   return (
     (!apiResponseData && !isError(apiResponseData)) ||
-    apiResponseData?.status === 'PRISTINE'
+    (apiResponseData?.status === 'PRISTINE' && apiResponseData.isActive)
   );
 }
 
@@ -153,9 +153,9 @@ export function apiPristineResult<T>(
   };
 }
 
-export function apiPostponeResult(): ApiPostponeResponse {
+export function apiPostponeResult<T>(content: T): ApiPostponeResponse<T> {
   return {
-    content: null,
+    content,
     status: 'POSTPONE',
   };
 }
