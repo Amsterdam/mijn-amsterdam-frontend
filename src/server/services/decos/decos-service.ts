@@ -1,30 +1,33 @@
+import assert from 'assert';
+
 import memoizee from 'memoizee';
 
 import {
+  caseType,
+  DecosZaakBase,
+  DecosZaakTransformer,
+  MA_DECISION_DEFAULT,
+  adresBoekenByProfileType,
   AddressBookEntry,
-  DecosDocumentBlobSource,
-  DecosDocumentSource,
   DecosFieldValue,
+  DecosZaakDocument,
   DecosWorkflowStepDate,
   DecosWorkflowStepTitle,
+  DecosDocumentBlobSource,
+  DecosDocumentSource,
   DecosZaakSource,
   DecosZakenResponse,
-  MA_DECISION_DEFAULT,
-  VergunningDocument,
-  VergunningV2,
-  adresBoekenByProfileType,
-} from './config-and-types';
-import {
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
-  decosZaakTransformers,
-} from './decos-zaken';
+} from './decos-types';
 import {
   getDecosZaakTypeFromSource,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
 } from './helpers';
 import {
+  ApiErrorResponse,
+  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -39,9 +42,9 @@ import { requestData } from '../../helpers/source-api-request';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
- * The Decos service ties responses of various api calls together and produces a set of transformed set of vergunningen.
+ * The Decos service ties responses of various api calls together and produces a set of transformed set of decosZaken.
  *
- * Service: **fetchDecosVergunningen**
+ * Service: **fetchDecosZaken**
  *
  * First we query Decos for a `key` to see if a certain userID (BSN or KVKNUMBER) is known in the system. We look for the values of the userID in so called AddressBooks.
  * The id's (keys) of the addressbooks are static values. So we put together a search query that looks for an AddressBook entry in a
@@ -59,13 +62,13 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
  * After transformation of the api attribute names and possibly values we apply another, optional, transform to the data.
  * At this point we can fetch other services to enrich the data we retrieved initially or maybe assign values to some properties based on business logic.
  *
- * Service: **fetchDecosVergunning**
+ * Service: **fetchDecosZaak**
  *
- * Retrieves one zaak based on a key found in the fetchDecosVergunningen call. This service is used to provide the data for the detailed view of a vergunning.
+ * Retrieves one zaak based on a key found in the fetchDecosZaken call. This service is used to provide the data for the detailed view of a decos zaak.
  * This api call to Decos does not specify any fields to be selected and instead retrieves all the fields related to the requested zaak. Source validity checks / filtering is
- * not performed at this stage because we should only have the keys of individual zaken that we got from the fetchDecosVergunningen service.
+ * not performed at this stage because we should only have the keys of individual zaken that we got from the fetchDecosZaken service.
  *
- * Event hough we retrieve all source fields/values for a specific case, only ones specified (transformFields) end up in the data sent to the user.
+ * Event though we retrieve all source fields/values for a specific case, only ones specified (transformFields) end up in the data sent to the user.
  *
  * Service: **fetchDecosWorkflowDate**
  *
@@ -77,7 +80,7 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
  * ZaakID is the value of the `key` attribute in Decos. `Identifier` is the attribute name we use in Mijn Amsterdam as `Zaaknummer / Kenmerk`, a value readable to the user.
  *
  *
- * Servuce: **fetchDecosDocument**
+ * Service: **fetchDecosDocument**
  *
  * Retrieves the document (binary) data which can be presented to the user as Document download.
  *
@@ -129,19 +132,25 @@ async function getUserKeys(
   return apiSuccessResult(userKeys);
 }
 
-async function transformDecosZaakResponse(
+async function transformDecosZaakResponse<
+  T extends DecosZaakTransformer<any>,
+  DZ extends DecosZaakBase = NestedType<T>,
+>(
   requestID: RequestID,
+  decosZaakTransformers: T[],
   decosZaakSource: DecosZaakSource
-) {
+): Promise<DZ | null> {
   const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
-  const zaakTypeTransformer = decosZaakTransformers[zaakType];
+  const decosZaakTransformer = decosZaakTransformers.find(
+    (transformer) => transformer.caseType == zaakType
+  );
 
-  if (!zaakTypeTransformer || !zaakTypeTransformer.transformFields) {
+  if (!decosZaakTransformer || !decosZaakTransformer.transformFields) {
     captureMessage(`No transformer for zaakType ${zaakType}`);
     return null;
   }
 
-  if (isExcludedFromTransformation(decosZaakSource, zaakTypeTransformer)) {
+  if (isExcludedFromTransformation(decosZaakSource, decosZaakTransformer)) {
     return null;
   }
 
@@ -152,7 +161,7 @@ async function transformDecosZaakResponse(
 
   // Iterates over the desired data fields (key=>value pairs) and transforms values if necessary.
   const transformedFieldEntries = Object.entries(
-    zaakTypeTransformer.transformFields
+    decosZaakTransformer.transformFields
   ).map(([fieldNameSource, fieldTransformer]) => {
     const fieldNameTransformed =
       typeof fieldTransformer === 'object'
@@ -168,7 +177,7 @@ async function transformDecosZaakResponse(
         typeof fieldTransformer === 'object' &&
         typeof fieldTransformer.transform === 'function'
           ? fieldTransformer.transform(value, {
-              zaakTypeTransformer,
+              decosZaakTransformer,
               fetchDecosWorkflowDate: fetchWorkflowDate,
             })
           : value;
@@ -182,107 +191,133 @@ async function transformDecosZaakResponse(
   // Create an object from the transformed fieldNames and values
   const transformedFields = Object.fromEntries(transformedFieldEntries);
 
-  // Create the base data for the vergunning. This object is not guaranteed to have all fields defined in the type for a specific vergunning.
-  // It depends on the query and resturned result to the decos api which field value ends up in the vergunning.
-  // For example, if we selected only the sourcefield `mark` we'd have a vergunning with a value for `identifier`..
-  let vergunning: VergunningV2 = {
+  // Create the base data for the decosZaak. This object is not guaranteed to have all fields defined in the type for a specific decosZaak.
+  // It depends on the query and resturned result to the decos api which field value ends up in the decosZaak.
+  // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
+  let decosZaak: DZ = {
     id:
       transformedFields.identifier?.replace(/\//g, '-') ??
-      'unknown-vergunning-id',
+      'unknown-decoszaak-id',
     key: decosZaakSource.key,
-    title: zaakTypeTransformer.title,
+    title: decosZaakTransformer.title,
     dateInBehandeling: null, // Serves as placeholder, value for this property will be added async below.
     ...transformedFields,
   };
 
   // Try to fetch and assign a specific date on which the zaak was "In behandeling"
-  if (zaakTypeTransformer.dateInBehandelingWorkflowStepTitle) {
+  if (decosZaakTransformer.dateInBehandelingWorkflowStepTitle) {
     const { content: dateInBehandeling } = await fetchWorkflowDate(
-      zaakTypeTransformer.dateInBehandelingWorkflowStepTitle
+      decosZaakTransformer.dateInBehandelingWorkflowStepTitle
     );
     if (dateInBehandeling) {
-      vergunning.dateInBehandeling = dateInBehandeling;
+      decosZaak.dateInBehandeling = dateInBehandeling;
     }
   }
 
-  if (vergunning.processed && !vergunning.decision) {
-    vergunning.decision = MA_DECISION_DEFAULT;
+  if (decosZaak.processed && !decosZaak.decision) {
+    decosZaak.decision = MA_DECISION_DEFAULT;
   }
 
   // After initial transformation of the data is done, perform a Post transform action.
   // It's possible to handle some data quality improvements and/or business logic operations in the after transform function.
-  if (zaakTypeTransformer.afterTransform) {
-    vergunning = await zaakTypeTransformer.afterTransform(
-      vergunning,
+  if (decosZaakTransformer.afterTransform) {
+    decosZaak = await decosZaakTransformer.afterTransform(
+      decosZaak,
       decosZaakSource,
       {
         fetchDecosWorkflowDate: fetchWorkflowDate,
-        zaakTypeTransformer,
+        decosZaakTransformer,
       }
     );
   }
 
-  return vergunning;
+  return decosZaak;
 }
 
-async function transformDecosZakenResponse(
+async function transformDecosZakenResponse<
+  T extends DecosZaakTransformer<any>,
+  DZ extends DecosZaakBase = NestedType<T>,
+>(
   requestID: RequestID,
+  decosZaakTransformers: T[],
   decosZakenSource: DecosZaakSource[]
 ) {
-  const zakenToBeTransformed = [];
-
+  const zakenToBeTransformed: [T, DecosZaakSource][] = [];
   for (const decosZaakSource of decosZakenSource) {
     const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
-    const zaakTypeTransformer = decosZaakTransformers[zaakType];
+    const decosZaakTransformer = decosZaakTransformers.find(
+      (transformer) => transformer.caseType == zaakType
+    );
 
-    if (!zaakTypeTransformer) {
-      captureMessage(`Decos: ${zaakType} transformer not implemented`);
+    // exclude decosZaakSources that do not have a matching decosZaakTransformer
+    if (!decosZaakTransformer) {
       continue;
     }
 
     // Exclude zaken that match the following conditions
-    if (isExcludedFromTransformation(decosZaakSource, zaakTypeTransformer)) {
+    if (isExcludedFromTransformation(decosZaakSource, decosZaakTransformer)) {
       continue;
     }
 
-    zakenToBeTransformed.push(decosZaakSource);
+    zakenToBeTransformed.push([decosZaakTransformer, decosZaakSource]);
   }
 
-  let vergunningen: Array<VergunningV2 | null> = [];
+  let decosZaken: Array<DZ | null> = [];
 
   try {
-    vergunningen = await Promise.all(
-      zakenToBeTransformed.map((decosZaak) => {
-        return transformDecosZaakResponse(requestID, decosZaak);
+    decosZaken = await Promise.all(
+      zakenToBeTransformed.map(([decosZaakTransformer, decosZaak]) => {
+        return transformDecosZaakResponse(
+          requestID,
+          [decosZaakTransformer],
+          decosZaak
+        );
       })
     );
   } catch (err) {
     captureException(err);
   }
 
-  return vergunningen
-    .filter(
-      (vergunning: VergunningV2 | null): vergunning is VergunningV2 =>
-        vergunning !== null
-    )
+  return decosZaken
+    .filter((decosZaak: DZ | null): decosZaak is DZ => decosZaak !== null)
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-async function getZakenByUserKey(requestID: RequestID, userKey: string) {
-  const selectFieldsAllCases = Object.keys(SELECT_FIELDS_TRANSFORM_BASE);
-  const additionalSelectFields = Object.values(decosZaakTransformers).flatMap(
-    (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
+async function getZakenByUserKey(
+  requestID: RequestID,
+  userKey: string,
+  zaakTypeTransformers: Pick<
+    DecosZaakTransformer<DecosZaakBase>,
+    'addToSelectFieldsBase' | 'caseType'
+  >[] = []
+) {
+  const caseField = 'text45';
+  assert(
+    SELECT_FIELDS_TRANSFORM_BASE[caseField] == caseType,
+    `getZakenByUserKey expects field ${caseField} to be the caseType`
   );
 
-  const selectFields = uniqueArray([
+  const fields = uniqueArray([
     ...SELECT_FIELDS_META,
-    ...selectFieldsAllCases,
-    ...additionalSelectFields,
+    ...Object.keys(SELECT_FIELDS_TRANSFORM_BASE),
+    ...zaakTypeTransformers.flatMap(
+      (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
+    ),
   ]).join(',');
+
+  const caseTypes = zaakTypeTransformers
+    .map((transformer) => `${caseField} eq ${transformer.caseType}`)
+    .join(' or ');
+
+  const decosUrlParams = new URLSearchParams({
+    top: '50',
+    ...(fields && { select: fields }),
+    ...(caseTypes && { filter: caseTypes }),
+  });
 
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${userKey}/folders?top=50&select=${selectFields}`;
+      return `${config.url}/items/${userKey}/folders?${decosUrlParams}`;
     },
     transformResponse: (responseData: DecosZakenResponse) => {
       if (!Array.isArray(responseData?.content)) {
@@ -302,7 +337,11 @@ async function getZakenByUserKey(requestID: RequestID, userKey: string) {
 
 export async function fetchDecosZakenFromSource(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  zaakTypeTransformers: Pick<
+    DecosZaakTransformer<DecosZaakBase>,
+    'addToSelectFieldsBase' | 'caseType'
+  >[] = []
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
 
@@ -312,7 +351,7 @@ export async function fetchDecosZakenFromSource(
 
   const zakenSourceResponses = await Promise.allSettled(
     userKeysResponse.content.map((userKey) =>
-      getZakenByUserKey(requestID, userKey)
+      getZakenByUserKey(requestID, userKey, zaakTypeTransformers)
     )
   );
 
@@ -331,28 +370,34 @@ export async function fetchDecosZakenFromSource(
   return apiSuccessResult(zakenSource);
 }
 
-async function fetchDecosVergunningen_(
+export async function fetchDecosZaken_<
+  T extends DecosZaakTransformer<any>,
+  DZ extends DecosZaakBase = NestedType<T>,
+>(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+  authProfileAndToken: AuthProfileAndToken,
+  zaakTypeTransformers: T[]
+): Promise<ApiSuccessResponse<DZ[]> | ApiErrorResponse<null>> {
   const zakenSourceResponse = await fetchDecosZakenFromSource(
     requestID,
-    authProfileAndToken
+    authProfileAndToken,
+    zaakTypeTransformers
   );
 
   if (zakenSourceResponse.status === 'OK') {
-    const vergunningen = await transformDecosZakenResponse(
+    const decosZakenSource = zakenSourceResponse.content;
+    const zaken = await transformDecosZakenResponse(
       requestID,
-      zakenSourceResponse.content
+      zaakTypeTransformers,
+      decosZakenSource
     );
-
-    return apiSuccessResult(vergunningen);
+    return apiSuccessResult(zaken);
   }
 
   return zakenSourceResponse;
 }
 
-export const fetchDecosVergunningen = memoizee(fetchDecosVergunningen_, {
+export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
@@ -381,7 +426,7 @@ function transformDecosWorkflowDateResponse(
 
 export async function fetchDecosWorkflowDate(
   requestID: RequestID,
-  zaakID: VergunningV2['key'],
+  zaakID: DecosZaakBase['key'],
   stepTitle: DecosWorkflowStepTitle
 ) {
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
@@ -413,7 +458,7 @@ export async function fetchDecosWorkflowDate(
 
 async function fetchIsPdfDocument(
   requestID: RequestID,
-  documentKey: VergunningDocument['key']
+  documentKey: DecosZaakDocument['key']
 ) {
   // items / { document_id } / blob ? select = bol10
   const apiConfigDocuments = getApiConfig('DECOS_API', {
@@ -456,20 +501,20 @@ async function transformDecosDocumentListResponse(
       .map(async ({ fields: documentMetadata, key }) => {
         const isPdfResponse = await fetchIsPdfDocument(requestID, key);
         if (isPdfResponse.status === 'OK' && isPdfResponse.content.isPDF) {
-          const vergunningDocument: VergunningDocument = {
+          const decosZaakDocument: DecosZaakDocument = {
             id: documentMetadata.mark,
             key: isPdfResponse.content.key,
             title: documentMetadata.text41,
             datePublished: documentMetadata.received_date,
             url: '', // Url is constructed in vergunningen.ts
           };
-          return vergunningDocument;
+          return decosZaakDocument;
         }
         return null;
       });
 
     const documents = (await Promise.all(documentsSourceFiltered)).filter(
-      (document: VergunningDocument | null): document is VergunningDocument =>
+      (document: DecosZaakDocument | null): document is DecosZaakDocument =>
         document !== null
     );
     return documents;
@@ -480,7 +525,7 @@ async function transformDecosDocumentListResponse(
 
 export async function fetchDecosDocumentList(
   requestID: RequestID,
-  zaakID: VergunningV2['key']
+  zaakID: DecosZaakBase['key']
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
@@ -504,7 +549,7 @@ export async function fetchDecosDocumentList(
 
 export async function fetchDecosZaakFromSource(
   requestID: RequestID,
-  zaakID: VergunningV2['key'],
+  zaakID: DecosZaakBase['key'],
   includeProperties: boolean = false
 ) {
   // Fetch the zaak from Decos, this request will return all the fieldNames, no need to specify the ?select= query.
@@ -523,9 +568,15 @@ export async function fetchDecosZaakFromSource(
   return requestData<DecosZaakSource | null>(apiConfig, requestID);
 }
 
-export async function fetchDecosVergunning(
+type NestedType<T> = T extends DecosZaakTransformer<infer R> ? R : never;
+
+export async function fetchDecosZaak<
+  T extends DecosZaakTransformer<any>,
+  DZ extends DecosZaakBase = NestedType<T>,
+>(
   requestID: RequestID,
-  zaakID: VergunningV2['key']
+  decosZaakTransformers: T[],
+  zaakID: DecosZaakBase['key']
 ) {
   const decosZaakSourceRequest = fetchDecosZaakFromSource(requestID, zaakID);
   const decosZaakDocumentsRequest = fetchDecosDocumentList(requestID, zaakID);
@@ -539,16 +590,16 @@ export async function fetchDecosVergunning(
   const zaakSourceResponse = getSettledResult(zaakSourceResponseSettled);
   const documentsResponse = getSettledResult(documentsResponseSettled);
 
-  let documents: VergunningDocument[] = [];
-  let vergunning: VergunningV2 | null = null;
+  let documents: DecosZaakDocument[] = [];
+  let decosZaak: DecosZaakBase | null = null;
 
   if (zaakSourceResponse.status == 'OK') {
     const decosZaakResponseData = zaakSourceResponse.content;
-
     if (decosZaakResponseData) {
       try {
-        vergunning = await transformDecosZaakResponse(
+        decosZaak = await transformDecosZaakResponse(
           requestID,
+          decosZaakTransformers,
           decosZaakResponseData
         );
       } catch (error) {
@@ -556,12 +607,12 @@ export async function fetchDecosVergunning(
       }
     }
 
-    if (documentsResponse.status === 'OK' && vergunning !== null) {
+    if (documentsResponse.status === 'OK' && decosZaak !== null) {
       documents = documentsResponse.content;
     }
 
     return apiSuccessResult({
-      vergunning,
+      decosZaak: decosZaak as DZ,
       documents,
     });
   }

@@ -6,13 +6,10 @@ import {
   NotificationLabelByType,
   NotificationLabels,
   NotificationProperty,
-  VergunningFilter,
   VergunningFrontendV2,
 } from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
-import { isNearEndDate } from './helpers';
+import { decosCaseToZaakTransformers } from './decos-zaken';
 import {
-  FILTER_VERGUNNINGEN_DEFAULT,
   fetchVergunningenV2,
 } from './vergunningen';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
@@ -25,6 +22,7 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { isNearEndDate } from '../decos/helpers';
 
 // prettier-ignore
 export function getNotificationLabels(
@@ -86,7 +84,7 @@ export function createVergunningNotification(
   vergunningen: VergunningFrontendV2[],
   thema: Thema
 ): MyNotification | null {
-  const zaakTypeTransformer = decosZaakTransformers[vergunning.caseType];
+  const zaakTypeTransformer = decosCaseToZaakTransformers[vergunning.caseType];
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
@@ -126,14 +124,12 @@ async function fetchVergunningenV2Notifications_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
-  filter: VergunningFilter = FILTER_VERGUNNINGEN_DEFAULT,
   thema: Thema = Themas.VERGUNNINGEN
 ) {
   const VERGUNNINGEN = await fetchVergunningenV2(
     requestID,
     authProfileAndToken,
-    appRoute,
-    filter
+    appRoute
   );
 
   if (VERGUNNINGEN.status === 'OK') {

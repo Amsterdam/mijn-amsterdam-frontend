@@ -1,29 +1,30 @@
+import type {
+  DecosZaakTransformer,
+  DecosZaakSource,
+  DecosZaakBase,
+  DecosZaakWithKentekens,
+} from './decos-types';
 import {
   DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
   DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
-  DecosZaakSource,
-  DecosZaakTypeTransformer,
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  VergunningV2,
-} from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+} from './decos-types';
 import {
   defaultDateFormat,
   isDateInPast,
   monthsFromNow,
 } from '../../../universal/helpers/date';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(
-  decosZaakSource: DecosZaakSource
+  decosZaakSource: DecosZaakSource,
+  zaakTypeTransformer: DecosZaakTransformer<any>
 ) {
-  const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
-
   const isWaitingForPaymentConfirmation =
     decosZaakSource.fields.text11?.toLowerCase() ==
       DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 &&
@@ -37,7 +38,7 @@ export function isWaitingForPaymentConfirmation(
     );
 
   return (
-    !!decosZaakTransformers[zaakType]?.requirePayment &&
+    !!zaakTypeTransformer.requirePayment &&
     (isWaitingForPaymentConfirmation || isWaitingForPaymentConfirmation2)
   );
 }
@@ -60,11 +61,11 @@ export function isScheduledForRemoval(decosZaakSource: DecosZaakSource) {
 
 export function isExcludedFromTransformation(
   zaakSource: DecosZaakSource,
-  zaakTypeTransformer: DecosZaakTypeTransformer
+  zaakTypeTransformer: DecosZaakTransformer<any>
 ) {
   return (
     isScheduledForRemoval(zaakSource) ||
-    isWaitingForPaymentConfirmation(zaakSource) ||
+    isWaitingForPaymentConfirmation(zaakSource, zaakTypeTransformer) ||
     hasInvalidDecision(zaakSource) ||
     !zaakTypeTransformer.isActive ||
     // Check if we have data we want to transform or not.
@@ -89,21 +90,23 @@ export function transformKenteken(kentekenSource: string | null) {
   return kentekenSource;
 }
 
-export function getCustomTitleForVergunningWithLicensePlates(
-  vergunning: VergunningV2
+export function getCustomTitleForDecosZaakWithLicensePlates(
+  decosZaak: DecosZaakWithKentekens
 ) {
-  if ('kentekens' in vergunning) {
-    const plates = vergunning.kentekens?.split(' | ');
+  if ('kentekens' in decosZaak) {
+    const plates = decosZaak.kentekens?.split(' | ');
     if (plates?.length === 1) {
-      return `${vergunning.title} (${vergunning.kentekens})`;
+      return `${decosZaak.title} (${decosZaak.kentekens})`;
     } else if (!!plates && plates.length > 1) {
-      return `${vergunning.title} (${plates[0]}... +${plates.length - 1})`;
+      return `${decosZaak.title} (${plates[0]}... +${plates.length - 1})`;
     }
   }
-  return vergunning.title;
+  return decosZaak.title;
 }
 
-export function getDecosZaakTypeFromSource(decosZaakSource: DecosZaakSource) {
+export function getDecosZaakTypeFromSource<T extends DecosZaakSource>(
+  decosZaakSource: T
+) {
   return decosZaakSource.fields.text45 as DecosCaseType;
 }
 
@@ -130,42 +133,42 @@ export function getUserKeysSearchQuery(
 }
 
 export function isNearEndDate(
-  vergunning: { dateEnd: string | null },
+  decosZaak: { dateEnd: string | null },
   dateNow: Date = new Date()
 ) {
-  if (!vergunning.dateEnd) {
+  if (!decosZaak.dateEnd) {
     return false;
   }
 
-  const monthsTillEnd = monthsFromNow(vergunning.dateEnd, dateNow);
+  const monthsTillEnd = monthsFromNow(decosZaak.dateEnd, dateNow);
 
   return (
-    !isExpired(vergunning, dateNow) &&
+    !isExpired(decosZaak, dateNow) &&
     monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
     monthsTillEnd >= 0 // Only show the notification if we have a long-running permit validity
   );
 }
 
 export function isExpired(
-  vergunning: { dateEnd: string | null },
+  decosZaak: { dateEnd: string | null },
   dateNow: Date = new Date()
 ) {
-  if (!vergunning.dateEnd) {
+  if (!decosZaak.dateEnd) {
     return false;
   }
 
-  return isDateInPast(vergunning.dateEnd, dateNow);
+  return isDateInPast(decosZaak.dateEnd, dateNow);
 }
 
-export function hasOtherActualVergunningOfSameType(
-  items: Array<VergunningV2>,
-  item: VergunningV2
+export function hasOtherActualDecosZaakOfSameType(
+  items: Array<DecosZaakBase>,
+  item: DecosZaakBase
 ): boolean {
   return items.some(
-    (otherVergunning: VergunningV2) =>
-      otherVergunning.caseType === item.caseType &&
-      otherVergunning.identifier !== item.identifier &&
-      !isExpired(otherVergunning)
+    (otherDecosZaak: DecosZaakBase) =>
+      otherDecosZaak.caseType === item.caseType &&
+      otherDecosZaak.identifier !== item.identifier &&
+      !isExpired(otherDecosZaak)
   );
 }
 

@@ -1,10 +1,6 @@
 import { Request, Response } from 'express';
 
-import { DecosZaakSource } from './config-and-types';
-import {
-  fetchDecosZaakFromSource,
-  fetchDecosZakenFromSource,
-} from './decos-service';
+import { decosZaakTransformers } from './decos-zaken';
 import { fetchVergunningV2 } from './vergunningen';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
@@ -13,6 +9,11 @@ import {
   generateFullApiUrlBFF,
   sendUnauthorized,
 } from '../../routing/route-helpers';
+import {
+  fetchDecosZaakFromSource,
+  fetchDecosZakenFromSource,
+} from '../decos/decos-service';
+import { DecosZaakSource } from '../decos/decos-types';
 
 export async function fetchVergunningDetail(req: Request, res: Response) {
   const authProfileAndToken = getAuth(req);
@@ -63,7 +64,8 @@ export async function fetchZakenFromSource(
 
   const zakenResponseData = await fetchDecosZakenFromSource(
     res.locals.requestID,
-    authProfileAndToken
+    authProfileAndToken,
+    decosZaakTransformers
   );
 
   if (zakenResponseData.status === 'OK') {
