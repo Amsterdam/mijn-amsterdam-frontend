@@ -122,3 +122,16 @@ export interface Match {
   path: string;
   url: string;
 }
+
+export const PROFILE_TYPES = [
+  'private',
+  'commercial',
+  'private-attributes',
+] as const;
+
+export const AUTH_METHODS = ['eherkenning', 'digid'] as const;
+
+declare global {
+  type ProfileType = (typeof PROFILE_TYPES)[number];
+  type AuthMethod = (typeof AUTH_METHODS)[number];
+}

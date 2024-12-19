@@ -22,10 +22,6 @@ type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
     ? R
     : any;
 
-type ProfileType = 'private' | 'private-attributes' | 'commercial';
-
-type AuthMethod = 'digid' | 'eherkenning';
-
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 type Prettify<T> = {

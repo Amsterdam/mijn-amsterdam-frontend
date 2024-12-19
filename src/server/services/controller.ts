@@ -117,7 +117,13 @@ export function addServiceResultHandler(
  * The service methods
  */
 // Public services
-const CMS_CONTENT = callPublicService(fetchCMSCONTENT);
+const CMS_CONTENT = (requestID: RequestID, req: Request) => {
+  const auth = getAuth(req);
+  return fetchCMSCONTENT(requestID, {
+    profileType: auth?.profile.profileType,
+    ...queryParams(req),
+  });
+};
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
 );
@@ -485,3 +491,7 @@ export async function getTipNotifications(
 
   return [];
 }
+
+export const forTesting = {
+  CMS_CONTENT,
+};
