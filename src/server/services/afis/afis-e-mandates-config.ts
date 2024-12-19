@@ -1,5 +1,6 @@
 import { AfisEMandateAcceptant, EMandateReceiverSource } from './afis-types';
 
+// TODO: Uitvinden of de receiver mogelijk per Acceptant kan verschillen
 export const eMandateReceiver: EMandateReceiverSource = {
   RecName1: 'Gemeente Amsterdam',
   RecPostal: '1011 PN',
