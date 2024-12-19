@@ -41,7 +41,7 @@ const pageRouteResolvers: PageRouteResolvers = {
       }
       if (!isLoading(appState.VERGUNNINGEN)) {
         return (
-          appState.VERGUNNINGEN.content?.find(
+          (appState.VERGUNNINGEN.content || []).find(
             (vergunning) => vergunning.identifier === detailPageItemId
           )?.link.to ?? ITEM_NOT_FOUND
         );
