@@ -29,7 +29,7 @@ export function extractAddress(rawAddress: string): BAGQueryParams {
     }
     words.push(word);
   }
-  const openbareruimteNaam = words.join(' ');
+
   // We know now that we're past the street name so now we can index into the last identifying part.
   const houseIdentifier = s[i];
   if (!houseIdentifier) {
@@ -42,7 +42,7 @@ export function extractAddress(rawAddress: string): BAGQueryParams {
     splitHuisnummerFromToevoeging(houseIdentifier);
 
   return {
-    openbareruimteNaam,
+    openbareruimteNaam: words.join(' '),
     huisnummer: parseInt(huisnummer),
     huisnummertoevoeging,
     // RP TODO: What is huisletter in the query? I already added one with a letter but this counts
@@ -59,31 +59,12 @@ function splitHuisnummerFromToevoeging(
   const huisnummertoevoeging = [];
   let i = 0;
 
-  for (; i < s.length; i++) {
-    if (!s[i].match(/\d/)) {
-      break;
-    }
-    huisnummer.push(s[i]);
+  // Matches something like 1, 2-5 or 3F.
+  const matches = s.match(/^(\d+)-?([\d*|\w*])?$/);
+  if (!matches) {
+    throw Error();
   }
-  if (s[i] === '-') {
-    // Consume the character.
-    i++;
-
-    for (; i < s.length; i++) {
-      huisnummertoevoeging.push(s[i]);
-    }
-  } else {
-    for (; i < s.length; i++) {
-      if (!s[i].match(/[a-z]/i)) {
-        throw Error(
-          `Unexpected character in huisnummer + toevoeging. Character: '${s[i]}'`
-        );
-      }
-      huisnummertoevoeging.push(s[i]);
-    }
-  }
-
-  return [huisnummer.join(''), huisnummertoevoeging.join('') || undefined];
+  return [matches[1], matches[2]];
 }
 
 export type BAGSearchAddress = string;

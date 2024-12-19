@@ -172,6 +172,15 @@ describe('getLatLonByAddress', () => {
       });
     });
 
+    test('With leading apostrophe', () => {
+      expect(extractAddress("'t Dijkhuis 40")).toStrictEqual({
+        openbareruimteNaam: 't Dijkhuis',
+        huisnummer: 40,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+      });
+    });
+
     test('Ignores postcal code, city name and random charcters', () => {
       expect(
         extractAddress('Straatnaam 1, 1015BA, Amsterdam _ ; ,')
