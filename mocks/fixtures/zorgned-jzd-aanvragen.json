@@ -5753,6 +5753,136 @@
         ]
       },
       {
+        "identificatie": "2717112",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-08-29"
+        },
+        "datumAanmelding": "2024-08-29",
+        "datumAanvraag": "2024-08-29",
+        "beschikking": {
+          "beschikkingNummer": 300989920,
+          "datumAfgifte": "2024-08-29",
+          "beschikteProducten": [
+            {
+              "identificatie": "1213392",
+              "product": {
+                "identificatie": "07A09",
+                "productCode": "07A09",
+                "productsoortCode": "DBS",
+                "omschrijving": "PGB: dagbesteding samenwerken"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen1",
+              "toegewezenProduct": {
+                "datumEindeGeldigheid": "2024-10-31",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "leveringsvorm": "pgb",
+                "leverancier": {
+                  "identificatie": "73731545",
+                  "agbcode": "73731545",
+                  "omschrijving": "Carehouse - Leveo Care (afgewezen)"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123123123123"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2814508",
+            "omschrijving": "Besluit: Naam in Inkijk-API",
+            "omschrijvingclientportaal": "Besluit: Naam in Inkijk-API",
+            "datumDefinitief": "2024-08-29T16:48:11.997"
+          }
+        ]
+      },
+      {
+        "identificatie": "2717111",
+        "regeling": {
+          "identificatie": "WMO",
+          "omschrijving": "WMO"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-08-29"
+        },
+        "datumAanmelding": "2024-08-29",
+        "datumAanvraag": "2024-08-29",
+        "beschikking": {
+          "beschikkingNummer": 300989920,
+          "datumAfgifte": "2024-08-29",
+          "beschikteProducten": [
+            {
+              "identificatie": "1213392",
+              "product": {
+                "identificatie": "07A09",
+                "productCode": "07A09",
+                "productsoortCode": "DBS",
+                "omschrijving": "PGB: dagbesteding samenwerken"
+              },
+              "productCategorie": {
+                "code": "07",
+                "omschrijving": "Dagbesteding"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-11-01",
+                "datumEindeGeldigheid": "2025-10-31",
+                "datumCheck": "2026-08-18",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "leveringsvorm": "pgb",
+                "leverancier": {
+                  "identificatie": "73731545",
+                  "agbcode": "73731545",
+                  "omschrijving": "Carehouse - Leveo Care (huidig)"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123123123123"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2814508",
+            "omschrijving": "Besluit: Naam in Inkijk-API",
+            "omschrijvingclientportaal": "Besluit: Naam in Inkijk-API",
+            "datumDefinitief": "2024-08-29T16:48:11.997"
+          }
+        ]
+      },
+      {
         "identificatie": "2701419",
         "regeling": {
           "identificatie": "WMO",
