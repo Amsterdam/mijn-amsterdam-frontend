@@ -60,6 +60,6 @@ describe('BAG service', () => {
   test('No data in response', async () => {
     setupNockResponse(200, {});
     const response = await fetchBAG(REQUEST_ID, ADDRESS);
-    expect(response).toStrictEqual({ status: 'OK', content: {} });
+    expect(response).toStrictEqual({ status: 'OK', content: null });
   });
 });

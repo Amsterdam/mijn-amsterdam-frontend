@@ -34,7 +34,7 @@ export async function fetchBAG(
     transformResponse: (responseData) => {
       const data = responseData._embedded?.adresseerbareobjecten;
       if (!data || data.length < 1) {
-        return {};
+        return null;
       }
 
       // Multiple items can be found, but only the first we take as relevant.
