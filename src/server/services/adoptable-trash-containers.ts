@@ -13,7 +13,7 @@ import {
   filterFeaturesinRadius,
   getBboxFromFeatures,
 } from './buurt/helpers';
-import { fetchMyLocation } from './home';
+import { fetchMyLocation } from './my-locations';
 import { AppRoutes } from '../../universal/config/routes';
 import { Themas } from '../../universal/config/thema';
 import {
@@ -107,7 +107,7 @@ export async function fetchAdoptableTrashContainers(
   );
 
   return apiSuccessResult({
-    tips: [buildNotification(age, bbox)],
+    tips: filteredFeatures.length ? [buildNotification(age, bbox)] : [],
   });
 }
 

@@ -13,7 +13,9 @@ export function AVGList() {
 
   return (
     <ListPagePaginated
-      items={avgVerzoeken}
+      items={avgVerzoeken
+        .filter(tableConfig[params.kind].filter)
+        .sort(tableConfig[params.kind].sort)}
       backLinkTitle={ThemaTitles.AVG}
       title={tableConfig[params.kind].title}
       appRoute={AppRoutes['AVG/LIST']}

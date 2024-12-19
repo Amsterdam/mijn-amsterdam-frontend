@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { renderHook } from '@testing-library/react';
 import * as rrd from 'react-router-dom';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
@@ -6,7 +8,6 @@ import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { usePageChange } from './usePageChange';
 import type { TrackingConfig } from '../config/routes';
 import { NOT_FOUND_TITLE } from '../config/thema';
-import { ReactNode } from 'react';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -24,8 +25,11 @@ vi.mock('react-router-dom', async (requireActual) => {
     __setPathname: (name: string) => {
       mocks.pathname = name;
     },
+    useLocation: () => {
+      return { pathname: mocks.pathname };
+    },
     useHistory: () => {
-      return { action: 'PUSH', location: { pathname: mocks.pathname } };
+      return { action: 'PUSH' };
     },
   };
 });

@@ -3,7 +3,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchMyLocation } from '../home';
+import { fetchMyLocation } from '../my-locations';
 import { fetchAfvalpuntenByLatLng } from './afvalpunten';
 import { fetchAfvalwijzer } from './afvalwijzer';
 
