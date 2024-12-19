@@ -174,8 +174,26 @@ describe('getLatLonByAddress', () => {
 
     test('With leading apostrophe', () => {
       expect(extractAddress("'t Dijkhuis 40")).toStrictEqual({
-        openbareruimteNaam: 't Dijkhuis',
+        openbareruimteNaam: "'t Dijkhuis",
         huisnummer: 40,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+      });
+    });
+
+    test('With a slash in the address', () => {
+      expect(extractAddress('PATER V/D ELSENPLEIN 86')).toStrictEqual({
+        openbareruimteNaam: 'PATER V/D ELSENPLEIN',
+        huisnummer: 86,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+      });
+    });
+
+    test('With a dot in the address', () => {
+      expect(extractAddress('P/A ST. JACOBSLAAN 339')).toStrictEqual({
+        openbareruimteNaam: 'P/A ST. JACOBSLAAN',
+        huisnummer: 339,
         huisnummertoevoeging: undefined,
         huisletter: undefined,
       });

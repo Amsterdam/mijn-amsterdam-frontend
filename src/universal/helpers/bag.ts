@@ -2,12 +2,9 @@ import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
 import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
 
-// Quick and dirty see also: https://stackoverflow.com/a/68401047
 export function extractAddress(rawAddress: string): BAGQueryParams {
-  // Strip down to Street + Housenumber
-  const address = rawAddress
-    // Remove everything but alphanumeric, dash, dot and space
-    .replace(/[^0-9-.\s\p{Script=Latin}+]/giu, '');
+  // Remove everything but alphanumeric, dash, dot, apostrophe and space.
+  const address = rawAddress.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
 
   const words = [];
   const s = address.split(' ');
@@ -20,10 +17,11 @@ export function extractAddress(rawAddress: string): BAGQueryParams {
   }
 
   let i = 0;
+  const onDigit = new RegExp(/\d/);
 
   for (; i < s.length; i++) {
     const word = s[i];
-    if (word[0].match(/\d/)) {
+    if (word[0].match(onDigit)) {
       // The first housenumber found, so there are no more streetname words left.
       break;
     }
@@ -45,9 +43,8 @@ export function extractAddress(rawAddress: string): BAGQueryParams {
     openbareruimteNaam: words.join(' '),
     huisnummer: parseInt(huisnummer),
     huisnummertoevoeging,
-    // RP TODO: What is huisletter in the query? I already added one with a letter but this counts
-    // as toevoeging.
-    // There is also mention of a dot in replacing trash characters. What to do when there is a dot?
+    // Leave out huisletter. This is used to look up a location on the map,
+    // and it's okay to show an approximate location.
     huisletter: undefined,
   };
 }
@@ -60,9 +57,11 @@ function splitHuisnummerFromToevoeging(
   let i = 0;
 
   // Matches something like 1, 2-5 or 3F.
-  const matches = s.match(/^(\d+)-?([\d*|\w*])?$/);
+  const matches = s.match(/(\d+)-?(\d*|\w*)?/);
   if (!matches) {
-    throw Error();
+    throw Error(
+      `Match failed for housenumber and/or toevoeging. Input string: '${s}'`
+    );
   }
   return [matches[1], matches[2]];
 }
