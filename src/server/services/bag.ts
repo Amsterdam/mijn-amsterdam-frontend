@@ -41,7 +41,7 @@ export async function fetchBAG(
       const firstItem = data[0];
 
       const latlng = getLatLngCoordinates(
-        first_item.adresseerbaarObjectPuntGeometrieWgs84.coordinates
+        firstItem.adresseerbaarObjectPuntGeometrieWgs84.coordinates
       );
       return {
         latlng,
