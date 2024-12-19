@@ -30,8 +30,6 @@ import { getFullAddress } from '../../../universal/helpers/brp';
 import { DataRequestConfig } from '../../config/source-api';
 import { requestData } from '../../helpers/source-api-request';
 
-const AFIS_IBAN_ACCOUNT_NUMBER_LENGTH = 8;
-
 function transformBusinessPartnerAddressResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerAddressSource>
 ): AfisBusinessPartnerAddress | null {
@@ -258,16 +256,16 @@ export async function fetchAfisBusinessPartnerDetails(
   );
 }
 
-function extractBankAccountNumberFromIBAN(iban: string) {
-  // Extract the last 8 characters from the IBAN to get the account number.
-  return iban.slice(-AFIS_IBAN_ACCOUNT_NUMBER_LENGTH);
-}
-
 export async function createBusinessPartnerBankAccount(
   requestID: RequestID,
   payload: AfisBusinessPartnerBankPayload
 ) {
   const iban = ibantools.extractIBAN(payload.iban);
+
+  if (!iban.accountNumber) {
+    throw new Error('Invalid IBAN');
+  }
+
   const createBankAccountPayload: AfisBusinessPartnerBankAccount = {
     BusinessPartner: payload.businessPartnerId,
     BankIdentification: '0001', // How to?
@@ -282,7 +280,7 @@ export async function createBusinessPartnerBankAccount(
     ValidityEndDate: 'Date(253402300799000+0000)', // TODO: check if this is required, we can't possibly know this
     IBAN: payload.iban,
     IBANValidityStartDate: 'Date(1680825600000)', // TODO: What is this?
-    BankAccount: extractBankAccountNumberFromIBAN(payload.iban),
+    BankAccount: iban.accountNumber,
     BankAccountReferenceText: '', // TODO: What is this?
     CollectionAuthInd: false, // TODO: What is this?
     CityName: 'amsterdam', // TODO: What is this?
