@@ -112,7 +112,7 @@ export function getLatLngWithAddress(
   };
 }
 
-function formatAddress(result: BAGAdreseerbaarObject) {
+function formatAddress(result: BAGAdreseerbaarObject): string {
   if (result.huisletter) {
     throw Error(
       `RP TODO: Huisletter found, how should this fit in formatting?
