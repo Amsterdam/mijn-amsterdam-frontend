@@ -8,6 +8,7 @@ import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/c
 import { AppRoutes } from '../../../universal/config/routes';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
@@ -63,12 +64,20 @@ function determinePageContentTop(
   parkerenUrlSSO: string
 ) {
   if (hasMijnParkerenVergunningen) {
+    const profileType = useProfileTypeValue();
+
+    const profileTypeLabel =
+      profileType === 'commercial' ? 'bedrijven' : 'bewoners';
+
     return (
       <>
-        <Alert severity="info" heading="Parkeervergunning voor bewoners">
+        <Alert
+          severity="info"
+          heading={`Parkeervergunning voor ${profileTypeLabel}`}
+        >
           <Paragraph>
-            Het inzien, aanvragen of wijzigen van een parkeervergunning voor
-            bewoners kan via Mijn Parkeren.
+            Het inzien, aanvragen of wijzigen van een parkeervergunning voor{' '}
+            {profileTypeLabel} kan via Mijn Parkeren.
           </Paragraph>
           <Paragraph>
             <MaButtonLink href={parkerenUrlSSO}>
