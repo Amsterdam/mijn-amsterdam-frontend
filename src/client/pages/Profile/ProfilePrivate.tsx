@@ -19,6 +19,7 @@ import {
   isMokum,
 } from '../../../universal/helpers/brp';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { ContactMoment } from '../../../universal/types';
 import { AppState } from '../../../universal/types/App.types';
 import {
   DetailPage,
@@ -30,10 +31,13 @@ import {
   MaintenanceNotifications,
   PageContent,
   PageHeading,
+  SectionCollapsible,
   ThemaIcon,
 } from '../../components';
+import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -45,8 +49,16 @@ function formatInfoPanelConfig(
   return panelConfig;
 }
 
+const contactmomentenDisplayProps: DisplayProps<ContactMoment> = {
+  kanaal: 'Contactvorm',
+  onderwerp: 'Onderwerp',
+  plaatsgevondenOp: 'Datum',
+  nummer: 'Referentie nummer',
+};
+
 export default function Profile() {
   const { BRP } = useAppStateGetter();
+  const { items: myThemasMenuItems } = useThemaMenuItems();
 
   const [{ data: residentData }, fetchResidentCount] = useDataApi<
     ApiResponse<{ residentCount: number }>
@@ -89,6 +101,42 @@ export default function Profile() {
     }
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
   }, [BRP.content, residentCount]);
+
+  const mapperContactmomentToMenuItem: { [key: string]: string } = {
+    ['Erfpacht']: 'ERFPACHT',
+    ['Parkeren']: 'PARKEREN',
+    ['Zorg']: 'WMO',
+    ['Werk en Inkomen']: 'SVWI',
+    ['Belastingen']: 'BELASTINGEN',
+    ['Geldzaken']: 'KREFIA',
+    ['Financieen']: 'AFIS',
+  };
+
+  function getLinkToThemaPage(contactMoment: ContactMoment) {
+    const menuItem = myThemasMenuItems.find(
+      (item) =>
+        item.id ===
+        mapperContactmomentToMenuItem[contactMoment.onderwerp as string]
+    );
+    if (menuItem) {
+      return {
+        ...contactMoment,
+        onderwerp: (
+          <LinkdInline external={false} href={menuItem.to as string}>
+            {menuItem.title as string}
+          </LinkdInline>
+        ),
+      };
+    } else return contactMoment;
+  }
+
+  if (brpProfileData?.contactmomenten) {
+    brpProfileData!.contactmomenten = brpProfileData!.contactmomenten!.map(
+      (contactmoment) => {
+        return getLinkToThemaPage(contactmoment);
+      }
+    );
+  }
 
   // Fetch the resident count data
   useEffect(() => {
@@ -229,6 +277,20 @@ export default function Profile() {
           {...formatInfoPanelConfig(panelConfig.persoon, BRP)}
           panelData={brpProfileData.persoon}
         />
+      )}
+
+      {!!brpProfileData?.contactmomenten && (
+        <SectionCollapsible
+          id="SectionCollapsible-complaints"
+          title="Contactmomenten"
+          noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
+          startCollapsed={false}
+        >
+          <TableV2
+            items={brpProfileData.contactmomenten}
+            displayProps={contactmomentenDisplayProps}
+          />
+        </SectionCollapsible>
       )}
 
       {!!brpProfileData?.adres && (

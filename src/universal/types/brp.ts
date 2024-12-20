@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { LinkProps } from './App.types';
 
 export interface IdentiteitsbewijsFromSource {
@@ -25,7 +27,7 @@ export interface Adres {
   einddatumVerblijf: string | null;
   adresType: 'correspondentie' | 'woon';
   aantalBewoners?: number;
-  wozWaarde?: string;
+  wozWaarde?: ReactNode | null;
   _adresSleutel?: string;
   mokum?: boolean;
 }
@@ -77,7 +79,12 @@ export interface Kind {
   voornamen: string | null;
   voorvoegselGeslachtsnaam: string | null;
 }
-
+export interface ContactMoment {
+  plaatsgevondenOp: string | null;
+  onderwerp: ReactNode | null;
+  nummer: string | null;
+  kanaal: string | null;
+}
 export interface BRPDataFromSource {
   kvkNummer: string;
   persoon: Persoon;
@@ -93,4 +100,5 @@ export interface BRPDataFromSource {
 
 export interface BRPData extends BRPDataFromSource {
   identiteitsbewijzen?: Identiteitsbewijs[];
+  contactmomenten?: ContactMoment[];
 }
