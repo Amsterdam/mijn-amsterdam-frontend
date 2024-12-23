@@ -162,7 +162,7 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-unused-imports": "^4.1.0",
     "formidable": "^3.5.2",
-    "globals": "^15.13.0",
-    "typescript-eslint": "^8.18.1"
+    "globals": "^15.14.0",
+    "typescript-eslint": "^8.18.2"
   }
 }
