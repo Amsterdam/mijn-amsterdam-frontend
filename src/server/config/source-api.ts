@@ -82,6 +82,7 @@ export type SourceApiKey =
   | 'PARKEREN'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
+  | 'SALESFORCE'
   | 'SUBSIDIE'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
@@ -197,6 +198,13 @@ export const ApiConfig: ApiDataRequestConfig = {
     method: 'POST',
     url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
     postponeFetch: !FeatureToggle.powerbrowserActive,
+    headers: {
+      apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
+    },
+  },
+  SALESFORCE: {
+    url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
+    postponeFetch: !FeatureToggle.salesforceActive,
     headers: {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },

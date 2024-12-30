@@ -30,6 +30,7 @@ import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
 import { fetchSSOParkerenURL } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
+import { fetchContactmomenten } from './salesforce/contactmomenten';
 import {
   fetchBelasting,
   fetchMilieuzone,
@@ -155,6 +156,7 @@ const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const PROFILE = callAuthenticatedService(fetchProfile);
 const AVG = callAuthenticatedService(fetchAVG);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
+const SALESFORCE = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
@@ -217,6 +219,7 @@ const SERVICES_INDEX = {
   PROFILE,
   SUBSIDIE,
   SVWI,
+  SALESFORCE,
   TOERISTISCHE_VERHUUR,
   VERGUNNINGEN,
   VERGUNNINGENv2,
@@ -293,6 +296,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     NOTIFICATIONS,
     OVERTREDINGEN,
     PARKEREN,
+    SALESFORCE,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -335,7 +339,13 @@ export const servicesByProfileType: ServicesByProfileType = {
   },
 };
 
-const tipsOmit = ['AFVAL', 'AFVALPUNTEN', 'CMS_CONTENT', 'NOTIFICATIONS'];
+const tipsOmit = [
+  'AFVAL',
+  'AFVALPUNTEN',
+  'CMS_CONTENT',
+  'NOTIFICATIONS',
+  'SALESFORCE',
+];
 
 export const servicesTipsByProfileType = {
   private: omit(
