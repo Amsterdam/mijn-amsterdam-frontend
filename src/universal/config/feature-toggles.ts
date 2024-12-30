@@ -91,6 +91,9 @@ export const FeatureToggle = {
   // Subsidie patroon C
   subsidieActive: true,
 
+  // Salesforce patroon A
+  salesforceActive: !IS_PRODUCTION,
+
   // WPI Portaal
   svwiLinkActive: !IS_PRODUCTION,
 

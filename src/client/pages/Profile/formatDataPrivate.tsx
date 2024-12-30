@@ -1,3 +1,10 @@
+import { Icon } from '@amsterdam/design-system-react';
+import {
+  ChatBubbleIcon,
+  EmailIcon,
+  PhoneIcon,
+} from '@amsterdam/design-system-react-icons';
+
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   formatBirthdate,
@@ -9,13 +16,13 @@ import { entries } from '../../../universal/helpers/utils';
 import {
   Adres,
   BRPData,
+  ContactMoment,
   Persoon,
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
 import { LinkdInline } from '../../components/Button/Button';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
-
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -145,7 +152,7 @@ const adres: ProfileLabels<Partial<Adres>> = {
       ) : null;
     },
   ],
-  wozWaarde: ['WOZ-waarde', (value, _item) => value],
+  wozWaarde: 'WOZ-waarde',
 };
 
 function transformVerbintenisStatus(value: string) {
@@ -191,12 +198,47 @@ const verbintenisHistorisch: ProfileLabels<
   ...verbintenis,
 };
 
+export function addIcon(type: string) {
+  if (type == 'Telefoon') {
+    return (
+      <div>
+        {' '}
+        <Icon svg={PhoneIcon} size="level-5" /> {type}
+      </div>
+    );
+  }
+  if (type == 'Chat') {
+    return (
+      <div>
+        {' '}
+        <Icon svg={ChatBubbleIcon} size="level-5" /> {type}
+      </div>
+    );
+  }
+  if (type == 'Contactformulier') {
+    return (
+      <div>
+        {' '}
+        <Icon svg={EmailIcon} size="level-5" /> {type}
+      </div>
+    );
+  } else return type;
+}
+
+export const contactMoment: ProfileLabels<Partial<ContactMoment>> = {
+  kanaal: ['kanaal', (value) => addIcon(value)],
+  nummer: 'nummer',
+  onderwerp: 'onderwerp',
+  // onderwerp: ['onderwerp', (value) => linkToThemaPage(value)],
+  plaatsgevondenOp: ['plaatsgevondenOp', (value) => defaultDateFormat(value)],
+};
 export const brpInfoLabels = {
   persoon,
   persoonSecundair,
   adres,
   verbintenis,
   verbintenisHistorisch,
+  contactMoment,
 };
 
 export function format<T, X>(labelConfig: X, data: any, profileData: T) {
@@ -233,6 +275,7 @@ export interface ProfileSection {
 
 interface BrpProfileData {
   persoon: ProfileSection | null;
+  contactmomenten?: ContactMoment[];
   adres: ProfileSection | null;
   adresHistorisch?: ProfileSection[];
   verbintenis?: ProfileSection;
@@ -294,6 +337,15 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
       profileData.ouders = brpData.ouders.map((ouder) =>
         format(brpInfoLabels.persoonSecundair, ouder, brpData)
+      );
+    }
+
+    if (
+      Array.isArray(brpData.contactmomenten) &&
+      brpData.contactmomenten.length
+    ) {
+      profileData.contactmomenten = brpData.contactmomenten.map((moment) =>
+        format(brpInfoLabels.contactMoment, moment, brpData)
       );
     }
 

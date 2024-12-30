@@ -3,7 +3,11 @@ import { useEffect, useMemo } from 'react';
 import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import { formatBrpProfileData } from './formatDataPrivate';
+import {
+  contactMoment,
+  format,
+  formatBrpProfileData,
+} from './formatDataPrivate';
 import styles from './Profile.module.scss';
 import { PanelConfigFormatter, panelConfig } from './profilePanelConfig';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -57,7 +61,7 @@ const contactmomentenDisplayProps: DisplayProps<ContactMoment> = {
 };
 
 export default function Profile() {
-  const { BRP } = useAppStateGetter();
+  const { BRP, SALESFORCE } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
 
   const [{ data: residentData }, fetchResidentCount] = useDataApi<
@@ -71,6 +75,40 @@ export default function Profile() {
   );
 
   const residentCount = residentData?.content?.residentCount;
+
+  const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
+    ? 'ERFPACHTv2'
+    : 'ERFPACHT';
+
+  const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? 'SVWI' : 'INKOMEN';
+
+  const mapperContactmomentToMenuItem: { [key: string]: string } = {
+    ['Erfpacht']: erfpachtV1ORV2,
+    ['Parkeren']: 'PARKEREN',
+    ['Zorg']: 'WMO',
+    ['Werk en Inkomen']: SVWIv1ORv2,
+    ['Belastingen']: 'BELASTINGEN',
+    ['Geldzaken']: 'KREFIA',
+    ['Financieen']: 'AFIS',
+  };
+
+  function getLinkToThemaPage(contactMoment: ContactMoment) {
+    const menuItem = myThemasMenuItems.find(
+      (item) =>
+        item.id ===
+        mapperContactmomentToMenuItem[contactMoment.onderwerp as string]
+    );
+    if (menuItem) {
+      return {
+        ...contactMoment,
+        onderwerp: (
+          <LinkdInline external={false} href={menuItem.to as string}>
+            {menuItem.title as string}
+          </LinkdInline>
+        ),
+      };
+    } else return contactMoment;
+  }
 
   const brpProfileData = useMemo(() => {
     if (
@@ -102,39 +140,22 @@ export default function Profile() {
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
   }, [BRP.content, residentCount]);
 
-  const mapperContactmomentToMenuItem: { [key: string]: string } = {
-    ['Erfpacht']: 'ERFPACHT',
-    ['Parkeren']: 'PARKEREN',
-    ['Zorg']: 'WMO',
-    ['Werk en Inkomen']: 'SVWI',
-    ['Belastingen']: 'BELASTINGEN',
-    ['Geldzaken']: 'KREFIA',
-    ['Financieen']: 'AFIS',
-  };
-
-  function getLinkToThemaPage(contactMoment: ContactMoment) {
-    const menuItem = myThemasMenuItems.find(
-      (item) =>
-        item.id ===
-        mapperContactmomentToMenuItem[contactMoment.onderwerp as string]
-    );
-    if (menuItem) {
-      return {
-        ...contactMoment,
-        onderwerp: (
-          <LinkdInline external={false} href={menuItem.to as string}>
-            {menuItem.title as string}
-          </LinkdInline>
-        ),
-      };
-    } else return contactMoment;
-  }
-
-  if (brpProfileData?.contactmomenten) {
-    brpProfileData!.contactmomenten = brpProfileData!.contactmomenten!.map(
-      (contactmoment) => {
-        return getLinkToThemaPage(contactmoment);
+  if (SALESFORCE.content && brpProfileData) {
+    // first fill the contactmomenten with the data from salesforce and add AppState information for links to themapages.
+    brpProfileData.contactmomenten = SALESFORCE.content.map(
+      (contactmomentItem) => {
+        return getLinkToThemaPage(contactmomentItem);
       }
+    );
+
+    // then format the contactmomenten for icons and dates
+    brpProfileData.contactmomenten = brpProfileData!.contactmomenten.map(
+      (contactMomentItem) =>
+        format(
+          contactMoment,
+          contactMomentItem,
+          brpProfileData!.contactmomenten
+        )
     );
   }
 
@@ -271,14 +292,6 @@ export default function Profile() {
         )}
       </PageContent>
 
-      {!!brpProfileData?.persoon && (
-        <InfoPanel
-          className={styles.DefaultPanel}
-          {...formatInfoPanelConfig(panelConfig.persoon, BRP)}
-          panelData={brpProfileData.persoon}
-        />
-      )}
-
       {!!brpProfileData?.contactmomenten && (
         <SectionCollapsible
           id="SectionCollapsible-complaints"
@@ -291,6 +304,14 @@ export default function Profile() {
             displayProps={contactmomentenDisplayProps}
           />
         </SectionCollapsible>
+      )}
+
+      {!!brpProfileData?.persoon && (
+        <InfoPanel
+          className={styles.DefaultPanel}
+          {...formatInfoPanelConfig(panelConfig.persoon, BRP)}
+          panelData={brpProfileData.persoon}
+        />
       )}
 
       {!!brpProfileData?.adres && (

@@ -106,6 +106,9 @@ export const PRISTINE_APPSTATE: AppState = {
   BRP: apiPristineResult(null, {
     profileTypes: ['private'],
   }),
+  SALESFORCE: apiPristineResult(null, {
+    profileTypes: ['private'],
+  }),
   PROFILE: apiPristineResult(null, {
     profileTypes: ['private-attributes'],
   }),

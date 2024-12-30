@@ -74,6 +74,8 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
       actionLinks,
     };
   },
+  contactmomenten: { title: 'Contactmomenten', actionLinks: [] },
+  fetchUrlAantalBewoners: { title: 'Aantal bewoners', actionLinks: [] },
   verbintenis: (BRP) => ({
     title: 'Burgerlijke staat',
     actionLinks: isMokum(BRP.content)
