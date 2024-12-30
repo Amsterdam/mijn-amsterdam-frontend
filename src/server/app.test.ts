@@ -99,11 +99,6 @@ describe('app', async () => {
     ).toBe(true);
     expect(
       routerProtected.handle.stack.some(
-        (x: object) => 'name' in x && x.name === 'isBlacklistedHandler'
-      )
-    ).toBe(true);
-    expect(
-      routerProtected.handle.stack.some(
         (x: object) => 'name' in x && x.name === 'handleCheckProtectedRoute'
       )
     ).toBe(true);

@@ -19,10 +19,10 @@ import {
 } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
+import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
-import { addToBlackList } from '../services/session-blacklist';
 
 export function getReturnToUrl(queryParams?: ParsedQs) {
   switch (queryParams?.returnTo) {
@@ -132,6 +132,16 @@ function isIDPSessionExpired(expiresAtInSeconds: number) {
   return expiresAtInSeconds < millisecondsToSeconds(Date.now());
 }
 
+export function destroySession(req: AuthenticatedRequest, res: Response) {
+  req[OIDC_SESSION_COOKIE_NAME] = undefined;
+  res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
+    path: '/',
+    secure: true,
+    sameSite: 'lax',
+    httpOnly: true,
+  });
+}
+
 export function createLogoutHandler(
   postLogoutRedirectUrl: string,
   doIDPLogout: boolean = true
@@ -140,16 +150,9 @@ export function createLogoutHandler(
     const auth = getAuth(req);
     if (
       doIDPLogout &&
-      auth &&
-      auth.expiresAt &&
-      !isIDPSessionExpired(auth.expiresAt) &&
-      req.oidc.isAuthenticated()
+      auth?.expiresAt &&
+      !isIDPSessionExpired(auth.expiresAt)
     ) {
-      // Add the session ID to a blacklist. This way the jwt id_token, which itself has longer lifetime, cannot be reused after logging out at IDP.
-      if (auth.profile.sid) {
-        await addToBlackList(auth.profile.sid);
-      }
-
       return res.oidc.logout({
         returnTo: postLogoutRedirectUrl,
         logoutParams: {
@@ -164,11 +167,13 @@ export function createLogoutHandler(
     }
 
     if (hasSessionCookie(req)) {
-      // Destroy the session context
-      delete req[OIDC_SESSION_COOKIE_NAME];
-      res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+      destroySession(req, res);
     }
 
     return res.redirect(postLogoutRedirectUrl);
   };
+}
+
+export function isValidProfileType(profileType: unknown) {
+  return PROFILE_TYPES.includes(profileType as ProfileType);
 }

@@ -7,6 +7,10 @@ import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { DecosCaseType } from '../../universal/types/vergunningen';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { PARKEER_CASE_TYPES } from '../pages/Parkeren/useParkerenData.hook';
+import {
+  getThemaTitleBurgerzakenWithAppState,
+  getThemaUrlBurgerzakenWithAppState,
+} from '../pages/Burgerzaken/helpers';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -23,7 +27,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
   BRP: 'Mijn gegevens',
-  BURGERZAKEN: 'Burgerzaken',
+  BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
   ERFPACHT: 'Erfpacht',
   ERFPACHTv2: 'Erfpacht V2',
@@ -42,6 +46,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
+  VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN_EERDER: 'Vergunningen',
   VERGUNNINGEN_LOPEND: 'Vergunningen',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
@@ -52,7 +57,12 @@ export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
 export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
 export type DocumentTitlesConfig = {
-  [key in AppRoute]: string | ((config: TrackingConfig) => string);
+  [key in AppRoute]:
+    | string
+    | (<T extends Record<string, string>>(
+        config: TrackingConfig,
+        params: T | null
+      ) => string);
 };
 
 // Used in <html><head><title>{PageTitle}</title></head>
@@ -70,7 +80,10 @@ export const DocumentTitles: DocumentTitlesConfig = {
     }
   },
   [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
-  [AppRoutes['BURGERZAKEN/ID-KAART']]: `ID-Kaart | ${ThemaTitles.BURGERZAKEN}`,
+  [AppRoutes['BURGERZAKEN/LIST']]:
+    `Paspoort en ID-kaart | ${ThemaTitles.BURGERZAKEN}`,
+  [AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']]: (_config, params) =>
+    `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${ThemaTitles.BURGERZAKEN}`,
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
@@ -107,6 +120,27 @@ export const DocumentTitles: DocumentTitlesConfig = {
     `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]:
     `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
+  [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
+  [AppRoutes['VAREN/LIST']]: (_config, params) => {
+    switch (params?.kind) {
+      case 'lopende-aanvragen':
+        return `Lopende aanvragen | ${ThemaTitles.VAREN}`;
+      case 'afgehandelde-aanvragen':
+        return `Afgehandelde aanvragen | ${ThemaTitles.VAREN}`;
+      default:
+        return `Vergunningaanvragen | ${ThemaTitles.VAREN}`;
+    }
+  },
+  [AppRoutes['VAREN/DETAIL']]: (_config, params) => {
+    switch (params?.caseType) {
+      case 'ligplaatsvergunning':
+        return `Ligplaatsvergunning | ${ThemaTitles.VAREN}`;
+      case 'exploitatievergunning':
+        return `Exploitatievergunning | ${ThemaTitles.VAREN}`;
+      default:
+        return `Vergunning | ${ThemaTitles.VAREN}`;
+    }
+  },
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
@@ -116,11 +150,14 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
   [AppRoutes.HORECA]: 'Horeca | overzicht',
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
+  [AppRoutes['AVG/LIST']]: `AVG verzoeken | ${ThemaTitles.AVG}`,
+  [AppRoutes['AVG/DETAIL']]: `AVG verzoek | ${ThemaTitles.AVG}`,
   [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
-  [AppRoutes['AVG/DETAIL']]: `${ThemaTitles.AVG} | verzoek`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
-  [AppRoutes.BODEM]: 'Bodem | overzicht',
-  [AppRoutes['BODEM/LOOD_METING']]: 'Bodem | lood in de bodem-check',
+  [AppRoutes['BODEM/LIST']]: `Lood in de bodem-checks | ${ThemaTitles.BODEM}`,
+  [AppRoutes['BODEM/LOOD_METING']]:
+    `Lood in de bodem-check | ${ThemaTitles.BODEM}`,
+  [AppRoutes.BODEM]: `${ThemaTitles.BODEM} | overzicht`,
   [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
   [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
   [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
@@ -131,15 +168,20 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
   [AppRoutes.AFIS]: 'Facturen en betalen | overzicht',
-  [generatePath(AppRoutes['AFIS/FACTUREN'], { state: 'open' })]:
-    'Open facturen | Facturen en betalen',
-  [generatePath(AppRoutes['AFIS/FACTUREN'], { state: 'afgehandeld' })]:
-    'Afgehanelde facturen | Facturen en betalen',
-  [generatePath(AppRoutes['AFIS/FACTUREN'], { state: 'overgedragen' })]:
-    'Overgedragen aan belastingen facturen | Facturen en betalen',
-  [AppRoutes['AFIS/FACTUREN']]: 'Lijst met facturen | Facturen en betalen',
+  [AppRoutes['AFIS/FACTUREN']]: (_config, params) => {
+    switch (params?.state) {
+      case 'open':
+        return `Open facturen | ${ThemaTitles.AFIS}`;
+      case 'afgehandeld':
+        return `Afgehandelde facturen | ${ThemaTitles.AFIS}`;
+      case 'overgedragen':
+        return `Overgedragen aan belastingen facturen | ${ThemaTitles.AFIS}`;
+      default:
+        return `Facturen | ${ThemaTitles.AFIS}`;
+    }
+  },
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
-    'Betaalvoorkeuren | Facturen en betalen',
+    `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
@@ -178,6 +220,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private', 'commercial'],
   },
   {
+    title: ThemaTitles.VAREN,
+    id: Themas.VAREN,
+    to: AppRoutes.VAREN,
+    profileTypes: ['commercial'],
+  },
+
+  {
     title: ThemaTitles.BEZWAREN,
     id: Themas.BEZWAREN,
     to: AppRoutes.BEZWAREN,
@@ -192,9 +241,11 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     isAlwaysVisible: true,
   },
   {
-    title: ThemaTitles.BURGERZAKEN,
+    title: (appState: AppState) => {
+      return getThemaTitleBurgerzakenWithAppState(appState);
+    },
     id: Themas.BURGERZAKEN,
-    to: AppRoutes.BURGERZAKEN,
+    to: (appState) => getThemaUrlBurgerzakenWithAppState(appState),
     profileTypes: ['private'],
   },
   {
@@ -288,15 +339,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.PARKEREN,
     id: Themas.PARKEREN,
     to: (appState: AppState) => {
-      const hasParkerenVergunningen = (
+      const hasOtherParkeerVegunningen = (
         appState.VERGUNNINGEN?.content ?? []
       ).some((vergunning) =>
         PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
       );
-      const urlExternal =
-        appState.PARKEREN.content?.url ??
-        import.meta.env.REACT_APP_SSO_URL_PARKEREN;
-      return hasParkerenVergunningen ? AppRoutes.PARKEREN : urlExternal;
+      const urlExternal = appState.PARKEREN.content?.url ?? '/';
+      return hasOtherParkeerVegunningen ? AppRoutes.PARKEREN : urlExternal;
     },
     profileTypes: ['private', 'commercial'],
   },

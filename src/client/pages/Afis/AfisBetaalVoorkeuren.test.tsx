@@ -70,6 +70,11 @@ describe('<AfisBetaalVoorkeuren />', () => {
 
     const screen = render(<Component />);
 
+    const toonKnop = screen.getByText('Toon');
+    expect(toonKnop).toBeInTheDocument();
+
+    await user.click(toonKnop);
+
     await waitFor(() => {
       expect(screen.getByText('someone@example.org')).toBeInTheDocument();
       expect(screen.getByText('Taxon Expeditions BV')).toBeInTheDocument();

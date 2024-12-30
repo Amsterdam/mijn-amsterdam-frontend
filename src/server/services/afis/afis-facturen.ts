@@ -56,7 +56,7 @@ const accountingDocumentTypesByState: Record<
   open: ['DR', 'DG', 'DM', 'DE', 'DF', 'DV', 'DW'],
   afgehandeld: ['DR', 'DE', 'DM', 'DV', 'DG', 'DF', 'DM', 'DW'],
   overgedragen: ['DR', 'DE', 'DM', 'DV', 'DG', 'DF', 'DM', 'DW'],
-  deelbetalingen: ['AB'],
+  deelbetalingen: ['AB', 'BA'],
 };
 
 const select = `$select=IsCleared,ReverseDocument,Paylink,PostingDate,ProfitCenterName,DocumentReferenceID,AccountingDocument,AmountInBalanceTransacCrcy,NetDueDate,DunningLevel,DunningBlockingReason,SEPAMandate,ClearingDate,PaymentMethod`;

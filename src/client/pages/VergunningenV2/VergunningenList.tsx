@@ -28,7 +28,7 @@ export function VergunningenList() {
   const vergunningen =
     addLinkElementToProperty<VergunningFrontendV2>(vergunningenFiltered);
 
-  const appRouteBack = AppRoutes['VERGUNNINGEN'];
+  const appRouteBack = AppRoutes.VERGUNNINGEN;
 
   return (
     <ListPagePaginated

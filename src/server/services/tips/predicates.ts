@@ -5,7 +5,7 @@ import {
 } from 'date-fns';
 
 import type { TipsPredicateFN } from './tip-types';
-import type { Identiteitsbewijs, Kind } from '../../../universal/types';
+import type { IdentiteitsbewijsFrontend, Kind } from '../../../universal/types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { HLIRegeling } from '../hli/hli-regelingen-types';
 import { BBVergunning } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
@@ -33,7 +33,7 @@ export const hasValidId: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
-  return ids.some((idBewijs: Identiteitsbewijs) => {
+  return ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
     return today <= new Date(idBewijs.datumAfloop);
   });
 };
@@ -165,10 +165,11 @@ export const hasKidsBetweenAges4And11: TipsPredicateFN = (
 export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
   const yearFrom = 2016;
   const yearTo = 2024;
-  const oldestKid = appState.BRP?.content?.kinderen?.sort(
-    (a: any, b: any) =>
-      new Date(a.geboortedatum as string).getTime() -
-      new Date(b.geboortedatum as string).getTime()
+  const oldestKid = appState.BRP?.content?.kinderen?.sort((a, b) =>
+    a.geboortedatum && b.geboortedatum
+      ? new Date(a.geboortedatum).getTime() -
+        new Date(b.geboortedatum).getTime()
+      : 0
   )[0];
 
   if (!oldestKid?.geboortedatum) {

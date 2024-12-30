@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { renderHook } from '@testing-library/react';
 import * as rrd from 'react-router-dom';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
@@ -20,11 +22,11 @@ vi.mock('react-router-dom', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,
-    useLocation: () => {
-      return { pathname: mocks.pathname };
-    },
     __setPathname: (name: string) => {
       mocks.pathname = name;
+    },
+    useLocation: () => {
+      return { pathname: mocks.pathname };
     },
     useHistory: () => {
       return { action: 'PUSH' };

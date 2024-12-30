@@ -43,7 +43,6 @@ import { oidcRouter } from './routing/router-oidc';
 import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
-import { cleanupSessionBlacklistTable } from './services/cron/jobs';
 import { captureException } from './services/monitoring';
 
 const app = express();
@@ -199,8 +198,6 @@ if (
   require.main?.filename.endsWith('app.js')
 ) {
   startServerBFF();
-  // Start Cron jobs
-  cleanupSessionBlacklistTable.start();
 }
 
 export const forTesting = {

@@ -22,13 +22,13 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchHLI } from './hli/hli';
-import { fetchMyLocation } from './home';
+import { fetchMyLocation } from './my-locations';
 import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
-import { fetchSSOParkerenURL } from './parkeren/parkeren';
+import { fetchParkeren } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
 import { fetchContactmomenten } from './salesforce/contactmomenten';
 import {
@@ -118,7 +118,13 @@ export function addServiceResultHandler(
  * The service methods
  */
 // Public services
-const CMS_CONTENT = callPublicService(fetchCMSCONTENT);
+const CMS_CONTENT = (requestID: RequestID, req: Request) => {
+  const auth = getAuth(req);
+  return fetchCMSCONTENT(requestID, {
+    profileType: auth?.profile.profileType,
+    ...queryParams(req),
+  });
+};
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
 );
@@ -128,7 +134,7 @@ const BRP = callAuthenticatedService(fetchBRP);
 const HLI = callAuthenticatedService(fetchHLI);
 const KREFIA = callAuthenticatedService(fetchKrefia);
 const KVK = callAuthenticatedService(fetchKVK);
-const PARKEREN = callAuthenticatedService(fetchSSOParkerenURL);
+const PARKEREN = callAuthenticatedService(fetchParkeren);
 const SVWI = callAuthenticatedService(fetchSVWI);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);
@@ -137,6 +143,8 @@ const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const WMO = callAuthenticatedService(fetchWmo);
 const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
+const VAREN = callAuthenticatedService(fetchVergunningen);
+
 const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
 const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
@@ -152,6 +160,7 @@ const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
 const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
 const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
+
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const PROFILE = callAuthenticatedService(fetchProfile);
 const AVG = callAuthenticatedService(fetchAVG);
@@ -221,6 +230,7 @@ const SERVICES_INDEX = {
   SVWI,
   SALESFORCE,
   TOERISTISCHE_VERHUUR,
+  VAREN,
   VERGUNNINGEN,
   VERGUNNINGENv2,
   WMO,
@@ -235,7 +245,7 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type PrivateServices = Omit<ServicesType, 'PROFILE'>;
+type PrivateServices = Omit<ServicesType, 'PROFILE' | 'VAREN'>;
 
 type PrivateServicesAttributeBased = Pick<
   ServiceMap,
@@ -262,6 +272,7 @@ type CommercialServices = Pick<
   | 'PARKEREN'
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
+  | 'VAREN'
   | 'VERGUNNINGEN'
   | 'VERGUNNINGENv2'
 >;
@@ -334,6 +345,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     PARKEREN,
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
+    VAREN,
     VERGUNNINGEN,
     VERGUNNINGENv2,
   },
@@ -489,3 +501,7 @@ export async function getTipNotifications(
 
   return [];
 }
+
+export const forTesting = {
+  CMS_CONTENT,
+};

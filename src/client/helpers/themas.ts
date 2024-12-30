@@ -30,6 +30,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
+    VAREN,
     VERGUNNINGEN,
     VERGUNNINGENv2,
     WMO,
@@ -186,17 +187,18 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Themas.PARKEREN: {
-      const hasDecosParkeerVergunningen =
+      const hasParkeerVergunningenFromThemaVergunningen =
         !isLoading(VERGUNNINGEN) &&
         (appState.VERGUNNINGEN?.content ?? []).some((vergunning) =>
           PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
         );
-      const hasEgisParkeerVergunningen =
+      const hasParkeerVergunningenFromThemaParkeren =
         !isLoading(PARKEREN) && !!PARKEREN?.content?.isKnown;
 
       return (
         FeatureToggle.parkerenActive &&
-        (hasEgisParkeerVergunningen || hasDecosParkeerVergunningen)
+        (hasParkeerVergunningenFromThemaParkeren ||
+          hasParkeerVergunningenFromThemaVergunningen)
       );
     }
 
@@ -212,6 +214,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
+      );
+
+    case Themas.VAREN:
+      return (
+        !isLoading(VAREN) &&
+        !!VAREN?.content?.length &&
+        FeatureToggle.varenActive
       );
 
     case Themas.HORECA:

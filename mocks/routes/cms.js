@@ -1,5 +1,5 @@
-const settings = require('../settings');
 const loadFixtureAndReplaceBaseUrl = require('../loadFixtureAndReplaceBaseUrl');
+const settings = require('../settings');
 
 const ALLE_RESPONSE = loadFixtureAndReplaceBaseUrl(
   'cms-maintenance-notifications-alle.json'
@@ -65,10 +65,17 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: PRODUCTEN_OP_MA,
+          middleware: (req, res, next, core) => {
+            const { articleslug } = req.params;
+            if (articleslug === 'overzicht-producten-ondernemers') {
+              const productenOndernemer = structuredClone(PRODUCTEN_OP_MA);
+              productenOndernemer.applicatie.inhoud.inleiding = `<p><strong>Mock content voor BEDRIJVEN</strong></p>`;
+              return res.send(productenOndernemer);
+            }
+            return res.send(PRODUCTEN_OP_MA);
+          },
         },
       },
     ],

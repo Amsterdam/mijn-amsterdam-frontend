@@ -20,7 +20,7 @@ import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
 
-type ThemaQueryParam = 'vergunningen';
+type ThemaQueryParam = 'vergunningen' | 'toeristischeVerhuur';
 
 type PageRouteResolver = {
   baseRoute: AppRoute;
@@ -41,9 +41,30 @@ const pageRouteResolvers: PageRouteResolvers = {
       }
       if (!isLoading(appState.VERGUNNINGEN)) {
         return (
-          appState.VERGUNNINGEN.content?.find(
+          (appState.VERGUNNINGEN.content || []).find(
             (vergunning) => vergunning.identifier === detailPageItemId
           )?.link.to ?? ITEM_NOT_FOUND
+        );
+      }
+    },
+  },
+  toeristischeVerhuur: {
+    baseRoute: AppRoutes.TOERISTISCHE_VERHUUR,
+    getRoute: (detailPageItemId, appState) => {
+      if (isError(appState.TOERISTISCHE_VERHUUR)) {
+        return STATE_ERROR;
+      }
+
+      if (!isLoading(appState.TOERISTISCHE_VERHUUR)) {
+        return (
+          (
+            appState.TOERISTISCHE_VERHUUR.content
+              ?.vakantieverhuurVergunningen || []
+          ).find((toeristischeVerhuur) => {
+            if (toeristischeVerhuur.zaaknummer === detailPageItemId) {
+              return toeristischeVerhuur;
+            }
+          })?.link.to ?? ITEM_NOT_FOUND
         );
       }
     },

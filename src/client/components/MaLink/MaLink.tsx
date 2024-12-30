@@ -1,4 +1,6 @@
-import { Link, LinkProps } from '@amsterdam/design-system-react';
+import { AnchorHTMLAttributes } from 'react';
+
+import { ButtonProps, Link, LinkProps } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -51,5 +53,35 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
         history.push(href as string);
       }}
     />
+  );
+}
+
+type MaButtonLinkProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  'placeholder'
+> & {
+  variant?: ButtonProps['variant'];
+};
+
+export function MaButtonLink({
+  href,
+  children,
+  className,
+  variant = 'primary',
+  ...rest
+}: MaButtonLinkProps) {
+  return (
+    <a
+      {...rest}
+      className={classNames(
+        styles.MaButtonLink,
+        'ams-button',
+        `ams-button--${variant}`,
+        className
+      )}
+      href={href}
+    >
+      {children}
+    </a>
   );
 }

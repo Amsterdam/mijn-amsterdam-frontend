@@ -32,7 +32,6 @@ import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { AppRoutes } from '../universal/config/routes';
-import Burgerzaken from './pages//Burgerzaken/Burgerzaken';
 import Accessibility from './pages/Accessibility/Accessibility';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
@@ -46,7 +45,9 @@ import BFF500Error from './pages/BffError/BffError';
 import { Bodem } from './pages/Bodem/Bodem';
 import { BodemList } from './pages/Bodem/BodemList';
 import { LoodMeting } from './pages/Bodem/LoodMeting';
-import BurgerzakenIDKaart from './pages/BurgerzakenDetail/BurgerzakenIDKaart';
+import { Burgerzaken } from './pages/Burgerzaken/Burgerzaken';
+import { BurgerzakenIdentiteitsbewijs } from './pages/Burgerzaken/BurgerzakenIdentiteitsbewijs';
+import { BurgerZakenList } from './pages/Burgerzaken/BurgerZakenList';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
 import Erfpacht from './pages/Erfpacht/Erfpacht';
@@ -73,7 +74,7 @@ import Krefia from './pages/Krefia/Krefia';
 import { default as LandingPage } from './pages/Landing/Landing';
 import MyNotifications from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
-import Parkeren from './pages/Parkeren/Parkeren';
+import { Parkeren } from './pages/Parkeren/Parkeren';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
@@ -81,6 +82,7 @@ import Search from './pages/Search/Search';
 import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
 import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
+import Varen from './pages/Varen/Varen';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
 import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
@@ -232,8 +234,12 @@ function AppAuthenticated() {
           )}
 
           <Route
-            path={AppRoutes['BURGERZAKEN/ID-KAART']}
-            component={BurgerzakenIDKaart}
+            path={AppRoutes['BURGERZAKEN/LIST']}
+            component={BurgerZakenList}
+          />
+          <Route
+            path={AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']}
+            component={BurgerzakenIdentiteitsbewijs}
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           {FeatureToggle.garbageInformationPage && (
@@ -305,6 +311,15 @@ function AppAuthenticated() {
               component={ToeristscheVerhuurThema}
             />
           )}
+          {FeatureToggle.varenActive && (
+            <Route path={AppRoutes['VAREN/DETAIL']} component={Varen} />
+          )}
+          {FeatureToggle.varenActive && (
+            <Route path={AppRoutes['VAREN/LIST']} component={Varen} />
+          )}
+          {FeatureToggle.varenActive && (
+            <Route path={AppRoutes.VAREN} component={Varen} />
+          )}
           {FeatureToggle.afisActive && (
             <Route
               path={AppRoutes['AFIS/BETAALVOORKEUREN']}
@@ -338,6 +353,7 @@ function AppAuthenticated() {
           {FeatureToggle.bodemActive && (
             <Route path={AppRoutes['BODEM/LIST']} component={BodemList} />
           )}
+
           {FeatureToggle.bodemActive && (
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}

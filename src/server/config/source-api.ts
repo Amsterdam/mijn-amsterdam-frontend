@@ -12,7 +12,6 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
   cancelTimeout?: number;
   postponeFetch?: boolean;
-  urls?: Record<string, string>;
 
   // Construct an url that will be assigned to the url key in the local requestConfig.
   // Example: formatUrl: (requestConfig) => requestConfig.url + '/some/additional/path/segments/,
@@ -80,6 +79,7 @@ export type SourceApiKey =
   | 'LOOD_365'
   | 'LOOD_365_OAUTH'
   | 'PARKEREN'
+  | 'PARKEREN_FRONTOFFICE'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SALESFORCE'
@@ -212,11 +212,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   CMS_CONTENT_GENERAL_INFO: {
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
-    urls: {
-      private: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
-      'private-attributes': `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
-      commercial: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data`,
-    },
+    url: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen`,
   },
   CMS_CONTENT_FOOTER: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
@@ -268,6 +264,15 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_PARKEREN_API_BASE_URL')}`,
     headers: {
       host: new URL(getFromEnv('BFF_PARKEREN_API_BASE_URL') ?? '').hostname,
+      'X-AUTH-TOKEN': getFromEnv('BFF_PARKEREN_API_TOKEN'),
+    },
+  },
+  // Because for some reason they have one endpoint here for retrieving the SSO URL.
+  PARKEREN_FRONTOFFICE: {
+    url: `${getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL')}`,
+    headers: {
+      host: new URL(getFromEnv('BFF_PARKEREN_FRONTOFFICE_API_BASE_URL') ?? '')
+        .hostname,
     },
   },
   TOERISTISCHE_VERHUUR_REGISTRATIES: {

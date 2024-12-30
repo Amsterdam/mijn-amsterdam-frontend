@@ -27,7 +27,6 @@ import { signDevelopmentToken } from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfile } from '../auth/auth-types';
 import { ONE_SECOND_MS } from '../config/app';
-import { addToBlackList } from '../services/session-blacklist';
 import { countLoggedInVisit } from '../services/visitors';
 
 export const authRouterDevelopment = express.Router();
@@ -153,14 +152,8 @@ authRouterDevelopment.get(
 );
 
 authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
-  const auth = getAuth(req);
-  if (auth?.profile.sid) {
-    await addToBlackList(auth.profile.sid);
-  }
   res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-
   const redirectUrl = `${process.env.MA_FRONTEND_URL}`;
-
   return res.redirect(redirectUrl);
 });
 

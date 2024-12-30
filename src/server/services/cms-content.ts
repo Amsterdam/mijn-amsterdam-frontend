@@ -15,7 +15,7 @@ import {
 } from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
-import { DataRequestConfig } from '../config/source-api';
+import { isValidProfileType } from '../auth/auth-helpers';
 import FileCache from '../helpers/file-cache';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
@@ -211,14 +211,14 @@ async function getGeneralPage(
           sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
       };
     },
+    formatUrl({ url }) {
+      return profileType === 'commercial'
+        ? `${url}/overzicht-producten-ondernemers/?AppIdt=app-data`
+        : `${url}/ziet-amsterdam/?AppIdt=app-data`;
+    },
   });
 
-  const requestConfigFinal: DataRequestConfig = {
-    ...requestConfig,
-    url: requestConfig.urls![profileType],
-  };
-
-  return requestData<CMSPageContent>(requestConfigFinal, requestID).then(
+  return requestData<CMSPageContent>(requestConfig, requestID).then(
     (apiData) => {
       if (
         apiData.status === 'OK' &&
@@ -285,11 +285,14 @@ async function fetchCmsBase(
   requestID: RequestID,
   query?: QueryParamsCMSFooter
 ) {
-  const forceRenew = !!(query?.forceRenew === 'true');
-
+  const forceRenew = query?.forceRenew === 'true';
+  const profileType =
+    query?.profileType && isValidProfileType(query?.profileType)
+      ? query.profileType
+      : undefined;
   const generalInfoPageRequest = getGeneralPage(
     requestID,
-    query?.profileType as ProfileType,
+    profileType,
     forceRenew
   );
 
@@ -310,10 +313,10 @@ async function fetchCmsBase(
   };
 }
 
-export interface QueryParamsCMSFooter extends Record<string, string> {
-  forceRenew: 'true';
-  profileType: ProfileType;
-}
+export type QueryParamsCMSFooter = {
+  forceRenew?: 'true';
+  profileType?: ProfileType;
+};
 
 export async function fetchCmsFooter(
   requestID: RequestID,

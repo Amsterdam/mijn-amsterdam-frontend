@@ -10,7 +10,7 @@ const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
-vi.mock('./server/helpers/env.ts', async (importOriginal) => {
+vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   const envModule: object = await importOriginal();
   return {
     ...envModule,
@@ -19,21 +19,22 @@ vi.mock('./server/helpers/env.ts', async (importOriginal) => {
   };
 });
 
-vi.mock('./universal/config/feature-toggles.ts', async (importOriginal) => {
+// Set every Featuretoggle to true.
+vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
   const featureToggleModule: {
     FeatureToggle: Record<string, string>;
   } = await importOriginal();
 
-  let featureTogglesOn = Object.entries(featureToggleModule.FeatureToggle).map(
-    ([keyName]) => {
-      return [keyName, true];
-    }
-  );
-  featureTogglesOn = Object.fromEntries(featureTogglesOn);
+  const featureTogglesOn = Object.entries(
+    featureToggleModule.FeatureToggle
+  ).map(([keyName]) => {
+    return [keyName, true];
+  });
+  const FeatureToggle = Object.fromEntries(featureTogglesOn);
 
   return {
     ...featureToggleModule,
-    featureTogglesOn,
+    FeatureToggle,
   };
 });
 
@@ -101,8 +102,10 @@ process.env.BFF_AFIS_OAUTH_CLIENT_SECRET =
   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 process.env.BFF_AFIS_ENABLEU_ACTIVE = 'true';
 
+process.env.BFF_PARKEREN_FRONTOFFICE_API_BASE_URL = `${remoteApiHost}/parkeren`;
 process.env.BFF_PARKEREN_API_BASE_URL = `${remoteApiHost}/parkeren`;
-process.env.BFF_PARKEREN_EXTERNAL_FALLBACK_URL = `${remoteApiHost}/parkeren/fallback`;
+process.env.BFF_PARKEREN_PORTAAL_URL = `${remoteApiHost}/parkeren/fallback`;
+process.env.BFF_PARKEREN_API_TOKEN = 'xxxclientsecretxxx';
 
 // V2
 process.env.BFF_DECOS_API_BASE_URL = `${remoteApiHost}/decos`;
@@ -154,7 +157,6 @@ process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 
 process.env.REACT_APP_SSO_URL_BELASTINGEN = `${remoteApiHost}/sso/portaal/belastingen`;
 process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuzone`;
-process.env.REACT_APP_SSO_URL_PARKEREN = `${remoteApiHost}/sso/portaal/parkeren`;
 
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
 process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';

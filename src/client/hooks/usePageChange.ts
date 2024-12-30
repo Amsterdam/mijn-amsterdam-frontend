@@ -24,8 +24,8 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
 }) as AppRoute[];
 
 export function usePageChange(isAuthenticated: boolean) {
-  const location = useLocation();
   const history = useHistory();
+  const location = useLocation();
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
@@ -66,7 +66,14 @@ export function usePageChange(isAuthenticated: boolean) {
     let assignedDocumentTitle = DocumentTitles[route];
 
     if (typeof assignedDocumentTitle === 'function') {
-      assignedDocumentTitle = assignedDocumentTitle(tackingConfig);
+      assignedDocumentTitle = assignedDocumentTitle(
+        tackingConfig,
+        matchPath(location.pathname, {
+          path: route,
+          exact: true,
+          strict: false,
+        })?.params ?? null
+      );
     }
 
     // Set a document title, even if we haven't found one assigned to the current route.
@@ -76,14 +83,16 @@ export function usePageChange(isAuthenticated: boolean) {
       documentTitle = assignedDocumentTitle;
     }
 
-    const isAppRouteKnown = Object.values(AppRoutes).find(
-      (route) =>
-        !!matchPath(location.pathname, {
-          path: route,
-          exact: true,
-          strict: false,
-        })
-    );
+    const isAppRouteKnown = !hasPageTitleAssigned
+      ? Object.values(AppRoutes).find(
+          (route) =>
+            !!matchPath(location.pathname, {
+              path: route,
+              exact: true,
+              strict: false,
+            })
+        )
+      : true;
 
     if (!isAppRouteKnown) {
       documentTitle = NOT_FOUND_TITLE;

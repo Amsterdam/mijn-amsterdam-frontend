@@ -5,86 +5,45 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Burgerzaken from './Burgerzaken';
+import { Burgerzaken } from './Burgerzaken';
+import { AppState, IdentiteitsbewijsFrontend } from '../../../universal/types';
 
-const identiteitsbewijzen = [
+const identiteitsbewijzen: IdentiteitsbewijsFrontend[] = [
   {
     datumAfloop: '2025-10-15T00:00:00Z',
     datumUitgifte: '2015-10-15T00:00:00Z',
+    datumAfloopFormatted: '15 oktober 2025',
+    datumUitgifteFormatted: '15 oktober 2015',
     documentNummer: 'PP57XKG54',
     documentType: 'paspoort',
+    title: 'paspoort',
+    steps: [],
     id: 'een-hash-van-documentnummer-1',
+    link: {
+      to: '/burgerzaken/paspoort/een-hash-van-documentnummer-1',
+      title: 'Paspoort',
+    },
   },
   {
     datumAfloop: '2020-09-11T00:00:00Z',
     datumUitgifte: '2010-09-11T00:00:00Z',
+    datumAfloopFormatted: '9 november 2020',
+    datumUitgifteFormatted: '9 november 2010',
     documentNummer: 'IE9962819',
     documentType: 'europese identiteitskaart',
+    title: 'europese-identiteitskaart',
+    steps: [],
     id: 'een-hash-van-documentnummer-2',
-  },
-];
-
-const aktes = [
-  {
-    registerjaar: '2015',
-    aktenummer: '67YUHAK-IO',
-    type: 'Huwelijksakte',
-    documenten: ['/bla/bla/bla.pdf'],
-    id: '70669889',
-    link: { to: '/burgerzaken/akte/70669889', title: 'Huwelijksakte' },
-    documents: [
-      {
-        id: 'document-70669889',
-        datePublished: '',
-        title: 'Huwelijksakte',
-        url: '/bla/bla/bla.pdf',
-        type: 'pdf',
-      },
-    ],
-  },
-  {
-    registerjaar: '2003',
-    aktenummer: '77566AS',
-    type: 'Geboorteakte',
-    documenten: ['/bla/bla/bla.pdf'],
-    id: '4150191554',
-    link: { to: '/burgerzaken/akte/4150191554', title: 'Geboorteakte' },
-    documents: [
-      {
-        id: 'document-4150191554',
-        datePublished: '',
-        title: 'Geboorteakte',
-        url: '/bla/bla/bla.pdf',
-        type: 'pdf',
-      },
-    ],
-  },
-  {
-    registerjaar: '1967',
-    aktenummer: 'YHJ5567',
-    type: 'Akte van geregistreerd partnerschap',
-    documenten: ['/bla/bla/bla.pdf'],
-    id: '1975027871',
     link: {
-      to: '/burgerzaken/akte/1975027871',
-      title: 'Akte van geregistreerd partnerschap',
+      to: '/burgerzaken/europese-identiteitskaart/een-hash-van-documentnummer-2',
+      title: 'ID-kaart',
     },
-    documents: [
-      {
-        id: 'document-1975027871',
-        datePublished: '',
-        title: 'Akte van geregistreerd partnerschap',
-        url: '/bla/bla/bla.pdf',
-        type: 'pdf',
-      },
-    ],
   },
 ];
 
-const testState: any = {
+const testState = {
   BRP: { status: 'OK', content: { identiteitsbewijzen } },
-  AKTES: { status: 'OK', content: aktes },
-};
+} as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
@@ -94,14 +53,16 @@ describe('<Burgerzaken />', () => {
   const routeEntry = generatePath(AppRoutes.BURGERZAKEN);
   const routePath = AppRoutes.BURGERZAKEN;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Burgerzaken}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Burgerzaken}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Renders without crashing', () => {
     const { asFragment } = render(<Component />);

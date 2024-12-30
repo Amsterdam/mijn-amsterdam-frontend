@@ -31,7 +31,7 @@ export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
-    listPageRoute: generatePath(AppRoutes.AVG, {
+    listPageRoute: generatePath(AppRoutes['AVG/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
     ...tableConfigBase,
@@ -39,7 +39,7 @@ export const tableConfig = {
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
-    listPageRoute: generatePath(AppRoutes.AVG, {
+    listPageRoute: generatePath(AppRoutes['AVG/LIST'], {
       kind: listPageParamKind.completed,
     }),
     ...tableConfigBase,
