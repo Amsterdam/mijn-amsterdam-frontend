@@ -40,6 +40,7 @@ const responseData = {
       woonplaatsNaam: 'Amsterdam',
     },
   ],
+
   persoon: {
     vertrokkenOnbekendWaarheen: true,
     datumVertrekUitNederland: '1967-01-01T00:00:00Z',
@@ -175,9 +176,27 @@ const responseData = {
     },
   ],
 };
+const responseDataSF = [
+  {
+    plaatsgevondenOp: '2024-05-29 08:02:38',
+    onderwerp: 'Meldingen',
+    nummer: '00002032',
+    kanaal: 'Telefoon',
+  },
+  {
+    plaatsgevondenOp: '2024-12-03 10:58:47',
+    onderwerp: 'Erfpacht',
+    nummer: '00154596',
+    kanaal: 'Chat',
+  },
+];
 
-const testState = (content = responseData) => ({
-  BRP: { status: 'OK', content },
+const testState = (
+  responseBRP = responseData,
+  responseSF = responseDataSF
+) => ({
+  BRP: { status: 'OK', content: responseBRP },
+  SALESFORCE: { status: 'OK', content: responseSF },
 });
 
 function initializeState(testState: any) {
@@ -198,166 +217,211 @@ describe('<Profile />', () => {
   });
 
   it('Matches the Full Page snapshot', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(testState())}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(testState())}
+        />
+      );
+    }
     expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot Non-Mokum', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(
-          testState({
-            ...responseData,
-            persoon: {
-              ...responseData.persoon,
-              mokum: false,
-            },
-          })
-        )}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              persoon: {
+                ...responseData.persoon,
+                mokum: false,
+              },
+            })
+          )}
+        />
+      );
+    }
     expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot No verbintenis', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(
-          testState({
-            ...responseData,
-            verbintenis: null,
-          } as any)
-        )}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              verbintenis: null,
+            } as any)
+          )}
+        />
+      );
+    }
     expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot Not living in Netherlands', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(
-          testState({
-            ...responseData,
-            adres: {
-              ...responseData.adres,
-              landnaam: 'Nicaragua',
-            },
-          } as any)
-        )}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              adres: {
+                ...responseData.adres,
+                landnaam: 'Nicaragua',
+              },
+            } as any)
+          )}
+        />
+      );
+    }
     expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot no address known', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(
-          testState({
-            ...responseData,
-            adres: null,
-          } as any)
-        )}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              adres: null,
+            } as any)
+          )}
+        />
+      );
+    }
     expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot "Punt adres" in onderzoek', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(
-          testState({
-            ...responseData,
-            persoon: {
-              ...responseData.persoon,
-              adresInOnderzoek: '089999',
-            },
-          } as any)
-        )}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              persoon: {
+                ...responseData.persoon,
+                adresInOnderzoek: '089999',
+              },
+            } as any)
+          )}
+        />
+      );
+    }
     expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Shows foreign nationalities', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(
-          testState({
-            ...responseData,
-            persoon: {
-              ...responseData.persoon,
-              nationaliteiten: [
-                {
-                  omschrijving: 'Armeense',
-                },
-                {
-                  omschrijving: 'Turkse',
-                },
-              ],
-            },
-          } as any)
-        )}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              persoon: {
+                ...responseData.persoon,
+                nationaliteiten: [
+                  {
+                    omschrijving: 'Armeense',
+                  },
+                  {
+                    omschrijving: 'Turkse',
+                  },
+                ],
+              },
+            } as any)
+          )}
+        />
+      );
+    }
     render(<Component />);
     expect(screen.getByText('Armeense, Turkse')).toBeInTheDocument();
   });
 
+  it('Shows contactmomenten', () => {
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState(
+              {
+                ...responseData,
+              },
+              [
+                {
+                  plaatsgevondenOp: '2024-05-29 08:02:38',
+                  onderwerp: 'Meldingen',
+                  nummer: '00002032',
+                  kanaal: 'Contactformulier',
+                },
+              ]
+            )
+          )}
+        />
+      );
+    }
+    render(<Component />);
+    expect(screen.getByText('Contactformulier')).toBeInTheDocument();
+  });
+
   it('Only shows dutch nationality', () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Profile}
-        initializeState={initializeState(
-          testState({
-            ...responseData,
-            persoon: {
-              ...responseData.persoon,
-              nationaliteiten: [
-                {
-                  omschrijving: 'Nederlandse',
-                },
-                {
-                  omschrijving: 'Armeense',
-                },
-                {
-                  omschrijving: 'Turkse',
-                },
-              ],
-            },
-          } as any)
-        )}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={Profile}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              persoon: {
+                ...responseData.persoon,
+                nationaliteiten: [
+                  {
+                    omschrijving: 'Nederlandse',
+                  },
+                  {
+                    omschrijving: 'Armeense',
+                  },
+                  {
+                    omschrijving: 'Turkse',
+                  },
+                ],
+              },
+            } as any)
+          )}
+        />
+      );
+    }
     render(<Component />);
     expect(screen.getByText('Nederlandse')).toBeInTheDocument();
     expect(screen.queryByText('Armeense, Turkse')).toBeNull();
@@ -373,22 +437,24 @@ describe('<Profile />', () => {
   ])(
     'Shows the correctly formatted birthday for indicatieGeboortedatum %s',
     async (indicatieGeboortedatum, geformateerdeGeboortedatum) => {
-      const Component = () => (
-        <MockApp
-          routeEntry={routeEntry}
-          routePath={routePath}
-          component={Profile}
-          initializeState={initializeState(
-            testState({
-              ...responseData,
-              persoon: {
-                ...responseData.persoon,
-                indicatieGeboortedatum,
-              },
-            } as any)
-          )}
-        />
-      );
+      function Component() {
+        return (
+          <MockApp
+            routeEntry={routeEntry}
+            routePath={routePath}
+            component={Profile}
+            initializeState={initializeState(
+              testState({
+                ...responseData,
+                persoon: {
+                  ...responseData.persoon,
+                  indicatieGeboortedatum,
+                },
+              } as any)
+            )}
+          />
+        );
+      }
       render(<Component />);
 
       expect(screen.getAllByText('Geboortedatum')[0]).toBeInTheDocument();

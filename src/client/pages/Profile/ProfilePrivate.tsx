@@ -98,6 +98,8 @@ export default function Profile() {
         item.id ===
         mapperContactmomentToMenuItem[contactMoment.onderwerp as string]
     );
+
+    // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person  has products in that thema.
     if (menuItem) {
       return {
         ...contactMoment,
@@ -292,19 +294,20 @@ export default function Profile() {
         )}
       </PageContent>
 
-      {!!brpProfileData?.contactmomenten && (
-        <SectionCollapsible
-          id="SectionCollapsible-complaints"
-          title="Contactmomenten"
-          noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
-          startCollapsed={false}
-        >
-          <TableV2
-            items={brpProfileData.contactmomenten}
-            displayProps={contactmomentenDisplayProps}
-          />
-        </SectionCollapsible>
-      )}
+      {!!brpProfileData?.contactmomenten &&
+        brpProfileData.contactmomenten.length > 0 && (
+          <SectionCollapsible
+            id="SectionCollapsible-complaints"
+            title="Contactmomenten"
+            noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
+            startCollapsed={false}
+          >
+            <TableV2
+              items={brpProfileData.contactmomenten}
+              displayProps={contactmomentenDisplayProps}
+            />
+          </SectionCollapsible>
+        )}
 
       {!!brpProfileData?.persoon && (
         <InfoPanel
