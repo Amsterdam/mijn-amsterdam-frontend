@@ -114,10 +114,7 @@ export function getLatLngWithAddress(
 
 function formatAddress(result: BAGAdreseerbaarObject): string {
   if (result.huisletter) {
-    throw Error(
-      `RP TODO: Huisletter found, how should this fit in formatting?
-And what if there is also a huisnummertoevoeging?`
-    );
+    throw Error('Huisletter found but formatting not implemented.');
   }
   if (result.huisnummertoevoeging) {
     return `${result.openbareruimteNaam} ${result.huisnummer}-${result.huisnummertoevoeging}`;
