@@ -23,6 +23,7 @@ import {
 } from '../../../universal/types';
 import { LinkdInline } from '../../components/Button/Button';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { ThemaMenuItem } from '../../config/thema';
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -119,13 +120,13 @@ delete persoonSecundair.indicatieGeheim;
 const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
-    (_value, adres, brpData) => {
+    (_value, adres) => {
       return adres?.straatnaam ? getFullAddress(adres) : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
-    (_value, adres, brpData) => {
+    (_value, adres) => {
       return adres
         ? `${adres.postcode || ''} ${adres.woonplaatsNaam || 'Onbekend'}`
         : 'Onbekend';
@@ -198,6 +199,40 @@ const verbintenisHistorisch: ProfileLabels<
   ...verbintenis,
 };
 
+let myThemasMenuItems: ThemaMenuItem[] = [];
+
+function getLinkToThemaPage(onderwerp: string) {
+  const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
+    ? 'ERFPACHTv2'
+    : 'ERFPACHT';
+
+  const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? 'SVWI' : 'INKOMEN';
+
+  const mapperContactmomentToMenuItem: { [key: string]: string } = {
+    ['Erfpacht']: erfpachtV1ORV2,
+    ['Parkeren']: 'PARKEREN',
+    ['Zorg']: 'WMO',
+    ['Werk en Inkomen']: SVWIv1ORv2,
+    ['Belastingen']: 'BELASTINGEN',
+    ['Geldzaken']: 'KREFIA',
+    ['Financieen']: 'AFIS',
+  };
+
+  // let result = [];
+
+  const menuItem = myThemasMenuItems.find(
+    (item) => item.id === mapperContactmomentToMenuItem[onderwerp as string]
+  );
+  // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person  has products in that thema.
+  if (menuItem) {
+    return (
+      <LinkdInline external={false} href={menuItem.to as string}>
+        {menuItem.title as string}
+      </LinkdInline>
+    );
+  } else return onderwerp;
+}
+
 export function addIcon(type: string) {
   if (type == 'Telefoon') {
     return (
@@ -228,8 +263,8 @@ export function addIcon(type: string) {
 export const contactMoment: ProfileLabels<Partial<ContactMoment>> = {
   kanaal: ['kanaal', (value) => addIcon(value)],
   nummer: 'nummer',
-  onderwerp: 'onderwerp',
-  // onderwerp: ['onderwerp', (value) => linkToThemaPage(value)],
+  // onderwerp: 'onderwerp',
+  onderwerp: ['onderwerp', (value) => getLinkToThemaPage(value)],
   plaatsgevondenOp: ['plaatsgevondenOp', (value) => defaultDateFormat(value)],
 };
 export const brpInfoLabels = {
@@ -241,7 +276,13 @@ export const brpInfoLabels = {
   contactMoment,
 };
 
-export function format<T, X>(labelConfig: X, data: any, profileData: T) {
+export function format<T, X>(
+  labelConfig: X,
+  data: any,
+  profileData: T,
+  myThemasMenuItems_?: ThemaMenuItem[]
+) {
+  myThemasMenuItems = myThemasMenuItems_ ?? [];
   if (!data) {
     return data;
   }

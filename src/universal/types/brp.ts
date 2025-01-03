@@ -85,7 +85,7 @@ export interface Kind {
 }
 export interface ContactMoment {
   plaatsgevondenOp: string | null;
-  onderwerp: ReactNode | null;
+  onderwerp: ReactNode | string | null;
   nummer: string | null;
   kanaal: string | null;
 }

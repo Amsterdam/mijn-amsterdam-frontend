@@ -113,6 +113,7 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   SALESFORCE: apiPristineResult(null, {
     profileTypes: ['private'],
+    isActive: FeatureToggle.salesforceActive,
   }),
   PROFILE: apiPristineResult(null, {
     profileTypes: ['private-attributes'],

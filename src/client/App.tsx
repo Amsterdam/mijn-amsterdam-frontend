@@ -76,6 +76,7 @@ import MyNotifications from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import { Parkeren } from './pages/Parkeren/Parkeren';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
+import ContactmomentenListPage from './pages/Profile/ContactmomentenListPage';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import Profile from './pages/Profile/ProfilePrivate';
 import Search from './pages/Search/Search';
@@ -358,6 +359,12 @@ function AppAuthenticated() {
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}
               component={LoodMeting}
+            />
+          )}
+          {FeatureToggle.salesforceActive && (
+            <Route
+              path={AppRoutes['SALESFORCE/CONTACTMOMENTEN']}
+              component={ContactmomentenListPage}
             />
           )}
           {FeatureToggle.bodemActive && (

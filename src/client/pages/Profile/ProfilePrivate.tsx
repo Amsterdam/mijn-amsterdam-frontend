@@ -1,6 +1,10 @@
 import { useEffect, useMemo } from 'react';
 
-import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert as DSAlert,
+  Grid,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import {
@@ -38,7 +42,9 @@ import {
   SectionCollapsible,
   ThemaIcon,
 } from '../../components';
+import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
@@ -53,11 +59,11 @@ function formatInfoPanelConfig(
   return panelConfig;
 }
 
-const contactmomentenDisplayProps: DisplayProps<ContactMoment> = {
+export const contactmomentenDisplayProps: DisplayProps<ContactMoment> = {
   kanaal: 'Contactvorm',
   onderwerp: 'Onderwerp',
   plaatsgevondenOp: 'Datum',
-  nummer: 'Referentie nummer',
+  nummer: 'Referentienummer',
 };
 
 export default function Profile() {
@@ -75,42 +81,6 @@ export default function Profile() {
   );
 
   const residentCount = residentData?.content?.residentCount;
-
-  const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
-    ? 'ERFPACHTv2'
-    : 'ERFPACHT';
-
-  const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? 'SVWI' : 'INKOMEN';
-
-  const mapperContactmomentToMenuItem: { [key: string]: string } = {
-    ['Erfpacht']: erfpachtV1ORV2,
-    ['Parkeren']: 'PARKEREN',
-    ['Zorg']: 'WMO',
-    ['Werk en Inkomen']: SVWIv1ORv2,
-    ['Belastingen']: 'BELASTINGEN',
-    ['Geldzaken']: 'KREFIA',
-    ['Financieen']: 'AFIS',
-  };
-
-  function getLinkToThemaPage(contactMoment: ContactMoment) {
-    const menuItem = myThemasMenuItems.find(
-      (item) =>
-        item.id ===
-        mapperContactmomentToMenuItem[contactMoment.onderwerp as string]
-    );
-
-    // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person  has products in that thema.
-    if (menuItem) {
-      return {
-        ...contactMoment,
-        onderwerp: (
-          <LinkdInline external={false} href={menuItem.to as string}>
-            {menuItem.title as string}
-          </LinkdInline>
-        ),
-      };
-    } else return contactMoment;
-  }
 
   const brpProfileData = useMemo(() => {
     if (
@@ -144,23 +114,23 @@ export default function Profile() {
 
   if (SALESFORCE.content && brpProfileData) {
     // first fill the contactmomenten with the data from salesforce and add AppState information for links to themapages.
-    brpProfileData.contactmomenten = SALESFORCE.content.map(
-      (contactmomentItem) => {
-        return getLinkToThemaPage(contactmomentItem);
-      }
-    );
+    // brpProfileData.contactmomenten = SALESFORCE.content.map(
+    //   (contactmomentItem) => {
+    //     return getLinkToThemaPage(contactmomentItem);
+    //   }
+    // );
 
     // then format the contactmomenten for icons and dates
-    brpProfileData.contactmomenten = brpProfileData!.contactmomenten.map(
+    brpProfileData.contactmomenten = SALESFORCE.content.map(
       (contactMomentItem) =>
         format(
           contactMoment,
           contactMomentItem,
-          brpProfileData!.contactmomenten
+          brpProfileData!.contactmomenten,
+          myThemasMenuItems
         )
     );
   }
-
   // Fetch the resident count data
   useEffect(() => {
     if (
@@ -296,17 +266,43 @@ export default function Profile() {
 
       {!!brpProfileData?.contactmomenten &&
         brpProfileData.contactmomenten.length > 0 && (
-          <SectionCollapsible
-            id="SectionCollapsible-complaints"
-            title="Contactmomenten"
-            noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
-            startCollapsed={false}
-          >
-            <TableV2
-              items={brpProfileData.contactmomenten}
-              displayProps={contactmomentenDisplayProps}
-            />
-          </SectionCollapsible>
+          <>
+            <SectionCollapsible
+              id="SectionCollapsible-complaints"
+              title="Contactmomenten"
+              noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
+              startCollapsed={false}
+            >
+              <Paragraph>
+                Dit is een overzicht van de momenten dat u contact had met
+                gemeente Amsterdam. Dat zijn telefoontjes naar telefoonnummer 14
+                020, vragen vanuit het contactformulier en chatberichten via de
+                website. In dit overzicht staan niet alle mogelijke contacten.
+                Brieven, klachten vanuit het klachtenformulier, whatsappjes en
+                social mediaberichten staan hier niet in.
+              </Paragraph>
+              <Paragraph>
+                Wilt u een eerder contactmoment doorgeven bij een volgende
+                vraag? Geef dan het referentienummer door.
+              </Paragraph>
+              <Grid.Cell span="all">
+                <TableV2
+                  items={brpProfileData.contactmomenten.slice(
+                    0,
+                    MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                  )}
+                  displayProps={contactmomentenDisplayProps}
+                />
+              </Grid.Cell>
+            </SectionCollapsible>
+            {brpProfileData.contactmomenten.length >
+              MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+              <LinkToListPage
+                count={brpProfileData.contactmomenten.length}
+                route={AppRoutes['SALESFORCE/CONTACTMOMENTEN']}
+              />
+            )}
+          </>
         )}
 
       {!!brpProfileData?.persoon && (

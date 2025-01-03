@@ -71,6 +71,8 @@ export const AppRoutes = {
   'ERFPACHTv2/ALLE_FACTUREN':
     '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
 
+  'SALESFORCE/CONTACTMOMENTEN': '/contactmomenten',
+
   ZAAK_STATUS: '/zaak-status',
 } as const;
 
