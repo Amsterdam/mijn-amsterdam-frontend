@@ -266,35 +266,34 @@ export default function Profile() {
 
       {!!brpProfileData?.contactmomenten &&
         brpProfileData.contactmomenten.length > 0 && (
-          <>
-            <SectionCollapsible
-              id="SectionCollapsible-complaints"
-              title="Contactmomenten"
-              noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
-              startCollapsed={false}
-            >
-              <Paragraph>
-                Dit is een overzicht van de momenten dat u contact had met
-                gemeente Amsterdam. Dat zijn telefoontjes naar telefoonnummer 14
-                020, vragen vanuit het contactformulier en chatberichten via de
-                website. In dit overzicht staan niet alle mogelijke contacten.
-                Brieven, klachten vanuit het klachtenformulier, whatsappjes en
-                social mediaberichten staan hier niet in.
-              </Paragraph>
-              <Paragraph>
-                Wilt u een eerder contactmoment doorgeven bij een volgende
-                vraag? Geef dan het referentienummer door.
-              </Paragraph>
-              <Grid.Cell span="all">
-                <TableV2
-                  items={brpProfileData.contactmomenten.slice(
-                    0,
-                    MAX_TABLE_ROWS_ON_THEMA_PAGINA
-                  )}
-                  displayProps={contactmomentenDisplayProps}
-                />
-              </Grid.Cell>
-            </SectionCollapsible>
+          <SectionCollapsible
+            id="SectionCollapsible-contactmomenten"
+            title="Contactmomenten"
+            noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
+            isLoading={isLoading(SALESFORCE)}
+            startCollapsed={false}
+          >
+            <Paragraph>
+              Dit is een overzicht van de momenten dat u contact had met
+              gemeente Amsterdam. Dat zijn telefoontjes naar telefoonnummer 14
+              020, vragen vanuit het contactformulier en chatberichten via de
+              website. In dit overzicht staan niet alle mogelijke contacten.
+              Brieven, klachten vanuit het klachtenformulier, whatsappjes en
+              social mediaberichten staan hier niet in.
+            </Paragraph>
+            <Paragraph>
+              Wilt u een eerder contactmoment doorgeven bij een volgende vraag?
+              Geef dan het referentienummer door.
+            </Paragraph>
+            <Grid.Cell span="all">
+              <TableV2
+                items={brpProfileData.contactmomenten.slice(
+                  0,
+                  MAX_TABLE_ROWS_ON_THEMA_PAGINA
+                )}
+                displayProps={contactmomentenDisplayProps}
+              />
+            </Grid.Cell>
             {brpProfileData.contactmomenten.length >
               MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
               <LinkToListPage
@@ -302,7 +301,7 @@ export default function Profile() {
                 route={AppRoutes['SALESFORCE/CONTACTMOMENTEN']}
               />
             )}
-          </>
+          </SectionCollapsible>
         )}
 
       {!!brpProfileData?.persoon && (
