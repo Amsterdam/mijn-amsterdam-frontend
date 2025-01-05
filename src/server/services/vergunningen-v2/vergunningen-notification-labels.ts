@@ -3,7 +3,7 @@ import { subMonths } from 'date-fns';
 import {
   NotificationLabels,
   RVVSloterweg,
-  VergunningExpirable,
+  DecosZaakExpirable,
   VergunningFrontendV2,
 } from './config-and-types';
 import { dateFormat } from '../../../universal/helpers/date';
@@ -44,7 +44,7 @@ const statusAfgehandeld: NotificationLabels = {
 const verlooptBinnenkort: NotificationLabels = {
   title: (vergunning) => `Uw ${vergunning.title} loopt af`,
   description: (vergunning) => `Uw ${vergunning.title} loopt binnenkort af.`,
-  datePublished: (vergunning: VergunningExpirable) =>
+  datePublished: (vergunning: DecosZaakExpirable) =>
     vergunning.dateEnd
       ? dateFormat(
           subMonths(
@@ -63,7 +63,7 @@ const verlooptBinnenkort: NotificationLabels = {
 const isVerlopen: NotificationLabels = {
   title: (vergunning) => `Uw ${vergunning.caseType} is verlopen`,
   description: (vergunning) => `Uw ${vergunning.title} is verlopen.`,
-  datePublished: (vergunning: VergunningExpirable) => vergunning.dateEnd,
+  datePublished: (vergunning: DecosZaakExpirable) => vergunning.dateEnd,
   link: (vergunning) => ({
     title: `Vraag zonodig een nieuwe vergunning aan`,
     to: vergunning.link.to,

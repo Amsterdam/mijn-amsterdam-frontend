@@ -1,20 +1,25 @@
 import uid from 'uid-safe';
 
 import {
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
-} from './config-and-types';
-import {
   fetchDecosDocumentList,
-  fetchDecosVergunningen,
+  fetchDecosZaken,
   fetchDecosWorkflowDate,
   fetchDecosZakenFromSource,
   forTesting,
 } from './decos-service';
+import {
+  DecosDocumentSource,
+  DecosZaakSource,
+  DecosZakenResponse,
+} from './decos-types';
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen-v2/config-and-types';
+import {
+  decosCaseToZaakTransformers,
+  decosZaakTransformers,
+} from '../vergunningen-v2/decos-zaken';
 
 const zakenSource = {
   count: 1,
@@ -237,8 +242,9 @@ describe('decos-service', () => {
 
       const workflowInstance2: typeof workflowInstance =
         jsonCopy(workflowInstance);
-      const [instance1] = workflowInstance2.content;
-      delete (instance1 as any).fields.text7;
+      const instance1 = workflowInstance2.content[0];
+      const fields = instance1.fields as Partial<typeof instance1.fields>;
+      delete fields.text7;
 
       remoteApi
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
@@ -321,9 +327,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('Booksearch failed');
 
-      const responseData = await fetchDecosVergunningen(
+      const responseData = await fetchDecosZaken(
         reqID,
-        authProfileAndToken
+        authProfileAndToken,
+        decosZaakTransformers
       );
 
       expect(responseData).toMatchInlineSnapshot(`
@@ -350,9 +357,10 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
-      const responseData = await fetchDecosVergunningen(
+      const responseData = await fetchDecosZaken(
         reqID,
-        authProfileAndToken
+        authProfileAndToken,
+        decosZaakTransformers
       );
 
       expect(responseData.status).toBe('OK');
@@ -415,25 +423,25 @@ describe('decos-service', () => {
     test('Niet definitief', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'foo.bar' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(false);
     });
     test('Niet openbaar', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'definitief', text40: 'geheim' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(false);
     });
     test('Niet van toepassing', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'definitief', text40: 'openbaar', text41: 'nvt' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(false);
     });
     test('Alles ok!', () => {
       const isValid = forTesting.filterValidDocument({
         fields: { text39: 'definitief', text40: 'openbaar', text41: 'ok' },
-      } as any);
+      } as unknown as DecosDocumentSource);
       expect(isValid).toBe(true);
     });
   });
@@ -498,6 +506,30 @@ describe('decos-service', () => {
       `);
     });
 
+    test('Called with filter based on caseTypes', async () => {
+      remoteApi
+        .get(/\/decos\/items\/123456789\/folders/)
+        .query((queryObject) => {
+          return (
+            queryObject.filter ===
+            'text45 eq Aanbieden van diensten or text45 eq GPK'
+          );
+        })
+        .times(numberOfAddressBooksToSearch)
+        .reply(200, zakenSource);
+
+      const responseData = await forTesting.getZakenByUserKey(
+        reqID,
+        '123456789',
+        [
+          decosCaseToZaakTransformers['Aanbieden van diensten'],
+          decosCaseToZaakTransformers.GPK,
+        ]
+      );
+
+      expect(responseData.content?.length).toBe(1);
+    });
+
     test('Success', async () => {
       remoteApi
         .get(/\/decos\/items\/123456789\/folders/)
@@ -536,7 +568,8 @@ describe('decos-service', () => {
     test('No date', () => {
       const workflowInstance2: typeof workflowInstance =
         jsonCopy(workflowInstance);
-      delete (workflowInstance2 as any).content[0].fields.date1;
+      const fields = workflowInstance2.content[0].fields;
+      delete (fields as Partial<typeof fields>).date1;
 
       const date = forTesting.transformDecosWorkflowDateResponse(
         'Zaak - behandelen',
@@ -598,6 +631,7 @@ describe('decos-service', () => {
 
       const transformed = await forTesting.transformDecosZaakResponse(
         reqID,
+        decosZaakTransformers,
         zakenSource.content[0]
       );
 
@@ -629,6 +663,7 @@ describe('decos-service', () => {
 
       const transformed = await forTesting.transformDecosZaakResponse(
         reqID,
+        decosZaakTransformers,
         zaak
       );
       expect(transformed).toBe(null);
@@ -639,17 +674,15 @@ describe('decos-service', () => {
       zaak.fields.bol17 = true;
       zaak.fields.bol8 = true;
 
-      const transformed = await forTesting.transformDecosZaakResponse(
-        reqID,
-        zaak
-      );
+      const transformed: WerkzaamhedenEnVervoerOpStraat | null =
+        await forTesting.transformDecosZaakResponse(
+          reqID,
+          decosZaakTransformers,
+          zaak
+        );
       expect(transformed).not.toBe(null);
-      expect(transformed !== null && 'werkzaamheden' in transformed).toBe(true);
-      expect(
-        transformed !== null && 'werkzaamheden' in transformed
-          ? transformed.werkzaamheden
-          : []
-      ).toStrictEqual([
+      expect(transformed).toHaveProperty('werkzaamheden');
+      expect(transformed?.werkzaamheden).toStrictEqual([
         'Werkzaamheden verrichten in de nacht',
         'Verhuizing tussen twee locaties binnen Amsterdam',
       ]);
@@ -662,9 +695,20 @@ describe('decos-service', () => {
 
       const transformed = await forTesting.transformDecosZaakResponse(
         reqID,
+        decosZaakTransformers,
         zaak
       );
       expect(transformed?.decision).toBe('Zie besluit');
+    });
+
+    test('Null response when no valid transformer', async () => {
+      const zaak: DecosZaakSource = jsonCopy(zakenSource.content[0]);
+      const transformed = await forTesting.transformDecosZaakResponse(
+        reqID,
+        [],
+        zaak
+      );
+      expect(transformed).toBe(null);
     });
   });
 
@@ -682,11 +726,22 @@ describe('decos-service', () => {
       });
       const zakenTransformed = await forTesting.transformDecosZakenResponse(
         reqID,
+        decosZaakTransformers,
         zaken
       );
       expect(
         zakenTransformed.map(({ identifier }) => identifier)
       ).toStrictEqual(['3 - xxx', '2 - xxx', '1 - xxx', '0 - xxx']);
+    });
+
+    test('Empty response when no valid transformer', async () => {
+      const zaak: DecosZaakSource = jsonCopy(zakenSource.content[0]);
+      const zakenTransformed = await forTesting.transformDecosZakenResponse(
+        reqID,
+        [],
+        [zaak]
+      );
+      expect(zakenTransformed).toStrictEqual([]);
     });
   });
 });
