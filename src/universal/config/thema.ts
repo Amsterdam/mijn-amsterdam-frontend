@@ -28,8 +28,7 @@ export type Thema =
   | 'HORECA'
   | 'KREFIA'
   | 'AVG'
-  | 'BODEM'
-  | string;
+  | 'BODEM';
 
 export const Themas: Record<Thema, Thema> = {
   AFIS: 'AFIS',
@@ -61,4 +60,4 @@ export const Themas: Record<Thema, Thema> = {
   VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
-};
+} as const;
