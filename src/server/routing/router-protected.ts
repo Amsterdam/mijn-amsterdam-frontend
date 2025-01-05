@@ -33,7 +33,7 @@ import {
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchDecosDocument } from '../services/vergunningen-v2/decos-service';
+import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchVergunningDetail,
   fetchZakenFromSource,
