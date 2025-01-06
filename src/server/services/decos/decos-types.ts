@@ -187,11 +187,7 @@ export interface DecosZaakBase {
   paymentMethod: string | null;
 }
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
-export type ZaakStatus =
-  | 'Ontvangen'
-  | 'In behandeling'
-  | 'Afgehandeld'
-  | string;
+export type ZaakStatus = 'Ontvangen' | 'In behandeling' | 'Afgehandeld';
 export interface DecosZaakWithLocation extends DecosZaakBase {
   location: string | null;
 }

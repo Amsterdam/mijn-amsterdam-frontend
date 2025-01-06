@@ -1,3 +1,4 @@
+import { RequestWithQueryParams } from './route-helpers';
 import { forTesting } from './router-stadspas-external-consumer';
 import { bffApiHost } from '../../testing/setup';
 import { remoteApi, RequestMock, ResponseMock } from '../../testing/utils';
@@ -257,6 +258,73 @@ describe('hli/router-external-consumer', async () => {
       );
 
       expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
+    });
+  });
+  describe('getAppStadspasDeepLink', () => {
+    test('should return default deep link when appHref is not provided', () => {
+      const result = forTesting.getAppStadspasDeepLink();
+      expect(result.deepLink).toBe('amsterdam://stadspas');
+      expect(result.queryParams).toBeNull();
+    });
+
+    test('should return provided deep link and query params when appHref is valid', () => {
+      const appHref = 'amsterdam://stadspas?param1=value1&param2=value2';
+      const result = forTesting.getAppStadspasDeepLink(appHref);
+      expect(result.deepLink).toBe(appHref);
+      expect(result.queryParams).toEqual({
+        param1: 'value1',
+        param2: 'value2',
+      });
+    });
+
+    test('should return default deep link when appHref is invalid', () => {
+      const appHref = 'invalid://link';
+      const result = forTesting.getAppStadspasDeepLink(appHref);
+      expect(result.deepLink).toBe('amsterdam://stadspas');
+      expect(result.queryParams).toBeNull();
+    });
+  });
+
+  describe('sendAppLandingResponse', () => {
+    test('should render amsapp-stadspas-landing with correct props', async () => {
+      const reqMock = RequestMock.new()
+        .setQuery({
+          appHref: 'amsterdam://stadspas?errorCode=001&errorMessage=TestError',
+        })
+        .get() as RequestWithQueryParams<{ appHref: string }>;
+      const resMock = ResponseMock.new();
+
+      await forTesting.sendAppLandingResponse(reqMock, resMock);
+
+      expect(resMock.render).toHaveBeenCalledWith('amsapp-stadspas-landing', {
+        nonce: expect.any(String),
+        urlToImage: expect.any(String),
+        urlToCSS: expect.any(String),
+        appHref: 'amsterdam://stadspas?errorCode=001&errorMessage=TestError',
+        error: {
+          code: '001',
+          message: 'TestError',
+        },
+      });
+    });
+
+    test('should render amsapp-stadspas-landing without error when no error params are provided', async () => {
+      const reqMock = RequestMock.new()
+        .setQuery({
+          appHref: 'amsterdam://stadspas',
+        })
+        .get() as RequestWithQueryParams<{ appHref: string }>;
+      const resMock = ResponseMock.new();
+
+      await forTesting.sendAppLandingResponse(reqMock, resMock);
+
+      expect(resMock.render).toHaveBeenCalledWith('amsapp-stadspas-landing', {
+        nonce: expect.any(String),
+        urlToImage: expect.any(String),
+        urlToCSS: expect.any(String),
+        appHref: 'amsterdam://stadspas',
+        error: undefined,
+      });
     });
   });
 });

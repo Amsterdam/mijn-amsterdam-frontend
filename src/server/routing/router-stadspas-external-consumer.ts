@@ -194,7 +194,7 @@ function getAppStadspasDeepLink(appHref?: string) {
 
   return {
     deepLink,
-    queryParams: appHrefParsed?.searchParams
+    queryParams: appHrefParsed?.searchParams.size
       ? Object.fromEntries(appHrefParsed?.searchParams)
       : null,
   };
@@ -343,4 +343,5 @@ export const forTesting = {
   sendDiscountTransactionsResponse,
   sendBudgetTransactionsResponse,
   getAppStadspasDeepLink,
+  sendAppLandingResponse,
 };
