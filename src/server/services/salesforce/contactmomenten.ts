@@ -62,7 +62,10 @@ export async function fetchContactmomenten(
 ) {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/?hadBetrokkene__uuid=${authProfileAndToken.profile.id}`;
+      return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+    },
+    params: {
+      hadBetrokkene__uuid: authProfileAndToken.profile.id,
     },
     transformResponse(responseData: ContactMomentenResponse) {
       return responseData.results ?? null;

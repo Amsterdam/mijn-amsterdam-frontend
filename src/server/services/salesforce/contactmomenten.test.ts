@@ -1,7 +1,23 @@
 import { fetchContactmomenten } from './contactmomenten';
-import contactmomenten from '../../../../mocks/fixtures/salesforce-contactmomenten.json';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+
+const responseData = {
+  results: [
+    {
+      plaatsgevondenOp: '2024-05-22 08:28:45',
+      onderwerp: 'Algemeen',
+      nummer: '10001875',
+      kanaal: 'Telefoon',
+    },
+    {
+      plaatsgevondenOp: '2024-05-29 08:02:38',
+      onderwerp: 'Meldingen',
+      nummer: '00002032',
+      kanaal: 'Telefoon',
+    },
+  ],
+};
 
 describe('Salesforce service', () => {
   const profileAndToken: AuthProfileAndToken = {
@@ -16,21 +32,19 @@ describe('Salesforce service', () => {
 
   describe('salesforce-contactmomenten.service', () => {
     beforeEach(() => {
-      remoteApi.get(`/salesforce`).reply(200, contactmomenten);
+      remoteApi
+        .get(
+          '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/?hadBetrokkene__uuid=123'
+        )
+        .reply(200, responseData);
     });
 
     it('should transform the data correctly', async () => {
       const requestID = '123';
 
-      // remoteApi.get(/\/salesforce/).reply((uri) => {
-      //   console.log('uri', uri);
-      //   if (uri.includes('contactmomenten/services')) {
-      //     return [200, contactmomenten];
-      //   }
-      //   return [200, null];
-      // });
       const result = await fetchContactmomenten(requestID, profileAndToken);
-      // expect(result.status).toBe('OK');
+      expect(result.status).toBe('OK');
+      expect(result.content![0].kanaal).toEqual('Telefoon'); // results is removed from the response
     });
   });
 });
