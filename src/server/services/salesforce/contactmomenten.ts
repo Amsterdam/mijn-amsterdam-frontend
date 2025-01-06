@@ -52,7 +52,6 @@ async function fetchSalesforceData2<T>(
     dataRequestConfigSpecific
   );
 
-  console.log('dataRequestConfigBase', dataRequestConfigBase);
   return requestData<T>(dataRequestConfigBase, requestID);
 }
 
