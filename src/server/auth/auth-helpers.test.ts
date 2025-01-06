@@ -9,6 +9,7 @@ import {
   EH_ATTR_PRIMARY_ID_LEGACY,
   OIDC_SESSION_COOKIE_NAME,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
 } from './auth-config';
 import {
   createLogoutHandler,
@@ -272,7 +273,7 @@ describe('auth-helpers', () => {
       );
     });
 
-    test('getReturnToUrl should return the corrent RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER  url', () => {
+    test('getReturnToUrl should return the correct RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER url', () => {
       const url = getReturnToUrl({
         returnTo: RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
         'amsapp-session-token': 'foo-bar',
@@ -280,6 +281,18 @@ describe('auth-helpers', () => {
 
       expect(url).toBe(
         'http://bff-api-host/api/v1/services/amsapp/stadspas/administratienummer/foo-bar'
+      );
+    });
+
+    test('getReturnToUrl should return the correct RETURNTO_AMSAPP_STADSPAS_APP_LANDING url', () => {
+      const url = getReturnToUrl({
+        returnTo: RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+        appHref:
+          'amsterdam://stadspas/mislukt?errorCode=001&errorMessage=foo-bar',
+      });
+
+      expect(url).toBe(
+        'http://bff-api-host/api/v1/services/amsapp/stadspas/app-landing?appHref=amsterdam%3A%2F%2Fstadspas%2Fmislukt%3FerrorCode%3D001%26errorMessage%3Dfoo-bar'
       );
     });
 

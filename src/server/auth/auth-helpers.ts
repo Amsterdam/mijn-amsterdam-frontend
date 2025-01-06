@@ -20,6 +20,7 @@ import {
 } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
+import { pick } from '../../universal/helpers/utils';
 import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
@@ -37,13 +38,12 @@ export function getReturnToUrl(
           token: queryParams['amsapp-session-token'] as string,
         }
       );
-    case RETURNTO_AMSAPP_STADSPAS_APP_LANDING:
-      return generateFullApiUrlBFF(
-        ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING,
-        {
-          appHref: queryParams.appHref as string,
-        }
-      );
+    case RETURNTO_AMSAPP_STADSPAS_APP_LANDING: {
+      const params = new URLSearchParams(pick(queryParams, ['appHref']));
+      return `${generateFullApiUrlBFF(
+        ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
+      )}?${params}`;
+    }
     case AppRoutes.ZAAK_STATUS:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:
