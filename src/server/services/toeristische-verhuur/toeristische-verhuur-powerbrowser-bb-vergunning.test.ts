@@ -770,6 +770,10 @@ describe('B&B Vergunningen service', () => {
   });
 
   describe('transformZaak', () => {
+    beforeEach(() => {
+      Mockdate.set('2023-01-01');
+    });
+
     test('should transform zaak successfully', () => {
       const zaak: PBZaakRecord = {
         fmtCpn:

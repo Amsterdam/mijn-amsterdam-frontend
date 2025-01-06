@@ -1,53 +1,125 @@
 import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
-import { BAGSearchResult, BAGSourceData } from '../types/bag';
-import { Adres } from '../types/brp';
+import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
 
-// Quick and dirty see also: https://stackoverflow.com/a/68401047
-export function extractAddress(rawAddress: string) {
-  // Strip down to Street + Housenumber
-  const address = rawAddress
-    // Remove everything but alphanumeric, dash, dot and space
-    .replace(/[^0-9-\.\s\p{Script=Latin}+]/giu, '')
-    // Remove woonplaats
-    .replace(/(Amsterdam|Weesp)/gi, '')
-    // Remove postalcode
-    .replace(/([1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2})/i, '')
-    .trim();
+export function extractAddress(rawAddress: string): BAGQueryParams {
+  // Remove everything but alphanumeric, dash, dot, apostrophe and space.
+  const address = rawAddress.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
 
-  return address;
+  const words = [];
+  const s = address.split(' ');
+
+  if (s.length < 2) {
+    throw Error(
+      `Address should consist of minimally two parts. A streetname and a housenumber.
+      Address: '${address}'`
+    );
+  }
+
+  let i = 0;
+  const onDigit = new RegExp(/\d/);
+
+  for (; i < s.length; i++) {
+    const word = s[i];
+    if (word[0].match(onDigit)) {
+      // The first housenumber found, so there are no more streetname words left.
+      break;
+    }
+    words.push(word);
+  }
+
+  // We know now that we're past the street name so now we can index into the last identifying part.
+  const houseIdentifier = s[i];
+  if (!houseIdentifier) {
+    throw Error(
+      `No houseIdentifier part, can't parse incomplete address: '${address}'`
+    );
+  }
+
+  const [huisnummer, huisnummertoevoeging] =
+    splitHuisnummerFromToevoeging(houseIdentifier);
+
+  return {
+    openbareruimteNaam: words.join(' '),
+    huisnummer: parseInt(huisnummer),
+    huisnummertoevoeging,
+    // Leave out huisletter. This is used to look up a location on the map,
+    // and it's okay to show an approximate location.
+    huisletter: undefined,
+  };
+}
+
+function splitHuisnummerFromToevoeging(
+  s: string
+): [string, string | undefined] {
+  const huisnummer = [];
+  const huisnummertoevoeging = [];
+  let i = 0;
+
+  // Matches something like 1, 2-5 or 3F.
+  const matches = s.match(/(\d+)-?(\d*|\w*)?/);
+  if (!matches) {
+    throw Error(
+      `Match failed for housenumber and/or toevoeging. Input string: '${s}'`
+    );
+  }
+  return [matches[1], matches[2]];
 }
 
 export type BAGSearchAddress = string;
 
 export type LatLngWithAddress = LatLngLiteral & { address: string };
 
+/** Find a matching object in adresseerbareObjecten.
+ *
+ *  A Match is a object where both the same adres as residency is found.
+ *  It's possible for the same street name to exist in both Weesp and Amsterdam.
+ *  So this prevents selecting the wrong one.
+ */
 export function getMatchingBagResult(
-  results: BAGSourceData['results'] = [],
-  bagSearchAddress: BAGSearchAddress,
+  adresseerbareObjecten: BAGAdreseerbaarObject[] = [],
+  bagSearchAddress: BAGQueryParams,
   isWeesp: boolean
 ) {
-  const result1 = results.find((result) => {
-    const isWoonplaatsMatch =
-      result.woonplaats === (isWeesp ? 'Weesp' : 'Amsterdam');
+  const foundAdresseerbaarObject = adresseerbareObjecten.find(
+    (adresseerbaarObject) => {
+      const isWoonplaatsMatch =
+        adresseerbaarObject.woonplaatsNaam ===
+        (isWeesp ? 'Weesp' : 'Amsterdam');
 
-    const isAddressMatch = result.adres
-      .toLowerCase()
-      .includes(bagSearchAddress.toLowerCase());
+      const isAddressMatch =
+        adresseerbaarObject.openbareruimteNaam ===
+          bagSearchAddress.openbareruimteNaam &&
+        adresseerbaarObject.huisnummer === bagSearchAddress.huisnummer &&
+        adresseerbaarObject.huisletter ===
+          (bagSearchAddress.huisletter ?? null);
 
-    return isWeesp ? isWoonplaatsMatch && isAddressMatch : isAddressMatch;
-  });
+      return isWeesp ? isWoonplaatsMatch && isAddressMatch : isAddressMatch;
+    }
+  );
 
-  return result1 ?? null;
+  return foundAdresseerbaarObject ?? null;
 }
 
 export function getLatLngWithAddress(
-  result: BAGSearchResult
+  result: BAGAdreseerbaarObject
 ): LatLngWithAddress {
   return {
-    address: result.adres,
-    ...(getLatLngCoordinates(result.centroid) ?? null),
+    address: formatAddress(result),
+    ...(getLatLngCoordinates(
+      result.adresseerbaarObjectPuntGeometrieWgs84.coordinates
+    ) ?? null),
   };
+}
+
+function formatAddress(result: BAGAdreseerbaarObject): string {
+  if (result.huisletter) {
+    throw Error('Huisletter found but formatting not implemented.');
+  }
+  if (result.huisnummertoevoeging) {
+    return `${result.openbareruimteNaam} ${result.huisnummer}-${result.huisnummertoevoeging}`;
+  }
+  return `${result.openbareruimteNaam} ${result.huisnummer}`;
 }
 
 export function getLatLngCoordinates(centroid: LatLngTuple) {
@@ -60,34 +132,25 @@ export function getLatLngCoordinates(centroid: LatLngTuple) {
 }
 
 export function getLatLonByAddress(
-  results: BAGSourceData['results'] = [],
-  bagSearchAddress: BAGSearchAddress,
+  adresseerbareObjecten: BAGAdreseerbaarObject[] = [],
+  bagSearchAddress: BAGQueryParams,
   isWeesp: boolean
 ): LatLngWithAddress | null {
-  if (results.length) {
-    const result1 = getMatchingBagResult(results, bagSearchAddress, isWeesp);
-    if (result1 && result1.adres && result1.centroid) {
-      return getLatLngWithAddress(result1);
+  if (adresseerbareObjecten.length) {
+    const result = getMatchingBagResult(
+      adresseerbareObjecten,
+      bagSearchAddress,
+      isWeesp
+    );
+    if (
+      result &&
+      result.openbareruimteNaam &&
+      result.adresseerbaarObjectPuntGeometrieWgs84.coordinates
+    ) {
+      return getLatLngWithAddress(result);
     }
   }
   return null;
-}
-
-export function getBagSearchAddress(adres: Adres): BAGSearchAddress | null {
-  let bagZoekAdres =
-    adres.straatnaam && adres.huisnummer
-      ? `${adres.straatnaam} ${adres.huisnummer}`.trim()
-      : null;
-
-  if (bagZoekAdres && adres.huisletter) {
-    bagZoekAdres += `${adres.huisletter}`; // Bijvoorbeeld Herengracht 50C
-  }
-
-  if (bagZoekAdres && adres.huisnummertoevoeging) {
-    bagZoekAdres += `-${adres.huisnummertoevoeging}`; // Bijvoorbeeld Da Costakade 50-1
-  }
-
-  return bagZoekAdres;
 }
 
 export function isLocatedInWeesp(address: string) {

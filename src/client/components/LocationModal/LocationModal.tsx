@@ -6,6 +6,7 @@ import { LatLngLiteral } from 'leaflet';
 
 import styles from './LocationModal.module.scss';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
+import { PUBLIC_API_URLS } from '../../../universal/config/url';
 import {
   extractAddress,
   getLatLngWithAddress,
@@ -13,7 +14,11 @@ import {
   isLocatedInWeesp,
   LatLngWithAddress,
 } from '../../../universal/helpers/bag';
-import { BAGSearchResult, BAGSourceData } from '../../../universal/types/bag';
+import {
+  BAGAdreseerbaarObject,
+  BAGQueryParams,
+  BAGSourceData,
+} from '../../../universal/types/bag';
 import { Modal } from '../../components';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
@@ -23,20 +28,25 @@ import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 
 function transformBagSearchResultsResponse(
   response: BAGSourceData,
-  querySearchAddress: string,
+  querySearchAddress: BAGQueryParams,
   isWeesp: boolean
 ): LatLngWithAddress[] | null {
-  const results = response?.results ?? [];
+  const adresseerbareObjecten = response?._embedded.adresseerbareobjecten ?? [];
 
   // Try to get exact match
-  const latlng = getLatLonByAddress(results, querySearchAddress, isWeesp);
-  if (latlng && results.length === 1) {
-    return [latlng];
+  const latlngWithAddress = getLatLonByAddress(
+    adresseerbareObjecten,
+    querySearchAddress,
+    isWeesp
+  );
+
+  if (latlngWithAddress && adresseerbareObjecten.length === 1) {
+    return [latlngWithAddress];
   }
 
   // No exact match, return all results
-  if (results.length) {
-    return results.map((result: BAGSearchResult) =>
+  if (adresseerbareObjecten.length) {
+    return adresseerbareObjecten.map((result: BAGAdreseerbaarObject) =>
       getLatLngWithAddress(result)
     );
   }
@@ -91,10 +101,10 @@ export function LocationModal({
     if (isLocationModalOpen) {
       const querySearchAddress = extractAddress(address);
       const isWeesp = isLocatedInWeesp(address);
-
       // Updates bagApi state
       fetchBag({
-        url: `https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=${querySearchAddress}`,
+        url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
+        params: querySearchAddress,
         transformResponse(responseData: BAGSourceData) {
           const latlngResults = transformBagSearchResultsResponse(
             responseData,
