@@ -6,6 +6,7 @@ import {
 } from '@amsterdam/design-system-react-icons';
 
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { Thema, Themas } from '../../../universal/config/thema';
 import {
   formatBirthdate,
   getFullAddress,
@@ -24,6 +25,7 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { ThemaMenuItem } from '../../config/thema';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -116,7 +118,6 @@ persoonSecundair.geboortelandnaam = 'Geboorteland';
 delete persoonSecundair.omschrijvingGeslachtsaanduiding;
 delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
-
 const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
@@ -199,28 +200,31 @@ const verbintenisHistorisch: ProfileLabels<
   ...verbintenis,
 };
 
-let myThemasMenuItems: ThemaMenuItem[] = [];
+const myThemasMenuItems = useThemaMenuItems();
 
 function getLinkToThemaPage(onderwerp: string) {
   const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
-    ? 'ERFPACHTv2'
-    : 'ERFPACHT';
+    ? Themas.ERFPACHTv2
+    : Themas.ERFPACHT;
 
-  const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? 'SVWI' : 'INKOMEN';
+  const SVWIv1ORv2 = FeatureToggle.svwiLinkActive
+    ? Themas.SVWI
+    : Themas.INKOMEN;
 
-  const mapperContactmomentToMenuItem: { [key: string]: string } = {
-    ['Erfpacht']: erfpachtV1ORV2,
-    ['Parkeren']: 'PARKEREN',
-    ['Zorg']: 'WMO',
-    ['Werk en Inkomen']: SVWIv1ORv2,
-    ['Belastingen']: 'BELASTINGEN',
-    ['Geldzaken']: 'KREFIA',
-    ['Financieen']: 'AFIS',
-  };
+  const mapperContactmomentToMenuItem: Record<ContactMoment['kanaal'], Thema> =
+    {
+      Erfpacht: erfpachtV1ORV2,
+      Parkeren: Themas.PARKEREN,
+      Zorg: Themas.ZORG,
+      'Werk en Inkomen': SVWIv1ORv2,
+      Belastingen: Themas.BELASTINGEN,
+      Geldzaken: Themas.KREFIA,
+      Financieen: Themas.AFIS,
+    };
 
   // let result = [];
 
-  const menuItem = myThemasMenuItems.find(
+  const menuItem = myThemasMenuItems.items.find(
     (item) => item.id === mapperContactmomentToMenuItem[onderwerp as string]
   );
   // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person  has products in that thema.
