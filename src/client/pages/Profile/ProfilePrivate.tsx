@@ -2,18 +2,15 @@ import { useEffect, useMemo } from 'react';
 
 import {
   Alert as DSAlert,
-  Grid,
   Paragraph,
+  Screen,
 } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import {
-  contactMoment,
-  format,
-  formatBrpProfileData,
-} from './formatDataPrivate';
+import { formatBrpProfileData } from './formatDataPrivate';
 import styles from './Profile.module.scss';
 import { PanelConfigFormatter, panelConfig } from './profilePanelConfig';
+import { useContactmomenten } from './useContactmomenten.hook';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -39,15 +36,14 @@ import {
   MaintenanceNotifications,
   PageContent,
   PageHeading,
-  SectionCollapsible,
   ThemaIcon,
 } from '../../components';
+import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -67,8 +63,8 @@ export const contactmomentenDisplayProps: DisplayProps<ContactMoment> = {
 };
 
 export default function Profile() {
-  const { BRP, SALESFORCE } = useAppStateGetter();
-  const { items: myThemasMenuItems } = useThemaMenuItems();
+  const { BRP } = useAppStateGetter();
+  const { items: contactmomentenItems } = useContactmomenten();
 
   const [{ data: residentData }, fetchResidentCount] = useDataApi<
     ApiResponse<{ residentCount: number }>
@@ -112,25 +108,6 @@ export default function Profile() {
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
   }, [BRP.content, residentCount]);
 
-  if (SALESFORCE.content && brpProfileData) {
-    // first fill the contactmomenten with the data from salesforce and add AppState information for links to themapages.
-    // brpProfileData.contactmomenten = SALESFORCE.content.map(
-    //   (contactmomentItem) => {
-    //     return getLinkToThemaPage(contactmomentItem);
-    //   }
-    // );
-
-    // then format the contactmomenten for icons and dates
-    brpProfileData.contactmomenten = SALESFORCE.content.map(
-      (contactMomentItem) =>
-        format(
-          contactMoment,
-          contactMomentItem,
-          brpProfileData!.contactmomenten,
-          myThemasMenuItems
-        )
-    );
-  }
   // Fetch the resident count data
   useEffect(() => {
     if (
@@ -263,16 +240,9 @@ export default function Profile() {
           </DSAlert>
         )}
       </PageContent>
-
-      {!!brpProfileData?.contactmomenten &&
-        brpProfileData.contactmomenten.length > 0 && (
-          <SectionCollapsible
-            id="SectionCollapsible-contactmomenten"
-            title="Contactmomenten"
-            noItemsMessage="U heeft nog geen geregisteerd contact gemaakt met de gemeente Amsterdam."
-            isLoading={isLoading(SALESFORCE)}
-            startCollapsed={false}
-          >
+      <Screen>
+        {contactmomentenItems && (
+          <CollapsiblePanel title="Contactmomenten" startCollapsed={true}>
             <Paragraph>
               Dit is een overzicht van de momenten dat u contact had met
               gemeente Amsterdam. Dat zijn telefoontjes naar telefoonnummer 14
@@ -285,24 +255,22 @@ export default function Profile() {
               Wilt u een eerder contactmoment doorgeven bij een volgende vraag?
               Geef dan het referentienummer door.
             </Paragraph>
-            <Grid.Cell span="all">
-              <TableV2
-                items={brpProfileData.contactmomenten.slice(
-                  0,
-                  MAX_TABLE_ROWS_ON_THEMA_PAGINA
-                )}
-                displayProps={contactmomentenDisplayProps}
-              />
-            </Grid.Cell>
-            {brpProfileData.contactmomenten.length >
-              MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+            <TableV2
+              items={contactmomentenItems.slice(
+                0,
+                MAX_TABLE_ROWS_ON_THEMA_PAGINA
+              )}
+              displayProps={contactmomentenDisplayProps}
+            />
+            {contactmomentenItems.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
               <LinkToListPage
-                count={brpProfileData.contactmomenten.length}
+                count={contactmomentenItems.length}
                 route={AppRoutes['SALESFORCE/CONTACTMOMENTEN']}
               />
             )}
-          </SectionCollapsible>
+          </CollapsiblePanel>
         )}
+      </Screen>
 
       {!!brpProfileData?.persoon && (
         <InfoPanel

@@ -1,12 +1,4 @@
-import { Icon } from '@amsterdam/design-system-react';
-import {
-  ChatBubbleIcon,
-  EmailIcon,
-  PhoneIcon,
-} from '@amsterdam/design-system-react-icons';
-
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { Thema, Themas } from '../../../universal/config/thema';
 import {
   formatBirthdate,
   getFullAddress,
@@ -24,8 +16,6 @@ import {
 } from '../../../universal/types';
 import { LinkdInline } from '../../components/Button/Button';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { ThemaMenuItem } from '../../config/thema';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
@@ -200,93 +190,15 @@ const verbintenisHistorisch: ProfileLabels<
   ...verbintenis,
 };
 
-const myThemasMenuItems = useThemaMenuItems();
-
-function getLinkToThemaPage(onderwerp: string) {
-  const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
-    ? Themas.ERFPACHTv2
-    : Themas.ERFPACHT;
-
-  const SVWIv1ORv2 = FeatureToggle.svwiLinkActive
-    ? Themas.SVWI
-    : Themas.INKOMEN;
-
-  const mapperContactmomentToMenuItem: Record<ContactMoment['kanaal'], Thema> =
-    {
-      Erfpacht: erfpachtV1ORV2,
-      Parkeren: Themas.PARKEREN,
-      Zorg: Themas.ZORG,
-      'Werk en Inkomen': SVWIv1ORv2,
-      Belastingen: Themas.BELASTINGEN,
-      Geldzaken: Themas.KREFIA,
-      Financieen: Themas.AFIS,
-    };
-
-  // let result = [];
-
-  const menuItem = myThemasMenuItems.items.find(
-    (item) => item.id === mapperContactmomentToMenuItem[onderwerp as string]
-  );
-  // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person  has products in that thema.
-  if (menuItem) {
-    return (
-      <LinkdInline external={false} href={menuItem.to as string}>
-        {menuItem.title as string}
-      </LinkdInline>
-    );
-  } else return onderwerp;
-}
-
-export function addIcon(type: string) {
-  if (type == 'Telefoon') {
-    return (
-      <div>
-        {' '}
-        <Icon svg={PhoneIcon} size="level-5" /> {type}
-      </div>
-    );
-  }
-  if (type == 'Chat') {
-    return (
-      <div>
-        {' '}
-        <Icon svg={ChatBubbleIcon} size="level-5" /> {type}
-      </div>
-    );
-  }
-  if (type == 'Contactformulier') {
-    return (
-      <div>
-        {' '}
-        <Icon svg={EmailIcon} size="level-5" /> {type}
-      </div>
-    );
-  } else return type;
-}
-
-export const contactMoment: ProfileLabels<Partial<ContactMoment>> = {
-  kanaal: ['kanaal', (value) => addIcon(value)],
-  nummer: 'nummer',
-  // onderwerp: 'onderwerp',
-  onderwerp: ['onderwerp', (value) => getLinkToThemaPage(value)],
-  plaatsgevondenOp: ['plaatsgevondenOp', (value) => defaultDateFormat(value)],
-};
 export const brpInfoLabels = {
   persoon,
   persoonSecundair,
   adres,
   verbintenis,
   verbintenisHistorisch,
-  contactMoment,
 };
 
-export function format<T, X>(
-  labelConfig: X,
-  data: any,
-  profileData: T,
-  myThemasMenuItems_?: ThemaMenuItem[]
-) {
-  myThemasMenuItems = myThemasMenuItems_ ?? [];
+export function format<T, X>(labelConfig: X, data: any, profileData: T) {
   if (!data) {
     return data;
   }
@@ -382,15 +294,6 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
       profileData.ouders = brpData.ouders.map((ouder) =>
         format(brpInfoLabels.persoonSecundair, ouder, brpData)
-      );
-    }
-
-    if (
-      Array.isArray(brpData.contactmomenten) &&
-      brpData.contactmomenten.length
-    ) {
-      profileData.contactmomenten = brpData.contactmomenten.map((moment) =>
-        format(brpInfoLabels.contactMoment, moment, brpData)
       );
     }
 

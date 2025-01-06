@@ -85,9 +85,9 @@ export interface Kind {
 }
 export interface ContactMoment {
   plaatsgevondenOp: string | null;
-  onderwerp: ReactNode | string | null;
+  onderwerp: ReactNode | null;
   nummer: string | null;
-  kanaal: string | null;
+  kanaal: ReactNode | null;
 }
 export interface BRPDataFromSource {
   kvkNummer: string;
@@ -104,5 +104,4 @@ export interface BRPDataFromSource {
 
 export interface BRPData extends BRPDataFromSource {
   identiteitsbewijzen?: IdentiteitsbewijsFrontend[];
-  contactmomenten?: ContactMoment[];
 }
