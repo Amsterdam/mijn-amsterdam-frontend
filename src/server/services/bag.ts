@@ -1,12 +1,9 @@
 import { LatLngLiteral } from 'leaflet';
 
-import { apiErrorResult } from '../../universal/helpers/api';
-import {
-  getMatchingBagResult,
-  getBagSearchAddress,
-  getLatLonByAddress,
-} from '../../universal/helpers/bag';
+import { apiErrorResult, ApiResponse } from '../../universal/helpers/api';
+import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
+import { BAGQueryParams } from '../../universal/types/bag';
 import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 
@@ -20,40 +17,36 @@ export interface BAGData {
 export async function fetchBAG(
   requestID: RequestID,
   sourceAddress: Adres | null
-) {
-  if (!sourceAddress) {
+): Promise<ApiResponse<BAGData>> {
+  if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
 
-  const searchAddress = getBagSearchAddress(sourceAddress);
+  const params: BAGQueryParams<string> = {
+    openbareruimteNaam: sourceAddress.straatnaam,
+    huisnummer: sourceAddress.huisnummer,
+    huisletter: sourceAddress.huisletter || undefined,
+  };
 
-  if (!searchAddress) {
-    return apiErrorResult(`Kon geen correct zoek adres opmaken.`, null);
-  }
-
-  const params = { q: searchAddress, features: 2 }; // features=2 is een Feature flag zodat ook locaties in Weesp worden weergegeven.
   const config = getApiConfig('BAG', {
     params,
-    cacheKey: `${requestID}-${searchAddress}`,
+    cacheKey: `${requestID}-${sourceAddress.straatnaam}-${sourceAddress.huisnummer}${sourceAddress.huisletter}`,
     transformResponse: (responseData) => {
-      const isWeesp = sourceAddress.woonplaatsNaam === 'Weesp';
+      const data = responseData._embedded?.adresseerbareobjecten;
+      if (!data || data.length < 1) {
+        return null;
+      }
 
-      const latlng = getLatLonByAddress(
-        responseData?.results,
-        searchAddress,
-        isWeesp
+      // Multiple items can be found, but only the first we take as relevant.
+      const firstItem = data[0];
+
+      const latlng = getLatLngCoordinates(
+        firstItem.adresseerbaarObjectPuntGeometrieWgs84.coordinates
       );
-
-      const bagResult = getMatchingBagResult(
-        responseData?.results,
-        searchAddress,
-        isWeesp
-      );
-
       return {
         latlng,
         address: sourceAddress,
-        bagNummeraanduidingId: bagResult?.landelijk_id ?? null,
+        bagNummeraanduidingId: firstItem.identificatie,
       };
     },
   });

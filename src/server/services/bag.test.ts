@@ -1,48 +1,65 @@
 import nock from 'nock';
-import { describe, expect, it } from 'vitest';
 
 import { fetchBAG } from './bag';
-import bagData from '../../../mocks/fixtures/bag.json';
-import { jsonCopy } from '../../universal/helpers/utils';
 import { Adres } from '../../universal/types';
 
+const REQUEST_ID = 'x';
+const ADDRESS = {
+  straatnaam: 'straatje',
+  huisnummer: 25,
+  woonplaatsNaam: 'Amsterdam',
+} as unknown as Adres;
+
+// This is only a section of the mock data from the source.
+const BAG_MOCK_DATA = {
+  _embedded: {
+    adresseerbareobjecten: [
+      {
+        identificatie: '0363200012145295',
+        huisnummer: 1,
+        huisletter: null,
+        huisnummertoevoeging: null,
+        postcode: '1011PN',
+        woonplaatsNaam: 'Amsterdam',
+        adresseerbaarObjectPuntGeometrieWgs84: {
+          type: 'Point',
+          coordinates: [4.9001655, 52.3676456],
+        },
+      },
+    ],
+  },
+};
+
+function setupNockResponse(reply: number, response?: object) {
+  nock('https://api.data.amsterdam.nl')
+    .get(
+      '/v1/benkagg/adresseerbareobjecten/?openbareruimteNaam=straatje&huisnummer=25'
+    )
+    .reply(reply, response);
+}
+
 describe('BAG service', () => {
-  const DUMMY_RESPONSE = jsonCopy(bagData);
+  setupNockResponse(200, BAG_MOCK_DATA);
 
-  it('Bag api should reply correctly', async () => {
-    nock('https://api.data.amsterdam.nl')
-      .get('/atlas/search/adres/?q=straatje 25&features=2')
-      .reply(200, DUMMY_RESPONSE);
+  test('Bag api should reply correctly', async () => {
+    const response = await fetchBAG(REQUEST_ID, ADDRESS);
 
-    const address = {
-      straatnaam: 'straatje',
-      huisnummer: 25,
-      woonplaatsNaam: 'Amsterdam',
-    } as unknown as Adres;
-
-    const rs = await fetchBAG('x', address);
-
-    expect(rs).toStrictEqual({
+    expect(response).toStrictEqual({
       status: 'OK',
       content: {
-        address,
-        bagNummeraanduidingId: null,
-        latlng: null,
+        address: ADDRESS,
+        bagNummeraanduidingId: '0363200012145295',
+        latlng: {
+          lat: 52.3676456,
+          lng: 4.9001655,
+        },
       },
     });
   });
 
-  it('Bag api should fail correctly', async () => {
-    nock('http://api.data.amsterdam.nl')
-      .get('/bag', { params: { q: 'undefined' } })
-      .reply(500);
-    // Request non-existing mock url
-    const rs = await fetchBAG('x', {} as any);
-
-    expect(rs).toStrictEqual({
-      status: 'ERROR',
-      message: 'Kon geen correct zoek adres opmaken.',
-      content: null,
-    });
+  test('No data in response', async () => {
+    setupNockResponse(200, {});
+    const response = await fetchBAG(REQUEST_ID, ADDRESS);
+    expect(response).toStrictEqual({ status: 'OK', content: null });
   });
 });

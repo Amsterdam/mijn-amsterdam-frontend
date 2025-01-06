@@ -5,6 +5,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
 import { IS_TAP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
+import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 
@@ -236,7 +237,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     }),
   },
   BAG: {
-    url: `https://api.data.amsterdam.nl/atlas/search/adres/`,
+    url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
   },
   ERFPACHTv2: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
