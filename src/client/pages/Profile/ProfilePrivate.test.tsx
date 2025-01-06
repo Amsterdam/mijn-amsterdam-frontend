@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
@@ -364,7 +365,9 @@ describe('<Profile />', () => {
     expect(screen.getByText('Armeense, Turkse')).toBeInTheDocument();
   });
 
-  it('Shows contactmomenten', () => {
+  it('Shows contactmomenten', async () => {
+    const user = userEvent.setup();
+
     function Component() {
       return (
         <MockApp
@@ -390,6 +393,7 @@ describe('<Profile />', () => {
       );
     }
     render(<Component />);
+    await user.click(screen.getByText('Toon'));
     expect(screen.getByText('Contactformulier')).toBeInTheDocument();
   });
 
