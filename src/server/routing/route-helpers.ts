@@ -7,16 +7,16 @@ import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
 
 export type RequestWithQueryParams<T extends Record<string, string>> = Request<
-  object,
-  object,
-  object,
+  {},
+  {},
+  {},
   T
 >;
 
 export type RequestWithRouteAndQueryParams<
   T extends Record<string, string> = Record<string, string>,
   T2 extends Record<string, string> = Record<string, string>,
-> = Request<T, object, object, T2>;
+> = Request<T, {}, {}, T2>;
 
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
