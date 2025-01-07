@@ -149,14 +149,25 @@ authRouterDevelopment.get(
   }
 );
 
-authRouterDevelopment.get(DevelopmentRoutes.DEV_LOGOUT, async (req, res) => {
-  res.clearCookie(OIDC_SESSION_COOKIE_NAME);
-  const redirectUrl = `${process.env.MA_FRONTEND_URL}`;
-  return res.redirect(redirectUrl);
-});
+authRouterDevelopment.get(
+  [
+    authRoutes.AUTH_LOGOUT,
+    authRoutes.AUTH_LOGOUT_EHERKENNING,
+    authRoutes.AUTH_LOGOUT_DIGID,
+  ],
+  async (req, res) => {
+    res.clearCookie(OIDC_SESSION_COOKIE_NAME);
+    const returnTo = getReturnToUrl(req.query);
+    return res.redirect(returnTo);
+  }
+);
 
 authRouterDevelopment.get(
-  DevelopmentRoutes.DEV_AUTH_CHECK,
+  [
+    authRoutes.AUTH_CHECK,
+    authRoutes.AUTH_CHECK_EHERKENNING,
+    authRoutes.AUTH_CHECK_DIGID,
+  ],
   async (req, res) => {
     if (hasSessionCookie(req)) {
       const auth = getAuth(req);
