@@ -61,29 +61,17 @@ jobs:
 
       - name: Output Categorized Notes
         run: |
-          if [ -s chores.txt ]; then
-            echo "chores<<EOF" >> $GITHUB_OUTPUT
-            cat chores.txt >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
-
-          if [ -s features.txt ]; then
-            echo "features<<EOF" >> $GITHUB_OUTPUT
-            cat features.txt >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
-
-          if [ -s bugs.txt ]; then
-            echo "bugs<<EOF" >> $GITHUB_OUTPUT
-            cat bugs.txt >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
-
-          if [ -s mijn.txt ]; then
-            echo "mijn<<EOF" >> $GITHUB_OUTPUT
-            cat mijn.txt >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
+          append_to_github_output() {
+            if [ -s "$1.txt" ]; then
+              echo "$1<<EOF" >> "$GITHUB_OUTPUT"
+              cat "$1.txt" >> "$GITHUB_OUTPUT"
+              echo "EOF" >> "$GITHUB_OUTPUT"
+            fi
+          }
+          append_to_github_output 'chores'
+          append_to_github_output 'features'
+          append_to_github_output 'bugs'
+          append_to_github_output 'mijn'
 
       - name: Create Customized Release Notes
         id: custom_release_notes
