@@ -292,7 +292,7 @@ describe('auth-helpers', () => {
       });
 
       expect(url).toBe(
-        'http://bff-api-host/api/v1/services/amsapp/stadspas/app-landing?appHref=amsterdam%3A%2F%2Fstadspas%2Fmislukt%3FerrorCode%3D001%26errorMessage%3Dfoo-bar'
+        'http://bff-api-host/api/v1/services/amsapp/stadspas/app-landing'
       );
     });
 
