@@ -629,7 +629,6 @@ describe('decos-service', () => {
 
       expect(transformed).toMatchObject({
         caseType: 'Werk en vervoer op straat',
-        dateInBehandeling: '2024-05-04',
         dateDecision: null,
         dateEnd: '2023-12-14T00:00:00',
         dateRequest: '2023-11-06T00:00:00',

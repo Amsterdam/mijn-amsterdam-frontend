@@ -161,7 +161,6 @@ export type DecosZakenSourceFilter = (
 export interface DecosZaakBase {
   caseType: DecosCaseType;
   dateDecision: string | null;
-  dateInBehandeling: string | null;
   dateRequest: string;
 
   // DateStart and DateEnd are not applicable to every single decosZaak but general enough to but in base Type.

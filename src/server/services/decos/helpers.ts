@@ -175,3 +175,11 @@ export function hasOtherActualDecosZaakOfSameType(
 export function toDateFormatted(input: string | null) {
   return input ? defaultDateFormat(input) : null;
 }
+
+// Try to fetch and assign a specific date on which the zaak was "In behandeling"
+export function getStatusDateInBehandeling(decosZaak: DecosZaakBase) {
+  return (
+    decosZaak.statusDates.find(({ status }) => status === 'In behandeling')
+      ?.datePublished || null
+  );
+}

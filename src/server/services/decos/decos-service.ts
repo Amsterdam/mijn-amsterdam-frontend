@@ -205,7 +205,6 @@ async function transformDecosZaakResponse<
     ...transformedFields,
   };
 
-  // Try to fetch and assign a specific date on which the zaak was "In behandeling"
   if (decosZaakTransformer.fetchWorkflowStatusDatesFor) {
     const stepTitles = decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
       ({ stepTitle }) => stepTitle
@@ -219,9 +218,6 @@ async function transformDecosZaakResponse<
             datePublished: workFlowDates.content[stepTitle],
           })
         );
-      decosZaak.dateInBehandeling =
-        decosZaak.statusDates.find(({ status }) => status === 'In behandeling')
-          ?.datePublished || null;
     }
   }
 
