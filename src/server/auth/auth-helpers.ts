@@ -7,6 +7,7 @@ import {
   OIDC_SESSION_COOKIE_NAME,
   OIDC_TOKEN_ID_ATTRIBUTE,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
 } from './auth-config';
@@ -24,7 +25,10 @@ import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
 
-export function getReturnToUrl(queryParams?: ParsedQs) {
+export function getReturnToUrl(
+  queryParams?: ParsedQs,
+  defaultReturnTo: string = authRoutes.AUTH_LOGIN_DIGID_LANDING
+) {
   switch (queryParams?.returnTo) {
     case RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER:
       return generateFullApiUrlBFF(
@@ -33,13 +37,19 @@ export function getReturnToUrl(queryParams?: ParsedQs) {
           token: queryParams['amsapp-session-token'] as string,
         }
       );
+    case RETURNTO_AMSAPP_STADSPAS_APP_LANDING: {
+      return generateFullApiUrlBFF(
+        ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
+      );
+    }
     case AppRoutes.ZAAK_STATUS:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:
       return authRoutes.AUTH_LOGIN_EHERKENNING_LANDING;
-    default:
     case RETURNTO_MAMS_LANDING_DIGID:
       return authRoutes.AUTH_LOGIN_DIGID_LANDING;
+    default:
+      return defaultReturnTo;
   }
 }
 
@@ -148,13 +158,14 @@ export function createLogoutHandler(
 ) {
   return async (req: AuthenticatedRequest, res: Response) => {
     const auth = getAuth(req);
+    const returnTo = getReturnToUrl(req.query, postLogoutRedirectUrl);
     if (
       doIDPLogout &&
       auth?.expiresAt &&
       !isIDPSessionExpired(auth.expiresAt)
     ) {
       return res.oidc.logout({
-        returnTo: postLogoutRedirectUrl,
+        returnTo,
         logoutParams: {
           id_token_hint: !FeatureToggle.oidcLogoutHintActive
             ? auth.token
@@ -170,7 +181,7 @@ export function createLogoutHandler(
       destroySession(req, res);
     }
 
-    return res.redirect(postLogoutRedirectUrl);
+    return res.redirect(returnTo);
   };
 }
 
