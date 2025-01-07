@@ -31,9 +31,10 @@ export function useVergunningenTransformed(
         title:
           typeof transformer === 'function' ? transformer(item) : item.title,
         dateRequest: defaultDateFormat(item.dateRequest),
+        identifier: item.identifier,
       };
     });
-    return addTitleLinkComponent(items, 'identifier');
+    return items;
   }, [VERGUNNINGEN.content]);
 
   return vergunningen;
