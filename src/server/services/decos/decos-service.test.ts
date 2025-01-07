@@ -3,7 +3,7 @@ import uid from 'uid-safe';
 import {
   fetchDecosDocumentList,
   fetchDecosZaken,
-  fetchDecosWorkflowDate,
+  fetchDecosWorkflowDates,
   fetchDecosZakenFromSource,
   forTesting,
 } from './decos-service';
@@ -198,15 +198,13 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200);
 
-      const responseData = await fetchDecosWorkflowDate(
-        reqID,
-        'zaak-id-1',
-        'zaak - behandelen'
-      );
+      const responseData = await fetchDecosWorkflowDates(reqID, 'zaak-id-1', [
+        'zaak - behandelen',
+      ]);
 
       expect(responseData).toMatchInlineSnapshot(`
         {
-          "content": null,
+          "content": {},
           "status": "OK",
         }
       `);
@@ -221,18 +219,14 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200, workflowInstance);
 
-      const responseData = await fetchDecosWorkflowDate(
-        reqID,
-        'zaak-id-1',
-        'Zaak - behandelen'
-      );
+      const responseData = await fetchDecosWorkflowDates(reqID, 'zaak-id-1', [
+        'Zaak - behandelen',
+      ]);
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": "2021-09-13T17:09:00",
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toMatchObject({
+        content: { 'Zaak - behandelen': '2021-09-13T17:09:00' },
+        status: 'OK',
+      });
     });
 
     test('Without date', async () => {
@@ -250,18 +244,14 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200, workflowInstance2);
 
-      const responseData = await fetchDecosWorkflowDate(
-        reqID,
-        'zaak-id-1',
-        'Zaak - behandelen'
-      );
+      const responseData = await fetchDecosWorkflowDates(reqID, 'zaak-id-1', [
+        'Zaak - behandelen',
+      ]);
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": null,
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toMatchObject({
+        content: { 'Zaak - behandelen': null },
+        status: 'OK',
+      });
     });
   });
 
@@ -572,27 +562,29 @@ describe('decos-service', () => {
       delete (fields as Partial<typeof fields>).date1;
 
       const date = forTesting.transformDecosWorkflowDateResponse(
-        'Zaak - behandelen',
+        ['Zaak - behandelen'],
         workflowInstance2
       );
 
-      expect(date).toBe(null);
+      expect(date).toMatchObject({ 'Zaak - behandelen': null });
     });
 
     test('Has date', () => {
       const date = forTesting.transformDecosWorkflowDateResponse(
-        'Zaak - behandelen',
+        ['Zaak - behandelen'],
         workflowInstance
       );
-      expect(date).toBe(workflowInstance.content[0].fields.date1);
+      expect(date).toMatchObject({
+        'Zaak - behandelen': workflowInstance.content[0].fields.date1,
+      });
     });
 
     test('Wrong step title', () => {
       const date = forTesting.transformDecosWorkflowDateResponse(
-        'Zaak - in behandeling',
+        ['Zaak - in behandeling'],
         workflowInstance
       );
-      expect(date).toBe(null);
+      expect(date).toMatchObject({ 'Zaak - in behandeling': null });
     });
   });
 
@@ -635,26 +627,30 @@ describe('decos-service', () => {
         zakenSource.content[0]
       );
 
-      expect(transformed).toMatchInlineSnapshot(`
-        {
-          "caseType": "Werk en vervoer op straat",
-          "dateDecision": null,
-          "dateEnd": "2023-12-14T00:00:00",
-          "dateInBehandeling": "2024-05-04",
-          "dateRequest": "2023-11-06T00:00:00",
-          "dateStart": "2023-11-27T00:00:00",
-          "decision": null,
-          "id": "Z-23-2230424",
-          "identifier": "Z/23/2230424",
-          "kentekens": "95GHZ4",
-          "key": "084239C942C647F79F1C2B5CCF8DC5DA",
-          "location": null,
-          "processed": false,
-          "status": "In behandeling",
-          "title": "Werkzaamheden en vervoer op straat (95GHZ4)",
-          "werkzaamheden": [],
-        }
-      `);
+      expect(transformed).toMatchObject({
+        caseType: 'Werk en vervoer op straat',
+        dateInBehandeling: '2024-05-04',
+        dateDecision: null,
+        dateEnd: '2023-12-14T00:00:00',
+        dateRequest: '2023-11-06T00:00:00',
+        dateStart: '2023-11-27T00:00:00',
+        decision: null,
+        id: 'Z-23-2230424',
+        identifier: 'Z/23/2230424',
+        kentekens: '95GHZ4',
+        key: '084239C942C647F79F1C2B5CCF8DC5DA',
+        location: null,
+        processed: false,
+        status: 'In behandeling',
+        statusDates: [
+          {
+            status: 'In behandeling',
+            datePublished: '2024-05-04',
+          },
+        ],
+        title: 'Werkzaamheden en vervoer op straat (95GHZ4)',
+        werkzaamheden: [],
+      });
     });
 
     test('Excluded', async () => {
