@@ -1,20 +1,20 @@
-import { contactmomentenDisplayProps } from './ProfilePrivate';
+import { contactmomentenDisplayProps } from './config';
 import { useContactmomenten } from './useContactmomenten.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
-export default function ContactmomentenListPage() {
-  const { items, isLoading, isError } = useContactmomenten();
+export function ContactmomentenListPage() {
+  const { contactmomenten, isLoading, isError, title } = useContactmomenten();
 
   return (
     <ListPagePaginated
-      items={items}
-      title="Alle Contactmomenten"
-      appRoute={AppRoutes['SALESFORCE/CONTACTMOMENTEN']}
+      items={contactmomenten}
+      title={`Alle ${title.toLowerCase()}`}
+      appRoute={AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']}
       appRouteBack={AppRoutes.BRP}
       displayProps={contactmomentenDisplayProps}
-      thema={Themas.SALESFORCE}
+      thema={Themas.BRP}
       isLoading={isLoading}
       isError={isError}
     />

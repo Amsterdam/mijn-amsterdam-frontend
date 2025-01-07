@@ -14,20 +14,6 @@
   }
 }
 
-.Intro {
-  padding-bottom: $page-content-bottom-space;
-
-  @include mq-phone() {
-    padding-bottom: 2rem;
-  }
-}
-
-.LoadingContent {
-  > * {
-    margin-bottom: 6rem;
-  }
-}
-
 .DefaultPanel {
   @include centered-block;
   margin-bottom: 1.6rem;
@@ -71,8 +57,4 @@
     bottom: 0.3rem;
     white-space: nowrap;
   }
-}
-
-.AlertVertrokkenOnbekendWaarheen + .AlertAdresInOnderzoek {
-  margin-top: 2rem;
 }

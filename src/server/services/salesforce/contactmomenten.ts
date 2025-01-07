@@ -19,6 +19,11 @@ async function fetchSalesforceData<T>(
   return requestData<T>(dataRequestConfigBase, requestID);
 }
 
+// TODO: Implement encryption
+function encryptBsn(bsn: string) {
+  return bsn;
+}
+
 export async function fetchContactmomenten(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
@@ -28,7 +33,7 @@ export async function fetchContactmomenten(
       return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     params: {
-      hadBetrokkene__uuid: authProfileAndToken.profile.id,
+      hadBetrokkene__uuid: encryptBsn(authProfileAndToken.profile.id),
     },
     transformResponse(responseData: ContactMomentenResponse) {
       if (responseData.results) {
@@ -36,9 +41,8 @@ export async function fetchContactmomenten(
           ...contactMoment,
           plaatsgevondenOp: defaultDateFormat(contactMoment.plaatsgevondenOp),
         }));
-      } else {
-        return null;
       }
+      return null;
     },
   };
   return fetchSalesforceData<ContactMoment[] | null>(requestID, requestConfig);

@@ -9,7 +9,6 @@ import { entries } from '../../../universal/helpers/utils';
 import {
   Adres,
   BRPData,
-  ContactMoment,
   Persoon,
   Verbintenis,
   VerbintenisHistorisch,
@@ -230,9 +229,8 @@ export interface ProfileSection {
   [key: string]: Value;
 }
 
-interface BrpProfileData {
+export interface BrpProfileData {
   persoon: ProfileSection | null;
-  contactmomenten?: ContactMoment[];
   adres: ProfileSection | null;
   adresHistorisch?: ProfileSection[];
   verbintenis?: ProfileSection;

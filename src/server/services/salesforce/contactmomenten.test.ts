@@ -34,7 +34,7 @@ describe('Salesforce service', () => {
     beforeEach(() => {
       remoteApi
         .get(
-          '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/?hadBetrokkene__uuid=123'
+          '/KLANT_CONTACT/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/?hadBetrokkene__uuid=123'
         )
         .reply(200, responseData);
     });

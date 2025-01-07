@@ -1,4 +1,5 @@
 // import { linkListItems, tableConfig } from './config';
+
 import { Icon } from '@amsterdam/design-system-react';
 import {
   ChatBubbleIcon,
@@ -6,100 +7,73 @@ import {
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
 
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { Themas, Thema } from '../../../universal/config/thema';
+import {
+  contactmomentenDisplayProps,
+  mapperContactmomentToMenuItem,
+} from './config';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import { LinkdInline } from '../../components';
-import { ThemaMenuItem } from '../../config/thema';
+import { ThemaMenuItemTransformed } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 
 function getLinkToThemaPage(
   onderwerp: string,
-  myThemasMenuItems: ThemaMenuItem[]
+  myThemasMenuItems: ThemaMenuItemTransformed[]
 ) {
-  const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
-    ? Themas.ERFPACHTv2
-    : Themas.ERFPACHT;
-
-  const SVWIv1ORv2 = FeatureToggle.svwiLinkActive
-    ? Themas.SVWI
-    : Themas.INKOMEN;
-
-  const mapperContactmomentToMenuItem: Record<string, Thema> = {
-    Erfpacht: erfpachtV1ORV2,
-    Parkeren: Themas.PARKEREN,
-    Zorg: Themas.ZORG,
-    'Werk en Inkomen': SVWIv1ORv2,
-    Belastingen: Themas.BELASTINGEN,
-    Geldzaken: Themas.KREFIA,
-    Financieen: Themas.AFIS,
-  };
-
   const menuItem = myThemasMenuItems.find(
     (item) => item.id === mapperContactmomentToMenuItem[onderwerp as string]
   );
+
   // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person has products in that thema.
   if (menuItem) {
     return (
-      <LinkdInline
-        external={(menuItem.to as string).startsWith('http') ? true : false}
-        href={menuItem.to as string}
-      >
-        {menuItem.title as string}
+      <LinkdInline external={menuItem.to.startsWith('http')} href={menuItem.to}>
+        {menuItem.title}
       </LinkdInline>
     );
-  } else return onderwerp;
+  }
+
+  return onderwerp;
 }
 
 function addIcon(type: string) {
-  if (type == 'Telefoon') {
+  const icons: Record<string, React.FC> = {
+    Telefoon: PhoneIcon,
+    Chat: ChatBubbleIcon,
+    Contactformulier: EmailIcon,
+  };
+  if (icons[type]) {
     return (
-      <div>
-        {' '}
-        <Icon svg={PhoneIcon} size="level-5" /> {type}
-      </div>
+      <>
+        <Icon svg={icons[type]} size="level-5" /> {type}
+      </>
     );
   }
-  if (type == 'Chat') {
-    return (
-      <div>
-        {' '}
-        <Icon svg={ChatBubbleIcon} size="level-5" /> {type}
-      </div>
-    );
-  }
-  if (type == 'Contactformulier') {
-    return (
-      <div>
-        {' '}
-        <Icon svg={EmailIcon} size="level-5" /> {type}
-      </div>
-    );
-  } else return type;
+  return type;
 }
 
 export function useContactmomenten() {
-  const { SALESFORCE } = useAppStateGetter();
+  const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
 
-  const items =
-    SALESFORCE.content != null
-      ? SALESFORCE.content.map((contactMomentItem) => {
-          return {
-            ...contactMomentItem,
-            kanaal: addIcon(contactMomentItem.kanaal),
-            onderwerp: getLinkToThemaPage(
-              contactMomentItem.onderwerp,
-              myThemasMenuItems
-            ),
-          };
-        })
-      : [];
+  const contactmomenten =
+    KLANT_CONTACT.content?.map?.((contactMomentItem) => {
+      return {
+        ...contactMomentItem,
+        kanaal: addIcon(contactMomentItem.kanaal),
+        onderwerp: getLinkToThemaPage(
+          contactMomentItem.onderwerp,
+          myThemasMenuItems
+        ),
+      };
+    }) ?? [];
 
   return {
-    isLoading: isLoading(SALESFORCE),
-    isError: isError(SALESFORCE),
-    items,
+    contactmomenten,
+    displayProps: contactmomentenDisplayProps,
+    isError: isError(KLANT_CONTACT),
+    isLoading: isLoading(KLANT_CONTACT),
+    title: 'Contactmomenten',
   };
 }

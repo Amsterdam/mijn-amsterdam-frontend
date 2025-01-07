@@ -197,7 +197,7 @@ const testState = (
   responseSF = responseDataSF
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
-  SALESFORCE: { status: 'OK', content: responseSF },
+  KLANT_CONTACT: { status: 'OK', content: responseSF },
 });
 
 function initializeState(testState: any) {
