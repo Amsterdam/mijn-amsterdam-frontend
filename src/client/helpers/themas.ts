@@ -192,14 +192,12 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       ).some((vergunning) =>
         PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
       );
-      const hasParkeerVergunningenFromThemaParkeren =
-        !!PARKEREN?.content?.isKnown;
 
       return (
         FeatureToggle.parkerenActive &&
         !isLoading(PARKEREN) &&
         !isLoading(VERGUNNINGEN) &&
-        (hasParkeerVergunningenFromThemaParkeren ||
+        (!!PARKEREN?.content?.isKnown ||
           hasParkeerVergunningenFromThemaVergunningen)
       );
     }
