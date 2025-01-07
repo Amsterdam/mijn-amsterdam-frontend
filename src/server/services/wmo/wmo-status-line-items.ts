@@ -28,6 +28,8 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'RWD',
       'RWT',
       'SCO',
+      'ORO',
+      'ORW',
     ],
     lineItemTransformers: hulpmiddelen,
   },
