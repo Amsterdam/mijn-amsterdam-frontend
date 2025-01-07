@@ -6,6 +6,7 @@ import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
 
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 export type RequestWithQueryParams<T extends Record<string, string>> = Request<
   {},
   {},
@@ -17,6 +18,7 @@ export type RequestWithRouteAndQueryParams<
   T extends Record<string, string> = Record<string, string>,
   T2 extends Record<string, string> = Record<string, string>,
 > = Request<T, {}, {}, T2>;
+/* eslint-enable @typescript-eslint/no-empty-object-type */
 
 export function queryParams<T extends Record<string, any>>(req: Request) {
   return req.query as T;
@@ -44,12 +46,13 @@ export function isProtectedRoute(pathRequested: string) {
  */
 export function generateFullApiUrlBFF(
   path: string,
-  params?: Record<string, string>,
+  pathParams?: Record<string, string>,
   baseUrl: string = BFF_API_BASE_URL
 ) {
-  return `${baseUrl}${generatePath(path, params)}`;
-} /** Sets the right statuscode and sends a response. */
+  return `${baseUrl}${generatePath(path, pathParams)}`;
+}
 
+/** Sets the right statuscode and sends a response. */
 export function sendResponse(res: Response, apiResponse: ApiResponse<any>) {
   if (apiResponse.status === 'ERROR') {
     res.status(
