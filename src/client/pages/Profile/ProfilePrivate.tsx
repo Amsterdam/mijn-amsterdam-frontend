@@ -1,10 +1,13 @@
 import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
-import classnames from 'classnames';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
 import styles from './Profile.module.scss';
-import { PanelConfigFormatter, panelConfig } from './profilePanelConfig';
+import { panelConfig } from './profilePanelConfig';
+import {
+  formatInfoPanelConfig,
+  ProfileSectionPanel,
+} from './ProfileSectionPanel';
 import { useProfileData } from './useProfileData.hook';
 import { useProfileThemaData } from './useProfileThemaData.hook';
 import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen';
@@ -12,83 +15,60 @@ import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../universal/helpers/brp';
-import { AppState } from '../../../universal/types/App.types';
-import { InfoPanel, InfoPanelCollapsible, PageContent } from '../../components';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 
-function formatInfoPanelConfig(
-  panelConfig: PanelConfigFormatter,
-  BRP: AppState['BRP']
-) {
-  if (typeof panelConfig === 'function') {
-    return panelConfig(BRP);
-  }
-  return panelConfig;
-}
-
-function BrpProfilePanels() {
+function ProfilePrivateSectionPanels() {
   const { BRP, profileData } = useProfileData();
+
   return (
     <>
       {!!profileData?.persoon && (
-        <InfoPanel
-          className={styles.DefaultPanel}
+        <ProfileSectionPanel
+          sectionData={profileData.persoon}
+          startCollapsed={false}
           {...formatInfoPanelConfig(panelConfig.persoon, BRP)}
-          panelData={profileData.persoon}
         />
       )}
       {!!profileData?.adres && (
-        <InfoPanel
-          className={classnames(styles.DefaultPanel, styles.AddressPanel)}
+        <ProfileSectionPanel
+          sectionData={profileData.adres}
+          startCollapsed={false}
           {...formatInfoPanelConfig(panelConfig.adres, BRP)}
-          panelData={profileData.adres}
         />
       )}
       {!!profileData?.verbintenis && (
-        <InfoPanelCollapsible
-          id="profile-verbintenis"
-          className={classnames(styles.Verbintenis, styles.CollapsiblePanel)}
+        <ProfileSectionPanel
+          sectionData={profileData.verbintenis}
           {...formatInfoPanelConfig(panelConfig.verbintenis, BRP)}
-          panelData={profileData.verbintenis}
         />
       )}
-      {!!profileData?.verbintenisHistorisch &&
-        profileData?.verbintenisHistorisch.length && (
-          <InfoPanelCollapsible
-            id="profile-verbintenisHistorisch"
-            className={classnames(styles.Verbintenis, styles.CollapsiblePanel)}
-            {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
-            panelData={profileData.verbintenisHistorisch}
-          />
-        )}
-      {!!profileData?.kinderen && profileData.kinderen.length && (
-        <InfoPanelCollapsible
-          id="profile-kinderen"
-          className={styles.CollapsiblePanel}
+      {!!profileData?.verbintenisHistorisch?.length && (
+        <ProfileSectionPanel
+          sectionData={profileData.verbintenisHistorisch}
+          {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
+        />
+      )}
+      {!!profileData?.kinderen?.length && (
+        <ProfileSectionPanel
+          sectionData={profileData.kinderen}
           {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
-          panelData={profileData.kinderen}
         />
       )}
-      {!!profileData?.ouders && profileData.ouders.length && (
-        <InfoPanelCollapsible
-          id="profile-ouders"
-          className={styles.CollapsiblePanel}
+      {!!profileData?.ouders?.length && (
+        <ProfileSectionPanel
+          sectionData={profileData.ouders}
           {...formatInfoPanelConfig(panelConfig.ouders, BRP)}
-          panelData={profileData.ouders}
         />
       )}
-      {!!profileData?.adresHistorisch &&
-        profileData?.adresHistorisch.length && (
-          <InfoPanelCollapsible
-            id="profile-adresHistorisch"
-            className={styles.CollapsiblePanel}
-            {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
-            panelData={profileData.adresHistorisch}
-          />
-        )}
+      {!!profileData?.adresHistorisch?.length && (
+        <ProfileSectionPanel
+          sectionData={profileData.adresHistorisch}
+          {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
+        />
+      )}
       {isMokum(BRP.content) && (
-        <PageContent>
+        <Grid.Cell span="all">
           <p className={styles.SuppressedParagraph}>
             Het is helaas niet mogelijk om de gegevens van een levenloos geboren
             kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
@@ -103,7 +83,7 @@ function BrpProfilePanels() {
             Amsterdamse administratie. Gegevens die bij een andere gemeente zijn
             geregistreerd worden hier niet getoond.
           </p>
-        </PageContent>
+        </Grid.Cell>
       )}
     </>
   );
@@ -129,6 +109,7 @@ export function MijnGegevensThema() {
   );
   const isThemaPaginaError = isErrorBrp && isErrorContactmomenten;
   const isThemaPaginaLoading = isLoadingBrp && isLoadingContactmomenten;
+
   const pageContentTop = (
     <Grid.Cell span="all">
       <Paragraph className="ams-mb--sm">
@@ -176,9 +157,7 @@ export function MijnGegevensThema() {
           <Grid.Cell span="all">
             <ContactMomenten />
           </Grid.Cell>
-          <Grid.Cell span="all">
-            <BrpProfilePanels />
-          </Grid.Cell>
+          <ProfilePrivateSectionPanels />
         </>
       }
     />

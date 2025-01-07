@@ -11,6 +11,7 @@ import {
   contactmomentenDisplayProps,
   mapperContactmomentToMenuItem,
 } from './config';
+import styles from './Profile.module.scss';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import { LinkdInline } from '../../components';
 import { ThemaMenuItemTransformed } from '../../config/thema';
@@ -45,9 +46,9 @@ function addIcon(type: string) {
   };
   if (icons[type]) {
     return (
-      <>
+      <span className={styles.IconWithLabel}>
         <Icon svg={icons[type]} size="level-5" /> {type}
-      </>
+      </span>
     );
   }
   return type;
