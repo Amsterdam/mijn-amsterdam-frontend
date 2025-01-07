@@ -31,7 +31,6 @@ export function useVergunningenTransformed(
         title:
           typeof transformer === 'function' ? transformer(item) : item.title,
         dateRequest: defaultDateFormat(item.dateRequest),
-        identifier: item.identifier,
       };
     });
     return items;
