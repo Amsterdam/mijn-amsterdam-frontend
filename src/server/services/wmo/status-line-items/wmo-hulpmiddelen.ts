@@ -52,8 +52,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
 /**
  * Er zijn een aantal voorzieninginen in Zorgned gecopieerd naar nieuwe voorzieningen.
  * De oude voorzieningen zijn afgesloten (einde recht).
- * De nieuwe voorzieningen hebben nieuwe codes gekregen.
- * De nieuwe voorzieningen zijn niet voorzien van een besluit document en hebben hierdoor de verkeerde status.
+ * De nieuwe voorzieningen zijn niet voorzien van een besluit document  waardoor de besluit status niet zichtbaar is.
  */
 export function getHulpmiddelenDisclaimer(
   detailAanvraag: ZorgnedAanvraagTransformed,
