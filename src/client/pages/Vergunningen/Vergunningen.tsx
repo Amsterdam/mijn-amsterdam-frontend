@@ -15,6 +15,7 @@ import {
   SectionCollapsible,
   Table,
   ThemaIcon,
+  addTitleLinkComponent,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
@@ -36,7 +37,8 @@ export const DISPLAY_PROPS_HISTORY = {
 export default function Vergunningen() {
   const { VERGUNNINGEN } = useAppStateGetter();
 
-  const vergunningen: Vergunning[] = useVergunningenTransformed(VERGUNNINGEN);
+  let vergunningen: Vergunning[] = useVergunningenTransformed(VERGUNNINGEN);
+  vergunningen = addTitleLinkComponent(vergunningen, 'identifier');
 
   const vergunningenPrevious = useMemo(() => {
     return vergunningen
