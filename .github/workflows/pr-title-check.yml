@@ -18,10 +18,13 @@ jobs:
             // Titel moet beginnen met mijn-xxxx-chore/feature/bug! todo mijn- patroon moet weggehaald worden wanneer de workflows van mijn-7620 gemerged zijn
             const jiraPattern = /^MIJN-\d+-(CHORE|FEATURE|BUG)/i
             const dependabotPattern = /^Build\(deps(-dev)?\): bump/
+            const disallowedQuotesPattern = /"/
 
-            if (!(jiraPattern.test(prTitle) || dependabotPattern.test(prTitle))) {
+            if (disallowedQuotesPattern.test(prTitle)) {
+              console.log('The PR title contains double quotes, which are not allowed!')
+              core.setFailed('PR title not valid. Please remove double quotes from the title.')
+            } else if (!(jiraPattern.test(prTitle) || dependabotPattern.test(prTitle))) {
               console.log('The PR title does not match JIRA ticket format!')
-              // Fails the workflow
               core.setFailed('PR title not valid. Please make sure this PR uses the JIRA ticket or dependabot format.')
             } else {
               console.log('PR title format is correct.')
