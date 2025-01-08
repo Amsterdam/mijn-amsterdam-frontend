@@ -11,7 +11,7 @@ import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 import { remoteApiHost } from '../../../testing/setup';
 
-const testState: any = {
+const testState: object = {
   BRP: {
     status: 'OK',
     content: {
