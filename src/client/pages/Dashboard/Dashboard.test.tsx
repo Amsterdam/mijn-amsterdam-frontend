@@ -11,7 +11,7 @@ import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 import { remoteApiHost } from '../../../testing/setup';
 
-const testState: any = {
+const testState = {
   BRP: {
     status: 'OK',
     content: {
@@ -70,6 +70,12 @@ const testState: any = {
       isKnown: true,
     },
   },
+  VERGUNNINGEN: {
+    isActive: true,
+  },
+  VERGUNNINGENv2: {
+    isActive: true,
+  },
   PARKEREN: {
     content: {
       isKnown: true,
@@ -79,7 +85,7 @@ const testState: any = {
   WPI_TOZO: {
     content: [{}],
   },
-};
+} as unknown as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom as RecoilState<Partial<AppState>>, testState);
@@ -89,14 +95,16 @@ describe('<Dashboard />', () => {
   const routeEntry = generatePath(AppRoutes.ROOT);
   const routePath = AppRoutes.ROOT;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Dashboard}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Dashboard}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
