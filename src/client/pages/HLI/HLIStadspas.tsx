@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
+  ActionGroup,
+  Button,
   Grid,
   Heading,
   Paragraph,
@@ -25,6 +27,7 @@ import {
   DetailPage,
   ErrorAlert,
   LoadingContent,
+  Modal,
   PageHeading,
   ThemaIcon,
 } from '../../components';
@@ -161,6 +164,11 @@ export default function HLIStadspas() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
+              {stadspas.blockPassURL && (
+                <BlockPassButton
+                  blockPassURL={stadspas.blockPassURL}
+                ></BlockPassButton>
+              )}
             </Grid.Cell>
           )}
 
@@ -231,5 +239,63 @@ export default function HLIStadspas() {
         </Grid>
       </Screen>
     </DetailPage>
+  );
+}
+
+function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <Button
+        variant="secondary"
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        Blokeer deze Stadspas
+      </Button>
+      <Modal
+        title="Weet u zeker dat u uw stadspas wilt blokkeren ?"
+        isOpen={isModalOpen}
+        showCloseButton={false}
+        actions={
+          <ActionGroup>
+            <Button
+              type="submit"
+              variant="primary"
+              onClick={() => {
+                setIsModalOpen(false);
+                if (!blockPassURL) {
+                  return;
+                }
+                fetch(blockPassURL, { method: 'POST' });
+              }}
+            >
+              Ja, blokkeer mijn pas
+            </Button>
+            <Button
+              variant="tertiary"
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
+            >
+              Nee, blokkeer mijn pas niet
+            </Button>
+          </ActionGroup>
+        }
+      >
+        <Paragraph className="ams-mb--sm">
+          Is uw Stadspas gestolen of bent u deze kwijt? Blokkeer dan hier uw
+          Stadspas. Zo zorgt u ervoor dat niemand de Stadspas en eventueel
+          tegoed van uw kind uitgeeft.
+        </Paragraph>
+        <Paragraph className="ams-mb--sm">
+          Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
+          blokkeren? Bel dan meteen naar 020 252 6000. De nieuwe pas wordt dan
+          binnen drie weken thuisgestuurd en is dan gelijk te gebruiken.
+        </Paragraph>
+      </Modal>
+    </>
   );
 }

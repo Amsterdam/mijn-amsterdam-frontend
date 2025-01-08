@@ -95,6 +95,7 @@ function transformStadspasResponse(
     const passNumber = gpassStadspasResonseData.pasnummer;
 
     let blockPassURL = null;
+    console.dir(gpassStadspasResonseData);
     if (gpassStadspasResonseData.actief) {
       const [encrypted] = encrypt(
         gpassStadspasResonseData.pasnummer.toString()
