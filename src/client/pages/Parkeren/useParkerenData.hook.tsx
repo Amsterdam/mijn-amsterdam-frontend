@@ -32,7 +32,8 @@ function getVergunningenFromThemaVergunningen(
           ...vergunning.link,
           to: vergunning.link.to.replace('vergunningen', 'parkeren'),
         },
-      }))
+      })),
+    'identifier'
   );
 }
 
