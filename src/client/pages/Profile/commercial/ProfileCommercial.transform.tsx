@@ -393,7 +393,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
 }
 
 export const panelConfig: PanelConfig<KVKPanelKey, AppState['KVK']> = {
-  onderneming: (KVK) => ({
+  onderneming: () => ({
     title: 'Onderneming',
     actionLinks: [],
   }),
@@ -405,7 +405,7 @@ export const panelConfig: PanelConfig<KVKPanelKey, AppState['KVK']> = {
         : 'Rechtspersoon',
     actionLinks: [],
   }),
-  hoofdVestiging: (KVK) => ({
+  hoofdVestiging: () => ({
     title: 'Hoofdvestiging',
     actionLinks: [],
   }),
