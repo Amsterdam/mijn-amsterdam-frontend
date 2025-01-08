@@ -50,7 +50,7 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
 ];
 
 /**
- * Er zijn een aantal voorzieninginen in Zorgned gecopieerd naar nieuwe voorzieningen.
+ * Er zijn een aantal voorzieninginen in Zorgned gekopieerd naar nieuwe voorzieningen.
  * De oude voorzieningen zijn afgesloten (einde recht).
  * De nieuwe voorzieningen zijn niet voorzien van een besluit document  waardoor de besluit status niet zichtbaar is.
  */
