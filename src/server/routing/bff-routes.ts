@@ -29,6 +29,7 @@ export const BffEndpoints = {
   // Stadspas
   STADSPAS_TRANSACTIONS:
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
+  STADSPAS_BLOCK_PASS: '/services/stadspas/block/:passNumber',
 
   // Vergunningen V2
   VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',
