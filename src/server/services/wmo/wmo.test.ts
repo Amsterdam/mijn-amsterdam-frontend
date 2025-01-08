@@ -171,7 +171,7 @@ describe('Transform api items', () => {
       ];
 
       const result = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
-      expect(result).toMatch(
+      expect(result).toBe(
         'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.'
       );
     });
