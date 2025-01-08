@@ -1,11 +1,11 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useContactmomenten } from './useContactmomenten.hook';
-import { AppRoutes } from '../../../universal/config/routes';
-import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
-import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
-import { TableV2 } from '../../components/Table/TableV2';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { AppRoutes } from '../../../../universal/config/routes';
+import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
+import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage';
+import { TableV2 } from '../../../components/Table/TableV2';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 
 export function ContactMomenten() {
   const { contactmomenten, displayProps, title } = useContactmomenten();

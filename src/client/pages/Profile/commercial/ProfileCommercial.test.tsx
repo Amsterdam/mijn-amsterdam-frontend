@@ -2,10 +2,11 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
-import Profile from './ProfileCommercial';
+import { ProfileCommercial } from './ProfileCommercial';
+import { AppRoutes } from '../../../../universal/config/routes';
+import { AppState } from '../../../../universal/types';
+import { appStateAtom } from '../../../hooks/useAppState';
+import MockApp from '../../MockApp';
 
 const responseData = {
   content: {
@@ -182,9 +183,9 @@ const responseData = {
   status: 'OK',
 };
 
-const testState: any = {
+const testState = {
   KVK: responseData,
-};
+} as unknown as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
@@ -194,14 +195,16 @@ describe('<ProfileCommercial />', () => {
   const routeEntry = generatePath(AppRoutes.KVK);
   const routePath = AppRoutes.KVK;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Profile}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ProfileCommercial}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);

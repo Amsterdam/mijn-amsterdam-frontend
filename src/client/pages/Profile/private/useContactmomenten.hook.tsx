@@ -10,13 +10,13 @@ import {
 import {
   contactmomentenDisplayProps,
   mapperContactmomentToMenuItem,
-} from './config';
-import styles from './Profile.module.scss';
-import { isLoading, isError } from '../../../universal/helpers/api';
-import { LinkdInline } from '../../components';
-import { ThemaMenuItemTransformed } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
+} from './Contactmomenten.config';
+import styles from './ProfilePrivate.module.scss';
+import { isLoading, isError } from '../../../../universal/helpers/api';
+import { LinkdInline } from '../../../components';
+import { ThemaMenuItemTransformed } from '../../../config/thema';
+import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useThemaMenuItems } from '../../../hooks/useThemaMenuItems';
 
 function getLinkToThemaPage(
   onderwerp: string,

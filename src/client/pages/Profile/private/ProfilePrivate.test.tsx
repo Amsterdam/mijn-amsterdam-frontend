@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
+import { AppRoutes } from '../../../../universal/config/routes';
+import { appStateAtom } from '../../../hooks/useAppState';
+import MockApp from '../../MockApp';
 import Profile from './ProfilePrivate';
 
 const responseData = {

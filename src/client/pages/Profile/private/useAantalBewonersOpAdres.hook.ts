@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
-import { AppState } from '../../../universal/types';
-import { useDataApi } from '../../hooks/api/useDataApi';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import {
+  apiPristineResult,
+  ApiResponse,
+} from '../../../../universal/helpers/api';
+import { AppState } from '../../../../universal/types';
+import { useDataApi } from '../../../hooks/api/useDataApi';
 
 export function useAantalBewonersOpAdres(
   brpContent: AppState['BRP']['content']

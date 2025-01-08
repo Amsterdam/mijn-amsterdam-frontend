@@ -1,7 +1,7 @@
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
-import { AppState } from '../../../universal/types';
-import { LinkdInline } from '../../components';
+import { AppState } from '../../../../universal/types';
+import { LinkdInline } from '../../../components';
 
 type AdresInOnderzoekProps = {
   brpContent: AppState['BRP']['content'];

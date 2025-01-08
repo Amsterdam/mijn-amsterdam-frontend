@@ -1,8 +1,8 @@
-import { contactmomentenDisplayProps } from './config';
+import { contactmomentenDisplayProps } from './Contactmomenten.config';
 import { useContactmomenten } from './useContactmomenten.hook';
-import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
-import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+import { AppRoutes } from '../../../../universal/config/routes';
+import { Themas } from '../../../../universal/config/thema';
+import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
 export function ContactmomentenListPage() {
   const { contactmomenten, isLoading, isError, title } = useContactmomenten();

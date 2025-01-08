@@ -1,7 +1,7 @@
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { Themas, Thema } from '../../../universal/config/thema';
-import { ContactMoment } from '../../../universal/types';
-import { DisplayProps } from '../../components/Table/TableV2';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { Themas, Thema } from '../../../../universal/config/thema';
+import { ContactMoment } from '../../../../universal/types';
+import { DisplayProps } from '../../../components/Table/TableV2';
 
 export const contactmomentenDisplayProps: DisplayProps<ContactMoment> = {
   kanaal: 'Contactvorm',

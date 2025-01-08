@@ -1,28 +1,37 @@
+import { ReactNode } from 'react';
+
 import { LinkList, Grid } from '@amsterdam/design-system-react';
 
-import { ProfileSection } from './formatDataPrivate';
-import styles from './Profile.module.scss';
-import { PanelConfigFormatter } from './profilePanelConfig';
-import { AppState } from '../../../universal/types';
+import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
-import { ActionLink } from '../../components/InfoPanel/InfoPanel';
 
-export function formatInfoPanelConfig(
-  panelConfig: PanelConfigFormatter,
-  BRP: AppState['BRP']
-) {
-  if (typeof panelConfig === 'function') {
-    return panelConfig(BRP);
-  }
-  return panelConfig;
+export interface ActionLink {
+  title: string;
+  url: string;
+  external?: boolean;
+  className?: string;
 }
 
-interface InfoPanelActionLinksProps {
+export type Value = ReactNode;
+export interface ProfileSectionData {
+  [key: string]: Value;
+}
+
+type PanelProps = object;
+
+export type PanelConfigFormatter<T> = (panelData: T) => PanelProps;
+export type PanelConfig<K extends string, T> = {
+  [key in K]: PanelConfigFormatter<T>;
+};
+
+interface ProfileSectionActionLinksProps {
   actionLinks: ActionLink[];
 }
 
-function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
+function ProfileSectionActionLinks({
+  actionLinks,
+}: ProfileSectionActionLinksProps) {
   return (
     <LinkList>
       {actionLinks.map((actionLink) => (
@@ -39,7 +48,7 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
   );
 }
 
-function getRows(sectionData: ProfileSection) {
+function getRows(sectionData: ProfileSectionData) {
   return Object.entries(sectionData).map(([key, value]) => {
     return {
       label: key,
@@ -51,7 +60,7 @@ function getRows(sectionData: ProfileSection) {
 
 type ProfilePanelProps = {
   actionLinks?: ActionLink[];
-  sectionData: ProfileSection | ProfileSection[];
+  sectionData: ProfileSectionData | ProfileSectionData[];
   startCollapsed?: boolean;
   title?: string;
 };
@@ -83,7 +92,7 @@ export function ProfileSectionPanel({
               start={{ narrow: 1, medium: 6, wide: 8 }}
               span={{ narrow: 4, medium: 3, wide: 5 }}
             >
-              <InfoPanelActionLinks actionLinks={actionLinks} />
+              <ProfileSectionActionLinks actionLinks={actionLinks} />
             </Grid.Cell>
           )}
         </Grid>

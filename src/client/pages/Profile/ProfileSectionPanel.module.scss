@@ -1,0 +1,9 @@
+.ProfileSectionPanelGrid {
+  position: relative;
+}
+
+.ProfileSection {
+  + .ProfileSection {
+    margin-top: var(--ams-grid-row-gap);
+  }
+}

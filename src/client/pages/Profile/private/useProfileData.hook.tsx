@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
-import { formatBrpProfileData } from './formatDataPrivate';
+import { formatBrpProfileData } from './ProfilePrivate.transform';
 import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { LinkdInline } from '../../components';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { LinkdInline } from '../../../components';
+import { useAppStateGetter } from '../../../hooks/useAppState';
 
 export function useProfileData() {
   const { BRP } = useAppStateGetter();
@@ -21,6 +21,8 @@ export function useProfileData() {
         ...BRP.content,
         adres: {
           ...BRP.content.adres,
+
+          // Add static and async profile data
           aantalBewoners: residentCount,
           wozWaarde: (
             <>

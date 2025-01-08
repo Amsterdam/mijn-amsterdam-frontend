@@ -1,7 +1,7 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { AppState } from '../../../universal/types';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { AppState } from '../../../../universal/types';
 
 type VertrokkenOnbekendWaarheenProps = {
   brpContent: AppState['BRP']['content'];

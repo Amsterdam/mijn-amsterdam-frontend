@@ -2,21 +2,18 @@ import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
-import styles from './Profile.module.scss';
-import { panelConfig } from './profilePanelConfig';
-import {
-  formatInfoPanelConfig,
-  ProfileSectionPanel,
-} from './ProfileSectionPanel';
+import styles from './ProfilePrivate.module.scss';
+import { panelConfig } from './ProfilePrivate.transform';
+import { ProfileSectionPanel } from '../ProfileSectionPanel';
 import { useProfileData } from './useProfileData.hook';
 import { useProfileThemaData } from './useProfileThemaData.hook';
 import { VertrokkenOnbekendWaarheen } from './VertrokkenOnbekendWaarheen';
 import {
   hasDutchAndOtherNationalities,
   isMokum,
-} from '../../../universal/helpers/brp';
-import { ThemaTitles } from '../../config/thema';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
+} from '../../../../universal/helpers/brp';
+import { ThemaTitles } from '../../../config/thema';
+import ThemaPagina from '../../ThemaPagina/ThemaPagina';
 
 function ProfilePrivateSectionPanels() {
   const { BRP, profileData } = useProfileData();
@@ -27,44 +24,44 @@ function ProfilePrivateSectionPanels() {
         <ProfileSectionPanel
           sectionData={profileData.persoon}
           startCollapsed={false}
-          {...formatInfoPanelConfig(panelConfig.persoon, BRP)}
+          {...panelConfig.persoon(BRP)}
         />
       )}
       {!!profileData?.adres && (
         <ProfileSectionPanel
           sectionData={profileData.adres}
           startCollapsed={false}
-          {...formatInfoPanelConfig(panelConfig.adres, BRP)}
+          {...panelConfig.adres(BRP)}
         />
       )}
       {!!profileData?.verbintenis && (
         <ProfileSectionPanel
           sectionData={profileData.verbintenis}
-          {...formatInfoPanelConfig(panelConfig.verbintenis, BRP)}
+          {...panelConfig.verbintenis(BRP)}
         />
       )}
       {!!profileData?.verbintenisHistorisch?.length && (
         <ProfileSectionPanel
           sectionData={profileData.verbintenisHistorisch}
-          {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
+          {...panelConfig.verbintenisHistorisch(BRP)}
         />
       )}
       {!!profileData?.kinderen?.length && (
         <ProfileSectionPanel
           sectionData={profileData.kinderen}
-          {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
+          {...panelConfig.kinderen(BRP)}
         />
       )}
       {!!profileData?.ouders?.length && (
         <ProfileSectionPanel
           sectionData={profileData.ouders}
-          {...formatInfoPanelConfig(panelConfig.ouders, BRP)}
+          {...panelConfig.ouders(BRP)}
         />
       )}
       {!!profileData?.adresHistorisch?.length && (
         <ProfileSectionPanel
           sectionData={profileData.adresHistorisch}
-          {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
+          {...panelConfig.adresHistorisch(BRP)}
         />
       )}
       {isMokum(BRP.content) && (
