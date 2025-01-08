@@ -33,7 +33,7 @@ export function useVergunningenTransformed(
         dateRequest: defaultDateFormat(item.dateRequest),
       };
     });
-    return addTitleLinkComponent(items, 'identifier');
+    return items;
   }, [VERGUNNINGEN.content]);
 
   return vergunningen;
