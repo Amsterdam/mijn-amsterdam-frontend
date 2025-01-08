@@ -89,14 +89,16 @@ describe('<Dashboard />', () => {
   const routeEntry = generatePath(AppRoutes.ROOT);
   const routePath = AppRoutes.ROOT;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Dashboard}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Dashboard}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
