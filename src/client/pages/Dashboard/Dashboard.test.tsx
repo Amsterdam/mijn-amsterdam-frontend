@@ -11,7 +11,7 @@ import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 import { remoteApiHost } from '../../../testing/setup';
 
-const testState: object = {
+const testState = {
   BRP: {
     status: 'OK',
     content: {
@@ -70,6 +70,12 @@ const testState: object = {
       isKnown: true,
     },
   },
+  VERGUNNINGEN: {
+    isActive: true,
+  },
+  VERGUNNINGENv2: {
+    isActive: true,
+  },
   PARKEREN: {
     content: {
       isKnown: true,
@@ -79,7 +85,7 @@ const testState: object = {
   WPI_TOZO: {
     content: [{}],
   },
-};
+} as unknown as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom as RecoilState<Partial<AppState>>, testState);
