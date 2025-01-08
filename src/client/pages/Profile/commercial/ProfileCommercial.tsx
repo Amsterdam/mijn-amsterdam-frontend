@@ -4,7 +4,6 @@ import { panelConfig } from './ProfileCommercial.transform';
 import { useProfileData } from './useProfileData.hook';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
 import styles from './ProfileCommercial.module.scss';
-import { ThemaTitles } from '../../../config/thema';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
 
 function ProfileCommercialSectionPanels() {
@@ -105,7 +104,7 @@ function ProfileCommercialSectionPanels() {
 }
 
 export function MijnBedrijfsGegevensThema() {
-  const { isLoading, isError, linkListItems } = useProfileData();
+  const { isLoading, isError, linkListItems, title } = useProfileData();
 
   const pageContentTop = (
     <Grid.Cell span="all">
@@ -120,7 +119,7 @@ export function MijnBedrijfsGegevensThema() {
 
   return (
     <ThemaPagina
-      title={ThemaTitles.BRP}
+      title={title}
       isError={isError}
       isLoading={!isLoading && isError}
       linkListItems={linkListItems}

@@ -12,7 +12,6 @@ import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../../universal/helpers/brp';
-import { ThemaTitles } from '../../../config/thema';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
 
 function ProfilePrivateSectionPanels() {
@@ -88,6 +87,7 @@ function ProfilePrivateSectionPanels() {
 
 export function MijnGegevensThema() {
   const {
+    title,
     brpContent,
     isLoadingBrp,
     isLoadingContactmomenten,
@@ -134,7 +134,7 @@ export function MijnGegevensThema() {
 
   return (
     <ThemaPagina
-      title={ThemaTitles.BRP}
+      title={title}
       isError={isThemaPaginaError}
       isPartialError={isErrorBrp || isErrorContactmomenten}
       errorAlertContent={pageContentErrorAlert}

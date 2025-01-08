@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { formatKvkProfileData } from './ProfileCommercial.transform';
 import { isError, isLoading } from '../../../../universal/helpers/api';
+import { ThemaTitles } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 
 export function useProfileData() {
@@ -14,6 +15,7 @@ export function useProfileData() {
 
   return {
     KVK,
+    title: ThemaTitles.KVK,
     profileData,
     isLoading: isLoading(KVK),
     isError: isError(KVK),
