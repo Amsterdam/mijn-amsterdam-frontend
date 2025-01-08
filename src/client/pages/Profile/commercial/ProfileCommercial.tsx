@@ -34,6 +34,7 @@ function ProfileCommercialSectionPanels() {
       {!!profileData?.eigenaar && (
         <ProfileSectionPanel
           sectionData={profileData.eigenaar}
+          startCollapsed={!!KVK.content?.rechtspersonen?.length}
           {...panelConfig.eigenaar(KVK)}
         />
       )}
