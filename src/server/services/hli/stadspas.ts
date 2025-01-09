@@ -47,10 +47,23 @@ export async function fetchStadspas(
           }
         );
 
+        let blockPassURL = null;
+        if (stadspas.actief) {
+          // Encrypt so we cannot see in our logging which pass was blocked.
+          const [encrypted] = encrypt(stadspas.passNumber.toString());
+          blockPassURL = generateFullApiUrlBFF(
+            BffEndpoints.STADSPAS_BLOCK_PASS,
+            {
+              passNumber: encrypted,
+            }
+          );
+        }
+
         return {
           ...stadspas,
           urlTransactions,
           transactionsKeyEncrypted,
+          blockPassURL,
           link: {
             to: generatePath(AppRoutes['HLI/STADSPAS'], {
               id: stadspas.id,

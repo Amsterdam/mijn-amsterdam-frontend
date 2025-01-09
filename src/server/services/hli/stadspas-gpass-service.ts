@@ -29,11 +29,11 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { encrypt } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { BffEndpoints } from '../../routing/bff-routes';
-import { encrypt } from '../../helpers/encrypt-decrypt';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -92,19 +92,6 @@ function transformStadspasResponse(
       0
     );
 
-    const passNumber = gpassStadspasResonseData.pasnummer;
-
-    let blockPassURL = null;
-    console.dir(gpassStadspasResonseData);
-    if (gpassStadspasResonseData.actief) {
-      const [encrypted] = encrypt(
-        gpassStadspasResonseData.pasnummer.toString()
-      );
-      blockPassURL = generateFullApiUrlBFF(BffEndpoints.STADSPAS_BLOCK_PASS, {
-        passNumber: encrypted,
-      });
-    }
-
     const stadspasTransformed: Stadspas = {
       id: String(gpassStadspasResonseData.id),
       owner: getOwner(pashouder),
@@ -113,10 +100,10 @@ function transformStadspasResponse(
       budgets: budgets,
       balance,
       balanceFormatted: `€${displayAmount(balance)}`,
-      passNumber,
+      passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
+      actief: gpassStadspasResonseData.actief,
       securityCode,
-      blockPassURL,
     };
 
     return stadspasTransformed;
