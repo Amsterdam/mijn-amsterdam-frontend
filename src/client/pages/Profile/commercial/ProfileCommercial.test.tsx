@@ -229,8 +229,8 @@ describe('<MijnBedrijfsGegevensThema />', () => {
     );
   }
 
-  test.only('Shows complete profile', async () => {
-    const { asFragment } = render(<Component />);
+  test('Shows complete profile', async () => {
+    render(<Component />);
     const user = userEvent.setup();
 
     expect(screen.getByText(PAGE_TITLE)).toBeInTheDocument();
