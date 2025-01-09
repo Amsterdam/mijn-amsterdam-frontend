@@ -59,7 +59,7 @@ export function getNotificationLabels(
 
     case notificationLabels.statusInBehandeling &&
       !vergunning.processed &&
-      !!getStatusDate(vergunning):
+      !!getStatusDate('In behandeling', vergunning):
       return notificationLabels.statusInBehandeling;
 
     case notificationLabels.statusAanvraag && !vergunning.processed:
