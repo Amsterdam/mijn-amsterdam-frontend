@@ -5,10 +5,7 @@ import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
 import { fetchBRP } from './brp';
 import { fetchDataset } from './buurt/buurt';
 import { fetchMyLocation } from './my-locations';
-import {
-  generateRandomPoints,
-  getAuthProfileAndToken,
-} from '../../testing/utils';
+import { getAuthProfileAndToken } from '../../testing/utils';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -40,11 +37,11 @@ describe('fetchAdoptableTrashContainers', () => {
     (fetchBRP as Mock).mockResolvedValue(brpApiResponse);
     (fetchMyLocation as Mock).mockResolvedValue(locationApiResponse);
 
-    const [coord] = generateRandomPoints(
-      { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
-      90, // 90 meters
-      1
-    );
+    const DISTANCE_ADDED = 0.0001;
+    const coord = {
+      lat: DEFAULT_LAT + DISTANCE_ADDED,
+      lng: DEFAULT_LNG + DISTANCE_ADDED,
+    };
 
     (fetchDataset as Mock).mockResolvedValue(
       apiSuccessResult({

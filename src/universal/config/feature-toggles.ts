@@ -112,8 +112,8 @@ export const FeatureToggle = {
   // Vergunningen V1 (met koppel api)
   vergunningenActive: true,
   // Vergunningen V2 met BFF integratie
-  vergunningenV2Active: IS_DEVELOPMENT, // TODO: Enable when working on MIJN-8914
-  decosServiceActive: IS_DEVELOPMENT, // TODO: Enable when working on MIJN-8914
+  vergunningenV2Active: false, // TODO: Enable when working on MIJN-8914
+  decosServiceActive: false, // TODO: Enable when working on MIJN-8914
 
   // WIOR Kaar data
   wiorDatasetActive: true,
