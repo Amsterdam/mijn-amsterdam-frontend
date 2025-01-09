@@ -19,6 +19,7 @@ import {
 } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
+import { renderRecoilHook } from '../../testing/render-recoil.hook';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   apiPristineResult,
@@ -26,7 +27,6 @@ import {
 } from '../../universal/helpers/api';
 import * as appStateModule from '../AppState';
 import * as Monitoring from '../helpers/monitoring';
-import { renderRecoilHook } from '../../testing/render-recoil.hook';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
@@ -155,10 +155,10 @@ describe('useAppState', () => {
   describe('isAppStateReady', () => {
     const pristineState = {
       TEST: apiPristineResult(null, { profileTypes: ['private'] }),
-    } as any;
+    };
 
     it('Should initially be false', async () => {
-      const appState = { TEST: pristineState.TEST } as any;
+      const appState = { TEST: pristineState.TEST };
 
       const isReady = isAppStateReady(appState, pristineState, 'private');
       expect(isReady).toBe(false);
@@ -166,7 +166,7 @@ describe('useAppState', () => {
 
     it('Should be true if we have proper data', async () => {
       const isReady = isAppStateReady(
-        { TEST: apiSuccessResult('test') } as any,
+        { TEST: apiSuccessResult('test') },
         pristineState,
         'private'
       );
@@ -175,7 +175,7 @@ describe('useAppState', () => {
 
     it('Should be false if we have proper data but a different profile type', async () => {
       const isReady = isAppStateReady(
-        { TEST: apiSuccessResult('test') } as any,
+        { TEST: apiSuccessResult('test') },
         pristineState,
         'commercial'
       );
@@ -185,7 +185,7 @@ describe('useAppState', () => {
     it('Should be false if we have statekey mismatch', async () => {
       const spy = vi.spyOn(Monitoring, 'captureMessage');
       const isReady = isAppStateReady(
-        { BLAP: apiSuccessResult('blap') } as any,
+        { BLAP: apiSuccessResult('blap') },
         pristineState,
         'private'
       );
