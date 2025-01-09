@@ -47,8 +47,6 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   SVWI: 'SVWI',
   TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
   VAREN: 'Passagiers- en beroepsvaart',
-  VERGUNNINGEN_EERDER: 'Vergunningen',
-  VERGUNNINGEN_LOPEND: 'Vergunningen',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
 };
@@ -182,6 +180,8 @@ export const DocumentTitles: DocumentTitlesConfig = {
   },
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
     `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
+  [AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']]:
+    `ALle contactmomenten | ${ThemaTitles.BRP}`,
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {

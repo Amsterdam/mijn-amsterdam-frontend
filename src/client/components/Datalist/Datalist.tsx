@@ -109,6 +109,7 @@ export function Datalist({
               isVisible={row.isVisible}
               key={`row-${index}`}
               rows={row.rows}
+              className={row.className}
             />
           ) : (
             <DatalistRow

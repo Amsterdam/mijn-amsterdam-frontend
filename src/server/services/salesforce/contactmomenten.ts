@@ -1,4 +1,7 @@
-import { ContactMoment, ContactMomentenResponse } from './types';
+import {
+  ContactMomentenResponseSource,
+  ContactMoment,
+} from './contactmomenten.types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -19,6 +22,26 @@ async function fetchSalesforceData<T>(
   return requestData<T>(dataRequestConfigBase, requestID);
 }
 
+// TODO: Implement encryption when the encryption method is known
+function encryptBsn(bsn: string) {
+  return bsn;
+}
+
+function transformContactmomentenResponse(
+  responseData: ContactMomentenResponseSource
+) {
+  if (responseData.results) {
+    return responseData.results.map((contactMoment) => ({
+      referenceNumber: contactMoment.nummer,
+      subject: contactMoment.onderwerp,
+      themaKanaal: contactMoment.kanaal,
+      datePublishedFormatted: defaultDateFormat(contactMoment.plaatsgevondenOp),
+      datePublished: contactMoment.plaatsgevondenOp,
+    }));
+  }
+  return [];
+}
+
 export async function fetchContactmomenten(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
@@ -28,18 +51,9 @@ export async function fetchContactmomenten(
       return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     params: {
-      hadBetrokkene__uuid: authProfileAndToken.profile.id,
+      hadBetrokkene__uuid: encryptBsn(authProfileAndToken.profile.id),
     },
-    transformResponse(responseData: ContactMomentenResponse) {
-      if (responseData.results) {
-        return responseData.results.map((contactMoment) => ({
-          ...contactMoment,
-          plaatsgevondenOp: defaultDateFormat(contactMoment.plaatsgevondenOp),
-        }));
-      } else {
-        return null;
-      }
-    },
+    transformResponse: transformContactmomentenResponse,
   };
-  return fetchSalesforceData<ContactMoment[] | null>(requestID, requestConfig);
+  return fetchSalesforceData<ContactMoment[]>(requestID, requestConfig);
 }

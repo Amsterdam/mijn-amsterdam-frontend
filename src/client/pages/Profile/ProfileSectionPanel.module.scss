@@ -1,0 +1,29 @@
+.ProfileSectionPanelGrid {
+  position: relative;
+}
+
+.ProfileSection {
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    // Note: ugly hack to make the grid work evenly for all subsequent items.
+    grid-template-columns: repeat(12, 1fr) !important;
+
+    .Label {
+      grid-column-start: 1;
+      grid-column-end: span 5;
+    }
+
+    .Content {
+      grid-column-start: 6;
+      grid-column-end: span 6;
+    }
+  }
+}
+
+.ProfileSection {
+  + .ProfileSection {
+    margin-top: calc(var(--ams-grid-row-gap) * 2);
+    @media screen and (min-width: $ams-breakpoint-medium) {
+      margin-top: var(--ams-grid-row-gap);
+    }
+  }
+}

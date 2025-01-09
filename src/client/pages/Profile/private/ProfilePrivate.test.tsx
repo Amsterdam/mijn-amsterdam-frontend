@@ -1,12 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
-import Profile from './ProfilePrivate';
+import { MijnGegevensThema } from './ProfilePrivate';
+import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
+import { AppRoutes } from '../../../../universal/config/routes';
+import { Adres, AppState, BRPData } from '../../../../universal/types';
+import { ThemaTitles } from '../../../config/thema';
+import { appStateAtom } from '../../../hooks/useAppState';
+import MockApp from '../../MockApp';
 
 const responseData = {
   adres: {
@@ -18,6 +21,7 @@ const responseData = {
     landnaam: 'Nederland',
     woonplaatsNaam: 'Amsterdam',
     begindatumVerblijf: '1967-01-01T00:00:00Z',
+    _adresSleutel: 'foo:bar',
   },
   adresHistorisch: [
     {
@@ -43,7 +47,7 @@ const responseData = {
   ],
 
   persoon: {
-    vertrokkenOnbekendWaarheen: true,
+    vertrokkenOnbekendWaarheen: false,
     datumVertrekUitNederland: '1967-01-01T00:00:00Z',
     aanduidingNaamgebruikOmschrijving: 'Eigen geslachtsnaam',
     omschrijvingAdellijkeTitel: 'Hertogin',
@@ -67,7 +71,7 @@ const responseData = {
     voornamen: 'Wesley',
     voorvoegselGeslachtsnaam: null,
     mokum: true,
-    adresInOnderzoek: '080000',
+    // adresInOnderzoek: '080000',
   },
   ouders: [
     {
@@ -176,40 +180,39 @@ const responseData = {
       voorvoegselGeslachtsnaam: null,
     },
   ],
-};
-const responseDataSF = [
-  {
-    plaatsgevondenOp: '2024-05-29 08:02:38',
-    onderwerp: 'Meldingen',
-    nummer: '00002032',
-    kanaal: 'Telefoon',
-  },
-  {
-    plaatsgevondenOp: '2024-12-03 10:58:47',
-    onderwerp: 'Erfpacht',
-    nummer: '00154596',
-    kanaal: 'Chat',
-  },
-];
+} as unknown as BRPData;
 
 const testState = (
-  responseBRP = responseData,
-  responseSF = responseDataSF
+  responseBRP: BRPData = responseData,
+  responseSF: ContactMoment[] = []
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
-  SALESFORCE: { status: 'OK', content: responseSF },
+  KLANT_CONTACT: { status: 'OK', content: responseSF },
 });
 
-function initializeState(testState: any) {
-  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
+function initializeState(testState: unknown) {
+  return (snapshot: MutableSnapshot) =>
+    snapshot.set(appStateAtom, testState as AppState);
 }
+
+const PAGE_TITLE = ThemaTitles.BRP;
+
+const panelHeadings = [
+  'Persoonlijke gegevens',
+  'Adres',
+  'Burgerlijke staat',
+  'Eerdere huwelijken of partnerschappen',
+  'Ouders',
+  'Kinderen',
+  'Vorige adressen',
+];
 
 describe('<Profile />', () => {
   const routeEntry = generatePath(AppRoutes.BRP);
   const routePath = AppRoutes.BRP;
 
   beforeAll(() => {
-    (window.matchMedia as any) = vi.fn(() => {
+    (window.matchMedia as unknown) = vi.fn(() => {
       return {
         addListener: vi.fn(),
         removeListener: vi.fn(),
@@ -217,27 +220,59 @@ describe('<Profile />', () => {
     });
   });
 
-  it('Matches the Full Page snapshot', () => {
+  test('Matches the Full Page snapshot', async () => {
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(testState())}
         />
       );
     }
-    expect(render(<Component />).asFragment()).toMatchSnapshot();
+    render(<Component />);
+    expect(screen.getByText(PAGE_TITLE)).toBeInTheDocument();
+    expect(
+      screen.getByText(responseData.persoon.geslachtsnaam as string)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(responseData.persoon.geboorteplaatsnaam as string)
+    ).toBeInTheDocument();
+
+    const panelHeadings = [
+      'Persoonlijke gegevens',
+      'Adres',
+      'Burgerlijke staat',
+      'Eerdere huwelijken of partnerschappen',
+      'Ouders',
+      'Kinderen',
+      'Vorige adressen',
+    ];
+
+    panelHeadings.forEach((heading) => {
+      expect(screen.getByText(heading)).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Verhuizing doorgeven')).toBeInTheDocument();
+    expect(
+      screen.getByText('Onjuiste inschrijving melden')
+    ).toBeInTheDocument();
+    expect(
+      await screen.queryByText('Adres in onderzoek')
+    ).not.toBeInTheDocument();
+    expect(
+      await screen.queryByText('Vertrokken Onbekend Waarheen')
+    ).not.toBeInTheDocument();
   });
 
-  it('Matches the Full Page snapshot Non-Mokum', () => {
+  test('Matches the Full Page snapshot Non-Mokum', async () => {
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
               ...responseData,
@@ -250,35 +285,68 @@ describe('<Profile />', () => {
         />
       );
     }
-    expect(render(<Component />).asFragment()).toMatchSnapshot();
+
+    render(<Component />);
+
+    const panelHeadingsNonMokum = ['Persoonlijke gegevens', 'Adres'];
+
+    panelHeadingsNonMokum.forEach((heading) => {
+      expect(screen.getByText(heading)).toBeInTheDocument();
+    });
+
+    panelHeadings
+      .filter((heading) => !panelHeadingsNonMokum.includes(heading))
+      .forEach(async (heading) => {
+        expect(await screen.findByText(heading)).not.toBeInTheDocument();
+      });
+
+    expect(
+      screen.getByText('Verhuizing naar Amsterdam doorgeven')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Onjuiste inschrijving melden')
+    ).toBeInTheDocument();
   });
 
-  it('Matches the Full Page snapshot No verbintenis', () => {
+  test('Matches the Full Page snapshot No verbintenis', () => {
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
               ...responseData,
-              verbintenis: null,
-            } as any)
+              verbintenis: undefined,
+            })
           )}
         />
       );
     }
-    expect(render(<Component />).asFragment()).toMatchSnapshot();
+
+    render(<Component />);
+
+    const panelHeadingsNotHere = ['Verbintenis'];
+
+    panelHeadings
+      .filter((heading) => !panelHeadingsNotHere.includes(heading))
+      .forEach((heading) => {
+        expect(screen.getByText(heading)).toBeInTheDocument();
+      });
+
+    panelHeadingsNotHere.forEach(async (heading) => {
+      expect(await screen.findByText(heading)).not.toBeInTheDocument();
+    });
   });
 
-  it('Matches the Full Page snapshot Not living in Netherlands', () => {
+  test('Matches the Full Page snapshot Not living in Netherlands', async () => {
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
               ...responseData,
@@ -286,62 +354,117 @@ describe('<Profile />', () => {
                 ...responseData.adres,
                 landnaam: 'Nicaragua',
               },
-            } as any)
+            })
           )}
         />
       );
     }
-    expect(render(<Component />).asFragment()).toMatchSnapshot();
+    render(<Component />);
+
+    expect(
+      await screen.queryByText('Onjuiste inschrijving melden')
+    ).not.toBeInTheDocument();
+    expect(await screen.queryByText('Nicaragua')).not.toBeInTheDocument();
   });
 
-  it('Matches the Full Page snapshot no address known', () => {
+  test('Matches the Full Page snapshot no address known', async () => {
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
               ...responseData,
-              adres: null,
-            } as any)
+              adres: null as unknown as Adres,
+              adresHistorisch: [],
+            })
           )}
         />
       );
     }
-    expect(render(<Component />).asFragment()).toMatchSnapshot();
+    render(<Component />);
+    expect(screen.getByText('Adres onbekend')).toBeInTheDocument();
   });
 
-  it('Matches the Full Page snapshot "Punt adres" in onderzoek', () => {
-    function Component() {
+  test('Matches the Full Page snapshot "Punt adres" in onderzoek', async () => {
+    function Component({
+      adresInOnderzoek,
+    }: {
+      adresInOnderzoek: '080000' | '089999' | null;
+    }) {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
               ...responseData,
               persoon: {
                 ...responseData.persoon,
-                adresInOnderzoek: '089999',
+                adresInOnderzoek,
               },
-            } as any)
+            })
           )}
         />
       );
     }
-    expect(render(<Component />).asFragment()).toMatchSnapshot();
+    {
+      const comp = render(<Component adresInOnderzoek="089999" />);
+      expect(comp.getByText('Adres in onderzoek')).toBeInTheDocument();
+      const adresInfo = await comp.queryByText(
+        /U woont niet meer op het adres waarop u staat ingeschreven\./
+      );
+      expect(adresInfo).toBeInTheDocument();
+    }
+    // Render can only be called once in per test.
+    cleanup();
+    {
+      const comp = render(<Component adresInOnderzoek="080000" />);
+      expect(comp.getByText('Adres in onderzoek')).toBeInTheDocument();
+      const adresInfo2 = await comp.queryByText(
+        /Op dit moment onderzoeken wij of u nog steeds woont op het adres/
+      );
+      expect(adresInfo2).toBeInTheDocument();
+    }
   });
 
-  it('Shows foreign nationalities', () => {
+  test('Shows vertrokken onbekend waarheen', () => {
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
+          initializeState={initializeState(
+            testState({
+              ...responseData,
+              persoon: {
+                ...responseData.persoon,
+                vertrokkenOnbekendWaarheen: true,
+              },
+            })
+          )}
+        />
+      );
+    }
+
+    render(<Component />);
+
+    expect(
+      screen.getByText('Vertrokken Onbekend Waarheen')
+    ).toBeInTheDocument();
+  });
+
+  test('Shows foreign nationalities', () => {
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
               ...responseData,
@@ -356,7 +479,7 @@ describe('<Profile />', () => {
                   },
                 ],
               },
-            } as any)
+            })
           )}
         />
       );
@@ -365,7 +488,7 @@ describe('<Profile />', () => {
     expect(screen.getByText('Armeense, Turkse')).toBeInTheDocument();
   });
 
-  it('Shows contactmomenten', async () => {
+  test('Shows max 3 contactmomenten', async () => {
     const user = userEvent.setup();
 
     function Component() {
@@ -373,37 +496,60 @@ describe('<Profile />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(
-            testState(
+            testState(responseData, [
               {
-                ...responseData,
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Contactformulier',
               },
-              [
-                {
-                  plaatsgevondenOp: '2024-05-29 08:02:38',
-                  onderwerp: 'Meldingen',
-                  nummer: '00002032',
-                  kanaal: 'Contactformulier',
-                },
-              ]
-            )
+              {
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Kanaal Foo',
+              },
+              {
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Kanaal Bar',
+              },
+              {
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Kanaal world',
+              },
+            ])
           )}
         />
       );
     }
     render(<Component />);
-    await user.click(screen.getByText('Toon'));
-    expect(screen.getByText('Contactformulier')).toBeInTheDocument();
+    expect(screen.getByText('Contactmomenten')).toBeInTheDocument();
+    await user.click(screen.getAllByText('Toon')[0]);
+
+    ['Contactformulier', 'Kanaal Foo', 'Kanaal Bar'].forEach((kanaal) => {
+      expect(screen.getByText(kanaal)).toBeInTheDocument();
+    });
+
+    expect(await screen.queryByText('Kanaal world')).not.toBeInTheDocument();
   });
 
-  it('Only shows dutch nationality', () => {
+  test('Only shows dutch nationality', () => {
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Profile}
+          component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
               ...responseData,
@@ -421,7 +567,7 @@ describe('<Profile />', () => {
                   },
                 ],
               },
-            } as any)
+            })
           )}
         />
       );
@@ -446,15 +592,16 @@ describe('<Profile />', () => {
           <MockApp
             routeEntry={routeEntry}
             routePath={routePath}
-            component={Profile}
+            component={MijnGegevensThema}
             initializeState={initializeState(
               testState({
                 ...responseData,
                 persoon: {
                   ...responseData.persoon,
-                  indicatieGeboortedatum,
+                  indicatieGeboortedatum:
+                    indicatieGeboortedatum as typeof responseData.persoon.indicatieGeboortedatum,
                 },
-              } as any)
+              })
             )}
           />
         );

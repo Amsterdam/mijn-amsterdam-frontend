@@ -1,0 +1,19 @@
+.SuppressedParagraph {
+  color: $color-neutral-grey4;
+}
+
+.ActionLink--reportIncorrectResidentCount {
+  @include mq-desktop {
+    position: absolute;
+    bottom: 0.3rem;
+    white-space: nowrap;
+  }
+}
+
+.IconWithLabel {
+  :global(.ams-icon) {
+    display: inline-block;
+    padding-right: 3px;
+    transform: translateY(3px);
+  }
+}

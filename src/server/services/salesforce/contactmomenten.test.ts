@@ -1,6 +1,5 @@
 import { fetchContactmomenten } from './contactmomenten';
-import { remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 const responseData = {
   results: [
@@ -20,31 +19,32 @@ const responseData = {
 };
 
 describe('Salesforce service', () => {
-  const profileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: '123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: '',
-    },
-    token: 'abc123',
-  };
+  const profileAndToken = getAuthProfileAndToken();
 
-  describe('salesforce-contactmomenten.service', () => {
-    beforeEach(() => {
-      remoteApi
-        .get(
-          '/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/?hadBetrokkene__uuid=123'
-        )
-        .reply(200, responseData);
-    });
+  beforeEach(() => {
+    remoteApi.get(/\/salesforce/).reply(200, responseData);
+  });
 
-    it('should transform the data correctly', async () => {
-      const requestID = '123';
+  it('should transform the data correctly', async () => {
+    const requestID = '123';
 
-      const result = await fetchContactmomenten(requestID, profileAndToken);
-      expect(result.status).toBe('OK');
-      expect(result.content![0].kanaal).toEqual('Telefoon'); // results is removed from the response
-    });
+    const result = await fetchContactmomenten(requestID, profileAndToken);
+    expect(result.status).toBe('OK');
+    expect(result.content).toEqual([
+      {
+        datePublished: '2024-05-22 08:28:45',
+        datePublishedFormatted: '22 mei 2024',
+        referenceNumber: '10001875',
+        subject: 'Algemeen',
+        themaKanaal: 'Telefoon',
+      },
+      {
+        datePublished: '2024-05-29 08:02:38',
+        datePublishedFormatted: '29 mei 2024',
+        referenceNumber: '00002032',
+        subject: 'Meldingen',
+        themaKanaal: 'Telefoon',
+      },
+    ]);
   });
 });

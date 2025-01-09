@@ -79,13 +79,12 @@ export function TableV2<T extends object = ZaakDetail>({
           {caption}
         </Heading>
       )}
-
       {subTitle}
       <Table className={classNames(styles.TableV2, className)}>
         {showTHead && (
           <Table.Header>
             <Table.Row>
-              {displayPropEntries.map(([key, label], index) => {
+              {displayPropEntries.map(([key, label]) => {
                 if (label) {
                   return (
                     <Table.HeaderCell key={`th-${key}`}>

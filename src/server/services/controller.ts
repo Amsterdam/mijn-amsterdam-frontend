@@ -22,12 +22,12 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchHLI } from './hli/hli';
-import { fetchMyLocation } from './my-locations';
 import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
 import { captureException } from './monitoring';
+import { fetchMyLocation } from './my-locations';
 import { fetchParkeren } from './parkeren/parkeren';
 import { fetchProfile } from './profile';
 import { fetchContactmomenten } from './salesforce/contactmomenten';
@@ -97,6 +97,7 @@ export function addServiceResultHandler(
   serviceName: string
 ) {
   if (IS_DEBUG) {
+    // eslint-disable-next-line no-console
     console.log(
       'Service-controller: adding service result handler for ',
       serviceName
@@ -105,6 +106,7 @@ export function addServiceResultHandler(
   return servicePromise.then((data) => {
     sendMessage(res, serviceName, 'message', data);
     if (IS_DEBUG) {
+      // eslint-disable-next-line no-console
       console.log(
         'Service-controller: service result message sent for',
         serviceName
@@ -165,7 +167,7 @@ const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const PROFILE = callAuthenticatedService(fetchProfile);
 const AVG = callAuthenticatedService(fetchAVG);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
-const SALESFORCE = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
+const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
@@ -228,7 +230,7 @@ const SERVICES_INDEX = {
   PROFILE,
   SUBSIDIE,
   SVWI,
-  SALESFORCE,
+  KLANT_CONTACT,
   TOERISTISCHE_VERHUUR,
   VAREN,
   VERGUNNINGEN,
@@ -307,7 +309,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     NOTIFICATIONS,
     OVERTREDINGEN,
     PARKEREN,
-    SALESFORCE,
+    KLANT_CONTACT,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -356,7 +358,7 @@ const tipsOmit = [
   'AFVALPUNTEN',
   'CMS_CONTENT',
   'NOTIFICATIONS',
-  'SALESFORCE',
+  'KLANT_CONTACT',
 ];
 
 export const servicesTipsByProfileType = {
@@ -463,7 +465,7 @@ export async function getServiceResultsForTips(
       getServiceTipsMap(auth.profile.profileType) as any
     );
     requestData = (await Promise.allSettled(servicePromises)).reduce(
-      (acc, result, index) => Object.assign(acc, getSettledResult(result)),
+      (acc, result) => Object.assign(acc, getSettledResult(result)),
       {}
     );
   }
