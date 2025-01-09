@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
-import { appStateAtom } from './useAppState';
+import { appStateAtom, appStateReadyAtom } from './useAppState';
 import { useTrackThemas } from './useTrackThemas.hook';
 import { AppState } from '../../universal/types';
 import { trackEvent } from '../helpers/monitoring';
@@ -39,6 +39,7 @@ describe('useTrackThemas', () => {
 
     function initializeState(snapshot: MutableSnapshot) {
       snapshot.set(appStateAtom, testState);
+      snapshot.set(appStateReadyAtom, true);
     }
 
     const mockApp = ({ children }: { children: ReactNode }) => (
