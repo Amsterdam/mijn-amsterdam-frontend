@@ -1,4 +1,5 @@
 import { ApiResponse } from '../../../universal/helpers/api';
+import { SomeOtherString } from '../../../universal/helpers/types';
 import { GenericDocument } from '../../../universal/types';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { NotificationLabelByType } from '../vergunningen-v2/config-and-types';
@@ -38,6 +39,10 @@ export type DecosDocumentSource = {
   fields: DecosDocumentBase & DecosFieldsObject;
 };
 
+export type DecosWorkflowSource = {
+  fields: DecosWorkflowFieldsSource;
+};
+
 export type DecosDocumentBlobSource = {
   key: DecosZaakID;
   links: string[];
@@ -48,6 +53,8 @@ export type DecosZakenResponse<T = DecosZaakSource[]> = {
   count: number;
   content: T;
 };
+
+export type DecosWorkflowResponse = DecosZakenResponse<DecosWorkflowSource[]>;
 
 export type DecosResponse<T> = {
   itemDataResultSet: {
@@ -86,6 +93,10 @@ export type DecosZaakFieldsSource = {
   // Info regarding possible payment
   text12?: string | null;
 };
+type DecosWorkflowFieldsSource = {
+  text7: string;
+  date1?: string;
+};
 export type AddressBookEntry = {
   key: string;
 };
@@ -111,9 +122,9 @@ export type DecosFieldTransformer<T extends DecosZaakBase = DecosZaakBase> = {
 };
 export type DecosTransformerOptions<T extends DecosZaakBase = DecosZaakBase> = {
   decosZaakTransformer?: DecosZaakTransformer<T>;
-  fetchDecosWorkflowDate?: (
-    stepTitle: DecosWorkflowStepTitle
-  ) => Promise<ApiResponse<string | null>>;
+  fetchDecosWorkflowDates?: (
+    stepTitles: DecosWorkflowStepTitle[]
+  ) => Promise<ApiResponse<Record<string, string | null>>>;
 };
 
 export type DecosZaakTransformer<T extends DecosZaakBase> = {
@@ -139,8 +150,8 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   requirePayment?: boolean;
   // Decision (resultaat) values are generalized here. For example. The sourceValues can be one of: `Toegekend met borden`, `Toegekend zonder dingen` which we want to show to the user as `Toegekend`.
   decisionTranslations?: Record<MADecision, DecosDecision[]>;
-  // The title of the workflow step that is used to find a date for the InBehandeling status.
-  dateInBehandelingWorkflowStepTitle?: string;
+  // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
+  fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.
   isActive: boolean;
   // Initially we request a set of fields to be included in the responseData (?select=). For some cases we need a (few) custom field(s) included in the initial response.
@@ -160,7 +171,6 @@ export type DecosZakenSourceFilter = (
 export interface DecosZaakBase {
   caseType: DecosCaseType;
   dateDecision: string | null;
-  dateInBehandeling: string | null;
   dateRequest: string;
 
   // DateStart and DateEnd are not applicable to every single decosZaak but general enough to but in base Type.
@@ -183,6 +193,9 @@ export interface DecosZaakBase {
   processed: boolean;
   status: ZaakStatus;
 
+  // WorkflowStep statusses
+  statusDates: ZaakStatusDate[];
+
   paymentStatus: string | null;
   paymentMethod: string | null;
 }
@@ -191,7 +204,11 @@ export type ZaakStatus =
   | 'Ontvangen'
   | 'In behandeling'
   | 'Afgehandeld'
-  | string;
+  | SomeOtherString;
+export type ZaakStatusDate = {
+  status: ZaakStatus;
+  datePublished: string | null;
+};
 export interface DecosZaakWithLocation extends DecosZaakBase {
   location: string | null;
 }

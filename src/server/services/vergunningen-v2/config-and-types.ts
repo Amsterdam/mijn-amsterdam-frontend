@@ -280,6 +280,7 @@ export interface VergunningOptions {
 
 export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
   dateDecisionFormatted?: string | null;
+  dateInBehandeling: string | null;
   dateInBehandelingFormatted: string | null;
   dateRequestFormatted: string;
   dateStartFormatted?: string | null;

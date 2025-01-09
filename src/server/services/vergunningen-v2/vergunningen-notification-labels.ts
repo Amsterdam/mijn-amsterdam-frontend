@@ -8,6 +8,7 @@ import {
 } from './config-and-types';
 import { dateFormat } from '../../../universal/helpers/date';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
+import { getStatusDate } from '../decos/helpers';
 
 const link = (vergunning: VergunningFrontendV2) => ({
   title: 'Bekijk details',
@@ -27,9 +28,7 @@ const statusInBehandeling: NotificationLabels = {
   description: (vergunning) =>
     `Wij hebben uw aanvraag ${vergunning.title} in behandeling genomen.`,
   datePublished: (vergunning) =>
-    vergunning.dateInBehandeling
-      ? vergunning.dateInBehandeling
-      : vergunning.dateRequest,
+    getStatusDate('In behandeling', vergunning) ?? vergunning.dateRequest,
   link,
 };
 

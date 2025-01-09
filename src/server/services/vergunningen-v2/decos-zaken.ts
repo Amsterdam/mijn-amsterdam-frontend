@@ -247,7 +247,12 @@ export const Omzettingsvergunning: DecosZaakTransformer<OmzettingsvergunningType
     isActive: true,
     caseType: CaseTypeV2.Omzettingsvergunning,
     title: 'VergunningV2 voor kamerverhuur (omzettingsvergunning)',
-    dateInBehandelingWorkflowStepTitle: 'Omzettingsvergunning - Behandelen',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle: 'Omzettingsvergunning - Behandelen',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
@@ -351,7 +356,12 @@ export const NachtwerkOntheffing: DecosZaakTransformer<NachtwerkontheffingType> 
     caseType: CaseTypeV2.NachtwerkOntheffing,
     title:
       'Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)',
-    dateInBehandelingWorkflowStepTitle: 'Nachtwerkontheffing - Behandelen',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle: 'Nachtwerkontheffing - Behandelen',
+      },
+    ],
     requirePayment: true,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -438,8 +448,12 @@ export const Samenvoegingsvergunning: DecosZaakTransformer<Samenvoegingsvergunni
     isActive: true,
     caseType: CaseTypeV2.Samenvoegingsvergunning,
     title: 'VergunningV2 voor samenvoegen van woonruimten',
-    dateInBehandelingWorkflowStepTitle:
-      'Samenvoegingsvergunning - Beoordelen en besluiten',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle: 'Samenvoegingsvergunning - Beoordelen en besluiten',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
@@ -452,8 +466,13 @@ export const Onttrekkingsvergunning: DecosZaakTransformer<Onttrekkingsvergunning
     isActive: true,
     caseType: CaseTypeV2.Onttrekkingsvergunning,
     title: CaseTypeV2.Onttrekkingsvergunning,
-    dateInBehandelingWorkflowStepTitle:
-      'Onttrekkingsvergunning voor ander gebruik - Beoordelen en besluiten',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle:
+          'Onttrekkingsvergunning voor ander gebruik - Beoordelen en besluiten',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
@@ -466,8 +485,13 @@ export const OnttrekkingsvergunningSloop: DecosZaakTransformer<Onttrekkingsvergu
     isActive: true,
     caseType: CaseTypeV2.OnttrekkingsvergunningSloop,
     title: CaseTypeV2.OnttrekkingsvergunningSloop,
-    dateInBehandelingWorkflowStepTitle:
-      'Onttrekkingsvergunning voor sloop - Beoordelen en besluiten',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle:
+          'Onttrekkingsvergunning voor sloop - Beoordelen en besluiten',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
@@ -480,8 +504,12 @@ export const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimteType> 
     isActive: true,
     caseType: CaseTypeV2.VormenVanWoonruimte,
     title: 'VergunningV2 voor woningvorming',
-    dateInBehandelingWorkflowStepTitle:
-      'Woningvormingsvergunning - Beoordelen en besluiten',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle: 'Woningvormingsvergunning - Beoordelen en besluiten',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
@@ -494,7 +522,12 @@ export const Splitsingsvergunning: DecosZaakTransformer<SplitsingsvergunningType
     isActive: true,
     caseType: CaseTypeV2.Splitsingsvergunning,
     title: CaseTypeV2.Splitsingsvergunning,
-    dateInBehandelingWorkflowStepTitle: 'Splitsingsvergunning - Behandelen',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle: 'Splitsingsvergunning - Behandelen',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
@@ -506,7 +539,9 @@ export const VOBvergunning: DecosZaakTransformer<LigplaatsvergunningType> = {
   isActive: true,
   caseType: CaseTypeV2.VOB,
   title: 'Ligplaatsvergunning',
-  dateInBehandelingWorkflowStepTitle: 'VOB - Beoordelen en besluiten',
+  fetchWorkflowStatusDatesFor: [
+    { status: 'In behandeling', stepTitle: 'VOB - Beoordelen en besluiten' },
+  ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     text9: { name: 'requestKind' },
@@ -523,8 +558,13 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<ExploitatieHorecabed
     isActive: FeatureToggle.horecaActive,
     caseType: CaseTypeV2.ExploitatieHorecabedrijf,
     title: CaseTypeV2.ExploitatieHorecabedrijf,
-    dateInBehandelingWorkflowStepTitle:
-      'Horeca vergunning exploitatie Horecabedrijf - In behandeling nemen',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle:
+          'Horeca vergunning exploitatie Horecabedrijf - In behandeling nemen',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       date2: dateEnd,
@@ -538,8 +578,12 @@ export const RVVHeleStad: DecosZaakTransformer<RVVHeleStadType> = {
   isActive: !IS_PRODUCTION,
   caseType: CaseTypeV2.RVVHeleStad,
   title: 'RVV-verkeersontheffing',
-  dateInBehandelingWorkflowStepTitle:
-    'Status bijwerken en notificatie verzenden - In behandeling',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+    },
+  ],
   requirePayment: true,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -559,7 +603,9 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
   isActive: true,
   caseType: CaseTypeV2.RVVSloterweg,
   title: 'RVV ontheffing Sloterweg',
-  dateInBehandelingWorkflowStepTitle: 'RVV Sloterweg - Behandelen',
+  fetchWorkflowStatusDatesFor: [
+    { status: 'In behandeling', stepTitle: 'RVV Sloterweg - Behandelen' },
+  ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     text8: {
@@ -578,8 +624,9 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
     Ingetrokken: ['Ingetrokken door gemeente'],
   },
   async afterTransform(vergunning, zaakSource, options) {
-    const dateVerleend =
-      await options?.fetchDecosWorkflowDate?.('Status naar actief');
+    const dateVerleend = await options?.fetchDecosWorkflowDates?.([
+      'Status naar actief',
+    ]);
 
     if (dateVerleend) {
       vergunning.processed = true;
@@ -616,8 +663,12 @@ export const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaatsType> =
     isActive: true,
     caseType: CaseTypeV2.EigenParkeerplaats,
     title: CaseTypeV2.EigenParkeerplaats,
-    dateInBehandelingWorkflowStepTitle:
-      'Status bijwerken en notificatie verzenden - In behandeling',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+      },
+    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       date6: dateStart,
@@ -692,8 +743,12 @@ export const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaats
     isActive: true,
     caseType: CaseTypeV2.EigenParkeerplaatsOpheffen,
     title: CaseTypeV2.EigenParkeerplaatsOpheffen,
-    dateInBehandelingWorkflowStepTitle:
-      'Status bijwerken en notificatie verzenden - In behandeling',
+    fetchWorkflowStatusDatesFor: [
+      {
+        status: 'In behandeling',
+        stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+      },
+    ],
     requirePayment: true,
     hasValidSourceData: EigenParkeerplaats.hasValidSourceData,
     transformFields: {
@@ -719,7 +774,9 @@ export const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffi
     isActive: true,
     caseType: CaseTypeV2.TouringcarDagontheffing,
     title: CaseTypeV2.TouringcarDagontheffing,
-    dateInBehandelingWorkflowStepTitle: 'Status naar in behandeling',
+    fetchWorkflowStatusDatesFor: [
+      { status: 'In behandeling', stepTitle: 'Status naar in behandeling' },
+    ],
     requirePayment: true,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -744,7 +801,9 @@ export const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaaronthef
     isActive: true,
     caseType: CaseTypeV2.TouringcarJaarontheffing,
     title: CaseTypeV2.TouringcarJaarontheffing,
-    dateInBehandelingWorkflowStepTitle: 'Status naar In Behandeling',
+    fetchWorkflowStatusDatesFor: [
+      { status: 'In behandeling', stepTitle: 'Status naar In Behandeling' },
+    ],
     requirePayment: true,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -772,7 +831,9 @@ export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerO
     isActive: !IS_PRODUCTION,
     caseType: CaseTypeV2.WVOS,
     title: 'Werkzaamheden en vervoer op straat',
-    dateInBehandelingWorkflowStepTitle: 'Status - In behandeling',
+    fetchWorkflowStatusDatesFor: [
+      { status: 'In behandeling', stepTitle: 'Status - In behandeling' },
+    ],
     requirePayment: true,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,

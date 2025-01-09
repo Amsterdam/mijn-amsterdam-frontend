@@ -1,6 +1,7 @@
 import { RVVSloterweg, VergunningFrontendV2 } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { getStatusDate } from '../decos/helpers';
 
 export function getStatusStepsRVVSloterweg(
   vergunning: RVVSloterweg
@@ -12,11 +13,12 @@ export function getStatusStepsRVVSloterweg(
   // Update of the kentekens on an active permit.
   const isChangeRequest = vergunning.requestType !== 'Nieuw';
 
+  const statusDateInProgress = getStatusDate('In behandeling', vergunning);
   const isReceived =
-    (!vergunning.dateInBehandeling || !vergunning.dateWorkflowVerleend) &&
+    (!statusDateInProgress || !vergunning.dateWorkflowVerleend) &&
     !vergunning.decision;
 
-  const isInprogress = !!vergunning.dateInBehandeling || !isChangeRequest;
+  const isInprogress = !!statusDateInProgress || !isChangeRequest;
   const isGranted = !!vergunning.dateWorkflowVerleend;
   const isExpiredByEndDate =
     vergunning.dateEnd &&
@@ -26,8 +28,7 @@ export function getStatusStepsRVVSloterweg(
     isExpiredByEndDate || vergunning.decision === RVV_SLOTERWEG_RESULT_EXPIRED;
 
   const dateInProgress =
-    (isChangeRequest ? vergunning.dateInBehandeling : vergunning.dateRequest) ??
-    '';
+    (isChangeRequest ? statusDateInProgress : vergunning.dateRequest) ?? '';
 
   const hasDecision = [
     RVV_SLOTERWEG_RESULT_NOT_APPLICABLE,
@@ -130,7 +131,8 @@ export function getStatusSteps(vergunning: VergunningFrontendV2) {
   }
 
   const isAfgehandeld = vergunning.processed;
-  const hasDateInBehandeling = !!vergunning.dateInBehandeling;
+  const dateInBehandeling = getStatusDate('In behandeling', vergunning);
+  const hasDateInBehandeling = !!dateInBehandeling;
   const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
   const isExpiredByEndDate =
     !!vergunning.dateEnd &&
@@ -151,7 +153,7 @@ export function getStatusSteps(vergunning: VergunningFrontendV2) {
     {
       id: 'step-2',
       status: 'In behandeling',
-      datePublished: vergunning.dateInBehandeling || '',
+      datePublished: dateInBehandeling || '',
       description: '',
       documents: [],
       isActive: isInBehandeling,

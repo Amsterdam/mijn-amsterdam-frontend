@@ -1,10 +1,7 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
-import {
-  VergunningDocument,
-  VergunningFrontendV2,
-} from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
@@ -17,6 +14,7 @@ import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDienste
 import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
 import { LinkProps } from '../../../universal/types';
+import { VergunningDocument } from '../../../server/services';
 
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
