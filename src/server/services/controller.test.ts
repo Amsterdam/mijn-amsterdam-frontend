@@ -22,6 +22,7 @@ import {
   RequestMock,
   ResponseMock,
 } from '../../testing/utils';
+import { apiSuccessResult } from '../../universal/helpers/api';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -188,7 +189,7 @@ describe('controller', () => {
 
   test('addServiceResultHandler', async () => {
     const resMock = ResponseMock.new();
-    const data = { foo: 'bar' };
+    const data = { X: apiSuccessResult({ foo: 'bar' }) };
     const servicePromise = Promise.resolve(data);
 
     const result = await addServiceResultHandler(
@@ -198,7 +199,7 @@ describe('controller', () => {
     );
 
     expect(resMock.write).toHaveBeenCalledWith(
-      `event: message\nid: test-service\ndata: {"foo":"bar"}\n\n`
+      `event: message\nid: test-service\ndata: {"X":{"content":{"foo":"bar"},"status":"OK"}}\n\n`
     );
 
     expect(result).toEqual(data);
