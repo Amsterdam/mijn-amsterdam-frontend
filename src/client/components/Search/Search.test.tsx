@@ -9,7 +9,8 @@ import * as bagResponse from './bag-response.json';
 import { Search } from './Search';
 import * as remoteConfig from './search-config.json';
 import { bffApi, remoteApi } from '../../../testing/utils';
-import { appStateAtom } from '../../hooks/useAppState';
+import { AppState } from '../../../universal/types';
+import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 
 describe('<Search />', () => {
   beforeEach(() => {
@@ -105,7 +106,8 @@ describe('<Search />', () => {
           initializeState={(snapshot) => {
             snapshot.set(appStateAtom, {
               VERGUNNINGEN: { status: 'OK', content: [] },
-            } as any);
+            } as unknown as AppState);
+            snapshot.set(appStateReadyAtom, true);
           }}
         >
           <Search />
@@ -140,7 +142,8 @@ describe('<Search />', () => {
                   },
                 ],
               },
-            } as any);
+            } as unknown as AppState);
+            snapshot.set(appStateReadyAtom, true);
           }}
         >
           <Search />
