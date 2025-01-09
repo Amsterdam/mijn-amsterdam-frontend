@@ -24,3 +24,7 @@
 .StadspasNummerInfo {
   padding-bottom: var(--ams-grid-row-gap-sm);
 }
+
+.BlokkeerDialog {
+  --ams-dialog-max-inline-size: 40em;
+}
