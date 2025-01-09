@@ -34,6 +34,7 @@ import {
 import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import modalStyles from '../../components/Modal/Modal.module.scss';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
@@ -266,9 +267,8 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
               variant="primary"
               onClick={() => {
                 setIsModalOpen(false);
-                if (!blockPassURL) {
-                  return;
-                }
+                // RP TODO: Update when errors or failure active = true after posting.
+                // Could use https://swr.vercel.app/#overview
                 fetch(blockPassURL, { method: 'POST' });
               }}
             >

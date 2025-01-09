@@ -20,6 +20,9 @@
   z-index: z-index(modal);
 }
 
+/* RP TODO: Make BlockPassButton Modal wider
+max-inline-style: 40em; does this but where can I place it??? */
+
 .ModalContainer {
   display: none;
 
