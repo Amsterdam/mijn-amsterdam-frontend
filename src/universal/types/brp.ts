@@ -83,12 +83,7 @@ export interface Kind {
   voornamen: string | null;
   voorvoegselGeslachtsnaam: string | null;
 }
-export interface ContactMoment {
-  plaatsgevondenOp: string | null;
-  onderwerp: ReactNode | null;
-  nummer: string | null;
-  kanaal: ReactNode | null;
-}
+
 export interface BRPDataFromSource {
   kvkNummer: string;
   persoon: Persoon;

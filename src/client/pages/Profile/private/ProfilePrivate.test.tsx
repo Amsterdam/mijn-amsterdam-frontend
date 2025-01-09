@@ -4,6 +4,7 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
 import { MijnGegevensThema } from './ProfilePrivate';
+import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { Adres, AppState, BRPData } from '../../../../universal/types';
 import { ThemaTitles } from '../../../config/thema';
@@ -181,24 +182,9 @@ const responseData = {
   ],
 } as unknown as BRPData;
 
-const responseDataSF = [
-  {
-    plaatsgevondenOp: '2024-05-29 08:02:38',
-    onderwerp: 'Meldingen',
-    nummer: '00002032',
-    kanaal: 'Telefoon',
-  },
-  {
-    plaatsgevondenOp: '2024-12-03 10:58:47',
-    onderwerp: 'Erfpacht',
-    nummer: '00154596',
-    kanaal: 'Chat',
-  },
-];
-
 const testState = (
-  responseBRP = responseData,
-  responseSF = responseDataSF
+  responseBRP: BRPData = responseData,
+  responseSF: ContactMoment[] = []
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
@@ -514,28 +500,32 @@ describe('<Profile />', () => {
           initializeState={initializeState(
             testState(responseData, [
               {
-                plaatsgevondenOp: '2024-05-29 08:02:38',
-                onderwerp: 'Meldingen',
-                nummer: '00002032',
-                kanaal: 'Contactformulier',
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Contactformulier',
               },
               {
-                plaatsgevondenOp: '2024-05-29 08:02:38',
-                onderwerp: 'Meldingen',
-                nummer: '00002032',
-                kanaal: 'Kanaal Foo',
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Kanaal Foo',
               },
               {
-                plaatsgevondenOp: '2024-05-29 08:02:38',
-                onderwerp: 'Meldingen',
-                nummer: '00002032',
-                kanaal: 'Kanaal Bar',
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Kanaal Bar',
               },
               {
-                plaatsgevondenOp: '2024-05-29 08:02:38',
-                onderwerp: 'Meldingen',
-                nummer: '00002032',
-                kanaal: 'Kanaal world',
+                datePublished: '2024-05-29 08:02:38',
+                datePublishedFormatted: '2024-05-29 08:02:38',
+                subject: 'Meldingen',
+                referenceNumber: '00002032',
+                themaKanaal: 'Kanaal world',
               },
             ])
           )}

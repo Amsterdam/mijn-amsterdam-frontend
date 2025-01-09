@@ -13,6 +13,7 @@ type TestData = {
 
 type TestProfileData = {
   owner: TestData;
+  foo?: { bar: string };
 };
 
 const labelConfig: ProfileLabels<TestData, TestProfileData> = {
@@ -55,12 +56,18 @@ describe('formatProfileSectionData', () => {
 
     const result = formatProfileSectionData(labelConfig, data, profileData);
 
-    expect(result).toEqual({});
+    expect(result).toEqual({
+      Age: '0 years old',
+    });
   });
 
   it('should handle label formatters that are functions', () => {
     const customLabelConfig: ProfileLabels<TestData, TestProfileData> = {
-      name: [(key) => `Custom ${key}`, (value) => value],
+      name: [
+        (key) => `Custom ${key}`,
+        (value, _profileSectionData, profileData) =>
+          `${value} + ${profileData?.foo?.bar}`,
+      ],
       age: ['Age', (value) => `${value} years old`],
       email: ['Email', (value) => value.toLowerCase()],
     };
@@ -73,6 +80,7 @@ describe('formatProfileSectionData', () => {
 
     const profileData: TestProfileData = {
       owner: data,
+      foo: { bar: 'baz' },
     };
 
     const result = formatProfileSectionData(
@@ -82,7 +90,7 @@ describe('formatProfileSectionData', () => {
     );
 
     expect(result).toEqual({
-      'Custom name': 'Jane Doe',
+      'Custom name': 'Jane Doe + baz',
       Age: '25 years old',
       Email: 'jane@example.com',
     });
