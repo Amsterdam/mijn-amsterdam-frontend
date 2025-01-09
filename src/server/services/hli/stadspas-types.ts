@@ -173,8 +173,8 @@ export interface Stadspas {
   budgets: StadspasBudget[];
   balanceFormatted: string;
   balance: number;
+  actief: boolean;
   securityCode: SecurityCode;
-  blockPassURL: string | null;
 }
 
 export interface StadspasFrontend extends Stadspas {
