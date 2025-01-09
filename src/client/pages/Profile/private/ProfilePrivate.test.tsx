@@ -6,6 +6,7 @@ import { MutableSnapshot } from 'recoil';
 import { MijnGegevensThema } from './ProfilePrivate';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { Adres, AppState, BRPData } from '../../../../universal/types';
+import { ThemaTitles } from '../../../config/thema';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
@@ -208,7 +209,7 @@ function initializeState(testState: unknown) {
     snapshot.set(appStateAtom, testState as AppState);
 }
 
-const PAGE_TITLE = 'Mijn gegevens';
+const PAGE_TITLE = ThemaTitles.BRP;
 
 const panelHeadings = [
   'Persoonlijke gegevens',
@@ -225,7 +226,7 @@ describe('<Profile />', () => {
   const routePath = AppRoutes.BRP;
 
   beforeAll(() => {
-    (window.matchMedia as any) = vi.fn(() => {
+    (window.matchMedia as unknown) = vi.fn(() => {
       return {
         addListener: vi.fn(),
         removeListener: vi.fn(),

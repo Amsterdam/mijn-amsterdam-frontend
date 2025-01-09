@@ -19,9 +19,9 @@ import {
 import { Adres, AppState } from '../../../../universal/types';
 import { LinkdInline } from '../../../components/Button/Button';
 import {
-  formatProfileSectionData,
   ProfileLabels,
-} from '../private/ProfilePrivate.transform';
+  formatProfileSectionData,
+} from '../profileDataFormatter';
 import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
 
 /**
@@ -30,14 +30,6 @@ import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
  */
 
 type KVKPanelKey = keyof Omit<KVKData, 'mokum'> | 'hoofdVestiging';
-
-type FormattedEigenaar = {
-  naam: string | null;
-  geboortedatum: string | null;
-  bsn?: string;
-  adres: string | null;
-  woonplaats: string | null;
-};
 
 const onderneming: ProfileLabels<Partial<Onderneming>, AppState['KVK']> = {
   handelsnaam: 'Handelsnaam',
@@ -290,7 +282,7 @@ export const labelConfig = {
 };
 
 interface KvkProfileData {
-  onderneming: ProfileSectionData | null;
+  onderneming?: ProfileSectionData | null;
   eigenaar?: ProfileSectionData | null;
   rechtspersonen?: ProfileSectionData[];
   hoofdVestiging?: ProfileSectionData;
@@ -303,18 +295,23 @@ interface KvkProfileData {
 }
 
 export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
-  const profileData: KvkProfileData = {
-    onderneming: formatProfileSectionData(
+  const profileData: KvkProfileData = {};
+
+  if (kvkData.onderneming) {
+    profileData.onderneming = formatProfileSectionData(
       labelConfig.onderneming,
       kvkData.onderneming,
       kvkData
-    ),
-    eigenaar: formatProfileSectionData(
+    );
+  }
+
+  if (labelConfig.eigenaar) {
+    profileData.eigenaar = formatProfileSectionData(
       labelConfig.eigenaar,
       kvkData.eigenaar,
       kvkData
-    ),
-  };
+    );
+  }
 
   if (kvkData.rechtspersonen?.length) {
     profileData.rechtspersonen = kvkData.rechtspersonen.map((persoon) =>
