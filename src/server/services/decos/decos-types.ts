@@ -194,7 +194,7 @@ export interface DecosZaakBase {
   status: ZaakStatus;
 
   // WorkflowStep statusses
-  statusDates: { status: ZaakStatus; datePublished: string | null }[];
+  statusDates: ZaakStatusDate[];
 
   paymentStatus: string | null;
   paymentMethod: string | null;
@@ -205,7 +205,10 @@ export type ZaakStatus =
   | 'In behandeling'
   | 'Afgehandeld'
   | SomeOtherString;
-
+export type ZaakStatusDate = {
+  status: ZaakStatus;
+  datePublished: string | null;
+};
 export interface DecosZaakWithLocation extends DecosZaakBase {
   location: string | null;
 }

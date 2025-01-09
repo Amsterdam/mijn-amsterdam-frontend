@@ -20,7 +20,7 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-import { getStatusDateInBehandeling, isNearEndDate } from '../decos/helpers';
+import { getStatusDate, isNearEndDate } from '../decos/helpers';
 
 // prettier-ignore
 export function getNotificationLabels(
@@ -59,7 +59,7 @@ export function getNotificationLabels(
 
     case notificationLabels.statusInBehandeling &&
       !vergunning.processed &&
-      !!getStatusDateInBehandeling(vergunning):
+      !!getStatusDate(vergunning):
       return notificationLabels.statusInBehandeling;
 
     case notificationLabels.statusAanvraag && !vergunning.processed:

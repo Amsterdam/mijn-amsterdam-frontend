@@ -20,11 +20,7 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { fetchDecosZaak, fetchDecosZaken } from '../decos/decos-service';
 import { DecosZaakDocument, ZakenFilter } from '../decos/decos-types';
-import {
-  getStatusDateInBehandeling,
-  isExpired,
-  toDateFormatted,
-} from '../decos/helpers';
+import { getStatusDate, isExpired, toDateFormatted } from '../decos/helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export const FILTER_VERGUNNINGEN_DEFAULT: ZakenFilter = (
@@ -47,9 +43,9 @@ function transformVergunningFrontend(
   const vergunningFrontend: VergunningFrontendV2 = {
     ...vergunning,
     dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
-    dateInBehandeling: getStatusDateInBehandeling(vergunning),
+    dateInBehandeling: getStatusDate('In behandeling', vergunning),
     dateInBehandelingFormatted: toDateFormatted(
-      getStatusDateInBehandeling(vergunning)
+      getStatusDate('In behandeling', vergunning)
     ),
     dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
     // Assign Status steps later on

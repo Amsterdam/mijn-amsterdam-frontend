@@ -1,7 +1,7 @@
 import { RVVSloterweg, VergunningFrontendV2 } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
-import { getStatusDateInBehandeling } from '../decos/helpers';
+import { getStatusDate } from '../decos/helpers';
 
 export function getStatusStepsRVVSloterweg(
   vergunning: RVVSloterweg
@@ -13,7 +13,7 @@ export function getStatusStepsRVVSloterweg(
   // Update of the kentekens on an active permit.
   const isChangeRequest = vergunning.requestType !== 'Nieuw';
 
-  const statusDateInProgress = getStatusDateInBehandeling(vergunning);
+  const statusDateInProgress = getStatusDate('In behandeling', vergunning);
   const isReceived =
     (!statusDateInProgress || !vergunning.dateWorkflowVerleend) &&
     !vergunning.decision;
@@ -131,7 +131,7 @@ export function getStatusSteps(vergunning: VergunningFrontendV2) {
   }
 
   const isAfgehandeld = vergunning.processed;
-  const dateInBehandeling = getStatusDateInBehandeling(vergunning);
+  const dateInBehandeling = getStatusDate('In behandeling', vergunning);
   const hasDateInBehandeling = !!dateInBehandeling;
   const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
   const isExpiredByEndDate =

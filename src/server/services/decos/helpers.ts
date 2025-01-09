@@ -3,6 +3,7 @@ import type {
   DecosZaakSource,
   DecosZaakBase,
   DecosZaakWithKentekens,
+  ZaakStatus,
 } from './decos-types';
 import {
   DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
@@ -177,9 +178,12 @@ export function toDateFormatted(input: string | null) {
 }
 
 // Try to fetch and assign a specific date on which the zaak was "In behandeling"
-export function getStatusDateInBehandeling(decosZaak: DecosZaakBase) {
+export function getStatusDate(
+  zaakStatus: ZaakStatus,
+  decosZaak: DecosZaakBase
+) {
   return (
-    decosZaak.statusDates.find(({ status }) => status === 'In behandeling')
+    decosZaak.statusDates.find(({ status }) => status === zaakStatus)
       ?.datePublished || null
   );
 }
