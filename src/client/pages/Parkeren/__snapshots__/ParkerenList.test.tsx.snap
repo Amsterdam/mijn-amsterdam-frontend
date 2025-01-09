@@ -111,17 +111,17 @@ exports[`ParkerenList > should display the list of parkeervergunningen 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/parkeren/gpp/Z-24-2233516"
-                    >
-                      Z/24/2233516
-                    </a>
+                    Z/24/2233516
                   </td>
                   <td
                     class="ams-table__cell"
                   >
-                    Vergunning 1
+                    <a
+                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                      href="/parkeren/gpp/Z-24-2233516"
+                    >
+                      Vergunning 1
+                    </a>
                   </td>
                   <td
                     class="ams-table__cell"
@@ -135,17 +135,17 @@ exports[`ParkerenList > should display the list of parkeervergunningen 1`] = `
                   <td
                     class="ams-table__cell"
                   >
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/parkeren/gpp/Z-24-2233516"
-                    >
-                      Z/24/2233516
-                    </a>
+                    Z/24/2233516
                   </td>
                   <td
                     class="ams-table__cell"
                   >
-                    Vergunning 2
+                    <a
+                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                      href="/parkeren/gpp/Z-24-2233516"
+                    >
+                      Vergunning 2
+                    </a>
                   </td>
                   <td
                     class="ams-table__cell"

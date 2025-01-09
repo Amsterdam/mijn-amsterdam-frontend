@@ -22,6 +22,12 @@ describe('useTrackThemas', () => {
           businessPartnerIdEncrypted: 'yyy-456-yyy',
         },
       },
+      VERGUNNINGEN: {
+        isActive: true,
+      },
+      VERGUNNINGENv2: {
+        isActive: true,
+      },
       PARKEREN: {
         status: 'OK',
         content: {

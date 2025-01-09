@@ -12,6 +12,7 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseType.GPK,
   CaseType.GPP,
   CaseType.BZP,
+  CaseType.BZB,
   CaseType.EigenParkeerplaats,
   CaseType.EigenParkeerplaatsOpheffen,
   CaseType.TouringcarDagontheffing,
@@ -21,19 +22,19 @@ export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
 function getVergunningenFromThemaVergunningen(
   content: VergunningFrontendV2[] | Vergunning[] | null
 ) {
+  const vergunningen = (content ?? [])
+    .filter((vergunning) => {
+      return PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType);
+    })
+    .map((vergunning) => ({
+      ...vergunning,
+      link: {
+        ...vergunning.link,
+        to: vergunning.link.to.replace('vergunningen', 'parkeren'),
+      },
+    }));
   return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
-    (content ?? [])
-      .filter((vergunning) =>
-        PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
-      )
-      .map((vergunning) => ({
-        ...vergunning,
-        link: {
-          ...vergunning.link,
-          to: vergunning.link.to.replace('vergunningen', 'parkeren'),
-        },
-      })),
-    'identifier'
+    vergunningen
   );
 }
 

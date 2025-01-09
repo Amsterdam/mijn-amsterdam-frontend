@@ -1,10 +1,11 @@
 import Mockdate from 'mockdate';
 
-import { fetchWmo, forTesting, getDisclaimer } from './wmo';
+import { fetchWmo, forTesting } from './wmo';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
+import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),
@@ -103,7 +104,7 @@ describe('Transform api items', () => {
     });
   });
 
-  describe('getDisclaimer', () => {
+  describe('getHulpmiddelenDisclaimer', () => {
     const baseAanvraag: ZorgnedAanvraagTransformed = {
       titel: 'Test Voorziening',
       isActueel: true,
@@ -128,7 +129,7 @@ describe('Transform api items', () => {
     const baseAanvragen = [baseAanvraag];
 
     it('should return undefined when no matching conditions', () => {
-      const result = getDisclaimer(baseAanvraag, baseAanvragen);
+      const result = getHulpmiddelenDisclaimer(baseAanvraag, baseAanvragen);
       expect(result).toBeUndefined();
     });
 
@@ -147,7 +148,7 @@ describe('Transform api items', () => {
         },
       ];
 
-      const result = getDisclaimer(aanvraag, aanvragen);
+      const result = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
       expect(result).toBe(
         'Door een fout staat dit hulpmiddel ten onrechte bij Eerdere en afgewezen voorzieningen. Kijk bij "Huidige voorzieningen" of in de brief bovenaan.'
       );
@@ -169,8 +170,8 @@ describe('Transform api items', () => {
         },
       ];
 
-      const result = getDisclaimer(aanvraag, aanvragen);
-      expect(result).toMatch(
+      const result = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
+      expect(result).toBe(
         'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.'
       );
     });
