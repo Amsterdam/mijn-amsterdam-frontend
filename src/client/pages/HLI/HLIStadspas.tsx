@@ -34,7 +34,6 @@ import {
 import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import modalStyles from '../../components/Modal/Modal.module.scss';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
@@ -258,6 +257,7 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
       </Button>
       <Modal
         title="Weet u zeker dat u uw stadspas wilt blokkeren ?"
+        className={styles.BlokkeerDialog}
         isOpen={isModalOpen}
         showCloseButton={false}
         actions={
