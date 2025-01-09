@@ -9,9 +9,7 @@ import {
   VergunningFrontendV2,
 } from './config-and-types';
 import { decosCaseToZaakTransformers } from './decos-zaken';
-import {
-  fetchVergunningenV2,
-} from './vergunningen';
+import { fetchVergunningenV2 } from './vergunningen';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { Thema, Themas } from '../../../universal/config/thema';
 import {
@@ -22,7 +20,7 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-import { isNearEndDate } from '../decos/helpers';
+import { getStatusDate, isNearEndDate } from '../decos/helpers';
 
 // prettier-ignore
 export function getNotificationLabels(
@@ -34,19 +32,34 @@ export function getNotificationLabels(
   // Ignore formatting of the switch case statements for readability
   switch (true) {
     // TODO: Check if we always have Verleend as decision for expirable vergunning
-    case notificationLabels.verlooptBinnenkort && vergunning.decision === 'Verleend' && isNearEndDate(vergunning, compareToDate):
+    case notificationLabels.verlooptBinnenkort &&
+      vergunning.decision === 'Verleend' &&
+      isNearEndDate(vergunning, compareToDate):
       return notificationLabels.verlooptBinnenkort;
 
-    case notificationLabels.isVerlopen && vergunning.decision === 'Verleend' && vergunning.isExpired && vergunning.dateEnd && differenceInMonths(parseISO(vergunning.dateEnd), compareToDate) < NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED:
+    case notificationLabels.isVerlopen &&
+      vergunning.decision === 'Verleend' &&
+      vergunning.isExpired &&
+      vergunning.dateEnd &&
+      differenceInMonths(parseISO(vergunning.dateEnd), compareToDate) <
+        NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED:
       return notificationLabels.isVerlopen;
 
-    case notificationLabels.isIngetrokken && vergunning.decision === 'Ingetrokken' && vergunning.dateDecision && isRecentNotification(vergunning.dateDecision):
+    case notificationLabels.isIngetrokken &&
+      vergunning.decision === 'Ingetrokken' &&
+      vergunning.dateDecision &&
+      isRecentNotification(vergunning.dateDecision):
       return notificationLabels.isIngetrokken;
 
-    case notificationLabels.statusAfgehandeld && vergunning.processed && vergunning.dateDecision && isRecentNotification(vergunning.dateDecision):
+    case notificationLabels.statusAfgehandeld &&
+      vergunning.processed &&
+      vergunning.dateDecision &&
+      isRecentNotification(vergunning.dateDecision):
       return notificationLabels.statusAfgehandeld;
 
-    case notificationLabels.statusInBehandeling && !vergunning.processed && !!vergunning.dateInBehandeling:
+    case notificationLabels.statusInBehandeling &&
+      !vergunning.processed &&
+      !!getStatusDate('In behandeling', vergunning):
       return notificationLabels.statusInBehandeling;
 
     case notificationLabels.statusAanvraag && !vergunning.processed:

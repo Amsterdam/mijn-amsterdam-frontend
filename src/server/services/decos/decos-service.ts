@@ -19,6 +19,7 @@ import {
   DecosZakenResponse,
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
+  DecosWorkflowResponse,
 } from './decos-types';
 import {
   getDecosZaakTypeFromSource,
@@ -27,6 +28,7 @@ import {
 } from './helpers';
 import {
   ApiErrorResponse,
+  ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
@@ -155,8 +157,8 @@ async function transformDecosZaakResponse<
   }
 
   // Reference to decos workflow service for use in transformers
-  const fetchWorkflowDate = (stepTitle: string) => {
-    return fetchDecosWorkflowDate(requestID, decosZaakSource.key, stepTitle);
+  const fetchWorkflowDates = (stepTitles: string[]) => {
+    return fetchDecosWorkflowDates(requestID, decosZaakSource.key, stepTitles);
   };
 
   // Iterates over the desired data fields (key=>value pairs) and transforms values if necessary.
@@ -178,7 +180,7 @@ async function transformDecosZaakResponse<
         typeof fieldTransformer.transform === 'function'
           ? fieldTransformer.transform(value, {
               decosZaakTransformer,
-              fetchDecosWorkflowDate: fetchWorkflowDate,
+              fetchDecosWorkflowDates: fetchWorkflowDates,
             })
           : value;
     } catch (err) {
@@ -200,17 +202,23 @@ async function transformDecosZaakResponse<
       'unknown-decoszaak-id',
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
-    dateInBehandeling: null, // Serves as placeholder, value for this property will be added async below.
+    statusDates: [], // Serves as placeholder, values for this property will be added async below.
     ...transformedFields,
   };
 
-  // Try to fetch and assign a specific date on which the zaak was "In behandeling"
-  if (decosZaakTransformer.dateInBehandelingWorkflowStepTitle) {
-    const { content: dateInBehandeling } = await fetchWorkflowDate(
-      decosZaakTransformer.dateInBehandelingWorkflowStepTitle
+  if (decosZaakTransformer.fetchWorkflowStatusDatesFor) {
+    const stepTitles = decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
+      ({ stepTitle }) => stepTitle
     );
-    if (dateInBehandeling) {
-      decosZaak.dateInBehandeling = dateInBehandeling;
+    const workFlowDates = await fetchWorkflowDates(stepTitles);
+    if (workFlowDates.status === 'OK') {
+      decosZaak.statusDates =
+        decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
+          ({ status, stepTitle }) => ({
+            status,
+            datePublished: workFlowDates.content[stepTitle],
+          })
+        );
     }
   }
 
@@ -225,7 +233,7 @@ async function transformDecosZaakResponse<
       decosZaak,
       decosZaakSource,
       {
-        fetchDecosWorkflowDate: fetchWorkflowDate,
+        fetchDecosWorkflowDates: fetchWorkflowDates,
         decosZaakTransformer,
       }
     );
@@ -412,23 +420,34 @@ function transformDecosWorkflowKeysResponse(workflowsResponseData: {
 }
 
 function transformDecosWorkflowDateResponse(
-  stepTitle: DecosWorkflowStepTitle,
-  singleWorkflowResponseData: {
-    content: Array<{ fields: { text7: string; date1?: string } }>;
-  }
-) {
-  return (
-    singleWorkflowResponseData.content?.find((workflowStep) => {
-      return workflowStep.fields.text7 === stepTitle;
-    })?.fields.date1 ?? null
+  stepTitles: DecosWorkflowStepTitle[],
+  singleWorkflowResponseData: DecosWorkflowResponse
+): { [key: DecosWorkflowStepTitle]: string | null } {
+  const responseStepTitleDates = singleWorkflowResponseData.content
+    .filter((workflowStep) => workflowStep.fields.text7 != null)
+    .reduce(
+      (acc, workflowStep) => ({
+        ...acc,
+        [workflowStep.fields.text7]: workflowStep.fields.date1 ?? null,
+      }),
+      {} as Record<string, string | null>
+    );
+
+  const stepTitleToDate = stepTitles.reduce(
+    (acc, stepTitle) => ({
+      ...acc,
+      [stepTitle]: responseStepTitleDates[stepTitle] ?? null,
+    }),
+    {} as Record<DecosWorkflowStepTitle, string | null>
   );
+  return stepTitleToDate;
 }
 
-export async function fetchDecosWorkflowDate(
+export async function fetchDecosWorkflowDates(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
-  stepTitle: DecosWorkflowStepTitle
-) {
+  stepTitles: DecosWorkflowStepTitle[]
+): Promise<ApiResponse<Record<string, DecosWorkflowStepDate | null>>> {
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
@@ -442,18 +461,26 @@ export async function fetchDecosWorkflowDate(
   );
 
   if (!latestWorkflowKey) {
-    return apiSuccessResult(null);
+    return apiSuccessResult({});
   }
+
+  const urlParams = new URLSearchParams({
+    top: '50',
+    properties: 'false',
+    fetchParents: 'false',
+    select: ['mark', 'date1', 'date2', 'text7'].join(','),
+    filter: stepTitles.map((stepTitle) => `text7 eq ${stepTitle}`).join(' or '),
+  });
 
   const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?properties=false&fetchParents=false&select=mark,date1,date2,text7,sequence&orderBy=sequence&filter=text7 eq '${stepTitle}'`;
+      return `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?'${urlParams}'`;
     },
-    transformResponse: (responseData) =>
-      transformDecosWorkflowDateResponse(stepTitle, responseData),
+    transformResponse: (responseData: DecosWorkflowResponse) =>
+      transformDecosWorkflowDateResponse(stepTitles, responseData),
   });
 
-  return requestData<DecosWorkflowStepDate>(apiConfigSingleWorkflow, requestID);
+  return requestData(apiConfigSingleWorkflow, requestID);
 }
 
 async function fetchIsPdfDocument(
