@@ -201,7 +201,7 @@ async function transformDecosZaakResponse<
       'unknown-decoszaak-id',
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
-    statusDates: {}, // Serves as placeholder, values for this property will be added async below.
+    statusDates: [], // Serves as placeholder, values for this property will be added async below.
     ...transformedFields,
   };
 
