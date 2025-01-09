@@ -39,6 +39,10 @@ export type DecosDocumentSource = {
   fields: DecosDocumentBase & DecosFieldsObject;
 };
 
+export type DecosWorkflowSource = {
+  fields: DecosWorkflowFieldsSource;
+};
+
 export type DecosDocumentBlobSource = {
   key: DecosZaakID;
   links: string[];
@@ -49,6 +53,8 @@ export type DecosZakenResponse<T = DecosZaakSource[]> = {
   count: number;
   content: T;
 };
+
+export type DecosWorkflowResponse = DecosZakenResponse<DecosWorkflowSource[]>;
 
 export type DecosResponse<T> = {
   itemDataResultSet: {
@@ -86,6 +92,10 @@ export type DecosZaakFieldsSource = {
   text11?: string | null;
   // Info regarding possible payment
   text12?: string | null;
+};
+type DecosWorkflowFieldsSource = {
+  text7: string;
+  date1?: string;
 };
 export type AddressBookEntry = {
   key: string;

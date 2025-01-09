@@ -19,6 +19,7 @@ import {
   DecosZakenResponse,
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
+  DecosWorkflowResponse,
 } from './decos-types';
 import {
   getDecosZaakTypeFromSource,
@@ -420,13 +421,8 @@ function transformDecosWorkflowKeysResponse(workflowsResponseData: {
 
 function transformDecosWorkflowDateResponse(
   stepTitles: DecosWorkflowStepTitle[],
-  singleWorkflowResponseData: {
-    content: Array<{ fields: { text7: string; date1?: string } }>;
-  }
+  singleWorkflowResponseData: DecosWorkflowResponse
 ): { [key: DecosWorkflowStepTitle]: string | null } {
-  if (singleWorkflowResponseData.content === null) {
-    return {} as Record<string, string | null>;
-  }
   const responseStepTitleDates = singleWorkflowResponseData.content
     .filter((workflowStep) => workflowStep.fields.text7 != null)
     .reduce(
@@ -480,7 +476,7 @@ export async function fetchDecosWorkflowDates(
     formatUrl: (config) => {
       return `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?'${urlParams}'`;
     },
-    transformResponse: (responseData) =>
+    transformResponse: (responseData: DecosWorkflowResponse) =>
       transformDecosWorkflowDateResponse(stepTitles, responseData),
   });
 
