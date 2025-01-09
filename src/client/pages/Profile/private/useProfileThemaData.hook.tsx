@@ -8,6 +8,7 @@ export function useProfileThemaData() {
   const {
     isError: isErrorContactmomenten,
     isLoading: isLoadingContactmomenten,
+    contactmomenten,
   } = useContactmomenten();
 
   return {
@@ -17,6 +18,7 @@ export function useProfileThemaData() {
     isErrorContactmomenten,
     isLoadingBrp: isLoading(BRP),
     isLoadingContactmomenten,
+    hasContactMomenten: !!contactmomenten?.length,
     linkListItems: [],
   };
 }

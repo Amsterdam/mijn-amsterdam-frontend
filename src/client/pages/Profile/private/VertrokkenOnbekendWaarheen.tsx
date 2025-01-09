@@ -11,11 +11,7 @@ export function VertrokkenOnbekendWaarheen({
   brpContent,
 }: VertrokkenOnbekendWaarheenProps) {
   return (
-    <Alert
-      severity="warning"
-      heading="Vertrokken Onbekend Waarheen"
-      className="ams-mb--sm"
-    >
+    <Alert severity="warning" heading="Vertrokken Onbekend Waarheen">
       <Paragraph>
         U staat sinds{' '}
         {brpContent?.persoon.datumVertrekUitNederland

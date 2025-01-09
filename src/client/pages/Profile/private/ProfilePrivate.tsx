@@ -94,6 +94,7 @@ export function MijnGegevensThema() {
     isErrorBrp,
     isErrorContactmomenten,
     linkListItems,
+    hasContactMomenten,
   } = useProfileThemaData();
 
   const pageContentErrorAlert = (
@@ -143,17 +144,21 @@ export function MijnGegevensThema() {
       pageContentTop={pageContentTop}
       pageContentMain={
         <>
-          <Grid.Cell span="all">
-            {brpContent?.persoon.vertrokkenOnbekendWaarheen && (
+          {brpContent?.persoon.vertrokkenOnbekendWaarheen && (
+            <Grid.Cell span="all">
               <VertrokkenOnbekendWaarheen brpContent={brpContent} />
-            )}
-            {brpContent?.persoon?.adresInOnderzoek && (
+            </Grid.Cell>
+          )}
+          {brpContent?.persoon?.adresInOnderzoek && (
+            <Grid.Cell span="all">
               <AdresInOnderzoek brpContent={brpContent} />
-            )}
-          </Grid.Cell>
-          <Grid.Cell span="all">
-            <ContactMomenten />
-          </Grid.Cell>
+            </Grid.Cell>
+          )}
+          {hasContactMomenten && (
+            <Grid.Cell span="all">
+              <ContactMomenten />
+            </Grid.Cell>
+          )}
           <ProfilePrivateSectionPanels />
         </>
       }
