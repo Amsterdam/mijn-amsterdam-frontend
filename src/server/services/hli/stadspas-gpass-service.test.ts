@@ -144,6 +144,7 @@ describe('stadspas-gpass-service', () => {
       );
       expect(transformedResponse).toStrictEqual({
         id: '1',
+        actief: false,
         owner: {
           firstname: 'John',
           lastname: 'Doe',
@@ -500,7 +501,7 @@ describe('stadspas-gpass-service', () => {
     });
 
     test('should return transformed stadspassen if stadspasHouderResponse status is OK', async () => {
-      const pashouder: StadspasHouderSource = {
+      const pashouder = {
         voornaam: 'John',
         achternaam: 'Doe',
         tussenvoegsel: 'van',
@@ -605,6 +606,7 @@ describe('stadspas-gpass-service', () => {
                 infix: 'van',
                 initials: 'J.D.',
               },
+              actief: false,
               dateEnd: '2023-12-31',
               dateEndFormatted: '31 december 2023',
               budgets: [

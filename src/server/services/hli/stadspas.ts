@@ -33,50 +33,48 @@ export async function fetchStadspas(
     authProfileAndToken
   );
 
-  if (stadspasResponse.status === 'OK') {
-    const stadspassen: StadspasFrontend[] =
-      stadspasResponse.content.stadspassen.map((stadspas) => {
-        const [transactionsKeyEncrypted] = encrypt(
-          `${authProfileAndToken.profile.sid}:${stadspasResponse.content.administratienummer}:${stadspas.passNumber}`
-        );
-
-        const urlTransactions = generateFullApiUrlBFF(
-          BffEndpoints.STADSPAS_TRANSACTIONS,
-          {
-            transactionsKeyEncrypted,
-          }
-        );
-
-        let blockPassURL = null;
-        if (stadspas.actief) {
-          // Encrypt so we cannot see in our logging which pass was blocked.
-          const [encrypted] = encrypt(stadspas.passNumber.toString());
-          blockPassURL = generateFullApiUrlBFF(
-            BffEndpoints.STADSPAS_BLOCK_PASS,
-            {
-              passNumber: encrypted,
-            }
-          );
-        }
-
-        return {
-          ...stadspas,
-          urlTransactions,
-          transactionsKeyEncrypted,
-          blockPassURL,
-          link: {
-            to: generatePath(AppRoutes['HLI/STADSPAS'], {
-              id: stadspas.id,
-            }),
-            title: `Stadspas van ${stadspas.owner.firstname}`,
-          },
-        };
-      });
-
-    return apiSuccessResult(stadspassen);
+  if (stadspasResponse.status !== 'OK') {
+    return stadspasResponse;
   }
 
-  return stadspasResponse;
+  const stadspassen: StadspasFrontend[] =
+    stadspasResponse.content.stadspassen.map((stadspas) => {
+      const [transactionsKeyEncrypted] = encrypt(
+        `${authProfileAndToken.profile.sid}:${stadspasResponse.content.administratienummer}:${stadspas.passNumber}`
+      );
+
+      const urlTransactions = generateFullApiUrlBFF(
+        BffEndpoints.STADSPAS_TRANSACTIONS,
+        {
+          transactionsKeyEncrypted,
+        }
+      );
+
+      let blockPassURL = null;
+      if (stadspas.actief) {
+        // Encrypt so we cannot see in our logging which pass was blocked.
+        const [encrypted] = encrypt(stadspas.passNumber.toString());
+        blockPassURL = generateFullApiUrlBFF(BffEndpoints.STADSPAS_BLOCK_PASS, {
+          passNumber: encrypted,
+        });
+      }
+
+      const stadspasFrontend: StadspasFrontend = {
+        ...stadspas,
+        urlTransactions,
+        transactionsKeyEncrypted,
+        blockPassURL,
+        link: {
+          to: generatePath(AppRoutes['HLI/STADSPAS'], {
+            id: stadspas.id,
+          }),
+          title: `Stadspas van ${stadspas.owner.firstname}`,
+        },
+      };
+      return stadspasFrontend;
+    });
+
+  return apiSuccessResult(stadspassen);
 }
 
 async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey(

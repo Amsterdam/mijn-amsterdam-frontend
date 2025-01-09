@@ -180,6 +180,7 @@ export interface Stadspas {
 export interface StadspasFrontend extends Stadspas {
   urlTransactions: string;
   transactionsKeyEncrypted: string;
+  blockPassURL: string | null;
   link?: LinkProps;
 }
 
