@@ -1,4 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+
+import { cleanup, render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, it } from 'vitest';
@@ -6,31 +8,37 @@ import { beforeAll, describe, it } from 'vitest';
 import Search from './Search';
 import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom } from '../../hooks/useAppState';
+import { AppState } from '../../../universal/types';
+import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 
-const testState: any = {
+const testState = {
   WPI_AANVRAGEN: {
     content: [],
   },
-};
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
-}
+} as unknown as AppState;
 
 describe('<Search />', () => {
   const routeEntry = generatePath(AppRoutes.SEARCH);
   const routePath = AppRoutes.SEARCH;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Search}
-      initializeState={initializeState}
-    />
-  );
+  function Component({
+    isAppStateReady = false,
+  }: {
+    isAppStateReady?: boolean;
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Search}
+        initializeState={function initializeState(snapshot: MutableSnapshot) {
+          snapshot.set(appStateAtom, testState);
+          snapshot.set(appStateReadyAtom, isAppStateReady);
+        }}
+      />
+    );
+  }
 
   const remoteConfig = {
     staticSearchEntries: [
@@ -55,6 +63,10 @@ describe('<Search />', () => {
   it('Renders without crashing', async () => {
     render(<Component />);
 
+    await screen.findByText('Zoeken voorbereiden...');
+    cleanup();
+
+    render(<Component isAppStateReady={true} />);
     await screen.findByPlaceholderText('Zoeken naar...');
   });
 });
