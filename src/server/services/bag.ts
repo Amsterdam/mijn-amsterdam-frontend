@@ -17,7 +17,7 @@ export interface BAGData {
 export async function fetchBAG(
   requestID: RequestID,
   sourceAddress: Adres | null
-): Promise<ApiResponse<BAGData>> {
+): Promise<ApiResponse<BAGData | null>> {
   if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
