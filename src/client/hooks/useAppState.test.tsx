@@ -12,21 +12,12 @@ import {
 
 import * as dataApiHook from './api/useDataApi';
 import { newEventSourceMock } from './EventSourceMock';
-import {
-  addParamsToStreamEndpoint,
-  isAppStateReady,
-  useAppStateRemote,
-} from './useAppState';
+import { addParamsToStreamEndpoint, useAppStateRemote } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 import { renderRecoilHook } from '../../testing/render-recoil.hook';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import {
-  apiPristineResult,
-  apiSuccessResult,
-} from '../../universal/helpers/api';
 import * as appStateModule from '../AppState';
-import * as Monitoring from '../helpers/monitoring';
 
 vi.mock('./api/useTipsApi');
 vi.mock('./useProfileType');
@@ -149,48 +140,6 @@ describe('useAppState', () => {
           },
         })
       );
-    });
-  });
-
-  describe('isAppStateReady', () => {
-    const pristineState = {
-      TEST: apiPristineResult(null, { profileTypes: ['private'] }),
-    };
-
-    it('Should initially be false', async () => {
-      const appState = { TEST: pristineState.TEST };
-
-      const isReady = isAppStateReady(appState, pristineState, 'private');
-      expect(isReady).toBe(false);
-    });
-
-    it('Should be true if we have proper data', async () => {
-      const isReady = isAppStateReady(
-        { TEST: apiSuccessResult('test') },
-        pristineState,
-        'private'
-      );
-      expect(isReady).toBe(true);
-    });
-
-    it('Should be false if we have proper data but a different profile type', async () => {
-      const isReady = isAppStateReady(
-        { TEST: apiSuccessResult('test') },
-        pristineState,
-        'commercial'
-      );
-      expect(isReady).toBe(false);
-    });
-
-    it('Should be false if we have statekey mismatch', async () => {
-      const spy = vi.spyOn(Monitoring, 'captureMessage');
-      const isReady = isAppStateReady(
-        { BLAP: apiSuccessResult('blap') },
-        pristineState,
-        'private'
-      );
-      expect(isReady).toBe(true);
-      expect(spy).toHaveBeenCalledWith('unknown stateConfig key: BLAP');
     });
   });
 
