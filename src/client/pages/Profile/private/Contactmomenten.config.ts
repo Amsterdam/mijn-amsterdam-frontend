@@ -1,14 +1,22 @@
+import { ReactNode } from 'react';
+
+import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { Themas, Thema } from '../../../../universal/config/thema';
-import { ContactMoment } from '../../../../universal/types';
 import { DisplayProps } from '../../../components/Table/TableV2';
 
-export const contactmomentenDisplayProps: DisplayProps<ContactMoment> = {
-  kanaal: 'Contactvorm',
-  onderwerp: 'Onderwerp',
-  plaatsgevondenOp: 'Datum',
-  nummer: 'Referentienummer',
+export type ContactMomentFrontend = ContactMoment & {
+  themaKanaalIcon: ReactNode;
+  subjectLink: ReactNode;
 };
+
+export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
+  {
+    themaKanaalIcon: 'Contactvorm',
+    subjectLink: 'Onderwerp',
+    datePublishedFormatted: 'Datum',
+    referenceNumber: 'Referentienummer',
+  };
 
 const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
   ? Themas.ERFPACHTv2

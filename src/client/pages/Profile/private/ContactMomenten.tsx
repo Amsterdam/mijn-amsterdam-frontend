@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { ContactMomentFrontend } from './Contactmomenten.config';
 import { useContactmomenten } from './useContactmomenten.hook';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
@@ -28,7 +29,7 @@ export function ContactMomenten() {
         Wilt u een eerder contactmoment doorgeven bij een volgende vraag? Geef
         dan het referentienummer door.
       </Paragraph>
-      <TableV2
+      <TableV2<ContactMomentFrontend>
         items={contactmomenten.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
         displayProps={displayProps}
       />

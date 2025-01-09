@@ -9,6 +9,7 @@ import {
 
 import {
   contactmomentenDisplayProps,
+  ContactMomentFrontend,
   mapperContactmomentToMenuItem,
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
@@ -58,13 +59,13 @@ export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
 
-  const contactmomenten =
+  const contactmomenten: ContactMomentFrontend[] =
     KLANT_CONTACT.content?.map?.((contactMomentItem) => {
       return {
         ...contactMomentItem,
-        kanaal: addIcon(contactMomentItem.kanaal),
-        onderwerp: getLinkToThemaPage(
-          contactMomentItem.onderwerp,
+        themaKanaalIcon: addIcon(contactMomentItem.themaKanaal),
+        subjectLink: getLinkToThemaPage(
+          contactMomentItem.subject,
           myThemasMenuItems
         ),
       };
