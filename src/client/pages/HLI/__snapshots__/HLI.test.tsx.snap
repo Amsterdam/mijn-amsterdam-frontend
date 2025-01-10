@@ -146,6 +146,11 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
                 <span
                   class="_Stadspas_owner_2b0bd1"
                 />
+                <span
+                  class="_Stadspas_secondaryInfo_2b0bd1"
+                >
+                  Geblokkeerd
+                </span>
               </a>
             </li>
           </ul>
