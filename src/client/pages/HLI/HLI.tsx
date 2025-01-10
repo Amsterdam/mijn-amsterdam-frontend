@@ -1,4 +1,5 @@
 import { Grid, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
+import { isPast } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 
 import styles from './HLI.module.scss';
@@ -31,6 +32,9 @@ function StadspasListItem({ stadspas }: { stadspas: StadspasFrontend }) {
           <span className={styles.Stadspas_balance}>
             Saldo {stadspas.balanceFormatted}
           </span>
+        )}
+        {!stadspas.actief && (
+          <span className={styles.Stadspas_secondaryInfo}>Geblokkeerd</span>
         )}
       </MaRouterLink>
     </UnorderedList.Item>
