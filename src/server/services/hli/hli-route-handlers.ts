@@ -54,12 +54,11 @@ export async function handleBlockStadspas(
     return sendUnauthorized(res);
   }
 
-  return sendResponse(
-    res,
-    await blockStadspas(
-      res.locals.requestID,
-      authProfileAndToken,
-      req.params.transactionsKeyEncrypted
-    )
+  const response = await blockStadspas(
+    res.locals.requestID,
+    authProfileAndToken,
+    req.params.transactionsKeyEncrypted
   );
+
+  return sendResponse(res, response);
 }

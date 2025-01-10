@@ -248,6 +248,9 @@ export default function HLIStadspas() {
 function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBusyBlockingPas, setIsBusyBlockingPas] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+  const somePhoneNumber = 'TODO';
 
   const setAppState = useAppStateSetter();
 
@@ -265,6 +268,18 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
           Blokeer deze Stadspas
         </Button>
       )}
+      {showErrorAlert && (
+        <Alert
+          className={styles.ErrorAlert}
+          heading="Fout bij het blokeren van de pas"
+          closeable={true}
+          onClose={() => setShowErrorAlert(false)}
+          severity="error"
+        >
+          Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
+          {somePhoneNumber}
+        </Alert>
+      )}
       <Modal
         title="Weet u zeker dat u uw stadspas wilt blokkeren ?"
         className={styles.BlokkeerDialog}
@@ -278,15 +293,18 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
               onClick={() => {
                 setIsBusyBlockingPas(true);
                 setIsModalOpen(false);
+                setShowErrorAlert(false);
+
                 fetch(blockPassURL, {
                   method: 'POST',
                   credentials: 'include',
                 }).then((res) => {
                   if (res.status !== HttpStatusCode.Ok) {
-                    throw Error(
-                      'Something went wrong trying to block the city pass'
-                    );
+                    setIsBusyBlockingPas(false);
+                    setShowErrorAlert(true);
+                    return;
                   }
+
                   setAppState((appState) => {
                     const newAppState = structuredClone(appState);
                     for (const pas of newAppState.HLI.content?.stadspas ?? []) {
@@ -297,6 +315,7 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
                         break;
                       }
                     }
+                    setShowErrorAlert(false);
                     return newAppState;
                   });
                 });
