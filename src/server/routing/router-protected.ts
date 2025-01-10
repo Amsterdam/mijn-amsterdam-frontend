@@ -28,6 +28,7 @@ import {
 } from '../services/controller';
 import {
   fetchZorgnedAVDocument,
+  handleBlockStadspas,
   handleFetchTransactionsRequest,
 } from '../services/hli/hli-route-handlers';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
@@ -240,6 +241,7 @@ attachDocumentDownloadRoute(
 
 // HLI Stadspas transacties
 router.get(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);
+router.post(BffEndpoints.STADSPAS_BLOCK_PASS, handleBlockStadspas);
 
 // HLI Regelingen / doc download
 attachDocumentDownloadRoute(

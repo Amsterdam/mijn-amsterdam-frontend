@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 
 import {
   ActionGroup,
+  Alert,
   Button,
   Grid,
   Heading,
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
+import { HttpStatusCode } from 'axios';
 import { useParams } from 'react-router-dom';
 
 import { getThemaTitleWithAppState } from './helpers';
@@ -34,10 +36,11 @@ import {
 import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter, useAppStateSetter } from '../../hooks/useAppState';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -164,10 +167,29 @@ export default function HLIStadspas() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {stadspas.blockPassURL && (
+              {stadspas.blockPassURL ? (
                 <BlockPassButton
                   blockPassURL={stadspas.blockPassURL}
                 ></BlockPassButton>
+              ) : (
+                <Alert
+                  heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
+                  severity="info"
+                >
+                  <Paragraph>
+                    Wilt u uw pas deblokkeren of wilt u een nieuwe pas
+                    aanvragen? Bel dan naar 020 252 6000 of 14020.
+                  </Paragraph>
+                  <Paragraph>
+                    Het aanvragen van een nieuwe pas is gratis. De pas wordt
+                    binnen drie weken thuisgestuurd en is dan gelijk te
+                    gebruiken.
+                  </Paragraph>
+                  <Paragraph>
+                    Stond er nog tegoed op de Stadspas? Dan staat het tegoed dat
+                    over was ook op weer op de nieuwe pas.
+                  </Paragraph>
+                </Alert>
               )}
             </Grid.Cell>
           )}
@@ -244,17 +266,24 @@ export default function HLIStadspas() {
 
 function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBusyBlockingPas, setIsBusyBlockingPas] = useState(false);
+
+  const setAppState = useAppStateSetter();
 
   return (
     <>
-      <Button
-        variant="secondary"
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-      >
-        Blokeer deze Stadspas
-      </Button>
+      {isBusyBlockingPas ? (
+        <Spinner></Spinner>
+      ) : (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          Blokeer deze Stadspas
+        </Button>
+      )}
       <Modal
         title="Weet u zeker dat u uw stadspas wilt blokkeren ?"
         className={styles.BlokkeerDialog}
@@ -266,10 +295,29 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
               type="submit"
               variant="primary"
               onClick={() => {
+                setIsBusyBlockingPas(true);
                 setIsModalOpen(false);
-                // RP TODO: Update when errors or failure active = true after posting.
-                // Could use https://swr.vercel.app/#overview
-                fetch(blockPassURL, { method: 'POST' });
+                fetch(blockPassURL, {
+                  method: 'POST',
+                  credentials: 'include',
+                }).then((res) => {
+                  if (res.status !== HttpStatusCode.Ok) {
+                    throw Error(
+                      'Something went wrong trying to block the city pass'
+                    );
+                  }
+                  setAppState((appState) => {
+                    const newAppState = structuredClone(appState);
+                    for (const pas of newAppState.HLI.content?.stadspas ?? []) {
+                      // Remove the data causing the button to render
+                      if (pas.blockPassURL === blockPassURL) {
+                        pas.blockPassURL = null;
+                        break;
+                      }
+                    }
+                    return newAppState;
+                  });
+                });
               }}
             >
               Ja, blokkeer mijn pas

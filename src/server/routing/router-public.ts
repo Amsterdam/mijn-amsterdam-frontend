@@ -14,6 +14,7 @@ import { ApiResponse, apiSuccessResult } from '../../universal/helpers/api';
 import { getAuth, getReturnToUrlZaakStatus } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
+import { getFromEnv } from '../helpers/env';
 import {
   QueryParamsCMSFooter,
   fetchCMSCONTENT,
@@ -29,7 +30,6 @@ import {
   QueryParamsMaintenanceNotifications,
   fetchMaintenanceNotificationsActual,
 } from '../services/cms-maintenance-notifications';
-import { getFromEnv } from '../helpers/env';
 
 export const router = express.Router();
 
