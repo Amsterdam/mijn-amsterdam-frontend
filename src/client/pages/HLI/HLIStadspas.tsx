@@ -143,7 +143,24 @@ export default function HLIStadspas() {
       </PageHeading>
       <Screen>
         <Grid>
-          {!stadspas && (
+          {stadspas ? (
+            <Grid.Cell span="all">
+              <Datalist rows={[NAME]} />
+              <Paragraph className={styles.StadspasNummerInfo}>
+                Hieronder staat het Stadspasnummer van uw actieve pas.
+                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
+              </Paragraph>
+              <Datalist rows={[NUMBER]} />
+              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
+              {stadspas.blockPassURL ? (
+                <BlockPassButton
+                  blockPassURL={stadspas.blockPassURL}
+                ></BlockPassButton>
+              ) : (
+                <PassBlockedAlert></PassBlockedAlert>
+              )}
+            </Grid.Cell>
+          ) : (
             <Grid.Cell span="all">
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigDetails} />
@@ -158,42 +175,6 @@ export default function HLIStadspas() {
               )}
             </Grid.Cell>
           )}
-          {!!stadspas && (
-            <Grid.Cell span="all">
-              <Datalist rows={[NAME]} />
-              <Paragraph className={styles.StadspasNummerInfo}>
-                Hieronder staat het Stadspasnummer van uw actieve pas.
-                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
-              </Paragraph>
-              <Datalist rows={[NUMBER]} />
-              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {stadspas.blockPassURL ? (
-                <BlockPassButton
-                  blockPassURL={stadspas.blockPassURL}
-                ></BlockPassButton>
-              ) : (
-                <Alert
-                  heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
-                  severity="info"
-                >
-                  <Paragraph>
-                    Wilt u uw pas deblokkeren of wilt u een nieuwe pas
-                    aanvragen? Bel dan naar 020 252 6000 of 14020.
-                  </Paragraph>
-                  <Paragraph>
-                    Het aanvragen van een nieuwe pas is gratis. De pas wordt
-                    binnen drie weken thuisgestuurd en is dan gelijk te
-                    gebruiken.
-                  </Paragraph>
-                  <Paragraph>
-                    Stond er nog tegoed op de Stadspas? Dan staat het tegoed dat
-                    over was ook op weer op de nieuwe pas.
-                  </Paragraph>
-                </Alert>
-              )}
-            </Grid.Cell>
-          )}
-
           <>
             <Grid.Cell span="all">
               <Heading>Gekregen tegoed</Heading>
@@ -345,5 +326,27 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
         </Paragraph>
       </Modal>
     </>
+  );
+}
+
+function PassBlockedAlert() {
+  return (
+    <Alert
+      heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
+      severity="info"
+    >
+      <Paragraph>
+        Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
+        naar 020 252 6000 of 14020.
+      </Paragraph>
+      <Paragraph>
+        Het aanvragen van een nieuwe pas is gratis. De pas wordt binnen drie
+        weken thuisgestuurd en is dan gelijk te gebruiken.
+      </Paragraph>
+      <Paragraph>
+        Stond er nog tegoed op de Stadspas? Dan staat het tegoed dat over was
+        ook op weer op de nieuwe pas.
+      </Paragraph>
+    </Alert>
   );
 }
