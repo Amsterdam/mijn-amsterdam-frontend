@@ -1,6 +1,8 @@
+import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
+import { stadspasDecryptAndFetch } from './stadspas';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   SecurityCode,
@@ -22,6 +24,7 @@ import {
 } from './stadspas-types';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
+  apiErrorResult,
   ApiResponse,
   apiSuccessResult,
   getSettledResult,
@@ -32,8 +35,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { stadspasDecryptAndFetch } from './stadspas';
-import { isPast } from 'date-fns';
+import { HttpStatusCode } from 'axios';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -365,25 +367,30 @@ async function blockStadspas_(
   if (passResponse.status !== 'OK') {
     return passResponse;
   }
-  // This cannot give unexpected behaviors so we do extra typechecking on the source input.
+  // This may not give unexpected results so we do extra typechecking on the source input.
   if (
     typeof passResponse.content.actief !== 'boolean' ||
     !passResponse.content.actief
   ) {
-    throw Error(
-      'The citypass is not active. We cannot unblock an active pass.'
+    return apiErrorResult(
+      'The citypass is not active. We cannot unblock an active pass.',
+      null,
+      HttpStatusCode.Forbidden
     );
   }
 
   const config = getApiConfig('GPASS', {
     method: 'POST',
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
-    transformResponse: (pas) => {
-      return { stadspasActive: pas.actief };
+    transformResponse: (pas: StadspasDetailSource) => {
+      if (pas.actief) {
+        throw Error('City pass is still active after trying to block it.');
+      }
+      return null;
     },
   });
 
-  return requestData<{ stadspasActive: boolean }>(config, requestID);
+  return requestData<null>(config, requestID);
 }
 
 export const forTesting = {

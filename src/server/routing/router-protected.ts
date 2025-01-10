@@ -26,6 +26,7 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from '../services/controller';
+import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchZorgnedAVDocument,
   handleBlockStadspas,
@@ -34,7 +35,6 @@ import {
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchVergunningDetail,
   fetchZakenFromSource,
