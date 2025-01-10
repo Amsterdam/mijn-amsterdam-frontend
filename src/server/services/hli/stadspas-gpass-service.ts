@@ -33,6 +33,7 @@ import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { stadspasDecryptAndFetch } from './stadspas';
+import { isPast } from 'date-fns';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -169,7 +170,10 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of pashouders) {
-    for (const pas of pashouder.passen.filter((pas) => pas.actief)) {
+    const passen = pashouder.passen.filter(
+      (pas) => pas.actief || !isPast(new Date(pas.expiry_date))
+    );
+    for (const pas of passen) {
       const response = fetchStadspasSource(
         requestID,
         pas.pasnummer,

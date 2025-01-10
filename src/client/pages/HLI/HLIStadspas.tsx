@@ -152,7 +152,7 @@ export default function HLIStadspas() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {stadspas.blockPassURL ? (
+              {stadspas.actief && stadspas.blockPassURL ? (
                 <BlockPassButton
                   blockPassURL={stadspas.blockPassURL}
                 ></BlockPassButton>
@@ -292,6 +292,7 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
                     for (const pas of newAppState.HLI.content?.stadspas ?? []) {
                       // Remove the data causing the button to render
                       if (pas.blockPassURL === blockPassURL) {
+                        pas.actief = false;
                         pas.blockPassURL = null;
                         break;
                       }
