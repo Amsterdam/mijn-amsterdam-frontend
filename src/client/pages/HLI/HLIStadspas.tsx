@@ -334,7 +334,7 @@ function PassBlockedAlert() {
   return (
     <Alert
       heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
-      severity="info"
+      severity="warning"
     >
       <Paragraph>
         Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
