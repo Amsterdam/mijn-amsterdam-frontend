@@ -52,10 +52,8 @@ export async function fetchStadspas(
 
       let blockPassURL = null;
       if (stadspas.actief) {
-        // Encrypt so we cannot see in our logging which pass was blocked.
-        const [encrypted] = encrypt(stadspas.passNumber.toString());
         blockPassURL = generateFullApiUrlBFF(BffEndpoints.STADSPAS_BLOCK_PASS, {
-          passNumber: encrypted,
+          transactionsKeyEncrypted,
         });
       }
 
@@ -124,18 +122,18 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
   });
 }
 
-async function decryptAndFetch<T>(
+export async function stadspasDecryptAndFetch<T>(
   fetchTransactionFn: (
     administratienummer: StadspasAdministratieNummer,
     pasnummer: StadspasFrontend['passNumber']
   ) => T,
   transactionsKeyEncrypted: string,
-  verifySessionId?: AuthProfileAndToken['profile']['sid']
+  sessionId?: AuthProfileAndToken['profile']['sid']
 ) {
   const decryptResult =
     await decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey(
       transactionsKeyEncrypted,
-      verifySessionId
+      sessionId
     );
 
   if (decryptResult.status === 'OK') {
@@ -152,7 +150,7 @@ export async function fetchStadspasDiscountTransactions(
   requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted']
 ) {
-  return decryptAndFetch(
+  return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
       fetchGpassDiscountTransactions(requestID, administratienummer, pasnummer),
     transactionsKeyEncrypted
@@ -165,7 +163,7 @@ export async function fetchStadspasBudgetTransactions(
   budgetCode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  return decryptAndFetch(
+  return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
       fetchGpassBudgetTransactions(
         requestID,
@@ -191,5 +189,5 @@ export async function fetchStadspasNotifications(
 
 export const forTesting = {
   decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey,
-  decryptAndFetch,
+  decryptAndFetch: stadspasDecryptAndFetch,
 };

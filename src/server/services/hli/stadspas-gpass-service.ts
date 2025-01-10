@@ -22,6 +22,7 @@ import {
 } from './stadspas-types';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
+  ApiResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -31,6 +32,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { stadspasDecryptAndFetch } from './stadspas';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -329,18 +331,56 @@ export async function fetchGpassDiscountTransactions(
   );
 }
 
-// function blockStadspas(
-//   requestID: RequestID
-// ): Promise<ApiResponse<StadspasBlockPassSourceResponse>> {
-//   const passen = fetchStadspassenByAdministratienummer;
-//   fetchStadspas;
-//
-//   const config = getApiConfig('GPASS', {
-//     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/:pasId`,
-//   });
-//
-//   return requestData(config, requestID);
-// }
+/** Block a stadspas with it's passNumber.
+ *
+ *  The passNumber is encrypted inside the transactionsKeyEncrypted.
+ *  The endpoint in use can also unblock cards, but we prevent this so its block only.
+ */
+export async function blockStadspas(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken,
+  transactionsKeyEncrypted: string
+) {
+  const stadspas = stadspasDecryptAndFetch(
+    (administratienummer, pasnummer) => {
+      return blockStadspas_(requestID, pasnummer, administratienummer);
+    },
+    transactionsKeyEncrypted,
+    authProfileAndToken.profile.sid
+  );
+  return stadspas;
+}
+
+async function blockStadspas_(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+) {
+  const passResponse: ApiResponse<StadspasDetailSource> =
+    await fetchStadspasSource(requestID, passNumber, administratienummer);
+  if (passResponse.status !== 'OK') {
+    return passResponse;
+  }
+  // This cannot give unexpected behaviors so we do extra typechecking on the source input.
+  if (
+    typeof passResponse.content.actief !== 'boolean' ||
+    !passResponse.content.actief
+  ) {
+    throw Error(
+      'The citypass is not active. We cannot unblock an active pass.'
+    );
+  }
+
+  const config = getApiConfig('GPASS', {
+    method: 'POST',
+    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
+    transformResponse: (pas) => {
+      return { stadspasActive: pas.actief };
+    },
+  });
+
+  return requestData<{ stadspasActive: boolean }>(config, requestID);
+}
 
 export const forTesting = {
   transformTransactions,

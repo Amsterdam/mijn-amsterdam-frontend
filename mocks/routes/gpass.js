@@ -70,6 +70,8 @@ module.exports = [
     id: 'post-toggle-stadspas',
     url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/togglepas/:pasId`,
     method: 'POST',
+    // Add delay to make loading icon visibile in the front end when pressing the block button.
+    delay: 2500,
     variants: [
       {
         id: 'standard',
