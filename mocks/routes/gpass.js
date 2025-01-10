@@ -23,15 +23,16 @@ module.exports = [
   },
   {
     id: 'get-gpass-stadspas',
-    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/*`,
+    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/:id`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: RESPONSES.STADSPAS,
+          middleware: (req, res) => {
+            res.send({ ...RESPONSES.STADSPAS, id: req.params.id });
+          },
         },
       },
     ],
