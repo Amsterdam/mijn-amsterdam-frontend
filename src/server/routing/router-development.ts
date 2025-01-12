@@ -1,9 +1,4 @@
-import express, {
-  CookieOptions,
-  NextFunction,
-  Request,
-  Response,
-} from 'express';
+import express, { CookieOptions, Request, Response } from 'express';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
@@ -76,7 +71,10 @@ authRouterDevelopment.use(async (req, res, next) => {
 
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_LOGIN,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (
+    req: Request<{ authMethod: AuthMethod; user: string }>,
+    res: Response
+  ) => {
     const appSessionCookieOptions: CookieOptions = {
       expires: new Date(
         new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
@@ -86,7 +84,7 @@ authRouterDevelopment.get(
       secure: false, // Not secure for local development
       sameSite: 'lax',
     };
-    const authMethod = req.params.authMethod as AuthProfile['authMethod'];
+    const authMethod = req.params.authMethod;
     const testAccounts =
       authMethod === 'digid' ? testAccountsDigid : testAccountsEherkenning;
     const allUsernames = Object.keys(testAccounts);
@@ -101,7 +99,7 @@ authRouterDevelopment.get(
         const queryString = queryEntries.length
           ? `?${queryEntries.map(([key, val]) => `${key}=${val}`).join('&')}`
           : '';
-        return `<li><a href=${authRoutes.AUTH_LOGIN_DIGID}/${userName}${queryString}>${userName}</a>`;
+        return `<li><a href=${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${userName}${queryString}>${userName}</a>`;
       });
       return res.send(
         `<div style="height:100vh;width:100vw;display:flex;justify-content:center;"><div><h1>Selecteer ${authMethod} test account.</h1><ul>${list}</ul></div></div>`
