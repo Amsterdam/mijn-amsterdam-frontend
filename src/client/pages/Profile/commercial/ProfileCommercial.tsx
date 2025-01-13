@@ -9,10 +9,6 @@ import ThemaPagina from '../../ThemaPagina/ThemaPagina';
 function ProfileCommercialSectionPanels() {
   const { KVK, profileData } = useProfileData();
 
-  if (!profileData) {
-    return null;
-  }
-
   return (
     <>
       {!!profileData?.onderneming && (
