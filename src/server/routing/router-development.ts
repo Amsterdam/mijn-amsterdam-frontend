@@ -75,16 +75,6 @@ authRouterDevelopment.use(async (req, res, next) => {
   next();
 });
 
-const appSessionCookieOptions: CookieOptions = {
-  expires: new Date(
-    new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
-  ),
-  httpOnly: true,
-  path: '/',
-  secure: false, // Not secure for local development
-  sameSite: 'lax',
-};
-
 authRouterDevelopment.get(
   DevelopmentRoutes.DEV_LOGIN,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -128,6 +118,16 @@ authRouterDevelopment.get(
       JSON.stringify(authProfile)
     ).toString('base64');
 
+    const appSessionCookieOptions: CookieOptions = {
+      expires: new Date(
+        new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS
+      ),
+      httpOnly: true,
+      path: '/',
+      secure: false, // Not secure for local development
+      sameSite: 'lax',
+    };
+
     res.cookie(
       OIDC_SESSION_COOKIE_NAME,
       appSessionCookieValue,
@@ -161,7 +161,7 @@ authRouterDevelopment.get(
   ],
   async (req, res) => {
     res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
-      path: appSessionCookieOptions.path,
+      path: '/',
     });
     const returnTo = getReturnToUrl(req.query, getFromEnv('MA_FRONTEND_URL'));
     return res.redirect(returnTo);
