@@ -34,7 +34,8 @@ function getVergunningenFromThemaVergunningen(
       },
     }));
   return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
-    vergunningen
+    vergunningen,
+    'identifier'
   );
 }
 
