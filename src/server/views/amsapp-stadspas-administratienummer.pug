@@ -19,7 +19,7 @@ html(lang="nl")
         pre #{administratienummerEncrypted}
 
       if error
-        p Foutmelding: #{commProps.error.code} - #{commProps.error.message}
+        p Foutmelding: #{error.code} - #{error.message}
 
       if promptOpenApp
         a(href=appHref id='protocol-link-button') Open Amsterdam App
