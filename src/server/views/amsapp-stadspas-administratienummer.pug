@@ -19,17 +19,30 @@ html(lang="nl")
         pre #{administratienummerEncrypted}
 
       if error
-        p Foutmelding: #{error.code} - #{error.message}
+        p Foutmelding: #{commProps.error.code} - #{commProps.error.message}
 
-      a(href=appHref id='protocol-link-button') Open Amsterdam App
+      if promptOpenApp
+        a(href=appHref id='protocol-link-button') Open Amsterdam App
+
+    if !promptOpenApp
+      script(type='text/javascript' nonce=nonce).
+        window.sessionStorage.setItem('amsapphref','#{appHref}');
+        setTimeout(() => {
+          window.location.href = '#{logoutUrl}';
+        }, 0);
 
     if promptOpenApp
       script(type='text/javascript' nonce=nonce).
+        const protocolLink = document.getElementById('protocol-link-button');
+        const appHref = window.sessionStorage.getItem('amsapphref');
+
+        if (appHref) {
+          window.sessionStorage.removeItem('amsapphref');
+          protocolLink.setAttribute('href', appHref);
+        }
+
         function logoutAndOpenApp() {
-          document.getElementById('protocol-link-button').click();
-          setTimeout(() => {
-            window.location.href = '#{logoutUrl}';
-          }, 100);
+          protocolLink.click();
         }
 
         document.addEventListener('DOMContentLoaded', logoutAndOpenApp);

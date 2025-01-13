@@ -86,9 +86,9 @@ type RenderProps = {
   promptOpenApp: boolean;
   urlToImage: string;
   urlToCSS: string;
-  appHref: string;
   error?: ApiError;
   administratienummerEncrypted?: string; // Only included in debug build.
+  appHref?: `${typeof AMSAPP_STADSPAS_DEEP_LINK}/${'gelukt' | 'mislukt'}${string}`;
 };
 
 const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
@@ -154,7 +154,7 @@ async function sendAdministratienummerResponse(
       ) {
         const renderProps: RenderProps = {
           ...baseRenderProps,
-          promptOpenApp: true,
+          promptOpenApp: false,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
@@ -187,10 +187,11 @@ async function sendAdministratienummerResponse(
 
   const renderProps: RenderProps = {
     ...baseRenderProps,
-    promptOpenApp: true,
     error: apiResponseError,
-    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorCode=${apiResponseError.code}&errorMessage=${apiResponseError.message}`,
+    promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
   };
+
   return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
 
@@ -202,8 +203,7 @@ routerInternet.get(
 function sendAppLandingResponse(_req: Request, res: Response) {
   const renderProps: RenderProps = {
     ...baseRenderProps,
-    promptOpenApp: false,
-    appHref: AMSAPP_STADSPAS_DEEP_LINK,
+    promptOpenApp: true,
   };
   return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
