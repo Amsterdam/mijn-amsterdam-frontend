@@ -2,6 +2,7 @@ import {
   ContactMomentenResponseSource,
   ContactMoment,
 } from './contactmomenten.types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -24,6 +25,11 @@ async function fetchSalesforceData<T>(
 
 // TODO: Implement encryption when the encryption method is known
 function encryptBsn(bsn: string) {
+  if (IS_PRODUCTION) {
+    throw Error(
+      'TODO: Not implemented, waiting for encryption method to be known'
+    );
+  }
   return bsn;
 }
 
