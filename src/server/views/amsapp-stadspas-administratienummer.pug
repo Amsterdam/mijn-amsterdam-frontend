@@ -27,9 +27,7 @@ html(lang="nl")
     if !promptOpenApp
       script(type='text/javascript' nonce=nonce).
         window.sessionStorage.setItem('amsapphref','#{appHref}');
-        setTimeout(() => {
-          window.location.href = '#{logoutUrl}';
-        }, 0);
+        window.location.href = '#{logoutUrl}';
 
     if promptOpenApp
       script(type='text/javascript' nonce=nonce).
@@ -41,11 +39,11 @@ html(lang="nl")
           protocolLink.setAttribute('href', appHref);
         }
 
-        function logoutAndOpenApp() {
+        function openApp() {
           protocolLink.click();
         }
 
-        document.addEventListener('DOMContentLoaded', logoutAndOpenApp);
+        document.addEventListener('DOMContentLoaded', openApp);
 
 
 
