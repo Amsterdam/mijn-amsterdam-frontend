@@ -67,7 +67,6 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      // @ts-ignore
       const renderSecondArg = resMock.render.mock.calls[0][1];
 
       expect(renderSecondArg.administratienummerEncrypted).toStrictEqual(
@@ -94,7 +93,6 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      // @ts-ignore
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
         code: '004',
@@ -112,7 +110,6 @@ describe('hli/router-external-consumer', async () => {
 
       await forTesting.sendAdministratienummerResponse(reqMock, resMock);
 
-      // @ts-ignore
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
         code: '001',
@@ -132,7 +129,6 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      // @ts-ignore
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
         code: '003',
@@ -152,7 +148,6 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      // @ts-ignore
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
         code: '002',
@@ -171,7 +166,6 @@ describe('hli/router-external-consumer', async () => {
         resMock
       );
 
-      // @ts-ignore
       const renderSecondArg = resMock.render.mock.calls[0][1];
       expect(renderSecondArg.error).toStrictEqual({
         code: '001',

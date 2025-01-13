@@ -188,7 +188,7 @@ async function sendAdministratienummerResponse(
   const renderProps: RenderProps = {
     ...baseRenderProps,
     error: apiResponseError,
-    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorCode=${apiResponseError.code}&errorMessage=${apiResponseError.message}`,
+    appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
     // No need to redirect to logout as 001 error code means user is not logged in with Digid.
     promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
   };
