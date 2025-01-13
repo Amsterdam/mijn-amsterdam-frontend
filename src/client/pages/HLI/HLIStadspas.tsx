@@ -41,6 +41,8 @@ import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter, useAppStateSetter } from '../../hooks/useAppState';
+import { useStadspassen } from './HLI.hooks';
+import { stadspasDecryptAndFetch } from '../../../server/services/hli/stadspas';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -74,14 +76,20 @@ const displayPropsBudgets = {
   budgetAssignedFormatted: 'Bedrag',
 };
 
+const PHONENUMBERS = {
+  CCA: '14020',
+  WerkEnInkomen: '020 252 6000',
+} as const;
+
 export default function HLIStadspas() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
+
   const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
-  const stadspas = id
-    ? HLI?.content?.stadspas?.find((pass) => pass.id === id)
-    : null;
+  const [stadspassen] = useStadspassen();
+  const stadspas = id ? stadspassen.find((pass) => pass.id === id) : null;
+
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
@@ -154,6 +162,7 @@ export default function HLIStadspas() {
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
               {stadspas.actief && stadspas.blockPassURL ? (
                 <BlockPassButton
+                  stadspasId={stadspas.id}
                   blockPassURL={stadspas.blockPassURL}
                 ></BlockPassButton>
               ) : (
@@ -245,14 +254,18 @@ export default function HLIStadspas() {
   );
 }
 
-function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
+function BlockPassButton({
+  stadspasId,
+  blockPassURL,
+}: {
+  stadspasId: string;
+  blockPassURL: string;
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBusyBlockingPas, setIsBusyBlockingPas] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
 
-  const somePhoneNumber = 'TODO';
-
-  const setAppState = useAppStateSetter();
+  const setStadspassenActiefStatus = useStadspassen()[1];
 
   return (
     <>
@@ -277,7 +290,7 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
           severity="error"
         >
           Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
-          {somePhoneNumber}
+          {PHONENUMBERS.WerkEnInkomen}
         </Alert>
       )}
       <Modal
@@ -295,6 +308,7 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
                 setIsModalOpen(false);
                 setShowErrorAlert(false);
 
+                // TODO: refactor as function as use library.
                 fetch(blockPassURL, {
                   method: 'POST',
                   credentials: 'include',
@@ -305,19 +319,11 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
                     return;
                   }
 
-                  setAppState((appState) => {
-                    const newAppState = structuredClone(appState);
-                    for (const pas of newAppState.HLI.content?.stadspas ?? []) {
-                      // Remove the data causing the button to render
-                      if (pas.blockPassURL === blockPassURL) {
-                        pas.actief = false;
-                        pas.blockPassURL = null;
-                        break;
-                      }
-                    }
-                    setShowErrorAlert(false);
-                    return newAppState;
+                  setStadspassenActiefStatus((stadspasActiefState) => {
+                    return { ...stadspasActiefState, [stadspasId]: false };
                   });
+
+                  setShowErrorAlert(false);
                 });
               }}
             >
@@ -340,9 +346,9 @@ function BlockPassButton({ blockPassURL }: { blockPassURL: string }) {
           tegoed van uw kind uitgeeft.
         </Paragraph>
         <Paragraph className="ams-mb--sm">
-          Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
-          blokkeren? Bel dan meteen naar 020 252 6000. De nieuwe pas wordt dan
-          binnen drie weken thuisgestuurd en is dan gelijk te gebruiken.
+          {`Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
+          blokkeren? Bel dan meteen naar ${PHONENUMBERS.WerkEnInkomen}. De nieuwe pas wordt dan
+          binnen drie weken thuisgestuurd en is dan gelijk te gebruiken.`}
         </Paragraph>
       </Modal>
     </>
@@ -356,8 +362,8 @@ function PassBlockedAlert() {
       severity="warning"
     >
       <Paragraph>
-        Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
-        naar 020 252 6000 of 14020.
+        {`Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
+        naar ${PHONENUMBERS.WerkEnInkomen} of ${PHONENUMBERS.CCA}.`}
       </Paragraph>
       <Paragraph>
         Het aanvragen van een nieuwe pas is gratis. De pas wordt binnen drie

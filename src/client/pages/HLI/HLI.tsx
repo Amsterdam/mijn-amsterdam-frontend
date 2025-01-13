@@ -11,6 +11,7 @@ import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import { useStadspassen } from './HLI.hooks';
 
 export function HistoricItemsMention() {
   return (
@@ -87,13 +88,14 @@ export default function ThemaPaginaHLI() {
     hasKindtegoed,
     isError,
     isLoading,
-    stadspassen,
     regelingen,
     title,
     routes,
     tableConfig,
     dependencyError,
   } = useHliThemaData();
+
+  const [stadspassen] = useStadspassen();
 
   const pageContentTop = (
     <Paragraph>
