@@ -76,8 +76,9 @@ import MyNotifications from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import { Parkeren } from './pages/Parkeren/Parkeren';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
-import ProfileCommercial from './pages/Profile/ProfileCommercial';
-import Profile from './pages/Profile/ProfilePrivate';
+import { MijnBedrijfsGegevensThema } from './pages/Profile/commercial/ProfileCommercial';
+import { ContactmomentenListPage } from './pages/Profile/private/ContactmomentenListPage';
+import { MijnGegevensThema } from './pages/Profile/private/ProfilePrivate';
 import Search from './pages/Search/Search';
 import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
 import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
@@ -182,8 +183,8 @@ function AppAuthenticated() {
           <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
-          <Route path={AppRoutes.BRP} component={Profile} />
-          <Route path={AppRoutes.KVK} component={ProfileCommercial} />
+          <Route path={AppRoutes.BRP} component={MijnGegevensThema} />
+          <Route path={AppRoutes.KVK} component={MijnBedrijfsGegevensThema} />
           {FeatureToggle.hliThemaStadspasActive && (
             <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
           )}
@@ -358,6 +359,12 @@ function AppAuthenticated() {
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}
               component={LoodMeting}
+            />
+          )}
+          {FeatureToggle.klantContactmomentenActive && (
+            <Route
+              path={AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']}
+              component={ContactmomentenListPage}
             />
           )}
           {FeatureToggle.bodemActive && (

@@ -111,6 +111,10 @@ export const PRISTINE_APPSTATE: AppState = {
   BRP: apiPristineResult(null, {
     profileTypes: ['private'],
   }),
+  KLANT_CONTACT: apiPristineResult([], {
+    profileTypes: ['private'],
+    isActive: FeatureToggle.klantContactActive,
+  }),
   PROFILE: apiPristineResult(null, {
     profileTypes: ['private-attributes'],
   }),

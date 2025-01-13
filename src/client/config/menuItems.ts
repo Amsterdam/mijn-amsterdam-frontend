@@ -1,10 +1,14 @@
-import { ThemaMenuItem, myThemasMenuItems } from './thema';
+import {
+  ThemaMenuItem,
+  ThemaMenuItemTransformed,
+  myThemasMenuItems,
+} from './thema';
 import { useAppStateGetter } from '../hooks/useAppState';
 import { termReplace } from '../hooks/useTermReplacement';
 
 export const themasByProfileType: (
   profileType: ProfileType
-) => ThemaMenuItem[] = (profileType) =>
+) => ThemaMenuItemTransformed[] = (profileType) =>
   ({
     private: myThemasMenuItems
       .filter((item) => item.profileTypes.includes('private'))
@@ -16,7 +20,6 @@ export const themasByProfileType: (
       .filter((item) => item.profileTypes.includes('commercial'))
       .map((item) => buildThemaMenuItem(item, 'commercial')),
   })[profileType];
-
 
 function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
   const appState = useAppStateGetter();

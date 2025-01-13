@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { LinkProps, ZaakDetail } from './App.types';
 
 export interface IdentiteitsbewijsFromSource {
@@ -29,7 +31,7 @@ export interface Adres {
   einddatumVerblijf: string | null;
   adresType: 'correspondentie' | 'woon';
   aantalBewoners?: number;
-  wozWaarde?: string;
+  wozWaarde?: ReactNode | null;
   _adresSleutel?: string;
   mokum?: boolean;
 }
@@ -38,7 +40,7 @@ export interface Persoon {
   aanduidingNaamgebruikOmschrijving: string | null;
   bsn: string | null;
   geboortedatum: string | null;
-  indicatieGeboortedatum: string | null;
+  indicatieGeboortedatum: 'J' | 'M' | 'D' | 'V' | null;
   overlijdensdatum: string | null;
   geboortelandnaam: string | null;
   geboorteplaatsnaam: string | null;
@@ -54,7 +56,7 @@ export interface Persoon {
   mokum: boolean;
   vertrokkenOnbekendWaarheen: boolean;
   datumVertrekUitNederland: string;
-  indicatieGeheim?: boolean;
+  indicatieGeheim: boolean;
   adresInOnderzoek: '080000' | '089999' | null;
 }
 

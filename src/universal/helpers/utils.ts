@@ -26,7 +26,7 @@ export const omit = <T extends object, U extends keyof T>(
 
 export function pick<T extends object>(source: T, keys: string[]) {
   return Object.fromEntries(
-    Object.entries(source).filter(([key]) => keys.includes(key))
+    entries(source).filter(([key]) => keys.includes(key))
   );
 }
 

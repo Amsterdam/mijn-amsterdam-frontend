@@ -1,52 +1,41 @@
-import { ProfileSection, format } from './formatDataPrivate';
 import type {
   Aandeelhouder,
   Aansprakelijke,
   Bestuurder,
+  Eigenaar,
   Gemachtigde,
   KVKData,
   Onderneming,
   OverigeFunctionaris,
   Rechtspersoon,
   Vestiging,
-} from '../../../server/services/kvk';
-import { getFullAddress } from '../../../universal/helpers/brp';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+} from '../../../../server/services/kvk';
+import { getFullAddress } from '../../../../universal/helpers/brp';
+import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   capitalizeFirstLetter,
   splitCapitals,
-} from '../../../universal/helpers/text';
-import { Adres } from '../../../universal/types';
-import { LinkdInline } from '../../components/Button/Button';
+} from '../../../../universal/helpers/text';
+import { Adres, AppState } from '../../../../universal/types';
+import { LinkdInline } from '../../../components/Button/Button';
+import {
+  ProfileLabels,
+  formatProfileSectionData,
+} from '../profileDataFormatter';
+import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
  * into the Profile page data.
  */
 
-type Value = any;
-type ProfileLabelValueFormatter =
-  | string
-  | [
-      string | ((key: string, item: any, kvkData?: KVKData) => string),
-      (value: any, item: any, kvkData?: KVKData) => Value,
-    ];
+type KVKPanelKey = keyof Omit<KVKData, 'mokum'> | 'hoofdVestiging';
 
-type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
-
-type FormattedEigenaar = {
-  naam: string | null;
-  geboortedatum: string | null;
-  bsn?: string;
-  adres: string | null;
-  woonplaats: string | null;
-};
-
-const onderneming: ProfileLabels<Partial<Onderneming>> = {
+const onderneming: ProfileLabels<Partial<Onderneming>, AppState['KVK']> = {
   handelsnaam: 'Handelsnaam',
   handelsnamen: [
     'Overige handelsnamen',
-    (handelsnamen: string[]) =>
+    (handelsnamen) =>
       handelsnamen?.length ? (
         <>
           {handelsnamen.map((handelsnaam) => (
@@ -62,7 +51,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
   hoofdactiviteit: 'Activiteiten',
   overigeActiviteiten: [
     'Overige activiteiten',
-    (activiteiten: string[]) =>
+    (activiteiten) =>
       activiteiten?.length ? (
         <>
           {activiteiten.map((activiteit) => (
@@ -76,7 +65,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
   ],
   datumAanvang: [
     'Startdatum onderneming',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
   datumEinde: [
     'Einddatum onderneming',
@@ -87,11 +76,11 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
   kvkNummer: 'KVK nummer',
 };
 
-const vestiging: ProfileLabels<Partial<Vestiging>> = {
+const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
   vestigingsNummer: 'Vestigingsnummer',
   handelsnamen: [
     'Handelsnaam',
-    (handelsnamen: string[], { isHoofdvestiging }) =>
+    (handelsnamen, { isHoofdvestiging }) =>
       handelsnamen?.length ? (
         <>
           {handelsnamen
@@ -109,7 +98,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   bezoekadres: [
     'Bezoekadres',
-    (adres: Adres) =>
+    (adres) =>
       adres
         ? `${getFullAddress(adres)}\n${
             adres.postcode ? adres.postcode + ', ' : ''
@@ -118,7 +107,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   postadres: [
     'Postadres',
-    (adres: Adres) =>
+    (adres) =>
       adres
         ? `${getFullAddress(adres)}\n${
             adres.postcode ? adres.postcode + ', ' : ''
@@ -127,7 +116,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   telefoonnummer: [
     'Telefoonnummer',
-    (value: string) => (
+    (value) => (
       <LinkdInline href={`tel:${value}`} external={true}>
         {value}
       </LinkdInline>
@@ -135,7 +124,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   websites: [
     'Website',
-    (urls: string[]) =>
+    (urls) =>
       urls?.length ? (
         <>
           {urls.map((url) => (
@@ -151,7 +140,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   emailadres: [
     'E-mail',
-    (value: string) =>
+    (value) =>
       value ? (
         <LinkdInline external={true} href={`mailto:${value}`}>
           {value}
@@ -161,7 +150,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   faxnummer: 'Fax',
   activiteiten: [
     'Activiteiten',
-    (activiteiten: string[]) =>
+    (activiteiten) =>
       activiteiten?.length ? (
         <>
           {activiteiten.map((activiteit) => (
@@ -175,18 +164,19 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   datumAanvang: [
     'Datum vestiging',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
   datumEinde: [
     'Datum sluiting',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
 };
 
 const rechtspersoon: ProfileLabels<
   Partial<Rechtspersoon> & {
     bsn?: string;
-  }
+  },
+  AppState['KVK']
 > = {
   rsin: 'RSIN',
   kvkNummer: 'KVKnummer',
@@ -195,77 +185,91 @@ const rechtspersoon: ProfileLabels<
   statutaireZetel: 'Statutaire zetel',
 };
 
-const aandeelhouder: ProfileLabels<Partial<Aandeelhouder>> = {
+const aandeelhouder: ProfileLabels<Partial<Aandeelhouder>, AppState['KVK']> = {
   opgemaakteNaam: 'Naam',
   geboortedatum: 'Geboortedatum',
   bevoegdheid: 'Bevoegdheid',
 };
 
-const bestuurder: ProfileLabels<Partial<Bestuurder>> = {
+const bestuurder: ProfileLabels<Partial<Bestuurder>, AppState['KVK']> = {
   naam: 'Naam',
   geboortedatum: [
     'Geboortedatum',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
   functie: 'Functie',
   soortBevoegdheid: [
     'Soort bevoegdheid',
     (value) =>
-      value
+      typeof value === 'string'
         ? capitalizeFirstLetter(splitCapitals(value).toLocaleLowerCase())
         : '',
   ],
 };
 
-const gemachtigde: ProfileLabels<Partial<Gemachtigde>> = {
+const gemachtigde: ProfileLabels<Partial<Gemachtigde>, AppState['KVK']> = {
   naam: 'Naam',
   functie: 'Type gemachtigde',
   datumIngangMachtiging: [
     'Datum ingang machtiging',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
 };
 
-const aansprakelijke: ProfileLabels<Partial<Aansprakelijke>> = {
+const aansprakelijke: ProfileLabels<
+  Partial<Aansprakelijke>,
+  AppState['KVK']
+> = {
   naam: 'Naam',
   geboortedatum: [
     'Geboortedatum',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
   functie: 'Functie',
   soortBevoegdheid: [
     'Soort bevoegdheid',
     (value) =>
-      value
+      typeof value === 'string'
         ? capitalizeFirstLetter(splitCapitals(value).toLocaleLowerCase())
         : '',
   ],
 };
 
-const overigeFunctionaris: ProfileLabels<Partial<OverigeFunctionaris>> = {
+const overigeFunctionaris: ProfileLabels<
+  Partial<OverigeFunctionaris>,
+  AppState['KVK']
+> = {
   naam: 'Naam',
   geboortedatum: [
     'Geboortedatum',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
   functie: 'Functie',
 };
 
-const eigenaar: ProfileLabels<FormattedEigenaar> = {
+// TODO: TvO: Check if this is correct
+const eigenaar: ProfileLabels<Eigenaar, AppState['KVK']> = {
   naam: 'Naam',
   geboortedatum: [
     'Geboortedatum',
-    (value) => (value ? defaultDateFormat(value) : null),
+    (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
   bsn: 'BSN',
-  adres: ['Adres', (address) => getFullAddress(address)],
-  woonplaats: [
+  adres: [
+    'Adres',
+    (address) =>
+      address && typeof address !== 'string' && typeof address !== 'number'
+        ? getFullAddress(address as Adres)
+        : null,
+  ],
+  ['woonplaats' as any]: [
     'Woonplaats',
-    (_, all) => `${all.adres.postcode} ${all.adres.woonplaatsNaam}`,
+    (_, eigenaar) =>
+      `${eigenaar.adres?.postcode} ${eigenaar.adres.woonplaatsNaam}`,
   ],
 };
 
-export const kvkInfoLabels = {
+export const labelConfig = {
   onderneming,
   vestiging,
   rechtspersoon,
@@ -278,38 +282,47 @@ export const kvkInfoLabels = {
 };
 
 interface KvkProfileData {
-  onderneming: ProfileSection | null;
-  eigenaar?: ProfileSection | null;
-  rechtspersonen?: ProfileSection[];
-  hoofdVestiging?: ProfileSection;
-  vestigingen?: ProfileSection[];
-  aandeelhouders?: ProfileSection[];
-  bestuurders?: ProfileSection[];
-  gemachtigden?: ProfileSection[];
-  aansprakelijken?: ProfileSection[];
-  overigeFunctionarissen?: ProfileSection[];
+  onderneming?: ProfileSectionData | null;
+  eigenaar?: ProfileSectionData | null;
+  rechtspersonen?: ProfileSectionData[];
+  hoofdVestiging?: ProfileSectionData;
+  vestigingen?: ProfileSectionData[];
+  aandeelhouders?: ProfileSectionData[];
+  bestuurders?: ProfileSectionData[];
+  gemachtigden?: ProfileSectionData[];
+  aansprakelijken?: ProfileSectionData[];
+  overigeFunctionarissen?: ProfileSectionData[];
 }
 
 export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
-  const profileData: KvkProfileData = {
-    onderneming: format(
-      kvkInfoLabels.onderneming,
+  const profileData: KvkProfileData = {};
+
+  if (kvkData.onderneming) {
+    profileData.onderneming = formatProfileSectionData(
+      labelConfig.onderneming,
       kvkData.onderneming,
       kvkData
-    ),
-    eigenaar: format(kvkInfoLabels.eigenaar, kvkData.eigenaar, kvkData),
-  };
+    );
+  }
+
+  if (labelConfig.eigenaar) {
+    profileData.eigenaar = formatProfileSectionData(
+      labelConfig.eigenaar,
+      kvkData.eigenaar,
+      kvkData
+    );
+  }
 
   if (kvkData.rechtspersonen?.length) {
     profileData.rechtspersonen = kvkData.rechtspersonen.map((persoon) =>
-      format(kvkInfoLabels.rechtspersoon, persoon, kvkData)
+      formatProfileSectionData(labelConfig.rechtspersoon, persoon, kvkData)
     );
   }
 
   if (kvkData.vestigingen?.length) {
     if (kvkData.vestigingen?.length === 1) {
       profileData.vestigingen = kvkData.vestigingen.map((vestiging) =>
-        format(kvkInfoLabels.vestiging, vestiging, kvkData)
+        formatProfileSectionData(labelConfig.vestiging, vestiging, kvkData)
       );
     } else {
       const hoofdVestiging = kvkData.vestigingen.find(
@@ -317,45 +330,119 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
       );
 
       profileData.hoofdVestiging = hoofdVestiging
-        ? format(kvkInfoLabels.vestiging, hoofdVestiging, kvkData)
-        : null;
+        ? formatProfileSectionData(
+            labelConfig.vestiging,
+            hoofdVestiging,
+            kvkData
+          )
+        : undefined;
 
       profileData.vestigingen = kvkData.vestigingen
         .filter((vestiging) => !vestiging.isHoofdvestiging)
         .map((vestiging) =>
-          format(kvkInfoLabels.vestiging, vestiging, kvkData)
+          formatProfileSectionData(labelConfig.vestiging, vestiging, kvkData)
         );
     }
   }
 
   if (kvkData.aandeelhouders?.length) {
     profileData.aandeelhouders = kvkData.aandeelhouders.map((aandeelhouder) =>
-      format(kvkInfoLabels.aandeelhouder, aandeelhouder, kvkData)
+      formatProfileSectionData(
+        labelConfig.aandeelhouder,
+        aandeelhouder,
+        kvkData
+      )
     );
   }
 
   if (kvkData.bestuurders?.length) {
     profileData.bestuurders = kvkData.bestuurders.map((bestuurder) =>
-      format(kvkInfoLabels.bestuurder, bestuurder, kvkData)
+      formatProfileSectionData(labelConfig.bestuurder, bestuurder, kvkData)
     );
   }
 
   if (kvkData.gemachtigden?.length) {
     profileData.gemachtigden = kvkData.gemachtigden.map((gemachtigde) =>
-      format(kvkInfoLabels.gemachtigde, gemachtigde, kvkData)
+      formatProfileSectionData(labelConfig.gemachtigde, gemachtigde, kvkData)
     );
   }
   if (kvkData.aansprakelijken?.length) {
     profileData.aansprakelijken = kvkData.aansprakelijken.map(
       (aansprakelijke) =>
-        format(kvkInfoLabels.aansprakelijke, aansprakelijke, kvkData)
+        formatProfileSectionData(
+          labelConfig.aansprakelijke,
+          aansprakelijke,
+          kvkData
+        )
     );
   }
   if (kvkData.overigeFunctionarissen?.length) {
     profileData.overigeFunctionarissen = kvkData.overigeFunctionarissen.map(
       (overigeFunctionaris) =>
-        format(kvkInfoLabels.overigeFunctionaris, overigeFunctionaris, kvkData)
+        formatProfileSectionData(
+          labelConfig.overigeFunctionaris,
+          overigeFunctionaris,
+          kvkData
+        )
     );
   }
   return profileData;
 }
+
+export const panelConfig: PanelConfig<KVKPanelKey, AppState['KVK']> = {
+  onderneming: () => ({
+    title: 'Onderneming',
+    actionLinks: [],
+  }),
+  rechtspersonen: (KVK) => ({
+    title:
+      KVK.content?.rechtspersonen.length &&
+      KVK.content.rechtspersonen.length > 1
+        ? 'Rechtspersonen'
+        : 'Rechtspersoon',
+    actionLinks: [],
+  }),
+  hoofdVestiging: () => ({
+    title: 'Hoofdvestiging',
+    actionLinks: [],
+  }),
+  vestigingen: (KVK) => ({
+    title: KVK.content?.vestigingen?.length !== 1 ? 'Vestigingen' : 'Vestiging',
+    actionLinks: [],
+  }),
+  aandeelhouders: (KVK) => ({
+    title:
+      KVK.content?.aandeelhouders.length &&
+      KVK.content.aandeelhouders.length > 1
+        ? 'Aandeelhouders'
+        : 'Aandeelhouder',
+    actionLinks: [],
+  }),
+  bestuurders: (KVK) => ({
+    title:
+      KVK.content?.bestuurders.length && KVK.content.bestuurders.length > 1
+        ? 'Bestuurders'
+        : 'Bestuurder',
+    actionLinks: [],
+  }),
+  overigeFunctionarissen: (KVK) => ({
+    title:
+      KVK.content?.overigeFunctionarissen.length &&
+      KVK.content.overigeFunctionarissen.length > 1
+        ? 'Overige functionarissen'
+        : 'Overige functionaris',
+    actionLinks: [],
+  }),
+  gemachtigden: () => ({
+    title: 'Gemachtigde',
+    actionLinks: [],
+  }),
+  aansprakelijken: () => ({
+    title: 'Aansprakelijke',
+    actionLinks: [],
+  }),
+  eigenaar: () => ({
+    title: 'Eigenaar',
+    actionLinks: [],
+  }),
+};

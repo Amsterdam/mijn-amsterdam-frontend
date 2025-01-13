@@ -1,0 +1,49 @@
+{
+  "results": [
+    {
+      "plaatsgevondenOp": "2024-05-22 08:28:45",
+      "onderwerp": "Algemeen",
+      "nummer": "10001875",
+      "kanaal": "Telefoon"
+    },
+    {
+      "plaatsgevondenOp": "2024-05-29 08:02:38",
+      "onderwerp": "Meldingen",
+      "nummer": "00002032",
+      "kanaal": "Telefoon"
+    },
+    {
+      "plaatsgevondenOp": "2024-12-03 10:58:47",
+      "onderwerp": "Erfpacht",
+      "nummer": "00154596",
+      "kanaal": "Chat"
+    },
+    {
+      "plaatsgevondenOp": "2024-12-03 11:49:29",
+      "onderwerp": "Algemeen",
+      "nummer": "00154602",
+      "kanaal": "Chat"
+    },
+    {
+      "plaatsgevondenOp": "2024-12-05 08:48:01",
+      "onderwerp": "Algemeen",
+      "nummer": "00154630",
+      "kanaal": "Chat"
+    },
+    {
+      "plaatsgevondenOp": "2024-11-05 13:13:59",
+      "onderwerp": "Parkeren",
+      "nummer": "00154524",
+      "kanaal": "Contactformulier"
+    },
+    {
+      "plaatsgevondenOp": "2024-11-05 13:14:49",
+      "onderwerp": "Werk en Inkomen",
+      "nummer": "00154529",
+      "kanaal": "Contactformulier"
+    }
+  ],
+  "previous": null,
+  "next": null,
+  "count": 5
+}

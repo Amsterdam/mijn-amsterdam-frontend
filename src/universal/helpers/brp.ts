@@ -75,7 +75,7 @@ export function hasDutchAndOtherNationalities(
 }
 
 export function formatBirthdate(
-  indicatie: 'J' | 'M' | 'D' | 'V',
+  indicatie: Persoon['indicatieGeboortedatum'],
   geboortedatum: string
 ) {
   if (indicatie === 'J') {

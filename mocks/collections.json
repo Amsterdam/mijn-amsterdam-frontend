@@ -72,6 +72,7 @@
       "get-powerbrowser-bb-zaak-attachment-download:standard",
       "post-powerbrowser-token:standard",
       "get-powerbrowser-zaken:standard",
+      "get-salesforce:standard",
       "post-powerbrowser-personen-zaken:standard",
       "post-zorgned-persoonsgegevens:standard",
       "post-zorgned-aanvragen:standard",
