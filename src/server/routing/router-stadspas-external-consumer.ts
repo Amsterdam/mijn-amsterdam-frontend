@@ -9,7 +9,10 @@ import {
 } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { apiSuccessResult } from '../../universal/helpers/api';
-import { RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER } from '../auth/auth-config';
+import {
+  RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
+  RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+} from '../auth/auth-config';
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -80,11 +83,27 @@ routerInternet.get(
 
 type RenderProps = {
   nonce: string;
+  promptOpenApp: boolean;
   urlToImage: string;
   urlToCSS: string;
-  appHref: string;
   error?: ApiError;
   administratienummerEncrypted?: string; // Only included in debug build.
+  appHref?: `${typeof AMSAPP_STADSPAS_DEEP_LINK}/${'gelukt' | 'mislukt'}${string}`;
+};
+
+const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
+const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
+const logoutUrl = `${generateFullApiUrlBFF(
+  authRoutes.AUTH_LOGOUT_DIGID,
+  {},
+  getFromEnv('BFF_OIDC_BASE_URL')
+)}?returnTo=${RETURNTO_AMSAPP_STADSPAS_APP_LANDING}`;
+
+const baseRenderProps = {
+  nonce,
+  urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
+  urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
+  logoutUrl,
 };
 
 async function sendAdministratienummerResponse(
@@ -97,20 +116,6 @@ async function sendAdministratienummerResponse(
   if (!authProfileAndToken) {
     apiResponseError = apiResponseErrors.DIGID_AUTH;
   }
-
-  const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
-  const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
-  const logoutUrl = generateFullApiUrlBFF(
-    authRoutes.AUTH_LOGOUT_DIGID,
-    {},
-    getFromEnv('BFF_OIDC_BASE_URL')
-  );
-  const baseRenderProps = {
-    nonce,
-    urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
-    urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
-    logoutUrl,
-  };
 
   if (
     authProfileAndToken?.profile.id &&
@@ -149,6 +154,7 @@ async function sendAdministratienummerResponse(
       ) {
         const renderProps: RenderProps = {
           ...baseRenderProps,
+          promptOpenApp: false,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
           administratienummerEncrypted: !IS_PRODUCTION
             ? administratienummerEncrypted
@@ -183,13 +189,29 @@ async function sendAdministratienummerResponse(
     ...baseRenderProps,
     error: apiResponseError,
     appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+    // No need to redirect to logout as 001 error code means user is not logged in with Digid.
+    promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
   };
+
   return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
 
 routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   sendAdministratienummerResponse
+);
+
+function sendAppLandingResponse(_req: Request, res: Response) {
+  const renderProps: RenderProps = {
+    ...baseRenderProps,
+    promptOpenApp: true,
+  };
+  return res.render('amsapp-stadspas-administratienummer', renderProps);
+}
+
+routerInternet.get(
+  ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING,
+  sendAppLandingResponse
 );
 
 async function sendStadspassenResponse(

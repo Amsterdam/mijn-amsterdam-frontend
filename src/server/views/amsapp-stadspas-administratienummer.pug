@@ -21,29 +21,30 @@ html(lang="nl")
       if error
         p Foutmelding: #{error.code} - #{error.message}
 
-      a(href=appHref id='protocol-link-button') Open Amsterdam App
+      if promptOpenApp
+        a(href=appHref id='protocol-link-button') Open Amsterdam App
 
-    script(type='text/javascript' nonce=nonce).       
-      const logoutUrl = '#{logoutUrl}';
+    if !promptOpenApp
+      script(type='text/javascript' nonce=nonce).
+        window.sessionStorage.setItem('amsapphref','#{appHref}');
+        window.location.href = '#{logoutUrl}';
 
-      async function performLogout() {
-        try {
-          const response = await fetch(logoutUrl, {
-            method: 'GET',
-            credentials: 'include'
-          });
-        } catch (error) {
-          console.error('Error during logout:', error);
+    if promptOpenApp
+      script(type='text/javascript' nonce=nonce).
+        const protocolLink = document.getElementById('protocol-link-button');
+        const appHref = window.sessionStorage.getItem('amsapphref');
+
+        if (appHref) {
+          window.sessionStorage.removeItem('amsapphref');
+          protocolLink.setAttribute('href', appHref);
         }
-      }
 
-      async function logoutAndOpenApp() {
-        await performLogout();
-        document.getElementById('protocol-link-button').click();
-      }
+        function openApp() {
+          protocolLink.click();
+        }
 
-      document.addEventListener('DOMContentLoaded', logoutAndOpenApp);
+        document.addEventListener('DOMContentLoaded', openApp);
 
 
-    
+
 

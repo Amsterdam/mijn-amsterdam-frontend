@@ -80,6 +80,7 @@ export const ExternalConsumerEndpoints = {
   public: {
     STADSPAS_AMSAPP_LOGIN: `/services/amsapp/stadspas/login/:token`,
     STADSPAS_ADMINISTRATIENUMMER: `/services/amsapp/stadspas/administratienummer/:token`,
+    STADSPAS_APP_LANDING: `/services/amsapp/stadspas/app-landing`,
   },
   // Privately accessible
   private: {
@@ -102,8 +103,6 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
 
 export const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
-  DEV_LOGOUT: '/api/v1/auth/logout',
-  DEV_AUTH_CHECK: '/api/v1/auth/check',
 };
 
 export const PREDEFINED_REDIRECT_URLS = ['noredirect', '/api/v1/services/all'];
