@@ -1,6 +1,7 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
+import { useStadspassen } from './HLI.hooks';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -11,7 +12,6 @@ import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { useStadspassen } from './HLI.hooks';
 
 export function HistoricItemsMention() {
   return (

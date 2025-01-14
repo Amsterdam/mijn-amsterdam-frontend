@@ -1,5 +1,6 @@
 import { atom, useRecoilState } from 'recoil';
 
+import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 type StadspasActiefByID = {
@@ -16,13 +17,15 @@ export function useStadspassen() {
   const [stadspasActief, setStadspassenActiefStatus] =
     useRecoilState(stadspasActiefAtom);
 
-  const stadspassen = (HLI.content?.stadspas || []).map((pas) => {
-    const stadspas = {
-      ...pas,
-      actief: stadspasActief[pas.id] ?? true,
-    };
-    return stadspas;
-  });
+  const stadspassen: StadspasFrontend[] = (HLI.content?.stadspas || []).map(
+    (pas) => {
+      const stadspas = {
+        ...pas,
+        actief: stadspasActief[pas.id] ?? true,
+      };
+      return stadspas;
+    }
+  );
 
   return [stadspassen, setStadspassenActiefStatus] as const;
 }
