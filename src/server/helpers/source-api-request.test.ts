@@ -213,7 +213,7 @@ describe('requestData.ts', () => {
     );
 
     expect(axiosRequestSpy).toHaveBeenCalledTimes(0);
-    expect(rs).toStrictEqual(apiPostponeResult());
+    expect(rs).toStrictEqual(apiPostponeResult(null));
   });
 
   it('A requests responds with error', async () => {

@@ -216,7 +216,7 @@ async function transformDecosZaakResponse<
         decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
           ({ status, stepTitle }) => ({
             status,
-            datePublished: workFlowDates.content[stepTitle],
+            datePublished: workFlowDates.content?.[stepTitle] ?? null,
           })
         );
     }
@@ -447,7 +447,7 @@ export async function fetchDecosWorkflowDates(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   stepTitles: DecosWorkflowStepTitle[]
-): Promise<ApiResponse<Record<string, DecosWorkflowStepDate | null>>> {
+): Promise<ApiResponse<Record<string, DecosWorkflowStepDate | null> | null>> {
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;

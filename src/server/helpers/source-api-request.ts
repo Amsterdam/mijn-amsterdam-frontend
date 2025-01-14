@@ -96,7 +96,7 @@ export async function requestData<T>(
   };
 
   if (requestConfig.postponeFetch) {
-    return apiPostponeResult();
+    return apiPostponeResult(null);
   }
 
   if (requestConfig.transformResponse) {

@@ -72,7 +72,7 @@ describe('transformSourceData', () => {
     const monitoringSpy = vi.spyOn(Monitoring, 'captureMessage');
     const result = transformSourceData(data as Partial<AppState>);
     expect(monitoringSpy).toHaveBeenCalledWith(
-      '[transformSourceData] Unknown stateKey encountered',
+      '[transformSourceData] Unknown stateKey encountered, not found in PRISTINE_APPSTATE',
       {
         properties: {
           unexpectedStateKeys: ['STATE_KEY'],
