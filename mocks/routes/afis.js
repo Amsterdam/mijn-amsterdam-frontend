@@ -336,15 +336,36 @@ module.exports = [
   },
   {
     id: 'put-afis-emandates',
-    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId=':mandateId')`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/ChangeMandate/ZGW_FI_MANDATE_SRV_01/:changeSetParam`,
     method: 'PUT',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: {},
+          middleware(req, res) {
+            const body = req.body;
+            const entryIndex = eMandates.feed.entry.findIndex(
+              (eMandate) =>
+                eMandate.content.properties.IMandateId.toString() ===
+                body.IMandateId
+            );
+            const mandate = eMandates.feed.entry[entryIndex];
+
+            if (!mandate) {
+              return res.status(httpConstants.HTTP_STATUS_NOT_FOUND).end();
+            }
+
+            const mandatePropertiesUpdated = {
+              ...mandate.content.properties,
+              ...body,
+            };
+
+            eMandates.feed.entry[entryIndex].content.properties =
+              mandatePropertiesUpdated;
+
+            return res.send(eMandates.feed.entry[entryIndex]);
+          },
         },
       },
     ],
