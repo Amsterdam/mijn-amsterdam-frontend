@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 
-import { useAppStateGetter } from './useAppState';
+import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-import { ApiResponse, isError, isLoading } from '../../universal/helpers/api';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema';
 import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
@@ -15,6 +14,7 @@ export interface ThemasState {
 export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
+  const isAppStateReady = useAppStateReady();
   const themaItems = themasByProfileType(profileType);
 
   const items = useMemo(() => {
@@ -31,14 +31,9 @@ export function useThemaMenuItems(): ThemasState {
   const themasState = useMemo(
     () => ({
       items,
-      isLoading:
-        !!appState &&
-        themaItemsWithAppState.some((apiState) => {
-          const apiStateTyped = apiState as ApiResponse<unknown>;
-          return isLoading(apiStateTyped) && !isError(apiStateTyped);
-        }),
+      isLoading: !isAppStateReady,
     }),
-    [items, appState, themaItemsWithAppState]
+    [items, appState, themaItemsWithAppState, isAppStateReady]
   );
 
   return themasState;

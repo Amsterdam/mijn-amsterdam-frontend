@@ -19,21 +19,26 @@ export function transformSourceData(data: Partial<AppState> | null) {
         data[key] === null ||
         data[key]?.status === 'ERROR'
       ) {
+        // Data returned by server is not usable, replace it with pristine appState;
         if (typeof data[key] !== 'object' || data[key] === null) {
-          // @ts-ignore
+          // @ts-expect-error TS cannot compute type properly
           data[key] = PRISTINE_APPSTATE[key];
         } else {
+          // Data returned by server is an error, replace content with pristine content;
           data[key]!.content = PRISTINE_APPSTATE[key]?.content || null;
         }
       }
     }
 
     if (unexpectedStateKeys.length) {
-      captureMessage('[transformSourceData] Unknown stateKey encountered', {
-        properties: {
-          unexpectedStateKeys,
-        },
-      });
+      captureMessage(
+        '[transformSourceData] Unknown stateKey encountered, not found in PRISTINE_APPSTATE',
+        {
+          properties: {
+            unexpectedStateKeys,
+          },
+        }
+      );
     }
 
     return data;

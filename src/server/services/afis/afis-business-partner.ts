@@ -54,7 +54,7 @@ function transformBusinessPartnerAddressResponse(
 async function fetchBusinessPartnerAddress(
   requestID: RequestID,
   businessPartnerId: string
-): Promise<ApiResponse<AfisBusinessPartnerAddress>> {
+): Promise<ApiResponse<AfisBusinessPartnerAddress | null>> {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerAddressResponse,
     formatUrl(config) {

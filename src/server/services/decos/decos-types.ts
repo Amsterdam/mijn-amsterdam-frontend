@@ -124,7 +124,7 @@ export type DecosTransformerOptions<T extends DecosZaakBase = DecosZaakBase> = {
   decosZaakTransformer?: DecosZaakTransformer<T>;
   fetchDecosWorkflowDates?: (
     stepTitles: DecosWorkflowStepTitle[]
-  ) => Promise<ApiResponse<Record<string, string | null>>>;
+  ) => Promise<ApiResponse<Record<string, string | null> | null>>;
 };
 
 export type DecosZaakTransformer<T extends DecosZaakBase> = {

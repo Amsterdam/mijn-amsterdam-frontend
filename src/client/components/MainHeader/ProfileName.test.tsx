@@ -3,22 +3,29 @@ import { MutableSnapshot } from 'recoil';
 
 import { ProfileName } from './ProfileName';
 import { AppRoutes } from '../../../universal/config/routes';
-import { appStateAtom, useAppStateGetter } from '../../hooks/useAppState';
+import { AppState } from '../../../universal/types';
+import {
+  appStateAtom,
+  appStateReadyAtom,
+  useAppStateGetter,
+} from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 
 vi.mock('../../hooks/media.hook');
 
 function testState(brp: any = null, profile: any = null, kvk: any = null) {
-  const s: any = {
+  const s = {
     BRP: {
       status: 'OK',
       content: brp,
     },
     PROFILE: { status: 'OK', content: profile },
     KVK: { status: 'OK', content: kvk },
-  };
+  } as unknown as AppState;
+
   return (snapshot: MutableSnapshot) => {
     snapshot.set(appStateAtom, s);
+    snapshot.set(appStateReadyAtom, true);
   };
 }
 
@@ -39,14 +46,16 @@ describe('<ProfileName />', () => {
   const routeEntry = AppRoutes.HOME;
   const routePath = AppRoutes.HOME;
 
-  const Component = ({ profileType, brp, kvk, profile }: any) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={() => <Wrapper profileType={profileType} />}
-      initializeState={testState(brp, profile, kvk)}
-    />
-  );
+  function Component({ profileType, brp, kvk, profile }: any) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={() => <Wrapper profileType={profileType} />}
+        initializeState={testState(brp, profile, kvk)}
+      />
+    );
+  }
 
   it('Shows BRP naam', () => {
     render(<Component brp={{ persoon: { opgemaakteNaam: 'J de grever' } }} />);
