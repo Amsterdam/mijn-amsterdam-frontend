@@ -10,10 +10,9 @@ import {
   Screen,
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
-import useSWRMutation from 'swr/mutation';
 
 import { getThemaTitleWithAppState } from './helpers';
-import { useStadspassen } from './HLI.hooks';
+import { useBlockStadspas, useStadspassen } from './HLI.hooks';
 import styles from './HLIStadspas.module.scss';
 import {
   StadspasBudget,
@@ -244,31 +243,6 @@ export default function HLIStadspas() {
         </Grid>
       </Screen>
     </DetailPage>
-  );
-}
-
-function useBlockStadspas(url: string | null, stadspasId: string) {
-  const setStadspassenActiefStatus = useStadspassen()[1];
-
-  return useSWRMutation(
-    url,
-    async (url) => {
-      const response = await fetch(url, {
-        method: 'POST',
-        credentials: 'include',
-      });
-
-      if (!response.ok) {
-        throw new Error('Request returned with an error');
-      }
-
-      setStadspassenActiefStatus((stadspasActiefState) => {
-        return { ...stadspasActiefState, [stadspasId]: false };
-      });
-
-      return response;
-    },
-    { revalidate: false, populateCache: false }
   );
 }
 
