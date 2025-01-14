@@ -12,7 +12,7 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
     "mock-server": "mocks-server",
-    "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled",
+    "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled --log=debug",
     "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\" \"npm:mock-server:serve\"",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
