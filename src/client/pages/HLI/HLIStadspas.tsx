@@ -9,14 +9,16 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
-import { HttpStatusCode } from 'axios';
 import { useParams } from 'react-router-dom';
+import useSWRMutation from 'swr/mutation';
 
 import { getThemaTitleWithAppState } from './helpers';
+import { useStadspassen } from './HLI.hooks';
 import styles from './HLIStadspas.module.scss';
 import {
   StadspasBudget,
   StadspasBudgetTransaction,
+  StadspasFrontend,
 } from '../../../server/services/hli/stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -40,9 +42,7 @@ import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useAppStateGetter, useAppStateSetter } from '../../hooks/useAppState';
-import { useStadspassen } from './HLI.hooks';
-import { stadspasDecryptAndFetch } from '../../../server/services/hli/stadspas';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -160,14 +160,7 @@ export default function HLIStadspas() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {stadspas.actief && stadspas.blockPassURL ? (
-                <BlockPassButton
-                  stadspasId={stadspas.id}
-                  blockPassURL={stadspas.blockPassURL}
-                ></BlockPassButton>
-              ) : (
-                <PassBlockedAlert></PassBlockedAlert>
-              )}
+              <BlockStadspas stadspas={stadspas}></BlockStadspas>
             </Grid.Cell>
           ) : (
             <Grid.Cell span="all">
@@ -254,39 +247,63 @@ export default function HLIStadspas() {
   );
 }
 
-function BlockPassButton({
-  stadspasId,
-  blockPassURL,
-}: {
-  stadspasId: string;
-  blockPassURL: string;
-}) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isBusyBlockingPas, setIsBusyBlockingPas] = useState(false);
-  const [showErrorAlert, setShowErrorAlert] = useState(false);
-
+function useBlockStadspas(url: string | null, stadspasId: string) {
   const setStadspassenActiefStatus = useStadspassen()[1];
+
+  return useSWRMutation(
+    url,
+    async (url) => {
+      const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Request returned with an error');
+      }
+
+      setStadspassenActiefStatus((stadspasActiefState) => {
+        return { ...stadspasActiefState, [stadspasId]: false };
+      });
+
+      return response;
+    },
+    { revalidate: false, populateCache: false }
+  );
+}
+
+function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+  if (!stadspas.actief || !stadspas.blockPassURL) {
+    return <PassBlockedAlert></PassBlockedAlert>;
+  }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { error, isMutating, trigger } = useBlockStadspas(
+    stadspas.blockPassURL,
+    stadspas.id
+  );
+
+  if (isMutating) {
+    return <Spinner></Spinner>;
+  }
 
   return (
     <>
-      {isBusyBlockingPas ? (
-        <Spinner></Spinner>
-      ) : (
-        <Button
-          variant="secondary"
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          Blokeer deze Stadspas
-        </Button>
-      )}
-      {showErrorAlert && (
+      <Button
+        variant="secondary"
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        Blokeer deze Stadspas
+      </Button>
+      {error && (
         <Alert
           className={styles.ErrorAlert}
           heading="Fout bij het blokeren van de pas"
           closeable={true}
-          onClose={() => setShowErrorAlert(false)}
+          onClose={() => {}}
           severity="error"
         >
           Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
@@ -304,27 +321,8 @@ function BlockPassButton({
               type="submit"
               variant="primary"
               onClick={() => {
-                setIsBusyBlockingPas(true);
                 setIsModalOpen(false);
-                setShowErrorAlert(false);
-
-                // TODO: refactor as function as use library.
-                fetch(blockPassURL, {
-                  method: 'POST',
-                  credentials: 'include',
-                }).then((res) => {
-                  if (res.status !== HttpStatusCode.Ok) {
-                    setIsBusyBlockingPas(false);
-                    setShowErrorAlert(true);
-                    return;
-                  }
-
-                  setStadspassenActiefStatus((stadspasActiefState) => {
-                    return { ...stadspasActiefState, [stadspasId]: false };
-                  });
-
-                  setShowErrorAlert(false);
-                });
+                trigger();
               }}
             >
               Ja, blokkeer mijn pas
