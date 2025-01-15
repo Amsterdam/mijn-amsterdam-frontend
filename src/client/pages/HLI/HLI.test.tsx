@@ -12,27 +12,43 @@ import MockApp from '../MockApp';
 import ThemaPaginaHLI from './HLI';
 import { AppState } from '../../../universal/types';
 
-const owner: StadspasOwner = {
-  initials: '',
-  firstname: '',
-  lastname: '',
-};
+const createStadspas = createStadspas_();
 
-const stadspas: StadspasFrontend = {
-  urlTransactions: '',
-  transactionsKeyEncrypted: '123-xxx-000',
-  id: 'stadspas-1',
-  passNumber: 123123123,
-  passNumberComplete: '0303123123123',
-  owner,
-  dateEnd: '31-07-2025',
-  dateEndFormatted: '31 juli 2025',
-  budgets: [],
-  balanceFormatted: '',
-  balance: 0,
-};
+// First name added for easily identifying where youre looking in the snapshot.
+function createStadspas_() {
+  let id = 0;
 
-const testState: Pick<AppState, 'HLI'> = {
+  function create(firstname: string, actief: boolean): StadspasFrontend {
+    id++;
+
+    const owner: StadspasOwner = {
+      firstname,
+      lastname: 'Crepin',
+      initials: 'KC',
+    };
+
+    return {
+      urlTransactions: 'http://example.com/url-transactions',
+      transactionsKeyEncrypted: '123-xxx-000',
+      id: `stadspas-id-${id}`,
+      passNumber: 123123123,
+      passNumberComplete: '0303123123123',
+      owner,
+      dateEnd: '31-07-2025',
+      dateEndFormatted: '31 juli 2025',
+      budgets: [],
+      balanceFormatted: '€5,50',
+      balance: 5.5,
+      blockPassURL: 'http://example.com/stadspas/block',
+      actief,
+      securityCode: '123-securitycode-123',
+    };
+  }
+
+  return create;
+}
+
+const testState = {
   HLI: {
     status: 'OK',
     content: {
@@ -74,29 +90,36 @@ const testState: Pick<AppState, 'HLI'> = {
           decision: 'toegewezen',
         },
       ],
-      stadspas: [stadspas],
+      stadspas: [createStadspas('Kerub', true), createStadspas('Lou', false)],
     },
   },
-};
+} as unknown as AppState;
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState as AppState);
+const routeEntry = generatePath(AppRoutes.HLI);
+const routePath = AppRoutes.HLI;
+
+function createComponent(state: AppState) {
+  function initializeState(snapshot: MutableSnapshot) {
+    snapshot.set(appStateAtom, state);
+  }
+
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ThemaPaginaHLI}
+        initializeState={initializeState}
+      />
+    );
+  }
+
+  return Component;
 }
 
 describe('<HLI />', () => {
-  const routeEntry = generatePath(AppRoutes.HLI);
-  const routePath = AppRoutes.HLI;
-
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ThemaPaginaHLI}
-      initializeState={initializeState}
-    />
-  );
-
-  it('Matches the Full Page snapshot', () => {
+  it('Matches the Full Page snapshot with an active and a blocked pas', () => {
+    const Component = createComponent(testState);
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
