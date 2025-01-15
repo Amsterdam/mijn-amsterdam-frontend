@@ -362,11 +362,21 @@ async function blockStadspas_(
   passNumber: number,
   administratienummer: string
 ) {
-  const passResponse: ApiResponse<StadspasDetailSource> =
+  const passResponse: ApiResponse<StadspasDetailSource | null> =
     await fetchStadspasSource(requestID, passNumber, administratienummer);
+
   if (passResponse.status !== 'OK') {
     return passResponse;
   }
+
+  if (!passResponse.content) {
+    return apiErrorResult(
+      'No content in response from GPASS',
+      null,
+      HttpStatusCode.BadGateway
+    );
+  }
+
   // This may not give unexpected results so we do extra typechecking on the source input.
   if (
     typeof passResponse.content.actief !== 'boolean' ||
