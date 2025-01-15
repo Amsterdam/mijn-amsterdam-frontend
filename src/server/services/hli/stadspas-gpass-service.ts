@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
@@ -25,7 +26,6 @@ import {
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
-  ApiResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -35,7 +35,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { HttpStatusCode } from 'axios';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -114,11 +113,11 @@ function transformStadspasResponse(
   return gpassStadspasResonseData;
 }
 
-export async function fetchStadspasSource<R>(
+export async function fetchStadspasSource(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string,
-  transformResponse?: (pas: StadspasDetailSource) => R
+  transformResponse?: (pas: StadspasDetailSource) => Stadspas
 ) {
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
@@ -128,7 +127,7 @@ export async function fetchStadspasSource<R>(
       include_balance: true,
     },
   });
-  return requestData<R>(dataRequestConfig, requestID);
+  return requestData<Stadspas>(dataRequestConfig, requestID);
 }
 
 export async function fetchStadspassenByAdministratienummer(
@@ -362,14 +361,17 @@ async function blockStadspas_(
   passNumber: number,
   administratienummer: string
 ) {
-  const passResponse: ApiResponse<StadspasDetailSource> =
-    await fetchStadspasSource(requestID, passNumber, administratienummer);
+  const passResponse = await fetchStadspasSource(
+    requestID,
+    passNumber,
+    administratienummer
+  );
   if (passResponse.status !== 'OK') {
     return passResponse;
   }
   // This may not give unexpected results so we do extra typechecking on the source input.
   if (
-    typeof passResponse.content.actief !== 'boolean' ||
+    typeof passResponse.content?.actief !== 'boolean' ||
     !passResponse.content.actief
   ) {
     return apiErrorResult(
