@@ -411,4 +411,5 @@ export const forTesting = {
   getOwner,
   transformBudget,
   transformStadspasResponse,
+  blockStadspas_,
 };

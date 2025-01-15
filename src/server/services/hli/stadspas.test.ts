@@ -39,7 +39,6 @@ function createStadspasHouderResponse() {
 
 function createPas(
   actief: boolean,
-  // eslint-disable-next-line no-magic-numbers
   pasnummer: number = 777777777777,
   securitycode: string = '012345'
 ) {
