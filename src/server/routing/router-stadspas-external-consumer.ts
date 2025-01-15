@@ -25,7 +25,10 @@ import {
   fetchStadspasBudgetTransactions,
   fetchStadspasDiscountTransactions,
 } from '../services/hli/stadspas';
-import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service';
+import {
+  blockStadspas,
+  fetchStadspassenByAdministratienummer,
+} from '../services/hli/stadspas-gpass-service';
 import {
   StadspasAMSAPPFrontend,
   StadspasBudget,
@@ -89,13 +92,11 @@ routerPrivateNetwork.get(
   sendBudgetTransactionsResponse
 );
 
-routerPrivateNetwork.get(
+routerPrivateNetwork.post(
   ExternalConsumerEndpoints.private.STADSPAS_BLOCK_PAS,
   apiKeyVerificationHandler,
   sendStadspasBlockRequest
 );
-
-function sendStadspasBlockRequest(res: Response, req: Request) {}
 
 type ApiError = {
   code: string;
@@ -332,6 +333,17 @@ async function sendBudgetTransactionsResponse(
     req.query?.budgetCode as StadspasBudget['code']
   );
 
+  return sendResponse(res, response);
+}
+
+async function sendStadspasBlockRequest(
+  req: TransactionKeysEncryptedRequest,
+  res: Response
+) {
+  const response = await blockStadspas(
+    res.locals.requestID,
+    req.params.transactionsKeyEncrypted
+  );
   return sendResponse(res, response);
 }
 

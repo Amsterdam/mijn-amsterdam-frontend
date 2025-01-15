@@ -344,15 +344,15 @@ export async function fetchGpassDiscountTransactions(
  */
 export async function blockStadspas(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  transactionsKeyEncrypted: string
+  transactionsKeyEncrypted: string,
+  sessionIDtoVerify?: AuthProfileAndToken['profile']['sid']
 ) {
   const stadspas = stadspasDecryptAndFetch(
     (administratienummer, pasnummer) => {
       return blockStadspas_(requestID, pasnummer, administratienummer);
     },
     transactionsKeyEncrypted,
-    authProfileAndToken.profile.sid
+    sessionIDtoVerify
   );
   return stadspas;
 }

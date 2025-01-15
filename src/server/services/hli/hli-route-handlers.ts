@@ -56,8 +56,8 @@ export async function handleBlockStadspas(
 
   const response = await blockStadspas(
     res.locals.requestID,
-    authProfileAndToken,
-    req.params.transactionsKeyEncrypted
+    req.params.transactionsKeyEncrypted,
+    authProfileAndToken.profile.sid
   );
 
   return sendResponse(res, response);
