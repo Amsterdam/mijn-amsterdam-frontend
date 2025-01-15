@@ -386,7 +386,7 @@ async function blockStadspas_(
       if (pas.actief) {
         throw Error('City pass is still active after trying to block it.');
       }
-      return null;
+      return pas;
     },
   });
 

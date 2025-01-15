@@ -252,11 +252,15 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const { error, isMutating, trigger } = useBlockStadspas(
-    stadspas.blockPassURL,
-    stadspas.id
+    stadspas.blockPassURL
   );
+
+  if (error) {
+    setShowError(true);
+  }
 
   if (isMutating) {
     return <Spinner></Spinner>;
@@ -272,12 +276,12 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
       >
         Blokeer deze Stadspas
       </Button>
-      {error && (
+      {showError && (
         <Alert
           className={styles.ErrorAlert}
           heading="Fout bij het blokeren van de pas"
           closeable={true}
-          onClose={() => {}}
+          onClose={() => setShowError(false)}
           severity="error"
         >
           Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}

@@ -1,39 +1,31 @@
-import { atom, useRecoilState } from 'recoil';
-import useSWRMutation from 'swr/dist/mutation';
+import { HttpStatusCode } from 'axios';
+import { useSWRConfig } from 'swr';
+import useSWRMutation from 'swr/mutation';
 
-import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { useAppStateGetter } from '../../hooks/useAppState';
-
-type StadspasActiefByID = {
-  [id: string]: boolean;
-};
-
-const stadspasActiefAtom = atom<StadspasActiefByID>({
-  key: 'stadspasActief',
-  default: {},
-});
 
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();
-  const [stadspasActief, setStadspassenActiefStatus] =
-    useRecoilState(stadspasActiefAtom);
+  const { cache } = useSWRConfig();
 
-  const stadspassen: StadspasFrontend[] = (HLI.content?.stadspas || []).map(
-    (pas) => {
-      const stadspas = {
-        ...pas,
-        actief: stadspasActief[pas.id] ?? true,
-      };
-      return stadspas;
+  const stadspassen = (HLI.content?.stadspas || []).map((pas) => {
+    let cachedPas;
+    if (pas.blockPassURL) {
+      cachedPas = cache.get(pas.blockPassURL);
     }
-  );
 
-  return [stadspassen, setStadspassenActiefStatus] as const;
+    const stadspas = {
+      ...pas,
+      actief: cachedPas?.data?.actief ?? pas.actief,
+    };
+
+    return stadspas;
+  });
+
+  return [stadspassen] as const;
 }
 
-export function useBlockStadspas(url: string | null, stadspasId: string) {
-  const setStadspassenActiefStatus = useStadspassen()[1];
-
+export function useBlockStadspas(url: string | null) {
   return useSWRMutation(
     url,
     async (url) => {
@@ -42,16 +34,17 @@ export function useBlockStadspas(url: string | null, stadspasId: string) {
         credentials: 'include',
       });
 
-      if (!response.ok) {
+      if (response.status !== HttpStatusCode.Ok) {
         throw new Error('Request returned with an error');
       }
 
-      setStadspassenActiefStatus((stadspasActiefState) => {
-        return { ...stadspasActiefState, [stadspasId]: false };
-      });
-
-      return response;
+      return response.json();
     },
-    { revalidate: false, populateCache: false }
+    {
+      revalidate: false,
+      populateCache: (updatedStadspasResponse, stadspassen) => {
+        return { ...stadspassen, ...updatedStadspasResponse.content };
+      },
+    }
   );
 }
