@@ -188,6 +188,40 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApplicationError'
+  /private/api/v1/services/amsapp/stadspas/block/{transactionsKeyEncrypted}:
+    post:
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Blocks a stadspas with the passNumber supplied in transactionsKeyEncrypted.
+      parameters:
+        - name: transactionsKeyEncrypted
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Blocking stadspas was successful
+        '400':
+          description: Returns bad request error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Returns unauthorized error (invalid api key)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '500':
+          description: |
+            Returns Application error, any error in code or from failed requests.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
 
 components:
   securitySchemes:
