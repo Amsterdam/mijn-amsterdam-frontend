@@ -76,18 +76,21 @@ export const BffEndpoints = {
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
 };
 
+const AMSAPP_BASE = '/services/amsapp';
+
 export const ExternalConsumerEndpoints = {
   // Publicly accessible
   public: {
-    STADSPAS_AMSAPP_LOGIN: `/services/amsapp/stadspas/login/:token`,
-    STADSPAS_ADMINISTRATIENUMMER: `/services/amsapp/stadspas/administratienummer/:token`,
-    STADSPAS_APP_LANDING: `/services/amsapp/stadspas/app-landing`,
+    STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
+    STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
+    STADSPAS_APP_LANDING: `${AMSAPP_BASE}/stadspas/app-landing`,
   },
   // Privately accessible
   private: {
-    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:administratienummerEncrypted`,
-    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
+    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
   },
 };
 

@@ -29,6 +29,7 @@ import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-
 import {
   StadspasAMSAPPFrontend,
   StadspasBudget,
+  TransactionKeysEncryptedWithoutSessionID,
 } from '../services/hli/stadspas-types';
 import { captureException, captureMessage } from '../services/monitoring';
 
@@ -87,6 +88,14 @@ routerPrivateNetwork.get(
   apiKeyVerificationHandler,
   sendBudgetTransactionsResponse
 );
+
+routerPrivateNetwork.get(
+  ExternalConsumerEndpoints.private.STADSPAS_BLOCK_PAS,
+  apiKeyVerificationHandler,
+  sendStadspasBlockRequest
+);
+
+function sendStadspasBlockRequest(res: Response, req: Request) {}
 
 type ApiError = {
   code: string;
@@ -291,8 +300,12 @@ async function sendStadspassenResponse(
   );
 }
 
+type TransactionKeysEncryptedRequest = Request<{
+  transactionsKeyEncrypted: TransactionKeysEncryptedWithoutSessionID;
+}>;
+
 async function sendDiscountTransactionsResponse(
-  req: Request<{ transactionsKeyEncrypted: string }>,
+  req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
   const response = await fetchStadspasDiscountTransactions(
@@ -310,7 +323,7 @@ async function sendDiscountTransactionsResponse(
  *  `transactionsKeyEncrypted`: is available in the response of `sendStadspassenResponse`.
  */
 async function sendBudgetTransactionsResponse(
-  req: Request<{ transactionsKeyEncrypted: string }>,
+  req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
   const response = await fetchStadspasBudgetTransactions(

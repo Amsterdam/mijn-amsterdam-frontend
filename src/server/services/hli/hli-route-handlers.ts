@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import { blockStadspas } from './stadspas-gpass-service';
-import { StadspasBudget, StadspasFrontend } from './stadspas-types';
+import { StadspasBudget, TransactionKeysEncrypted } from './stadspas-types';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
 import { fetchDocument } from '../zorgned/zorgned-service';
 
 type TransactionKeysEncryptedRequest = Request<{
-  transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];
+  transactionsKeyEncrypted: TransactionKeysEncrypted;
 }>;
 
 export async function handleFetchTransactionsRequest(

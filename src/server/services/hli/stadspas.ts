@@ -27,7 +27,7 @@ import { captureException } from '../monitoring';
 export async function fetchStadspas(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<StadspasFrontend[]>> {
+): Promise<ApiResponse<StadspasFrontend[] | null>> {
   const stadspasResponse = await fetchStadspassen(
     requestID,
     authProfileAndToken

@@ -177,15 +177,19 @@ export interface Stadspas {
   securityCode: SecurityCode;
 }
 
+export type TransactionKeysEncrypted = string;
+
 export interface StadspasFrontend extends Stadspas {
   urlTransactions: string;
-  transactionsKeyEncrypted: string;
+  transactionsKeyEncrypted: TransactionKeysEncrypted;
   blockPassURL: string | null;
   link?: LinkProps;
 }
 
+export type TransactionKeysEncryptedWithoutSessionID = string;
+
 export interface StadspasAMSAPPFrontend extends Stadspas {
-  transactionsKeyEncrypted: string;
+  transactionsKeyEncrypted: TransactionKeysEncryptedWithoutSessionID;
 }
 
 export interface StadspasTransactionQueryParams {
