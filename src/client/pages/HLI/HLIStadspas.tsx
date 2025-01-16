@@ -247,47 +247,50 @@ export default function HLIStadspas() {
 }
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
-  if (!stadspas.actief || !stadspas.blockPassURL) {
+  if (!stadspas.actief) {
     return <PassBlockedAlert></PassBlockedAlert>;
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  const { error, isMutating, trigger } = useBlockStadspas(
-    stadspas.blockPassURL
-  );
+  const { error, isMutating, trigger: blokkeerStadspas } = useBlockStadspas();
 
-  if (error) {
-    setShowError(true);
-  }
-
-  if (isMutating) {
-    return <Spinner></Spinner>;
-  }
+  useEffect(() => {
+    if (error && !isMutating && !showError) {
+      setShowError(true);
+    }
+  }, [error, showError, isMutating]);
 
   return (
     <>
-      <Button
-        variant="secondary"
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-      >
-        Blokeer deze Stadspas
-      </Button>
       {showError && (
         <Alert
-          className={styles.ErrorAlert}
+          className="ams-mb--sm"
           heading="Fout bij het blokeren van de pas"
-          closeable={true}
-          onClose={() => setShowError(false)}
           severity="error"
         >
           Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
           {PHONENUMBERS.WerkEnInkomen}
         </Alert>
       )}
+      {isMutating ? (
+        <Alert severity="warning">
+          <Paragraph>
+            <Spinner></Spinner> Bezig met het blokkeren van de pas...
+          </Paragraph>
+        </Alert>
+      ) : (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          Blokeer deze Stadspas
+        </Button>
+      )}
+
       <Modal
         title="Weet u zeker dat u uw stadspas wilt blokkeren ?"
         className={styles.BlokkeerDialog}
@@ -299,8 +302,11 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
               type="submit"
               variant="primary"
               onClick={() => {
+                setShowError(false);
                 setIsModalOpen(false);
-                trigger();
+                if (stadspas.blockPassURL) {
+                  blokkeerStadspas(stadspas.blockPassURL);
+                }
               }}
             >
               Ja, blokkeer mijn pas
@@ -322,9 +328,10 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           tegoed van uw kind uitgeeft.
         </Paragraph>
         <Paragraph className="ams-mb--sm">
-          {`Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
-          blokkeren? Bel dan meteen naar ${PHONENUMBERS.WerkEnInkomen}. De nieuwe pas wordt dan
-          binnen drie weken thuisgestuurd en is dan gelijk te gebruiken.`}
+          Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
+          blokkeren? Bel dan meteen naar {PHONENUMBERS.WerkEnInkomen}. De nieuwe
+          pas wordt dan binnen drie weken thuisgestuurd en is dan gelijk te
+          gebruiken.
         </Paragraph>
       </Modal>
     </>
@@ -338,8 +345,8 @@ function PassBlockedAlert() {
       severity="warning"
     >
       <Paragraph>
-        {`Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
-        naar ${PHONENUMBERS.WerkEnInkomen} of ${PHONENUMBERS.CCA}.`}
+        Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
+        naar {PHONENUMBERS.WerkEnInkomen} of {PHONENUMBERS.CCA}.
       </Paragraph>
       <Paragraph>
         Het aanvragen van een nieuwe pas is gratis. De pas wordt binnen drie

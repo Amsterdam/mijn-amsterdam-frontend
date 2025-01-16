@@ -1,22 +1,16 @@
-import { HttpStatusCode } from 'axios';
-import { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();
-  const { cache } = useSWRConfig();
-
+  const { data: passBlokkadeByPasnummer } = useBlockStadspas();
   const stadspassen = (HLI.content?.stadspas || []).map((pas) => {
-    let cachedPas;
-    if (pas.blockPassURL) {
-      cachedPas = cache.get(pas.blockPassURL);
-    }
-
+    const isGeblokkeerd = passBlokkadeByPasnummer?.[pas.passNumber];
     const stadspas = {
       ...pas,
-      actief: cachedPas?.data?.actief ?? pas.actief,
+      actief: isGeblokkeerd ?? pas.actief,
     };
 
     return stadspas;
@@ -25,26 +19,38 @@ export function useStadspassen() {
   return [stadspassen] as const;
 }
 
-export function useBlockStadspas(url: string | null) {
-  return useSWRMutation(
-    url,
-    async (url) => {
-      const response = await fetch(url, {
+type BlokkeerURL = string;
+
+export function useBlockStadspas() {
+  const { data } = useSWR('pasblokkades');
+  const mutation = useSWRMutation(
+    'pasblokkades',
+    async (key, { arg }: { arg: BlokkeerURL }) => {
+      const response = await fetch(arg, {
         method: 'POST',
         credentials: 'include',
-      });
+      }).then((response) => response.json());
 
-      if (response.status !== HttpStatusCode.Ok) {
-        throw new Error('Request returned with an error');
+      if (response.status !== 'OK') {
+        throw new Error(response.message);
       }
 
-      return response.json();
+      return response;
     },
     {
       revalidate: false,
-      populateCache: (updatedStadspasResponse, stadspassen) => {
-        return { ...stadspassen, ...updatedStadspasResponse.content };
+      populateCache: (response, pasBlokkadeByPasnummer) => {
+        const newState = {
+          ...pasBlokkadeByPasnummer,
+          ...response.content,
+        };
+        return newState;
       },
     }
   );
+
+  return {
+    ...mutation,
+    data,
+  };
 }
