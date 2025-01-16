@@ -27,7 +27,7 @@ import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
-  ApiResponse2,
+  ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
@@ -120,7 +120,7 @@ export async function fetchStadspasSource(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string
-): Promise<ApiResponse2<StadspasDetailSource>> {
+): Promise<ApiResponse<StadspasDetailSource>> {
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
     headers: getHeaders(administratienummer),

@@ -55,7 +55,7 @@ export type ApiResponse_DEPRECATED<T> =
   | ApiPostponeResponse<T>
   | ApiDependencyErrorResponse;
 
-export type ApiResponse2<T> =
+export type ApiResponse<T> =
   | ApiErrorResponse<null>
   | ApiSuccessResponse<T>
   | ApiPostponeResponse<null>;
