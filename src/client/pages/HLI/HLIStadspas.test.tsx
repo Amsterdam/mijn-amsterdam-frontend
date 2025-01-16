@@ -10,12 +10,22 @@ import { AppRoutes } from '../../../universal/config/routes';
 const createStadspas = stadspasCreator();
 const passNumber = 12345678;
 
-const testState = {
+const activePasState = {
   HLI: {
     status: 'OK',
     content: {
       regelingen: [],
       stadspas: [createStadspas('Kerub', true, passNumber)],
+    },
+  },
+} as unknown as AppState;
+
+const pasBlockedState = {
+  HLI: {
+    status: 'OK',
+    content: {
+      regelingen: [],
+      stadspas: [createStadspas('Lou', false, passNumber)],
     },
   },
 } as unknown as AppState;
@@ -27,9 +37,15 @@ const createHLIStadspasComponent = componentCreator({
 });
 
 describe('<HLIStadspas />', () => {
-  it('Finds the block button', () => {
-    const HLIStadspas = createHLIStadspasComponent(testState);
+  test('Finds the block button', () => {
+    const HLIStadspas = createHLIStadspasComponent(activePasState);
     const screen = render(<HLIStadspas />);
     expect(screen.getByTestId('block-stadspas-button')).toBeInTheDocument();
+  });
+
+  test('Find label communicating that the stadspas is blocked', () => {
+    const HLIStadspas = createHLIStadspasComponent(pasBlockedState);
+    const screen = render(<HLIStadspas />);
+    expect(screen.getByTestId('stadspas-blocked-alert')).toBeInTheDocument();
   });
 });

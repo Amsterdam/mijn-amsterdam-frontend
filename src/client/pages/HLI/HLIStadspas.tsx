@@ -347,6 +347,7 @@ function PassBlockedAlert() {
     <Alert
       heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
       severity="warning"
+      data-testid="stadspas-blocked-alert"
     >
       <Paragraph>
         Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
