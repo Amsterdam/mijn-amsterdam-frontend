@@ -1,4 +1,4 @@
-import { ApiResponse } from '../../../universal/helpers/api';
+import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { GenericDocument } from '../../../universal/types';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
@@ -124,7 +124,7 @@ export type DecosTransformerOptions<T extends DecosZaakBase = DecosZaakBase> = {
   decosZaakTransformer?: DecosZaakTransformer<T>;
   fetchDecosWorkflowDates?: (
     stepTitles: DecosWorkflowStepTitle[]
-  ) => Promise<ApiResponse<Record<string, string | null> | null>>;
+  ) => Promise<ApiResponse_DEPRECATED<Record<string, string | null> | null>>;
 };
 
 export type DecosZaakTransformer<T extends DecosZaakBase> = {

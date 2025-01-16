@@ -3,7 +3,10 @@ import memoize from 'memoizee';
 
 import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ApiResponse, getSettledResult } from '../../universal/helpers/api';
+import {
+  ApiResponse_DEPRECATED,
+  getSettledResult,
+} from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification, MyTip } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -89,7 +92,7 @@ export function sortNotifications(
 }
 
 export function getTipsAndNotificationsFromApiResults(
-  responses: Array<ApiResponse<unknown>>
+  responses: Array<ApiResponse_DEPRECATED<unknown>>
 ): MyNotification[] {
   const notifications: MyNotification[] = [];
   const tips: MyTip[] = [];
@@ -146,7 +149,7 @@ export function getTipsAndNotificationsFromApiResults(
 type FetchNotificationFunction = (
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) => Promise<ApiResponse<unknown>>;
+) => Promise<ApiResponse_DEPRECATED<unknown>>;
 
 type NotificationServices = Record<string, FetchNotificationFunction>;
 

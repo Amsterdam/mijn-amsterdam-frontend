@@ -1,7 +1,6 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
-import { useStadspassen } from './HLI.hooks';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -51,7 +50,11 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
           )}
         </MaRouterLink>
       ),
-      actief: pas.actief ? 'Actief' : 'Geblokkeerd',
+      actief: (
+        <span className={styles.StatusValue}>
+          {pas.actief ? 'Actief' : 'Geblokkeerd'}
+        </span>
+      ),
     };
   });
 
@@ -93,9 +96,8 @@ export default function ThemaPaginaHLI() {
     routes,
     tableConfig,
     dependencyError,
+    stadspassen,
   } = useHliThemaData();
-
-  const [stadspassen] = useStadspassen();
 
   const pageContentTop = (
     <Paragraph>

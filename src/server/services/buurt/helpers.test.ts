@@ -31,7 +31,7 @@ import {
   refineFilterSelection,
 } from './helpers';
 import { remoteApiHost } from '../../../testing/setup';
-import { ApiResponse } from '../../../universal/helpers/api';
+import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 
 const DSO_API_RESULT = {
   _links: {
@@ -614,7 +614,7 @@ describe('Buurt helpers', () => {
   });
 
   it('Should datasetApiResult', () => {
-    const apiResponses: ApiResponse<DatasetResponse | null>[] = [
+    const apiResponses: ApiResponse_DEPRECATED<DatasetResponse | null>[] = [
       {
         status: 'OK',
         content: { features: features.slice(0, 2) },

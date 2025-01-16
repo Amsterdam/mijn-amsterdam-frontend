@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import {
   apiPristineResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
 } from '../../../../universal/helpers/api';
 import { AppState } from '../../../../universal/types';
 import { useDataApi } from '../../../hooks/api/useDataApi';
@@ -12,7 +12,7 @@ export function useAantalBewonersOpAdres(
   brpContent: AppState['BRP']['content']
 ) {
   const [{ data: residentData }, fetchResidentCount] = useDataApi<
-    ApiResponse<{ residentCount: number }>
+    ApiResponse_DEPRECATED<{ residentCount: number }>
   >(
     {
       url: brpContent?.fetchUrlAantalBewoners ?? '',

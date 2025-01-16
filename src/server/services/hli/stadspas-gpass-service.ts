@@ -1,8 +1,8 @@
+import { HttpStatusCode } from 'axios';
 import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { stadspasDecryptAndFetch } from './stadspas';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   SecurityCode,
@@ -21,11 +21,14 @@ import {
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
+  PasblokkadeByPasnummer,
 } from './stadspas-types';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
+  ApiResponse_DEPRECATED,
   ApiResponse,
+  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -35,7 +38,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { HttpStatusCode } from 'axios';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -114,21 +116,19 @@ function transformStadspasResponse(
   return gpassStadspasResonseData;
 }
 
-export async function fetchStadspasSource<R>(
+export async function fetchStadspasSource(
   requestID: RequestID,
   passNumber: number,
-  administratienummer: string,
-  transformResponse?: (pas: StadspasDetailSource) => R
-) {
+  administratienummer: string
+): Promise<ApiResponse<StadspasDetailSource>> {
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
-    transformResponse,
     headers: getHeaders(administratienummer),
     params: {
       include_balance: true,
     },
   });
-  return requestData<R>(dataRequestConfig, requestID);
+  return requestData<StadspasDetailSource>(dataRequestConfig, requestID);
 }
 
 export async function fetchStadspassenByAdministratienummer(
@@ -179,10 +179,24 @@ export async function fetchStadspassenByAdministratienummer(
       const response = fetchStadspasSource(
         requestID,
         pas.pasnummer,
-        administratienummer,
-        (stadspasSource) =>
-          transformStadspasResponse(stadspasSource, pashouder, pas.securitycode)
-      );
+        administratienummer
+      ).then((response) => {
+        if (response.content && response.status === 'OK') {
+          const pasTransformed = transformStadspasResponse(
+            response.content,
+            pashouder,
+            pas.securitycode
+          );
+          const stadspas: ApiSuccessResponse<Stadspas> = {
+            ...response,
+            content: pasTransformed,
+          };
+
+          return stadspas;
+        }
+        return response;
+      });
+
       pasRequests.push(response);
     }
   }
@@ -337,39 +351,22 @@ export async function fetchGpassDiscountTransactions(
   );
 }
 
-/** Block a stadspas with it's passNumber.
- *
- *  The passNumber is encrypted inside the transactionsKeyEncrypted.
- *  The endpoint in use can also unblock cards, but we prevent this so its block only.
- */
-export async function blockStadspas(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  transactionsKeyEncrypted: string
-) {
-  const stadspas = stadspasDecryptAndFetch(
-    (administratienummer, pasnummer) => {
-      return blockStadspas_(requestID, pasnummer, administratienummer);
-    },
-    transactionsKeyEncrypted,
-    authProfileAndToken.profile.sid
-  );
-  return stadspas;
-}
-
-async function blockStadspas_(
+export async function mutateGpassBlockPass(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string
-) {
-  const passResponse: ApiResponse<StadspasDetailSource> =
-    await fetchStadspasSource(requestID, passNumber, administratienummer);
+): Promise<ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>> {
+  const passResponse = await fetchStadspasSource(
+    requestID,
+    passNumber,
+    administratienummer
+  );
   if (passResponse.status !== 'OK') {
     return passResponse;
   }
   // This may not give unexpected results so we do extra typechecking on the source input.
   if (
-    typeof passResponse.content.actief !== 'boolean' ||
+    typeof passResponse.content?.actief !== 'boolean' ||
     !passResponse.content.actief
   ) {
     return apiErrorResult(
@@ -386,11 +383,11 @@ async function blockStadspas_(
       if (pas.actief) {
         throw Error('City pass is still active after trying to block it.');
       }
-      return pas;
+      return { [pas.pasnummer]: pas.actief };
     },
   });
 
-  return requestData<null>(config, requestID);
+  return requestData<PasblokkadeByPasnummer>(config, requestID);
 }
 
 export const forTesting = {

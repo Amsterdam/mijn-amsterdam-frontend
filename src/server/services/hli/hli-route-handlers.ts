@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 
-import { fetchStadspasBudgetTransactions } from './stadspas';
-import { blockStadspas } from './stadspas-gpass-service';
+import { blockStadspas, fetchStadspasBudgetTransactions } from './stadspas';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -56,8 +55,8 @@ export async function handleBlockStadspas(
 
   const response = await blockStadspas(
     res.locals.requestID,
-    authProfileAndToken,
-    req.params.transactionsKeyEncrypted
+    req.params.transactionsKeyEncrypted,
+    authProfileAndToken.profile.sid
   );
 
   return sendResponse(res, response);

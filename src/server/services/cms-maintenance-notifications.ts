@@ -4,7 +4,7 @@ import { marked } from 'marked';
 import { IS_TAP } from '../../universal/config/env';
 import { Themas } from '../../universal/config/thema';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiSuccessResult,
 } from '../../universal/helpers/api';
@@ -124,7 +124,7 @@ function transformCMSEventResponse(
 async function fetchCMSMaintenanceNotifications(
   requestID: RequestID,
   useCache: boolean = true
-): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
+): Promise<ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>> {
   const cachedData = fileCache.getKey<
     ApiSuccessResponse<CMSMaintenanceNotification[]>
   >('CMS_MAINTENANCE_NOTIFICATIONS');
