@@ -241,7 +241,7 @@ attachDocumentDownloadRoute(
 
 // HLI Stadspas transacties
 router.get(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);
-router.post(BffEndpoints.STADSPAS_BLOCK_PASS, handleBlockStadspas);
+router.get(BffEndpoints.STADSPAS_BLOCK_PASS, handleBlockStadspas);
 
 // HLI Regelingen / doc download
 attachDocumentDownloadRoute(
