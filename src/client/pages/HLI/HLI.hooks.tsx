@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
+import { PasblokkadeByPasnummer } from '../../../server/services/hli/stadspas-types';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
@@ -22,15 +22,17 @@ export function useStadspassen() {
 }
 
 type BlokkeerURL = string;
-type PasblokkadeByPasnummer = Record<StadspasFrontend['passNumber'], boolean>;
 
 export function useBlockStadspas() {
   const { data } = useSWR<PasblokkadeByPasnummer>('pasblokkades');
   const mutation = useSWRMutation<
-    PasblokkadeByPasnummer | ApiResponse<PasblokkadeByPasnummer | null>
+    PasblokkadeByPasnummer | ApiResponse<PasblokkadeByPasnummer | null>,
+    Error,
+    'pasblokkades',
+    BlokkeerURL
   >(
     'pasblokkades',
-    async (key, { arg }: { arg: BlokkeerURL }) => {
+    async (key, { arg }) => {
       const response = await fetch(arg, {
         method: 'POST',
         credentials: 'include',
