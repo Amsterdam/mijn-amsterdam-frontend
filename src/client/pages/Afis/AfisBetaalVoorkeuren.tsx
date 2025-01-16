@@ -1,4 +1,4 @@
-import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AfisEmandateStub } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
@@ -111,7 +111,7 @@ export function AfisBetaalVoorkeuren() {
 
   const pageContentTop = (
     <>
-      <Paragraph>
+      <Paragraph className="ams-mb--sm">
         Hieronder kunt u uw betaalgegevens bekijken en een automatische incasso
         instellen per afdeling van de gemeente. Wil u uw betaalgegevens
         wijzigen, stuur dan een email naar{' '}
@@ -122,6 +122,33 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
+      <Heading level={3} size="level-5">
+        Via automatische incasso betalen
+      </Heading>
+      <Paragraph className="ams-mb--sm">
+        Download{' '}
+        <Link
+          rel="noreferrer noopener"
+          href="https://omnichanneliv.cdn.salesforce-experience.com/cms/delivery/media/MCJM5EH46HYNAZXFYHPNR4WUIMBA?oid=00D68000000aIuV&channelId=0ap68000000g3EBAAY"
+        >
+          het machtigingsformulier.
+        </Link>{' '}
+        Kies een of meerdere producten waarvoor de gemeente automatisch mag
+        incasseren en vul uw gegevens in. Het debiteurennummer is niet
+        verplicht. Onderteken het formulier en stuur het naar:
+      </Paragraph>
+      <Paragraph className="ams-mb--sm">
+        Gemeente Amsterdam
+        <br />
+        Debiteurenadministratie
+        <br />
+        Antwoordnummer 47389
+        <br />
+        1070 WC
+        <br />
+        Amsterdam
+      </Paragraph>
+      <Paragraph>Een postzegel is niet nodig.</Paragraph>
     </>
   );
 
@@ -130,7 +157,7 @@ export function AfisBetaalVoorkeuren() {
       <AfisBusinessPartnerDetails
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
-        isLoading={isLoadingBusinessPartnerDetails || isThemaPaginaLoading}
+        isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
         startCollapsed={FeatureToggle.afisEmandatesActive}
       />
       {eMandateTables}
