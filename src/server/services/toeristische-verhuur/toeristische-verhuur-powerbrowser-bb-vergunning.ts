@@ -20,7 +20,7 @@ import {
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -281,7 +281,7 @@ function transformZaakStatusResponse(
 async function fetchZaakAdres(
   requestID: RequestID,
   zaakId: PBZaakRecord['id']
-): Promise<ApiResponse<string | null>> {
+): Promise<ApiResponse_DEPRECATED<string | null>> {
   const addressResponse = await fetchPowerBrowserData<string>(requestID, {
     method: 'post',
     formatUrl({ url }) {
@@ -315,7 +315,7 @@ async function fetchZaakAdres(
 async function fetchZaakStatussen(
   requestID: RequestID,
   zaak: BBVergunning
-): Promise<ApiResponse<StatusLineItem[] | null>> {
+): Promise<ApiResponse_DEPRECATED<StatusLineItem[] | null>> {
   const statusResponse = await fetchPowerBrowserData<StatusLineItem[]>(
     requestID,
     {
@@ -490,7 +490,7 @@ async function fetchZakenByIds(
   requestID: RequestID,
   authProfile: AuthProfile,
   zaakIds: string[]
-): Promise<ApiResponse<BBVergunning[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BBVergunning[] | null>> {
   const requestConfig: DataRequestConfig = {
     method: 'get',
     formatUrl({ url }) {
@@ -532,7 +532,7 @@ async function fetchZakenByIds(
 export async function fetchBBVergunningen(
   requestID: RequestID,
   authProfile: AuthProfile
-): Promise<ApiResponse<BBVergunning[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BBVergunning[] | null>> {
   // Set-up the options for the PowerBrowser API request based on the profile type.
   const optionsByProfileType: Record<
     ProfileType,
@@ -682,7 +682,7 @@ export async function fetchBBDocumentsList(
   requestID: RequestID,
   authProfile: AuthProfile,
   zaakId: BBVergunning['id']
-): Promise<ApiResponse<BBVergunning['documents'] | null>> {
+): Promise<ApiResponse_DEPRECATED<BBVergunning['documents'] | null>> {
   const dataRequestConfig: DataRequestConfig = {
     method: 'post',
     formatUrl({ url }) {

@@ -28,7 +28,7 @@ import {
 } from './helpers';
 import {
   ApiErrorResponse,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
@@ -447,7 +447,9 @@ export async function fetchDecosWorkflowDates(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   stepTitles: DecosWorkflowStepTitle[]
-): Promise<ApiResponse<Record<string, DecosWorkflowStepDate | null> | null>> {
+): Promise<
+  ApiResponse_DEPRECATED<Record<string, DecosWorkflowStepDate | null> | null>
+> {
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;

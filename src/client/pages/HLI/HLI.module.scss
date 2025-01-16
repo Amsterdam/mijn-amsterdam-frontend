@@ -21,6 +21,22 @@
   --ams-paragraph-color: #{$color-neutral-grey4};
 }
 
+.Stadspassen {
+  height: fit-content;
+  tr {
+    height: 100%;
+  }
+}
+
+.StatusValue {
+  // Hack to align table cell content with other cells content
+  &:before {
+    content: '';
+    line-height: var(--ams-link-standalone-line-height);
+    font-size: var(--ams-text-level-2-font-size);
+  }
+}
+
 @media screen and (min-width: $ams-breakpoint-medium) {
   .EerdereRegelingen,
   .Stadspassen,

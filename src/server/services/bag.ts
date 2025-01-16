@@ -1,6 +1,9 @@
 import { LatLngLiteral } from 'leaflet';
 
-import { apiErrorResult, ApiResponse } from '../../universal/helpers/api';
+import {
+  apiErrorResult,
+  ApiResponse_DEPRECATED,
+} from '../../universal/helpers/api';
 import { getLatLngCoordinates } from '../../universal/helpers/bag';
 import { Adres } from '../../universal/types';
 import { BAGQueryParams } from '../../universal/types/bag';
@@ -17,7 +20,7 @@ export interface BAGData {
 export async function fetchBAG(
   requestID: RequestID,
   sourceAddress: Adres | null
-): Promise<ApiResponse<BAGData | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGData | null>> {
   if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }

@@ -6,7 +6,7 @@ import {
   POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/myarea-datasets';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
@@ -174,7 +174,7 @@ export async function fetchDataset(
   return response;
 }
 
-type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
+type ApiDatasetResponse = ApiResponse_DEPRECATED<DatasetResponse | null>;
 
 export async function loadDatasetFeatures(
   requestID: RequestID,

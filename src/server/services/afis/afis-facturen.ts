@@ -6,7 +6,7 @@ import { firstBy } from 'thenby';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -141,7 +141,7 @@ function transformDeelbetalingenResponse(
 async function fetchAfisFacturenDeelbetalingen(
   requestID: RequestID,
   params: AfisFacturenParams
-): Promise<ApiResponse<AfisFactuurDeelbetalingen | null>> {
+): Promise<ApiResponse_DEPRECATED<AfisFactuurDeelbetalingen | null>> {
   const config = await getAfisApiConfig(
     {
       formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
@@ -415,7 +415,7 @@ export async function fetchAfisFacturen(
   requestID: RequestID,
   sessionID: SessionID,
   params: AfisFacturenParams
-): Promise<ApiResponse<AfisFacturenResponse | null>> {
+): Promise<ApiResponse_DEPRECATED<AfisFacturenResponse | null>> {
   let deelbetalingen: AfisFactuurDeelbetalingen | undefined;
 
   if (params.state === 'open' || params.state === 'afgehandeld') {

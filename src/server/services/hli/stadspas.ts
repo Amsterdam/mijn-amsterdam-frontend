@@ -2,6 +2,7 @@ import { generatePath } from 'react-router-dom';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
+  mutateGpassBlockPass,
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
@@ -15,7 +16,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -27,7 +28,7 @@ import { captureException } from '../monitoring';
 export async function fetchStadspas(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<StadspasFrontend[] | null>> {
+): Promise<ApiResponse_DEPRECATED<StadspasFrontend[] | null>> {
   const stadspasResponse = await fetchStadspassen(
     requestID,
     authProfileAndToken
@@ -171,6 +172,25 @@ export async function fetchStadspasBudgetTransactions(
         pasnummer,
         budgetCode
       ),
+    transactionsKeyEncrypted,
+    verifySessionId
+  );
+}
+
+/** Block a stadspas with it's passNumber.
+ *
+ *  The passNumber is encrypted inside the transactionsKeyEncrypted.
+ *  The endpoint in use can also unblock cards, but we prevent this so its block only.
+ */
+export async function blockStadspas(
+  requestID: RequestID,
+  transactionsKeyEncrypted: string,
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
+) {
+  return stadspasDecryptAndFetch(
+    (administratienummer, pasnummer) => {
+      return mutateGpassBlockPass(requestID, pasnummer, administratienummer);
+    },
     transactionsKeyEncrypted,
     verifySessionId
   );

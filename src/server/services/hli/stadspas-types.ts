@@ -181,7 +181,7 @@ export type TransactionKeysEncrypted = string;
 
 export interface StadspasFrontend extends Stadspas {
   urlTransactions: string;
-  transactionsKeyEncrypted: TransactionKeysEncrypted;
+  transactionsKeyEncrypted: string;
   blockPassURL: string | null;
   link?: LinkProps;
 }
@@ -228,3 +228,8 @@ export interface StadspasDiscountTransaction {
 }
 
 export type StadspasAdministratieNummer = string;
+
+export type PasblokkadeByPasnummer = Record<
+  StadspasFrontend['passNumber'],
+  boolean
+>;

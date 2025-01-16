@@ -51,7 +51,11 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
           )}
         </MaRouterLink>
       ),
-      actief: pas.actief ? 'Actief' : 'Geblokkeerd',
+      actief: (
+        <span className={styles.StatusValue}>
+          {pas.actief ? 'Actief' : 'Geblokkeerd'}
+        </span>
+      ),
     };
   });
 
@@ -93,6 +97,7 @@ export default function ThemaPaginaHLI() {
     routes,
     tableConfig,
     dependencyError,
+    stadspassen,
   } = useHliThemaData();
 
   const [stadspassen] = useStadspassen();

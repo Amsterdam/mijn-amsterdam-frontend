@@ -3,7 +3,10 @@ import { generatePath, matchPath } from 'react-router-dom';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
-import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
+import {
+  ApiResponse_DEPRECATED,
+  apiErrorResult,
+} from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
@@ -53,7 +56,10 @@ export function generateFullApiUrlBFF(
 }
 
 /** Sets the right statuscode and sends a response. */
-export function sendResponse(res: Response, apiResponse: ApiResponse<any>) {
+export function sendResponse(
+  res: Response,
+  apiResponse: ApiResponse_DEPRECATED<any>
+) {
   if (apiResponse.status === 'ERROR') {
     res.status(
       typeof apiResponse.code === 'number'

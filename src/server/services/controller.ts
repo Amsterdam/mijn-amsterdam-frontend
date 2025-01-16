@@ -4,7 +4,7 @@ import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
 } from '../../universal/helpers/api';
@@ -94,7 +94,7 @@ function getServiceTipsMap(profileType: ProfileType) {
 }
 
 export function addServiceResultHandler<
-  T extends Promise<Record<string, ApiResponse<unknown | null>>>,
+  T extends Promise<Record<string, ApiResponse_DEPRECATED<unknown | null>>>,
 >(res: Response, servicePromise: T, serviceName: string) {
   if (IS_DEBUG) {
     // eslint-disable-next-line no-console
