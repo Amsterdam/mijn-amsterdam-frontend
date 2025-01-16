@@ -51,7 +51,7 @@ export function Parkeren() {
       title={ThemaTitles.PARKEREN}
       isError={isError}
       isPartialError={false}
-      isLoading={isLoading}
+      isLoading={!!isLoading}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
       pageContentMain={tables}
