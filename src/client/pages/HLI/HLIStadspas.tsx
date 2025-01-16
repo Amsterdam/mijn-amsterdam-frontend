@@ -159,7 +159,7 @@ export default function HLIStadspas() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              <BlockStadspas stadspas={stadspas}></BlockStadspas>
+              <BlockStadspas stadspas={stadspas} />
             </Grid.Cell>
           ) : (
             <Grid.Cell span="all">
@@ -248,7 +248,7 @@ export default function HLIStadspas() {
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   if (!stadspas.actief) {
-    return <PassBlockedAlert></PassBlockedAlert>;
+    return <PassBlockedAlert />;
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -277,7 +277,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
       {isMutating ? (
         <Alert severity="warning">
           <Paragraph>
-            <Spinner></Spinner> Bezig met het blokkeren van de pas...
+            <Spinner /> <span>Bezig met het blokkeren van de pas...</span>
           </Paragraph>
         </Alert>
       ) : (
