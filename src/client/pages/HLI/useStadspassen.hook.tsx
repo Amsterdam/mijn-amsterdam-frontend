@@ -33,7 +33,7 @@ export function useBlockStadspas() {
     BlokkeerURL
   >(
     'pasblokkades',
-    async (key, { arg }) => {
+    async (_key, { arg }) => {
       const response = await fetch(arg, {
         credentials: 'include',
       }).then((response) => response.json());

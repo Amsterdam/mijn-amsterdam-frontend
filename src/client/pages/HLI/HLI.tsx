@@ -100,8 +100,6 @@ export default function ThemaPaginaHLI() {
     stadspassen,
   } = useHliThemaData();
 
-  const [stadspassen] = useStadspassen();
-
   const pageContentTop = (
     <Paragraph>
       Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn

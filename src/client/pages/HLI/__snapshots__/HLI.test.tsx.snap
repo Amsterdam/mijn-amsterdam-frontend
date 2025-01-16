@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
+exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked pas 1`] = `
 <DocumentFragment>
   <main
     class="_Page_47d7c0 _OverviewPage_47d7c0"
@@ -143,21 +143,95 @@ exports[`<HLI /> > Matches the Full Page snapshot 1`] = `
               <table
                 class="ams-table__table _TableV2_4c6825 _Stadspassen_2b0bd1"
               >
-                <span
-                  class="_Stadspas_owner_2b0bd1"
-                />
-                <span
-                  class="_Stadspas_secondaryInfo_2b0bd1"
+                <thead
+                  class="ams-table__header"
                 >
-                  Geblokkeerd
-                </span>
-              </a>
-            </li>
-          </ul>
+                  <tr
+                    class="ams-table__row"
+                  >
+                    <td
+                      class="ams-table__cell"
+                    />
+                    <th
+                      class="ams-table__header-cell"
+                    >
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="ams-table__body"
+                >
+                  <tr
+                    class="ams-table__row"
+                  >
+                    <td
+                      class="ams-table__cell"
+                    >
+                      <a
+                        class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                      >
+                        <span
+                          class="_Stadspas_owner_2b0bd1"
+                        >
+                          Stadspas van Kerub
+                        </span>
+                        <span
+                          class="_Stadspas_balance_2b0bd1"
+                        >
+                          Saldo €5,50
+                        </span>
+                      </a>
+                    </td>
+                    <td
+                      class="ams-table__cell"
+                    >
+                      <span
+                        class="_StatusValue_2b0bd1"
+                      >
+                        Actief
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    class="ams-table__row"
+                  >
+                    <td
+                      class="ams-table__cell"
+                    >
+                      <a
+                        class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                      >
+                        <span
+                          class="_Stadspas_owner_2b0bd1"
+                        >
+                          Stadspas van Lou
+                        </span>
+                        <span
+                          class="_Stadspas_balance_2b0bd1"
+                        >
+                          Saldo €5,50
+                        </span>
+                      </a>
+                    </td>
+                    <td
+                      class="ams-table__cell"
+                    >
+                      <span
+                        class="_StatusValue_2b0bd1"
+                      >
+                        Geblokkeerd
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <p
             class="ams-paragraph ams-paragraph--small"
           >
-            De stadspas heeft een einddatum van 31 juli 2025
+            Voor alle stadspassen geldt de einddatum van 31 juli 2025
           </p>
         </div>
         <div

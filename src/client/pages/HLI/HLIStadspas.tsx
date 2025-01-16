@@ -12,7 +12,6 @@ import {
 import { useParams } from 'react-router-dom';
 
 import { getThemaTitleWithAppState } from './helpers';
-import { useBlockStadspas, useStadspassen } from './HLI.hooks';
 import styles from './HLIStadspas.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {

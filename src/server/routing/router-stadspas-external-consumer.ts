@@ -22,13 +22,11 @@ import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
 import {
+  blockStadspas,
   fetchStadspasBudgetTransactions,
   fetchStadspasDiscountTransactions,
 } from '../services/hli/stadspas';
-import {
-  blockStadspas,
-  fetchStadspassenByAdministratienummer,
-} from '../services/hli/stadspas-gpass-service';
+import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service';
 import {
   StadspasAMSAPPFrontend,
   StadspasBudget,
