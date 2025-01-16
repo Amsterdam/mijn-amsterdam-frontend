@@ -224,3 +224,8 @@ export interface StadspasDiscountTransaction {
 }
 
 export type StadspasAdministratieNummer = string;
+
+export type PasblokkadeByPasnummer = Record<
+  StadspasFrontend['passNumber'],
+  boolean
+>;

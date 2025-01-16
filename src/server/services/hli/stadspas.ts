@@ -2,6 +2,7 @@ import { generatePath } from 'react-router-dom';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
+  fetchGpassBlockPass,
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
@@ -171,6 +172,25 @@ export async function fetchStadspasBudgetTransactions(
         pasnummer,
         budgetCode
       ),
+    transactionsKeyEncrypted,
+    verifySessionId
+  );
+}
+
+/** Block a stadspas with it's passNumber.
+ *
+ *  The passNumber is encrypted inside the transactionsKeyEncrypted.
+ *  The endpoint in use can also unblock cards, but we prevent this so its block only.
+ */
+export async function blockStadspas(
+  requestID: RequestID,
+  transactionsKeyEncrypted: string,
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
+) {
+  return stadspasDecryptAndFetch(
+    (administratienummer, pasnummer) => {
+      return fetchGpassBlockPass(requestID, pasnummer, administratienummer);
+    },
     transactionsKeyEncrypted,
     verifySessionId
   );

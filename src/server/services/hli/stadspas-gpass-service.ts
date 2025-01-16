@@ -3,7 +3,6 @@ import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { stadspasDecryptAndFetch } from './stadspas';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   SecurityCode,
@@ -22,10 +21,12 @@ import {
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
+  PasblokkadeByPasnummer,
 } from './stadspas-types';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
+  ApiResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -336,31 +337,11 @@ export async function fetchGpassDiscountTransactions(
   );
 }
 
-/** Block a stadspas with it's passNumber.
- *
- *  The passNumber is encrypted inside the transactionsKeyEncrypted.
- *  The endpoint in use can also unblock cards, but we prevent this so its block only.
- */
-export async function blockStadspas(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  transactionsKeyEncrypted: string
-) {
-  const stadspas = stadspasDecryptAndFetch(
-    (administratienummer, pasnummer) => {
-      return blockStadspas_(requestID, pasnummer, administratienummer);
-    },
-    transactionsKeyEncrypted,
-    authProfileAndToken.profile.sid
-  );
-  return stadspas;
-}
-
-async function blockStadspas_(
+export async function fetchGpassBlockPass(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string
-) {
+): Promise<ApiResponse<PasblokkadeByPasnummer | null>> {
   const passResponse = await fetchStadspasSource(
     requestID,
     passNumber,
@@ -392,7 +373,7 @@ async function blockStadspas_(
     },
   });
 
-  return requestData<null>(config, requestID);
+  return requestData<PasblokkadeByPasnummer>(config, requestID);
 }
 
 export const forTesting = {
