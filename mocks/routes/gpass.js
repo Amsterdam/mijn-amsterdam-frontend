@@ -77,7 +77,7 @@ module.exports = [
     url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/togglepas/:pasnummer`,
     method: 'POST',
     // Add delay to make loading icon visibile in the front end when pressing the block button.
-    // delay: 2500,
+    delay: 2500,
     variants: [
       {
         id: 'standard',
