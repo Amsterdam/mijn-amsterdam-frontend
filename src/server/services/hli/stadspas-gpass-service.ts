@@ -3,7 +3,6 @@ import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { stadspasDecryptAndFetch } from './stadspas';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   SecurityCode,
@@ -39,7 +38,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { HttpStatusCode } from 'axios';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -400,5 +398,4 @@ export const forTesting = {
   getOwner,
   transformBudget,
   transformStadspasResponse,
-  blockStadspas_,
 };

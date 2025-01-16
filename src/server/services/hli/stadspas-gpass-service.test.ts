@@ -1,10 +1,11 @@
 import { describe, expect, Mock } from 'vitest';
 
+import { blockStadspas } from './stadspas';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
-  blockStadspas,
   fetchGpassDiscountTransactions,
   forTesting,
+  mutateGpassBlockPass,
 } from './stadspas-gpass-service';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import {
@@ -810,7 +811,7 @@ describe('stadspas-gpass-service', () => {
         content: null,
       });
 
-      const response = await forTesting.blockStadspas_(requestId, 123, '123');
+      const response = await mutateGpassBlockPass(requestId, 123, '123');
       expect(response).toStrictEqual({ status: 'OK', content: null });
     });
 
@@ -828,7 +829,7 @@ describe('stadspas-gpass-service', () => {
         PassBlockedSuccessfulResponse
       );
 
-      const response = await forTesting.blockStadspas_(requestId, 123, '123');
+      const response = await mutateGpassBlockPass(requestId, 123, '123');
       expect(response).toStrictEqual({
         code: 403,
         content: null,
