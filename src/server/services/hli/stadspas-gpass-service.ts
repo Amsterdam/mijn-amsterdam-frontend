@@ -337,7 +337,7 @@ export async function fetchGpassDiscountTransactions(
   );
 }
 
-export async function fetchGpassBlockPass(
+export async function mutateGpassBlockPass(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string

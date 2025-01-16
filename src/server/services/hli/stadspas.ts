@@ -2,7 +2,7 @@ import { generatePath } from 'react-router-dom';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
-  fetchGpassBlockPass,
+  mutateGpassBlockPass,
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
@@ -189,7 +189,7 @@ export async function blockStadspas(
 ) {
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) => {
-      return fetchGpassBlockPass(requestID, pasnummer, administratienummer);
+      return mutateGpassBlockPass(requestID, pasnummer, administratienummer);
     },
     transactionsKeyEncrypted,
     verifySessionId
