@@ -55,6 +55,11 @@ export type ApiResponse<T> =
   | ApiPostponeResponse<T>
   | ApiDependencyErrorResponse;
 
+export type ApiResponse2<T> =
+  | ApiErrorResponse<null>
+  | ApiSuccessResponse<T>
+  | ApiPostponeResponse<null>;
+
 export function isLoading(apiResponseData: ApiResponse<unknown>) {
   // If no responseData was found, assumes it's still loading
   return (

@@ -27,6 +27,8 @@ import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
   ApiResponse,
+  ApiResponse2,
+  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -117,18 +119,16 @@ function transformStadspasResponse(
 export async function fetchStadspasSource(
   requestID: RequestID,
   passNumber: number,
-  administratienummer: string,
-  transformResponse?: (pas: StadspasDetailSource) => Stadspas
-) {
+  administratienummer: string
+): Promise<ApiResponse2<StadspasDetailSource>> {
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
-    transformResponse,
     headers: getHeaders(administratienummer),
     params: {
       include_balance: true,
     },
   });
-  return requestData<Stadspas>(dataRequestConfig, requestID);
+  return requestData<StadspasDetailSource>(dataRequestConfig, requestID);
 }
 
 export async function fetchStadspassenByAdministratienummer(
@@ -179,10 +179,24 @@ export async function fetchStadspassenByAdministratienummer(
       const response = fetchStadspasSource(
         requestID,
         pas.pasnummer,
-        administratienummer,
-        (stadspasSource) =>
-          transformStadspasResponse(stadspasSource, pashouder, pas.securitycode)
-      );
+        administratienummer
+      ).then((response) => {
+        if (response.content && response.status === 'OK') {
+          const pasTransformed = transformStadspasResponse(
+            response.content,
+            pashouder,
+            pas.securitycode
+          );
+          const stadspas: ApiSuccessResponse<Stadspas> = {
+            ...response,
+            content: pasTransformed,
+          };
+
+          return stadspas;
+        }
+        return response;
+      });
+
       pasRequests.push(response);
     }
   }
