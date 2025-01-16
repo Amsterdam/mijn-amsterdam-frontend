@@ -48,7 +48,7 @@ export type ResponseStatus =
   | 'POSTPONE'
   | 'DEPENDENCY_ERROR';
 
-export type ApiResponse<T> =
+export type ApiResponse_DEPRECATED<T> =
   | ApiErrorResponse<null>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>
@@ -60,7 +60,7 @@ export type ApiResponse2<T> =
   | ApiSuccessResponse<T>
   | ApiPostponeResponse<null>;
 
-export function isLoading(apiResponseData: ApiResponse<unknown>) {
+export function isLoading(apiResponseData: ApiResponse_DEPRECATED<unknown>) {
   // If no responseData was found, assumes it's still loading
   return (
     (!apiResponseData && !isError(apiResponseData)) ||
@@ -68,12 +68,12 @@ export function isLoading(apiResponseData: ApiResponse<unknown>) {
   );
 }
 
-export function isOk(apiResponseData: ApiResponse<unknown>) {
+export function isOk(apiResponseData: ApiResponse_DEPRECATED<unknown>) {
   return apiResponseData?.status === 'OK';
 }
 
 export function isError(
-  apiResponseData: ApiResponse<unknown>,
+  apiResponseData: ApiResponse_DEPRECATED<unknown>,
   includeFailedDependencies: boolean = true
 ) {
   return (
@@ -86,7 +86,7 @@ export function isError(
 }
 
 export function hasFailedDependency(
-  apiResponseData: ApiResponse<unknown>,
+  apiResponseData: ApiResponse_DEPRECATED<unknown>,
   dependencyKey: string
 ) {
   return (
@@ -166,7 +166,7 @@ export function apiPostponeResult<T>(content: T): ApiPostponeResponse<T> {
 }
 
 export function apiDependencyError(
-  apiResponses: Record<string, ApiResponse<unknown>>
+  apiResponses: Record<string, ApiResponse_DEPRECATED<unknown>>
 ): ApiDependencyErrorResponse {
   return {
     message: Object.entries(apiResponses).reduce((acc, [key, response]) => {

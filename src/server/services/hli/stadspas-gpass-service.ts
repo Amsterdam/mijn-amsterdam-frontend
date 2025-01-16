@@ -26,7 +26,7 @@ import {
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiResponse2,
   ApiSuccessResponse,
   apiSuccessResult,
@@ -355,7 +355,7 @@ export async function mutateGpassBlockPass(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string
-): Promise<ApiResponse<PasblokkadeByPasnummer | null>> {
+): Promise<ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>> {
   const passResponse = await fetchStadspasSource(
     requestID,
     passNumber,

@@ -1,8 +1,10 @@
 import { Thema } from '../../../universal/config/thema';
-import { ApiResponse } from '../../../universal/helpers/api';
+import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { AppState, LinkProps } from '../../../universal/types';
 
-export type ServiceResults = { [serviceId: string]: ApiResponse<any> };
+export type ServiceResults = {
+  [serviceId: string]: ApiResponse_DEPRECATED<any>;
+};
 
 export type Tip = {
   id: string;

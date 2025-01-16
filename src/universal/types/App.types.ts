@@ -2,12 +2,12 @@ import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
 import { Thema } from '../config/thema';
-import { ApiResponse } from '../helpers/api';
+import { ApiResponse_DEPRECATED } from '../helpers/api';
 
 export type BagThema = `${Thema}_BAG`;
 
 export type AppState = {
-  [key in ServiceID]: ApiResponse<
+  [key in ServiceID]: ApiResponse_DEPRECATED<
     ReturnTypeAsync<ServicesType[key]>['content']
   >;
 } & {

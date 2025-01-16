@@ -16,7 +16,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -28,7 +28,7 @@ import { captureException } from '../monitoring';
 export async function fetchStadspas(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<StadspasFrontend[] | null>> {
+): Promise<ApiResponse_DEPRECATED<StadspasFrontend[] | null>> {
   const stadspasResponse = await fetchStadspassen(
     requestID,
     authProfileAndToken

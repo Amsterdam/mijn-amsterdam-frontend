@@ -10,7 +10,7 @@ import {
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
@@ -634,7 +634,9 @@ export async function fetchVergunningenDocumentsList(
     {
       url,
       passthroughOIDCToken: true,
-      transformResponse: (responseData: ApiResponse<GenericDocument[]>) => {
+      transformResponse: (
+        responseData: ApiResponse_DEPRECATED<GenericDocument[]>
+      ) => {
         if (responseData.status === 'OK') {
           const documents: GenericDocument[] = responseData.content.map(
             (document) => {

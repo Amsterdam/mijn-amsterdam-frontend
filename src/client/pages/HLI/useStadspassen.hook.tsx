@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { PasblokkadeByPasnummer } from '../../../server/services/hli/stadspas-types';
-import { ApiResponse } from '../../../universal/helpers/api';
+import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 export function useStadspassen() {
@@ -26,7 +26,8 @@ type BlokkeerURL = string;
 export function useBlockStadspas() {
   const { data } = useSWR<PasblokkadeByPasnummer>('pasblokkades');
   const mutation = useSWRMutation<
-    PasblokkadeByPasnummer | ApiResponse<PasblokkadeByPasnummer | null>,
+    | PasblokkadeByPasnummer
+    | ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>,
     Error,
     'pasblokkades',
     BlokkeerURL

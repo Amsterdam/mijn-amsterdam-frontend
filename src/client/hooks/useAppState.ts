@@ -4,7 +4,10 @@ import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ApiResponse, apiPristineResult } from '../../universal/helpers/api';
+import {
+  ApiResponse_DEPRECATED,
+  apiPristineResult,
+} from '../../universal/helpers/api';
 import { AppState, BagThema } from '../../universal/types/App.types';
 import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
@@ -214,7 +217,7 @@ export function useAppStateBagApi<T>({
     typeof appState[bagThema] !== 'undefined' &&
     key in appState[bagThema]!;
 
-  const [api, fetch] = useDataApi<ApiResponse<T | null>>(
+  const [api, fetch] = useDataApi<ApiResponse_DEPRECATED<T | null>>(
     {
       url,
       postpone: isApiDataCached || !url,
@@ -240,7 +243,7 @@ export function useAppStateBagApi<T>({
 
         localState = {
           ...localState,
-          [key]: api.data as ApiResponse<T | null>,
+          [key]: api.data as ApiResponse_DEPRECATED<T | null>,
         };
 
         return {
@@ -252,7 +255,8 @@ export function useAppStateBagApi<T>({
   }, [isApiDataCached, api, key, url]);
 
   return [
-    (appState?.[bagThema]?.[key] as ApiResponse<T | null>) || api.data, // Return the response data from remote system or the pristine data provided to useApiData.
+    (appState?.[bagThema]?.[key] as ApiResponse_DEPRECATED<T | null>) ||
+      api.data, // Return the response data from remote system or the pristine data provided to useApiData.
     fetch,
     isApiDataCached,
   ] as const;
@@ -261,7 +265,7 @@ export function useAppStateBagApi<T>({
 export function useGetAppStateBagDataByKey<T>({
   bagThema,
   key,
-}: Omit<AppStateBagApiParams, 'url'>): ApiResponse<T | null> | null {
+}: Omit<AppStateBagApiParams, 'url'>): ApiResponse_DEPRECATED<T | null> | null {
   const appState = useRecoilValue(appStateAtom);
   return appState?.[bagThema]?.[key] ?? null;
 }

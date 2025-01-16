@@ -5,7 +5,7 @@ import slug from 'slugme';
 import { AppRoutes } from '../../universal/config/routes';
 import { Themas } from '../../universal/config/thema';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
@@ -278,7 +278,7 @@ export async function fetchAantalBewoners(
       data: {
         addressKey: addressKeyEncrypted,
       },
-      transformResponse: (responseData: ApiResponse<string>) => {
+      transformResponse: (responseData: ApiResponse_DEPRECATED<string>) => {
         if (responseData.status === 'OK') {
           return responseData.content;
         }

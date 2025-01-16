@@ -1,7 +1,10 @@
 import { AxiosResponseTransformer } from 'axios';
 
 import { Thema } from '../../../universal/config/thema';
-import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  ApiResponse_DEPRECATED,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { MyNotification, MyTip } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -15,7 +18,7 @@ export interface ApiPatternResponseA {
 }
 
 const transformApiResponseDefault: AxiosResponseTransformer = (
-  response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
+  response: ApiResponse_DEPRECATED<ApiPatternResponseA> | ApiPatternResponseA
 ) => {
   if (
     response !== null &&
@@ -33,7 +36,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false,
   authProfileAndToken?: AuthProfileAndToken
-): Promise<ApiResponse<T | null>> {
+): Promise<ApiResponse_DEPRECATED<T | null>> {
   const transformResponse = [transformApiResponseDefault].concat(
     apiConfig.transformResponse ?? []
   );
@@ -87,7 +90,10 @@ export async function fetchTipsAndNotifications(
   thema: Thema,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<
-  ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
+  ApiResponse_DEPRECATED<Pick<
+    ApiPatternResponseA,
+    'notifications' | 'tips'
+  > | null>
 > {
   const response = await fetchService(
     requestID,

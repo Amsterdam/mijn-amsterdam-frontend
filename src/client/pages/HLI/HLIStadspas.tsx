@@ -21,7 +21,7 @@ import {
 } from '../../../server/services/hli/stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiPristineResult,
   isError,
   isLoading,
@@ -115,7 +115,7 @@ export default function HLIStadspas() {
   };
 
   const [transactionsApi, fetchTransactions] = useDataApi<
-    ApiResponse<StadspasBudgetTransaction[]>
+    ApiResponse_DEPRECATED<StadspasBudgetTransaction[]>
   >(requestOptions, apiPristineResult([]));
 
   const isLoadingTransacties = transactionsApi.isLoading;
