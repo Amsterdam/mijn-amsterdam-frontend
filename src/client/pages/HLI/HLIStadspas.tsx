@@ -86,7 +86,7 @@ export default function HLIStadspas() {
 
   const { HLI } = appState;
   const { id } = useParams<{ id: string }>();
-  const [stadspassen] = useStadspassen();
+  const stadspassen = useStadspassen();
   const stadspas = id ? stadspassen.find((pass) => pass.id === id) : null;
 
   const isErrorStadspas = isError(HLI);

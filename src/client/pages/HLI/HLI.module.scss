@@ -21,6 +21,22 @@
   --ams-paragraph-color: #{$color-neutral-grey4};
 }
 
+.Stadspassen {
+  height: fit-content;
+  tr {
+    height: 100%;
+  }
+}
+
+.StatusValue {
+  position: relative;
+  display: inline-block;
+  top: 50%;
+  transform: translateY(
+    calc(-50% + 3px)
+  ); // Not super clean, but it works kinda...
+}
+
 @media screen and (min-width: $ams-breakpoint-medium) {
   .EerdereRegelingen,
   .Stadspassen,

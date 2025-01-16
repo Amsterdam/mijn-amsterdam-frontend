@@ -18,7 +18,7 @@ export function useStadspassen() {
     return stadspas;
   });
 
-  return [stadspassen] as const;
+  return stadspassen;
 }
 
 type BlokkeerURL = string;
