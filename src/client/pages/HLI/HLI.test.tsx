@@ -2,51 +2,14 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import {
-  StadspasFrontend,
-  StadspasOwner,
-} from '../../../server/services/hli/stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import ThemaPaginaHLI from './HLI';
+import { stadspasCreator } from './test-helpers';
 import { AppState } from '../../../universal/types';
 
-const createStadspas = createStadspas_();
-
-// First name added for easily identifying where youre looking in the snapshot.
-function createStadspas_() {
-  let id = 0;
-
-  function create(firstname: string, actief: boolean): StadspasFrontend {
-    id++;
-
-    const owner: StadspasOwner = {
-      firstname,
-      lastname: 'Crepin',
-      initials: 'KC',
-    };
-
-    return {
-      urlTransactions: 'http://example.com/url-transactions',
-      transactionsKeyEncrypted: '123-xxx-000',
-      id: `stadspas-id-${id}`,
-      passNumber: 123123123,
-      passNumberComplete: '0303123123123',
-      owner,
-      dateEnd: '31-07-2025',
-      dateEndFormatted: '31 juli 2025',
-      budgets: [],
-      balanceFormatted: '€5,50',
-      balance: 5.5,
-      blockPassURL: 'http://example.com/stadspas/block',
-      actief,
-      securityCode: '123-securitycode-123',
-    };
-  }
-
-  return create;
-}
+const createStadspas = stadspasCreator();
 
 const testState = {
   HLI: {
@@ -98,7 +61,7 @@ const testState = {
 const routeEntry = generatePath(AppRoutes.HLI);
 const routePath = AppRoutes.HLI;
 
-function createComponent(state: AppState) {
+export function createComponent(state: AppState, component: () => JSX.Element) {
   function initializeState(snapshot: MutableSnapshot) {
     snapshot.set(appStateAtom, state);
   }
@@ -108,7 +71,7 @@ function createComponent(state: AppState) {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ThemaPaginaHLI}
+        component={component}
         initializeState={initializeState}
       />
     );
@@ -119,7 +82,7 @@ function createComponent(state: AppState) {
 
 describe('<HLI />', () => {
   it('Matches the Full Page snapshot with an active and a blocked pas', () => {
-    const Component = createComponent(testState);
+    const Component = createComponent(testState, ThemaPaginaHLI);
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });

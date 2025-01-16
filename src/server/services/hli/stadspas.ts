@@ -65,7 +65,7 @@ export async function fetchStadspas(
         blockPassURL,
         link: {
           to: generatePath(AppRoutes['HLI/STADSPAS'], {
-            id: stadspas.id,
+            passNumber: stadspas.passNumber,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,
         },

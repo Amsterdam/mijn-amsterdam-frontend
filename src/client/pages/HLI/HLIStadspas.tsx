@@ -85,9 +85,12 @@ export default function HLIStadspas() {
   const appState = useAppStateGetter();
 
   const { HLI } = appState;
-  const { id } = useParams<{ id: string }>();
+  const { passNumber } = useParams<{ passNumber: string }>();
   const stadspassen = useStadspassen();
-  const stadspas = id ? stadspassen.find((pass) => pass.id === id) : null;
+
+  const stadspas = passNumber
+    ? stadspassen.find((pass) => pass.passNumber.toString() === passNumber)
+    : null;
 
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
@@ -286,6 +289,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           onClick={() => {
             setIsModalOpen(true);
           }}
+          data-testid="block-stadspas-button"
         >
           Blokeer deze Stadspas
         </Button>

@@ -26,7 +26,7 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
 
   const createNotificationBudget = (
     description: string,
-    stadspasId?: string
+    stadspasPassNumber?: string
   ) => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
@@ -36,8 +36,10 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
     )}!`,
     description,
     link: {
-      to: stadspasId
-        ? generatePath(AppRoutes['HLI/STADSPAS'], { id: stadspasId })
+      to: stadspasPassNumber
+        ? generatePath(AppRoutes['HLI/STADSPAS'], {
+            passNumber: stadspasPassNumber,
+          })
         : AppRoutes.HLI,
       title: 'Check het saldo',
     },
@@ -64,7 +66,10 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   ) {
     const notification = isParent
       ? createNotificationBudget(BUDGET_NOTIFICATION_PARENT)
-      : createNotificationBudget(BUDGET_NOTIFICATION_CHILD, stadspas?.id);
+      : createNotificationBudget(
+          BUDGET_NOTIFICATION_CHILD,
+          stadspas?.passNumber.toString()
+        );
     notifications.push(notification);
   }
 
