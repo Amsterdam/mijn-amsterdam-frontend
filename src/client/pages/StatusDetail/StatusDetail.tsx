@@ -5,7 +5,6 @@ import {
   Grid,
   LinkList,
   Paragraph,
-  Screen,
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
@@ -20,17 +19,15 @@ import {
   StatusLine,
 } from '../../../universal/types/App.types';
 import {
-  DetailPage,
   ErrorAlert,
   LoadingContent,
-  PageHeading,
   StatusLine as StatusLineComponent,
-  ThemaIcon,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
-import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { captureMessage } from '../../helpers/monitoring';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 export type StatusSourceItem = StatusLine;
 
@@ -104,63 +101,51 @@ export default function StatusDetail<T extends StatusLine>({
   }
 
   return (
-    <DetailPage className={styles.StatusDetail}>
-      <PageHeading
-        icon={<ThemaIcon />}
-        backLink={{
-          to: appRoute,
-          title: backLinkTitle ?? ThemaTitles[thema],
-        }}
-        isLoading={isStateLoading}
-      >
-        {title}
-      </PageHeading>
-      <Screen className={styles.DetailPageContent}>
-        <Grid>
-          {!!statusItem && typeof pageContent === 'function'
-            ? (pageContent as Function)(isStateLoading, statusItem)
-            : pageContent}
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={appRoute}>{title}</PageHeadingV2>
 
-          {(isError(STATE) || (noContent && !statusItems.length)) && (
-            <Grid.Cell span="all">
-              <ErrorAlert>
-                We kunnen op dit moment geen gegevens tonen.{' '}
-                <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>
-                .
-              </ErrorAlert>
-            </Grid.Cell>
-          )}
+        {!!statusItem && typeof pageContent === 'function'
+          ? (pageContent as Function)(isStateLoading, statusItem)
+          : pageContent}
 
-          {!isStateLoading && !statusItem && !!statusItems.length && (
-            <Grid.Cell span="all">
-              <DSAlert title="Deze pagina is mogelijk verplaatst">
-                <Paragraph className={styles.MarginBottom}>
-                  Kies hieronder een van de beschikbare zaken.
-                </Paragraph>
-                <LinkList>
-                  {statusItems.map((statusItem, index) => {
-                    return (
-                      <LinkList.Link
-                        key={statusItem.link?.to || index}
-                        href={statusItem.link?.to || appRoute}
-                      >
-                        {statusItem.title}
-                      </LinkList.Link>
-                    );
-                  })}
-                </LinkList>
-              </DSAlert>
-            </Grid.Cell>
-          )}
+        {(isError(STATE) || (noContent && !statusItems.length)) && (
+          <Grid.Cell span="all">
+            <ErrorAlert>
+              We kunnen op dit moment geen gegevens tonen.{' '}
+              <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>.
+            </ErrorAlert>
+          </Grid.Cell>
+        )}
 
-          {isStateLoading && (
-            <Grid.Cell span="all">
-              <LoadingContent />
-            </Grid.Cell>
-          )}
-        </Grid>
-      </Screen>
-      <Grid>
+        {!isStateLoading && !statusItem && !!statusItems.length && (
+          <Grid.Cell span="all">
+            <DSAlert title="Deze pagina is mogelijk verplaatst">
+              <Paragraph className={styles.MarginBottom}>
+                Kies hieronder een van de beschikbare zaken.
+              </Paragraph>
+              <LinkList>
+                {statusItems.map((statusItem, index) => {
+                  return (
+                    <LinkList.Link
+                      key={statusItem.link?.to || index}
+                      href={statusItem.link?.to || appRoute}
+                    >
+                      {statusItem.title}
+                    </LinkList.Link>
+                  );
+                })}
+              </LinkList>
+            </DSAlert>
+          </Grid.Cell>
+        )}
+
+        {isStateLoading && (
+          <Grid.Cell span="all">
+            <LoadingContent />
+          </Grid.Cell>
+        )}
+
         {!!(statusItem?.steps && statusItemSteps.length) && (
           <Grid.Cell span="all">
             <StatusLineComponent
@@ -177,7 +162,7 @@ export default function StatusDetail<T extends StatusLine>({
             />
           </Grid.Cell>
         )}
-      </Grid>
-    </DetailPage>
+      </PageContentV2>
+    </DetailPageV2>
   );
 }
