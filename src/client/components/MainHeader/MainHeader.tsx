@@ -8,6 +8,7 @@ import {
 import { CloseIcon, MenuIcon } from '@amsterdam/design-system-react-icons';
 import { animated } from '@react-spring/web';
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';
 import { OtapLabel } from './OtapLabel';
@@ -30,7 +31,6 @@ export default function MainHeader({
   isAuthenticated = false,
 }: MainHeaderProps) {
   const {
-    backdropRef,
     errors,
     fadeStyles,
     hasErrors,
@@ -55,12 +55,12 @@ export default function MainHeader({
             className={classNames(styles.HeaderGridPadding, 'ma-main-header')}
           >
             <Grid.Cell span={4}>
-              <div className={styles.LogoWrap}>
+              <NavLink to="/" className={styles.LogoWrap}>
                 <Logo />
                 <Heading level={1} size="level-3">
                   Mijn Amsterdam
                 </Heading>
-              </div>
+              </NavLink>
             </Grid.Cell>
             {isAuthenticated && (
               <Grid.Cell className={styles.SecondaryLinks} start={5} span={8}>
@@ -140,7 +140,6 @@ export default function MainHeader({
       )}
 
       <animated.div
-        ref={backdropRef}
         key="BurgerMenuBackDrop"
         className={styles.Backdrop}
         style={fadeStyles}
