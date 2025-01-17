@@ -130,6 +130,9 @@ function buildNotification(
     datePublished: new Date().toISOString(),
     thema: Themas.AFVAL,
     title: 'Adopteer een afvalcontainer',
+    isTip: true,
+    tipReason:
+      'U ziet deze tip omdat er bij u in de buurt een afvalcontainer is die u kunt adopteren.',
     description: determineDescriptionText(age),
     link: {
       to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&filters=${filterQueryParam}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
