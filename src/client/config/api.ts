@@ -1,5 +1,8 @@
 import { IS_PRODUCTION } from '../../universal/config/env';
-import { ApiResponse, FailedDependencies } from '../../universal/helpers/api';
+import {
+  ApiResponse_DEPRECATED,
+  FailedDependencies,
+} from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
@@ -89,7 +92,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 
 export function createErrorDisplayData(
   stateKey: string,
-  apiResponseData: ApiResponse<unknown> | null | string
+  apiResponseData: ApiResponse_DEPRECATED<unknown> | null | string
 ): ApiError {
   const name = ErrorNames[stateKey] || stateKey;
   const errorMessage =
@@ -116,7 +119,7 @@ export function createFailedDependenciesError(
     apiErrors.push(
       createErrorDisplayData(
         `${stateKey}_${stateDependencyKey}`,
-        apiDependencyResponseData as ApiResponse<unknown>
+        apiDependencyResponseData as ApiResponse_DEPRECATED<unknown>
       )
     );
   }
@@ -158,7 +161,7 @@ export function getApiErrors(appState: AppState): ApiError[] {
         apiErrors.push(
           createErrorDisplayData(
             stateKey,
-            apiResponseData as ApiResponse<unknown>
+            apiResponseData as ApiResponse_DEPRECATED<unknown>
           )
         );
       }

@@ -150,10 +150,14 @@ describe('zorgned-service', () => {
   });
 
   it('should fetch document successfully', async () => {
+    const filename = 'Naam documentje';
+    const mimetype = 'foo/bar';
+    const base64Data = 'Zm9vLWJhcg==';
+
     remoteApi.post('/zorgned/document').reply(200, {
-      inhoud: 'Zm9vLWJhcg==',
-      omschrijving: 'Naam documentje',
-      mimetype: 'foo/bar',
+      inhoud: base64Data,
+      omschrijving: filename,
+      mimetype,
     });
 
     const result = await fetchDocument(
@@ -165,6 +169,7 @@ describe('zorgned-service', () => {
 
     expect(requestData).toHaveBeenCalledWith(
       {
+        httpsAgent: expect.any(Object),
         url: `${remoteApiHost}/zorgned/document`,
         data: {
           burgerservicenummer: mocks.mockAuthProfileAndToken.profile.id,
@@ -178,18 +183,16 @@ describe('zorgned-service', () => {
           'Content-type': 'application/json; charset=utf-8',
           'X-Mams-Api-User': 'JZD',
         },
-        httpsAgent: expect.any(Object),
       },
-      mocks.mockRequestID,
-      mocks.mockAuthProfileAndToken as AuthProfileAndToken
+      mocks.mockRequestID
     );
 
     expect(result).toEqual({
       status: 'OK',
       content: {
-        filename: 'Naam documentje',
-        mimetype: 'foo/bar',
-        data: Buffer.from('Zm9vLWJhcg==', 'base64'),
+        filename,
+        mimetype,
+        data: Buffer.from(base64Data, 'base64'),
       },
     });
   });

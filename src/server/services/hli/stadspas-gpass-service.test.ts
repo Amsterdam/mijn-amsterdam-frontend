@@ -1,9 +1,11 @@
 import { describe, expect, Mock } from 'vitest';
 
+import { blockStadspas } from './stadspas';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   fetchGpassDiscountTransactions,
   forTesting,
+  mutateGpassBlockPass,
 } from './stadspas-gpass-service';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import {
@@ -15,10 +17,18 @@ import {
   StadspasHouderSource,
   StadspasTransactiesResponseSource,
 } from './stadspas-types';
+import { remoteApi } from '../../../testing/utils';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import {
+  ApiErrorResponse,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+
+vi.mock('../../helpers/source-api-request');
+vi.mock('../../helpers/source-api-helpers');
 
 describe('stadspas-gpass-service', () => {
   describe('getHeaders', () => {
@@ -144,6 +154,7 @@ describe('stadspas-gpass-service', () => {
       );
       expect(transformedResponse).toStrictEqual({
         id: '1',
+        actief: false,
         owner: {
           firstname: 'John',
           lastname: 'Doe',
@@ -452,8 +463,6 @@ describe('stadspas-gpass-service', () => {
       ]);
     });
   });
-  vi.mock('../../helpers/source-api-request');
-  vi.mock('../../helpers/source-api-helpers');
 
   describe('fetchStadspassenByAdministratienummer', () => {
     const requestID = 'test-request-id';
@@ -500,7 +509,7 @@ describe('stadspas-gpass-service', () => {
     });
 
     test('should return transformed stadspassen if stadspasHouderResponse status is OK', async () => {
-      const pashouder: StadspasHouderSource = {
+      const pashouder = {
         voornaam: 'John',
         achternaam: 'Doe',
         tussenvoegsel: 'van',
@@ -605,6 +614,7 @@ describe('stadspas-gpass-service', () => {
                 infix: 'van',
                 initials: 'J.D.',
               },
+              actief: false,
               dateEnd: '2023-12-31',
               dateEndFormatted: '31 december 2023',
               budgets: [
@@ -756,6 +766,77 @@ describe('stadspas-gpass-service', () => {
       );
 
       expect(result).toStrictEqual(errorResponse);
+    });
+  });
+
+  describe('blockStadspass', async () => {
+    const PassBlockedSuccessfulResponse = {
+      content: null,
+      status: 'OK',
+    };
+
+    const requestId = '123';
+    const transactionKeysEncrypted = '123';
+    const passNumber = 123;
+
+    test('Uses decrypt and fetcher', async () => {
+      remoteApi.post(
+        BffEndpoints.STADSPAS_BLOCK_PASS,
+        PassBlockedSuccessfulResponse
+      );
+
+      const response = (await blockStadspas(
+        requestId,
+        // This cannot be decrypted so we expect an error response.
+        transactionKeysEncrypted
+      )) as ApiErrorResponse<null>;
+      expect(response.message).toContain('Failed to decrypt');
+    });
+
+    test('Will block a pass that is active', async () => {
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)
+        .reply(200, { actief: false });
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { actief: true },
+      });
+
+      remoteApi.post(
+        BffEndpoints.STADSPAS_BLOCK_PASS,
+        PassBlockedSuccessfulResponse
+      );
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: null,
+      });
+
+      const response = await mutateGpassBlockPass(requestId, 123, '123');
+      expect(response).toStrictEqual({ status: 'OK', content: null });
+    });
+
+    test('Can only block and not toggle the stadspas', async () => {
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)
+        .reply(200, { actief: false });
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { actief: false },
+      });
+
+      remoteApi.post(
+        BffEndpoints.STADSPAS_BLOCK_PASS,
+        PassBlockedSuccessfulResponse
+      );
+
+      const response = await mutateGpassBlockPass(requestId, 123, '123');
+      expect(response).toStrictEqual({
+        code: 403,
+        content: null,
+        message:
+          'The citypass is not active. We cannot unblock an active pass.',
+        status: 'ERROR',
+      });
     });
   });
 });

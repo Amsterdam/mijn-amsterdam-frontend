@@ -1,6 +1,6 @@
 import { Themas } from '../../../universal/config/thema';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
@@ -80,7 +80,7 @@ export async function fetchRequestProcess(
     requestProcess: WpiRequestProcess
   ) => WpiRequestProcessLabels | undefined,
   fetchConfig: FetchConfig
-): Promise<ApiResponse<WpiRequestProcess[] | null>> {
+): Promise<ApiResponse_DEPRECATED<WpiRequestProcess[] | null>> {
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
     cacheKey: fetchConfig.requestCacheKey,
     transformResponse: [

@@ -26,14 +26,15 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from '../services/controller';
+import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchZorgnedAVDocument,
+  handleBlockStadspas,
   handleFetchTransactionsRequest,
 } from '../services/hli/hli-route-handlers';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchVergunningDetail,
   fetchZakenFromSource,
@@ -240,6 +241,7 @@ attachDocumentDownloadRoute(
 
 // HLI Stadspas transacties
 router.get(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);
+router.get(BffEndpoints.STADSPAS_BLOCK_PASS, handleBlockStadspas);
 
 // HLI Regelingen / doc download
 attachDocumentDownloadRoute(

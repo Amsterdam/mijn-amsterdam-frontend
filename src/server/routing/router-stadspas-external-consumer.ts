@@ -22,6 +22,7 @@ import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 import { fetchAdministratienummer } from '../services/hli/hli-zorgned-service';
 import {
+  blockStadspas,
   fetchStadspasBudgetTransactions,
   fetchStadspasDiscountTransactions,
 } from '../services/hli/stadspas';
@@ -29,11 +30,71 @@ import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-
 import {
   StadspasAMSAPPFrontend,
   StadspasBudget,
+  TransactionKeysEncryptedWithoutSessionID,
 } from '../services/hli/stadspas-types';
 import { captureException, captureMessage } from '../services/monitoring';
 
 const AMSAPP_PROTOCOl = 'amsterdam://';
 const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
+
+// PUBLIC INTERNET NETWORK ROUTER
+// ==============================
+export const routerInternet = express.Router();
+routerInternet.BFF_ID = 'external-consumer-public';
+
+routerInternet.get(
+  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
+  async (req: Request<{ token: string }>, res: Response) => {
+    return res.redirect(
+      authRoutes.AUTH_LOGIN_DIGID +
+        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
+    );
+  }
+);
+
+routerInternet.get(
+  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
+  sendAdministratienummerResponse
+);
+
+routerInternet.get(
+  ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING,
+  sendAppLandingResponse
+);
+
+// PRIVATE NETWORK ROUTER
+// ======================
+export const routerPrivateNetwork = express.Router();
+routerPrivateNetwork.BFF_ID = 'external-consumer-private-network';
+
+export const stadspasExternalConsumerRouter = {
+  internet: routerInternet,
+  privateNetwork: routerPrivateNetwork,
+};
+
+routerPrivateNetwork.get(
+  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
+  apiKeyVerificationHandler,
+  sendStadspassenResponse
+);
+
+routerPrivateNetwork.get(
+  ExternalConsumerEndpoints.private.STADSPAS_DISCOUNT_TRANSACTIONS,
+  apiKeyVerificationHandler,
+  sendDiscountTransactionsResponse
+);
+
+routerPrivateNetwork.get(
+  ExternalConsumerEndpoints.private.STADSPAS_BUDGET_TRANSACTIONS,
+  apiKeyVerificationHandler,
+  sendBudgetTransactionsResponse
+);
+
+routerPrivateNetwork.post(
+  ExternalConsumerEndpoints.private.STADSPAS_BLOCK_PAS,
+  apiKeyVerificationHandler,
+  sendStadspasBlockRequest
+);
 
 type ApiError = {
   code: string;
@@ -64,22 +125,6 @@ const apiResponseErrors: Record<string, ApiError> = {
     message: 'Onbekende fout',
   },
 } as const;
-
-export const routerInternet = express.Router();
-routerInternet.BFF_ID = 'external-consumer-public';
-
-export const routerPrivateNetwork = express.Router();
-routerPrivateNetwork.BFF_ID = 'external-consumer-private-network';
-
-routerInternet.get(
-  ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
-  async (req: Request<{ token: string }>, res: Response) => {
-    return res.redirect(
-      authRoutes.AUTH_LOGIN_DIGID +
-        `?returnTo=${RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER}&amsapp-session-token=${req.params.token}`
-    );
-  }
-);
 
 type RenderProps = {
   nonce: string;
@@ -196,11 +241,6 @@ async function sendAdministratienummerResponse(
   return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
 
-routerInternet.get(
-  ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
-  sendAdministratienummerResponse
-);
-
 function sendAppLandingResponse(_req: Request, res: Response) {
   const renderProps: RenderProps = {
     ...baseRenderProps,
@@ -208,11 +248,6 @@ function sendAppLandingResponse(_req: Request, res: Response) {
   };
   return res.render('amsapp-stadspas-administratienummer', renderProps);
 }
-
-routerInternet.get(
-  ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING,
-  sendAppLandingResponse
-);
 
 async function sendStadspassenResponse(
   req: Request<{ administratienummerEncrypted: string }>,
@@ -264,14 +299,12 @@ async function sendStadspassenResponse(
   );
 }
 
-routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_PASSEN,
-  apiKeyVerificationHandler,
-  sendStadspassenResponse
-);
+type TransactionKeysEncryptedRequest = Request<{
+  transactionsKeyEncrypted: TransactionKeysEncryptedWithoutSessionID;
+}>;
 
 async function sendDiscountTransactionsResponse(
-  req: Request<{ transactionsKeyEncrypted: string }>,
+  req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
   const response = await fetchStadspasDiscountTransactions(
@@ -282,12 +315,6 @@ async function sendDiscountTransactionsResponse(
   sendResponse(res, response);
 }
 
-routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_DISCOUNT_TRANSACTIONS,
-  apiKeyVerificationHandler,
-  sendDiscountTransactionsResponse
-);
-
 /** Sends transformed budget transactions.
  *
  * # Url Params
@@ -295,7 +322,7 @@ routerPrivateNetwork.get(
  *  `transactionsKeyEncrypted`: is available in the response of `sendStadspassenResponse`.
  */
 async function sendBudgetTransactionsResponse(
-  req: Request<{ transactionsKeyEncrypted: string }>,
+  req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
   const response = await fetchStadspasBudgetTransactions(
@@ -307,16 +334,16 @@ async function sendBudgetTransactionsResponse(
   return sendResponse(res, response);
 }
 
-routerPrivateNetwork.get(
-  ExternalConsumerEndpoints.private.STADSPAS_BUDGET_TRANSACTIONS,
-  apiKeyVerificationHandler,
-  sendBudgetTransactionsResponse
-);
-
-export const stadspasExternalConsumerRouter = {
-  internet: routerInternet,
-  privateNetwork: routerPrivateNetwork,
-};
+async function sendStadspasBlockRequest(
+  req: TransactionKeysEncryptedRequest,
+  res: Response
+) {
+  const response = await blockStadspas(
+    res.locals.requestID,
+    req.params.transactionsKeyEncrypted
+  );
+  return sendResponse(res, response);
+}
 
 export const forTesting = {
   sendAdministratienummerResponse,

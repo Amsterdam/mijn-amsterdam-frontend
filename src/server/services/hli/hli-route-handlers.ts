@@ -1,16 +1,18 @@
 import { Request, Response } from 'express';
 
-import { fetchStadspasBudgetTransactions } from './stadspas';
+import { blockStadspas, fetchStadspasBudgetTransactions } from './stadspas';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
 import { fetchDocument } from '../zorgned/zorgned-service';
 
+type TransactionKeysEncryptedRequest = Request<{
+  transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];
+}>;
+
 export async function handleFetchTransactionsRequest(
-  req: Request<{
-    transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'];
-  }>,
+  req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
   const authProfileAndToken = getAuth(req);
@@ -39,4 +41,23 @@ export async function fetchZorgnedAVDocument(
     documentId
   );
   return response;
+}
+
+export async function handleBlockStadspas(
+  req: TransactionKeysEncryptedRequest,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const response = await blockStadspas(
+    res.locals.requestID,
+    req.params.transactionsKeyEncrypted,
+    authProfileAndToken.profile.sid
+  );
+
+  return sendResponse(res, response);
 }

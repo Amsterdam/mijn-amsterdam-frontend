@@ -282,8 +282,7 @@ export async function fetchDocument(
         };
       },
     },
-    requestID,
-    authProfileAndToken
+    requestID
   );
 }
 

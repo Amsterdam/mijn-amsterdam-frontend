@@ -14,7 +14,7 @@ import {
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -54,7 +54,7 @@ function transformBusinessPartnerAddressResponse(
 async function fetchBusinessPartnerAddress(
   requestID: RequestID,
   businessPartnerId: string
-): Promise<ApiResponse<AfisBusinessPartnerAddress | null>> {
+): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerAddress | null>> {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerAddressResponse,
     formatUrl(config) {
@@ -202,8 +202,8 @@ export async function fetchAfisBusinessPartnerDetails(
   const fullNameResponse = getSettledResult(fullNameResult);
   const addressResponse = getSettledResult(addressResult);
 
-  let phoneResponse: ApiResponse<AfisBusinessPartnerPhone | null>;
-  let emailResponse: ApiResponse<AfisBusinessPartnerEmail | null>;
+  let phoneResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerPhone | null>;
+  let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null>;
 
   if (addressResponse.status === 'OK' && addressResponse.content) {
     const phoneRequest = fetchPhoneNumber(

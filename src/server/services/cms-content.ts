@@ -8,7 +8,7 @@ import sanitizeHtml, { IOptions } from 'sanitize-html';
 import { IS_TAP } from '../../universal/config/env';
 import {
   apiErrorResult,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
@@ -190,7 +190,7 @@ async function getGeneralPage(
   requestID: RequestID,
   profileType: ProfileType = 'private',
   forceRenew: boolean = false
-): Promise<ApiResponse<CMSPageContent | null>> {
+): Promise<ApiResponse_DEPRECATED<CMSPageContent | null>> {
   const apiData = fileCache.getKey<ApiSuccessResponse<CMSPageContent>>(
     'CMS_CONTENT_GENERAL_INFO_' + profileType
   );
@@ -246,10 +246,11 @@ async function getGeneralPage(
 async function getFooter(
   requestID: RequestID,
   forceRenew: boolean = false
-): Promise<ApiResponse<CMSFooterContent | null>> {
+): Promise<ApiResponse_DEPRECATED<CMSFooterContent | null>> {
   const apiData =
-    fileCache.getKey<ApiResponse<CMSFooterContent>>('CMS_CONTENT_FOOTER') ??
-    null;
+    fileCache.getKey<ApiResponse_DEPRECATED<CMSFooterContent>>(
+      'CMS_CONTENT_FOOTER'
+    ) ?? null;
 
   if (apiData && !forceRenew) {
     return Promise.resolve(apiData);
@@ -268,7 +269,7 @@ async function getFooter(
       }
       // Try to get stale cache instead.
       const staleApiData =
-        fileCache.getKeyStale<ApiResponse<CMSFooterContent>>(
+        fileCache.getKeyStale<ApiResponse_DEPRECATED<CMSFooterContent>>(
           'CMS_CONTENT_FOOTER'
         );
 
@@ -299,7 +300,7 @@ async function fetchCmsBase(
   const footerInfoPageRequest = getFooter(requestID, forceRenew);
 
   const requests: Promise<
-    ApiResponse<CMSPageContent | CMSFooterContent | null>
+    ApiResponse_DEPRECATED<CMSPageContent | CMSFooterContent | null>
   >[] = [generalInfoPageRequest, footerInfoPageRequest];
 
   const [generalInfo, footer] = await Promise.allSettled(requests);
