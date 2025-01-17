@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
+
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
-import { useStadspassen } from './HLI.hooks';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -23,8 +24,8 @@ export function HistoricItemsMention() {
 }
 
 type StadspasDisplayProps = {
-  owner: React.JSX.Element;
-  actief: string;
+  owner: ReactNode;
+  actief: ReactNode;
 };
 
 type StadspassenProps = {
@@ -62,7 +63,6 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   return (
     <Grid.Cell span="all">
       <ThemaPaginaTable<StadspasDisplayProps>
-        title=""
         displayProps={displayProps}
         zaken={passen}
         className={styles.Stadspassen}

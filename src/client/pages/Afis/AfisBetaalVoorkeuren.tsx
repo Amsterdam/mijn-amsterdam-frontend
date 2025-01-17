@@ -14,7 +14,6 @@ import { LoadingContent } from '../../components';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { DisplayProps } from '../../components/Table/TableV2';
-import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
@@ -224,7 +223,7 @@ export function AfisBetaalVoorkeuren() {
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
-      backLink={{ to: AppRoutes.AFIS, title: ThemaTitles.AFIS }}
+      backLink={AppRoutes.AFIS}
       linkListItems={[
         {
           to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
