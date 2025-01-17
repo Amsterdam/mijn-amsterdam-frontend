@@ -1,7 +1,6 @@
 import { Grid } from '@amsterdam/design-system-react';
 
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { useAVGDetailPage } from '../AVG/useAVGDetailPage.hook';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
@@ -33,7 +32,6 @@ function AVGDetail() {
       zaak={verzoek}
       isError={isError}
       isLoading={isLoading}
-      icon={<ThemaIcon />}
       pageContentTop={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
       backLink={backLink}
     />
