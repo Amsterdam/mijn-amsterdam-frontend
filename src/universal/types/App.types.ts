@@ -49,12 +49,14 @@ export interface MyNotification {
   hideDatePublished?: boolean;
   id: string;
   isAlert?: boolean;
-  isTip?: boolean;
-  tipReason?: string;
   link?: LinkProps;
   moreInformation?: string;
   subject?: string;
   title: string;
+
+  // TIP notifications
+  tipReason?: string;
+  isTip?: true;
 
   // NOTE: Maybe move this to client?
   customLink?: {

@@ -22,21 +22,9 @@ export type ContentTipSource = {
   predicates?: TipsPredicateFN[];
   profileTypes: ProfileType[];
   reason?: string;
-  thema?: Thema;
+  thema: Thema;
   title: string;
 };
-
-export type TipFrontend = Pick<
-  ContentTipSource,
-  | 'datePublished'
-  | 'description'
-  | 'id'
-  | 'imgUrl'
-  | 'link'
-  | 'reason'
-  | 'thema'
-  | 'title'
->;
 
 export type TipsPredicateFN = (
   stateData: Partial<AppState>,
