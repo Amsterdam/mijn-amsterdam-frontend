@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { BFFApiUrls } from '../../config/api';
@@ -45,9 +44,8 @@ export default function ErfpachtFacturen() {
       noItemsText="U heeft geen facturen."
       appRoute={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
       appRouteParams={{ dossierNummerUrlParam }}
-      appRouteBack={AppRoutes['ERFPACHTv2']}
+      appRouteBack={AppRoutes.ERFPACHTv2}
       displayProps={displayPropsAlleFacturen}
-      thema={Themas.ERFPACHTv2}
       isLoading={isLoading(dossierApiResponse)}
       isError={isError(dossierApiResponse)}
     />

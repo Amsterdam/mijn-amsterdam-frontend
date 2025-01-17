@@ -17,7 +17,6 @@ export default function HLIRegelingen() {
         items={regelingen
           .filter(listPageTableConfig.filter)
           .sort(listPageTableConfig.sort)}
-        backLinkTitle={title}
         title={listPageTableConfig.title}
         appRoute={routes.listPage}
         appRouteParams={{ kind }}

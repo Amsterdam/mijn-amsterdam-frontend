@@ -2,9 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
 import { ListPageParamKind } from '../VergunningenV2/config';
 
 export function ParkerenList() {
@@ -26,13 +24,11 @@ export function ParkerenList() {
       items={parkeerVergunningenFromThemaVergunningen
         .filter(tableConfig[params.kind].filter)
         .sort(tableConfig[params.kind].sort)}
-      backLinkTitle={ThemaTitles.PARKEREN}
       title={title ?? ''}
       appRoute={AppRoutes['PARKEREN/LIST']}
       appRouteParams={params}
       appRouteBack={appRouteBack}
       displayProps={displayProps}
-      thema={Themas.PARKEREN}
       isLoading={isLoading}
       isError={isError}
     />
