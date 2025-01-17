@@ -5,7 +5,6 @@ import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import styles from './MyNotification.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import type { MyNotification } from '../../../universal/types/App.types';
-import { IconInfo } from '../../assets/icons';
 import { ThemaTitles } from '../../config/thema';
 import { trackEvent } from '../../helpers/monitoring';
 import { isInteralUrl } from '../../helpers/utils';
@@ -34,6 +33,8 @@ export function MyNotification({
     !!notification.link?.download;
 
   const LinkComponent = isLinkExternal ? MaLink : MaRouterLink;
+
+  const hasTipReason = notification.isTip && notification.tipReason;
 
   return (
     <article>
@@ -82,7 +83,7 @@ export function MyNotification({
           </Paragraph>
           {(!!notification.link || !!notification.customLink) && (
             <>
-              <Paragraph>
+              <Paragraph className={hasTipReason ? 'ams-mb--xs' : ''}>
                 {notification.link?.download ? (
                   <DocumentLink
                     document={{
@@ -115,26 +116,31 @@ export function MyNotification({
                       'Meer informatie over ' + notification.title}
                   </LinkComponent>
                 )}
+                {hasTipReason && (
+                  <>
+                    {' '}
+                    &mdash;{' '}
+                    <MaLink
+                      href="/"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        if (!isTipReasonShown) {
+                          trackEvent('klik-op-tip-reden', {
+                            title: `${trackCategory} - ${notification.title}`,
+                          });
+                        }
+                        return showTipReason(
+                          (isTipReasonShown) => !isTipReasonShown
+                        );
+                      }}
+                    >
+                      Waarom zie ik deze tip?
+                    </MaLink>
+                  </>
+                )}
               </Paragraph>
-              {notification.isTip && notification.tipReason && (
-                <Paragraph className={styles.TipReason}>
-                  <IconInfo />
-                  <a
-                    onClick={() => {
-                      if (!isTipReasonShown) {
-                        trackEvent('klik-op-tip-reden', {
-                          title: `${trackCategory} - ${notification.title}`,
-                        });
-                      }
-                      return showTipReason(
-                        (isTipReasonShown) => !isTipReasonShown
-                      );
-                    }}
-                  >
-                    Waarom zie ik deze tip?
-                  </a>
-                  {isTipReasonShown && <span>{notification.tipReason}</span>}
-                </Paragraph>
+              {isTipReasonShown && (
+                <Paragraph>{notification.tipReason}</Paragraph>
               )}
             </>
           )}
