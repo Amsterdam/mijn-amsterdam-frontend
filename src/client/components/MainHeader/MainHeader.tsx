@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import styles from './MainHeader.module.scss';
 import { OtapLabel } from './OtapLabel';
 import { ProfileName } from './ProfileName';
+import { SearchBar } from './SearchBar';
 import { useMainHeaderData } from './useMainHeaderData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { IconSearch } from '../../assets/icons';
@@ -19,8 +20,7 @@ import { ErrorMessages } from '../../components';
 import { LOGOUT_URL } from '../../config/api';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { MainMenu } from '../MainMenu/MainMenu';
-import { MaButtonLink } from '../MaLink/MaLink';
-import { Search } from '../Search/Search';
+import { MaButtonLink, MaButtonRouterLink } from '../MaLink/MaLink';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -40,7 +40,6 @@ export default function MainHeader({
     isSearchActive,
     menuItems,
     myThemasMenuItems,
-    replaceResultUrl,
     setSearchActive,
     toggleBurgerMenu,
   } = useMainHeaderData();
@@ -55,13 +54,13 @@ export default function MainHeader({
           <Grid
             className={classNames(styles.HeaderGridPadding, 'ma-main-header')}
           >
-            <Grid.Cell span={1}>
-              <Logo />
-            </Grid.Cell>
-            <Grid.Cell start={2} span={3}>
-              <Heading level={1} size="level-3">
-                Mijn Amsterdam
-              </Heading>
+            <Grid.Cell span={4}>
+              <div className={styles.LogoWrap}>
+                <Logo />
+                <Heading level={1} size="level-3">
+                  Mijn Amsterdam
+                </Heading>
+              </div>
             </Grid.Cell>
             {isAuthenticated && (
               <Grid.Cell className={styles.SecondaryLinks} start={5} span={8}>
@@ -78,11 +77,11 @@ export default function MainHeader({
                   </Button>
                 )}
 
-                <MaButtonLink variant="tertiary" href={AppRoutes.BRP}>
+                <MaButtonRouterLink variant="tertiary" href={AppRoutes.BRP}>
                   <span className={styles.ProfileNameInner}>
                     <ProfileName />
                   </span>
-                </MaButtonLink>
+                </MaButtonRouterLink>
 
                 <MaButtonLink
                   variant="tertiary"
@@ -112,16 +111,9 @@ export default function MainHeader({
 
             <OtapLabel />
             {isDisplayLiveSearch && isSearchActive && isAuthenticated && (
-              <div className={styles.SearchBar}>
-                <div className={styles.SearchBarInner}>
-                  <Search
-                    onFinish={() => {
-                      setSearchActive(false);
-                    }}
-                    replaceResultUrl={replaceResultUrl}
-                  />
-                </div>
-              </div>
+              <Grid.Cell start={2} span={9}>
+                <SearchBar onFinish={() => setSearchActive(false)} />
+              </Grid.Cell>
             )}
 
             {isAuthenticated && hasErrors && (
