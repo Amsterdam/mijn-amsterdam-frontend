@@ -1,10 +1,10 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
+import { VergunningDocument } from '../../../server/services';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
-import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { BagThemas } from '../../config/thema';
@@ -13,13 +13,11 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
-import { LinkProps } from '../../../universal/types';
-import { VergunningDocument } from '../../../server/services';
 
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
   documents: VergunningDocument[];
-  backLink: LinkProps;
+  backLink: string;
 }
 
 // TODO: Implement detailpages per case
@@ -49,7 +47,7 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
 }
 
 interface VergunningV2DetailProps {
-  backLink: LinkProps;
+  backLink: string;
 }
 
 export default function VergunningV2Detail({
@@ -80,7 +78,6 @@ export default function VergunningV2Detail({
       isLoading={
         isLoading(vergunningDetailApiResponse) || isLoading(VERGUNNINGENv2)
       }
-      icon={<ThemaIcon />}
       pageContentTop={
         vergunningDetail && (
           <DetailPageContent
@@ -90,10 +87,7 @@ export default function VergunningV2Detail({
           />
         )
       }
-      backLink={{
-        title: backLink.title,
-        to: backLink.to,
-      }}
+      backLink={backLink}
       documentPathForTracking={(document) =>
         `/downloads/vergunningen/${vergunningDetail?.caseType}/${document.title.split(/\n/)[0]}`
       }
