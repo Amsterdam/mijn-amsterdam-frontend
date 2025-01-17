@@ -7,7 +7,7 @@ import {
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import { ServiceResults } from '../../tips/tip-types';
+import { ServiceResults } from '../../content-tips/tip-types';
 import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
 import type {
   WpiIncomeSpecification,
