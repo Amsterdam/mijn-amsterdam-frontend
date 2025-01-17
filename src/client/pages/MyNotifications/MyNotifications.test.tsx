@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import MyNotifications from './MyNotifications';
+import { MyNotifications } from './MyNotifications';
 import { Themas } from '../../../universal/config/thema';
 
 const testState: any = {
