@@ -1,0 +1,8 @@
+.SecondaryLink {
+  display: block !important;
+
+  :global(.ams-icon) {
+    transform: translateY(3px);
+    margin-right: 1rem;
+  }
+}
