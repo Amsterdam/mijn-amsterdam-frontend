@@ -1,0 +1,15 @@
+.Welcome {
+  background-color: white;
+  margin-top: -200px;
+  z-index: 1000;
+  position: relative;
+  padding: var(--ams-grid-column-gap) calc(var(--ams-grid-column-gap) * 2);
+  margin-left: calc(var(--ams-grid-column-gap) * -3);
+  display: none;
+}
+
+.WelcomeHeading {
+  font-size: 200px;
+  --ams-heading-level-3-font-size: 58px;
+  --ams-heading-level-3-line-height: 72px;
+}
