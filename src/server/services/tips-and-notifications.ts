@@ -114,7 +114,7 @@ const notificationServices: NotificationServicesByProfileType = {
 };
 
 function getTipsAndNotificationsFromApiResults(
-  responses: Array<ApiResponse<unknown>>
+  responses: Array<ApiResponse_DEPRECATED<unknown>>
 ): MyNotification[] {
   const notifications: MyNotification[] = [];
   const tips: MyNotification[] = [];
