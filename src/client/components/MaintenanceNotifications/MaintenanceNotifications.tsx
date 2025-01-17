@@ -1,11 +1,10 @@
-import { useState } from 'react';
-
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
 import styles from './MaintenanceNotifications.module.scss';
 import { InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
-import Linkd, { Button } from '../Button/Button';
+import Linkd from '../Button/Button';
 
 interface MaintenanceNotificationsProps {
   page?: string;
@@ -20,7 +19,6 @@ export default function MaintenanceNotifications({
     page,
     fromApiDirectly
   );
-  const [isMoreInformationVisible, setMoreInformationVisible] = useState(false);
 
   if (!maintenanceNotifications?.length) {
     return null;
@@ -36,31 +34,16 @@ export default function MaintenanceNotifications({
             heading="Onderhoudsmelding"
             className={styles.MaintenanceNotification}
           >
-            <InnerHtml className={styles.Description}>
+            <InnerHtml className={classNames(styles.Description, 'ams-mb--sm')}>
               {notification.description}
             </InnerHtml>
-            {notification.moreInformation && isMoreInformationVisible && (
-              <InnerHtml className={styles.MoreInformation}>
-                {notification.moreInformation}
-              </InnerHtml>
-            )}
-            {notification.moreInformation && !isMoreInformationVisible && (
+
+            {notification.link?.to && (
               <Paragraph>
-                <Button
-                  variant="inline"
-                  lean={true}
-                  onClick={() => setMoreInformationVisible(true)}
-                >
-                  Meer informatie.
-                </Button>
-              </Paragraph>
-            )}
-            {isMoreInformationVisible && notification.link && (
-              <p>
                 <Linkd href={notification.link.to}>
                   {notification.link.title}
                 </Linkd>
-              </p>
+              </Paragraph>
             )}
           </Alert>
         );

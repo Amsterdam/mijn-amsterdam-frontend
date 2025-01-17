@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
-import { InnerHtml } from '..';
 import styles from './MyNotification.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import type { MyNotification } from '../../../universal/types/App.types';
@@ -78,16 +77,9 @@ export function MyNotification({
 
       {!isCollapsed && (
         <div className={styles.Body}>
-          {!!notification.description && (
-            <InnerHtml className={styles.Description}>
-              {notification.description}
-            </InnerHtml>
-          )}
-          {!!notification.moreInformation && (
-            <InnerHtml className={styles.MoreInformation}>
-              {notification.moreInformation}
-            </InnerHtml>
-          )}
+          <Paragraph className="ams-mb--sm">
+            {notification.description}
+          </Paragraph>
           {(!!notification.link || !!notification.customLink) && (
             <>
               <Paragraph className="ams-mb--sm">
