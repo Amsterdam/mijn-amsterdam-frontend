@@ -1,0 +1,14 @@
+.SearchBar {
+  @include mq-tablet() {
+    @include select('Search_SearchBar') {
+      form {
+        padding: 1rem;
+      }
+    }
+  }
+}
+
+.SearchBarInner {
+  max-width: 60rem;
+  margin: 0 auto;
+}
