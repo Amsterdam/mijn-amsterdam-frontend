@@ -8,7 +8,6 @@ import {
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
 
 function AfisListPageBody({ state }: { state: AfisFactuurState }) {
   switch (state) {
@@ -40,7 +39,6 @@ export function AfisFacturen() {
     <ListPagePaginated<AfisFactuur>
       items={facturen}
       body={<AfisListPageBody state={state} />}
-      backLinkTitle={ThemaTitles.AFIS}
       title={listPageTableConfig.title}
       appRoute={routes.listPageFacturen}
       appRouteParams={{ state }}

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useBurgerZakenData } from './useBurgerZakenData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
 import { ListPageParamKind } from '../VergunningenV2/config';
 
 export function BurgerZakenList() {
@@ -13,10 +12,7 @@ export function BurgerZakenList() {
 
   return (
     <ListPagePaginated
-      items={documents
-        .filter(tableConfig[params.kind].filter)
-        .sort(tableConfig[params.kind].sort)}
-      backLinkTitle={ThemaTitles.BURGERZAKEN}
+      items={documents.sort(tableConfig[params.kind].sort)}
       title={tableConfig[params.kind].title}
       appRoute={AppRoutes['BURGERZAKEN/LIST']}
       appRouteParams={params}
