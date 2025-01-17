@@ -8,7 +8,6 @@ export { default as DateInput } from './DateInput/DateInput';
 export { default as DirectLinks } from './DirectLinks/DirectLinks';
 export { default as DocumentList } from './DocumentList/DocumentList';
 export { default as ErrorMessages } from './ErrorMessages/ErrorMessages';
-export { default as FontEnlarger } from './FontEnlarger/FontEnlarger';
 export { default as InfoDetail } from './InfoDetail/InfoDetail';
 export { default as LoadingContent } from './LoadingContent/LoadingContent';
 export { default as MainFooter } from './MainFooter/MainFooter';
