@@ -16,7 +16,6 @@ import {
   useRecoilValueLoadable,
 } from 'recoil';
 
-import styles from './Search.module.scss';
 import {
   ApiBaseItem,
   ApiSearchConfig,
@@ -25,6 +24,7 @@ import {
   apiSearchConfigs,
   displayPath,
 } from './search-config';
+import styles from './Search.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse_DEPRECATED,
@@ -309,6 +309,7 @@ function useDynamicSearchEntries() {
 }
 
 let fuseInstance: any;
+
 export function useSearchIndex() {
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();

@@ -48,6 +48,7 @@ export function useMainHeaderData() {
       display: isBurgerMenuVisible ? 'block' : 'none',
     },
   });
+
   const isPhoneScreen = usePhoneScreen();
 
   // Bind click outside and tab navigation interaction
