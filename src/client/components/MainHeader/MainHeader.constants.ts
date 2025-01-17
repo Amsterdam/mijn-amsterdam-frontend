@@ -13,28 +13,21 @@ export interface MenuItem extends LinkProps {
   profileTypes?: ProfileType[];
 }
 
-export const mainMenuItemId: { [key: string]: MainMenuId } = {
-  HOME: 'DASHBOARD',
-  THEMAS: 'MIJN_THEMAS',
-  BUURT: 'BUURT',
-  NOTIFICATIONS: 'NOTIFICATIONS',
-};
-
 export const mainMenuItems: MenuItem[] = [
   {
     title: ThemaTitles.ROOT,
-    id: mainMenuItemId.HOME,
+    id: 'ROOT',
     to: AppRoutes.ROOT,
   },
   {
     title: ThemaTitles.BUURT,
-    id: mainMenuItemId.BUURT,
+    id: 'BUURT',
     to: generatePath(AppRoutes.BUURT),
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.NOTIFICATIONS,
-    id: mainMenuItemId.NOTIFICATIONS,
+    id: 'NOTIFICATIONS',
     to: generatePath(AppRoutes.NOTIFICATIONS),
   },
 ];

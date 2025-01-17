@@ -54,18 +54,18 @@ body {
 // Global styling and reset
 html {
   box-sizing: border-box;
-  font-size: var(
-    --mams-font-size-rem-adjust
-  ); // translates to 10px which makes 1rem = 10px in all other elements contained within body
-  line-height: var(--mams-line-height);
+  // font-size: var(
+  //   --mams-font-size-rem-adjust
+  // ); // translates to 10px which makes 1rem = 10px in all other elements contained within body
+  // line-height: var(--mams-line-height);
   height: 100%;
   background-color: var(--mams-bg-color);
 }
 
 body {
-  font-family: var(--ams-text-font-family);
+  // font-family: var(--ams-text-font-family);
   color: var(--ams-color-primary-black);
-  font-size: var(--mams-font-size-body);
+  // font-size: var(--mams-font-size-body);
   min-width: $main-min-width;
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
 
