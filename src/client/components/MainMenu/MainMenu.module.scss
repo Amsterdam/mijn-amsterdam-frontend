@@ -1,16 +1,15 @@
-.menu {
-  @include centered-block;
-  padding: 4rem 0 calc(6rem - var(--ams-link-list-gap));
+.MainMenu {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  column-gap: var(--ams-grid-column-gap);
+  grid-template-columns: 3fr 1fr;
+  padding-top: calc(var(--ams-link-list-gap) * 4);
+  padding-bottom: calc(
+    var(--ams-grid-row-gap) - calc(var(--ams-link-list-gap) * 1.2)
+  );
 
   .menuItem {
     display: block;
     margin-bottom: var(--ams-link-list-gap);
-  }
-
-  nav:first-child .menuItem {
-    font-weight: 800;
   }
 
   @include mq-phone() {
