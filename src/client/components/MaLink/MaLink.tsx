@@ -2,7 +2,7 @@ import { AnchorHTMLAttributes } from 'react';
 
 import { ButtonProps, Link, LinkProps } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import styles from './MaLink.module.scss';
 
@@ -45,11 +45,12 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
       {...rest}
       href={href}
       onClick={(event) => {
+        event.preventDefault();
+
         if (onClick) {
           onClick(event);
         }
 
-        event.preventDefault();
         history.push(href as string);
       }}
     />
@@ -87,5 +88,28 @@ export function MaButtonLink({
     >
       {children}
     </a>
+  );
+}
+
+export function MaButtonRouterLink({
+  href,
+  children,
+  className,
+  variant = 'primary',
+  ...rest
+}: MaButtonLinkProps) {
+  return (
+    <NavLink
+      {...rest}
+      className={classNames(
+        styles.MaButtonLink,
+        'ams-button',
+        `ams-button--${variant}`,
+        className
+      )}
+      to={href}
+    >
+      {children}
+    </NavLink>
   );
 }

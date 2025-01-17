@@ -38,3 +38,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.LogoWrap {
+  display: flex;
+  gap: var(--ams-space-lg);
+}
