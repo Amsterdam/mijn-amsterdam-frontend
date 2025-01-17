@@ -1,6 +1,5 @@
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
@@ -13,9 +12,8 @@ export default function ErfpachtDossiers() {
       items={dossiers}
       title={`Alle ${titleDossiers?.toLowerCase()}`}
       appRoute={AppRoutes['ERFPACHTv2/DOSSIERS']}
-      appRouteBack={AppRoutes['ERFPACHTv2']}
+      appRouteBack={AppRoutes.ERFPACHTv2}
       displayProps={displayPropsDossiers}
-      thema={Themas.ERFPACHTv2}
       isLoading={isLoading(ERFPACHTv2)}
       isError={isError(ERFPACHTv2)}
     />

@@ -21,7 +21,6 @@ export function ToeristischeVerhuurVergunningen() {
       items={vergunningen
         .filter(listPageTableConfig.filter)
         .sort(listPageTableConfig.sort)}
-      backLinkTitle={title}
       tableClassName={listPageTableConfig.className}
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
