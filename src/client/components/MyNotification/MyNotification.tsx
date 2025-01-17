@@ -16,7 +16,7 @@ import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 type MyNotificationProps = {
   notification: MyNotification;
   trackCategory?: string;
-  smallVariant: boolean;
+  smallVariant?: true;
 };
 
 export function MyNotification({
@@ -26,7 +26,7 @@ export function MyNotification({
 }: MyNotificationProps) {
   const profileType = useProfileTypeValue();
 
-  const [isCollapsed, toggleCollapsed] = useState(smallVariant);
+  const [isCollapsed, toggleCollapsed] = useState(!!smallVariant);
   const [isTipReasonShown, showTipReason] = useState(false);
 
   const isLinkExternal =
@@ -37,7 +37,7 @@ export function MyNotification({
 
   return (
     <article>
-      <header>
+      <header className={!isCollapsed ? 'ams-mb--xs' : ''}>
         {smallVariant ? (
           <MaLink
             aria-expanded={isCollapsed}
@@ -77,12 +77,12 @@ export function MyNotification({
 
       {!isCollapsed && (
         <div className={styles.Body}>
-          <Paragraph className="ams-mb--sm">
+          <Paragraph className="ams-mb--xs">
             {notification.description}
           </Paragraph>
           {(!!notification.link || !!notification.customLink) && (
             <>
-              <Paragraph className="ams-mb--sm">
+              <Paragraph>
                 {notification.link?.download ? (
                   <DocumentLink
                     document={{
