@@ -127,6 +127,7 @@ function AppNotAuthenticated() {
   return (
     <>
       <MainHeader isAuthenticated={false} />
+      <MainHeaderHero />
       <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
