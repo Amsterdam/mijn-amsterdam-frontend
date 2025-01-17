@@ -6,10 +6,8 @@ import {
   OrderedList,
   Screen,
 } from '@amsterdam/design-system-react';
-import classNames from 'classnames';
 import { generatePath, useHistory } from 'react-router-dom';
 
-import styles from './Dashboard.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
 import { DirectLinks, LoadingContent, Page } from '../../components';
@@ -47,64 +45,59 @@ export function Dashboard() {
   }, []);
 
   return (
-    <>
-      <Page className={styles.Dashboard}>
-        <Screen>
-          <Grid>
-            <Grid.Cell start={1} span={6}>
-              <Heading level={2} className="ams-mb--sm">
-                Recente berichten{' '}
-                {total > notifications.length && (
-                  <MaRouterLink href={generatePath(AppRoutes.NOTIFICATIONS)}>
-                    Alle updates
-                  </MaRouterLink>
-                )}
-              </Heading>
-              <OrderedList markers={false}>
-                {isLoading(NOTIFICATIONS) && (
-                  <OrderedList.Item>
-                    <LoadingContent />
-                  </OrderedList.Item>
-                )}
-                {!isLoading(NOTIFICATIONS) &&
-                  notifications.map((notification, index) => {
-                    return (
-                      <OrderedList.Item
-                        key={`${notification.thema}-${notification.id}-${index}`}
-                        className={classNames(
-                          styles.MyNotificationItem,
-                          'ams-mb--sm'
-                        )}
-                      >
-                        <MyNotification
-                          notification={notification}
-                          trackCategory="Dashboard / Actueel"
-                          smallVariant={true}
-                        />
-                      </OrderedList.Item>
-                    );
-                  })}
-              </OrderedList>
-            </Grid.Cell>
-            <Grid.Cell start={7} span={6}>
-              <Heading level={2} className="ams-mb--sm">
-                Mijn thema&apos;s
-              </Heading>
-              <MyThemasPanel
-                isLoading={isMyThemasLoading}
-                items={myThemaItems}
-                trackCategory="Dashboard / Mijn Thema's"
-              />
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              {!isPhoneScreen && <MyAreaDashboard />}
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              <DirectLinks profileType={profileType} />
-            </Grid.Cell>
-          </Grid>
-        </Screen>
-      </Page>
-    </>
+    <Page>
+      <Screen>
+        <Grid>
+          <Grid.Cell start={1} span={6}>
+            <Heading level={2} className="ams-mb--sm">
+              Recente berichten{' '}
+              {total > notifications.length && (
+                <MaRouterLink href={generatePath(AppRoutes.NOTIFICATIONS)}>
+                  Alle updates
+                </MaRouterLink>
+              )}
+            </Heading>
+            <OrderedList markers={false}>
+              {isLoading(NOTIFICATIONS) && (
+                <OrderedList.Item>
+                  <LoadingContent />
+                </OrderedList.Item>
+              )}
+              {!isLoading(NOTIFICATIONS) &&
+                notifications.map((notification, index) => {
+                  return (
+                    <OrderedList.Item
+                      key={`${notification.thema}-${notification.id}-${index}`}
+                      className="ams-mb--sm"
+                    >
+                      <MyNotification
+                        notification={notification}
+                        trackCategory="Dashboard / Actueel"
+                        smallVariant={true}
+                      />
+                    </OrderedList.Item>
+                  );
+                })}
+            </OrderedList>
+          </Grid.Cell>
+          <Grid.Cell start={7} span={6}>
+            <Heading level={2} className="ams-mb--sm">
+              Mijn thema&apos;s
+            </Heading>
+            <MyThemasPanel
+              isLoading={isMyThemasLoading}
+              items={myThemaItems}
+              trackCategory="Dashboard / Mijn Thema's"
+            />
+          </Grid.Cell>
+          <Grid.Cell span="all">
+            {!isPhoneScreen && <MyAreaDashboard />}
+          </Grid.Cell>
+          <Grid.Cell span="all">
+            <DirectLinks profileType={profileType} />
+          </Grid.Cell>
+        </Grid>
+      </Screen>
+    </Page>
   );
 }
