@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import { OrderedList } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 import styles from './MyNotifications.module.scss';
@@ -92,12 +93,11 @@ export function MyNotificationsPage() {
             return (
               <OrderedList.Item
                 key={`${notification.thema}-${notification.id}-${index}`}
-                className={styles.MyNotificationItem}
+                className={classNames(styles.MyNotificationItem, 'ams-mb--sm')}
               >
                 <MyNotification
                   notification={notification}
                   trackCategory="Dashboard / Actueel"
-                  smallVariant={true}
                 />
               </OrderedList.Item>
             );
