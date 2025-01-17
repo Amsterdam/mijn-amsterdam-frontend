@@ -26,68 +26,51 @@ export default function Landing() {
           Welkom op Mijn Amsterdam
         </PageHeadingV2>
         <Grid.Cell span="all">
-          <Paragraph>Uw Amsterdamse zaken op 1 plek.</Paragraph>
+          <Paragraph className="ams-mb--md">
+            Uw Amsterdamse zaken op 1 plek.
+          </Paragraph>
           <MaintenanceNotifications
             fromApiDirectly={true}
             page="landingspagina"
           />
-          <div className={styles.LoginOption}>
-            {FeatureToggle.eherkenningActive && (
-              <Heading
-                className={styles.LoginOptionHeading}
-                size="level-4"
-                level={3}
-              >
-                Voor particulieren en eenmanszaken
-              </Heading>
-            )}
-            <Paragraph>
-              <a
-                ref={loginButton}
-                role="button"
-                href={LOGIN_URL_DIGID}
-                onClick={() => setRedirecting(true)}
-                rel="noopener noreferrer"
-                className={classnames(
-                  styles.LoginBtn,
-                  isRedirectingAny && styles.LoginBtnDisabled
-                )}
-              >
-                <span className={styles.LoginLogoWrap}>
-                  <DigiDLogo />
-                </span>
-                <span className={styles.LoginButtonText}>
-                  {isRedirecting
-                    ? 'Bezig met inloggen...'
-                    : 'Inloggen met DigiD'}
-                </span>
-              </a>
-            </Paragraph>
-            <Heading size="level-4" level={4}>
-              Hebt u nog geen DigiD? Regel dit dan eerst.
-            </Heading>
-            <Paragraph>
-              Ga naar{' '}
-              <Link
-                rel="noopener noreferrer"
-                href={ExternalUrls.DIGID_AANVRAGEN}
-              >
-                DigiD aanvragen
-              </Link>
-            </Paragraph>
-          </div>
+
           {FeatureToggle.eherkenningActive && (
-            <div
+            <Heading className="ams-mb--xs" level={3}>
+              Voor particulieren en eenmanszaken
+            </Heading>
+          )}
+          <Paragraph>
+            <a
+              ref={loginButton}
+              role="button"
+              href={LOGIN_URL_DIGID}
+              onClick={() => setRedirecting(true)}
+              rel="noopener noreferrer"
               className={classnames(
-                styles.LoginOption,
-                styles['LoginOption--eherkenning']
+                styles.LoginBtn,
+                isRedirectingAny && styles.LoginBtnDisabled
               )}
             >
-              <Heading
-                className={styles.LoginOptionHeading}
-                size="level-4"
-                level={3}
-              >
+              <span className={styles.LoginLogoWrap}>
+                <DigiDLogo />
+              </span>
+              <span className={styles.LoginButtonText}>
+                {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
+              </span>
+            </a>
+          </Paragraph>
+          <Paragraph className="ams-mb--md">
+            Hebt u nog geen DigiD? Regel dit dan eerst.
+            <br />
+            Ga naar{' '}
+            <Link rel="noopener noreferrer" href={ExternalUrls.DIGID_AANVRAGEN}>
+              DigiD aanvragen
+            </Link>
+          </Paragraph>
+
+          {FeatureToggle.eherkenningActive && (
+            <>
+              <Heading className="ams-mb--xs" level={3}>
                 Voor ondernemers
               </Heading>
               <Paragraph>
@@ -113,23 +96,20 @@ export default function Landing() {
                   </span>
                 </a>
               </Paragraph>
-              <Heading size="level-4" level={4}>
+              <Paragraph className="ams-mb--md">
                 U heeft eHerkenning niveau 3 nodig om in te loggen.
-              </Heading>
-              <Paragraph>
+                <br />
                 Ga naar{' '}
                 <Link rel="noopener noreferrer" href="https://eherkenning.nl">
                   eherkenning.nl
                 </Link>{' '}
                 voor meer informatie.
               </Paragraph>
-            </div>
+            </>
           )}
 
-          <Heading size="level-4" level={4}>
-            Vragen over Mijn Amsterdam?
-          </Heading>
-          <Paragraph className={styles.FaqInfo}>
+          <Heading level={4}>Vragen over Mijn Amsterdam?</Heading>
+          <Paragraph className="ams-mb--md">
             Kijk bij{' '}
             <Link
               rel="noopener noreferrer"
