@@ -8,9 +8,11 @@ import {
 } from '@amsterdam/design-system-react';
 import { generatePath, useHistory } from 'react-router-dom';
 
+import styles from './Dashboard.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
-import { DirectLinks, LoadingContent, Page } from '../../components';
+import { getFullName } from '../../../universal/helpers/brp';
+import { LoadingContent, Page } from '../../components';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
@@ -26,7 +28,7 @@ const MAX_NOTIFICATIONS_VISIBLE = 6;
 export function Dashboard() {
   const appState = useAppStateGetter();
   const history = useHistory();
-  const { NOTIFICATIONS } = appState;
+  const { NOTIFICATIONS, BRP } = appState;
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
@@ -48,6 +50,15 @@ export function Dashboard() {
     <Page>
       <Screen>
         <Grid>
+          <Grid.Cell span="all">
+            <div className={styles.Welcome}>
+              <Heading className={styles.WelcomeHeading} level={3}>
+                Goedemorgen,
+                <br />{' '}
+                {BRP.content?.persoon ? getFullName(BRP.content?.persoon) : ''}
+              </Heading>
+            </div>
+          </Grid.Cell>
           <Grid.Cell start={1} span={6}>
             <Heading level={2} className="ams-mb--sm">
               Recente berichten{' '}
@@ -90,14 +101,9 @@ export function Dashboard() {
               trackCategory="Dashboard / Mijn Thema's"
             />
           </Grid.Cell>
-          <Grid.Cell span="all">
-            {!isPhoneScreen && <MyAreaDashboard />}
-          </Grid.Cell>
-          <Grid.Cell span="all">
-            <DirectLinks profileType={profileType} />
-          </Grid.Cell>
         </Grid>
       </Screen>
+      {!isPhoneScreen && <MyAreaDashboard />}
     </Page>
   );
 }
