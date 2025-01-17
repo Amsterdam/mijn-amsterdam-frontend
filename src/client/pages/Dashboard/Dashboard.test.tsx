@@ -8,7 +8,7 @@ import { Themas } from '../../../universal/config/thema';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Dashboard from './Dashboard';
+import { Dashboard } from './Dashboard';
 import { remoteApiHost } from '../../../testing/setup';
 
 const testState = {
