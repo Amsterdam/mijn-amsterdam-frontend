@@ -1,17 +1,13 @@
-import { Grid, Heading } from '@amsterdam/design-system-react';
-
-import styles from './WelcomeHeading.module.scss';
 import { ProfileName } from '../../components/MainHeader/ProfileName';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
 const HELLO = 'Welkom,';
 
 export function WelcomeHeading() {
   return (
-    <Grid.Cell span={7} className={styles.Welcome}>
-      <Heading className={styles.WelcomeHeading} level={3}>
-        {HELLO}
-        <br /> <ProfileName />
-      </Heading>
-    </Grid.Cell>
+    <PageHeadingV2 showBacklink={false}>
+      {HELLO}
+      <br /> <ProfileName />
+    </PageHeadingV2>
   );
 }
