@@ -1,16 +1,12 @@
-import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
+import { Grid, Paragraph } from '@amsterdam/design-system-react';
 
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import {
-  ErrorAlert,
-  OverviewPage,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import { isError } from '../../../universal/helpers/api';
+import { ErrorAlert } from '../../components';
+import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 
 interface OpenFacturenListGroupedProps {
@@ -58,43 +54,41 @@ export default function ErfpachtOpenFacturen() {
   } = useErfpachtV2Data();
 
   return (
-    <OverviewPage>
-      <PageHeading
-        icon={<ThemaIcon thema={Themas.ERFPACHTv2} />}
-        backLink={{ to: AppRoutes.ERFPACHTv2, title: 'Overzicht' }}
-        isLoading={isLoading(ERFPACHTv2)}
-      >
-        {`Alle ${
-          titleOpenFacturen?.toLocaleLowerCase() ?? 'openstaande facturen'
-        }`}
-      </PageHeading>
-      <Screen>
-        {isError(ERFPACHTv2) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen openstaande facturen tonen.
-          </ErrorAlert>
-        )}
+    <OverviewPageV2>
+      <PageContentV2>
+        <Grid.Cell span="all">
+          <PageHeadingV2 backLink={AppRoutes.ERFPACHTv2}>
+            {`Alle ${
+              titleOpenFacturen?.toLocaleLowerCase() ?? 'openstaande facturen'
+            }`}
+          </PageHeadingV2>
+          {isError(ERFPACHTv2) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen openstaande facturen tonen.
+            </ErrorAlert>
+          )}
 
-        {!isError(ERFPACHTv2) &&
-          !!openFacturen.length &&
-          (isMediumScreen ? (
-            <TableV2
-              items={openFacturen}
-              displayProps={displayPropsOpenFacturen}
-            />
-          ) : (
-            <OpenFacturenListGrouped
-              facturen={openFacturen}
-              displayProps={displayPropsOpenFacturen}
-            />
-          ))}
-        {!openFacturen.length && (
-          <Paragraph>
-            U heeft geen{' '}
-            {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
-          </Paragraph>
-        )}
-      </Screen>
-    </OverviewPage>
+          {!isError(ERFPACHTv2) &&
+            !!openFacturen.length &&
+            (isMediumScreen ? (
+              <TableV2
+                items={openFacturen}
+                displayProps={displayPropsOpenFacturen}
+              />
+            ) : (
+              <OpenFacturenListGrouped
+                facturen={openFacturen}
+                displayProps={displayPropsOpenFacturen}
+              />
+            ))}
+          {!openFacturen.length && (
+            <Paragraph>
+              U heeft geen{' '}
+              {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
+            </Paragraph>
+          )}
+        </Grid.Cell>
+      </PageContentV2>
+    </OverviewPageV2>
   );
 }
