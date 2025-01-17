@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
+import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 import styles from './MyNotifications.module.scss';
@@ -9,19 +10,20 @@ import {
   ErrorAlert,
   ThemaIcon,
   DetailPage,
-  MyNotifications,
   PageContent,
   PageHeading,
   Pagination,
+  LoadingContent,
 } from '../../components';
+import { MyNotification } from '../../components/MyNotification/MyNotification';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 
 const PAGE_SIZE = 12;
 
-export default function MyNotificationsPage() {
+export function MyNotificationsPage() {
   const { NOTIFICATIONS } = useAppStateGetter();
-  const notifications = useAppStateNotifications();
+  const { notifications, total } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
   const history = useHistory();
 
@@ -32,13 +34,12 @@ export default function MyNotificationsPage() {
     return parseInt(page, 10);
   }, [page]);
 
-  const itemsPaginated = useMemo(() => {
+  const notificationsPaginated = useMemo(() => {
     const startIndex = currentPage - 1;
     const start = startIndex * PAGE_SIZE;
     const end = start + PAGE_SIZE;
     return notifications.slice(start, end);
   }, [currentPage, notifications]);
-  const total = notifications.length;
 
   useEffect(() => {
     window.scrollBy({
@@ -80,12 +81,28 @@ export default function MyNotificationsPage() {
           />
         </PageContent>
       )}
-      <MyNotifications
-        isLoading={isLoading(NOTIFICATIONS)}
-        items={itemsPaginated}
-        noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
-        trackCategory="Actueel overzicht"
-      />
+      <OrderedList markers={false}>
+        {isLoading(NOTIFICATIONS) && (
+          <OrderedList.Item>
+            <LoadingContent />
+          </OrderedList.Item>
+        )}
+        {!isLoading(NOTIFICATIONS) &&
+          notificationsPaginated.map((notification, index) => {
+            return (
+              <OrderedList.Item
+                key={`${notification.thema}-${notification.id}-${index}`}
+                className={styles.MyNotificationItem}
+              >
+                <MyNotification
+                  notification={notification}
+                  trackCategory="Dashboard / Actueel"
+                  smallVariant={true}
+                />
+              </OrderedList.Item>
+            );
+          })}
+      </OrderedList>
       {total > PAGE_SIZE && (
         <PageContent>
           <Pagination
