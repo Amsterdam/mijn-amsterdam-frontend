@@ -17,7 +17,7 @@ import {
 } from '../MainMenu/MainMenu';
 import { useSearchOnPage } from '../Search/useSearch';
 
-function isTargetWithinMenu(target: any) {
+function isTargetWithinMenu(target: Node | null) {
   const LinkContainer = document.querySelector(`.${AmsMainMenuClassname}`);
   const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
   return (
@@ -53,7 +53,7 @@ export function useMainHeaderData() {
   // Bind click outside and tab navigation interaction
   useEffect(() => {
     const onTab = (event: KeyboardEvent) => {
-      const isMenuTarget = isTargetWithinMenu(event.target);
+      const isMenuTarget = isTargetWithinMenu(event.target as Node);
       if (event.key === 'Tab') {
         if (isBurgerMenuVisible === true && !isMenuTarget) {
           toggleBurgerMenu(false);
@@ -64,7 +64,10 @@ export function useMainHeaderData() {
     };
 
     const onClickOutsideBurgermenu = (event?: MouseEvent) => {
-      if (isBurgerMenuVisible === true && !isTargetWithinMenu(event?.target)) {
+      if (
+        isBurgerMenuVisible === true &&
+        !isTargetWithinMenu(event?.target as Node)
+      ) {
         toggleBurgerMenu(false);
       }
     };
