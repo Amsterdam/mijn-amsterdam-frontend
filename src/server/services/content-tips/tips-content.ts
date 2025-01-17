@@ -23,21 +23,22 @@ import {
   not,
   or,
   previouslyLivingInAmsterdam,
+  hasBudget,
 } from './predicates';
-import { Tip } from './tip-types';
+import { ContentTipSource } from './tip-types';
 import { Themas } from '../../../universal/config/thema';
 
 const DAYS = 90;
-export const tips: Tip[] = [
+
+export const tips: ContentTipSource[] = [
   {
     id: 'mijn-10',
     active: true,
     dateActiveStart: null,
     dateActiveEnd: null,
-    priority: 70,
     datePublished: '2019-08-18',
     title: 'Tip: Bekijk de afvalpunten in de buurt',
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     thema: Themas.AFVAL,
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
     predicates: [isLivingInAmsterdamLessThanNumberOfDays(DAYS)],
@@ -52,10 +53,9 @@ export const tips: Tip[] = [
     active: true,
     dateActiveStart: null,
     dateActiveEnd: null,
-    priority: 70,
     datePublished: '2019-10-22',
     title: 'Tip: Op stap met uw Stadspas',
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     thema: Themas.HLI,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een stadspas hebt aangevraagd.',
@@ -71,11 +71,10 @@ export const tips: Tip[] = [
     dateActiveStart: null,
     dateActiveEnd: null,
     active: true,
-    priority: 70,
     datePublished: '2020-07-03',
     title: 'Tip: Welkom in Amsterdam',
     thema: Themas.BRP,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'U woont in Amsterdam, welkom! Blijf op de hoogte van de producten en diensten die u heeft bij de gemeente Amsterdam.nl.',
     predicates: [
@@ -94,11 +93,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2020-11-16',
     dateActiveEnd: '2021-11-16',
     active: true,
-    priority: 71,
     datePublished: '2020-11-25',
     title: 'Tip: Download de 020werkt-app',
     thema: Themas.INKOMEN,
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     description:
       'Via de 020werkt-app krijgt u informatie  over werk, inkomen en meedoen in de wijk. De app is gratis, anoniem en makkelijk in gebruik.',
     predicates: [
@@ -116,11 +114,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2021-01-01',
     dateActiveEnd: '2021-12-31',
     active: true,
-    priority: 71,
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
     thema: Themas.HLI,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
     predicates: [hasValidRecentStadspasRequest, hasKidsBetweenAges2And18],
@@ -138,11 +135,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2020-11-16',
     dateActiveEnd: '2021-11-16',
     active: true,
-    priority: 71,
     datePublished: '2020-12-20',
     title: 'Tip: Hulp bij geldproblemen',
     thema: Themas.INKOMEN,
-    profileTypes: ['private', 'commercial'],
+    profileTypes: ['private', 'commercial'] as ProfileType[],
     description:
       'Is uw inkomen te laag om alle rekeningen te betalen of hebt u schulden? Meld u aan voor gratis hulp',
     predicates: [
@@ -160,11 +156,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2023-10-16',
     dateActiveEnd: '2023-11-20',
     active: true,
-    priority: 80,
     datePublished: '2023-10-16',
     title: 'Tip: Gratis ID-kaart om te stemmen',
     thema: Themas.BRP,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
@@ -186,11 +181,10 @@ export const tips: Tip[] = [
     dateActiveStart: null,
     dateActiveEnd: null,
     active: false,
-    priority: 70,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',
     thema: Themas.INKOMEN,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.',
     predicates: [isBetween17and18],
@@ -207,11 +201,10 @@ export const tips: Tip[] = [
     dateActiveStart: null,
     dateActiveEnd: '2023-12-31',
     active: true,
-    priority: 10,
     datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
     thema: Themas.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
     predicates: [
@@ -230,11 +223,10 @@ export const tips: Tip[] = [
     dateActiveStart: null,
     dateActiveEnd: '2026-01-07',
     active: true,
-    priority: 11,
     datePublished: '2021-06-15',
     title: 'Tip: Overgangsrecht bij Bed and breakfast',
     thema: Themas.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Hebt u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
     predicates: [hasBnBTransitionRight],
@@ -251,11 +243,10 @@ export const tips: Tip[] = [
     dateActiveStart: null,
     dateActiveEnd: '2022-12-31',
     active: true,
-    priority: 11,
     datePublished: '2021-06-15',
     title: 'Tip: Bed & breakfast',
     thema: Themas.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
     predicates: [hasBnBVergunning, not(hasVerhuurRegistrations), isMokum],
@@ -271,11 +262,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2021-08-01',
     dateActiveEnd: '2021-12-31',
     active: true,
-    priority: 11,
     datePublished: '2021-08-01',
     title: 'Tip: Sportvergoeding voor kinderen',
     thema: Themas.INKOMEN,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Hebt u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
     predicates: [not(hasStadspasGroeneStip), isReceivingSubsidy],
@@ -291,11 +281,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2023-07-22',
     dateActiveEnd: '2023-11-30',
     active: true,
-    priority: 81,
     datePublished: '2023-07-28',
     title: 'Tip: Gratis openbaar vervoer voor kinderen',
     predicates: [hasKidsBetweenAges4And11, isMokum],
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     isNotification: true,
     thema: Themas.INKOMEN,
     description:
@@ -313,11 +302,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2023-11-23',
     dateActiveEnd: null,
     active: true,
-    priority: 82,
     datePublished: '2023-11-23',
     title: 'Vraag een gratis ID-kaart aan',
     thema: Themas.BRP,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de stadspas groene stip krijgt u gratis een nieuwe ID-kaart.',
     predicates: [
@@ -339,11 +327,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2024-01-01',
     dateActiveEnd: '2024-12-31',
     active: true,
-    priority: 1,
     datePublished: '2024-04-04',
     title: 'Overgangsregeling: achternaam van kind kiezen',
     thema: Themas.BRP,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
     predicates: [hasOldestKidBornFrom2016, isMarriedOrLivingTogether],
@@ -360,11 +347,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2024-07-01',
     dateActiveEnd: '2025-01-04',
     active: true,
-    priority: 1,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
     thema: Themas.INKOMEN,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
     predicates: [hasKidsBetweenAges4And11, isMokum],
@@ -381,11 +367,10 @@ export const tips: Tip[] = [
     dateActiveStart: '2024-07-01',
     dateActiveEnd: '2025-01-04',
     active: true,
-    priority: 1,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
     thema: Themas.INKOMEN,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',
     predicates: [isBetween4and12, isMokum],
@@ -400,16 +385,15 @@ export const tips: Tip[] = [
     id: 'mijn-59',
     owner: '',
     dateActiveStart: '2025-01-01',
-    dateActiveEnd: '2025-12-31',
+    dateActiveEnd: '2025-03-31',
     active: true,
-    priority: 1,
     datePublished: '2025-01-16',
     title: '€300 korting op witgoed',
     thema: Themas.HLI,
-    profileTypes: ['private'],
+    profileTypes: ['private'] as ProfileType[],
     description:
       'Met je Stadspas krijg je € 300,- korting op een nieuwe energiezuinige wasmachine of koelkast. Dit helpt je om geld te besparen op je energierekening.',
-    predicates: [is18OrOlder, hasStadspasGroeneStip],
+    predicates: [is18OrOlder, hasStadspasGroeneStip, hasBudget('witgoed')],
     reason:
       'U ziet deze tip omdat u ouder bent dan 18 jaar en woonachtig bent in Amsterdam en een Stadspas heeft.',
     link: {
