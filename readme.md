@@ -54,10 +54,6 @@ Not all browsers in the world are supported. The targeted browsers can be found 
 There is no super strict convention (yet) for grouping components, functions, types etc. For larger components we might want to separate for example additional components, helpers, config and constants
 into other files as done in `src/client/pages/Profile` or `src/server/services/focus`.
 
-A blueprint for basic components can be found in `components/AlphaComponent/`. A blueprint for page components is located in `pages/AlphaPage`.
-To generate a component based on these blueprints you can either copy/paste rename stuff or use a tool like `npm install -g generact` which can
-be used to duplicate any component and assign it a specific name.
-
 ## BFF api
 
 The BFF api is the goto part of the application where we do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
