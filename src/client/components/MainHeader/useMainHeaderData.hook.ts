@@ -1,10 +1,9 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 
 import { useSpring } from '@react-spring/web';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { mainMenuItems, isMenuItemVisible } from './MainHeader.constants';
-import { AppRoutes } from '../../../universal/config/routes';
 import { getApiErrors } from '../../config/api';
 import { ThemaTitles } from '../../config/thema';
 import { usePhoneScreen } from '../../hooks/media.hook';
@@ -153,23 +152,7 @@ export function useMainHeaderData() {
     };
   }, [isBurgerMenuVisible]);
 
-  const history = useHistory();
-
-  useEffect(() => {
-    const h1Element = document.querySelector('h1');
-    const goToHomepage = () => {
-      history.push(AppRoutes.HOME);
-    };
-    if (h1Element?.textContent === 'Mijn Amsterdam') {
-      h1Element.addEventListener('click', goToHomepage);
-    }
-    return () => {
-      h1Element?.removeEventListener('click', goToHomepage);
-    };
-  }, []);
-
   return {
-    backdropRef,
     errors,
     fadeStyles,
     hasErrors,
@@ -178,7 +161,6 @@ export function useMainHeaderData() {
     isPhoneScreen,
     isSearchActive,
     menuItems,
-    menuRef,
     myThemasMenuItems,
     setSearchActive,
     toggleBurgerMenu,
