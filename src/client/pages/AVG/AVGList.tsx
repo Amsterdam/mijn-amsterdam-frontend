@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useAVGData } from './useAVGData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
 import { ListPageParamKind } from '../VergunningenV2/config';
 
 export function AVGList() {
@@ -16,7 +15,6 @@ export function AVGList() {
       items={avgVerzoeken
         .filter(tableConfig[params.kind].filter)
         .sort(tableConfig[params.kind].sort)}
-      backLinkTitle={ThemaTitles.AVG}
       title={tableConfig[params.kind].title}
       appRoute={AppRoutes['AVG/LIST']}
       appRouteParams={params}
