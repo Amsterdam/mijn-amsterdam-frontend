@@ -11,16 +11,13 @@ import classNames from 'classnames';
 
 import styles from './MainHeader.module.scss';
 import { OtapLabel } from './OtapLabel';
+import { ProfileName } from './ProfileName';
 import { useMainHeaderData } from './useMainHeaderData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { isLoading } from '../../../universal/helpers/api';
-import { getFullName } from '../../../universal/helpers/brp';
 import { IconSearch } from '../../assets/icons';
-import { ErrorMessages, LoadingContent } from '../../components';
+import { ErrorMessages } from '../../components';
 import { LOGOUT_URL } from '../../config/api';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaButtonLink } from '../MaLink/MaLink';
 import { Search } from '../Search/Search';
@@ -48,20 +45,8 @@ export default function MainHeader({
     toggleBurgerMenu,
   } = useMainHeaderData();
 
-  const { BRP, KVK } = useAppStateGetter();
   const session = useSessionValue();
-  const profileType = useProfileTypeValue();
   const showIcons = !isPhoneScreen;
-
-  const persoon = BRP.content?.persoon;
-
-  const labelCommercial =
-    KVK.content?.onderneming.handelsnaam || 'Mijn onderneming';
-  const labelPrivate = persoon?.opgemaakteNaam
-    ? persoon.opgemaakteNaam
-    : persoon?.voornamen
-      ? getFullName(persoon)
-      : 'Mijn gegevens';
 
   return (
     <>
@@ -95,16 +80,7 @@ export default function MainHeader({
 
                 <MaButtonLink variant="tertiary" href={AppRoutes.BRP}>
                   <span className={styles.ProfileNameInner}>
-                    {profileType === 'private' &&
-                      !isLoading(BRP) &&
-                      labelPrivate}
-                    {profileType === 'commercial' &&
-                      !isLoading(KVK) &&
-                      labelCommercial}
-                    {((profileType === 'commercial' && isLoading(KVK)) ||
-                      (profileType === 'private' && isLoading(BRP))) && (
-                      <LoadingContent barConfig={[['200px', '20px', '0']]} />
-                    )}
+                    <ProfileName />
                   </span>
                 </MaButtonLink>
 
