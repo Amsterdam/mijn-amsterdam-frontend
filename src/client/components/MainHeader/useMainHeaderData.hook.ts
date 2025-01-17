@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 
 import { useSpring } from '@react-spring/web';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -16,7 +16,6 @@ import {
   AmsMainMenuClassname,
   BurgerMenuToggleBtnId,
 } from '../MainMenu/MainMenu';
-import { SearchEntry } from '../Search/search-config';
 import { useSearchOnPage } from '../Search/useSearch';
 
 function isTargetWithinMenu(target: any) {
@@ -101,10 +100,6 @@ export function useMainHeaderData() {
     toggleBurgerMenu(false);
   }, [location.pathname]);
 
-  const replaceResultUrl = useCallback((result: SearchEntry) => {
-    return result.url.startsWith(AppRoutes.BUURT);
-  }, []);
-
   const menuItems = useMemo(() => {
     return mainMenuItems
       .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
@@ -184,7 +179,6 @@ export function useMainHeaderData() {
     menuItems,
     menuRef,
     myThemasMenuItems,
-    replaceResultUrl,
     setSearchActive,
     toggleBurgerMenu,
   };

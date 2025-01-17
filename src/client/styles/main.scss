@@ -64,8 +64,17 @@ html {
 
 body {
   // font-family: var(--ams-text-font-family);
-  color: var(--ams-color-primary-black);
   // font-size: var(--mams-font-size-body);
+  // color: var(--ams-color-primary-black);
+  color: var(--ams-paragraph-color);
+  font-family: var(--ams-paragraph-font-family);
+  font-size: var(--ams-paragraph-font-size);
+  font-weight: var(--ams-paragraph-font-weight);
+  line-height: var(--ams-paragraph-line-height);
+  text-rendering: optimizeLegibility;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
   min-width: $main-min-width;
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
 
