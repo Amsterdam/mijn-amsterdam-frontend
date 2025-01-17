@@ -1,6 +1,7 @@
 import { describe, expect } from 'vitest';
 
-import { sortNotifications } from './tips-and-notifications';
+import { sortNotificationsAndInsertTips } from './tips-and-notifications';
+import { MyNotification } from '../../universal/types';
 
 describe('tips-and-notifications', () => {
   test('Should sort notifications by datePublished and insert tips', () => {
@@ -61,9 +62,12 @@ describe('tips-and-notifications', () => {
         datePublished: '2021-03-07',
         isTip: true,
       },
-    ];
+    ] as unknown as MyNotification[];
 
-    const sortedNotifications = sortNotifications(notifications, false);
+    const sortedNotifications = sortNotificationsAndInsertTips(
+      notifications,
+      false
+    );
 
     expect(sortedNotifications[0].title).toBe('notification 4');
     expect(sortedNotifications[1].title).toBe('notification 1');
