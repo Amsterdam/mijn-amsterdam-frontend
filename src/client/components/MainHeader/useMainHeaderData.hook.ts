@@ -110,6 +110,13 @@ export function useMainHeaderData() {
     }
   }, [setSearchActive, isBurgerMenuVisible]);
 
+  // Hides menu on search open
+  useEffect(() => {
+    if (isSearchActive) {
+      toggleBurgerMenu(false);
+    }
+  }, [toggleBurgerMenu, isSearchActive]);
+
   const menuItems = useMemo(() => {
     return mainMenuItems
       .filter((menuItem) => isMenuItemVisible(profileType, menuItem))

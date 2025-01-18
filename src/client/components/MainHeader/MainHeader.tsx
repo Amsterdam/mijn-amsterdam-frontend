@@ -1,11 +1,15 @@
 import {
-  Button,
   Grid,
   Heading,
+  Icon,
   Logo,
   Screen,
 } from '@amsterdam/design-system-react';
-import { CloseIcon, MenuIcon } from '@amsterdam/design-system-react-icons';
+import {
+  CloseIcon,
+  MenuIcon,
+  SearchIcon,
+} from '@amsterdam/design-system-react-icons';
 import { animated } from '@react-spring/web';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
@@ -16,12 +20,10 @@ import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
 import { useMainHeaderData } from './useMainHeaderData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { IconSearch } from '../../assets/icons';
 import { ErrorMessages } from '../../components';
 import { LOGOUT_URL } from '../../config/api';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { MainMenu } from '../MainMenu/MainMenu';
-import { MaButtonLink, MaButtonRouterLink } from '../MaLink/MaLink';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -44,9 +46,6 @@ export default function MainHeader({
     toggleBurgerMenu,
   } = useMainHeaderData();
 
-  const session = useSessionValue();
-  const showIcons = !isPhoneScreen;
-
   return (
     <>
       <div className={styles.MainHeaderWrap}>
@@ -65,47 +64,56 @@ export default function MainHeader({
             {isAuthenticated && (
               <Grid.Cell className={styles.SecondaryLinks} start={5} span={8}>
                 {isDisplayLiveSearch && (
-                  <Button
+                  <MaLink
                     onClick={(e) => {
-                      e.stopPropagation();
+                      e.preventDefault();
                       setSearchActive(!isSearchActive);
                     }}
-                    icon={IconSearch}
-                    variant="tertiary"
+                    href={AppRoutes.SEARCH}
+                    maVariant="noDefaultUnderline"
+                    className="ams-button"
                   >
-                    Zoeken
-                  </Button>
+                    Zoeken{' '}
+                    <Icon
+                      svg={isSearchActive ? CloseIcon : SearchIcon}
+                      size="level-5"
+                    />
+                  </MaLink>
                 )}
 
-                <MaButtonRouterLink variant="tertiary" href={AppRoutes.BRP}>
+                <MaRouterLink
+                  maVariant="noDefaultUnderline"
+                  href={AppRoutes.BRP}
+                  className="ams-button"
+                >
                   <span className={styles.ProfileNameInner}>
                     <ProfileName />
                   </span>
-                </MaButtonRouterLink>
+                </MaRouterLink>
 
-                <MaButtonLink
-                  variant="tertiary"
+                <MaLink
+                  maVariant="noDefaultUnderline"
                   href={LOGOUT_URL}
-                  className={styles.SecondaryLink}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    session.logout();
-                    return false;
-                  }}
+                  className="ams-button"
                 >
-                  {/* {showIcons && <Icon size="level-5" svg={LogoutIcon} />}{' '} */}
                   Uitloggen
-                </MaButtonLink>
+                </MaLink>
 
-                <Button
-                  variant="tertiary"
+                <MaLink
+                  maVariant="noDefaultUnderline"
+                  href={AppRoutes.ROOT}
+                  className="ams-button"
                   onClick={(e) => {
+                    e.preventDefault();
                     toggleBurgerMenu(!isBurgerMenuVisible);
                   }}
-                  icon={isBurgerMenuVisible ? CloseIcon : MenuIcon}
                 >
-                  Menu
-                </Button>
+                  Menu{' '}
+                  <Icon
+                    svg={isBurgerMenuVisible ? CloseIcon : MenuIcon}
+                    size="level-5"
+                  />
+                </MaLink>
               </Grid.Cell>
             )}
 
