@@ -26,7 +26,7 @@ const MAX_NOTIFICATIONS_VISIBLE = 6;
 export function Dashboard() {
   const appState = useAppStateGetter();
   const history = useHistory();
-  const { NOTIFICATIONS, BRP } = appState;
+  const { NOTIFICATIONS } = appState;
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
   );
