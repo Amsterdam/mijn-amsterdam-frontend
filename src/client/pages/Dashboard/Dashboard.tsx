@@ -8,7 +8,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
 import { LoadingContent } from '../../components';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
+import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
 import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel';
 import {
