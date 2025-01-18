@@ -422,7 +422,8 @@ function AppAuthenticated() {
           <Route component={NotFound} />
         </Switch>
       </div>
-      <MainFooter isAuthenticated />
+      {/** Remove the footer on the Map view for better UX */}
+      {location.pathname !== AppRoutes.BUURT && <MainFooter isAuthenticated />}
     </>
   );
 }
