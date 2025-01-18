@@ -7,10 +7,10 @@ import styles from './DocumentLink.module.scss';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { GenericDocument } from '../../../universal/types';
 import { IconAlert, IconDownload } from '../../assets/icons';
+import { captureException } from '../../helpers/monitoring';
 import { trackDownload } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
-import { captureException } from '../../helpers/monitoring';
 import { MaLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
