@@ -5,15 +5,13 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { showDocuments } from '../../../universal/helpers/vergunningen';
 import { CaseType } from '../../../universal/types/vergunningen';
+import { ErrorAlert, LoadingContent } from '../../components';
 import {
-  ErrorAlert,
-  ThemaIcon,
-  DetailPage,
-  LoadingContent,
-  PageContent,
-  PageHeading,
-} from '../../components';
-import { ThemaTitles } from '../../config/thema';
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
 import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
@@ -27,46 +25,45 @@ export default function HorecaDetail() {
   const noContent = !isLoadingContent && !Vergunning;
 
   return (
-    <DetailPage>
-      <PageHeading
-        icon={<ThemaIcon />}
-        backLink={{
-          to: generatePath(AppRoutes.HORECA),
-          title: ThemaTitles.HORECA,
-        }}
-        isLoading={isLoadingContent}
-      >
-        {Vergunning?.title || 'Horecavergunning'}
-      </PageHeading>
-
-      <PageContent className="">
-        {(isError(HORECA) || noContent) && (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
-        )}
-        {isLoadingContent && <LoadingContent className="" />}
-        {!isLoadingContent && Vergunning && (
-          <>
-            {Vergunning.caseType === CaseType.ExploitatieHorecabedrijf && (
-              <ExploitatieHorecabedrijf vergunning={Vergunning} />
-            )}
-
-            {showDocuments(Vergunning.caseType) &&
-              !!Vergunning.documentsUrl && (
-                <DocumentDetails vergunning={Vergunning} />
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={generatePath(AppRoutes.HORECA)}>
+          {Vergunning?.title || 'Horecavergunning'}
+        </PageHeadingV2>
+        <PageContentCell>
+          {(isError(HORECA) || noContent) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen gegevens tonen.
+            </ErrorAlert>
+          )}
+          {isLoadingContent && <LoadingContent className="" />}
+          {!isLoadingContent && Vergunning && (
+            <>
+              {Vergunning.caseType === CaseType.ExploitatieHorecabedrijf && (
+                <ExploitatieHorecabedrijf vergunning={Vergunning} />
               )}
-          </>
+
+              {showDocuments(Vergunning.caseType) &&
+                !!Vergunning.documentsUrl && (
+                  <DocumentDetails vergunning={Vergunning} />
+                )}
+            </>
+          )}
+        </PageContentCell>
+
+        {!isLoadingContent && Vergunning && (
+          <PageContentCell>
+            <StatusLineItems
+              vergunning={Vergunning}
+              trackPath={(document) =>
+                `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
+                  document.title
+                }`
+              }
+            />
+          </PageContentCell>
         )}
-      </PageContent>
-      {!isLoadingContent && Vergunning && (
-        <StatusLineItems
-          vergunning={Vergunning}
-          trackPath={(document) =>
-            `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
-              document.title
-            }`
-          }
-        />
-      )}
-    </DetailPage>
+      </PageContentV2>
+    </DetailPageV2>
   );
 }
