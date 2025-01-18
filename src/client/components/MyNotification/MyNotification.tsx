@@ -59,7 +59,10 @@ export function MyNotification({
             {notification.title}
           </MaLink>
         ) : (
-          <Heading level={4}>{notification.title}</Heading>
+          <Heading level={4}>
+            {notification.isAlert ? '⚠ ' : ''}
+            {notification.title}
+          </Heading>
         )}
         <div className={styles.MetaInfoSecondary}>
           <em className={styles.ThemaIndication}>
