@@ -11,8 +11,6 @@ import {
 } from '@amsterdam/design-system-react';
 import type { FallbackProps } from 'react-error-boundary';
 
-import styles from './ApplicationError.module.scss';
-import { LinkdInline } from '../../components';
 import {
   PageContentCell,
   PageContentV2,
@@ -21,7 +19,7 @@ import {
 import { ExternalUrls } from '../../config/external-urls';
 import { useUsabilla } from '../../hooks/useUsabilla';
 
-function ApplicationErrorContent() {
+function ApplicationErrorContent({ error }: { error?: Error }) {
   return (
     <>
       <PageContentCell startWide={1} spanWide={12}>
@@ -52,12 +50,12 @@ function ApplicationErrorContent() {
         </Heading>
         <Paragraph className="ams-mb--xl">
           Kijk bij{' '}
-          <LinkdInline
-            external={true}
+          <Link
             href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+            rel="noopener noreferrer"
           >
             veelgestelde vragen over Mijn Amsterdam
-          </LinkdInline>
+          </Link>
         </Paragraph>
       </PageContentCell>
     </>
@@ -77,7 +75,7 @@ export default function ApplicationError({
           <PageContentCell startWide={1} spanWide={12}>
             <Header appName="Mijn Amsterdam" />
           </PageContentCell>
-          {!children ? <ApplicationErrorContent /> : children}
+          {!children ? <ApplicationErrorContent error={error} /> : children}
         </PageContentV2>
       </TextPageV2>
       <Footer>
