@@ -74,7 +74,7 @@ export default function Vergunningen() {
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {ThemaTitles.VERGUNNINGEN}
         </PageHeadingV2>
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           <Paragraph className="ams-mb--sm">
             Hier ziet u een overzicht van uw aanvragen voor vergunningen en
             ontheffingen bij gemeente Amsterdam.
