@@ -6,12 +6,19 @@ import { SearchEntry } from '../Search/search-config';
 
 type SearchBarProps = {
   onFinish: () => void;
+  className?: string;
 };
 
-export function SearchBar({ onFinish }: SearchBarProps) {
+export function SearchBar({ onFinish, className }: SearchBarProps) {
   const replaceResultUrl = useCallback((result: SearchEntry) => {
     return result.url.startsWith(AppRoutes.BUURT);
   }, []);
 
-  return <Search onFinish={onFinish} replaceResultUrl={replaceResultUrl} />;
+  return (
+    <Search
+      className={className}
+      onFinish={onFinish}
+      replaceResultUrl={replaceResultUrl}
+    />
+  );
 }
