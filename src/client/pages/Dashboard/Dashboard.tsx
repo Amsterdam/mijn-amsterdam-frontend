@@ -42,6 +42,10 @@ export function Dashboard() {
     }
   }, []);
 
+  if (true) {
+    throw new Error('test');
+  }
+
   return (
     <PageV2>
       <PageContentV2>
