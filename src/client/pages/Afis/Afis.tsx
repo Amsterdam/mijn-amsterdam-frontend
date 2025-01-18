@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   Alert,
-  Button,
   Heading,
   Link,
   Paragraph,
@@ -14,6 +13,7 @@ import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../universal/helpers/utils';
+import { MaButtonRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -117,13 +117,13 @@ export function AfisThemaPagina() {
 
   const pageContentSecondary = (
     <PageContentCell>
-      <Button
+      <MaButtonRouterLink
         className="ams-mb--sm"
         variant="secondary"
-        onClick={() => history.push(routes.betaalVoorkeuren)}
+        href={routes.betaalVoorkeuren}
       >
         Betaalvoorkeuren
-      </Button>
+      </MaButtonRouterLink>
       <AfisDisclaimer />
     </PageContentCell>
   );
