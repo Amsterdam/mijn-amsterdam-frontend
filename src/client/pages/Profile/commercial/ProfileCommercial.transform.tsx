@@ -298,7 +298,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
     );
   }
 
-  if (labelConfig.eigenaar) {
+  if (kvkData.eigenaar) {
     profileData.eigenaar = formatProfileSectionData(
       labelConfig.eigenaar,
       kvkData.eigenaar,
