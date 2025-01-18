@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
 
-import { Grid } from '@amsterdam/design-system-react';
-
 import {
   GenericDocument,
   ZaakDetail,
@@ -84,10 +82,9 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
             <LoadingContent barConfig={loadingBarConfig} />
           </PageContentCell>
         )}
-      </PageContentV2>
-      <Grid>
+
         {!!statusItemSteps.length && zaak && (
-          <PageContentCell>
+          <PageContentCell startWide={1} spanWide={12}>
             <StatusLineComponent
               statusLabel={statusLabel}
               showStatusLineConnection={showStatusLineConnection}
@@ -96,10 +93,8 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
             />
           </PageContentCell>
         )}
-      </Grid>
-      {!!pageContentBottom && (
-        <PageContentV2>{pageContentBottom}</PageContentV2>
-      )}
+        {pageContentBottom}
+      </PageContentV2>
     </DetailPageV2>
   );
 }
