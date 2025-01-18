@@ -1,18 +1,21 @@
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
+
 import styles from './Bezwaren.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  Linkd,
-  OverviewPage,
-  PageContent,
-  PageHeading,
   SectionCollapsible,
   Table,
-  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 const DISPLAY_PROPS_BEZWAREN = {
@@ -38,31 +41,25 @@ export default function BEZWAREN() {
     items.filter((bezwaar) => bezwaar.status === 'Afgehandeld') ?? [];
 
   return (
-    <OverviewPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={isLoading(BEZWAREN)}
-        icon={<ThemaIcon />}
-      >
-        Bezwaren
-      </PageHeading>
-      <PageContent>
-        <p>Hier ziet u een overzicht van uw ingediende bezwaren.</p>
-        <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          >
-            Meer informatie over Bezwaar maken
-          </Linkd>
-        </p>
-        {isError(BEZWAREN) && (
-          <ErrorAlert>We kunnen op dit moment geen bezwaren tonen.</ErrorAlert>
-        )}
-      </PageContent>
+    <OverviewPageV2>
+      <PageContentV2 className="ams-mb--xl">
+        <PageHeadingV2 backLink={AppRoutes.HOME}>Bezwaren</PageHeadingV2>
+        <PageContentCell>
+          <Paragraph className="ams-mb--sm">
+            Hier ziet u een overzicht van uw ingediende bezwaren.
+          </Paragraph>
+          <LinkList>
+            <LinkList.Link href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898">
+              Meer informatie over Bezwaar maken
+            </LinkList.Link>
+          </LinkList>
+          {isError(BEZWAREN) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen bezwaren tonen.
+            </ErrorAlert>
+          )}
+        </PageContentCell>
+      </PageContentV2>
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Lopende bezwaren"
@@ -94,6 +91,6 @@ export default function BEZWAREN() {
           items={afgehandeldeBezwaren}
         />
       </SectionCollapsible>
-    </OverviewPage>
+    </OverviewPageV2>
   );
 }
