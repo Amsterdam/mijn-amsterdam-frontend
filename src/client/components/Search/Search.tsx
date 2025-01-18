@@ -129,6 +129,7 @@ interface SearchProps {
   typeAhead?: boolean;
   extendedAMResults?: boolean;
   replaceResultUrl?: (result: SearchEntry) => boolean;
+  className?: string;
 }
 
 const MAX_RESULT_COUNT_DISPLAY = 10;
@@ -139,6 +140,7 @@ export function Search({
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
+  className,
   replaceResultUrl,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
@@ -298,7 +300,11 @@ export function Search({
 
   return (
     <div
-      className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
+      className={classnames(
+        styles.SearchBar,
+        !typeAhead && styles['in-page'],
+        className
+      )}
     >
       <div ref={resultsRef}>
         <form

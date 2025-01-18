@@ -17,10 +17,12 @@
 // Top header bar
 .HeaderGridPadding {
   min-height: 80px;
-  @include select(ams-grid__cell) {
-    display: flex;
-    align-items: center;
-  }
+}
+
+.TopCell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .MainMenuWrap {
@@ -42,4 +44,27 @@
   display: flex;
   gap: var(--ams-space-lg);
   text-decoration: none;
+}
+
+.SearchBarWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SearchBar {
+  width: 100%;
+  padding: var(--ams-space-lg) 0;
+}
+
+.ErrorMessagesWrap {
+  top: 150px;
+  width: 60rem;
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
 }
