@@ -21,6 +21,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
+import { MaButtonLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {
@@ -378,15 +379,14 @@ export function Search({
             />
 
             {extendedAMResults && (
-              <p>
-                <Button
-                  onClick={() =>
-                    (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
-                  }
+              <Paragraph>
+                <MaButtonLink
+                  href={`https://www.amsterdam.nl/zoeken/?Zoe=${term}`}
+                  rel="noopener noreferrer"
                 >
                   Zoek verder op Amsterdam.nl
-                </Button>
-              </p>
+                </MaButtonLink>
+              </Paragraph>
             )}
           </div>
         )}
