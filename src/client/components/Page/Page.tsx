@@ -15,21 +15,6 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   children: ComponentChildren;
 }
 
-export default function Page({
-  className,
-  children,
-  id,
-  ...otherProps
-}: PageProps) {
-  const classNames = composeClassNames(styles.Page, className);
-
-  return (
-    <main {...otherProps} id={id} className={classNames}>
-      {children}
-    </main>
-  );
-}
-
 export function PageV2({ className, children, id, ...otherProps }: PageProps) {
   const classNames = composeClassNames(styles.PageV2, className);
 
@@ -44,27 +29,11 @@ export function PageV2({ className, children, id, ...otherProps }: PageProps) {
   );
 }
 
-export function TextPage({ children, className, id }: PageProps) {
-  return (
-    <Page id={id} className={composeClassNames(styles.TextPage, className)}>
-      {children}
-    </Page>
-  );
-}
-
 export function TextPageV2({ children, className, id }: PageProps) {
   return (
     <PageV2 id={id} className={composeClassNames(styles.TextPage, className)}>
       {children}
     </PageV2>
-  );
-}
-
-export function OverviewPage({ children, className, id }: PageProps) {
-  return (
-    <Page id={id} className={composeClassNames(styles.OverviewPage, className)}>
-      {children}
-    </Page>
   );
 }
 
@@ -79,26 +48,11 @@ export function OverviewPageV2({ children, className, id }: PageProps) {
   );
 }
 
-export function DetailPage({ children, className, id }: PageProps) {
-  return (
-    <Page id={id} className={composeClassNames(styles.DetailPage, className)}>
-      {children}
-    </Page>
-  );
-}
 export function DetailPageV2({ children, className, id }: PageProps) {
   return (
     <PageV2 id={id} className={composeClassNames(styles.DetailPage, className)}>
       {children}
     </PageV2>
-  );
-}
-
-export function PageContent({ children, className, id }: PageProps) {
-  return (
-    <div id={id} className={composeClassNames(styles.PageContent, className)}>
-      {children}
-    </div>
   );
 }
 
