@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import {
   BrowserRouter,
@@ -123,24 +124,24 @@ function AppNotAuthenticated() {
       </p>
     );
   }
-
+  console.log('AppNotAuthenticated', location.pathname, AppRoutes.HOME);
   return (
     <>
       <MainHeader isAuthenticated={false} />
-      <MainHeaderHero />
+      {location.pathname !== AppRoutes.HOME && <MainHeaderHero />}
       <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          <Route exact path={AppRoutes.ROOT} component={LandingPage} />
+          <Route exact path={AppRoutes.HOME} component={LandingPage} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route
             render={({ location: { pathname } }) => {
               if (isPrivateRoute(pathname)) {
                 // Private routes are redirected to Home
-                return <Redirect to={AppRoutes.ROOT} />;
+                return <Redirect to={AppRoutes.HOME} />;
               }
               // All other routes are presented with a 404 page
               return <Route component={NotFound} />;
@@ -183,7 +184,7 @@ function AppAuthenticated() {
           ))}
           <Route path={AppRoutes.ZAAK_STATUS} component={ZaakStatus} />
           <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-          <Route exact path={AppRoutes.ROOT} component={Dashboard} />
+          <Route exact path={AppRoutes.HOME} component={Dashboard} />
           <Route
             path={AppRoutes.NOTIFICATIONS}
             component={MyNotificationsPage}
@@ -434,7 +435,11 @@ function AppLanding() {
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
-    return <p className={styles.PreLoader}>Welkom op Mijn Amsterdam</p>;
+    return (
+      <Paragraph className={styles.PreLoader}>
+        Welkom op Mijn Amsterdam
+      </Paragraph>
+    );
   }
 
   return isAuthenticated ? (

@@ -13,7 +13,6 @@ import {
   PageContentV2,
   TextPageV2,
 } from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 
@@ -25,11 +24,14 @@ export default function Landing() {
 
   return (
     <TextPageV2>
-      <PageContentV2 id="skip-to-id-AppContent">
-        <PageHeadingV2 showBacklink={false}>
-          Welkom op Mijn Amsterdam
-        </PageHeadingV2>
-        <PageContentCell>
+      <PageContentV2
+        id="skip-to-id-AppContent"
+        className={styles.LandingPageContent}
+      >
+        <PageContentCell startWide={3}>
+          <Heading level={1} className="ams-mb--sm">
+            Welkom op Mijn Amsterdam
+          </Heading>
           <Paragraph className="ams-mb--md">
             Uw Amsterdamse zaken op 1 plek.
           </Paragraph>
