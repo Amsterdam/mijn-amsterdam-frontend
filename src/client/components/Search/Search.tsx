@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Button, Heading, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Button,
+  Heading,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
 import { SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -21,7 +26,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import { MaButtonLink } from '../MaLink/MaLink';
+import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {
@@ -69,7 +74,7 @@ export function ResultSet({
   return (
     <div className={styles.ResultSet}>
       {!!title && (
-        <Heading className={styles.ResultSetTitle} size="level-4" level={3}>
+        <Heading size="level-3" level={3} className="ams-mb--sm">
           {title}
         </Heading>
       )}
@@ -79,21 +84,18 @@ export function ResultSet({
         </Paragraph>
       )}
       {!!term && !results.length && !isLoading && (
-        <p className={styles.NoResults}>{noResultsMessage}</p>
+        <Paragraph className={styles.NoResults}>{noResultsMessage}</Paragraph>
       )}
-      <ul className={styles.ResultList}>
+      <UnorderedList className={styles.ResultList} markers={false}>
         {results.map((result, index) => {
+          const LinkComponent = result.url.startsWith('http')
+            ? MaLink
+            : MaRouterLink;
           return (
-            <li
-              key={result.url + index}
-              className={classnames(
-                styles.ResultListItem,
-                extendedResults && styles['is-extended']
-              )}
-            >
-              <a
+            <UnorderedList.Item key={result.url + index} className="Result">
+              <LinkComponent
+                maVariant="fatNoUnderline"
                 href={result.url}
-                className={styles.ResultSetLink}
                 onClick={(event) => {
                   event.preventDefault();
                   onClickResult(result, index + 1, results.length);
@@ -104,18 +106,17 @@ export function ResultSet({
                   : typeof result.displayTitle === 'string'
                     ? displayPath(term, [result.displayTitle])
                     : result.displayTitle}
-                {result.trailingIcon}
                 {extendedResults && (
-                  <p className={styles.ResultDescription}>
-                    <span className={styles.ResultUrl}>{result.url}</span>
+                  <Paragraph>
+                    <span>{result.url}</span>
                     {result.description}
-                  </p>
+                  </Paragraph>
                 )}
-              </a>
-            </li>
+              </LinkComponent>
+            </UnorderedList.Item>
           );
         })}
-      </ul>
+      </UnorderedList>
     </div>
   );
 }
@@ -354,7 +355,6 @@ export function Search({
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               totalAmountOfResults={results?.ma?.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              showIcon={extendedAMResults}
               onClickResult={onClickResult}
             />
 
