@@ -29,7 +29,7 @@ export function useSetDeeplinkEntry(excludeQueryParams: string[] = []) {
 
 export function useDeeplinkRedirect() {
   const [routeEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
-  const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
+  const redirectAfterLogin = routeEntry || AppRoutes.HOME;
 
   clearDeeplinkEntry();
 
