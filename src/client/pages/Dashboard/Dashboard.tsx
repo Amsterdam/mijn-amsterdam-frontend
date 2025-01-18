@@ -47,7 +47,7 @@ export function Dashboard() {
       <PageContentV2>
         <WelcomeHeading />
         <PageContentCell spanWide={6}>
-          <Heading level={2} className="ams-mb--sm">
+          <Heading level={2} size="level-3" className="ams-mb--sm">
             Recente berichten{' '}
             {total > notifications.length && (
               <MaRouterLink href={generatePath(AppRoutes.NOTIFICATIONS)}>
@@ -79,7 +79,7 @@ export function Dashboard() {
           </OrderedList>
         </PageContentCell>
         <PageContentCell startWide={8} spanWide={5}>
-          <Heading level={2} className="ams-mb--sm">
+          <Heading level={2} size="level-3" className="ams-mb--sm">
             Mijn thema&apos;s
           </Heading>
           <MyThemasPanel
