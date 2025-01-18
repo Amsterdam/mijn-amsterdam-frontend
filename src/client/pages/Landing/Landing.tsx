@@ -90,7 +90,12 @@ export default function Landing() {
                     isRedirectingAny && styles.LoginBtnDisabled
                   )}
                 >
-                  <span className={styles.LoginLogoWrap}>
+                  <span
+                    className={classnames(
+                      styles.LoginLogoWrap,
+                      styles.LogoEherkenning
+                    )}
+                  >
                     <LogoEherkenning />
                   </span>
                   <span className={styles.LoginButtonText}>
