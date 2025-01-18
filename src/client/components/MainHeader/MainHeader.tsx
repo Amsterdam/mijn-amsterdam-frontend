@@ -101,7 +101,7 @@ export default function MainHeader({
 
                 <MaLink
                   maVariant="noDefaultUnderline"
-                  href={AppRoutes.ROOT}
+                  href={AppRoutes.HOME}
                   className="ams-button"
                   onClick={(e) => {
                     e.preventDefault();

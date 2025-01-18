@@ -15,9 +15,9 @@ export interface MenuItem extends LinkProps {
 
 export const mainMenuItems: MenuItem[] = [
   {
-    title: ThemaTitles.ROOT,
-    id: 'ROOT',
-    to: AppRoutes.ROOT,
+    title: ThemaTitles.HOME,
+    id: 'HOME',
+    to: AppRoutes.HOME,
   },
   {
     title: ThemaTitles.BUURT,
