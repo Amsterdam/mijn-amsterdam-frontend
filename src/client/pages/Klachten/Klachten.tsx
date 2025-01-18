@@ -69,7 +69,7 @@ export default function Klachten() {
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {ThemaTitles.KLACHTEN}
         </PageHeadingV2>
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           <Paragraph className="ams-mb--sm">
             Hier ziet u een overzicht van de klachten die U heeft ingediend bij
             gemeente Amsterdam.
