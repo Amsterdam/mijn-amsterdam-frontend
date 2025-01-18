@@ -5,7 +5,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaMenuItemTransformed } from '../../config/thema';
 import { ThemaIcons } from '../../config/themaIcons';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { MaRouterLink } from '../MaLink/MaLink';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 type ThemaLinkLoaderProps = {
   width: number;
@@ -41,13 +41,14 @@ export function MyThemasPanel({
       <UnorderedList markers={false} className="ams-mb--sm">
         {items.map(({ id, to, title, rel }) => {
           const ThemaIcon = ThemaIcons[id];
+          const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
             <UnorderedList.Item key={id}>
-              <MaRouterLink maVariant="fatNoUnderline" href={to}>
+              <LinkComponent maVariant="fatNoUnderline" href={to}>
                 <span className={styles.ThemaLink}>
                   <Icon svg={ThemaIcon} size="level-4" square /> {title}
                 </span>
-              </MaRouterLink>
+              </LinkComponent>
             </UnorderedList.Item>
           );
         })}
