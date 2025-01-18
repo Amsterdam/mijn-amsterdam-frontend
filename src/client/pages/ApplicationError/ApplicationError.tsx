@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import {
   Footer,
   Grid,
@@ -19,7 +21,53 @@ import {
 import { ExternalUrls } from '../../config/external-urls';
 import { useUsabilla } from '../../hooks/useUsabilla';
 
-export default function ApplicationError({ error }: FallbackProps) {
+function ApplicationErrorContent() {
+  return (
+    <>
+      <PageContentCell startWide={1} spanWide={12}>
+        <Heading level={1}>Kritieke applicatie fout</Heading>
+      </PageContentCell>
+      <PageContentCell>
+        <Paragraph className="ams-mb--sm">
+          Excuses, er gaat iets mis. Probeer om de pagina opnieuw te laden. Lukt
+          het dan nog niet? Probeer het dan later nog eens.
+        </Paragraph>
+        <Paragraph className="ams-mb--sm">
+          Gebruikt u Google Translate?
+          <br />
+          Deze browser extensie veroorzaakt soms problemen, mogelijk werkt de
+          pagina beter wanneer u deze extensie niet gebruikt.
+        </Paragraph>
+        <Paragraph className="ams-mb--sm">
+          Als het probleem zich blijft voordoen maak melding bij “Uw mening” aan
+          de rechter zijkant van deze pagina.
+        </Paragraph>
+        {error && (
+          <Paragraph className="ams-mb--sm">
+            <strong>Fout:</strong> {error.toString()}
+          </Paragraph>
+        )}
+        <Heading size="level-4" level={4}>
+          Vragen over Mijn Amsterdam?
+        </Heading>
+        <Paragraph className="ams-mb--xl">
+          Kijk bij{' '}
+          <LinkdInline
+            external={true}
+            href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+          >
+            veelgestelde vragen over Mijn Amsterdam
+          </LinkdInline>
+        </Paragraph>
+      </PageContentCell>
+    </>
+  );
+}
+
+export default function ApplicationError({
+  error,
+  children,
+}: FallbackProps & { children?: ReactNode }) {
   useUsabilla();
 
   return (
@@ -29,42 +77,7 @@ export default function ApplicationError({ error }: FallbackProps) {
           <PageContentCell startWide={1} spanWide={12}>
             <Header appName="Mijn Amsterdam" />
           </PageContentCell>
-          <PageContentCell startWide={1} spanWide={12}>
-            <Heading level={1}>Kritieke applicatie fout</Heading>
-          </PageContentCell>
-          <PageContentCell>
-            <Paragraph className="ams-mb--sm">
-              Excuses, er gaat iets mis. Probeer om de pagina opnieuw te laden.
-              Lukt het dan nog niet? Probeer het dan later nog eens.
-            </Paragraph>
-            <Paragraph className="ams-mb--sm">
-              Gebruikt u Google Translate?
-              <br />
-              Deze browser extensie veroorzaakt soms problemen, mogelijk werkt
-              de pagina beter wanneer u deze extensie niet gebruikt.
-            </Paragraph>
-            <Paragraph className="ams-mb--sm">
-              Als het probleem zich blijft voordoen maak melding bij “Uw mening”
-              aan de rechter zijkant van deze pagina.
-            </Paragraph>
-            {error && (
-              <Paragraph className="ams-mb--sm">
-                <strong>Fout:</strong> {error.toString()}
-              </Paragraph>
-            )}
-            <Heading size="level-4" level={4}>
-              Vragen over Mijn Amsterdam?
-            </Heading>
-            <Paragraph className="ams-mb--xl">
-              Kijk bij{' '}
-              <LinkdInline
-                external={true}
-                href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
-              >
-                veelgestelde vragen over Mijn Amsterdam
-              </LinkdInline>
-            </Paragraph>
-          </PageContentCell>
+          {!children ? <ApplicationErrorContent /> : children}
         </PageContentV2>
       </TextPageV2>
       <Footer>
