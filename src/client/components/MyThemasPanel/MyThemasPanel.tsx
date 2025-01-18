@@ -1,4 +1,5 @@
 import { Icon, UnorderedList } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -38,7 +39,10 @@ export function MyThemasPanel({
 }: MyThemasPanelProps) {
   return (
     <>
-      <UnorderedList markers={false} className="ams-mb--sm">
+      <UnorderedList
+        markers={false}
+        className={classNames('ams-mb--sm', styles.LinkList)}
+      >
         {items.map(({ id, to, title, rel }) => {
           const ThemaIcon = ThemaIcons[id];
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
