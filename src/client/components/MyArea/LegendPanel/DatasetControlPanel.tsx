@@ -1,3 +1,5 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import {
   DatasetCategory,
   DatasetCategoryId,
@@ -52,7 +54,7 @@ export function DatasetControlPanel({
       label={
         <>
           {getIcon(categoryId, categoryId) || ''}
-          <p>{category.title}</p>
+          <Paragraph>{category.title}</Paragraph>
         </>
       }
       onChange={() => {
