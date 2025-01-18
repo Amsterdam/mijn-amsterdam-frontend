@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Paragraph } from '@amsterdam/design-system-react';
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
 import { useVergunningenTransformed } from './useVergunningenTransformed.hook';
 import styles from './Vergunningen.module.scss';
@@ -10,7 +10,6 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  Linkd,
   MaintenanceNotifications,
   SectionCollapsible,
   Table,
@@ -76,18 +75,15 @@ export default function Vergunningen() {
           {ThemaTitles.VERGUNNINGEN}
         </PageHeadingV2>
         <PageContentCell>
-          <Paragraph>
+          <Paragraph className="ams-mb--sm">
             Hier ziet u een overzicht van uw aanvragen voor vergunningen en
             ontheffingen bij gemeente Amsterdam.
           </Paragraph>
-          <p>
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/ondernemen/vergunningen/wevos/"
-            >
+          <LinkList className="ams-mb--xl">
+            <LinkList.Link href="https://www.amsterdam.nl/ondernemen/vergunningen/wevos/">
               Ontheffing RVV en TVM aanvragen
-            </Linkd>
-          </p>
+            </LinkList.Link>
+          </LinkList>
           <MaintenanceNotifications page="vergunningen" />
           {isError(VERGUNNINGEN) && (
             <ErrorAlert>
