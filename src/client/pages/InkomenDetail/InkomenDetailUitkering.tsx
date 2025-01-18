@@ -13,7 +13,7 @@ export default function InkomenDetailUitkering() {
     (isLoading: boolean, inkomenItem: StatusSourceItem) => {
       return (
         <>
-          <PageContentCell>
+          <PageContentCell spanWide={6}>
             <Paragraph className="ams-mb--sm">
               Hieronder ziet u de status van uw aanvraag voor een
               bijstandsuitkering. Het duurt maximaal 3 werkdagen voordat uw

@@ -144,7 +144,7 @@ export default function HLIStadspas() {
         </PageHeadingV2>
 
         {stadspas ? (
-          <PageContentCell>
+          <PageContentCell spanWide={6}>
             <Datalist rows={[NAME]} />
             <Paragraph className={styles.StadspasNummerInfo}>
               Hieronder staat het Stadspasnummer van uw actieve pas.
