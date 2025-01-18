@@ -36,23 +36,3 @@
     }
   }
 }
-
-.CheckboxWrapper {
-  position: relative;
-  display: inline-flex;
-  user-select: none;
-  vertical-align: middle;
-  margin-bottom: 0.1rem;
-  padding: 0;
-  margin-right: 0.8rem;
-  padding-left: 0;
-  flex-shrink: 0;
-  color: $color-neutral-grey4;
-  &:hover {
-    color: $color-black;
-  }
-}
-
-.Disabled {
-  pointer-events: none;
-}
