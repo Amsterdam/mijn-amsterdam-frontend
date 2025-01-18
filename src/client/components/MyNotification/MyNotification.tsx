@@ -10,6 +10,7 @@ import { trackEvent } from '../../helpers/monitoring';
 import { isInteralUrl } from '../../helpers/utils';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DocumentLink } from '../DocumentList/DocumentLink';
+import InnerHtml from '../InnerHtml/InnerHtml';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 type MyNotificationProps = {
@@ -82,7 +83,11 @@ export function MyNotification({
       {!isCollapsed && (
         <div className={styles.Body}>
           <Paragraph className="ams-mb--xs">
-            {notification.description}
+            {notification.description.includes('<p') ? (
+              <InnerHtml>{notification.description}</InnerHtml>
+            ) : (
+              notification.description
+            )}
           </Paragraph>
           {(!!notification.link || !!notification.customLink) && (
             <>
