@@ -3,6 +3,7 @@
   position: relative;
   z-index: z-index(main-header);
 }
+
 .Backdrop {
   position: fixed;
   left: 0;
@@ -13,15 +14,13 @@
   z-index: z-index(main-menu-backdrop);
 }
 
-.SecondaryLinks {
-  text-align: right;
-  --ams-button-line-height: 1;
-  --ams-icon-size-5-line-height: 1;
-}
-
 // Top header bar
 .HeaderGridPadding {
-  padding: calc(var(--ams-link-list-gap) * 1.2) 0;
+  min-height: 80px;
+  @include select(ams-grid__cell) {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .MainMenuWrap {
