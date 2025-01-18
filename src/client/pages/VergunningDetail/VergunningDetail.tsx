@@ -156,17 +156,19 @@ export default function VergunningDetail({ backLink }: VergunningDetailProps) {
             </>
           )}
         </PageContentCell>
+        {!isLoading(VERGUNNINGEN) && Vergunning && (
+          <PageContentCell>
+            <StatusLineItems
+              vergunning={Vergunning}
+              trackPath={(document) =>
+                `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
+                  document.title
+                }`
+              }
+            />
+          </PageContentCell>
+        )}
       </PageContentV2>
-      {!isLoading(VERGUNNINGEN) && Vergunning && (
-        <StatusLineItems
-          vergunning={Vergunning}
-          trackPath={(document) =>
-            `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
-              document.title
-            }`
-          }
-        />
-      )}
     </DetailPageV2>
   );
 }
