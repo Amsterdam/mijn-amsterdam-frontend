@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Landing.module.scss';
@@ -8,7 +8,11 @@ import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import DigiDLogo from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
 import { MaintenanceNotifications } from '../../components';
-import { PageContentV2, TextPageV2 } from '../../components/Page/Page';
+import {
+  PageContentCell,
+  PageContentV2,
+  TextPageV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
@@ -25,7 +29,7 @@ export default function Landing() {
         <PageHeadingV2 showBacklink={false}>
           Welkom op Mijn Amsterdam
         </PageHeadingV2>
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Paragraph className="ams-mb--md">
             Uw Amsterdamse zaken op 1 plek.
           </Paragraph>
@@ -118,7 +122,7 @@ export default function Landing() {
               veelgestelde vragen over Mijn Amsterdam
             </Link>
           </Paragraph>
-        </Grid.Cell>
+        </PageContentCell>
       </PageContentV2>
     </TextPageV2>
   );
