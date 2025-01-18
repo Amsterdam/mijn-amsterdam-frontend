@@ -27,7 +27,7 @@ export function MainMenu({ menuItems, themas, isPhoneScreen }: MainMenuProps) {
               <LinkComponent
                 key={thema.id}
                 href={thema.to}
-                maVariant="fatNoUnderline"
+                maVariant="fatNoDefaultUnderline"
                 rel={thema.rel === 'external' ? 'noreferrer' : undefined}
                 className={styles.menuItem}
               >
