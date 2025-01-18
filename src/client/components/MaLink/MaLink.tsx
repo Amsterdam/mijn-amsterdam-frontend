@@ -6,7 +6,10 @@ import { NavLink, useHistory } from 'react-router-dom';
 
 import styles from './MaLink.module.scss';
 
-type MaClassNameVariant = 'fatNoUnderline' | 'noDefaultUnderline';
+type MaClassNameVariant =
+  | 'fatNoUnderline'
+  | 'noDefaultUnderline'
+  | 'fatNoDefaultUnderline';
 
 type MaLinkProps = LinkProps & {
   maVariant?: MaClassNameVariant;
@@ -15,6 +18,7 @@ type MaLinkProps = LinkProps & {
 const maClassName: Record<MaClassNameVariant, string> = {
   fatNoUnderline: 'MaRouterLink__no-underline-fat',
   noDefaultUnderline: 'MaRouterLink__no-default-underline',
+  fatNoDefaultUnderline: 'MaRouterLink__no-default-underline-fat',
 };
 
 export function MaLink({
