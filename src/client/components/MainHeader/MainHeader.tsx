@@ -53,7 +53,7 @@ export default function MainHeader({
           <Grid
             className={classNames(styles.HeaderGridPadding, 'ma-main-header')}
           >
-            <Grid.Cell span={4}>
+            <Grid.Cell span={4} className={styles.TopCell}>
               <NavLink to="/" className={styles.LogoWrap}>
                 <Logo />
                 <Heading level={1} size="level-3">
@@ -62,7 +62,7 @@ export default function MainHeader({
               </NavLink>
             </Grid.Cell>
             {isAuthenticated && (
-              <Grid.Cell className={styles.SecondaryLinks} start={5} span={8}>
+              <Grid.Cell className={styles.TopCell} start={5} span={8}>
                 {isDisplayLiveSearch && (
                   <MaLink
                     onClick={(e) => {
@@ -118,17 +118,21 @@ export default function MainHeader({
             )}
 
             <OtapLabel />
-            {isDisplayLiveSearch && isSearchActive && isAuthenticated && (
-              <Grid.Cell start={2} span={9}>
-                <SearchBar onFinish={() => setSearchActive(false)} />
-              </Grid.Cell>
-            )}
-
-            {isAuthenticated && hasErrors && (
-              <ErrorMessages errors={errors} className={styles.ErrorMessages} />
-            )}
           </Grid>
         </Screen>
+        {isAuthenticated && hasErrors && (
+          <div className={styles.ErrorMessagesWrap}>
+            <ErrorMessages errors={errors} />
+          </div>
+        )}
+        {isDisplayLiveSearch && isSearchActive && isAuthenticated && (
+          <div className={styles.SearchBarWrap}>
+            <SearchBar
+              onFinish={() => setSearchActive(false)}
+              className={styles.SearchBar}
+            />
+          </div>
+        )}
       </div>
 
       {isBurgerMenuVisible && (

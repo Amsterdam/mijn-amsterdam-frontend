@@ -1,8 +1,7 @@
 .SearchBar {
-  z-index: 2;
   position: relative;
   max-width: 60rem;
-  padding-bottom: var(--ams-space-lg);
+
   &.in-page {
     max-width: none;
   }
