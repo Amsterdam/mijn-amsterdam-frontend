@@ -19,7 +19,8 @@
   right: 0;
   bottom: 0;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
+  justify-content: flex-end;
   text-decoration: none;
   z-index: z-index(my-area-dashboard-content);
   text-decoration: none;
@@ -30,5 +31,4 @@
   background-color: $color-white;
   padding: 2rem 4rem;
   width: 46rem;
-  margin-left: calc(50% + 2rem);
 }
