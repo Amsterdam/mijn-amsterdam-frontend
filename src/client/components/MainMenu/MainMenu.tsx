@@ -18,7 +18,9 @@ export function MainMenu({ menuItems, themas, isPhoneScreen }: MainMenuProps) {
   return (
     <MegaMenu className={styles.MainMenu}>
       <nav>
-        <Heading level={3}>Thema&apos;s</Heading>
+        <Heading level={3} size="level-4">
+          Thema&apos;s
+        </Heading>
         <MegaMenu.ListCategory>
           {themas.map((thema) => {
             const LinkComponent =
@@ -38,7 +40,9 @@ export function MainMenu({ menuItems, themas, isPhoneScreen }: MainMenuProps) {
         </MegaMenu.ListCategory>
       </nav>
       <nav>
-        <Heading level={3}>Categorieën</Heading>
+        <Heading level={3} size="level-4">
+          Categorieën
+        </Heading>
         <MegaMenu.ListCategory>
           {menuItems.map((item) => (
             <MaRouterLink
