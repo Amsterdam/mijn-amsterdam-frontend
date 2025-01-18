@@ -34,7 +34,7 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [titleKey]: (
-        <MaRouterLink href={item.link.to}>
+        <MaRouterLink maVariant="fatNoUnderline" href={item.link.to}>
           {capitalizeFirstLetter(title)}
         </MaRouterLink>
       ),
