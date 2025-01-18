@@ -6,7 +6,6 @@
   height: 100%;
   height: 100vh;
   height: var(--map-container-height);
-  margin-bottom: -6rem; // Used to remove whitespace between end of map and footer.
 }
 
 .MapContainer {
@@ -24,50 +23,6 @@
   position: absolute;
   width: 100%;
   height: 100%;
-}
-
-.LogoLink {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.Logo {
-  display: block;
-  height: 4.5rem;
-  width: 9.6rem;
-  margin-right: 0.8rem;
-
-  @include mq-phone() {
-    height: 3rem;
-    width: 6.6rem;
-    margin-right: 0;
-  }
-}
-
-.Header {
-  display: flex;
-  height: 6.4rem;
-  min-height: 6.4rem;
-  padding-left: 1.8rem;
-  padding-right: 1.8rem;
-  align-items: center;
-  justify-content: space-between;
-  background-color: $color-white;
-  border-bottom: 0.2rem solid rgba(0, 0, 0, 0.3);
-
-  @include mq-phone() {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-.Title {
-  font-size: 2rem;
-  margin: 0;
-  margin-left: 1.5rem;
-  flex-grow: 1;
-  transform: translateY(-0.4rem);
 }
 
 // Label underneath the marker
@@ -89,61 +44,4 @@
   text-align: center;
   font-weight: bold;
   width: max-content;
-}
-
-.DirectSkipLinks {
-  top: 5rem;
-  z-index: 1000;
-  background-color: $color-white;
-}
-
-.SearchBar {
-  display: flex;
-  flex-direction: row;
-  width: 64rem;
-  align-items: center;
-
-  @include mq-tablet() {
-    width: 40rem;
-  }
-
-  @include mq-phone() {
-    top: 7rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    display: flex;
-    width: calc(100vw - 2rem);
-    z-index: 450;
-    position: absolute;
-    form {
-      padding: 1rem;
-    }
-  }
-}
-
-.SearchBarInner {
-  z-index: 500;
-  width: 64rem;
-  @include mq-phone() {
-    width: 100%;
-    margin: auto;
-    min-width: 100%;
-  }
-}
-
-.SearchButton {
-  margin-left: 1rem;
-}
-
-.SearchButtonWrapper {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 500;
-
-  @include mq-phone() {
-    width: 5rem;
-  }
 }
