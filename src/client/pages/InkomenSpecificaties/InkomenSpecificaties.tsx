@@ -316,7 +316,7 @@ export default function InkomenSpecificaties() {
                 </Button>
               </Paragraph>
             )}
-            {currentPage !== 1 && <p>Pagina {currentPage}</p>}
+            {currentPage !== 1 && <Paragraph>Pagina {currentPage}</Paragraph>}
             {!!itemsFiltered.length && (
               <Table
                 className={styles.SpecificationsTable}
