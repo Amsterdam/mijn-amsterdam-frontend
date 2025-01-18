@@ -42,7 +42,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   NOTIFICATIONS: 'Actueel',
   OVERTREDINGEN: 'Overtredingen voertuigen',
   PARKEREN: 'Parkeren',
-  ROOT: 'Home',
+  HOME: 'Home',
   SEARCH: 'Zoeken',
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
@@ -66,7 +66,7 @@ export type DocumentTitlesConfig = {
 
 // Used in <html><head><title>{PageTitle}</title></head>
 export const DocumentTitles: DocumentTitlesConfig = {
-  [AppRoutes.ROOT]: (config) => {
+  [AppRoutes.HOME]: (config) => {
     switch (true) {
       case config.profileType === 'private-attributes' &&
         config.isAuthenticated:
