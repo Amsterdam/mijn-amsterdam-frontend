@@ -1,6 +1,10 @@
 import { HTMLProps } from 'react';
 
-import { Grid } from '@amsterdam/design-system-react';
+import {
+  Grid,
+  GridColumnNumber,
+  GridColumnNumbers,
+} from '@amsterdam/design-system-react';
 import composeClassNames from 'classnames';
 
 import styles from './Page.module.scss';
@@ -103,5 +107,29 @@ export function PageContentV2({ children, className, id }: PageProps) {
     <Grid id={id} className={composeClassNames(styles.PageContent, className)}>
       {children}
     </Grid>
+  );
+}
+
+type PageContentCellProps = {
+  className?: string;
+  children: ComponentChildren;
+  start?: GridColumnNumber | GridColumnNumbers;
+  span?: GridColumnNumber | GridColumnNumbers;
+};
+
+export function PageContentCell({
+  children,
+  className,
+  start = { narrow: 1, medium: 1, wide: 2 },
+  span = { narrow: 4, medium: 6, wide: 11 },
+}: PageContentCellProps) {
+  return (
+    <Grid.Cell
+      start={start}
+      span={span}
+      className={composeClassNames(styles.PageContentCell, className)}
+    >
+      {children}
+    </Grid.Cell>
   );
 }
