@@ -11,13 +11,6 @@ export { default as LoadingContent } from './LoadingContent/LoadingContent';
 export { default as MainFooter } from './MainFooter/MainFooter';
 export { default as MainHeader } from './MainHeader/MainHeader';
 export { Modal } from './Modal/Modal';
-export {
-  default as Page,
-  DetailPage,
-  OverviewPage,
-  PageContent,
-  TextPage,
-} from './Page/Page';
 export { default as PageHeading } from './PageHeading/PageHeading';
 export { default as Pagination } from './Pagination/Pagination';
 export { default as Panel } from './Panel/Panel';
