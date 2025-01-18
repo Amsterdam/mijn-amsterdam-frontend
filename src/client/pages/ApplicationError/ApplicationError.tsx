@@ -67,7 +67,6 @@ export default function ApplicationError({
   children,
 }: FallbackProps & { children?: ReactNode }) {
   useUsabilla();
-
   return (
     <>
       <TextPageV2>
@@ -75,7 +74,7 @@ export default function ApplicationError({
           <PageContentCell startWide={1} spanWide={12}>
             <Header appName="Mijn Amsterdam" />
           </PageContentCell>
-          {!children ? <ApplicationErrorContent error={error} /> : children}
+          <ApplicationErrorContent error={error} />
         </PageContentV2>
       </TextPageV2>
       <Footer>
@@ -117,7 +116,7 @@ export default function ApplicationError({
             </Grid.Cell>
           </Grid>
         </Footer.Top>
-        <Footer.Bottom className={styles.BottomBar}>
+        <Footer.Bottom>
           <Grid paddingVertical="small">
             <Grid.Cell span="all"></Grid.Cell>
           </Grid>
