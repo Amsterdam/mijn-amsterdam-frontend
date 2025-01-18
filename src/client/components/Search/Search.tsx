@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Button, Heading } from '@amsterdam/design-system-react';
+import { Button, Heading, Paragraph } from '@amsterdam/design-system-react';
 import { SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
@@ -31,7 +31,6 @@ interface ResultSetProps {
   isLoading?: boolean;
   term: string;
   extendedResults?: boolean;
-  showIcon?: boolean;
   onClickResult?: (
     result: SearchEntry,
     resultNumber: number,
@@ -48,7 +47,6 @@ export function ResultSet({
   noResultsMessage = 'Geen resultaten',
   term,
   extendedResults = false,
-  showIcon = false,
   onClickResult: onClickResultCallback,
 }: ResultSetProps) {
   const onClickResult = useCallback(
@@ -75,10 +73,9 @@ export function ResultSet({
         </Heading>
       )}
       {isLoading && !results.length && (
-        <p className={styles.ResultsPending}>
-          <Spinner />
-          Zoeken...
-        </p>
+        <Paragraph className={styles.ResultsPending}>
+          <Spinner /> Zoeken...
+        </Paragraph>
       )}
       {!!term && !results.length && !isLoading && (
         <p className={styles.NoResults}>{noResultsMessage}</p>
