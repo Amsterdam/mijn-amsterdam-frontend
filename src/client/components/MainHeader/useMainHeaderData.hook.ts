@@ -103,6 +103,13 @@ export function useMainHeaderData() {
     toggleBurgerMenu(false);
   }, [location.pathname]);
 
+  // Hides search on menu open
+  useEffect(() => {
+    if (isBurgerMenuVisible) {
+      setSearchActive(false);
+    }
+  }, [setSearchActive, isBurgerMenuVisible]);
+
   const menuItems = useMemo(() => {
     return mainMenuItems
       .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
