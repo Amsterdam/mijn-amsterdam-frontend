@@ -13,6 +13,7 @@ import { entries } from '../../../universal/helpers/utils';
 import { LoadingContent } from '../../components';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
+import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -45,7 +46,7 @@ function AfisBusinessPartnerDetails({
     : [];
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <CollapsiblePanel title="Betaalgegevens" startCollapsed={startCollapsed}>
         {isLoading && <LoadingContent />}
         {!isLoading && !!rows.length && (
@@ -60,7 +61,7 @@ function AfisBusinessPartnerDetails({
           </Grid>
         )}
       </CollapsiblePanel>
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 

@@ -1,4 +1,3 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import { VergunningDocument } from '../../../server/services';
@@ -13,6 +12,7 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
+import { PageContentCell } from '../../components/Page/Page';
 
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
@@ -33,7 +33,7 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
 
   return (
     !!vergunning && (
-      <Grid.Cell span="all">
+      <PageContentCell>
         <Datalist
           rows={Object.entries(vergunning).map(([label, content]) => ({
             label,
@@ -41,7 +41,7 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
           }))}
         />
         {!!documents.length && <DocumentListV2 documents={documents} />}
-      </Grid.Cell>
+      </PageContentCell>
     )
   );
 }
