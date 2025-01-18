@@ -19,12 +19,12 @@ export default function GeneralInfo() {
           {generalInfo?.title || 'Over Mijn Amsterdam'}
         </PageHeadingV2>
         <PageContentCell>
-          {isError(CMS_CONTENT) ||
-            (generalInfo === null && (
-              <ErrorAlert>
-                We kunnen de inhoud van deze pagina nu niet weergeven.
-              </ErrorAlert>
-            ))}
+          {(isError(CMS_CONTENT) ||
+            (generalInfo === null && !isLoading(CMS_CONTENT))) && (
+            <ErrorAlert>
+              We kunnen de inhoud van deze pagina nu niet weergeven.
+            </ErrorAlert>
+          )}
           {isLoading(CMS_CONTENT) && <LoadingContent />}
           {generalInfo?.content && (
             <InnerHtml>{generalInfo?.content}</InnerHtml>
