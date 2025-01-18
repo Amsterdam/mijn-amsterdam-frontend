@@ -153,7 +153,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
           )}
           <Button
             variant="secondary"
-            className={classnames('logout-button', styles.LogoutButton)}
             onClick={() => session.logout()}
             onKeyUp={(event) => event.key === 'Enter' && session.logout()}
           >
