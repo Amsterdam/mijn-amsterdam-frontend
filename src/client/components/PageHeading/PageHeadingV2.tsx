@@ -42,6 +42,7 @@ export function PageHeadingV2({
           {showBacklink && (
             <MaRouterLink
               className={styles.BackLink}
+              maVariant="noDefaultUnderline"
               href={backLink || '/'}
               onClick={!backLink ? goBack : undefined}
             >
