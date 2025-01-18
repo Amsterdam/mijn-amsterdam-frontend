@@ -1,3 +1,4 @@
+import styles from './MainHeader.module.scss';
 import { isLoading } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -23,7 +24,10 @@ export function ProfileName() {
       {profileType === 'commercial' && !isLoading(KVK) && labelCommercial}
       {((profileType === 'commercial' && isLoading(KVK)) ||
         (profileType === 'private' && isLoading(BRP))) && (
-        <LoadingContent barConfig={[['200px', '20px', '0']]} />
+        <LoadingContent
+          className={styles.ProfileNameLoader}
+          barConfig={[['200px', '20px', '0']]}
+        />
       )}
     </>
   );
