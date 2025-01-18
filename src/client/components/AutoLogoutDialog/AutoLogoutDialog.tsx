@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
+import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
@@ -11,7 +11,6 @@ import { ComponentChildren } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import { Button } from '../Button/Button';
 import { Modal } from '../Modal/Modal';
 
 /**
@@ -145,7 +144,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
         <ActionGroup>
           {continueButtonIsVisible && (
             <Button
-              variant="secondary"
+              variant="primary"
               className="continue-button"
               onClick={continueUsingApp}
             >
@@ -153,7 +152,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             </Button>
           )}
           <Button
-            variant="secondary-inverted"
+            variant="secondary"
             className={classnames('logout-button', styles.LogoutButton)}
             onClick={() => session.logout()}
             onKeyUp={(event) => event.key === 'Enter' && session.logout()}
