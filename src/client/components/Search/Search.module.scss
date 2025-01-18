@@ -54,12 +54,7 @@
     }
   }
 }
-.ResultSetTitle {
-  border-bottom: 0.2rem solid $color-black;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-}
+
 .ResultsPending {
   @include select(Spinner_Spinner) {
     margin-right: 0.3rem;
@@ -93,14 +88,8 @@
     color: inherit;
   }
 }
-.ResultDescription {
-  margin: 0;
-}
 
 .DisplayPath {
-  width: calc(100% - 5rem);
-  display: inline-flex;
-
   em {
     font-style: normal;
     font-weight: bold;
