@@ -50,7 +50,7 @@ export default function ErrorMessages({
       )}
     >
       <Alert
-        severity="warning"
+        severity="info"
         className={styles.MessageBar}
         closeable
         closeButtonLabel="Verberg bericht"
