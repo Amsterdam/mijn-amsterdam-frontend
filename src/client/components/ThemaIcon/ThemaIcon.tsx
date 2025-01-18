@@ -23,7 +23,7 @@ export default function ThemaIcon({
 }: ThemaIconProps) {
   const location = useLocation();
 
-  let matchThema: Thema = thema || Themas.ROOT;
+  let matchThema: Thema = thema || Themas.HOME;
   let label: string | undefined = thema;
 
   // Try to match the thema based on the current route
