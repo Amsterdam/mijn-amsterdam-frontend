@@ -53,7 +53,7 @@ export const ThemaIcons: Record<Thema, SVGComponent> = {
   NOTIFICATIONS: IconMyNotifications,
   OVERTREDINGEN: IconOvertredingen,
   PARKEREN: IconParkeren,
-  ROOT: IconBurgerZaken,
+  HOME: IconBurgerZaken,
   SEARCH: IconSearch,
   SUBSIDIE: IconSubsidie,
   SVWI: IconInkomenSVWI,
