@@ -59,7 +59,7 @@ export const PublicRoutes: string[] = [
   AppRoutes.BFF_500_ERROR,
   AppRoutes.ACCESSIBILITY,
   AppRoutes.GENERAL_INFO,
-  AppRoutes.ROOT,
+  AppRoutes.HOME,
 ];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
@@ -103,7 +103,7 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
-  [AppRoutes.ROOT]: (
+  [AppRoutes.HOME]: (
     match: Match,
     { profileType, isAuthenticated }: TrackingConfig
   ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
