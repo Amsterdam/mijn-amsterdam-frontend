@@ -1,17 +1,17 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import styles from './Horeca.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  OverviewPage,
-  PageContent,
-  PageHeading,
   SectionCollapsible,
   Table,
-  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
+import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
@@ -46,28 +46,21 @@ export default function Horeca() {
   const afgerondeVergunningen = items.filter((v) => v.processed);
 
   return (
-    <OverviewPage className={styles.Horeca}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={isLoading(HORECA)}
-        icon={<ThemaIcon />}
-      >
+    <OverviewPageV2 className={styles.Horeca}>
+      <PageHeadingV2 backLink={AppRoutes.HOME}>
         {ThemaTitles.HORECA}
-      </PageHeading>
-      <PageContent>
-        <p>
+      </PageHeadingV2>
+      <PageContentV2>
+        <Paragraph>
           Hier ziet u een overzicht van uw aanvragen voor Horeca en ontheffingen
           bij gemeente Amsterdam.
-        </p>
+        </Paragraph>
         {isError(HORECA) && (
           <ErrorAlert>
             We kunnen op dit moment geen vergunningen tonen.
           </ErrorAlert>
         )}
-      </PageContent>
+      </PageContentV2>
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Lopende aanvragen"
@@ -98,6 +91,6 @@ export default function Horeca() {
           titleKey="identifier"
         />
       </SectionCollapsible>
-    </OverviewPage>
+    </OverviewPageV2>
   );
 }
