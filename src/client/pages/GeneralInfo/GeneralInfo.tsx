@@ -1,12 +1,11 @@
 import { isError, isLoading } from '../../../universal/helpers/api';
+import { ErrorAlert, InnerHtml, LoadingContent } from '../../components';
 import {
-  ErrorAlert,
-  InnerHtml,
-  LoadingContent,
-  PageContent,
-  PageHeading,
-  TextPage,
-} from '../../components';
+  PageContentCell,
+  PageContentV2,
+  TextPageV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 export default function GeneralInfo() {
@@ -14,20 +13,24 @@ export default function GeneralInfo() {
   const generalInfo = CMS_CONTENT.content?.generalInfo;
 
   return (
-    <TextPage>
-      <PageHeading isLoading={isLoading(CMS_CONTENT)}>
-        {generalInfo?.title || 'Over Mijn Amsterdam'}
-      </PageHeading>
-      <PageContent>
-        {isError(CMS_CONTENT) ||
-          (generalInfo === null && (
-            <ErrorAlert>
-              We kunnen de inhoud van deze pagina nu niet weergeven.
-            </ErrorAlert>
-          ))}
-        {isLoading(CMS_CONTENT) && <LoadingContent />}
-        {generalInfo?.content && <InnerHtml>{generalInfo?.content}</InnerHtml>}
-      </PageContent>
-    </TextPage>
+    <TextPageV2>
+      <PageContentV2>
+        <PageHeadingV2>
+          {generalInfo?.title || 'Over Mijn Amsterdam'}
+        </PageHeadingV2>
+        <PageContentCell>
+          {isError(CMS_CONTENT) ||
+            (generalInfo === null && (
+              <ErrorAlert>
+                We kunnen de inhoud van deze pagina nu niet weergeven.
+              </ErrorAlert>
+            ))}
+          {isLoading(CMS_CONTENT) && <LoadingContent />}
+          {generalInfo?.content && (
+            <InnerHtml>{generalInfo?.content}</InnerHtml>
+          )}
+        </PageContentCell>
+      </PageContentV2>
+    </TextPageV2>
   );
 }
