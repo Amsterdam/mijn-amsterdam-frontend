@@ -19,7 +19,6 @@ import {
   splitCapitals,
 } from '../../../../universal/helpers/text';
 import { Adres, AppState } from '../../../../universal/types';
-import { Link } from '../../../components/Button/Button';
 import {
   ProfileLabels,
   formatProfileSectionData,

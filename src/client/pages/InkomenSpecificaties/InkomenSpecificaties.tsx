@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Button, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { parseISO } from 'date-fns';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
@@ -11,7 +11,6 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  Button,
   DateInput,
   Pagination,
   Section,
@@ -198,15 +197,15 @@ export default function InkomenSpecificaties() {
             noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
           >
             <Button
-              variant="secondary-inverted"
+              variant="secondary"
               className={classnames(
                 styles.SearchButton,
-                isSearchPanelActive && styles.SearchButtonActive
+                isSearchPanelActive && styles.SearchButtonActive,
+                'ams-mb--sm'
               )}
               onClick={toggleSearchPanel}
               disabled={isSearchPanelActive}
               icon={Caret}
-              iconPosition="right"
               aria-expanded={isSearchPanelActive}
             >
               Zoeken
@@ -219,12 +218,13 @@ export default function InkomenSpecificaties() {
                     <span>
                       Regeling{' '}
                       {categoryFilterActive && (
-                        <button
+                        <Link
                           className={styles.ResetFilterButton}
                           onClick={() => selectCategoryFilter('')}
+                          href={AppRoutes.INKOMEN}
                         >
                           resetten
-                        </button>
+                        </Link>
                       )}
                     </span>
                     <select
@@ -309,7 +309,7 @@ export default function InkomenSpecificaties() {
                 Zoeken heeft geen resultaten opgeleverd.{' '}
                 <Button
                   onClick={resetSearch}
-                  variant="inline"
+                  variant="tertiary"
                   className={styles.ResetButton}
                 >
                   Resetten
