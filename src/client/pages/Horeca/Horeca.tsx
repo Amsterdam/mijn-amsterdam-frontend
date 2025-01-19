@@ -1,6 +1,5 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import styles from './Horeca.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';

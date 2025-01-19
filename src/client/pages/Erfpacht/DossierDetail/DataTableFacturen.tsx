@@ -11,7 +11,6 @@ import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
-import { PageContentCell } from '../../../components/Page/Page';
 
 export function DataTableFacturen({
   dossier,
@@ -58,7 +57,7 @@ export function DataTableFacturen({
 
   return (
     <Grid className={styles.FacturenBetaler}>
-      <PageContentCell>
+      <Grid.Cell span="all">
         <Heading level={4} size="level-4">
           Factuur naar nieuw adres
         </Heading>
@@ -77,8 +76,8 @@ export function DataTableFacturen({
           uw debiteurennummer of het E-dossiernummer en uw nieuwe adresgegevens.
           U krijgt binnen 3 werkdagen een reactie.
         </Paragraph>
-      </PageContentCell>
-      <PageContentCell>
+      </Grid.Cell>
+      <Grid.Cell span="all">
         <Heading level={4} size="level-4">
           Factuur via e-mail
         </Heading>
@@ -95,8 +94,8 @@ export function DataTableFacturen({
           />
           .
         </Paragraph>
-      </PageContentCell>
-      <PageContentCell>
+      </Grid.Cell>
+      <Grid.Cell span="all">
         <Datalist
           className={styles.FacturenBetalerDebiteur}
           rows={facturenBetalerDebiteurRows}
@@ -126,7 +125,7 @@ export function DataTableFacturen({
         {!isLoading && !dossier.facturen?.facturen?.length && (
           <Paragraph>U heeft geen facturen.</Paragraph>
         )}
-      </PageContentCell>
+      </Grid.Cell>
     </Grid>
   );
 }

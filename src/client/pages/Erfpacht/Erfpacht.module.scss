@@ -1,5 +1,3 @@
-@include DesignSystemStyleAdjust();
-
 .OpenFacturenTableThemaPagina {
   @media screen and (max-width: $ams-breakpoint-medium) {
     :global {
