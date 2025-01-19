@@ -22,7 +22,6 @@ export { default as IconInkomen } from './inkomen.svg?react';
 export { default as IconInkomenSVWI } from './inkomen-svwi.svg?react';
 export { default as IconKlachten } from './IconKlachten.svg?react';
 export { default as IconKrefia } from './krefia.svg?react';
-export { default as IconLogout } from './Logout.svg?react';
 export { default as IconMijnGegevens } from './MijnGegevens.svg?react';
 export { default as IconMilieuzone } from './milieuzone.svg?react';
 export { default as IconOvertredingen } from './Overtredingen.svg?react';
