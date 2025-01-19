@@ -168,7 +168,7 @@ export default function MainHeaderHero() {
   const profileType = useProfileTypeValue();
 
   if (srcSet === null) {
-    return <div className={styles.MainHeaderHeroPlaceHolder} />;
+    return null;
   }
 
   return (
