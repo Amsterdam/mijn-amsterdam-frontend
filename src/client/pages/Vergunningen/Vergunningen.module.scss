@@ -1,9 +1,3 @@
-.Vergunningen {
-  @include select(PageContent) {
-    padding-bottom: $page-content-bottom-space;
-  }
-}
-
 .Table {
   tr td:nth-child(2) {
     width: 40%;

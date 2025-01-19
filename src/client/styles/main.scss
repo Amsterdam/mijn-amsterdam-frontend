@@ -1,4 +1,3 @@
-@import 'components/components';
 @import 'fonts';
 // Use this file as an entry point for global styles and imports
 @import 'global';
@@ -32,14 +31,6 @@
 @import '@amsterdam/design-system-css/src/components/icon-button/icon-button.scss';
 @import '@amsterdam/design-system-css/src/components/action-group/action-group.scss';
 
-:root {
-  --map-container-height: 100%;
-  --ams-grid-row-gap: var(--ams-grid-row-gap-lg);
-  --mams-font-size-rem-adjust: 62.5%;
-  --mams-font-size-body: 1.6rem;
-  --mams-line-height: 1.375;
-}
-
 *,
 *:before,
 *:after {
@@ -54,19 +45,11 @@ body {
 // Global styling and reset
 html {
   box-sizing: border-box;
-  // font-size: var(
-  //   --mams-font-size-rem-adjust
-  // ); // translates to 10px which makes 1rem = 10px in all other elements contained within body
-  // line-height: var(--mams-line-height);
   height: 100%;
-  background-color: var(--mams-bg-color);
+  background-color: var(--ams-primary-color-white);
 }
 
 body {
-  // font-family: var(--ams-text-font-family);
-  // font-size: var(--mams-font-size-body);
-  // color: var(--ams-color-primary-black);
-
   // DESIGN SYSTEM BASE
   color: var(--ams-paragraph-color);
   font-family: var(--ams-paragraph-font-family);
@@ -78,7 +61,6 @@ body {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
 
-  min-width: $main-min-width;
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
 
   &.has-modal {
@@ -95,33 +77,6 @@ body {
   min-height: 100%;
   position: relative;
 }
-
-a {
-  color: inherit;
-}
-
-p:not(.ams-paragraph) a {
-  color: $color-primary-darkblue;
-
-  &:hover {
-    color: $color-primary-red;
-  }
-}
-
-[role='button'],
-button {
-  cursor: pointer;
-}
-
-[role='button'],
-input,
-textarea,
-select,
-button {
-  line-height: inherit;
-}
-
-@import 'print.scss';
 
 .is-typeAheadActive {
   @include mq-phone {
@@ -141,4 +96,8 @@ button {
       display: none;
     }
   }
+}
+
+.ams-grid .ams-grid {
+  --ams-grid-padding-inline: 0;
 }
