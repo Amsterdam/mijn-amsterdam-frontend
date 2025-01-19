@@ -54,7 +54,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: z-index(my-area-error-messages);
-  max-width: $main-boxed-width;
+  max-width: 60rem;
   @include mq-phone {
     max-width: calc(100% - 2rem);
   }
