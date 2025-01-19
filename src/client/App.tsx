@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph, SkipLink } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import {
   BrowserRouter,
@@ -174,6 +174,7 @@ function AppAuthenticated() {
 
   return (
     <>
+      <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
       <MainHeader isAuthenticated />
       {isHeroVisible && <MainHeaderHero />}
       <div className={styles.App} id="skip-to-id-AppContent">
