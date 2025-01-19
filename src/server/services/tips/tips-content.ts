@@ -23,6 +23,7 @@ import {
   not,
   or,
   previouslyLivingInAmsterdam,
+  hasBudget,
 } from './predicates';
 import { Tip } from './tip-types';
 import { Themas } from '../../../universal/config/thema';
@@ -409,7 +410,7 @@ export const tips: Tip[] = [
     profileTypes: ['private'],
     description:
       'Met je Stadspas krijg je € 300,- korting op een nieuwe energiezuinige wasmachine of koelkast. Dit helpt je om geld te besparen op je energierekening.',
-    predicates: [is18OrOlder, hasStadspasGroeneStip],
+    predicates: [is18OrOlder, hasStadspasGroeneStip, hasBudget('witgoed')],
     reason:
       'U ziet deze tip omdat u ouder bent dan 18 jaar en woonachtig bent in Amsterdam en een Stadspas heeft.',
     link: {
