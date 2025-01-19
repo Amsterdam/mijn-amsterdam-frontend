@@ -12,7 +12,7 @@ export type Thema =
   | 'MILIEUZONE'
   | 'OVERTREDINGEN'
   | 'NOTIFICATIONS'
-  | 'ROOT'
+  | 'HOME'
   | 'ERFPACHT'
   | 'ERFPACHTv2'
   | 'ZORG'
@@ -52,7 +52,7 @@ export const Themas: Record<Thema, Thema> = {
   NOTIFICATIONS: 'NOTIFICATIONS',
   OVERTREDINGEN: 'OVERTREDINGEN',
   PARKEREN: 'PARKEREN',
-  ROOT: 'ROOT',
+  HOME: 'HOME', // Not really a theme, but used as a fallback
   SEARCH: 'SEARCH',
   SUBSIDIE: 'SUBSIDIE',
   SVWI: 'SVWI',
