@@ -1,11 +1,11 @@
 import { MouseEventHandler, useCallback } from 'react';
 
 import { Heading, Icon } from '@amsterdam/design-system-react';
+import { ChevronLeftIcon } from '@amsterdam/design-system-react-icons';
 import { useHistory } from 'react-router-dom';
 
 import styles from './PageHeadingV2.module.scss';
 import { ComponentChildren } from '../../../universal/types';
-import { IconChevronLeft } from '../../assets/icons';
 import { MaRouterLink } from '../MaLink/MaLink';
 import { PageContentCell } from '../Page/Page';
 
@@ -46,7 +46,7 @@ export function PageHeadingV2({
               href={backLink || '/'}
               onClick={!backLink ? goBack : undefined}
             >
-              <Icon size="level-5" svg={IconChevronLeft} />
+              <Icon size="level-5" svg={ChevronLeftIcon} />
               {label}
             </MaRouterLink>
           )}
