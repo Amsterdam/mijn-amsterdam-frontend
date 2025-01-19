@@ -128,37 +128,5 @@
 }
 
 .Input {
-  height: 3.6rem;
-  padding: 0.4rem 0.8rem;
-  appearance: none;
-  font-size: 1.6rem;
-  border: solid 0.1rem $color-neutral-grey4;
-  border-radius: 0;
-  box-sizing: border-box;
-  line-height: 1.4rem;
   width: 100%;
-}
-
-.SubmitButton {
-  background-color: $color-primary-red;
-  height: 3.6rem;
-  width: 3.6rem;
-  margin-left: 0.4rem;
-  padding: 0.8rem;
-  bottom: 0;
-  &:hover {
-    background-color: rgb(225, 0, 0);
-    svg path {
-      fill: $color-white;
-    }
-  }
-}
-
-.CloseButton {
-  height: 3.6rem;
-  min-width: 3.6rem;
-  width: 3.6rem;
-  margin-left: 0.4rem;
-  padding: 0.8rem;
-  bottom: 0;
 }
