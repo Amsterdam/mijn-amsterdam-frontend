@@ -22,7 +22,7 @@ export function Nachtwerkontheffing({
       <Location location={vergunning.location} />
 
       {isVerleend && !isSameDate && (
-        <InfoDetailGroup className={styles.DateAndTime_SingleLine}>
+        <InfoDetailGroup>
           <InfoDetail
             label="Vanaf"
             value={
@@ -44,7 +44,7 @@ export function Nachtwerkontheffing({
         </InfoDetailGroup>
       )}
       {isVerleend && isSameDate && (
-        <InfoDetailGroup className={styles.DateAndTime_SingleLine}>
+        <InfoDetailGroup>
           <InfoDetail
             label="Op"
             value={
