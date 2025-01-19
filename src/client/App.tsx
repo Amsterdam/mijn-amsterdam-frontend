@@ -177,7 +177,7 @@ function AppAuthenticated() {
       <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
       <MainHeader isAuthenticated />
       {isHeroVisible && <MainHeaderHero />}
-      <div className={styles.App} id="skip-to-id-AppContent">
+      <div className={styles.App}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
