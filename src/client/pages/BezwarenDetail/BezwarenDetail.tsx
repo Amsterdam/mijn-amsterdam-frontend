@@ -120,12 +120,14 @@ function BezwarenDetail() {
         <PageHeadingV2 backLink={AppRoutes.BEZWAREN}>
           {bezwaar?.identificatie ?? 'Bezwaar'}
         </PageHeadingV2>
-        <PageContentCell spanWide={6}>
-          {(isError(BEZWAREN) || noContent) && (
+        {(isError(BEZWAREN) || noContent) && (
+          <PageContentCell spanWide={6}>
             <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.
             </ErrorAlert>
-          )}
+          </PageContentCell>
+        )}
+        <PageContentCell>
           {!!bezwaar && (
             <>
               {bezwaar.omschrijving && (
