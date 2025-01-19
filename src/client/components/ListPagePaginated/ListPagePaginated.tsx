@@ -1,11 +1,11 @@
 import { ReactNode, useMemo } from 'react';
 
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 import { ErrorAlert, LoadingContent } from '..';
 import { ZaakDetail } from '../../../universal/types';
-import { OverviewPageV2, PageContentV2 } from '../Page/Page';
+import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
 import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { DisplayProps, TableV2 } from '../Table/TableV2';
@@ -72,13 +72,13 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
       <PageContentV2>
         <PageHeadingV2 backLink={appRouteBack}>{title}</PageHeadingV2>
 
-        {!!body && <Grid.Cell span="all">{body}</Grid.Cell>}
+        {!!body && <PageContentCell>{body}</PageContentCell>}
         {isError && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <ErrorAlert>{errorText}</ErrorAlert>
-          </Grid.Cell>
+          </PageContentCell>
         )}
-        <Grid.Cell span="all">
+        <PageContentCell>
           {isLoading && (
             <LoadingContent
               barConfig={[
@@ -91,9 +91,9 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
           {!isError && (
             <>
               {!isLoading && !itemsPaginated.length && !!noItemsText && (
-                <Grid.Cell span="all">
+                <PageContentCell>
                   <Paragraph>{noItemsText}</Paragraph>
-                </Grid.Cell>
+                </PageContentCell>
               )}
               {!isLoading && !!itemsPaginated.length && (
                 <TableV2<T>
@@ -119,7 +119,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
               )}
             </>
           )}
-        </Grid.Cell>
+        </PageContentCell>
       </PageContentV2>
     </OverviewPageV2>
   );

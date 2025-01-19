@@ -28,10 +28,3 @@
   color: $color-neutral-grey3;
   text-align: left;
 }
-
-.MainHeaderHeroPlaceHolder {
-  height: $main-header-topbar-height;
-  @include mq-phone() {
-    display: none;
-  }
-}
