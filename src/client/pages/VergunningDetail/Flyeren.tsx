@@ -1,5 +1,4 @@
 import { Location } from './Location';
-import styles from './VergunningDetail.module.scss';
 import type { Flyeren as FlyerenVergunning } from '../../../server/services';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { InfoDetail } from '../../components';
@@ -18,7 +17,7 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       {isVerleend && <Location location={vergunning.location} />}
       {isVerleend && !isSameDate && (
-        <InfoDetailGroup className={styles.DateAndTime_SingleLine}>
+        <InfoDetailGroup>
           <InfoDetail
             label="Vanaf"
             value={
@@ -40,7 +39,7 @@ export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
         </InfoDetailGroup>
       )}
       {isVerleend && isSameDate && (
-        <InfoDetailGroup className={styles.DateAndTime_SingleLine}>
+        <InfoDetailGroup>
           <InfoDetail
             label="Op"
             value={
