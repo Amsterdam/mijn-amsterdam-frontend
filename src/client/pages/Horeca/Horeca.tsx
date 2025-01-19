@@ -49,7 +49,7 @@ export default function Horeca() {
   const afgerondeVergunningen = items.filter((v) => v.processed);
 
   return (
-    <OverviewPageV2 className={styles.Horeca}>
+    <OverviewPageV2>
       <PageContentV2>
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {ThemaTitles.HORECA}
