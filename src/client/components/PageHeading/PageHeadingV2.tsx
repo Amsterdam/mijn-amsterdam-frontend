@@ -37,7 +37,7 @@ export function PageHeadingV2({
       spanWide={7}
       className={styles.PageHeadingWrap}
     >
-      <div className={styles.PageHeadingSizer}>
+      <div className={styles.PageHeadingSizer} id="skip-to-id-AppContent">
         <div className={styles.PageHeadingInner}>
           {showBacklink && (
             <MaRouterLink
