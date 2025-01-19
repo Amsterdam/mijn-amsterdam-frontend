@@ -83,7 +83,7 @@ function ProfileCommercialSectionPanels() {
             {...panelConfig.overigeFunctionarissen(KVK)}
           />
         )}
-      <PageContentCell>
+      <PageContentCell spanWide={6}>
         <Paragraph className={styles.SuppressedParagraph}>
           Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
