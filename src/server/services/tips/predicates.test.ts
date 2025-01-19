@@ -3,6 +3,7 @@ import Mockdate from 'mockdate';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
+  hasBudget,
   hasDutchNationality,
   hasKidsBetweenAges2And18,
   hasOldestKidBornFrom2016,
@@ -327,7 +328,7 @@ describe('predicates', () => {
           status: 'OK',
           content: { stadspas: [{ passType: 'kind' }] },
         },
-      } as AppState;
+      } as unknown as AppState;
 
       expect(hasStadspasGroeneStip(appState)).toEqual(true);
     });
@@ -514,6 +515,28 @@ describe('predicates', () => {
         };
         expect(hasTozo(appState)).toBe(false);
       });
+    });
+  });
+
+  describe('hasBudget', () => {
+    const state = {
+      HLI: {
+        status: 'OK',
+        content: {
+          stadspas: [
+            {
+              budgets: [{ title: 'Witgoed regeling' }],
+            },
+          ],
+        },
+      },
+    };
+    test('hasBudget with correct name', () => {
+      expect(hasBudget('witgoed')(state as unknown as AppState)).toBe(true);
+    });
+
+    test('hasBudget name not found', () => {
+      expect(hasBudget('zwartgoed')(state as unknown as AppState)).toBe(false);
     });
   });
 
