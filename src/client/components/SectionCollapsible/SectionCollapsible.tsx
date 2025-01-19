@@ -1,13 +1,13 @@
 import { ReactNode, useRef, useState } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
+import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
 import { animated, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { useDebouncedCallback } from 'use-debounce';
 
 import styles from './SectionCollapsible.module.scss';
 import { ComponentChildren } from '../../../universal/types';
-import { IconChevronRight } from '../../assets/icons';
 import { withKeyPress } from '../../helpers/utils';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { useContentDimensions } from '../../hooks/useContentDimensions';
@@ -46,7 +46,7 @@ export function SectionCollapsibleHeading({
         className={styles.TitleToggle}
         onClick={(event) => toggleCollapsed(event)}
       >
-        <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
+        <ChevronRightIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
         {children}
       </button>
     </Heading>

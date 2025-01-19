@@ -6,8 +6,9 @@ import {
   useState,
 } from 'react';
 
+import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
+
 import styles from './PanelComponent.module.scss';
-import { IconChevronRight } from '../../../assets/icons';
 
 export enum CollapsedState {
   Expanded = 'Expanded',
@@ -42,7 +43,7 @@ function MyAreaCollapsiblePanelHeading({
           onClick={onClick}
           aria-expanded={isExpanded(state)}
         >
-          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
+          <ChevronRightIcon aria-hidden="true" className={styles.CaretIcon} />
         </button>
       )}
     </>
