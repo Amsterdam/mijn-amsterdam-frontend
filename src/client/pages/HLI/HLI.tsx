@@ -1,7 +1,8 @@
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { ReactNode } from 'react';
+
+import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
-import { useStadspassen } from './HLI.hooks';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -9,6 +10,7 @@ import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -23,8 +25,8 @@ export function HistoricItemsMention() {
 }
 
 type StadspasDisplayProps = {
-  owner: React.JSX.Element;
-  actief: string;
+  owner: ReactNode;
+  actief: ReactNode;
 };
 
 type StadspassenProps = {
@@ -60,9 +62,8 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   });
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <ThemaPaginaTable<StadspasDisplayProps>
-        title=""
         displayProps={displayProps}
         zaken={passen}
         className={styles.Stadspassen}
@@ -83,7 +84,7 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
           )}
         </Paragraph>
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 

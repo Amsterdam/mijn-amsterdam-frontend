@@ -1,3 +1,5 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { ThemaTitles } from '../../config/thema';
@@ -28,7 +30,9 @@ export function Bodem() {
       isLoading={isLoading}
       isError={isError}
       pageContentTop={
-        <p>Op deze pagina vindt u informatie over uw lood in de bodem-check.</p>
+        <Paragraph>
+          Op deze pagina vindt u informatie over uw lood in de bodem-check.
+        </Paragraph>
       }
       pageContentMain={tables}
       isPartialError={false}

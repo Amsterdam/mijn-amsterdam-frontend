@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -9,7 +7,6 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import { omit } from '../../universal/helpers/utils';
-import { MyNotification } from '../../universal/types';
 import { getAuth } from '../auth/auth-helpers';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { IS_DEBUG } from '../config/app';
@@ -40,15 +37,7 @@ import {
 } from './simple-connect';
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
-import {
-  convertTipToNotication,
-  createTipsFromServiceResults,
-  prefixTipNotification,
-} from './tips/tips-service';
-import {
-  fetchTipsAndNotifications,
-  sortNotifications,
-} from './tips-and-notifications';
+import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVaren } from './varen/varen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
@@ -61,7 +50,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -180,33 +168,13 @@ const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
   const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return apiErrorResult(
-      'Not authorized',
-      null,
-      HTTP_STATUS_CODES.UNAUTHORIZED
+  const serviceResults = await getServiceResultsForTips(requestID, req);
+  const notificationsWithTipsInserted =
+    await fetchNotificationsWithTipsInserted(
+      requestID,
+      serviceResults,
+      authProfileAndToken
     );
-  }
-
-  const [tipNotifications, themaAndTipNotifications] = await Promise.all([
-    getTipNotifications(requestID, req),
-    fetchTipsAndNotifications(requestID, authProfileAndToken),
-  ]);
-
-  const notifications: Array<MyNotification> = [
-    ...tipNotifications,
-    ...themaAndTipNotifications,
-  ].map((notification) => {
-    if (notification.isTip) {
-      notification.hideDatePublished = true;
-      return prefixTipNotification(notification);
-    }
-    return notification;
-  });
-
-  const notificationsWithTipsInserted = sortNotifications(notifications);
-
   return apiSuccessResult(notificationsWithTipsInserted);
 };
 
@@ -456,12 +424,10 @@ export async function loadServicesAll(req: Request, res: Response) {
 }
 
 /**
- * TIPS specific services
+ * Services specific to TIPS
+ * Retrieves service results based on profile type to generate tips.
  */
-export async function getServiceResultsForTips(
-  requestID: RequestID,
-  req: Request
-) {
+async function getServiceResultsForTips(requestID: RequestID, req: Request) {
   let requestData = null;
 
   const auth = getAuth(req);
@@ -479,37 +445,6 @@ export async function getServiceResultsForTips(
   }
 
   return requestData;
-}
-
-export async function getTipNotifications(
-  requestID: RequestID,
-  req: Request
-): Promise<MyNotification[]> {
-  const serviceResults = await getServiceResultsForTips(requestID, req);
-  const authProfileAndToken = getAuth(req);
-
-  if (authProfileAndToken) {
-    const { content: tipNotifications } = await createTipsFromServiceResults(
-      authProfileAndToken.profile.profileType,
-      {
-        serviceResults,
-        tipsDirectlyFromServices: [],
-        compareDate:
-          FeatureToggle.passQueryParamsToStreamUrl &&
-          req.query?.[streamEndpointQueryParamKeys.tipsCompareDate]
-            ? new Date(
-                req.query[
-                  streamEndpointQueryParamKeys.tipsCompareDate
-                ] as string
-              )
-            : new Date(),
-      }
-    );
-
-    return tipNotifications.map(convertTipToNotication);
-  }
-
-  return [];
 }
 
 export const forTesting = {

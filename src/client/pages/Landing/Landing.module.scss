@@ -1,3 +1,6 @@
+.LandingPageContent {
+  padding-top: var(--ams-space-xl);
+}
 .LoginBtn {
   display: inline-flex;
   height: 5rem;
@@ -14,10 +17,6 @@
     padding-right: 1.3rem;
     padding-left: 1.3rem;
     line-height: 5rem;
-  }
-
-  + p {
-    margin-top: 1rem;
   }
 }
 
@@ -43,28 +42,6 @@
   }
 }
 
-.LoginLogo {
-  width: 5rem;
-}
-
-.LoginOption {
-  border-top: 0.1rem solid $color-neutral-grey2;
-  padding-top: 2.6rem;
-  padding-bottom: 1rem;
-
-  p:last-of-type {
-    margin-top: 0;
-  }
-
-  &--eherkenning {
-    margin-bottom: 3rem;
-
-    .LoginLogoWrap {
-      background-color: transparent;
-    }
-  }
-}
-
 .LoginOptionHeading {
   margin-bottom: 1rem;
 }
@@ -83,14 +60,6 @@
   }
 }
 
-.FaqInfo {
-  margin: 0;
-}
-
-.InnerAlert {
-  padding-top: 1.5rem;
-}
-
-.AlertLanding {
-  margin-top: 3rem;
+.LogoEherkenning {
+  background-color: #fff;
 }

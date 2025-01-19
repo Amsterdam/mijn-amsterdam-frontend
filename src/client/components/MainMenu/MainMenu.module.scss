@@ -1,0 +1,21 @@
+.MainMenu {
+  display: grid;
+  column-gap: var(--ams-grid-column-gap);
+  grid-template-columns: 3fr 1fr;
+  padding-top: calc(var(--ams-link-list-gap) * 4);
+  padding-bottom: var(--ams-space-xl);
+
+  .menuItem {
+    display: block;
+    margin-bottom: var(--ams-link-list-gap);
+  }
+
+  @include mq-phone() {
+    grid-template-columns: 1fr;
+    padding: 2rem 0 4rem;
+
+    & > nav {
+      padding-top: 2rem;
+    }
+  }
+}

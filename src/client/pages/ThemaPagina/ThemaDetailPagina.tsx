@@ -1,21 +1,21 @@
-import { ReactElement, ReactNode } from 'react';
-
-import { Grid, Screen } from '@amsterdam/design-system-react';
+import { ReactNode } from 'react';
 
 import {
   GenericDocument,
-  LinkProps,
   ZaakDetail,
 } from '../../../universal/types/App.types';
 import {
-  DetailPage,
   ErrorAlert,
   LoadingContent,
-  PageHeading,
   StatusLine as StatusLineComponent,
-  ThemaIcon,
 } from '../../components';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
@@ -27,10 +27,9 @@ const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 
 interface ThemaDetailPaginaProps<T> {
   zaak?: T | null;
-  backLink: LinkProps;
+  backLink: string;
   documentPathForTracking?: (document: GenericDocument) => string;
   errorAlertContent?: ReactNode;
-  icon?: ReactElement;
   isError: boolean;
   isLoading: boolean;
   loadingBarConfig?: BarConfig;
@@ -47,8 +46,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   zaak,
   title = 'Detailpagina',
   backLink,
-  className,
-  icon = <ThemaIcon />,
   pageContentTop,
   pageContentBottom,
   errorAlertContent = ERROR_ALERT_DEFAULT,
@@ -68,44 +65,36 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   }
 
   return (
-    <DetailPage className={className}>
-      <PageHeading icon={icon} backLink={backLink}>
-        {title}
-      </PageHeading>
-      <Screen className="ams-mb--lg">
-        <Grid>
-          {pageContentTop}
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
 
-          {!isLoading && (isError || !zaak) && (
-            <Grid.Cell span="all">
-              <ErrorAlert>{errorAlertContent}</ErrorAlert>
-            </Grid.Cell>
-          )}
+        {pageContentTop}
 
-          {isLoading && (
-            <Grid.Cell span="all">
-              <LoadingContent barConfig={loadingBarConfig} />
-            </Grid.Cell>
-          )}
-        </Grid>
-      </Screen>
-      <Grid>
+        {!isLoading && (isError || !zaak) && (
+          <PageContentCell>
+            <ErrorAlert>{errorAlertContent}</ErrorAlert>
+          </PageContentCell>
+        )}
+
+        {isLoading && (
+          <PageContentCell>
+            <LoadingContent barConfig={loadingBarConfig} />
+          </PageContentCell>
+        )}
+
         {!!statusItemSteps.length && zaak && (
-          <Grid.Cell span="all">
+          <PageContentCell startWide={1} spanWide={12}>
             <StatusLineComponent
               statusLabel={statusLabel}
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
               documentPathForTracking={documentPathForTracking}
             />
-          </Grid.Cell>
+          </PageContentCell>
         )}
-      </Grid>
-      {!!pageContentBottom && (
-        <Screen>
-          <Grid>{pageContentBottom}</Grid>
-        </Screen>
-      )}
-    </DetailPage>
+        {pageContentBottom}
+      </PageContentV2>
+    </DetailPageV2>
   );
 }

@@ -1,13 +1,12 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ErrorAlert, ThemaIcon } from '../../components';
+import { ErrorAlert } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { ThemaTitles } from '../../config/thema';
+import { PageContentCell } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -27,7 +26,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   return (
     <>
       {!!rows.length && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           {voorziening?.disclaimer && (
             <ErrorAlert
               className="ams-mb--sm"
@@ -45,7 +44,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
               className="ams-mb--lg"
             />
           )}
-        </Grid.Cell>
+        </PageContentCell>
       )}
     </>
   );
@@ -63,14 +62,10 @@ export default function ZorgDetail() {
       zaak={voorziening}
       isError={isError(WMO)}
       isLoading={isLoading(WMO)}
-      icon={<ThemaIcon />}
       pageContentTop={
         !!voorziening && <WMODetailContent voorziening={voorziening} />
       }
-      backLink={{
-        title: ThemaTitles.ZORG,
-        to: AppRoutes.ZORG,
-      }}
+      backLink={AppRoutes.ZORG}
       documentPathForTracking={(document) =>
         `/downloads/zorg-en-ondersteuning/${document.title.split(/\n/)[0]}`
       }

@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
+
 import { useVergunningenTransformed } from './useVergunningenTransformed.hook';
 import styles from './Vergunningen.module.scss';
 import type { Vergunning } from '../../../server/services/vergunningen/vergunningen';
@@ -8,16 +10,17 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { CaseType } from '../../../universal/types/vergunningen';
 import {
   ErrorAlert,
-  Linkd,
   MaintenanceNotifications,
-  PageContent,
-  PageHeading,
   SectionCollapsible,
   Table,
-  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
-import { OverviewPage } from '../../components/Page/Page';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { hasMultiplePermits } from '../VergunningDetail/WVOS';
@@ -66,35 +69,29 @@ export default function Vergunningen() {
   );
 
   return (
-    <OverviewPage className={styles.Vergunningen}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={isLoading(VERGUNNINGEN)}
-        icon={<ThemaIcon />}
-      >
-        {ThemaTitles.VERGUNNINGEN}
-      </PageHeading>
-      <PageContent>
-        <p>
-          Hier ziet u een overzicht van uw aanvragen voor vergunningen en
-          ontheffingen bij gemeente Amsterdam.
-        </p>
-        <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/ondernemen/vergunningen/wevos/"
-          >
-            Ontheffing RVV en TVM aanvragen
-          </Linkd>
-        </p>
-        <MaintenanceNotifications page="vergunningen" />
-        {isError(VERGUNNINGEN) && (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
-        )}
-      </PageContent>
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HOME}>
+          {ThemaTitles.VERGUNNINGEN}
+        </PageHeadingV2>
+        <PageContentCell spanWide={6}>
+          <Paragraph className="ams-mb--sm">
+            Hier ziet u een overzicht van uw aanvragen voor vergunningen en
+            ontheffingen bij gemeente Amsterdam.
+          </Paragraph>
+          <LinkList className="ams-mb--xl">
+            <LinkList.Link href="https://www.amsterdam.nl/ondernemen/vergunningen/wevos/">
+              Ontheffing RVV en TVM aanvragen
+            </LinkList.Link>
+          </LinkList>
+          <MaintenanceNotifications page="vergunningen" />
+          {isError(VERGUNNINGEN) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen gegevens tonen.
+            </ErrorAlert>
+          )}
+        </PageContentCell>
+      </PageContentV2>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-actual"
         title="Lopende aanvragen"
@@ -128,16 +125,16 @@ export default function Vergunningen() {
         />
       </SectionCollapsible>
       {hasActualGPK && (
-        <PageContent>
-          <p className={styles.SuppressedParagraph}>
+        <PageContentV2>
+          <Paragraph className={styles.SuppressedParagraph}>
             Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een
             vaste parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u
             hier in Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra
             de GPK is gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn
             Amsterdam.
-          </p>
-        </PageContent>
+          </Paragraph>
+        </PageContentV2>
       )}
-    </OverviewPage>
+    </OverviewPageV2>
   );
 }

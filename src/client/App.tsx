@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
+import { Paragraph, SkipLink } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import {
   BrowserRouter,
   Redirect,
   Route,
   Switch,
-  matchPath,
   useHistory,
   useLocation,
 } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
+import MainHeaderHero from './components/MainHeaderHero/MainHeaderHero';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
@@ -48,7 +49,7 @@ import { LoodMeting } from './pages/Bodem/LoodMeting';
 import { Burgerzaken } from './pages/Burgerzaken/Burgerzaken';
 import { BurgerzakenIdentiteitsbewijs } from './pages/Burgerzaken/BurgerzakenIdentiteitsbewijs';
 import { BurgerZakenList } from './pages/Burgerzaken/BurgerZakenList';
-import Dashboard from './pages/Dashboard/Dashboard';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
 import Erfpacht from './pages/Erfpacht/Erfpacht';
 import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
@@ -72,7 +73,7 @@ import Klachten from './pages/Klachten/Klachten';
 import KlachtenDetail from './pages/KlachtenDetail/KlachtenDetail';
 import Krefia from './pages/Krefia/Krefia';
 import { default as LandingPage } from './pages/Landing/Landing';
-import MyNotifications from './pages/MyNotifications/MyNotifications';
+import { MyNotificationsPage } from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import { Parkeren } from './pages/Parkeren/Parkeren';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
@@ -116,28 +117,28 @@ function AppNotAuthenticated() {
 
   if (shouldRedirectSSO) {
     return (
-      <p className={styles.PreLoader}>
+      <Paragraph className={styles.PreLoader}>
         Automatische toegang tot Mijn Amsterdam wordt gecontroleerd...
-      </p>
+      </Paragraph>
     );
   }
-
   return (
     <>
       <MainHeader isAuthenticated={false} />
+      {location.pathname !== AppRoutes.HOME && <MainHeaderHero />}
       <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
-          <Route exact path={AppRoutes.ROOT} component={LandingPage} />
+          <Route exact path={AppRoutes.HOME} component={LandingPage} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route
             render={({ location: { pathname } }) => {
               if (isPrivateRoute(pathname)) {
                 // Private routes are redirected to Home
-                return <Redirect to={AppRoutes.ROOT} />;
+                return <Redirect to={AppRoutes.HOME} />;
               }
               // All other routes are presented with a 404 page
               return <Route component={NotFound} />;
@@ -167,22 +168,25 @@ function AppAuthenticated() {
     }
   }, [redirectAfterLogin, history]);
 
-  const isHeroVisible = !matchPath(history.location.pathname, {
-    path: AppRoutes.BUURT,
-  });
+  const isHeroVisible = history.location.pathname !== AppRoutes.BUURT;
 
   return (
     <>
-      <MainHeader isAuthenticated isHeroVisible={isHeroVisible} />
-      <div className={styles.App} id="skip-to-id-AppContent">
+      <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
+      <MainHeader isAuthenticated />
+      {isHeroVisible && <MainHeaderHero />}
+      <div className={styles.App}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}
           <Route path={AppRoutes.ZAAK_STATUS} component={ZaakStatus} />
           <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-          <Route exact path={AppRoutes.ROOT} component={Dashboard} />
-          <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
+          <Route exact path={AppRoutes.HOME} component={Dashboard} />
+          <Route
+            path={AppRoutes.NOTIFICATIONS}
+            component={MyNotificationsPage}
+          />
           <Route path={AppRoutes.BRP} component={MijnGegevensThema} />
           <Route path={AppRoutes.KVK} component={MijnBedrijfsGegevensThema} />
           {FeatureToggle.hliThemaStadspasActive && (
@@ -258,12 +262,7 @@ function AppAuthenticated() {
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
             component={function VergunningDetailWrapper() {
               return FeatureToggle.vergunningenV2Active ? (
-                <VergunningV2Detail
-                  backLink={{
-                    to: AppRoutes.VERGUNNINGEN,
-                    title: ThemaTitles.VERGUNNINGEN,
-                  }}
-                />
+                <VergunningV2Detail backLink={AppRoutes.VERGUNNINGEN} />
               ) : (
                 <VergunningDetail
                   backLink={{
@@ -403,12 +402,7 @@ function AppAuthenticated() {
             path={AppRoutes['PARKEREN/DETAIL']} // Nieuwe AppRoute
             component={function ParkerenWrapper() {
               return FeatureToggle.vergunningenV2Active ? (
-                <VergunningV2Detail
-                  backLink={{
-                    to: AppRoutes.PARKEREN,
-                    title: ThemaTitles.PARKEREN,
-                  }}
-                />
+                <VergunningV2Detail backLink={AppRoutes.PARKEREN} />
               ) : (
                 <VergunningDetail
                   backLink={{
@@ -424,7 +418,8 @@ function AppAuthenticated() {
           <Route component={NotFound} />
         </Switch>
       </div>
-      <MainFooter isAuthenticated />
+      {/** Remove the footer on the Map view for better UX */}
+      {location.pathname !== AppRoutes.BUURT && <MainFooter isAuthenticated />}
     </>
   );
 }
@@ -435,7 +430,11 @@ function AppLanding() {
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
-    return <p className={styles.PreLoader}>Welkom op Mijn Amsterdam</p>;
+    return (
+      <Paragraph className={styles.PreLoader}>
+        Welkom op Mijn Amsterdam
+      </Paragraph>
+    );
   }
 
   return isAuthenticated ? (

@@ -1,3 +1,4 @@
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import { AanbiedenDiensten } from './AanbiedenDiensten';
@@ -31,15 +32,13 @@ import {
 } from '../../../universal/helpers/vergunningen';
 import { LinkProps } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
+import { ErrorAlert, LoadingContent } from '../../components';
 import {
-  ErrorAlert,
-  ThemaIcon,
-  DetailPage,
-  LinkdInline,
-  LoadingContent,
-  PageContent,
-  PageHeading,
-} from '../../components';
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 interface VergunningDetailProps {
@@ -53,123 +52,124 @@ export default function VergunningDetail({ backLink }: VergunningDetailProps) {
   const noContent = !isLoading(VERGUNNINGEN) && !Vergunning;
 
   return (
-    <DetailPage>
-      <PageHeading
-        icon={<ThemaIcon />}
-        backLink={backLink}
-        isLoading={isLoading(VERGUNNINGEN)}
-      >
-        {Vergunning?.title || 'Vergunning'}
-      </PageHeading>
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={backLink?.to}>
+          {Vergunning?.title || 'Vergunning'}
+        </PageHeadingV2>
+        <PageContentCell>
+          {(isError(VERGUNNINGEN) || noContent) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen gegevens tonen.
+            </ErrorAlert>
+          )}
+          {isLoading(VERGUNNINGEN) && (
+            <LoadingContent className={styles.LoadingContentInfo} />
+          )}
+          {!isLoading(VERGUNNINGEN) && Vergunning && (
+            <>
+              {Vergunning.caseType === CaseType.TVMRVVObject && (
+                <TVMRVVObject vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.GPK && (
+                <GPK vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.GPP && (
+                <GPP vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.ERVV && (
+                <ERVV vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.Omzettingsvergunning && (
+                <Omzettingsvergunning vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.EvenementVergunning && (
+                <EvenementVergunning vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.EvenementMelding && (
+                <EvenementMelding vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.BZP && (
+                <BZP vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.BZB && (
+                <BZB vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.Flyeren && (
+                <Flyeren vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.AanbiedenDiensten && (
+                <AanbiedenDiensten vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.NachtwerkOntheffing && (
+                <Nachtwerkontheffing vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.ZwaarVerkeer && (
+                <ZwaarVerkeer vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.VOB && (
+                <VOB vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.RVVHeleStad && (
+                <RvvHeleStad vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.RVVSloterweg && (
+                <RvvSloterweg vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.EigenParkeerplaats && (
+                <EigenParkeerplaats vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.EigenParkeerplaatsOpheffen && (
+                <EigenParkeerplaatsOpheffen vergunning={Vergunning} />
+              )}
+              {(Vergunning.caseType === CaseType.TouringcarDagontheffing ||
+                Vergunning.caseType === CaseType.TouringcarJaarontheffing) && (
+                <Touringcar vergunning={Vergunning} />
+              )}
+              {Vergunning.caseType === CaseType.WVOS && (
+                <WVOS vergunning={Vergunning} />
+              )}
 
-      <PageContent className={styles.DetailPageContent}>
-        {(isError(VERGUNNINGEN) || noContent) && (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
-        )}
-        {isLoading(VERGUNNINGEN) && (
-          <LoadingContent className={styles.LoadingContentInfo} />
-        )}
+              {isWoonvergunning(Vergunning) && (
+                <Woonvergunningen vergunning={Vergunning} />
+              )}
+
+              {showDocuments(Vergunning.caseType) &&
+                !!Vergunning.documentsUrl && (
+                  <DocumentDetails vergunning={Vergunning} />
+                )}
+
+              {Vergunning.caseType === CaseType.BZP &&
+                Vergunning.decision === 'Verleend' &&
+                Vergunning.status === 'Afgehandeld' && (
+                  <Paragraph className={styles.Disclaimer}>
+                    U kunt uw kenteken{' '}
+                    <Link
+                      rel="noopener noreferrer"
+                      href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/ontheffing-blauwe-zone-aanvragen/#hf1dde781-fd6f-462f-8e9c-6b86d42019b8"
+                    >
+                      hier
+                    </Link>{' '}
+                    wijzigen. Doorgevoerde wijzigingen worden niet getoond in
+                    Mijn Amsterdam.
+                  </Paragraph>
+                )}
+            </>
+          )}
+        </PageContentCell>
         {!isLoading(VERGUNNINGEN) && Vergunning && (
-          <>
-            {Vergunning.caseType === CaseType.TVMRVVObject && (
-              <TVMRVVObject vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.GPK && (
-              <GPK vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.GPP && (
-              <GPP vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.ERVV && (
-              <ERVV vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.Omzettingsvergunning && (
-              <Omzettingsvergunning vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.EvenementVergunning && (
-              <EvenementVergunning vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.EvenementMelding && (
-              <EvenementMelding vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.BZP && (
-              <BZP vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.BZB && (
-              <BZB vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.Flyeren && (
-              <Flyeren vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.AanbiedenDiensten && (
-              <AanbiedenDiensten vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.NachtwerkOntheffing && (
-              <Nachtwerkontheffing vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.ZwaarVerkeer && (
-              <ZwaarVerkeer vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.VOB && (
-              <VOB vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.RVVHeleStad && (
-              <RvvHeleStad vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.RVVSloterweg && (
-              <RvvSloterweg vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.EigenParkeerplaats && (
-              <EigenParkeerplaats vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.EigenParkeerplaatsOpheffen && (
-              <EigenParkeerplaatsOpheffen vergunning={Vergunning} />
-            )}
-            {(Vergunning.caseType === CaseType.TouringcarDagontheffing ||
-              Vergunning.caseType === CaseType.TouringcarJaarontheffing) && (
-              <Touringcar vergunning={Vergunning} />
-            )}
-            {Vergunning.caseType === CaseType.WVOS && (
-              <WVOS vergunning={Vergunning} />
-            )}
-
-            {isWoonvergunning(Vergunning) && (
-              <Woonvergunningen vergunning={Vergunning} />
-            )}
-
-            {showDocuments(Vergunning.caseType) &&
-              !!Vergunning.documentsUrl && (
-                <DocumentDetails vergunning={Vergunning} />
-              )}
-
-            {Vergunning.caseType === CaseType.BZP &&
-              Vergunning.decision === 'Verleend' &&
-              Vergunning.status === 'Afgehandeld' && (
-                <p className={styles.Disclaimer}>
-                  U kunt uw kenteken{' '}
-                  <LinkdInline
-                    external
-                    href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/ontheffing-blauwe-zone-aanvragen/#hf1dde781-fd6f-462f-8e9c-6b86d42019b8"
-                  >
-                    hier
-                  </LinkdInline>{' '}
-                  wijzigen. Doorgevoerde wijzigingen worden niet getoond in Mijn
-                  Amsterdam.
-                </p>
-              )}
-          </>
+          <PageContentCell>
+            <StatusLineItems
+              vergunning={Vergunning}
+              trackPath={(document) =>
+                `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
+                  document.title
+                }`
+              }
+            />
+          </PageContentCell>
         )}
-      </PageContent>
-      {!isLoading(VERGUNNINGEN) && Vergunning && (
-        <StatusLineItems
-          vergunning={Vergunning}
-          trackPath={(document) =>
-            `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
-              document.title
-            }`
-          }
-        />
-      )}
-    </DetailPage>
+      </PageContentV2>
+    </DetailPageV2>
   );
 }

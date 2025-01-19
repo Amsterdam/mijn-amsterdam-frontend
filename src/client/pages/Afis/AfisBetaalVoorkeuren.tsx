@@ -13,8 +13,8 @@ import { entries } from '../../../universal/helpers/utils';
 import { LoadingContent } from '../../components';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
+import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps } from '../../components/Table/TableV2';
-import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
@@ -46,7 +46,7 @@ function AfisBusinessPartnerDetails({
     : [];
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <CollapsiblePanel title="Betaalgegevens" startCollapsed={startCollapsed}>
         {isLoading && <LoadingContent />}
         {!isLoading && !!rows.length && (
@@ -61,7 +61,7 @@ function AfisBusinessPartnerDetails({
           </Grid>
         )}
       </CollapsiblePanel>
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 
@@ -192,7 +192,7 @@ export function AfisBetaalVoorkeuren() {
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
-      backLink={{ to: AppRoutes.AFIS, title: ThemaTitles.AFIS }}
+      backLink={AppRoutes.AFIS}
       linkListItems={[
         {
           to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',

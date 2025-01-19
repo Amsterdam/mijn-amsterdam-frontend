@@ -2,8 +2,6 @@ import React from 'react';
 
 import {
   Alert,
-  Button,
-  Grid,
   Heading,
   Link,
   Paragraph,
@@ -15,6 +13,8 @@ import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../universal/helpers/utils';
+import { MaButtonRouterLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -98,16 +98,16 @@ export function AfisThemaPagina() {
   );
 
   const pageContentSecondary = (
-    <Grid.Cell span="all">
-      <Button
+    <PageContentCell>
+      <MaButtonRouterLink
         className="ams-mb--sm"
         variant="secondary"
-        onClick={() => history.push(routes.betaalVoorkeuren)}
+        href={routes.betaalVoorkeuren}
       >
         Betaalvoorkeuren
-      </Button>
+      </MaButtonRouterLink>
       <AfisDisclaimer />
-    </Grid.Cell>
+    </PageContentCell>
   );
 
   const pageContentErrorAlert = (

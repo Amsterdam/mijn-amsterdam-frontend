@@ -7,7 +7,6 @@
 
 .Value {
   display: block;
-  font-size: 1.8rem;
   margin: 0;
   padding-right: 16rem;
 
@@ -51,9 +50,4 @@
   > * {
     flex: 1;
   }
-}
-
-.WithExcerpt {
-  max-height: 40px;
-  overflow: hidden;
 }

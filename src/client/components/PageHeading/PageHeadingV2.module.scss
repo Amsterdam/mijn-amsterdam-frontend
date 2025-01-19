@@ -1,0 +1,41 @@
+.PageHeadingWrap {
+  background-color: white;
+  margin-top: -166px;
+  position: relative;
+
+  // Hack to add white background to the left of the screen.
+  &:before {
+    content: '';
+    position: absolute;
+    background-color: white;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    display: block;
+  }
+}
+
+.PageHeadingSizer {
+  display: flex;
+  height: 100%;
+  position: relative;
+  align-items: flex-end;
+  height: 166px;
+}
+
+.PageHeading {
+  // Align bottom of text with rest of page.
+  transform: translateY(20px);
+  --ams-heading-level-3-font-size: 58px;
+  --ams-heading-level-3-line-height: 72px;
+}
+
+:global(.ams-link--standalone) {
+  &.BackLink {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+  }
+}

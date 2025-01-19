@@ -11,15 +11,18 @@ import {
   useRef,
 } from 'react';
 
+import { Button } from '@amsterdam/design-system-react';
+import {
+  ChevronRightIcon,
+  CloseIcon,
+} from '@amsterdam/design-system-react-icons';
 import { animated, AnimatedValue, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 
 import styles from './PanelComponent.module.scss';
-import { IconChevronRight } from '../../../assets/icons';
 import { useWidescreen } from '../../../hooks/media.hook';
-import { CloseButton } from '../../Button/Button';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible
@@ -375,13 +378,14 @@ export function PanelComponent({
       height={getPanelSize(state, true, availableHeight)}
     >
       {showCloseButton && (
-        <CloseButton
-          iconSize="24"
+        <Button
           className={styles.CloseButton}
           onClick={(event) => {
             cycleState();
-            onClose && onClose(event);
+            onClose?.(event);
           }}
+          icon={CloseIcon}
+          iconOnly
           aria-label={`${id} paneel sluiten`}
         />
       )}
@@ -399,12 +403,16 @@ export function PanelComponent({
   ) : (
     <PanelWideAnimated width={getPanelSize(state, false)}>
       {showCloseButton && (
-        <CloseButton
+        <Button
           className={styles.CloseButton}
+          variant="tertiary"
           onClick={(event) => {
             cycleState();
-            onClose && onClose(event);
+            onClose?.(event);
           }}
+          icon={CloseIcon}
+          iconOnly
+          aria-label={`${id} paneel sluiten`}
         />
       )}
       {showToggleButton && (
@@ -417,7 +425,7 @@ export function PanelComponent({
           onClick={cycleState}
         >
           <span className={styles.Icon}>
-            <IconChevronRight />
+            <ChevronRightIcon />
           </span>
         </ToggleButtonDesktop>
       )}

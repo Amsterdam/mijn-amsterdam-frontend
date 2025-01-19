@@ -1,3 +1,5 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import type {
   Aandeelhouder,
   Aansprakelijke,
@@ -17,7 +19,6 @@ import {
   splitCapitals,
 } from '../../../../universal/helpers/text';
 import { Adres, AppState } from '../../../../universal/types';
-import { LinkdInline } from '../../../components/Button/Button';
 import {
   ProfileLabels,
   formatProfileSectionData,
@@ -36,32 +37,28 @@ const onderneming: ProfileLabels<Partial<Onderneming>, AppState['KVK']> = {
   handelsnamen: [
     'Overige handelsnamen',
     (handelsnamen) =>
-      handelsnamen?.length ? (
-        <>
-          {handelsnamen.map((handelsnaam) => (
+      handelsnamen?.length
+        ? handelsnamen.map((handelsnaam) => (
             <span key={handelsnaam}>
               {handelsnaam}
               <br />
             </span>
-          ))}
-        </>
-      ) : null,
+          ))
+        : null,
   ],
   rechtsvorm: 'Rechtsvorm',
   hoofdactiviteit: 'Activiteiten',
   overigeActiviteiten: [
     'Overige activiteiten',
     (activiteiten) =>
-      activiteiten?.length ? (
-        <>
-          {activiteiten.map((activiteit) => (
+      activiteiten?.length
+        ? activiteiten.map((activiteit) => (
             <span key={activiteit}>
               {activiteit}
               <br />
             </span>
-          ))}
-        </>
-      ) : null,
+          ))
+        : null,
   ],
   datumAanvang: [
     'Startdatum onderneming',
@@ -81,9 +78,8 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
   handelsnamen: [
     'Handelsnaam',
     (handelsnamen, { isHoofdvestiging }) =>
-      handelsnamen?.length ? (
-        <>
-          {handelsnamen
+      handelsnamen?.length
+        ? handelsnamen
             .filter((handelsnaam, index) =>
               isHoofdvestiging ? index === 0 : true
             )
@@ -92,9 +88,8 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
                 {handelsnaam}
                 <br />
               </span>
-            ))}
-        </>
-      ) : null,
+            ))
+        : null,
   ],
   bezoekadres: [
     'Bezoekadres',
@@ -117,9 +112,9 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
   telefoonnummer: [
     'Telefoonnummer',
     (value) => (
-      <LinkdInline href={`tel:${value}`} external={true}>
+      <Link href={`tel:${value}`} rel="noopener noreferrer">
         {value}
-      </LinkdInline>
+      </Link>
     ),
   ],
   websites: [
@@ -129,9 +124,9 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
         <>
           {urls.map((url) => (
             <span key={url}>
-              <LinkdInline key={url} href={url} external={true}>
+              <Link key={url} href={url} rel="noopener noreferrer">
                 {url.replace(/(https?:\/\/)/, '')}
-              </LinkdInline>
+              </Link>
               <br />
             </span>
           ))}
@@ -142,25 +137,23 @@ const vestiging: ProfileLabels<Partial<Vestiging>, AppState['KVK']> = {
     'E-mail',
     (value) =>
       value ? (
-        <LinkdInline external={true} href={`mailto:${value}`}>
+        <Link rel="noopener noreferrer" href={`mailto:${value}`}>
           {value}
-        </LinkdInline>
+        </Link>
       ) : null,
   ],
   faxnummer: 'Fax',
   activiteiten: [
     'Activiteiten',
     (activiteiten) =>
-      activiteiten?.length ? (
-        <>
-          {activiteiten.map((activiteit) => (
+      activiteiten?.length
+        ? activiteiten.map((activiteit) => (
             <span key={activiteit}>
               {activiteit}
               <br />
             </span>
-          ))}
-        </>
-      ) : null,
+          ))
+        : null,
   ],
   datumAanvang: [
     'Datum vestiging',
@@ -305,7 +298,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
     );
   }
 
-  if (labelConfig.eigenaar) {
+  if (kvkData.eigenaar) {
     profileData.eigenaar = formatProfileSectionData(
       labelConfig.eigenaar,
       kvkData.eigenaar,
