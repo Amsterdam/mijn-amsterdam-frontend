@@ -12,14 +12,16 @@ import {
 } from 'react';
 
 import { Button } from '@amsterdam/design-system-react';
-import { CloseIcon } from '@amsterdam/design-system-react-icons';
+import {
+  ChevronRightIcon,
+  CloseIcon,
+} from '@amsterdam/design-system-react-icons';
 import { animated, AnimatedValue, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 
 import styles from './PanelComponent.module.scss';
-import { IconChevronRight } from '../../../assets/icons';
 import { useWidescreen } from '../../../hooks/media.hook';
 
 export enum PanelState {
@@ -423,7 +425,7 @@ export function PanelComponent({
           onClick={cycleState}
         >
           <span className={styles.Icon}>
-            <IconChevronRight />
+            <ChevronRightIcon />
           </span>
         </ToggleButtonDesktop>
       )}
