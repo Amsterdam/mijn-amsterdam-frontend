@@ -186,7 +186,6 @@ export default function InkomenSpecificaties() {
         )}
         <PageContentCell>
           <Section
-            className={styles.TableSection}
             title={
               isAnnualStatementOverviewPage
                 ? 'Jaaropgaven'
