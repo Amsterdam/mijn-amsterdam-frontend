@@ -10,15 +10,18 @@ export interface PaginationProps {
 }
 
 const MAX_PAGES = 5;
+
 export default function Pagination({
   totalCount,
   pageSize,
   maxPages = MAX_PAGES,
   onPageClick,
   currentPage = 1,
+  className,
 }: PaginationProps) {
   return (
     <PaginationV2
+      className={className}
       totalCount={totalCount}
       pageSize={pageSize}
       maxPages={maxPages}
