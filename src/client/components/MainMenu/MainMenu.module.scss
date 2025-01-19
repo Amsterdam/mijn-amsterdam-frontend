@@ -3,9 +3,7 @@
   column-gap: var(--ams-grid-column-gap);
   grid-template-columns: 3fr 1fr;
   padding-top: calc(var(--ams-link-list-gap) * 4);
-  padding-bottom: calc(
-    var(--ams-grid-row-gap) - calc(var(--ams-link-list-gap) * 1.2)
-  );
+  padding-bottom: var(--ams-space-xl);
 
   .menuItem {
     display: block;
