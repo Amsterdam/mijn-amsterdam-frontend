@@ -11,7 +11,6 @@ export { default as IconAuto } from './car.svg?react';
 export { default as IconBekendmaking } from './bekendmaking.svg?react';
 export { default as IconEvenement } from './evenement.svg?react';
 export { default as IconSport } from './sport.svg?react';
-export { default as IconHomeCommercial } from './homeCommercial__primary-red.svg?react';
 export { default as IconTennis } from './tennis.svg?react';
 export { default as IconVoetbal } from './voetbal.svg?react';
 export { default as IconFitness } from './fitness.svg?react';

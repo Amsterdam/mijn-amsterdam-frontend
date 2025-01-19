@@ -1,3 +1,9 @@
+import {
+  BellIcon,
+  BuildingsIcon,
+  SearchIcon,
+} from '@amsterdam/design-system-react-icons';
+
 import { Thema } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
@@ -10,7 +16,6 @@ import {
   IconErfpacht,
   IconGarbage,
   IconHLI,
-  IconHomeCommercial,
   IconHoreca,
   IconInkomen,
   IconInkomenSVWI,
@@ -18,10 +23,8 @@ import {
   IconKrefia,
   IconMijnGegevens,
   IconMilieuzone,
-  IconMyNotifications,
   IconOvertredingen,
   IconParkeren,
-  IconSearch,
   IconSubsidie,
   IconToeristischeVerhuur,
   IconVaren,
@@ -48,13 +51,13 @@ export const ThemaIcons: Record<Thema, SVGComponent> = {
   INKOMEN: IconInkomen,
   KLACHTEN: IconKlachten,
   KREFIA: IconKrefia,
-  KVK: IconHomeCommercial,
+  KVK: BuildingsIcon,
   MILIEUZONE: IconMilieuzone,
-  NOTIFICATIONS: IconMyNotifications,
+  NOTIFICATIONS: BellIcon,
   OVERTREDINGEN: IconOvertredingen,
   PARKEREN: IconParkeren,
   HOME: IconBurgerZaken,
-  SEARCH: IconSearch,
+  SEARCH: SearchIcon,
   SUBSIDIE: IconSubsidie,
   SVWI: IconInkomenSVWI,
   TOERISTISCHE_VERHUUR: IconToeristischeVerhuur,
