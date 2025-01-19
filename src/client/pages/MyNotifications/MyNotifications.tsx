@@ -1,10 +1,8 @@
 import { useEffect, useMemo } from 'react';
 
 import { OrderedList } from '@amsterdam/design-system-react';
-import classNames from 'classnames';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
-import styles from './MyNotifications.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ErrorAlert, Pagination, LoadingContent } from '../../components';
@@ -49,18 +47,18 @@ export function MyNotificationsPage() {
   }, [currentPage]);
 
   return (
-    <DetailPageV2 className={styles.MyNotifications}>
+    <DetailPageV2>
       <PageContentV2>
         <PageHeadingV2 backLink={AppRoutes.HOME}>Actueel</PageHeadingV2>
         <PageContentCell>
           {isError(NOTIFICATIONS) && (
-            <ErrorAlert>
+            <ErrorAlert className="ams-mb--sm">
               Niet alle updates kunnen op dit moment worden getoond.
             </ErrorAlert>
           )}
           {total > PAGE_SIZE && (
             <Pagination
-              className={styles.Pagination}
+              className="ams-mb--sm"
               totalCount={total}
               pageSize={PAGE_SIZE}
               currentPage={currentPage}
@@ -83,10 +81,7 @@ export function MyNotificationsPage() {
                 return (
                   <OrderedList.Item
                     key={`${notification.thema}-${notification.id}-${index}`}
-                    className={classNames(
-                      styles.MyNotificationItem,
-                      'ams-mb--sm'
-                    )}
+                    className="ams-mb--sm"
                   >
                     <MyNotification
                       notification={notification}
@@ -98,7 +93,6 @@ export function MyNotificationsPage() {
           </OrderedList>
           {total > PAGE_SIZE && (
             <Pagination
-              className={styles.Pagination}
               totalCount={total}
               pageSize={PAGE_SIZE}
               currentPage={currentPage}
