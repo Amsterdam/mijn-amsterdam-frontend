@@ -6,7 +6,10 @@ import {
   useAfisBetaalVoorkeurenData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
-import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
+import {
+  AfisBusinessPartnerDetailsTransformed,
+  AfisEMandateFrontend,
+} from '../../../server/services/afis/afis-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { entries } from '../../../universal/helpers/utils';
@@ -78,34 +81,28 @@ export function AfisBetaalVoorkeuren() {
     eMandates,
     eMandateTableConfig,
     hasBusinessPartnerDetailsError,
-    hasEmandatesError,
+    hasEMandatesError,
     hasFailedEmailDependency,
     hasFailedPhoneDependency,
     hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
-    isLoadingEmandates,
+    isLoadingEMandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
   const isLoadingAllAPis =
     isThemaPaginaLoading &&
     isLoadingBusinessPartnerDetails &&
-    isLoadingEmandates;
+    isLoadingEMandates;
 
-  const eMandateTables =
-    FeatureToggle.afisEmandatesActive &&
-    entries(eMandateTableConfig).map(
-      ([kind, { title, displayProps, filter }]) => {
-        return (
-          <ThemaPaginaTable<AfisEmandateStub>
-            key={kind}
-            title={title}
-            zaken={eMandates.filter(filter)}
-            displayProps={displayProps}
-            maxItems={-1}
-          />
-        );
-      }
-    );
+  const eMandateTables = FeatureToggle.afisEMandatesActive && (
+    <ThemaPaginaTable<AfisEMandateFrontend>
+      className={eMandateTableConfig.className}
+      displayProps={eMandateTableConfig.displayProps}
+      maxItems={-1}
+      title={eMandateTableConfig.title}
+      zaken={eMandates}
+    />
+  );
 
   const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
 
@@ -157,8 +154,8 @@ export function AfisBetaalVoorkeuren() {
       <AfisBusinessPartnerDetails
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
-        isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={FeatureToggle.afisEmandatesActive}
+        isLoading={isLoadingBusinessPartnerDetails || isThemaPaginaLoading}
+        startCollapsed={FeatureToggle.afisEMandatesActive}
       />
       {eMandateTables}
     </>
@@ -197,7 +194,7 @@ export function AfisBetaalVoorkeuren() {
           <br />
         </>
       )}
-      {hasEmandatesError && (
+      {hasEMandatesError && (
         <>Wij kunnen nu geen automatische incasso&apos;s laten zien.</>
       )}
     </>
@@ -208,14 +205,14 @@ export function AfisBetaalVoorkeuren() {
       title="Betaalvoorkeuren"
       isError={
         isThemaPaginaError ||
-        (hasBusinessPartnerDetailsError && hasEmandatesError)
+        (hasBusinessPartnerDetailsError && hasEMandatesError)
       }
       isPartialError={
         hasFailedFullNameDependency ||
         hasFailedPhoneDependency ||
         hasFailedPhoneDependency ||
         hasBusinessPartnerDetailsError ||
-        hasEmandatesError
+        hasEMandatesError
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
