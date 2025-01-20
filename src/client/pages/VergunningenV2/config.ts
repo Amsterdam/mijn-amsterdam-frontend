@@ -57,7 +57,7 @@ export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (vergunning: VergunningFrontendV2 | Vergunning) =>
-      !vergunning.processed,
+      vergunning.status !== 'Afgehandeld',
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
   },
@@ -73,8 +73,8 @@ export const tableConfig = {
       }
       if (isVergunningExpirable(vergunning)) {
         return (
-          vergunning.status === 'Afgehandeld' &&
-          vergunning.decision === 'Verleend' &&
+          (vergunning.status === 'Afgehandeld' ||
+            vergunning.decision === 'Verleend') &&
           !isExpired(vergunning, new Date())
         );
       }
@@ -94,12 +94,14 @@ export const tableConfig = {
     filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
       if (isVergunningExpirable(vergunning)) {
         return (
-          vergunning.processed ||
-          vergunning.decision !== 'Verleend' ||
-          !isExpired(vergunning, new Date())
+          vergunning.decision === 'Verleend' &&
+          isExpired(vergunning, new Date())
         );
       }
-      return vergunning.processed && vergunning.decision;
+      return (
+        vergunning.status === 'Afgehandeld' &&
+        vergunning.decision !== 'Verleend'
+      );
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
