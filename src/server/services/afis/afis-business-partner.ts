@@ -10,6 +10,7 @@ import {
   AfisBusinessPartnerEmailSource,
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
+  BusinessPartnerId,
   BusinessPartnerIdPayload,
 } from './afis-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -35,7 +36,8 @@ function transformBusinessPartnerAddressResponse(
     const includeLand = true;
     return {
       id: addressEntry.AddressID,
-      address: getFullAddress(
+      address: addressEntry,
+      fullAddress: getFullAddress(
         {
           straatnaam: addressEntry.StreetName,
           huisnummer: addressEntry.HouseNumber?.toString() ?? '',
@@ -55,8 +57,8 @@ function transformBusinessPartnerAddressResponse(
 
 async function fetchBusinessPartnerAddress(
   requestID: RequestID,
-  businessPartnerId: string
-): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerAddress | null>> {
+  businessPartnerId: BusinessPartnerId
+): Promise<ApiResponse<AfisBusinessPartnerAddresss | null>> {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerAddressResponse,
     formatUrl(config) {
@@ -83,6 +85,8 @@ function transformBusinessPartnerFullNameResponse(
   if (businessPartnerEntry) {
     const transformedResponse: AfisBusinessPartnerDetails = {
       fullName: businessPartnerEntry.BusinessPartnerFullName ?? null,
+      firstName: businessPartnerEntry.FirstName ?? null,
+      lastName: businessPartnerEntry.LastName ?? null,
     };
 
     return transformedResponse;
@@ -93,12 +97,12 @@ function transformBusinessPartnerFullNameResponse(
 
 async function fetchBusinessPartnerFullName(
   requestID: RequestID,
-  businessPartnerId: string
-) {
+  businessPartnerId: BusinessPartnerId
+): Promise<ApiResponse<AfisBusinessPartnerDetails | null>> {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerFullNameResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName,FirstName,LastName`;
     },
   };
 
