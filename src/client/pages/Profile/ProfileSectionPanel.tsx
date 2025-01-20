@@ -35,7 +35,7 @@ function ProfileSectionActionLinks({
   actionLinks,
 }: ProfileSectionActionLinksProps) {
   return (
-    <LinkList>
+    <LinkList className="ams-mb--sm">
       {actionLinks.map((actionLink) => (
         <LinkList.Link
           key={actionLink.title}

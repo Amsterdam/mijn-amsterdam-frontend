@@ -1,20 +1,15 @@
 import { Heading, MegaMenu } from '@amsterdam/design-system-react';
 
+import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
-import { ThemaMenuItemTransformed } from '../../config/thema';
-import { MenuItem } from '../MainHeader/MainHeader.constants';
+import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 export const AmsMainMenuClassname = 'ma-main-header';
 export const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 
-type MainMenuProps = {
-  menuItems: MenuItem[];
-  themas: ThemaMenuItemTransformed[];
-  isPhoneScreen: boolean;
-};
-
-export function MainMenu({ menuItems, themas, isPhoneScreen }: MainMenuProps) {
+export function MainMenu() {
+  const { items } = useThemaMenuItems();
   return (
     <MegaMenu className={styles.MainMenu}>
       <nav>
@@ -22,7 +17,7 @@ export function MainMenu({ menuItems, themas, isPhoneScreen }: MainMenuProps) {
           Thema&apos;s
         </Heading>
         <MegaMenu.ListCategory>
-          {themas.map((thema) => {
+          {items.map((thema) => {
             const LinkComponent =
               thema.rel === 'external' ? MaLink : MaRouterLink;
             return (
@@ -44,7 +39,7 @@ export function MainMenu({ menuItems, themas, isPhoneScreen }: MainMenuProps) {
           Categorieën
         </Heading>
         <MegaMenu.ListCategory>
-          {menuItems.map((item) => (
+          {categoryMenuItems.map((item) => (
             <MaRouterLink
               key={item.id}
               href={item.to}

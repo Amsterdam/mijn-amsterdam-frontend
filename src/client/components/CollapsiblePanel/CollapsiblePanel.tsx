@@ -21,9 +21,7 @@ export function CollapsiblePanelHeading({
 }: CollapsiblePanelHeadingProps) {
   return (
     <div className={styles.CollapsiblePanelHeading}>
-      <Heading level={3} size="level-2">
-        {title}
-      </Heading>
+      <Heading level={3}>{title}</Heading>
       <Button variant="tertiary" onClick={() => toggle()}>
         {isCollapsed ? buttonLabelCollapsed : buttonLabelExpanded}
       </Button>
