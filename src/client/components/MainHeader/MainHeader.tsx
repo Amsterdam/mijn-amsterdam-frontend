@@ -105,12 +105,14 @@ export default function MainHeader({
         <Header
           logoLink="https://www.amsterdam.nl/"
           brandName={
-            <MaRouterLink
-              className={styles.BrandNameLink}
-              href={AppRoutes.HOME}
-            >
-              Mijn Amsterdam
-            </MaRouterLink>
+            (
+              <MaRouterLink
+                className={styles.BrandNameLink}
+                href={AppRoutes.HOME}
+              >
+                Mijn Amsterdam
+              </MaRouterLink>
+            ) as unknown as string // Hack because brandName is not typed as ReactNode
           }
           menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
         >

@@ -162,7 +162,7 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
         </dl>
       )}
       {!!fraction.opmerking && (
-        <Paragraph>
+        <Paragraph className={styles.GarbageFractionPanelOpmerking}>
           <InnerHtml el="span">{fraction.opmerking}</InnerHtml>
         </Paragraph>
       )}
