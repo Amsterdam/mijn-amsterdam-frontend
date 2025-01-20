@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import { ParamsDictionary } from 'express-serve-static-core';
 import { generatePath, matchPath } from 'react-router-dom';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
@@ -18,8 +19,8 @@ export type RequestWithQueryParams<T extends Record<string, string>> = Request<
 >;
 
 export type RequestWithRouteAndQueryParams<
-  T extends Record<string, string> = Record<string, string>,
-  T2 extends Record<string, string> = Record<string, string>,
+  T extends ParamsDictionary = Record<string, string>,
+  T2 extends qs.ParsedQs = Record<string, string>,
 > = Request<T, {}, {}, T2>;
 /* eslint-enable @typescript-eslint/no-empty-object-type */
 
