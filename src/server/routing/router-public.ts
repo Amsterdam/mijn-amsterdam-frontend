@@ -121,7 +121,7 @@ router.get(
     const id = req.params.id;
     const datasetCategoryId = getDatasetCategoryId(datasetId);
 
-    let response: ApiResponse_DEPRECATED<any> | null = null;
+    let response: ApiResponse_DEPRECATED<unknown> | null = null;
 
     try {
       if (datasetCategoryId && datasetId && id) {
