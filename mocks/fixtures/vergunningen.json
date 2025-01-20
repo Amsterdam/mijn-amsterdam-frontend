@@ -55,7 +55,7 @@
     {
       "caseType": "Parkeerontheffingen Blauwe zone bedrijven",
       "dateDecision": "2022-09-01",
-      "dateEnd": "2022-09-30",
+      "dateEnd": "2080-09-30",
       "dateRequest": "2022-08-31",
       "dateStart": "2022-09-01",
       "dateWorkflowActive": "2022-08-31",
@@ -1378,7 +1378,10 @@
       ],
       "previousLicensePlates": null,
       "processed": false,
-      "requestTypes": ["Kentekenwijziging", "Nieuwe aanvraag"],
+      "requestTypes": [
+        "Kentekenwijziging",
+        "Nieuwe aanvraag"
+      ],
       "status": "Ontvangen",
       "title": "Eigen parkeerplaats",
       "link": {
