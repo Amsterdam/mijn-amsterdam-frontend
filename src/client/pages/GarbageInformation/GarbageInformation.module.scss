@@ -53,9 +53,8 @@
 }
 
 .GarbageFractionPanel {
-  background-color: $color-neutral-grey1;
-  margin-bottom: 1.6rem;
-  padding: 0.8rem 1.6rem;
+  // background-color: $color-neutral-grey1;
+  margin-bottom: var(--ams-space-xl);
 
   dl {
     display: flex;
@@ -64,16 +63,12 @@
 
   dt {
     min-width: 22%;
-    color: $color-neutral-grey4;
+    font-weight: bold;
   }
 
   dd {
     width: 80%;
-    font-weight: bold;
-
     p {
-      margin: 0;
-
       + p {
         margin-top: 1rem;
       }
@@ -83,7 +78,7 @@
 
 .GarbageFractionPanelTitle {
   margin: 0;
-  border-bottom: 0.1rem solid $color-neutral-grey4;
+  // border-bottom: 0.1rem solid $color-neutral-grey4;
   display: flex;
 }
 
@@ -92,9 +87,16 @@
   margin-right: 2rem;
 }
 
+.GarbageFractionPanelOpmerking {
+  border: 2px solid var(--ams-link-color);
+  padding: var(--ams-space-md);
+  margin-top: var(--ams-space-md) !important;
+}
+
 .GarbageFractionPanelHighlight {
-  background-color: $color-support-focus;
-  padding: 0.5rem 1rem;
+  border: 2px solid var(--ams-alert-warning-border-color);
+  padding: var(--ams-space-md);
+  margin-top: var(--ams-space-md) !important;
 }
 
 .UnstyledList {
