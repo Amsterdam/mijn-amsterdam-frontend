@@ -4,46 +4,11 @@
   z-index: z-index(main-header);
 }
 
-.Backdrop {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: z-index(main-menu-backdrop);
-}
-
-// Top header bar
-.HeaderGridPadding {
-  min-height: 80px;
-}
-
-.TopCell {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.MainMenuWrap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: z-index(main-menu);
-  background-color: white;
-}
-
 .ProfileNameInner {
   max-width: 200px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.LogoWrap {
-  display: flex;
-  gap: var(--ams-space-lg);
-  text-decoration: none;
 }
 
 .SearchBarWrap {
@@ -67,4 +32,12 @@
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
+}
+
+:global(.ams-link).BrandNameLink {
+  color: var(--ams-heading-color);
+  font-weight: var(--ams-heading-font-weight);
+  font-size: var(--ams-heading-level-5-font-size);
+  line-height: 1.35;
+  text-decoration: none;
 }

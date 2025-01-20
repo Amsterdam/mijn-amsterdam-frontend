@@ -103,7 +103,15 @@ export default function MainHeader({
     <>
       <Screen className={styles.MainHeaderWrap}>
         <Header
-          brandName="Mijn Amsterdam"
+          logoLink="https://www.amsterdam.nl/"
+          brandName={
+            <MaRouterLink
+              className={styles.BrandNameLink}
+              href={AppRoutes.HOME}
+            >
+              Mijn Amsterdam
+            </MaRouterLink>
+          }
           menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
         >
           {isAuthenticated && <MainMenu />}
