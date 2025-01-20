@@ -1,10 +1,11 @@
 .LandingPageContent {
+  --landing-page-button-size: 3rem;
   padding-top: var(--ams-space-xl);
 }
+
 .LoginBtn {
   display: inline-flex;
-  height: 5rem;
-  width: 28rem; // ie11 fallback
+  height: var(--landing-page-button-size);
   width: fit-content;
   text-decoration: none;
   align-items: center;
@@ -13,10 +14,10 @@
   .LoginButtonText {
     background-color: $color-primary-red;
     color: $color-white;
-    font-weight: 700;
     padding-right: 1.3rem;
     padding-left: 1.3rem;
-    line-height: 5rem;
+    line-height: var(--landing-page-button-size);
+    font-size: smaller;
   }
 }
 
@@ -30,9 +31,9 @@
   cursor: progress;
 
   span {
+    cursor: not-allowed;
     background-color: $color-neutral-grey2 !important;
     border-color: $color-neutral-grey2 !important;
-    cursor: not-allowed;
     pointer-events: none;
     color: $color-neutral-grey3 !important;
   }
@@ -49,9 +50,9 @@
 .LoginLogoWrap {
   display: inline-flex;
   align-items: center;
-  height: 5rem;
-  width: 5rem;
-  margin-right: 1rem;
+  height: var(--landing-page-button-size);
+  width: var(--landing-page-button-size);
+  margin-right: 0.5rem;
   background-color: #000;
 
   > svg {
