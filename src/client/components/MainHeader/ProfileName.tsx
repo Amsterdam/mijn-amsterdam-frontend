@@ -5,19 +5,22 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import LoadingContent from '../LoadingContent/LoadingContent';
 
-export function ProfileName() {
+type ProfileNameProps = {
+  fallbackName: string;
+};
+
+export function ProfileName({ fallbackName }: ProfileNameProps) {
   const { BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
 
   const persoon = BRP.content?.persoon;
 
-  const labelCommercial =
-    KVK.content?.onderneming.handelsnaam || 'Mijn onderneming';
+  const labelCommercial = KVK.content?.onderneming.handelsnaam || fallbackName;
   const labelPrivate = persoon?.opgemaakteNaam
     ? persoon.opgemaakteNaam
     : persoon?.voornamen
       ? getFullName(persoon)
-      : 'Mijn gegevens';
+      : fallbackName;
   return (
     <>
       {profileType === 'private' && !isLoading(BRP) && labelPrivate}
