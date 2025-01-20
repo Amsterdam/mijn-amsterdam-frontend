@@ -3,7 +3,7 @@ import { ParamsDictionary } from 'express-serve-static-core';
 
 import { fetchAfisFacturenByState } from './afis-facturen';
 import { AfisFactuurState, BusinessPartnerIdPayload } from './afis-types';
-import { ApiResponse } from '../../../universal/helpers/api';
+import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfile } from '../../auth/auth-types';
 import {
@@ -66,7 +66,7 @@ export async function handleFetchAfisFacturen(
 
 export function handleAfisRequestWithEncryptedPayloadQueryParam<
   QueryPayload extends qs.ParsedQs,
-  ServiceResponse extends Promise<ApiResponse<unknown | null>>,
+  ServiceResponse extends Promise<ApiResponse_DEPRECATED<unknown>>,
   RouteParams extends ParamsDictionary = ParamsDictionary,
 >(
   serviceMethod: (

@@ -62,7 +62,7 @@ function transformBusinessPartnerAddressResponse(
 async function fetchBusinessPartnerAddress(
   requestID: RequestID,
   businessPartnerId: BusinessPartnerId
-): Promise<ApiResponse<AfisBusinessPartnerAddresss | null>> {
+): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerAddress | null>> {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerAddressResponse,
     formatUrl(config) {
@@ -102,7 +102,7 @@ function transformBusinessPartnerFullNameResponse(
 async function fetchBusinessPartnerFullName(
   requestID: RequestID,
   businessPartnerId: BusinessPartnerId
-): Promise<ApiResponse<AfisBusinessPartnerDetails | null>> {
+): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerDetails | null>> {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerFullNameResponse,
     formatUrl(config) {
