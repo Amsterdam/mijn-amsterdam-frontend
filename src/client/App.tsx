@@ -170,7 +170,7 @@ function AppAuthenticated() {
     }
   }, [redirectAfterLogin, history]);
 
-  const isHeroVisible = history.location.pathname !== AppRoutes.BUURT;
+  const isHeroVisible = history.location.pathname === AppRoutes.HOME;
 
   return (
     <>
