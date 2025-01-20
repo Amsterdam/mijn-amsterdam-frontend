@@ -73,7 +73,7 @@ export function generateFullApiUrlBFF(
 /** Sets the right statuscode and sends a response. */
 export function sendResponse(
   res: Response,
-  apiResponse: ApiResponse_DEPRECATED<any>
+  apiResponse: ApiResponse_DEPRECATED<unknown>
 ) {
   if (apiResponse.status === 'ERROR') {
     res.status(
@@ -120,7 +120,7 @@ export function sendMessage(
   res: Response,
   id: string,
   event: string = 'message',
-  data?: any
+  data?: object | string | number | null
 ) {
   const doStringify = typeof data !== 'string';
   const payload = doStringify ? JSON.stringify(data) : data;
