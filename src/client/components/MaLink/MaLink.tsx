@@ -9,6 +9,7 @@ import styles from './MaLink.module.scss';
 type MaClassNameVariant =
   | 'fatNoUnderline'
   | 'noDefaultUnderline'
+  | 'noUnderline'
   | 'fatNoDefaultUnderline';
 
 type MaLinkProps = LinkProps & {
@@ -19,6 +20,7 @@ const maClassName: Record<MaClassNameVariant, string> = {
   fatNoUnderline: 'MaRouterLink__no-underline-fat',
   noDefaultUnderline: 'MaRouterLink__no-default-underline',
   fatNoDefaultUnderline: 'MaRouterLink__no-default-underline-fat',
+  noUnderline: 'MaRouterLink__no-underline',
 };
 
 export function MaLink({

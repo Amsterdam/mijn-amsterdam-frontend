@@ -37,23 +37,21 @@ export function PageHeadingV2({
       spanWide={7}
       className={styles.PageHeadingWrap}
     >
-      <div className={styles.PageHeadingSizer} id="skip-to-id-AppContent">
-        <div className={styles.PageHeadingInner}>
-          {showBacklink && (
-            <MaRouterLink
-              className={styles.BackLink}
-              maVariant="noDefaultUnderline"
-              href={backLink || '/'}
-              onClick={!backLink ? goBack : undefined}
-            >
-              <Icon size="level-5" svg={ChevronLeftIcon} />
-              {label}
-            </MaRouterLink>
-          )}
-          <Heading className={styles.PageHeading} level={3}>
-            {children}
-          </Heading>
-        </div>
+      <div className={styles.PageHeadingInner} id="skip-to-id-AppContent">
+        {showBacklink && (
+          <MaRouterLink
+            className={styles.BackLink}
+            maVariant="noDefaultUnderline"
+            href={backLink || '/'}
+            onClick={!backLink ? goBack : undefined}
+          >
+            <Icon size="level-5" svg={ChevronLeftIcon} />
+            {label}
+          </MaRouterLink>
+        )}
+        <Heading className={styles.PageHeading} level={3} size="level-1">
+          {children}
+        </Heading>
       </div>
     </PageContentCell>
   );
