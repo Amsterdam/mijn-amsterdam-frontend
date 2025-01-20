@@ -7,6 +7,10 @@
   --ams-link-standalone-text-decoration-line: none;
 }
 
+.MaRouterLink__no-underline {
+  --ams-link-standalone-text-decoration-line: none;
+}
+
 .MaRouterLink__no-default-underline-fat {
   --ams-link-font-weight: bold;
   &:not(:hover) {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import {
   ExternalLinkIcon,
@@ -441,16 +441,30 @@ export function useSearchResults(
   };
 }
 
+const isSearchActiveAtom = atom<boolean>({
+  key: 'searchActive',
+  default: false,
+});
+
+export function useSearchActive() {
+  return useRecoilState(isSearchActiveAtom);
+}
+
+export function useDisplayLiveSearch() {
+  const location = useLocation();
+  const isDisplayLiveSearch = !matchPath(location.pathname, {
+    path: AppRoutes.SEARCH,
+  });
+  return isDisplayLiveSearch;
+}
+
 export function useSearchOnPage(): {
   isSearchActive: boolean;
   setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
   isDisplayLiveSearch: boolean;
 } {
-  const [isSearchActive, setSearchActive] = useState(false);
-  const location = useLocation();
-  const isDisplayLiveSearch = !matchPath(location.pathname, {
-    path: AppRoutes.SEARCH,
-  });
+  const [isSearchActive, setSearchActive] = useSearchActive();
+  const isDisplayLiveSearch = useDisplayLiveSearch();
 
   useEffect(() => {
     if (isSearchActive && isDisplayLiveSearch) {
