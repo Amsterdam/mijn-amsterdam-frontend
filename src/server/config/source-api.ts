@@ -81,6 +81,7 @@ export type SourceApiKey =
   | 'LOOD_365_OAUTH'
   | 'PARKEREN'
   | 'PARKEREN_FRONTOFFICE'
+  | 'POM'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'SALESFORCE'
@@ -203,6 +204,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },
   },
+  POM: { url: `${getFromEnv('BFF_POM_API_BASE_URL')}` },
   SALESFORCE: {
     url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
     postponeFetch: !FeatureToggle.salesforceActive,

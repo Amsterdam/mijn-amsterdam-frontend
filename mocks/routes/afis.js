@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const httpConstants = require('http2').constants;
 
 const settings = require('../settings');
@@ -283,6 +284,21 @@ module.exports = [
             const htmlResponse = `<h1>Afis factuur betalen</h1><button onclick="history.back()">Betaal factuur</button>`;
             res.send(htmlResponse);
           },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-afis-emandates',
+    url: `${settings.MOCK_BASE_PATH}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: require('../fixtures/afis/e-mandates.json'),
         },
       },
     ],
