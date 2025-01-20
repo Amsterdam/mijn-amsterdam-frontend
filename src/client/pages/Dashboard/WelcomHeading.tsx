@@ -1,6 +1,8 @@
+import { Heading } from '@amsterdam/design-system-react';
+
 import styles from './WelcomeHeading.module.scss';
 import { ProfileName } from '../../components/MainHeader/ProfileName';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { PageContentCell } from '../../components/Page/Page';
 
 const HELLO = 'Welkom,';
 const NOON = 12;
@@ -32,11 +34,21 @@ export function WelcomeHeading() {
   }
 
   return (
-    <PageHeadingV2 showBacklink={false}>
-      {hello}{' '}
-      <span className={styles.ProfileNameWrap}>
-        <ProfileName />
-      </span>
-    </PageHeadingV2>
+    <PageContentCell
+      startWide={1}
+      spanWide={7}
+      className={styles.WelcomeHeadingWrap}
+    >
+      <div className={styles.WelcomeHeadingSizer} id="skip-to-id-AppContent">
+        <div>
+          <Heading className={styles.WelcomeHeading} level={3} size="level-1">
+            {hello}{' '}
+            <span className={styles.ProfileNameWrap}>
+              <ProfileName fallbackName="Bezoeker" />
+            </span>
+          </Heading>
+        </div>
+      </div>
+    </PageContentCell>
   );
 }
