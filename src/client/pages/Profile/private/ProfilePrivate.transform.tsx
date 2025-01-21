@@ -232,23 +232,16 @@ export interface BrpProfileData {
 }
 
 export function formatBrpProfileData(brpData: BRPData | null): BrpProfileData {
-  const profileData: BrpProfileData = {};
-
-  if (brpData?.persoon) {
-    profileData.persoon = formatProfileSectionData(
+  const profileData: BrpProfileData = {
+    persoon: formatProfileSectionData(
       labelConfig.persoon,
-      brpData.persoon,
+      brpData?.persoon,
       brpData
-    );
-  }
-
-  if (brpData?.adres) {
-    profileData.adres = formatProfileSectionData(
-      labelConfig.adres,
-      brpData.adres,
-      brpData
-    );
-  }
+    ),
+    adres: brpData?.adres
+      ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
+      : { '': 'Adres onbekend' },
+  };
 
   // Exclude below profile data for non-mokum residents.
   if (brpData?.persoon.mokum) {
