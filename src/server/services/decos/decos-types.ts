@@ -138,8 +138,6 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   hasValidSourceData?: (decosZaakSource: DecosZaakSource) => boolean;
   // Indicate if the zaak requires payment to be processed and complete. This function is run before transformation of the zaak.
   requirePayment?: boolean;
-  // Decision (resultaat) values are generalized here. For example. The sourceValues can be one of: `Toegekend met borden`, `Toegekend zonder dingen` which we want to show to the user as `Toegekend`.
-  decisionTranslations?: Record<MADecision, DecosDecision[]>;
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
   fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.

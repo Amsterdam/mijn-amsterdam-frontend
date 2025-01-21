@@ -4,6 +4,7 @@ import type {
   DecosZaakBase,
   DecosZaakWithKentekens,
   ZaakStatus,
+  DecosFieldValue,
 } from './decos-types';
 import {
   DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
@@ -20,6 +21,7 @@ import {
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { entries } from '../../../universal/helpers/utils';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(
@@ -90,6 +92,20 @@ export function transformKenteken(kentekenSource: string | null) {
 
   return kentekenSource;
 }
+
+export const translateValue =
+  <T>(translationMapping: { [K in keyof T]: DecosFieldValue[] }) =>
+  (input: string) => {
+    if (translationMapping) {
+      const maValue = entries(translationMapping).find(
+        ([maValue, decosValues]) => {
+          return decosValues.includes(input);
+        }
+      )?.[0];
+      return maValue ?? input;
+    }
+    return input;
+  };
 
 export function getCustomTitleForDecosZaakWithLicensePlates(
   decosZaak: DecosZaakWithKentekens
