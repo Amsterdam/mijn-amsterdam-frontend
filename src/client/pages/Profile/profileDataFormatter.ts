@@ -38,7 +38,7 @@ export function formatProfileSectionData<T, X>(
           ? labelOrLabelFormatter(data, profileData)
           : labelOrLabelFormatter;
 
-      if (data && isRecord(data)) {
+      if (data && isRecord(data) && !Array.isArray(data)) {
         const dataValue = data[key];
         value = formatValue
           ? formatValue(dataValue, data, profileData)
