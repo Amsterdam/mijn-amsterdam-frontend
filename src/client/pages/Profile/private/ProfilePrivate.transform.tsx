@@ -231,20 +231,20 @@ export interface BrpProfileData {
   kinderen?: ProfileSectionData[];
 }
 
-export function formatBrpProfileData(brpData: BRPData | null): BrpProfileData {
+export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   const profileData: BrpProfileData = {
     persoon: formatProfileSectionData(
       labelConfig.persoon,
       brpData?.persoon,
       brpData
     ),
-    adres: brpData?.adres
+    adres: brpData.adres
       ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
       : { '': 'Adres onbekend' },
   };
 
   // Exclude below profile data for non-mokum residents.
-  if (brpData?.persoon.mokum) {
+  if (brpData.persoon.mokum) {
     if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
       profileData.verbintenis = {
         ...formatProfileSectionData(
