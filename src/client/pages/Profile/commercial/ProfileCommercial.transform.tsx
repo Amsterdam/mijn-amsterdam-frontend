@@ -16,13 +16,13 @@ import {
   capitalizeFirstLetter,
   splitCapitals,
 } from '../../../../universal/helpers/text';
-import { Adres, AppState } from '../../../../universal/types';
+import type { Adres, AppState } from '../../../../universal/types';
 import { LinkdInline } from '../../../components/Button/Button';
 import {
   ProfileLabels,
   formatProfileSectionData,
 } from '../profileDataFormatter';
-import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
+import type { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -281,7 +281,7 @@ export const labelConfig = {
   eigenaar,
 };
 
-interface KvkProfileData {
+export interface KvkProfileData {
   onderneming?: ProfileSectionData | null;
   eigenaar?: ProfileSectionData | null;
   rechtspersonen?: ProfileSectionData[];
@@ -294,10 +294,10 @@ interface KvkProfileData {
   overigeFunctionarissen?: ProfileSectionData[];
 }
 
-export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
+export function formatKvkProfileData(kvkData: KVKData | null): KvkProfileData {
   const profileData: KvkProfileData = {};
 
-  if (kvkData.onderneming) {
+  if (kvkData?.onderneming) {
     profileData.onderneming = formatProfileSectionData(
       labelConfig.onderneming,
       kvkData.onderneming,
@@ -305,7 +305,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
     );
   }
 
-  if (labelConfig.eigenaar) {
+  if (kvkData?.eigenaar) {
     profileData.eigenaar = formatProfileSectionData(
       labelConfig.eigenaar,
       kvkData.eigenaar,
@@ -313,13 +313,13 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
     );
   }
 
-  if (kvkData.rechtspersonen?.length) {
+  if (kvkData?.rechtspersonen?.length) {
     profileData.rechtspersonen = kvkData.rechtspersonen.map((persoon) =>
       formatProfileSectionData(labelConfig.rechtspersoon, persoon, kvkData)
     );
   }
 
-  if (kvkData.vestigingen?.length) {
+  if (kvkData?.vestigingen?.length) {
     if (kvkData.vestigingen?.length === 1) {
       profileData.vestigingen = kvkData.vestigingen.map((vestiging) =>
         formatProfileSectionData(labelConfig.vestiging, vestiging, kvkData)
@@ -345,7 +345,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
     }
   }
 
-  if (kvkData.aandeelhouders?.length) {
+  if (kvkData?.aandeelhouders?.length) {
     profileData.aandeelhouders = kvkData.aandeelhouders.map((aandeelhouder) =>
       formatProfileSectionData(
         labelConfig.aandeelhouder,
@@ -355,18 +355,18 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
     );
   }
 
-  if (kvkData.bestuurders?.length) {
+  if (kvkData?.bestuurders?.length) {
     profileData.bestuurders = kvkData.bestuurders.map((bestuurder) =>
       formatProfileSectionData(labelConfig.bestuurder, bestuurder, kvkData)
     );
   }
 
-  if (kvkData.gemachtigden?.length) {
+  if (kvkData?.gemachtigden?.length) {
     profileData.gemachtigden = kvkData.gemachtigden.map((gemachtigde) =>
       formatProfileSectionData(labelConfig.gemachtigde, gemachtigde, kvkData)
     );
   }
-  if (kvkData.aansprakelijken?.length) {
+  if (kvkData?.aansprakelijken?.length) {
     profileData.aansprakelijken = kvkData.aansprakelijken.map(
       (aansprakelijke) =>
         formatProfileSectionData(
@@ -376,7 +376,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
         )
     );
   }
-  if (kvkData.overigeFunctionarissen?.length) {
+  if (kvkData?.overigeFunctionarissen?.length) {
     profileData.overigeFunctionarissen = kvkData.overigeFunctionarissen.map(
       (overigeFunctionaris) =>
         formatProfileSectionData(

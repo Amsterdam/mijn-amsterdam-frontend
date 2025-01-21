@@ -222,8 +222,8 @@ const labelConfig = {
 };
 
 export interface BrpProfileData {
-  persoon: ProfileSectionData | null;
-  adres: ProfileSectionData | null;
+  persoon?: ProfileSectionData | null;
+  adres?: ProfileSectionData | null;
   adresHistorisch?: ProfileSectionData[];
   verbintenis?: ProfileSectionData;
   verbintenisHistorisch?: ProfileSectionData[];
@@ -231,17 +231,24 @@ export interface BrpProfileData {
   kinderen?: ProfileSectionData[];
 }
 
-export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
-  const profileData: BrpProfileData = {
-    persoon: formatProfileSectionData(
+export function formatBrpProfileData(brpData: BRPData | null): BrpProfileData {
+  const profileData: BrpProfileData = {};
+
+  if (brpData?.persoon) {
+    profileData.persoon = formatProfileSectionData(
       labelConfig.persoon,
       brpData.persoon,
       brpData
-    ),
-    adres: brpData.adres
-      ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
-      : { '': 'Adres onbekend' },
-  };
+    );
+  }
+
+  if (brpData?.adres) {
+    profileData.adres = formatProfileSectionData(
+      labelConfig.adres,
+      brpData.adres,
+      brpData
+    );
+  }
 
   // Exclude below profile data for non-mokum residents.
   if (brpData?.persoon.mokum) {
