@@ -262,7 +262,7 @@ const eigenaar: ProfileLabels<Eigenaar, AppState['KVK']> = {
         ? getFullAddress(address as Adres)
         : null,
   ],
-  ['woonplaats' as any]: [
+  woonplaats: [
     'Woonplaats',
     (_, eigenaar) =>
       `${eigenaar.adres?.postcode} ${eigenaar.adres.woonplaatsNaam}`,

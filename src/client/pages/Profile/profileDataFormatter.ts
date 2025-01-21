@@ -1,47 +1,62 @@
 import { ProfileSectionData, Value } from './ProfileSectionPanel';
+import { SomeOtherString } from '../../../universal/helpers/types';
 import { entries, isRecord } from '../../../universal/helpers/utils';
 
-export type ProfileLabelValueFormatter<T, V, S> =
+type LabelValueFormatter<V, T, S> = (
+  value: V,
+  item: T,
+  stateSliceContent?: S
+) => Value;
+
+type LabelFormatter<T, S> = (item: T, stateSliceContent?: S) => string;
+
+export type ProfileLabelValueFormatter<V, T, S> =
   | string
-  | [
-      string | ((key: string, item: T, stateSliceContent?: S) => string),
-      (value: V, item: T, stateSliceContent?: S) => Value,
-    ];
+  | [string | LabelFormatter<T, S>, LabelValueFormatter<V, T, S>];
 
 export type ProfileLabels<T, S> = {
-  [key in keyof T]: ProfileLabelValueFormatter<T, T[key], S>;
-};
+  [key in keyof T]: ProfileLabelValueFormatter<T[key], T, S>;
+} & { [key: SomeOtherString]: ProfileLabelValueFormatter<never, T, S> };
 
 export function formatProfileSectionData<T, X>(
   labelConfig: X,
   data: unknown,
   profileData: T
 ): ProfileSectionData {
-  const formattedData = entries(labelConfig).reduce((acc, [key, formatter]) => {
-    const labelFormatter = Array.isArray(formatter) ? formatter[0] : formatter;
+  const formattedData = entries(labelConfig).reduce(
+    (acc, [key, labelValueFormater]) => {
+      let value = null;
 
-    const label =
-      typeof labelFormatter === 'function'
-        ? labelFormatter(key, data, profileData)
-        : labelFormatter;
-    let value = null;
-    if (data && isRecord(data)) {
-      const dataValue = data[key];
-      value = Array.isArray(formatter)
-        ? formatter[1](dataValue, data, profileData)
-        : dataValue;
-    }
+      const [labelOrLabelFormatter, formatValue] = Array.isArray(
+        labelValueFormater
+      )
+        ? labelValueFormater
+        : [labelValueFormater, null];
 
-    // Don't display falsey values
-    if (!value) {
-      return acc;
-    }
+      const label =
+        typeof labelOrLabelFormatter === 'function'
+          ? labelOrLabelFormatter(data, profileData)
+          : labelOrLabelFormatter;
 
-    return {
-      ...acc,
-      [label]: value,
-    };
-  }, {});
+      if (data && isRecord(data)) {
+        const dataValue = data[key];
+        value = formatValue
+          ? formatValue(dataValue, data, profileData)
+          : dataValue;
+      }
+
+      // Don't display falsey values
+      if (!value) {
+        return acc;
+      }
+
+      return {
+        ...acc,
+        [label]: value,
+      };
+    },
+    {}
+  );
 
   return formattedData;
 }

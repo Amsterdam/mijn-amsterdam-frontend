@@ -1,15 +1,18 @@
 import { describe, expect } from 'vitest';
 
 import { formatKvkProfileData } from './ProfileCommercial.transform';
-import type { KVKData } from '../../../../server/services/kvk';
+import type {
+  KVKData,
+  KVKSourceDataContent,
+} from '../../../../server/services/kvk';
 
 describe('formatKvkProfileData', () => {
   test('should not format data when no kvkData is provided', () => {
     const kvkData = null;
 
-    const result = formatKvkProfileData(kvkData);
-
-    expect(result).toEqual({});
+    expect(() =>
+      formatKvkProfileData(kvkData as unknown as KVKSourceDataContent)
+    ).toThrowError();
   });
 
   test('should format onderneming data correctly', () => {

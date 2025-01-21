@@ -172,11 +172,11 @@ function transformVerbintenisStatus(value: string) {
 }
 
 const verbintenis: ProfileLabels<
-  Partial<VerbintenisHistorisch> & Partial<Persoon>,
+  Partial<VerbintenisHistorisch & Persoon>,
   AppState['BRP']['content']
 > = {
   soortVerbintenisOmschrijving: [
-    (_value, verbintenis) =>
+    (verbintenis) =>
       !verbintenis.datumOntbinding && !verbintenis.redenOntbindingOmschrijving
         ? 'Status'
         : 'Verbintenis',
@@ -203,14 +203,15 @@ const verbintenis: ProfileLabels<
 };
 
 const verbintenisHistorisch: ProfileLabels<
-  Partial<VerbintenisHistorisch> & Partial<Persoon>,
+  Partial<VerbintenisHistorisch>,
   AppState['BRP']['content']
 > = {
-  soortVerbintenisOmschrijving: verbintenis.soortVerbintenisOmschrijving,
-  datumSluiting: verbintenis.datumSluiting,
-  datumOntbinding: verbintenis.datumOntbinding,
+  soortVerbintenisOmschrijving: verbintenis.soortVerbintenisOmschrijving!,
+  datumSluiting: verbintenis.datumSluiting!,
+  plaatsnaamSluitingOmschrijving: 'Plaats',
+  landnaamSluiting: 'Land',
   redenOntbindingOmschrijving: 'Reden',
-  ...verbintenis,
+  datumOntbinding: verbintenis.datumOntbinding!,
 };
 
 const labelConfig = {
