@@ -124,7 +124,8 @@ export function getCustomTitleForDecosZaakWithLicensePlates(
 export function getDecosZaakTypeFromSource<T extends DecosZaakSource>(
   decosZaakSource: T
 ) {
-  return decosZaakSource.fields.text45 as DecosCaseType;
+  // TODO: Base this on the transformer or DZ?
+  return decosZaakSource.fields.text45;
 }
 
 export function transformBoolean(input: unknown) {

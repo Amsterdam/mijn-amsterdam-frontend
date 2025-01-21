@@ -275,7 +275,7 @@ export const Omzettingsvergunning: DecosZaakTransformer<OmzettingsvergunningType
 
 export const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   isActive: true,
-  caseType: CaseTypeV2.Omzettingsvergunning,
+  caseType: CaseTypeV2.ERVV,
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,

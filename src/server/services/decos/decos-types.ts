@@ -71,7 +71,7 @@ export type DecosZaakFieldsSource = {
   // status
   title: string;
   // caseType
-  text45: DecosCaseType | string;
+  text45: string;
   // decision
   dfunction?: string | null;
   // identifier / zaaknummer
@@ -118,9 +118,14 @@ export type DecosFieldTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   transform?: (input: any) => DecosFieldValue;
 };
 
+type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
+  ? DecosZaakBase extends T // Allow unextended baseCase for easier internal function typing
+    ? unknown
+    : never
+  : T['caseType'];
 export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // The caseType (zaaktype) of the sourceData.
-  caseType: DecosCaseType;
+  caseType: CaseTypeLiteral<T>;
   // Title of the DecosZaakBase, mostly a slightly different variant of the $caseType
   title: string;
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
@@ -157,7 +162,7 @@ export type DecosZakenSourceFilter = (
   decosZaakSource: DecosZaakSource
 ) => boolean;
 export interface DecosZaakBase {
-  caseType: DecosCaseType;
+  caseType: string;
   dateDecision: string | null;
   dateRequest: string;
 

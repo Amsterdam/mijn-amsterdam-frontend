@@ -29,7 +29,6 @@ import {
 import {
   ApiErrorResponse,
   ApiResponse,
-  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
@@ -143,7 +142,7 @@ async function transformDecosZaakResponse<
   decosZaakTransformers: T[],
   decosZaakSource: DecosZaakSource
 ): Promise<DZ | null> {
-  const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
+  const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
   const decosZaakTransformer = decosZaakTransformers.find(
     (transformer) => transformer.caseType == zaakType
   );
@@ -246,7 +245,7 @@ async function transformDecosZakenResponse<
 ) {
   const zakenToBeTransformed: [T, DecosZaakSource][] = [];
   for (const decosZaakSource of decosZakenSource) {
-    const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
+    const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
     const decosZaakTransformer = decosZaakTransformers.find(
       (transformer) => transformer.caseType == zaakType
     );
@@ -341,7 +340,7 @@ export async function fetchDecosZakenFromSource(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: Pick<
-    DecosZaakTransformer<DecosZaakBase>,
+    DecosZaakTransformer<any>,
     'addToSelectFieldsBase' | 'caseType'
   >[] = []
 ) {
