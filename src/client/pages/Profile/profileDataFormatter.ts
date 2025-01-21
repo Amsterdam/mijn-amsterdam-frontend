@@ -1,5 +1,5 @@
 import { ProfileSectionData, Value } from './ProfileSectionPanel';
-import { entries } from '../../../universal/helpers/utils';
+import { entries, isRecord } from '../../../universal/helpers/utils';
 
 export type ProfileLabelValueFormatter<T, V, S> =
   | string
@@ -14,7 +14,7 @@ export type ProfileLabels<T, S> = {
 
 export function formatProfileSectionData<T, X>(
   labelConfig: X,
-  data: any, // TODO: Fix any
+  data: unknown,
   profileData: T
 ): ProfileSectionData {
   const formattedData = entries(labelConfig).reduce((acc, [key, formatter]) => {
@@ -24,9 +24,13 @@ export function formatProfileSectionData<T, X>(
       typeof labelFormatter === 'function'
         ? labelFormatter(key, data, profileData)
         : labelFormatter;
-    const value = Array.isArray(formatter)
-      ? formatter[1](data[key], data, profileData)
-      : data[key];
+    let value = null;
+    if (data && isRecord(data)) {
+      const dataValue = data[key];
+      value = Array.isArray(formatter)
+        ? formatter[1](dataValue, data, profileData)
+        : dataValue;
+    }
 
     // Don't display falsey values
     if (!value) {
