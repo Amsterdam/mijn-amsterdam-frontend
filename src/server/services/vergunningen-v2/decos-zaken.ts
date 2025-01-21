@@ -58,6 +58,7 @@ import {
 } from '../decos/decos-types';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
+  getStatusDate,
   transformBoolean,
   transformKenteken,
 } from '../decos/helpers';
@@ -156,7 +157,7 @@ export const GPP: DecosZaakTransformer<GPPType> = {
     text7: kentekens,
     text8: location,
   },
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -300,7 +301,7 @@ export const BZP: DecosZaakTransformer<BZPType> = {
     date7: dateEnd,
     text8: kentekens,
   },
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -436,7 +437,7 @@ export const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeerType> = {
     },
   },
   addToSelectFieldsBase: ['text49'], // kenteken,
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -592,7 +593,7 @@ export const RVVHeleStad: DecosZaakTransformer<RVVHeleStadType> = {
     text49: kentekens,
   },
   addToSelectFieldsBase: ['text49'], // Kenteken,
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -623,12 +624,8 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
   decisionTranslations: {
     Ingetrokken: ['Ingetrokken door gemeente'],
   },
-  async afterTransform(vergunning, zaakSource, options) {
-    const dateVerleend = await options?.fetchDecosWorkflowDates?.([
-      'Status naar actief',
-    ]);
-
-    if (dateVerleend) {
+  async afterTransform(vergunning, decosZaakSource) {
+    if (getStatusDate('Verleend', vergunning)) {
       vergunning.processed = true;
       // if the workflow verleend has run but there is no decision then its actually Verleend.
       // this decision (verleend) is not set by decos eventhough the actual permit is granted.

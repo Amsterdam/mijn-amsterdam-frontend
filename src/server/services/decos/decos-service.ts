@@ -178,10 +178,7 @@ async function transformDecosZaakResponse<
       nValue =
         typeof fieldTransformer === 'object' &&
         typeof fieldTransformer.transform === 'function'
-          ? fieldTransformer.transform(value, {
-              decosZaakTransformer,
-              fetchDecosWorkflowDates: fetchWorkflowDates,
-            })
+          ? fieldTransformer.transform(value)
           : value;
     } catch (err) {
       captureException(err);
@@ -231,11 +228,7 @@ async function transformDecosZaakResponse<
   if (decosZaakTransformer.afterTransform) {
     decosZaak = await decosZaakTransformer.afterTransform(
       decosZaak,
-      decosZaakSource,
-      {
-        fetchDecosWorkflowDates: fetchWorkflowDates,
-        decosZaakTransformer,
-      }
+      decosZaakSource
     );
   }
 

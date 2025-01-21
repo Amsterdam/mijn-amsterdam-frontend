@@ -115,16 +115,7 @@ export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
 export const MA_DECISION_DEFAULT = 'Zie besluit';
 export type DecosFieldTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   name: keyof T;
-  transform?: (
-    input: any,
-    options?: DecosTransformerOptions<T>
-  ) => DecosFieldValue;
-};
-export type DecosTransformerOptions<T extends DecosZaakBase = DecosZaakBase> = {
-  decosZaakTransformer?: DecosZaakTransformer<T>;
-  fetchDecosWorkflowDates?: (
-    stepTitles: DecosWorkflowStepTitle[]
-  ) => Promise<ApiResponse_DEPRECATED<Record<string, string | null> | null>>;
+  transform?: (input: any) => DecosFieldValue;
 };
 
 export type DecosZaakTransformer<T extends DecosZaakBase> = {
@@ -140,8 +131,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // Business logic is implemented at this point, also async calls to other services to enrich the data can be done here.
   afterTransform?: (
     decosZaak: T,
-    decosZaakSource: DecosZaakSource,
-    options?: DecosTransformerOptions<T>
+    decosZaakSource: DecosZaakSource
   ) => Promise<T>;
   // A function to check if the source data quality and/or prerequisites for showing the data to the user are valid.
   // This function is run before transformation of the zaak.
@@ -251,18 +241,8 @@ export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
 
 export const decision: DecosFieldTransformer = {
   name: 'decision',
-  transform: (decision: string, options) => {
-    const decisionTranslations =
-      options?.decosZaakTransformer?.decisionTranslations;
-
-    if (decisionTranslations) {
-      const maDecision = Object.entries(decisionTranslations).find(
-        ([maDecision, decosDecisions]) => {
-          return decosDecisions.includes(decision);
-        }
-      )?.[0];
-      return maDecision ?? decision;
-    }
+  transform: (decision: string) => {
+    // TODO
     return decision;
   },
 };
