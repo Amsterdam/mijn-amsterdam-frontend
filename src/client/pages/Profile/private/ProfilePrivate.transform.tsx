@@ -222,8 +222,8 @@ const labelConfig = {
 };
 
 export interface BrpProfileData {
-  persoon?: ProfileSectionData | null;
-  adres?: ProfileSectionData | null;
+  persoon: ProfileSectionData | null;
+  adres: ProfileSectionData | null;
   adresHistorisch?: ProfileSectionData[];
   verbintenis?: ProfileSectionData;
   verbintenisHistorisch?: ProfileSectionData[];
