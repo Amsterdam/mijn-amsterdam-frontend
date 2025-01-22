@@ -172,7 +172,7 @@ function transformVerbintenisStatus(value: string) {
 }
 
 const verbintenis: ProfileLabels<
-  Partial<VerbintenisHistorisch & Persoon>,
+  Partial<VerbintenisHistorisch>,
   AppState['BRP']['content']
 > = {
   soortVerbintenisOmschrijving: [
