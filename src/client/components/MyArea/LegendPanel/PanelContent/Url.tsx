@@ -1,4 +1,5 @@
-import Linkd from '../../../Button/Button';
+import { Link } from '@amsterdam/design-system-react';
+
 import InfoDetail from '../../../InfoDetail/InfoDetail';
 
 interface UrlProps {
@@ -21,9 +22,9 @@ export default function Url({
     <InfoDetail
       label={label}
       value={
-        <Linkd icon={null} external={true} href={theUrl}>
+        <Link rel="noopener noreferrer" href={theUrl}>
           {urlTitle || url}
-        </Linkd>
+        </Link>
       }
     />
   );
