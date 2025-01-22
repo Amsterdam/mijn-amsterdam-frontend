@@ -379,6 +379,7 @@ export async function mutateGpassBlockPass(
   const config = getApiConfig('GPASS', {
     method: 'POST',
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
+    headers: getHeaders(administratienummer),
     transformResponse: (pas: StadspasDetailSource) => {
       if (pas.actief) {
         throw Error('City pass is still active after trying to block it.');
