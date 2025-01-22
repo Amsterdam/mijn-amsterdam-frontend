@@ -1,7 +1,6 @@
-import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AppState } from '../../../../universal/types';
-import { LinkdInline } from '../../../components';
 
 type AdresInOnderzoekProps = {
   brpContent: AppState['BRP']['content'];
@@ -22,22 +21,22 @@ export function AdresInOnderzoek({ brpContent }: AdresInOnderzoekProps) {
             moment onderzoeken wij op welk adres u nu woont.
           </>
         )}{' '}
-        <LinkdInline
-          external={true}
+        <Link
+          rel="noopener noreferrer"
           href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
         >
           Kijk voor meer informatie over een adresonderzoek op amsterdam.nl
-        </LinkdInline>
+        </Link>
         .
       </Paragraph>
       <Paragraph>
         Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar{' '}
-        <a
+        <Link
           href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-          rel="external noopener noreferrer"
+          rel="noopener noreferrer"
         >
           adresonderzoek.basisinformatie@amsterdam.nl
-        </a>
+        </Link>
         .
       </Paragraph>
     </Alert>

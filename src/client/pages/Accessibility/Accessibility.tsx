@@ -1,10 +1,10 @@
 import {
   Heading,
+  Link,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
 
-import { LinkdInline } from '../../components';
 import {
   PageContentCell,
   PageContentV2,
@@ -25,12 +25,12 @@ export default function Accessibility() {
             De gemeente Amsterdam wil dat iedereen Mijn Amsterdam kan gebruiken.
             Komt u toch een pagina tegen die u niet kunt lezen of gebruiken?
             Meld het via ons{' '}
-            <LinkdInline
-              external={true}
+            <Link
+              rel="noopener noreferrer"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx"
             >
               contactformulier
-            </LinkdInline>
+            </Link>
             .
           </Paragraph>
           <Heading level={3} size="level-4">
@@ -72,27 +72,27 @@ export default function Accessibility() {
           </Heading>
           <Paragraph>
             De eisen voor een toegankelijke website staan in het{' '}
-            <LinkdInline
-              external={true}
+            <Link
+              rel="noopener noreferrer"
               href="https://wetten.overheid.nl/BWBR0040936/2018-07-01"
             >
               Tijdelijk besluit digitale toegankelijkheid overheid
-            </LinkdInline>
+            </Link>
             . In dat besluit staat ook dat wij een toegankelijkheidsverklaring
             op Mijn Amsterdam moeten zetten. Lees hier onze{' '}
-            <LinkdInline
-              external={true}
+            <Link
+              rel="noopener noreferrer"
               href="https://www.toegankelijkheidsverklaring.nl/register/9142#verklaring"
             >
               volledige toegankelijkheidsverklaring
-            </LinkdInline>
+            </Link>
             . Lees hier de resultaten van het meest{' '}
-            <LinkdInline
-              external={true}
+            <Link
+              rel="noopener noreferrer"
               href="/20211127%20Rapportage%20Audit%20Mijn%20Amsterdam%20Digitaal%20Toegankelijk%20WCAG-EM.pdf"
             >
               recente toegankelijkheidsonderzoek
-            </LinkdInline>
+            </Link>
             .
           </Paragraph>
         </PageContentCell>

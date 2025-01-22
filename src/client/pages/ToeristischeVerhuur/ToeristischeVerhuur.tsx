@@ -1,4 +1,4 @@
-import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
 import { routes } from './toeristischeVerhuur-thema-config';
@@ -13,7 +13,6 @@ import {
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/App.types';
-import { LinkdInline } from '../../components';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -142,12 +141,12 @@ export function ToeristscheVerhuurThema() {
                     &amp; breakfast. Het is niet toegestaan om op hetzelfde
                     adres zowel aan vakantieverhuur als bed &amp; breakfast te
                     doen. U moet daarom 1 van deze vergunningen opzeggen.{' '}
-                    <LinkdInline
-                      external={true}
+                    <Link
+                      rel="noopener noreferrer"
                       href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
                     >
                       Meer informatie over voorwaarden vakantieverhuur
-                    </LinkdInline>
+                    </Link>
                     .
                   </Paragraph>
                 )}
@@ -157,13 +156,13 @@ export function ToeristscheVerhuurThema() {
                     U heeft een vergunning voor vakantieverhuur of bed &amp;
                     breakfast. U moet daarom ook een landelijk registratienummer
                     voor toeristische verhuur aanvragen.{' '}
-                    <LinkdInline
-                      external={true}
+                    <Link
+                      rel="noopener noreferrer"
                       href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
                     >
                       Meer informatie over het landelijk registratienummer
                       toeristische verhuur
-                    </LinkdInline>
+                    </Link>
                     .
                   </Paragraph>
                 )}
