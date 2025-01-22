@@ -57,7 +57,7 @@ export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (vergunning: VergunningFrontendV2 | Vergunning) =>
-      vergunning.status !== 'Afgehandeld',
+      !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
   },
