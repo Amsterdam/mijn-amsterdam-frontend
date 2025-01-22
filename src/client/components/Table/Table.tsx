@@ -6,8 +6,8 @@ import styles from './Table.module.scss';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries, keys } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped } from '../../../universal/types';
-import Linkd from '../Button/Button';
 import InnerHtml from '../InnerHtml/InnerHtml';
+import { MaRouterLink } from '../MaLink/MaLink';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -34,7 +34,9 @@ export function addTitleLinkComponent<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [titleKey]: (
-        <Linkd href={item.link.to}>{capitalizeFirstLetter(title)}</Linkd>
+        <MaRouterLink href={item.link.to}>
+          {capitalizeFirstLetter(title)}
+        </MaRouterLink>
       ),
     };
   });
