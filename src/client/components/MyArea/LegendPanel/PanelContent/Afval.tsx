@@ -1,5 +1,6 @@
+import { Link, Paragraph } from '@amsterdam/design-system-react';
+
 import GenericBase from './GenericBase';
-import { LinkdInline } from '../../../Button/Button';
 
 const afvalUrls: Record<string, string> = {
   rest: 'https://www.milieucentraal.nl/minder-afval/afval-scheiden/restafval',
@@ -12,7 +13,7 @@ const afvalUrls: Record<string, string> = {
 };
 
 interface MyArePanelContentAfvalProps {
-  panelItem: any;
+  panelItem: Record<string, string>;
   datasetId: string;
 }
 
@@ -32,25 +33,25 @@ export default function MyArePanelContentAfval({
         panelItem.fractieOmschrijving &&
         // You can't adopt a Kerstboom inzamellocatie
         !panelItem.fractieOmschrijving.startsWith('Kerst') && (
-          <p>
+          <Paragraph>
             Deze container kunt u adopteren!
             <br />{' '}
-            <LinkdInline
-              external={true}
+            <Link
+              rel="noopener noreferrer"
               href="https://www.amsterdam.nl/veelgevraagd/ondergrondse-afvalcontainer-adopteren-a188d"
             >
               Lees hier hoe
-            </LinkdInline>
-          </p>
+            </Link>
+          </Paragraph>
         )}
       {!!infoUrl && (
-        <p>
+        <Paragraph>
           Wat mag er{' '}
-          <LinkdInline external={true} href={infoUrl}>
+          <Link rel="noopener noreferrer" href={infoUrl}>
             niet
-          </LinkdInline>{' '}
+          </Link>{' '}
           in de container?
-        </p>
+        </Paragraph>
       )}
     </GenericBase>
   );
