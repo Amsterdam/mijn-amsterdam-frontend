@@ -6,6 +6,7 @@ import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import styles from './MainHeader.module.scss';
 import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
+import { useCloseMenu } from './useCloseMenu.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ErrorMessages } from '../../components';
 import { getApiErrors, LOGOUT_URL } from '../../config/api';
@@ -99,6 +100,9 @@ export interface MainHeaderProps {
 export default function MainHeader({
   isAuthenticated = false,
 }: MainHeaderProps) {
+  // Closes menu on location.pathname change, Escape key press and Search activation.
+  useCloseMenu();
+
   return (
     <>
       <Screen className={styles.MainHeaderWrap}>
