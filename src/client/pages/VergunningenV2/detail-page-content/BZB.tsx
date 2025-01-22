@@ -1,14 +1,14 @@
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import type { BZB as BZBVergunning } from '../../../../server/services/vergunningen/vergunningen';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import { InnerHtml, LinkdInline } from '../../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 
-function ExpirationNotifications({ id }: { id: string }) {
+export function ExpirationNotifications({ id }: { id: string }) {
   const appState = useAppStateGetter();
   const isExpiredNotification = appState.NOTIFICATIONS.content?.find(
     (notification: MyNotification) =>
@@ -25,28 +25,32 @@ function ExpirationNotifications({ id }: { id: string }) {
     <>
       {!!isExpiredNotification && (
         <>
-          <InnerHtml>{isExpiredNotification.description}</InnerHtml>
-          <p>
-            <LinkdInline
-              external
+          <Paragraph className="ams-mb--sm">
+            {isExpiredNotification.description}
+          </Paragraph>
+          <Paragraph>
+            <Link
+              rel="noopener noreferrer"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
             >
               Vraag een nieuwe ontheffing aan
-            </LinkdInline>
-          </p>
+            </Link>
+          </Paragraph>
         </>
       )}
       {!!willExpireSoonNotification && (
         <>
-          <InnerHtml>{willExpireSoonNotification.description}</InnerHtml>
-          <p>
-            <LinkdInline
-              external
+          <Paragraph className="ams-mb--sm">
+            {willExpireSoonNotification.description}
+          </Paragraph>
+          <Paragraph>
+            <Link
+              rel="noopener noreferrer"
               href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
             >
               Vraag op tijd een nieuwe ontheffing aan
-            </LinkdInline>
-          </p>
+            </Link>
+          </Paragraph>
         </>
       )}
     </>
