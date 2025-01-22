@@ -2,7 +2,7 @@ import { ProfileSectionData, Value } from './ProfileSectionPanel';
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { entries, isRecord } from '../../../universal/helpers/utils';
 
-type LabelValueFormatter<V, T, S> = (
+type ValueFormatter<V, T, S> = (
   value: V,
   item: T,
   stateSliceContent?: S
@@ -10,13 +10,13 @@ type LabelValueFormatter<V, T, S> = (
 
 type LabelFormatter<T, S> = (item: T, stateSliceContent?: S) => string;
 
-export type ProfileLabelValueFormatter<V, T, S> =
+export type ProfileValueFormatter<V, T, S> =
   | string
-  | [string | LabelFormatter<T, S>, LabelValueFormatter<V, T, S>];
+  | [string | LabelFormatter<T, S>, ValueFormatter<V, T, S>];
 
 export type ProfileLabels<T, S> = {
-  [key in keyof T]: ProfileLabelValueFormatter<T[key], T, S>;
-} & { [key: SomeOtherString]: ProfileLabelValueFormatter<never, T, S> };
+  [key in keyof T]: ProfileValueFormatter<T[key], T, S>;
+} & { [key: SomeOtherString]: ProfileValueFormatter<never, T, S> };
 
 export function formatProfileSectionData<T, X>(
   labelConfig: X,
