@@ -1,7 +1,5 @@
-import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { GenericDocument } from '../../../universal/types';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { NotificationLabelByType } from '../vergunningen-v2/config-and-types';
 
 type DecosDocumentBase = {

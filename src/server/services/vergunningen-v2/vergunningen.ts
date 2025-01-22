@@ -3,8 +3,6 @@ import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
 import {
-  EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA,
-  VergunningBase,
   VergunningFrontendV2,
 } from './config-and-types';
 import { VergunningV2 } from './config-and-types';
@@ -19,17 +17,9 @@ import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt'
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { fetchDecosZaak, fetchDecosZaken } from '../decos/decos-service';
-import { DecosZaakDocument, ZakenFilter } from '../decos/decos-types';
+import { DecosZaakDocument } from '../decos/decos-types';
 import { getStatusDate, isExpired, toDateFormatted } from '../decos/helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
-
-export const FILTER_VERGUNNINGEN_DEFAULT: ZakenFilter = (
-  vergunning: VergunningBase
-) => {
-  return !EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA.includes(
-    vergunning.caseType
-  );
-};
 
 function transformVergunningFrontend(
   sessionID: SessionID,

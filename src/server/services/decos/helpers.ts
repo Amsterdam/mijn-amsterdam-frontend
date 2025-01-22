@@ -18,10 +18,9 @@ import {
   isDateInPast,
   monthsFromNow,
 } from '../../../universal/helpers/date';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import { entries } from '../../../universal/helpers/utils';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(
