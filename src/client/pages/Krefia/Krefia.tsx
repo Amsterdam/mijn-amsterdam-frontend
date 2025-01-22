@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react';
 
-import { LinkList, Paragraph } from '@amsterdam/design-system-react';
+import { Link, LinkList, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './Krefia.module.scss';
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
@@ -8,7 +8,6 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  LinkdInline,
   LoadingContent,
   SectionCollapsible,
   Table,
@@ -52,9 +51,9 @@ function useDeepLinks(deepLinksContent?: KrefiaDeepLinks) {
         {
           ...link,
           to: (
-            <LinkdInline external={true} href={link.url}>
+            <Link rel="noopener noreferrer" href={link.url}>
               {linkText}
-            </LinkdInline>
+            </Link>
           ),
         },
       ];

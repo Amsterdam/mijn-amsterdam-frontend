@@ -22,7 +22,7 @@ import {
   LoadingContent,
   StatusLine as StatusLineComponent,
 } from '../../components';
-import { LinkdInline } from '../../components/Button/Button';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
 import {
   DetailPageV2,
   PageContentCell,
@@ -116,7 +116,8 @@ export default function StatusDetail<T extends StatusLine>({
           <PageContentCell>
             <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.{' '}
-              <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>.
+              <MaRouterLink href={appRoute}>Ga naar het overzicht</MaRouterLink>
+              .
             </ErrorAlert>
           </PageContentCell>
         )}
