@@ -1,23 +1,13 @@
+import { PARKEER_CASE_TYPES } from './Parkeren.config';
 import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { CaseType, DecosCaseType } from '../../../universal/types/vergunningen';
+import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useVergunningenTransformed } from '../Vergunningen/useVergunningenTransformed.hook';
 import { tableConfig } from '../VergunningenV2/config';
-
-export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
-  CaseType.GPK,
-  CaseType.GPP,
-  CaseType.BZP,
-  CaseType.BZB,
-  CaseType.EigenParkeerplaats,
-  CaseType.EigenParkeerplaatsOpheffen,
-  CaseType.TouringcarDagontheffing,
-  CaseType.TouringcarJaarontheffing,
-]);
 
 function getVergunningenFromThemaVergunningen(
   content: VergunningFrontendV2[] | Vergunning[] | null

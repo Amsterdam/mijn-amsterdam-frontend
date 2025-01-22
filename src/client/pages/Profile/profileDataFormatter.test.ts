@@ -9,6 +9,7 @@ type TestData = {
   name: string;
   age: number;
   email: string;
+  who?: string;
 };
 
 type TestProfileData = {
@@ -64,7 +65,7 @@ describe('formatProfileSectionData', () => {
   it('should handle label formatters that are functions', () => {
     const customLabelConfig: ProfileLabels<TestData, TestProfileData> = {
       name: [
-        (key) => `Custom ${key}`,
+        (profileSectionData) => `Custom ${profileSectionData.who}`,
         (value, _profileSectionData, profileData) =>
           `${value} + ${profileData?.foo?.bar}`,
       ],
@@ -76,6 +77,7 @@ describe('formatProfileSectionData', () => {
       name: 'Jane Doe',
       age: 25,
       email: 'JANE@EXAMPLE.COM',
+      who: 'Mr.',
     };
 
     const profileData: TestProfileData = {
@@ -90,7 +92,7 @@ describe('formatProfileSectionData', () => {
     );
 
     expect(result).toEqual({
-      'Custom name': 'Jane Doe + baz',
+      'Custom Mr.': 'Jane Doe + baz',
       Age: '25 years old',
       Email: 'jane@example.com',
     });

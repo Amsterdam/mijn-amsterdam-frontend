@@ -16,13 +16,13 @@ import {
   capitalizeFirstLetter,
   splitCapitals,
 } from '../../../../universal/helpers/text';
-import { Adres, AppState } from '../../../../universal/types';
+import type { Adres, AppState } from '../../../../universal/types';
 import { LinkdInline } from '../../../components/Button/Button';
 import {
   ProfileLabels,
   formatProfileSectionData,
 } from '../profileDataFormatter';
-import { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
+import type { PanelConfig, ProfileSectionData } from '../ProfileSectionPanel';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -262,7 +262,7 @@ const eigenaar: ProfileLabels<Eigenaar, AppState['KVK']> = {
         ? getFullAddress(address as Adres)
         : null,
   ],
-  ['woonplaats' as any]: [
+  woonplaats: [
     'Woonplaats',
     (_, eigenaar) =>
       `${eigenaar.adres?.postcode} ${eigenaar.adres.woonplaatsNaam}`,
@@ -281,7 +281,7 @@ export const labelConfig = {
   eigenaar,
 };
 
-interface KvkProfileData {
+export interface KvkProfileData {
   onderneming?: ProfileSectionData | null;
   eigenaar?: ProfileSectionData | null;
   rechtspersonen?: ProfileSectionData[];
@@ -305,7 +305,7 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
     );
   }
 
-  if (labelConfig.eigenaar) {
+  if (kvkData.eigenaar) {
     profileData.eigenaar = formatProfileSectionData(
       labelConfig.eigenaar,
       kvkData.eigenaar,

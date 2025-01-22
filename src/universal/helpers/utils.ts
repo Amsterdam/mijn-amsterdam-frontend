@@ -30,6 +30,10 @@ export function pick<T extends object>(source: T, keys: string[]) {
   );
 }
 
+export function isRecord(obj: unknown): obj is Record<string, unknown> {
+  return typeof obj === 'object';
+}
+
 export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
 }
