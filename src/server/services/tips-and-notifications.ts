@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import memoize from 'memoizee';
 
 import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
@@ -146,14 +145,7 @@ function getTipsAndNotificationsFromApiResults(
 
   const notificationsResult = notifications.map((notification) => {
     if (notification.description) {
-      notification.description = sanitizeCmsContent(
-        marked(notification.description)
-      );
-    }
-    if (notification.moreInformation) {
-      notification.moreInformation = sanitizeCmsContent(
-        marked(notification.moreInformation)
-      );
+      notification.description = sanitizeCmsContent(notification.description);
     }
     return notification;
   });

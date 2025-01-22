@@ -1,57 +1,9 @@
-
 import type { BZB as BZBVergunning } from '../../../server/services/vergunningen/vergunningen';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { MyNotification } from '../../../universal/types';
-import { InnerHtml, LinkdInline } from '../../components';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import { useAppStateGetter } from '../../hooks/useAppState';
-
-function ExpirationNotifications({ id }: { id: string }) {
-  const appState = useAppStateGetter();
-  const isExpiredNotification = appState.NOTIFICATIONS.content?.find(
-    (notification: MyNotification) =>
-      notification.subject === id &&
-      notification.title === 'Uw ontheffing blauwe zone is verlopen'
-  );
-  const willExpireSoonNotification = appState.NOTIFICATIONS.content?.find(
-    (notification: MyNotification) =>
-      notification.subject === id &&
-      notification.title === 'Uw ontheffing blauwe zone verloopt binnenkort'
-  );
-
-  return (
-    <>
-      {!!isExpiredNotification && (
-        <>
-          <InnerHtml>{isExpiredNotification.description}</InnerHtml>
-          <p>
-            <LinkdInline
-              external
-              href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
-            >
-              Vraag een nieuwe ontheffing aan
-            </LinkdInline>
-          </p>
-        </>
-      )}
-      {!!willExpireSoonNotification && (
-        <>
-          <InnerHtml>{willExpireSoonNotification.description}</InnerHtml>
-          <p>
-            <LinkdInline
-              external
-              href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ontheffingblauwezone.aspx"
-            >
-              Vraag op tijd een nieuwe ontheffing aan
-            </LinkdInline>
-          </p>
-        </>
-      )}
-    </>
-  );
-}
+import { ExpirationNotifications } from '../VergunningenV2/detail-page-content/BZB';
 
 export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
   return (
