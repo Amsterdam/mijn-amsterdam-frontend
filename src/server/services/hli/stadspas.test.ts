@@ -5,6 +5,7 @@ import {
   fetchStadspassen,
 } from './stadspas-gpass-service';
 import {
+  Stadspas,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
 } from './stadspas-types';
@@ -38,6 +39,7 @@ function createStadspasHouderResponse() {
 
 function createPas(
   actief: boolean,
+  // eslint-disable-next-line no-magic-numbers
   pasnummer: number = 777777777777,
   securitycode: string = '012345'
 ) {
@@ -74,8 +76,9 @@ function createPas(
   };
 }
 
-function createTransformedPas(firstname: string, initials: string) {
+function createTransformedPas(firstname: string, initials: string): Stadspas {
   return {
+    actief: true,
     balance: 0,
     balanceFormatted: '€0,00',
     budgets: [

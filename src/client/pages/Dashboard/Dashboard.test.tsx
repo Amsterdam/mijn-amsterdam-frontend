@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { AppState } from '../../../universal/types/App.types';
-import { appStateAtom } from '../../hooks/useAppState';
+import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 import { remoteApiHost } from '../../../testing/setup';
@@ -89,6 +89,7 @@ const testState = {
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom as RecoilState<Partial<AppState>>, testState);
+  snapshot.set(appStateReadyAtom, true);
 }
 
 describe('<Dashboard />', () => {

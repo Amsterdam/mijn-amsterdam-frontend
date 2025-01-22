@@ -14,7 +14,10 @@ import {
 } from './route-helpers';
 import { bffApiHost } from '../../testing/setup';
 import { RequestMock, ResponseMock } from '../../testing/utils';
-import { ApiResponse, apiErrorResult } from '../../universal/helpers/api';
+import {
+  ApiResponse_DEPRECATED,
+  apiErrorResult,
+} from '../../universal/helpers/api';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config';
 import { cache } from '../helpers/source-api-request';
 
@@ -44,7 +47,7 @@ describe('route-helpers', () => {
 
   describe('sendResponse tests', async () => {
     test('Sends 200 when status OK', () => {
-      const response: ApiResponse = {
+      const response: ApiResponse_DEPRECATED = {
         status: 'OK',
         content: null,
       };

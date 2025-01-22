@@ -1,5 +1,3 @@
-const UID = require('uid-safe');
-
 const settings = require('../settings');
 const RESPONSES = {
   PASHOUDER: require('../fixtures/gpass-pashouders.json'),
@@ -25,15 +23,21 @@ module.exports = [
   },
   {
     id: 'get-gpass-stadspas',
-    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/*`,
+    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/:pasnummer`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: RESPONSES.STADSPAS,
+          middleware: (req, res) => {
+            res.send({
+              ...RESPONSES.STADSPAS,
+              pasnummer: req.params.pasnummer,
+              pasnummer_volledig: `volledig.${req.params.pasnummer}`,
+              id: req.params.pasnummer,
+            });
+          },
         },
       },
     ],
@@ -64,6 +68,30 @@ module.exports = [
         options: {
           status: 200,
           body: [{ toBeDeterminedFields: 'Unknown' }],
+        },
+      },
+    ],
+  },
+  {
+    id: 'post-toggle-stadspas',
+    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/togglepas/:pasnummer`,
+    method: 'POST',
+    // Add delay to make loading icon visibile in the front end when pressing the block button.
+    delay: 2500,
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (req, res) => {
+            // return res.status(500).end();
+            res.send({
+              // NOT sure if this is the same response as the real API
+              ...RESPONSES.STADSPAS,
+              pasnummer: req.params.pasnummer,
+              actief: false,
+            });
+          },
         },
       },
     ],

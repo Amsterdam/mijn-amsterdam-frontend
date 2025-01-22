@@ -14,8 +14,9 @@ import {
 } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
-import { appStateAtom } from '../../hooks/useAppState';
+import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
+
 const pushMock = vi.fn();
 
 const testState = {
@@ -38,6 +39,7 @@ const testState = {
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateReadyAtom, true);
 }
 
 let historyReturnValue = {
@@ -60,14 +62,16 @@ describe('ZaakStatus', () => {
   const routePath = AppRoutes.ZAAK_STATUS;
 
   test('No query params passed', async () => {
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={ZaakStatus}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ZaakStatus}
+          initializeState={initializeState}
+        />
+      );
+    }
     const { asFragment } = render(<Component />);
 
     expect(pushMock).not.toHaveBeenCalled();
@@ -84,18 +88,20 @@ describe('ZaakStatus', () => {
       push: pushMock,
     };
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routePath}
-        routePath={routePath}
-        component={ZaakStatus}
-        initializeState={(snapshot) =>
-          snapshot.set(appStateAtom, {
-            VERGUNNINGEN: { status: 'ERROR', content: null },
-          } as unknown as AppState)
-        }
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routePath}
+          routePath={routePath}
+          component={ZaakStatus}
+          initializeState={(snapshot) =>
+            snapshot.set(appStateAtom, {
+              VERGUNNINGEN: { status: 'ERROR', content: null },
+            } as unknown as AppState)
+          }
+        />
+      );
+    }
 
     const { asFragment } = render(<Component />);
 
@@ -111,14 +117,16 @@ describe('ZaakStatus', () => {
       push: pushMock,
     };
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routePath}
-        routePath={routePath}
-        component={ZaakStatus}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routePath}
+          routePath={routePath}
+          component={ZaakStatus}
+          initializeState={initializeState}
+        />
+      );
+    }
 
     const { asFragment } = render(<Component />);
 
@@ -140,14 +148,16 @@ describe('ZaakStatus', () => {
       push: pushMock,
     };
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routePath}
-        routePath={routePath}
-        component={ZaakStatus}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routePath}
+          routePath={routePath}
+          component={ZaakStatus}
+          initializeState={initializeState}
+        />
+      );
+    }
 
     const { asFragment } = render(<Component />);
 
@@ -174,14 +184,16 @@ describe('ZaakStatus', () => {
       push: pushMock,
     };
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routePath}
-        routePath={routePath}
-        component={ZaakStatus}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routePath}
+          routePath={routePath}
+          component={ZaakStatus}
+          initializeState={initializeState}
+        />
+      );
+    }
 
     render(<Component />);
 

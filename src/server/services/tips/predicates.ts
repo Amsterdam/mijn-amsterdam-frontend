@@ -57,6 +57,25 @@ export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
   return false;
 };
 
+export function hasBudget(
+  titleMatchInLowerCaseLetters: string
+): TipsPredicateFN {
+  const predicate: TipsPredicateFN = (appState) => {
+    if (appState.HLI?.status === 'OK') {
+      const stadspassen = appState.HLI?.content?.stadspas ?? [];
+      return stadspassen.some((stadspas) => {
+        return stadspas.budgets.some((budget) => {
+          return budget.title
+            .toLowerCase()
+            .includes(titleMatchInLowerCaseLetters);
+        });
+      });
+    }
+    return false;
+  };
+  return predicate;
+}
+
 export const hasValidRecentStadspasRequest: TipsPredicateFN = (
   appState,
   today: Date = new Date()

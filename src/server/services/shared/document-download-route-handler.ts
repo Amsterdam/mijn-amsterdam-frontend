@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Response, Router } from 'express';
 
 import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
@@ -26,7 +27,7 @@ export type DocumentDownloadData = {
 export type DocumentDownloadResponse =
   | ApiSuccessResponse<DocumentDownloadData>
   | ApiErrorResponse<null>
-  | ApiPostponeResponse;
+  | ApiPostponeResponse<null>;
 
 export type FetchDocumenDownloadService = (
   requestID: RequestID,
@@ -73,7 +74,9 @@ export function downloadDocumentRouteHandler(
           documentResponse.status === 'ERROR' ||
           documentResponse.status === 'POSTPONE'
         ) {
-          return res.status(500).send(documentResponse);
+          return res
+            .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+            .send(documentResponse);
         }
 
         if (
@@ -92,7 +95,7 @@ export function downloadDocumentRouteHandler(
           : res.send(documentResponse.content.data);
       }
 
-      return res.status(400).send(decryptResult);
+      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send(decryptResult);
     }
 
     return sendUnauthorized(res);

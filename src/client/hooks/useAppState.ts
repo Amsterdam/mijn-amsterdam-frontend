@@ -1,26 +1,21 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { SetterOrUpdater, atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
-  ApiPristineResponse,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiPristineResult,
 } from '../../universal/helpers/api';
-import {
-  AppState,
-  AppStateKey,
-  BagThema,
-} from '../../universal/types/App.types';
+import { AppState, BagThema } from '../../universal/types/App.types';
 import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
 import { captureMessage } from '../helpers/monitoring';
 import { useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
-import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
+import { SSE_CLOSE_MESSAGE, SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 import { entries } from '../../universal/helpers/utils';
 
 const fallbackServiceRequestOptions = {
@@ -30,6 +25,11 @@ const fallbackServiceRequestOptions = {
 export const appStateAtom = atom<AppState>({
   key: 'appState',
   default: PRISTINE_APPSTATE as AppState,
+});
+
+export const appStateReadyAtom = atom<boolean>({
+  key: 'appStateReady',
+  default: false,
 });
 
 interface useAppStateFallbackServiceProps {
@@ -47,6 +47,7 @@ export function useAppStateFallbackService({
     fallbackServiceRequestOptions,
     null
   );
+  const setIsAppStateReady = useSetAppStateReady();
 
   const appStateError = useCallback(
     (message: string) => {
@@ -82,13 +83,14 @@ export function useAppStateFallbackService({
       setAppState((appState) => {
         return Object.assign({}, appState, transformSourceData(api.data));
       });
+      setIsAppStateReady(true);
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error.';
       appStateError(errorMessage);
     }
-  }, [api, appStateError, setAppState, isEnabled]);
+  }, [api, appStateError, setAppState, isEnabled, setIsAppStateReady]);
 }
 
 export function addParamsToStreamEndpoint(
@@ -133,6 +135,7 @@ export function useAppStateRemote() {
 
   const profileType = useProfileTypeValue();
   const [appState, setAppState] = useRecoilState(appStateAtom);
+  const setIsAppStateReady = useSetAppStateReady();
 
   // First retrieve all the services specified in the BFF, after that Only retrieve incremental updates
   const useIncremental = useRef(false);
@@ -142,25 +145,25 @@ export function useAppStateRemote() {
   }, []);
 
   // The callback is fired on every incoming message from the EventSource.
-  const onEvent = useCallback(
-    (messageData: typeof SSE_ERROR_MESSAGE | object) => {
-      if (messageData && messageData !== SSE_ERROR_MESSAGE) {
-        const transformedMessageData = transformSourceData(
-          typeof messageData === 'object' ? messageData : null
-        );
-        setAppState((appState) => {
-          const appStateUpdated = {
-            ...appState,
-            ...transformedMessageData,
-          };
-          return appStateUpdated;
-        });
-      } else if (messageData === SSE_ERROR_MESSAGE) {
-        setFallbackServiceEnabled(true);
-      }
-    },
-    []
-  );
+  const onEvent = useCallback((messageData: string | object) => {
+    if (typeof messageData === 'object') {
+      const transformedMessageData = transformSourceData(messageData);
+      setAppState((appState) => {
+        const appStateUpdated = {
+          ...appState,
+          ...transformedMessageData,
+        };
+        return appStateUpdated;
+      });
+    } else if (messageData === SSE_ERROR_MESSAGE) {
+      setFallbackServiceEnabled(true);
+    } else if (messageData === SSE_CLOSE_MESSAGE) {
+      setIsAppStateReady(true);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('event source', messageData);
+    }
+  }, []);
 
   useSSE({
     path: streamEndpoint,
@@ -186,47 +189,12 @@ export function useAppStateSetter() {
   return useRecoilState(appStateAtom)[1];
 }
 
-export function isAppStateReady(
-  appState: AppState,
-  pristineAppState: AppState,
-  profileType: ProfileType
-) {
-  const isLegacyProfileType = ['private', 'commercial'].includes(profileType);
-  const profileStates = Object.entries(appState).filter(
-    ([appStateKey, state]) => {
-      const key = appStateKey as AppStateKey;
-      const stateConfig = pristineAppState[key] as ApiPristineResponse<unknown>;
-
-      const isProfileMatch =
-        (isLegacyProfileType && !stateConfig?.profileTypes?.length) ||
-        stateConfig?.profileTypes?.includes(profileType);
-
-      // NOTE: The appState keys ending with _BAG are not considered a fixed/known portion of the appstate.
-      if (!stateConfig && !key.endsWith('_BAG')) {
-        captureMessage(`unknown stateConfig key: ${appStateKey}`);
-      }
-
-      // If we encounter an unknown stateConfig we treat the state to be ready so we don't block the isReady completely.
-      return isProfileMatch && (!!stateConfig?.isActive || !stateConfig);
-    }
-  );
-
-  return (
-    !!profileStates.length &&
-    profileStates.every(([appStateKey, state]) => {
-      return typeof state !== 'undefined' && state.status !== 'PRISTINE';
-    })
-  );
+function useSetAppStateReady() {
+  return useRecoilState(appStateReadyAtom)[1];
 }
 
 export function useAppStateReady() {
-  const appState = useAppStateGetter();
-  const profileType = useProfileTypeValue();
-
-  return useMemo(
-    () => isAppStateReady(appState, PRISTINE_APPSTATE, profileType),
-    [appState, profileType]
-  );
+  return useRecoilValue(appStateReadyAtom);
 }
 
 export interface AppStateBagApiParams {
@@ -249,7 +217,7 @@ export function useAppStateBagApi<T>({
     typeof appState[bagThema] !== 'undefined' &&
     key in appState[bagThema]!;
 
-  const [api, fetch] = useDataApi<ApiResponse<T | null>>(
+  const [api, fetch] = useDataApi<ApiResponse_DEPRECATED<T | null>>(
     {
       url,
       postpone: isApiDataCached || !url,
@@ -275,7 +243,7 @@ export function useAppStateBagApi<T>({
 
         localState = {
           ...localState,
-          [key]: api.data as ApiResponse<T | null>,
+          [key]: api.data as ApiResponse_DEPRECATED<T | null>,
         };
 
         return {
@@ -287,7 +255,8 @@ export function useAppStateBagApi<T>({
   }, [isApiDataCached, api, key, url]);
 
   return [
-    (appState?.[bagThema]?.[key] as ApiResponse<T | null>) || api.data, // Return the response data from remote system or the pristine data provided to useApiData.
+    (appState?.[bagThema]?.[key] as ApiResponse_DEPRECATED<T | null>) ||
+      api.data, // Return the response data from remote system or the pristine data provided to useApiData.
     fetch,
     isApiDataCached,
   ] as const;
@@ -296,7 +265,7 @@ export function useAppStateBagApi<T>({
 export function useGetAppStateBagDataByKey<T>({
   bagThema,
   key,
-}: Omit<AppStateBagApiParams, 'url'>): ApiResponse<T | null> | null {
+}: Omit<AppStateBagApiParams, 'url'>): ApiResponse_DEPRECATED<T | null> | null {
   const appState = useRecoilValue(appStateAtom);
   return appState?.[bagThema]?.[key] ?? null;
 }

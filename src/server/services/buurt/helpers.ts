@@ -25,7 +25,7 @@ import {
 } from '../../../universal/config/myarea-datasets';
 import {
   ApiErrorResponse,
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
@@ -432,7 +432,7 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
 }
 
 export function datasetApiResult(
-  results: ApiResponse<DatasetResponse | null>[]
+  results: ApiResponse_DEPRECATED<DatasetResponse | null>[]
 ) {
   const errors = results
     .filter(

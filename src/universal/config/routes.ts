@@ -10,7 +10,7 @@ export const AppRoutes = {
   'ZORG/VOORZIENINGEN_LIST': '/zorg-en-ondersteuning/:kind/:page?',
 
   HLI: '/regelingen-bij-laag-inkomen',
-  'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:id',
+  'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
   'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
   'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/:kind/:page?',
 

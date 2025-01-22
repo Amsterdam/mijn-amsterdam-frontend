@@ -29,8 +29,8 @@ export interface PristineStageConfig {
 }
 
 // Used of the request to the api must be postponed, for example when using a feature toggle.
-export type ApiPostponeResponse = {
-  content: null;
+export type ApiPostponeResponse<T> = {
+  content: T;
   status: 'POSTPONE';
 };
 
@@ -48,27 +48,32 @@ export type ResponseStatus =
   | 'POSTPONE'
   | 'DEPENDENCY_ERROR';
 
-export type ApiResponse<T> =
+export type ApiResponse_DEPRECATED<T> =
   | ApiErrorResponse<null>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>
-  | ApiPostponeResponse
+  | ApiPostponeResponse<T>
   | ApiDependencyErrorResponse;
 
-export function isLoading(apiResponseData: ApiResponse<unknown>) {
+export type ApiResponse<T> =
+  | ApiErrorResponse<null>
+  | ApiSuccessResponse<T>
+  | ApiPostponeResponse<null>;
+
+export function isLoading(apiResponseData: ApiResponse_DEPRECATED<unknown>) {
   // If no responseData was found, assumes it's still loading
   return (
     (!apiResponseData && !isError(apiResponseData)) ||
-    apiResponseData?.status === 'PRISTINE'
+    (apiResponseData?.status === 'PRISTINE' && apiResponseData.isActive)
   );
 }
 
-export function isOk(apiResponseData: ApiResponse<unknown>) {
+export function isOk(apiResponseData: ApiResponse_DEPRECATED<unknown>) {
   return apiResponseData?.status === 'OK';
 }
 
 export function isError(
-  apiResponseData: ApiResponse<unknown>,
+  apiResponseData: ApiResponse_DEPRECATED<unknown>,
   includeFailedDependencies: boolean = true
 ) {
   return (
@@ -81,7 +86,7 @@ export function isError(
 }
 
 export function hasFailedDependency(
-  apiResponseData: ApiResponse<unknown>,
+  apiResponseData: ApiResponse_DEPRECATED<unknown>,
   dependencyKey: string
 ) {
   return (
@@ -153,15 +158,15 @@ export function apiPristineResult<T>(
   };
 }
 
-export function apiPostponeResult(): ApiPostponeResponse {
+export function apiPostponeResult<T>(content: T): ApiPostponeResponse<T> {
   return {
-    content: null,
+    content,
     status: 'POSTPONE',
   };
 }
 
 export function apiDependencyError(
-  apiResponses: Record<string, ApiResponse<unknown>>
+  apiResponses: Record<string, ApiResponse_DEPRECATED<unknown>>
 ): ApiDependencyErrorResponse {
   return {
     message: Object.entries(apiResponses).reduce((acc, [key, response]) => {

@@ -85,7 +85,7 @@ export type SecurityCode = string;
 
 export interface StadspasHouderPasSource {
   actief: boolean;
-  budgetten: unknown[];  // Did not see the exact shape of this data, encountered an empty array.
+  budgetten: unknown[]; // Did not see the exact shape of this data, encountered an empty array.
   categorie: string;
   categorie_code: string;
   expiry_date: string;
@@ -93,7 +93,7 @@ export interface StadspasHouderPasSource {
   id: number;
   pasnummer: number;
   pasnummer_volledig: string;
-  passoort: { id: number, naam: string };
+  passoort: { id: number; naam: string };
   securitycode: SecurityCode;
   vervangen: boolean;
 }
@@ -173,17 +173,23 @@ export interface Stadspas {
   budgets: StadspasBudget[];
   balanceFormatted: string;
   balance: number;
+  actief: boolean;
   securityCode: SecurityCode;
 }
+
+export type TransactionKeysEncrypted = string;
 
 export interface StadspasFrontend extends Stadspas {
   urlTransactions: string;
   transactionsKeyEncrypted: string;
+  blockPassURL: string | null;
   link?: LinkProps;
 }
 
+export type TransactionKeysEncryptedWithoutSessionID = string;
+
 export interface StadspasAMSAPPFrontend extends Stadspas {
-  transactionsKeyEncrypted: string;
+  transactionsKeyEncrypted: TransactionKeysEncryptedWithoutSessionID;
 }
 
 export interface StadspasTransactionQueryParams {
@@ -222,3 +228,8 @@ export interface StadspasDiscountTransaction {
 }
 
 export type StadspasAdministratieNummer = string;
+
+export type PasblokkadeByPasnummer = Record<
+  StadspasFrontend['passNumber'],
+  boolean
+>;

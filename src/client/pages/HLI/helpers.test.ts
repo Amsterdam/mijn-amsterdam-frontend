@@ -1,12 +1,8 @@
-import { generatePath } from 'react-router-dom';
 import { describe, it, expect } from 'vitest';
 
 import { getThemaTitle, getThemaTitleWithAppState } from './helpers';
-import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { ThemaTitles } from '../../config/thema';
-import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
-import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 
 describe('helpers', () => {
   describe('getThemaTitle', () => {

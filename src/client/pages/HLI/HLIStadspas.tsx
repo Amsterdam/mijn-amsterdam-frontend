@@ -1,6 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
+  ActionGroup,
+  Alert,
+  Button,
   Grid,
   Heading,
   Paragraph,
@@ -10,13 +13,15 @@ import { useParams } from 'react-router-dom';
 
 import { getThemaTitleWithAppState } from './helpers';
 import styles from './HLIStadspas.module.scss';
+import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
   StadspasBudget,
   StadspasBudgetTransaction,
+  StadspasFrontend,
 } from '../../../server/services/hli/stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiPristineResult,
   isError,
   isLoading,
@@ -25,12 +30,14 @@ import {
   DetailPage,
   ErrorAlert,
   LoadingContent,
+  Modal,
   PageHeading,
   ThemaIcon,
 } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
@@ -68,14 +75,23 @@ const displayPropsBudgets = {
   budgetAssignedFormatted: 'Bedrag',
 };
 
+const PHONENUMBERS = {
+  CCA: '14020',
+  WerkEnInkomen: '020 252 6000',
+} as const;
+
 export default function HLIStadspas() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
+
   const { HLI } = appState;
-  const { id } = useParams<{ id: string }>();
-  const stadspas = id
-    ? HLI?.content?.stadspas?.find((pass) => pass.id === id)
+  const { passNumber } = useParams<{ passNumber: string }>();
+  const stadspassen = useStadspassen();
+
+  const stadspas = passNumber
+    ? stadspassen.find((pass) => pass.passNumber.toString() === passNumber)
     : null;
+
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
   const noContent = !stadspas;
@@ -102,7 +118,7 @@ export default function HLIStadspas() {
   };
 
   const [transactionsApi, fetchTransactions] = useDataApi<
-    ApiResponse<StadspasBudgetTransaction[]>
+    ApiResponse_DEPRECATED<StadspasBudgetTransaction[]>
   >(requestOptions, apiPristineResult([]));
 
   const isLoadingTransacties = transactionsApi.isLoading;
@@ -137,7 +153,18 @@ export default function HLIStadspas() {
       </PageHeading>
       <Screen>
         <Grid>
-          {!stadspas && (
+          {stadspas ? (
+            <Grid.Cell span="all">
+              <Datalist rows={[NAME]} />
+              <Paragraph className={styles.StadspasNummerInfo}>
+                Hieronder staat het Stadspasnummer van uw actieve pas.
+                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
+              </Paragraph>
+              <Datalist rows={[NUMBER]} />
+              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
+              <BlockStadspas stadspas={stadspas} />
+            </Grid.Cell>
+          ) : (
             <Grid.Cell span="all">
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigDetails} />
@@ -152,18 +179,6 @@ export default function HLIStadspas() {
               )}
             </Grid.Cell>
           )}
-          {!!stadspas && (
-            <Grid.Cell span="all">
-              <Datalist rows={[NAME]} />
-              <Paragraph className={styles.StadspasNummerInfo}>
-                Hieronder staat het Stadspasnummer van uw actieve pas.
-                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
-              </Paragraph>
-              <Datalist rows={[NUMBER]} />
-              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-            </Grid.Cell>
-          )}
-
           <>
             <Grid.Cell span="all">
               <Heading>Gekregen tegoed</Heading>
@@ -231,5 +246,121 @@ export default function HLIStadspas() {
         </Grid>
       </Screen>
     </DetailPage>
+  );
+}
+
+function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+  if (!stadspas.actief) {
+    return <PassBlockedAlert />;
+  }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const { error, isMutating, trigger: blokkeerStadspas } = useBlockStadspas();
+
+  useEffect(() => {
+    if (error && !isMutating && !showError) {
+      setShowError(true);
+    }
+  }, [error, showError, isMutating]);
+
+  return (
+    <>
+      {showError && (
+        <Alert
+          className="ams-mb--sm"
+          heading="Fout bij het blokeren van de pas"
+          severity="error"
+        >
+          Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
+          {PHONENUMBERS.WerkEnInkomen}
+        </Alert>
+      )}
+      {isMutating ? (
+        <Alert severity="warning">
+          <Paragraph>
+            <Spinner /> <span>Bezig met het blokkeren van de pas...</span>
+          </Paragraph>
+        </Alert>
+      ) : (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+          data-testid="block-stadspas-button"
+        >
+          Blokeer deze Stadspas
+        </Button>
+      )}
+
+      <Modal
+        title="Weet u zeker dat u uw stadspas wilt blokkeren ?"
+        className={styles.BlokkeerDialog}
+        isOpen={isModalOpen}
+        showCloseButton={false}
+        actions={
+          <ActionGroup>
+            <Button
+              type="submit"
+              variant="primary"
+              onClick={() => {
+                setShowError(false);
+                setIsModalOpen(false);
+                if (stadspas.blockPassURL) {
+                  blokkeerStadspas(stadspas.blockPassURL);
+                }
+              }}
+            >
+              Ja, blokkeer mijn pas
+            </Button>
+            <Button
+              variant="tertiary"
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
+            >
+              Nee, blokkeer mijn pas niet
+            </Button>
+          </ActionGroup>
+        }
+      >
+        <Paragraph className="ams-mb--sm">
+          Is uw Stadspas gestolen of bent u deze kwijt? Blokkeer dan hier uw
+          Stadspas. Zo zorgt u ervoor dat niemand de Stadspas en eventueel
+          tegoed van uw kind uitgeeft.
+        </Paragraph>
+        <Paragraph className="ams-mb--sm">
+          Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
+          blokkeren? Bel dan meteen naar {PHONENUMBERS.WerkEnInkomen}. De nieuwe
+          pas wordt dan binnen drie weken thuisgestuurd en is dan gelijk te
+          gebruiken.
+        </Paragraph>
+      </Modal>
+    </>
+  );
+}
+
+function PassBlockedAlert() {
+  return (
+    <Alert
+      heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
+      severity="warning"
+      data-testid="stadspas-blocked-alert"
+    >
+      <Paragraph>
+        Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
+        naar {PHONENUMBERS.WerkEnInkomen} of {PHONENUMBERS.CCA}.
+      </Paragraph>
+      <Paragraph>
+        Het aanvragen van een nieuwe pas is gratis. De pas wordt binnen drie
+        weken thuisgestuurd en is dan gelijk te gebruiken.
+      </Paragraph>
+      <Paragraph>
+        Stond er nog tegoed op de Stadspas? Dan staat het tegoed dat over was
+        ook op weer op de nieuwe pas.
+      </Paragraph>
+    </Alert>
   );
 }

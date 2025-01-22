@@ -2,6 +2,7 @@ import { generatePath } from 'react-router-dom';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
+  mutateGpassBlockPass,
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
@@ -15,6 +16,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
+  ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -26,43 +28,52 @@ import { captureException } from '../monitoring';
 export async function fetchStadspas(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse_DEPRECATED<StadspasFrontend[] | null>> {
   const stadspasResponse = await fetchStadspassen(
     requestID,
     authProfileAndToken
   );
 
-  if (stadspasResponse.status === 'OK') {
-    const stadspassen: StadspasFrontend[] =
-      stadspasResponse.content.stadspassen.map((stadspas) => {
-        const [transactionsKeyEncrypted] = encrypt(
-          `${authProfileAndToken.profile.sid}:${stadspasResponse.content.administratienummer}:${stadspas.passNumber}`
-        );
-
-        const urlTransactions = generateFullApiUrlBFF(
-          BffEndpoints.STADSPAS_TRANSACTIONS,
-          {
-            transactionsKeyEncrypted,
-          }
-        );
-
-        return {
-          ...stadspas,
-          urlTransactions,
-          transactionsKeyEncrypted,
-          link: {
-            to: generatePath(AppRoutes['HLI/STADSPAS'], {
-              id: stadspas.id,
-            }),
-            title: `Stadspas van ${stadspas.owner.firstname}`,
-          },
-        };
-      });
-
-    return apiSuccessResult(stadspassen);
+  if (stadspasResponse.status !== 'OK') {
+    return stadspasResponse;
   }
 
-  return stadspasResponse;
+  const stadspassen: StadspasFrontend[] =
+    stadspasResponse.content.stadspassen.map((stadspas) => {
+      const [transactionsKeyEncrypted] = encrypt(
+        `${authProfileAndToken.profile.sid}:${stadspasResponse.content.administratienummer}:${stadspas.passNumber}`
+      );
+
+      const urlTransactions = generateFullApiUrlBFF(
+        BffEndpoints.STADSPAS_TRANSACTIONS,
+        {
+          transactionsKeyEncrypted,
+        }
+      );
+
+      let blockPassURL = null;
+      if (stadspas.actief) {
+        blockPassURL = generateFullApiUrlBFF(BffEndpoints.STADSPAS_BLOCK_PASS, {
+          transactionsKeyEncrypted,
+        });
+      }
+
+      const stadspasFrontend: StadspasFrontend = {
+        ...stadspas,
+        urlTransactions,
+        transactionsKeyEncrypted,
+        blockPassURL,
+        link: {
+          to: generatePath(AppRoutes['HLI/STADSPAS'], {
+            passNumber: stadspas.passNumber,
+          }),
+          title: `Stadspas van ${stadspas.owner.firstname}`,
+        },
+      };
+      return stadspasFrontend;
+    });
+
+  return apiSuccessResult(stadspassen);
 }
 
 async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey(
@@ -112,18 +123,18 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
   });
 }
 
-async function decryptAndFetch<T>(
+export async function stadspasDecryptAndFetch<T>(
   fetchTransactionFn: (
     administratienummer: StadspasAdministratieNummer,
     pasnummer: StadspasFrontend['passNumber']
   ) => T,
   transactionsKeyEncrypted: string,
-  verifySessionId?: AuthProfileAndToken['profile']['sid']
+  sessionId?: AuthProfileAndToken['profile']['sid']
 ) {
   const decryptResult =
     await decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey(
       transactionsKeyEncrypted,
-      verifySessionId
+      sessionId
     );
 
   if (decryptResult.status === 'OK') {
@@ -140,7 +151,7 @@ export async function fetchStadspasDiscountTransactions(
   requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted']
 ) {
-  return decryptAndFetch(
+  return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
       fetchGpassDiscountTransactions(requestID, administratienummer, pasnummer),
     transactionsKeyEncrypted
@@ -153,7 +164,7 @@ export async function fetchStadspasBudgetTransactions(
   budgetCode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  return decryptAndFetch(
+  return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
       fetchGpassBudgetTransactions(
         requestID,
@@ -161,6 +172,25 @@ export async function fetchStadspasBudgetTransactions(
         pasnummer,
         budgetCode
       ),
+    transactionsKeyEncrypted,
+    verifySessionId
+  );
+}
+
+/** Block a stadspas with it's passNumber.
+ *
+ *  The passNumber is encrypted inside the transactionsKeyEncrypted.
+ *  The endpoint in use can also unblock cards, but we prevent this so its block only.
+ */
+export async function blockStadspas(
+  requestID: RequestID,
+  transactionsKeyEncrypted: string,
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
+) {
+  return stadspasDecryptAndFetch(
+    (administratienummer, pasnummer) => {
+      return mutateGpassBlockPass(requestID, pasnummer, administratienummer);
+    },
     transactionsKeyEncrypted,
     verifySessionId
   );
@@ -179,5 +209,5 @@ export async function fetchStadspasNotifications(
 
 export const forTesting = {
   decryptEncryptedRouteParamAndValidateSessionIDStadspasTransactionsKey,
-  decryptAndFetch,
+  decryptAndFetch: stadspasDecryptAndFetch,
 };

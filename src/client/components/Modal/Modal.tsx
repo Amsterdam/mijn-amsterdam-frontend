@@ -36,10 +36,7 @@ export function Modal({
   return isOpen
     ? ReactDOM.createPortal(
         <div className={styles.ModalContainer}>
-          <div
-            className={classnames(styles.Modal, className)}
-            onClick={onClose}
-          />
+          <div className={styles.Modal} onClick={onClose} />
 
           <Dialog
             ref={dialogEl}
@@ -51,7 +48,8 @@ export function Modal({
             style={{ transform: `translateY(${marginTop}px)` }}
             className={classnames(
               styles.Dialog,
-              !showCloseButton && styles.DialogWithoutCloseButton
+              !showCloseButton && styles.DialogWithoutCloseButton,
+              className
             )}
           >
             {children}

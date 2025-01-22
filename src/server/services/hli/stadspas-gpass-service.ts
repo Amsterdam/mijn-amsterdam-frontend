@@ -1,3 +1,5 @@
+import { HttpStatusCode } from 'axios';
+import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
@@ -9,19 +11,24 @@ import {
   StadspasBudget,
   StadspasBudgetTransaction,
   StadspasDetailBudgetSource,
-  StadspasDetailSource,
   StadspasDiscountTransaction,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
   StadspasHouderSource,
   StadspasOwner,
   StadspasPasHouderResponse,
+  StadspasDetailSource,
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
+  PasblokkadeByPasnummer,
 } from './stadspas-types';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
+  apiErrorResult,
+  ApiResponse_DEPRECATED,
+  ApiResponse,
+  ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
@@ -99,6 +106,7 @@ function transformStadspasResponse(
       balanceFormatted: `€${displayAmount(balance)}`,
       passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
+      actief: gpassStadspasResonseData.actief,
       securityCode,
     };
 
@@ -108,6 +116,21 @@ function transformStadspasResponse(
   return gpassStadspasResonseData;
 }
 
+export async function fetchStadspasSource(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<ApiResponse<StadspasDetailSource>> {
+  const dataRequestConfig = getApiConfig('GPASS', {
+    formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
+    headers: getHeaders(administratienummer),
+    params: {
+      include_balance: true,
+    },
+  });
+  return requestData<StadspasDetailSource>(dataRequestConfig, requestID);
+}
+
 export async function fetchStadspassenByAdministratienummer(
   requestID: RequestID,
   administratienummer: string
@@ -115,7 +138,6 @@ export async function fetchStadspassenByAdministratienummer(
   const dataRequestConfig = getApiConfig('GPASS');
 
   const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v1/pashouder`;
-  const GPASS_ENDPOINT_PAS = `${dataRequestConfig.url}/rest/sales/v1/pas`;
 
   const headers = getHeaders(administratienummer);
   const stadspasHouderResponse = await requestData<StadspasPasHouderResponse>(
@@ -150,22 +172,32 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of pashouders) {
-    for (const pas of pashouder.passen.filter((pas) => pas.actief)) {
-      const url = `${GPASS_ENDPOINT_PAS}/${pas.pasnummer}`;
-      const request = requestData<Stadspas[]>(
-        {
-          ...dataRequestConfig,
-          url,
-          transformResponse: (stadspas) =>
-            transformStadspasResponse(stadspas, pashouder, pas.securitycode),
-          headers,
-          params: {
-            include_balance: true,
-          },
-        },
-        requestID
-      );
-      pasRequests.push(request);
+    const passen = pashouder.passen.filter(
+      (pas) => pas.actief || !isPast(new Date(pas.expiry_date))
+    );
+    for (const pas of passen) {
+      const response = fetchStadspasSource(
+        requestID,
+        pas.pasnummer,
+        administratienummer
+      ).then((response) => {
+        if (response.content && response.status === 'OK') {
+          const pasTransformed = transformStadspasResponse(
+            response.content,
+            pashouder,
+            pas.securitycode
+          );
+          const stadspas: ApiSuccessResponse<Stadspas> = {
+            ...response,
+            content: pasTransformed,
+          };
+
+          return stadspas;
+        }
+        return response;
+      });
+
+      pasRequests.push(response);
     }
   }
 
@@ -317,6 +349,45 @@ export async function fetchGpassDiscountTransactions(
     dataRequestConfig,
     requestID
   );
+}
+
+export async function mutateGpassBlockPass(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>> {
+  const passResponse = await fetchStadspasSource(
+    requestID,
+    passNumber,
+    administratienummer
+  );
+  if (passResponse.status !== 'OK') {
+    return passResponse;
+  }
+  // This may not give unexpected results so we do extra typechecking on the source input.
+  if (
+    typeof passResponse.content?.actief !== 'boolean' ||
+    !passResponse.content.actief
+  ) {
+    return apiErrorResult(
+      'The citypass is not active. We cannot unblock an active pass.',
+      null,
+      HttpStatusCode.Forbidden
+    );
+  }
+
+  const config = getApiConfig('GPASS', {
+    method: 'POST',
+    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
+    transformResponse: (pas: StadspasDetailSource) => {
+      if (pas.actief) {
+        throw Error('City pass is still active after trying to block it.');
+      }
+      return { [pas.pasnummer]: pas.actief };
+    },
+  });
+
+  return requestData<PasblokkadeByPasnummer>(config, requestID);
 }
 
 export const forTesting = {

@@ -29,6 +29,7 @@ export const BffEndpoints = {
   // Stadspas
   STADSPAS_TRANSACTIONS:
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
+  STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
 
   // Vergunningen V2
   VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',
@@ -75,17 +76,21 @@ export const BffEndpoints = {
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
 };
 
+const AMSAPP_BASE = '/services/amsapp';
+
 export const ExternalConsumerEndpoints = {
   // Publicly accessible
   public: {
-    STADSPAS_AMSAPP_LOGIN: `/services/amsapp/stadspas/login/:token`,
-    STADSPAS_ADMINISTRATIENUMMER: `/services/amsapp/stadspas/administratienummer/:token`,
+    STADSPAS_AMSAPP_LOGIN: `${AMSAPP_BASE}/stadspas/login/:token`,
+    STADSPAS_ADMINISTRATIENUMMER: `${AMSAPP_BASE}/stadspas/administratienummer/:token`,
+    STADSPAS_APP_LANDING: `${AMSAPP_BASE}/stadspas/app-landing`,
   },
   // Privately accessible
   private: {
-    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/passen/:administratienummerEncrypted`,
-    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
-    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}/services/amsapp/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_PASSEN: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/passen/:administratienummerEncrypted`,
+    STADSPAS_DISCOUNT_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/aanbiedingen/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
+    STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
   },
 };
 
@@ -102,8 +107,6 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
 
 export const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
-  DEV_LOGOUT: '/api/v1/auth/logout',
-  DEV_AUTH_CHECK: '/api/v1/auth/check',
 };
 
 export const PREDEFINED_REDIRECT_URLS = ['noredirect', '/api/v1/services/all'];

@@ -1,6 +1,7 @@
-import { Grid, Paragraph, UnorderedList } from '@amsterdam/design-system-react';
+import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
+import { useStadspassen } from './HLI.hooks';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -8,6 +9,7 @@ import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
@@ -20,35 +22,52 @@ export function HistoricItemsMention() {
   );
 }
 
-function StadspasListItem({ stadspas }: { stadspas: StadspasFrontend }) {
-  return (
-    <UnorderedList.Item>
-      <MaRouterLink maVariant="fatNoUnderline" href={stadspas.link?.to}>
-        <span className={styles.Stadspas_owner}>
-          {stadspas.owner.firstname}
-        </span>
-        {!!stadspas.balance && (
-          <span className={styles.Stadspas_balance}>
-            Saldo {stadspas.balanceFormatted}
-          </span>
-        )}
-      </MaRouterLink>
-    </UnorderedList.Item>
-  );
-}
+type StadspasDisplayProps = {
+  owner: React.JSX.Element;
+  actief: string;
+};
 
 type StadspassenProps = {
   stadspassen: StadspasFrontend[];
 };
 
+const displayProps: DisplayProps<StadspasDisplayProps> = {
+  owner: '',
+  actief: 'Status',
+};
+
 function Stadspassen({ stadspassen }: StadspassenProps) {
+  const passen = stadspassen.map((pas) => {
+    return {
+      owner: (
+        <MaRouterLink maVariant="fatNoUnderline" href={pas.link?.to}>
+          <span
+            className={styles.Stadspas_owner}
+          >{`Stadspas van ${pas.owner.firstname}`}</span>
+          {!!pas.balance && (
+            <span className={styles.Stadspas_balance}>
+              Saldo {pas.balanceFormatted}
+            </span>
+          )}
+        </MaRouterLink>
+      ),
+      actief: (
+        <span className={styles.StatusValue}>
+          {pas.actief ? 'Actief' : 'Geblokkeerd'}
+        </span>
+      ),
+    };
+  });
+
   return (
     <Grid.Cell span="all">
-      <UnorderedList markers={false}>
-        {stadspassen?.map((stadspas) => (
-          <StadspasListItem key={stadspas.id} stadspas={stadspas} />
-        ))}
-      </UnorderedList>
+      <ThemaPaginaTable<StadspasDisplayProps>
+        title=""
+        displayProps={displayProps}
+        zaken={passen}
+        className={styles.Stadspassen}
+      />
+
       {!!stadspassen?.length && (
         <Paragraph size="small">
           {stadspassen.length > 1 ? (
@@ -73,12 +92,12 @@ export default function ThemaPaginaHLI() {
     hasKindtegoed,
     isError,
     isLoading,
-    stadspassen,
     regelingen,
     title,
     routes,
     tableConfig,
     dependencyError,
+    stadspassen,
   } = useHliThemaData();
 
   const pageContentTop = (

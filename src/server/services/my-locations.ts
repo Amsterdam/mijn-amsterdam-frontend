@@ -6,7 +6,7 @@ import {
   DEFAULT_LNG,
 } from '../../universal/config/myarea-datasets';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiDependencyError,
   apiErrorResult,
   apiSuccessResult,
@@ -18,7 +18,7 @@ import { AuthProfileAndToken } from '../auth/auth-types';
 async function fetchPrivate(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
   const BRP = await fetchBRP(requestID, authProfileAndToken);
 
   if (BRP.status === 'OK') {
@@ -59,10 +59,10 @@ async function fetchPrivate(
 async function fetchCommercial(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
   const KVK = await fetchKVK(requestID, authProfileAndToken);
 
-  let MY_LOCATION: ApiResponse<BAGData[] | null>;
+  let MY_LOCATION: ApiResponse_DEPRECATED<BAGData[] | null>;
 
   if (KVK.status === 'OK') {
     const addresses: Adres[] = getKvkAddresses(KVK.content);
@@ -99,7 +99,7 @@ async function fetchCommercial(
 export async function fetchMyLocation(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<BAGData[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
   const commercialResponse = await fetchCommercial(
     requestID,
     authProfileAndToken

@@ -3,6 +3,7 @@ import Mockdate from 'mockdate';
 import {
   hasBijstandsuitkering,
   hasBnBVergunning,
+  hasBudget,
   hasDutchNationality,
   hasKidsBetweenAges2And18,
   hasOldestKidBornFrom2016,
@@ -26,7 +27,7 @@ import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_AANVRAGEN from '../../../../mocks/fixtures/wpi-aanvragen.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
@@ -77,7 +78,7 @@ describe('predicates', () => {
             BRP as ApiSuccessResponse<BRPDataFromSource>
           ),
           status: 'OK',
-        } as ApiResponse<BRPData>,
+        } as ApiResponse_DEPRECATED<BRPData>,
       };
     };
 
@@ -327,7 +328,7 @@ describe('predicates', () => {
           status: 'OK',
           content: { stadspas: [{ passType: 'kind' }] },
         },
-      } as AppState;
+      } as unknown as AppState;
 
       expect(hasStadspasGroeneStip(appState)).toEqual(true);
     });
@@ -391,8 +392,10 @@ describe('predicates', () => {
 
         return {
           WPI_TOZO: TOZO as unknown as AppState['WPI_TOZO'],
-          WPI_TONK: TONK as unknown as ApiResponse<WpiRequestProcess[] | null>,
-          WPI_AANVRAGEN: UITKERINGEN as unknown as ApiResponse<
+          WPI_TONK: TONK as unknown as ApiResponse_DEPRECATED<
+            WpiRequestProcess[] | null
+          >,
+          WPI_AANVRAGEN: UITKERINGEN as unknown as ApiResponse_DEPRECATED<
             WpiRequestProcess[] | null
           >,
         };
@@ -474,7 +477,7 @@ describe('predicates', () => {
         UITKERINGEN.content[0].datePublished = datePublished;
 
         return {
-          WPI_AANVRAGEN: UITKERINGEN as unknown as ApiResponse<
+          WPI_AANVRAGEN: UITKERINGEN as unknown as ApiResponse_DEPRECATED<
             WpiRequestProcess[] | null
           >,
         };
@@ -498,7 +501,9 @@ describe('predicates', () => {
     describe('hasTozo', () => {
       it('should return true when there is some content', () => {
         const appState = {
-          WPI_TOZO: TOZO as unknown as ApiResponse<WpiRequestProcess[] | null>,
+          WPI_TOZO: TOZO as unknown as ApiResponse_DEPRECATED<
+            WpiRequestProcess[] | null
+          >,
         };
 
         expect(hasTozo(appState)).toBe(true);
@@ -506,10 +511,32 @@ describe('predicates', () => {
 
       it('should return false when no content', () => {
         const appState = {
-          WPI_TOZO: {} as ApiResponse<WpiRequestProcess[] | null>,
+          WPI_TOZO: {} as ApiResponse_DEPRECATED<WpiRequestProcess[] | null>,
         };
         expect(hasTozo(appState)).toBe(false);
       });
+    });
+  });
+
+  describe('hasBudget', () => {
+    const state = {
+      HLI: {
+        status: 'OK',
+        content: {
+          stadspas: [
+            {
+              budgets: [{ title: 'Witgoed regeling' }],
+            },
+          ],
+        },
+      },
+    };
+    test('hasBudget with correct name', () => {
+      expect(hasBudget('witgoed')(state as unknown as AppState)).toBe(true);
+    });
+
+    test('hasBudget name not found', () => {
+      expect(hasBudget('zwartgoed')(state as unknown as AppState)).toBe(false);
     });
   });
 

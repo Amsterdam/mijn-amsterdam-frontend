@@ -26,7 +26,10 @@ import {
   displayPath,
 } from './search-config';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ApiResponse, isError } from '../../../universal/helpers/api';
+import {
+  ApiResponse_DEPRECATED,
+  isError,
+} from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState, AppStateKey } from '../../../universal/types/App.types';
 import { IconMarker } from '../../assets/icons';
@@ -373,7 +376,7 @@ export const searchConfigRemote = selector<SearchConfigRemote | null>({
   get: async ({ get }) => {
     // Subscribe to updates from requestID to re-evaluate selector to reload the SEARCH_CONFIG
     get(requestID);
-    const response: AxiosResponse<ApiResponse<SearchConfigRemote>> =
+    const response: AxiosResponse<ApiResponse_DEPRECATED<SearchConfigRemote>> =
       await axios.get(BFFApiUrls.SEARCH_CONFIGURATION, {
         responseType: 'json',
         withCredentials: true,

@@ -5,7 +5,7 @@ import type {
   VergunningDocument,
 } from '../../../server/services/vergunningen/vergunningen';
 import {
-  ApiResponse,
+  ApiResponse_DEPRECATED,
   apiPristineResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
@@ -35,7 +35,7 @@ export function DocumentDetails({
       isLoading: isLoadingDocuments,
     },
     fetchDocuments,
-  ] = useDataApi<ApiResponse<VergunningDocument[]>>(
+  ] = useDataApi<ApiResponse_DEPRECATED<VergunningDocument[]>>(
     {
       postpone: true,
       transformResponse: ({ content }) => {
