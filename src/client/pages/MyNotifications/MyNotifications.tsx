@@ -56,20 +56,6 @@ export function MyNotificationsPage() {
               Niet alle updates kunnen op dit moment worden getoond.
             </ErrorAlert>
           )}
-          {total > PAGE_SIZE && (
-            <Pagination
-              className="ams-mb--sm"
-              totalCount={total}
-              pageSize={PAGE_SIZE}
-              currentPage={currentPage}
-              onPageClick={(page) => {
-                history.replace(
-                  generatePath(AppRoutes.NOTIFICATIONS, { page })
-                );
-              }}
-            />
-          )}
-
           <OrderedList markers={false}>
             {isLoading(NOTIFICATIONS) && (
               <OrderedList.Item>
