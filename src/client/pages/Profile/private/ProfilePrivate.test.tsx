@@ -336,7 +336,7 @@ describe('<Profile />', () => {
       });
 
     panelHeadingsNotHere.forEach(async (heading) => {
-      expect(await screen.findByText(heading)).not.toBeInTheDocument();
+      expect(await screen.queryByText(heading)).not.toBeInTheDocument();
     });
   });
 
