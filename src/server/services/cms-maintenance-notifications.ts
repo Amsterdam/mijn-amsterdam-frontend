@@ -1,6 +1,6 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
-import { marked } from 'marked';
 
+import { sanitizeCmsContent } from './cms-content';
 import { IS_TAP } from '../../universal/config/env';
 import { Themas } from '../../universal/config/thema';
 import {
@@ -68,7 +68,6 @@ export interface CMSMaintenanceNotification extends MyNotification {
   timeEnd: string;
   timeStart: string;
   description: string;
-  moreInformation: string;
   path: string;
   link?: LinkProps;
 }
@@ -108,9 +107,6 @@ function transformCMSEventResponse(
             to: veld.Src,
           };
         }
-        break;
-      case 'Meer informatie':
-        item.moreInformation = veld.Src;
         break;
       case 'Omschrijving':
         item.description = veld.Src;
@@ -166,11 +162,15 @@ async function fetchCMSMaintenanceNotifications(
             notification !== null
         )
         .map((notification) => {
-          if (notification.moreInformation) {
-            notification.moreInformation = marked(notification.moreInformation);
-          }
           if (notification.description) {
-            notification.description = marked(notification.description);
+            notification.description = sanitizeCmsContent(
+              notification.description,
+              {
+                allowedAttributes: { a: [] },
+                allowedTags: [],
+                exclusiveFilter: () => true,
+              }
+            );
           }
           return notification;
         });
@@ -249,10 +249,6 @@ export async function fetchMaintenanceNotificationsDashboard(
     title: notification.title,
     description: notification.description,
   };
-
-  if (notification.moreInformation) {
-    item.moreInformation = notification.moreInformation;
-  }
 
   if (notification.link) {
     item.link = notification.link;
