@@ -1,7 +1,6 @@
 export { default as ErrorAlert } from './Alert/Alert';
 export { default as ApplicationError } from '../pages/ApplicationError/ApplicationError';
 export { default as AutoLogoutDialog } from './AutoLogoutDialog/AutoLogoutDialog';
-export { Button, default as Linkd, LinkdInline } from './Button/Button';
 export { default as ThemaIcon } from './ThemaIcon/ThemaIcon';
 export { default as DateInput } from './DateInput/DateInput';
 export { default as DocumentList } from './DocumentList/DocumentList';
@@ -11,7 +10,6 @@ export { default as LoadingContent } from './LoadingContent/LoadingContent';
 export { default as MainFooter } from './MainFooter/MainFooter';
 export { default as MainHeader } from './MainHeader/MainHeader';
 export { Modal } from './Modal/Modal';
-export { default as PageHeading } from './PageHeading/PageHeading';
 export { default as Pagination } from './Pagination/Pagination';
 export { default as Panel } from './Panel/Panel';
 export { default as Section } from './Section/Section';

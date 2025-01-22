@@ -1,10 +1,9 @@
-import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MaintenanceNotifications.module.scss';
 import { InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
-import Linkd from '../Button/Button';
 
 interface MaintenanceNotificationsProps {
   page?: string;
@@ -40,9 +39,9 @@ export default function MaintenanceNotifications({
 
             {notification.link?.to && (
               <Paragraph>
-                <Linkd href={notification.link.to}>
+                <Link href={notification.link.to}>
                   {notification.link.title}
-                </Linkd>
+                </Link>
               </Paragraph>
             )}
           </Alert>
