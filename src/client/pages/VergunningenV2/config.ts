@@ -73,8 +73,8 @@ export const tableConfig = {
       }
       if (isVergunningExpirable(vergunning)) {
         return (
-          (vergunning.status === 'Afgehandeld' ||
-            vergunning.decision === 'Verleend') &&
+          vergunning.status === 'Afgehandeld' &&
+          vergunning.decision === 'Verleend' &&
           !isExpired(vergunning, new Date())
         );
       }
