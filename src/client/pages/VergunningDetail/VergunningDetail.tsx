@@ -1,3 +1,4 @@
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import { AanbiedenDiensten } from './AanbiedenDiensten';
@@ -31,7 +32,7 @@ import {
 } from '../../../universal/helpers/vergunningen';
 import { LinkProps } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
-import { ErrorAlert, LinkdInline, LoadingContent } from '../../components';
+import { ErrorAlert, LoadingContent } from '../../components';
 import {
   DetailPageV2,
   PageContentCell,
@@ -141,17 +142,17 @@ export default function VergunningDetail({ backLink }: VergunningDetailProps) {
               {Vergunning.caseType === CaseType.BZP &&
                 Vergunning.decision === 'Verleend' &&
                 Vergunning.status === 'Afgehandeld' && (
-                  <p className={styles.Disclaimer}>
+                  <Paragraph className={styles.Disclaimer}>
                     U kunt uw kenteken{' '}
-                    <LinkdInline
-                      external
+                    <Link
+                      rel="noopener noreferrer"
                       href="https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/ontheffing-blauwe-zone-aanvragen/#hf1dde781-fd6f-462f-8e9c-6b86d42019b8"
                     >
                       hier
-                    </LinkdInline>{' '}
+                    </Link>{' '}
                     wijzigen. Doorgevoerde wijzigingen worden niet getoond in
                     Mijn Amsterdam.
-                  </p>
+                  </Paragraph>
                 )}
             </>
           )}

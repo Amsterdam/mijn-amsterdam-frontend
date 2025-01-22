@@ -1,6 +1,6 @@
 // import { linkListItems, tableConfig } from './config';
 
-import { Icon } from '@amsterdam/design-system-react';
+import { Icon, Link } from '@amsterdam/design-system-react';
 import {
   ChatBubbleIcon,
   EmailIcon,
@@ -14,7 +14,7 @@ import {
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
 import { isLoading, isError } from '../../../../universal/helpers/api';
-import { LinkdInline } from '../../../components';
+import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaMenuItems } from '../../../hooks/useThemaMenuItems';
@@ -29,10 +29,11 @@ function getLinkToThemaPage(
 
   // menuItem only exists in myThemasMenuItems if that thema is active through the toggle and this person has products in that thema.
   if (menuItem) {
+    const LinkComponent = menuItem.to.startsWith('http') ? Link : MaRouterLink;
     return (
-      <LinkdInline external={menuItem.to.startsWith('http')} href={menuItem.to}>
+      <LinkComponent rel="noopener noreferrer" href={menuItem.to}>
         {menuItem.title}
-      </LinkdInline>
+      </LinkComponent>
     );
   }
 

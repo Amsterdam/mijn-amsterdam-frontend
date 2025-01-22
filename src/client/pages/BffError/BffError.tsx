@@ -1,7 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { IS_PRODUCTION } from '../../../universal/config/env';
-import { LinkdInline } from '../../components';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
 import {
   PageContentCell,
   PageContentV2,
@@ -26,7 +26,7 @@ export default function Bff500Error() {
         <PageContentCell>
           <Paragraph className="ams-mb--xl">
             Er is een fout opgetreden in de communicatie met de server.{' '}
-            <LinkdInline href="/">Ga verder naar home.</LinkdInline>
+            <MaRouterLink href="/">Ga verder naar home.</MaRouterLink>
             {!IS_PRODUCTION && (
               <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
             )}
