@@ -450,8 +450,6 @@ components:
           type: string
         description:
           type: string
-        moreInformation:
-          type: string
         path:
           type: string
         link:
