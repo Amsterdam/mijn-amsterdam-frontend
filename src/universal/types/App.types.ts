@@ -54,7 +54,6 @@ export interface MyNotification {
   id: string;
   isAlert?: boolean;
   link?: LinkProps;
-  moreInformation?: string;
   subject?: string;
   title: string;
 
