@@ -24,8 +24,9 @@ import { useCMSApi } from '../../hooks/api/useCmsApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 function FooterBlock({ id, title, links, description }: FooterBlockProps) {
+  console.log('FooterBlock', id, title, links, description);
   return (
-    <Grid.Cell key={title} span={4} className="page-footer-space-y">
+    <Grid.Cell key={title} span={4}>
       <Heading inverseColor level={4} className="ams-mb--xs">
         {title}
       </Heading>
@@ -95,8 +96,10 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
       case 'li':
         return (
           <UnorderedList.Item className={styles.Link}>
-            <Icon svg={ChevronRightIcon} size="level-5" />
-            {children}
+            <div className={styles.FakeFooterLink}>
+              <Icon svg={ChevronRightIcon} size="level-5" />
+              {children}
+            </div>
           </UnorderedList.Item>
         );
       case 'strong':
@@ -125,7 +128,7 @@ export default function MainFooter({
 
   return (
     <Footer>
-      <Footer.Top className={classnames('page-footer-top', styles.FooterTop)}>
+      <Footer.Top>
         <Grid gapVertical="large" paddingVertical="medium">
           {footer?.blocks.map((footerItem) => (
             <FooterBlock key={footerItem.id} {...footerItem} />
