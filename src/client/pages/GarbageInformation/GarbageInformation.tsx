@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from './GarbageInformation.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { getFullAddress, isMokum } from '../../../universal/helpers/brp';
+import { getFullAddress } from '../../../universal/helpers/brp';
 import {
   GarbageFractionCode,
   GarbageFractionInformationTransformed,
@@ -227,13 +227,9 @@ function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
 }
 
 export default function GarbageInformation() {
-  const { AFVAL, AFVALPUNTEN, MY_LOCATION, BRP, KVK } = useAppStateGetter();
+  const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();
-  const address = MY_LOCATION.content?.[0]?.address;
-  const inMokum =
-    profileType === 'private' ? isMokum(BRP.content) : isMokum(KVK.content);
-  const isWeesp = address?.woonplaatsNaam === 'Weesp';
   const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
 
   const heeftGeenWoonfunctie = AFVAL.content?.some(
@@ -360,13 +356,7 @@ export default function GarbageInformation() {
             </>
           }
         />
-        {isApiReady && isWeesp && (
-          <p className={styles.WeespWarning}>
-            In Weesp haalt de GAD het afval op. Kijk op de{' '}
-            <a href="https://www.gad.nl/">website van de GAD</a> hoe dat werkt.
-          </p>
-        )}
-        {isApiReady && inMokum && (
+        {isApiReady && (
           <>
             {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
               <GarbageFractionPanels fractions={AFVAL.content} />
