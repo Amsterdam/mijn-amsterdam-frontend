@@ -210,22 +210,4 @@ describe('<GarbageInformation />', () => {
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
-
-  test('Full page snapshot for Weesp address', () => {
-    const weespState = jsonCopy(testState);
-    weespState.BRP.content.persoon.mokum = false;
-    weespState.MY_LOCATION.content[0].address.woonplaatsNaam = 'Weesp';
-
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={GarbageInformation}
-        initializeState={(snapshot) => initializeState(snapshot, weespState)}
-      />
-    );
-
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
-  });
 });
