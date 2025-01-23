@@ -44,7 +44,10 @@ export function WelcomeHeading() {
           <Heading className={styles.WelcomeHeading} level={3} size="level-1">
             {hello}{' '}
             <span className={styles.ProfileNameWrap}>
-              <ProfileName fallbackName="Bezoeker" />
+              <ProfileName
+                fallbackName="Bezoeker"
+                loaderBarConfig={[['400px', '40px', '0']]}
+              />
             </span>
           </Heading>
         </div>
