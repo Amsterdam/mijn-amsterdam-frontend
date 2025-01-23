@@ -1,4 +1,4 @@
-# Mijn-Amsterdam Front-end
+# Mijn-Amsterdam Front-end + BFF
 
 Hi and welcome to the **Mijn-Amsterdam** front-end + bff repository!
 
