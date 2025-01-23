@@ -1,5 +1,3 @@
-import { Heading } from '@amsterdam/design-system-react';
-
 import styles from './WelcomeHeading.module.scss';
 import { ProfileName } from '../../components/MainHeader/ProfileName';
 import { PageContentCell } from '../../components/Page/Page';
@@ -40,17 +38,15 @@ export function WelcomeHeading() {
       className={styles.WelcomeHeadingWrap}
     >
       <div className={styles.WelcomeHeadingSizer} id="skip-to-id-AppContent">
-        <div>
-          <Heading className={styles.WelcomeHeading} level={3} size="level-1">
-            {hello}{' '}
-            <span className={styles.ProfileNameWrap}>
-              <ProfileName
-                fallbackName="Bezoeker"
-                loaderBarConfig={[['400px', '40px', '0']]}
-              />
-            </span>
-          </Heading>
-        </div>
+        <h2 className={styles.WelcomeHeading}>
+          <span className={styles.ProfileNameHello}>{hello} </span>
+          <span className={styles.ProfileNameWrap}>
+            <ProfileName
+              fallbackName="Bezoeker"
+              loaderBarConfig={[['400px', '40px', '0']]}
+            />
+          </span>
+        </h2>
       </div>
     </PageContentCell>
   );

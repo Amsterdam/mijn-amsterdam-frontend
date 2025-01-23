@@ -1,4 +1,3 @@
-import styles from './MainHeader.module.scss';
 import { isLoading } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -20,8 +19,15 @@ export function ProfileName({
   const persoon = BRP.content?.persoon;
 
   const labelCommercial = KVK.content?.onderneming.handelsnaam || fallbackName;
-  const labelPrivate = persoon?.opgemaakteNaam
-    ? persoon.opgemaakteNaam
+  let opgemaakteNaam = persoon?.opgemaakteNaam;
+
+  if (opgemaakteNaam) {
+    const parts = opgemaakteNaam.split(/\./);
+    opgemaakteNaam = `${parts[0]}. ${parts[parts.length - 1]}`;
+  }
+
+  const labelPrivate = opgemaakteNaam
+    ? opgemaakteNaam
     : persoon?.voornamen
       ? getFullName(persoon)
       : fallbackName;
@@ -31,10 +37,7 @@ export function ProfileName({
       {profileType === 'commercial' && !isLoading(KVK) && labelCommercial}
       {((profileType === 'commercial' && isLoading(KVK)) ||
         (profileType === 'private' && isLoading(BRP))) && (
-        <LoadingContent
-          className={styles.ProfileNameLoader}
-          barConfig={loaderBarConfig}
-        />
+        <LoadingContent barConfig={loaderBarConfig} />
       )}
     </>
   );
