@@ -198,14 +198,16 @@ describe('<GarbageInformation />', () => {
       })
     );
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={GarbageInformation}
-        initializeState={(snapshot) => initializeState(snapshot, testState2)}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={GarbageInformation}
+          initializeState={(snapshot) => initializeState(snapshot, testState2)}
+        />
+      );
+    }
 
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
