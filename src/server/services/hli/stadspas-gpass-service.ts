@@ -172,9 +172,7 @@ export async function fetchStadspassenByAdministratienummer(
 
   for (const pashouder of pashouders) {
     // Filter out passes that are not relevant for the user.
-    const passen = pashouder.passen.filter(
-      (pas) => pas.actief || !pas.vervangen
-    );
+    const passen = pashouder.passen.filter((pas) => !pas.vervangen);
 
     for (const pas of passen) {
       const response = fetchStadspasSource(
