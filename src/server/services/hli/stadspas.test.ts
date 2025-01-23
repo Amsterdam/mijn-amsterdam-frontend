@@ -126,7 +126,7 @@ const authProfileAndToken: AuthProfileAndToken = {
 describe('stadspas services', () => {
   const FAKE_API_KEY = '22222xx22222';
 
-  afterAll(() => {
+  afterEach(() => {
     vi.restoreAllMocks();
     vi.resetAllMocks();
   });
@@ -230,17 +230,13 @@ describe('stadspas services', () => {
   });
 
   test('stadspas-gpass-service Happy! All passes returned', async () => {
-    const encryptSpy = vi
-      .spyOn(encryptDecrypt, 'encrypt')
-      .mockReturnValue([
-        '1x2x3x-##########-4x5x6x',
-        Buffer.from('xx'),
-        Buffer.from('yy'),
-      ]);
+    vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
+      '1x2x3x-##########-4x5x6x',
+      Buffer.from('xx'),
+      Buffer.from('yy'),
+    ]);
 
-    const decryptSpy = vi
-      .spyOn(encryptDecrypt, 'decrypt')
-      .mockReturnValue('123-unencrypted-456');
+    vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue('123-unencrypted-456');
 
     remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
       persoon: {
@@ -252,8 +248,8 @@ describe('stadspas services', () => {
       .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
       .reply(200, pashouderResponse);
     remoteApi
+      .persist()
       .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
-      .times(6)
       .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
       .reply(200, pasResponse);
 
@@ -273,9 +269,6 @@ describe('stadspas services', () => {
       status: 'OK',
     };
     expect(response).toStrictEqual(expectedResponse);
-
-    encryptSpy.mockRestore();
-    decryptSpy.mockRestore();
   });
 
   test('stadspas transacties Happy!', async () => {
