@@ -8,6 +8,7 @@ import { jsonCopy } from '../../../universal/helpers/utils';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import GarbageInformation from './GarbageInformation';
+import { AppState } from '../../../universal/types';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 
@@ -21,7 +22,7 @@ const afvalpunt = {
   website: 'http://example.org/afvalpunt',
 };
 
-const testState: any = {
+const testState = {
   BRP: {
     status: 'OK',
     content: {
@@ -117,7 +118,7 @@ const testState: any = {
         fractieCode: 'Textiel',
       },
     ],
-  },
+  } as unknown as AppState,
   AFVALPUNTEN: { status: 'OK', content: { centers: [afvalpunt] } },
   MY_LOCATION: {
     status: 'OK',
@@ -157,14 +158,16 @@ describe('<GarbageInformation />', () => {
   const routeEntry = generatePath(AppRoutes.AFVAL);
   const routePath = AppRoutes.AFVAL;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={GarbageInformation}
-      initializeState={(snapshot) => initializeState(snapshot)}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={GarbageInformation}
+        initializeState={(snapshot) => initializeState(snapshot)}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
@@ -176,14 +179,16 @@ describe('<GarbageInformation />', () => {
     testState2.MY_LOCATION.content[1].bagNummeraanduidingId =
       testState2.MY_LOCATION.content[0].bagNummeraanduidingId;
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={GarbageInformation}
-        initializeState={(snapshot) => initializeState(snapshot, testState2)}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={GarbageInformation}
+          initializeState={(snapshot) => initializeState(snapshot, testState2)}
+        />
+      );
+    }
 
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
