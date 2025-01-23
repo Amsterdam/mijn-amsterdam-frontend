@@ -128,6 +128,7 @@ describe('stadspas services', () => {
 
   afterAll(() => {
     vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
 
   test('stadspas-zorgned-service', async () => {
