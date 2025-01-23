@@ -116,10 +116,10 @@ export function AfisBetaalVoorkeuren() {
     <>
       <Paragraph className="ams-mb--sm">
         Hieronder kunt u uw debiteurgegevens bekijken en een automatische
-        incasso instellen per afdeling van de gemeente. Wil u uw betaalgegevens
-        wijzigen, stuur dan een email naar{' '}
+        incasso instellen per afdeling van de gemeente. Wil u uw
+        debiteurgegevens wijzigen, stuur dan een email naar{' '}
         <Link
-          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaalgegevens wijzigen&body=${mailBody}`}
+          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Debiteurgegevens wijzigen&body=${mailBody}`}
         >
           debiteurenadministratie@amsterdam.nl
         </Link>
