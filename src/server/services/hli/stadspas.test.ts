@@ -8,17 +8,22 @@ import {
   Stadspas,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
+  StadspasHouderPasSource,
+  StadspasHouderSource,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
-function createStadspasHouderResponse() {
+function createStadspasHouderResponse(): StadspasHouderSource {
   const stadspasHouderResponse = {
     initialen: 'A',
     achternaam: 'Achternaam',
     voornaam: 'Vadertje',
-    passen: [createPas(false, 111111111111), createPas(true, 222222222222)],
+    passen: [
+      createPas(false, 111111111111),
+      createPas(true, 222222222222, '012345', true),
+    ],
     sub_pashouders: [
       {
         initialen: 'B',
@@ -39,14 +44,14 @@ function createStadspasHouderResponse() {
 
 function createPas(
   actief: boolean,
-
   pasnummer: number = 777777777777,
-  securitycode: string = '012345'
-) {
+  securitycode: string = '012345',
+  vervangen: boolean = false
+): StadspasHouderPasSource {
   return {
     actief,
     securitycode,
-    balance_update_time: '2020-04-02T12:45:41.000Z',
+    heeft_budget: true,
     budgetten: [
       {
         code: 'AMSTEG_10-14',
@@ -57,19 +62,11 @@ function createPas(
         budget_balance: 0,
       },
     ],
-    budgetten_actief: true,
+    vervangen,
     categorie: 'Amsterdamse Digitale Stadspas',
     categorie_code: 'A',
     expiry_date: '2020-08-31T23:59:59.000Z',
     id: 999999,
-    originele_pas: {
-      categorie: 'Amsterdamse Digitale Stadspas',
-      categorie_code: 'A',
-      id: 888888,
-      pasnummer: 8888888888888,
-      pasnummer_volledig: '8888888888888888888',
-      passoort: { id: 11, naam: 'Digitale Stadspas' },
-    },
     pasnummer,
     pasnummer_volledig: '6666666666666666666',
     passoort: { id: 11, naam: 'Digitale Stadspas' },
@@ -229,7 +226,7 @@ describe('stadspas services', () => {
     decryptSpy.mockRestore();
   });
 
-  test('stadspas-gpass-service Happy! All passes returned', async () => {
+  test('stadspas-gpass-service, filters out replaced passes', async () => {
     vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
       '1x2x3x-##########-4x5x6x',
       Buffer.from('xx'),
@@ -258,7 +255,6 @@ describe('stadspas services', () => {
       content: {
         administratienummer: '0363000123-123',
         stadspassen: [
-          createTransformedPas('Vadertje', 'A'),
           createTransformedPas('Vadertje', 'A'),
           createTransformedPas('Moedertje', 'B'),
           createTransformedPas('Moedertje', 'B'),
