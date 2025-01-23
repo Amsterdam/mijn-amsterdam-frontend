@@ -39,6 +39,7 @@ import {
   XmlNullable,
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
+import { entries } from '../../../universal/helpers/utils';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -529,6 +530,23 @@ export async function fetchAfisFacturenOverview(
     Object.keys(facturenOverview).every((key) => key in failedDependencies)
   ) {
     return apiErrorResult('Facturen ophalen mislukt.', null);
+  }
+
+  const countByState = entries(facturenOverview).reduce(
+    (acc, [state, content]) => {
+      if (content !== null) {
+        return {
+          ...acc,
+          [state]: content?.count ?? -1,
+        };
+      }
+      return acc;
+    },
+    {}
+  );
+
+  if (Object.keys(countByState).length > 0) {
+    captureMessage(`AFIS Facturen per categorie`, countByState);
   }
 
   return apiSuccessResult(facturenOverview, failedDependencies);
