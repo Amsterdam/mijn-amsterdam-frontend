@@ -1,7 +1,3 @@
-.ProfileNameWrap {
-  white-space: nowrap;
-}
-
 .WelcomeHeadingWrap {
   background-color: white;
   @media screen and (min-width: $ams-breakpoint-medium) {
@@ -23,21 +19,41 @@
 }
 
 .WelcomeHeadingSizer {
-  display: flex;
-  height: 100%;
   position: relative;
-  align-items: flex-end;
   @media screen and (min-width: $ams-breakpoint-medium) {
     height: 166px;
   }
 }
 
-.WelcomeHeading {
-  // Align bottom of text with rest of page.
-  transform: translateY(20px);
+@media screen and (min-width: $ams-breakpoint-medium) {
+  .WelcomeHeading {
+    // Align bottom of text with rest of page.
+    position: relative;
+    top: 100%;
+    transform: translateY(calc(-100% + 18px));
+    line-height: 0;
+    margin: 0;
+  }
+}
+
+.ProfileNameHello {
   @media screen and (min-width: $ams-breakpoint-medium) {
-    --ams-heading-level-3-font-size: 58px;
-    --ams-heading-level-3-line-height: 72px;
+    font-size: 58px;
+  }
+  display: block;
+  line-height: 1.5;
+}
+
+.ProfileNameWrap {
+  font-size: 40px;
+  line-height: 1;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    white-space: nowrap;
+    line-height: 1;
+    font-size: 80px;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
   }
 }
 
