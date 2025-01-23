@@ -39,7 +39,7 @@ function createStadspasHouderResponse() {
 
 function createPas(
   actief: boolean,
-  // eslint-disable-next-line no-magic-numbers
+
   pasnummer: number = 777777777777,
   securitycode: string = '012345'
 ) {
@@ -128,6 +128,7 @@ describe('stadspas services', () => {
 
   afterAll(() => {
     vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
 
   test('stadspas-zorgned-service', async () => {
@@ -252,7 +253,7 @@ describe('stadspas services', () => {
       .reply(200, pashouderResponse);
     remoteApi
       .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
-      .times(3)
+      .times(6)
       .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
       .reply(200, pasResponse);
 
@@ -262,7 +263,10 @@ describe('stadspas services', () => {
         administratienummer: '0363000123-123',
         stadspassen: [
           createTransformedPas('Vadertje', 'A'),
+          createTransformedPas('Vadertje', 'A'),
           createTransformedPas('Moedertje', 'B'),
+          createTransformedPas('Moedertje', 'B'),
+          createTransformedPas('Kindje', 'C'),
           createTransformedPas('Kindje', 'C'),
         ],
       },
