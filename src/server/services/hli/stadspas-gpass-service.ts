@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios';
-import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
@@ -172,9 +171,11 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of pashouders) {
+    // Filter out passes that are not relevant for the user.
     const passen = pashouder.passen.filter(
-      (pas) => pas.actief || !isPast(new Date(pas.expiry_date))
+      (pas) => pas.actief || !pas.vervangen
     );
+
     for (const pas of passen) {
       const response = fetchStadspasSource(
         requestID,
