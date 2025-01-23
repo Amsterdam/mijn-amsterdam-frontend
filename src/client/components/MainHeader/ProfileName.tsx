@@ -3,13 +3,17 @@ import { isLoading } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import LoadingContent from '../LoadingContent/LoadingContent';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 
 type ProfileNameProps = {
   fallbackName: string;
+  loaderBarConfig?: BarConfig;
 };
 
-export function ProfileName({ fallbackName }: ProfileNameProps) {
+export function ProfileName({
+  fallbackName,
+  loaderBarConfig = [['200px', '20px', '0']],
+}: ProfileNameProps) {
   const { BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
 
@@ -29,7 +33,7 @@ export function ProfileName({ fallbackName }: ProfileNameProps) {
         (profileType === 'private' && isLoading(BRP))) && (
         <LoadingContent
           className={styles.ProfileNameLoader}
-          barConfig={[['200px', '20px', '0']]}
+          barConfig={loaderBarConfig}
         />
       )}
     </>
