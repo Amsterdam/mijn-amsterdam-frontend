@@ -47,7 +47,10 @@ function AfisBusinessPartnerDetails({
 
   return (
     <Grid.Cell span="all">
-      <CollapsiblePanel title="Betaalgegevens" startCollapsed={startCollapsed}>
+      <CollapsiblePanel
+        title="Debiteurgegevens"
+        startCollapsed={startCollapsed}
+      >
         {isLoading && <LoadingContent />}
         {!isLoading && !!rows.length && (
           <Grid>
@@ -112,8 +115,8 @@ export function AfisBetaalVoorkeuren() {
   const pageContentTop = (
     <>
       <Paragraph className="ams-mb--sm">
-        Hieronder kunt u uw betaalgegevens bekijken en een automatische incasso
-        instellen per afdeling van de gemeente. Wil u uw betaalgegevens
+        Hieronder kunt u uw debiteurgegevens bekijken en een automatische
+        incasso instellen per afdeling van de gemeente. Wil u uw betaalgegevens
         wijzigen, stuur dan een email naar{' '}
         <Link
           href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Betaalgegevens wijzigen&body=${mailBody}`}
@@ -122,33 +125,35 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      <Heading level={3} size="level-5">
-        Via automatische incasso betalen
-      </Heading>
-      <Paragraph className="ams-mb--sm">
-        Download{' '}
-        <Link
-          rel="noreferrer noopener"
-          href="https://omnichanneliv.cdn.salesforce-experience.com/cms/delivery/media/MCJM5EH46HYNAZXFYHPNR4WUIMBA?oid=00D68000000aIuV&channelId=0ap68000000g3EBAAY"
-        >
-          het machtigingsformulier.
-        </Link>{' '}
-        Kies een of meerdere producten waarvoor de gemeente automatisch mag
-        incasseren en vul uw gegevens in. Het debiteurennummer is niet
-        verplicht. Onderteken het formulier en stuur het naar:
-      </Paragraph>
-      <Paragraph className="ams-mb--sm">
-        Gemeente Amsterdam
-        <br />
-        Debiteurenadministratie
-        <br />
-        Antwoordnummer 47389
-        <br />
-        1070 WC
-        <br />
-        Amsterdam
-      </Paragraph>
-      <Paragraph>Een postzegel is niet nodig.</Paragraph>
+      {!FeatureToggle.afisEmandatesActive && (
+        <>
+          <Heading level={3} size="level-5">
+            Via automatische incasso betalen
+          </Heading>
+          <Paragraph className="ams-mb--sm">
+            Download{' '}
+            <Link
+              rel="noreferrer noopener"
+              href="https://omnichanneliv.cdn.salesforce-experience.com/cms/delivery/media/MCJM5EH46HYNAZXFYHPNR4WUIMBA?oid=00D68000000aIuV&channelId=0ap68000000g3EBAAY"
+            >
+              het machtigingsformulier.
+            </Link>{' '}
+            Kies een of meerdere producten waarvoor de gemeente automatisch mag
+            incasseren en vul uw gegevens in. Het debiteurennummer is niet
+            verplicht. Onderteken het formulier en stuur het naar:
+          </Paragraph>
+          <Paragraph className="ams-mb--sm">
+            Gemeente Amsterdam
+            <br />
+            Debiteurenadministratie
+            <br />
+            Antwoordnummer 47389
+            <br />
+            1070 WC Amsterdam
+          </Paragraph>
+          <Paragraph>Een postzegel is niet nodig.</Paragraph>
+        </>
+      )}
     </>
   );
 
