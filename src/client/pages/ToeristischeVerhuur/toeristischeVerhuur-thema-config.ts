@@ -1,23 +1,22 @@
-import { ReactNode } from 'react';
-
 import styles from './ToeristischeVerhuur.module.scss';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
-  BBVergunning,
   LVVRegistratie,
   VakantieverhuurVergunning,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
-import { DisplayProps } from '../../components/Table/TableV2';
+import {
+  DisplayProps,
+  WithDetailLinkComponent,
+} from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const DISPLAY_PROPS_VERGUNNINGEN: DisplayProps<
-  (BBVergunning | VakantieverhuurVergunning) & {
-    detailLinkComponent: ReactNode;
-  }
+  WithDetailLinkComponent<BBVergunning | VakantieverhuurVergunning>
 > = {
   detailLinkComponent: 'Soort vergunning',
   zaaknummer: 'Zaaknummer',
@@ -74,5 +73,5 @@ export const tableConfigLVVRegistraties = {
 export const routes = {
   listPage: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST'],
   detailPageVergunning: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-  themaPage: AppRoutes['TOERISTISCHE_VERHUUR'],
+  themaPage: AppRoutes.TOERISTISCHE_VERHUUR,
 } as const;
