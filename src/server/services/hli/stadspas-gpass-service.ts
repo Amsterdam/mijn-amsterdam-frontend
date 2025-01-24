@@ -31,12 +31,16 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  defaultDateFormat,
+  isDateAfter as isDateAfter,
+} from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { parseISO } from 'date-fns';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -172,7 +176,12 @@ export async function fetchStadspassenByAdministratienummer(
 
   for (const pashouder of pashouders) {
     // Filter out passes that are not relevant for the user.
-    const passen = pashouder.passen.filter((pas) => !pas.vervangen);
+    const passen = pashouder.passen.filter((pas) => {
+      if (pas.vervangen) {
+        return false;
+      }
+      return !isExpired(pas.expiry_date);
+    });
 
     for (const pas of passen) {
       const response = fetchStadspasSource(
@@ -209,6 +218,29 @@ export async function fetchStadspassenByAdministratienummer(
     );
 
   return apiSuccessResult({ stadspassen, administratienummer });
+}
+
+function isExpired(expiryDate: string): boolean {
+  const defaultExpiryDate = new Date();
+  // eslint-disable-next-line no-magic-numbers
+  defaultExpiryDate.setDate(31);
+
+  // Set date to 01-08-{last-year}
+  // eslint-disable-next-line no-magic-numbers
+  defaultExpiryDate.setMonth(7);
+  defaultExpiryDate.setFullYear(defaultExpiryDate.getFullYear() - 1);
+
+  const expiryDate_ = parseISO(expiryDate);
+  const isDefaultExpiryDate =
+    expiryDate_.getDate() === defaultExpiryDate.getDate() &&
+    expiryDate_.getMonth() === defaultExpiryDate.getMonth() &&
+    expiryDate_.getFullYear() === defaultExpiryDate.getFullYear();
+
+  if (!isDefaultExpiryDate) {
+    return false;
+  }
+
+  return !isDateAfter(new Date(), defaultExpiryDate);
 }
 
 export async function fetchStadspassen_(

@@ -1,3 +1,4 @@
+import Mockdate from 'mockdate';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import {
@@ -67,7 +68,7 @@ function createPas(
         code: 'AMSTEG_10-14',
         naam: 'Kindtegoed 10-14',
         omschrijving: 'Kindtegoed',
-        expiry_date: '2021-08-31T21:59:59.000Z',
+        expiry_date: '2080-08-31T21:59:59.000Z',
         budget_assigned: 150,
         budget_balance: 0,
       },
@@ -75,7 +76,7 @@ function createPas(
     vervangen: false,
     categorie: 'Amsterdamse Digitale Stadspas',
     categorie_code: 'A',
-    expiry_date: '2020-08-31T23:59:59.000Z',
+    expiry_date: '2080-08-31T23:59:59.000Z',
     id: 999999,
     pasnummer: 777777777777,
     pasnummer_volledig: '6666666666666666666',
@@ -109,14 +110,14 @@ function createTransformedPas(
         budgetBalance: 0,
         budgetBalanceFormatted: '€0,00',
         code: 'AMSTEG_10-14',
-        dateEnd: '2021-08-31T21:59:59.000Z',
-        dateEndFormatted: '31 augustus 2021',
+        dateEnd: '2080-08-31T21:59:59.000Z',
+        dateEndFormatted: '31 augustus 2080',
         description: 'Kindtegoed',
         title: 'Kindtegoed 10-14',
       },
     ],
-    dateEnd: '2020-08-31T23:59:59.000Z',
-    dateEndFormatted: '01 september 2020',
+    dateEnd: '2080-08-31T23:59:59.000Z',
+    dateEndFormatted: '31 augustus 2080',
     id: '999999',
     owner,
     passNumber: 777777777777,
@@ -142,7 +143,12 @@ const authProfileAndToken: AuthProfileAndToken = {
 describe('stadspas services', () => {
   const FAKE_API_KEY = '22222xx22222';
 
+  beforeEach(() => {
+    Mockdate.set('01-01-2025');
+  });
+
   afterEach(() => {
+    Mockdate.reset();
     vi.restoreAllMocks();
     vi.resetAllMocks();
   });
@@ -239,6 +245,10 @@ describe('stadspas services', () => {
           administratienummer: '0363000123-123',
           stadspassen: [
             createTransformedPas({
+              topLevelProps: {
+                dateEnd: '2080-08-31T23:59:59.000Z',
+                dateEndFormatted: '31 augustus 2080',
+              },
               owner: { firstname: 'Moedertje', initials: 'B' },
             }),
           ],
@@ -263,11 +273,18 @@ describe('stadspas services', () => {
         '123-unencrypted-456'
       );
 
-      const unrelevantPas = createPas({
+      const replacedPas = createPas({
         actief: true,
         pasnummer: 222222222222,
         securitycode: '012345',
         vervangen: true,
+      });
+      const expiredPas = createPas({
+        actief: false,
+        pasnummer: 222222222222,
+        securitycode: '012345',
+        vervangen: false,
+        expiry_date: '31-07-2024',
       });
 
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
@@ -281,7 +298,8 @@ describe('stadspas services', () => {
         voornaam: 'Vadertje',
         passen: [
           createPas({ actief: false, pasnummer: 111111111111 }),
-          unrelevantPas,
+          replacedPas,
+          expiredPas,
         ],
         sub_pashouders: [
           {

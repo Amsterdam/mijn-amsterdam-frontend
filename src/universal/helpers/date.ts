@@ -18,7 +18,7 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
   try {
     const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
     return format(d, fmt, { locale: nl });
-  } catch (error) {
+  } catch (_error) {
     console.error(`Could not parse date ${datestr}`);
   }
 
@@ -74,6 +74,22 @@ export function isDateInPast(date: string, dateNow: string | Date) {
   }
   const date_ = parseISO(date);
   return date_.getTime() <= dateNow.getTime();
+}
+
+/**
+ * Checks if `date` is after the `comparisonDate` (non-inclusive check).
+ */
+export function isDateAfter(
+  date: string | Date,
+  comparisonDate: string | Date
+) {
+  if (typeof comparisonDate === 'string') {
+    comparisonDate = parseISO(comparisonDate);
+  }
+  if (typeof date === 'string') {
+    date = parseISO(date);
+  }
+  return date.getTime() > comparisonDate.getTime();
 }
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
