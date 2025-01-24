@@ -22,13 +22,16 @@
   position: relative;
   text-align: center;
   width: 100%;
-  color: $color-primary-darkblue;
+  color: var(--ams-color-primary-blue);
   text-decoration: underline;
   cursor: pointer;
 
   .label {
     display: block;
-    background-color: var(--clampedGradientBgColor, $color-white);
+    background-color: var(
+      --clampedGradientBgColor,
+      var(--ams-color-primary-white)
+    );
     background-image: url('../../assets/icons/Chevron-Down.svg');
     background-repeat: no-repeat, repeat;
     background-position: center center;
@@ -41,10 +44,10 @@
   }
 
   &:hover {
-    color: $color-primary-red;
+    color: var(--ams-color-primary-red);
 
     .label {
-      border: 1px solid $color-neutral-grey3;
+      border: 1px solid var(--ams-color-neutral-grey2);
     }
   }
 
@@ -53,7 +56,7 @@
       content: '';
       background: linear-gradient(
         to top,
-        var(--clampedGradientBgColor, $color-white),
+        var(--clampedGradientBgColor, var(--ams-color-primary-white)),
         rgba(255, 255, 255, 0)
       );
       display: block;
