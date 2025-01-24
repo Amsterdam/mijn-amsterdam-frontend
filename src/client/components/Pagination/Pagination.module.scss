@@ -28,13 +28,13 @@
   }
 
   &:hover {
-    color: $color-primary-red;
+    color: var(--ams-color-primary-red);
     text-decoration: underline;
   }
 
   &.SelectedPage {
-    background-color: $color-neutral-grey4;
-    color: $color-white;
+    background-color: var(--ams-color-neutral-grey3);
+    color: var(--ams-color-primary-white);
     &:hover {
       text-decoration: none;
     }
@@ -54,11 +54,11 @@
 
     &:hover {
       background-color: inherit;
-      color: $color-primary-red;
+      color: var(--ams-color-primary-red);
       text-decoration: underline;
 
       svg {
-        fill: $color-primary-red;
+        fill: var(--ams-color-primary-red);
       }
     }
 

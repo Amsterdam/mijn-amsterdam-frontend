@@ -1,11 +1,4 @@
 .SearchBar {
-  @include mq-tablet() {
-    @include select('Search_SearchBar') {
-      form {
-        padding: 1rem;
-      }
-    }
-  }
 }
 
 .SearchBarInner {
