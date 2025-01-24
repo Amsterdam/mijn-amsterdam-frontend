@@ -20,7 +20,7 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>
+  <Paragraph className="ams-mb--sm">
     Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen
     inzake Gemeentebelastingen. Deze vindt u terug bij{' '}
     <Link rel="noreferrer" href={import.meta.env.REACT_APP_SSO_URL_BELASTINGEN}>

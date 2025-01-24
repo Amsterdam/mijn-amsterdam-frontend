@@ -13,8 +13,12 @@ const pageContentTop = (
 function AVG() {
   const { tableConfig, avgVerzoeken, isLoading, isError, linkListItems } =
     useAVGData();
+
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, maxItems, listPageRoute },
+    ]) => {
       return (
         <ThemaPaginaTable<AVGRequestFrontend>
           key={kind}
@@ -22,6 +26,7 @@ function AVG() {
           listPageRoute={listPageRoute}
           zaken={avgVerzoeken.filter(filter).sort(sort)}
           displayProps={displayProps}
+          maxItems={maxItems}
         />
       );
     }
@@ -31,7 +36,6 @@ function AVG() {
     <ThemaPagina
       title={ThemaTitles.AVG}
       isError={isError}
-      isPartialError={false}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={tables}
