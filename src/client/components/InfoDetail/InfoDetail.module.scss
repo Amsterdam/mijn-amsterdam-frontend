@@ -1,5 +1,5 @@
 .InfoDetail {
-  border-top: 0.1rem solid $color-neutral-grey2;
+  border-top: 0.1rem solid var(--ams-color-neutral-grey1);
   padding-bottom: 2.5rem;
   padding-top: 1.6rem;
   margin: 0 auto;
@@ -9,14 +9,10 @@
   display: block;
   margin: 0;
   padding-right: 16rem;
-
-  @include mq-phone {
-    padding-right: 0;
-  }
 }
 
 .InfoDetailGroup {
-  border-top: 0.1rem solid $color-neutral-grey2;
+  border-top: 0.1rem solid var(--ams-color-neutral-grey1);
 
   > .Label {
     margin-top: 1.6rem;
@@ -38,10 +34,6 @@
 .InfoDetailGroupContent {
   display: flex;
   flex-wrap: wrap;
-
-  @include mq-phone() {
-    display: block;
-  }
 
   .InfoDetail {
     border-top: 0;

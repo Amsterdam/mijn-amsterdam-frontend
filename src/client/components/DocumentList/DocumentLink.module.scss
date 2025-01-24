@@ -23,6 +23,6 @@
 .DocumentDownloadError {
   .LinkIcon,
   .DownloadInfo {
-    color: $color-support-invalid;
+    color: var(--ams-color-primary-red);
   }
 }
