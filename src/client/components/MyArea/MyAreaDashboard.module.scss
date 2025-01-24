@@ -1,5 +1,5 @@
 .DashboardMapContainer {
-  background-color: $color-neutral-grey1;
+  background-color: var(--ams-color-neutral-grey1);
   min-height: 50rem;
   margin-top: 8rem;
   margin-bottom: 10rem;
@@ -28,7 +28,7 @@
 
 .NavLinkContentWrap {
   display: block;
-  background-color: $color-white;
+  background-color: var(--ams-color-primary-white);
   padding: 2rem 4rem;
   width: 46rem;
 }
