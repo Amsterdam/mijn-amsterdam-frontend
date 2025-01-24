@@ -9,14 +9,14 @@ import {
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
   StadspasHouderPasSource,
-  StadspasHouderSource,
   StadspasOwner,
+  StadspasPasHouderResponse,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
-function createStadspasHouderResponse(): StadspasHouderSource {
+function createStadspasHouderResponse(): StadspasPasHouderResponse {
   const stadspasHouderResponse = {
     initialen: 'A',
     achternaam: 'Achternaam',
@@ -56,7 +56,7 @@ function createStadspasHouderResponse(): StadspasHouderSource {
 
 /** Create a stadspas with optionally overwriting it's default properties. */
 function createPas(
-  props: Partial<StadspasHouderPasSource>
+  props?: Partial<StadspasHouderPasSource>
 ): StadspasHouderPasSource {
   return {
     actief: true,
@@ -126,9 +126,8 @@ function createTransformedPas(
   };
 }
 
-const pashouderResponse = createStadspasHouderResponse();
-
-const pasResponse = createPas({ actief: true });
+const defaultPashouderResponse = createStadspasHouderResponse();
+const defaultPasResponse = createPas();
 
 const authProfileAndToken: AuthProfileAndToken = {
   profile: {
@@ -168,12 +167,13 @@ describe('stadspas services', () => {
     `);
   });
 
-  test('stadspas-gpass-service fail administratienummer endpoint', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
+  describe('stadspas-gpass-service', () => {
+    test('fail administratienummer endpoint', async () => {
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-    const response = await fetchStadspassen('8798712', authProfileAndToken);
+      const response = await fetchStadspassen('8798712', authProfileAndToken);
 
-    expect(response).toMatchInlineSnapshot(`
+      expect(response).toMatchInlineSnapshot(`
       {
         "code": 500,
         "content": null,
@@ -181,19 +181,21 @@ describe('stadspas services', () => {
         "status": "ERROR",
       }
     `);
-  });
-
-  test('stadspas-gpass-service fail user unknown', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        clientidentificatie: '123-123',
-      },
     });
-    remoteApi.get('/stadspas/rest/sales/v1/pashouder?addsubs=true').reply(401);
 
-    const response = await fetchStadspassen('xyz123', authProfileAndToken);
+    test('fail user unknown', async () => {
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+        .reply(401);
 
-    expect(response).toMatchInlineSnapshot(`
+      const response = await fetchStadspassen('xyz123', authProfileAndToken);
+
+      expect(response).toMatchInlineSnapshot(`
       {
         "content": {
           "administratienummer": null,
@@ -202,105 +204,126 @@ describe('stadspas services', () => {
         "status": "OK",
       }
     `);
-  });
+    });
 
-  test('stadspas-gpass-service fail only returns 1st pass', async () => {
-    const encryptSpy = vi
-      .spyOn(encryptDecrypt, 'encrypt')
-      .mockReturnValueOnce([
+    test('fail only returns 1st pass', async () => {
+      const encryptSpy = vi
+        .spyOn(encryptDecrypt, 'encrypt')
+        .mockReturnValueOnce([
+          '1x2x3x-##########-4x5x6x',
+          Buffer.from('xx'),
+          Buffer.from('yy'),
+        ]);
+
+      const decryptSpy = vi
+        .spyOn(encryptDecrypt, 'decrypt')
+        .mockReturnValueOnce('123-unencrypted-456');
+
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+        .reply(200, defaultPashouderResponse);
+      // Only mocking 1 pas response
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
+        .reply(200, defaultPasResponse);
+
+      const response = await fetchStadspassen('0912039', authProfileAndToken);
+
+      const expectedResponse = {
+        content: {
+          administratienummer: '0363000123-123',
+          stadspassen: [
+            createTransformedPas({
+              owner: { firstname: 'Moedertje', initials: 'B' },
+            }),
+          ],
+        },
+        status: 'OK',
+      };
+
+      expect(response).toStrictEqual(expectedResponse);
+
+      encryptSpy.mockRestore();
+      decryptSpy.mockRestore();
+    });
+
+    test('filters out replaced passes', async () => {
+      vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
         '1x2x3x-##########-4x5x6x',
         Buffer.from('xx'),
         Buffer.from('yy'),
       ]);
 
-    const decryptSpy = vi
-      .spyOn(encryptDecrypt, 'decrypt')
-      .mockReturnValueOnce('123-unencrypted-456');
+      vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue(
+        '123-unencrypted-456'
+      );
 
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        clientidentificatie: '123-123',
-      },
-    });
-    remoteApi
-      .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
-      .reply(200, pashouderResponse);
-    // Only mocking 1 pas response
-    remoteApi
-      .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
-      .reply(200, pasResponse);
+      const unrelevantPas = createPas({
+        actief: true,
+        pasnummer: 222222222222,
+        securitycode: '012345',
+        vervangen: true,
+      });
 
-    const response = await fetchStadspassen('0912039', authProfileAndToken);
-
-    const expectedResponse = {
-      content: {
-        administratienummer: '0363000123-123',
-        stadspassen: [
-          createTransformedPas({
-            owner: { firstname: 'Moedertje', initials: 'B' },
-          }),
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+      const pasHouderResponse: StadspasPasHouderResponse = {
+        initialen: 'A',
+        achternaam: 'Achternaam',
+        voornaam: 'Vadertje',
+        passen: [
+          createPas({ actief: false, pasnummer: 111111111111 }),
+          unrelevantPas,
         ],
-      },
-      status: 'OK',
-    };
-
-    expect(response).toStrictEqual(expectedResponse);
-
-    encryptSpy.mockRestore();
-    decryptSpy.mockRestore();
-  });
-
-  test('stadspas-gpass-service, filters out replaced passes', async () => {
-    vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
-      '1x2x3x-##########-4x5x6x',
-      Buffer.from('xx'),
-      Buffer.from('yy'),
-    ]);
-
-    vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue('123-unencrypted-456');
-
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        clientidentificatie: '123-123',
-      },
-    });
-    remoteApi
-      .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
-      .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
-      .reply(200, pashouderResponse);
-    remoteApi
-      .persist()
-      .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
-      .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
-      .reply(200, pasResponse);
-
-    const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
-    const expectedResponse = {
-      content: {
-        administratienummer: '0363000123-123',
-        stadspassen: [
-          createTransformedPas({
-            owner: { firstname: 'Vadertje', initials: 'A' },
-          }),
-          createTransformedPas({
-            owner: { firstname: 'Moedertje', initials: 'B' },
-          }),
-          createTransformedPas({
-            owner: { firstname: 'Moedertje', initials: 'B' },
-          }),
-          createTransformedPas({
-            owner: { firstname: 'Kindje', initials: 'C' },
-          }),
-          createTransformedPas({
-            owner: { firstname: 'Kindje', initials: 'C' },
-          }),
+        sub_pashouders: [
+          {
+            initialen: 'B',
+            achternaam: 'Achternaam',
+            voornaam: 'Moedertje',
+            passen: [
+              createPas({ actief: true, pasnummer: 333333333333 }),
+              createPas({ actief: false, pasnummer: 444444444444 }),
+            ],
+          },
+          {
+            initialen: 'C',
+            achternaam: 'Achternaam',
+            voornaam: 'Kindje',
+            passen: [
+              createPas({ actief: true, pasnummer: 555555555555 }),
+              createPas({ actief: false, pasnummer: 666666666666 }),
+            ],
+          },
         ],
-      },
-      status: 'OK',
-    };
-    expect(response).toStrictEqual(expectedResponse);
-  });
+      };
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, pasHouderResponse);
+      remoteApi
+        .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
+        .times(6)
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, defaultPasResponse);
 
+      const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
+      expect(response.content?.stadspassen.length).toBe(5);
+    });
+  });
   test('stadspas transacties Happy!', async () => {
     remoteApi
       .get(
