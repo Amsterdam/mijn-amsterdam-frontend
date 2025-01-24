@@ -10,16 +10,11 @@
 .Results {
   position: absolute;
   width: calc(100% - 4rem);
-  background-color: $color-white;
-  border: 0.1rem solid $color-neutral-grey4;
+  background-color: var(--ams-color-primary-white);
+  border: 0.1rem solid var(--ams-color-neutral-grey3);
   margin-top: 0;
   border-top: 0;
   // transform: translateX(-1rem);
-
-  @include mq-tablet() {
-    width: 100%;
-    border: 0;
-  }
 }
 
 .SearchBar.in-page .Results {
@@ -72,13 +67,13 @@
   &:hover {
     text-decoration: underline;
     svg {
-      fill: $color-primary-red;
+      fill: var(--ams-color-primary-red);
     }
   }
 }
 .ResultUrl {
   font-size: 0.8em;
-  color: $color-neutral-grey4;
+  color: var(--ams-color-neutral-grey3);
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -100,7 +95,7 @@
   white-space: nowrap;
   margin-right: 0.5rem;
   &:not(:first-child) {
-    color: $color-neutral-grey4;
+    color: var(--ams-color-neutral-grey3);
     font-weight: normal;
     margin-left: 0.4rem;
     font-size: 0.9em;

@@ -14,9 +14,4 @@
     flex: 1;
     flex-basis: 50%;
   }
-
-  @include mq-phone {
-    display: block;
-    margin-bottom: 2rem;
-  }
 }

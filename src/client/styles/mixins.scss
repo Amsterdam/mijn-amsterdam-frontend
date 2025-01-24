@@ -19,44 +19,14 @@
   }
 }
 
-@mixin media-q($sizes...) {
-  @include media($sizes...) {
-    @content;
-  }
-}
-
-@mixin mq-phone() {
-  @include media-q('<phone') {
-    @content;
-  }
-}
-
-@mixin mq-gt-phone() {
-  @include media-q('>phone') {
-    @content;
-  }
-}
-
-@mixin mq-tablet() {
-  @include media-q('<tablet') {
-    @content;
-  }
-}
-
-@mixin mq-desktop() {
-  @include media-q('>=tablet') {
-    @content;
-  }
-}
-
 @mixin input() {
   display: block;
-  color: $color-black;
+  color: var(--ams-color-primary-black);
   padding: 0.6em 1.2em 0.5em 0.6em;
   width: 100%;
   max-width: 100%;
   margin: 0;
-  border: 0.1rem solid $color-neutral-grey4;
+  border: 0.1rem solid var(--ams-color-neutral-grey3);
   border-radius: 0;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -68,7 +38,7 @@
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: $color-white;
+  background-color: var(--ams-color-primary-white);
   background-image: url('../../assets/icons/Chevron-Down.svg');
   background-repeat: no-repeat, repeat;
   background-position:
