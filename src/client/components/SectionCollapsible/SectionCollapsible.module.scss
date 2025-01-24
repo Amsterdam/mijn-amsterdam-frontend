@@ -1,6 +1,6 @@
 .SectionCollapsible {
   margin-bottom: 1.8rem;
-  border-bottom: 0.1rem solid $color-neutral-grey2;
+  border-bottom: 0.1rem solid var(--ams-color-neutral-grey1);
 }
 
 @media print {
@@ -26,16 +26,6 @@
   margin-bottom: 1.8rem;
   transform: translateX(-2.2rem);
   white-space: nowrap;
-
-  @include mq-tablet() {
-    margin-left: 9.5rem;
-    white-space: initial;
-  }
-
-  @include mq-phone() {
-    margin-left: 0;
-    transform: translateX(0);
-  }
 
   span {
     padding-left: 0.2em;
@@ -70,21 +60,13 @@
 }
 
 .NoItemsMessage {
-  @include mq-tablet() {
-    text-indent: 12rem;
-  }
-
-  @include mq-phone() {
-    text-indent: 0;
-  }
-
   text-indent: 16rem;
   margin-top: 1rem;
   padding-bottom: 3rem;
 }
 
 .ToggleMorePanel {
-  background: $color-white;
+  background: var(--ams-color-primary-white);
   position: absolute;
   bottom: 0;
   left: 0;

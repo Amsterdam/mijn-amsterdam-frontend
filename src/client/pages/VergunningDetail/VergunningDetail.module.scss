@@ -10,11 +10,6 @@
   white-space: pre-wrap;
 }
 
-.InfoGroupDivider {
-  @include mq-phone {
-    border-top: 1px solid $color-neutral-grey2;
-  }
-}
 .LocationModalInner {
   height: 40rem;
   --map-container-height: 40rem;
@@ -27,7 +22,7 @@
 }
 
 .Disclaimer {
-  color: $color-neutral-grey4;
+  color: var(--ams-color-neutral-grey3);
 }
 
 .LicensePlatesList {

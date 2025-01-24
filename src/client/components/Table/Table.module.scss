@@ -7,31 +7,9 @@
     border-top: 0;
   }
 
-  @include mq-phone() {
-    display: grid;
-
-    tr,
-    td,
-    tbody {
-      display: block;
-    }
-
-    td:not(:first-child) {
-      display: block;
-    }
-
-    thead {
-      display: none;
-    }
-
-    tr:last-of-type td {
-      border-bottom: 0;
-    }
-  }
-
   thead th,
   thead td {
-    border-bottom: 0.2rem solid $color-neutral-grey2;
+    border-bottom: 0.2rem solid var(--ams-color-neutral-grey1);
     padding-bottom: 0.5rem;
   }
 }
@@ -40,28 +18,14 @@
   td {
     padding: 1em 1em 1em 0;
     vertical-align: top;
-    border-top: 0.1rem solid $color-neutral-grey2;
+    border-top: 0.1rem solid var(--ams-color-neutral-grey1);
   }
 
   th {
     text-align: left;
 
-    color: $color-neutral-grey4;
+    color: var(--ams-color-neutral-grey3);
     font-weight: 500;
-  }
-
-  @include mq-phone() {
-    padding-top: 0.5rem;
-    border-top: 0.1rem solid $color-neutral-grey2;
-
-    td {
-      border-top: 0;
-      padding: 0;
-
-      &:last-child {
-        padding-bottom: 1rem;
-      }
-    }
   }
 }
 
@@ -75,14 +39,10 @@
 .DisplayPropLabel {
   display: none;
   padding-right: 0.3rem;
-
-  @include mq-phone() {
-    display: initial;
-  }
 }
 
 .DisplayProp {
-  color: $color-neutral-grey4;
+  color: var(--ams-color-neutral-grey3);
   font-weight: normal;
   white-space: nowrap;
 }
