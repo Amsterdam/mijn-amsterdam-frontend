@@ -340,6 +340,10 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           Bel dan meteen naar {PHONENUMBERS.WerkEnInkomen}. De nieuwe pas wordt
           dan binnen drie weken thuisgestuurd en is dan gelijk te gebruiken.
         </Paragraph>
+        <Paragraph>
+          Let op: het blokkeren kan alleen worden teruggedraaid door te bellen
+          met <br /> {PHONENUMBERS.WerkEnInkomen}.
+        </Paragraph>
       </Modal>
     </>
   );
