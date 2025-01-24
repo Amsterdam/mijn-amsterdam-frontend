@@ -41,7 +41,7 @@
 }
 
 .MarkerLabelText {
-  color: $color-black;
+  color: var(--ams-color-primary-black);
   text-align: center;
   font-weight: bold;
   width: max-content;
