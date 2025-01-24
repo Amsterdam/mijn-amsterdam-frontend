@@ -10,6 +10,7 @@ import {
   StadspasDiscountTransactionsResponseSource,
   StadspasHouderPasSource,
   StadspasHouderSource,
+  StadspasOwner,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -21,36 +22,45 @@ function createStadspasHouderResponse(): StadspasHouderSource {
     achternaam: 'Achternaam',
     voornaam: 'Vadertje',
     passen: [
-      createPas(false, 111111111111),
-      createPas(true, 222222222222, '012345', true),
+      createPas({ actief: false, pasnummer: 111111111111 }),
+      createPas({
+        actief: true,
+        pasnummer: 222222222222,
+        securitycode: '012345',
+        vervangen: true,
+      }),
     ],
     sub_pashouders: [
       {
         initialen: 'B',
         achternaam: 'Achternaam',
         voornaam: 'Moedertje',
-        passen: [createPas(true, 333333333333), createPas(false, 444444444444)],
+        passen: [
+          createPas({ actief: true, pasnummer: 333333333333 }),
+          createPas({ actief: false, pasnummer: 444444444444 }),
+        ],
       },
       {
         initialen: 'C',
         achternaam: 'Achternaam',
         voornaam: 'Kindje',
-        passen: [createPas(true, 555555555555), createPas(false, 666666666666)],
+        passen: [
+          createPas({ actief: true, pasnummer: 555555555555 }),
+          createPas({ actief: false, pasnummer: 666666666666 }),
+        ],
       },
     ],
   };
   return stadspasHouderResponse;
 }
 
+/** Create a stadspas with optionally overwriting it's default properties. */
 function createPas(
-  actief: boolean,
-  pasnummer: number = 777777777777,
-  securitycode: string = '012345',
-  vervangen: boolean = false
+  props: Partial<StadspasHouderPasSource>
 ): StadspasHouderPasSource {
   return {
-    actief,
-    securitycode,
+    actief: true,
+    securitycode: '012345',
     heeft_budget: true,
     budgetten: [
       {
@@ -62,18 +72,32 @@ function createPas(
         budget_balance: 0,
       },
     ],
-    vervangen,
+    vervangen: false,
     categorie: 'Amsterdamse Digitale Stadspas',
     categorie_code: 'A',
     expiry_date: '2020-08-31T23:59:59.000Z',
     id: 999999,
-    pasnummer,
+    pasnummer: 777777777777,
     pasnummer_volledig: '6666666666666666666',
     passoort: { id: 11, naam: 'Digitale Stadspas' },
+    ...props,
   };
 }
 
-function createTransformedPas(firstname: string, initials: string): Stadspas {
+/** Create a transformed stadspas with optionally overwriting it's default properties. */
+function createTransformedPas(
+  props: Partial<{
+    topLevelProps: Partial<Stadspas>;
+    owner: Partial<StadspasOwner>;
+  }>
+): Stadspas {
+  const owner = {
+    firstname: 'Paul',
+    infix: undefined,
+    initials: 'P',
+    lastname: 'Achternaam',
+    ...props.owner,
+  };
   return {
     actief: true,
     balance: 0,
@@ -94,21 +118,17 @@ function createTransformedPas(firstname: string, initials: string): Stadspas {
     dateEnd: '2020-08-31T23:59:59.000Z',
     dateEndFormatted: '01 september 2020',
     id: '999999',
-    owner: {
-      firstname,
-      infix: undefined,
-      initials,
-      lastname: 'Achternaam',
-    },
+    owner,
     passNumber: 777777777777,
     passNumberComplete: '6666666666666666666',
     securityCode: '012345',
+    ...props.topLevelProps,
   };
 }
 
 const pashouderResponse = createStadspasHouderResponse();
 
-const pasResponse = createPas(true);
+const pasResponse = createPas({ actief: true });
 
 const authProfileAndToken: AuthProfileAndToken = {
   profile: {
@@ -215,7 +235,11 @@ describe('stadspas services', () => {
     const expectedResponse = {
       content: {
         administratienummer: '0363000123-123',
-        stadspassen: [createTransformedPas('Moedertje', 'B')],
+        stadspassen: [
+          createTransformedPas({
+            owner: { firstname: 'Moedertje', initials: 'B' },
+          }),
+        ],
       },
       status: 'OK',
     };
@@ -255,11 +279,21 @@ describe('stadspas services', () => {
       content: {
         administratienummer: '0363000123-123',
         stadspassen: [
-          createTransformedPas('Vadertje', 'A'),
-          createTransformedPas('Moedertje', 'B'),
-          createTransformedPas('Moedertje', 'B'),
-          createTransformedPas('Kindje', 'C'),
-          createTransformedPas('Kindje', 'C'),
+          createTransformedPas({
+            owner: { firstname: 'Vadertje', initials: 'A' },
+          }),
+          createTransformedPas({
+            owner: { firstname: 'Moedertje', initials: 'B' },
+          }),
+          createTransformedPas({
+            owner: { firstname: 'Moedertje', initials: 'B' },
+          }),
+          createTransformedPas({
+            owner: { firstname: 'Kindje', initials: 'C' },
+          }),
+          createTransformedPas({
+            owner: { firstname: 'Kindje', initials: 'C' },
+          }),
         ],
       },
       status: 'OK',
