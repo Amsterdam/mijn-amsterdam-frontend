@@ -1,4 +1,4 @@
 .SuppressedParagraph {
-  --ams-paragraph-color: #{$color-neutral-grey4};
+  --ams-paragraph-color: #{var(--ams-color-neutral-grey3)};
   text-align: center;
 }

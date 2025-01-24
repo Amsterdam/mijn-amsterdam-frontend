@@ -10,22 +10,9 @@
   @include select(Table_DisplayPropTitle) {
     width: 20%;
   }
-
-  @include mq-tablet() {
-    tr td:nth-child(2) {
-      width: 95%;
-      max-width: 100vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    @include select(Table_DisplayPropTitle) {
-      width: 100%;
-    }
-  }
 }
 
 .SuppressedParagraph {
-  color: $color-neutral-grey4;
+  color: var(--ams-color-neutral-grey3);
   text-align: center;
 }

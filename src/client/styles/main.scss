@@ -48,7 +48,7 @@ body {
 html {
   box-sizing: border-box;
   height: 100%;
-  background-color: var(--ams-primary-color-white);
+  background-color: var(--ams-color-primary-white);
 }
 
 body {
@@ -81,7 +81,7 @@ body {
 }
 
 .is-typeAheadActive {
-  @include mq-phone {
+  @media screen and (max-width: $ams-breakpoint-medium) {
     @include select('App') {
       display: none;
     }

@@ -2,15 +2,11 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background-color: $color-white;
+  background-color: var(--ams-color-primary-white);
   max-height: 100%;
   height: auto;
   padding-top: 3.2rem;
   z-index: 401;
-
-  @include mq-phone {
-    padding-top: 0;
-  }
 }
 
 .PanelInner {
@@ -83,7 +79,7 @@
     height: 0.9rem;
     width: 12rem;
     border-radius: 1.2rem;
-    background: $color-support-blue;
+    background: var(--ams-color-primary-blue);
   }
 }
 
@@ -93,7 +89,7 @@
   bottom: 0;
   top: 0;
   display: block;
-  background-color: $color-white;
+  background-color: var(--ams-color-primary-white);
   border: 0;
   padding: 0;
   box-shadow: none;
@@ -109,7 +105,7 @@
 .Icon {
   height: 3.2rem;
   width: 1.6rem;
-  background-color: $color-white;
+  background-color: var(--ams-color-primary-white);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -129,7 +125,7 @@
 .LabelStyle {
   display: inline-flex;
   vertical-align: middle;
-  color: $color-black;
+  color: var(--ams-color-primary-black);
   cursor: pointer;
   display: flex;
   align-items: center;

@@ -18,21 +18,21 @@
   justify-content: center;
   align-items: center;
   z-index: 1;
-  background-color: $color-white;
+  background-color: var(--ams-color-primary-white);
   transition: background-color 0.2s ease-in-out;
   pointer-events: none;
   padding: 0.4rem;
 }
 
 .Checked {
-  color: $color-black;
-  background-color: $color-black;
+  color: var(--ams-color-primary-black);
+  background-color: var(--ams-color-primary-black);
   & svg {
     circle,
     rect,
     polygon,
     path {
-      fill: $color-white;
+      fill: var(--ams-color-primary-white);
     }
   }
 }

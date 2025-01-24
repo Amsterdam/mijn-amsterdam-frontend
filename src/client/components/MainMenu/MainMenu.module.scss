@@ -9,13 +9,4 @@
     display: block;
     margin-bottom: var(--ams-link-list-gap);
   }
-
-  @include mq-phone() {
-    grid-template-columns: 1fr;
-    padding: 2rem 0 4rem;
-
-    & > nav {
-      padding-top: 2rem;
-    }
-  }
 }

@@ -2,40 +2,40 @@
 
 $colors: (
   'grey': (
-    background-color: $color-neutral-grey5,
+    background-color: var(--ams-color-neutral-grey3),
   ),
   'lightBlue': (
-    background-color: $color-support-lightblue,
+    background-color: var(--ams-color-blue),
   ),
   'yellow': (
-    background-color: $color-support-yellow,
+    background-color: var(--ams-color-yellow),
   ),
   'valid': (
-    background-color: $color-support-valid,
+    background-color: var(--ams-color-green),
   ),
   'orange': (
-    background-color: $color-support-orange,
+    background-color: var(--ams-color-orange),
   ),
   'purple': (
-    background-color: $color-support-purple,
+    background-color: var(--ams-color-purple),
   ),
   'lightGreen': (
-    background-color: $color-support-lightgreen,
+    background-color: var(--ams-color-green),
   ),
   'pink': (
-    background-color: $color-support-pink,
+    background-color: var(--ams-color-magenta),
   ),
   'focus': (
-    background-color: $color-support-focus,
+    background-color: var(--ams-color-yellow),
   ),
   'black': (
-    background-color: $color-black,
+    background-color: var(--ams-color-primary-black),
   ),
   'blue': (
-    background-color: $color-support-blue,
+    background-color: var(--ams-color-primary-blue),
   ),
   'bluePrimary': (
-    background-color: $color-primary-darkblue,
+    background-color: var(--ams-color-primary-blue),
   ),
 );
 
@@ -56,7 +56,7 @@ $colors: (
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.2rem $color-white solid;
+  border: 0.2rem var(--ams-color-primary-white) solid;
   width: 2.8rem;
   height: 2.8rem;
   @include colorStyle('grey');
