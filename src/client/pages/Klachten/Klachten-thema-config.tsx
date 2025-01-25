@@ -1,5 +1,3 @@
-import { generatePath } from 'react-router-dom';
-
 import { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';
@@ -33,5 +31,5 @@ export const klachtenTableConfig = {
   title: 'Ingediende klachten',
   displayProps: displayPropsKlachten,
   maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-  listPageRoute: generatePath(routes.listPage),
+  listPageRoute: routes.listPage,
 } as const;
