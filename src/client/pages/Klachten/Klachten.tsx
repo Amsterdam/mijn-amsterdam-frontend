@@ -1,3 +1,4 @@
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 import styles from './Klachten.module.scss';
@@ -7,16 +8,17 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  Linkd,
-  OverviewPage,
-  PageContent,
-  PageHeading,
   Pagination,
   SectionCollapsible,
   Table,
-  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
@@ -62,34 +64,30 @@ export default function Klachten() {
     : [];
 
   return (
-    <OverviewPage className={styles.Klachten}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={isLoading(KLACHTEN)}
-        icon={<ThemaIcon />}
-      >
-        {ThemaTitles.KLACHTEN}
-      </PageHeading>
-      <PageContent>
-        <p>
-          Hier ziet u een overzicht van de klachten die U heeft ingediend bij
-          gemeente Amsterdam.
-        </p>
-        <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-          >
-            Meer informatie over de afhandeling van uw klacht
-          </Linkd>
-        </p>
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HOME}>
+          {ThemaTitles.KLACHTEN}
+        </PageHeadingV2>
+        <PageContentCell>
+          <Paragraph className="ams-mb--sm">
+            Hier ziet u een overzicht van de klachten die U heeft ingediend bij
+            gemeente Amsterdam.
+          </Paragraph>
+          <LinkList className="ams-mb--xl">
+            <LinkList.Link href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D">
+              Meer informatie over de afhandeling van uw klacht
+            </LinkList.Link>
+          </LinkList>
+        </PageContentCell>
         {isError(KLACHTEN) && (
-          <ErrorAlert>We kunnen op dit moment geen klachten tonen.</ErrorAlert>
+          <PageContentCell>
+            <ErrorAlert>
+              We kunnen op dit moment geen klachten tonen.
+            </ErrorAlert>
+          </PageContentCell>
         )}
-      </PageContent>
+      </PageContentV2>
       <SectionCollapsible
         id="SectionCollapsible-complaints"
         title="Ingediende klachten"
@@ -116,6 +114,6 @@ export default function Klachten() {
           />
         )}
       </SectionCollapsible>
-    </OverviewPage>
+    </OverviewPageV2>
   );
 }

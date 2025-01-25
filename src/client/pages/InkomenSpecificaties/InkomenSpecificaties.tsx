@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { parseISO } from 'date-fns';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
@@ -11,17 +12,18 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
   Button,
-  ThemaIcon,
   DateInput,
-  OverviewPage,
-  PageContent,
-  PageHeading,
   Pagination,
   Section,
   Table,
 } from '../../components';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
-import { ThemaTitles } from '../../config/thema';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 export const specificationsTableDisplayProps = {
@@ -165,185 +167,187 @@ export default function InkomenSpecificaties() {
   }
 
   return (
-    <OverviewPage
+    <OverviewPageV2
       className={classnames(
         styles.InkomenSpecificaties,
         isAnnualStatementOverviewPage &&
           styles['SpecificationsTable--annualStatements']
       )}
     >
-      <PageHeading
-        icon={<ThemaIcon />}
-        backLink={{ to: AppRoutes.INKOMEN, title: ThemaTitles.INKOMEN }}
-        isLoading={isLoading(WPI_SPECIFICATIES)}
-      >
-        Bijstandsuitkering
-      </PageHeading>
-      <PageContent>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.INKOMEN}>
+          Bijstandsuitkering
+        </PageHeadingV2>
         {isError(WPI_SPECIFICATIES) && (
-          <ErrorAlert>
-            We kunnen op dit moment niet alle gegevens tonen.
-          </ErrorAlert>
+          <PageContentCell>
+            <ErrorAlert>
+              We kunnen op dit moment niet alle gegevens tonen.
+            </ErrorAlert>
+          </PageContentCell>
         )}
-      </PageContent>
-      <Section
-        className={styles.TableSection}
-        title={
-          isAnnualStatementOverviewPage
-            ? 'Jaaropgaven'
-            : 'Uitkeringsspecificaties'
-        }
-        isLoading={isLoading(WPI_SPECIFICATIES)}
-        hasItems={!!items.length}
-        noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
-      >
-        <Button
-          variant="secondary-inverted"
-          className={classnames(
-            styles.SearchButton,
-            isSearchPanelActive && styles.SearchButtonActive
-          )}
-          onClick={toggleSearchPanel}
-          disabled={isSearchPanelActive}
-          icon={Caret}
-          iconPosition="right"
-          aria-expanded={isSearchPanelActive}
-        >
-          Zoeken
-        </Button>
+        <PageContentCell>
+          <Section
+            className={styles.TableSection}
+            title={
+              isAnnualStatementOverviewPage
+                ? 'Jaaropgaven'
+                : 'Uitkeringsspecificaties'
+            }
+            isLoading={isLoading(WPI_SPECIFICATIES)}
+            hasItems={!!items.length}
+            noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
+          >
+            <Button
+              variant="secondary-inverted"
+              className={classnames(
+                styles.SearchButton,
+                isSearchPanelActive && styles.SearchButtonActive
+              )}
+              onClick={toggleSearchPanel}
+              disabled={isSearchPanelActive}
+              icon={Caret}
+              iconPosition="right"
+              aria-expanded={isSearchPanelActive}
+            >
+              Zoeken
+            </Button>
 
-        {isSearchPanelActive && (
-          <div className={styles.SearchPanel}>
-            {hasCategoryFilters && (
-              <div className={styles.FilterInput}>
-                <span>
-                  Regeling{' '}
-                  {categoryFilterActive && (
-                    <button
-                      className={styles.ResetFilterButton}
-                      onClick={() => selectCategoryFilter('')}
+            {isSearchPanelActive && (
+              <div className={styles.SearchPanel}>
+                {hasCategoryFilters && (
+                  <div className={styles.FilterInput}>
+                    <span>
+                      Regeling{' '}
+                      {categoryFilterActive && (
+                        <button
+                          className={styles.ResetFilterButton}
+                          onClick={() => selectCategoryFilter('')}
+                        >
+                          resetten
+                        </button>
+                      )}
+                    </span>
+                    <select
+                      className={classnames(
+                        styles.Select,
+                        categoryFilterActive && styles.FilterActive
+                      )}
+                      value={selectedCategory}
+                      onChange={(event) =>
+                        selectCategoryFilter(event.target.value)
+                      }
                     >
-                      resetten
-                    </button>
-                  )}
-                </span>
-                <select
-                  className={classnames(
-                    styles.Select,
-                    categoryFilterActive && styles.FilterActive
-                  )}
-                  value={selectedCategory}
-                  onChange={(event) => selectCategoryFilter(event.target.value)}
-                >
-                  <option value="">Alle regelingen ({items.length})</option>
-                  {categoryFilterOptions.map(([option, count]) => (
-                    <option key={option} value={option}>
-                      {option} ({count})
-                    </option>
-                  ))}
-                </select>
+                      <option value="">Alle regelingen ({items.length})</option>
+                      {categoryFilterOptions.map(([option, count]) => (
+                        <option key={option} value={option}>
+                          {option} ({count})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                <div className={styles.FilterInput}>
+                  <span>
+                    Datum van{' '}
+                    {minDateFilterActive && (
+                      <button
+                        className={styles.ResetFilterButton}
+                        onClick={() =>
+                          setSelectedDates([minDate, selectedDates[1]])
+                        }
+                      >
+                        resetten
+                      </button>
+                    )}
+                  </span>
+                  <DateInput
+                    className={classnames(
+                      minDateFilterActive && styles.FilterActive
+                    )}
+                    value={selectedDates[0]}
+                    hasNativeSupport={isNativeDatePickerInputSupported()}
+                    onChange={(dateStart) => {
+                      setSelectedDates(([, dateEnd]) => [
+                        dateStart || minDate,
+                        dateEnd || maxDate,
+                      ]);
+                    }}
+                  />
+                </div>
+                <div className={styles.FilterInput}>
+                  <span>
+                    Datum t/m{' '}
+                    {maxDateFilterActive && (
+                      <button
+                        className={styles.ResetFilterButton}
+                        onClick={() => {
+                          setSelectedDates([selectedDates[0], maxDate]);
+                        }}
+                      >
+                        resetten
+                      </button>
+                    )}
+                  </span>
+                  <DateInput
+                    className={classnames(
+                      maxDateFilterActive && styles.FilterActive
+                    )}
+                    value={selectedDates[1]}
+                    hasNativeSupport={isNativeDatePickerInputSupported()}
+                    onChange={(dateEnd) =>
+                      setSelectedDates(([dateStart]) => [
+                        dateStart || minDate,
+                        dateEnd || maxDate,
+                      ])
+                    }
+                  />
+                </div>
               </div>
             )}
-            <div className={styles.FilterInput}>
-              <span>
-                Datum van{' '}
-                {minDateFilterActive && (
-                  <button
-                    className={styles.ResetFilterButton}
-                    onClick={() =>
-                      setSelectedDates([minDate, selectedDates[1]])
-                    }
-                  >
-                    resetten
-                  </button>
-                )}
-              </span>
-              <DateInput
-                className={classnames(
-                  minDateFilterActive && styles.FilterActive
-                )}
-                value={selectedDates[0]}
-                hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={(dateStart) => {
-                  setSelectedDates(([, dateEnd]) => [
-                    dateStart || minDate,
-                    dateEnd || maxDate,
-                  ]);
-                }}
-              />
-            </div>
-            <div className={styles.FilterInput}>
-              <span>
-                Datum t/m{' '}
-                {maxDateFilterActive && (
-                  <button
-                    className={styles.ResetFilterButton}
-                    onClick={() => {
-                      setSelectedDates([selectedDates[0], maxDate]);
-                    }}
-                  >
-                    resetten
-                  </button>
-                )}
-              </span>
-              <DateInput
-                className={classnames(
-                  maxDateFilterActive && styles.FilterActive
-                )}
-                value={selectedDates[1]}
-                hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={(dateEnd) =>
-                  setSelectedDates(([dateStart]) => [
-                    dateStart || minDate,
-                    dateEnd || maxDate,
-                  ])
+            {!itemsFiltered.length && (
+              <Paragraph>
+                Zoeken heeft geen resultaten opgeleverd.{' '}
+                <Button
+                  onClick={resetSearch}
+                  variant="inline"
+                  className={styles.ResetButton}
+                >
+                  Resetten
+                </Button>
+              </Paragraph>
+            )}
+            {currentPage !== 1 && <p>Pagina {currentPage}</p>}
+            {!!itemsFiltered.length && (
+              <Table
+                className={styles.SpecificationsTable}
+                items={itemsFilteredPaginated}
+                displayProps={
+                  isAnnualStatementOverviewPage
+                    ? annualStatementsTableDisplayProps
+                    : specificationsTableDisplayProps
                 }
               />
-            </div>
-          </div>
-        )}
-        {!itemsFiltered.length && (
-          <p>
-            Zoeken heeft geen resultaten opgeleverd.{' '}
-            <Button
-              onClick={resetSearch}
-              variant="inline"
-              className={styles.ResetButton}
-            >
-              Resetten
-            </Button>
-          </p>
-        )}
-        {currentPage !== 1 && <p>Pagina {currentPage}</p>}
-        {!!itemsFiltered.length && (
-          <Table
-            className={styles.SpecificationsTable}
-            items={itemsFilteredPaginated}
-            displayProps={
-              isAnnualStatementOverviewPage
-                ? annualStatementsTableDisplayProps
-                : specificationsTableDisplayProps
-            }
-          />
-        )}
+            )}
 
-        {itemsFiltered.length > PAGE_SIZE && (
-          <Pagination
-            className={styles.Pagination}
-            totalCount={total}
-            pageSize={PAGE_SIZE}
-            currentPage={currentPage}
-            onPageClick={(page) => {
-              history.replace(
-                generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-                  page,
-                  variant,
-                })
-              );
-            }}
-          />
-        )}
-      </Section>
-    </OverviewPage>
+            {itemsFiltered.length > PAGE_SIZE && (
+              <Pagination
+                className={styles.Pagination}
+                totalCount={total}
+                pageSize={PAGE_SIZE}
+                currentPage={currentPage}
+                onPageClick={(page) => {
+                  history.replace(
+                    generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+                      page,
+                      variant,
+                    })
+                  );
+                }}
+              />
+            )}
+          </Section>
+        </PageContentCell>
+      </PageContentV2>
+    </OverviewPageV2>
   );
 }
