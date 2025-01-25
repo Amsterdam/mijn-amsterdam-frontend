@@ -14,6 +14,8 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 export function useBezwarenThemaData() {
   const { BEZWAREN } = useAppStateGetter();
 
+  console.log('BEZWAREN', BEZWAREN);
+
   const bezwaren = addLinkElementToProperty<Bezwaar>(
     BEZWAREN.content ?? [],
     'identificatie',
