@@ -49,6 +49,9 @@ export const listPageParamKind = {
   eerder: 'eerdere-aanvragen-en-vergunningen',
 } as const;
 
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+
 export const horecaTableConfig = {
   [listPageParamKind.huidig]: {
     title: 'Huidige aanvragen en vergunningen',
@@ -56,7 +59,9 @@ export const horecaTableConfig = {
     textNoContent: 'U heeft geen horeca vergunningen of aanvragen.',
     displayProps: displayPropsHorecaHuidig,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routes.listPage),
+    listPageRoute: generatePath(routes.listPage, {
+      kind: listPageParamKind.huidig,
+    }),
   },
   [listPageParamKind.eerder]: {
     title: 'Eerdere aanvragen en vergunningen',
@@ -64,6 +69,8 @@ export const horecaTableConfig = {
     textNoContent: 'U heeft geen eerdere horeca vergunningen of aanvragen.',
     displayProps: displayPropsHorecaEerder,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routes.listPage),
+    listPageRoute: generatePath(routes.listPage, {
+      kind: listPageParamKind.eerder,
+    }),
   },
 } as const;
