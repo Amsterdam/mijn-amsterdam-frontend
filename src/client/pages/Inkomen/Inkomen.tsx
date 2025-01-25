@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { generatePath } from 'react-router-dom';
 
@@ -9,16 +10,18 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import {
   ErrorAlert,
-  Linkd,
   MaintenanceNotifications,
-  OverviewPage,
-  PageContent,
-  PageHeading,
   SectionCollapsible,
   Table,
-  ThemaIcon,
   addTitleLinkComponent,
 } from '../../components';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ExternalUrls, MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -141,41 +144,35 @@ export default function Inkomen() {
   const isLoadingWpiSpecificaties = isLoading(WPI_SPECIFICATIES);
 
   return (
-    <OverviewPage className={styles.Inkomen}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={false}
-        icon={<ThemaIcon />}
-      >
-        {ThemaTitles.INKOMEN}
-      </PageHeading>
-      <PageContent>
-        <p>
-          Op deze pagina vindt u informatie over uw uitkering en de
-          ondersteuning die u krijgt omdat u weinig geld hebt.
-        </p>
-        <p>
-          <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
-            Algemene informatie over Werk en Inkomen
-          </Linkd>
-          <br />
-          <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
-            Contact Werk en Inkomen
-          </Linkd>
-        </p>
-        <MaintenanceNotifications page="inkomen" />
-        {(isError(WPI_AANVRAGEN) ||
-          isError(WPI_SPECIFICATIES) ||
-          isError(WPI_TOZO) ||
-          isError(WPI_TONK)) && (
-          <ErrorAlert>
-            We kunnen op dit moment niet alle gegevens tonen.
-          </ErrorAlert>
-        )}
-      </PageContent>
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HOME}>
+          {ThemaTitles.INKOMEN}
+        </PageHeadingV2>
+        <PageContentCell>
+          <Paragraph className="ams-mb--sm">
+            Op deze pagina vindt u informatie over uw uitkering en de
+            ondersteuning die u krijgt omdat u weinig geld hebt.
+          </Paragraph>
+          <LinkList className="ams-mb--xl">
+            <LinkList.Link href={ExternalUrls.WPI_ALGEMEEN}>
+              Algemene informatie over Werk en Inkomen
+            </LinkList.Link>
+            <LinkList.Link href={ExternalUrls.WPI_CONTACT}>
+              Contact Werk en Inkomen
+            </LinkList.Link>
+          </LinkList>
+          <MaintenanceNotifications page="inkomen" />
+          {(isError(WPI_AANVRAGEN) ||
+            isError(WPI_SPECIFICATIES) ||
+            isError(WPI_TOZO) ||
+            isError(WPI_TONK)) && (
+            <ErrorAlert>
+              We kunnen op dit moment niet alle gegevens tonen.
+            </ErrorAlert>
+          )}
+        </PageContentCell>
+      </PageContentV2>
 
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
@@ -225,9 +222,11 @@ export default function Inkomen() {
         )}
         {uitkeringsspecificaties?.length &&
           uitkeringsspecificaties.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-            <p className={styles.ShowAllButtonContainer}>
-              <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
-            </p>
+            <Paragraph className={styles.ShowAllButtonContainer}>
+              <MaRouterLink href={incomSpecificationsRouteMonthly}>
+                Toon alles
+              </MaRouterLink>
+            </Paragraph>
           )}
       </SectionCollapsible>
 
@@ -251,11 +250,13 @@ export default function Inkomen() {
         )}
         {jaaropgaven?.length &&
           jaaropgaven.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-            <p className={styles.ShowAllButtonContainer}>
-              <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
-            </p>
+            <Paragraph className={styles.ShowAllButtonContainer}>
+              <MaRouterLink href={incomSpecificationsRouteYearly}>
+                Toon alles
+              </MaRouterLink>
+            </Paragraph>
           )}
       </SectionCollapsible>
-    </OverviewPage>
+    </OverviewPageV2>
   );
 }
