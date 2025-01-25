@@ -1,16 +1,15 @@
-import { LinkProps } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types';
 import { SmileFieldValue, SmileSourceResponse } from '../smile/smile-types';
 
 export type Klacht = {
   inbehandelingSinds: string;
   ontvangstDatum: string;
+  ontvangstDatumFormatted: string | null;
   omschrijving: string;
   gewensteOplossing: string | null;
   onderwerp: string | null;
-  id: string;
   locatie: string | null;
-  link: LinkProps;
-};
+} & ZaakDetail;
 
 export type SmileKlacht = {
   klacht_inbehandeling: SmileFieldValue;

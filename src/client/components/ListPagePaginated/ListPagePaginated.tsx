@@ -51,6 +51,8 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
     page?: string;
   }>();
 
+  console.log('page', page);
+
   const currentPage = (() => {
     if (!page) {
       return 1;
@@ -108,12 +110,12 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
                   pageSize={pageSize}
                   currentPage={currentPage}
                   onPageClick={(page: number) => {
-                    history.push(
-                      generatePath(appRoute, {
-                        ...appRouteParams,
-                        page,
-                      })
-                    );
+                    const path = generatePath(appRoute, {
+                      ...appRouteParams,
+                      page,
+                    });
+                    console.log('path', path);
+                    history.push(path);
                   }}
                 />
               )}
