@@ -150,7 +150,7 @@ export default function StatusDetail<T extends StatusLine>({
         )}
 
         {!!(statusItem?.steps && statusItemSteps.length) && (
-          <PageContentCell>
+          <PageContentCell startWide={1} spanWide={12}>
             <StatusLineComponent
               trackCategory={`${thema} / ${statusItem?.about} status`}
               statusLabel={
