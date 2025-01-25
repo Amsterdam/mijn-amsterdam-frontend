@@ -39,9 +39,10 @@ import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
 import { AVG } from './pages/AVG/AVG';
 import { AVGDetail } from './pages/AVG/AVGDetail';
-import { AVGList } from './pages/AVG/AVGList';
+import { AVGList } from './pages/AVG/AVGLijst';
 import { BezwarenThemaPagina } from './pages/Bezwaren/Bezwaren';
 import { BezwarenDetailPagina } from './pages/Bezwaren/BezwarenDetail';
+import { BezwarenLijstPagina } from './pages/Bezwaren/BezwarenLijst';
 import BFF500Error from './pages/BffError/BffError';
 import { Bodem } from './pages/Bodem/Bodem';
 import { BodemList } from './pages/Bodem/BodemList';
@@ -294,6 +295,12 @@ function AppAuthenticated() {
             component={KlachtenLijstPagina}
           />
           <Route path={AppRoutes.KLACHTEN} component={KlachtenThemaPagina} />
+          {FeatureToggle.bezwarenActive && (
+            <Route
+              path={AppRoutes['BEZWAREN/LIST']}
+              component={BezwarenLijstPagina}
+            />
+          )}
           {FeatureToggle.bezwarenActive && (
             <Route
               path={AppRoutes['BEZWAREN/DETAIL']}
