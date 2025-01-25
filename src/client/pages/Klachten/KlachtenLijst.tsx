@@ -11,6 +11,7 @@ export function KlachtenLijstPagina() {
       items={klachten}
       title={tableConfig.title}
       appRoute={tableConfig.listPageRoute}
+      appRouteParams={{}}
       appRouteBack={routes.themaPage}
       displayProps={tableConfig.displayProps}
       isLoading={isLoading}
