@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Klachten from './Klachten';
+import { KlachtenThemaPagina } from './Klachten';
 
 const testState: any = {
   KLACHTEN: {
@@ -52,14 +52,16 @@ function setupTestComponent(testState: any) {
   const routeEntry = generatePath(AppRoutes.KLACHTEN);
   const routePath = AppRoutes.KLACHTEN;
 
-  return () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Klachten}
-      initializeState={initializeState(testState)}
-    />
-  );
+  return function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={KlachtenThemaPagina}
+        initializeState={initializeState(testState)}
+      />
+    );
+  };
 }
 
 describe('<Klachten />', () => {
