@@ -63,6 +63,7 @@ import HLIRegeling from './pages/HLI/HLIRegeling';
 import HLIRegelingen from './pages/HLI/HLIRegelingen';
 import HLIStadspas from './pages/HLI/HLIStadspas';
 import { HorecaThemaPagina } from './pages/Horeca/Horeca';
+import { HorecaLijstPagina } from './pages/Horeca/HorecaLijst';
 import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 import Inkomen from './pages/Inkomen/Inkomen';
 import InkomenDetailBbz from './pages/InkomenDetail/InkomenDetailBbz';
@@ -348,10 +349,13 @@ function AppAuthenticated() {
             <Route path={AppRoutes.KREFIA} component={Krefia} />
           )}
           {FeatureToggle.horecaActive && (
-            <Route path={AppRoutes['HORECA/DETAIL']} component={HorecaDetail} />
+            <Route
+              path={AppRoutes['HORECA/LIST']}
+              component={HorecaLijstPagina}
+            />
           )}
           {FeatureToggle.horecaActive && (
-            <Route path={AppRoutes['HORECA/LIST']} component={HorecaDetail} />
+            <Route path={AppRoutes['HORECA/DETAIL']} component={HorecaDetail} />
           )}
           {FeatureToggle.horecaActive && (
             <Route path={AppRoutes.HORECA} component={HorecaThemaPagina} />
