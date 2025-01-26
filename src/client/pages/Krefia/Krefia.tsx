@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import styles from './Krefia.module.scss';
 import { useKrefiaThemaData } from './useKrefiaThemaData.hook';
 import type { KrefiaDeepLink } from '../../../server/services';
 import { entries } from '../../../universal/helpers/utils';
@@ -51,6 +52,7 @@ export function KrefiaThemaPagina() {
           title={title}
           zaken={deepLinks.filter(filter)}
           displayProps={displayProps}
+          className={styles.KrefiaTable}
         />
       );
     }
