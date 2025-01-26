@@ -1,10 +1,13 @@
-.SectionBorderTop {
-  border-top: 0.1rem var(--ams-color-neutral-grey1) solid;
-  padding-top: 2rem;
-}
-
-.HulpTable {
-  tr td:first-child {
-    width: 70%;
+@media screen and (min-width: $ams-breakpoint-medium) {
+  .KrefiaTable {
+    td,
+    th {
+      &:nth-child(1) {
+        width: 60%;
+      }
+      &:nth-child(2) {
+        width: 40%;
+      }
+    }
   }
 }
