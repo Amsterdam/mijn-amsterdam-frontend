@@ -7,12 +7,7 @@ export * from './buurt/supercluster';
 export * from './cms-content';
 export * from './tips-and-notifications';
 export { fetchKrefia, fetchKrefiaNotifications } from './krefia';
-export type {
-  Krefia,
-  KrefiaDeepLink,
-  KrefiaDeepLinks,
-  KrefiaDetail,
-} from './krefia';
+export type { Krefia, KrefiaDeepLink } from './krefia';
 export * from './simple-connect';
 export * from './content-tips/tips-service';
 export * from './toeristische-verhuur/toeristische-verhuur';
