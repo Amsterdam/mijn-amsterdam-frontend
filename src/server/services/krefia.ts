@@ -3,10 +3,11 @@ import memoize from 'memoizee';
 import { Themas } from '../../universal/config/thema';
 import {
   apiDependencyError,
+  ApiResponse,
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import { omit } from '../../universal/helpers/utils';
-import { MyNotification } from '../../universal/types';
+import { LinkProps, MyNotification } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { getApiConfig } from '../helpers/source-api-helpers';
@@ -18,14 +19,9 @@ interface NotificationTrigger {
 }
 
 export interface KrefiaDeepLink {
-  title: string;
-  url: string;
-}
-
-export interface KrefiaDeepLinks {
-  budgetbeheer: KrefiaDeepLink | null;
-  lening: KrefiaDeepLink | null;
-  schuldhulp: KrefiaDeepLink | null;
+  status: string;
+  link: LinkProps;
+  type: 'budgetbeheer' | 'lening' | 'schuldhulp';
 }
 
 interface NotificationTriggers {
@@ -33,13 +29,20 @@ interface NotificationTriggers {
   krediet: NotificationTrigger | null;
 }
 
-export interface Krefia {
-  notificationTriggers: NotificationTriggers | null;
-  deepLinks: KrefiaDeepLinks;
+export interface KrefiaDeepLinksSource {
+  budgetbeheer: KrefiaDeepLink | null;
+  lening: KrefiaDeepLink | null;
+  schuldhulp: KrefiaDeepLink | null;
 }
 
-export interface KrefiaDetail {
-  deepLinks: KrefiaDeepLinks;
+export interface KrefiaSource {
+  notificationTriggers: NotificationTriggers | null;
+  deepLinks: KrefiaDeepLinksSource;
+}
+
+export interface Krefia {
+  notificationTriggers: NotificationTriggers | null;
+  deepLinks: KrefiaDeepLink[];
 }
 
 function createNotification(
@@ -61,16 +64,50 @@ function createNotification(
   };
 }
 
+function getLinkText(deepLinkType: KrefiaDeepLink['type']) {
+  let linkText = 'Bekijk op Krefia';
+  switch (deepLinkType) {
+    case 'budgetbeheer':
+      linkText = 'Ga naar budgetbeheer';
+      break;
+    case 'lening':
+      linkText = 'Bekijk uw lening';
+      break;
+    case 'schuldhulp':
+      linkText = 'Bekijk uw schuldregeling';
+      break;
+  }
+  return linkText;
+}
+
+function transformKrefiaResponse(responseData: ApiResponse<KrefiaSource>) {
+  return {
+    deepLinks: Object.entries(responseData.content?.deepLinks ?? {}).map(
+      ([key, deepLink]) => {
+        const deepLinkType = key as KrefiaDeepLink['type'];
+        const title = getLinkText(deepLinkType);
+        const krefiaDeepLink: KrefiaDeepLink = {
+          status: deepLink.title,
+          link: {
+            to: deepLink.url,
+            title,
+          },
+          type: deepLinkType,
+        };
+        return krefiaDeepLink;
+      }
+    ),
+    notificationTriggers: responseData.content?.notificationTriggers,
+  };
+}
+
 async function fetchAndTransformKrefia(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<Krefia>> {
   const response = await requestData<Krefia>(
     getApiConfig('KREFIA', {
-      transformResponse: (responseData: {
-        content: Krefia | null;
-        status: 'OK';
-      }) => responseData.content,
+      transformResponse: transformKrefiaResponse,
     }),
     requestID,
     authProfileAndToken
@@ -81,7 +118,7 @@ async function fetchAndTransformKrefia(
 
 export const fetchSource = memoize(fetchAndTransformKrefia, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args: any[]) {
+  normalizer: function (args: unknown[]) {
     return args[0] + JSON.stringify(args[1]);
   },
 });
