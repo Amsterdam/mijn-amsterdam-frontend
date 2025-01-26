@@ -74,7 +74,7 @@ import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificat
 import { KlachtenThemaPagina } from './pages/Klachten/Klachten';
 import { KlachtenDetailPagina } from './pages/Klachten/KlachtenDetail';
 import { KlachtenLijstPagina } from './pages/Klachten/KlachtenLijst';
-import Krefia from './pages/Krefia/Krefia';
+import { KrefiaThemaPagina } from './pages/Krefia/Krefia';
 import { default as LandingPage } from './pages/Landing/Landing';
 import { MyNotificationsPage } from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
@@ -351,7 +351,7 @@ function AppAuthenticated() {
             <Route path={AppRoutes.AFIS} component={AfisThemaPagina} />
           )}
           {FeatureToggle.krefiaActive && (
-            <Route path={AppRoutes.KREFIA} component={Krefia} />
+            <Route path={AppRoutes.KREFIA} component={KrefiaThemaPagina} />
           )}
           {FeatureToggle.horecaActive && (
             <Route
