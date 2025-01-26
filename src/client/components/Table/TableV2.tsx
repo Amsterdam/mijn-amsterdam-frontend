@@ -19,7 +19,7 @@ export type WithDetailLinkComponent<T> = T & {
 
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
-  propertyName: keyof T = 'title',
+  propertyName: keyof T | keyof T['link'] = 'title',
   addDetailLinkComponentAttr = false,
   linkName = 'link'
 ): WithDetailLinkComponent<T>[] {
@@ -28,7 +28,7 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
       return item;
     }
 
-    let label: string = item[propertyName];
+    let label: string = item[propertyName] ?? item?.[linkName]?.[propertyName];
     let linkPropertyName = propertyName;
 
     if (typeof label !== 'string') {
