@@ -7,7 +7,7 @@ import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/c
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types';
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
