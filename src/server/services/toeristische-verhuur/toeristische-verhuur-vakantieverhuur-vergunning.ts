@@ -8,7 +8,7 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types/App.types';
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
 import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';

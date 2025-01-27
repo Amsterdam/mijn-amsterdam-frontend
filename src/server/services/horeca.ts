@@ -5,7 +5,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { CaseTypeV2 } from '../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { HorecaVergunning } from './vergunningen-v2/config-and-types';
 import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
