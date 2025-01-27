@@ -41,9 +41,9 @@ function transformVergunningFrontend(
     // Assign Status steps later on
     steps: [],
     // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
-    fetchUrl: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DETAIL, {
-      id: idEncrypted,
-    }),
+    fetchDocumentsUrl: `${generateFullApiUrlBFF(
+      BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST
+    )}?id=${idEncrypted}`,
     link: {
       to: generatePath(appRoute, {
         title: slug(vergunning.caseType, {
