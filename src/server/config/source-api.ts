@@ -95,6 +95,13 @@ export type SourceApiKey =
   | 'ZORGNED_JZD';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
+const salesforceFeatureToggle = getFromEnv(
+  'BFF_SALESFORCE_FEATURE_TOGGLE_ACTIVE'
+);
+const postponeFetchSalesforce =
+  typeof salesforceFeatureToggle !== 'undefined'
+    ? salesforceFeatureToggle === 'false'
+    : !FeatureToggle.salesforceActive;
 
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
@@ -205,7 +212,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   SALESFORCE: {
     url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
-    postponeFetch: !FeatureToggle.salesforceActive,
+    postponeFetch: postponeFetchSalesforce,
     headers: {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },

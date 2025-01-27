@@ -23,11 +23,11 @@ export function ContactMomenten() {
         medewerker, waarbij er voor het beantwoorden van de vraag
         persoonsgegevens nodig zijn.
       </Paragraph>
-      <Paragraph className="ams-mb--md">
+      <Paragraph className="ams-mb--sm">
         Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
         socialmediaberichten staan niet in deze lijst.
       </Paragraph>
-      <Paragraph className="ams-mb--md">
+      <Paragraph className="ams-mb--sm">
         Wilt u een eerder contactmoment doorgeven bij een volgende vraag? Geef
         dan het referentienummer door.
       </Paragraph>

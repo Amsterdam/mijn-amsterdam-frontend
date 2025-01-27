@@ -11,8 +11,6 @@ import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
-// See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
-
 async function fetchSalesforceData<T>(
   requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
@@ -21,7 +19,6 @@ async function fetchSalesforceData<T>(
     'SALESFORCE',
     dataRequestConfigSpecific
   );
-  console.log('____________dataRequestConfigBase', dataRequestConfigSpecific);
   return requestData<T>(dataRequestConfigBase, requestID);
 }
 
@@ -44,16 +41,21 @@ export async function fetchContactmomenten(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  const base64encodedPK = getFromEnv('BFF_SALESFORCE_API_KEY');
+  if (!base64encodedPK) {
+    throw new Error('BFF_SALESFORCE_API_KEY not found');
+  }
   const encryptedBSN = encrypt(
     authProfileAndToken.profile.id,
-    getFromEnv('BFF_SALESFORCE_API_KEY')
+    Buffer.from(base64encodedPK, 'base64')
   );
+
   const addEnv = IS_TEST ? '/dev' : '';
   console.log('env Test?', IS_TEST);
+
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/contactmomenten${addEnv}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
-      // url encoded
     },
     params: {
       hadBetrokkene__uuid: encodeURIComponent(
