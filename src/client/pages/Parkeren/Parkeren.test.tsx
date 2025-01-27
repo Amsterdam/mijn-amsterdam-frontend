@@ -5,7 +5,7 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
-import { CaseType } from '../../../universal/types/vergunningen';
+import { CaseType } from '../../../universal/types/decos-zaken';
 import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
 import { Parkeren } from './Parkeren';
