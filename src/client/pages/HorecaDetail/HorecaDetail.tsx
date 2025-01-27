@@ -3,7 +3,7 @@ import { generatePath, useParams } from 'react-router-dom';
 import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { ErrorAlert, LoadingContent } from '../../components';
 import {
   DetailPageV2,
