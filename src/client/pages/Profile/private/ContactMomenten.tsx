@@ -18,12 +18,14 @@ export function ContactMomenten() {
   return (
     <CollapsiblePanel title={title} startCollapsed={true}>
       <Paragraph className="ams-mb--sm">
-        Dit is een overzicht van de momenten dat u contact had met gemeente
-        Amsterdam. Dat zijn telefoontjes naar telefoonnummer 14 020, vragen
-        vanuit het contactformulier en chatberichten via de website. In dit
-        overzicht staan niet alle mogelijke contacten. Brieven, klachten vanuit
-        het klachtenformulier, whatsappjes en social mediaberichten staan hier
-        niet in.
+        De lijst met contactmomenten wordt alleen bijgehouden met telefonische
+        gesprekken naar telefoonnummer 14 020 of chatberichten met een
+        medewerker, waarbij er voor het beantwoorden van de vraag
+        persoonsgegevens nodig zijn.
+      </Paragraph>
+      <Paragraph className="ams-mb--md">
+        Brieven, klachten vanuit het klachtenformulier, WhatsApp- en
+        socialmediaberichten staan niet in deze lijst.
       </Paragraph>
       <Paragraph className="ams-mb--md">
         Wilt u een eerder contactmoment doorgeven bij een volgende vraag? Geef
