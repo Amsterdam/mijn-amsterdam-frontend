@@ -7,7 +7,7 @@ import {
   VergunningFrontendV2,
 } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 
 export function getCustomTitleForVergunningWithLicensePlates(
   vergunning:
