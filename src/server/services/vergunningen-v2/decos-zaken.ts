@@ -99,7 +99,6 @@ export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
     text13: timeEnd,
     text9: kentekens,
   },
-  addToSelectFieldsBase: ['text9'],
   async afterTransform(vergunning) {
     if (
       'dateEnd' in vergunning &&
@@ -444,7 +443,6 @@ export const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeerType> = {
       },
     },
   },
-  addToSelectFieldsBase: ['text49'], // kenteken,
   async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
@@ -600,7 +598,6 @@ export const RVVHeleStad: DecosZaakTransformer<RVVHeleStadType> = {
     date7: dateEnd,
     text49: kentekens,
   },
-  addToSelectFieldsBase: ['text49'], // Kenteken,
   async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
@@ -631,7 +628,6 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
     text10: kentekens,
     text15: { ...kentekens, name: 'vorigeKentekens' },
   },
-  addToSelectFieldsBase: ['text10'], // Kenteken
   async afterTransform(vergunning, decosZaakSource) {
     if (getStatusDate('Verleend', vergunning)) {
       vergunning.processed = true;
@@ -681,7 +677,6 @@ export const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaatsType> =
       text13: kentekens,
       text14: { ...kentekens, name: 'vorigeKentekens' },
     },
-    addToSelectFieldsBase: ['text13'], // Kenteken
     requirePayment: true,
     hasValidSourceData: (decosZaak) => {
       const dateNotBefore = new Date('2023-08-08');
@@ -792,7 +787,6 @@ export const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffi
       text10: kentekens,
       text7: destination,
     },
-    addToSelectFieldsBase: ['text10'], // kentekens
     async afterTransform(vergunning) {
       vergunning.title =
         getCustomTitleForDecosZaakWithLicensePlates(vergunning);
@@ -818,7 +812,6 @@ export const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaaronthef
       text7: destination,
       bol8: { name: 'routetest', transform: transformBoolean },
     },
-    addToSelectFieldsBase: ['text39'], // Kenteken
     async afterTransform(vergunning) {
       if ('routetest' in vergunning && vergunning.routetest) {
         vergunning.title = 'Touringcar jaarontheffing met routetoets';
@@ -847,7 +840,6 @@ export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerO
       text49: kentekens,
       text6: location,
     },
-    addToSelectFieldsBase: ['text49'], // Kenteken
     async afterTransform(vergunning, zaakSource) {
       const wvosActiviteiten: Record<
         WVOSActiviteitType,
