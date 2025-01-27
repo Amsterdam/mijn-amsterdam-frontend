@@ -1,18 +1,16 @@
 import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { GetCaseType } from '../../../universal/types/decos-zaken';
 import {
-  DecosZaakBase,
   DecosZaakWithDateRange,
   DecosZaakWithKentekens,
   DecosZaakWithLocation,
   DecosZaakWithDateTimeRange,
   ZaakStatus,
+  DecosZaakBase,
 } from '../decos/decos-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
-
-export type VergunningBase = DecosZaakBase;
 
 export interface TVMRVVObject
   extends DecosZaakWithLocation,
@@ -175,7 +173,7 @@ export type EigenParkeerplaatsRequestType =
   | 'Verlenging';
 
 export interface EigenParkeerplaats
-  extends VergunningBase,
+  extends DecosZaakBase,
     DecosZaakWithKentekens,
     DecosZaakWithDateRange {
   caseType: GetCaseType<'EigenParkeerplaats'>;
@@ -184,7 +182,7 @@ export interface EigenParkeerplaats
   locations: Parkeerplaats[];
 }
 
-export interface EigenParkeerplaatsOpheffen extends VergunningBase {
+export interface EigenParkeerplaatsOpheffen extends DecosZaakBase {
   caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
   isCarsharingpermit: boolean;
   dateEnd: string | null;
@@ -244,7 +242,7 @@ export type VergunningenSourceData = {
 
 export type DecosZaakExpirable = VergunningV2 & { dateEnd?: string | null };
 
-export type VergunningFrontendV2<T extends VergunningBase = VergunningBase> =
+export type VergunningFrontendV2<T extends DecosZaakBase = DecosZaakBase> =
   T & {
     dateDecisionFormatted?: string | null;
     dateInBehandeling: string | null;
@@ -255,8 +253,6 @@ export type VergunningFrontendV2<T extends VergunningBase = VergunningBase> =
     isExpired?: boolean;
     // Url to vergunning detail page api
     fetchUrl: string;
-    // Url to documents list api
-    fetchDocumentsUrl: string | null;
   } & ZaakDetail;
 
 export type NotificationProperty =

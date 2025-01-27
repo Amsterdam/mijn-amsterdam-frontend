@@ -96,7 +96,7 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
   [AppRoutes['ZORG/VOORZIENING']]: () => '/zorg-en-ondersteuning/voorziening',
 
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: (match) => {
-    return `/toeristische-verhuur/vergunning/${match.params.casetype ?? ''}`;
+    return `/toeristische-verhuur/vergunning/${match.params.caseType ?? ''}`;
   },
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',

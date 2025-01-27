@@ -12,7 +12,7 @@ import {
 import { VergunningFrontendV2 } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
-export interface VakantieverhuurVergunningaanvraag
+export interface VakantieverhuurVergunningaanvraagIF
   extends DecosZaakWithLocation,
     DecosZaakWithDateRange {
   caseType: GetCaseType<'VakantieverhuurVergunningaanvraag'>;
@@ -52,7 +52,7 @@ export interface LVVRegistratiesSourceData {
 }
 
 export type VakantieverhuurVergunning =
-  VergunningFrontendV2<VakantieverhuurVergunningaanvraag>;
+  VergunningFrontendV2<VakantieverhuurVergunningaanvraagIF>;
 
 export type ToeristischeVerhuurVergunning =
   | BBVergunning
@@ -64,7 +64,7 @@ export type ToeristischeVerhuur = {
   lvvRegistraties: LVVRegistratie[];
 };
 
-export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<VakantieverhuurVergunningaanvraag> =
+export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<VakantieverhuurVergunningaanvraagIF> =
   {
     isActive: true,
     caseType: CaseTypeV2.VakantieverhuurVergunningaanvraag,

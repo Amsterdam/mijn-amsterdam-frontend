@@ -1,7 +1,5 @@
-import {
-  VergunningBase,
-  VergunningFrontendV2,
-} from '../../../../server/services/vergunningen/config-and-types';
+import { VergunningFrontendV2 } from '../../../../server/services/vergunningen/config-and-types';
+import { entries } from '../../../../universal/helpers/utils';
 import { Row, RowSet } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 
@@ -14,7 +12,7 @@ type VergunningDataListRow<
 > = (vergunning: T, options?: DataListRowOptions) => Row | RowSet | null;
 
 export const commonRows: Record<string, VergunningDataListRow> = {
-  identifier: (vergunning: VergunningBase) => ({
+  identifier: (vergunning) => ({
     label: 'Kenmerk',
     content: vergunning.identifier,
   }),
@@ -40,7 +38,7 @@ export const commonRows: Record<string, VergunningDataListRow> = {
         }
       : null,
   kentekens: (vergunning) =>
-    'kentekens' in vergunning && vergunning.kentekens
+    'kentekens' in vergunning && typeof vergunning.kentekens === 'string'
       ? {
           label: `Kenteken${vergunning?.kentekens?.includes('|') ? 's' : ''}`,
           content: vergunning.kentekens,
@@ -59,21 +57,24 @@ export const commonRows: Record<string, VergunningDataListRow> = {
     content: vergunning.dateEndFormatted,
   }),
   timeStart: (vergunning) =>
-    'timeStart' in vergunning && vergunning.timeStart
+    'timeStart' in vergunning && typeof vergunning.timeStart === 'string'
       ? {
           label: `Van`,
           content: vergunning.timeStart,
         }
       : null,
   timeEnd: (vergunning) =>
-    'timeEnd' in vergunning && vergunning.timeEnd
+    'timeEnd' in vergunning && typeof vergunning.timeEnd === 'string'
       ? {
           label: 'Tot',
           content: vergunning.timeEnd,
         }
       : null,
   timeRange: (vergunning) =>
-    'timeStart' in vergunning && vergunning.timeStart
+    'timeStart' in vergunning &&
+    'timeEnd' in vergunning &&
+    typeof vergunning.timeStart === 'string' &&
+    typeof vergunning.timeEnd === 'string'
       ? {
           label: 'Tussen',
           content: `${vergunning.timeStart} - ${vergunning.timeEnd} uur`,
@@ -85,7 +86,7 @@ export function getRowsByKey<T extends VergunningFrontendV2>(
   vergunning: T,
   keys: string[]
 ): Record<string, Row | RowSet> {
-  const rows = Object.entries(commonRows)
+  const rows = entries(commonRows)
     .filter(([key]) => keys.includes(key))
     .map(([key, getRow]) => {
       return [key, getRow(vergunning as T)];

@@ -140,7 +140,7 @@ describe('helpers/decos', () => {
       ).toBe(true);
     });
 
-    test('Is not waiting: wrong casetype', () => {
+    test('Is not waiting: wrong caseType', () => {
       const zaak = {
         fields: {
           text45: 'Blaap',
