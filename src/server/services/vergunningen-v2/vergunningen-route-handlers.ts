@@ -32,7 +32,8 @@ export async function fetchVergunningDocumentsList(
       zaakKey
     );
 
-    return res.send(response);
+    return sendResponse(res, response);
   }
+
   return sendUnauthorized(res);
 }
