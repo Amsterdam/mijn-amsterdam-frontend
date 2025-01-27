@@ -28,7 +28,7 @@ import {
 } from './helpers';
 import {
   ApiErrorResponse,
-  ApiResponse_DEPRECATED,
+  ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
@@ -142,7 +142,7 @@ async function transformDecosZaakResponse<
   decosZaakTransformers: T[],
   decosZaakSource: DecosZaakSource
 ): Promise<DZ | null> {
-  const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
+  const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
   const decosZaakTransformer = decosZaakTransformers.find(
     (transformer) => transformer.caseType == zaakType
   );
@@ -178,10 +178,7 @@ async function transformDecosZaakResponse<
       nValue =
         typeof fieldTransformer === 'object' &&
         typeof fieldTransformer.transform === 'function'
-          ? fieldTransformer.transform(value, {
-              decosZaakTransformer,
-              fetchDecosWorkflowDates: fetchWorkflowDates,
-            })
+          ? fieldTransformer.transform(value)
           : value;
     } catch (err) {
       captureException(err);
@@ -231,11 +228,7 @@ async function transformDecosZaakResponse<
   if (decosZaakTransformer.afterTransform) {
     decosZaak = await decosZaakTransformer.afterTransform(
       decosZaak,
-      decosZaakSource,
-      {
-        fetchDecosWorkflowDates: fetchWorkflowDates,
-        decosZaakTransformer,
-      }
+      decosZaakSource
     );
   }
 
@@ -252,7 +245,7 @@ async function transformDecosZakenResponse<
 ) {
   const zakenToBeTransformed: [T, DecosZaakSource][] = [];
   for (const decosZaakSource of decosZakenSource) {
-    const zaakType = getDecosZaakTypeFromSource(decosZaakSource);
+    const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
     const decosZaakTransformer = decosZaakTransformers.find(
       (transformer) => transformer.caseType == zaakType
     );
@@ -347,7 +340,7 @@ export async function fetchDecosZakenFromSource(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: Pick<
-    DecosZaakTransformer<DecosZaakBase>,
+    DecosZaakTransformer<any>,
     'addToSelectFieldsBase' | 'caseType'
   >[] = []
 ) {
@@ -448,7 +441,7 @@ export async function fetchDecosWorkflowDates(
   zaakID: DecosZaakBase['key'],
   stepTitles: DecosWorkflowStepTitle[]
 ): Promise<
-  ApiResponse_DEPRECATED<Record<string, DecosWorkflowStepDate | null> | null>
+  ApiResponse<Record<string, DecosWorkflowStepDate | null | undefined>>
 > {
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {

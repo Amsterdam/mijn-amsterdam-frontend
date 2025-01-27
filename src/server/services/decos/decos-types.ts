@@ -1,7 +1,5 @@
-import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { GenericDocument } from '../../../universal/types';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { NotificationLabelByType } from '../vergunningen-v2/config-and-types';
 
 type DecosDocumentBase = {
@@ -71,7 +69,7 @@ export type DecosZaakFieldsSource = {
   // status
   title: string;
   // caseType
-  text45: DecosCaseType | string;
+  text45: string;
   // decision
   dfunction?: string | null;
   // identifier / zaaknummer
@@ -115,23 +113,19 @@ export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
 export const MA_DECISION_DEFAULT = 'Zie besluit';
 export type DecosFieldTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   name: keyof T;
-  transform?: (
-    input: any,
-    options?: DecosTransformerOptions<T>
-  ) => DecosFieldValue;
-};
-export type DecosTransformerOptions<T extends DecosZaakBase = DecosZaakBase> = {
-  decosZaakTransformer?: DecosZaakTransformer<T>;
-  fetchDecosWorkflowDates?: (
-    stepTitles: DecosWorkflowStepTitle[]
-  ) => Promise<ApiResponse_DEPRECATED<Record<string, string | null> | null>>;
+  transform?: (input: any) => DecosFieldValue;
 };
 
+type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
+  ? DecosZaakBase extends T // Allow unextended baseCase for easier internal function typing
+    ? unknown
+    : never
+  : T['caseType'];
 export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // The caseType (zaaktype) of the sourceData.
-  caseType: DecosCaseType;
+  caseType: CaseTypeLiteral<T>;
   // Title of the DecosZaakBase, mostly a slightly different variant of the $caseType
-  title: string;
+  title: T['title'];
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
   // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
   // For example String operations like, trim, split, uppercase etc.
@@ -140,16 +134,13 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // Business logic is implemented at this point, also async calls to other services to enrich the data can be done here.
   afterTransform?: (
     decosZaak: T,
-    decosZaakSource: DecosZaakSource,
-    options?: DecosTransformerOptions<T>
+    decosZaakSource: DecosZaakSource
   ) => Promise<T>;
   // A function to check if the source data quality and/or prerequisites for showing the data to the user are valid.
   // This function is run before transformation of the zaak.
   hasValidSourceData?: (decosZaakSource: DecosZaakSource) => boolean;
   // Indicate if the zaak requires payment to be processed and complete. This function is run before transformation of the zaak.
   requirePayment?: boolean;
-  // Decision (resultaat) values are generalized here. For example. The sourceValues can be one of: `Toegekend met borden`, `Toegekend zonder dingen` which we want to show to the user as `Toegekend`.
-  decisionTranslations?: Record<MADecision, DecosDecision[]>;
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
   fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.
@@ -169,7 +160,7 @@ export type DecosZakenSourceFilter = (
   decosZaakSource: DecosZaakSource
 ) => boolean;
 export interface DecosZaakBase {
-  caseType: DecosCaseType;
+  caseType: string;
   dateDecision: string | null;
   dateRequest: string;
 
@@ -234,7 +225,7 @@ export const caseType = 'caseType';
 const identifier = 'identifier';
 const processed = 'processed';
 const dateDecision = 'dateDecision';
-const dateRequest = 'dateRequest';
+export const dateRequest = 'dateRequest';
 export const dateStart = 'dateStart';
 export const dateEnd = 'dateEnd';
 export const location = 'location';
@@ -242,30 +233,13 @@ export const timeStart = 'timeStart';
 export const timeEnd = 'timeEnd';
 export const destination = 'destination';
 export const description = 'description';
+export const decision = 'decision';
 // Fields are selected per case initially but don't end up in the data we send to front end.
 // These fields are fore example used to determine payment status.
 
 export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
 // The set of field transforms that applies to every case.
 // { $api_attribute_name_source: $api_attribute_name_mijn_amsterdam }
-
-export const decision: DecosFieldTransformer = {
-  name: 'decision',
-  transform: (decision: string, options) => {
-    const decisionTranslations =
-      options?.decosZaakTransformer?.decisionTranslations;
-
-    if (decisionTranslations) {
-      const maDecision = Object.entries(decisionTranslations).find(
-        ([maDecision, decosDecisions]) => {
-          return decosDecisions.includes(decision);
-        }
-      )?.[0];
-      return maDecision ?? decision;
-    }
-    return decision;
-  },
-};
 
 export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
   title: status,

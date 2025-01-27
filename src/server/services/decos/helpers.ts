@@ -4,6 +4,7 @@ import type {
   DecosZaakBase,
   DecosZaakWithKentekens,
   ZaakStatus,
+  DecosFieldValue,
 } from './decos-types';
 import {
   DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
@@ -17,8 +18,8 @@ import {
   isDateInPast,
   monthsFromNow,
 } from '../../../universal/helpers/date';
+import { entries } from '../../../universal/helpers/utils';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
@@ -91,6 +92,20 @@ export function transformKenteken(kentekenSource: string | null) {
   return kentekenSource;
 }
 
+export const translateValue =
+  <T>(translationMapping: { [K in keyof T]: DecosFieldValue[] }) =>
+  (input: string) => {
+    if (translationMapping) {
+      const maValue = entries(translationMapping).find(
+        ([maValue, decosValues]) => {
+          return decosValues.includes(input);
+        }
+      )?.[0];
+      return maValue ?? input;
+    }
+    return input;
+  };
+
 export function getCustomTitleForDecosZaakWithLicensePlates(
   decosZaak: DecosZaakWithKentekens
 ) {
@@ -108,7 +123,8 @@ export function getCustomTitleForDecosZaakWithLicensePlates(
 export function getDecosZaakTypeFromSource<T extends DecosZaakSource>(
   decosZaakSource: T
 ) {
-  return decosZaakSource.fields.text45 as DecosCaseType;
+  // TODO: Base this on the transformer or DZ?
+  return decosZaakSource.fields.text45;
 }
 
 export function transformBoolean(input: unknown) {

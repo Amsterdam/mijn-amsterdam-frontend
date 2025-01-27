@@ -58,8 +58,10 @@ import {
 } from '../decos/decos-types';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
+  getStatusDate,
   transformBoolean,
   transformKenteken,
+  translateValue,
 } from '../decos/helpers';
 
 // 1 or multiple kenteken(s)
@@ -68,6 +70,13 @@ const kentekens = {
   transform: transformKenteken,
 };
 
+const transformDecision = (
+  translationMapping: Parameters<typeof translateValue>[0]
+) => ({
+  name: 'decision' as const,
+  transform: translateValue(translationMapping),
+});
+
 export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
   isActive: true,
   caseType: CaseTypeV2.TVMRVVObject,
@@ -75,6 +84,13 @@ export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
   requirePayment: true,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Verleend: [
+        'verleend met borden',
+        'verleend zonder bebording',
+        'verleend zonder borden',
+      ],
+    }),
     subject1: description,
     date6: dateStart,
     date7: dateEnd,
@@ -84,13 +100,6 @@ export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
     text9: kentekens,
   },
   addToSelectFieldsBase: ['text9'],
-  decisionTranslations: {
-    Verleend: [
-      'verleend met borden',
-      'verleend zonder bebording',
-      'verleend zonder borden',
-    ],
-  },
   async afterTransform(vergunning) {
     if (
       'dateEnd' in vergunning &&
@@ -153,16 +162,16 @@ export const GPP: DecosZaakTransformer<GPPType> = {
   title: 'Vaste parkeerplaats voor gehandicapten (GPP)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Ingetrokken: ['Ingetrokken i.v.m. overlijden of verhuizing'],
+      '': ['Nog niet bekend'],
+    }),
     text7: kentekens,
     text8: location,
   },
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
-  },
-  decisionTranslations: {
-    Ingetrokken: ['Ingetrokken i.v.m. overlijden of verhuizing'],
-    '': ['Nog niet bekend'],
   },
   notificationLabels: caseNotificationLabelsDefault,
 };
@@ -173,27 +182,27 @@ export const GPK: DecosZaakTransformer<GPKType> = {
   title: 'Europese gehandicaptenparkeerkaart (GPK)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Ingetrokken: [
+        'Ingetrokken i.v.m. overlijden of verhuizing',
+        'Ingetrokken verleende GPK wegens overlijden',
+      ],
+      '': ['Nog niet bekend'],
+      'Verleend Bestuurder, niet verleend Passagier': [
+        'Verleend Bestuurder met GPP (niet verleend passagier)',
+        // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
+        'Verleend Bestuurder met GPP (niet verleend passagi',
+      ],
+      Verleend: ['Verleend met GPP', 'Verleend vervangend GPK'],
+      'Verleend Passagier, niet verleend Bestuurder': [
+        'Verleend Passagier met GPP (niet verleend Bestuurder)',
+        // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
+        'Verleend Passagier met GPP (niet verleend Bestuurd',
+      ],
+    }),
     date7: dateEnd,
     num3: { name: 'cardNumber' },
     text7: { name: 'cardType' },
-  },
-  decisionTranslations: {
-    Ingetrokken: [
-      'Ingetrokken i.v.m. overlijden of verhuizing',
-      'Ingetrokken verleende GPK wegens overlijden',
-    ],
-    '': ['Nog niet bekend'],
-    'Verleend Bestuurder, niet verleend Passagier': [
-      'Verleend Bestuurder met GPP (niet verleend passagier)',
-      // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
-      'Verleend Bestuurder met GPP (niet verleend passagi',
-    ],
-    Verleend: ['Verleend met GPP', 'Verleend vervangend GPK'],
-    'Verleend Passagier, niet verleend Bestuurder': [
-      'Verleend Passagier met GPP (niet verleend Bestuurder)',
-      // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
-      'Verleend Passagier met GPP (niet verleend Bestuurd',
-    ],
   },
   notificationLabels: caseNotificationLabelsExpirables,
 };
@@ -204,20 +213,20 @@ export const EvenementMelding: DecosZaakTransformer<EvenementMeldingType> = {
   title: 'Evenement melding',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Toegestaan: [
+        'Verleend',
+        'Verleend (Bijzonder/Bewaren)',
+        'Verleend zonder borden',
+      ],
+      'Niet toegestaan': ['Niet verleend'],
+      '': ['Nog niet  bekend', 'Nog niet bekend'],
+    }),
     date6: dateStart,
     date7: dateEnd,
     text6: location,
     text7: timeStart,
     text8: timeEnd,
-  },
-  decisionTranslations: {
-    Toegestaan: [
-      'Verleend',
-      'Verleend (Bijzonder/Bewaren)',
-      'Verleend zonder borden',
-    ],
-    'Niet toegestaan': ['Niet verleend'],
-    '': ['Nog niet  bekend', 'Nog niet bekend'],
   },
   notificationLabels: caseNotificationLabelsDefault,
 };
@@ -229,15 +238,15 @@ export const EvenementVergunning: DecosZaakTransformer<EvenementVergunningType> 
     title: CaseTypeV2.EvenementVergunning,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
+      dfunction: transformDecision({
+        Verleend: ['Verleend (Bijzonder/Bewaren)', 'Verleend zonder borden'],
+        '': ['Nog niet bekend', 'Nog niet  bekend'],
+      }),
       date6: dateStart,
       date7: dateEnd,
       text6: location,
       text7: timeStart,
       text8: timeEnd,
-    },
-    decisionTranslations: {
-      Verleend: ['Verleend (Bijzonder/Bewaren)', 'Verleend zonder borden'],
-      '': ['Nog niet bekend', 'Nog niet  bekend'],
     },
     notificationLabels: caseNotificationLabelsDefault,
   };
@@ -255,36 +264,36 @@ export const Omzettingsvergunning: DecosZaakTransformer<OmzettingsvergunningType
     ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
+      dfunction: transformDecision({
+        Verleend: ['Verleend zonder borden'],
+        '': ['Nog niet bekend', 'Nog niet  bekend'],
+      }),
       text6: location,
-    },
-    decisionTranslations: {
-      Verleend: ['Verleend zonder borden'],
-      '': ['Nog niet bekend', 'Nog niet  bekend'],
     },
     notificationLabels: caseNotificationLabelsDefault,
   };
 
 export const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   isActive: true,
-  caseType: CaseTypeV2.Omzettingsvergunning,
+  caseType: CaseTypeV2.ERVV,
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      '': ['Nog niet bekend', 'Nog niet  bekend'],
+      Verleend: [
+        'Verleend met borden',
+        'Verleend met borden en Fietsenrekken verwijderen',
+        'Verleend met Fietsenrekken verwijderen',
+        'Verleend zonder bebording',
+        'Verleend zonder borden',
+      ],
+    }),
     text6: location,
     date6: dateStart,
     date7: dateEnd,
     text10: timeStart,
     text13: timeEnd,
-  },
-  decisionTranslations: {
-    '': ['Nog niet bekend', 'Nog niet  bekend'],
-    Verleend: [
-      'Verleend met borden',
-      'Verleend met borden en Fietsenrekken verwijderen',
-      'Verleend met Fietsenrekken verwijderen',
-      'Verleend zonder bebording',
-      'Verleend zonder borden',
-    ],
   },
   notificationLabels: caseNotificationLabelsExpirables,
 };
@@ -300,7 +309,7 @@ export const BZP: DecosZaakTransformer<BZPType> = {
     date7: dateEnd,
     text8: kentekens,
   },
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -365,14 +374,14 @@ export const NachtwerkOntheffing: DecosZaakTransformer<NachtwerkontheffingType> 
     requirePayment: true,
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
+      dfunction: transformDecision({
+        Verleend: ['Verleend met borden', 'Verleend zonder borden'],
+      }),
       date6: dateStart,
       date7: dateEnd,
       text6: location,
       text7: timeStart,
       text10: timeEnd,
-    },
-    decisionTranslations: {
-      Verleend: ['Verleend met borden', 'Verleend zonder borden'],
     },
     notificationLabels: caseNotificationLabelsDefault,
   };
@@ -380,13 +389,13 @@ export const NachtwerkOntheffing: DecosZaakTransformer<NachtwerkontheffingType> 
 export const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeerType> = {
   isActive: true,
   caseType: CaseTypeV2.ZwaarVerkeer,
-  decisionTranslations: {
-    Afgewezen: ['Niet verleend'],
-    Toegekend: ['Verleend'],
-  },
   title: 'Ontheffing zwaar verkeer',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Afgewezen: ['Niet verleend'],
+      Toegekend: ['Verleend'],
+    }),
     date6: dateStart,
     date7: dateEnd,
     text49: kentekens,
@@ -436,7 +445,7 @@ export const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeerType> = {
     },
   },
   addToSelectFieldsBase: ['text49'], // kenteken,
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -592,7 +601,7 @@ export const RVVHeleStad: DecosZaakTransformer<RVVHeleStadType> = {
     text49: kentekens,
   },
   addToSelectFieldsBase: ['text49'], // Kenteken,
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning, decosZaakSource) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -608,6 +617,9 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
   ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Ingetrokken: ['Ingetrokken door gemeente'],
+    }),
     text8: {
       name: 'requestType',
     },
@@ -620,15 +632,8 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
     text15: { ...kentekens, name: 'vorigeKentekens' },
   },
   addToSelectFieldsBase: ['text10'], // Kenteken
-  decisionTranslations: {
-    Ingetrokken: ['Ingetrokken door gemeente'],
-  },
-  async afterTransform(vergunning, zaakSource, options) {
-    const dateVerleend = await options?.fetchDecosWorkflowDates?.([
-      'Status naar actief',
-    ]);
-
-    if (dateVerleend) {
+  async afterTransform(vergunning, decosZaakSource) {
+    if (getStatusDate('Verleend', vergunning)) {
       vergunning.processed = true;
       // if the workflow verleend has run but there is no decision then its actually Verleend.
       // this decision (verleend) is not set by decos eventhough the actual permit is granted.
