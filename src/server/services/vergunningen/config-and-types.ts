@@ -251,8 +251,8 @@ export type VergunningFrontendV2<T extends DecosZaakBase = DecosZaakBase> =
     dateStartFormatted?: string | null;
     dateEndFormatted?: string | null;
     isExpired?: boolean;
-    // Url to vergunning detail page api
-    fetchUrl: string;
+    // Url to fetch documents for a specific Vergunning.
+    fetchDocumentsUrl: string;
   } & ZaakDetail;
 
 export type NotificationProperty =
