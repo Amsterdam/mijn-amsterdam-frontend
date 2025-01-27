@@ -532,6 +532,7 @@ export async function fetchAfisFacturenOverview(
     return apiErrorResult('Facturen ophalen mislukt.', null);
   }
 
+  // Prepare data for monitoring
   const countByState = entries(facturenOverview).reduce(
     (acc, [state, content]) => {
       if (content !== null) {
@@ -546,6 +547,7 @@ export async function fetchAfisFacturenOverview(
   );
 
   if (Object.keys(countByState).length > 0) {
+    // Log the count of facturen per state in Application Insights
     captureMessage(`AFIS Facturen per categorie`, countByState);
   }
 
