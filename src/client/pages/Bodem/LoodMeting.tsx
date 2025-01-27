@@ -1,4 +1,3 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
 import { useBodemDetailData } from './useBodemDetailData.hook';
@@ -7,6 +6,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function LoodMeting() {
@@ -32,9 +32,9 @@ export function LoodMeting() {
 
   function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
     return (
-      <Grid.Cell span="all">
+      <PageContentCell>
         <Datalist rows={BodemDetailRows(meting)} />
-      </Grid.Cell>
+      </PageContentCell>
     );
   }
 

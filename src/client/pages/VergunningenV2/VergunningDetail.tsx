@@ -1,4 +1,3 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -18,7 +17,7 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
-import { LinkProps } from '../../../universal/types';
+import { PageContentCell } from '../../components/Page/Page';
 
 const ONE_MINUTE_MS = 60000;
 // eslint-disable-next-line no-magic-numbers
@@ -43,7 +42,7 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
 
   return (
     !!vergunning && (
-      <Grid.Cell span="all">
+      <PageContentCell>
         <Datalist
           rows={Object.entries(vergunning).map(([label, content]) => ({
             label,
@@ -51,7 +50,7 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
           }))}
         />
         {!!documents.length && <DocumentListV2 documents={documents} />}
-      </Grid.Cell>
+      </PageContentCell>
     )
   );
 }

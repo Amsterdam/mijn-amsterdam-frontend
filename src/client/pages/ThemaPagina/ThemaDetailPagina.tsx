@@ -12,7 +12,11 @@ import {
   StatusLine as StatusLineComponent,
 } from '../../components';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
-import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
@@ -70,27 +74,27 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
         {pageContentTop}
 
         {!isLoading && (isError || !zaak) && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <ErrorAlert>{errorAlertContent}</ErrorAlert>
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {isLoading && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <LoadingContent barConfig={loadingBarConfig} />
-          </Grid.Cell>
+          </PageContentCell>
         )}
       </PageContentV2>
       <Grid>
         {!!statusItemSteps.length && zaak && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <StatusLineComponent
               statusLabel={statusLabel}
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
               documentPathForTracking={documentPathForTracking}
             />
-          </Grid.Cell>
+          </PageContentCell>
         )}
       </Grid>
       {!!pageContentBottom && (
