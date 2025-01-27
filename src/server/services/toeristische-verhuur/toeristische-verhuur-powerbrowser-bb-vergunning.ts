@@ -32,6 +32,7 @@ import {
 import { entries } from '../../../universal/helpers/utils';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_HOUR_MS, ONE_MINUTE_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -44,11 +45,7 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
 // eslint-disable-next-line no-magic-numbers
-const MINUTE_MS = 1000 * 60;
-const HOUR_MS = MINUTE_MS * 60;
-// eslint-disable-next-line no-magic-numbers
-const TOKEN_VALIDITY_PERIOD = 23 * HOUR_MS + 55 * MINUTE_MS;
-
+const TOKEN_VALIDITY_PERIOD = 23 * ONE_HOUR_MS + 55 * ONE_MINUTE_MS;
 const CLOSE_TO_EXPIRY = 0.95;
 
 const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_, {
@@ -56,7 +53,7 @@ const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_, {
   preFetch: CLOSE_TO_EXPIRY,
 });
 
-function fetchPowerBrowserToken_(requestID: RequestID) {
+function fetchPowerBrowserToken_() {
   const requestConfig = getApiConfig('POWERBROWSER', {
     formatUrl: ({ url }) => `${url}/Token`,
     responseType: 'text',
@@ -64,14 +61,15 @@ function fetchPowerBrowserToken_(requestID: RequestID) {
       apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
     },
   });
-  return requestData<string>(requestConfig, requestID);
+  // Token is shared between all requests so we don't give a requestID here.
+  return requestData<string>(requestConfig, '');
 }
 
 async function fetchPowerBrowserData<T>(
   requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
 ) {
-  const tokenResponse = await fetchPowerBrowserToken(requestID);
+  const tokenResponse = await fetchPowerBrowserToken();
   const dataRequestConfigBase = getApiConfig(
     'POWERBROWSER',
     dataRequestConfigSpecific
@@ -725,7 +723,7 @@ export async function fetchBBDocument(
   _authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  const tokenResponse = await fetchPowerBrowserToken(requestID);
+  const tokenResponse = await fetchPowerBrowserToken();
 
   if (tokenResponse.status === 'ERROR') {
     return tokenResponse;
