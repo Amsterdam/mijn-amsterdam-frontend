@@ -3,20 +3,13 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
-import HorecaDetail from './HorecaDetail';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import { horecaOptions } from '../../../server/services/horeca';
-import {
-  transformVergunningenData,
-  VergunningenSourceData,
-} from '../../../server/services/vergunningen/vergunningen';
+import { HorecaDetail } from './HorecaDetail';
+import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 
-const content = transformVergunningenData(
-  vergunningenData as VergunningenSourceData
-).filter(horecaOptions.filter);
+const content: HorecaVergunning[] = [];
 
 const testState = {
   HORECA: {
