@@ -13,13 +13,8 @@ import {
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
 } from './decos-types';
-import {
-  defaultDateFormat,
-  isDateInPast,
-  monthsFromNow,
-} from '../../../universal/helpers/date';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.

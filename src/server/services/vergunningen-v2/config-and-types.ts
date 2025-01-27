@@ -3,7 +3,7 @@ import {
   CaseTypeV2,
   DecosCaseType,
   GetCaseType,
-} from '../../../universal/types/vergunningen';
+} from '../../../universal/types/decos-zaken';
 import {
   DecosZaakBase,
   DecosZaakWithDateRange,

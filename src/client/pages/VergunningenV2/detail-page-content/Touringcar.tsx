@@ -6,7 +6,7 @@ import {
   dateTimeFormatYear,
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
-import { CaseTypeV2 } from '../../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../../universal/types/decos-zaken';
 import { InfoDetail } from '../../../components';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
 

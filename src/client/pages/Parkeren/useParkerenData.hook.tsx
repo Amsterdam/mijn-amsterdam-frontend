@@ -1,7 +1,7 @@
 import { PARKEER_CASE_TYPES } from './Parkeren-thema-config';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
+import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { tableConfig } from '../VergunningenV2/Vergunningen-thema-config';

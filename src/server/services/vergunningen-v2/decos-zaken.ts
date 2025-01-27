@@ -42,7 +42,7 @@ import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   CaseTypeV2,
   DecosCaseType,
-} from '../../../universal/types/vergunningen';
+} from '../../../universal/types/decos-zaken';
 import {
   dateEnd,
   dateStart,

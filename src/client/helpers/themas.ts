@@ -3,7 +3,7 @@ import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import { DecosCaseType } from '../../universal/types/vergunningen';
+import { DecosCaseType } from '../../universal/types/decos-zaken';
 import { ThemaMenuItem } from '../config/thema';
 import { PARKEER_CASE_TYPES } from '../pages/Parkeren/Parkeren-thema-config';
 
