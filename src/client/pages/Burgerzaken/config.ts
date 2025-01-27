@@ -7,7 +7,6 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
-import { ThemaTitles } from '../../config/thema';
 
 export const DISPLAY_PROPS_IDENTITEITSBEWIJZEN: DisplayProps<
   WithDetailLinkComponent<IdentiteitsbewijsFrontend>
@@ -38,7 +37,4 @@ export const linkListItems = [
   },
 ];
 
-export const backLinkDetailPage = {
-  to: AppRoutes.BURGERZAKEN,
-  title: ThemaTitles.BURGERZAKEN,
-};
+export const backLinkDetailPage = AppRoutes.BURGERZAKEN;
