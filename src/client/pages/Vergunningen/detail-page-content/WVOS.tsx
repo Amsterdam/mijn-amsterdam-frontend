@@ -10,8 +10,11 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 export function WVOSContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontendV2<WerkzaamhedenEnVervoerOpStraat>;
+  vergunning: VergunningFrontendV2;
 }) {
+  const vergunningData =
+    vergunning as VergunningFrontendV2<WerkzaamhedenEnVervoerOpStraat>;
+
   const rowsByKey = getRowsByKey(vergunning, [
     'identifier',
     'location',
@@ -22,7 +25,7 @@ export function WVOSContent({
     label: 'Werkzaamheden',
     content: (
       <UnorderedList>
-        {vergunning.werkzaamheden.map((activiteit) => (
+        {vergunningData.werkzaamheden.map((activiteit) => (
           <UnorderedList.Item key={activiteit}>{activiteit}</UnorderedList.Item>
         ))}
       </UnorderedList>

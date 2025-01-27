@@ -1,6 +1,9 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import type { BZB as BZBVergunning } from '../../../../server/services/vergunningen/vergunningen';
+import type {
+  BZB,
+  VergunningFrontendV2,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
 import InfoDetail, {
@@ -57,33 +60,38 @@ export function ExpirationNotifications({ id }: { id: string }) {
   );
 }
 
-export function BZB({ vergunning }: { vergunning: BZBVergunning }) {
+export function BZB({ vergunning }: { vergunning: VergunningFrontendV2 }) {
+  const vergunningData = vergunning as VergunningFrontendV2<BZB>;
+
   return (
     <>
-      <ExpirationNotifications id={vergunning.id} />
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Naam bedrijf" value={vergunning.companyName || '-'} />
+      <ExpirationNotifications id={vergunningData.id} />
+      <InfoDetail label="Kenmerk" value={vergunningData?.identifier || '-'} />
+      <InfoDetail
+        label="Naam bedrijf"
+        value={vergunningData.companyName || '-'}
+      />
       <InfoDetail
         label="Aantal aangevraagde ontheffingen"
-        value={vergunning.numberOfPermits}
+        value={vergunningData.numberOfPermits}
       />
-      {!!vergunning.dateStart &&
-        !!vergunning.dateEnd &&
-        vergunning.decision === 'Verleend' &&
-        vergunning.status === 'Afgehandeld' && (
+      {!!vergunningData.dateStart &&
+        !!vergunningData.dateEnd &&
+        vergunningData.decision === 'Verleend' &&
+        vergunningData.status === 'Afgehandeld' && (
           <InfoDetailGroup>
             <InfoDetail
               label="Vanaf"
-              value={defaultDateFormat(vergunning.dateStart)}
+              value={defaultDateFormat(vergunningData.dateStart)}
             />
             <InfoDetail
               label="Tot en met"
-              value={defaultDateFormat(vergunning.dateEnd)}
+              value={defaultDateFormat(vergunningData.dateEnd)}
             />
           </InfoDetailGroup>
         )}
-      {!!vergunning.decision && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      {!!vergunningData.decision && (
+        <InfoDetail label="Resultaat" value={vergunningData.decision} />
       )}
     </>
   );
