@@ -87,9 +87,9 @@ import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/Toeristisch
 import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
 import Varen from './pages/Varen/Varen';
-import { VergunningDetailPagina } from './pages/VergunningenV2/VergunningDetail';
-import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
-import { VergunningenThemaPagina } from './pages/VergunningenV2/VergunningenThemaPagina';
+import { VergunningDetailPagina } from './pages/Vergunningen/VergunningDetail';
+import { VergunningenList } from './pages/Vergunningen/VergunningenList';
+import { VergunningenThemaPagina } from './pages/Vergunningen/VergunningenThemaPagina';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import ZorgThemaPagina from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';

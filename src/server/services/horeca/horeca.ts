@@ -9,9 +9,9 @@ import {
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDecosZaken } from '../decos/decos-service';
-import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
-import { transformVergunningFrontend } from '../vergunningen-v2/vergunningen';
-import { getVergunningNotifications } from '../vergunningen-v2/vergunningen-notifications';
+import { VergunningFrontendV2 } from '../vergunningen/config-and-types';
+import { transformVergunningFrontend } from '../vergunningen/vergunningen';
+import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
 
 export async function fetchHorecaVergunningen(
   requestID: RequestID,

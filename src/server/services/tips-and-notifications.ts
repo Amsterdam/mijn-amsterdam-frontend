@@ -34,7 +34,7 @@ import {
 } from './simple-connect';
 import { fetchSVWINotifications } from './simple-connect/svwi';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
-import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
+import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
@@ -64,7 +64,7 @@ const notificationServices: NotificationServicesByProfileType = {
     afis: fetchAfisNotifications,
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
-    vergunningen: fetchVergunningenV2Notifications,
+    vergunningen: fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
     erfpacht: fetchErfpachtNotifications,
     maintenanceNotifications: (requestID: RequestID) =>
@@ -104,7 +104,7 @@ const notificationServices: NotificationServicesByProfileType = {
     overtredingen: fetchOvertredingenNotifications,
     subsidie: fetchSubsidieNotifications,
     toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
-    vergunningen: fetchVergunningenV2Notifications,
+    vergunningen: fetchVergunningenNotifications,
   },
 };
 

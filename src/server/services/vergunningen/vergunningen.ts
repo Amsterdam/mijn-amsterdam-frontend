@@ -21,7 +21,7 @@ import { DecosZaakDocument } from '../decos/decos-types';
 import { getStatusDate, isExpired, toDateFormatted } from '../decos/helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
-function transformVergunningFrontend(
+export function transformVergunningFrontend<V extends VergunningBase>(
   sessionID: SessionID,
   vergunning: VergunningV2,
   appRoute: AppRoute
@@ -62,7 +62,7 @@ function transformVergunningFrontend(
     vergunning.dateStart &&
     vergunning.dateEnd
   ) {
-    vergunningFrontend.isExpired = isExpired(vergunning);
+    vergunningFrontend.isExpired = isExpired(vergunningFrontend);
     vergunningFrontend.dateStartFormatted = defaultDateFormat(
       vergunning.dateStart
     );
@@ -75,7 +75,7 @@ function transformVergunningFrontend(
   return vergunningFrontend;
 }
 
-async function fetchVergunningenV2_(
+async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
@@ -102,7 +102,7 @@ async function fetchVergunningenV2_(
   return response;
 }
 
-export const fetchVergunningenV2 = memoizee(fetchVergunningenV2_, {
+export const fetchVergunningen = memoizee(fetchVergunningen_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 

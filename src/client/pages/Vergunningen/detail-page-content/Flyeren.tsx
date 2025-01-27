@@ -1,5 +1,5 @@
 import { Location } from './Location';
-import type { Flyeren } from '../../../../server/services/vergunningen-v2/config-and-types';
+import type { Flyeren } from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { InfoDetail } from '../../../components';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useBodemData } from './useBodemData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ListPageParamKind } from '../VergunningenV2/Vergunningen-thema-config';
+import { ListPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
 export function BodemList() {
   const { items, isLoading, isError, tableConfig } = useBodemData();

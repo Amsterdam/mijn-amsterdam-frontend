@@ -16,7 +16,7 @@ export type Thema =
   | 'ERFPACHT'
   | 'ERFPACHTv2'
   | 'ZORG'
-  | 'VERGUNNINGENv2'
+  | 'VERGUNNINGEN'
   | 'SVWI'
   | 'KVK'
   | 'TOERISTISCHE_VERHUUR'
@@ -58,6 +58,6 @@ export const Themas: Record<Thema, Thema> = {
   SVWI: 'SVWI',
   TOERISTISCHE_VERHUUR: 'TOERISTISCHE_VERHUUR',
   VAREN: 'VAREN',
-  VERGUNNINGENv2: 'VERGUNNINGENv2',
+  VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
 } as const;
