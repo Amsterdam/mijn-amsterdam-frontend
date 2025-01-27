@@ -114,13 +114,13 @@ router.get(
 
 // Vergunningen V2
 router.get(
-  BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
+  BffEndpoints.VERGUNNINGEN_DOCUMENTS_LIST,
   fetchVergunningDocumentsList
 );
 
 attachDocumentDownloadRoute(
   router,
-  BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD,
+  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
   fetchDecosDocument
 );
 

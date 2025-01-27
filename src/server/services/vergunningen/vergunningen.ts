@@ -40,7 +40,7 @@ export function transformVergunningFrontend<V extends DecosZaakBase>(
     steps: [],
     // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
     fetchDocumentsUrl: `${generateFullApiUrlBFF(
-      BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST
+      BffEndpoints.VERGUNNINGEN_DOCUMENTS_LIST
     )}?id=${idEncrypted}`,
     link: {
       to: generatePath(appRoute, {
@@ -116,7 +116,7 @@ function setEncryptedDocumentDownloadUrl(
   return {
     ...document,
     // Adds an url to the BFF api for document download which accepts an encrypted ID only
-    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD, {
+    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD, {
       id: documentIdEncrypted,
     }),
   };

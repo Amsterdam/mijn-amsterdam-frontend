@@ -44,6 +44,7 @@ import {
   dateEnd,
   dateStart,
   DecosFieldNameSource,
+  DecosZaakBase,
   DecosZaakTransformer,
   DecosZaakWithKentekens,
   description,
@@ -848,5 +849,5 @@ export const decosCaseToZaakTransformers = decosZaakTransformers.reduce(
     ...acc,
     [zaakTransformer.caseType]: zaakTransformer,
   }),
-  {} as Record<DecosCaseType, DecosZaakTransformer<any>>
+  {} as Record<DecosCaseType, DecosZaakTransformer<DecosZaakBase>>
 );

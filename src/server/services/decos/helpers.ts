@@ -15,12 +15,13 @@ import {
 } from './decos-types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
+import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(
   decosZaakSource: DecosZaakSource,
-  zaakTypeTransformer: DecosZaakTransformer<any>
+  zaakTypeTransformer: DecosZaakTransformer<DecosZaakBase>
 ) {
   const isWaitingForPaymentConfirmation =
     decosZaakSource.fields.text11?.toLowerCase() ==
@@ -58,7 +59,7 @@ export function isScheduledForRemoval(decosZaakSource: DecosZaakSource) {
 
 export function isExcludedFromTransformation(
   zaakSource: DecosZaakSource,
-  zaakTypeTransformer: DecosZaakTransformer<any>
+  zaakTypeTransformer: DecosZaakTransformer<DecosZaakBase>
 ) {
   return (
     isScheduledForRemoval(zaakSource) ||
@@ -119,7 +120,7 @@ export function getDecosZaakTypeFromSource<T extends DecosZaakSource>(
   decosZaakSource: T
 ) {
   // TODO: Base this on the transformer or DZ?
-  return decosZaakSource.fields.text45;
+  return decosZaakSource.fields.text45 as DecosCaseType;
 }
 
 export function transformBoolean(input: unknown) {

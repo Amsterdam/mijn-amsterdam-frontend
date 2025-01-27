@@ -4,124 +4,19 @@ import {
   DecosZaakTransformer,
 } from './decos-types';
 import {
-  getCustomTitleForDecosZaakWithLicensePlates,
-  getDecosZaakTypeFromSource,
-  hasInvalidDecision,
-  hasOtherActualDecosZaakOfSameType,
-  isExcludedFromTransformation,
-  isExpired,
-  isNearEndDate,
-  isScheduledForRemoval,
   isWaitingForPaymentConfirmation,
-  toDateFormatted,
-  transformBoolean,
+  hasInvalidDecision,
+  isScheduledForRemoval,
+  isExcludedFromTransformation,
   transformKenteken,
+  getDecosZaakTypeFromSource,
+  transformBoolean,
+  toDateFormatted,
 } from './helpers';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
-import { TouringcarDagontheffing } from '../vergunningen/config-and-types';
 import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken';
 
-describe('helpers/decos', () => {
-  vi.useFakeTimers();
-  vi.setSystemTime(new Date('2022-10-06'));
-
-  test('isNearEndDate', () => {
-    {
-      // No end date
-      const decosZaak = {
-        dateEnd: null,
-      };
-      expect(isNearEndDate(decosZaak)).toBe(false);
-    }
-    {
-      // Near end
-      const decosZaak = {
-        dateEnd: '2022-10-28',
-      };
-      expect(isNearEndDate(decosZaak)).toBe(true);
-    }
-    {
-      // Not near end
-      const decosZaak = {
-        dateEnd: '2023-10-28',
-      };
-      expect(isNearEndDate(decosZaak)).toBe(false);
-    }
-  });
-
-  test('isExpired', () => {
-    {
-      // Not expired
-      const decosZaak = {
-        dateEnd: '2023-10-28',
-      };
-      expect(isExpired(decosZaak)).toBe(false);
-    }
-    {
-      const decosZaak = {
-        dateEnd: '2022-10-07',
-      };
-      expect(isExpired(decosZaak)).toBe(false);
-    }
-    {
-      // Is expired
-      const decosZaak = {
-        dateEnd: '2022-10-06',
-      };
-      expect(isExpired(decosZaak)).toBe(true);
-    }
-    {
-      const decosZaak = {
-        dateEnd: '2022-10-06',
-      };
-      expect(isExpired(decosZaak)).toBe(true);
-    }
-    {
-      const decosZaak = {
-        dateEnd: '2022-09-28',
-      };
-      expect(isExpired(decosZaak)).toBe(true);
-    }
-  });
-
-  test('hasOtherActualDecosZaakOfSameType', () => {
-    const decosZaak = {
-      caseType: 'test1',
-      dateEnd: null,
-      identifier: 'xx1',
-    } as unknown as DecosZaakBase;
-
-    {
-      const decosZaken = [
-        { caseType: 'test1', dateEnd: null, identifier: 'xx2' },
-        decosZaak,
-      ] as unknown as DecosZaakBase[];
-
-      expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
-        true
-      );
-    }
-
-    {
-      const decosZaken = [decosZaak];
-
-      expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
-        false
-      );
-    }
-
-    {
-      const decosZaken = [
-        { caseType: 'test1', dateEnd: '2022-05-06', identifier: 'xx2' },
-        decosZaak,
-      ] as unknown as DecosZaakBase[];
-
-      expect(hasOtherActualDecosZaakOfSameType(decosZaken, decosZaak)).toBe(
-        false
-      );
-    }
-  });
-
+describe('decos/helpers', () => {
   describe('isWaitingForPaymentConfirmation', () => {
     test('Is waiting', () => {
       const zaak = {
@@ -323,26 +218,6 @@ describe('helpers/decos', () => {
     });
   });
 
-  describe('getCustomTitleForVergunningWithLicensePlates', () => {
-    test('Single kenteken title', () => {
-      expect(
-        getCustomTitleForDecosZaakWithLicensePlates({
-          title: 'blaap',
-          kentekens: 'AA-BB-CC',
-        } as TouringcarDagontheffing)
-      ).toBe('blaap (AA-BB-CC)');
-    });
-
-    test('Multiple kenteken title', () => {
-      expect(
-        getCustomTitleForDecosZaakWithLicensePlates({
-          title: 'blaap',
-          kentekens: 'AA-BB-CC | DDD-EE-F | ZZ-XX-00 | THJ-789-I',
-        } as TouringcarDagontheffing)
-      ).toMatchInlineSnapshot(`"blaap (AA-BB-CC... +3)"`);
-    });
-  });
-
   test('getDecosZaakTypeFromSource', () => {
     expect(
       getDecosZaakTypeFromSource({
@@ -357,51 +232,6 @@ describe('helpers/decos', () => {
     expect(transformBoolean('yes')).toBe(true);
     expect(transformBoolean('')).toBe(false);
     expect(transformBoolean(' ')).toBe(true);
-  });
-
-  describe('isNearEndDate', () => {
-    test('Near', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() + 30);
-      expect(isNearEndDate({ dateEnd: d.toISOString() })).toBe(true);
-    });
-
-    test('Not near', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() + 120);
-      expect(isNearEndDate({ dateEnd: d.toISOString() })).toBe(false);
-    });
-
-    test('In past', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() - 120);
-      expect(isNearEndDate({ dateEnd: d.toISOString() })).toBe(false);
-    });
-  });
-
-  describe('isExpired', () => {
-    test('Is expired', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() + 1);
-      expect(isExpired({ dateEnd: new Date().toISOString() }, d)).toBe(true);
-    });
-
-    test('Is not expired', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() - 1);
-      expect(isExpired({ dateEnd: new Date().toISOString() }, d)).toBe(false);
-    });
-
-    test('Is expired same date', () => {
-      expect(isExpired({ dateEnd: new Date().toISOString() }, new Date())).toBe(
-        true
-      );
-    });
   });
 
   describe('toDateFormatted', () => {
