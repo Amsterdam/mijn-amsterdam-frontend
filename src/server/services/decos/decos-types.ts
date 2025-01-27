@@ -125,7 +125,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // The caseType (zaaktype) of the sourceData.
   caseType: CaseTypeLiteral<T>;
   // Title of the DecosZaakBase, mostly a slightly different variant of the $caseType
-  title: string;
+  title: T['title'];
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
   // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
   // For example String operations like, trim, split, uppercase etc.
@@ -225,7 +225,7 @@ export const caseType = 'caseType';
 const identifier = 'identifier';
 const processed = 'processed';
 const dateDecision = 'dateDecision';
-const dateRequest = 'dateRequest';
+export const dateRequest = 'dateRequest';
 export const dateStart = 'dateStart';
 export const dateEnd = 'dateEnd';
 export const location = 'location';
