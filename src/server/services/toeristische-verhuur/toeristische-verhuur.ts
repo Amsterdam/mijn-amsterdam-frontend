@@ -1,10 +1,12 @@
 import memoize from 'memoizee';
 
+import { ToeristischeVerhuur } from './toeristische-verhuur-config-and-types';
 import { fetchRegistraties } from './toeristische-verhuur-lvv-registratie';
 import { fetchBBVergunningen } from './toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchVakantieverhuurVergunningen } from './toeristische-verhuur-vakantieverhuur-vergunning';
+import { fetchVakantieverhuurVergunningenV2 } from './toeristische-verhuur-vakantieverhuur-vergunning';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
+  ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -16,7 +18,7 @@ import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 async function fetchAndTransformToeristischeVerhuur(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiSuccessResponse<ToeristischeVerhuur>> {
   if (!FeatureToggle.toeristischeVerhuurActive) {
     return apiSuccessResult({
       vakantieverhuurVergunningen: [],
@@ -35,7 +37,7 @@ async function fetchAndTransformToeristischeVerhuur(
     authProfileAndToken.profile
   );
 
-  const vakantieverhuurVergunningenRequest = fetchVakantieverhuurVergunningen(
+  const vakantieverhuurVergunningenRequest = fetchVakantieverhuurVergunningenV2(
     requestID,
     authProfileAndToken
   );

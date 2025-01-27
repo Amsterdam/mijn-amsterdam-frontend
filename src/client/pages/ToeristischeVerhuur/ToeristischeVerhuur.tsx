@@ -6,11 +6,10 @@ import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
 } from './useToeristischeVerhuur.hook';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   LVVRegistratie,
-  VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+  ToeristischeVerhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { entries } from '../../../universal/helpers/utils';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -74,7 +73,7 @@ export function ToeristscheVerhuurThema() {
   const vergunningenTables = entries(tableConfigVergunningen).map(
     ([kind, { title, displayProps, filter, sort, maxItems, className }]) => {
       return (
-        <ThemaPaginaTable<BBVergunning | VakantieverhuurVergunning>
+        <ThemaPaginaTable<ToeristischeVerhuurVergunning>
           key={kind}
           title={title}
           className={className}
