@@ -43,11 +43,22 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
 // See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
+// eslint-disable-next-line no-magic-numbers
+const MINUTE_MS = 1000 * 60;
+const HOUR_MS = MINUTE_MS * 60;
+// eslint-disable-next-line no-magic-numbers
+const TOKEN_VALIDITY_PERIOD = 23 * HOUR_MS + 55 * MINUTE_MS;
+
+const CLOSE_TO_EXPIRY = 0.95;
+
+const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_, {
+  maxAge: TOKEN_VALIDITY_PERIOD,
+  preFetch: CLOSE_TO_EXPIRY,
+});
+
 function fetchPowerBrowserToken_(requestID: RequestID) {
   const requestConfig = getApiConfig('POWERBROWSER', {
-    formatUrl({ url }) {
-      return `${url}/Token`;
-    },
+    formatUrl: ({ url }) => `${url}/Token`,
     responseType: 'text',
     data: {
       apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
@@ -55,8 +66,6 @@ function fetchPowerBrowserToken_(requestID: RequestID) {
   });
   return requestData<string>(requestConfig, requestID);
 }
-
-const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_);
 
 async function fetchPowerBrowserData<T>(
   requestID: RequestID,
