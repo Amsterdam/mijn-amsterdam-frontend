@@ -172,10 +172,7 @@ export function ToeristischeVerhuurDetail() {
       pageContentTop={
         vergunning && <DetailPageContent vergunning={vergunning} />
       }
-      backLink={{
-        title: title,
-        to: routes.themaPage,
-      }}
+      backLink={routes.themaPage}
       documentPathForTracking={(document) =>
         `/downloads/toeristische-verhuur/vergunning/${vergunning?.title}/${document.title.split(/\n/)[0]}`
       }
