@@ -4,7 +4,6 @@ import {
   ActionGroup,
   Alert,
   Button,
-  Grid,
   Heading,
   Paragraph,
 } from '@amsterdam/design-system-react';
@@ -28,7 +27,11 @@ import { ErrorAlert, LoadingContent, Modal } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
@@ -141,7 +144,7 @@ export default function HLIStadspas() {
         </PageHeadingV2>
 
         {stadspas ? (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <Datalist rows={[NAME]} />
             <Paragraph className={styles.StadspasNummerInfo}>
               Hieronder staat het Stadspasnummer van uw actieve pas.
@@ -150,9 +153,9 @@ export default function HLIStadspas() {
             <Datalist rows={[NUMBER]} />
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             <BlockStadspas stadspas={stadspas} />
-          </Grid.Cell>
+          </PageContentCell>
         ) : (
-          <Grid.Cell span="all">
+          <PageContentCell>
             {isLoadingStadspas && (
               <LoadingContent barConfig={loadingContentBarConfigDetails} />
             )}
@@ -164,12 +167,10 @@ export default function HLIStadspas() {
                 </MaRouterLink>
               </ErrorAlert>
             )}
-          </Grid.Cell>
+          </PageContentCell>
         )}
-        <Grid.Cell span="all">
-          <Heading>Gekregen tegoed</Heading>
-        </Grid.Cell>
-        <Grid.Cell span="all">
+        <PageContentCell>
+          <Heading className="ams-mb--sm">Gekregen tegoed</Heading>
           {isLoadingStadspas && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -183,11 +184,9 @@ export default function HLIStadspas() {
           {!isLoadingStadspas && !stadspas?.budgets.length && (
             <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
           )}
-        </Grid.Cell>
-        <Grid.Cell span="all">
-          <Heading>Uw uitgaven</Heading>
-        </Grid.Cell>
-        <Grid.Cell span="all">
+        </PageContentCell>
+        <PageContentCell>
+          <Heading className="ams-mb--sm">Uw uitgaven</Heading>
           {(isLoadingTransacties || isLoadingStadspas) && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -208,10 +207,10 @@ export default function HLIStadspas() {
               )}
             </Paragraph>
           )}
-        </Grid.Cell>
+        </PageContentCell>
         {!isLoadingTransacties && hasTransactions && (
           <>
-            <Grid.Cell span="all">
+            <PageContentCell>
               <TableV2<StadspasBudgetTransaction>
                 className={
                   showMultiBudgetTransactions
@@ -225,7 +224,7 @@ export default function HLIStadspas() {
                     : displayPropsTransacties
                 }
               />
-            </Grid.Cell>
+            </PageContentCell>
           </>
         )}
       </PageContentV2>

@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useMemo } from 'react';
 
 import {
   Alert as DSAlert,
-  Grid,
   LinkList,
   Paragraph,
 } from '@amsterdam/design-system-react';
@@ -24,7 +23,11 @@ import {
   StatusLine as StatusLineComponent,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
-import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { captureMessage } from '../../helpers/monitoring';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -110,16 +113,16 @@ export default function StatusDetail<T extends StatusLine>({
           : pageContent}
 
         {(isError(STATE) || (noContent && !statusItems.length)) && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.{' '}
               <LinkdInline href={appRoute}>Ga naar het overzicht</LinkdInline>.
             </ErrorAlert>
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {!isStateLoading && !statusItem && !!statusItems.length && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <DSAlert title="Deze pagina is mogelijk verplaatst">
               <Paragraph className={styles.MarginBottom}>
                 Kies hieronder een van de beschikbare zaken.
@@ -137,17 +140,17 @@ export default function StatusDetail<T extends StatusLine>({
                 })}
               </LinkList>
             </DSAlert>
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {isStateLoading && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <LoadingContent />
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {!!(statusItem?.steps && statusItemSteps.length) && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <StatusLineComponent
               trackCategory={`${thema} / ${statusItem?.about} status`}
               statusLabel={
@@ -160,7 +163,7 @@ export default function StatusDetail<T extends StatusLine>({
               id={`${thema}-${stateKey}-status`}
               documentPathForTracking={documentPathForTracking}
             />
-          </Grid.Cell>
+          </PageContentCell>
         )}
       </PageContentV2>
     </DetailPageV2>

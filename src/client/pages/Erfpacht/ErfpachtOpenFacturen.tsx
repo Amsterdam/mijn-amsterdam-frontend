@@ -1,11 +1,15 @@
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError } from '../../../universal/helpers/api';
 import { ErrorAlert } from '../../components';
-import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 
@@ -32,14 +36,14 @@ export function OpenFacturenListGrouped({
   );
   return Object.entries(facturenGrouped).map(([adres, facturen]) => {
     return (
-      <Grid.Cell span="all" key={adres}>
+      <PageContentCell key={adres}>
         <TableV2
           caption={adres}
           items={facturen}
           displayProps={displayProps}
           className={tableClassName}
         />
-      </Grid.Cell>
+      </PageContentCell>
     );
   });
 }
@@ -56,7 +60,7 @@ export default function ErfpachtOpenFacturen() {
   return (
     <OverviewPageV2>
       <PageContentV2>
-        <Grid.Cell span="all">
+        <PageContentCell>
           <PageHeadingV2 backLink={AppRoutes.ERFPACHTv2}>
             {`Alle ${
               titleOpenFacturen?.toLocaleLowerCase() ?? 'openstaande facturen'
@@ -87,7 +91,7 @@ export default function ErfpachtOpenFacturen() {
               {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
             </Paragraph>
           )}
-        </Grid.Cell>
+        </PageContentCell>
       </PageContentV2>
     </OverviewPageV2>
   );

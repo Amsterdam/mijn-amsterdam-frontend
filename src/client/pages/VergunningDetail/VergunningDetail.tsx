@@ -1,4 +1,3 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import { AanbiedenDiensten } from './AanbiedenDiensten';
@@ -33,7 +32,11 @@ import {
 import { LinkProps } from '../../../universal/types';
 import { CaseType } from '../../../universal/types/vergunningen';
 import { ErrorAlert, LinkdInline, LoadingContent } from '../../components';
-import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
@@ -53,7 +56,7 @@ export default function VergunningDetail({ backLink }: VergunningDetailProps) {
         <PageHeadingV2 backLink={backLink?.to}>
           {Vergunning?.title || 'Vergunning'}
         </PageHeadingV2>
-        <Grid.Cell span="all">
+        <PageContentCell>
           {(isError(VERGUNNINGEN) || noContent) && (
             <ErrorAlert>
               We kunnen op dit moment geen gegevens tonen.
@@ -152,7 +155,7 @@ export default function VergunningDetail({ backLink }: VergunningDetailProps) {
                 )}
             </>
           )}
-        </Grid.Cell>
+        </PageContentCell>
       </PageContentV2>
       {!isLoading(VERGUNNINGEN) && Vergunning && (
         <StatusLineItems
