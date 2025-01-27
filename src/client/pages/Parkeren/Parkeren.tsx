@@ -3,7 +3,7 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router-dom';
 
 import { useParkerenData } from './useParkerenData.hook';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
