@@ -1,40 +1,52 @@
-import type { ZwaarVerkeer as ZwaarVerkeerType } from '../../../../server/services';
+import type {
+  VergunningFrontendV2,
+  ZwaarVerkeer,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';
 
-export function ZwaarVerkeer({ vergunning }: { vergunning: ZwaarVerkeerType }) {
-  const isAfgehandeld = vergunning.processed;
+export function ZwaarVerkeer({
+  vergunning,
+}: {
+  vergunning: VergunningFrontendV2;
+}) {
+  const vergunningData = vergunning as VergunningFrontendV2<ZwaarVerkeer>;
+  const isAfgehandeld = vergunningData.processed;
 
   return (
     <>
-      <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
+      <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />
 
       <InfoDetail
         label="Soort ontheffing"
-        value={vergunning.exemptionKind || '-'}
+        value={vergunningData.exemptionKind || '-'}
       />
 
-      <InfoDetail label="Kentekens" value={vergunning.licensePlates || '-'} />
+      <InfoDetail label="Kentekens" value={vergunningData.kentekens || '-'} />
 
       <InfoDetailGroup>
         <InfoDetail
           label="Vanaf"
           value={
-            vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : '-'
+            vergunningData.dateStart
+              ? defaultDateFormat(vergunningData.dateStart)
+              : '-'
           }
         />
         <InfoDetail
           label="Tot en met"
           value={
-            vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+            vergunningData.dateEnd
+              ? defaultDateFormat(vergunningData.dateEnd)
+              : '-'
           }
         />
       </InfoDetailGroup>
 
       {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
+        <InfoDetail label="Resultaat" value={vergunningData.decision} />
       )}
     </>
   );
