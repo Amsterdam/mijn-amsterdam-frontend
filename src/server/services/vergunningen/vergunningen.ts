@@ -3,7 +3,6 @@ import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
 import { VergunningFrontendV2 } from './config-and-types';
-import { VergunningV2 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { isExpired } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
@@ -22,7 +21,7 @@ import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decryp
 
 export function transformVergunningFrontend<V extends DecosZaakBase>(
   sessionID: SessionID,
-  vergunning: VergunningV2,
+  vergunning: V,
   appRoute: AppRoute
 ) {
   const idEncrypted = encryptSessionIdWithRouteIdParam(
