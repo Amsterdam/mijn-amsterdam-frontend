@@ -1,40 +1,47 @@
 import { Location } from './Location';
-import type { Flyeren } from '../../../../server/services/vergunningen/config-and-types';
+import type {
+  Flyeren,
+  VergunningFrontendV2,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { InfoDetail } from '../../../components';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
 
 // Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
 // In dat geval allen de datum tonen.
-export function Flyeren({ vergunning }: { vergunning: Flyeren }) {
-  const isVerleend = vergunning.decision === 'Verleend';
-  const isAfgehandeld = vergunning.status === 'Afgehandeld';
+export function Flyeren({ vergunning }: { vergunning: VergunningFrontendV2 }) {
+  const vergunningData = vergunning as VergunningFrontendV2<Flyeren>;
+  const isVerleend = vergunningData.decision === 'Verleend';
+  const isAfgehandeld = vergunningData.status === 'Afgehandeld';
   const isSameDate =
-    vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
+    vergunningData.dateStart === vergunningData.dateEnd ||
+    vergunningData.dateEnd === null;
 
   return (
     <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {isVerleend && <Location location={vergunning.location} />}
+      <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />
+      {isVerleend && <Location location={vergunningData.location} />}
       {isVerleend && !isSameDate && (
         <InfoDetailGroup>
           <InfoDetail
             label="Vanaf"
             value={
-              vergunning?.dateStart
-                ? defaultDateFormat(vergunning.dateStart)
+              vergunningData.dateStart
+                ? defaultDateFormat(vergunningData.dateStart)
                 : '-'
             }
           />
           <InfoDetail
             label="Tot en met"
             value={
-              vergunning?.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+              vergunningData.dateEnd
+                ? defaultDateFormat(vergunningData.dateEnd)
+                : '-'
             }
           />
           <InfoDetail
             label="Tussen"
-            value={`${vergunning?.timeStart} - ${vergunning?.timeEnd} uur`}
+            value={`${vergunningData.timeStart} - ${vergunningData.timeEnd} uur`}
           />
         </InfoDetailGroup>
       )}
@@ -43,23 +50,27 @@ export function Flyeren({ vergunning }: { vergunning: Flyeren }) {
           <InfoDetail
             label="Op"
             value={
-              vergunning?.dateStart
-                ? defaultDateFormat(vergunning.dateStart)
+              vergunningData.dateStart
+                ? defaultDateFormat(vergunningData.dateStart)
                 : '-'
             }
           />
           <InfoDetail
             label="Van"
-            value={vergunning?.timeStart ? `${vergunning.timeStart} uur` : '-'}
+            value={
+              vergunningData.timeStart ? `${vergunningData.timeStart} uur` : '-'
+            }
           />
           <InfoDetail
             label="Tot"
-            value={vergunning?.timeEnd ? `${vergunning.timeEnd} uur` : '-'}
+            value={
+              vergunningData.timeEnd ? `${vergunningData.timeEnd} uur` : '-'
+            }
           />
         </InfoDetailGroup>
       )}
       {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
+        <InfoDetail label="Resultaat" value={vergunningData.decision} />
       )}
     </>
   );
