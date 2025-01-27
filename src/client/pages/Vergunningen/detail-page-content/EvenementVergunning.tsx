@@ -1,5 +1,8 @@
 import { Location } from './Location';
-import type { EvenementVergunning } from '../../../../server/services/vergunningen/config-and-types';
+import type {
+  EvenementVergunning,
+  VergunningFrontendV2,
+} from '../../../../server/services/vergunningen/config-and-types';
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
@@ -10,7 +13,7 @@ import InfoDetail, {
 } from '../../../components/InfoDetail/InfoDetail';
 
 export function getEvenementVergunningLineItems(
-  vergunning: EvenementVergunning
+  vergunning: VergunningFrontendV2<EvenementVergunning>
 ): StatusLineItem[] {
   const isDone = vergunning.processed;
 
@@ -41,42 +44,49 @@ export function getEvenementVergunningLineItems(
 export function EvenementVergunning({
   vergunning,
 }: {
-  vergunning: EvenementVergunning;
+  vergunning: VergunningFrontendV2;
 }) {
+  const vergunningData =
+    vergunning as VergunningFrontendV2<EvenementVergunning>;
   return (
     <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Omschrijving" value={vergunning.description || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
+      <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />
+      <InfoDetail
+        label="Omschrijving"
+        value={vergunningData.description || '-'}
+      />
+      {!!vergunningData.location && (
+        <Location location={vergunningData.location} />
+      )}
 
       <InfoDetailGroup>
         <InfoDetail
           label="Vanaf"
           value={
-            vergunning?.timeStart && vergunning?.dateStart
+            vergunningData.timeStart && vergunningData.dateStart
               ? defaultDateTimeFormat(
-                  `${vergunning.dateStart}T${vergunning.timeStart}`
+                  `${vergunningData.dateStart}T${vergunningData.timeStart}`
                 )
-              : vergunning.dateStart
-                ? defaultDateFormat(vergunning.dateStart)
+              : vergunningData.dateStart
+                ? defaultDateFormat(vergunningData.dateStart)
                 : '-'
           }
         />
         <InfoDetail
           label="Tot en met"
           value={
-            vergunning?.timeEnd && vergunning?.dateEnd
+            vergunningData.timeEnd && vergunningData.dateEnd
               ? defaultDateTimeFormat(
-                  `${vergunning.dateEnd}T${vergunning.timeEnd}`
+                  `${vergunningData.dateEnd}T${vergunningData.timeEnd}`
                 )
-              : vergunning.dateEnd
-                ? defaultDateFormat(vergunning.dateEnd)
+              : vergunningData.dateEnd
+                ? defaultDateFormat(vergunningData.dateEnd)
                 : '-'
           }
         />
       </InfoDetailGroup>
-      {!!vergunning?.decision && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      {!!vergunningData.decision && (
+        <InfoDetail label="Resultaat" value={vergunningData.decision} />
       )}
     </>
   );
