@@ -1,6 +1,7 @@
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
+  VergunningFrontendV2,
 } from '../../../../server/services/vergunningen/config-and-types';
 import {
   dateTimeFormatYear,
@@ -13,88 +14,93 @@ import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
 export function Touringcar({
   vergunning,
 }: {
-  vergunning: TouringcarDagontheffing | TouringcarJaarontheffing;
+  vergunning: VergunningFrontendV2;
 }) {
+  const vergunningData = vergunning as VergunningFrontendV2<
+    TouringcarDagontheffing | TouringcarJaarontheffing
+  >;
   const isGranted = vergunning.decision === 'Verleend';
 
   return (
     <>
-      <InfoDetail label="Kenmerk" value={vergunning.identifier} />
+      <InfoDetail label="Kenmerk" value={vergunningData.identifier} />
 
-      {vergunning.caseType === CaseTypeV2.TouringcarJaarontheffing ? (
+      {vergunningData.caseType === CaseTypeV2.TouringcarJaarontheffing ? (
         <InfoDetail
           valueWrapperElement="div"
-          label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
+          label={vergunningData.routetest ? 'Kenteken' : 'Kenteken(s)'}
           value={
-            vergunning.kentekens?.includes(' | ') ? (
+            vergunningData.kentekens?.includes(' | ') ? (
               <ul>
-                {vergunning.kentekens
+                {vergunningData.kentekens
                   ?.split(' | ')
                   .map((plate, index) => <li key={plate + index}>{plate}</li>)}
               </ul>
             ) : (
-              vergunning.kentekens
+              vergunningData.kentekens
             )
           }
         />
       ) : (
-        <InfoDetail label="Kenteken" value={vergunning.kentekens} />
+        <InfoDetail label="Kenteken" value={vergunningData.kentekens} />
       )}
 
-      <InfoDetail label="Bestemming" value={vergunning.destination} />
+      <InfoDetail label="Bestemming" value={vergunningData.destination} />
 
       {isGranted &&
-        vergunning.caseType === CaseTypeV2.TouringcarJaarontheffing && (
+        vergunningData.caseType === CaseTypeV2.TouringcarJaarontheffing && (
           <InfoDetailGroup>
             <InfoDetail
               label="Van"
               value={
-                vergunning.dateStart
-                  ? defaultDateFormat(vergunning.dateStart)
+                vergunningData.dateStart
+                  ? defaultDateFormat(vergunningData.dateStart)
                   : '-'
               }
             />
             <InfoDetail
               label="Tot"
               value={
-                vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
+                vergunningData.dateEnd
+                  ? defaultDateFormat(vergunningData.dateEnd)
+                  : '-'
               }
             />
           </InfoDetailGroup>
         )}
 
       {isGranted &&
-        vergunning.caseType === CaseTypeV2.TouringcarDagontheffing && (
+        vergunningData.caseType === CaseTypeV2.TouringcarDagontheffing && (
           <InfoDetailGroup>
             <InfoDetail
               label="Van"
               value={
-                vergunning?.timeStart && vergunning?.dateStart
+                vergunningData?.timeStart && vergunningData?.dateStart
                   ? dateTimeFormatYear(
-                      `${vergunning.dateStart}T${vergunning.timeStart}`
+                      `${vergunningData.dateStart}T${vergunningData.timeStart}`
                     )
-                  : vergunning.dateStart
-                    ? defaultDateFormat(vergunning.dateStart)
+                  : vergunningData.dateStart
+                    ? defaultDateFormat(vergunningData.dateStart)
                     : '-'
               }
             />
             <InfoDetail
               label="Tot"
               value={
-                vergunning?.timeEnd && vergunning?.dateEnd
+                vergunningData?.timeEnd && vergunningData?.dateEnd
                   ? dateTimeFormatYear(
-                      `${vergunning.dateEnd}T${vergunning.timeEnd}`
+                      `${vergunningData.dateEnd}T${vergunningData.timeEnd}`
                     )
-                  : vergunning.dateEnd
-                    ? defaultDateFormat(vergunning.dateEnd)
+                  : vergunningData.dateEnd
+                    ? defaultDateFormat(vergunningData.dateEnd)
                     : '-'
               }
             />
           </InfoDetailGroup>
         )}
 
-      {!!vergunning.processed && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      {!!vergunningData.processed && (
+        <InfoDetail label="Resultaat" value={vergunningData.decision} />
       )}
     </>
   );
