@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
@@ -20,6 +21,7 @@ import {
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
+  ApiResponse,
   ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
@@ -82,7 +84,21 @@ async function fetchPowerBrowserData<T>(
     },
   };
 
-  return requestData<T>(dataRequestConfig, requestID);
+  const response = await requestData<T>(dataRequestConfig, requestID);
+
+  handleMemoizedDependantRequest(response);
+
+  return response;
+}
+
+/** Clear the cache when a response fails that uses a power browser token */
+function handleMemoizedDependantRequest<T>(response: ApiResponse<T>): void {
+  if (
+    response.status === 'ERROR' &&
+    response.code === HttpStatusCode.Unauthorized
+  ) {
+    fetchPowerBrowserToken.clear();
+  }
 }
 
 async function fetchPersoonOrMaatschapIdByUid(
@@ -746,10 +762,14 @@ export async function fetchBBDocument(
     },
   };
 
-  return fetchPowerBrowserData<DocumentDownloadData>(
+  const response = await fetchPowerBrowserData<DocumentDownloadData>(
     requestID,
     dataRequestConfig
   );
+
+  handleMemoizedDependantRequest(response);
+
+  return response;
 }
 
 export const forTesting = {
