@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { IS_OT } from '../../universal/config/env';
 import { getAuth } from '../auth/auth-helpers';
 import {
   fetchAantalBewoners,
@@ -35,10 +34,7 @@ import {
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import {
-  fetchVergunningDetail,
-  fetchZakenFromSource,
-} from '../services/vergunningen-v2/vergunningen-route-handlers';
+import { fetchVergunningDocumentsList } from '../services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
@@ -161,10 +157,10 @@ router.get(
 );
 
 // Vergunningen V2
-if (IS_OT) {
-  router.get(BffEndpoints.VERGUNNINGENv2_ZAKEN_SOURCE, fetchZakenFromSource);
-}
-router.get(BffEndpoints.VERGUNNINGENv2_DETAIL, fetchVergunningDetail);
+router.get(
+  BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
+  fetchVergunningDocumentsList
+);
 
 attachDocumentDownloadRoute(
   router,

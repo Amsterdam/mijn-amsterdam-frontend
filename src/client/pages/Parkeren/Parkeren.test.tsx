@@ -123,7 +123,7 @@ const testState = {
         dateRequestFormatted: '05 juni 2024',
         dateStart: null,
         decision: null,
-        fetchUrl:
+        fetchDocumentsUrl:
           'http://localhost:5000/api/v1/services/vergunningen/v2/962cCLy-d6nz4-85Cfyb2CaOKclPxVWCXF9L8T1lYamfgI25euHU1vf5OsA-qeyGYVuukIOquMqEFhww68MWxEW5LjLvu6jwplz4Hgs1LyE',
         id: 'Z-24-2233516',
         identifier: 'Z/24/2233516',
@@ -148,7 +148,7 @@ const testState = {
         dateRequestFormatted: '05 juni 2024',
         dateStart: null,
         decision: null,
-        fetchUrl:
+        fetchDocumentsUrl:
           'http://localhost:5000/api/v1/services/vergunningen/v2/962cCLy-d6nz4-85Cfyb2CaOKclPxVWCXF9L8T1lYamfgI25euHU1vf5OsA-qeyGYVuukIOquMqEFhww68MWxEW5LjLvu6jwplz4Hgs1LyE',
         id: 'Z-24-2233517',
         identifier: 'Z/24/2233516',
