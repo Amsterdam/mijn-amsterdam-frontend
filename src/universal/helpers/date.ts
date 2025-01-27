@@ -77,7 +77,7 @@ export function isDateInPast(date: string, dateNow: string | Date) {
 }
 
 /**
- * Checks if `date` is after the `comparisonDate` (non-inclusive check).
+ * Checks if `date` is after the `comparisonDate` (inclusive check).
  */
 export function isDateAfter(
   date: string | Date,
@@ -89,7 +89,8 @@ export function isDateAfter(
   if (typeof date === 'string') {
     date = parseISO(date);
   }
-  return date.getTime() > comparisonDate.getTime();
+
+  return date.getTime() >= comparisonDate.getTime();
 }
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {

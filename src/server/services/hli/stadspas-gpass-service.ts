@@ -1,4 +1,5 @@
 import { HttpStatusCode } from 'axios';
+import { parseISO } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
@@ -40,7 +41,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { parseISO } from 'date-fns';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -177,6 +177,9 @@ export async function fetchStadspassenByAdministratienummer(
   for (const pashouder of pashouders) {
     // Filter out passes that are not relevant for the user.
     const passen = pashouder.passen.filter((pas) => {
+      if (pas.actief) {
+        return true;
+      }
       if (pas.vervangen) {
         return false;
       }
@@ -222,25 +225,31 @@ export async function fetchStadspassenByAdministratienummer(
 
 function isExpired(expiryDate: string): boolean {
   const defaultExpiryDate = new Date();
-  // eslint-disable-next-line no-magic-numbers
-  defaultExpiryDate.setDate(31);
 
-  // Set date to 01-08-{last-year}
-  // eslint-disable-next-line no-magic-numbers
-  defaultExpiryDate.setMonth(7);
-  defaultExpiryDate.setFullYear(defaultExpiryDate.getFullYear() - 1);
+  const DEFAULT_EXPIRY_DAY = 31;
+  defaultExpiryDate.setDate(DEFAULT_EXPIRY_DAY);
+
+  const DEFAULT_EXPIRY_MONTH = 7;
+  defaultExpiryDate.setMonth(DEFAULT_EXPIRY_MONTH);
 
   const expiryDate_ = parseISO(expiryDate);
+  const now = new Date();
+
+  const isSameYear = expiryDate_.getFullYear() === now.getFullYear();
+  if (!isSameYear) {
+    defaultExpiryDate.setFullYear(defaultExpiryDate.getFullYear() - 1);
+  }
+
   const isDefaultExpiryDate =
-    expiryDate_.getDate() === defaultExpiryDate.getDate() &&
-    expiryDate_.getMonth() === defaultExpiryDate.getMonth() &&
-    expiryDate_.getFullYear() === defaultExpiryDate.getFullYear();
+    expiryDate_.getDate() <= defaultExpiryDate.getDate() &&
+    expiryDate_.getMonth() <= defaultExpiryDate.getMonth() &&
+    expiryDate_.getFullYear() <= defaultExpiryDate.getFullYear();
 
   if (!isDefaultExpiryDate) {
     return false;
   }
 
-  return !isDateAfter(new Date(), defaultExpiryDate);
+  return isDateAfter(now, expiryDate);
 }
 
 export async function fetchStadspassen_(
