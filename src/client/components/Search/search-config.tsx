@@ -23,7 +23,7 @@ import {
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
