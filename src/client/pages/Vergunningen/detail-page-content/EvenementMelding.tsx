@@ -1,5 +1,8 @@
 import { Location } from './Location';
-import type { EvenementMelding } from '../../../../server/services/vergunningen/config-and-types';
+import type {
+  EvenementMelding,
+  VergunningFrontendV2,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
@@ -8,33 +11,38 @@ import InfoDetail, {
 export function EvenementMelding({
   vergunning,
 }: {
-  vergunning: EvenementMelding;
+  vergunning: VergunningFrontendV2;
 }) {
+  const vergunningData = vergunning as VergunningFrontendV2<EvenementMelding>;
   return (
     <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
+      <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />
+      {!!vergunningData.location && (
+        <Location location={vergunningData.location} />
+      )}
 
       <InfoDetailGroup>
         <InfoDetail
           label="Op"
           value={
-            vergunning?.dateStart
-              ? defaultDateFormat(vergunning.dateStart)
+            vergunningData.dateStart
+              ? defaultDateFormat(vergunningData.dateStart)
               : '-'
           }
         />
         <InfoDetail
           label="Van"
-          value={vergunning?.timeStart ? `${vergunning.timeStart} uur` : '-'}
+          value={
+            vergunningData.timeStart ? `${vergunningData.timeStart} uur` : '-'
+          }
         />
         <InfoDetail
           label="Tot"
-          value={vergunning?.timeEnd ? `${vergunning.timeEnd} uur` : '-'}
+          value={vergunningData.timeEnd ? `${vergunningData.timeEnd} uur` : '-'}
         />
       </InfoDetailGroup>
-      {!!vergunning?.decision && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
+      {!!vergunningData.decision && (
+        <InfoDetail label="Resultaat" value={vergunningData.decision} />
       )}
     </>
   );
