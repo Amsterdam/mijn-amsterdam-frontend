@@ -283,6 +283,19 @@ async function transformDecosZakenResponse<
     .sort(sortAlpha('identifier', 'desc'));
 }
 
+function getSelectFields(
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[]
+) {
+  const fields = uniqueArray([
+    ...SELECT_FIELDS_META,
+    ...zaakTypeTransformers.flatMap((zaakTransformer) =>
+      Object.keys(zaakTransformer.transformFields)
+    ),
+  ]).join(',');
+
+  return fields;
+}
+
 async function getZakenByUserKey(
   requestID: RequestID,
   userKey: string,
@@ -295,12 +308,7 @@ async function getZakenByUserKey(
     `getZakenByUserKey expects field ${caseTypeField} to be the caseType`
   );
 
-  const fields = uniqueArray([
-    ...SELECT_FIELDS_META,
-    ...zaakTypeTransformers.flatMap((zaakTransformer) =>
-      Object.keys(zaakTransformer.transformFields)
-    ),
-  ]).join(',');
+  const fields = getSelectFields(zaakTypeTransformers);
 
   const caseTypes = zaakTypeTransformers
     .map((transformer) => `${caseTypeField} eq ${transformer.caseType}`)
@@ -670,6 +678,7 @@ export async function fetchDecosDocument(
 export const forTesting = {
   filterValidDocument,
   getUserKeys,
+  getSelectFields,
   getZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowDateResponse,

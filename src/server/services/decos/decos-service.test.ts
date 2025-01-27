@@ -15,6 +15,7 @@ import {
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { axiosRequest } from '../../helpers/source-api-request';
 import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen-v2/config-and-types';
 import {
   decosCaseToZaakTransformers,
@@ -129,9 +130,12 @@ describe('decos-service', () => {
   /**
    * Testing Exported service methods
    */
-  describe('fetchDecosVergunningenSource', async () => {
+  describe('fetchDecosZakenSource', async () => {
     test('Error response in userkeys', async () => {
-      remoteApi.post(/\/decos\/search\/books/).replyWithError('request failed');
+      remoteApi
+        .post(/\/decos\/search\/books/)
+        .times(numberOfAddressBooksToSearch)
+        .replyWithError('request failed');
 
       const responseData = await fetchDecosZakenFromSource(
         reqID,
@@ -153,7 +157,8 @@ describe('decos-service', () => {
 
       remoteApi
         .get(/\/decos\/items\/123456789\/folders/)
-        .reply(200, zakenSource);
+        .times(numberOfAddressBooksToSearch)
+        .replyWithError('bad request to folder');
 
       const responseData = await fetchDecosZakenFromSource(
         reqID,
@@ -164,7 +169,7 @@ describe('decos-service', () => {
       expect(responseData.content).toBe(null);
     });
 
-    test('Error response in folders', async () => {
+    test('Error response in one of the folder requests', async () => {
       remoteApi
         .post(/\/decos\/search\/books/)
         .times(numberOfAddressBooksToSearch)
@@ -175,7 +180,12 @@ describe('decos-service', () => {
         });
       remoteApi
         .get(/\/decos\/items\/123456789\/folders/)
+        .times(1)
         .replyWithError('bad request');
+      remoteApi
+        .get(/\/decos\/items\/123456789\/folders/)
+        .times(numberOfAddressBooksToSearch - 1)
+        .reply(200);
 
       const responseData = await fetchDecosZakenFromSource(
         reqID,
@@ -310,7 +320,7 @@ describe('decos-service', () => {
     });
   });
 
-  describe('fetchDecosVergunningen', async () => {
+  describe('fetchDecosZaken', async () => {
     test('Fail response', async () => {
       remoteApi
         .post(/\/decos\/search\/books/)
@@ -347,14 +357,51 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
+      const axiosSpy = vi.spyOn(axiosRequest, 'request');
+
       const responseData = await fetchDecosZaken(
         reqID,
         authProfileAndToken,
         decosZaakTransformers
       );
 
+      const calls = axiosSpy.mock.calls.map((call) => {
+        return call[0].url;
+      });
+
+      expect(calls.length).toBe(12);
+      expect(
+        calls
+          .slice(0, 4)
+          .every(
+            (url) =>
+              url ===
+              'http://remote-api-host/decos/search/books?properties=false&select=key'
+          )
+      ).toBe(true);
+      expect(
+        calls
+          .slice(4, 8)
+          .every((url) =>
+            url?.includes(
+              'http://remote-api-host/decos/items/123456789/folders?top=50&select='
+            )
+          )
+      ).toBe(true);
+      expect(
+        calls
+          .slice(8, 12)
+          .every(
+            (url) =>
+              url ===
+              'http://remote-api-host/decos/items/084239C942C647F79F1C2B5CCF8DC5DA/workflows'
+          )
+      ).toBe(true);
+
       expect(responseData.status).toBe('OK');
       expect(responseData.content?.length).toBe(4);
+
+      axiosSpy.mockRestore();
     });
   });
 
@@ -508,16 +555,30 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
+      const axiosSpy = vi.spyOn(axiosRequest, 'request');
+
+      const dienstenTransformer =
+        decosCaseToZaakTransformers['Aanbieden van diensten'];
+      const gpkTransformer = decosCaseToZaakTransformers.GPK;
+      const transformers = [dienstenTransformer, gpkTransformer];
+
       const responseData = await forTesting.getZakenByUserKey(
         reqID,
         '123456789',
-        [
-          decosCaseToZaakTransformers['Aanbieden van diensten'],
-          decosCaseToZaakTransformers.GPK,
-        ]
+        transformers
       );
 
+      const selectFields = forTesting.getSelectFields(transformers);
+
+      expect(
+        axiosSpy.mock.calls[0][0].url?.includes(
+          encodeURIComponent(selectFields)
+        )
+      ).toBe(true);
+
       expect(responseData.content?.length).toBe(1);
+
+      axiosSpy.mockRestore();
     });
 
     test('Success', async () => {
