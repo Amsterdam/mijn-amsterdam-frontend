@@ -535,13 +535,13 @@ export async function fetchAfisFacturenOverview(
   // Prepare data for monitoring
   const countByState = entries(facturenOverview).reduce(
     (acc, [state, content]) => {
-      if (content !== null) {
-        return {
-          ...acc,
-          [state]: content?.count ?? -1,
-        };
+      if (content === null) {
+        return acc;
       }
-      return acc;
+      return {
+        ...acc,
+        [state]: content?.count ?? -1,
+      };
     },
     {}
   );
