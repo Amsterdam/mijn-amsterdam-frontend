@@ -2,11 +2,10 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
-import {
-  VergunningFrontendV2,
-} from './config-and-types';
+import { VergunningFrontendV2 } from './config-and-types';
 import { VergunningV2 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
+import { isExpired } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -17,11 +16,11 @@ import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt'
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { fetchDecosZaak, fetchDecosZaken } from '../decos/decos-service';
-import { DecosZaakDocument } from '../decos/decos-types';
-import { getStatusDate, isExpired, toDateFormatted } from '../decos/helpers';
+import { DecosZaakBase, DecosZaakDocument } from '../decos/decos-types';
+import { getStatusDate, toDateFormatted } from '../decos/helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
-export function transformVergunningFrontend<V extends VergunningBase>(
+export function transformVergunningFrontend<V extends DecosZaakBase>(
   sessionID: SessionID,
   vergunning: VergunningV2,
   appRoute: AppRoute
@@ -30,7 +29,7 @@ export function transformVergunningFrontend<V extends VergunningBase>(
     sessionID,
     vergunning.key
   );
-  const vergunningFrontend: VergunningFrontendV2 = {
+  const vergunningFrontend: VergunningFrontendV2<V> = {
     ...vergunning,
     dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
     dateInBehandeling: getStatusDate('In behandeling', vergunning),
@@ -118,7 +117,7 @@ function setEncryptedDocumentDownloadUrl(
   return {
     ...document,
     // Adds an url to the BFF api for document download which accepts an encrypted ID only
-    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD, {
+    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD, {
       id: documentIdEncrypted,
     }),
   };
