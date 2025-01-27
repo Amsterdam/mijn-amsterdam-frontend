@@ -15,7 +15,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { DocumentDetails } from '../Vergunningen/detail-page-content/DocumentDetails';
 import { StatusLineItems } from '../Vergunningen/detail-page-content/StatusLineItems';
 
-export default function HorecaDetail() {
+export function HorecaDetail() {
   const { HORECA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const vergunning = HORECA.content?.find((item) => item.id === id);

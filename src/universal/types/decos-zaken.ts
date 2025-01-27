@@ -7,7 +7,6 @@ export const CaseTypeV2 = {
   Omzettingsvergunning: 'Omzettingsvergunning',
   ERVV: 'E-RVV - TVM',
   VakantieverhuurVergunningaanvraag: 'Vakantieverhuur vergunningsaanvraag',
-  BBVergunning: 'B&B - vergunning',
   BZP: 'Parkeerontheffingen Blauwe zone particulieren',
   BZB: 'Parkeerontheffingen Blauwe zone bedrijven',
   Flyeren: 'Flyeren-Sampling',
