@@ -233,20 +233,13 @@ export const timeStart = 'timeStart';
 export const timeEnd = 'timeEnd';
 export const destination = 'destination';
 export const description = 'description';
+export const decision = 'decision';
 // Fields are selected per case initially but don't end up in the data we send to front end.
 // These fields are fore example used to determine payment status.
 
 export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
 // The set of field transforms that applies to every case.
 // { $api_attribute_name_source: $api_attribute_name_mijn_amsterdam }
-
-export const decision: DecosFieldTransformer = {
-  name: 'decision',
-  transform: (decision: string) => {
-    // TODO
-    return decision;
-  },
-};
 
 export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
   title: status,
