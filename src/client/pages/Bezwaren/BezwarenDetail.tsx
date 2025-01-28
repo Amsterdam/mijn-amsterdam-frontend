@@ -9,7 +9,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { uniqueArray } from '../../../universal/helpers/utils';
 import { ErrorAlert, InfoDetail, LoadingContent } from '../../components';
-import DocumentList from '../../components/DocumentList/DocumentList';
+import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import {
   InfoDetailGroup,
   InfoDetailHeading,
@@ -82,7 +82,7 @@ function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
                       </div>
                     }
                   >
-                    <DocumentList documents={docs} showDatePublished />
+                    <DocumentListV2 documents={docs} />
                   </InfoDetailGroup>
                 );
               })}

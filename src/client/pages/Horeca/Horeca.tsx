@@ -2,6 +2,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
 import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
@@ -28,7 +29,7 @@ export function HorecaThemaPagina() {
       { title, displayProps, filter, textNoContent, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<HorecaVergunning>
+        <ThemaPaginaTable<VergunningFrontend<HorecaVergunning>>
           key={kind}
           title={title}
           listPageRoute={listPageRoute}

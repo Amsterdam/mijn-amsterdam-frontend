@@ -66,9 +66,6 @@ export default function ZorgDetail() {
         !!voorziening && <WMODetailContent voorziening={voorziening} />
       }
       backLink={AppRoutes.ZORG}
-      documentPathForTracking={(document) =>
-        `/downloads/zorg-en-ondersteuning/${document.title.split(/\n/)[0]}`
-      }
     />
   );
 }

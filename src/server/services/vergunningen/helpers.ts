@@ -4,7 +4,7 @@ import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
@@ -31,11 +31,11 @@ export function getCustomTitleForVergunningWithLicensePlates(
 }
 
 export function hasOtherActualVergunningOfSameType(
-  items: VergunningFrontendV2[],
-  item: VergunningFrontendV2
+  items: VergunningFrontend[],
+  item: VergunningFrontend
 ): boolean {
   return items.some(
-    (otherVergunning: VergunningFrontendV2) =>
+    (otherVergunning: VergunningFrontend) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
@@ -57,7 +57,7 @@ export function isNearEndDate(dateEnd?: string | null, dateNow?: Date) {
   );
 }
 
-export function isExpired(vergunning: VergunningFrontendV2, dateNow?: Date) {
+export function isExpired(vergunning: VergunningFrontend, dateNow?: Date) {
   if (!vergunning.dateEnd) {
     return false;
   }

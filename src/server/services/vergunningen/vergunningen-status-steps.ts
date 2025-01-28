@@ -1,10 +1,10 @@
-import { RVVSloterweg, VergunningFrontendV2 } from './config-and-types';
+import { RVVSloterweg, VergunningFrontend } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { getStatusDate } from '../decos/helpers';
 
 export function getStatusStepsRVVSloterweg(
-  vergunning: VergunningFrontendV2<RVVSloterweg>
+  vergunning: VergunningFrontend<RVVSloterweg>
 ): StatusLineItem[] {
   const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
   const RVV_SLOTERWEG_RESULT_EXPIRED = 'Verlopen';
@@ -125,11 +125,11 @@ export function getStatusStepsRVVSloterweg(
   return steps;
 }
 
-export function getStatusSteps<V extends VergunningFrontendV2>(vergunning: V) {
+export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
   // TODO: Ask Terry to assess this compiler problem
   if (vergunning.caseType === CaseTypeV2.RVVSloterweg) {
     return getStatusStepsRVVSloterweg(
-      vergunning as unknown as VergunningFrontendV2<RVVSloterweg>
+      vergunning as unknown as VergunningFrontend<RVVSloterweg>
     );
   }
 

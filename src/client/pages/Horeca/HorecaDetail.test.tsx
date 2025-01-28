@@ -3,7 +3,7 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
-import { HorecaDetail } from './HorecaDetail';
+import { HorecaDetailPagina } from './HorecaDetail';
 import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
@@ -33,7 +33,7 @@ function state(state: any) {
 function MockVergunningDetail({ identifier }: { identifier: string }) {
   const vergunning = content.find((v) => v.identifier === identifier);
   const routeEntry = generatePath(AppRoutes['HORECA/DETAIL'], {
-    title: slug(vergunning?.caseType, {
+    caseType: slug(vergunning?.caseType, {
       lower: true,
     }),
     id: vergunning?.id,
@@ -44,7 +44,7 @@ function MockVergunningDetail({ identifier }: { identifier: string }) {
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={HorecaDetail}
+      component={HorecaDetailPagina}
       initializeState={state(testState)}
     />
   );

@@ -4,21 +4,22 @@ import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-
 import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakTransformer,
-  DecosZaakWithDateRange,
-  DecosZaakWithLocation,
   SELECT_FIELDS_TRANSFORM_BASE,
   location,
+  DecosZaakBase,
+  WithLocation,
+  WithDateRange,
 } from '../decos/decos-types';
-import { VergunningFrontendV2 } from '../vergunningen/config-and-types';
+import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
-export interface VakantieverhuurVergunningaanvraagIF
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'VakantieverhuurVergunningaanvraag'>;
-  title: 'Vergunning vakantieverhuur';
-  decision: 'Verleend' | 'Ingetrokken';
-}
+export type VakantieverhuurVergunningaanvraag = DecosZaakBase &
+  WithLocation &
+  WithDateRange & {
+    caseType: GetCaseType<'VakantieverhuurVergunningaanvraag'>;
+    title: 'Vergunning vakantieverhuur';
+    decision: 'Verleend' | 'Ingetrokken';
+  };
 
 // LVV Registraties
 export interface ToeristischeVerhuurRegistratieNumberSource {
@@ -52,7 +53,7 @@ export interface LVVRegistratiesSourceData {
 }
 
 export type VakantieverhuurVergunning =
-  VergunningFrontendV2<VakantieverhuurVergunningaanvraagIF>;
+  VergunningFrontend<VakantieverhuurVergunningaanvraag>;
 
 export type ToeristischeVerhuurVergunning =
   | BBVergunning
@@ -64,7 +65,7 @@ export type ToeristischeVerhuur = {
   lvvRegistraties: LVVRegistratie[];
 };
 
-export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<VakantieverhuurVergunningaanvraagIF> =
+export const VakantieverhuurVergunningaanvraagTransformer: DecosZaakTransformer<VakantieverhuurVergunningaanvraag> =
   {
     isActive: true,
     caseType: CaseTypeV2.VakantieverhuurVergunningaanvraag,

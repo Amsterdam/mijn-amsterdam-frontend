@@ -1,7 +1,7 @@
 import { Location } from './Location';
 import type {
   EvenementMelding,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
@@ -11,9 +11,9 @@ import InfoDetail, {
 export function EvenementMelding({
   vergunning,
 }: {
-  vergunning: VergunningFrontendV2;
+  vergunning: VergunningFrontend;
 }) {
-  const vergunningData = vergunning as VergunningFrontendV2<EvenementMelding>;
+  const vergunningData = vergunning as VergunningFrontend<EvenementMelding>;
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />

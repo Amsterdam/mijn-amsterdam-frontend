@@ -1,7 +1,7 @@
 import { Location } from './Location';
 import type {
   Flyeren,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { InfoDetail } from '../../../components';
@@ -9,8 +9,8 @@ import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
 
 // Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
 // In dat geval allen de datum tonen.
-export function Flyeren({ vergunning }: { vergunning: VergunningFrontendV2 }) {
-  const vergunningData = vergunning as VergunningFrontendV2<Flyeren>;
+export function Flyeren({ vergunning }: { vergunning: VergunningFrontend }) {
+  const vergunningData = vergunning as VergunningFrontend<Flyeren>;
   const isVerleend = vergunningData.decision === 'Verleend';
   const isAfgehandeld = vergunningData.status === 'Afgehandeld';
   const isSameDate =

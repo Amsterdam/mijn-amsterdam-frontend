@@ -1,7 +1,7 @@
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
 import {
   dateTimeFormatYear,
@@ -11,12 +11,8 @@ import { CaseTypeV2 } from '../../../../universal/types/decos-zaken';
 import { InfoDetail } from '../../../components';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
 
-export function Touringcar({
-  vergunning,
-}: {
-  vergunning: VergunningFrontendV2;
-}) {
-  const vergunningData = vergunning as VergunningFrontendV2<
+export function Touringcar({ vergunning }: { vergunning: VergunningFrontend }) {
+  const vergunningData = vergunning as VergunningFrontend<
     TouringcarDagontheffing | TouringcarJaarontheffing
   >;
   const isGranted = vergunning.decision === 'Verleend';

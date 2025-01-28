@@ -2,7 +2,7 @@ import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import type {
   BZB,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
@@ -60,8 +60,8 @@ export function ExpirationNotifications({ id }: { id: string }) {
   );
 }
 
-export function BZB({ vergunning }: { vergunning: VergunningFrontendV2 }) {
-  const vergunningData = vergunning as VergunningFrontendV2<BZB>;
+export function BZB({ vergunning }: { vergunning: VergunningFrontend }) {
+  const vergunningData = vergunning as VergunningFrontend<BZB>;
 
   return (
     <>

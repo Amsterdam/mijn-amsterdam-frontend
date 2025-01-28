@@ -2,12 +2,12 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
-import { VergunningFrontendV2 } from './config-and-types';
+import { DecosVergunning, VergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { isExpired } from './helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
@@ -28,7 +28,19 @@ export function transformVergunningFrontend<V extends DecosZaakBase>(
     sessionID,
     vergunning.key
   );
-  const vergunningFrontend: VergunningFrontendV2<V> = {
+
+  const fetchDocumentsUrl = `${generateFullApiUrlBFF(
+    BffEndpoints.VERGUNNINGEN_DOCUMENTS_LIST
+  )}?id=${idEncrypted}`;
+
+  const detailPageRoute = generatePath(appRoute, {
+    caseType: slug(vergunning.caseType, {
+      lower: true,
+    }),
+    id: vergunning.id,
+  });
+
+  const vergunningFrontend: VergunningFrontend<V> = {
     ...vergunning,
     dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
     dateInBehandeling: getStatusDate('In behandeling', vergunning),
@@ -39,16 +51,9 @@ export function transformVergunningFrontend<V extends DecosZaakBase>(
     // Assign Status steps later on
     steps: [],
     // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
-    fetchDocumentsUrl: `${generateFullApiUrlBFF(
-      BffEndpoints.VERGUNNINGEN_DOCUMENTS_LIST
-    )}?id=${idEncrypted}`,
+    fetchDocumentsUrl,
     link: {
-      to: generatePath(appRoute, {
-        caseType: slug(vergunning.caseType, {
-          lower: true,
-        }),
-        id: vergunning.id,
-      }),
+      to: detailPageRoute,
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
   };
@@ -77,7 +82,7 @@ async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
-) {
+): Promise<ApiResponse<VergunningFrontend<DecosVergunning>[]>> {
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
@@ -86,14 +91,14 @@ async function fetchVergunningen_(
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: VergunningFrontendV2[] = decosVergunningen.map(
-      (vergunning) =>
+    const vergunningenFrontend: VergunningFrontend<DecosVergunning>[] =
+      decosVergunningen.map((vergunning) =>
         transformVergunningFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           appRoute
         )
-    );
+      );
     return apiSuccessResult(vergunningenFrontend);
   }
 
