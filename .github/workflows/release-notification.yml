@@ -1,5 +1,6 @@
-name: 'Release notification'
+name: Release notification
 on: create
+run-name: Generating release notifications for ${{ github.base_ref }}
 
 permissions:
   contents: write
@@ -24,21 +25,21 @@ jobs:
           all_tags=$(git tag -l --sort=-creatordate)
           latest_tag=$(echo "$all_tags" | sed -n '1p')
           previous_tag=$(echo "$all_tags" | sed -n '2p')
-          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
-          echo "previous_tag=$previous_tag" >> $GITHUB_OUTPUT
+          echo "latest_tag=$latest_tag" >> "$GITHUB_OUTPUT"
+          echo "previous_tag=$previous_tag" >> "$GITHUB_OUTPUT"
 
           # Debug output
           echo "Latest tag: $latest_tag"
-          echo "Previous tag: $previous_tag"
+          echo "Second to latest tag: $previous_tag"
 
       - name: Generate Release Notes
         run: |
           echo "Changes between ${{ steps.tags.outputs.previous_tag }} and ${{ steps.tags.outputs.latest_tag }}:" > release-notes.txt
             git log ${{ steps.tags.outputs.previous_tag }}..${{ steps.tags.outputs.latest_tag }} --oneline >> release-notes.txt
             RELEASE_NOTES=$(cat release-notes.txt)
-            echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-            echo "$RELEASE_NOTES" >> $GITHUB_ENV
-            echo "EOF" >> $GITHUB_ENV
+            echo "RELEASE_NOTES<<EOF" >> "$GITHUB_ENV"
+            echo "$RELEASE_NOTES" >> "$GITHUB_ENV"
+            echo "EOF" >> "$GITHUB_ENV"
 
       - name: Create or Update Release
         run: |
@@ -88,9 +89,9 @@ jobs:
             echo "${{ steps.categorize_notes.outputs.mijn }}"
           } > custom_release_notes.txt
           CUSTOM_NOTES=$(cat custom_release_notes.txt)
-          echo "CUSTOM_NOTES<<EOF" >> $GITHUB_ENV
-          echo "$CUSTOM_NOTES" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "CUSTOM_NOTES<<EOF" >> "$GITHUB_ENV"
+          echo "$CUSTOM_NOTES" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
 
       - name: Update Release with Custom Notes
         run: |
