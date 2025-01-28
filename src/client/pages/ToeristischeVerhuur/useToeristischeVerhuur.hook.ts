@@ -5,30 +5,16 @@ import {
   tableConfigLVVRegistraties,
   tableConfigVergunningen,
 } from './toeristischeVerhuur-thema-config';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
   hasFailedDependency,
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
-import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
-import {
-  addLinkElementToProperty,
-  WithDetailLinkComponent,
-} from '../../components/Table/TableV2';
+import { LinkProps } from '../../../universal/types/App.types';
+import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-
-export type BBVergunningFrontend = WithDetailLinkComponent<BBVergunning>;
-
-export type VakantieverhuurVergunningFrontend = WithDetailLinkComponent<
-  VakantieverhuurVergunning & { documents: GenericDocument[] }
->;
-
-export type ToeristischeVerhuurVergunningFrontend =
-  | BBVergunningFrontend
-  | VakantieverhuurVergunningFrontend;
 
 export const BB_VERGUNNING_DISCLAIMER =
   'Bed & breakfast vergunningen die vóór 14 mei 2021 zijn aangevraagd kunnen niet worden getoond';
@@ -52,9 +38,7 @@ export function useToeristischeVerhuurThemaData() {
       (vergunning) => vergunning.decision === 'Verleend'
     );
 
-  const vergunningen = addLinkElementToProperty<
-    BBVergunning | VakantieverhuurVergunning
-  >(
+  const vergunningen = addLinkElementToProperty<ToeristischeVerhuurVergunning>(
     [
       ...(TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen ?? []),
       ...(TOERISTISCHE_VERHUUR.content?.bbVergunningen ?? []),
