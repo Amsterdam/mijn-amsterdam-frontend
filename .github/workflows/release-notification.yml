@@ -1,6 +1,6 @@
-name: 'Release notification'
+name: Release notification
 on: create
-run-name: Generating release notifications for 
+run-name: Generating release notifications for ${{ github.base_ref }}
 
 permissions:
   contents: write
