@@ -19,7 +19,10 @@ import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import {
+  DecosVergunning,
+  VergunningFrontend,
+} from '../../../server/services/vergunningen/config-and-types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { Datalist } from '../../components/Datalist/Datalist';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
@@ -32,7 +35,7 @@ interface DetailPageContentProps<V> {
 }
 
 // TODO: Implement detailpages per case
-function DetailPageContent<V extends VergunningFrontend>({
+function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
   vergunning,
 }: DetailPageContentProps<V>) {
   return (
@@ -112,7 +115,7 @@ export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
     useVergunningenDetailData(vergunningen);
 
   return (
-    <ThemaDetailPagina<VergunningFrontend>
+    <ThemaDetailPagina<VergunningFrontend<DecosVergunning>>
       title={title}
       zaak={vergunning}
       isError={isError}
@@ -120,7 +123,7 @@ export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
       pageContentTop={
         vergunning && (
           <>
-            <DetailPageContent vergunning={vergunning} backLink={backLink} />
+            <DetailPageContent vergunning={vergunning} />
             {!!documents.length && (
               <PageContentCell spanWide={8}>
                 <Datalist

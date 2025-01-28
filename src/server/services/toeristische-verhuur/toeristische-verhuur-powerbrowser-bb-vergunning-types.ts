@@ -75,7 +75,7 @@ export type BBVergunningZaakResult =
   | string
   | null;
 
-export interface BBVergunning extends ZaakDetail {
+export type BBVergunning = ZaakDetail & {
   location: string | null;
   dateDecision: string | null;
   dateEnd: string | null;
@@ -91,7 +91,7 @@ export interface BBVergunning extends ZaakDetail {
   processed: boolean;
   status: BBVergunningZaakStatus | BBVergunningZaakResult;
   title: 'Vergunning bed & breakfast';
-}
+};
 
 export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',
