@@ -55,7 +55,9 @@ const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_, {
   preFetch: CLOSE_TO_EXPIRY,
 });
 
-function fetchPowerBrowserToken_() {
+type PowerBrowserToken = string;
+
+function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
   const requestConfig = getApiConfig('POWERBROWSER', {
     formatUrl: ({ url }) => `${url}/Token`,
     responseType: 'text',
@@ -64,9 +66,10 @@ function fetchPowerBrowserToken_() {
     },
   });
   // Token is shared between all requests so we don't give a requestID here.
-  return requestData<string>(requestConfig, '');
+  return requestData<PowerBrowserToken>(requestConfig, '');
 }
 
+/** Fetch any data from Powerbrowser by extending a default `dataRequestConfig`. */
 async function fetchPowerBrowserData<T>(
   requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
@@ -86,19 +89,14 @@ async function fetchPowerBrowserData<T>(
 
   const response = await requestData<T>(dataRequestConfig, requestID);
 
-  handleMemoizedDependantRequest(response);
-
-  return response;
-}
-
-/** Clear the cache when a response fails that uses a power browser token */
-function handleMemoizedDependantRequest<T>(response: ApiResponse<T>): void {
   if (
     response.status === 'ERROR' &&
     response.code === HttpStatusCode.Unauthorized
   ) {
     fetchPowerBrowserToken.clear();
   }
+
+  return response;
 }
 
 async function fetchPersoonOrMaatschapIdByUid(
@@ -766,8 +764,6 @@ export async function fetchBBDocument(
     requestID,
     dataRequestConfig
   );
-
-  handleMemoizedDependantRequest(response);
 
   return response;
 }
