@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import useSWR from 'swr';
 
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { BZB } from './detail-page-content/BZB';
@@ -17,15 +16,12 @@ import { RvvHeleStad } from './detail-page-content/RvvHeleStad';
 import { RvvSloterweg } from './detail-page-content/RvvSloterweg';
 import { Touringcar } from './detail-page-content/Touringcar';
 import { TVMRVVObject } from './detail-page-content/TVMRVVObject';
+import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
 import { VOB } from './detail-page-content/VOB';
 import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
-import {
-  ApiResponse,
-  isError,
-  isLoading,
-} from '../../../universal/helpers/api';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { GenericDocument } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { Datalist } from '../../components/Datalist/Datalist';
@@ -34,10 +30,6 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { WVOSContent } from './detail-page-content/WVOS';
 import { PageContentCell } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
-
-const ONE_MINUTE_MS = 60000;
-// eslint-disable-next-line no-magic-numbers
-const FIFTEEN_MINUTES_MS = 15 * ONE_MINUTE_MS;
 
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
@@ -126,18 +118,7 @@ export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
   const vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
   const fetchDocumentsUrl = vergunning?.fetchDocumentsUrl;
 
-  const { data: vergunningDocumentsResponse } = useSWR<
-    ApiResponse<GenericDocument[]>
-  >(
-    fetchDocumentsUrl,
-    (url: string) =>
-      fetch(url, { credentials: 'include' }).then((response) =>
-        response.json()
-      ),
-
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
-  );
-  const vergunningDocuments = vergunningDocumentsResponse?.content ?? [];
+  const vergunningDocuments = useVergunningDocumentList(fetchDocumentsUrl);
 
   return (
     <ThemaDetailPagina<VergunningFrontendV2>
