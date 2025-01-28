@@ -41,13 +41,12 @@ export default function Varen() {
   const registratieReder = items.find(
     (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
   );
-  if (!registratieReder) {
-    return <></>; // TODO: Default page
-  }
 
   // TODO: Use existing component or create reusable detailView component
   const displayPropsReder = ['email', 'company', 'adres', 'phone', 'bsnkvk'];
-  const aanvragerGegevens = (
+  const aanvragerGegevens = !registratieReder ? (
+    <></> // TODO: Do this differently
+  ) : (
     <Grid.Cell span="all">
       <Grid>
         {Object.entries(registratieReder)
