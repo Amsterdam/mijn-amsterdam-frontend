@@ -372,7 +372,7 @@ describe('decos-service', () => {
       expect(calls.length).toBe(12);
       expect(
         calls
-          .slice(0, 4)
+          .slice(0, numberOfAddressBooksToSearch)
           .every(
             (url) =>
               url ===
@@ -381,7 +381,7 @@ describe('decos-service', () => {
       ).toBe(true);
       expect(
         calls
-          .slice(4, 8)
+          .slice(numberOfAddressBooksToSearch, numberOfAddressBooksToSearch * 2)
           .every((url) =>
             url?.includes(
               'http://remote-api-host/decos/items/123456789/folders?top=50&select='
@@ -390,7 +390,10 @@ describe('decos-service', () => {
       ).toBe(true);
       expect(
         calls
-          .slice(8, 12)
+          .slice(
+            numberOfAddressBooksToSearch * 2,
+            numberOfAddressBooksToSearch * 3
+          )
           .every(
             (url) =>
               url ===
