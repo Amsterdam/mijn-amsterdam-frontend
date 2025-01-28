@@ -28,7 +28,7 @@ function transformVarenVergunningFrontend(
     // Assign Status steps later on
     steps: [],
     // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
-    fetchUrl: 'https://mijn.amsterdam.nl', //todo
+    fetchDocumentsUrl: 'https://mijn.amsterdam.nl', //todo
     link: {
       to: generatePath(appRoute, {
         title: slug(vergunning.caseType, {
