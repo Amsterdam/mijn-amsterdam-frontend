@@ -1,6 +1,10 @@
 import { isError } from 'lodash';
 
-import { linkListItems, tableConfig } from './Vergunningen-thema-config';
+import {
+  linkListItems,
+  routes,
+  tableConfig,
+} from './Vergunningen-thema-config';
 import {
   DecosVergunning,
   VergunningFrontend,
@@ -23,5 +27,6 @@ export function useVergunningenThemaData() {
     isError: isError(VERGUNNINGEN),
     tableConfig,
     linkListItems,
+    routes,
   };
 }

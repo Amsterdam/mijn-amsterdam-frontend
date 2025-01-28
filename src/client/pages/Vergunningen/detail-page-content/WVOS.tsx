@@ -1,6 +1,6 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
-import { getRowsByKey } from './fields-config';
+import { getRows } from './fields-config';
 import {
   VergunningFrontend,
   WerkzaamhedenEnVervoerOpStraat,
@@ -10,34 +10,31 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 export function WVOSContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontend;
+  vergunning: VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
 }) {
-  const vergunningData =
-    vergunning as VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
-
-  const rowsByKey = getRowsByKey(vergunning, [
-    'identifier',
-    'location',
-    'decision',
-  ]);
-
-  const werkzaamheden = {
-    label: 'Werkzaamheden',
-    content: (
-      <UnorderedList>
-        {vergunningData.werkzaamheden.map((activiteit) => (
-          <UnorderedList.Item key={activiteit}>{activiteit}</UnorderedList.Item>
-        ))}
-      </UnorderedList>
-    ),
+  const werkzaamhedenTransformer = {
+    werkzaamheden: () => {
+      return {
+        label: 'Werkzaamheden',
+        content: (
+          <UnorderedList>
+            {vergunning.werkzaamheden.map((activiteit) => (
+              <UnorderedList.Item key={activiteit}>
+                {activiteit}
+              </UnorderedList.Item>
+            ))}
+          </UnorderedList>
+        ),
+      };
+    },
   };
 
-  const rows = [
-    rowsByKey.identifier,
-    rowsByKey.location,
-    werkzaamheden,
-    rowsByKey.decision,
-  ];
+  const rows = getRows(vergunning, [
+    'identifier',
+    'location',
+    werkzaamhedenTransformer,
+    'decision',
+  ]);
 
   return <Datalist rows={rows} />;
 }

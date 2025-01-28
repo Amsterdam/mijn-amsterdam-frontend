@@ -1,18 +1,12 @@
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
-import { BZB } from './detail-page-content/BZB';
-import { BZP } from './detail-page-content/BZP';
-import { EigenParkeerplaatsOpheffen } from './detail-page-content/EigenParkeerplaatsOpheffen';
 import { ERVV } from './detail-page-content/ERVV';
 import { EvenementMelding } from './detail-page-content/EvenementMelding';
 import { EvenementVergunning } from './detail-page-content/EvenementVergunning';
 import { Flyeren } from './detail-page-content/Flyeren';
-import { GPK } from './detail-page-content/GPK';
-import { GPPContent } from './detail-page-content/GPP';
 import { Nachtwerkontheffing } from './detail-page-content/Nachtwerkontheffing';
 import { Omzettingsvergunning } from './detail-page-content/Omzettingsvergunning';
 import { RvvHeleStad } from './detail-page-content/RvvHeleStad';
 import { RvvSloterweg } from './detail-page-content/RvvSloterweg';
-import { Touringcar } from './detail-page-content/Touringcar';
 import { TVMRVVObject } from './detail-page-content/TVMRVVObject';
 import { VOB } from './detail-page-content/VOB';
 import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
@@ -44,10 +38,6 @@ function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
         switch (vergunning.caseType) {
           case CaseTypeV2.TVMRVVObject:
             return <TVMRVVObject vergunning={vergunning} />;
-          case CaseTypeV2.GPK:
-            return <GPK vergunning={vergunning} />;
-          case CaseTypeV2.GPP:
-            return <GPPContent vergunning={vergunning} />;
           case CaseTypeV2.EvenementMelding:
             return <EvenementMelding vergunning={vergunning} />;
           case CaseTypeV2.EvenementVergunning:
@@ -56,10 +46,6 @@ function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
             return <Omzettingsvergunning vergunning={vergunning} />;
           case CaseTypeV2.ERVV:
             return <ERVV vergunning={vergunning} />;
-          case CaseTypeV2.BZP:
-            return <BZP vergunning={vergunning} />;
-          case CaseTypeV2.BZB:
-            return <BZB vergunning={vergunning} />;
           case CaseTypeV2.Flyeren:
             return <Flyeren vergunning={vergunning} />;
           case CaseTypeV2.AanbiedenDiensten:
@@ -80,13 +66,6 @@ function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
             return <RvvHeleStad vergunning={vergunning} />;
           case CaseTypeV2.RVVSloterweg:
             return <RvvSloterweg vergunning={vergunning} />;
-          case CaseTypeV2.EigenParkeerplaats:
-            return <EigenParkeerplaatsOpheffen vergunning={vergunning} />;
-          case CaseTypeV2.EigenParkeerplaatsOpheffen:
-            return <EigenParkeerplaatsOpheffen vergunning={vergunning} />;
-          case CaseTypeV2.TouringcarDagontheffing:
-          case CaseTypeV2.TouringcarJaarontheffing:
-            return <Touringcar vergunning={vergunning} />;
           case CaseTypeV2.WVOS:
             return <WVOSContent vergunning={vergunning} />;
 
@@ -105,12 +84,9 @@ function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
   );
 }
 
-interface VergunningV2DetailProps {
-  backLink: string;
-}
-
-export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
-  const { vergunningen, isLoading, isError } = useVergunningenThemaData();
+export function VergunningDetailPagina() {
+  const { vergunningen, isLoading, isError, routes } =
+    useVergunningenThemaData();
   const { vergunning, title, documents } =
     useVergunningenDetailData(vergunningen);
 
@@ -145,7 +121,7 @@ export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
           </>
         )
       }
-      backLink={backLink}
+      backLink={routes.themePage}
     />
   );
 }
