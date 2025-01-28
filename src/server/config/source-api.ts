@@ -95,6 +95,7 @@ export type SourceApiKey =
   | 'ZORGNED_JZD';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
+
 const salesforceFeatureToggle = getFromEnv(
   'BFF_SALESFORCE_FEATURE_TOGGLE_ACTIVE'
 );
