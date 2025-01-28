@@ -78,6 +78,7 @@ import { default as LandingPage } from './pages/Landing/Landing';
 import { MyNotificationsPage } from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import { Parkeren } from './pages/Parkeren/Parkeren';
+import { ParkerenDetailPagina } from './pages/Parkeren/ParkerenDetail';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import { MijnBedrijfsGegevensThema } from './pages/Profile/commercial/ProfileCommercial';
 import { ContactmomentenListPage } from './pages/Profile/private/ContactmomentenListPage';
@@ -263,11 +264,7 @@ function AppAuthenticated() {
           />
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
-            component={function VergunningDetailWrapper() {
-              return (
-                <VergunningDetailPagina backLink={AppRoutes.VERGUNNINGEN} />
-              );
-            }}
+            component={VergunningDetailPagina}
           />
           <Route
             path={AppRoutes.VERGUNNINGEN}
@@ -412,10 +409,8 @@ function AppAuthenticated() {
           <Route path={AppRoutes.SEARCH} component={Search} />
           <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />
           <Route
-            path={AppRoutes['PARKEREN/DETAIL']} // Nieuwe AppRoute
-            component={function ParkerenWrapper() {
-              return <VergunningDetailPagina backLink={AppRoutes.PARKEREN} />;
-            }}
+            path={AppRoutes['PARKEREN/DETAIL']}
+            component={ParkerenDetailPagina}
           />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
