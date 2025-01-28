@@ -427,12 +427,12 @@ async function fetchAndMergeAdressen(
 
   for (let i = 0; i < zaken.length; i++) {
     const addressResponse = getSettledResult(addressResults[i]);
-    const adres =
+    const location =
       addressResponse.status === 'OK' && addressResponse.content !== null
         ? addressResponse.content
         : '';
 
-    const zaak: BBVergunning = { ...zaken[i], adres };
+    const zaak: BBVergunning = { ...zaken[i], location };
 
     zakenWithAddress.push(zaak);
   }
@@ -490,7 +490,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     link: {
       to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
         id,
-        casetype: 'bed-and-breakfast',
+        caseType: 'bed-and-breakfast',
       }),
       title,
     },
@@ -498,7 +498,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     processed: isZaakActual({ dateEnd, decision, compareDate: new Date() }),
 
     // Added after initial transform
-    adres: null,
+    location: null,
     status: 'Ontvangen',
     documents: [],
     steps: [],

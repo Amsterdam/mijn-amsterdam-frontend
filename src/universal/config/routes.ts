@@ -43,7 +43,7 @@ export const AppRoutes = {
   'TOERISTISCHE_VERHUUR/VERGUNNING/LIST':
     '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
   'TOERISTISCHE_VERHUUR/VERGUNNING':
-    '/toeristische-verhuur/vergunning/:casetype/:id',
+    '/toeristische-verhuur/vergunning/:caseType/:id',
   VAREN: '/passagiers-en-beroepsvaart',
   'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?',
   'VAREN/DETAIL': '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',

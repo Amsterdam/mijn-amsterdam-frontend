@@ -154,6 +154,7 @@ export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
 export type DecosZakenSourceFilter = (
   decosZaakSource: DecosZaakSource
 ) => boolean;
+
 export interface DecosZaakBase {
   caseType: string;
   dateDecision: string | null;

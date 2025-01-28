@@ -117,9 +117,9 @@ function addEncryptedDocumentDownloadUrl(
   return {
     ...document,
     // Adds an url to the BFF api for document download which accepts an encrypted ID only
-    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD, [
-      { id: documentIdEncrypted },
-    ]),
+    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD, {
+      id: documentIdEncrypted,
+    }),
   };
 }
 
