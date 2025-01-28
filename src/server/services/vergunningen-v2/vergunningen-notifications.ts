@@ -9,6 +9,7 @@ import {
   VergunningFrontendV2,
 } from './config-and-types';
 import { decosCaseToZaakTransformers } from './decos-zaken';
+import { isNearEndDate } from './helpers';
 import { fetchVergunningenV2 } from './vergunningen';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { Thema, Themas } from '../../../universal/config/thema';
@@ -20,13 +21,12 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-import { getStatusDate, isNearEndDate } from '../decos/helpers';
+import { getStatusDate } from '../decos/helpers';
 
 // prettier-ignore
 export function getNotificationLabels(
   notificationLabels: Partial<NotificationLabelByType>,
   vergunning: VergunningFrontendV2,
-  vergunningen: VergunningFrontendV2[],
   compareToDate: Date = new Date()
 ) {
   // Ignore formatting of the switch case statements for readability
@@ -34,7 +34,7 @@ export function getNotificationLabels(
     // TODO: Check if we always have Verleend as decision for expirable vergunning
     case notificationLabels.verlooptBinnenkort &&
       vergunning.decision === 'Verleend' &&
-      isNearEndDate(vergunning, compareToDate):
+      isNearEndDate(vergunning.dateEnd, compareToDate):
       return notificationLabels.verlooptBinnenkort;
 
     case notificationLabels.isVerlopen &&
@@ -94,7 +94,6 @@ function mergeNotificationProperties(
 
 export function createVergunningNotification(
   vergunning: VergunningFrontendV2,
-  vergunningen: VergunningFrontendV2[],
   thema: Thema
 ): MyNotification | null {
   const zaakTypeTransformer = decosCaseToZaakTransformers[vergunning.caseType];
@@ -102,11 +101,7 @@ export function createVergunningNotification(
 
   if (labels) {
     const notificationBase = getNotificationBase(vergunning, thema);
-    const notificationLabels = getNotificationLabels(
-      labels,
-      vergunning,
-      vergunningen
-    );
+    const notificationLabels = getNotificationLabels(labels, vergunning);
     if (notificationLabels !== null) {
       return mergeNotificationProperties(
         notificationBase,
@@ -124,9 +119,7 @@ export function getVergunningNotifications(
   thema: Thema
 ) {
   return vergunningen
-    .map((vergunning, index, allVergunningen) =>
-      createVergunningNotification(vergunning, allVergunningen, thema)
-    )
+    .map((vergunning) => createVergunningNotification(vergunning, thema))
     .filter(
       (notification: MyNotification | null): notification is MyNotification =>
         notification !== null
@@ -137,7 +130,7 @@ async function fetchVergunningenV2Notifications_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
-  thema: Thema = Themas.VERGUNNINGEN
+  thema: Thema = Themas.VERGUNNINGENv2
 ) {
   const VERGUNNINGEN = await fetchVergunningenV2(
     requestID,

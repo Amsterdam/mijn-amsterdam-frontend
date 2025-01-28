@@ -1,23 +1,11 @@
-import {
-  Vergunning,
-  VergunningExpirable,
-} from '../../../server/services/vergunningen/vergunningen';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { dateSort } from '../../../universal/helpers/date';
-import { isExpired } from '../../../universal/helpers/vergunningen';
 
 export const displayPropsHuidigeVergunningen = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
   dateStartFormatted: 'Startdatum',
   dateEndFormatted: 'Einddatum',
-};
-
-export const displayPropsParkerenHuidigeVergunningen = {
-  identifier: 'Kenmerk',
-  title: 'Soort vergunning',
-  dateRequestFormatted: 'Aangevraagd',
 };
 
 export const displayPropsLopendeAanvragen = {
@@ -47,35 +35,26 @@ export const listPageTitle = {
     'Eerdere en niet verleende vergunningen en ontheffingen',
 };
 
-function isVergunningExpirable(
-  vergunning: Vergunning | VergunningFrontendV2
-): vergunning is VergunningExpirable {
-  return (vergunning as VergunningExpirable).dateEnd !== undefined;
+function isVergunningExpirable(vergunning: VergunningFrontendV2) {
+  // TODO: is this the correct check ?
+  return 'isExpired' in vergunning;
 }
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VergunningFrontendV2 | Vergunning) =>
-      !vergunning.processed,
+    filter: (vergunning: VergunningFrontendV2) => !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
-      if (FeatureToggle.vergunningenV2Active) {
+    filter: (vergunning: VergunningFrontendV2) => {
+      if (isVergunningExpirable(vergunning)) {
         return (
           vergunning.decision === 'Verleend' &&
           'isExpired' in vergunning &&
           vergunning.isExpired !== true
-        );
-      }
-      if (isVergunningExpirable(vergunning)) {
-        return (
-          vergunning.status === 'Afgehandeld' &&
-          vergunning.decision === 'Verleend' &&
-          !isExpired(vergunning, new Date())
         );
       }
       // Assume if something is not expirable then it's not expired.
@@ -85,17 +64,14 @@ export const tableConfig = {
       );
     },
     sort: dateSort('dateEnd', 'asc'),
-    displayProps: FeatureToggle.vergunningenV2Active
-      ? displayPropsHuidigeVergunningen
-      : displayPropsParkerenHuidigeVergunningen,
+    displayProps: displayPropsHuidigeVergunningen,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
+    filter: (vergunning: VergunningFrontendV2) => {
       if (isVergunningExpirable(vergunning)) {
         return (
-          vergunning.decision === 'Verleend' &&
-          isExpired(vergunning, new Date())
+          vergunning.decision === 'Verleend' && vergunning.isExpired === true
         );
       }
       return (

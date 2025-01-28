@@ -36,11 +36,6 @@ export const BffEndpoints = {
   VERGUNNINGENv2_DOCUMENT_DOWNLOAD:
     '/services/vergunningen/v2/documents/download',
 
-  // Vergunningen / Koppel api
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD:
-    '/services/vergunningen/documents/download/:id',
-  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
-
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
 

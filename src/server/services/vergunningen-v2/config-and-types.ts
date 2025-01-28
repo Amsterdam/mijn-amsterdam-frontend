@@ -11,10 +11,10 @@ import {
   DecosZaakWithLocation,
   DecosZaakWithDateTimeRange,
   ZaakStatus,
-  ZakenFilter,
 } from '../decos/decos-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
+export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 export const EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA: DecosCaseType[] = [
   CaseTypeV2.VakantieverhuurVergunningaanvraag,
@@ -264,19 +264,12 @@ export type VergunningV2 =
   | TouringcarJaarontheffing
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type HorecaVergunningen = ExploitatieHorecabedrijf;
-
 export type VergunningenSourceData = {
   content?: VergunningV2[];
   status: 'OK' | 'ERROR';
 };
 
 export type DecosZaakExpirable = VergunningV2 & { dateEnd?: string | null };
-
-export interface VergunningOptions {
-  filter?: ZakenFilter;
-  appRoute: string | ((vergunning: VergunningV2) => string);
-}
 
 export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
   dateDecisionFormatted?: string | null;
@@ -286,7 +279,13 @@ export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
   isExpired?: boolean;
+  // Url to vergunning detail page api
+  fetchUrl: string;
+  // Url to documents list api
+  fetchDocumentsUrl: string | null;
 } & ZaakDetail;
+
+export type HorecaVergunning = VergunningFrontendV2<ExploitatieHorecabedrijf>;
 
 export type NotificationProperty =
   | 'title'

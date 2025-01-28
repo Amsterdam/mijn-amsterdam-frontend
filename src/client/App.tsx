@@ -18,7 +18,6 @@ import MainHeaderHero from './components/MainHeaderHero/MainHeaderHero';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
-import { ThemaTitles } from './config/thema';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
@@ -88,11 +87,9 @@ import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/Toeristisch
 import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
 import Varen from './pages/Varen/Varen';
-import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
-import Vergunningen from './pages/Vergunningen/Vergunningen';
-import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
-import VergunningenV2 from './pages/VergunningenV2/Vergunningen';
+import { VergunningDetailPagina } from './pages/VergunningenV2/VergunningDetail';
 import { VergunningenList } from './pages/VergunningenV2/VergunningenList';
+import { VergunningenThemaPagina } from './pages/VergunningenV2/VergunningenThemaPagina';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import ZorgThemaPagina from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
@@ -255,32 +252,21 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
-          {FeatureToggle.vergunningenV2Active && (
-            <Route
-              path={AppRoutes['VERGUNNINGEN/LIST']}
-              component={VergunningenList}
-            />
-          )}
+          <Route
+            path={AppRoutes['VERGUNNINGEN/LIST']}
+            component={VergunningenList}
+          />
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
             component={function VergunningDetailWrapper() {
-              return FeatureToggle.vergunningenV2Active ? (
-                <VergunningV2Detail backLink={AppRoutes.VERGUNNINGEN} />
-              ) : (
-                <VergunningDetail
-                  backLink={{
-                    to: AppRoutes.VERGUNNINGEN,
-                    title: ThemaTitles.VERGUNNINGEN,
-                  }}
-                />
+              return (
+                <VergunningDetailPagina backLink={AppRoutes.VERGUNNINGEN} />
               );
             }}
           />
           <Route
             path={AppRoutes.VERGUNNINGEN}
-            component={
-              FeatureToggle.vergunningenV2Active ? VergunningenV2 : Vergunningen
-            }
+            component={VergunningenThemaPagina}
           />
           <Route
             path={AppRoutes['KLACHTEN/KLACHT']}
@@ -420,16 +406,7 @@ function AppAuthenticated() {
           <Route
             path={AppRoutes['PARKEREN/DETAIL']} // Nieuwe AppRoute
             component={function ParkerenWrapper() {
-              return FeatureToggle.vergunningenV2Active ? (
-                <VergunningV2Detail backLink={AppRoutes.PARKEREN} />
-              ) : (
-                <VergunningDetail
-                  backLink={{
-                    to: AppRoutes.PARKEREN,
-                    title: ThemaTitles.PARKEREN,
-                  }}
-                />
-              );
+              return <VergunningDetailPagina backLink={AppRoutes.PARKEREN} />;
             }}
           />
           <Route path={AppRoutes.PARKEREN} component={Parkeren} />
