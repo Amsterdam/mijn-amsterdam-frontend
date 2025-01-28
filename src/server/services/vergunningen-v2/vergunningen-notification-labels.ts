@@ -2,8 +2,6 @@ import { subMonths } from 'date-fns';
 
 import {
   NotificationLabels,
-  RVVSloterweg,
-  DecosZaakExpirable,
   VergunningFrontendV2,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from './config-and-types';
@@ -43,7 +41,7 @@ const statusAfgehandeld: NotificationLabels = {
 const verlooptBinnenkort: NotificationLabels = {
   title: (vergunning) => `Uw ${vergunning.title} loopt af`,
   description: (vergunning) => `Uw ${vergunning.title} loopt binnenkort af.`,
-  datePublished: (vergunning: DecosZaakExpirable) =>
+  datePublished: (vergunning) =>
     vergunning.dateEnd
       ? dateFormat(
           subMonths(
@@ -62,7 +60,7 @@ const verlooptBinnenkort: NotificationLabels = {
 const isVerlopen: NotificationLabels = {
   title: (vergunning) => `Uw ${vergunning.caseType} is verlopen`,
   description: (vergunning) => `Uw ${vergunning.title} is verlopen.`,
-  datePublished: (vergunning: DecosZaakExpirable) => vergunning.dateEnd,
+  datePublished: (vergunning) => vergunning.dateEnd,
   link: (vergunning) => ({
     title: `Vraag zonodig een nieuwe vergunning aan`,
     to: vergunning.link.to,
@@ -73,22 +71,24 @@ const isIngetrokken: NotificationLabels = {
   ...statusAfgehandeld,
   title: (vergunning) =>
     `Aanvraag${
-      (vergunning as RVVSloterweg).requestType === 'Wijziging'
+      'requestType' in vergunning && vergunning.requestType === 'Wijziging'
         ? ' kentekenwijziging'
         : ''
     } ${vergunning.title} ingetrokken`,
   description: (vergunning) =>
     `Wij hebben uw aanvraag voor een${
-      (vergunning as RVVSloterweg).requestType === 'Wijziging'
+      'requestType' in vergunning && vergunning.requestType === 'Wijziging'
         ? ' kentekenwijziging'
         : ''
-    } RVV ontheffing ${(vergunning as RVVSloterweg).area}
+    } RVV ontheffing ${'area' in vergunning ? vergunning.area : ''}
         ${
-          (vergunning as RVVSloterweg).requestType === 'Wijziging'
-            ? `van (${(vergunning as RVVSloterweg).vorigeKentekens}) naar `
+          'requestType' in vergunning &&
+          'vorigeKentekens' in vergunning &&
+          vergunning.requestType === 'Wijziging'
+            ? `van (${vergunning.vorigeKentekens}) naar `
             : ''
         }
-        (${(vergunning as RVVSloterweg).kentekens}) ingetrokken.`,
+        (${'kentekens' in vergunning ? vergunning.kentekens : ''}) ingetrokken.`,
 };
 
 export const caseNotificationLabelsDefault = {

@@ -76,19 +76,20 @@ export type BBVergunningZaakResult =
   | null;
 
 export interface BBVergunning extends ZaakDetail {
-  heeftOvergangsRecht: boolean;
   adres: string | null;
-  dateReceived: string | null;
   dateDecision: string | null;
-  dateStart: string;
-  dateStartFormatted: string | null;
   dateEnd: string | null;
   dateEndFormatted: string | null;
-  isActual: boolean;
-  result: BBVergunningZaakResult;
-  status: BBVergunningZaakStatus | BBVergunningZaakResult;
-  zaaknummer: string;
+  dateRequest: string | null;
+  dateRequestFormatted: string | null;
+  dateStart: string;
+  dateStartFormatted: string | null;
+  decision: BBVergunningZaakResult;
   documents: GenericDocument[];
+  heeftOvergangsRecht: boolean;
+  identifier: string;
+  processed: boolean;
+  status: BBVergunningZaakStatus | BBVergunningZaakResult;
   title: 'Vergunning bed & breakfast';
 }
 
