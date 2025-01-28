@@ -15,7 +15,6 @@ import {
 } from './decos-types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
-import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
@@ -120,7 +119,7 @@ export function getDecosZaakTypeFromSource<T extends DecosZaakSource>(
   decosZaakSource: T
 ) {
   // TODO: Base this on the transformer or DZ?
-  return decosZaakSource.fields.text45 as DecosCaseType;
+  return decosZaakSource.fields.text45;
 }
 
 export function transformBoolean(input: unknown) {
