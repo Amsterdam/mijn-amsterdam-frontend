@@ -30,7 +30,7 @@ export function transformVergunningFrontend<V extends DecosZaakBase>(
   );
 
   const fetchDocumentsUrl = `${generateFullApiUrlBFF(
-    BffEndpoints.VERGUNNINGEN_DOCUMENTS_LIST
+    BffEndpoints.DECOS_DOCUMENTS_LIST
   )}?id=${idEncrypted}`;
 
   const detailPageRoute = generatePath(appRoute, {

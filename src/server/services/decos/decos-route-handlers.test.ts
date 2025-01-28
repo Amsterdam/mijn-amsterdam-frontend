@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { fetchVergunningDocumentsList } from './vergunningen-route-handlers';
+import { fetchDecosDocumentsList } from './decos-route-handlers';
+import { fetchDecosDocumentList } from './decos-service';
 import {
   getAuthProfileAndToken,
   RequestMock,
@@ -8,7 +9,6 @@ import {
 } from '../../../testing/utils';
 import { getAuth } from '../../auth/auth-helpers';
 import { RequestWithQueryParams } from '../../routing/route-helpers';
-import { fetchDecosDocumentList } from '../decos/decos-service';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 vi.mock('../decos/decos-service');
@@ -58,7 +58,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseMock.new();
 
-    await fetchVergunningDocumentsList(
+    await fetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );
@@ -75,7 +75,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseMock.new();
 
-    await fetchVergunningDocumentsList(
+    await fetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );
@@ -99,7 +99,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseMock.new();
 
-    await fetchVergunningDocumentsList(
+    await fetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );

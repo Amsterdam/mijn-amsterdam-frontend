@@ -31,8 +31,9 @@ export const BffEndpoints = {
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
 
+  // Decos
+  DECOS_DOCUMENTS_LIST: `/services/vergunningen/v2/documents`,
   // Vergunningen V2
-  VERGUNNINGEN_DOCUMENTS_LIST: `/services/vergunningen/v2/documents`,
   VERGUNNINGEN_DOCUMENT_DOWNLOAD:
     '/services/vergunningen/v2/documents/download',
 
