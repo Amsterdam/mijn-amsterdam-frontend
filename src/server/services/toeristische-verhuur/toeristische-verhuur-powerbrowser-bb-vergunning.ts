@@ -102,7 +102,7 @@ async function fetchPowerBrowserData<T>(
 async function fetchPersoonOrMaatschapIdByUid(
   requestID: RequestID,
   options: FetchPersoonOrMaatschapIdByUidOptions
-) {
+): Promise<ApiResponse<string | null>> {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/SearchRequest`;
@@ -135,7 +135,7 @@ async function fetchPersoonOrMaatschapIdByUid(
 async function fetchZaakIds(
   requestID: RequestID,
   options: FetchZaakIdsOptions
-) {
+): Promise<ApiResponse<string[]>> {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
@@ -152,7 +152,7 @@ async function fetchZaakIds(
 function getFieldValue(
   pbFieldName: PBZaakFields['fieldName'],
   pbZaakFields: PBZaakFields[]
-) {
+): string | null {
   const pbField = pbZaakFields.find((field) => field.fieldName === pbFieldName);
 
   switch (pbFieldName) {
@@ -212,7 +212,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 function transformZaakStatusResponse(
   zaak: BBVergunning,
   statusResponse: PowerBrowserStatusResponse
-) {
+): StatusLineItem[] {
   function getStatusDate(status: string[]) {
     const datum =
       statusResponse?.find(({ omschrijving }) => status.includes(omschrijving))
@@ -418,7 +418,7 @@ async function fetchAndMergeZaakStatussen(
 async function fetchAndMergeAdressen(
   requestID: RequestID,
   zaken: BBVergunning[]
-) {
+): Promise<BBVergunning[]> {
   const addressRequests = zaken.map((zaak) => {
     return fetchZaakAdres(requestID, zaak.id);
   });
@@ -448,7 +448,7 @@ function isZaakActual({
   result: BBVergunningZaakResult;
   dateEnd: string | null;
   compareDate: string | Date | null;
-}) {
+}): boolean {
   if (!result) {
     return true;
   }
@@ -651,7 +651,7 @@ const documentNamenMA_PB = {
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
-) {
+): BBVergunning['documents'] {
   type PBDocument = {
     [K in PBDocumentFields['fieldName']]: string;
   };
@@ -736,7 +736,7 @@ export async function fetchBBDocument(
   requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
   documentId: string
-) {
+): Promise<ApiResponse<DocumentDownloadData>> {
   const tokenResponse = await fetchPowerBrowserToken();
 
   if (tokenResponse.status === 'ERROR') {
