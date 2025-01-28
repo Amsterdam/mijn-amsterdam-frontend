@@ -31,6 +31,8 @@ function ExploitatieHorecaBedrijf({
     'decision',
   ]);
 
+  console.log('rrr', rows);
+
   return <Datalist rows={rows} />;
 }
 
@@ -49,6 +51,9 @@ export function HorecaDetailPagina() {
       pageContentTop={
         vergunning && (
           <>
+            <PageContentCell>
+              <ExploitatieHorecaBedrijf vergunning={vergunning} />
+            </PageContentCell>
             {!!documents.length && (
               <PageContentCell spanWide={8}>
                 <Datalist
