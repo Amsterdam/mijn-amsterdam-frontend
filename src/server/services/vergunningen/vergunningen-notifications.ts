@@ -5,7 +5,6 @@ import {
   NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
   NotificationLabelByType,
   NotificationLabels,
-  NotificationProperty,
   VergunningFrontend,
 } from './config-and-types';
 import { decosCaseToZaakTransformers } from './decos-zaken';
@@ -19,6 +18,7 @@ import {
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
+import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getStatusDate } from '../decos/helpers';
@@ -69,7 +69,10 @@ export function getNotificationLabels(
   return null;
 }
 
-function getNotificationBase(vergunning: VergunningFrontend, thema: Thema) {
+function getNotificationBase(
+  vergunning: VergunningFrontend,
+  thema: Thema
+): Pick<MyNotification, 'thema' | 'id' | 'link'> {
   const notificationBaseProperties = {
     thema: thema,
     id: `vergunning-${vergunning.id}-notification`,
@@ -82,21 +85,26 @@ function getNotificationBase(vergunning: VergunningFrontend, thema: Thema) {
 }
 
 function mergeNotificationProperties(
-  notification: Partial<MyNotification>,
+  notificationBase: Pick<MyNotification, 'thema' | 'id' | 'link'>,
   content: NotificationLabels,
   vergunning: VergunningFrontend
-) {
-  for (const [key, getValue] of Object.entries(content)) {
-    notification[key as NotificationProperty] = getValue(vergunning);
-  }
-  return notification as MyNotification;
+): MyNotification {
+  const notificationLabels: Pick<MyNotification, keyof typeof content> = {
+    title: content.title(vergunning),
+    description: content.description(vergunning),
+    datePublished: content.datePublished(vergunning),
+    link: content.link(vergunning),
+  };
+
+  return { ...notificationBase, ...notificationLabels };
 }
 
 export function createVergunningNotification(
   vergunning: VergunningFrontend,
   thema: Thema
 ): MyNotification | null {
-  const zaakTypeTransformer = decosCaseToZaakTransformers[vergunning.caseType];
+  const zaakTypeTransformer =
+    decosCaseToZaakTransformers[vergunning.caseType as DecosCaseType];
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
