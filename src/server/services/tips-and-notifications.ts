@@ -22,7 +22,7 @@ import {
   fetchContentTips,
   prefixTipNotification,
 } from './content-tips/tips-service';
-import { fetchHorecaNotifications } from './horeca';
+import { fetchHorecaNotifications } from './horeca/horeca';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia';
 import {
