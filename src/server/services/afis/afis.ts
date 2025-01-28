@@ -58,7 +58,7 @@ async function fetchAfisTokenHeader_(
     Authorization: string;
   } | null>(dataRequestConfig, requestID);
 
-  if (tokenHeaderResponse.status !== 'OK') {
+  if (tokenHeaderResponse.status === 'ERROR') {
     throw new Error('AFIS: Could not fetch token');
   }
 
