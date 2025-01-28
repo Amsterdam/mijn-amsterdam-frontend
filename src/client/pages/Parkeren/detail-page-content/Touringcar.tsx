@@ -1,8 +1,8 @@
-import {
+import type {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
-  VergunningFrontend,
-} from '../../../../server/services/vergunningen/config-and-types';
+} from '../../../../server/services/parkeren/config-and-types';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import {
   dateTimeFormatYear,
   defaultDateFormat,
