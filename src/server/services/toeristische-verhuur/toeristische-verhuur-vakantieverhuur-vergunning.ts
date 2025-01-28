@@ -81,7 +81,7 @@ export async function fetchVakantieverhuurVergunningen(
         const vergunningTransformed = transformVergunningFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
-          AppRoutes['HORECA/DETAIL']
+          AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']
         );
 
         return {
