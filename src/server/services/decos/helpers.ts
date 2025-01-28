@@ -2,7 +2,7 @@ import type {
   DecosZaakTransformer,
   DecosZaakSource,
   DecosZaakBase,
-  DecosZaakWithKentekens,
+  WithKentekens,
   ZaakStatus,
   DecosFieldValue,
 } from './decos-types';
@@ -103,7 +103,7 @@ export const translateValue =
   };
 
 export function getCustomTitleForDecosZaakWithLicensePlates(
-  decosZaak: DecosZaakWithKentekens
+  decosZaak: DecosZaakBase & WithKentekens
 ) {
   if ('kentekens' in decosZaak) {
     const plates = decosZaak.kentekens?.split(' | ');
