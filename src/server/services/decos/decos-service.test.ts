@@ -382,10 +382,11 @@ describe('decos-service', () => {
       expect(
         calls
           .slice(numberOfAddressBooksToSearch, numberOfAddressBooksToSearch * 2)
-          .every((url) =>
-            url?.includes(
-              'http://remote-api-host/decos/items/123456789/folders?top=50&select='
-            )
+          .every(
+            (url) =>
+              url?.startsWith(
+                'http://remote-api-host/decos/items/123456789/folders?'
+              ) && url?.includes('select=fields')
           )
       ).toBe(true);
       expect(
