@@ -3,7 +3,6 @@ export { default as ApplicationError } from '../pages/ApplicationError/Applicati
 export { default as AutoLogoutDialog } from './AutoLogoutDialog/AutoLogoutDialog';
 export { default as ThemaIcon } from './ThemaIcon/ThemaIcon';
 export { default as DateInput } from './DateInput/DateInput';
-export { default as DocumentList } from './DocumentList/DocumentList';
 export { default as ErrorMessages } from './ErrorMessages/ErrorMessages';
 export { default as InfoDetail } from './InfoDetail/InfoDetail';
 export { default as LoadingContent } from './LoadingContent/LoadingContent';
