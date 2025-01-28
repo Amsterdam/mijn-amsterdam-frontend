@@ -32,8 +32,8 @@ interface ThemaPaginaProps {
   icon?: ReactElement;
   pageContentTop: ReactNode;
   pageContentMain: ReactNode;
-  linkListItems: LinkProps[];
-  buttonItems: LinkProps[];
+  linkListItems?: LinkProps[];
+  buttonItems?: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
