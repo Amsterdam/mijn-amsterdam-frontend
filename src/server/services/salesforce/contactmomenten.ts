@@ -50,12 +50,9 @@ export async function fetchContactmomenten(
     Buffer.from(base64encodedPK, 'base64')
   );
 
-  const addEnv = IS_TEST ? '/dev' : '';
-  console.log('env Test?', IS_TEST);
-
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/contactmomenten${addEnv}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+      return `${url}/contactmomenten${IS_TEST ? '/dev' : ''}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     params: {
       hadBetrokkene__uuid: encodeURIComponent(
