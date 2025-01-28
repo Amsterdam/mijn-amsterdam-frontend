@@ -1,5 +1,5 @@
 import { LinkProps, ZaakDetail } from '../../../universal/types';
-import { GetCaseType } from '../../../universal/types/decos-zaken';
+import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   WithDateRange,
   WithKentekens,
@@ -30,7 +30,7 @@ export type GPK = DecosZaakBase &
 
 export type GPP = DecosZaakBase & {
   location: string | null;
-  caseType: GetCaseType<'GPP'>;
+  caseType: typeof CaseTypeV2.GPP;
   kentekens: string | null;
 };
 
