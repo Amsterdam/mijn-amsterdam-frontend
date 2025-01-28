@@ -1,4 +1,5 @@
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { SomeOtherString } from '../../../../universal/helpers/types';
 import { entries } from '../../../../universal/helpers/utils';
 import { Row, RowSet } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
@@ -13,11 +14,11 @@ type VergunningDataListRow<T extends VergunningFrontend> = (
 ) => Row | RowSet | null;
 
 type RowTransformer<T extends VergunningFrontend> = Record<
-  string,
+  keyof T | SomeOtherString,
   VergunningDataListRow<T>
 >;
 
-export const commonTransformers: RowTransformer<VergunningFrontend> = {
+export const commonTransformers: Partial<RowTransformer<VergunningFrontend>> = {
   identifier: (vergunning) => ({
     label: 'Kenmerk',
     content: vergunning.identifier,
@@ -95,22 +96,32 @@ export function getRowsByKey<T extends VergunningFrontend>(
   const rows = keysOrTransformers
     .map((keyOrTransformer) => {
       if (typeof keyOrTransformer === 'string') {
+        const commonTransformer = commonTransformers[keyOrTransformer];
+        const defaultRow = vergunning[keyOrTransformer]
+          ? {
+              label: keyOrTransformer,
+              content: vergunning[keyOrTransformer],
+            }
+          : null;
         return [
           keyOrTransformer,
-          commonTransformers[keyOrTransformer]?.(vergunning) || {
-            label: keyOrTransformer,
-            content: vergunning[keyOrTransformer] ?? null,
-          },
+          typeof commonTransformer === 'function'
+            ? commonTransformer(vergunning)
+            : defaultRow,
         ];
       }
 
-      const [key, transformer] = entries(keyOrTransformer)[0];
+      const [key, transformer] = entries(
+        keyOrTransformer as RowTransformer<T>
+      )[0] as [keyof T, VergunningDataListRow<T>];
 
       return [
         key,
         typeof transformer === 'function'
           ? transformer(vergunning) // Cannot determine the type of the transformer function.
-          : { label: key, content: vergunning[key] },
+          : vergunning[key]
+            ? { label: key, content: vergunning[key] }
+            : null,
       ];
     })
     .filter(([_, row]) => row !== null);
@@ -122,5 +133,6 @@ export function getRows<T extends VergunningFrontend>(
   vergunning: T,
   keysOrTransformers: (keyof T | RowTransformer<T>)[]
 ): Array<Row | RowSet> {
-  return Object.values(getRowsByKey(vergunning, keysOrTransformers));
+  const rowsByKey = getRowsByKey(vergunning, keysOrTransformers);
+  return Object.values(rowsByKey);
 }
