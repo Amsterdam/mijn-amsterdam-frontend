@@ -1,9 +1,7 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import type {
-  BZB,
-  VergunningFrontend,
-} from '../../../../server/services/vergunningen/config-and-types';
+import type { BZB } from '../../../../server/services/parkeren/config-and-types';
+import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
 import InfoDetail, {

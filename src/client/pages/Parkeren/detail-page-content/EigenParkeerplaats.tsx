@@ -1,11 +1,11 @@
 import { Link } from '@amsterdam/design-system-react';
 
-import { Location } from './Location';
-import type { EigenParkeerplaats } from '../../../../server/services/vergunningen/config-and-types';
+import type { EigenParkeerplaats } from '../../../../server/services/parkeren/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';
+import { Location } from '../../Vergunningen/detail-page-content/Location';
 
 export function EigenParkeerplaats({
   vergunning,

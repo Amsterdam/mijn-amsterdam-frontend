@@ -1,9 +1,7 @@
-import { getRows } from './fields-config';
-import {
-  GPP,
-  VergunningFrontend,
-} from '../../../../server/services/vergunningen/config-and-types';
+import type { GPP } from '../../../../server/services/parkeren/config-and-types';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
+import { getRows } from '../../Vergunningen/detail-page-content/fields-config';
 
 export function GPPContent({
   vergunning,

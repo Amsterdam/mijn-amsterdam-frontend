@@ -1,14 +1,14 @@
 import { Link } from '@amsterdam/design-system-react';
 
-import { Location } from './Location';
-import type { EigenParkeerplaatsOpheffen as EigenParkeerplaatsOpheffenType } from '../../../../server/services';
+import type { EigenParkeerplaatsOpheffen } from '../../../../server/services/parkeren/config-and-types';
 import InfoDetail from '../../../components/InfoDetail/InfoDetail';
 import styles from '../../../components/LocationModal/LocationModal.module.scss';
+import { Location } from '../../Vergunningen/detail-page-content/Location';
 
 export function EigenParkeerplaatsOpheffen({
   vergunning,
 }: {
-  vergunning: EigenParkeerplaatsOpheffenType;
+  vergunning: EigenParkeerplaatsOpheffen;
 }) {
   const isAfgehandeld = vergunning.processed;
   const { street, type, url, houseNumber } = vergunning.location;
