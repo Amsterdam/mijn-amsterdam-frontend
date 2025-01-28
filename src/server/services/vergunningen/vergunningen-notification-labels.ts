@@ -34,7 +34,7 @@ const statusAfgehandeld: NotificationLabels = {
   title: (vergunning) => `Aanvraag ${vergunning.title} afgehandeld`,
   description: (vergunning) =>
     `Wij hebben uw aanvraag ${vergunning.title} afgehandeld.`,
-  datePublished: (vergunning) => vergunning.dateDecision,
+  datePublished: (vergunning) => vergunning.dateDecision ?? '',
   link,
 };
 
@@ -50,7 +50,7 @@ const verlooptBinnenkort: NotificationLabels = {
           ),
           'yyyy-MM-dd'
         )
-      : null,
+      : '',
   link: (vergunning) => ({
     title: `Vraag tijdig een nieuwe vergunning aan`,
     to: vergunning.link.to,
@@ -60,7 +60,7 @@ const verlooptBinnenkort: NotificationLabels = {
 const isVerlopen: NotificationLabels = {
   title: (vergunning) => `Uw ${vergunning.caseType} is verlopen`,
   description: (vergunning) => `Uw ${vergunning.title} is verlopen.`,
-  datePublished: (vergunning) => vergunning.dateEnd,
+  datePublished: (vergunning) => vergunning.dateEnd ?? '',
   link: (vergunning) => ({
     title: `Vraag zonodig een nieuwe vergunning aan`,
     to: vergunning.link.to,
