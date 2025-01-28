@@ -361,7 +361,7 @@ function AppAuthenticated() {
               component={LoodMeting}
             />
           )}
-          {FeatureToggle.klantContactmomentenActive && (
+          {FeatureToggle.contactmomentenActive && (
             <Route
               path={AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']}
               component={ContactmomentenListPage}
