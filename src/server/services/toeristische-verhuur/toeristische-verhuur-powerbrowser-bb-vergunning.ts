@@ -64,8 +64,8 @@ function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
       apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
     },
   });
-  // Token is shared between all requests so we don't give a requestID here.
-  return requestData<PowerBrowserToken>(requestConfig, '');
+  // Token is shared between all requests so we give a fixed requestID here.
+  return requestData<PowerBrowserToken>(requestConfig, 	'powerbrowser-token');
 }
 
 /** Fetch any data from Powerbrowser by extending a default `dataRequestConfig`. */
@@ -161,12 +161,12 @@ function getFieldValue(
 
 function getZaakStatus(
   zaak: BBVergunning
-): BBVergunning['status'] | BBVergunning['result'] {
+): BBVergunning['status'] | BBVergunning['decision'] {
   const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
     ?.status as BBVergunning['status'];
 
-  if (lastStepStatus !== 'Verlopen' && zaak.result) {
-    return zaak.result;
+  if (lastStepStatus !== 'Verlopen' && zaak.decision) {
+    return zaak.decision;
   }
 
   return lastStepStatus ?? 'Ontvangen';
@@ -177,7 +177,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
     return null;
   }
 
-  const resultaatTransformed: BBVergunning['result'] = resultaat;
+  const resultaatTransformed: BBVergunning['decision'] = resultaat;
 
   const resultatenVerleend = [
     'Verleend met overgangsrecht',
@@ -229,17 +229,17 @@ function transformZaakStatusResponse(
   const statusOntvangen: StatusLineItem = {
     id: 'step-1',
     status: 'Ontvangen',
-    datePublished: zaak.dateReceived ?? '',
+    datePublished: zaak.dateRequest ?? '',
     isActive: true,
     isChecked: true,
   };
 
   const isVerlopen =
-    zaak.result === 'Verleend' && zaak.dateEnd
+    zaak.decision === 'Verleend' && zaak.dateEnd
       ? isDateInPast(zaak.dateEnd, new Date())
       : false;
   const hasInBehandeling = !!datumInBehandeling;
-  const hasDecision = !!zaak.result && !!dateDecision;
+  const hasDecision = !!zaak.decision && !!dateDecision;
   const hasMeerInformatieNodig = !!datumMeerInformatie;
   const isMeerInformatieStepActive =
     hasMeerInformatieNodig && !hasDecision && !hasInBehandeling;
@@ -437,18 +437,18 @@ async function fetchAndMergeAdressen(
 }
 
 function isZaakActual({
-  result,
+  decision,
   dateEnd,
   compareDate,
 }: {
-  result: BBVergunningZaakResult;
+  decision: BBVergunningZaakResult;
   dateEnd: string | null;
   compareDate: string | Date | null;
-}): boolean {
-  if (!result) {
+}) {
+  if (!decision) {
     return true;
   }
-  if (result !== 'Verleend') {
+  if (decision !== 'Verleend') {
     return false;
   }
   return !!dateEnd && !!compareDate && !isDateInPast(dateEnd, compareDate);
@@ -462,23 +462,27 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
   ) as PBZaakCompacted;
 
   const title = 'Vergunning bed & breakfast';
-  const result = getZaakResultaat(pbZaak.result);
+  const decision = getZaakResultaat(pbZaak.result);
   // The permit is valid from the date we have a decision.
   const dateStart =
-    result === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
-  const dateEnd = result === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
+    decision === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
+  const dateEnd =
+    decision === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
 
   return {
-    dateReceived: pbZaak.dateReceived,
+    dateRequest: pbZaak.dateReceived,
+    dateRequestFormatted: pbZaak.dateReceived
+      ? defaultDateFormat(pbZaak.dateReceived)
+      : pbZaak.dateReceived,
     dateDecision: pbZaak.dateDecision,
     dateStart,
     dateStartFormatted: dateStart ? defaultDateFormat(dateStart) : '-',
     dateEnd,
     dateEndFormatted: dateEnd ? defaultDateFormat(dateEnd) : '-',
-    result,
+    decision,
     id,
-    zaaknummer: pbZaak.zaaknummer ?? zaak.id,
+    identifier: pbZaak.zaaknummer ?? zaak.id,
     link: {
       to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
         id,
@@ -487,7 +491,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
       title,
     },
     title,
-    isActual: isZaakActual({ dateEnd, result, compareDate: new Date() }),
+    processed: isZaakActual({ dateEnd, decision, compareDate: new Date() }),
 
     // Added after initial transform
     adres: null,
