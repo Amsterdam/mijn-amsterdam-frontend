@@ -1,17 +1,12 @@
-import { PARKEER_CASE_TYPES } from './Parkeren.config';
-import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
+import { PARKEER_CASE_TYPES } from './Parkeren-thema-config';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useVergunningenTransformed } from '../Vergunningen/useVergunningenTransformed.hook';
-import { tableConfig } from '../VergunningenV2/config';
+import { tableConfig } from '../VergunningenV2/Vergunningen-thema-config';
 
-function getVergunningenFromThemaVergunningen(
-  content: VergunningFrontendV2[] | Vergunning[] | null
-) {
+function getVergunningenFromThemaVergunningen(content: VergunningFrontendV2[]) {
   const vergunningen = (content ?? [])
     .filter((vergunning) => {
       return PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType);
@@ -23,21 +18,16 @@ function getVergunningenFromThemaVergunningen(
         to: vergunning.link.to.replace('vergunningen', 'parkeren'),
       },
     }));
-  return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
+
+  return addLinkElementToProperty<VergunningFrontendV2>(
     vergunningen,
     'identifier'
   );
 }
 
 export function useParkerenData() {
-  const { VERGUNNINGENv2, VERGUNNINGEN, PARKEREN } = useAppStateGetter();
-  const vergunningenState = FeatureToggle.vergunningenV2Active
-    ? VERGUNNINGENv2
-    : VERGUNNINGEN;
-  const vergunningen =
-    (vergunningenState === VERGUNNINGEN
-      ? useVergunningenTransformed(VERGUNNINGEN)
-      : VERGUNNINGENv2.content) ?? [];
+  const { VERGUNNINGENv2, PARKEREN } = useAppStateGetter();
+  const vergunningen = VERGUNNINGENv2.content ?? [];
 
   const parkeerVergunningenFromThemaVergunningen =
     getVergunningenFromThemaVergunningen(vergunningen);
@@ -47,8 +37,8 @@ export function useParkerenData() {
     tableConfig,
     parkeerVergunningenFromThemaVergunningen,
     hasMijnParkerenVergunningen,
-    isLoading: isLoading(vergunningenState) || isLoading(PARKEREN),
-    isError: isError(vergunningenState) || isError(PARKEREN),
+    isLoading: isLoading(VERGUNNINGENv2) || isLoading(PARKEREN),
+    isError: isError(VERGUNNINGENv2) || isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
     linkListItems: [

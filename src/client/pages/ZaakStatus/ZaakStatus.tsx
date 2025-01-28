@@ -37,12 +37,12 @@ const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: {
     baseRoute: AppRoutes.VERGUNNINGEN,
     getRoute: (detailPageItemId, appState) => {
-      if (isError(appState.VERGUNNINGEN)) {
+      if (isError(appState.VERGUNNINGENv2)) {
         return STATE_ERROR;
       }
-      if (!isLoading(appState.VERGUNNINGEN)) {
+      if (!isLoading(appState.VERGUNNINGENv2)) {
         return (
-          (appState.VERGUNNINGEN.content || []).find(
+          (appState.VERGUNNINGENv2.content || []).find(
             (vergunning) => vergunning.identifier === detailPageItemId
           )?.link.to ?? ITEM_NOT_FOUND
         );

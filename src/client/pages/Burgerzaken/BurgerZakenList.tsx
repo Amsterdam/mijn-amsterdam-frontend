@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useBurgerZakenData } from './useBurgerZakenData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ListPageParamKind } from '../VergunningenV2/config';
+import { ListPageParamKind } from '../VergunningenV2/Vergunningen-thema-config';
 
 export function BurgerZakenList() {
   const { documents, isLoading, isError, tableConfig } = useBurgerZakenData();

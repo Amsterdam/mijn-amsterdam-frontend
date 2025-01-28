@@ -10,7 +10,7 @@ import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
 import { ParkerenList } from './ParkerenList';
 import { appStateAtom } from '../../hooks/useAppState';
-import { listPageParamKind } from '../VergunningenV2/config';
+import { listPageParamKind } from '../VergunningenV2/Vergunningen-thema-config';
 
 const testState = {
   PARKEREN: {

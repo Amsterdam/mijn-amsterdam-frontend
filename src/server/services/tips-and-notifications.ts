@@ -34,7 +34,6 @@ import {
 } from './simple-connect';
 import { fetchSVWINotifications } from './simple-connect/svwi';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
-import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
@@ -65,9 +64,7 @@ const notificationServices: NotificationServicesByProfileType = {
     afis: fetchAfisNotifications,
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
-    vergunningen: FeatureToggle.vergunningenV2Active
-      ? fetchVergunningenV2Notifications
-      : fetchVergunningenNotifications,
+    vergunningen: fetchVergunningenV2Notifications,
     horeca: fetchHorecaNotifications,
     erfpacht: fetchErfpachtNotifications,
     maintenanceNotifications: (requestID: RequestID) =>
@@ -107,9 +104,7 @@ const notificationServices: NotificationServicesByProfileType = {
     overtredingen: fetchOvertredingenNotifications,
     subsidie: fetchSubsidieNotifications,
     toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
-    vergunningen: FeatureToggle.vergunningenV2Active
-      ? fetchVergunningenV2Notifications
-      : fetchVergunningenNotifications,
+    vergunningen: fetchVergunningenV2Notifications,
   },
 };
 

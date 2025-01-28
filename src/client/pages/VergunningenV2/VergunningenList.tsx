@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { ListPageParamKind, tableConfig } from './config';
+import { ListPageParamKind, tableConfig } from './Vergunningen-thema-config';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
