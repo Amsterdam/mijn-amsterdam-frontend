@@ -59,6 +59,7 @@ export async function fetchContactmomenten(
     params: {
       hadBetrokkene__uuid: encryptedBSN.toString('base64'),
       iv: iv.toString('base64'),
+      pageSize: 100,
     },
     transformResponse: transformContactmomentenResponse,
   };
