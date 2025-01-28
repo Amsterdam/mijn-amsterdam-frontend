@@ -14,7 +14,7 @@ export function useVergunningenThemaData() {
   const { VERGUNNINGEN } = useAppStateGetter();
   const vergunningen = addLinkElementToProperty<
     VergunningFrontend<DecosVergunning>
-  >(VERGUNNINGEN.content ?? [], 'title', true);
+  >(VERGUNNINGEN.content ?? [], 'identifier', true);
 
   return {
     title: ThemaTitles.VERGUNNINGEN,
