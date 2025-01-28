@@ -45,7 +45,7 @@ export function transformVergunningFrontend<V extends DecosZaakBase>(
     ),
     link: {
       to: generatePath(appRoute, {
-        title: slug(vergunning.caseType, {
+        caseType: slug(vergunning.caseType, {
           lower: true,
         }),
         id: vergunning.id,
