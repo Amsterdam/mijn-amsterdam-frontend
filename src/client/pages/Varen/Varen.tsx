@@ -6,12 +6,23 @@ import { linkListItems } from '../Afis/Afis-thema-config';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { tableConfig } from './config';
-import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import {
+  caseTypeVaren,
+  VarenFrontend,
+} from '../../../server/services/varen/config-and-types';
 import { LinkProps } from '../../../universal/types/App.types';
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 
 export default function Varen() {
   const { items, tableConfig, isLoading, isError } = useVarenThemaData();
+
+  const pageContentTop = (
+    <Paragraph>
+      De passagiersvaart in Amsterdam is erg populair bij bezoekers.
+      Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook
+      gehuurde boten, met of zonder schipper, vallen onder de passagiersvaart.
+    </Paragraph>
+  );
 
   const linkListItems: LinkProps[] = [
     {
@@ -27,38 +38,30 @@ export default function Varen() {
     },
   ];
 
-  const pageContentTop = (
-    <Paragraph>
-      De passagiersvaart in Amsterdam is erg populair bij bezoekers.
-      Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook
-      gehuurde boten, met of zonder schipper, vallen onder de passagiersvaart.
-    </Paragraph>
-  );
-
   const registratieReder = items.find(
-    (item) => item.caseType === 'Varen registratie reder'
+    (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
   );
   if (!registratieReder) {
     return <></>; // TODO: Default page
   }
 
   // TODO: Use existing component or create reusable detailView component
-  const displayPropsReder = ['email', 'company'];
+  const displayPropsReder = ['email', 'company', 'adres', 'phone', 'bsnkvk'];
   const aanvragerGegevens = (
     <Grid.Cell span="all">
       <Grid>
         {Object.entries(registratieReder)
           .filter(([key]) => displayPropsReder.includes(key))
-          .map(([key, value]) => (
-            <Grid key={key}>
-              <Grid.Cell start={1} span={12}>
-                <b>{key}</b>
+          .map(([key, value]) =>
+            !value ? (
+              <></>
+            ) : (
+              <Grid.Cell key={key} span={4}>
+                <strong>{key}</strong>
+                <div>{value}</div>
               </Grid.Cell>
-              <Grid.Cell start={1} span={12}>
-                {value}
-              </Grid.Cell>
-            </Grid>
-          ))}
+            )
+          )}
       </Grid>
     </Grid.Cell>
   );
@@ -77,19 +80,18 @@ export default function Varen() {
     }
   );
 
-  const pageContentMain = (
-    <>
-      {aanvragerGegevens} {tables}
-    </>
-  );
-
   return (
     <ThemaPagina
       title={ThemaTitles.VAREN}
       isLoading={isLoading}
       isError={isError}
       pageContentTop={pageContentTop}
-      pageContentMain={pageContentMain}
+      pageContentMain={
+        <>
+          {aanvragerGegevens}
+          {tables}
+        </>
+      }
       isPartialError={false}
       linkListItems={linkListItems}
       buttonItems={buttonItems}
