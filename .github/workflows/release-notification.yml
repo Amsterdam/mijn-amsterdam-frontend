@@ -1,5 +1,5 @@
 name: Release notification
-on: create
+on: pull_request
 run-name: Generating release notifications for ${{ github.base_ref }}
 
 permissions:
