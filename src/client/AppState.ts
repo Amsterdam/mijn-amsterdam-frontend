@@ -113,7 +113,7 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   KLANT_CONTACT: apiPristineResult([], {
     profileTypes: ['private'],
-    isActive: FeatureToggle.klantContactActive,
+    isActive: FeatureToggle.contactmomentenActive,
   }),
   PROFILE: apiPristineResult(null, {
     profileTypes: ['private-attributes'],

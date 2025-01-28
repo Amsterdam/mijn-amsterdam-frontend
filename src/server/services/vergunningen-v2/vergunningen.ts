@@ -2,9 +2,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
-import {
-  VergunningFrontendV2,
-} from './config-and-types';
+import { VergunningFrontendV2 } from './config-and-types';
 import { VergunningV2 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './vergunningen-status-steps';
@@ -41,9 +39,10 @@ function transformVergunningFrontend(
     // Assign Status steps later on
     steps: [],
     // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
-    fetchUrl: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DETAIL, {
-      id: idEncrypted,
-    }),
+    fetchDocumentsUrl: generateFullApiUrlBFF(
+      BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
+      [{ id: idEncrypted }]
+    ),
     link: {
       to: generatePath(appRoute, {
         title: slug(vergunning.caseType, {
@@ -106,7 +105,7 @@ export const fetchVergunningenV2 = memoizee(fetchVergunningenV2_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
 
-function setEncryptedDocumentDownloadUrl(
+function addEncryptedDocumentDownloadUrl(
   sessionID: SessionID,
   document: DecosZaakDocument
 ) {
@@ -118,9 +117,9 @@ function setEncryptedDocumentDownloadUrl(
   return {
     ...document,
     // Adds an url to the BFF api for document download which accepts an encrypted ID only
-    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD, {
-      id: documentIdEncrypted,
-    }),
+    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD, [
+      { id: documentIdEncrypted },
+    ]),
   };
 }
 
@@ -143,7 +142,7 @@ export async function fetchVergunningV2(
     if (response.status === 'OK' && response.content?.decosZaak) {
       const { decosZaak, documents } = response.content;
       const documentsTransformed = documents.map((document) =>
-        setEncryptedDocumentDownloadUrl(
+        addEncryptedDocumentDownloadUrl(
           authProfileAndToken.profile.sid,
           document
         )

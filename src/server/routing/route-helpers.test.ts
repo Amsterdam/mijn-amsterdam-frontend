@@ -189,8 +189,30 @@ describe('route-helpers', () => {
     expect(value3).toBe(false);
   });
 
-  test('generateFullApiUrlBFF', () => {
-    const value = generateFullApiUrlBFF('/services/stream');
-    expect(value).toBe(`${bffApiHost}/api/v1/services/stream`);
+  describe('generateFullApiUrlBFF', () => {
+    test('generateFullApiUrlBFF no params', () => {
+      const value = generateFullApiUrlBFF('/services/stream');
+      expect(value).toBe(`${bffApiHost}/api/v1/services/stream`);
+    });
+    test('generateFullApiUrlBFF with path params', () => {
+      const value = generateFullApiUrlBFF('/services/test/:id', { id: '123' });
+      expect(value).toBe(`${bffApiHost}/api/v1/services/test/123`);
+    });
+    test('generateFullApiUrlBFF with path and query params', () => {
+      const value = generateFullApiUrlBFF('/services/test/:id', [
+        { foo: 'bar' },
+        { id: '123' },
+      ]);
+      expect(value).toBe(`${bffApiHost}/api/v1/services/test/123?foo=bar`);
+    });
+    test('generateFullApiUrlBFF with only query params', () => {
+      const value = generateFullApiUrlBFF('/services/test', [{ foo: 'bar' }]);
+      expect(value).toBe(`${bffApiHost}/api/v1/services/test?foo=bar`);
+    });
+    test('generateFullApiUrlBFF with only query params', () => {
+      expect(() =>
+        generateFullApiUrlBFF('/services/test/:id', [{ foo: 'bar' }])
+      ).toThrow();
+    });
   });
 });

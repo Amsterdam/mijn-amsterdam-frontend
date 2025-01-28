@@ -1,4 +1,4 @@
-import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
+import { IS_AP, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   // AFIS
@@ -92,9 +92,7 @@ export const FeatureToggle = {
   subsidieActive: true,
 
   // Klant/Contactmomenten (Salesforce) patroon A
-  salesforceActive: !IS_PRODUCTION,
-  klantContactActive: !IS_PRODUCTION,
-  klantContactmomentenActive: !IS_PRODUCTION,
+  contactmomentenActive: !IS_PRODUCTION,
 
   // WPI Portaal
   svwiLinkActive: !IS_PRODUCTION,

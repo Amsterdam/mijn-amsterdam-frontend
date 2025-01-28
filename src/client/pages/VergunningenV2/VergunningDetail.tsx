@@ -1,20 +1,28 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
+import useSWR from 'swr';
 
+import { VergunningDocument } from '../../../server/services';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { isError, isLoading } from '../../../universal/helpers/api';
+import {
+  ApiResponse,
+  isError,
+  isLoading,
+} from '../../../universal/helpers/api';
 import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { BagThemas } from '../../config/thema';
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
 import { LinkProps } from '../../../universal/types';
-import { VergunningDocument } from '../../../server/services';
+
+const ONE_MINUTE_MS = 60000;
+// eslint-disable-next-line no-magic-numbers
+const FIFTEEN_MINUTES_MS = 15 * ONE_MINUTE_MS;
 
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
@@ -59,32 +67,32 @@ export default function VergunningV2Detail({
   const { VERGUNNINGENv2 } = appState;
   const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
   const vergunning = VERGUNNINGENv2.content?.find((item) => item.id === id);
-  const fetchUrl = vergunning?.fetchUrl ?? '';
-  const [vergunningDetailApiResponse] = useAppStateBagApi<{
-    vergunning: VergunningFrontendV2 | null;
-    documents: VergunningDocument[];
-  }>({
-    url: fetchUrl,
-    bagThema: BagThemas.VERGUNNINGEN,
-    key: id,
-  });
-  const vergunningDetailResponseContent = vergunningDetailApiResponse.content;
-  const vergunningDetail = vergunningDetailResponseContent?.vergunning ?? null;
-  const vergunningDocuments = vergunningDetailResponseContent?.documents ?? [];
+  const fetchDocumentsUrl = vergunning?.fetchDocumentsUrl;
+
+  const { data: vergunningDocumentsResponse } = useSWR<
+    ApiResponse<VergunningDocument[]>
+  >(
+    fetchDocumentsUrl,
+    (url: string) =>
+      fetch(url, { credentials: 'include' }).then((response) =>
+        response.json()
+      ),
+
+    { dedupingInterval: FIFTEEN_MINUTES_MS }
+  );
+  const vergunningDocuments = vergunningDocumentsResponse?.content ?? [];
 
   return (
     <ThemaDetailPagina<VergunningFrontendV2>
-      title={vergunningDetail?.title ?? 'Vergunning'}
-      zaak={vergunningDetail}
-      isError={isError(vergunningDetailApiResponse)}
-      isLoading={
-        isLoading(vergunningDetailApiResponse) || isLoading(VERGUNNINGENv2)
-      }
+      title={vergunning?.title ?? 'Vergunning'}
+      zaak={vergunning}
+      isError={isError(VERGUNNINGENv2)}
+      isLoading={isLoading(VERGUNNINGENv2)}
       icon={<ThemaIcon />}
       pageContentTop={
-        vergunningDetail && (
+        vergunning && (
           <DetailPageContent
-            vergunning={vergunningDetail}
+            vergunning={vergunning}
             documents={vergunningDocuments}
             backLink={backLink}
           />
@@ -95,7 +103,7 @@ export default function VergunningV2Detail({
         to: backLink.to,
       }}
       documentPathForTracking={(document) =>
-        `/downloads/vergunningen/${vergunningDetail?.caseType}/${document.title.split(/\n/)[0]}`
+        `/downloads/vergunningen/${vergunning?.caseType}/${document.title.split(/\n/)[0]}`
       }
     />
   );
