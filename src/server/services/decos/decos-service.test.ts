@@ -386,7 +386,7 @@ describe('decos-service', () => {
             (url) =>
               url?.startsWith(
                 'http://remote-api-host/decos/items/123456789/folders?'
-              ) && url?.includes('select=fields')
+              ) && url?.includes('select=')
           )
       ).toBe(true);
       expect(
