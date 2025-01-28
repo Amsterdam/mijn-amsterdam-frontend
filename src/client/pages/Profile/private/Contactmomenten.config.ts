@@ -18,18 +18,13 @@ export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
     referenceNumber: 'Referentienummer',
   };
 
-const erfpachtV1ORV2 = FeatureToggle.erfpachtV2Active
-  ? Themas.ERFPACHTv2
-  : Themas.ERFPACHT;
-
 const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? Themas.SVWI : Themas.INKOMEN;
 
 export const mapperContactmomentToMenuItem: Record<string, Thema> = {
-  Erfpacht: erfpachtV1ORV2,
   Parkeren: Themas.PARKEREN,
   Zorg: Themas.ZORG,
   'Werk en Inkomen': SVWIv1ORv2,
   Belastingen: Themas.BELASTINGEN,
   Geldzaken: Themas.KREFIA,
-  Financieen: Themas.AFIS,
+  Financiën: Themas.AFIS,
 };
