@@ -96,6 +96,12 @@ export type SourceApiKey =
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
+const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
+const postponeFetchAfis =
+  typeof afisFeatureToggle !== 'undefined'
+    ? afisFeatureToggle === 'false'
+    : !FeatureToggle.afisActive;
+
 const contactmomentenFeatureToggle = getFromEnv(
   'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'
 );
@@ -106,7 +112,7 @@ const postponeFetchContactmomenten =
 
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
-    postponeFetch: !FeatureToggle.afisActive,
+    postponeFetch: postponeFetchAfis,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
   },
   ZORGNED_JZD: {
