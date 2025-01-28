@@ -23,11 +23,11 @@ export function createToeristischeVerhuurNotification(
   const vergunningTitleLower = vergunning.title.toLowerCase();
 
   let title = `Aanvraag ${vergunningTitleLower} in behandeling`;
-  let description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} in behandeling.`;
+  let description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} in behandeling.`;
   let datePublished =
     vergunning.steps.find((step) => step.status === 'In behandeling')
       ?.datePublished ??
-    vergunning.dateReceived ??
+    vergunning.dateRequest ??
     '';
   let cta = 'Bekijk uw aanvraag';
   let linkTo: string = AppRoutes.TOERISTISCHE_VERHUUR;
@@ -55,11 +55,11 @@ export function createToeristischeVerhuurNotification(
 
     switch (true) {
       // B&B + Vakantieverhuurvergunning
-      case vergunning.result === 'Verleend' &&
+      case vergunning.decision === 'Verleend' &&
         !!vergunning.dateEnd &&
         isNearEndDate(vergunning.dateEnd):
         title = `Uw ${vergunningTitleLower} loopt af`;
-        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
+        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = ctaLinkToAanvragen;
         datePublished = vergunning.dateEnd
@@ -73,11 +73,11 @@ export function createToeristischeVerhuurNotification(
           : datePublished;
         break;
       // B&B + Vakantieverhuurvergunning
-      case vergunning.result === 'Verleend' &&
+      case vergunning.decision === 'Verleend' &&
         !!vergunning.dateEnd &&
         isDateInPast(vergunning.dateEnd, dateNow):
         title = `Uw ${vergunningTitleLower} is verlopen`;
-        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
+        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
         linkTo = ctaLinkToAanvragen;
         datePublished = vergunning.dateEnd;
@@ -85,15 +85,15 @@ export function createToeristischeVerhuurNotification(
       // B&B only
       case vergunning.status === 'Ontvangen':
         title = `Aanvraag ${vergunningTitleLower} ontvangen`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} ontvangen.`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} ontvangen.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
-        datePublished = vergunning.dateReceived ?? '';
+        datePublished = vergunning.dateRequest ?? '';
         break;
       // B&B only
       case vergunning.status === 'Meer informatie nodig':
         title = `Aanvraag ${vergunningTitleLower}: meer informatie nodig`;
-        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} te behandelen.`;
+        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} te behandelen.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished =
@@ -102,13 +102,13 @@ export function createToeristischeVerhuurNotification(
           )?.datePublished ?? '';
         break;
       // B&B + Vakantieverhuurvergunning
-      case !!vergunning.result:
-        title = `Aanvraag ${vergunningTitleLower} ${vergunning.result.toLowerCase()}`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} ${vergunning.result.toLowerCase()}.`;
+      case !!vergunning.decision:
+        title = `Aanvraag ${vergunningTitleLower} ${vergunning.decision.toLowerCase()}`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} ${vergunning.decision.toLowerCase()}.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished =
-          (vergunning.dateDecision || vergunning.dateReceived) ?? '';
+          (vergunning.dateDecision || vergunning.dateRequest) ?? '';
         break;
     }
   }

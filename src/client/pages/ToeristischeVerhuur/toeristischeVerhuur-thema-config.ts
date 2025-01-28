@@ -18,7 +18,7 @@ const DISPLAY_PROPS_VERGUNNINGEN: DisplayProps<
   WithDetailLinkComponent<ToeristischeVerhuurVergunning>
 > = {
   detailLinkComponent: 'Soort vergunning',
-  zaaknummer: 'Zaaknummer',
+  identifier: 'Zaaknummer',
   status: 'Status',
   dateStartFormatted: 'Vanaf',
   dateEndFormatted: 'Tot',
@@ -46,7 +46,7 @@ export const listPageTitle = {
 export const tableConfigVergunningen = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (vergunning: ToeristischeVerhuurVergunning) => vergunning.isActual,
+    filter: (vergunning: ToeristischeVerhuurVergunning) => vergunning.processed,
     sort: dateSort('dateReceived', 'desc'),
     displayProps: DISPLAY_PROPS_VERGUNNINGEN,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
@@ -54,7 +54,8 @@ export const tableConfigVergunningen = {
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
-    filter: (vergunning: ToeristischeVerhuurVergunning) => !vergunning.isActual,
+    filter: (vergunning: ToeristischeVerhuurVergunning) =>
+      !vergunning.processed,
     sort: dateSort('dateReceived', 'desc'),
     displayProps: DISPLAY_PROPS_VERGUNNINGEN,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
