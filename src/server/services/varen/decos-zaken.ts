@@ -25,7 +25,7 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
       ...SELECT_FIELDS_TRANSFORM_BASE,
       company: 'company',
       num2: 'bsnkvk',
-      mailadress: 'adres',
+      mailaddress: 'adres',
       zipcode: 'postal',
       city: 'city',
       phone1: 'phone',
