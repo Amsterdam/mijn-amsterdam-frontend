@@ -83,7 +83,7 @@ export type SourceApiKey =
   | 'PARKEREN_FRONTOFFICE'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
-  | 'SALESFORCE'
+  | 'CONTACTMOMENTEN'
   | 'SUBSIDIE'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
@@ -96,13 +96,13 @@ export type SourceApiKey =
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
-const salesforceFeatureToggle = getFromEnv(
-  'BFF_SALESFORCE_FEATURE_TOGGLE_ACTIVE'
+const contactmomentenFeatureToggle = getFromEnv(
+  'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'
 );
-const postponeFetchSalesforce =
-  typeof salesforceFeatureToggle !== 'undefined'
-    ? salesforceFeatureToggle === 'false'
-    : !FeatureToggle.salesforceActive;
+const postponeFetchContactmomenten =
+  typeof contactmomentenFeatureToggle !== 'undefined'
+    ? contactmomentenFeatureToggle === 'false'
+    : !FeatureToggle.contactmomentenActive;
 
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
@@ -211,9 +211,9 @@ export const ApiConfig: ApiDataRequestConfig = {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },
   },
-  SALESFORCE: {
-    url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
-    postponeFetch: postponeFetchSalesforce,
+  CONTACTMOMENTEN: {
+    url: `${getFromEnv('BFF_CONTACTMOMENTEN_BASE_URL')}`,
+    postponeFetch: postponeFetchContactmomenten,
     headers: {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },

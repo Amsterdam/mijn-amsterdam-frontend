@@ -2,7 +2,6 @@ import {
   ContactMomentenResponseSource,
   ContactMoment,
 } from './contactmomenten.types';
-import { IS_TEST } from '../../../universal/config/env';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -16,7 +15,7 @@ async function fetchSalesforceData<T>(
   dataRequestConfigSpecific: DataRequestConfig
 ) {
   const dataRequestConfigBase = getApiConfig(
-    'SALESFORCE',
+    'CONTACTMOMENTEN',
     dataRequestConfigSpecific
   );
   return requestData<T>(dataRequestConfigBase, requestID);
@@ -41,10 +40,11 @@ export async function fetchContactmomenten(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const base64encodedPK = getFromEnv('BFF_SALESFORCE_API_KEY');
-
+  const base64encodedPK = getFromEnv(
+    'BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY'
+  );
   if (!base64encodedPK) {
-    throw new Error('BFF_SALESFORCE_API_KEY not found');
+    throw new Error('BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY not found');
   }
 
   const [, encryptedBSN, iv] = encrypt(
@@ -54,7 +54,7 @@ export async function fetchContactmomenten(
 
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/contactmomenten${IS_TEST ? '/dev' : ''}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+      return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     params: {
       hadBetrokkene__uuid: encryptedBSN.toString('base64'),
