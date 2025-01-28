@@ -307,7 +307,7 @@ async function getZakenByUserKey(
   ]).join(',');
 
   const caseTypes = zaakTypeTransformers
-    .map((transformer) => `${caseField} eq ${transformer.caseType}`)
+    .map((transformer) => `${caseField} eq '${transformer.caseType}'`)
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
