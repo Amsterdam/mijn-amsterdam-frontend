@@ -34,7 +34,7 @@ import {
 import { entries } from '../../../universal/helpers/utils';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_HOUR_MS, ONE_MINUTE_MS } from '../../config/app';
+import { ONE_HOUR_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -46,13 +46,13 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
 // See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
-// eslint-disable-next-line no-magic-numbers
-const TOKEN_VALIDITY_PERIOD = 23 * ONE_HOUR_MS + 55 * ONE_MINUTE_MS;
-const CLOSE_TO_EXPIRY = 0.95;
+const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
+const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
 
 const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_, {
   maxAge: TOKEN_VALIDITY_PERIOD,
-  preFetch: CLOSE_TO_EXPIRY,
+  preFetch: PERCENTAGE_DISTANCE_FROM_EXPIRY,
+  promise: true,
 });
 
 type PowerBrowserToken = string;
