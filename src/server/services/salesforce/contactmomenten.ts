@@ -42,10 +42,12 @@ export async function fetchContactmomenten(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const base64encodedPK = getFromEnv('BFF_SALESFORCE_API_KEY');
+
   if (!base64encodedPK) {
     throw new Error('BFF_SALESFORCE_API_KEY not found');
   }
-  const encryptedBSN = encrypt(
+
+  const [, encryptedBSN, iv] = encrypt(
     authProfileAndToken.profile.id,
     Buffer.from(base64encodedPK, 'base64')
   );
@@ -55,10 +57,8 @@ export async function fetchContactmomenten(
       return `${url}/contactmomenten${IS_TEST ? '/dev' : ''}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     params: {
-      hadBetrokkene__uuid: encodeURIComponent(
-        encryptedBSN[1].toString('base64')
-      ),
-      iv: encodeURIComponent(encryptedBSN[2].toString('base64')),
+      hadBetrokkene__uuid: encryptedBSN.toString('base64'),
+      iv: iv.toString('base64'),
     },
     transformResponse: transformContactmomentenResponse,
   };
