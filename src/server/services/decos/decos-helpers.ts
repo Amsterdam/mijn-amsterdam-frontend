@@ -1,3 +1,5 @@
+import keyBy from 'lodash.keyby';
+
 import type {
   DecosZaakTransformer,
   DecosZaakSource,
@@ -5,16 +7,17 @@ import type {
   WithKentekens,
   ZaakStatus,
   DecosFieldValue,
-} from './decos-types';
+} from './config-and-types';
 import {
   DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
   DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
-} from './decos-types';
+} from './config-and-types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
+import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
@@ -157,4 +160,10 @@ export function getStatusDate(
     decosZaak.statusDates.find(({ status }) => status === zaakStatus)
       ?.datePublished || null
   );
+}
+
+export function getDecosZaakTransformersByCaseType<
+  T extends DecosZaakTransformer<any>,
+>(zaaktTransformers: T[]) {
+  return keyBy(zaaktTransformers, 'caseType') as Record<DecosCaseType, T>;
 }

@@ -3,7 +3,6 @@ import assert from 'assert';
 import memoizee from 'memoizee';
 
 import {
-  caseType,
   DecosZaakBase,
   DecosZaakTransformer,
   MA_DECISION_DEFAULT,
@@ -17,15 +16,18 @@ import {
   DecosDocumentSource,
   DecosZaakSource,
   DecosZakenResponse,
+  DecosWorkflowResponse,
+} from './config-and-types';
+import {
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
-  DecosWorkflowResponse,
-} from './decos-types';
+  caseType,
+} from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
-} from './helpers';
+} from './decos-helpers';
 import {
   ApiErrorResponse,
   ApiResponse,

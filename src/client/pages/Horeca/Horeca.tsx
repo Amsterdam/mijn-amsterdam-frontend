@@ -24,10 +24,7 @@ export function HorecaThemaPagina() {
   } = useHorecaThemaData();
 
   const tables = Object.entries(tableConfig).map(
-    ([
-      kind,
-      { title, displayProps, filter, textNoContent, listPageRoute, maxItems },
-    ]) => {
+    ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
       return (
         <ThemaPaginaTable<VergunningFrontend<HorecaVergunning>>
           key={kind}
@@ -35,7 +32,6 @@ export function HorecaThemaPagina() {
           listPageRoute={listPageRoute}
           zaken={vergunningen.filter(filter)}
           displayProps={displayProps}
-          textNoContent={textNoContent}
           maxItems={maxItems}
         />
       );

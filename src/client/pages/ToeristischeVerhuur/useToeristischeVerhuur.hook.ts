@@ -1,9 +1,8 @@
 import {
-  listPageParamKind,
   listPageTitle,
   routes,
   tableConfigLVVRegistraties,
-  tableConfigVergunningen,
+  tableConfig,
 } from './toeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
@@ -43,7 +42,7 @@ export function useToeristischeVerhuurThemaData() {
       ...(TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen ?? []),
       ...(TOERISTISCHE_VERHUUR.content?.bbVergunningen ?? []),
     ],
-    'title',
+    'identifier',
     true
   );
 
@@ -101,10 +100,9 @@ export function useToeristischeVerhuurThemaData() {
     hasBBVergunningError,
     hasVakantieVerhuurVergunningError,
     routes,
-    tableConfigVergunningen,
+    tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
     listPageTitle,
-    listPageParamKind,
     hasRegistrations,
     hasPermits,
     hasVergunningenVakantieVerhuur,

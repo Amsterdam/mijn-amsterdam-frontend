@@ -4,7 +4,7 @@ import slug from 'slugme';
 
 import { DecosVergunning, VergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
-import { isExpired } from './helpers';
+import { isExpired } from './vergunningen-helpers';
 import { getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
@@ -14,9 +14,9 @@ import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { DecosZaakBase, DecosZaakDocument } from '../decos/config-and-types';
+import { getStatusDate, toDateFormatted } from '../decos/decos-helpers';
 import { fetchDecosZaak, fetchDecosZaken } from '../decos/decos-service';
-import { DecosZaakBase, DecosZaakDocument } from '../decos/decos-types';
-import { getStatusDate, toDateFormatted } from '../decos/helpers';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export function transformVergunningFrontend<V extends DecosZaakBase>(
@@ -121,7 +121,7 @@ function setEncryptedDocumentDownloadUrl(
   return {
     ...document,
     // Adds an url to the BFF api for document download which accepts an encrypted ID only
-    url: generateFullApiUrlBFF(BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD, {
+    url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, {
       id: documentIdEncrypted,
     }),
   };

@@ -112,12 +112,12 @@ router.get(
   }
 );
 
-// Vergunningen V2
+// Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
 router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
 
 attachDocumentDownloadRoute(
   router,
-  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
+  BffEndpoints.DECOS_DOCUMENT_DOWNLOAD,
   fetchDecosDocument
 );
 

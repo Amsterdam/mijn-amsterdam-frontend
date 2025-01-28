@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
-import { DecosZaakBase } from '../../../server/services/decos/decos-types';
+import { DecosZaakBase } from '../../../server/services/decos/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 
 export function useVergunningenDetailData<T extends DecosZaakBase>(

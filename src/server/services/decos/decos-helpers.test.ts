@@ -2,7 +2,7 @@ import {
   DecosZaakBase,
   DecosZaakSource,
   DecosZaakTransformer,
-} from './decos-types';
+} from './config-and-types';
 import {
   isWaitingForPaymentConfirmation,
   hasInvalidDecision,
@@ -12,7 +12,7 @@ import {
   getDecosZaakTypeFromSource,
   transformBoolean,
   toDateFormatted,
-} from './helpers';
+} from './decos-helpers';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken';
 

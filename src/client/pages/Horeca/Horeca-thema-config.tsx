@@ -1,14 +1,14 @@
+import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router-dom';
 
-import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
+import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/App.types';
 import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../components/Table/TableV2';
-
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
+  ListPageParamKind as ListPageParamKindVergunningen,
+  listPageParamKind as listPageParamKindVergunningen,
+  tableConfig as tableConfigVergunningen,
+} from '../Vergunningen/Vergunningen-thema-config';
 
 export const LinkListItems: LinkProps[] = [
   // {
@@ -17,21 +17,7 @@ export const LinkListItems: LinkProps[] = [
   // },
 ];
 
-const displayPropsHorecaHuidig: DisplayProps<
-  WithDetailLinkComponent<HorecaVergunning>
-> = {
-  detailLinkComponent: 'Zaaknummer',
-  title: 'Soort vergunning',
-  dateRequestFormatted: 'Aangevraagd',
-};
-
-const displayPropsHorecaEerder: DisplayProps<
-  WithDetailLinkComponent<HorecaVergunning>
-> = {
-  detailLinkComponent: 'Zaaknummer',
-  title: 'Soort vergunning',
-  decision: 'Resultaat',
-};
+export type ListPageParamKind = ListPageParamKindVergunningen;
 
 export const routes = {
   listPage: AppRoutes['HORECA/LIST'],
@@ -39,33 +25,24 @@ export const routes = {
   themaPage: AppRoutes.HORECA,
 } as const;
 
-export const listPageParamKind = {
-  huidig: 'huidige-aanvragen-en-vergunningen',
-  eerder: 'eerdere-aanvragen-en-vergunningen',
+const tableHeadings = {
+  [listPageParamKindVergunningen.inProgress]: 'Lopende aanvragen',
+  [listPageParamKindVergunningen.actual]: 'Huidige vergunningen',
+  [listPageParamKindVergunningen.historic]:
+    'Eerdere en niet verleende vergunningen',
 } as const;
 
-export type ListPageParamKey = keyof typeof listPageParamKind;
-export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const horecaTableConfig = {
-  [listPageParamKind.huidig]: {
-    title: 'Huidige aanvragen en vergunningen',
-    filter: (v: HorecaVergunning) => !v.processed,
-    textNoContent: 'U heeft geen horeca vergunningen of aanvragen.',
-    displayProps: displayPropsHorecaHuidig,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routes.listPage, {
-      kind: listPageParamKind.huidig,
-    }),
-  },
-  [listPageParamKind.eerder]: {
-    title: 'Eerdere aanvragen en vergunningen',
-    filter: (v: HorecaVergunning) => v.processed,
-    textNoContent: 'U heeft geen eerdere horeca vergunningen of aanvragen.',
-    displayProps: displayPropsHorecaEerder,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routes.listPage, {
-      kind: listPageParamKind.eerder,
-    }),
-  },
-} as const;
+export const tableConfig = Object.fromEntries(
+  entries(cloneDeep(tableConfigVergunningen)).map(([kind, tableConfig]) => {
+    return [
+      kind,
+      {
+        ...tableConfig,
+        title: tableHeadings[kind],
+        listPageRoute: generatePath(routes.listPage, {
+          kind: listPageParamKindVergunningen.inProgress,
+        }),
+      },
+    ];
+  })
+);

@@ -8,10 +8,14 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 type VergunningFrontendDisplayProps = DisplayProps<
   WithDetailLinkComponent<VergunningFrontend>
 >;
+
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 export const displayPropsHuidigeVergunningen: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
@@ -23,6 +27,7 @@ export const displayPropsHuidigeVergunningen: VergunningFrontendDisplayProps = {
 export const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
   title: 'Soort vergunning',
+  status: 'Status',
   dateRequestFormatted: 'Aangevraagd',
 };
 
@@ -67,6 +72,7 @@ export const tableConfig = {
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
@@ -89,6 +95,7 @@ export const tableConfig = {
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actual,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
@@ -98,16 +105,14 @@ export const tableConfig = {
           vergunning.decision === 'Verleend' && vergunning.isExpired === true
         );
       }
-      return (
-        vergunning.status === 'Afgehandeld' &&
-        vergunning.decision !== 'Verleend'
-      );
+      return vergunning.processed && vergunning.decision !== 'Verleend';
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.historic,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
   },
 };
 
