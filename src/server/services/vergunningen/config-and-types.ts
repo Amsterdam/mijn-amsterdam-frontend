@@ -269,15 +269,9 @@ export type NotificationProperty =
   | 'datePublished'
   | 'link';
 
-type NotificationPropertyValue = (
-  vergunning: VergunningFrontend
-) => string | null;
+type NotificationPropertyValue = (vergunning: VergunningFrontend) => string;
 
 type NotificationLink = (vergunning: VergunningFrontend) => LinkProps;
-
-export type NotificationLinks = {
-  [key in VergunningFrontend['caseType']]?: string;
-};
 
 type NotificationLabelsBase = {
   [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;
