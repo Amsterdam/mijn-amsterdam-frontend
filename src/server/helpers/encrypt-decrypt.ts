@@ -10,7 +10,8 @@ const ENC_ALGO = 'aes-256-cbc';
 const IV_BYTE_LENGTH = 16;
 export function encrypt(
   plainText: string,
-  encryptionKey: string | undefined = process.env.BFF_GENERAL_ENCRYPTION_KEY
+  encryptionKey: string | Buffer | undefined = process.env
+    .BFF_GENERAL_ENCRYPTION_KEY
 ): [Base64IvEncryptedValue, EncryptedValue, Iv] {
   if (!encryptionKey) {
     throw new Error('Cannot encrypt, Encryption key not found.');

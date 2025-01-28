@@ -18,14 +18,12 @@ const responseData = {
   ],
 };
 
-describe('Salesforce service', () => {
+describe('Contactmomenten service', () => {
   const profileAndToken = getAuthProfileAndToken();
 
-  beforeEach(() => {
-    remoteApi.get(/\/salesforce/).reply(200, responseData);
-  });
-
   it('should transform the data correctly', async () => {
+    remoteApi.get(/salesforce\/contactmomenten/).reply(200, responseData);
+
     const requestID = '123';
 
     const result = await fetchContactmomenten(requestID, profileAndToken);
