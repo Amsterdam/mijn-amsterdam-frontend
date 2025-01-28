@@ -129,7 +129,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
   // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
   // For example String operations like, trim, split, uppercase etc.
-  transformFields?: Partial<DecosFieldTransformerObject<T>>;
+  transformFields: Partial<DecosFieldTransformerObject<T>>;
   // After transform is used to perform additional transformations after the initial transform.
   // Business logic is implemented at this point, also async calls to other services to enrich the data can be done here.
   afterTransform?: (
@@ -145,11 +145,6 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.
   isActive: boolean;
-  // Initially we request a set of fields to be included in the responseData (?select=). For some cases we need a (few) custom field(s) included in the initial response.
-  // For example to show a kenteken in the Notifications. Sadly the requested fields cannot be specified on a case basis.
-  // This means even though we do not want, for example, date7 for case A we will receive it anyway.
-  // We select a specific set of fields because otherwise we receive all the fields of a zaak which are bloated and mostly unused.
-  addToSelectFieldsBase?: string[];
   // Notifications for this specific
   notificationLabels?: Partial<NotificationLabelByType>;
 };
@@ -171,8 +166,8 @@ export interface DecosZaakBase {
   decision: string | null;
   description: string;
 
-  // Url to BFF Detail paga api
-  fetchUrl: string;
+  // Url to fetch vergunnungen for a specific Zaak.
+  fetchDocumentsUrl: string;
 
   identifier: ZaakKenmerk;
   title: string;
