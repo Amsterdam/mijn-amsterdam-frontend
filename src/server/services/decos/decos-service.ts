@@ -287,10 +287,7 @@ async function transformDecosZakenResponse<
 async function getZakenByUserKey(
   requestID: RequestID,
   userKey: string,
-  zaakTypeTransformers: Pick<
-    DecosZaakTransformer<DecosZaakBase>,
-    'addToSelectFieldsBase' | 'caseType'
-  >[] = []
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
   const caseField = 'text45';
   assert(
@@ -304,6 +301,10 @@ async function getZakenByUserKey(
     ...zaakTypeTransformers.flatMap(
       (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
     ),
+    ...zaakTypeTransformers.flatMap(
+      (zaakTransformer) =>
+        Object.keys(zaakTransformer.transformFields ?? {}) ?? []
+    ), // TODO: Temporary for testing, will be fixed by other PR
   ]).join(',');
 
   const caseTypes = zaakTypeTransformers
@@ -339,10 +340,7 @@ async function getZakenByUserKey(
 export async function fetchDecosZakenFromSource(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakTypeTransformers: Pick<
-    DecosZaakTransformer<any>,
-    'addToSelectFieldsBase' | 'caseType'
-  >[] = []
+  zaakTypeTransformers: DecosZaakTransformer<any>[] = []
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
 
