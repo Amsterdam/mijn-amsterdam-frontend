@@ -57,7 +57,7 @@ export const AppRoutes = {
   KLACHTEN: '/klachten',
   HORECA: '/horeca/',
   'HORECA/LIST': '/horeca/list/:kind/:page?',
-  'HORECA/DETAIL': '/horeca/:title/:id',
+  'HORECA/DETAIL': '/horeca/:caseType/:id',
   AVG: '/avg',
   'AVG/LIST': '/avg/lijst/:kind/:page?',
   'AVG/DETAIL': '/avg/verzoek/:id',
