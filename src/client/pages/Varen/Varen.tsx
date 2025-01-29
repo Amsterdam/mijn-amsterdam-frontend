@@ -8,13 +8,42 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import { tableConfig } from './config';
 import {
   caseTypeVaren,
-  VarenFrontend,
+  VarenVergunningFrontend,
 } from '../../../server/services/varen/config-and-types';
 import { LinkProps } from '../../../universal/types/App.types';
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
+import { GridDetails } from './GridDetails';
+
+function useVarenThemaData() {
+  const { VAREN } = useAppStateGetter();
+
+  const gegevensAanvrager = VAREN.content?.find(
+    (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
+  );
+
+  const vergunningen = VAREN.content?.filter(
+    (item) => item.caseType !== caseTypeVaren.VarenRederRegistratie
+  );
+
+  const tableItems = addLinkElementToProperty<VarenVergunningFrontend>(
+    vergunningen ?? [],
+    'vesselName',
+    true
+  );
+
+  return {
+    gegevensAanvrager,
+    tableConfig,
+    isLoading: isLoading(VAREN),
+    isError: isError(VAREN),
+    tableItems,
+    linkListItems,
+  };
+}
 
 export default function Varen() {
-  const { items, tableConfig, isLoading, isError } = useVarenThemaData();
+  const { gegevensAanvrager, tableItems, tableConfig, isLoading, isError } =
+    useVarenThemaData();
 
   const pageContentTop = (
     <Paragraph>
@@ -38,40 +67,21 @@ export default function Varen() {
     },
   ];
 
-  const registratieReder = items.find(
-    (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
-  );
-
-  // TODO: Use existing component or create reusable detailView component
-  const displayPropsReder = ['email', 'company', 'adres', 'phone', 'bsnkvk'];
-  const aanvragerGegevens = !registratieReder ? (
-    <></> // TODO: Do this differently
-  ) : (
-    <Grid.Cell span="all">
-      <Grid>
-        {Object.entries(registratieReder)
-          .filter(([key]) => displayPropsReder.includes(key))
-          .map(([key, value]) =>
-            !value ? (
-              <></>
-            ) : (
-              <Grid.Cell key={key} span={4}>
-                <strong>{key}</strong>
-                <div>{value}</div>
-              </Grid.Cell>
-            )
-          )}
-      </Grid>
-    </Grid.Cell>
+  const gegevens = (
+    <GridDetails
+      caption={'Gegevens aanvrager'}
+      displayProps={['email', 'company', 'adres', 'phone', 'bsnkvk']}
+      items={gegevensAanvrager}
+    />
   );
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort }]) => {
       return (
-        <ThemaPaginaTable<VarenFrontend>
+        <ThemaPaginaTable<VarenVergunningFrontend>
           key={kind}
           title={title}
-          zaken={items.filter(filter).sort(sort)}
+          zaken={tableItems.filter(filter).sort(sort)}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
@@ -87,7 +97,7 @@ export default function Varen() {
       pageContentTop={pageContentTop}
       pageContentMain={
         <>
-          {aanvragerGegevens}
+          {gegevens}
           {tables}
         </>
       }
@@ -96,23 +106,4 @@ export default function Varen() {
       buttonItems={buttonItems}
     />
   );
-}
-
-// TODO: Move to own file
-export function useVarenThemaData() {
-  const { VAREN } = useAppStateGetter();
-
-  const items = addLinkElementToProperty<VarenFrontend>(
-    VAREN.content ?? [],
-    'identifier',
-    true
-  );
-
-  return {
-    tableConfig,
-    isLoading: isLoading(VAREN),
-    isError: isError(VAREN),
-    items,
-    linkListItems,
-  };
 }
