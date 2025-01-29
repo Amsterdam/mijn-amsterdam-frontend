@@ -23,7 +23,7 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-export function InkomenDetailTONK() {
+export function InkomenDetailTonk() {
   const { isLoading, isError, zaak } = useInkomenDetailData('WPI_TONK');
 
   return (
