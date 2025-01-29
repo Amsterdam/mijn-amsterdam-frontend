@@ -1,8 +1,11 @@
+import React from 'react';
+
 import styles from './BezwarenDetail.module.scss';
 import { BezwarenStatusLines } from './BezwarenStatusLines';
 import { useBezwarenDetailData } from './useBezwarenDetailData.hook';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { entries } from '../../../universal/helpers/utils';
 import { InfoDetail } from '../../components';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import {
@@ -24,7 +27,24 @@ export function BezwarenDetailPagina() {
     documentCategories,
     documents,
     statussen,
+    dependencyErrors,
   } = useBezwarenDetailData();
+
+  const pageContentErrorAlert = (
+    <>
+      We kunnen niet alle gegevens tonen.{' '}
+      {dependencyErrors &&
+        entries(dependencyErrors)
+          .filter(([, hasError]) => hasError)
+          .map(([dependency]) => {
+            return (
+              <React.Fragment key={dependency}>
+                <br />- {dependency} kunnen nu niet getoond worden.
+              </React.Fragment>
+            );
+          })}
+    </>
+  );
 
   return (
     <ThemaDetailPagina<Bezwaar>
@@ -32,6 +52,7 @@ export function BezwarenDetailPagina() {
       zaak={bezwaar}
       isError={isError || isErrorThemaData}
       isLoading={isLoading || isLoadingThemaData}
+      errorAlertContent={pageContentErrorAlert}
       pageContentTop={
         <>
           <PageContentCell>
@@ -82,32 +103,28 @@ export function BezwarenDetailPagina() {
                 )}
               </>
             )}
+
+            {documentCategories.map((category) => {
+              const docs = documents.filter((d) => d.dossiertype === category);
+              return (
+                <InfoDetailGroup
+                  key={category}
+                  label={
+                    <div className={styles.DocumentListHeader}>
+                      <InfoDetailHeading
+                        label={`Document${
+                          documents.length > 1 ? 'en' : ''
+                        } ${category.toLowerCase()}`}
+                      />
+                    </div>
+                  }
+                >
+                  <DocumentListV2 documents={docs} />
+                </InfoDetailGroup>
+              );
+            })}
           </PageContentCell>
-          {!!documentCategories?.length && (
-            <PageContentCell>
-              {documentCategories.map((category) => {
-                const docs = documents.filter(
-                  (d) => d.dossiertype === category
-                );
-                return (
-                  <InfoDetailGroup
-                    key={category}
-                    label={
-                      <div className={styles.DocumentListHeader}>
-                        <InfoDetailHeading
-                          label={`Document${
-                            documents.length > 1 ? 'en' : ''
-                          } ${category.toLowerCase()}`}
-                        />
-                      </div>
-                    }
-                  >
-                    <DocumentListV2 documents={docs} />
-                  </InfoDetailGroup>
-                );
-              })}
-            </PageContentCell>
-          )}
+
           {!!statussen?.length && (
             <PageContentCell>
               <BezwarenStatusLines statussen={statussen} />
