@@ -7,7 +7,7 @@ import { ExternalUrls } from '../../config/app';
 import { routes } from '../Afis/Afis-thema-config';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
-export function InkomenDetailTOZO() {
+export function InkomenDetailTozo() {
   const { isLoading, isError, zaak } = useInkomenDetailData('WPI_TOZO');
   const pageContentTop = (
     <PageContentCell spanWide={6}>
