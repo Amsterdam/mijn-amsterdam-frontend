@@ -62,7 +62,6 @@ export async function fetchVaren_(
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
 ) {
-  // TODO: Do we check FeatureToggle.varenActive here or somewhere else??
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
