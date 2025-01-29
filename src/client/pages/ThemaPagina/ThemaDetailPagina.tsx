@@ -64,8 +64,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
       <PageContentV2>
         <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
 
-        {pageContentTop}
-
         {!isLoading && (isError || !zaak) && (
           <PageContentCell>
             <ErrorAlert>{errorAlertContent}</ErrorAlert>
@@ -77,6 +75,8 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
             <LoadingContent barConfig={loadingBarConfig} />
           </PageContentCell>
         )}
+
+        {pageContentTop}
 
         {!!statusItemSteps.length && zaak && (
           <PageContentCell startWide={1} spanWide={12}>
