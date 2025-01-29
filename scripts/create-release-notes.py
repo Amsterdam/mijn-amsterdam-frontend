@@ -62,7 +62,6 @@ previous_version = args.previous_release_tag.removeprefix(RELEASE_SUFFIX)
 latest_version = args.latest_release_tag.removeprefix(RELEASE_SUFFIX)
 
 # Lines entered here are at the top of the release notes.
-# Newlines are entered automatically but can be added for more whitespace.
 release_notes = [
     f"Here are the updates between the {previous_version} and {latest_version} releases.\n",
 ]
