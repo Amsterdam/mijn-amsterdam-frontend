@@ -4,7 +4,11 @@ import useSWR from 'swr';
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
 import { FIFTEEN_MINUTES_MS } from '../../../universal/config/app';
-import { ApiResponse } from '../../../universal/helpers/api';
+import {
+  ApiSuccessResponse,
+  hasFailedDependency,
+  isError,
+} from '../../../universal/helpers/api';
 import { uniqueArray } from '../../../universal/helpers/utils';
 
 export function useBezwarenDetailData() {
@@ -22,7 +26,7 @@ export function useBezwarenDetailData() {
     data: bezwaarDetailResponse,
     isLoading,
     error,
-  } = useSWR<ApiResponse<BezwaarDetail>>(
+  } = useSWR<ApiSuccessResponse<BezwaarDetail>>(
     bezwaar?.fetchUrl,
     (url: string) =>
       fetch(url, { credentials: 'include' }).then((response) =>
@@ -50,6 +54,14 @@ export function useBezwarenDetailData() {
     isLoading,
     isLoadingThemaData,
     isErrorThemaData,
-    isError: !!error,
+    isError:
+      !!error ||
+      (bezwaarDetailResponse ? isError(bezwaarDetailResponse) : false),
+    dependencyErrors: bezwaarDetailResponse
+      ? {
+          Documenten: hasFailedDependency(bezwaarDetailResponse, 'documents'),
+          Statussen: hasFailedDependency(bezwaarDetailResponse, 'statussen'),
+        }
+      : null,
   };
 }
