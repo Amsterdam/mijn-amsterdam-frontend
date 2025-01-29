@@ -8,7 +8,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { ErrorAlert, Pagination, LoadingContent } from '../../components';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
 import {
-  DetailPageV2,
+  OverviewPageV2,
   PageContentCell,
   PageContentV2,
 } from '../../components/Page/Page';
@@ -47,7 +47,7 @@ export function MyNotificationsPage() {
   }, [currentPage]);
 
   return (
-    <DetailPageV2>
+    <OverviewPageV2>
       <PageContentV2>
         <PageHeadingV2 backLink={AppRoutes.HOME}>Actueel</PageHeadingV2>
         <PageContentCell>
@@ -83,14 +83,12 @@ export function MyNotificationsPage() {
               pageSize={PAGE_SIZE}
               currentPage={currentPage}
               onPageClick={(page) => {
-                history.replace(
-                  generatePath(AppRoutes.NOTIFICATIONS, { page })
-                );
+                history.push(generatePath(AppRoutes.NOTIFICATIONS, { page }));
               }}
             />
           )}
         </PageContentCell>
       </PageContentV2>
-    </DetailPageV2>
+    </OverviewPageV2>
   );
 }
