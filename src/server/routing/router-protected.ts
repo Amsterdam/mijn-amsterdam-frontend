@@ -11,10 +11,8 @@ import {
   handleFetchAfisBusinessPartner,
   handleFetchAfisFacturen,
 } from '../services/afis/afis-route-handlers';
-import {
-  fetchBezwaarDetail,
-  fetchBezwaarDocument,
-} from '../services/bezwaren/bezwaren';
+import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
+import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import {
   NOTIFICATIONS,
@@ -140,22 +138,7 @@ attachDocumentDownloadRoute(
   fetchBezwaarDocument
 );
 
-router.get(
-  BffEndpoints.BEZWAREN_DETAIL,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
-    if (authProfileAndToken) {
-      const response = await fetchBezwaarDetail(
-        res.locals.requestID,
-        authProfileAndToken,
-        req.params.id
-      );
-
-      return res.send(response);
-    }
-    return sendUnauthorized(res);
-  }
-);
+router.get(BffEndpoints.BEZWAREN_DETAIL, handleFetchBezwaarDetail);
 
 router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
