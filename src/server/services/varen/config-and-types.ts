@@ -49,11 +49,11 @@ export interface VarenVergunningExploitatieType extends DecosZaakBase {
     | 'Onbemand';
   isCvoIssued: boolean;
   numberOfSeats: number | null; // 001 seats
-  boatHeight: number | null; // 0.01 meters
-  boatDepth: number | null; // 0.01 meters
-  boatWidth: number | null; // 0.01 meters
-  boatLength: number | null; // 0.01 meters
-  boatName: string | null;
+  vesselHeight: number | null; // 0.01 meters
+  vesselDepth: number | null; // 0.01 meters
+  vesselWidth: number | null; // 0.01 meters
+  vesselLength: number | null; // 0.01 meters
+  vesselName: string | null;
 }
 
 export interface VarenVergunningLigplaatsType extends DecosZaakBase {
@@ -61,7 +61,7 @@ export interface VarenVergunningLigplaatsType extends DecosZaakBase {
   title: 'Varen ligplaatsvergunning';
   decision: 'Geannuleerd' | 'Afgehandeld';
   location: string | null;
-  boatName: string | null;
+  vesselName: string | null;
 }
 
 export type Varen =
@@ -69,7 +69,7 @@ export type Varen =
   | VarenVergunningExploitatieType
   | VarenVergunningLigplaatsType;
 
-export type VarenFrontend<T extends Varen = Varen> = T & {
+export type VarenFrontend<T extends DecosZaakBase = Varen> = T & {
   dateDecisionFormatted?: string | null;
   dateInBehandeling: string | null;
   dateInBehandelingFormatted: string | null;
@@ -78,3 +78,8 @@ export type VarenFrontend<T extends Varen = Varen> = T & {
   dateEndFormatted?: string | null;
   isExpired?: boolean;
 } & ZaakDetail;
+
+export type VarenVergunningFrontend = Exclude<
+  VarenFrontend,
+  VarenRegistratieRederType
+>;
