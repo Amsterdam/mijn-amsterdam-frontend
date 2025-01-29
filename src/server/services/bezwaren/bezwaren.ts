@@ -33,7 +33,6 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
@@ -90,7 +89,7 @@ function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
     : 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
 }
 
-function getZaakUrl(zaakId: string) {
+function getZaakUrl(zaakId: Bezwaar['uuid']) {
   return `${process.env.BFF_BEZWAREN_API}/zaken/${zaakId}`;
 }
 
@@ -157,7 +156,7 @@ function transformBezwaarStatus(
 async function fetchBezwaarStatus(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: string
+  zaakId: Bezwaar['uuid']
 ) {
   const params = {
     zaak: getZaakUrl(zaakId),
@@ -193,9 +192,11 @@ function transformBezwarenDocumentsResults(
           id: documentIdEncrypted,
           title: bestandsnaam,
           datePublished: verzenddatum,
-          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, {
-            id: documentIdEncrypted,
-          }),
+          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, [
+            {
+              id: documentIdEncrypted,
+            },
+          ]),
           dossiertype,
         };
       }
@@ -214,7 +215,7 @@ function transformBezwarenDocumentsResults(
 export async function fetchBezwarenDocuments(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: string
+  zaakId: Bezwaar['uuid']
 ) {
   const params = {
     page: 1,
@@ -268,7 +269,10 @@ function transformBezwarenResults(
           identificatie: bezwaarBron.identificatie,
           id: bezwaarBron.uuid,
           uuid: bezwaarBron.uuid,
-          uuidEncrypted: idEncrypted,
+
+          fetchUrl: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DETAIL, [
+            { id: idEncrypted },
+          ]),
 
           // Wanneer het bezwaar is ontvangen
           ontvangstdatum: bezwaarBron.registratiedatum,
@@ -436,51 +440,40 @@ export type BezwaarDetail = {
 export async function fetchBezwaarDetail(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakIdEncrypted: string
+  zaakId: Bezwaar['uuid']
 ) {
-  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    zaakIdEncrypted,
-    authProfileAndToken
+  const bezwaarStatusRequest = fetchBezwaarStatus(
+    requestID,
+    authProfileAndToken,
+    zaakId
   );
 
-  if (decryptResult.status === 'OK') {
-    const zaakId = decryptResult.content;
+  const bezwaarDocumentsRequest = fetchBezwarenDocuments(
+    requestID,
+    authProfileAndToken,
+    zaakId
+  );
 
-    const bezwaarStatusRequest = fetchBezwaarStatus(
-      requestID,
-      authProfileAndToken,
-      zaakId
-    );
+  const [statussenResponse, documentsResponse] = await Promise.allSettled([
+    bezwaarStatusRequest,
+    bezwaarDocumentsRequest,
+  ]);
 
-    const bezwaarDocumentsRequest = fetchBezwarenDocuments(
-      requestID,
-      authProfileAndToken,
-      zaakId
-    );
+  const statussen = getSettledResult(statussenResponse);
+  const documents = getSettledResult(documentsResponse);
 
-    const [statussenResponse, documentsResponse] = await Promise.allSettled([
-      bezwaarStatusRequest,
-      bezwaarDocumentsRequest,
-    ]);
+  const failedDependencies = getFailedDependencies({
+    statussen,
+    documents,
+  });
 
-    const statussen = getSettledResult(statussenResponse);
-    const documents = getSettledResult(documentsResponse);
-
-    const failedDependencies = getFailedDependencies({
-      statussen,
-      documents,
-    });
-
-    return apiSuccessResult(
-      {
-        statussen: statussen.content,
-        documents: documents.content,
-      },
-      failedDependencies
-    );
-  }
-
-  return decryptResult;
+  return apiSuccessResult(
+    {
+      statussen: statussen.content,
+      documents: documents.content,
+    },
+    failedDependencies
+  );
 }
 
 export async function fetchBezwaarDocument(
