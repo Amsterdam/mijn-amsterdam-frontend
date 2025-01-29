@@ -19,6 +19,7 @@ import {
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../server/services/hli/stadspas-types';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse_DEPRECATED,
@@ -164,7 +165,9 @@ export default function HLIStadspas() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              <BlockStadspas stadspas={stadspas} />
+              {FeatureToggle.hliThemaStadspasBlokkerenActive && (
+                <BlockStadspas stadspas={stadspas} />
+              )}
             </Grid.Cell>
           ) : (
             <Grid.Cell span="all">
