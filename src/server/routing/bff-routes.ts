@@ -32,10 +32,9 @@ export const BffEndpoints = {
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
 
   // Decos
-  DECOS_DOCUMENTS_LIST: `/services/vergunningen/v2/documents`,
+  DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   // Vergunningen V2
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD:
-    '/services/vergunningen/v2/documents/download',
+  DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
 
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',

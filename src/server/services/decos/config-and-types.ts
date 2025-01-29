@@ -211,41 +211,7 @@ export type WithTimeRange = {
 };
 export type WithDateTimeRange = WithDateRange & WithTimeRange; // A list of common readable api attributes
 
-const status = 'status';
-const identifier = 'identifier';
-const processed = 'processed';
-const dateDecision = 'dateDecision';
-
-export const caseType = 'caseType';
-export const dateRequest = 'dateRequest';
-export const dateStart = 'dateStart';
-export const dateEnd = 'dateEnd';
-export const location = 'location';
-export const timeStart = 'timeStart';
-export const timeEnd = 'timeEnd';
-export const destination = 'destination';
-export const description = 'description';
-export const decision = 'decision';
-// Fields are selected per case initially but don't end up in the data we send to front end.
-// These fields are fore example used to determine payment status.
-
-export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
-// The set of field transforms that applies to every case.
-// { $api_attribute_name_source: $api_attribute_name_mijn_amsterdam }
-
-export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
-  title: status,
-  text45: caseType,
-  dfunction: decision,
-  mark: identifier,
-  processed: processed,
-  date5: dateDecision,
-  document_date: dateRequest,
-  date6: dateStart,
-  date7: dateEnd,
-};
 // Cases with this one of these dfunction values will not be included in the cases shown to the user.
-
 export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [
   'buiten behandeling',
   'geannuleerd',

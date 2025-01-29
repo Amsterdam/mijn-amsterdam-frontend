@@ -3,13 +3,15 @@ import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakBase,
   DecosZaakTransformer,
-  SELECT_FIELDS_TRANSFORM_BASE,
   WithDateRange,
   WithLocation,
+} from '../decos/config-and-types';
+import {
+  SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,
   dateStart,
   location,
-} from '../decos/decos-types';
+} from '../decos/decos-field-transformers';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
