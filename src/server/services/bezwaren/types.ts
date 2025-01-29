@@ -41,7 +41,7 @@ export interface BezwaarSourceData {
 export type Bezwaar = {
   identificatie: string;
   uuid: string;
-  uuidEncrypted: string;
+  fetchUrl: string | null;
   startdatum: string;
   ontvangstdatum: string;
   ontvangstdatumFormatted: string | null;
