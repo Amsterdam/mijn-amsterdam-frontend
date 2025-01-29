@@ -53,15 +53,14 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
  * specic AddressBook table that matches a condition (num1 should be the userID)
  *
  * After querying the AddressBook we use the keys that were retrieved to look for Zaken tied to these AddressBookEntry keys.
- * Initially we only select a set of specific api attributes (fields) that we want to be processed/transformed. This reduces the response size and should be faster.
+ * Initially we only select a set of specific api attributes (fields (defined in the transformer of a certain caseTye)) that we want to be processed/transformed. This reduces the response size and should be faster.
  *
- * After retrieving the zaken we first filter these zaken based on configuration found in `decos-zaken.ts`.
- * We check for data quality, payment and other arbitrary checks (hasValidSourceData).
+ * After retrieving the zaken we check for data quality, payment and other arbitrary checks (hasValidSourceData).
  *
  * We now have filtered set of decos zaken which we want to make sense of first by transforming the api attributes to understandable
  * ones for example the source attribute `document_date` becomes `dateRequest`.
  *
- * After transformation of the api attribute names and possibly values we apply another, optional, transform to the data.
+ * After transformation of the api attribute names and possibly values, we apply another, optional, transform to the data.
  * At this point we can fetch other services to enrich the data we retrieved initially or maybe assign values to some properties based on business logic.
  *
  * Service: **fetchDecosZaak**
@@ -284,30 +283,35 @@ async function transformDecosZakenResponse<
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-async function getZakenByUserKey(
-  requestID: RequestID,
-  userKey: string,
-  zaakTypeTransformers: Pick<
-    DecosZaakTransformer<DecosZaakBase>,
-    'addToSelectFieldsBase' | 'caseType'
-  >[] = []
+function getSelectFields(
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[]
 ) {
-  const caseField = 'text45';
-  assert(
-    SELECT_FIELDS_TRANSFORM_BASE[caseField] == caseType,
-    `getZakenByUserKey expects field ${caseField} to be the caseType`
-  );
-
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
-    ...Object.keys(SELECT_FIELDS_TRANSFORM_BASE),
-    ...zaakTypeTransformers.flatMap(
-      (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
+    ...zaakTypeTransformers.flatMap((zaakTransformer) =>
+      Object.keys(zaakTransformer.transformFields)
     ),
   ]).join(',');
 
+  return fields;
+}
+
+async function getZakenByUserKey(
+  requestID: RequestID,
+  userKey: string,
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
+) {
+  const caseTypeField = 'text45';
+
+  assert(
+    SELECT_FIELDS_TRANSFORM_BASE[caseTypeField] == caseType,
+    `getZakenByUserKey expects field ${caseTypeField} to be the caseType`
+  );
+
+  const fields = getSelectFields(zaakTypeTransformers);
+
   const caseTypes = zaakTypeTransformers
-    .map((transformer) => `${caseField} eq ${transformer.caseType}`)
+    .map((transformer) => `${caseTypeField} eq '${transformer.caseType}'`)
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
@@ -339,10 +343,7 @@ async function getZakenByUserKey(
 export async function fetchDecosZakenFromSource(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakTypeTransformers: Pick<
-    DecosZaakTransformer<any>,
-    'addToSelectFieldsBase' | 'caseType'
-  >[] = []
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
 
@@ -677,6 +678,7 @@ export async function fetchDecosDocument(
 export const forTesting = {
   filterValidDocument,
   getUserKeys,
+  getSelectFields,
   getZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowDateResponse,

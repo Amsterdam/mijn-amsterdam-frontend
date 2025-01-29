@@ -32,10 +32,9 @@ export const BffEndpoints = {
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
 
   // Vergunningen V2
-  VERGUNNINGENv2_ZAKEN_SOURCE: '/services/vergunningen/v2/zaken/:id?',
-  VERGUNNINGENv2_DETAIL: `/services/vergunningen/v2/:id`,
+  VERGUNNINGENv2_DOCUMENTS_LIST: `/services/vergunningen/v2/documents`,
   VERGUNNINGENv2_DOCUMENT_DOWNLOAD:
-    '/services/vergunningen/v2/documents/download/:id',
+    '/services/vergunningen/v2/documents/download',
 
   // Vergunningen / Koppel api
   VERGUNNINGEN_DOCUMENT_DOWNLOAD:
