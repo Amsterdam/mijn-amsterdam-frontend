@@ -1,4 +1,8 @@
-import { LinkProps, StatusLineItem } from '../../../universal/types';
+import {
+  LinkProps,
+  StatusLineItem,
+  ZaakDetail,
+} from '../../../universal/types';
 
 export interface WpiRequestStatusDocument {
   id: string;
@@ -21,7 +25,7 @@ export interface WpiRequestStatusHerstelTermijn extends WpiRequestStatus {
   dateUserFeedbackExpected: string;
 }
 
-export interface WpiRequestProcess {
+export interface WpiRequestProcess extends ZaakDetail {
   id: string;
   title: string;
   about:
@@ -40,7 +44,6 @@ export interface WpiRequestProcess {
   steps: WpiRequestStatus[];
   statusId: WpiRequestStatus['id'];
   decision: string | null;
-  link?: LinkProps;
 }
 
 export type WpiRequestProcessContent<T = string> = (
