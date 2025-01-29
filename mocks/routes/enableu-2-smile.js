@@ -1,17 +1,19 @@
-const AVG_RESPONSE = require('../fixtures/avg.json');
 const AVG_THEMAS_RESPONSE = require('../fixtures/avg-themas.json');
+const AVG_RESPONSE = require('../fixtures/avg.json');
 const KLACHTEN_RESPONSE = require('../fixtures/klachten.json');
 const settings = require('../settings');
 
-function getSmileIdentifyingField(fields, core) {
-  if (!fields?.function) {
-    core.logger.error(
-      "No 'function' property on 'fields'. \
+function isIncomingFormFunction(identifier) {
+  return (fields, core) => {
+    if (!fields?.function) {
+      core.logger.error(
+        "No 'function' property on 'fields'. \
       Make sure the multipart-form being send contains this."
-    );
-    return undefined;
-  }
-  return fields.function[0];
+      );
+      return undefined;
+    }
+    return fields.function[0] == identifier;
+  };
 }
 
 module.exports = [
@@ -25,19 +27,19 @@ module.exports = [
         type: 'intermediate-api-handler',
         options: {
           klachten: {
-            identifier: 'readKlacht',
-            getFieldWithIdentifier: getSmileIdentifyingField,
+            isMatch: isIncomingFormFunction('readKlacht'),
             body: KLACHTEN_RESPONSE,
+            statusCode: 200,
           },
           avg: {
-            identifier: 'readAVGverzoek',
-            getFieldWithIdentifier: getSmileIdentifyingField,
+            isMatch: isIncomingFormFunction('readAVGverzoek'),
             body: AVG_RESPONSE,
+            statusCode: 200,
           },
           avgThemas: {
-            identifier: 'readthemaperavgverzoek',
-            getFieldWithIdentifier: getSmileIdentifyingField,
+            isMatch: isIncomingFormFunction('readthemaperavgverzoek'),
             body: AVG_THEMAS_RESPONSE,
+            statusCode: 200,
           },
         },
       },
