@@ -30,9 +30,9 @@ export function transformVergunningFrontend<V extends DecosZaakBase>(
   );
 
   const fetchDocumentsUrl = generateFullApiUrlBFF(
-      BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
-      [{ id: idEncrypted }]
-    );
+    BffEndpoints.DECOS_DOCUMENTS_LIST,
+    [{ id: idEncrypted }]
+  );
 
   const detailPageRoute = generatePath(appRoute, {
     caseType: slug(vergunning.caseType, {
@@ -122,9 +122,11 @@ function addEncryptedDocumentDownloadUrl(
   return {
     ...document,
     // Adds an url to the BFF api for document download which accepts an encrypted ID only
-    url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, {
-      id: documentIdEncrypted,
-    }]),
+    url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
+      {
+        id: documentIdEncrypted,
+      },
+    ]),
   };
 }
 
