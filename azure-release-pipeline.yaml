@@ -12,7 +12,7 @@ resources:
       ref: refs/heads/main
 
 jobs:
-  - ${{ if contains(variables['Build.SourceBranchName'], 'refs/heads/main') }}:
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
       - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
         parameters:
           dtapName: p
@@ -21,8 +21,9 @@ jobs:
           btdDeploy: true
           btdAppBFF: true
           btdAppUI: true
-  - job: EchoMessage
-    displayName: 'Just prints a message for when the main branch condition is not met'
-    steps:
-      - script: echo "This pipeline is only triggered for the main branch"
-        displayName: 'Print message'
+  - ${{ if ne(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+      - job: EchoMessage
+        displayName: 'Pipeline triggered on a releas tag on the wrong branch'
+        steps:
+          - script: echo "This pipeline is only triggered for the main branch"
+            displayName: 'Print message'
