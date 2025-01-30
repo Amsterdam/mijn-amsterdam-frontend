@@ -1,5 +1,10 @@
 import { ReactNode } from 'react';
 
+import {
+  Grid,
+  GridColumnNumber,
+  GridColumnNumbers,
+} from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './Datalist.module.scss';
@@ -37,14 +42,22 @@ interface WrappedRow {
   content: ReactNode;
   className?: string;
   isVisible?: boolean;
+  span?: GridColumnNumber | GridColumnNumbers;
+  start?: GridColumnNumber | GridColumnNumbers;
 }
 
-function DatalistRowWrapped({ label, content, className }: WrappedRow) {
+function DatalistRowWrapped({
+  label,
+  content,
+  className,
+  span,
+  start,
+}: WrappedRow) {
   return (
-    <div className={className}>
+    <Grid.Cell span={span} start={start} className={className}>
       <dt className={styles.Datalist__title}>{label}</dt>
       <dd className={styles.Datalist__description}>{content}</dd>
-    </div>
+    </Grid.Cell>
   );
 }
 
@@ -74,6 +87,8 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
             content={row.content}
             className={row.className}
             isVisible={row.isVisible}
+            span={row.span}
+            start={row.start}
           />
         ))}
     </div>

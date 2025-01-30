@@ -1,25 +1,74 @@
+import { Grid, Paragraph } from '@amsterdam/design-system-react';
+
+import { tableConfig } from './config';
+import {
+  caseTypeVaren,
+  VarenVergunningFrontend,
+} from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
+import { LinkProps } from '../../../universal/types/App.types';
+import { Datalist } from '../../components/Datalist/Datalist';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { linkListItems } from '../Afis/Afis-thema-config';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { tableConfig } from './config';
-import {
-  caseTypeVaren,
-  VarenVergunningFrontend,
-} from '../../../server/services/varen/config-and-types';
-import { LinkProps } from '../../../universal/types/App.types';
-import { Paragraph } from '@amsterdam/design-system-react';
-import { GridDetails } from '../../components/GridDetails/GridDetails';
 
 function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
 
-  const gegevensAanvrager = VAREN.content?.find(
+  const varenRederRegistratie = VAREN.content?.find(
     (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
   );
+
+  const span = { narrow: 4, medium: 4, wide: 3 };
+  const col1start = { narrow: 1, medium: 1, wide: 1 };
+  const col2start = { narrow: 1, medium: 5, wide: 4 };
+  const col3start = { narrow: 1, medium: 1, wide: 8 };
+
+  const gegevensAanvrager = varenRederRegistratie
+    ? [
+        {
+          rows: [
+            {
+              label: 'Bedrijfsnaam',
+              content: varenRederRegistratie.company,
+              start: col1start,
+              span,
+            },
+            {
+              label: 'E-mailadres',
+              content: varenRederRegistratie.email,
+              start: col2start,
+              span,
+            },
+            {
+              label: 'Telefoonnummer',
+              content: varenRederRegistratie.phone,
+              start: col3start,
+              span,
+            },
+          ],
+        },
+        {
+          rows: [
+            {
+              label: 'KVK nummer',
+              content: varenRederRegistratie.bsnkvk,
+              start: col1start,
+              span,
+            },
+            {
+              label: 'Adres',
+              content: varenRederRegistratie.adres,
+              start: col2start,
+              span,
+            },
+          ],
+        },
+      ]
+    : null;
 
   const vergunningen = VAREN.content?.filter(
     (item) => item.caseType !== caseTypeVaren.VarenRederRegistratie
@@ -68,11 +117,9 @@ export default function Varen() {
   ];
 
   const gegevens = (
-    <GridDetails
-      caption={'Gegevens aanvrager'}
-      displayProps={['email', 'company', 'adres', 'phone', 'bsnkvk']}
-      items={gegevensAanvrager}
-    />
+    <Grid.Cell span="all">
+      <Datalist rows={gegevensAanvrager} />
+    </Grid.Cell>
   );
 
   const tables = Object.entries(tableConfig).map(
