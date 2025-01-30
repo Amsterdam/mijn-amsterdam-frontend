@@ -1,0 +1,27 @@
+.VarenGegevensAanvrager {
+  display: grid;
+  padding: 0;
+
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    dd {
+      margin: 0;
+    }
+  }
+
+  & div {
+    &:nth-child(3n + 1) {
+      grid-column-start: 1;
+      grid-column-end: span 3;
+    }
+
+    &:nth-child(3n + 2) {
+      grid-column-start: 4;
+      grid-column-end: span 3;
+    }
+
+    &:nth-child(3n) {
+      grid-column-start: 7;
+      grid-column-end: span 3;
+    }
+  }
+}

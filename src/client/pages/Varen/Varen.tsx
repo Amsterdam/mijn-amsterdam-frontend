@@ -1,25 +1,36 @@
+import { Grid, Paragraph } from '@amsterdam/design-system-react';
+
+import { tableConfig } from './config';
+import styles from './Varen.module.scss';
+import {
+  caseTypeVaren,
+  VarenVergunningFrontend,
+} from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
+import { entries } from '../../../universal/helpers/utils';
+import { LinkProps } from '../../../universal/types/App.types';
+import { Datalist } from '../../components/Datalist/Datalist';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { linkListItems } from '../Afis/Afis-thema-config';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { tableConfig } from './config';
-import {
-  caseTypeVaren,
-  VarenVergunningFrontend,
-} from '../../../server/services/varen/config-and-types';
-import { LinkProps } from '../../../universal/types/App.types';
-import { Paragraph } from '@amsterdam/design-system-react';
-import { GridDetails } from '../../components/GridDetails/GridDetails';
 
 function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
 
-  const gegevensAanvrager = VAREN.content?.find(
+  const varenRederRegistratie = VAREN.content?.find(
     (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
   );
+  const gegevensAanvrager = entries(varenRederRegistratie ?? {})
+    .filter(([key]) =>
+      ['email', 'company', 'adres', 'phone', 'bsnkvk'].includes(key)
+    )
+    .map(([label, content]) => ({
+      label,
+      content,
+    }));
 
   const vergunningen = VAREN.content?.filter(
     (item) => item.caseType !== caseTypeVaren.VarenRederRegistratie
@@ -65,14 +76,20 @@ export default function Varen() {
       to: 'https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningAanvragen.aspx',
       title: 'Exploitatievergunning aanvragen',
     },
+    {
+      to: 'https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningWijzigen.aspx?guid=00E9D514E8AB4460AECE6675956A9441',
+      title: 'TEST exploitatievergunning wijzigen',
+    },
   ];
 
   const gegevens = (
-    <GridDetails
-      caption={'Gegevens aanvrager'}
-      displayProps={['email', 'company', 'adres', 'phone', 'bsnkvk']}
-      items={gegevensAanvrager}
-    />
+    <Grid.Cell span="all">
+      <Datalist
+        className={styles.VarenGegevensAanvrager}
+        rows={gegevensAanvrager.map((a) => ({ rows: [a] }))}
+        // rowVariant="vertical"
+      />
+    </Grid.Cell>
   );
 
   const tables = Object.entries(tableConfig).map(

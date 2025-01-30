@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 
 import { Grid, Icon, LinkList, Screen } from '@amsterdam/design-system-react';
+import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
@@ -12,7 +13,6 @@ import {
   ThemaIcon,
 } from '../../components';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
-import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
@@ -84,10 +84,13 @@ export default function ThemaPagina({
           {!!buttonItems.length && (
             <Grid.Cell span="all">
               {buttonItems.map(({ to, title }) => (
-                <MaButtonLink key={to} href={to}>
-                  {title}
-                  <Icon svg={ExternalLinkIcon} size="level-5" />
-                </MaButtonLink>
+                <Grid.Cell key={to} span="all">
+                  <br />
+                  <MaButtonLink key={to} href={to}>
+                    {title}
+                    <Icon svg={ExternalLinkIcon} size="level-5" />
+                  </MaButtonLink>
+                </Grid.Cell>
               ))}
             </Grid.Cell>
           )}
