@@ -1,3 +1,4 @@
+import Mockdate from 'mockdate';
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import {
@@ -8,75 +9,96 @@ import {
   Stadspas,
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
+  StadspasHouderPasSource,
+  StadspasOwner,
+  StadspasPasHouderResponse,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
-function createStadspasHouderResponse() {
+function createStadspasHouderResponse(): StadspasPasHouderResponse {
   const stadspasHouderResponse = {
     initialen: 'A',
     achternaam: 'Achternaam',
     voornaam: 'Vadertje',
-    passen: [createPas(false, 111111111111), createPas(true, 222222222222)],
+    passen: [
+      createPas({ actief: false, pasnummer: 111111111111 }),
+      createPas({
+        actief: true,
+        pasnummer: 222222222222,
+        securitycode: '012345',
+        vervangen: true,
+      }),
+    ],
     sub_pashouders: [
       {
         initialen: 'B',
         achternaam: 'Achternaam',
         voornaam: 'Moedertje',
-        passen: [createPas(true, 333333333333), createPas(false, 444444444444)],
+        passen: [
+          createPas({ actief: true, pasnummer: 333333333333 }),
+          createPas({ actief: false, pasnummer: 444444444444 }),
+        ],
       },
       {
         initialen: 'C',
         achternaam: 'Achternaam',
         voornaam: 'Kindje',
-        passen: [createPas(true, 555555555555), createPas(false, 666666666666)],
+        passen: [
+          createPas({ actief: true, pasnummer: 555555555555 }),
+          createPas({ actief: false, pasnummer: 666666666666 }),
+        ],
       },
     ],
   };
   return stadspasHouderResponse;
 }
 
+/** Create a stadspas with optionally overwriting it's default properties. */
 function createPas(
-  actief: boolean,
-  // eslint-disable-next-line no-magic-numbers
-  pasnummer: number = 777777777777,
-  securitycode: string = '012345'
-) {
+  props?: Partial<StadspasHouderPasSource>
+): StadspasHouderPasSource {
   return {
-    actief,
-    securitycode,
-    balance_update_time: '2020-04-02T12:45:41.000Z',
+    actief: true,
+    securitycode: '012345',
+    heeft_budget: true,
     budgetten: [
       {
         code: 'AMSTEG_10-14',
         naam: 'Kindtegoed 10-14',
         omschrijving: 'Kindtegoed',
-        expiry_date: '2021-08-31T21:59:59.000Z',
+        expiry_date: '2080-08-31T21:59:59.000Z',
         budget_assigned: 150,
         budget_balance: 0,
       },
     ],
-    budgetten_actief: true,
+    vervangen: false,
     categorie: 'Amsterdamse Digitale Stadspas',
     categorie_code: 'A',
-    expiry_date: '2020-08-31T23:59:59.000Z',
+    expiry_date: '2080-08-31T23:59:59.000Z',
     id: 999999,
-    originele_pas: {
-      categorie: 'Amsterdamse Digitale Stadspas',
-      categorie_code: 'A',
-      id: 888888,
-      pasnummer: 8888888888888,
-      pasnummer_volledig: '8888888888888888888',
-      passoort: { id: 11, naam: 'Digitale Stadspas' },
-    },
-    pasnummer,
+    pasnummer: 777777777777,
     pasnummer_volledig: '6666666666666666666',
     passoort: { id: 11, naam: 'Digitale Stadspas' },
+    ...props,
   };
 }
 
-function createTransformedPas(firstname: string, initials: string): Stadspas {
+/** Create a transformed stadspas with optionally overwriting it's default properties. */
+function createTransformedPas(
+  props: Partial<{
+    topLevelProps: Partial<Stadspas>;
+    owner: Partial<StadspasOwner>;
+  }>
+): Stadspas {
+  const owner = {
+    firstname: 'Paul',
+    infix: undefined,
+    initials: 'P',
+    lastname: 'Achternaam',
+    ...props.owner,
+  };
   return {
     actief: true,
     balance: 0,
@@ -88,30 +110,25 @@ function createTransformedPas(firstname: string, initials: string): Stadspas {
         budgetBalance: 0,
         budgetBalanceFormatted: '€0,00',
         code: 'AMSTEG_10-14',
-        dateEnd: '2021-08-31T21:59:59.000Z',
-        dateEndFormatted: '31 augustus 2021',
+        dateEnd: '2080-08-31T21:59:59.000Z',
+        dateEndFormatted: '31 augustus 2080',
         description: 'Kindtegoed',
         title: 'Kindtegoed 10-14',
       },
     ],
-    dateEnd: '2020-08-31T23:59:59.000Z',
-    dateEndFormatted: '01 september 2020',
+    dateEnd: '2080-08-31T23:59:59.000Z',
+    dateEndFormatted: '31 augustus 2080',
     id: '999999',
-    owner: {
-      firstname,
-      infix: undefined,
-      initials,
-      lastname: 'Achternaam',
-    },
+    owner,
     passNumber: 777777777777,
     passNumberComplete: '6666666666666666666',
     securityCode: '012345',
+    ...props.topLevelProps,
   };
 }
 
-const pashouderResponse = createStadspasHouderResponse();
-
-const pasResponse = createPas(true);
+const defaultPashouderResponse = createStadspasHouderResponse();
+const defaultPasResponse = createPas();
 
 const authProfileAndToken: AuthProfileAndToken = {
   profile: {
@@ -126,8 +143,14 @@ const authProfileAndToken: AuthProfileAndToken = {
 describe('stadspas services', () => {
   const FAKE_API_KEY = '22222xx22222';
 
-  afterAll(() => {
+  beforeEach(() => {
+    Mockdate.set('2025-01-01');
+  });
+
+  afterEach(() => {
+    Mockdate.reset();
     vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
 
   test('stadspas-zorgned-service', async () => {
@@ -150,12 +173,13 @@ describe('stadspas services', () => {
     `);
   });
 
-  test('stadspas-gpass-service fail administratienummer endpoint', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
+  describe('stadspas-gpass-service', () => {
+    test('fail administratienummer endpoint', async () => {
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-    const response = await fetchStadspassen('8798712', authProfileAndToken);
+      const response = await fetchStadspassen('8798712', authProfileAndToken);
 
-    expect(response).toMatchInlineSnapshot(`
+      expect(response).toMatchInlineSnapshot(`
       {
         "code": 500,
         "content": null,
@@ -163,19 +187,21 @@ describe('stadspas services', () => {
         "status": "ERROR",
       }
     `);
-  });
-
-  test('stadspas-gpass-service fail user unknown', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        clientidentificatie: '123-123',
-      },
     });
-    remoteApi.get('/stadspas/rest/sales/v1/pashouder?addsubs=true').reply(401);
 
-    const response = await fetchStadspassen('xyz123', authProfileAndToken);
+    test('fail user unknown', async () => {
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+        .reply(401);
 
-    expect(response).toMatchInlineSnapshot(`
+      const response = await fetchStadspassen('xyz123', authProfileAndToken);
+
+      expect(response).toMatchInlineSnapshot(`
       {
         "content": {
           "administratienummer": null,
@@ -184,94 +210,171 @@ describe('stadspas services', () => {
         "status": "OK",
       }
     `);
-  });
+    });
 
-  test('stadspas-gpass-service fail only returns 1st pass', async () => {
-    const encryptSpy = vi
-      .spyOn(encryptDecrypt, 'encrypt')
-      .mockReturnValueOnce([
+    test('fail only returns 1st pass', async () => {
+      const encryptSpy = vi
+        .spyOn(encryptDecrypt, 'encrypt')
+        .mockReturnValueOnce([
+          '1x2x3x-##########-4x5x6x',
+          Buffer.from('xx'),
+          Buffer.from('yy'),
+        ]);
+
+      const decryptSpy = vi
+        .spyOn(encryptDecrypt, 'decrypt')
+        .mockReturnValueOnce('123-unencrypted-456');
+
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+        .reply(200, defaultPashouderResponse);
+      // Only mocking 1 pas response
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
+        .reply(200, defaultPasResponse);
+
+      const response = await fetchStadspassen('0912039', authProfileAndToken);
+
+      const expectedResponse = {
+        content: {
+          administratienummer: '0363000123-123',
+          stadspassen: [
+            createTransformedPas({
+              topLevelProps: {
+                dateEnd: '2080-08-31T23:59:59.000Z',
+                dateEndFormatted: '01 september 2080',
+              },
+              owner: { firstname: 'Moedertje', initials: 'B' },
+            }),
+          ],
+        },
+        status: 'OK',
+      };
+
+      expect(response).toStrictEqual(expectedResponse);
+
+      encryptSpy.mockRestore();
+      decryptSpy.mockRestore();
+    });
+
+    test('filters out replaced passes and returns pass correctly', async () => {
+      Mockdate.set('2024-12-01');
+
+      vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
         '1x2x3x-##########-4x5x6x',
         Buffer.from('xx'),
         Buffer.from('yy'),
       ]);
 
-    const decryptSpy = vi
-      .spyOn(encryptDecrypt, 'decrypt')
-      .mockReturnValueOnce('123-unencrypted-456');
+      vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue(
+        '123-unencrypted-456'
+      );
 
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        clientidentificatie: '123-123',
-      },
-    });
-    remoteApi
-      .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
-      .reply(200, pashouderResponse);
-    // Only mocking 1 pas response
-    remoteApi
-      .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
-      .reply(200, pasResponse);
+      const relevantPas = createPas({ actief: true, pasnummer: 111111111111 });
+      const relevantPas2 = createPas({
+        actief: false,
+        pasnummer: 222222222222,
+      });
+      const replacedPas = createPas({
+        actief: false,
+        pasnummer: 333333333333,
+        securitycode: '012345',
+        vervangen: true,
+      });
+      const expiredPas = createPas({
+        actief: false,
+        pasnummer: 444444444444,
+        securitycode: '012345',
+        vervangen: false,
+        expiry_date: '2024-07-31T21:59:59.000Z',
+      });
+      const expiredPasWayInThePast = createPas({
+        actief: false,
+        pasnummer: 555555555555,
+        securitycode: '012345',
+        vervangen: false,
+        expiry_date: '2020-07-31T21:59:59.000Z',
+      });
 
-    const response = await fetchStadspassen('0912039', authProfileAndToken);
-
-    const expectedResponse = {
-      content: {
-        administratienummer: '0363000123-123',
-        stadspassen: [createTransformedPas('Moedertje', 'B')],
-      },
-      status: 'OK',
-    };
-
-    expect(response).toStrictEqual(expectedResponse);
-
-    encryptSpy.mockRestore();
-    decryptSpy.mockRestore();
-  });
-
-  test('stadspas-gpass-service Happy! All passes returned', async () => {
-    const encryptSpy = vi
-      .spyOn(encryptDecrypt, 'encrypt')
-      .mockReturnValue([
-        '1x2x3x-##########-4x5x6x',
-        Buffer.from('xx'),
-        Buffer.from('yy'),
-      ]);
-
-    const decryptSpy = vi
-      .spyOn(encryptDecrypt, 'decrypt')
-      .mockReturnValue('123-unencrypted-456');
-
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        clientidentificatie: '123-123',
-      },
-    });
-    remoteApi
-      .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
-      .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
-      .reply(200, pashouderResponse);
-    remoteApi
-      .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
-      .times(3)
-      .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
-      .reply(200, pasResponse);
-
-    const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
-    const expectedResponse = {
-      content: {
-        administratienummer: '0363000123-123',
-        stadspassen: [
-          createTransformedPas('Vadertje', 'A'),
-          createTransformedPas('Moedertje', 'B'),
-          createTransformedPas('Kindje', 'C'),
+      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+        persoon: {
+          clientidentificatie: '123-123',
+        },
+      });
+      const pasHouderResponse: StadspasPasHouderResponse = {
+        initialen: 'A',
+        achternaam: 'Achternaam',
+        voornaam: 'Vadertje',
+        passen: [relevantPas, replacedPas, expiredPas, expiredPasWayInThePast],
+        sub_pashouders: [
+          {
+            initialen: 'B',
+            achternaam: 'Achternaam',
+            voornaam: 'Moedertje',
+            passen: [relevantPas, relevantPas2],
+          },
+          {
+            initialen: 'C',
+            achternaam: 'Achternaam',
+            voornaam: 'Kindje',
+            passen: [relevantPas, relevantPas2],
+          },
         ],
-      },
-      status: 'OK',
-    };
-    expect(response).toStrictEqual(expectedResponse);
+      };
+      remoteApi
+        .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, pasHouderResponse);
+      remoteApi
+        .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
+        .times(6)
+        .matchHeader(
+          'authorization',
+          `AppBearer ${FAKE_API_KEY},0363000123-123`
+        )
+        .reply(200, defaultPasResponse);
 
-    encryptSpy.mockRestore();
-    decryptSpy.mockRestore();
+      const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
+      expect(response.content?.stadspassen.length).toBe(5);
+      expect(response.content?.stadspassen[0]).toStrictEqual({
+        actief: true,
+        balance: 0,
+        balanceFormatted: '€0,00',
+        budgets: [
+          {
+            budgetAssigned: 150,
+            budgetAssignedFormatted: '€150,00',
+            budgetBalance: 0,
+            budgetBalanceFormatted: '€0,00',
+            code: 'AMSTEG_10-14',
+            dateEnd: '2080-08-31T21:59:59.000Z',
+            dateEndFormatted: '31 augustus 2080',
+            description: 'Kindtegoed',
+            title: 'Kindtegoed 10-14',
+          },
+        ],
+        dateEnd: '2080-08-31T23:59:59.000Z',
+        dateEndFormatted: '01 september 2080',
+        id: '999999',
+        owner: {
+          firstname: 'Vadertje',
+          infix: undefined,
+          initials: 'A',
+          lastname: 'Achternaam',
+        },
+        passNumber: 777777777777,
+        passNumberComplete: '6666666666666666666',
+        securityCode: '012345',
+      });
+    });
   });
 
   test('stadspas transacties Happy!', async () => {
