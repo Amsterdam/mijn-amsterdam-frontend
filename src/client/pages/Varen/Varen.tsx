@@ -6,8 +6,9 @@ import {
   VarenVergunningFrontend,
 } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
+import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/App.types';
-import { Datalist } from '../../components/Datalist/Datalist';
+import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -22,48 +23,23 @@ function useVarenThemaData() {
     (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
   );
 
-  const span = { narrow: 4, medium: 4, wide: 3 };
-  const col1start = { narrow: 1, medium: 1, wide: 1 };
-  const col2start = { narrow: 1, medium: 5, wide: 4 };
-  const col3start = { narrow: 1, medium: 1, wide: 8 };
+  const span = 4;
 
-  const gegevensAanvrager = varenRederRegistratie
-    ? [
-        {
-          rows: [
-            {
-              label: 'Bedrijfsnaam',
-              content: varenRederRegistratie.company,
-              start: col1start,
-              span,
-            },
-            {
-              label: 'E-mailadres',
-              content: varenRederRegistratie.email,
-              start: col2start,
-              span,
-            },
-            {
-              label: 'Telefoonnummer',
-              content: varenRederRegistratie.phone,
-              start: col3start,
-              span,
-            },
-            {
-              label: 'KVK nummer',
-              content: varenRederRegistratie.bsnkvk,
-              start: col1start,
-              span,
-            },
-            {
-              label: 'Adres',
-              content: varenRederRegistratie.adres,
-              start: col2start,
-              span,
-            },
-          ],
-        },
-      ]
+  const labelMap = {
+    company: 'Bedrijfsnaam',
+    email: 'E-mailadres',
+    phone: 'Telefoonnummer',
+    bsnkvk: 'KVK nummer',
+    adres: 'Adres',
+  };
+
+  const gegevensAanvrager: RowSet | null = varenRederRegistratie
+    ? {
+        rows: entries(labelMap).map(([key, label]) => {
+          const content = varenRederRegistratie[key];
+          return { label, content, span };
+        }),
+      }
     : null;
 
   const vergunningen = VAREN.content?.filter(
@@ -78,6 +54,7 @@ function useVarenThemaData() {
 
   return {
     gegevensAanvrager,
+    varenRederRegistratie,
     tableConfig,
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
@@ -112,11 +89,11 @@ export default function Varen() {
     },
   ];
 
-  const gegevens = (
+  const gegevens = gegevensAanvrager ? (
     <Grid.Cell span="all">
-      <Datalist rows={gegevensAanvrager} />
+      <Datalist rows={[gegevensAanvrager]} />
     </Grid.Cell>
-  );
+  ) : null;
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort }]) => {
