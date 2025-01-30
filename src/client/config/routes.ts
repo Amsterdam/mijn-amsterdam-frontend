@@ -23,25 +23,25 @@ export const AppRoutesRedirect = [
   {
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'jaaropgave',
+      kind: 'jaaropgave',
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'jaaropgave',
+      kind: 'jaaropgave',
     }),
   },
   {
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'uitkering',
+      kind: 'uitkering',
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'uitkering',
+      kind: 'uitkering',
     }),
   },
   {
