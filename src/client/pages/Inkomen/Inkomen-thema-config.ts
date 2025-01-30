@@ -48,7 +48,7 @@ const lopendeAanvragenDisplayProps: DisplayProps<
   WithDetailLinkComponent<WpiRequestProcess>
 > = {
   detailLinkComponent: '',
-  dateStart: 'Datum aanvraag',
+  dateStartFormatted: 'Datum aanvraag',
   statusId: 'Status',
 };
 
@@ -56,8 +56,8 @@ const afgehandeldeAanvragenDisplayProps: DisplayProps<
   WithDetailLinkComponent<WpiRequestProcess>
 > = {
   detailLinkComponent: '',
-  dateStart: 'Datum aanvraag',
-  dateEnd: 'Datum besluit',
+  dateStartFormatted: 'Datum aanvraag',
+  dateEndFormatted: 'Datum besluit',
 };
 
 export const specificatiesTableDisplayProps: DisplayProps<
@@ -66,7 +66,7 @@ export const specificatiesTableDisplayProps: DisplayProps<
   >
 > = {
   category: 'Regeling',
-  displayDatePublished: 'Datum',
+  datePublishedFormatted: 'Datum',
   documentUrl: 'Documenten',
 };
 
@@ -75,7 +75,7 @@ export const jaaropgavenTableDisplayProps: DisplayProps<
     WpiIncomeSpecificationTransformed & { documentUrl: string }
   >
 > = {
-  displayDatePublished: 'Datum',
+  datePublishedFormatted: 'Datum',
   documentUrl: 'Documenten',
 };
 
