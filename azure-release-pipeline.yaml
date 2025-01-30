@@ -12,7 +12,7 @@ resources:
       ref: refs/heads/main
 
 jobs:
-  - ${{ if contains(variables['Build.SourceBranchName'], 'main') }}:
+  - ${{ if contains(variables['Build.SourceBranchName'], 'refs/heads/main') }}:
       - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
         parameters:
           dtapName: p
