@@ -64,25 +64,14 @@ export const tableConfig = {
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
     filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
-      if (FeatureToggle.vergunningenV2Active) {
-        return (
-          vergunning.decision === 'Verleend' &&
-          'isExpired' in vergunning &&
-          vergunning.isExpired !== true
-        );
-      }
+      const isCurrentlyActivePermit =
+        vergunning.processed && vergunning.decision === 'Verleend';
+
       if (isVergunningExpirable(vergunning)) {
-        return (
-          vergunning.status === 'Afgehandeld' &&
-          vergunning.decision === 'Verleend' &&
-          !isExpired(vergunning, new Date())
-        );
+        return isCurrentlyActivePermit && !isExpired(vergunning, new Date());
       }
       // Assume if something is not expirable then it's not expired.
-      return (
-        vergunning.status === 'Afgehandeld' &&
-        vergunning.decision === 'Verleend'
-      );
+      return isCurrentlyActivePermit;
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: FeatureToggle.vergunningenV2Active
@@ -92,16 +81,19 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
     filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
+      if (vergunning.processed && vergunning.decision !== 'Verleend') {
+        return true;
+      }
+
       if (isVergunningExpirable(vergunning)) {
         return (
+          vergunning.processed &&
           vergunning.decision === 'Verleend' &&
           isExpired(vergunning, new Date())
         );
       }
-      return (
-        vergunning.status === 'Afgehandeld' &&
-        vergunning.decision !== 'Verleend'
-      );
+
+      return false;
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
