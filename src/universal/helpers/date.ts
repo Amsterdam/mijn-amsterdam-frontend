@@ -76,23 +76,6 @@ export function isDateInPast(date: string, dateNow: string | Date) {
   return date_.getTime() <= dateNow.getTime();
 }
 
-/**
- * Checks if `date` is after the `comparisonDate` (inclusive check).
- */
-export function isDateAfter(
-  date: string | Date,
-  comparisonDate: string | Date
-) {
-  if (typeof comparisonDate === 'string') {
-    comparisonDate = parseISO(comparisonDate);
-  }
-  if (typeof date === 'string') {
-    date = parseISO(date);
-  }
-
-  return date.getTime() >= comparisonDate.getTime();
-}
-
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
   function getDateCompareValue(value: unknown) {
     if (value instanceof Date) {

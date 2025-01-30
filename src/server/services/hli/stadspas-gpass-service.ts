@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import { parseISO } from 'date-fns';
+import { isAfter } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
@@ -32,10 +33,7 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  defaultDateFormat,
-  isDateAfter as isDateAfter,
-} from '../../../universal/helpers/date';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
@@ -249,7 +247,7 @@ function isExpired(expiryDate: string): boolean {
     return false;
   }
 
-  return isDateAfter(now, expiryDate);
+  return isAfter(now, expiryDate);
 }
 
 export async function fetchStadspassen_(
