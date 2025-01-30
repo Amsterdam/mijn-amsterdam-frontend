@@ -1,4 +1,3 @@
-import { HttpStatusCode } from 'axios';
 import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router-dom';
@@ -89,10 +88,7 @@ async function fetchPowerBrowserData<T>(
 
   const response = await requestData<T>(dataRequestConfig, requestID);
 
-  if (
-    response.status === 'ERROR' &&
-    response.code === HttpStatusCode.Unauthorized
-  ) {
+  if (response.status === 'ERROR') {
     fetchPowerBrowserToken.clear();
   }
 
