@@ -1,3 +1,4 @@
+import styles from './Vergunningen.module.scss';
 import {
   Vergunning,
   VergunningExpirable,
@@ -16,19 +17,19 @@ export const displayPropsHuidigeVergunningen = {
 
 export const displayPropsParkerenHuidigeVergunningen = {
   identifier: 'Kenmerk',
-  title: 'Soort vergunning',
+  title: 'Omschrijving',
   dateRequestFormatted: 'Aangevraagd',
 };
 
 export const displayPropsLopendeAanvragen = {
   identifier: 'Kenmerk',
-  title: 'Soort vergunning',
+  title: 'Omschrijving',
   dateRequestFormatted: 'Aangevraagd',
 };
 
 export const displayPropsEerdereVergunningen = {
   identifier: 'Kenmerk',
-  title: 'Soort vergunning',
+  title: 'Omschrijving',
   decision: 'Resultaat',
 };
 
@@ -60,6 +61,7 @@ export const tableConfig = {
       !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
+    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
@@ -77,6 +79,7 @@ export const tableConfig = {
     displayProps: FeatureToggle.vergunningenV2Active
       ? displayPropsHuidigeVergunningen
       : displayPropsParkerenHuidigeVergunningen,
+    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
@@ -97,5 +100,6 @@ export const tableConfig = {
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
+    className: styles.VergunningenTableThemaPagina,
   },
 };

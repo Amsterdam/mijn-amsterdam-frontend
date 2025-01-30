@@ -24,7 +24,7 @@ export function Parkeren() {
   } = useParkerenData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort }]) => {
+    ([kind, { title, displayProps, filter, sort, className }]) => {
       return (
         <ThemaPaginaTable<VergunningFrontendV2 | Vergunning>
           key={kind}
@@ -32,6 +32,7 @@ export function Parkeren() {
           zaken={parkeerVergunningenFromThemaVergunningen
             .filter(filter)
             .sort(sort)}
+          className={className}
           listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
             kind,
           })}
