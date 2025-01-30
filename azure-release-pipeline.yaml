@@ -12,7 +12,7 @@ resources:
       ref: refs/heads/main
 
 jobs:
-  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+  - ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
       - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
         parameters:
           dtapName: p
@@ -21,9 +21,9 @@ jobs:
           btdDeploy: true
           btdAppBFF: true
           btdAppUI: true
-  - ${{ if ne(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+  - ${{ if ne(variables['Build.SourceBranchName'], 'main') }}:
       - job: EchoMessage
         displayName: 'Warning: Pipeline triggered a release on the wrong branch'
         steps:
-          - script: echo "This pipeline is only triggered for the main branch"
+          - script: echo "This pipeline is only triggered for the main branch. Instead $(variables['Build.SourceBranchName'])"
             displayName: 'Print message'
