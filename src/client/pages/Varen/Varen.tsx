@@ -49,10 +49,6 @@ function useVarenThemaData() {
               start: col3start,
               span,
             },
-          ],
-        },
-        {
-          rows: [
             {
               label: 'KVK nummer',
               content: varenRederRegistratie.bsnkvk,
