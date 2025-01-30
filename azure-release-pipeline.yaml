@@ -1,7 +1,7 @@
 trigger:
   tags:
     include:
-      - release-v*.*.*
+      - release-v*
 pr: none
 
 resources:
