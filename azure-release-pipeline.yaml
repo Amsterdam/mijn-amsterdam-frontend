@@ -26,6 +26,5 @@ jobs:
         displayName: 'Warning: Pipeline triggered a release on the wrong branch'
         steps:
           - script: |
-              echo "This pipeline is only triggered for the main branch. "
-              echo $(variables['Build.SourceBranchName'])
+              echo "This pipeline is only triggered for the main branch. ${{ variables['Build.SourceBranchName'] }} was found instead."
             displayName: 'Print message'
