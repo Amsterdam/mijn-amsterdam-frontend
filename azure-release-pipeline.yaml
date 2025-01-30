@@ -23,7 +23,7 @@ jobs:
           btdAppUI: true
   - ${{ if ne(variables['Build.SourceBranch'], 'refs/heads/main') }}:
       - job: EchoMessage
-        displayName: 'Pipeline triggered on a releas tag on the wrong branch'
+        displayName: 'Warning: Pipeline triggered a release on the wrong branch'
         steps:
           - script: echo "This pipeline is only triggered for the main branch"
             displayName: 'Print message'
