@@ -111,8 +111,7 @@ It's basically an additional development server integrated in the BFF api.
 
 We currently work with a trunk based development approach. [see also](https://trunkbaseddevelopment.com) This means we have relatively short lived branches and only 1 main branch (main)
 The main branch should always be production worthy in terms of functionality, stability and code quality.
-Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you are about create a release, use the `npm run release` or `npm run release:(major|bug)` (for more specific versions) command. This command
-creates a [semver](https://semver.org/) version of the release tag and pushes it to origin in a separte production branch. The CI/CD pipeline will automatically detect the branch and starts building a release.
+Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you create a release on Github, the CI/CD pipeline will automatically detect the branch and starts building a release.
 
 ### Debugging
 `export DEBUG=1` will log some BFF info and also outgoing http requests via the `log-that-http` package. Headers and Body can be made visible as well by `export LOG_THAT_HTTP_HEADERS=true` for headers and `export LOG_THAT_HTTP_BODY=true` for request bodies.
