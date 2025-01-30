@@ -64,12 +64,13 @@ import HLIStadspasDetail from './pages/HLI/HLIStadspasDetail';
 import { HorecaThemaPagina } from './pages/Horeca/Horeca';
 import { HorecaDetailPagina } from './pages/Horeca/HorecaDetail';
 import { HorecaLijstPagina } from './pages/Horeca/HorecaList';
-import Inkomen from './pages/Inkomen/Inkomen';
-import { InkomenDetailBbz } from './pages/InkomenDetail/InkomenDetailBbz';
-import { InkomenDetailTonk } from './pages/InkomenDetail/InkomenDetailTonk';
-import { InkomenDetailTozo } from './pages/InkomenDetail/InkomenDetailTozo';
-import { InkomenDetailUitkering } from './pages/InkomenDetail/InkomenDetailUitkering';
-import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificaties';
+import { InkomenThemaPagina } from './pages/Inkomen/Inkomen';
+import { InkomenDetailBbz } from './pages/Inkomen/InkomenDetailBbz';
+import { InkomenDetailTonk } from './pages/Inkomen/InkomenDetailTonk';
+import { InkomenDetailTozo } from './pages/Inkomen/InkomenDetailTozo';
+import { InkomenDetailUitkering } from './pages/Inkomen/InkomenDetailUitkering';
+import { InkomenLijstPagina } from './pages/Inkomen/InkomenListPage';
+import { InkomenSpecificaties } from './pages/Inkomen/InkomenSpecificaties';
 import { KlachtenThemaPagina } from './pages/Klachten/Klachten';
 import { KlachtenDetailPagina } from './pages/Klachten/KlachtenDetail';
 import { KlachtenLijstPagina } from './pages/Klachten/KlachtenLijst';
@@ -211,6 +212,10 @@ function AppAuthenticated() {
             <Route path={AppRoutes.HLI} component={HLI} />
           )}
           <Route
+            path={AppRoutes['INKOMEN/LIST']}
+            component={InkomenLijstPagina}
+          />
+          <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetailUitkering}
           />
@@ -232,7 +237,7 @@ function AppAuthenticated() {
               component={InkomenDetailBbz}
             />
           )}
-          <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route path={AppRoutes.INKOMEN} component={InkomenThemaPagina} />
           <Route path={AppRoutes['ZORG/VOORZIENING']} component={ZorgDetail} />
           {FeatureToggle.zorgv2ThemapaginaActive && (
             <Route
