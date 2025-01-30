@@ -43,6 +43,7 @@ export const FeatureToggle = {
   // HLI Hulp bij laag inkomen //
   hliThemaActive: true,
   hliThemaStadspasActive: true,
+  hliThemaStadspasBlokkerenActive: !IS_PRODUCTION,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,

@@ -1,9 +1,14 @@
 const settings = require('../settings');
 const RESPONSES = {
-  PASHOUDER: require('../fixtures/gpass-pashouders.json'),
+  PASHOUDERS: require('../fixtures/gpass-pashouders.json'),
   STADSPAS: require('../fixtures/gpass-stadspas.json'),
   TRANSACTIES: require('../fixtures/gpass-transacties.json'),
 };
+
+const subPassen = RESPONSES.PASHOUDERS.sub_pashouders.flatMap(
+  (pashouder) => pashouder.passen
+);
+const allPasses = RESPONSES.PASHOUDERS.passen.concat(subPassen);
 
 module.exports = [
   {
@@ -16,7 +21,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: RESPONSES.PASHOUDER,
+          body: RESPONSES.PASHOUDERS,
         },
       },
     ],
@@ -31,11 +36,15 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
+            const correspondingPashouderPass = allPasses.find((pas) => {
+              return pas.pasnummer == req.params.pasnummer;
+            });
             res.send({
-              ...RESPONSES.STADSPAS,
-              pasnummer: req.params.pasnummer,
-              pasnummer_volledig: `volledig.${req.params.pasnummer}`,
-              id: req.params.pasnummer,
+              // Because we want to be able to mutate a stadspas, We mutate a pashouder pas.
+              // But RESPONSES.STADSPAS is static, so we overwrite this.
+              ...correspondingPashouderPass,
+              // ...RESPONSES.STADSPAS,
+              budgetten: RESPONSES.STADSPAS.budgetten,
             });
           },
         },
@@ -84,11 +93,18 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
-            // return res.status(500).end();
+            const pasnummer = req.params.pasnummer;
+            const pas = allPasses.find((pas) => pas.pasnummer == pasnummer);
+
+            // The pas is now blocked.
+            pas.actief = false;
+            // Blocking a pass sets it `expiry_date` to now.
+            pas.expiry_date = new Date().toString();
+
             res.send({
-              // NOT sure if this is the same response as the real API
               ...RESPONSES.STADSPAS,
-              pasnummer: req.params.pasnummer,
+              pasnummer,
+              expiry_date: pas.expiry_date,
               actief: false,
             });
           },

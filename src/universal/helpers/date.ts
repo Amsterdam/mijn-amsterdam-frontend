@@ -18,7 +18,7 @@ export function dateFormat(datestr: string | Date | number, fmt: string) {
   try {
     const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
     return format(d, fmt, { locale: nl });
-  } catch (error) {
+  } catch (_error) {
     console.error(`Could not parse date ${datestr}`);
   }
 
