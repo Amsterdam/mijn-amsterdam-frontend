@@ -15,10 +15,11 @@ export const AppRoutes = {
   'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/:kind/:page?',
 
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
   'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
   'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
+  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:kind/:page?',
+  'INKOMEN/LIST': '/inkomen/:kind/:page?',
   INKOMEN: '/inkomen',
   AFIS: '/facturen-en-betalen',
   'AFIS/BETAALVOORKEUREN': '/facturen-en-betalen/betaalvoorkeuren',
