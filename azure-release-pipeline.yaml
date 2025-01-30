@@ -2,9 +2,6 @@ trigger:
   tags:
     include:
       - release-v*
-  branches:
-    include:
-      - main
 pr: none
 
 resources:
@@ -15,11 +12,12 @@ resources:
       ref: refs/heads/main
 
 jobs:
-  - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
-    parameters:
-      dtapName: p
-      btdBuild: true
-      btdTest: true
-      btdDeploy: true
-      btdAppBFF: true
-      btdAppUI: true
+  - ${{ if contains(variables['Build.SourceBranchName'], 'main') }}:
+      - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
+        parameters:
+          dtapName: p
+          btdBuild: true
+          btdTest: true
+          btdDeploy: true
+          btdAppBFF: true
+          btdAppUI: true
