@@ -8,9 +8,10 @@ import { transformIncomSpecificationResponse } from '../../../server/services/wp
 import { WpiIncomeSpecificationResponseData } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
+import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
+import { InkomenSpecificaties } from '../Inkomen/InkomenSpecificaties';
 import MockApp from '../MockApp';
-import InkomenSpecificaties from './InkomenSpecificaties';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -167,23 +168,25 @@ function initializeState(snapshot: MutableSnapshot) {
       content,
       status: 'OK',
     },
-  } as any);
+  } as unknown as AppState);
 }
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    variant: 'uitkering',
+    kind: 'uitkering',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={InkomenSpecificaties}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={InkomenSpecificaties}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
@@ -239,18 +242,20 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    variant: 'jaaropgave',
+    kind: 'jaaropgave',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={InkomenSpecificaties}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={InkomenSpecificaties}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
