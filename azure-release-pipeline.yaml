@@ -2,6 +2,9 @@ trigger:
   tags:
     include:
       - release-v*
+  branches:
+    include:
+      - main
 pr: none
 
 resources:
