@@ -6,10 +6,11 @@ pr: none
 
 resources:
   repositories:
-    - repository: MamsInfra
-      type: git
-      name: MijnAmsterdam/mijn-amsterdam-infra
-      ref: refs/heads/main
+    - ${{ if contains(variables['Build.SourceBranchName'], 'refs/heads/main') }}:
+        - repository: MamsInfra
+          type: git
+          name: MijnAmsterdam/mijn-amsterdam-infra
+          ref: refs/heads/main
 
 jobs:
   - ${{ if contains(variables['Build.SourceBranchName'], 'refs/heads/main') }}:
