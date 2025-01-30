@@ -117,7 +117,7 @@ export function transformIncomeSpecificationItem(
   sessionID: SessionID,
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
-  const displayDatePublished = defaultDateFormat(item.datePublished);
+  const datePublishedFormatted = defaultDateFormat(item.datePublished);
   const [{ url }] = addApiBasePathToDocumentUrls(sessionID, [item]);
   const categoryFromSource = item.variant;
 
@@ -126,6 +126,6 @@ export function transformIncomeSpecificationItem(
     category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
     url,
     download: documentDownloadName(item),
-    displayDatePublished,
+    datePublishedFormatted,
   };
 }
