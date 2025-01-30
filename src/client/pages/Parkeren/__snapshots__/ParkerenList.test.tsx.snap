@@ -93,7 +93,7 @@ exports[`ParkerenList > should display the list of parkeervergunningen 1`] = `
                   <th
                     class="ams-table__header-cell"
                   >
-                    Soort vergunning
+                    Omschrijving
                   </th>
                   <th
                     class="ams-table__header-cell"

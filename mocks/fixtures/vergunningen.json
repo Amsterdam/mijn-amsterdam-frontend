@@ -1,6 +1,28 @@
 {
   "content": [
     {
+      "cardNumber": 8372918,
+      "cardtype": "bestuurder",
+      "caseType": "GPK",
+      "dateDecision": null,
+      "dateEnd": "2024-06-14",
+      "dateRequest": "2024-03-28",
+      "dateWorkflowActive": "2024-03-28",
+      "decision": "Verleend",
+      "description": "Mijn gehandicaptenparkeerkaart verlengen",
+      "documentsUrl": "https://example.com/vergunningen-koppel-api/decosjoin/listdocuments/gAAAAABjKYDIOgDQc8saVY2ZLlB6GL7lYkkLmPGiyQQpkrtr_WsCzAaNTNGDJ4lZeOojHKiiJbDY7FIBAQd_xBOpIcb09p0QoPQRUtBLZ3UYBpcIeOnAVUHe6h_PVrLmoXfn7XKbL9yt",
+      "id": "3181642345",
+      "identifier": "Z/24/1238756",
+      "processed": false,
+      "status": "Ophalen GPK",
+      "title": "Europese gehandicaptenparkeerkaart (GPK)",
+      "dateRequestFormatted": "28 maart 2024",
+      "link": {
+        "to": "/vergunningen/gpk/3181642345",
+        "title": "Bekijk hoe het met uw aanvraag staat"
+      }
+    },
+    {
       "caseType": "Parkeerontheffingen Blauwe zone particulieren",
       "dateDecision": null,
       "dateEnd": null,

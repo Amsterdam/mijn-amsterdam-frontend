@@ -180,7 +180,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_4c6825"
+              class="ams-table__table _TableV2_4c6825 _VergunningenTableThemaPagina_d58fe4"
             >
               <thead
                 class="ams-table__header"
@@ -196,7 +196,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                   <th
                     class="ams-table__header-cell"
                   >
-                    Soort vergunning
+                    Omschrijving
                   </th>
                   <th
                     class="ams-table__header-cell"
@@ -272,7 +272,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_4c6825"
+              class="ams-table__table _TableV2_4c6825 _VergunningenTableThemaPagina_d58fe4"
             >
               <tbody
                 class="ams-table__body"
@@ -297,7 +297,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_4c6825"
+              class="ams-table__table _TableV2_4c6825 _VergunningenTableThemaPagina_d58fe4"
             >
               <tbody
                 class="ams-table__body"
