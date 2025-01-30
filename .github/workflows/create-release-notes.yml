@@ -1,0 +1,38 @@
+name: 'Release notification'
+on: create
+run-name: Generating release notes for ${{ github.base_ref }}
+permissions:
+  contents: write
+jobs:
+  create-publish-release-notes:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Generate and update the release notes
+        run: |
+          all_tags=$(git tag -l --sort=-creatordate)
+          latest_tag=$(echo "$all_tags" | sed -n '1p')
+          previous_tag=$(echo "$all_tags" | sed -n '2p')
+
+          release_notes=$(git log "$previous_tag..$latest_tag" --oneline)
+          release_notes=$(echo "$release_notes" | python3\
+            ./scripts/create-release-notes.py\
+            "$previous_tag"\
+            "$latest_tag"\
+          )
+
+          if gh release view "$latest_tag" &>/dev/null; then
+            echo "Release exists. Updating..."
+            gh release edit "$latest_tag" --notes "$release_notes"
+          else
+            echo "Creating new release..."
+            gh release create "$latest_tag" --notes "$release_notes"
+          fi
+
