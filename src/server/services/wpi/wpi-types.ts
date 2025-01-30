@@ -39,7 +39,9 @@ export interface WpiRequestProcess extends ZaakDetail {
     | 'Bbz'
     | string;
   dateStart: string;
+  dateStartFormatted: string | null;
   dateEnd: string | null;
+  dateEndFormatted: string | null;
   datePublished: string; // Date of latest step
   steps: WpiRequestStatus[];
   statusId: WpiRequestStatus['id'];
@@ -74,7 +76,7 @@ export interface WpiIncomeSpecification {
 
 export interface WpiIncomeSpecificationTransformed
   extends WpiIncomeSpecification {
-  displayDatePublished: string;
+  datePublishedFormatted: string;
   category: string;
   download: string;
 }
