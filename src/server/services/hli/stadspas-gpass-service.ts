@@ -39,6 +39,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -418,6 +419,7 @@ export async function mutateGpassBlockPass(
     method: 'POST',
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
+    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
     transformResponse: (pas: StadspasDetailSource) => {
       if (pas.actief) {
         throw Error('City pass is still active after trying to block it.');
