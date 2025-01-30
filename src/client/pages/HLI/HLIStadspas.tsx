@@ -19,7 +19,6 @@ import {
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../server/services/hli/stadspas-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse_DEPRECATED,
@@ -57,24 +56,22 @@ const loadingContentBarConfigList: BarConfig = [
   ['60rem', '2rem', '4rem'],
 ];
 
-const budgetFieldName = 'Tegoed';
-
 const displayPropsTransacties = {
-  title: 'Bij',
+  title: 'Omschrijving',
   datePublishedFormatted: 'Datum',
   amountFormatted: 'Bedrag',
 };
 
 const displayPropsTransactiesWithBudget = {
   title: displayPropsTransacties.title,
-  budget: budgetFieldName,
+  budget: 'Budget',
   datePublishedFormatted: displayPropsTransacties.datePublishedFormatted,
   amountFormatted: displayPropsTransacties.amountFormatted,
 };
 
 const displayPropsBudgets = {
-  title: budgetFieldName,
-  dateEndFormatted: 'Geldig t/m',
+  title: 'Omschrijving',
+  dateEndFormatted: 'Tegoed geldig t/m',
   budgetAssignedFormatted: 'Bedrag',
 };
 
@@ -151,7 +148,7 @@ export default function HLIStadspas() {
         }}
         icon={<ThemaIcon />}
       >
-        Overzicht Stadspas{' '}
+        Overzicht stadspas{' '}
         {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
       </PageHeading>
       <Screen>
@@ -165,9 +162,7 @@ export default function HLIStadspas() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {FeatureToggle.hliThemaStadspasBlokkerenActive && (
-                <BlockStadspas stadspas={stadspas} />
-              )}
+              <BlockStadspas stadspas={stadspas} />
             </Grid.Cell>
           ) : (
             <Grid.Cell span="all">
@@ -216,7 +211,7 @@ export default function HLIStadspas() {
                     <>
                       Hieronder ziet u bij welke winkels u het tegoed hebt
                       uitgegeven. Deze informatie kan een dag achterlopen. Maar
-                      het saldo dat u nog over heeft klopt altijd.
+                      het bedrag dat u nog over heeft klopt altijd.
                     </>
                   ) : (
                     <>
@@ -296,12 +291,12 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           }}
           data-testid="block-stadspas-button"
         >
-          Blokkeer deze Stadspas
+          Blokeer deze Stadspas
         </Button>
       )}
 
       <Modal
-        title="Weet u zeker dat u uw Stadspas wilt blokkeren?"
+        title="Weet u zeker dat u uw stadspas wilt blokkeren ?"
         className={styles.BlokkeerDialog}
         isOpen={isModalOpen}
         showCloseButton={false}
@@ -338,14 +333,9 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Paragraph>
         <Paragraph className="ams-mb--sm">
           Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
-          blokkeren?
-          <br />
-          Bel dan meteen naar {PHONENUMBERS.WerkEnInkomen}. De nieuwe pas wordt
-          dan binnen drie weken thuisgestuurd en is dan gelijk te gebruiken.
-        </Paragraph>
-        <Paragraph>
-          Let op: het blokkeren kan alleen worden teruggedraaid door te bellen
-          met <br /> {PHONENUMBERS.WerkEnInkomen}.
+          blokkeren? Bel dan meteen naar {PHONENUMBERS.WerkEnInkomen}. De nieuwe
+          pas wordt dan binnen drie weken thuisgestuurd en is dan gelijk te
+          gebruiken.
         </Paragraph>
       </Modal>
     </>

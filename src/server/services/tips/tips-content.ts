@@ -59,7 +59,7 @@ export const tips: Tip[] = [
     profileTypes: ['private'],
     thema: Themas.HLI,
     description: 'Haalt u alles uit uw Stadspas?',
-    reason: 'U ziet deze tip omdat u een Stadspas hebt aangevraagd.',
+    reason: 'U ziet deze tip omdat u een stadspas hebt aangevraagd.',
     predicates: [hasValidRecentStadspasRequest],
     link: {
       title: 'Bekijk de aanbiedingen',
@@ -175,7 +175,7 @@ export const tips: Tip[] = [
       hasDutchNationality,
     ],
     reason:
-      'U ziet deze tip omdat u een Stadspas hebt en geen geldige ID-kaart of paspoort',
+      'U ziet deze tip omdat u een Stadspas met groene stip hebt en geen geldige ID-kaart of paspoort',
     link: {
       title: 'Bekijk de voorwaarden',
       to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
@@ -320,7 +320,7 @@ export const tips: Tip[] = [
     thema: Themas.BRP,
     profileTypes: ['private'],
     description:
-      'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de Stadspas krijgt u gratis een nieuwe ID-kaart.',
+      'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de stadspas groene stip krijgt u gratis een nieuwe ID-kaart.',
     predicates: [
       not(hasValidId),
       is18OrOlder,
@@ -328,7 +328,7 @@ export const tips: Tip[] = [
       hasDutchNationality,
     ],
     reason:
-      'U ziet deze tip omdat u een Stadspas hebt en geen geldige ID-kaart of paspoort',
+      'U ziet deze tip omdat u een Stadspas met groene stip hebt en geen geldige ID-kaart of paspoort',
     link: {
       title: 'Bekijk de voorwaarden',
       to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',

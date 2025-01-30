@@ -770,7 +770,7 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('blockStadspass', async () => {
-    const passBlockedSuccessfulResponse = {
+    const PassBlockedSuccessfulResponse = {
       content: null,
       status: 'OK',
     };
@@ -782,7 +782,7 @@ describe('stadspas-gpass-service', () => {
     test('Uses decrypt and fetcher', async () => {
       remoteApi.post(
         BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
+        PassBlockedSuccessfulResponse
       );
 
       const response = (await blockStadspas(
@@ -804,7 +804,7 @@ describe('stadspas-gpass-service', () => {
 
       remoteApi.post(
         BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
+        PassBlockedSuccessfulResponse
       );
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
@@ -826,7 +826,7 @@ describe('stadspas-gpass-service', () => {
 
       remoteApi.post(
         BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
+        PassBlockedSuccessfulResponse
       );
 
       const response = await mutateGpassBlockPass(requestId, 123, '123');

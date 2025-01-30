@@ -1,6 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { parseISO } from 'date-fns';
-import { isAfter } from 'date-fns';
+import { isPast } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
@@ -173,17 +172,9 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of pashouders) {
-    // Filter out passes that are not relevant for the user.
-    const passen = pashouder.passen.filter((pas) => {
-      if (pas.actief) {
-        return true;
-      }
-      if (pas.vervangen) {
-        return false;
-      }
-      return !isExpired(pas.expiry_date);
-    });
-
+    const passen = pashouder.passen.filter(
+      (pas) => pas.actief || !isPast(new Date(pas.expiry_date))
+    );
     for (const pas of passen) {
       const response = fetchStadspasSource(
         requestID,
@@ -219,35 +210,6 @@ export async function fetchStadspassenByAdministratienummer(
     );
 
   return apiSuccessResult({ stadspassen, administratienummer });
-}
-
-function isExpired(expiryDate: string): boolean {
-  const defaultExpiryDate = new Date();
-
-  const DEFAULT_EXPIRY_DAY = 31;
-  defaultExpiryDate.setDate(DEFAULT_EXPIRY_DAY);
-
-  const DEFAULT_EXPIRY_MONTH = 7;
-  defaultExpiryDate.setMonth(DEFAULT_EXPIRY_MONTH);
-
-  const expiryDate_ = parseISO(expiryDate);
-  const now = new Date();
-
-  const isSameYear = expiryDate_.getFullYear() === now.getFullYear();
-  if (!isSameYear) {
-    defaultExpiryDate.setFullYear(defaultExpiryDate.getFullYear() - 1);
-  }
-
-  const isDefaultExpiryDate =
-    expiryDate_.getDate() <= defaultExpiryDate.getDate() &&
-    expiryDate_.getMonth() <= defaultExpiryDate.getMonth() &&
-    expiryDate_.getFullYear() <= defaultExpiryDate.getFullYear();
-
-  if (!isDefaultExpiryDate) {
-    return false;
-  }
-
-  return isAfter(now, expiryDate);
 }
 
 export async function fetchStadspassen_(

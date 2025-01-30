@@ -48,8 +48,8 @@
       "pasnummer_volledig": "6064366011012781014",
       "categorie": "Minima stadspas",
       "categorie_code": "M",
-      "actief": true,
-      "expiry_date": "2080-07-31T21:59:59.000Z",
+      "actief": false,
+      "expiry_date": "2023-07-31T21:59:59.000Z",
       "heeft_budget": false,
       "vervangen": false,
       "securitycode": "012345",
@@ -65,10 +65,10 @@
       "pasnummer_volledig": "6064366011012867540",
       "categorie": "Minima stadspas",
       "categorie_code": "M",
-      "actief": false,
+      "actief": true,
       "expiry_date": "2090-07-31T21:59:59.000Z",
       "heeft_budget": false,
-      "vervangen": true,
+      "vervangen": false,
       "securitycode": "012346",
       "passoort": {
         "id": 11,
@@ -99,7 +99,7 @@
             "id": 11,
             "naam": "Digitale Stadspas"
           },
-          "actief": false,
+          "actief": true,
           "heeft_budget": true,
           "vervangen": false,
           "securitycode": "012347",
@@ -116,7 +116,7 @@
           "pasnummer_volledig": "6064366011012781063",
           "categorie": "Minima stadspas",
           "categorie_code": "M",
-          "expiry_date": "2080-07-31T21:59:59.000Z",
+          "expiry_date": "2023-07-31T21:59:59.000Z",
           "passoort": {
             "id": 11,
             "naam": "Digitale Stadspas"
