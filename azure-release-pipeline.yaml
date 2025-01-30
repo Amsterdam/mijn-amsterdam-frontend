@@ -21,3 +21,8 @@ jobs:
           btdDeploy: true
           btdAppBFF: true
           btdAppUI: true
+  - job: EchoMessage
+    displayName: 'Just prints a message for when the main branch condition is not met'
+    steps:
+      - script: echo "This pipeline is only triggered for the main branch"
+        displayName: 'Print message'
