@@ -12,7 +12,7 @@ import {
 } from '../../../server/services/varen/config-and-types';
 import { LinkProps } from '../../../universal/types/App.types';
 import { Paragraph } from '@amsterdam/design-system-react';
-import { GridDetails } from './GridDetails';
+import { GridDetails } from '../../components/GridDetails/GridDetails';
 
 function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
