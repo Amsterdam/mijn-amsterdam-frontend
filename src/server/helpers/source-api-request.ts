@@ -2,6 +2,7 @@ import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import memoryCache from 'memory-cache';
 
 import { Deferred } from './deferred';
+import { IS_AP } from '../../universal/config/env';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
@@ -16,7 +17,6 @@ import {
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
 } from '../config/source-api';
-import { captureException } from '../services/monitoring';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -192,14 +192,11 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
-
-    captureException(error, {
-      properties: {
-        message: errorMessage,
-      },
-    });
-
     const statusCode = error.statusCode ?? error?.response?.status;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions, no-console
+    !IS_AP && console.error('Error in requestData:', errorMessage);
+
     const responseData = apiErrorResult(
       errorMessage,
       null,

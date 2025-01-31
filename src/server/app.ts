@@ -30,12 +30,9 @@ import {
   ONE_MINUTE_SECONDS,
   ONE_SECOND_MS,
 } from './config/app';
+import { getFromEnv } from './helpers/env';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import {
-  clearRequestCache,
-  nocache,
-  requestID,
-} from './routing/route-handlers';
+import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
@@ -58,17 +55,19 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
-// Add request logging attribute (:build)
-morgan.token('build', function () {
-  return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
-});
+if (getFromEnv('BFF_INCOMING_REQUEST_LOGS_ENABLED') === 'true') {
+  // Add request logging attribute (:build)
+  morgan.token('build', function () {
+    return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
+  });
 
-// Logs all Incoming requests
-app.use(
-  morgan(
-    '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-  )
-);
+  // Logs all Incoming requests
+  app.use(
+    morgan(
+      '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+    )
+  );
+}
 
 app.use(
   cors({
@@ -84,14 +83,6 @@ app.use(compression());
 
 // Generate request id
 app.use(requestID);
-
-// Destroy the session as soon as the api requests are all processed
-app.use(function (req, res, next) {
-  res.on('end', function () {
-    clearRequestCache(req, res);
-  });
-  next();
-});
 
 ////////////////////////////////////////////////////////////////////////
 ///// [ACCEPTANCE - PRODUCTION]

@@ -1,6 +1,6 @@
 import memoizee from 'memoizee';
 
-import { captureException } from '../services/monitoring';
+import { IS_AP } from '../../universal/config/env';
 
 /** Retrieve an environment variable.
  *
@@ -14,12 +14,13 @@ function getFromEnv_(
   if (key in process.env) {
     return process.env[key];
   }
-  if (isRequired) {
-    const error = new Error(`ENV undefined key: ${key}.`);
-    console.error(error); // So we see it in logstream.
-    captureException(error); // So we see it in monitoring.
-  } else {
-    console.warn(`ENV undefined, but not required: ${key}`);
+  if (!IS_AP) {
+    if (isRequired) {
+      const error = new Error(`ENV undefined key: ${key}.`);
+      console.error(error); // So we see it in logstream.
+    } else {
+      console.warn(`ENV undefined, but not required: ${key}`);
+    }
   }
 }
 
