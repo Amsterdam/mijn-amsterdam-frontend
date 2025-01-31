@@ -1,36 +1,20 @@
-import type { RVVHeleStad } from '../../../../server/services';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import { InfoDetail } from '../../../components';
-import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
+import { getRows } from './fields-config';
+import type {
+  VergunningFrontend,
+  RVVHeleStad,
+} from '../../../../server/services/vergunningen/config-and-types';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
-export function RvvHeleStad({ vergunning }: { vergunning: RVVHeleStad }) {
-  const isAfgehandeld = vergunning.processed;
-
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunning.identifier} />
-
-      <InfoDetail label="Kenteken(s)" value={vergunning.licensePlates || '-'} />
-
-      <InfoDetailGroup>
-        <InfoDetail
-          label="Van"
-          value={
-            vergunning.dateStart ? defaultDateFormat(vergunning.dateStart) : '-'
-          }
-        />
-
-        <InfoDetail
-          label="Tot en met"
-          value={
-            vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : '-'
-          }
-        />
-      </InfoDetailGroup>
-
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
-    </>
-  );
+export function RvvHeleStad({
+  vergunning,
+}: {
+  vergunning: VergunningFrontend<RVVHeleStad>;
+}) {
+  const rows = getRows(vergunning, [
+    'identifier',
+    'licensePlates',
+    'dateRange',
+    'decision',
+  ]);
+  return <Datalist rows={rows} />;
 }

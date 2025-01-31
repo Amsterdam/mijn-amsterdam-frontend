@@ -1,39 +1,21 @@
-import { Location } from './Location';
-import type { TVMRVVObject as TVMRVVObjectType } from '../../../../server/services';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../../components/InfoDetail/InfoDetail';
+import { getRows } from './fields-config';
+import type {
+  VergunningFrontend,
+  TVMRVVObject,
+} from '../../../../server/services/vergunningen/config-and-types';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
-export function TVMRVVObject({ vergunning }: { vergunning: TVMRVVObjectType }) {
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Omschrijving" value={vergunning?.description || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
-      <InfoDetailGroup>
-        <InfoDetail
-          label="Vanaf"
-          value={
-            (vergunning?.dateStart
-              ? defaultDateFormat(vergunning.dateStart)
-              : '-') +
-            (vergunning?.timeStart ? ` - ${vergunning.timeStart} uur` : '')
-          }
-        />
-        <InfoDetail
-          label="Tot en met"
-          value={
-            (vergunning?.dateEnd
-              ? defaultDateFormat(vergunning.dateEnd)
-              : '-') +
-            (vergunning?.timeEnd ? ` - ${vergunning.timeEnd} uur` : '')
-          }
-        />
-      </InfoDetailGroup>
-      {!!vergunning?.decision && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
-    </>
-  );
+export function TVMRVVObject({
+  vergunning,
+}: {
+  vergunning: VergunningFrontend<TVMRVVObject>;
+}) {
+  const rows = getRows(vergunning, [
+    'identifier',
+    'description',
+    'location',
+    'dateTimeRange',
+    'decision',
+  ]);
+  return <Datalist rows={rows} />;
 }
