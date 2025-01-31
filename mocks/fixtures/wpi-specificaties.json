@@ -64,6 +64,69 @@
         "title": "Uitkeringsspecificatie Januari-2021",
         "variant": null,
         "url": "https://example.com/wpi/document?id=660000000010015&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2022-08-01T00:00:00+02:00",
+        "id": "31",
+        "title": "Uitkeringsspecificatie Augustus-2022",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2019-09-01T00:00:00+02:00",
+        "id": "32",
+        "title": "Uitkeringsspecificatie September-2019",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2019-10-01T00:00:00+02:00",
+        "id": "33",
+        "title": "Uitkeringsspecificatie Oktober-2019",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2019-11-01T00:00:00+01:00",
+        "id": "34",
+        "title": "Uitkeringsspecificatie November-2019",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2019-12-01T00:00:00+01:00",
+        "id": "35",
+        "title": "Uitkeringsspecificatie December-2019",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2020-01-01T00:00:00+01:00",
+        "id": "36",
+        "title": "Uitkeringsspecificatie Januari-2020",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2020-02-01T00:00:00+01:00",
+        "id": "37",
+        "title": "Uitkeringsspecificatie Februari-2020",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2020-03-01T00:00:00+01:00",
+        "id": "38",
+        "title": "Uitkeringsspecificatie Maart-2020",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010112&isBulk=False&isDms=False"
+      },
+      {
+        "datePublished": "2021-01-01T00:00:00+01:00",
+        "id": "39",
+        "title": "Uitkeringsspecificatie Januari-2021",
+        "variant": null,
+        "url": "https://example.com/wpi/document?id=660000000010015&isBulk=False&isDms=False"
       }
     ],
     "jaaropgaven": [
