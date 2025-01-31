@@ -4,25 +4,12 @@ import { WpiIncomeSpecificationTransformed } from '../../../server/services/wpi/
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 
 export function useAddDocumentLinkComponents(
-  specificaties: WpiIncomeSpecificationTransformed[],
-  jaaropgaven: WpiIncomeSpecificationTransformed[]
+  specificaties: WpiIncomeSpecificationTransformed[]
 ) {
   return useMemo(() => {
-    if (jaaropgaven.length) {
-      jaaropgaven = jaaropgaven.map((document) => {
-        const documentUrl = <DocumentLink document={document} label="PDF" />;
-        return Object.assign({}, document, { documentUrl });
-      });
-    }
-    if (specificaties.length) {
-      specificaties = specificaties.map((document) => {
-        const documentUrl = <DocumentLink document={document} label="PDF" />;
-        return Object.assign({}, document, { documentUrl });
-      });
-    }
-    return {
-      jaaropgaven,
-      specificaties,
-    };
-  }, [specificaties, jaaropgaven]);
+    return specificaties.map((document) => {
+      const documentUrl = <DocumentLink document={document} label="PDF" />;
+      return Object.assign({}, document, { documentUrl });
+    });
+  }, [specificaties]);
 }
