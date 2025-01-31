@@ -21,8 +21,14 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
   <Paragraph>
-    Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen
-    inzake Gemeentebelastingen. Deze vindt u terug bij{' '}
+    Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of heeft
+    u een vraag over één van uw facturen? Stuur een e-mail naar
+    <Link href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren">
+      debiteurenadministratie@amsterdam.nl
+    </Link>{' '}
+    met de details van de factuur, zoals het factuurnummer of andere relevante
+    informatie, zodat zij u verder kunnen helpen. U ziet hier niet de facturen
+    over Gemeentebelastingen. Deze vindt u terug bij{' '}
     <Link rel="noreferrer" href={import.meta.env.REACT_APP_SSO_URL_BELASTINGEN}>
       Mijn Belastingen
     </Link>
