@@ -1,13 +1,14 @@
-import {
-  DecosZaakTransformer,
-  SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/decos-types';
 import type {
   CaseTypeVaren,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
   VarenVergunningLigplaatsType,
 } from './config-and-types';
+import {
+  DecosZaakBase,
+  DecosZaakTransformer,
+  SELECT_FIELDS_TRANSFORM_BASE,
+} from '../decos/decos-types';
 
 export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
   {
@@ -25,8 +26,8 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
       ...SELECT_FIELDS_TRANSFORM_BASE,
       company: 'company',
       num2: 'bsnkvk',
-      mailaddress: 'adres',
-      zipcode: 'postal',
+      mailaddress: 'address',
+      zipcode: 'postalCode',
       city: 'city',
       phone1: 'phone',
       email1: 'email',
@@ -92,5 +93,5 @@ export const decosCaseToZaakTransformers = decosZaakTransformers.reduce(
     ...acc,
     [zaakTransformer.caseType]: zaakTransformer,
   }),
-  {} as Record<CaseTypeVaren, DecosZaakTransformer<any>> // TODO: type key as varen casetype
+  {} as Record<CaseTypeVaren, DecosZaakTransformer<DecosZaakBase>>
 );

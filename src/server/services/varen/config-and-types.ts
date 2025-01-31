@@ -15,8 +15,8 @@ export type VarenRegistratieRederType = DecosZaakBase & {
   decision: 'Verleend' | 'Ingetrokken';
   company: string | null;
   bsnkvk: string | null;
-  adres: string | null;
-  postal: string | null;
+  address: string | null;
+  postalCode: string | null;
   city: string | null;
   phone: string | null;
   email: string | null;
@@ -38,6 +38,7 @@ export interface VarenVergunningExploitatieType extends DecosZaakBase {
     | 'Aanvullende informatie gevraagd'
     | 'Nadere informatie nodig'
     | 'Besluit';
+  // eslint-disable-next-line no-magic-numbers
   formAppearance: 1 | 2 | 3;
   segment:
     | 'Beeldbepalend groot'

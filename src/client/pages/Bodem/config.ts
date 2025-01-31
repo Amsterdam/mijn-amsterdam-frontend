@@ -1,13 +1,20 @@
 import { generatePath } from 'react-router-dom';
 
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
+import {
+  DisplayProps,
+  WithDetailLinkComponent,
+} from '../../components/Table/TableV2';
 
-export const displayPropsAanvragen = {
+export const displayPropsAanvragen: DisplayProps<
+  WithDetailLinkComponent<VarenFrontend>
+> = {
   detailLinkComponent: 'Adres',
-  datumAanvraagFormatted: 'Aangevraagd',
+  dateRequestFormatted: 'Aangevraagd',
   status: 'Status',
 };
 

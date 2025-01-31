@@ -23,22 +23,21 @@ function useVarenThemaData() {
     (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
   );
 
-  const span = 4;
-
   const labelMap = {
     company: 'Bedrijfsnaam',
     email: 'E-mailadres',
     phone: 'Telefoonnummer',
     bsnkvk: 'KVK nummer',
-    adres: 'Adres',
+    address: 'Adres',
   };
 
   const gegevensAanvrager: RowSet | null = varenRederRegistratie
     ? {
-        rows: entries(labelMap).map(([key, label]) => {
-          const content = varenRederRegistratie[key];
-          return { label, content, span };
-        }),
+        rows: entries(labelMap).map(([key, label]) => ({
+          label,
+          content: varenRederRegistratie[key],
+          span: 4,
+        })),
       }
     : null;
 
@@ -63,7 +62,7 @@ function useVarenThemaData() {
   };
 }
 
-export default function Varen() {
+export function Varen() {
   const { gegevensAanvrager, tableItems, tableConfig, isLoading, isError } =
     useVarenThemaData();
 
