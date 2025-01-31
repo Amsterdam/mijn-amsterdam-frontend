@@ -23,7 +23,7 @@ export function useInkomenThemaData() {
     WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []
   );
   const jaaropgaven = useAddDocumentLinkComponents(
-    WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []
+    WPI_SPECIFICATIES.content?.jaaropgaven ?? []
   );
 
   const zaken = useMemo(() => {
