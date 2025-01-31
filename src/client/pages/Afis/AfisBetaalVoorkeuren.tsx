@@ -48,7 +48,7 @@ function AfisBusinessPartnerDetails({
   return (
     <Grid.Cell span="all">
       <CollapsiblePanel
-        title="Debiteurgegevens"
+        title="Facturatiegegevens"
         startCollapsed={startCollapsed}
       >
         {isLoading && <LoadingContent />}
@@ -115,11 +115,11 @@ export function AfisBetaalVoorkeuren() {
   const pageContentTop = (
     <>
       <Paragraph className="ams-mb--sm">
-        Hieronder kunt u uw debiteurgegevens bekijken en een automatische
+        Hieronder kunt u uw facturatiegegevens bekijken en een automatische
         incasso instellen per afdeling van de gemeente. Wil u uw
-        debiteurgegevens wijzigen, stuur dan een email naar{' '}
+        facturatiegegevens wijzigen, stuur dan een email naar{' '}
         <Link
-          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Debiteurgegevens wijzigen&body=${mailBody}`}
+          href={`mailto:debiteurenadministratie@amsterdam.nl?subject=Facturatiegegevens wijzigen&body=${mailBody}`}
         >
           debiteurenadministratie@amsterdam.nl
         </Link>
@@ -198,7 +198,7 @@ export function AfisBetaalVoorkeuren() {
         )}
       {hasBusinessPartnerDetailsError && (
         <>
-          Wij kunnen nu geen betaalgegevens laten zien.
+          Wij kunnen nu geen facturatiegegevens laten zien.
           <br />
         </>
       )}
