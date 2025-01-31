@@ -4,7 +4,6 @@ import { parseISO } from 'date-fns';
 import { useParams, useHistory, generatePath } from 'react-router-dom';
 
 import { tableConfigSpecificaties } from './Inkomen-thema-config';
-import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 
@@ -18,11 +17,6 @@ export function useInkomenSpecificatiesListPageData() {
     routes,
   } = useInkomenThemaData();
 
-  const wpiSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
-    specificaties,
-    jaaropgaven
-  );
-
   const params = useParams<{
     kind:
       | typeof listPageParamKind.jaaropgaven
@@ -34,9 +28,7 @@ export function useInkomenSpecificatiesListPageData() {
   const isJaaropgaven = kind === listPageParamKind.jaaropgaven;
   const history = useHistory();
 
-  const items = useMemo(() => {
-    return (isJaaropgaven ? jaaropgaven : specificaties) || [];
-  }, [isJaaropgaven, wpiSpecificatiesWithDocumentLinks]);
+  const items = isJaaropgaven ? jaaropgaven : specificaties;
 
   const maxDate = useMemo(() => {
     if (items.length) {
