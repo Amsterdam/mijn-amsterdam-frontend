@@ -6,7 +6,10 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>Hier ziet u een overzicht van uw ingediende bezwaren.</Paragraph>
+  <Paragraph>
+    Op deze pagina vindt u informatie over uw uitkering en de ondersteuning die
+    u krijgt omdat u weinig geld hebt.
+  </Paragraph>
 );
 
 export function InkomenThemaPagina() {
