@@ -107,6 +107,12 @@ export type VormenVanWoonruimte = DecosZaakBase &
     caseType: GetCaseType<'VormenVanWoonruimte'>;
   };
 
+export type WoningVergunning =
+  | Samenvoegingsvergunning
+  | Onttrekkingsvergunning
+  | OnttrekkingsvergunningSloop
+  | VormenVanWoonruimte;
+
 export type Splitsingsvergunning = DecosZaakBase &
   WithLocation & {
     caseType: GetCaseType<'Splitsingsvergunning'>;
