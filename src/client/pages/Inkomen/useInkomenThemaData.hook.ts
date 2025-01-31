@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { listPageParamKind, routes, tableConfig } from './Inkomen-thema-config';
+import { linkListItems } from './Inkomen-thema-config';
 import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -8,7 +9,6 @@ import { defaultDateFormat, dateSort } from '../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { linkListItems } from '../Afis/Afis-thema-config';
 
 export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
