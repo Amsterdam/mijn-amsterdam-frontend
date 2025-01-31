@@ -143,7 +143,7 @@ export function InkomenSpecificaties() {
           </div>
         </div>
       )}
-      {!itemsFiltered.length && (
+      {!itemsFiltered.length && !isLoading && (
         <Paragraph>
           Zoeken heeft geen resultaten opgeleverd.{' '}
           <Button
@@ -163,7 +163,7 @@ export function InkomenSpecificaties() {
       title={title}
       isError={isError}
       isLoading={isLoading}
-      appRoute={tableConfig.listPageRoute}
+      appRoute={`${tableConfig.listPageRoute}/:page?`}
       appRouteBack={routes.themaPage}
       appRouteParams={params}
       pageContentTop={pageContentMain}

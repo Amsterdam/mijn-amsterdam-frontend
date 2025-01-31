@@ -22,7 +22,9 @@
 }
 
 .SearchButton {
-  margin-bottom: 2rem;
+  &:not(&Active) {
+    --ams-margin-sm: 0;
+  }
 
   i {
     height: 1.3rem;
@@ -48,7 +50,6 @@
   width: 100%;
   display: flex;
   padding: 2rem;
-  margin-bottom: 2rem;
   flex-wrap: wrap;
 }
 
