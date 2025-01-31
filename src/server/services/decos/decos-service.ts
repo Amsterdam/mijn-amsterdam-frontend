@@ -1,6 +1,8 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
+import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 
 import {
   caseType,
@@ -20,12 +22,17 @@ import {
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
   DecosWorkflowResponse,
+  DecosZaakFrontend,
 } from './decos-types';
 import {
   getDecosZaakTypeFromSource,
+  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
+  isExpired,
+  toDateFormatted,
 } from './helpers';
+import { AppRoute } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
   ApiResponse,
@@ -33,14 +40,18 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
   DEFAULT_API_CACHE_TTL_MS,
 } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
@@ -675,6 +686,58 @@ export async function fetchDecosDocument(
   );
 }
 
+export function transformDecosZaakFrontend<T extends DecosZaakBase>(
+  sessionID: SessionID,
+  vergunning: T,
+  appRoute: AppRoute
+) {
+  const idEncrypted = encryptSessionIdWithRouteIdParam(
+    sessionID,
+    vergunning.key
+  );
+  const vergunningFrontend: DecosZaakFrontend<T> = {
+    ...vergunning,
+    dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
+    dateInBehandeling: getStatusDate('In behandeling', vergunning),
+    dateInBehandelingFormatted: toDateFormatted(
+      getStatusDate('In behandeling', vergunning)
+    ),
+    dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
+    // Assign Status steps later on
+    steps: [],
+    // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
+    fetchDocumentsUrl: generateFullApiUrlBFF(
+      BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
+      [{ id: idEncrypted }]
+    ),
+    link: {
+      to: generatePath(appRoute, {
+        title: slug(vergunning.caseType, {
+          lower: true,
+        }),
+        id: vergunning.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  };
+
+  // If a vergunning has both dateStart and dateEnd add formatted dates and an expiration indication.
+  if (
+    'dateEnd' in vergunning &&
+    'dateStart' in vergunning &&
+    vergunning.dateStart &&
+    vergunning.dateEnd
+  ) {
+    vergunningFrontend.isExpired = isExpired(vergunning);
+    vergunningFrontend.dateStartFormatted = defaultDateFormat(
+      vergunning.dateStart
+    );
+    vergunningFrontend.dateEndFormatted = defaultDateFormat(vergunning.dateEnd);
+  }
+
+  return vergunningFrontend;
+}
+
 export const forTesting = {
   filterValidDocument,
   getUserKeys,
@@ -685,4 +748,5 @@ export const forTesting = {
   transformDecosWorkflowKeysResponse,
   transformDecosZaakResponse,
   transformDecosZakenResponse,
+  transformDecosZaakFrontend,
 };

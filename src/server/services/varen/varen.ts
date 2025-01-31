@@ -1,61 +1,13 @@
 import memoize from 'memoizee';
-import slug from 'slugme';
 
+import { Varen, VarenFrontend } from './config-and-types';
+import { decosZaakTransformers } from './decos-zaken';
+import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
-import { decosZaakTransformers } from './decos-zaken';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
-import { Varen, VarenFrontend } from './config-and-types';
-import { getStatusDate, isExpired, toDateFormatted } from '../decos/helpers';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { generatePath } from 'react-router-dom';
-
-function transformVarenVergunningFrontend(
-  sessionID: SessionID,
-  vergunning: Varen,
-  appRoute: AppRoute
-) {
-  const vergunningFrontend: VarenFrontend = {
-    ...vergunning,
-    dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
-    dateInBehandeling: getStatusDate('In behandeling', vergunning),
-    dateInBehandelingFormatted: toDateFormatted(
-      getStatusDate('In behandeling', vergunning)
-    ),
-    dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
-    // Assign Status steps later on
-    steps: [],
-    // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
-    fetchDocumentsUrl: 'https://mijn.amsterdam.nl', //todo
-    link: {
-      to: generatePath(appRoute, {
-        title: slug(vergunning.caseType, {
-          lower: true,
-        }),
-        id: vergunning.id,
-      }),
-      title: `Bekijk hoe het met uw aanvraag staat`,
-    },
-  };
-
-  // If a vergunning has both dateStart and dateEnd add formatted dates and an expiration indication.
-  if (
-    'dateEnd' in vergunning &&
-    'dateStart' in vergunning &&
-    vergunning.dateStart &&
-    vergunning.dateEnd
-  ) {
-    vergunningFrontend.isExpired = isExpired(vergunning);
-    vergunningFrontend.dateStartFormatted = defaultDateFormat(
-      vergunning.dateStart
-    );
-    vergunningFrontend.dateEndFormatted = defaultDateFormat(vergunning.dateEnd);
-  }
-
-  return vergunningFrontend;
-}
+import { transformDecosZaakFrontend } from '../decos/decos-service';
 
 export async function fetchVaren_(
   requestID: RequestID,
@@ -72,7 +24,7 @@ export async function fetchVaren_(
     const decosVergunningen = response.content;
     const varenVergunningFrontend: VarenFrontend[] = decosVergunningen.map(
       (vergunning) =>
-        transformVarenVergunningFrontend(
+        transformDecosZaakFrontend<Varen>(
           authProfileAndToken.profile.sid,
           vergunning,
           appRoute
