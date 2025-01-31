@@ -30,6 +30,7 @@ import {
   ONE_MINUTE_SECONDS,
   ONE_SECOND_MS,
 } from './config/app';
+import { getFromEnv } from './helpers/env';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
@@ -54,10 +55,12 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
-// Add request logging attribute (:build)
-morgan.token('build', function () {
-  return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
-});
+if (getFromEnv('BFF_INCOMING_REQUEST_LOGS_ENABLED') === 'true') {
+  // Add request logging attribute (:build)
+  morgan.token('build', function () {
+    return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
+  });
+}
 
 // Logs all Incoming requests
 app.use(
