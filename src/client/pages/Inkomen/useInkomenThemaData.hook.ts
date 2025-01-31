@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
 
 import { listPageParamKind, routes, tableConfig } from './Inkomen-thema-config';
-import {
-  WpiIncomeSpecificationTransformed,
-  WpiRequestProcess,
-} from '../../../server/services/wpi/wpi-types';
+import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
+import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat, dateSort } from '../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
@@ -21,19 +19,12 @@ export function useInkomenThemaData() {
   const tonk = WPI_TONK.content ?? [];
   const bbz = WPI_BBZ.content ?? [];
 
-  const specificaties =
-    addLinkElementToProperty<WpiIncomeSpecificationTransformed>(
-      WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? [],
-      'title',
-      true
-    );
-
-  const jaaropgaven =
-    addLinkElementToProperty<WpiIncomeSpecificationTransformed>(
-      WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? [],
-      'title',
-      true
-    );
+  const specificaties = useAddDocumentLinkComponents(
+    WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []
+  );
+  const jaaropgaven = useAddDocumentLinkComponents(
+    WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []
+  );
 
   const zaken = useMemo(() => {
     if ((!aanvragen.length && !tozo.length) || !tonk.length) {
@@ -96,7 +87,6 @@ export function useInkomenThemaData() {
     isErrorWpi,
     isLoadingWpiSpecificaties,
     isErrorWpiSpecificaties,
-    tableProps: tableConfig,
     listPageParamKind,
     routes,
     tableConfig,
