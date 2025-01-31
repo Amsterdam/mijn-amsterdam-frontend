@@ -5,13 +5,7 @@ import type {
 } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 
-// Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
-// In dat geval allen de datum tonen.
-export function Flyeren({
-  vergunning,
-}: {
-  vergunning: VergunningFrontend<Flyeren>;
-}) {
+export function getRowsFlyeren(vergunning: VergunningFrontend) {
   const isVerleend = vergunning.decision === 'Verleend';
   const isSameDate =
     vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
@@ -20,14 +14,14 @@ export function Flyeren({
     'identifier',
     'location',
     {
-      onFromTo: (vergunning: VergunningFrontend<Flyeren>) => {
+      onFromTo: (vergunning) => {
         return isVerleend && isSameDate
           ? commonTransformers.onFromTo(vergunning)
           : null;
       },
     },
     {
-      dateTimeRangeBetween: (vergunning: VergunningFrontend<Flyeren>) => {
+      dateTimeRangeBetween: (vergunning) => {
         return isVerleend && !isSameDate
           ? commonTransformers.dateTimeRangeBetween(vergunning)
           : null;
@@ -36,5 +30,14 @@ export function Flyeren({
     'decision',
   ]);
 
-  return <Datalist rows={rows} />;
+  return rows;
+}
+// Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
+// In dat geval allen de datum tonen.
+export function Flyeren({
+  vergunning,
+}: {
+  vergunning: VergunningFrontend<Flyeren>;
+}) {
+  return <Datalist rows={getRowsFlyeren(vergunning)} />;
 }
