@@ -166,7 +166,7 @@ export function InkomenSpecificaties() {
       appRoute={tableConfig.listPageRoute}
       appRouteBack={routes.themaPage}
       appRouteParams={params}
-      body={pageContentMain}
+      pageContentTop={pageContentMain}
       displayProps={tableConfig.displayProps}
       noItemsText={noContentMessage}
       items={itemsFiltered}

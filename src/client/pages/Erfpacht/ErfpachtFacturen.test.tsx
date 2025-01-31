@@ -15,7 +15,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ErfpachtFacturen from './ErfpachtFacturen';
+import { ErfpachtFacturen } from './ErfpachtFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
   const user = userEvent.setup();
@@ -29,18 +29,20 @@ describe('<ErfpachtOpenFacturen />', () => {
     ERFPACHTv2_DOSSIER_DETAIL as any
   );
 
-  const Component = ({
+  function Component({
     initializeState,
   }: {
     initializeState: (snapshot: MutableSnapshot) => void;
-  }) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ErfpachtFacturen}
-      initializeState={initializeState}
-    />
-  );
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ErfpachtFacturen}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Renders Facturen List Page no data', async () => {
     bffApi
