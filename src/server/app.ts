@@ -60,14 +60,14 @@ if (getFromEnv('BFF_INCOMING_REQUEST_LOGS_ENABLED') === 'true') {
   morgan.token('build', function () {
     return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
   });
-}
 
-// Logs all Incoming requests
-app.use(
-  morgan(
-    '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-  )
-);
+  // Logs all Incoming requests
+  app.use(
+    morgan(
+      '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+    )
+  );
+}
 
 app.use(
   cors({
