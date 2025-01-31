@@ -1,92 +1,24 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 
-import { tableConfig } from './config';
-import {
-  caseTypeVaren,
-  VarenVergunningFrontend,
-} from '../../../server/services/varen/config-and-types';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import { entries } from '../../../universal/helpers/utils';
-import { LinkProps } from '../../../universal/types/App.types';
-import { Datalist, RowSet } from '../../components/Datalist/Datalist';
-import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { useVarenThemaData } from './useVarenThemaData.hook';
+import { buttonItems, linkListItems } from './Varen-thema-config';
+import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
+import { Datalist } from '../../components/Datalist/Datalist';
 import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { linkListItems } from '../Afis/Afis-thema-config';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-function useVarenThemaData() {
-  const { VAREN } = useAppStateGetter();
-
-  const varenRederRegistratie = VAREN.content?.find(
-    (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
-  );
-
-  const labelMap = {
-    company: 'Bedrijfsnaam',
-    email: 'E-mailadres',
-    phone: 'Telefoonnummer',
-    bsnkvk: 'KVK nummer',
-    address: 'Adres',
-  };
-
-  const gegevensAanvrager: RowSet | null = varenRederRegistratie
-    ? {
-        rows: entries(labelMap).map(([key, label]) => ({
-          label,
-          content: varenRederRegistratie[key],
-          span: 4,
-        })),
-      }
-    : null;
-
-  const vergunningen = VAREN.content?.filter(
-    (item) => item.caseType !== caseTypeVaren.VarenRederRegistratie
-  );
-
-  const tableItems = addLinkElementToProperty<VarenVergunningFrontend>(
-    vergunningen ?? [],
-    'vesselName',
-    true
-  );
-
-  return {
-    gegevensAanvrager,
-    varenRederRegistratie,
-    tableConfig,
-    isLoading: isLoading(VAREN),
-    isError: isError(VAREN),
-    tableItems,
-    linkListItems,
-  };
-}
+const pageContentTop = (
+  <Paragraph>
+    De passagiersvaart in Amsterdam is erg populair bij bezoekers.
+    Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook gehuurde
+    boten, met of zonder schipper, vallen onder de passagiersvaart.
+  </Paragraph>
+);
 
 export function Varen() {
   const { gegevensAanvrager, tableItems, tableConfig, isLoading, isError } =
     useVarenThemaData();
-
-  const pageContentTop = (
-    <Paragraph>
-      De passagiersvaart in Amsterdam is erg populair bij bezoekers.
-      Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook
-      gehuurde boten, met of zonder schipper, vallen onder de passagiersvaart.
-    </Paragraph>
-  );
-
-  const linkListItems: LinkProps[] = [
-    {
-      to: 'https://www.amsterdam.nl/verkeer-vervoer/varen-amsterdam/varen-beroepsvaart/#:~:text=De%20passagiersvaart%20in%20Amsterdam%20is,stad%20willen%20we%20graag%20behouden.',
-      title: 'Meer informatie over passagiers- en beroepsvaart',
-    },
-  ];
-
-  const buttonItems: LinkProps[] = [
-    {
-      to: 'https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningAanvragen.aspx',
-      title: 'Exploitatievergunning aanvragen',
-    },
-  ];
 
   const gegevens = gegevensAanvrager ? (
     <Grid.Cell span="all">

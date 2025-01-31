@@ -1,0 +1,57 @@
+import { tableConfig } from './Varen-thema-config';
+import {
+  caseTypeVaren,
+  VarenVergunningFrontend,
+} from '../../../server/services/varen/config-and-types';
+import { isError, isLoading } from '../../../universal/helpers/api';
+import { entries } from '../../../universal/helpers/utils';
+import { RowSet } from '../../components/Datalist/Datalist';
+import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import { linkListItems } from '../Afis/Afis-thema-config';
+
+export function useVarenThemaData() {
+  const { VAREN } = useAppStateGetter();
+
+  const varenRederRegistratie = VAREN.content?.find(
+    (item) => item.caseType === caseTypeVaren.VarenRederRegistratie
+  );
+
+  const labelMap = {
+    company: 'Bedrijfsnaam',
+    email: 'E-mailadres',
+    phone: 'Telefoonnummer',
+    bsnkvk: 'KVK nummer',
+    address: 'Adres',
+  };
+
+  const gegevensAanvrager: RowSet | null = varenRederRegistratie
+    ? {
+        rows: entries(labelMap).map(([key, label]) => ({
+          label,
+          content: varenRederRegistratie[key],
+          span: 4,
+        })),
+      }
+    : null;
+
+  const vergunningen = VAREN.content?.filter(
+    (item) => item.caseType !== caseTypeVaren.VarenRederRegistratie
+  );
+
+  const tableItems = addLinkElementToProperty<VarenVergunningFrontend>(
+    vergunningen ?? [],
+    'vesselName',
+    true
+  );
+
+  return {
+    gegevensAanvrager,
+    varenRederRegistratie,
+    tableConfig,
+    isLoading: isLoading(VAREN),
+    isError: isError(VAREN),
+    tableItems,
+    linkListItems,
+  };
+}
