@@ -2,10 +2,6 @@
   margin: 0;
   font-size: var(--ams-paragraph-medium-font-size);
 
-  &__row-wrapper {
-    grid-auto-flow: column;
-  }
-
   // TODO: Find a way to use the h4 style without re-declaring
   &__title {
     font-family: var(--ams-heading-font-family);

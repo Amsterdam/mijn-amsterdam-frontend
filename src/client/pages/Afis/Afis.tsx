@@ -90,7 +90,6 @@ export function AfisThemaPagina() {
     isThemaPaginaLoading,
     listPageTitle,
     routes,
-    linkListItems,
   } = useAfisThemaData();
 
   const isPartialError = entries(dependencyErrors).some(
@@ -164,7 +163,6 @@ export function AfisThemaPagina() {
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
-      linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={
         <>

@@ -1,4 +1,4 @@
-import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { LinkProps } from '../../../universal/types';
 import {
   CaseTypeV2,
   DecosCaseType,
@@ -12,6 +12,7 @@ import {
   DecosZaakWithDateTimeRange,
   ZaakStatus,
   ZakenFilter,
+  DecosZaakFrontend,
 } from '../decos/decos-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
@@ -278,15 +279,8 @@ export interface VergunningOptions {
   appRoute: string | ((vergunning: VergunningV2) => string);
 }
 
-export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> = T & {
-  dateDecisionFormatted?: string | null;
-  dateInBehandeling: string | null;
-  dateInBehandelingFormatted: string | null;
-  dateRequestFormatted: string;
-  dateStartFormatted?: string | null;
-  dateEndFormatted?: string | null;
-  isExpired?: boolean;
-} & ZaakDetail;
+export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> =
+  DecosZaakFrontend<T>;
 
 export type NotificationProperty =
   | 'title'
