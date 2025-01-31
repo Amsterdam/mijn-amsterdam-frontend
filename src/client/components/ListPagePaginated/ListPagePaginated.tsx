@@ -16,7 +16,8 @@ interface ListPagePaginatedProps<T> {
   appRoute: string;
   appRouteBack: string;
   appRouteParams?: Record<string, string> | null;
-  body?: ReactNode;
+  pageContentTop?: ReactNode;
+  pageContentBottom?: ReactNode;
   displayProps: DisplayProps<T> | null;
   errorText?: string;
   isError: boolean;
@@ -33,7 +34,8 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   appRoute,
   appRouteBack,
   appRouteParams = null,
-  body,
+  pageContentTop,
+  pageContentBottom,
   displayProps,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
   noItemsText = 'U heeft (nog) geen gegevens op deze pagina.',
@@ -71,13 +73,12 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
     <OverviewPageV2>
       <PageContentV2>
         <PageHeadingV2 backLink={appRouteBack}>{title}</PageHeadingV2>
-
-        {!!body && <PageContentCell>{body}</PageContentCell>}
         {isError && (
           <PageContentCell>
             <ErrorAlert>{errorText}</ErrorAlert>
           </PageContentCell>
         )}
+        {pageContentTop}
         <PageContentCell>
           {isLoading && (
             <LoadingContent
@@ -91,9 +92,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
           {!isError && (
             <>
               {!isLoading && !itemsPaginated.length && !!noItemsText && (
-                <PageContentCell>
-                  <Paragraph>{noItemsText}</Paragraph>
-                </PageContentCell>
+                <Paragraph>{noItemsText}</Paragraph>
               )}
               {!isLoading && !!itemsPaginated.length && (
                 <TableV2<T>
@@ -119,6 +118,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
             </>
           )}
         </PageContentCell>
+        {pageContentBottom}
       </PageContentV2>
     </OverviewPageV2>
   );
