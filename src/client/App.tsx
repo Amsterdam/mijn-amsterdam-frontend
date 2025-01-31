@@ -53,7 +53,7 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
 import Erfpacht from './pages/Erfpacht/Erfpacht';
 import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
-import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
+import { ErfpachtFacturen } from './pages/Erfpacht/ErfpachtFacturen';
 import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
 import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
 import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
@@ -211,10 +211,7 @@ function AppAuthenticated() {
           {FeatureToggle.hliThemaActive && (
             <Route path={AppRoutes.HLI} component={HLI} />
           )}
-          <Route
-            path={AppRoutes['INKOMEN/LIST']}
-            component={InkomenLijstPagina}
-          />
+
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetailUitkering}
@@ -223,6 +220,7 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/SPECIFICATIES']}
             component={InkomenSpecificaties}
           />
+
           <Route
             path={AppRoutes['INKOMEN/TOZO']}
             component={InkomenDetailTozo}
@@ -237,6 +235,10 @@ function AppAuthenticated() {
               component={InkomenDetailBbz}
             />
           )}
+          <Route
+            path={AppRoutes['INKOMEN/LIST']}
+            component={InkomenLijstPagina}
+          />
           <Route path={AppRoutes.INKOMEN} component={InkomenThemaPagina} />
           <Route path={AppRoutes['ZORG/VOORZIENING']} component={ZorgDetail} />
           {FeatureToggle.zorgv2ThemapaginaActive && (
