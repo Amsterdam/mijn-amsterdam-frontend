@@ -1,8 +1,5 @@
 .WelcomeHeadingWrap {
   background-color: white;
-  @media screen and (min-width: $ams-breakpoint-medium) {
-    margin-top: -166px;
-  }
   position: relative;
 
   // Hack to add white background to the left of the screen.
@@ -15,6 +12,10 @@
     height: 100%;
     width: 100%;
     display: block;
+  }
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    margin-top: -166px;
   }
 }
 
@@ -37,11 +38,11 @@
 }
 
 .ProfileNameHello {
+  display: block;
+  line-height: 1.5;
   @media screen and (min-width: $ams-breakpoint-medium) {
     font-size: 58px;
   }
-  display: block;
-  line-height: 1.5;
 }
 
 .ProfileNameWrap {
