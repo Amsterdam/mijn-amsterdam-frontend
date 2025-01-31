@@ -15,7 +15,7 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { DecosZaakDocument, DecosZaakTransformer } from '../decos/decos-types';
+import { DecosZaakDocument } from '../decos/decos-types';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 function transformVergunningFrontend(
@@ -42,7 +42,7 @@ async function fetchVergunningenV2_(
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
-    decosZaakTransformers as DecosZaakTransformer<VergunningV2>[]
+    decosZaakTransformers
   );
 
   if (response.status === 'OK') {
@@ -96,7 +96,7 @@ export async function fetchVergunningV2(
   if (decryptResult.status === 'OK') {
     const response = await fetchDecosZaak(
       requestID,
-      decosZaakTransformers as DecosZaakTransformer<VergunningV2>[],
+      decosZaakTransformers,
       decryptResult.content
     );
     if (response.status === 'OK' && response.content?.decosZaak) {
