@@ -1,4 +1,8 @@
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import {
+  defaultDateFormat,
+  defaultDateTimeFormat,
+} from '../../../../universal/helpers/date';
 import { entries } from '../../../../universal/helpers/utils';
 import { Row, RowSet } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
@@ -7,35 +11,123 @@ type DataListRowOptions = {
   endDateIncluded?: boolean;
 };
 
-type VergunningDataListRow<T extends VergunningFrontend> = (
-  vergunning: T,
-  options?: DataListRowOptions
-) => Row | RowSet | null;
+type VergunningDataListRow<T extends VergunningFrontend = VergunningFrontend> =
+  (vergunning: T, options?: DataListRowOptions) => Row | RowSet | null;
 
-type RowTransformer<T extends VergunningFrontend> = Record<
-  string,
-  VergunningDataListRow<T>
->;
+export type RowTransformer<T extends VergunningFrontend = VergunningFrontend> =
+  Record<string, VergunningDataListRow<T>>;
 
-export const commonTransformers: RowTransformer<VergunningFrontend> = {
-  identifier: (vergunning) => ({
+export const identifier: VergunningDataListRow = (vergunning) => {
+  return {
     label: 'Kenmerk',
     content: vergunning.identifier,
-  }),
-  location: (vergunning) =>
-    'location' in vergunning && typeof vergunning.location === 'string'
-      ? {
-          label: 'Adres',
-          content: <AddressDisplayAndModal address={vergunning.location} />,
-        }
-      : null,
-  location2: (vergunning) =>
-    'location' in vergunning && typeof vergunning.location !== 'string'
-      ? {
-          label: 'Adres',
-          content: JSON.stringify(vergunning.location),
-        }
-      : null,
+  };
+};
+
+export const onFromTo: VergunningDataListRow<VergunningFrontend> = (
+  vergunning
+) => {
+  if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
+    return null;
+  }
+  const on = {
+    label: 'Op',
+    content: vergunning.dateStart
+      ? defaultDateFormat(vergunning.dateStart)
+      : '-',
+  };
+  const from = {
+    label: 'Van',
+    content: vergunning.timeStart ? `${vergunning.timeStart} uur` : '-',
+  };
+  const to = {
+    label: 'Tot',
+    content: vergunning.timeEnd ? `${vergunning.timeEnd} uur` : '-',
+  };
+  return { rows: [on, from, to] };
+};
+
+export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
+  vergunning
+) => {
+  const isVerleend = vergunning?.decision === 'Verleend';
+  if (!('timeStart' in vergunning && 'timeEnd' in vergunning) || !isVerleend) {
+    return null;
+  }
+
+  const from: Row = {
+    label: 'Van',
+    isVisible: isVerleend,
+    content:
+      vergunning?.timeStart && vergunning?.dateStart && isVerleend
+        ? defaultDateTimeFormat(
+            `${vergunning.dateStart}T${vergunning.timeStart}`
+          )
+        : vergunning.dateStart && isVerleend
+          ? defaultDateFormat(vergunning.dateStart)
+          : '-',
+  };
+
+  const to: Row = {
+    label: 'Tot en met',
+    isVisible: isVerleend,
+    content:
+      vergunning?.timeEnd && vergunning?.dateEnd && isVerleend
+        ? defaultDateTimeFormat(`${vergunning.dateEnd}T${vergunning.timeEnd}`)
+        : vergunning.dateEnd && isVerleend
+          ? defaultDateFormat(vergunning.dateEnd)
+          : '-',
+  };
+
+  const rowSet: RowSet = { rows: [from, to] };
+
+  return rowSet;
+};
+
+export const dateTimeRangeBetween: VergunningDataListRow<VergunningFrontend> = (
+  vergunning
+) => {
+  const dateTimeRangeRowSet = dateTimeRange(vergunning);
+  if (!dateTimeRangeRowSet) {
+    return null;
+  }
+  const rows = 'rows' in dateTimeRangeRowSet ? dateTimeRangeRowSet.rows : [];
+  if (!rows.length) {
+    return null;
+  }
+  const rowSet: RowSet = {
+    rows: [...rows],
+  };
+
+  const timeRange = commonTransformers.timeRange(vergunning);
+
+  if (timeRange && !('rows' in timeRange)) {
+    rowSet.rows.push(timeRange);
+  }
+
+  return rowSet;
+};
+
+const location: VergunningDataListRow<VergunningFrontend> = (vergunning) =>
+  'location' in vergunning && typeof vergunning.location === 'string'
+    ? {
+        label: 'Adres',
+        content: <AddressDisplayAndModal address={vergunning.location} />,
+      }
+    : null;
+
+const location2: VergunningDataListRow<VergunningFrontend> = (vergunning) =>
+  'location' in vergunning && typeof vergunning.location !== 'string'
+    ? {
+        label: 'Adres',
+        content: JSON.stringify(vergunning.location),
+      }
+    : null;
+
+export const commonTransformers: RowTransformer<VergunningFrontend> = {
+  identifier,
+  location,
+  location2,
   decision: (vergunning) =>
     vergunning.decision
       ? {
@@ -62,6 +154,9 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
     label: options?.endDateIncluded ? `Tot en met` : 'Tot',
     content: vergunning.dateEndFormatted,
   }),
+  dateTimeRange,
+  dateTimeRangeBetween,
+  onFromTo,
   timeStart: (vergunning) =>
     'timeStart' in vergunning && typeof vergunning.timeStart === 'string'
       ? {
@@ -86,9 +181,31 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
           content: `${vergunning.timeStart} - ${vergunning.timeEnd} uur`,
         }
       : null,
+  description: (vergunning) => {
+    return {
+      label: 'Omschrijving',
+      content: vergunning.description,
+    };
+  },
 };
 
-type TransformerKey = keyof typeof commonTransformers;
+// Eplicit type because we cannot? type the keys of a Record<string, xxx>
+type TransformerKey =
+  | 'description'
+  | 'identifier'
+  | 'location'
+  | 'location2'
+  | 'decision'
+  | 'kentekens'
+  | 'dateStartedOn'
+  | 'dateStart'
+  | 'dateEnd'
+  | 'onFromTo'
+  | 'dateTimeRangeBetween'
+  | 'dateTimeRange'
+  | 'timeStart'
+  | 'timeEnd'
+  | 'timeRange';
 
 export function getRowsByKey<T extends VergunningFrontend>(
   vergunning: T,
