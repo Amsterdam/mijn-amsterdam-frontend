@@ -1,16 +1,10 @@
-import { Location } from './Location';
+import { getRows } from './fields-config';
 import type {
   EvenementVergunning,
   VergunningFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
-import {
-  defaultDateFormat,
-  defaultDateTimeFormat,
-} from '../../../../universal/helpers/date';
 import { StatusLineItem } from '../../../../universal/types';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../../components/InfoDetail/InfoDetail';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function getEvenementVergunningLineItems(
   vergunning: VergunningFrontend<EvenementVergunning>
@@ -44,49 +38,14 @@ export function getEvenementVergunningLineItems(
 export function EvenementVergunning({
   vergunning,
 }: {
-  vergunning: VergunningFrontend;
+  vergunning: VergunningFrontend<EvenementVergunning>;
 }) {
-  const vergunningData = vergunning as VergunningFrontend<EvenementVergunning>;
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />
-      <InfoDetail
-        label="Omschrijving"
-        value={vergunningData.description || '-'}
-      />
-      {!!vergunningData.location && (
-        <Location location={vergunningData.location} />
-      )}
-
-      <InfoDetailGroup>
-        <InfoDetail
-          label="Vanaf"
-          value={
-            vergunningData.timeStart && vergunningData.dateStart
-              ? defaultDateTimeFormat(
-                  `${vergunningData.dateStart}T${vergunningData.timeStart}`
-                )
-              : vergunningData.dateStart
-                ? defaultDateFormat(vergunningData.dateStart)
-                : '-'
-          }
-        />
-        <InfoDetail
-          label="Tot en met"
-          value={
-            vergunningData.timeEnd && vergunningData.dateEnd
-              ? defaultDateTimeFormat(
-                  `${vergunningData.dateEnd}T${vergunningData.timeEnd}`
-                )
-              : vergunningData.dateEnd
-                ? defaultDateFormat(vergunningData.dateEnd)
-                : '-'
-          }
-        />
-      </InfoDetailGroup>
-      {!!vergunningData.decision && (
-        <InfoDetail label="Resultaat" value={vergunningData.decision} />
-      )}
-    </>
-  );
+  const rows = getRows(vergunning, [
+    'identifier',
+    'description',
+    'location',
+    'dateTimeRange',
+    'decision',
+  ]);
+  return <Datalist rows={rows} />;
 }
