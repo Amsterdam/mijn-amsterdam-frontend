@@ -16,7 +16,6 @@ import { Request, Response } from 'express';
 
 import { IS_DB_ENABLED, tableNameLoginCount } from './db/config';
 import { db } from './db/db';
-import { captureException } from './monitoring';
 import { IS_TAP } from '../../universal/config/env';
 import { defaultDateFormat } from '../../universal/helpers/date';
 
@@ -200,14 +199,7 @@ export async function loginStats(req: Request, res: Response) {
           ? dateMaxResult.date_max
           : parseISO(dateMaxResult.date_max);
     }
-  } catch (error) {
-    captureException(error, {
-      properties: {
-        dateMaxResult,
-        dateMinResult,
-      },
-    });
-  }
+  } catch (error) {}
 
   let dateStart: string = dateMin
     ? format(dateMin, QUERY_DATE_FORMAT)
