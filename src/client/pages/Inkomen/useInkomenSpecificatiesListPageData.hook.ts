@@ -78,21 +78,6 @@ export function useInkomenSpecificatiesListPageData() {
       );
     });
 
-  const currentPage = useMemo(() => {
-    if (!page) {
-      return 1;
-    }
-    return parseInt(page, 10);
-  }, [page]);
-
-  useEffect(() => {
-    window.scrollBy({
-      top: -document.documentElement.scrollTop,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [currentPage]);
-
   const total = itemsFiltered.length;
   const hasCategoryFilters = categoryFilterOptions.length > 1;
   const categoryFilterActive = !!selectedCategory;
@@ -130,7 +115,6 @@ export function useInkomenSpecificatiesListPageData() {
   return {
     categoryFilterActive,
     categoryFilterOptions,
-    currentPage,
     hasCategoryFilters,
     isError: isErrorWpiSpecificaties,
     isLoading: isLoadingWpiSpecificaties,

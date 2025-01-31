@@ -213,21 +213,22 @@ export function transformIncomSpecificationResponse(
   };
 }
 
-export function fetchSpecificaties(
+export async function fetchSpecificaties(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
-    getApiConfig('WPI_SPECIFICATIES', {
-      transformResponse: (responseData) =>
-        transformIncomSpecificationResponse(
-          authProfileAndToken.profile.sid,
-          responseData
-        ),
-    }),
-    requestID,
-    authProfileAndToken
-  );
+  const response =
+    await requestData<WpiIncomeSpecificationResponseDataTransformed>(
+      getApiConfig('WPI_SPECIFICATIES', {
+        transformResponse: (responseData) =>
+          transformIncomSpecificationResponse(
+            authProfileAndToken.profile.sid,
+            responseData
+          ),
+      }),
+      requestID,
+      authProfileAndToken
+    );
 
   return response;
 }
