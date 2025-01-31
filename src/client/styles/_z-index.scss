@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 // Global z-index control
 $z-index: (
   header-error-messages: 1,
@@ -18,5 +20,5 @@ $z-index: (
 );
 
 @function z-index($key) {
-  @return map-get($z-index, $key);
+  @return map.get($z-index, $key);
 }
