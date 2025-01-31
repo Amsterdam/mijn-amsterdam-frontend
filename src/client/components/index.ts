@@ -11,7 +11,6 @@ export { default as MainHeader } from './MainHeader/MainHeader';
 export { Modal } from './Modal/Modal';
 export { default as Pagination } from './Pagination/Pagination';
 export { default as Panel } from './Panel/Panel';
-export { default as Section } from './Section/Section';
 export { Search } from './Search/Search';
 export { default as StatusLine } from './StatusLine/StatusLine';
 export { default as Table, addTitleLinkComponent } from './Table/Table';
