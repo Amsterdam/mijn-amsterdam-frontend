@@ -1,19 +1,15 @@
-import { Location } from './Location';
-import type { Omzettingsvergunning as OmzettingsvergunningType } from '../../../../server/services';
-import InfoDetail from '../../../components/InfoDetail/InfoDetail';
+import { getRows } from './fields-config';
+import type {
+  VergunningFrontend,
+  Omzettingsvergunning,
+} from '../../../../server/services/vergunningen/config-and-types';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function Omzettingsvergunning({
   vergunning,
 }: {
-  vergunning: OmzettingsvergunningType;
+  vergunning: VergunningFrontend<Omzettingsvergunning>;
 }) {
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
-      {!!vergunning?.decision && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
-    </>
-  );
+  const rows = getRows(vergunning, ['identifier', 'location', 'decision']);
+  return <Datalist rows={rows} />;
 }

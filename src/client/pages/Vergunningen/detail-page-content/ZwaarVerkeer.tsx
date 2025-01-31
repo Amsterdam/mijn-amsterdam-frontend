@@ -1,53 +1,29 @@
+import { getRows } from './fields-config';
 import type {
   VergunningFrontend,
   ZwaarVerkeer,
 } from '../../../../server/services/vergunningen/config-and-types';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../../components/InfoDetail/InfoDetail';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function ZwaarVerkeer({
   vergunning,
 }: {
-  vergunning: VergunningFrontend;
+  vergunning: VergunningFrontend<ZwaarVerkeer>;
 }) {
-  const vergunningData = vergunning as VergunningFrontend<ZwaarVerkeer>;
-  const isAfgehandeld = vergunningData.processed;
+  const rows = getRows(vergunning, [
+    'identifier',
+    {
+      exemptionKind: () => {
+        return {
+          label: 'Soort ontheffing',
+          content: vergunning.exemptionKind || '-',
+        };
+      },
+    },
+    'licensePlates',
+    'dateRange',
+    'decision',
+  ]);
 
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />
-
-      <InfoDetail
-        label="Soort ontheffing"
-        value={vergunningData.exemptionKind || '-'}
-      />
-
-      <InfoDetail label="Kentekens" value={vergunningData.kentekens || '-'} />
-
-      <InfoDetailGroup>
-        <InfoDetail
-          label="Vanaf"
-          value={
-            vergunningData.dateStart
-              ? defaultDateFormat(vergunningData.dateStart)
-              : '-'
-          }
-        />
-        <InfoDetail
-          label="Tot en met"
-          value={
-            vergunningData.dateEnd
-              ? defaultDateFormat(vergunningData.dateEnd)
-              : '-'
-          }
-        />
-      </InfoDetailGroup>
-
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunningData.decision} />
-      )}
-    </>
-  );
+  return <Datalist rows={rows} />;
 }

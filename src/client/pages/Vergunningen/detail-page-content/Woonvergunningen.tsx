@@ -1,21 +1,16 @@
-import { Location } from './Location';
-import type { WoningVergunning } from '../../../../universal/helpers/vergunningen';
-import InfoDetail from '../../../components/InfoDetail/InfoDetail';
+import { getRows } from './fields-config';
+import type {
+  VergunningFrontend,
+  WoningVergunning,
+} from '../../../../server/services/vergunningen/config-and-types';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function Woonvergunningen({
   vergunning,
 }: {
-  vergunning: WoningVergunning;
+  vergunning: VergunningFrontend<WoningVergunning>;
 }) {
-  const isAfgehandeld = vergunning.processed;
+  const rows = getRows(vergunning, ['identifier', 'location', 'decision']);
 
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
-    </>
-  );
+  return <Datalist rows={rows} />;
 }
