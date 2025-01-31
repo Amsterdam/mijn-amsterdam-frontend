@@ -2,7 +2,7 @@ import memoize from 'memoizee';
 
 import { Varen, VarenFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
@@ -11,8 +11,7 @@ import { transformDecosZaakFrontend } from '../decos/decos-service';
 
 export async function fetchVaren_(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchDecosZaken(
     requestID,
@@ -27,7 +26,7 @@ export async function fetchVaren_(
         transformDecosZaakFrontend<Varen>(
           authProfileAndToken.profile.sid,
           vergunning,
-          appRoute
+          AppRoutes['VAREN/DETAIL']
         )
     );
     return apiSuccessResult(varenVergunningFrontend);

@@ -164,18 +164,20 @@ describe('<ToeristischVerhuurDetail />', () => {
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
-        casetype: 'vakantieverhuur',
+        caseType: 'vakantieverhuur',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={ToeristischeVerhuurDetail}
-        initializeState={state(testState)}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ToeristischeVerhuurDetail}
+          initializeState={state(testState)}
+        />
+      );
+    }
     render(<Component />);
     expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
     expect(screen.getByText('Z/XXX/000007c')).toBeInTheDocument();
@@ -195,18 +197,20 @@ describe('<ToeristischVerhuurDetail />', () => {
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
-        casetype: 'bed-and-breakfast',
+        caseType: 'bed-and-breakfast',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={ToeristischeVerhuurDetail}
-        initializeState={state(testState)}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={ToeristischeVerhuurDetail}
+          initializeState={state(testState)}
+        />
+      );
+    }
     const screen = render(<Component />);
     expect(screen.getByText('Vergunning bed & breakfast')).toBeInTheDocument();
     expect(screen.getByText('Z/23/2130506')).toBeInTheDocument();
