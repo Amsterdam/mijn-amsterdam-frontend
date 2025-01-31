@@ -1,32 +1,44 @@
-import { Location } from './Location';
-import type { Ligplaatsvergunning } from '../../../../server/services';
-import InfoDetail from '../../../components/InfoDetail/InfoDetail';
+import { getRows } from './fields-config';
+import type {
+  VergunningFrontend,
+  Ligplaatsvergunning,
+} from '../../../../server/services/vergunningen/config-and-types';
+import { Datalist } from '../../../components/Datalist/Datalist';
 
-export function VOB({ vergunning }: { vergunning: Ligplaatsvergunning }) {
-  const isAfgehandeld = vergunning.processed;
+export function VOB({
+  vergunning,
+}: {
+  vergunning: VergunningFrontend<Ligplaatsvergunning>;
+}) {
+  const rows = getRows(vergunning, [
+    'identifier',
+    'location',
+    {
+      vesselKind: (vergunning) => ({
+        label: 'Soort vaartuig',
+        content: vergunning.vesselKind || '-',
+      }),
+    },
+    {
+      vesselName: (vergunning) => ({
+        label: 'Naam vaartuig',
+        content: vergunning.vesselName || '-',
+      }),
+    },
+    {
+      requestKind: (vergunning) => ({
+        label: 'Soort aanvraag',
+        content: vergunning.requestKind || '-',
+      }),
+    },
+    {
+      reason: (vergunning) => ({
+        label: 'Reden',
+        content: vergunning.reason || '-',
+      }),
+    },
+    'decision',
+  ]);
 
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      {!!vergunning.location && <Location location={vergunning.location} />}
-
-      <InfoDetail
-        label="Soort vaartuig"
-        value={vergunning?.vesselKind || '-'}
-      />
-
-      <InfoDetail label="Naam vaartuig" value={vergunning?.vesselName || '-'} />
-
-      <InfoDetail
-        label="Soort aanvraag"
-        value={vergunning?.requestKind || '-'}
-      />
-
-      <InfoDetail label="Reden" value={vergunning?.reason || '-'} />
-
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
-    </>
-  );
+  return <Datalist rows={rows} />;
 }

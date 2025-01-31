@@ -84,6 +84,26 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
   return rowSet;
 };
 
+export const dateRange: VergunningDataListRow<VergunningFrontend> = (
+  vergunning
+) => {
+  const from: Row = {
+    label: 'Van',
+    content: vergunning?.dateStart
+      ? defaultDateTimeFormat(vergunning.dateStart)
+      : null,
+  };
+
+  const to: Row = {
+    label: 'Tot en met',
+    content: vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : null,
+  };
+
+  const rowSet: RowSet = { rows: [from, to] };
+
+  return rowSet;
+};
+
 export const dateTimeRangeBetween: VergunningDataListRow<VergunningFrontend> = (
   vergunning
 ) => {
@@ -154,6 +174,7 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
     label: options?.endDateIncluded ? `Tot en met` : 'Tot',
     content: vergunning.dateEndFormatted,
   }),
+  dateRange,
   dateTimeRange,
   dateTimeRangeBetween,
   onFromTo,
@@ -187,6 +208,15 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
       content: vergunning.description,
     };
   },
+  licensePlates: (vergunning) => {
+    return 'licensePlates' in vergunning &&
+      typeof vergunning.licensePlates === 'string'
+      ? {
+          label: 'Kenteken(s)',
+          content: vergunning.licensePlates || '-',
+        }
+      : null;
+  },
 };
 
 // Eplicit type because we cannot? type the keys of a Record<string, xxx>
@@ -199,6 +229,8 @@ type TransformerKey =
   | 'kentekens'
   | 'dateStartedOn'
   | 'dateStart'
+  | 'dateRange'
+  | 'licensePlates'
   | 'dateEnd'
   | 'onFromTo'
   | 'dateTimeRangeBetween'
