@@ -8,6 +8,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
+import { DecosZaakTransformer } from '../decos/decos-types';
 
 export async function fetchVaren_(
   requestID: RequestID,
@@ -17,7 +18,7 @@ export async function fetchVaren_(
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
-    decosZaakTransformers
+    decosZaakTransformers as DecosZaakTransformer<Varen>[]
   );
 
   if (response.status === 'OK') {

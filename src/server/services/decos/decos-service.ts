@@ -144,14 +144,11 @@ async function getUserKeys(
   return apiSuccessResult(userKeys);
 }
 
-async function transformDecosZaakResponse<
-  T extends DecosZaakTransformer<any>,
-  DZ extends DecosZaakBase = NestedType<T>,
->(
+async function transformDecosZaakResponse<T extends DecosZaakBase>(
   requestID: RequestID,
-  decosZaakTransformers: T[],
+  decosZaakTransformers: DecosZaakTransformer<T>[],
   decosZaakSource: DecosZaakSource
-): Promise<DZ | null> {
+): Promise<T | null> {
   const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
   const decosZaakTransformer = decosZaakTransformers.find(
     (transformer) => transformer.caseType == zaakType
@@ -203,7 +200,7 @@ async function transformDecosZaakResponse<
   // Create the base data for the decosZaak. This object is not guaranteed to have all fields defined in the type for a specific decosZaak.
   // It depends on the query and resturned result to the decos api which field value ends up in the decosZaak.
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
-  let decosZaak: DZ = {
+  let decosZaak: T = {
     id:
       transformedFields.identifier?.replace(/\//g, '-') ??
       'unknown-decoszaak-id',
@@ -245,15 +242,12 @@ async function transformDecosZaakResponse<
   return decosZaak;
 }
 
-async function transformDecosZakenResponse<
-  T extends DecosZaakTransformer<any>,
-  DZ extends DecosZaakBase = NestedType<T>,
->(
+async function transformDecosZakenResponse<T extends DecosZaakBase>(
   requestID: RequestID,
-  decosZaakTransformers: T[],
+  decosZaakTransformers: DecosZaakTransformer<T>[],
   decosZakenSource: DecosZaakSource[]
 ) {
-  const zakenToBeTransformed: [T, DecosZaakSource][] = [];
+  const zakenToBeTransformed: [DecosZaakTransformer<T>, DecosZaakSource][] = [];
   for (const decosZaakSource of decosZakenSource) {
     const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
     const decosZaakTransformer = decosZaakTransformers.find(
@@ -273,7 +267,7 @@ async function transformDecosZakenResponse<
     zakenToBeTransformed.push([decosZaakTransformer, decosZaakSource]);
   }
 
-  let decosZaken: Array<DZ | null> = [];
+  let decosZaken: Array<T | null> = [];
 
   try {
     decosZaken = await Promise.all(
@@ -290,12 +284,12 @@ async function transformDecosZakenResponse<
   }
 
   return decosZaken
-    .filter((decosZaak: DZ | null): decosZaak is DZ => decosZaak !== null)
+    .filter((decosZaak: T | null): decosZaak is T => decosZaak !== null)
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-function getSelectFields(
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[]
+function getSelectFields<T extends DecosZaakBase>(
+  zaakTypeTransformers: DecosZaakTransformer<T>[]
 ) {
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
@@ -307,10 +301,10 @@ function getSelectFields(
   return fields;
 }
 
-async function getZakenByUserKey(
+async function getZakenByUserKey<T extends DecosZaakBase>(
   requestID: RequestID,
   userKey: string,
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
+  zaakTypeTransformers: DecosZaakTransformer<T>[] = []
 ) {
   const caseTypeField = 'text45';
 
@@ -351,10 +345,10 @@ async function getZakenByUserKey(
   return responseSource;
 }
 
-export async function fetchDecosZakenFromSource(
+export async function fetchDecosZakenFromSource<T extends DecosZaakBase>(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
+  zaakTypeTransformers: DecosZaakTransformer<T>[] = []
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
 
@@ -383,14 +377,11 @@ export async function fetchDecosZakenFromSource(
   return apiSuccessResult(zakenSource);
 }
 
-export async function fetchDecosZaken_<
-  T extends DecosZaakTransformer<any>,
-  DZ extends DecosZaakBase = NestedType<T>,
->(
+export async function fetchDecosZaken_<T extends DecosZaakBase>(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakTypeTransformers: T[]
-): Promise<ApiSuccessResponse<DZ[]> | ApiErrorResponse<null>> {
+  zaakTypeTransformers: DecosZaakTransformer<T>[]
+): Promise<ApiSuccessResponse<T[]> | ApiErrorResponse<null>> {
   const zakenSourceResponse = await fetchDecosZakenFromSource(
     requestID,
     authProfileAndToken,
@@ -602,14 +593,9 @@ export async function fetchDecosZaakFromSource(
   return requestData<DecosZaakSource | null>(apiConfig, requestID);
 }
 
-type NestedType<T> = T extends DecosZaakTransformer<infer R> ? R : never;
-
-export async function fetchDecosZaak<
-  T extends DecosZaakTransformer<any>,
-  DZ extends DecosZaakBase = NestedType<T>,
->(
+export async function fetchDecosZaak<T extends DecosZaakBase>(
   requestID: RequestID,
-  decosZaakTransformers: T[],
+  decosZaakTransformers: DecosZaakTransformer<T>[],
   zaakID: DecosZaakBase['key']
 ) {
   const decosZaakSourceRequest = fetchDecosZaakFromSource(requestID, zaakID);
@@ -646,7 +632,7 @@ export async function fetchDecosZaak<
     }
 
     return apiSuccessResult({
-      decosZaak: decosZaak as DZ,
+      decosZaak: decosZaak as T,
       documents,
     });
   }
