@@ -372,14 +372,15 @@ async function getZakenByUserKey(
 
 export async function fetchDecosZakenFromSourceRaw(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
+  authProfileAndToken: AuthProfileAndToken,
+  selectFields?: string
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
 
   async function fetchZakenByUserKey(userKey: string) {
     const apiConfig = getApiConfig('DECOS_API', {
       formatUrl: (config) => {
-        return `${config.url}/items/${userKey}/folders?select=*&properties=true`;
+        return `${config.url}/items/${userKey}/folders?properties=true${selectFields ? `&select=${selectFields}` : ''}`;
       },
       transformResponse: (responseData: DecosZakenResponse) => {
         if (!Array.isArray(responseData?.content)) {
