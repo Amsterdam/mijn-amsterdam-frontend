@@ -80,6 +80,7 @@ export type RVVSloterweg = DecosZaakBase &
   WithDateRange & {
     caseType: GetCaseType<'RVVSloterweg'>;
     vorigeKentekens: string | null;
+    dateWorkflowActive: string | null;
     dateWorkflowVerleend: string | null;
     requestType: 'Nieuw' | 'Wijziging';
     area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
