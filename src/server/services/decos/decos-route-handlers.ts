@@ -14,6 +14,7 @@ import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   RequestWithQueryParams,
+  sendBadRequest,
   sendResponse,
   sendUnauthorized,
 } from '../../routing/route-helpers';
@@ -53,6 +54,10 @@ export async function fetchZakenByUserIDs(
 ) {
   const authProfileAndToken = getAuth(req);
 
+  if (!['private', 'commercial'].includes(req.query.profileType)) {
+    return sendBadRequest(res, 'Invalid profileType');
+  }
+
   if (!authProfileAndToken) {
     return sendUnauthorized(res);
   }
@@ -70,8 +75,9 @@ export async function fetchZakenByUserIDs(
     userIDs.map((id) => {
       const authProfileAndTokenSubject: AuthProfileAndToken = {
         profile: {
-          authMethod: 'digid',
-          profileType: 'private',
+          authMethod:
+            req.query.profileType === 'private' ? 'digid' : 'eherkenning',
+          profileType: req.query.profileType,
           id,
           sid: authProfileAndToken.profile.sid,
         },
@@ -84,5 +90,12 @@ export async function fetchZakenByUserIDs(
       );
     })
   );
-  return res.send(apiSuccessResult(response.map((r) => r.content).flat()));
+
+  return res.send(
+    apiSuccessResult({
+      profileType: req.query.profileType,
+      userIDs,
+      zaken: response.map((r) => r.content).flat(),
+    })
+  );
 }
