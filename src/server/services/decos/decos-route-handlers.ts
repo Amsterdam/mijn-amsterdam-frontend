@@ -71,31 +71,35 @@ export async function fetchZakenByUserIDs(
     ? userIDsFromEnv
     : [authProfileAndToken.profile.id];
 
-  const response = await Promise.all(
-    userIDs.map((id) => {
-      const authProfileAndTokenSubject: AuthProfileAndToken = {
-        profile: {
-          authMethod:
-            req.query.profileType === 'private' ? 'digid' : 'eherkenning',
-          profileType: req.query.profileType,
-          id,
-          sid: authProfileAndToken.profile.sid,
-        },
-        token: '',
-      };
+  const responses = [];
 
-      return fetchDecosZakenFromSourceRaw(
-        res.locals.requestID,
-        authProfileAndTokenSubject
-      );
-    })
-  );
+  for (const id of userIDs) {
+    const authProfileAndTokenSubject: AuthProfileAndToken = {
+      profile: {
+        authMethod:
+          req.query.profileType === 'private' ? 'digid' : 'eherkenning',
+        profileType: req.query.profileType,
+        id,
+        sid: authProfileAndToken.profile.sid,
+      },
+      token: '',
+    };
+
+    const response = await fetchDecosZakenFromSourceRaw(
+      res.locals.requestID,
+      authProfileAndTokenSubject
+    );
+
+    if (response.status === 'OK') {
+      responses.push(response.content);
+    }
+  }
 
   return res.send(
     apiSuccessResult({
       profileType: req.query.profileType,
       userIDs,
-      zaken: response.map((r) => r.content).flat(),
+      zaken: responses.flat(),
     })
   );
 }
