@@ -59,8 +59,8 @@ export async function fetchZakenByUserIDs(
 
   const userIDsFromEnv =
     req.query.profileType === 'private'
-      ? Object.keys(testAccountsDigid)
-      : Object.keys(testAccountsEherkenning);
+      ? Object.values(testAccountsDigid)
+      : Object.values(testAccountsEherkenning);
 
   const userIDs = userIDsFromEnv.length
     ? userIDsFromEnv
