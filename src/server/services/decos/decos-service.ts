@@ -379,7 +379,7 @@ export async function fetchDecosZakenFromSourceRaw(
   async function fetchZakenByUserKey(userKey: string) {
     const apiConfig = getApiConfig('DECOS_API', {
       formatUrl: (config) => {
-        return `${config.url}/items/${userKey}/folders?properties=true`;
+        return `${config.url}/items/${userKey}/folders?select=*&properties=true`;
       },
       transformResponse: (responseData: DecosZakenResponse) => {
         if (!Array.isArray(responseData?.content)) {
