@@ -396,14 +396,14 @@ export async function fetchDecosZakenFromSourceRaw(
     return apiErrorResult('Failed to fetch user keys', null);
   }
 
-  const zakenSourceResponses = await Promise.allSettled(
-    userKeysResponse.content.map((userKey) => fetchZakenByUserKey(userKey))
-  );
+  const responseContent = [];
 
-  const responseContent = zakenSourceResponses
-    .map((response) => getSettledResult(response))
-    .filter((response) => response.status === 'OK')
-    .flatMap((response) => response.content);
+  for (const userKey of userKeysResponse.content) {
+    const response = await fetchZakenByUserKey(userKey);
+    if (response.status === 'OK') {
+      responseContent.push(...response.content);
+    }
+  }
 
   return apiSuccessResult(responseContent);
 }
