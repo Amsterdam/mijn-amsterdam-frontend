@@ -1,12 +1,12 @@
 import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { GetCaseType } from '../../../universal/types/decos-zaken';
 import {
-  WithDateRange,
-  WithKentekens,
-  WithLocation,
-  WithDateTimeRange,
-  ZaakStatus,
   DecosZaakBase,
+  WithLocation,
+  WithKentekens,
+  WithDateTimeRange,
+  WithDateRange,
+  ZaakStatus,
 } from '../decos/config-and-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { DecosZaakBase } from './config-and-types';
+import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers';
 import {
   fetchDecosDocumentList,
   fetchDecosZakenFromSourceRaw,
@@ -49,7 +50,10 @@ export async function fetchDecosDocumentsList(
 }
 
 export async function fetchZakenByUserIDs(
-  req: RequestWithQueryParams<{ profileType: ProfileType }>,
+  req: RequestWithQueryParams<{
+    profileType: ProfileType;
+    selectFields?: string;
+  }>,
   res: Response
 ) {
   const authProfileAndToken = getAuth(req);
@@ -61,6 +65,11 @@ export async function fetchZakenByUserIDs(
   if (!authProfileAndToken) {
     return sendUnauthorized(res);
   }
+
+  const selectFields =
+    req.query.selectFields === 'core'
+      ? Object.keys(SELECT_FIELDS_TRANSFORM_BASE).join(',')
+      : req.query.selectFields;
 
   const userIDsFromEnv =
     req.query.profileType === 'private'
@@ -87,7 +96,8 @@ export async function fetchZakenByUserIDs(
 
     const response = await fetchDecosZakenFromSourceRaw(
       res.locals.requestID,
-      authProfileAndTokenSubject
+      authProfileAndTokenSubject,
+      selectFields
     );
 
     if (response.status === 'OK') {
