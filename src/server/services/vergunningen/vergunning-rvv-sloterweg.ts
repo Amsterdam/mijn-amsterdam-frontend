@@ -1,4 +1,4 @@
-import { RVVSloterweg } from './config-and-types';
+import { RVVSloterweg, VergunningFrontend } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
 
 const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
@@ -6,7 +6,7 @@ const RVV_SLOTERWEG_RESULT_EXPIRED = 'Verlopen';
 const RVV_SLOTERWEG_RESULT_UPDATED_WITH_NEW_KENTEKEN = 'Vervallen';
 
 export function getRVVSloterwegLineItems(
-  vergunning: RVVSloterweg
+  vergunning: VergunningFrontend<RVVSloterweg>
 ): StatusLineItem[] {
   const isChangeRequest = vergunning.requestType !== 'Nieuw';
 
@@ -40,7 +40,7 @@ export function getRVVSloterwegLineItems(
   const hasUpdatedKenteken =
     vergunning.decision === RVV_SLOTERWEG_RESULT_UPDATED_WITH_NEW_KENTEKEN;
 
-  const descriptionIngetrokken = `Wij hebben uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.licensePlates} ingetrokken. Zie het intrekkingsbesluit voor meer informatie.`;
+  const descriptionIngetrokken = `Wij hebben uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.kentekens} ingetrokken. Zie het intrekkingsbesluit voor meer informatie.`;
 
   let descriptionAfgehandeld = '';
 
@@ -49,7 +49,7 @@ export function getRVVSloterwegLineItems(
       descriptionAfgehandeld = `Wij hebben uw kentekenwijziging voor een ${vergunning.title} verleend.`;
       break;
     case isGranted && !isChangeRequest:
-      descriptionAfgehandeld = `Wij hebben uw aanvraag voor een RVV ontheffing ${vergunning.area} ${vergunning.licensePlates} verleend.`;
+      descriptionAfgehandeld = `Wij hebben uw aanvraag voor een RVV ontheffing ${vergunning.area} ${vergunning.kentekens} verleend.`;
       break;
     case !isGranted && isIngetrokken:
       descriptionAfgehandeld = descriptionIngetrokken;
@@ -99,7 +99,7 @@ export function getRVVSloterwegLineItems(
         description = descriptionIngetrokken;
         break;
       case isExpired:
-        description = `Uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.licensePlates} is verlopen.`;
+        description = `Uw RVV ontheffing ${vergunning.area} voor kenteken ${vergunning.kentekens} is verlopen.`;
         break;
       case hasUpdatedKenteken:
         description =
