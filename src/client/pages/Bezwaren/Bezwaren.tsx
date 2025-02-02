@@ -44,7 +44,7 @@ export default function BEZWAREN() {
     <OverviewPageV2>
       <PageContentV2 className="ams-mb--xl">
         <PageHeadingV2 backLink={AppRoutes.HOME}>Bezwaren</PageHeadingV2>
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           <Paragraph className="ams-mb--sm">
             Hier ziet u een overzicht van uw ingediende bezwaren.
           </Paragraph>
