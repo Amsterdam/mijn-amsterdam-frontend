@@ -10,7 +10,7 @@ export default function InkomenDetailTozo() {
   const pageContent = useCallback(
     (_isLoading: boolean, inkomenItem: StatusSourceItem) => {
       return (
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           <Paragraph className="ams-mb--sm">
             Hieronder ziet u de status van uw aanvraag voor de{' '}
             {inkomenItem?.about || 'Tozo'}. Als u meerdere aanvragen voor de{' '}

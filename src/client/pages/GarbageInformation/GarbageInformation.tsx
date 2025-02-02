@@ -8,7 +8,7 @@ import {
 import styles from './GarbageInformation.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { getFullAddress, isMokum } from '../../../universal/helpers/brp';
+import { getFullAddress } from '../../../universal/helpers/brp';
 import {
   GarbageFractionCode,
   GarbageFractionInformationTransformed,
@@ -209,12 +209,10 @@ function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
 }
 
 export default function GarbageInformation() {
-  const { AFVAL, AFVALPUNTEN, MY_LOCATION, BRP, KVK } = useAppStateGetter();
+  const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();
-  const address = MY_LOCATION.content?.[0]?.address;
-  const inMokum =
-    profileType === 'private' ? isMokum(BRP.content) : isMokum(KVK.content);
+
   const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
 
   const heeftGeenWoonfunctie = AFVAL.content?.some(
@@ -237,7 +235,7 @@ export default function GarbageInformation() {
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {termReplace(ThemaTitles.AFVAL)}
         </PageHeadingV2>
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           {profileType === 'private' && (
             <>
               <Paragraph className="ams-mb--sm">
@@ -249,7 +247,9 @@ export default function GarbageInformation() {
                   severity="info"
                   className="ams-mb--sm"
                 >
-                  Let op deze regels gaan over uw woonadres. Lees hier{' '}
+                  Let op deze regels gaan over uw woonadres.
+                  <br />
+                  Lees hier{' '}
                   <Link
                     href={ExternalUrls.AFVAL_COMMERCIAL}
                     rel="noopener noreferrer"
