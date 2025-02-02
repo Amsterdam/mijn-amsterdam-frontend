@@ -10,7 +10,11 @@ import {
   Table,
   addTitleLinkComponent,
 } from '../../components';
-import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -47,19 +51,21 @@ export default function Horeca() {
 
   return (
     <OverviewPageV2 className={styles.Horeca}>
-      <PageHeadingV2 backLink={AppRoutes.HOME}>
-        {ThemaTitles.HORECA}
-      </PageHeadingV2>
       <PageContentV2>
-        <Paragraph>
-          Hier ziet u een overzicht van uw aanvragen voor Horeca en ontheffingen
-          bij gemeente Amsterdam.
-        </Paragraph>
-        {isError(HORECA) && (
-          <ErrorAlert>
-            We kunnen op dit moment geen vergunningen tonen.
-          </ErrorAlert>
-        )}
+        <PageHeadingV2 backLink={AppRoutes.HOME}>
+          {ThemaTitles.HORECA}
+        </PageHeadingV2>
+        <PageContentCell spanWide={6}>
+          <Paragraph className="ams-mb--xl">
+            Hier ziet u een overzicht van uw aanvragen voor Horeca en
+            ontheffingen bij gemeente Amsterdam.
+          </Paragraph>
+          {isError(HORECA) && (
+            <ErrorAlert>
+              We kunnen op dit moment geen vergunningen tonen.
+            </ErrorAlert>
+          )}
+        </PageContentCell>
       </PageContentV2>
       <SectionCollapsible
         id="SectionCollapsible-complaints"

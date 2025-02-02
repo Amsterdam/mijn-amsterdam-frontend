@@ -133,7 +133,7 @@ export function ToeristscheVerhuurThema() {
       pageContentMain={
         <>
           {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
-            <PageContentCell>
+            <PageContentCell spanWide={6}>
               <Alert severity="info" title="Voorwaarden en regels">
                 {hasBothVerleend && (
                   <Paragraph className="ams-mb--sm">
@@ -170,7 +170,7 @@ export function ToeristscheVerhuurThema() {
             </PageContentCell>
           )}
           {!hasVergunningBB && (
-            <PageContentCell>
+            <PageContentCell spanWide={6}>
               <Paragraph>{BB_VERGUNNING_DISCLAIMER}</Paragraph>
             </PageContentCell>
           )}
