@@ -9,7 +9,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
-export function Bff500Error() {
+export function BFF500Error() {
   const queryParams = new URL(location.href).searchParams;
   let stack = '';
   try {
