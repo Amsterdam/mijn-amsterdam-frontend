@@ -26,6 +26,7 @@ import {
   SELECT_FIELDS_TRANSFORM_BASE,
   caseType,
 } from './decos-field-transformers';
+import { CASE_TYP_FIELD_DECOS } from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
   getUserKeysSearchQuery,
@@ -331,17 +332,17 @@ async function getZakenByUserKey(
   userKey: string,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
-  const caseTypeField = 'text45';
-
   assert(
-    SELECT_FIELDS_TRANSFORM_BASE[caseTypeField] == caseType,
-    `getZakenByUserKey expects field ${caseTypeField} to be the caseType`
+    SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] == caseType,
+    `getZakenByUserKey expects field ${CASE_TYP_FIELD_DECOS} to be the caseType`
   );
 
   const fields = getSelectFields(zaakTypeTransformers);
 
   const caseTypes = zaakTypeTransformers
-    .map((transformer) => `${caseTypeField} eq '${transformer.caseType}'`)
+    .map(
+      (transformer) => `${CASE_TYP_FIELD_DECOS} eq '${transformer.caseType}'`
+    )
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
@@ -373,14 +374,29 @@ async function getZakenByUserKey(
 export async function fetchDecosZakenFromSourceRaw(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  selectFields?: string
+  selectFields?: string,
+  filterCaseTypes?: string,
+  includeProperties: boolean = false,
+  top: string = '50'
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
+
+  const caseTypes = filterCaseTypes
+    ?.split(',')
+    .map((caseType) => `${CASE_TYP_FIELD_DECOS} eq '${caseType}'`)
+    .join(' or ');
+
+  const queryParams = new URLSearchParams({
+    top,
+    properties: includeProperties ? 'true' : 'false',
+    ...(selectFields && { select: selectFields }),
+    ...(filterCaseTypes && { filter: caseTypes }),
+  });
 
   async function fetchZakenByUserKey(userKey: string) {
     const apiConfig = getApiConfig('DECOS_API', {
       formatUrl: (config) => {
-        return `${config.url}/items/${userKey}/folders?properties=true${selectFields ? `&select=${selectFields}` : ''}`;
+        return `${config.url}/items/${userKey}/folders?${queryParams}`;
       },
       transformResponse: (responseData: DecosZakenResponse) => {
         if (!Array.isArray(responseData?.content)) {
@@ -390,7 +406,7 @@ export async function fetchDecosZakenFromSourceRaw(
       },
     });
 
-    return requestData<DecosZaakSource[]>(apiConfig, requestID);
+    return requestData<DecosZaakSource[]>(apiConfig, `${requestID}-${userKey}`);
   }
 
   if (userKeysResponse.status === 'ERROR') {
