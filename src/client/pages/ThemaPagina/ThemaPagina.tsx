@@ -59,7 +59,7 @@ export default function ThemaPagina({
       <PageContentV2>
         <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
 
-        <PageContentCell>{pageContentTop}</PageContentCell>
+        <PageContentCell spanWide={6}>{pageContentTop}</PageContentCell>
         {!!linkListItems.length && (
           <PageContentCell>
             <LinkList>

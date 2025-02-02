@@ -149,7 +149,7 @@ export default function Inkomen() {
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {ThemaTitles.INKOMEN}
         </PageHeadingV2>
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           <Paragraph className="ams-mb--sm">
             Op deze pagina vindt u informatie over uw uitkering en de
             ondersteuning die u krijgt omdat u weinig geld hebt.

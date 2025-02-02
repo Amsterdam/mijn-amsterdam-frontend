@@ -11,7 +11,7 @@ export default function InkomenDetailTonk() {
     (isLoading: boolean, inkomenItem: StatusSourceItem) => {
       return (
         <>
-          <PageContentCell>
+          <PageContentCell spanWide={6}>
             <Paragraph className="ams-mb--sm">
               Hieronder ziet u de status van uw aanvraag TONK. Als u meerdere
               aanvragen voor de TONK hebt gedaan, dan krijgt u 1 besluit als
