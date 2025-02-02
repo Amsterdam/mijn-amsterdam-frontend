@@ -28,9 +28,11 @@ export function PageHeadingV2({
     (event) => {
       event.preventDefault();
       history.goBack();
+      return;
     },
     [history]
   );
+
   return (
     <PageContentCell
       startWide={1}
@@ -43,7 +45,7 @@ export function PageHeadingV2({
             className={styles.BackLink}
             maVariant="noDefaultUnderline"
             href={backLink || '/'}
-            onClick={!backLink ? goBack : undefined}
+            onClick={goBack}
           >
             <Icon size="level-5" svg={ChevronLeftIcon} />
             {label}
