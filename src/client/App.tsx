@@ -42,7 +42,7 @@ import { AVGList } from './pages/AVG/AVGLijst';
 import { BezwarenThemaPagina } from './pages/Bezwaren/Bezwaren';
 import { BezwarenDetailPagina } from './pages/Bezwaren/BezwarenDetail';
 import { BezwarenLijstPagina } from './pages/Bezwaren/BezwarenLijst';
-import { Bff500Error } from './pages/BffError/BffError';
+import { BFF500Error } from './pages/BffError/BffError';
 import { Bodem } from './pages/Bodem/Bodem';
 import { BodemList } from './pages/Bodem/BodemList';
 import { LoodMeting } from './pages/Bodem/LoodMeting';
@@ -137,7 +137,7 @@ function AppNotAuthenticated() {
           ))}
           <Route exact path={AppRoutes.HOME} component={LandingPage} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-          <Route path={AppRoutes.BFF_500_ERROR} component={Bff500Error} />
+          <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route
             render={({ location: { pathname } }) => {
               if (isPrivateRoute(pathname)) {
