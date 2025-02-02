@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
+import styles from './Vergunningen.module.scss';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -52,7 +53,7 @@ export const listPageTitle = {
     'Eerdere en niet verleende vergunningen en ontheffingen',
 };
 
-function isVergunningExpirable(vergunning: VergunningFrontendV2) {
+function isVergunningExpirable(vergunning: VergunningFrontend) {
   // TODO: is this the correct check ?
   return 'isExpired' in vergunning;
 }
@@ -66,17 +67,18 @@ export const routes = {
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VergunningFrontendV2) => !vergunning.processed,
+    filter: (vergunning: VergunningFrontend) => !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
-    className: styles.VergunningenTableThemaPagina,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
+    className: styles.LopendeAanvragen,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2) => {
+    filter: (vergunning: VergunningFrontend) => {
       const isCurrentlyActivePermit =
         vergunning.processed && vergunning.decision === 'Verleend';
 
@@ -88,14 +90,15 @@ export const tableConfig = {
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
-    className: styles.VergunningenTableThemaPagina,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actual,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
+    className: styles.HuidigeVergunningenEnOntheffingen,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2) => {
+    filter: (vergunning: VergunningFrontend) => {
       if (vergunning.processed && vergunning.decision !== 'Verleend') {
         return true;
       }
@@ -104,18 +107,18 @@ export const tableConfig = {
         return (
           vergunning.processed &&
           vergunning.decision === 'Verleend' &&
-         vergunning.isExpired === true
+          vergunning.isExpired === true
         );
       }
       return false;
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
-    className: styles.VergunningenTableThemaPagina,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.historic,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
+    className: styles.EerderEnNietVerleend,
   },
 } as const;
 
