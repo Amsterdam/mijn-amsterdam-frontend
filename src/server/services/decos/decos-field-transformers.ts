@@ -17,6 +17,8 @@ export const destination = 'destination';
 export const description = 'description';
 export const decision = 'decision';
 
+export const CASE_TYP_FIELD_DECOS = 'text45';
+
 // Fields are selected per case initially but don't end up in the data we send to front end.
 // These fields are fore example used to determine payment status.
 
@@ -26,7 +28,7 @@ export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
 
 export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
   title: status,
-  text45: caseType,
+  [CASE_TYP_FIELD_DECOS]: caseType,
   dfunction: decision,
   mark: identifier,
   processed: processed,
