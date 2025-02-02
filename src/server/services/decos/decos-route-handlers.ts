@@ -53,6 +53,9 @@ export async function fetchZakenByUserIDs(
   req: RequestWithQueryParams<{
     profileType: ProfileType;
     selectFields?: string;
+    filterCaseTypes?: string;
+    includeProperties?: '1';
+    top?: string;
   }>,
   res: Response
 ) {
@@ -94,10 +97,16 @@ export async function fetchZakenByUserIDs(
       token: '',
     };
 
+    const regexCaseTypeFilter = new RegExp('^[.a-zA-Z0-9,!? ]*$', 'g');
+    const regexTop = /^\d+$/g;
+
     const response = await fetchDecosZakenFromSourceRaw(
       res.locals.requestID,
       authProfileAndTokenSubject,
-      selectFields
+      selectFields,
+      req.query?.filterCaseTypes?.replace(regexCaseTypeFilter, ''),
+      req.query.includeProperties === '1',
+      req.query.top?.replace(regexTop, '')
     );
 
     if (response.status === 'OK') {
