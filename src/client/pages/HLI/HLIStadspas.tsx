@@ -171,7 +171,7 @@ export default function HLIStadspas() {
               )}
             </PageContentCell>
           )}
-          <>
+          <PageContentCell>
             <Heading className="ams-mb--sm">Gekregen tegoed</Heading>
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
@@ -211,8 +211,7 @@ export default function HLIStadspas() {
               )}
             </PageContentCell>
             {!isLoadingTransacties && hasTransactions && (
-              <>
-                <PageContentCell>
+              <PageContentCell>
                   <TableV2<StadspasBudgetTransaction>
                     className={
                       showMultiBudgetTransactions
@@ -227,7 +226,6 @@ export default function HLIStadspas() {
                     }
                   />
                 </PageContentCell>
-              </>
             )}
           </>
       </PageContentV2>
