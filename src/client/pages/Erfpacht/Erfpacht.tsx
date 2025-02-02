@@ -36,7 +36,7 @@ export default function Erfpacht() {
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {ThemaTitles.ERFPACHTv2}
         </PageHeadingV2>
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           <Paragraph>
             Hieronder ziet u de gegevens van uw erfpachtrechten.
           </Paragraph>
