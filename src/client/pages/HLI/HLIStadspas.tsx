@@ -7,11 +7,9 @@ import {
   Grid,
   Heading,
   Paragraph,
-  Screen,
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
-import { getThemaTitleWithAppState } from './helpers';
 import styles from './HLIStadspas.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -27,17 +25,12 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
-import {
-  DetailPage,
-  ErrorAlert,
-  LoadingContent,
-  Modal,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import { ErrorAlert, LoadingContent, Modal } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
@@ -144,18 +137,12 @@ export default function HLIStadspas() {
 
   return (
     <DetailPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HLI,
-          title: getThemaTitleWithAppState(appState),
-        }}
-        icon={<ThemaIcon />}
-      >
-        Overzicht Stadspas{' '}
-        {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
-      </PageHeading>
-      <Screen>
-        <Grid>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HLI}>
+          Overzicht stadspas{' '}
+          {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
+        </PageHeadingV2>
+ 
           {stadspas ? (
             <Grid.Cell span="all">
               <Datalist rows={[NAME]} />
@@ -248,9 +235,8 @@ export default function HLIStadspas() {
               </>
             )}
           </>
-        </Grid>
-      </Screen>
-    </DetailPage>
+      </PageContentV2>
+    </DetailPageV2>
   );
 }
 
