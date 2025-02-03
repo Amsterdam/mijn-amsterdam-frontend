@@ -5,13 +5,13 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
 
-export const displayPropsAanvragen = {
+const displayPropsAanvragen = {
   detailLinkComponent: 'Adres',
   datumAanvraagFormatted: 'Aangevraagd',
   status: 'Status',
 };
 
-export const listPageParamKind = {
+const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 };
@@ -40,11 +40,11 @@ export const tableConfig = {
     }),
     ...tableConfigBase,
   },
-};
+} as const;
 
 export const linkListItems: LinkProps[] = [
   {
     title: 'Meer informatie over lood in de bodem.',
     to: 'https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/',
   },
-];
+] as const;
