@@ -10,7 +10,7 @@ import { fetchDecosDocumentList } from '../decos/decos-service';
 import { DecosZaakBase } from '../decos/decos-types';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
-export async function fetchVergunningDocumentsList(
+export async function fetchDecosDocumentsList(
   req: RequestWithQueryParams<{ id: string }>,
   res: Response
 ) {

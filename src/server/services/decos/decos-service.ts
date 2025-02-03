@@ -704,7 +704,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     steps: [],
     // Adds an url with encrypted id to the BFF Detail page api for zaken.
     fetchDocumentsUrl: generateFullApiUrlBFF(
-      BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
+      BffEndpoints.DECOS_DOCUMENTS_LIST,
       [{ id: idEncrypted }]
     ),
     link: {
