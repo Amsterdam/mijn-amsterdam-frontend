@@ -176,6 +176,7 @@ export function useAfisThemaData() {
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
     listPageTitle,
+    linkListItems,
     routes,
     dependencyErrors: {
       open: hasFailedDependency(AFIS, 'open'),
