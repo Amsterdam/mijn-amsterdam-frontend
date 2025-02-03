@@ -1,5 +1,8 @@
 name: 'Release notification'
-on: create
+on:
+  push:
+    tags:
+      - release-*
 run-name: Generating release notes for ${{ github.base_ref }}
 permissions:
   contents: write
