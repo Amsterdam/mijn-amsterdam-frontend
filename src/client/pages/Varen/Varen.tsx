@@ -29,13 +29,12 @@ export function Varen() {
 
   const pageContentTopSecondary = (
     <>
-      {!!buttonItems &&
-        buttonItems.map(({ to, title }) => (
-          <MaButtonLink key={to} href={to} variant="secondary">
-            {title}
-            <Icon svg={ExternalLinkIcon} size="level-5" />
-          </MaButtonLink>
-        ))}
+      {buttonItems?.map(({ to, title }) => (
+        <MaButtonLink key={to} href={to} variant="secondary">
+          {title}
+          <Icon svg={ExternalLinkIcon} size="level-5" />
+        </MaButtonLink>
+      ))}
     </>
   );
 
@@ -53,7 +52,6 @@ export function Varen() {
           title={title}
           zaken={varenVergunningen.filter(filter).sort(sort)}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
       );
     }
