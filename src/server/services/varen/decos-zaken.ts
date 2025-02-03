@@ -16,7 +16,6 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
     caseType: 'Varen registratie reder',
     title: 'Varen registratie reder',
     fetchWorkflowStatusDatesFor: [
-      // TODO: Stapnaam komt nog door vanuit bronsysteem
       {
         status: 'In behandeling',
         stepTitle: 'Varen - Behandelen',
@@ -32,7 +31,7 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
       phone1: 'phone',
       email1: 'email',
     },
-    notificationLabels: {}, // TODO
+    notificationLabels: {},
   };
 
 export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatieType> =
@@ -41,7 +40,6 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     caseType: 'Varen vergunning exploitatie',
     title: 'Varen vergunning exploitatie',
     fetchWorkflowStatusDatesFor: [
-      // TODO
       {
         status: 'In behandeling',
         stepTitle: 'Varen - Behandelen',
@@ -59,7 +57,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
       text10: 'segment',
       text15: 'formAppearance',
     },
-    notificationLabels: {}, // TODO
+    notificationLabels: {},
   };
 
 export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigplaatsType> =
@@ -68,7 +66,6 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
     caseType: 'Varen ligplaatsvergunning',
     title: 'Varen ligplaatsvergunning',
     fetchWorkflowStatusDatesFor: [
-      // TODO
       {
         status: 'In behandeling',
         stepTitle: 'Varen - Behandelen',
@@ -80,7 +77,7 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
       text6: 'location',
       date7: 'dateEnd',
     },
-    notificationLabels: {}, // TODO
+    notificationLabels: {},
   };
 
 export const decosZaakTransformers = [
