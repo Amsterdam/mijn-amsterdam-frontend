@@ -19,8 +19,13 @@ const pageContentTop = (
 );
 
 export function Varen() {
-  const { gegevensAanvrager, tableItems, tableConfig, isLoading, isError } =
-    useVarenThemaData();
+  const {
+    gegevensAanvrager,
+    varenVergunningen,
+    tableConfig,
+    isLoading,
+    isError,
+  } = useVarenThemaData();
 
   const pageContentTopSecondary = (
     <>
@@ -34,19 +39,19 @@ export function Varen() {
     </>
   );
 
-  const gegevens = gegevensAanvrager ? (
+  const gegevensAanvragerList = gegevensAanvrager ? (
     <Grid.Cell span="all">
       <Datalist rows={[gegevensAanvrager]} />
     </Grid.Cell>
   ) : null;
 
-  const tables = Object.entries(tableConfig).map(
+  const vergunningenTables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort }]) => {
       return (
         <ThemaPaginaTable<VarenVergunningFrontend>
           key={kind}
           title={title}
-          zaken={tableItems.filter(filter).sort(sort)}
+          zaken={varenVergunningen.filter(filter).sort(sort)}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
@@ -63,8 +68,8 @@ export function Varen() {
       pageContentTopSecondary={pageContentTopSecondary}
       pageContentMain={
         <>
-          {gegevens}
-          {tables}
+          {gegevensAanvragerList}
+          {vergunningenTables}
         </>
       }
       isPartialError={false}

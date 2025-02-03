@@ -44,7 +44,7 @@ export function useVarenThemaData() {
     (item) => item.caseType !== caseTypeVaren.VarenRederRegistratie
   );
 
-  const tableItems = addLinkElementToProperty<VarenVergunningFrontend>(
+  const varenVergunningen = addLinkElementToProperty<VarenVergunningFrontend>(
     vergunningen ?? [],
     'vesselName',
     true
@@ -56,7 +56,7 @@ export function useVarenThemaData() {
     tableConfig,
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
-    tableItems,
+    varenVergunningen,
     linkListItems,
   };
 }
