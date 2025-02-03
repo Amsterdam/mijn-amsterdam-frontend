@@ -1,9 +1,10 @@
 import Mockdate from 'mockdate';
+
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { fetchStadspasBudgetTransactions } from './stadspas';
 import {
   fetchGpassDiscountTransactions,
-  fetchStadspassen,
+  fetchStadspassen_,
 } from './stadspas-gpass-service';
 import {
   Stadspas,
@@ -177,7 +178,7 @@ describe('stadspas services', () => {
     test('fail administratienummer endpoint', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-      const response = await fetchStadspassen('8798712', authProfileAndToken);
+      const response = await fetchStadspassen_('8798712', authProfileAndToken);
 
       expect(response).toMatchInlineSnapshot(`
       {
@@ -199,7 +200,7 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
         .reply(401);
 
-      const response = await fetchStadspassen('xyz123', authProfileAndToken);
+      const response = await fetchStadspassen_('xyz123', authProfileAndToken);
 
       expect(response).toMatchInlineSnapshot(`
       {
@@ -238,7 +239,7 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
         .reply(200, defaultPasResponse);
 
-      const response = await fetchStadspassen('0912039', authProfileAndToken);
+      const response = await fetchStadspassen_('0912039', authProfileAndToken);
 
       const expectedResponse = {
         content: {
@@ -262,117 +263,135 @@ describe('stadspas services', () => {
       decryptSpy.mockRestore();
     });
 
-    test('filters out replaced passes and returns pass correctly', async () => {
-      Mockdate.set('2024-12-01');
+    describe('filter inside of fetchStadspassen', async () => {
+      beforeEach(() => {
+        vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
+          '1x2x3x-##########-4x5x6x',
+          Buffer.from('xx'),
+          Buffer.from('yy'),
+        ]);
 
-      vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
-        '1x2x3x-##########-4x5x6x',
-        Buffer.from('xx'),
-        Buffer.from('yy'),
-      ]);
+        vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue(
+          '123-unencrypted-456'
+        );
 
-      vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue(
-        '123-unencrypted-456'
-      );
+        const relevantPas = createPas({
+          actief: true,
+          pasnummer: 111111111111,
+        });
+        const blockedRelevantPas = createPas({
+          actief: false,
+          pasnummer: 222222222222,
+        });
+        const replacedPas = createPas({
+          actief: false,
+          pasnummer: 333333333333,
+          securitycode: '012345',
+          vervangen: true,
+        });
+        const expiredPas = createPas({
+          actief: false,
+          pasnummer: 444444444444,
+          securitycode: '012345',
+          vervangen: false,
+          expiry_date: '2024-07-31T21:59:59.000Z',
+        });
+        const expiredPas2 = createPas({
+          actief: false,
+          pasnummer: 555555555555,
+          securitycode: '012345',
+          vervangen: false,
+          expiry_date: '2024-06-31T21:59:59.000Z',
+        });
 
-      const relevantPas = createPas({ actief: true, pasnummer: 111111111111 });
-      const relevantPas2 = createPas({
-        actief: false,
-        pasnummer: 222222222222,
-      });
-      const replacedPas = createPas({
-        actief: false,
-        pasnummer: 333333333333,
-        securitycode: '012345',
-        vervangen: true,
-      });
-      const expiredPas = createPas({
-        actief: false,
-        pasnummer: 444444444444,
-        securitycode: '012345',
-        vervangen: false,
-        expiry_date: '2024-07-31T21:59:59.000Z',
-      });
-      const expiredPasWayInThePast = createPas({
-        actief: false,
-        pasnummer: 555555555555,
-        securitycode: '012345',
-        vervangen: false,
-        expiry_date: '2020-07-31T21:59:59.000Z',
-      });
-
-      remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-        persoon: {
-          clientidentificatie: '123-123',
-        },
-      });
-      const pasHouderResponse: StadspasPasHouderResponse = {
-        initialen: 'A',
-        achternaam: 'Achternaam',
-        voornaam: 'Vadertje',
-        passen: [relevantPas, replacedPas, expiredPas, expiredPasWayInThePast],
-        sub_pashouders: [
-          {
-            initialen: 'B',
-            achternaam: 'Achternaam',
-            voornaam: 'Moedertje',
-            passen: [relevantPas, relevantPas2],
+        remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+          persoon: {
+            clientidentificatie: '123-123',
           },
-          {
-            initialen: 'C',
-            achternaam: 'Achternaam',
-            voornaam: 'Kindje',
-            passen: [relevantPas, relevantPas2],
-          },
-        ],
-      };
-      remoteApi
-        .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
-        .matchHeader(
-          'authorization',
-          `AppBearer ${FAKE_API_KEY},0363000123-123`
-        )
-        .reply(200, pasHouderResponse);
-      remoteApi
-        .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
-        .times(6)
-        .matchHeader(
-          'authorization',
-          `AppBearer ${FAKE_API_KEY},0363000123-123`
-        )
-        .reply(200, defaultPasResponse);
+        });
+        const pasHouderResponse: StadspasPasHouderResponse = {
+          initialen: 'A',
+          achternaam: 'Achternaam',
+          voornaam: 'Vadertje',
+          passen: [relevantPas, replacedPas, expiredPas, expiredPas2],
+          sub_pashouders: [
+            {
+              initialen: 'B',
+              achternaam: 'Achternaam',
+              voornaam: 'Moedertje',
+              passen: [relevantPas, blockedRelevantPas],
+            },
+            {
+              initialen: 'C',
+              achternaam: 'Achternaam',
+              voornaam: 'Kindje',
+              passen: [relevantPas, blockedRelevantPas],
+            },
+          ],
+        };
+        remoteApi
+          .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+          .matchHeader(
+            'authorization',
+            `AppBearer ${FAKE_API_KEY},0363000123-123`
+          )
+          .reply(200, pasHouderResponse);
+        remoteApi
+          .persist()
+          .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
+          .matchHeader(
+            'authorization',
+            `AppBearer ${FAKE_API_KEY},0363000123-123`
+          )
+          .reply(200, defaultPasResponse);
+      });
 
-      const response = await fetchStadspassen('12l3kj12', authProfileAndToken);
-      expect(response.content?.stadspassen.length).toBe(5);
-      expect(response.content?.stadspassen[0]).toStrictEqual({
-        actief: true,
-        balance: 0,
-        balanceFormatted: '€0,00',
-        budgets: [
-          {
-            budgetAssigned: 150,
-            budgetAssignedFormatted: '€150,00',
-            budgetBalance: 0,
-            budgetBalanceFormatted: '€0,00',
-            code: 'AMSTEG_10-14',
-            dateEnd: '2080-08-31T21:59:59.000Z',
-            dateEndFormatted: '31 augustus 2080',
-            description: 'Kindtegoed',
-            title: 'Kindtegoed 10-14',
+      test('filters out replaced passes and returns pass correctly', async () => {
+        Mockdate.set('2024-12-01');
+
+        const response = await fetchStadspassen_(
+          'fake-request-id',
+          authProfileAndToken
+        );
+        expect(response.content?.stadspassen.length).toBe(6);
+        expect(response.content?.stadspassen[0]).toStrictEqual({
+          actief: true,
+          balance: 0,
+          balanceFormatted: '€0,00',
+          budgets: [
+            {
+              budgetAssigned: 150,
+              budgetAssignedFormatted: '€150,00',
+              budgetBalance: 0,
+              budgetBalanceFormatted: '€0,00',
+              code: 'AMSTEG_10-14',
+              dateEnd: '2080-08-31T21:59:59.000Z',
+              dateEndFormatted: '31 augustus 2080',
+              description: 'Kindtegoed',
+              title: 'Kindtegoed 10-14',
+            },
+          ],
+          dateEnd: '2080-08-31T23:59:59.000Z',
+          dateEndFormatted: '01 september 2080',
+          id: '999999',
+          owner: {
+            firstname: 'Vadertje',
+            infix: undefined,
+            initials: 'A',
+            lastname: 'Achternaam',
           },
-        ],
-        dateEnd: '2080-08-31T23:59:59.000Z',
-        dateEndFormatted: '01 september 2080',
-        id: '999999',
-        owner: {
-          firstname: 'Vadertje',
-          infix: undefined,
-          initials: 'A',
-          lastname: 'Achternaam',
-        },
-        passNumber: 777777777777,
-        passNumberComplete: '6666666666666666666',
-        securityCode: '012345',
+          passNumber: 777777777777,
+          passNumberComplete: '6666666666666666666',
+          securityCode: '012345',
+        });
+      });
+
+      test('Subtracts a year when expiry date is in the last year', async () => {
+        const response = await fetchStadspassen_(
+          'fake-request-id',
+          authProfileAndToken
+        );
+        expect(response.content?.stadspassen.length).toBe(5);
       });
     });
   });
