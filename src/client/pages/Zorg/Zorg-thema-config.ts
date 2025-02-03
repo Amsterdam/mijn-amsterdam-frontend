@@ -17,7 +17,7 @@ export const listPageParamKind = {
   historic: 'eerdere-en-afgewezen-regelingen',
 } as const;
 
-export type ListPageParamKey = keyof typeof listPageParamKind;
+type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
@@ -48,5 +48,5 @@ export const tableConfig = {
 export const routes = {
   listPage: AppRoutes['ZORG/VOORZIENINGEN_LIST'],
   detailPage: AppRoutes['ZORG/VOORZIENING'],
-  themaPage: AppRoutes['ZORG'],
+  themaPage: AppRoutes.ZORG,
 } as const;

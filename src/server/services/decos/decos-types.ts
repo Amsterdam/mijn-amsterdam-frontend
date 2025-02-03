@@ -1,5 +1,5 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
-import { GenericDocument } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { NotificationLabelByType } from '../vergunningen-v2/config-and-types';
 
 type DecosDocumentBase = {
@@ -268,3 +268,13 @@ export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 = 'nogniet';
 // Cases with this text12 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
 export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
   'wacht op online betaling';
+
+export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> = T & {
+  dateDecisionFormatted?: string | null;
+  dateInBehandeling: string | null;
+  dateInBehandelingFormatted: string | null;
+  dateRequestFormatted: string;
+  dateStartFormatted?: string | null;
+  dateEndFormatted?: string | null;
+  isExpired?: boolean;
+} & ZaakDetail;

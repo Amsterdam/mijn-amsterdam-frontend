@@ -231,7 +231,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: AppRoutes.VAREN,
     profileTypes: ['commercial'],
   },
-
   {
     title: ThemaTitles.BEZWAREN,
     id: Themas.BEZWAREN,

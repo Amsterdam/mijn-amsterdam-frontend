@@ -31,10 +31,9 @@ export const BffEndpoints = {
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
 
-  // Vergunningen V2
-  VERGUNNINGENv2_DOCUMENTS_LIST: `/services/vergunningen/v2/documents`,
-  VERGUNNINGENv2_DOCUMENT_DOWNLOAD:
-    '/services/vergunningen/v2/documents/download',
+  // Decos
+  DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
+  DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
 
   // Vergunningen / Koppel api
   VERGUNNINGEN_DOCUMENT_DOWNLOAD:

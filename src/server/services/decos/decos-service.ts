@@ -1,6 +1,8 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
+import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 
 import {
   caseType,
@@ -20,12 +22,17 @@ import {
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
   DecosWorkflowResponse,
+  DecosZaakFrontend,
 } from './decos-types';
 import {
   getDecosZaakTypeFromSource,
+  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
+  isExpired,
+  toDateFormatted,
 } from './helpers';
+import { AppRoute } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
   ApiResponse,
@@ -33,14 +40,18 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
   DEFAULT_API_CACHE_TTL_MS,
 } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
@@ -675,6 +686,53 @@ export async function fetchDecosDocument(
   );
 }
 
+export function transformDecosZaakFrontend<T extends DecosZaakBase>(
+  sessionID: SessionID,
+  zaak: T,
+  appRoute: AppRoute
+) {
+  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
+  const zaakFrontend: DecosZaakFrontend<T> = {
+    ...zaak,
+    dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
+    dateInBehandeling: getStatusDate('In behandeling', zaak),
+    dateInBehandelingFormatted: toDateFormatted(
+      getStatusDate('In behandeling', zaak)
+    ),
+    dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
+    // Assign Status steps later on
+    steps: [],
+    // Adds an url with encrypted id to the BFF Detail page api for zaken.
+    fetchDocumentsUrl: generateFullApiUrlBFF(
+      BffEndpoints.DECOS_DOCUMENTS_LIST,
+      [{ id: idEncrypted }]
+    ),
+    link: {
+      to: generatePath(appRoute, {
+        title: slug(zaak.caseType, {
+          lower: true,
+        }),
+        id: zaak.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  };
+
+  // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
+  if (
+    'dateEnd' in zaak &&
+    'dateStart' in zaak &&
+    zaak.dateStart &&
+    zaak.dateEnd
+  ) {
+    zaakFrontend.isExpired = isExpired(zaak);
+    zaakFrontend.dateStartFormatted = defaultDateFormat(zaak.dateStart);
+    zaakFrontend.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
+  }
+
+  return zaakFrontend;
+}
+
 export const forTesting = {
   filterValidDocument,
   getUserKeys,
@@ -685,4 +743,5 @@ export const forTesting = {
   transformDecosWorkflowKeysResponse,
   transformDecosZaakResponse,
   transformDecosZakenResponse,
+  transformDecosZaakFrontend,
 };
