@@ -1,4 +1,5 @@
-import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import type { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+export type { BBVergunning };
 import {
   GenericDocument,
   ZaakDetail,

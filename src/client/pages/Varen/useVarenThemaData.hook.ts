@@ -1,3 +1,5 @@
+import { GridColumnNumber } from '@amsterdam/design-system-react';
+
 import { tableConfig } from './Varen-thema-config';
 import {
   caseTypeVaren,
@@ -25,13 +27,16 @@ export function useVarenThemaData() {
     address: 'Adres',
   };
 
+  const thirdOfGrid: GridColumnNumber = 4;
   const gegevensAanvrager: RowSet | null = varenRederRegistratie
     ? {
-        rows: entries(labelMap).map(([key, label]) => ({
-          label,
-          content: varenRederRegistratie[key],
-          span: 4,
-        })),
+        rows: entries(labelMap)
+          .map(([key, label]) => ({
+            label,
+            content: varenRederRegistratie[key],
+            span: thirdOfGrid,
+          }))
+          .filter(({ content }) => !!content),
       }
     : null;
 
@@ -39,7 +44,7 @@ export function useVarenThemaData() {
     (item) => item.caseType !== caseTypeVaren.VarenRederRegistratie
   );
 
-  const tableItems = addLinkElementToProperty<VarenVergunningFrontend>(
+  const varenVergunningen = addLinkElementToProperty<VarenVergunningFrontend>(
     vergunningen ?? [],
     'vesselName',
     true
@@ -51,7 +56,7 @@ export function useVarenThemaData() {
     tableConfig,
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
-    tableItems,
+    varenVergunningen,
     linkListItems,
   };
 }

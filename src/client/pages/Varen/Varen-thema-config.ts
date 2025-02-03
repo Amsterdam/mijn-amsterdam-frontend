@@ -9,7 +9,7 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 
-export const displayPropsAanvragen: DisplayProps<
+const displayPropsAanvragen: DisplayProps<
   WithDetailLinkComponent<VarenFrontend>
 > = {
   detailLinkComponent: '',
@@ -18,7 +18,7 @@ export const displayPropsAanvragen: DisplayProps<
   status: 'Status',
 };
 
-export const listPageParamKind = {
+const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 };
@@ -45,18 +45,18 @@ export const tableConfig = {
     }),
     ...tableConfigBase,
   },
-};
+} as const;
 
 export const linkListItems: LinkProps[] = [
   {
     to: 'https://www.amsterdam.nl/verkeer-vervoer/varen-amsterdam/varen-beroepsvaart/#:~:text=De%20passagiersvaart%20in%20Amsterdam%20is,stad%20willen%20we%20graag%20behouden.',
     title: 'Meer informatie over passagiers- en beroepsvaart',
   },
-];
+] as const;
 
 export const buttonItems: LinkProps[] = [
   {
     to: 'https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningAanvragen.aspx',
     title: 'Exploitatievergunning aanvragen',
   },
-];
+] as const;

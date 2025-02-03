@@ -9,7 +9,7 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 
-export const displayPropsAanvragen: DisplayProps<
+const displayPropsAanvragen: DisplayProps<
   WithDetailLinkComponent<AVGRequestFrontend>
 > = {
   detailLinkComponent: 'Nummer',
@@ -17,7 +17,7 @@ export const displayPropsAanvragen: DisplayProps<
   themas: 'Onderwerp(en)',
 };
 
-export const listPageParamKind = {
+const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 };
@@ -44,11 +44,11 @@ export const tableConfig = {
     }),
     ...tableConfigBase,
   },
-};
+} as const;
 
 export const linkListItems: LinkProps[] = [
   {
     to: 'https://www.amsterdam.nl/privacy/loket/',
     title: 'Loket persoonsgegevens gemeente Amsterdam',
   },
-];
+] as const;

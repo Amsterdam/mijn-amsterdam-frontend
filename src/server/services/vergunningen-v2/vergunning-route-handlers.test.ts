@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import { fetchVergunningDocumentsList } from './vergunningen-route-handlers';
+import { fetchDecosDocumentsList } from './vergunningen-route-handlers';
 import {
   getAuthProfileAndToken,
   RequestMock,
@@ -58,7 +58,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseMock.new();
 
-    await fetchVergunningDocumentsList(
+    await fetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );
@@ -75,7 +75,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseMock.new();
 
-    await fetchVergunningDocumentsList(
+    await fetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );
@@ -99,7 +99,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     const res = ResponseMock.new();
 
-    await fetchVergunningDocumentsList(
+    await fetchDecosDocumentsList(
       req as RequestWithQueryParams<{ id: string }>,
       res
     );

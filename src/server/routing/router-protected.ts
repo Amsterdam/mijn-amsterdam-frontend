@@ -34,7 +34,7 @@ import {
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchVergunningDocumentsList } from '../services/vergunningen-v2/vergunningen-route-handlers';
+import { fetchDecosDocumentsList } from '../services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
@@ -156,15 +156,12 @@ router.get(
   }
 );
 
-// Vergunningen V2
-router.get(
-  BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
-  fetchVergunningDocumentsList
-);
+// Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
+router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
 
 attachDocumentDownloadRoute(
   router,
-  BffEndpoints.VERGUNNINGENv2_DOCUMENT_DOWNLOAD,
+  BffEndpoints.DECOS_DOCUMENT_DOWNLOAD,
   fetchDecosDocument
 );
 

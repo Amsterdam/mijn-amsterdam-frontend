@@ -9,14 +9,14 @@ import {
 } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 
-export const DISPLAY_PROPS_IDENTITEITSBEWIJZEN: DisplayProps<
+const DISPLAY_PROPS_IDENTITEITSBEWIJZEN: DisplayProps<
   WithDetailLinkComponent<IdentiteitsbewijsFrontend>
 > = {
   detailLinkComponent: 'Type',
   datumAfloopFormatted: 'Geldig tot',
 };
 
-export const listPageParamKind = {
+const listPageParamKind = {
   identiteitsbewijzen: 'identiteitsbewijzen',
 };
 
@@ -29,16 +29,16 @@ export const tableConfig = {
       kind: listPageParamKind.identiteitsbewijzen,
     }),
   },
-};
+} as const;
 
 export const linkListItems = [
   {
     to: 'https://www.amsterdam.nl/burgerzaken',
     title: 'Overzicht en aanvragen bij burgerzaken',
   },
-];
+] as const;
 
 export const backLinkDetailPage = {
   to: AppRoutes.BURGERZAKEN,
   title: ThemaTitles.BURGERZAKEN,
-};
+} as const;

@@ -96,7 +96,7 @@ export const FeatureToggle = {
   contactmomentenActive: !IS_PRODUCTION,
 
   // WPI Portaal
-  svwiLinkActive: !IS_PRODUCTION,
+  svwiLinkActive: false, // NOTE: The status of this feature is unknown.
 
   // Toeristische verhuur
   toeristischeVerhuurActive: true,
