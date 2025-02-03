@@ -688,54 +688,49 @@ export async function fetchDecosDocument(
 
 export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
-  vergunning: T,
+  zaak: T,
   appRoute: AppRoute
 ) {
-  const idEncrypted = encryptSessionIdWithRouteIdParam(
-    sessionID,
-    vergunning.key
-  );
-  const vergunningFrontend: DecosZaakFrontend<T> = {
-    ...vergunning,
-    dateDecisionFormatted: toDateFormatted(vergunning.dateDecision),
-    dateInBehandeling: getStatusDate('In behandeling', vergunning),
+  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
+  const zaakFrontend: DecosZaakFrontend<T> = {
+    ...zaak,
+    dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
+    dateInBehandeling: getStatusDate('In behandeling', zaak),
     dateInBehandelingFormatted: toDateFormatted(
-      getStatusDate('In behandeling', vergunning)
+      getStatusDate('In behandeling', zaak)
     ),
-    dateRequestFormatted: defaultDateFormat(vergunning.dateRequest),
+    dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
     // Assign Status steps later on
     steps: [],
-    // Adds an url with encrypted id to the BFF Detail page api for vergunningen.
+    // Adds an url with encrypted id to the BFF Detail page api for zaken.
     fetchDocumentsUrl: generateFullApiUrlBFF(
       BffEndpoints.VERGUNNINGENv2_DOCUMENTS_LIST,
       [{ id: idEncrypted }]
     ),
     link: {
       to: generatePath(appRoute, {
-        title: slug(vergunning.caseType, {
+        title: slug(zaak.caseType, {
           lower: true,
         }),
-        id: vergunning.id,
+        id: zaak.id,
       }),
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
   };
 
-  // If a vergunning has both dateStart and dateEnd add formatted dates and an expiration indication.
+  // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
   if (
-    'dateEnd' in vergunning &&
-    'dateStart' in vergunning &&
-    vergunning.dateStart &&
-    vergunning.dateEnd
+    'dateEnd' in zaak &&
+    'dateStart' in zaak &&
+    zaak.dateStart &&
+    zaak.dateEnd
   ) {
-    vergunningFrontend.isExpired = isExpired(vergunning);
-    vergunningFrontend.dateStartFormatted = defaultDateFormat(
-      vergunning.dateStart
-    );
-    vergunningFrontend.dateEndFormatted = defaultDateFormat(vergunning.dateEnd);
+    zaakFrontend.isExpired = isExpired(zaak);
+    zaakFrontend.dateStartFormatted = defaultDateFormat(zaak.dateStart);
+    zaakFrontend.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
   }
 
-  return vergunningFrontend;
+  return zaakFrontend;
 }
 
 export const forTesting = {
