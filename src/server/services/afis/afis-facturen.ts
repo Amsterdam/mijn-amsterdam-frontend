@@ -23,7 +23,7 @@ import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt'
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { captureMessage } from '../monitoring';
+import { captureMessage, trackEvent } from '../monitoring';
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AccountingDocumentType,
@@ -548,7 +548,7 @@ export async function fetchAfisFacturenOverview(
 
   if (Object.keys(countByState).length > 0) {
     // Log the count of facturen per state in Application Insights
-    captureMessage(`AFIS Facturen per categorie`, countByState);
+    trackEvent('afis-facturen-per-categorie', countByState);
   }
 
   return apiSuccessResult(facturenOverview, failedDependencies);
