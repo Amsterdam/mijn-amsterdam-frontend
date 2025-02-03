@@ -2,7 +2,7 @@ import { IS_AP, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   // AFIS
-  afisActive: !IS_PRODUCTION,
+  afisActive: true,
   afisEmandatesActive: false,
   afisBusinesspartnerPhoneActive: false,
   // We don't filter out the undownloadable facturen for testing purposes.
