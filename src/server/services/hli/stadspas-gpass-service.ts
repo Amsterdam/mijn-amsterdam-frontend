@@ -176,13 +176,10 @@ export async function fetchStadspassenByAdministratienummer(
   for (const pashouder of pashouders) {
     // Filter out passes that are not relevant for the user.
     const passen = pashouder.passen.filter((pas) => {
-      if (pas.actief) {
-        return true;
-      }
-      if (pas.vervangen) {
-        return false;
-      }
-      return !isExpired(pas.expiry_date);
+      return (
+        pas.actief ||
+        (!pas.vervangen && isBlockedButNotExpired(pas.expiry_date))
+      );
     });
 
     for (const pas of passen) {
@@ -222,12 +219,10 @@ export async function fetchStadspassenByAdministratienummer(
   return apiSuccessResult({ stadspassen, administratienummer });
 }
 
-function isExpired(expiryDate: string): boolean {
+function isBlockedButNotExpired(expiryDate: string): boolean {
   const defaultExpiryDate = new Date();
-
   const DEFAULT_EXPIRY_DAY = 31;
   defaultExpiryDate.setDate(DEFAULT_EXPIRY_DAY);
-
   const DEFAULT_EXPIRY_MONTH = 7;
   defaultExpiryDate.setMonth(DEFAULT_EXPIRY_MONTH);
 
@@ -239,16 +234,7 @@ function isExpired(expiryDate: string): boolean {
     defaultExpiryDate.setFullYear(defaultExpiryDate.getFullYear() - 1);
   }
 
-  const isDefaultExpiryDate =
-    expiryDate_.getDate() <= defaultExpiryDate.getDate() &&
-    expiryDate_.getMonth() <= defaultExpiryDate.getMonth() &&
-    expiryDate_.getFullYear() <= defaultExpiryDate.getFullYear();
-
-  if (!isDefaultExpiryDate) {
-    return false;
-  }
-
-  return isAfter(now, expiryDate);
+  return isAfter(expiryDate, defaultExpiryDate);
 }
 
 export async function fetchStadspassen_(
