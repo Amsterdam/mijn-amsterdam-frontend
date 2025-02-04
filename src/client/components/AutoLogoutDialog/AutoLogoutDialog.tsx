@@ -8,9 +8,11 @@ import 'react-circular-progressbar/dist/styles.css';
 import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
 import { ComponentChildren } from '../../../universal/types';
+import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal/Modal';
 
@@ -89,6 +91,7 @@ export const DefaultAutologoutDialogSettings = {
 
 export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useSessionValue();
+  const profileType = useProfileTypeValue();
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultAutologoutDialogSettings, ...settings };
 
@@ -113,11 +116,13 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   }
 
   function continueUsingApp() {
-    session.refetch();
-    document.title = originalTitle;
-    counter.reset();
-    counter.resume();
-    setOpen(false);
+    // session.refetch();
+    // document.title = originalTitle;
+    // counter.reset();
+    // counter.resume();
+    // setOpen(false);
+    window.location.href =
+      profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING;
   }
 
   // On every tick the document title is changed trying to catch the users attention.
