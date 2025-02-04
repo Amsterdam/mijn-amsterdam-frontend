@@ -8,10 +8,16 @@ import 'react-circular-progressbar/dist/styles.css';
 import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
 import { ComponentChildren } from '../../../universal/types';
+import {
+  LOGIN_URL_DIGID,
+  LOGIN_URL_EHERKENNING,
+  LOGOUT_URL,
+} from '../../config/api';
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import { Button } from '../Button/Button';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { MaButtonLink } from '../MaLink/MaLink';
 import { Modal } from '../Modal/Modal';
 
 /**
@@ -89,6 +95,7 @@ export const DefaultAutologoutDialogSettings = {
 
 export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useSessionValue();
+  const profileType = useProfileTypeValue();
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultAutologoutDialogSettings, ...settings };
 
@@ -96,7 +103,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout; // Gives user T time to cancel the automatic logout
 
   // Count before dialog will show
-  const counter = useCounter({
+  useCounter({
     maxCount,
     onMaxCount: () => {
       setOpen(true);
@@ -110,14 +117,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   function showLoginScreen() {
     setContinueButtonVisibility(false);
     session.logout();
-  }
-
-  function continueUsingApp() {
-    session.refetch();
-    document.title = originalTitle;
-    counter.reset();
-    counter.resume();
-    setOpen(false);
   }
 
   // On every tick the document title is changed trying to catch the users attention.
@@ -144,24 +143,27 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (
-            <Button
-              variant="secondary"
+            <MaButtonLink
+              variant="primary"
               className="continue-button"
-              onClick={continueUsingApp}
+              href={
+                profileType === 'private'
+                  ? LOGIN_URL_DIGID
+                  : LOGIN_URL_EHERKENNING
+              }
             >
               Doorgaan
-            </Button>
+            </MaButtonLink>
           )}
-          <Button
-            variant="secondary-inverted"
+          <MaButtonLink
+            variant="secondary"
             className={classnames('logout-button', styles.LogoutButton)}
-            onClick={() => session.logout()}
-            onKeyUp={(event) => event.key === 'Enter' && session.logout()}
+            href={LOGOUT_URL}
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
               : 'Bezig met controleren van uw sessie..'}
-          </Button>
+          </MaButtonLink>
         </ActionGroup>
       }
     >
