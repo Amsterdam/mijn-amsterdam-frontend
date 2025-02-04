@@ -23,11 +23,13 @@ import {
 } from '../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
+import { LinkProps } from '../../../universal/types';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
@@ -164,19 +166,31 @@ export function useAfisListPageData(state: AfisFactuurState) {
 
 export function useAfisThemaData() {
   const { AFIS } = useAppStateGetter();
+  const profileType = useProfileTypeValue();
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
   const facturenByState = useTransformFacturen(AFIS.content?.facturen ?? null);
 
+  const urlNaarBelastingen =
+    profileType === 'private'
+      ? import.meta.env.REACT_APP_SSO_URL_BELASTINGEN
+      : import.meta.env.REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK;
+
+  const belastingenLinkListItem: LinkProps = {
+    title: 'Belastingen op Mijn Amsterdam',
+    to: urlNaarBelastingen,
+  };
+
   return {
+    belastingenLinkListItem,
     businessPartnerIdEncrypted,
     facturenByState,
     facturenTableConfig,
     isThemaPaginaError: isError(AFIS, false),
     isThemaPaginaLoading: isLoading(AFIS),
     listPageTitle,
-    linkListItems,
+    linkListItems: [...linkListItems, belastingenLinkListItem],
     routes,
     dependencyErrors: {
       open: hasFailedDependency(AFIS, 'open'),
@@ -213,7 +227,6 @@ export function useAfisBetaalVoorkeurenData(
   ]);
 
   return {
-    linkListItems,
     businesspartnerDetails: businesspartnerDetailsApiResponse.content,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: isLoading(

@@ -141,11 +141,7 @@ export const routes = {
 
 export const linkListItems: LinkProps[] = [
   {
-    to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
-    title: 'Meer over facturen van de gemeente',
-  },
-  {
-    to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
-    title: 'Belastingen op Mijn Amsterdam',
+    to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
+    title: 'Meer over betalen aan de gemeente',
   },
 ];
