@@ -8,10 +8,10 @@ import { IS_DEBUG } from '../config/app';
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
-    .setInternalLogging(IS_DEBUG)
-    .setAutoCollectRequests(true)
-    .setSendLiveMetrics(true)
-    .setAutoCollectPerformance(true, true)
+    .setInternalLogging(false)
+    .setAutoCollectRequests(false)
+    .setSendLiveMetrics(false)
+    .setAutoCollectPerformance(false, false)
     .setAutoCollectExceptions(true)
     .setAutoCollectDependencies(true)
     .start();
