@@ -16,16 +16,14 @@ import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../universal/helpers/utils';
 import { ThemaTitles } from '../../config/thema';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-function PageContentTop() {
-  const profileType = useProfileTypeValue();
-  const urlNaarBelastingen =
-    profileType === 'private'
-      ? import.meta.env.REACT_APP_SSO_URL_BELASTINGEN
-      : import.meta.env.REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK;
+function PageContentTop({
+  urlNaarBelastingen,
+}: {
+  urlNaarBelastingen: string;
+}) {
   return (
     <>
       <Paragraph className="ams-mb--sm">
@@ -110,6 +108,7 @@ export function AfisThemaPagina() {
     listPageTitle,
     routes,
     linkListItems,
+    belastingenLinkListItem,
   } = useAfisThemaData();
 
   const isPartialError = entries(dependencyErrors).some(
@@ -184,7 +183,9 @@ export function AfisThemaPagina() {
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       linkListItems={linkListItems}
-      pageContentTop={<PageContentTop />}
+      pageContentTop={
+        <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
+      }
       pageContentMain={
         <>
           {pageContentSecondary}
