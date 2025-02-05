@@ -7,7 +7,7 @@ import {
 } from './auth-config';
 import { AuthProfile } from './auth-types';
 import { DEV_JWK_PRIVATE } from '../config/development';
-
+import { log } from '../logging';
 
 /**
  *
@@ -37,7 +37,7 @@ async function signDevelopmentToken_(
       .sign(await getPrivateKeyForDevelopment());
     return idToken;
   } catch (err) {
-    console.error(err);
+    log.error(err);
   }
 }
 

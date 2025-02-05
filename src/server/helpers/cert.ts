@@ -2,6 +2,7 @@ import fs from 'fs';
 
 import { getFromEnv } from './env';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { log } from '../logging';
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && getFromEnv(envVarName, false);
@@ -10,7 +11,7 @@ export function getCertificateSync(envVarName: string | undefined) {
       const fileContents = fs.readFileSync(path).toString();
       return fileContents;
     } catch (error) {
-      console.error(error);
+      log.error(error);
     }
   }
 

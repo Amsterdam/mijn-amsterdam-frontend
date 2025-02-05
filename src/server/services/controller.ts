@@ -62,6 +62,7 @@ import {
   fetchTozo,
 } from './wpi';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
+import { log } from '../logging';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -97,8 +98,7 @@ export function addServiceResultHandler<
   T extends Promise<Record<string, ApiResponse_DEPRECATED<unknown | null>>>,
 >(res: Response, servicePromise: T, serviceName: string) {
   if (IS_DEBUG) {
-    // eslint-disable-next-line no-console
-    console.log(
+    log.info(
       'Service-controller: adding service result handler for ',
       serviceName
     );
@@ -114,8 +114,7 @@ export function addServiceResultHandler<
       sendMessage(res, serviceName, 'message', serviceResponse);
     }
     if (IS_DEBUG) {
-      // eslint-disable-next-line no-console
-      console.log(
+      log.info(
         'Service-controller: service result message sent for',
         serviceName
       );

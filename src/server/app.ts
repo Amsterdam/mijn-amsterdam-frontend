@@ -13,7 +13,10 @@ import {
 
 if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
-  console.debug(`[BFF server] trying env file ${ENV_FILE}`);
+  // This runs local only and -
+  // we can't load the logger before we loader our environment variables.
+  // eslint-disable-next-line no-console
+  console.debug(`Using local env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
   dotenvExpand.expand(envConfig);
 }
@@ -30,6 +33,7 @@ import {
   ONE_MINUTE_SECONDS,
   ONE_SECOND_MS,
 } from './config/app';
+import { log } from './logging';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
@@ -61,9 +65,11 @@ morgan.token('build', function () {
 
 // Logs all Incoming requests
 app.use(
-  morgan(
-    '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-  )
+  IS_DEVELOPMENT
+    ? morgan('dev')
+    : morgan(
+        '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+      )
 );
 
 app.use(
@@ -86,7 +92,7 @@ app.use(requestID);
 ///// Public routes Voor Acceptance - Development
 ////////////////////////////////////////////////////////////////////////
 if (IS_AP && !IS_OT) {
-  console.info('Using AUTH OIDC Router');
+  log.info('Using AUTH OIDC Router');
   app.use(oidcRouter);
 }
 
@@ -102,7 +108,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 ///// Development routing for mock data
 ////////////////////////////////////////////////////////////////////////
 if (IS_OT && !IS_AP) {
-  console.info('Using AUTH Development Router');
+  log.info('Using AUTH Development Router');
   app.use(authRouterDevelopment);
 }
 
@@ -121,14 +127,14 @@ app.use(
 
 app.use(nocache, stadspasExternalConsumerRouter.privateNetwork);
 
-app.get(BffEndpoints.ROOT, (req, res) => {
+app.get(BffEndpoints.ROOT, (_req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
 });
 
 // Optional fallthrough error handler
 app.use(function onError(
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response,
   _next: NextFunction
 ) {
@@ -162,7 +168,7 @@ async function startServerBFF() {
     await import('log-that-http');
   }
   const server = app.listen(BFF_PORT, () => {
-    console.info(
+    log.info(
       `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
     );
   });

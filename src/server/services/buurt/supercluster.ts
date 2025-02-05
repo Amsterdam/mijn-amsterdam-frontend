@@ -11,6 +11,7 @@ import {
   DatasetFilterSelection,
   DatasetId,
 } from '../../../universal/config/myarea-datasets';
+import { log } from '../../logging';
 
 async function generateSuperCluster(features: MaPointFeature[]) {
   if (features?.length) {
@@ -35,7 +36,7 @@ function addExpansionZoom(superClusterIndex: Supercluster, feature: MaFeature) {
         );
     }
   } catch (_error) {
-    console.error(
+    log.error(
       "Can't add expansion zoom to cluster",
       feature.properties.cluster_id,
       feature

@@ -4,6 +4,7 @@ import * as appInsights from 'applicationinsights';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { IS_DEBUG } from '../config/app';
+import { log } from '../logging';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
@@ -55,7 +56,7 @@ export function captureException(error: unknown, properties?: Properties) {
   if (IS_DEVELOPMENT) {
     // Does nothing (As expected) if development is not in debug mode.
     if (IS_DEBUG) {
-      console.log('Capture Exception', payload);
+      log.info('Capture Exception', payload);
     }
   } else {
     client?.trackException(payload);
@@ -76,7 +77,7 @@ export function captureMessage(message: string, properties?: Properties) {
   if (IS_DEVELOPMENT) {
     // Does nothing (As expected) if development is not in debug mode.
     if (IS_DEBUG) {
-      console.log('Capture message', payload);
+      log.info('Capture message', payload);
     }
   } else {
     client?.trackTrace(payload);
@@ -85,7 +86,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
 export function trackEvent(name: string, properties: Record<string, unknown>) {
   return IS_DEVELOPMENT
-    ? IS_DEBUG && console.log('Track event', name, properties)
+    ? IS_DEBUG && log.info('Track event', name, properties)
     : client?.trackEvent({
         name,
         properties,
@@ -120,7 +121,7 @@ export function trackRequest({ name, url, properties }: TrackRequestProps) {
         if (IS_DEVELOPMENT) {
           // Does nothing (As expected) if development is not in debug mode.
           if (IS_DEBUG) {
-            console.log('Track request', payload);
+            log.info('Track request', payload);
           }
         } else {
           client?.trackRequest(payload);

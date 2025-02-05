@@ -16,6 +16,7 @@ import {
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
 } from '../config/source-api';
+import { log } from '../logging';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -23,9 +24,9 @@ export const axiosRequest = axios.create({
 });
 
 function debugResponseData(responseData: any) {
-  console.debug('\n\nResponse:\n');
-  console.debug(responseData || '<== NO RESPONSE DATA ==>');
-  console.debug('\nEnd response from');
+  log.debug('\n\nResponse:\n');
+  log.debug(responseData || '<== NO RESPONSE DATA ==>');
+  log.debug('\nEnd response from');
   return responseData;
 }
 
@@ -40,7 +41,7 @@ if (debugResponseDataTerms?.length) {
         return !!term && response.config.url?.includes(term.trim());
       })
     ) {
-      console.debug(
+      log.debug(
         'url:',
         response.request?.res?.responseUrl ?? response.config.url,
         '\n\n'

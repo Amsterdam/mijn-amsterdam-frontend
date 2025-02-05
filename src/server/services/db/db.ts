@@ -1,6 +1,7 @@
 import memoizee from 'memoizee';
 
 import { IS_DB_ENABLED } from './config';
+import { log } from '../../logging';
 
 type DBAdapter = {
   id: string;
@@ -12,11 +13,11 @@ type DBAdapter = {
 const db_: () => Promise<DBAdapter> = () => {
   if (!IS_DB_ENABLED) {
     return import('./fake-db').finally(() => {
-      console.info('Using Fake DB');
+      log.info('Using Fake DB');
     });
   }
   return import('./postgres').finally(() => {
-    console.info('Using Postgres DB');
+    log.info('Using Postgres DB');
   });
 };
 
