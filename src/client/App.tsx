@@ -40,7 +40,7 @@ import { AfisFacturen } from './pages/Afis/AfisFacturen';
 import { AVG } from './pages/AVG/AVG';
 import { AVGDetail } from './pages/AVG/AVGDetail';
 import { AVGList } from './pages/AVG/AVGList';
-import Bezwaren from './pages/Bezwaren/Bezwaren';
+import { BezwarenThemaPagina } from './pages/Bezwaren/Bezwaren';
 import BezwarenDetail from './pages/BezwarenDetail/BezwarenDetail';
 import BFF500Error from './pages/BffError/BffError';
 import { Bodem } from './pages/Bodem/Bodem';
@@ -296,7 +296,7 @@ function AppAuthenticated() {
             />
           )}
           {FeatureToggle.bezwarenActive && (
-            <Route path={AppRoutes.BEZWAREN} component={Bezwaren} />
+            <Route path={AppRoutes.BEZWAREN} component={BezwarenThemaPagina} />
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
