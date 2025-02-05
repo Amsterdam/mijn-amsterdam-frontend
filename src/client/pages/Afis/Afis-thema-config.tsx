@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 
 import {
+  AfisBusinessPartnerDetailsTransformed,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
@@ -112,13 +113,14 @@ const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
   name: 'Naam',
 };
 
-export const businessPartnerDetailsLabels = {
-  fullName: 'Debiteurnaam',
-  businessPartnerId: 'Debiteurnummer',
-  email: 'E-mailadres factuur',
-  phone: 'Telefoonnummer',
-  address: 'Adres',
-};
+export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
+  {
+    fullName: 'Debiteurnaam',
+    businessPartnerId: 'Debiteurnummer',
+    email: 'E-mailadres factuur',
+    phone: 'Telefoonnummer',
+    address: 'Adres',
+  };
 
 export const eMandateTableConfig = {
   active: {

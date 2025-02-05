@@ -11,7 +11,10 @@ export function Bodem() {
     useBodemData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, listPageRoute, maxItems },
+    ]) => {
       return (
         <ThemaPaginaTable<LoodMetingFrontend>
           key={kind}
@@ -20,6 +23,7 @@ export function Bodem() {
           listPageRoute={listPageRoute}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          maxItems={maxItems}
         />
       );
     }
@@ -35,7 +39,6 @@ export function Bodem() {
         </Paragraph>
       }
       pageContentMain={tables}
-      isPartialError={false}
       linkListItems={linkListItems}
     />
   );
