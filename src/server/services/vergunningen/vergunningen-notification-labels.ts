@@ -2,13 +2,13 @@ import { subMonths } from 'date-fns';
 
 import {
   NotificationLabels,
-  VergunningFrontendV2,
+  VergunningFrontend,
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from './config-and-types';
 import { dateFormat } from '../../../universal/helpers/date';
 import { getStatusDate } from '../decos/helpers';
 
-const link = (vergunning: VergunningFrontendV2) => ({
+const link = (vergunning: VergunningFrontend) => ({
   title: 'Bekijk details',
   to: vergunning.link.to,
 });

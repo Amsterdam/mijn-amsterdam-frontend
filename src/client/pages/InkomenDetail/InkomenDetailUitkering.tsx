@@ -40,12 +40,6 @@ export default function InkomenDetailUitkering() {
       thema="INKOMEN"
       stateKey="WPI_AANVRAGEN"
       pageContent={pageContent}
-      documentPathForTracking={(document) =>
-        `/downloads/inkomen/bijstandsuitkering/${document.title.replace(
-          /\\n/,
-          ''
-        )}`
-      }
     />
   );
 }
