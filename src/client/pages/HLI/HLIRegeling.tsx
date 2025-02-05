@@ -53,10 +53,7 @@ export default function HLIRegelingDetailPagina() {
       pageContentTop={
         regelingDetail && <DetailPageContent hliRegeling={regelingDetail} />
       }
-      backLink={{
-        title: title,
-        to: routes.themaPage,
-      }}
+      backLink={routes.themaPage}
       documentPathForTracking={(document) =>
         `/downloads/hli/regeling/${regelingDetail?.title}/${document.title.split(/\n/)[0]}`
       }
