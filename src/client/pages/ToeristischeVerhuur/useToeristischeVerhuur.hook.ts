@@ -5,7 +5,7 @@ import {
   tableConfigLVVRegistraties,
   tableConfigVergunningen,
 } from './toeristischeVerhuur-thema-config';
-import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
   hasFailedDependency,
   isError,
