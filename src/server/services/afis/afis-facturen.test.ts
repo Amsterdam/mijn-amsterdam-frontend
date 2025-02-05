@@ -125,9 +125,9 @@ describe('afis-facturen', async () => {
         "debtClearingDate": null,
         "debtClearingDateFormatted": null,
         "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
-        "factuurDocumentId": "1234567890",
+        "factuurDocumentId": "100012345678902024",
         "factuurNummer": "1234567890",
-        "id": "1234567890",
+        "id": "100012345678902024",
         "link": {
           "title": "Factuur 1234567890",
           "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
@@ -197,9 +197,9 @@ describe('afis-facturen', async () => {
         "debtClearingDate": null,
         "debtClearingDateFormatted": null,
         "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
-        "factuurDocumentId": "INV-2023-010",
+        "factuurDocumentId": "1000INV-2023-0102024",
         "factuurNummer": "INV-2023-010",
-        "id": "INV-2023-010",
+        "id": "1000INV-2023-0102024",
         "link": {
           "title": "Factuur INV-2023-010",
           "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
@@ -681,6 +681,20 @@ describe('afis-facturen', async () => {
       invoiceWithoutAccountingDocument
     );
     expect(factuurnummerWithoutAccountingDocument).toBe('987654321');
+  });
+
+  describe('getFactuurDocumentId returns correct factuurDocumentId', () => {
+    const properID = '123456789987654321';
+    const oldID = '5678998765';
+    const migratedID = '100056789987652024';
+    test('Returns same ID', () => {
+      expect(forTesting.getFactuurDocumentId(properID)).toBe(properID);
+    });
+    test('Converts oldID to migratedID', () => {
+      const rs = forTesting.getFactuurDocumentId(oldID);
+      expect(rs).toBe(migratedID);
+      expect(rs.length).toBe(18);
+    });
   });
 
   test('fetchAfisFacturenDeelbetalingen fetches and transforms deelbetalingen correctly', async () => {
