@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { Grid, OrderedList } from '@amsterdam/design-system-react';
+import { OrderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
@@ -9,7 +9,11 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ErrorAlert, Pagination, LoadingContent } from '../../components';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
-import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
@@ -48,7 +52,7 @@ export function MyNotificationsPage() {
     <DetailPageV2 className={styles.MyNotifications}>
       <PageContentV2>
         <PageHeadingV2 backLink={AppRoutes.HOME}>Actueel</PageHeadingV2>
-        <Grid.Cell span="all">
+        <PageContentCell>
           {isError(NOTIFICATIONS) && (
             <ErrorAlert>
               Niet alle updates kunnen op dit moment worden getoond.
@@ -105,7 +109,7 @@ export function MyNotificationsPage() {
               }}
             />
           )}
-        </Grid.Cell>
+        </PageContentCell>
       </PageContentV2>
     </DetailPageV2>
   );

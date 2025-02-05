@@ -1,4 +1,3 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import styles from './HLIThemaPagina.module.scss';
@@ -6,6 +5,7 @@ import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 type DetailPageContentProps = {
@@ -26,14 +26,14 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
   return (
     <>
       {!!rows.length && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Datalist rows={rows} />
-        </Grid.Cell>
+        </PageContentCell>
       )}
       {!!hliRegeling.documents.length && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <DocumentListV2 documents={hliRegeling.documents} />
-        </Grid.Cell>
+        </PageContentCell>
       )}
     </>
   );

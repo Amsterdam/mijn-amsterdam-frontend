@@ -158,7 +158,7 @@ export default function HLIStadspasDetail() {
       <Screen>
         <Grid>
           {stadspas ? (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <Datalist rows={[NAME]} />
               <Paragraph className={styles.StadspasNummerInfo}>
                 Hieronder staat het Stadspasnummer van uw{' '}
@@ -170,9 +170,9 @@ export default function HLIStadspasDetail() {
               {FeatureToggle.hliThemaStadspasBlokkerenActive && (
                 <BlockStadspas stadspas={stadspas} />
               )}
-            </Grid.Cell>
+            </PageContentCell>
           ) : (
-            <Grid.Cell span="all">
+            <PageContentCell>
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigDetails} />
               )}
@@ -184,13 +184,10 @@ export default function HLIStadspasDetail() {
                   </MaRouterLink>
                 </ErrorAlert>
               )}
-            </Grid.Cell>
+            </PageContentCell>
           )}
           <>
-            <Grid.Cell span="all">
-              <Heading>Gekregen tegoed</Heading>
-            </Grid.Cell>
-            <Grid.Cell span="all">
+            <Heading className="ams-mb--sm">Gekregen tegoed</Heading>
               {isLoadingStadspas && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}
@@ -204,11 +201,9 @@ export default function HLIStadspasDetail() {
               {!isLoadingStadspas && !stadspas?.budgets.length && (
                 <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
               )}
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              <Heading>Uw uitgaven</Heading>
-            </Grid.Cell>
-            <Grid.Cell span="all">
+            </PageContentCell>
+        <PageContentCell>
+          <Heading className="ams-mb--sm">Uw uitgaven</Heading>
               {(isLoadingTransacties || isLoadingStadspas) && (
                 <LoadingContent barConfig={loadingContentBarConfigList} />
               )}
@@ -217,10 +212,10 @@ export default function HLIStadspasDetail() {
                   {determineUwUitgavenDescription(stadspas, hasTransactions)}
                 </Paragraph>
               )}
-            </Grid.Cell>
+            </PageContentCell>
             {!isLoadingTransacties && hasTransactions && (
               <>
-                <Grid.Cell span="all">
+                <PageContentCell>
                   <TableV2<StadspasBudgetTransaction>
                     className={
                       showMultiBudgetTransactions
@@ -236,7 +231,7 @@ export default function HLIStadspasDetail() {
                         : displayPropsTransacties
                     }
                   />
-                </Grid.Cell>
+                </PageContentCell>
               </>
             )}
           </>
