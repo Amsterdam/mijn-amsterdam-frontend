@@ -1,4 +1,4 @@
-import { Alert, Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
 import { routes } from './toeristischeVerhuur-thema-config';
@@ -14,6 +14,7 @@ import {
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/App.types';
 import { LinkdInline } from '../../components';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
@@ -133,7 +134,7 @@ export function ToeristscheVerhuurThema() {
       pageContentMain={
         <>
           {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <Alert severity="info" title="Voorwaarden en regels">
                 {hasBothVerleend && (
                   <Paragraph className="ams-mb--sm">
@@ -167,12 +168,12 @@ export function ToeristscheVerhuurThema() {
                   </Paragraph>
                 )}
               </Alert>
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {!hasVergunningBB && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <Paragraph>{BB_VERGUNNING_DISCLAIMER}</Paragraph>
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {vergunningenTables}
           {registratieTable}

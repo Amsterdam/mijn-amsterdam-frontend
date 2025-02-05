@@ -1,7 +1,8 @@
-import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { panelConfig } from './ProfileCommercial.transform';
 import { useProfileData } from './useProfileData.hook';
+import { PageContentCell } from '../../../components/Page/Page';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
 import styles from './ProfileCommercial.module.scss';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
@@ -82,7 +83,7 @@ function ProfileCommercialSectionPanels() {
             {...panelConfig.overigeFunctionarissen(KVK)}
           />
         )}
-      <Grid.Cell span="all">
+      <PageContentCell>
         <p className={styles.SuppressedParagraph}>
           Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
@@ -95,7 +96,7 @@ function ProfileCommercialSectionPanels() {
           </Link>
           .
         </p>
-      </Grid.Cell>
+      </PageContentCell>
     </>
   );
 }
@@ -104,14 +105,14 @@ export function MijnBedrijfsGegevensThema() {
   const { isLoading, isError, linkListItems, title } = useProfileData();
 
   const pageContentTop = (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <Paragraph>
         Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
         van de Kamer van Koophandel. In dat register staan onder meer uw
         bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze
         gegevens. Het is dus belangrijk dat uw gegevens kloppen.
       </Paragraph>
-    </Grid.Cell>
+    </PageContentCell>
   );
 
   return (

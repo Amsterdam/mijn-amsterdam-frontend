@@ -1,11 +1,8 @@
 import { useCallback } from 'react';
 
-import {
-  Grid,
-  LinkList,
-  Paragraph,
-} from '@amsterdam/design-system-react';
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
+import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
 
@@ -16,14 +13,13 @@ export default function InkomenDetailUitkering() {
     (isLoading: boolean, inkomenItem: StatusSourceItem) => {
       return (
         <>
-          <Grid.Cell span="all">
-            <Paragraph>
+          <PageContentCell>
+            <Paragraph className="ams-mb--sm">
               Hieronder ziet u de status van uw aanvraag voor een
               bijstandsuitkering. Het duurt maximaal 3 werkdagen voordat uw
               documenten over de bijstandsuitkering in Mijn Amsterdam staan.
             </Paragraph>
-          </Grid.Cell>
-          <Grid.Cell span="all">
+
             <LinkList>
               <LinkList.Link
                 rel="noreferrer"
@@ -32,7 +28,7 @@ export default function InkomenDetailUitkering() {
                 Meer informatie over de bijstandsuitkering
               </LinkList.Link>
             </LinkList>
-          </Grid.Cell>
+          </PageContentCell>
         </>
       );
     },

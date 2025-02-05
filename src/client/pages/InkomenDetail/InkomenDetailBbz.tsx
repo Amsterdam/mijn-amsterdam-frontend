@@ -1,12 +1,9 @@
 import { useCallback } from 'react';
 
-import {
-  Grid,
-  LinkList,
-  Paragraph,
-} from '@amsterdam/design-system-react';
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
+import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import StatusDetail, { StatusSourceItem } from '../StatusDetail/StatusDetail';
@@ -22,8 +19,8 @@ export default function InkomenDetailBbz() {
     (isLoading: boolean, inkomenItem: StatusSourceItem) => {
       return (
         <>
-          <Grid.Cell span="all">
-            <Paragraph>
+          <PageContentCell>
+            <Paragraph className="ams-mb--sm">
               Hieronder ziet u de status van uw aanvraag voor een uitkering of
               lening van het Bbz. Ook als u een IOAZ uitkering heeft aangevraagd
               ziet u de status hieronder. Als u meerdere aanvragen voor het Bbz
@@ -31,20 +28,16 @@ export default function InkomenDetailBbz() {
               aanvragen voor het Bbz. Het duurt maximaal 3 werkdagen voordat uw
               documenten over het Bbz in Mijn Amsterdam staan.
             </Paragraph>
-          </Grid.Cell>
-          <Grid.Cell span="all">
-            <Paragraph>
+            <Paragraph className="ams-mb--sm">
               Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u
               opgenomen.
             </Paragraph>
-          </Grid.Cell>
-          <Grid.Cell span="all">
             <LinkList>
               <LinkList.Link rel="noreferrer" href={ExternalUrls.WPI_BBZ}>
                 Meer informatie over het Bbz
               </LinkList.Link>
             </LinkList>
-          </Grid.Cell>
+          </PageContentCell>
         </>
       );
     },
