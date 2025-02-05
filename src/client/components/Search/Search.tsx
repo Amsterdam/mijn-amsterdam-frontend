@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Button, Heading } from '@amsterdam/design-system-react';
+import { SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 
-import styles from './Search.module.scss';
 import { SearchEntry, displayPath } from './search-config';
+import styles from './Search.module.scss';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 import { AppRoutes } from '../../../universal/config/routes';
-import { IconSearch } from '../../assets/icons';
-import { Colors } from '../../config/app';
 import {
   trackSearch,
   trackSearchResultClick,
@@ -22,7 +21,6 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import { Button, IconButton } from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {
@@ -341,13 +339,12 @@ export function Search({
             }}
           />
 
-          <IconButton
+          <Button
+            iconOnly
             className={styles.SubmitButton}
             aria-label="Verstuur zoekopdracht"
             type="submit"
-            iconSize="36"
-            iconFill={Colors.white}
-            icon={IconSearch}
+            icon={SearchIcon}
           />
         </form>
 
