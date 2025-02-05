@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
 import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
+import { VakantieverhuurVergunning } from './toeristische-verhuur-config-and-types';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
