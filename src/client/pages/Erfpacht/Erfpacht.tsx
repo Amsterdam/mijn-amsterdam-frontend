@@ -1,9 +1,4 @@
-import {
-  Grid,
-  Heading,
-  LinkList,
-  Paragraph,
-} from '@amsterdam/design-system-react';
+import { Heading, LinkList, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
@@ -12,7 +7,11 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ErrorAlert, LoadingContent } from '../../components';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
-import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
@@ -36,12 +35,12 @@ export default function Erfpacht() {
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {ThemaTitles.ERFPACHTv2}
         </PageHeadingV2>
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Paragraph>
             Hieronder ziet u de gegevens van uw erfpachtrechten.
           </Paragraph>
-        </Grid.Cell>
-        <Grid.Cell span="all">
+        </PageContentCell>
+        <PageContentCell>
           <LinkList>
             <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/">
               Meer informatie over erfpacht in Amsterdam
@@ -53,18 +52,18 @@ export default function Erfpacht() {
               Overstappen erfpachtrecht
             </LinkList.Link>
           </LinkList>
-        </Grid.Cell>
+        </PageContentCell>
 
         {isError(ERFPACHTv2) && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <ErrorAlert>
               We kunnen op dit moment geen erfpachtrechten tonen.
             </ErrorAlert>
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {isLoading(ERFPACHTv2) && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <LoadingContent
               barConfig={[
                 ['20rem', '4rem', '4rem'],
@@ -75,12 +74,12 @@ export default function Erfpacht() {
                 ['40rem', '2rem', '4rem'],
               ]}
             />
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {!isLoading(ERFPACHTv2) && !isError(ERFPACHTv2) && (
           <>
-            <Grid.Cell span="all">
+            <PageContentCell>
               <TableV2
                 caption={titleDossiers ?? 'Erfpachtrechten'}
                 className={styles.DossiersTable}
@@ -101,8 +100,8 @@ export default function Erfpacht() {
                   route={AppRoutes['ERFPACHTv2/DOSSIERS']}
                 />
               )}
-            </Grid.Cell>
-            <Grid.Cell span="all">
+            </PageContentCell>
+            <PageContentCell>
               {isMediumScreen ? (
                 <TableV2
                   caption={titleOpenFacturen ?? 'Openstaande facturen'}
@@ -137,7 +136,7 @@ export default function Erfpacht() {
                 count={openFacturen.length}
                 route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
               />
-            </Grid.Cell>
+            </PageContentCell>
           </>
         )}
       </PageContentV2>
