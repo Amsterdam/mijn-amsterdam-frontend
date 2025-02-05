@@ -164,7 +164,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
-        casetype: 'vakantieverhuur',
+        caseType: 'vakantieverhuur',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
@@ -195,7 +195,7 @@ describe('<ToeristischVerhuurDetail />', () => {
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
-        casetype: 'bed-and-breakfast',
+        caseType: 'bed-and-breakfast',
       }
     );
     const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];

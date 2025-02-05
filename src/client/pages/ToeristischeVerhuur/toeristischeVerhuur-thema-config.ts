@@ -74,3 +74,5 @@ export const routes = {
   detailPageVergunning: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
   themaPage: AppRoutes.TOERISTISCHE_VERHUUR,
 } as const;
+
+export const THEMA_DETAIL_TITLE_DEFAULT = 'Vergunning toeristische verhuur';

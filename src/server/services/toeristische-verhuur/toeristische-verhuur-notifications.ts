@@ -40,7 +40,7 @@ export function createToeristischeVerhuurNotification(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
-        casetype:
+        caseType:
           vergunning.title === 'Vergunning vakantieverhuur'
             ? 'vakantieverhuur'
             : 'bed-and-breakfast',
