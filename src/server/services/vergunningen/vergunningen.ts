@@ -34,7 +34,7 @@ function transformVergunningFrontend(
   return vergunningFrontend;
 }
 
-async function fetchVergunningenV2_(
+async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
