@@ -476,13 +476,14 @@ export async function fetchDecosWorkflowDates(
     properties: 'false',
     fetchParents: 'false',
     select: ['mark', 'date1', 'date2', 'text7'].join(','),
-    filter: stepTitles.map((stepTitle) => `text7 eq ${stepTitle}`).join(' or '),
+    filter: stepTitles
+      .map((stepTitle) => `text7 eq '${stepTitle}'`)
+      .join(' or '),
   });
 
   const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
-    formatUrl: (config) => {
-      return `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?'${urlParams}'`;
-    },
+    formatUrl: (config) =>
+      `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?${urlParams}`,
     transformResponse: (responseData: DecosWorkflowResponse) =>
       transformDecosWorkflowDateResponse(stepTitles, responseData),
   });
