@@ -125,9 +125,9 @@ describe('afis-facturen', async () => {
         "debtClearingDate": null,
         "debtClearingDateFormatted": null,
         "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
-        "factuurDocumentId": "100012345678902024",
+        "factuurDocumentId": "1234567890",
         "factuurNummer": "1234567890",
-        "id": "100012345678902024",
+        "id": "1234567890",
         "link": {
           "title": "Factuur 1234567890",
           "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
@@ -197,9 +197,9 @@ describe('afis-facturen', async () => {
         "debtClearingDate": null,
         "debtClearingDateFormatted": null,
         "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
-        "factuurDocumentId": "1000INV-2023-0102024",
+        "factuurDocumentId": "INV-2023-010",
         "factuurNummer": "INV-2023-010",
-        "id": "1000INV-2023-0102024",
+        "id": "INV-2023-010",
         "link": {
           "title": "Factuur INV-2023-010",
           "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
