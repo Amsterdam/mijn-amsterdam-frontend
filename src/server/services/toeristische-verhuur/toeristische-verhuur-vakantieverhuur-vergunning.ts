@@ -66,7 +66,7 @@ function getVergunningStatussen(vergunning: VergunningFrontendV2) {
   return statussen;
 }
 
-export async function fetchVakantieverhuurVergunningenV2(
+export async function fetchVakantieverhuurVergunningen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
