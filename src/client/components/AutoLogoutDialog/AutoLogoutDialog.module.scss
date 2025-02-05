@@ -1,17 +1,3 @@
-.AutoLogoutDialogChildren {
-  p {
-    &:first-child {
-      margin-top: 0;
-    }
-    &:nth-child(2) {
-      font-weight: bold;
-    }
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
 .TimerText {
   display: flex;
   align-items: center;
@@ -21,8 +7,4 @@
   width: 10rem;
   display: block;
   margin-right: 2rem;
-}
-
-.LogoutButton {
-  align-items: center;
 }
