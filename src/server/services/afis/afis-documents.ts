@@ -5,6 +5,8 @@ import {
   AfisDocumentIDSource,
   AfisFactuur,
 } from './afis-types';
+import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
+import { apiErrorResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
 import {
@@ -24,6 +26,14 @@ export async function fetchAfisDocument(
   );
   if (ArchiveDocumentIDResponse.status !== 'OK') {
     return ArchiveDocumentIDResponse;
+  }
+
+  if (!ArchiveDocumentIDResponse.content) {
+    return apiErrorResult(
+      'ArcDocumentID not found',
+      null,
+      HTTP_STATUS_CODES.NOT_FOUND
+    );
   }
 
   const config = await getAfisApiConfig(

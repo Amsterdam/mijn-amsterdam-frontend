@@ -240,6 +240,28 @@ describe('afis-facturen', async () => {
     `);
   });
 
+  test('Download document success response but no DocumentId', async () => {
+    const noArcDocId = structuredClone(ARC_DOC);
+    delete noArcDocId.feed.entry[0];
+
+    remoteApi.get(ROUTES.documentID).reply(200, noArcDocId);
+
+    const response = await fetchAfisDocument(
+      REQUEST_ID,
+      getAuthProfileAndToken('private'),
+      FACTUUR_NUMMER
+    );
+
+    expect(response).toMatchInlineSnapshot(`
+      {
+        "code": 404,
+        "content": null,
+        "message": "ArcDocumentID not found",
+        "status": "ERROR",
+      }
+    `);
+  });
+
   test('Download document happy path', async () => {
     remoteApi.get(ROUTES.documentID).reply(200, ARC_DOC);
     remoteApi
