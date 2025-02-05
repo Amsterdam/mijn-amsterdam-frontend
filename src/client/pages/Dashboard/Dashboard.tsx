@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Grid, Heading, OrderedList } from '@amsterdam/design-system-react';
+import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useHistory } from 'react-router-dom';
 
 import { WelcomeHeading } from './WelcomHeading';
@@ -11,7 +11,11 @@ import { MaRouterLink } from '../../components/MaLink/MaLink';
 import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
 import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel';
-import { PageContentV2, PageV2 } from '../../components/Page/Page';
+import {
+  PageContentCell,
+  PageContentV2,
+  PageV2,
+} from '../../components/Page/Page';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
@@ -42,7 +46,7 @@ export function Dashboard() {
     <PageV2>
       <PageContentV2>
         <WelcomeHeading />
-        <Grid.Cell start={2} span={6}>
+        <PageContentCell spanWide={6}>
           <Heading level={2} className="ams-mb--sm">
             Recente berichten{' '}
             {total > notifications.length && (
@@ -73,8 +77,8 @@ export function Dashboard() {
                 );
               })}
           </OrderedList>
-        </Grid.Cell>
-        <Grid.Cell start={8} span={5}>
+        </PageContentCell>
+        <PageContentCell startWide={8} spanWide={5}>
           <Heading level={2} className="ams-mb--sm">
             Mijn thema&apos;s
           </Heading>
@@ -83,7 +87,7 @@ export function Dashboard() {
             items={myThemaItems}
             trackCategory="Dashboard / Mijn Thema's"
           />
-        </Grid.Cell>
+        </PageContentCell>
       </PageContentV2>
       {!isPhoneScreen && <MyAreaDashboard />}
     </PageV2>

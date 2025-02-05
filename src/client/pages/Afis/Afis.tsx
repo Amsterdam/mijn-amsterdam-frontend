@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Alert,
   Button,
-  Grid,
   Heading,
   Link,
   Paragraph,
@@ -15,6 +14,7 @@ import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../universal/helpers/utils';
+import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -116,7 +116,7 @@ export function AfisThemaPagina() {
   );
 
   const pageContentSecondary = (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <Button
         className="ams-mb--sm"
         variant="secondary"
@@ -125,7 +125,7 @@ export function AfisThemaPagina() {
         Betaalvoorkeuren
       </Button>
       <AfisDisclaimer />
-    </Grid.Cell>
+    </PageContentCell>
   );
 
   const pageContentErrorAlert = (

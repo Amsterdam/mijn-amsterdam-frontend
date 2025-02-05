@@ -1,4 +1,4 @@
-import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import styles from './ToeristischeVerhuurDetail.module.scss';
@@ -8,6 +8,7 @@ import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
+import { PageContentCell } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -123,7 +124,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
   return (
     <>
       {isVakantieVerhuur && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Paragraph>
             Vakantieverhuur kunt u melden en annuleren via{' '}
             <Link
@@ -135,15 +136,15 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
             </Link>
             .
           </Paragraph>
-        </Grid.Cell>
+        </PageContentCell>
       )}
       {!!rows.length && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Datalist rows={rows} />
-        </Grid.Cell>
+        </PageContentCell>
       )}
 
-      <Grid.Cell span={8}>
+      <PageContentCell spanWide={8}>
         <Datalist
           rows={[
             {
@@ -152,7 +153,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
             },
           ]}
         />
-      </Grid.Cell>
+      </PageContentCell>
     </>
   );
 }
