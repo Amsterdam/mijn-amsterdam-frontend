@@ -28,16 +28,21 @@ export default function ThemaPaginaZorg() {
     useZorgThemaData();
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke
-      ondersteuning (Wmo). Heeft u vragen of wilt u een wijziging doorgeven? Bel
-      dan gratis de Wmo Helpdesk:{' '}
-      <Link rel="noreferrer" href="tel:08000643" variant="inline">
-        0800 0643
-      </Link>{' '}
-      (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het
-      Sociaal Loket.
-    </Paragraph>
+    <>
+      <Paragraph className="ams-mb--sm">
+        Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke
+        ondersteuning (Wmo).
+      </Paragraph>
+      <Paragraph>
+        Heeft u vragen of wilt u een wijziging doorgeven? <br />
+        Bel dan gratis de Wmo Helpdesk:{' '}
+        <Link rel="noreferrer" href="tel:08000643" variant="inline">
+          0800 0643
+        </Link>{' '}
+        (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het
+        Sociaal Loket.
+      </Paragraph>
+    </>
   );
 
   const linkListItems: LinkProps[] = [
