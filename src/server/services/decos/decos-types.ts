@@ -1,6 +1,6 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
-import { GenericDocument, ZaakDetail } from '../../../universal/types';
-import { NotificationLabelByType } from '../vergunningen-v2/config-and-types';
+import { GenericDocument } from '../../../universal/types';
+import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
   text39: string;
@@ -194,9 +194,6 @@ export interface DecosZaakBase {
   decision: string | null;
   description: string;
 
-  // Url to fetch vergunnungen for a specific Zaak.
-  fetchDocumentsUrl: string;
-
   identifier: ZaakKenmerk;
   title: string;
   id: string;
@@ -313,4 +310,6 @@ export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> = T & {
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
   isExpired?: boolean;
+  // Url to fetch documents for a specific Zaak.
+  fetchDocumentsUrl: string;
 } & ZaakDetail;
