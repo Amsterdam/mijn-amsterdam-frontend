@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
 
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 
 import { ZaakDetail } from '../../../universal/types';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
@@ -42,7 +43,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   const hasListPage = !!listPageRoute && maxItems !== -1;
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
@@ -64,6 +65,6 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
           route={listPageRoute}
         />
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 }

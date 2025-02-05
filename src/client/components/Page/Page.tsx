@@ -113,8 +113,10 @@ export function PageContentV2({ children, className, id }: PageProps) {
 type PageContentCellProps = {
   className?: string;
   children: ComponentChildren;
-  start?: GridColumnNumber | GridColumnNumbers;
-  span?: GridColumnNumber | GridColumnNumbers;
+  start?: GridColumnNumbers;
+  startWide?: GridColumnNumber;
+  span?: GridColumnNumbers;
+  spanWide?: GridColumnNumber;
 };
 
 export function PageContentCell({
@@ -122,11 +124,21 @@ export function PageContentCell({
   className,
   start = { narrow: 1, medium: 1, wide: 2 },
   span = { narrow: 4, medium: 6, wide: 11 },
+  spanWide,
+  startWide,
 }: PageContentCellProps) {
+  let span_ = span;
+  if (spanWide) {
+    span_ = { ...span, wide: spanWide };
+  }
+  let start_ = start;
+  if (startWide) {
+    start_ = { ...start, wide: startWide };
+  }
   return (
     <Grid.Cell
-      start={start}
-      span={span}
+      start={start_}
+      span={span_}
       className={composeClassNames(styles.PageContentCell, className)}
     >
       {children}

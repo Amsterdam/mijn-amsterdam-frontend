@@ -1,12 +1,16 @@
 import { ReactNode } from 'react';
 
-import { Grid, LinkList } from '@amsterdam/design-system-react';
+import { LinkList } from '@amsterdam/design-system-react';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
 import { ErrorAlert, LoadingContent } from '../../components';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
-import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
@@ -55,9 +59,9 @@ export default function ThemaPagina({
       <PageContentV2>
         <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
 
-        <Grid.Cell span="all">{pageContentTop}</Grid.Cell>
+        <PageContentCell>{pageContentTop}</PageContentCell>
         {!!linkListItems.length && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <LinkList>
               {linkListItems.map(({ to, title }) => (
                 <LinkList.Link key={to} rel="noreferrer" href={to}>
@@ -65,24 +69,24 @@ export default function ThemaPagina({
                 </LinkList.Link>
               ))}
             </LinkList>
-          </Grid.Cell>
+          </PageContentCell>
         )}
         {!!pageContentTopSecondary && (
           <Grid.Cell span="all">{pageContentTopSecondary}</Grid.Cell>
         )}
         {showError && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <ErrorAlert>
               {errorAlertContent || ERROR_ALERT_DEFAULT}
               {/* errorAlertContent could be an emty string, force to show an error. **/}
             </ErrorAlert>
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {isLoading && (
-          <Grid.Cell span="all">
+          <PageContentCell>
             <LoadingContent barConfig={loadingBarConfig} />
-          </Grid.Cell>
+          </PageContentCell>
         )}
 
         {!isLoading && !isError && pageContentMain}

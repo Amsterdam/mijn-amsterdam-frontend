@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
 import styles from './HLIThemaPagina.module.scss';
@@ -10,6 +10,7 @@ import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -61,7 +62,7 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   });
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <ThemaPaginaTable<StadspasDisplayProps>
         displayProps={displayProps}
         zaken={passen}
@@ -83,7 +84,7 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
           )}
         </Paragraph>
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 

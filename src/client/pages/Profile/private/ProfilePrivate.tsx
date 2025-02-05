@@ -1,4 +1,4 @@
-import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
@@ -12,6 +12,7 @@ import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../../universal/helpers/brp';
+import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
 
 function ProfilePrivateSectionPanels() {
@@ -64,7 +65,7 @@ function ProfilePrivateSectionPanels() {
         />
       )}
       {isMokum(BRP.content) && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <p className={styles.SuppressedParagraph}>
             Het is helaas niet mogelijk om de gegevens van een levenloos geboren
             kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
@@ -79,7 +80,7 @@ function ProfilePrivateSectionPanels() {
             Amsterdamse administratie. Gegevens die bij een andere gemeente zijn
             geregistreerd worden hier niet getoond.
           </p>
-        </Grid.Cell>
+        </PageContentCell>
       )}
     </>
   );
@@ -109,7 +110,7 @@ export function MijnGegevensThema() {
   const isThemaPaginaLoading = isLoadingBrp && isLoadingContactmomenten;
 
   const pageContentTop = (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <Paragraph className="ams-mb--sm">
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u
         vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw
@@ -130,7 +131,7 @@ export function MijnGegevensThema() {
           moment geen Nederlandse nationaliteit hebt.
         </Paragraph>
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 
   return (
@@ -145,19 +146,19 @@ export function MijnGegevensThema() {
       pageContentMain={
         <>
           {brpContent?.persoon.vertrokkenOnbekendWaarheen && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <VertrokkenOnbekendWaarheen brpContent={brpContent} />
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {brpContent?.persoon?.adresInOnderzoek && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <AdresInOnderzoek brpContent={brpContent} />
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {hasContactMomenten && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <ContactMomenten />
-            </Grid.Cell>
+            </PageContentCell>
           )}
           <ProfilePrivateSectionPanels />
         </>
