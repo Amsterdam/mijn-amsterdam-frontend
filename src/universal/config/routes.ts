@@ -38,7 +38,7 @@ export const AppRoutes = {
   GENERAL_INFO: '/uitleg',
   VERGUNNINGEN: '/vergunningen',
   'VERGUNNINGEN/LIST': '/vergunningen/lijst/:kind/:page?',
-  'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
+  'VERGUNNINGEN/DETAIL': '/vergunningen/:caseType/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
   'TOERISTISCHE_VERHUUR/VERGUNNING/LIST':
     '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
