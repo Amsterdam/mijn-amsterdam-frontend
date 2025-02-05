@@ -21,6 +21,7 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from '../services/controller';
+import { fetchDecosDocumentsList } from '../services/decos/decos-route-handlers';
 import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchZorgnedAVDocument,
@@ -30,7 +31,7 @@ import {
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchDecosDocumentsList } from '../services/vergunningen/vergunningen-route-handlers';
+
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
