@@ -1,13 +1,13 @@
 import { Response } from 'express';
 
+import { fetchDecosDocumentList } from './decos-service';
+import { DecosZaakBase } from './decos-types';
 import { getAuth } from '../../auth/auth-helpers';
 import {
   RequestWithQueryParams,
   sendResponse,
   sendUnauthorized,
 } from '../../routing/route-helpers';
-import { fetchDecosDocumentList } from '../decos/decos-service';
-import { DecosZaakBase } from '../decos/decos-types';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 export async function fetchDecosDocumentsList(
