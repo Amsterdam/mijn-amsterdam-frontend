@@ -28,6 +28,7 @@ export const AppRoutes = {
   BUURT: '/buurt',
   BEZWAREN: '/bezwaren',
   'BEZWAREN/DETAIL': '/bezwaren/:uuid',
+  'BEZWAREN/LIST': '/bezwaren/lijst/:kind/:page?',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',
@@ -40,7 +41,7 @@ export const AppRoutes = {
   'VERGUNNINGEN/DETAIL': '/vergunningen/:caseType/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
   'TOERISTISCHE_VERHUUR/VERGUNNING/LIST':
-    '/toeristische-verhuur/vergunning/list/:kind/:page?',
+    '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
   'TOERISTISCHE_VERHUUR/VERGUNNING':
     '/toeristische-verhuur/vergunning/:caseType/:id',
   VAREN: '/passagiers-en-beroepsvaart',
