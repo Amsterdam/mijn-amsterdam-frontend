@@ -4,7 +4,7 @@ import escapeRegex from 'lodash.escaperegexp';
 
 import styles from './Search.module.scss';
 import type {
-  HorecaVergunningen,
+  HorecaVergunning,
   Krefia,
   KrefiaDeepLink,
   VakantieverhuurVergunning,
@@ -222,7 +222,7 @@ interface ToeristischRegistratieItem {
 
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
-    stateKey: 'VERGUNNINGEN' as AppStateKey,
+    stateKey: 'VERGUNNINGENv2' as AppStateKey,
     displayTitle: (vergunning: Vergunning) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
@@ -456,7 +456,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: FeatureToggle.horecaActive,
     stateKey: 'HORECA' as AppStateKey,
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: HorecaVergunningen) {
+    displayTitle(item: HorecaVergunning) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
     },

@@ -1,37 +1,24 @@
-import styles from './Vergunningen.module.scss';
-import {
-  Vergunning,
-  VergunningExpirable,
-} from '../../../server/services/vergunningen/vergunningen';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { dateSort } from '../../../universal/helpers/date';
-import { isExpired } from '../../../universal/helpers/vergunningen';
 
-const displayPropsHuidigeVergunningen = {
+export const displayPropsHuidigeVergunningen = {
   identifier: 'Kenmerk',
-  title: 'Soort vergunning',
+  title: 'Omschrijving',
   dateStartFormatted: 'Startdatum',
   dateEndFormatted: 'Einddatum',
-};
+} as const;
 
-const displayPropsParkerenHuidigeVergunningen = {
+export const displayPropsLopendeAanvragen = {
   identifier: 'Kenmerk',
   title: 'Omschrijving',
   dateRequestFormatted: 'Aangevraagd',
-};
+} as const;
 
-const displayPropsLopendeAanvragen = {
-  identifier: 'Kenmerk',
-  title: 'Omschrijving',
-  dateRequestFormatted: 'Aangevraagd',
-};
-
-const displayPropsEerdereVergunningen = {
+export const displayPropsEerdereVergunningen = {
   identifier: 'Kenmerk',
   title: 'Omschrijving',
   decision: 'Resultaat',
-};
+} as const;
 
 export const listPageParamKind = {
   actual: 'huidige-vergunningen-en-ontheffingen',
@@ -39,45 +26,47 @@ export const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
 } as const;
 
-type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-function isVergunningExpirable(
-  vergunning: Vergunning | VergunningFrontendV2
-): vergunning is VergunningExpirable {
-  return (vergunning as VergunningExpirable).dateEnd !== undefined;
+export const listPageTitle = {
+  [listPageParamKind.actual]: 'Huidige vergunningen en ontheffingen',
+  [listPageParamKind.historic]:
+    'Eerdere en niet verleende vergunningen en ontheffingen',
+};
+
+function isVergunningExpirable(vergunning: VergunningFrontendV2) {
+  // TODO: is this the correct check ?
+  return 'isExpired' in vergunning;
 }
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VergunningFrontendV2 | Vergunning) =>
-      !vergunning.processed,
+    filter: (vergunning: VergunningFrontendV2) => !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
     className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
+    filter: (vergunning: VergunningFrontendV2) => {
       const isCurrentlyActivePermit =
         vergunning.processed && vergunning.decision === 'Verleend';
 
       if (isVergunningExpirable(vergunning)) {
-        return isCurrentlyActivePermit && !isExpired(vergunning, new Date());
+        return isCurrentlyActivePermit && vergunning.isExpired !== true;
       }
       // Assume if something is not expirable then it's not expired.
       return isCurrentlyActivePermit;
     },
     sort: dateSort('dateEnd', 'asc'),
-    displayProps: FeatureToggle.vergunningenV2Active
-      ? displayPropsHuidigeVergunningen
-      : displayPropsParkerenHuidigeVergunningen,
+    displayProps: displayPropsHuidigeVergunningen,
     className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
+    filter: (vergunning: VergunningFrontendV2) => {
       if (vergunning.processed && vergunning.decision !== 'Verleend') {
         return true;
       }
@@ -86,7 +75,7 @@ export const tableConfig = {
         return (
           vergunning.processed &&
           vergunning.decision === 'Verleend' &&
-          isExpired(vergunning, new Date())
+         vergunning.isExpired === true
         );
       }
 
