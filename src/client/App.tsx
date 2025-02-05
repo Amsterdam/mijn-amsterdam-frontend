@@ -265,12 +265,7 @@ function AppAuthenticated() {
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
             component={function VergunningDetailWrapper() {
               return FeatureToggle.vergunningenV2Active ? (
-                <VergunningV2Detail
-                  backLink={{
-                    to: AppRoutes.VERGUNNINGEN,
-                    title: ThemaTitles.VERGUNNINGEN,
-                  }}
-                />
+                <VergunningV2Detail backLink={AppRoutes.VERGUNNINGEN} />
               ) : (
                 <VergunningDetail
                   backLink={{
@@ -410,12 +405,7 @@ function AppAuthenticated() {
             path={AppRoutes['PARKEREN/DETAIL']} // Nieuwe AppRoute
             component={function ParkerenWrapper() {
               return FeatureToggle.vergunningenV2Active ? (
-                <VergunningV2Detail
-                  backLink={{
-                    to: AppRoutes.PARKEREN,
-                    title: ThemaTitles.PARKEREN,
-                  }}
-                />
+                <VergunningV2Detail backLink={AppRoutes.PARKEREN} />
               ) : (
                 <VergunningDetail
                   backLink={{
