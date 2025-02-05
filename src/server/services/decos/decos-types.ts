@@ -1,5 +1,6 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { GenericDocument } from '../../../universal/types';
+import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
@@ -143,6 +144,7 @@ type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
     ? unknown
     : never
   : T['caseType'];
+
 export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // The caseType (zaaktype) of the sourceData.
   caseType: CaseTypeLiteral<T>;
@@ -183,7 +185,7 @@ export type DecosZakenSourceFilter = (
 ) => boolean;
 
 export interface DecosZaakBase {
-  caseType: string;
+  caseType: DecosCaseType;
   dateDecision: string | null;
   dateRequest: string;
 
