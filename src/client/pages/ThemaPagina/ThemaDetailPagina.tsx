@@ -1,21 +1,19 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-import { Grid, Screen } from '@amsterdam/design-system-react';
+import { Grid } from '@amsterdam/design-system-react';
 
 import {
   GenericDocument,
-  LinkProps,
   ZaakDetail,
 } from '../../../universal/types/App.types';
 import {
-  DetailPage,
   ErrorAlert,
   LoadingContent,
-  PageHeading,
   StatusLine as StatusLineComponent,
-  ThemaIcon,
 } from '../../components';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
@@ -27,10 +25,9 @@ const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 
 interface ThemaDetailPaginaProps<T> {
   zaak?: T | null;
-  backLink: LinkProps;
+  backLink: string;
   documentPathForTracking?: (document: GenericDocument) => string;
   errorAlertContent?: ReactNode;
-  icon?: ReactElement;
   isError: boolean;
   isLoading: boolean;
   loadingBarConfig?: BarConfig;
@@ -47,8 +44,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   zaak,
   title = 'Detailpagina',
   backLink,
-  className,
-  icon = <ThemaIcon />,
   pageContentTop,
   pageContentBottom,
   errorAlertContent = ERROR_ALERT_DEFAULT,
@@ -68,27 +63,24 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   }
 
   return (
-    <DetailPage className={className}>
-      <PageHeading icon={icon} backLink={backLink}>
-        {title}
-      </PageHeading>
-      <Screen className="ams-mb--lg">
-        <Grid>
-          {pageContentTop}
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
 
-          {!isLoading && (isError || !zaak) && (
-            <Grid.Cell span="all">
-              <ErrorAlert>{errorAlertContent}</ErrorAlert>
-            </Grid.Cell>
-          )}
+        {pageContentTop}
 
-          {isLoading && (
-            <Grid.Cell span="all">
-              <LoadingContent barConfig={loadingBarConfig} />
-            </Grid.Cell>
-          )}
-        </Grid>
-      </Screen>
+        {!isLoading && (isError || !zaak) && (
+          <Grid.Cell span="all">
+            <ErrorAlert>{errorAlertContent}</ErrorAlert>
+          </Grid.Cell>
+        )}
+
+        {isLoading && (
+          <Grid.Cell span="all">
+            <LoadingContent barConfig={loadingBarConfig} />
+          </Grid.Cell>
+        )}
+      </PageContentV2>
       <Grid>
         {!!statusItemSteps.length && zaak && (
           <Grid.Cell span="all">
@@ -102,10 +94,8 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
         )}
       </Grid>
       {!!pageContentBottom && (
-        <Screen>
-          <Grid>{pageContentBottom}</Grid>
-        </Screen>
+        <PageContentV2>{pageContentBottom}</PageContentV2>
       )}
-    </DetailPage>
+    </DetailPageV2>
   );
 }
