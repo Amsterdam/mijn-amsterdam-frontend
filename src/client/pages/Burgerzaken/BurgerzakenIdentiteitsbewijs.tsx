@@ -4,7 +4,6 @@ import { Grid } from '@amsterdam/design-system-react';
 import { useBurgerZakenDetailData } from './useBurgerZakenDetailData.hook';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { IdentiteitsbewijsFrontend } from '../../../universal/types';
-import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -19,7 +18,6 @@ export function BurgerzakenIdentiteitsbewijs() {
       zaak={document}
       isError={isError}
       isLoading={isLoading}
-      icon={<ThemaIcon />}
       backLink={backLink}
       pageContentTop={
         !!document && (
