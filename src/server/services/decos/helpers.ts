@@ -14,7 +14,7 @@ import {
   DECOS_PENDING_REMOVAL_DFUNCTION,
 } from './decos-types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { DecosCaseType } from '../../../universal/types/decos-zaken';
+import { entries } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
