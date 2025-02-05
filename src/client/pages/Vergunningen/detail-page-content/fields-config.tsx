@@ -50,7 +50,7 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
           content: vergunning.kentekens,
         }
       : null,
-  theDate: (vergunning) => ({
+  dateStartedOn: (vergunning) => ({
     label: `Op`,
     content: vergunning.dateStartFormatted,
   }),
@@ -88,39 +88,23 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
       : null,
 };
 
+type TransformerKey = keyof typeof commonTransformers;
+
 export function getRowsByKey<T extends VergunningFrontend>(
   vergunning: T,
-  keysOrTransformers: (string | RowTransformer<T>)[]
+  keysOrTransformers: (TransformerKey | RowTransformer<T>)[]
 ): Record<string, Row | RowSet> {
   const rows = keysOrTransformers
     .map((keyOrTransformer) => {
       if (typeof keyOrTransformer === 'string') {
         // Check if the key has a common transformer attached to it
         const commonTransformer = commonTransformers[keyOrTransformer];
-        // Cast the key to a keyof T to check if it exists in the vergunning object.
-        const key = keyOrTransformer as keyof T;
-        // In advance construct a default row object with the key and the value from the vergunning object.
-        const defaultRow =
-          key in vergunning
-            ? {
-                label: key,
-                content: vergunning[key],
-              }
-            : null;
         // If the key has a common transformer attached to it, return the key and the transformed value.
-        return [
-          keyOrTransformer,
-          typeof commonTransformer === 'function'
-            ? commonTransformer(vergunning)
-            : defaultRow,
-        ];
+        return [keyOrTransformer, commonTransformer(vergunning)];
       }
 
       // KeyOrTransformer is a transformer object
-      const [key, transformer] = entries(
-        keyOrTransformer as RowTransformer<T>
-      )[0] as [keyof T, VergunningDataListRow<T>];
-
+      const [key, transformer] = entries(keyOrTransformer)[0];
       return [key, transformer(vergunning)];
     })
     .filter(([_, row]) => row !== null);
@@ -130,7 +114,7 @@ export function getRowsByKey<T extends VergunningFrontend>(
 
 export function getRows<T extends VergunningFrontend>(
   vergunning: T,
-  keysOrTransformers: (string | RowTransformer<T>)[]
+  keysOrTransformers: (TransformerKey | RowTransformer<T>)[]
 ): Array<Row | RowSet> {
   const rowsByKey = getRowsByKey(vergunning, keysOrTransformers);
   return Object.values(rowsByKey);

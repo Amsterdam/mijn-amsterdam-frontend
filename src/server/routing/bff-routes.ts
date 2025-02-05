@@ -31,7 +31,7 @@ export const BffEndpoints = {
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
 
-  // Decos
+  // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
 
