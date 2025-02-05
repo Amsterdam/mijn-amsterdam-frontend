@@ -690,7 +690,7 @@ describe('afis-facturen', async () => {
     test('Returns same ID', () => {
       expect(forTesting.getFactuurDocumentId(properID)).toBe(properID);
     });
-    test('Returns same ID', () => {
+    test('Converts oldID to migratedID', () => {
       const rs = forTesting.getFactuurDocumentId(oldID);
       expect(rs).toBe(migratedID);
       expect(rs.length).toBe(18);
