@@ -27,7 +27,7 @@ const FIFTEEN_MINUTES_MS = 15 * ONE_MINUTE_MS;
 interface DetailPageContentProps {
   vergunning: VergunningFrontendV2;
   documents: VergunningDocument[];
-  backLink: LinkProps;
+  backLink: string;
 }
 
 // TODO: Implement detailpages per case
@@ -57,7 +57,7 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
 }
 
 interface VergunningV2DetailProps {
-  backLink: LinkProps;
+  backLink: string;
 }
 
 export default function VergunningV2Detail({
