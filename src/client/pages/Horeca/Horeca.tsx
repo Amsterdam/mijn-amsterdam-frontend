@@ -1,7 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { HorecaVergunning } from './Horeca-thema-config';
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
+import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
