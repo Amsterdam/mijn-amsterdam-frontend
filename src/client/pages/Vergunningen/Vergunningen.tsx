@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useVergunningenTransformed } from './useVergunningenTransformed.hook';
 import styles from './Vergunningen.module.scss';
@@ -16,7 +16,11 @@ import {
   Table,
   addTitleLinkComponent,
 } from '../../components';
-import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -71,7 +75,7 @@ export default function Vergunningen() {
         <PageHeadingV2 backLink={AppRoutes.HOME}>
           {ThemaTitles.VERGUNNINGEN}
         </PageHeadingV2>
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Paragraph>
             Hier ziet u een overzicht van uw aanvragen voor vergunningen en
             ontheffingen bij gemeente Amsterdam.
@@ -90,7 +94,7 @@ export default function Vergunningen() {
               We kunnen op dit moment geen gegevens tonen.
             </ErrorAlert>
           )}
-        </Grid.Cell>
+        </PageContentCell>
       </PageContentV2>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-actual"

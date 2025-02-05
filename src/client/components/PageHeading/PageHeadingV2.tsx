@@ -1,12 +1,13 @@
 import { MouseEventHandler, useCallback } from 'react';
 
-import { Grid, Heading, Icon } from '@amsterdam/design-system-react';
+import { Heading, Icon } from '@amsterdam/design-system-react';
 import { useHistory } from 'react-router-dom';
 
 import styles from './PageHeadingV2.module.scss';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronLeft } from '../../assets/icons';
 import { MaRouterLink } from '../MaLink/MaLink';
+import { PageContentCell } from '../Page/Page';
 
 export type PageHeadingProps = {
   children: ComponentChildren;
@@ -31,7 +32,11 @@ export function PageHeadingV2({
     [history]
   );
   return (
-    <Grid.Cell span={7} className={styles.PageHeadingWrap}>
+    <PageContentCell
+      startWide={1}
+      spanWide={7}
+      className={styles.PageHeadingWrap}
+    >
       <div className={styles.PageHeadingSizer}>
         <div className={styles.PageHeadingInner}>
           {showBacklink && (
@@ -49,6 +54,6 @@ export function PageHeadingV2({
           </Heading>
         </div>
       </div>
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
