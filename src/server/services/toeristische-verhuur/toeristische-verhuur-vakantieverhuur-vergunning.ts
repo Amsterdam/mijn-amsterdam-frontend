@@ -4,8 +4,8 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchDecosZaken } from '../decos/decos-service';
-import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
-import { transformVergunningFrontend } from '../vergunningen-v2/vergunningen';
+import { VergunningFrontendV2 } from '../vergunningen/config-and-types';
+import { transformVergunningFrontend } from '../vergunningen/vergunningen';
 
 function getVergunningStatussen(vergunning: VergunningFrontendV2) {
   const isAfgehandeld =
