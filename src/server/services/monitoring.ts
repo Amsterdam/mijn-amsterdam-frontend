@@ -39,6 +39,10 @@ if (client) {
     if (envelope?.data?.baseType === 'RequestData') {
       const reqData = envelope.data.baseData!;
 
+      console.log('------REQUEST URL-----');
+      console.log(reqData.url);
+      console.log('-------End--------');
+
       if (EXCLUDED_REQUESTS.includes(reqData.url)) {
         // Do not send telemetry.
         return false;
