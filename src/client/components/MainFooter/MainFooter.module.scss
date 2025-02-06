@@ -4,9 +4,17 @@
 
 .FakeFooterLink {
   color: var(--ams-link-inverse-color-color);
+  padding-left: calc(
+    var(--ams-icon-size-5-font-size) * var(--ams-icon-size-5-line-height) - 2px
+  );
+  position: relative;
+  :global(span.ams-icon) {
+    position: absolute;
+    left: -2px;
+    top: -6px;
+  }
   > span:not(.ams-icon),
   > strong {
-    display: inline-block;
     font-size: var(--ams-link-standalone-font-size);
     line-height: var(--ams-link-standalone-line-height);
   }
