@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Script to create an html file of all the commits between two git tags
 // First step: get first commit hash of the year ($first)
 // Second step: get last commit hash of the year ($last)
