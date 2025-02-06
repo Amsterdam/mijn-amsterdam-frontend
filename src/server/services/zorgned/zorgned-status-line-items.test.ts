@@ -1,3 +1,4 @@
+import { log } from '../../logging';
 import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
 import {
   ZorgnedAanvraagTransformed,
@@ -47,7 +48,7 @@ const lineItemsConfig3: ZorgnedStatusLineItemsConfig = {
 const lineItemConfigs = [lineItemsConfig1, lineItemsConfig2, lineItemsConfig3];
 
 describe('zorgned-status-line-items', () => {
-  const logSpy = vi.spyOn(console, 'log');
+  const logSpy = vi.spyOn(log, 'error');
 
   describe('getStatusLineItemTransformers', () => {
     test('Get transformers', () => {
