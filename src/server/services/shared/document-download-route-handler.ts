@@ -2,7 +2,6 @@ import { AxiosResponse } from 'axios';
 import { Response, Router } from 'express';
 
 import { decryptEncryptedRouteParamAndValidateSessionID } from './decrypt-route-param';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   ApiErrorResponse,
   ApiPostponeResponse,
@@ -12,6 +11,7 @@ import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   RequestWithRouteAndQueryParams,
+  sendResponse,
   sendUnauthorized,
 } from '../../routing/route-helpers';
 
@@ -74,9 +74,7 @@ export function downloadDocumentRouteHandler(
           documentResponse.status === 'ERROR' ||
           documentResponse.status === 'POSTPONE'
         ) {
-          return res
-            .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-            .send(documentResponse);
+          return sendResponse(res, documentResponse);
         }
 
         if (
@@ -95,7 +93,7 @@ export function downloadDocumentRouteHandler(
           : res.send(documentResponse.content.data);
       }
 
-      return res.status(HTTP_STATUS_CODES.BAD_REQUEST).send(decryptResult);
+      return sendResponse(res, decryptResult);
     }
 
     return sendUnauthorized(res);
