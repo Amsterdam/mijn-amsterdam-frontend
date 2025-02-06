@@ -1,5 +1,6 @@
 import { getThemaTitle } from './helpers';
 import {
+  linkListItems,
   listPageParamKind,
   listPageTitle,
   routes,
@@ -57,5 +58,6 @@ export function useHliThemaData() {
     tableConfig,
     listPageTitle,
     listPageParamKind,
+    linkListItems,
   };
 }
