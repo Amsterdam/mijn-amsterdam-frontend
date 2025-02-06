@@ -10,7 +10,7 @@ if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
     .setInternalLogging(false)
-    .setAutoCollectRequests(false)
+    .setAutoCollectRequests(true)
     .setSendLiveMetrics(false)
     .setAutoCollectPerformance(false, false)
     .setAutoCollectExceptions(true)
