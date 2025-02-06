@@ -1,6 +1,7 @@
 import * as appInsights from 'applicationinsights';
 import {
   ExceptionTelemetry,
+  RequestData,
   SeverityLevel,
   Telemetry,
   TraceTelemetry,
@@ -37,13 +38,16 @@ if (client) {
 
   client.addTelemetryProcessor((envelope) => {
     if (envelope?.data?.baseType === 'RequestData') {
-      const reqData = envelope.data.baseData!;
+      const reqData = envelope.data.baseData as RequestData;
 
       console.log('------REQUEST URL-----');
-      console.log(reqData.url);
+      console.log(reqData.name);
+      console.log(
+        `Should exclude: ${EXCLUDED_REQUESTS.includes(reqData.name)}`
+      );
       console.log('-------End--------');
 
-      if (EXCLUDED_REQUESTS.includes(reqData.url)) {
+      if (EXCLUDED_REQUESTS.includes(reqData.name)) {
         // Do not send telemetry.
         return false;
       }
