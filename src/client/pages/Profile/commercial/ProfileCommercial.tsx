@@ -3,9 +3,9 @@ import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { panelConfig } from './ProfileCommercial.transform';
 import { useProfileData } from './useProfileData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ProfileSectionPanel } from '../ProfileSectionPanel';
-import styles from './ProfileCommercial.module.scss';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
+import { ProfileSectionPanel } from '../ProfileSectionPanel';
 
 function ProfileCommercialSectionPanels() {
   const { KVK, profileData } = useProfileData();
@@ -84,18 +84,18 @@ function ProfileCommercialSectionPanels() {
           />
         )}
       <PageContentCell spanWide={6}>
-        <Paragraph className={styles.SuppressedParagraph}>
+        <ParagaphSuppressed className="ams-mb--sm">
           Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
-        </Paragraph>
-        <Paragraph className={styles.SuppressedParagraph}>
+        </ParagaphSuppressed>
+        <ParagaphSuppressed>
           U kunt deze gegevens niet gebruiken als uittreksel. Een gewaarmerkt
           uittreksel vraagt u aan bij de de{' '}
           <Link href="https://kvk.nl" rel="noopener noreferrer">
             Kamer van Koophandel
           </Link>
           .
-        </Paragraph>
+        </ParagaphSuppressed>
       </PageContentCell>
     </>
   );

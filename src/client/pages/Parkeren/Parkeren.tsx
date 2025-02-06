@@ -1,12 +1,12 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
-import styles from './Parkeren.module.scss';
 import { useParkerenData } from './useParkerenData.hook';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
+import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -53,12 +53,12 @@ export function Parkeren() {
 
   const pageContentBottom = hasActualGPK && (
     <PageContentCell startWide={3} spanWide={7}>
-      <Paragraph className={styles.SuppressedParagraph}>
+      <ParagaphSuppressed>
         Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste
         parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u hier in
         Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra de GPK is
         gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn Amsterdam.
-      </Paragraph>
+      </ParagaphSuppressed>
     </PageContentCell>
   );
 
@@ -86,7 +86,7 @@ function determinePageContentTop(
       profileType === 'commercial' ? 'bedrijven' : 'bewoners';
 
     return (
-      <>
+      <PageContentCell>
         <Alert
           severity="info"
           heading={`Parkeervergunning voor ${profileTypeLabel}`}
@@ -102,7 +102,7 @@ function determinePageContentTop(
             </MaButtonLink>
           </Paragraph>
         </Alert>
-      </>
+      </PageContentCell>
     );
   }
   return (

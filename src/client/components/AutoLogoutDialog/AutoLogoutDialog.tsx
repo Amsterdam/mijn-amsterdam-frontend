@@ -93,7 +93,7 @@ export const DefaultAutologoutDialogSettings = {
   secondsSessionRenewRequestInterval: SESSION_RENEW_INTERVAL_SECONDS,
 };
 
-export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
+export function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
   // Will open the dialog if maxCount is reached.

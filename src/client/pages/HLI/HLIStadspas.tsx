@@ -24,10 +24,13 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
-import { ErrorAlert, LoadingContent, Modal } from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import { Datalist } from '../../components/Datalist/Datalist';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import LoadingContent, {
+  BarConfig,
+} from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { Modal } from '../../components/Modal/Modal';
 import {
   DetailPageV2,
   PageContentCell,

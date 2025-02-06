@@ -22,8 +22,8 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
+import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -38,7 +38,7 @@ import { uniqueArray } from '../../../universal/helpers/utils';
 import {
   AppStateKey,
   BRPData,
-  Identiteitsbewijs,
+  IdentiteitsbewijsFrontend,
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
@@ -391,7 +391,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       ];
       return [...identiteitsBewijzen, ...brpDataItems];
     },
-    displayTitle: (item: Identiteitsbewijs | ApiBaseItem) => {
+    displayTitle: (item: IdentiteitsbewijsFrontend | ApiBaseItem) => {
       return (term: string) =>
         displayPath(term, [capitalizeFirstLetter(item.title)]);
     },
@@ -410,11 +410,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
           .map((deepLink) => {
             return {
               ...deepLink,
-              title: deepLink.title,
-              link: {
-                to: deepLink.url,
-                title: deepLink.title,
-              },
+              title: deepLink.link.title,
             };
           });
       return deepLinks || [];

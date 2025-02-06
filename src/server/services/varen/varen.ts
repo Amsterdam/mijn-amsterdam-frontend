@@ -1,6 +1,6 @@
 import memoize from 'memoizee';
 
-import { Varen, VarenFrontend } from './config-and-types';
+import { DecosVaren, VarenFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -24,7 +24,7 @@ export async function fetchVaren_(
     const decosVergunningen = response.content;
     const varenVergunningFrontend: VarenFrontend[] = decosVergunningen.map(
       (vergunning) =>
-        transformDecosZaakFrontend<Varen>(
+        transformDecosZaakFrontend<DecosVaren>(
           authProfileAndToken.profile.sid,
           vergunning,
           appRoute

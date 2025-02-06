@@ -2,15 +2,17 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
 import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
-import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>
-    Hier ziet u een overzicht van uw aanvragen voor Horeca en ontheffingen bij
-    gemeente Amsterdam.
-  </Paragraph>
+  <PageContentCell>
+    <Paragraph>
+      Hier ziet u een overzicht van uw aanvragen voor Horeca en ontheffingen bij
+      gemeente Amsterdam.
+    </Paragraph>
+  </PageContentCell>
 );
 
 export function HorecaThemaPagina() {
@@ -26,7 +28,7 @@ export function HorecaThemaPagina() {
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
       return (
-        <ThemaPaginaTable<VergunningFrontend<HorecaVergunning>>
+        <ThemaPaginaTable<HorecaVergunning>
           key={kind}
           title={title}
           listPageRoute={listPageRoute}

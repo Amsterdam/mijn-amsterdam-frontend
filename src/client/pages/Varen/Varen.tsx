@@ -1,4 +1,4 @@
-import { Grid, Icon, Paragraph } from '@amsterdam/design-system-react';
+import { Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
@@ -6,16 +6,19 @@ import { buttonItems, linkListItems } from './Varen-thema-config';
 import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>
-    De passagiersvaart in Amsterdam is erg populair bij bezoekers.
-    Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook gehuurde
-    boten, met of zonder schipper, vallen onder de passagiersvaart.
-  </Paragraph>
+  <PageContentCell>
+    <Paragraph>
+      De passagiersvaart in Amsterdam is erg populair bij bezoekers.
+      Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook
+      gehuurde boten, met of zonder schipper, vallen onder de passagiersvaart.
+    </Paragraph>
+  </PageContentCell>
 );
 
 export function Varen() {
@@ -39,9 +42,9 @@ export function Varen() {
   );
 
   const gegevensAanvragerList = gegevensAanvrager ? (
-    <Grid.Cell span="all">
+    <PageContentCell spanWide={12}>
       <Datalist rows={[gegevensAanvrager]} />
-    </Grid.Cell>
+    </PageContentCell>
   ) : null;
 
   const vergunningenTables = Object.entries(tableConfig).map(

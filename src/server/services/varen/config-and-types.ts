@@ -1,4 +1,4 @@
-import { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
+import { DecosZaakBase, DecosZaakFrontend } from '../decos/config-and-types';
 
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
@@ -8,7 +8,7 @@ export const caseTypeVaren = {
 export type CaseTypeVaren = keyof typeof caseTypeVaren;
 export type GetCaseType<T extends CaseTypeVaren> = (typeof caseTypeVaren)[T];
 
-export type VarenRegistratieRederType = DecosZaakBase & {
+export type DecosVarenRegistratieReder = DecosZaakBase & {
   caseType: GetCaseType<'VarenRederRegistratie'>;
   title: 'Varen registratie reder';
   decision: 'Verleend' | 'Ingetrokken';
@@ -21,7 +21,7 @@ export type VarenRegistratieRederType = DecosZaakBase & {
   email: string | null;
 };
 
-export interface VarenVergunningExploitatieType extends DecosZaakBase {
+export type DecosVarenVergunningExploitatie = DecosZaakBase & {
   caseType: GetCaseType<'VarenVergunningExploitatie'>;
   title: 'Varen vergunning exploitatie';
   decision:
@@ -54,25 +54,25 @@ export interface VarenVergunningExploitatieType extends DecosZaakBase {
   vesselWidth: number | null; // 0.01 meters
   vesselLength: number | null; // 0.01 meters
   vesselName: string | null;
-}
+};
 
-export interface VarenVergunningLigplaatsType extends DecosZaakBase {
+export type DecosVarenVergunningLigplaats = DecosZaakBase & {
   caseType: GetCaseType<'VarenVergunningLigplaats'>;
   title: 'Varen ligplaatsvergunning';
   decision: 'Geannuleerd' | 'Afgehandeld';
   location: string | null;
   vesselName: string | null;
-}
+};
 
-export type Varen =
-  | VarenRegistratieRederType
-  | VarenVergunningExploitatieType
-  | VarenVergunningLigplaatsType;
+export type DecosVaren =
+  | DecosVarenRegistratieReder
+  | DecosVarenVergunningExploitatie
+  | DecosVarenVergunningLigplaats;
 
-export type VarenFrontend<T extends DecosZaakBase = Varen> =
+export type VarenFrontend<T extends DecosZaakBase = DecosVaren> =
   DecosZaakFrontend<T>;
 
 export type VarenVergunningFrontend = Exclude<
   VarenFrontend,
-  VarenRegistratieRederType
+  DecosVarenRegistratieReder
 >;

@@ -2,16 +2,15 @@ import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
 import { useZorgThemaData } from './useZorgThemaData';
-import styles from './Zorg.module.scss';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { LinkProps } from '../../../universal/types/App.types';
-import { ExternalUrls } from '../../config/external-urls';
+import { PageContentCell } from '../../components/Page/Page';
+import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function HistoricItemsMention() {
   return (
-    <Paragraph className={styles.HistoricItemsMention}>
+    <ParagaphSuppressed>
       U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van
       daarvoor? Bel dan de Wmo Helpdesk:{' '}
       <Link href="tel:08000643" rel="noreferrer">
@@ -19,16 +18,23 @@ export function HistoricItemsMention() {
       </Link>
       .<br />U ziet ook geen begeleid thuis en beschermd verblijf (vroeger
       maatschappelijke opvang en beschermd wonen). Hier zijn we nog mee bezig.
-    </Paragraph>
+    </ParagaphSuppressed>
   );
 }
 
 export function ZorgThemaPagina() {
-  const { isError, isLoading, regelingen, title, routes, tableConfig } =
-    useZorgThemaData();
+  const {
+    isError,
+    isLoading,
+    regelingen,
+    title,
+    routes,
+    tableConfig,
+    linkListItems,
+  } = useZorgThemaData();
 
   const pageContentTop = (
-    <>
+    <PageContentCell>
       <Paragraph className="ams-mb--sm">
         Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke
         ondersteuning (Wmo).
@@ -42,15 +48,8 @@ export function ZorgThemaPagina() {
         (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het
         Sociaal Loket.
       </Paragraph>
-    </>
+    </PageContentCell>
   );
-
-  const linkListItems: LinkProps[] = [
-    {
-      to: ExternalUrls.ZORG_LEES_MEER,
-      title: 'Lees hier meer over zorg en ondersteuning',
-    },
-  ];
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -80,11 +79,17 @@ export function ZorgThemaPagina() {
         title={title}
         pageContentTop={pageContentTop}
         linkListItems={linkListItems}
-        pageContentMain={tables}
+        pageContentMain={
+          <>
+            {tables}
+            <PageContentCell spanWide={8} startWide={3}>
+              <HistoricItemsMention />
+            </PageContentCell>
+          </>
+        }
         isError={isError}
         isLoading={isLoading}
       />
-      <HistoricItemsMention />
     </>
   );
 }

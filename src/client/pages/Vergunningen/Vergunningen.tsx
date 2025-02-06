@@ -5,14 +5,17 @@ import {
   DecosVergunning,
   VergunningFrontend,
 } from '../../../server/services/vergunningen/config-and-types';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>
-    Hier ziet u een overzicht van uw aanvragen voor vergunningen en ontheffingen
-    bij gemeente Amsterdam.
-  </Paragraph>
+  <PageContentCell>
+    <Paragraph>
+      Hier ziet u een overzicht van uw aanvragen voor vergunningen en
+      ontheffingen bij gemeente Amsterdam.
+    </Paragraph>
+  </PageContentCell>
 );
 
 export function VergunningenThemaPagina() {
