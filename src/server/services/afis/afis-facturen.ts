@@ -199,7 +199,9 @@ function transformFactuur(
   deelbetalingen?: AfisFactuurDeelbetalingen
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
-  const factuurDocumentId = String(invoice.AccountingDocument);
+  const factuurDocumentId = getFactuurDocumentId(
+    String(invoice.AccountingDocument)
+  );
   const factuurNummer = getFactuurnummer(invoice);
   const factuurDocumentIdEncrypted = factuurDocumentId
     ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
