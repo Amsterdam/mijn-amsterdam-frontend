@@ -2,6 +2,7 @@ import styles from './HLI.module.scss';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
+import { LinkProps } from '../../../universal/types/App.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
@@ -55,5 +56,16 @@ export const tableConfig = {
 export const routes = {
   listPage: AppRoutes['HLI/REGELINGEN_LIST'],
   detailPage: AppRoutes['HLI/REGELING'],
-  themaPage: AppRoutes['HLI'],
+  themaPage: AppRoutes.HLI,
 } as const;
+
+export const linkListItems: LinkProps[] = [
+  {
+    to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
+    title: 'Meer informatie over regelingen',
+  },
+  {
+    to: 'https://www.amsterdam.nl/stadspas',
+    title: 'Meer informatie over Stadspas',
+  },
+] as const;
