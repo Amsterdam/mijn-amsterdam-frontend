@@ -8,7 +8,6 @@ import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
 import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
@@ -100,6 +99,7 @@ export function HLIThemaPagina() {
     tableConfig,
     dependencyError,
     stadspassen,
+    linkListItems,
   } = useHliThemaData();
 
   const pageContentTop = (
@@ -110,24 +110,6 @@ export function HLIThemaPagina() {
       </Paragraph>
     </PageContentCell>
   );
-
-  const linkListItems: LinkProps[] = [
-    {
-      to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
-      title: 'Meer informatie over regelingen',
-    },
-    {
-      to: 'https://www.amsterdam.nl/stadspas',
-      title: 'Meer informatie over Stadspas',
-    },
-  ];
-
-  if (hasKindtegoed) {
-    linkListItems.push({
-      to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-      title: 'Meer informatie over Kindtegoed declareren',
-    });
-  }
 
   const regelingenTables = FeatureToggle.hliThemaRegelingenActive
     ? Object.entries(tableConfig).map(
@@ -168,7 +150,17 @@ export function HLIThemaPagina() {
       <ThemaPagina
         title={title}
         pageContentTop={pageContentTop}
-        linkListItems={linkListItems}
+        linkListItems={
+          hasKindtegoed
+            ? [
+                ...linkListItems,
+                {
+                  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+                  title: 'Meer informatie over Kindtegoed declareren',
+                },
+              ]
+            : linkListItems
+        }
         pageContentMain={
           <>
             {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
