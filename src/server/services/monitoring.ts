@@ -22,6 +22,29 @@ const client: appInsights.TelemetryClient | undefined =
   appInsights.defaultClient;
 // See also: https://www.npmjs.com/package/applicationinsights
 
+if (client) {
+  const EXCLUDED_REQUESTS = [
+    'GET /api/v1/auth/check',
+    'GET /robots933456.txt',
+    'POST /admin/host/ping',
+    'POST /api/v1/services/telemetry/v2/track',
+  ];
+
+  client.addTelemetryProcessor((envelope) => {
+    if (envelope?.data?.baseType === 'RequestData') {
+      const reqData = envelope.data.baseData!;
+
+      if (EXCLUDED_REQUESTS.includes(reqData.url)) {
+        // Stop telemetry from being sent
+        return false;
+      }
+    }
+
+    // Allow telemetry to be sent
+    return true;
+  });
+}
+
 export type Severity =
   | 'verbose'
   | 'information'
