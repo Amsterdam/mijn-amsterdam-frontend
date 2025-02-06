@@ -31,14 +31,14 @@ export function Varen() {
   } = useVarenThemaData();
 
   const pageContentTopSecondary = (
-    <>
+    <PageContentCell>
       {buttonItems?.map(({ to, title }) => (
         <MaButtonLink key={to} href={to} variant="secondary">
           {title}
           <Icon svg={ExternalLinkIcon} size="level-5" />
         </MaButtonLink>
       ))}
-    </>
+    </PageContentCell>
   );
 
   const gegevensAanvragerList = gegevensAanvrager ? (
