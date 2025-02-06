@@ -40,12 +40,12 @@ if (client) {
       const reqData = envelope.data.baseData!;
 
       if (EXCLUDED_REQUESTS.includes(reqData.url)) {
-        // Stop telemetry from being sent
+        // Do not send telemetry.
         return false;
       }
     }
 
-    // Allow telemetry to be sent
+    // Send telemetry.
     return true;
   });
 }
