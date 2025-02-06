@@ -43,7 +43,7 @@ import { entries } from '../../../universal/helpers/utils';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
-const FACTUUR_DOCUMENT_ID_LENGTH = 18;
+const FACTUUR_DOCUMENT_ID_LENGTH = 10;
 
 export const FACTUUR_STATE_KEYS: AfisFactuurState[] = [
   'open',
@@ -168,9 +168,13 @@ function getFactuurnummer(
 }
 
 function getFactuurDocumentId(id: string) {
+  // 12345678 must become 1000 00 12345678 2024
+
+  // 2400012282
+
   // Migrate old factuur document id to new format
-  const migratedFactuurId = `1000${id}2024`;
-  return id.length == FACTUUR_DOCUMENT_ID_LENGTH ? id : migratedFactuurId;
+  const migratedFactuurId = `1000${id.padStart(FACTUUR_DOCUMENT_ID_LENGTH, '0')}2024`;
+  return id.length < FACTUUR_DOCUMENT_ID_LENGTH ? migratedFactuurId : id;
 }
 
 function getInvoiceAmount(
