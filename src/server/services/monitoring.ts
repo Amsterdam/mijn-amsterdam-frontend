@@ -1,5 +1,10 @@
-import { KnownSeverityLevel } from 'applicationinsights';
 import * as appInsights from 'applicationinsights';
+import {
+  ExceptionTelemetry,
+  SeverityLevel,
+  Telemetry,
+  TraceTelemetry,
+} from 'applicationinsights/out/Declarations/Contracts';
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
@@ -52,28 +57,29 @@ export type Severity =
   | 'error'
   | 'critical';
 
-const severityMap: Record<Severity, KnownSeverityLevel> = {
-  verbose: KnownSeverityLevel.Verbose,
-  information: KnownSeverityLevel.Information,
-  warning: KnownSeverityLevel.Warning,
-  error: KnownSeverityLevel.Error,
-  critical: KnownSeverityLevel.Critical,
+const severityMap: Record<Severity, SeverityLevel> = {
+  verbose: SeverityLevel.Verbose,
+  information: SeverityLevel.Information,
+  warning: SeverityLevel.Warning,
+  error: SeverityLevel.Error,
+  critical: SeverityLevel.Critical,
 };
 
 export type Properties = {
-  properties?: appInsights.Telemetry['properties'];
+  properties?: Telemetry['properties'];
   severity?: Severity;
-  tags?: appInsights.Telemetry['properties'];
+  tags?: Telemetry['properties'];
 };
 
 export function captureException(error: unknown, properties?: Properties) {
   const severity = properties?.severity
     ? severityMap[properties.severity]
     : undefined;
-  const payload = {
+
+  const payload: ExceptionTelemetry = {
     exception: error as Error,
-    severity,
     properties,
+    severity,
   };
 
   if (IS_DEVELOPMENT) {
@@ -91,7 +97,7 @@ export function captureMessage(message: string, properties?: Properties) {
     ? severityMap[properties.severity]
     : undefined;
 
-  const payload: appInsights.TraceTelemetry = {
+  const payload: TraceTelemetry = {
     message,
     severity,
     properties,
