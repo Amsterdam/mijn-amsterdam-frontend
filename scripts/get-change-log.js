@@ -26,7 +26,7 @@ const { values } = parseArgs({
 let year = new Date().getFullYear();
 
 function parseGitLog(log) {
-  let table = `<table><thead><tr><th>Commit</th><th>date</th><th>Ticket</th><th>PR</th></tr></thead><tbody>`;
+  let table = `<table><thead><tr><th>Commit</th><th>Datum</th><th>Issue</th><th>Ticket</th><th>PR</th></tr></thead><tbody>`;
   const prReg = /\(#(\d+)\)/g;
   const ticketReg = /MIJN-(\d{4,})/gi; // Mijn-9064
   const logs = log.split('\n');
@@ -43,6 +43,7 @@ function parseGitLog(log) {
     table += `<tr>`;
     table += `<td><a href="https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${commitHash}">${commitHash}</a></td>`;
     table += `<td>${date}</td>`;
+    table += `<td>${commit?.replace(prReg, '')}</td>`;
 
     table += `<td>`;
     if (ticketMatches?.length) {
