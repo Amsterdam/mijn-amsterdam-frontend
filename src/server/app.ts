@@ -33,7 +33,7 @@ import {
   ONE_MINUTE_SECONDS,
   ONE_SECOND_MS,
 } from './config/app';
-import { log } from './logging';
+import { log, LOGGER_ENABLED } from './logging';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
@@ -64,13 +64,15 @@ morgan.token('build', function () {
 });
 
 // Logs all Incoming requests
-app.use(
-  IS_DEVELOPMENT
-    ? morgan('dev')
-    : morgan(
-        '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-      )
-);
+if (LOGGER_ENABLED) {
+  app.use(
+    morgan(
+      IS_DEVELOPMENT
+        ? 'dev'
+        : '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+    )
+  );
+}
 
 app.use(
   cors({

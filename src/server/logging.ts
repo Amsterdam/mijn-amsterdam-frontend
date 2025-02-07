@@ -3,7 +3,7 @@ import { LoggerOptions, pino } from 'pino';
 import { IS_DEVELOPMENT } from '../universal/config/env';
 
 const loggerEnabledKey = 'LOGGER_ENABLED';
-let LOGGER_ENABLED = process.env[loggerEnabledKey];
+export let LOGGER_ENABLED = process.env[loggerEnabledKey];
 
 if (!(LOGGER_ENABLED && ['true', 'false'].includes(LOGGER_ENABLED))) {
   // eslint-disable-next-line no-console
