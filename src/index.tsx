@@ -5,7 +5,6 @@ import App from './client/App';
 import { reactPlugin } from './client/helpers/monitoring';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';
-import { log } from './server/logging';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -16,7 +15,8 @@ if (
 }
 
 const release = `mijnamsterdam-frontend@${MA_APP_VERSION}`;
-log.info(
+// eslint-disable-next-line no-console
+console.info(
   'App version: %s, Commit sha: %s, Build id:, %s',
   release,
   MA_GIT_SHA ?? '-1',
