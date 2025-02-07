@@ -169,7 +169,7 @@ async function startServerBFF() {
   }
   const server = app.listen(BFF_PORT, () => {
     log.info(
-      `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${IS_DEVELOPMENT}]`
+      `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [IS_DEVELOPMENT: ${IS_DEVELOPMENT}]`
     );
   });
 
