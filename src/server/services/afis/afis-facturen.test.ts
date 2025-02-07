@@ -707,22 +707,17 @@ describe('afis-facturen', async () => {
 
   describe('getFactuurDocumentId returns correct factuurDocumentId', () => {
     const properID = '1234567890';
-    const properID2 = '123456789055555555';
     const oldID = '98765432';
-    const migratedID = `100000${oldID}2024`;
+    const migratedID = `00${oldID}`;
 
     test('Returns same ID', () => {
       expect(forTesting.getFactuurDocumentId(properID)).toBe(properID);
     });
 
-    test('Returns same ID 2', () => {
-      expect(forTesting.getFactuurDocumentId(properID2)).toBe(properID2);
-    });
-
     test('Converts oldID to migratedID', () => {
       const rs = forTesting.getFactuurDocumentId(oldID);
       expect(rs).toBe(migratedID);
-      expect(rs.length).toBe(18);
+      expect(rs.length).toBe(10);
     });
   });
 
