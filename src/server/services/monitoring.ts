@@ -8,7 +8,6 @@ import {
 } from 'applicationinsights/out/Declarations/Contracts';
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { IS_DEBUG } from '../config/app';
 import { log } from '../logging';
 
@@ -32,6 +31,7 @@ if (client) {
   const EXCLUDED_REQUESTS = [
     'GET /api/v1/auth/check',
     'GET /robots933456.txt',
+    'GET /admin/host/status',
     'POST /admin/host/ping',
     'POST /api/v1/services/telemetry/v2/track',
   ];
@@ -39,13 +39,6 @@ if (client) {
   client.addTelemetryProcessor((envelope) => {
     if (envelope?.data?.baseType === 'RequestData') {
       const reqData = envelope.data.baseData as RequestData;
-
-      console.log('------REQUEST URL-----');
-      console.log(reqData.name);
-      console.log(
-        `Should exclude: ${EXCLUDED_REQUESTS.includes(reqData.name)}`
-      );
-      console.log('-------End--------');
 
       if (EXCLUDED_REQUESTS.includes(reqData.name)) {
         // Do not send telemetry.
