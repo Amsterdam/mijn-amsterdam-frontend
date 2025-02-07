@@ -168,13 +168,7 @@ function getFactuurnummer(
 }
 
 function getFactuurDocumentId(id: string) {
-  // 12345678 must become 1000 00 12345678 2024
-
-  // 2400012282
-
-  // Migrate old factuur document id to new format
-  const migratedFactuurId = `1000${id.padStart(FACTUUR_DOCUMENT_ID_LENGTH, '0')}2024`;
-  return id.length < FACTUUR_DOCUMENT_ID_LENGTH ? migratedFactuurId : id;
+  return id.padStart(FACTUUR_DOCUMENT_ID_LENGTH, '0');
 }
 
 function getInvoiceAmount(
