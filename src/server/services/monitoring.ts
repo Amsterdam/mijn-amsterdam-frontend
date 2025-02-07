@@ -49,6 +49,8 @@ if (client) {
     // Send telemetry.
     return true;
   });
+
+  client.config.samplingPercentage = getSamplePercentage();
 }
 
 export type Severity =
@@ -121,4 +123,21 @@ export function trackEvent(name: string, properties: Record<string, unknown>) {
         name,
         properties,
       });
+}
+
+function getSamplePercentage(): number {
+  const samplePercentageKey = 'APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE';
+
+  let samplePercentage = process.env[samplePercentageKey];
+  if (!samplePercentage) {
+    // eslint-disable-next-line no-console
+    console.error(
+      `The environment variable ${samplePercentageKey} is not a percentage in the range of 0 up to including 100.`
+    );
+    samplePercentage = '100';
+    // eslint-disable-next-line no-console
+    console.log(`Defaulted ${samplePercentageKey} to ${samplePercentage}`);
+  }
+
+  return parseInt(samplePercentage);
 }
