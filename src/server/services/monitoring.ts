@@ -88,7 +88,7 @@ export function captureException(error: unknown, properties?: Properties) {
   if (IS_DEVELOPMENT) {
     // Does nothing (As expected) if development is not in debug mode.
     if (IS_DEBUG) {
-      log.info('Capture Exception', payload);
+      log.error('Capture Exception', payload);
     }
   } else {
     client?.trackException(payload);
@@ -130,13 +130,11 @@ function getSamplePercentage(): number {
 
   let samplePercentage = process.env[samplePercentageKey];
   if (!samplePercentage) {
-    // eslint-disable-next-line no-console
-    console.error(
+    log.error(
       `The environment variable ${samplePercentageKey} is not a percentage in the range of 0 up to including 100.`
     );
     samplePercentage = '100';
-    // eslint-disable-next-line no-console
-    console.log(`Defaulted ${samplePercentageKey} to ${samplePercentage}`);
+    log.error(`Defaulted ${samplePercentageKey} to ${samplePercentage}`);
   }
 
   return parseInt(samplePercentage);
