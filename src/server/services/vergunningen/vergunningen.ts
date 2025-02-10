@@ -22,10 +22,11 @@ function transformVergunningFrontend(
     appRoute,
     vergunning
   );
-  // Assign the definitive status steps
-  vergunningFrontend.steps = getStatusSteps(vergunningFrontend);
 
-  return vergunningFrontend;
+  return {
+    ...vergunningFrontend,
+    steps: getStatusSteps(vergunningFrontend),
+  };
 }
 
 async function fetchVergunningen_(
