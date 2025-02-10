@@ -1,11 +1,10 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './StatusLine.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { ComponentChildren } from '../../../universal/types';
 import {
   AltDocumentContent,
   GenericDocument,
@@ -15,7 +14,7 @@ import DocumentListV2 from '../DocumentList/DocumentListV2';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 interface StatusLinePanelProps {
-  children: ComponentChildren;
+  children: ReactNode;
   name?: string;
 }
 
@@ -87,7 +86,7 @@ export function StatusLinePanelDocuments({
 }
 
 interface StatusLineItemProps {
-  children: ComponentChildren;
+  children: ReactNode;
   highlight?: boolean;
   style?: CSSProperties;
 }
