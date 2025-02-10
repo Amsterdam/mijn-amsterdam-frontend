@@ -1,4 +1,4 @@
-import { DecosParkeerVergunning } from './config-and-types';
+import { ParkeerVergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
@@ -7,12 +7,12 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { VergunningFrontend } from '../vergunningen/config-and-types';
+import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchDecosParkeerVergunningen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<VergunningFrontend<DecosParkeerVergunning>[]>> {
+): Promise<ApiResponse<ParkeerVergunningFrontend[]>> {
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
@@ -21,14 +21,19 @@ export async function fetchDecosParkeerVergunningen(
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: VergunningFrontend<DecosParkeerVergunning>[] =
-      decosVergunningen.map((vergunning) =>
-        transformDecosZaakFrontend(
+    const vergunningenFrontend: ParkeerVergunningFrontend[] =
+      decosVergunningen.map((vergunning) => {
+        const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           AppRoutes['PARKEREN/DETAIL']
-        )
-      );
+        );
+
+        return {
+          ...vergunningTransformed,
+          steps: getStatusSteps(vergunningTransformed),
+        };
+      });
     return apiSuccessResult(vergunningenFrontend);
   }
 
