@@ -3,7 +3,7 @@ import { StatusLineItem } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { getStatusDate } from '../decos/decos-helpers';
 
-export function getStatusStepsRVVSloterweg(
+function getStatusStepsRVVSloterweg(
   vergunning: VergunningFrontend<RVVSloterweg>
 ): StatusLineItem[] {
   const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
@@ -137,61 +137,67 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
   const dateInBehandeling = getStatusDate('In behandeling', vergunning);
   const hasDateInBehandeling = !!dateInBehandeling;
   const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
-  const isExpiredByEndDate =
-    !!vergunning.dateEnd &&
-    vergunning.decision === 'Verleend' &&
-    new Date(vergunning.dateEnd) <= new Date();
-  const isExpired = isExpiredByEndDate;
+  const isExpired = vergunning.isExpired === true;
+  const isIngetrokken = vergunning.decision === 'Ingetrokken';
+  const isVerlopen = vergunning.status === 'Verlopen' || isExpired;
+
+  const statusOntvangen: StatusLineItem = {
+    id: 'step-1',
+    status: 'Ontvangen',
+    datePublished: vergunning.dateRequest,
+    description: '',
+    documents: [],
+    isActive: !isInBehandeling && !isAfgehandeld,
+    isChecked: true,
+  };
+  const statusInBehandeling: StatusLineItem = {
+    id: 'step-2',
+    status: 'In behandeling',
+    datePublished: dateInBehandeling || '',
+    description: '',
+    documents: [],
+    isActive: isInBehandeling,
+    isChecked: hasDateInBehandeling || isAfgehandeld,
+  };
+  const statusAfgehandeld: StatusLineItem = {
+    id: 'step-3',
+    status: 'Afgehandeld',
+    datePublished: vergunning.dateDecision || '',
+    description:
+      isAfgehandeld &&
+      vergunning.decision &&
+      ['Verleend', 'Ingetrokken', 'Niet verleend', 'Geweigerd'].includes(
+        vergunning.decision
+      )
+        ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
+        : '', // Complex decisions cannot be captured in a generic text. They should be handled in the specific case.
+    documents: [],
+    isActive: !isExpired && isAfgehandeld,
+    isChecked: isAfgehandeld,
+  };
 
   const steps: StatusLineItem[] = [
-    {
-      id: 'step-1',
-      status: 'Ontvangen',
-      datePublished: vergunning.dateRequest,
-      description: '',
-      documents: [],
-      isActive: !isInBehandeling && !isAfgehandeld,
-      isChecked: true,
-    },
-    {
-      id: 'step-2',
-      status: 'In behandeling',
-      datePublished: dateInBehandeling || '',
-      description: '',
-      documents: [],
-      isActive: isInBehandeling,
-      isChecked: hasDateInBehandeling || isAfgehandeld,
-    },
-    {
-      id: 'step-3',
-      status: 'Afgehandeld',
-      datePublished: vergunning.dateDecision || '',
-      description:
-        isAfgehandeld &&
-        vergunning.decision &&
-        ['Verleend', 'Ingetrokken', 'Niet verleend', 'Geweigerd'].includes(
-          vergunning.decision
-        )
-          ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
-          : '', // Complex decisions cannot be captured in a generic text.
-      documents: [],
-      isActive: !isExpired && isAfgehandeld,
-      isChecked: isAfgehandeld,
-    },
+    statusOntvangen,
+    statusInBehandeling,
+    statusAfgehandeld,
   ];
 
-  if ('isExpired' in vergunning) {
-    if (isExpired) {
-      steps.push({
-        id: 'step-4',
-        status: 'Gewijzigd',
-        datePublished: vergunning.dateEnd ?? '',
-        description: `Uw ${vergunning.title} is verlopen.`,
-        documents: [],
-        isActive: true,
-        isChecked: true,
-      });
-    }
+  if (isVerlopen || isIngetrokken) {
+    const statusGewijzigd: StatusLineItem = {
+      id: 'step-4',
+      status: isIngetrokken ? 'Ingetrokken' : 'Verlopen',
+      datePublished:
+        (isVerlopen && !isIngetrokken
+          ? (vergunning.dateDecision ?? vergunning.dateEnd)
+          : vergunning.dateDecision) ?? '',
+      description: isIngetrokken
+        ? `Wij hebben uw ${vergunning.title} ingetrokken.`
+        : `Uw ${vergunning.title} is verlopen.`,
+      isActive: true,
+      isChecked: true,
+    };
+
+    steps.push(statusGewijzigd);
   }
 
   return steps;
