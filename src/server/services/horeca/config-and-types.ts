@@ -46,7 +46,3 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
     },
     notificationLabels: caseNotificationLabelsExpirables,
   };
-
-export const horecaVergunningTypes: HorecaVergunning['caseType'][] = [
-  CaseTypeV2.ExploitatieHorecabedrijf,
-];
