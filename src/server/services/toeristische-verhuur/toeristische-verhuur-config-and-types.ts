@@ -54,15 +54,15 @@ export interface LVVRegistratiesSourceData {
   content: LVVRegistratie[];
 }
 
-export type VakantieverhuurVergunning =
+export type VakantieverhuurVergunningFrontend =
   VergunningFrontend<DecosVakantieverhuurVergunningaanvraag>;
 
 export type ToeristischeVerhuurVergunning =
   | BBVergunning
-  | VakantieverhuurVergunning;
+  | VakantieverhuurVergunningFrontend;
 
 export type ToeristischeVerhuur = {
-  vakantieverhuurVergunningen: VakantieverhuurVergunning[];
+  vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];
   bbVergunningen: BBVergunning[];
   lvvRegistraties: LVVRegistratie[];
 };

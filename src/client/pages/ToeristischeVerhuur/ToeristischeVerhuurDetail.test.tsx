@@ -9,10 +9,10 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
-import { VakantieverhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
+import { VakantieverhuurVergunningFrontend } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { AppState } from '../../../universal/types';
 
-const vakantieverhuurVergunningen: VakantieverhuurVergunning[] = [
+const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
   {
     id: 'Z-XXX-000007C',
     title: 'Vergunning vakantieverhuur',
