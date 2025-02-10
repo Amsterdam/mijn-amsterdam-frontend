@@ -150,6 +150,7 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
     isActive: !isInBehandeling && !isAfgehandeld,
     isChecked: true,
   };
+
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
@@ -159,6 +160,7 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
     isActive: isInBehandeling,
     isChecked: hasDateInBehandeling || isAfgehandeld,
   };
+
   const statusAfgehandeld: StatusLineItem = {
     id: 'step-3',
     status: 'Afgehandeld',
@@ -166,13 +168,11 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
     description:
       isAfgehandeld &&
       vergunning.decision &&
-      ['Verleend', 'Ingetrokken', 'Niet verleend', 'Geweigerd'].includes(
-        vergunning.decision
-      )
+      ['Verleend', 'Niet verleend', 'Geweigerd'].includes(vergunning.decision)
         ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
         : '', // Complex decisions cannot be captured in a generic text. They should be handled in the specific case.
     documents: [],
-    isActive: !isExpired && isAfgehandeld,
+    isActive: !isExpired && !isIngetrokken && isAfgehandeld,
     isChecked: isAfgehandeld,
   };
 
