@@ -23,7 +23,7 @@ export type DecosZaakExploitatieHorecabedrijf = DecosZaakBase &
     numberOfPermits: string | null;
   };
 
-export type HorecaVergunning =
+export type HorecaVergunningFrontend =
   VergunningFrontend<DecosZaakExploitatieHorecabedrijf>;
 
 export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatieHorecabedrijf> =
