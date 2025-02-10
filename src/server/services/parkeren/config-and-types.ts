@@ -6,6 +6,7 @@ import {
   WithKentekens,
   WithDateTimeRange,
 } from '../decos/config-and-types';
+import { VergunningFrontend } from '../vergunningen/config-and-types';
 
 type BaseSourceResponse<T> = {
   result: 'success' | unknown;
@@ -130,3 +131,6 @@ export type DecosParkeerVergunning =
   | TouringcarJaarontheffing
   | EigenParkeerplaats
   | EigenParkeerplaatsOpheffen;
+
+export type ParkeerVergunningFrontend =
+  VergunningFrontend<DecosParkeerVergunning>;

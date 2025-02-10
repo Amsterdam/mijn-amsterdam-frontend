@@ -7,16 +7,10 @@ import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { DecosZaakDocument } from '../decos/config-and-types';
 import {
-  fetchDecosZaak,
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 function transformVergunningFrontend(
   sessionID: SessionID,
@@ -49,7 +43,7 @@ async function fetchVergunningen_(
     const decosVergunningen = response.content;
     const vergunningenFrontend: VergunningFrontend[] = decosVergunningen.map(
       (vergunning) =>
-        transformDecosZaakFrontend<DecosVergunning>(
+        transformVergunningFrontend(
           authProfileAndToken.profile.sid,
           appRoute,
           vergunning
@@ -64,61 +58,3 @@ async function fetchVergunningen_(
 export const fetchVergunningen = memoizee(fetchVergunningen_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
-
-function addEncryptedDocumentDownloadUrl(
-  sessionID: SessionID,
-  document: DecosZaakDocument
-) {
-  const documentIdEncrypted = encryptSessionIdWithRouteIdParam(
-    sessionID,
-    document.key
-  );
-
-  return {
-    ...document,
-    // Adds an url to the BFF api for document download which accepts an encrypted ID only
-    url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
-      { id: documentIdEncrypted },
-    ]),
-  };
-}
-
-export async function fetchVergunningV2(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  vergunningIdEncrypted: string
-) {
-  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    vergunningIdEncrypted,
-    authProfileAndToken
-  );
-
-  if (decryptResult.status === 'OK') {
-    const response = await fetchDecosZaak(
-      requestID,
-      decosZaakTransformers,
-      decryptResult.content
-    );
-    if (response.status === 'OK' && response.content?.decosZaak) {
-      const { decosZaak, documents } = response.content;
-      const documentsTransformed = documents.map((document) =>
-        addEncryptedDocumentDownloadUrl(
-          authProfileAndToken.profile.sid,
-          document
-        )
-      );
-
-      return apiSuccessResult({
-        vergunning: transformVergunningFrontend(
-          authProfileAndToken.profile.id,
-          decosZaak,
-          AppRoutes['VERGUNNINGEN/DETAIL']
-        ),
-        documents: documentsTransformed,
-      });
-    }
-    return response;
-  }
-
-  return decryptResult;
-}
