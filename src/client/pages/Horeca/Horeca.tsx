@@ -1,7 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
-import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
+import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -28,7 +28,7 @@ export function HorecaThemaPagina() {
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {
       return (
-        <ThemaPaginaTable<HorecaVergunning>
+        <ThemaPaginaTable<HorecaVergunningFrontend>
           key={kind}
           title={title}
           listPageRoute={listPageRoute}
