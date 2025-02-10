@@ -1,5 +1,5 @@
 import {
-  VakantieverhuurVergunning,
+  VakantieverhuurVergunningFrontend,
   VakantieverhuurVergunningaanvraag,
 } from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -21,7 +21,7 @@ export async function fetchVakantieverhuurVergunningen(
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: VakantieverhuurVergunning[] =
+    const vergunningenFrontend: VakantieverhuurVergunningFrontend[] =
       decosVergunningen.map((vergunning) => {
         const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
