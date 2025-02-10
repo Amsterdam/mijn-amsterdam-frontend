@@ -1,4 +1,7 @@
-import { ExploitatieHorecabedrijf, HorecaVergunning } from './config-and-types';
+import {
+  ExploitatieHorecabedrijf,
+  HorecaVergunningFrontend,
+} from './config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
@@ -17,21 +20,21 @@ import { getVergunningNotifications } from '../vergunningen/vergunningen-notific
 export async function fetchHorecaVergunningen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<HorecaVergunning[]>> {
+): Promise<ApiResponse<HorecaVergunningFrontend[]>> {
   const response = await fetchDecosZaken(requestID, authProfileAndToken, [
     ExploitatieHorecabedrijf,
   ]);
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: HorecaVergunning[] = decosVergunningen.map(
-      (vergunning) =>
+    const vergunningenFrontend: HorecaVergunningFrontend[] =
+      decosVergunningen.map((vergunning) =>
         transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           AppRoutes['HORECA/DETAIL']
         )
-    );
+      );
     return apiSuccessResult(vergunningenFrontend);
   }
 
