@@ -4,12 +4,12 @@ import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
 import { HorecaDetailPagina } from './HorecaDetail';
-import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
+import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 
-const content: HorecaVergunning[] = [];
+const content: HorecaVergunningFrontend[] = [];
 
 const testState = {
   HORECA: {

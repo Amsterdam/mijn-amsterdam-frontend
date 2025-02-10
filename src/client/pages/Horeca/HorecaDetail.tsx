@@ -1,7 +1,7 @@
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
 import {
   DecosZaakExploitatieHorecabedrijf,
-  HorecaVergunning,
+  HorecaVergunningFrontend,
 } from '../../../server/services/horeca/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../components/Datalist/Datalist';
@@ -40,10 +40,10 @@ export function HorecaDetailPagina() {
   const { routes, vergunningen, isLoading, isError } = useHorecaThemaData();
 
   const { vergunning, title, documents } =
-    useVergunningenDetailData<HorecaVergunning>(vergunningen);
+    useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
 
   return (
-    <ThemaDetailPagina<HorecaVergunning>
+    <ThemaDetailPagina<HorecaVergunningFrontend>
       title={title}
       zaak={vergunning}
       isError={isError}
