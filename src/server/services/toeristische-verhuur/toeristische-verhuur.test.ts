@@ -2,7 +2,7 @@ import Mockdate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
-import { VakantieverhuurVergunning } from './toeristische-verhuur-config-and-types';
+import { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
 import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
@@ -174,7 +174,7 @@ describe('Toeristische verhuur service', () => {
   });
 
   it('Should create notifcations from vergunningen', async () => {
-    const vakantieverhuurVergunning: VakantieverhuurVergunning = {
+    const vakantieverhuurVergunning: VakantieverhuurVergunningFrontend = {
       id: 'Z-000-000040',
       title: 'Vergunning vakantieverhuur',
       dateDecision: null,
