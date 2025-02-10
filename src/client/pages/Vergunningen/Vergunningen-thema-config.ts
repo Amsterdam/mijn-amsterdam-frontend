@@ -37,7 +37,7 @@ export const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
   status: 'Status',
-  dateRequestFormatted: 'Aangevraagd',
+  dateRequestFormatted: 'Aangevraagd op',
 };
 
 export const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
@@ -83,7 +83,7 @@ export const tableConfig = {
       kind: listPageParamKind.inProgress,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    className: styles.LopendeAanvragen,
+    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
@@ -103,7 +103,7 @@ export const tableConfig = {
       kind: listPageParamKind.actual,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    className: styles.HuidigeVergunningenEnOntheffingen,
+    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
@@ -127,7 +127,7 @@ export const tableConfig = {
       kind: listPageParamKind.historic,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    className: styles.EerderEnNietVerleend,
+    className: styles.VergunningenTableThemaPagina,
   },
 } as const;
 
