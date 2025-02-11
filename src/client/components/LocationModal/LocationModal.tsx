@@ -164,7 +164,7 @@ export function LocationModal({
         </Button>
         <Modal
           isOpen={isLocationModalOpen}
-          pollingQuerySelector="#my-area-map"
+          pollingQuerySelector="#map-zoom"
           giveUpOnReadyPollingAfterMs={5000}
           onClose={() => {
             setLocationModalOpen(false);
