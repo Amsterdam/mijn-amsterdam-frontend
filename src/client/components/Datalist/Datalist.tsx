@@ -37,7 +37,7 @@ export function DatalistRow({
   );
 }
 
-interface WrappedRow {
+export interface WrappedRow {
   label: ReactNode;
   content: ReactNode;
   className?: string;

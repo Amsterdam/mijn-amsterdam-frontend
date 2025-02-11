@@ -4,10 +4,7 @@ import type { EigenParkeerplaats } from '../../../../server/services/parkeren/co
 import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
-import {
-  commonTransformers,
-  getRows,
-} from '../../Vergunningen/detail-page-content/fields-config';
+import { getRows } from '../../Vergunningen/detail-page-content/fields-config';
 
 export function EigenParkeerplaats({
   vergunning,
@@ -83,16 +80,7 @@ export function EigenParkeerplaats({
           : null;
       },
     },
-    {
-      dateStart: (vergunning) => {
-        return isVerleend ? commonTransformers.dateStart(vergunning) : null;
-      },
-    },
-    {
-      dateEnd: (vergunning) => {
-        return isVerleend ? commonTransformers.dateEnd(vergunning) : null;
-      },
-    },
+    'dateRange',
     'decision',
   ]);
 
