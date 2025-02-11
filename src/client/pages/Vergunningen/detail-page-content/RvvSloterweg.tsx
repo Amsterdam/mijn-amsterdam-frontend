@@ -23,7 +23,7 @@ export function RvvSloterweg({
       },
     },
     {
-      licensePlates: (vergunning) => {
+      kenteken: (vergunning) => {
         return {
           label: isChangeRequest ? 'Nieuw kenteken' : 'Kenteken',
           content: vergunning.kentekens || '-',
@@ -31,7 +31,7 @@ export function RvvSloterweg({
       },
     },
     {
-      previousLicensePlates: (vergunning) => {
+      vorigeKentekens: (vergunning) => {
         return 'vorigeKentekens' in vergunning &&
           typeof vergunning.vorigeKentekens === 'string'
           ? {
