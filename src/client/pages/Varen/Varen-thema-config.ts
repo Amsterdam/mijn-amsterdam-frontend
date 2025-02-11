@@ -6,6 +6,7 @@ import {
   VarenVergunningExploitatieType,
   VarenVergunningLigplaatsType,
 } from '../../../server/services/varen/config-and-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
@@ -57,20 +58,21 @@ export const varenMeerInformatieLink: LinkProps = {
   title: 'Meer informatie over passagiers- en beroepsvaart',
 } as const;
 
+const formulierenBaseUrl = `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam`;
 export const exploitatieVergunningAanvragen: LinkProps = {
-  to: 'https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningAanvragen.aspx',
+  to: `${formulierenBaseUrl}/VARExploitatievergunningAanvragen.aspx`,
   title: 'Exploitatievergunning aanvragen',
 } as const;
 
 export const exploitatieVergunningWijzigen: (key: string) => LinkProps = (
   key
 ) => ({
-  to: `https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningWijzigen.aspx?guid=${key}`,
+  to: `${formulierenBaseUrl}/VARExploitatievergunningWijzigen.aspx?guid=${key}`,
   title: 'Wijzigen',
 });
 
 export const ligplaatsVergunningLink: LinkProps = {
-  to: `https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ligplaatsbedrijfsvaartuig.aspx`,
+  to: `${formulierenBaseUrl}/Ligplaatsbedrijfsvaartuig.aspx`,
   title: 'Ligplaatsvergunning aanvragen',
 } as const;
 
@@ -81,7 +83,7 @@ export const labelMapThemaRegistratieReder = {
   phone: 'Telefoonnummer',
   bsnkvk: 'KVK nummer',
   address: 'Adres',
-} satisfies LabelMap<VarenRegistratieRederType>;
+} as const satisfies LabelMap<VarenRegistratieRederType>;
 
 export const labelMapsThemaDetail = {
   'Varen vergunning exploitatie': {
@@ -100,4 +102,4 @@ export const labelMapsThemaDetail = {
     id: 'Zaaknummer',
     ...labelMapThemaRegistratieReder,
   } satisfies LabelMap<VarenRegistratieRederType>,
-};
+} as const;
