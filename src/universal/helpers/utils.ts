@@ -1,5 +1,11 @@
 import { differenceInMonths } from 'date-fns';
 
+// // https://github.com/sindresorhus/type-fest/blob/main/source/entries.d.ts
+// type ObjectEntry<T> = [keyof T, T[keyof T]];
+// type ObjectEntries<T> = Array<ObjectEntry<T>>;
+// type Entries<T> = T extends object ? ObjectEntries<T> : never;
+// export const entries = Object.entries as <T>(o: T) => Entries<T>;
+
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
   o: T

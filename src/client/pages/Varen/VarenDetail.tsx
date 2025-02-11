@@ -1,35 +1,62 @@
-import { useParams } from 'react-router-dom';
+import { Grid, GridColumnNumber, Icon } from '@amsterdam/design-system-react';
+import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
-import { isError, isLoading } from '../../../universal/helpers/api';
-import {
-  DetailPage,
-  ErrorAlert,
-  PageContent,
-  PageHeading,
-  StatusLine,
-} from '../../components';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { transformDetailsIntoRowSet } from './helpers';
+import { useVarenDetailPage } from './useVarenDetailPage.hook';
+import { labelMapsThemaDetail } from './Varen-thema-config';
+import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { ThemaIcon } from '../../components';
+import { Datalist } from '../../components/Datalist/Datalist';
+import { MaButtonLink } from '../../components/MaLink/MaLink';
+import { ThemaTitles } from '../../config/thema';
+import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
-  const { VAREN } = useAppStateGetter();
-  const { id } = useParams<{ id: string }>();
-  const Vergunning = VAREN.content?.find((item) => item.id === id);
-  const noContent = !isLoading(VAREN) && !Vergunning;
+  const { vergunning, buttons, isLoading, isError } = useVarenDetailPage();
+
+  const halfOfGrid: GridColumnNumber = 6;
+  const vergunningRowSet = vergunning
+    ? transformDetailsIntoRowSet(
+        vergunning,
+        labelMapsThemaDetail[vergunning.caseType],
+        halfOfGrid
+      )
+    : null;
+  const vergunningDetails = vergunningRowSet ? (
+    <Grid.Cell span="all">
+      <Datalist rows={[vergunningRowSet]} />
+    </Grid.Cell>
+  ) : null;
+
+  const pageContentTopSecondary = !!buttons && (
+    <Grid.Cell span="all">
+      {buttons.map(({ to, title }) => (
+        <MaButtonLink key={to} href={to} variant="secondary">
+          {title}
+          <Icon svg={ExternalLinkIcon} size="level-5" />
+        </MaButtonLink>
+      ))}
+    </Grid.Cell>
+  );
 
   return (
-    <DetailPage>
-      <PageHeading>TEST DETAIL</PageHeading>
-      <PageContent>
-        {(isError(VAREN) || noContent) && (
-          <ErrorAlert>We kunnen op dit moment geen gegevens tonen.</ErrorAlert>
-        )}
-        <StatusLine
-          // className={styles.VergunningStatus}
-          trackCategory="Vergunningen detail / status"
-          items={[]}
-          id="vergunning-detail"
-        />
-      </PageContent>
-    </DetailPage>
+    <ThemaDetailPagina<VarenFrontend>
+      statusLabel="Status van uw aanvraag"
+      title={vergunning?.title ?? 'Varen vergunning'}
+      zaak={vergunning}
+      isError={isError}
+      isLoading={isLoading}
+      icon={<ThemaIcon />}
+      pageContentTop={
+        <>
+          {vergunningDetails} {pageContentTopSecondary}
+        </>
+      }
+      backLink={{
+        title: ThemaTitles.VAREN,
+        to: AppRoutes.VAREN,
+      }}
+    />
   );
 }
