@@ -79,7 +79,7 @@ function isElementOnPage(
   });
 }
 
-const FAIGIVE_UP_READY_POLLING_AFTER_MS = 3000;
+const GIVE_UP_READY_POLLING_AFTER_MS = 5000;
 
 interface ModalProps {
   children: ReactNode;
@@ -93,6 +93,7 @@ interface ModalProps {
   closeOnEscape?: boolean;
   closeOnClickOutside?: boolean;
   pollingQuerySelector?: string;
+  giveUpOnReadyPollingAfterMs?: number;
 }
 
 export function Modal({
@@ -107,6 +108,7 @@ export function Modal({
   closeOnEscape = true,
   closeOnClickOutside = true,
   pollingQuerySelector,
+  giveUpOnReadyPollingAfterMs = GIVE_UP_READY_POLLING_AFTER_MS,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [isReady, setIsReady] = useState(pollingQuerySelector ? false : true);
@@ -129,12 +131,11 @@ export function Modal({
   useEffect(() => {
     if (!isReady && pollingQuerySelector) {
       // Delays the initialization of the focus trap. This is necessary because some dialog content is not yet rendered when the dialog is opened.
-      isElementOnPage(
-        pollingQuerySelector,
-        FAIGIVE_UP_READY_POLLING_AFTER_MS
-      ).then(() => {
-        setIsReady(true);
-      });
+      isElementOnPage(pollingQuerySelector, giveUpOnReadyPollingAfterMs).then(
+        () => {
+          setIsReady(true);
+        }
+      );
     }
   }, []);
 
