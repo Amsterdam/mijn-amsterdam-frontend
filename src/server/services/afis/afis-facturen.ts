@@ -43,6 +43,7 @@ import { entries } from '../../../universal/helpers/utils';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
+const FACTUUR_DOCUMENT_ID_LENGTH = 10;
 
 export const FACTUUR_STATE_KEYS: AfisFactuurState[] = [
   'open',
@@ -166,6 +167,10 @@ function getFactuurnummer(
   return factuurNummer;
 }
 
+function getFactuurDocumentId(id: string) {
+  return id.padStart(FACTUUR_DOCUMENT_ID_LENGTH, '0');
+}
+
 function getInvoiceAmount(
   invoice: Pick<AfisFactuurPropertiesSource, 'AmountInBalanceTransacCrcy'>,
   deelbetalingAmount?: Decimal
@@ -188,7 +193,9 @@ function transformFactuur(
   deelbetalingen?: AfisFactuurDeelbetalingen
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
-  const factuurDocumentId = String(invoice.AccountingDocument);
+  const factuurDocumentId = getFactuurDocumentId(
+    String(invoice.AccountingDocument)
+  );
   const factuurNummer = getFactuurnummer(invoice);
   const factuurDocumentIdEncrypted = factuurDocumentId
     ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
@@ -583,6 +590,7 @@ export const forTesting = {
   getAccountingDocumentTypesFilter,
   getInvoiceAmount,
   getFactuurnummer,
+  getFactuurDocumentId,
   replaceXmlNulls,
   transformDeelbetalingenResponse,
   transformFacturen,

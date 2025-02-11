@@ -31,11 +31,7 @@ import {
   ONE_SECOND_MS,
 } from './config/app';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import {
-  clearRequestCache,
-  nocache,
-  requestID,
-} from './routing/route-handlers';
+import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
@@ -84,14 +80,6 @@ app.use(compression());
 
 // Generate request id
 app.use(requestID);
-
-// Destroy the session as soon as the api requests are all processed
-app.use(function (req, res, next) {
-  res.on('end', function () {
-    clearRequestCache(req, res);
-  });
-  next();
-});
 
 ////////////////////////////////////////////////////////////////////////
 ///// [ACCEPTANCE - PRODUCTION]

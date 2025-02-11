@@ -115,7 +115,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             <li>
               <a
                 class="ams-link-list__link"
-                href="https://www.amsterdam.nl/ondernemen/afis/facturen/"
+                href="https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa"
                 rel="noreferrer"
               >
                 <span
@@ -133,7 +133,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                     />
                   </svg>
                 </span>
-                Meer over facturen van de gemeente
+                Meer over betalen aan de gemeente
               </a>
             </li>
             <li>

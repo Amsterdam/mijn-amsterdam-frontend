@@ -215,7 +215,8 @@ router.get(
       release: RELEASE_VERSION,
       gitSha: gitSHA,
       gitShaUrl: `https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${gitSHA}`,
-      buildId: process.env.MA_BUILD_ID ?? '-1',
+      buildId: process.env.MA_BUILD_ID ?? 'unknown',
+      instanceId: process.env.WEBSITE_INSTANCE_ID ?? 'unknown',
     });
   }
 );
