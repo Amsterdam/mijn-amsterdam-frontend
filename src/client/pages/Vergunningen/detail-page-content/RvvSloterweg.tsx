@@ -32,8 +32,7 @@ export function RvvSloterweg({
     },
     {
       vorigeKentekens: (vergunning) => {
-        return 'vorigeKentekens' in vergunning &&
-          typeof vergunning.vorigeKentekens === 'string'
+        return vergunning.vorigeKentekens
           ? {
               label: 'Kenteken(s)',
               content: vergunning.vorigeKentekens || '-',
