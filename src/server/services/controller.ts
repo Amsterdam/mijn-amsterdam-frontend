@@ -111,8 +111,7 @@ export function addServiceResultHandler<
       sendMessage(res, serviceName, 'message', serviceResponse);
     }
     log.debug(
-      'Service-controller: service result message sent for',
-      serviceName
+      `Service-controller: service result message sent for ${serviceName}`
     );
     return serviceResponse;
   });
