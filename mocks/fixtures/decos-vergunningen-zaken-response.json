@@ -803,7 +803,7 @@
         "SUBJECT1": "Een beschrijving van deze vergunning",
         "document_date": "2023-11-06T00:00:00",
         "date5": "2023-11-06T00:00:00",
-        "processed": false,
+        "processed": true,
         "text18": "Pipo de Clown Boot",
         "num3": "2,38",
         "num4": "2,48",
