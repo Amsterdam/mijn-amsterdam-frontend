@@ -206,15 +206,6 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
       content: vergunning.description,
     };
   },
-  licensePlates: (vergunning) => {
-    return 'licensePlates' in vergunning &&
-      typeof vergunning.licensePlates === 'string'
-      ? {
-          label: 'Kenteken(s)',
-          content: vergunning.licensePlates || '-',
-        }
-      : null;
-  },
 };
 
 // Eplicit type because we cannot? type the keys of a Record<string, xxx>
@@ -228,7 +219,6 @@ type TransformerKey =
   | 'dateStartedOn'
   | 'dateStart'
   | 'dateRange'
-  | 'licensePlates'
   | 'dateEnd'
   | 'onFromTo'
   | 'dateTimeRangeBetween'

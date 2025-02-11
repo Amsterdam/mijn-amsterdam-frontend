@@ -32,6 +32,7 @@ export function WVOSContent({
   const rows = getRows(vergunning, [
     'identifier',
     'location',
+    'kentekens',
     werkzaamhedenTransformer,
     'decision',
   ]);
