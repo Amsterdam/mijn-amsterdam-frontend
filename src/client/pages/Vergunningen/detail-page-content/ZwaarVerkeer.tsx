@@ -20,7 +20,7 @@ export function ZwaarVerkeer({
         };
       },
     },
-    'licensePlates',
+    'kentekens',
     'dateRange',
     'decision',
   ]);
