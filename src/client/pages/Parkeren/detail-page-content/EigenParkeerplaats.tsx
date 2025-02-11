@@ -1,6 +1,9 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import type { EigenParkeerplaats } from '../../../../server/services/parkeren/config-and-types';
 import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
+import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 import {
   commonTransformers,
   getRows,
@@ -12,7 +15,6 @@ export function EigenParkeerplaats({
   vergunning: VergunningFrontend<EigenParkeerplaats>;
 }) {
   const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
-  const isAfgehandeld = vergunning.processed;
 
   const rows = getRows(vergunning, [
     'identifier',
@@ -36,29 +38,33 @@ export function EigenParkeerplaats({
     {
       locations: (vergunning: VergunningFrontend<EigenParkeerplaats>) => {
         const rows: Row[] = [];
-        // vergunning.locations?.map((location, i) => {
-        //     return (
-        //       <div key={JSON.stringify(location)}>
-        //         <Location
-        //           label={`Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`}
-        //           location={`${location.street} ${location.houseNumber}`}
-        //         />
-        //         {!!location.type && (
-        //           <InfoDetail label="Soort plek" value={location.type} />
-        //         )}
-        //         {!!location.url && (
-        //           <InfoDetail
-        //             label="Parkeervak"
-        //             value={
-        //               <Link rel="noreferrer" variant="inline" href={location.url}>
-        //                 Bekijk parkeervak
-        //               </Link>
-        //             }
-        //           />
-        //         )}
-        //       </div>
-        //     );
-        //   })
+        vergunning.locations?.map((location, i) => {
+          return {
+            label: `Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`,
+            rows: [
+              {
+                label: `Locatie`,
+                content: (
+                  <AddressDisplayAndModal
+                    address={`${location.street} ${location.houseNumber}`}
+                  />
+                ),
+              },
+              {
+                label: 'Soort plek',
+                content: location.type || null,
+              },
+              {
+                label: 'Parkeervak',
+                content: location.url ? (
+                  <Link rel="noreferrer" variant="inline" href={location.url}>
+                    Bekijk parkeervak
+                  </Link>
+                ) : null,
+              },
+            ],
+          };
+        });
         return {
           rows,
         };
