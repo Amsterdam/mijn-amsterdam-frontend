@@ -1,6 +1,7 @@
 import * as appInsights from 'applicationinsights';
 import {
   ExceptionTelemetry,
+  RemoteDependencyData,
   RequestData,
   SeverityLevel,
   Telemetry,
@@ -28,19 +29,38 @@ const client: appInsights.TelemetryClient | undefined =
 // See also: https://www.npmjs.com/package/applicationinsights
 
 if (client) {
-  const EXCLUDED_REQUESTS = [
-    'GET /api/v1/auth/check',
-    'GET /robots933456.txt',
-    'GET /admin/host/status',
-    'POST /admin/host/ping',
-    'POST /api/v1/services/telemetry/v2/track',
-  ];
+  const EXCLUDE_REQUESTS: {
+    INCOMING: string[];
+    OUTGOING: Record<string, string>;
+  } = {
+    INCOMING: [
+      'GET /api/v1/auth/check',
+      'GET /robots933456.txt',
+      'GET /admin/host/status',
+      'POST /admin/host/ping',
+      'POST /api/v1/services/telemetry/v2/track',
+    ],
+    OUTGOING: {
+      'GET /stadspas/rest/sales/v1/pashouder': '401',
+      'POST /zorgned/persoonsgegevensNAW': '404',
+      'POST /v2/track': '400',
+    },
+  };
 
   client.addTelemetryProcessor((envelope) => {
     if (envelope?.data?.baseType === 'RequestData') {
       const reqData = envelope.data.baseData as RequestData;
 
-      if (EXCLUDED_REQUESTS.includes(reqData.name)) {
+      if (EXCLUDE_REQUESTS.INCOMING.includes(reqData.name)) {
+        // Do not send telemetry.
+        return false;
+      }
+    }
+
+    if (envelope?.data?.baseType === 'RemoteDependencyData') {
+      const reqData = envelope.data.baseData as RemoteDependencyData;
+
+      if (EXCLUDE_REQUESTS.OUTGOING[reqData.name] === reqData.resultCode) {
         // Do not send telemetry.
         return false;
       }
@@ -50,7 +70,7 @@ if (client) {
     return true;
   });
 
-  client.config.samplingPercentage = getSamplePercentage();
+  client.config.samplingPercentage = getSamplingPercentage();
 }
 
 export type Severity =
@@ -125,7 +145,7 @@ export function trackEvent(name: string, properties: Record<string, unknown>) {
       });
 }
 
-function getSamplePercentage(): number {
+function getSamplingPercentage(): number {
   const samplePercentageKey = 'APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE';
 
   let samplePercentage = process.env[samplePercentageKey];
