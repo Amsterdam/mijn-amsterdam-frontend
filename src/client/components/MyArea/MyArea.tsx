@@ -168,7 +168,6 @@ export default function MyArea({
         <div className={styles.MapOffset} id="skip-to-id-Map">
           {isReadyToRender && (
             <Map
-              id="my-area-map"
               fullScreen={true}
               aria-label={ariaLabel}
               options={mapOptions}
