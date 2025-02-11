@@ -4,7 +4,7 @@ import { AccessToken } from 'express-openid-connect';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
-import { sendUnauthorized } from './route-helpers';
+import { sendBadRequest, sendUnauthorized } from './route-helpers';
 import {
   testAccountsDigid,
   testAccountsEherkenning,
@@ -104,6 +104,14 @@ authRouterDevelopment.get(
     const authMethod = req.params.authMethod;
     const testAccounts =
       authMethod === 'digid' ? testAccountsDigid : testAccountsEherkenning;
+
+    if (!testAccounts) {
+      return sendBadRequest(
+        res,
+        'Test accounts not available. Check env settings.'
+      );
+    }
+
     const allUsernames = Object.keys(testAccounts);
     const userName =
       req.params.user && req.params.user in testAccounts
