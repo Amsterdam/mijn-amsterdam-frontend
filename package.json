@@ -121,7 +121,6 @@
     "outdent": "^0.8.0",
     "pg": "^8.13.1",
     "pino": "^9.6.0",
-    "pino-pretty": "^13.0.0",
     "prettier": "^3.4.2",
     "proj4": "^2.15.0",
     "pug": "^3.0.3",
@@ -163,6 +162,7 @@
     "eslint-plugin-unused-imports": "^4.1.0",
     "formidable": "^3.5.2",
     "globals": "^15.14.0",
+    "pino-pretty": "^13.0.0",
     "typescript-eslint": "^8.21.0"
   }
 }
