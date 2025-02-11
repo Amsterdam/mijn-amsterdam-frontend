@@ -24,6 +24,6 @@ function splitUsersIntoRecord(accounts: string) {
 export const testAccountsDigid = !IS_PRODUCTION
   ? splitUsersIntoRecord(accountsDigid)
   : null;
-export const testAccountsEherkenning = IS_PRODUCTION
+export const testAccountsEherkenning = !IS_PRODUCTION
   ? splitUsersIntoRecord(accountsEherkenning)
   : null;
