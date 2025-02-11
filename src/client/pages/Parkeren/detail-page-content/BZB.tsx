@@ -2,12 +2,13 @@ import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import type { BZB } from '../../../../server/services/parkeren/config-and-types';
 import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../../components/InfoDetail/InfoDetail';
+import { Datalist } from '../../../components/Datalist/Datalist';
 import { useAppStateGetter } from '../../../hooks/useAppState';
+import {
+  dateRange,
+  getRows,
+} from '../../Vergunningen/detail-page-content/fields-config';
 
 export function ExpirationNotifications({ id }: { id: string }) {
   const appState = useAppStateGetter();
@@ -58,39 +59,37 @@ export function ExpirationNotifications({ id }: { id: string }) {
   );
 }
 
-export function BZB({ vergunning }: { vergunning: VergunningFrontend }) {
-  const vergunningData = vergunning as VergunningFrontend<BZB>;
+export function BZB({ vergunning }: { vergunning: VergunningFrontend<BZB> }) {
+  const rows = getRows(vergunning, [
+    'identifier',
+    {
+      companyName: () => {
+        return {
+          label: 'Naam bedrijf',
+          content: vergunning.companyName || '-',
+        };
+      },
+    },
+    {
+      numberOfPermits: () => {
+        return {
+          label: 'Aantal aangevraagde ontheffingen',
+          content: vergunning.numberOfPermits || '-',
+        };
+      },
+    },
+    {
+      dateRange: (vergunning) => {
+        return vergunning.processed ? dateRange(vergunning) : null;
+      },
+    },
+    'decision',
+  ]);
 
   return (
     <>
-      <ExpirationNotifications id={vergunningData.id} />
-      <InfoDetail label="Kenmerk" value={vergunningData?.identifier || '-'} />
-      <InfoDetail
-        label="Naam bedrijf"
-        value={vergunningData.companyName || '-'}
-      />
-      <InfoDetail
-        label="Aantal aangevraagde ontheffingen"
-        value={vergunningData.numberOfPermits}
-      />
-      {!!vergunningData.dateStart &&
-        !!vergunningData.dateEnd &&
-        vergunningData.decision === 'Verleend' &&
-        vergunningData.status === 'Afgehandeld' && (
-          <InfoDetailGroup>
-            <InfoDetail
-              label="Vanaf"
-              value={defaultDateFormat(vergunningData.dateStart)}
-            />
-            <InfoDetail
-              label="Tot en met"
-              value={defaultDateFormat(vergunningData.dateEnd)}
-            />
-          </InfoDetailGroup>
-        )}
-      {!!vergunningData.decision && (
-        <InfoDetail label="Resultaat" value={vergunningData.decision} />
-      )}
+      <ExpirationNotifications id={vergunning.id} />
+      <Datalist rows={rows} />
     </>
   );
 }

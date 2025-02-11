@@ -1,32 +1,22 @@
 import type { BZP } from '../../../../server/services/parkeren/config-and-types';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../../components/InfoDetail/InfoDetail';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { Datalist } from '../../../components/Datalist/Datalist';
+import {
+  getRows,
+  dateRange,
+} from '../../Vergunningen/detail-page-content/fields-config';
 
-export function BZP({ vergunning }: { vergunning: BZP }) {
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
-      <InfoDetail label="Kenteken" value={vergunning.kentekens || '-'} />
-      {!!vergunning.dateStart &&
-        !!vergunning.dateEnd &&
-        vergunning.decision === 'Verleend' &&
-        vergunning.status === 'Afgehandeld' && (
-          <InfoDetailGroup>
-            <InfoDetail
-              label="Vanaf"
-              value={defaultDateFormat(vergunning.dateStart)}
-            />
-            <InfoDetail
-              label="Tot en met"
-              value={defaultDateFormat(vergunning.dateEnd)}
-            />
-          </InfoDetailGroup>
-        )}
-      {!!vergunning?.decision && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
-    </>
-  );
+export function BZP({ vergunning }: { vergunning: VergunningFrontend<BZP> }) {
+  const rows = getRows(vergunning, [
+    'identifier',
+    'kentekens',
+    {
+      dateRange: (vergunning) => {
+        return vergunning.processed ? dateRange(vergunning) : null;
+      },
+    },
+    'decision',
+  ]);
+
+  return <Datalist rows={rows} />;
 }
