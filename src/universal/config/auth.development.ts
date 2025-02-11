@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from './env';
 import { getFromEnv } from '../../server/helpers/env';
 
 export const DEV_USER_ID_DEFAULT =
@@ -20,6 +21,9 @@ function splitUsersIntoRecord(accounts: string) {
   );
 }
 
-export const testAccountsDigid = splitUsersIntoRecord(accountsDigid);
-export const testAccountsEherkenning =
-  splitUsersIntoRecord(accountsEherkenning);
+export const testAccountsDigid = !IS_PRODUCTION
+  ? splitUsersIntoRecord(accountsDigid)
+  : null;
+export const testAccountsEherkenning = IS_PRODUCTION
+  ? splitUsersIntoRecord(accountsEherkenning)
+  : null;
