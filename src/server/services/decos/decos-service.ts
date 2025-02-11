@@ -658,7 +658,14 @@ async function transformDecosDocumentListResponse(
             key: isPdfResponse.content.key,
             title: documentMetadata.text41,
             datePublished: documentMetadata.received_date,
-            url: '',
+            url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
+              {
+                id: encryptSessionIdWithRouteIdParam(
+                  sessionID,
+                  isPdfResponse.content.key
+                ),
+              },
+            ]),
           };
           return decosZaakDocument;
         }
