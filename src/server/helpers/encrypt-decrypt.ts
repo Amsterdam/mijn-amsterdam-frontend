@@ -6,8 +6,8 @@ type EncryptedValue = Buffer;
 type Iv = Buffer;
 
 const ENC_ALGO = 'aes-256-cbc';
-
 const IV_BYTE_LENGTH = 16;
+
 export function encrypt(
   plainText: string,
   encryptionKey: string | Buffer | undefined = process.env
