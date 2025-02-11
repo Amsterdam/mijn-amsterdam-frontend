@@ -27,7 +27,7 @@ export function getStatusSteps(decosZaak: Varen) {
     },
     {
       id: 'step-3',
-      status: 'Afgehandeld',
+      status: 'Besluit',
       datePublished: decosZaak.dateDecision || '',
       description: isAfgehandeld ? decosZaak.decision : '',
       isActive: isAfgehandeld,

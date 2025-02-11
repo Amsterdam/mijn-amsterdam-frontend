@@ -2,7 +2,7 @@ import memoize from 'memoizee';
 
 import { Varen, VarenFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
-import { getStatusSteps } from './vergunningen-status-steps';
+import { getStatusSteps } from './varen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
