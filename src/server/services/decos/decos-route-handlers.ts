@@ -10,6 +10,7 @@ import {
   testAccountsDigid,
   testAccountsEherkenning,
 } from '../../../universal/config/auth.development';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -77,12 +78,18 @@ export async function fetchZakenByUserIDs(
 
   const userIDsFromEnv =
     req.query.profileType === 'private'
-      ? Object.values(testAccountsDigid)
-      : Object.values(testAccountsEherkenning);
+      ? testAccountsDigid
+        ? Object.values(testAccountsDigid)
+        : []
+      : testAccountsEherkenning
+        ? Object.values(testAccountsEherkenning)
+        : [];
 
-  const userIDs = userIDsFromEnv.length
-    ? userIDsFromEnv
-    : [authProfileAndToken.profile.id];
+  // Only allow fetching zaken for test accounts in non-production environments
+  const userIDs =
+    userIDsFromEnv.length && !IS_PRODUCTION
+      ? userIDsFromEnv
+      : [authProfileAndToken.profile.id];
 
   const responses = [];
 
