@@ -1,10 +1,15 @@
 import { Grid, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
+import { transformDetailsIntoRowSet } from './helpers';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { buttonItems, linkListItems } from './Varen-thema-config';
+import {
+  exploitatieVergunningAanvragen,
+  labelMapThemaRegistratieReder,
+  varenMeerInformatieLink,
+} from './Varen-thema-config';
 import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
-import { Datalist } from '../../components/Datalist/Datalist';
+import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -20,7 +25,7 @@ const pageContentTop = (
 
 export function Varen() {
   const {
-    gegevensAanvrager,
+    varenRederRegistratie,
     varenVergunningen,
     tableConfig,
     isLoading,
@@ -28,19 +33,26 @@ export function Varen() {
   } = useVarenThemaData();
 
   const pageContentTopSecondary = (
-    <>
-      {buttonItems?.map(({ to, title }) => (
-        <MaButtonLink key={to} href={to} variant="secondary">
-          {title}
-          <Icon svg={ExternalLinkIcon} size="level-5" />
-        </MaButtonLink>
-      ))}
-    </>
+    <MaButtonLink
+      key={exploitatieVergunningAanvragen.to}
+      href={exploitatieVergunningAanvragen.to}
+      variant="secondary"
+    >
+      {exploitatieVergunningAanvragen.title}
+      <Icon svg={ExternalLinkIcon} size="level-5" />
+    </MaButtonLink>
   );
 
-  const gegevensAanvragerList = gegevensAanvrager ? (
+  const gegevensAanvragerRowSet: RowSet | null = varenRederRegistratie
+    ? transformDetailsIntoRowSet(
+        varenRederRegistratie,
+        labelMapThemaRegistratieReder
+      )
+    : null;
+
+  const gegevensAanvrager = gegevensAanvragerRowSet ? (
     <Grid.Cell span="all">
-      <Datalist rows={[gegevensAanvrager]} />
+      <Datalist rows={[gegevensAanvragerRowSet]} />
     </Grid.Cell>
   ) : null;
 
@@ -66,12 +78,12 @@ export function Varen() {
       pageContentTopSecondary={pageContentTopSecondary}
       pageContentMain={
         <>
-          {gegevensAanvragerList}
+          {gegevensAanvrager}
           {vergunningenTables}
         </>
       }
       isPartialError={false}
-      linkListItems={linkListItems}
+      linkListItems={[varenMeerInformatieLink]}
     />
   );
 }

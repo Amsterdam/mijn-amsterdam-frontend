@@ -1,6 +1,11 @@
 import { generatePath } from 'react-router-dom';
 
-import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import {
+  VarenFrontend,
+  VarenRegistratieRederType,
+  VarenVergunningExploitatieType,
+  VarenVergunningLigplaatsType,
+} from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
@@ -47,16 +52,52 @@ export const tableConfig = {
   },
 } as const;
 
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/verkeer-vervoer/varen-amsterdam/varen-beroepsvaart/#:~:text=De%20passagiersvaart%20in%20Amsterdam%20is,stad%20willen%20we%20graag%20behouden.',
-    title: 'Meer informatie over passagiers- en beroepsvaart',
-  },
-] as const;
+export const varenMeerInformatieLink: LinkProps = {
+  to: 'https://www.amsterdam.nl/verkeer-vervoer/varen-amsterdam/varen-beroepsvaart/#:~:text=De%20passagiersvaart%20in%20Amsterdam%20is,stad%20willen%20we%20graag%20behouden.',
+  title: 'Meer informatie over passagiers- en beroepsvaart',
+} as const;
 
-export const buttonItems: LinkProps[] = [
-  {
-    to: 'https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningAanvragen.aspx',
-    title: 'Exploitatievergunning aanvragen',
-  },
-] as const;
+export const exploitatieVergunningAanvragen: LinkProps = {
+  to: 'https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningAanvragen.aspx',
+  title: 'Exploitatievergunning aanvragen',
+} as const;
+
+export const exploitatieVergunningWijzigen: (key: string) => LinkProps = (
+  key
+) => ({
+  to: `https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/VARExploitatievergunningWijzigen.aspx?guid=${key}`,
+  title: 'Wijzigen',
+});
+
+export const ligplaatsVergunningLink: LinkProps = {
+  to: `https://formulieren.acc.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Ligplaatsbedrijfsvaartuig.aspx`,
+  title: 'Ligplaatsvergunning aanvragen',
+} as const;
+
+export type LabelMap<T extends object> = Partial<Record<keyof T, string>>;
+export const labelMapThemaRegistratieReder = {
+  company: 'Bedrijfsnaam',
+  email: 'E-mailadres',
+  phone: 'Telefoonnummer',
+  bsnkvk: 'KVK nummer',
+  address: 'Adres',
+} satisfies LabelMap<VarenRegistratieRederType>;
+
+export const labelMapsThemaDetail = {
+  'Varen vergunning exploitatie': {
+    id: 'Zaaknummer',
+    vesselName: 'Naam van het vaartuig',
+    segment: 'Segment',
+    vesselWidth: 'Breedte van het vaartuig',
+    vesselLength: 'Lengte van het vaartuig',
+  } satisfies LabelMap<VarenVergunningExploitatieType>,
+  'Varen ligplaatsvergunning': {
+    id: 'Zaaknummer',
+    vesselName: 'Naam van het vaartuig',
+    location: 'Ligplek',
+  } satisfies LabelMap<VarenVergunningLigplaatsType>,
+  'Varen registratie reder': {
+    id: 'Zaaknummer',
+    ...labelMapThemaRegistratieReder,
+  } satisfies LabelMap<VarenRegistratieRederType>,
+};
