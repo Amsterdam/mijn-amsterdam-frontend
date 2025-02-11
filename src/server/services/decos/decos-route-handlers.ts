@@ -40,6 +40,7 @@ export async function fetchDecosDocumentsList(
     const zaakKey: DecosZaakBase['key'] = decryptResult.content;
     const response = await fetchDecosDocumentList(
       res.locals.requestID,
+      authProfileAndToken.profile.sid,
       zaakKey
     );
 

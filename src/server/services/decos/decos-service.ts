@@ -644,6 +644,7 @@ function filterValidDocument({
 
 async function transformDecosDocumentListResponse(
   requestID: RequestID,
+  sessionID: SessionID,
   decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource[]>
 ) {
   if (Array.isArray(decosDocumentsListResponse.content)) {
@@ -657,7 +658,7 @@ async function transformDecosDocumentListResponse(
             key: isPdfResponse.content.key,
             title: documentMetadata.text41,
             datePublished: documentMetadata.received_date,
-            url: '', // Url is constructed in vergunningen.ts
+            url: '',
           };
           return decosZaakDocument;
         }
@@ -676,6 +677,7 @@ async function transformDecosDocumentListResponse(
 
 export async function fetchDecosDocumentList(
   requestID: RequestID,
+  sessionID: SessionID,
   zaakID: DecosZaakBase['key']
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
@@ -691,6 +693,7 @@ export async function fetchDecosDocumentList(
   if (documentsSource.status === 'OK') {
     const documentsTransformed = await transformDecosDocumentListResponse(
       requestID,
+      sessionID,
       documentsSource.content
     );
     return apiSuccessResult(documentsTransformed);
@@ -720,56 +723,6 @@ export async function fetchDecosZaakFromSource(
 }
 
 type NestedType<T> = T extends DecosZaakTransformer<infer R> ? R : never;
-
-export async function fetchDecosZaak<
-  T extends DecosZaakTransformer<any>,
-  DZ extends DecosZaakBase = NestedType<T>,
->(
-  requestID: RequestID,
-  decosZaakTransformers: T[],
-  zaakID: DecosZaakBase['key']
-) {
-  const decosZaakSourceRequest = fetchDecosZaakFromSource(requestID, zaakID);
-  const decosZaakDocumentsRequest = fetchDecosDocumentList(requestID, zaakID);
-
-  const [zaakSourceResponseSettled, documentsResponseSettled] =
-    await Promise.allSettled([
-      decosZaakSourceRequest,
-      decosZaakDocumentsRequest,
-    ]);
-
-  const zaakSourceResponse = getSettledResult(zaakSourceResponseSettled);
-  const documentsResponse = getSettledResult(documentsResponseSettled);
-
-  let documents: DecosZaakDocument[] = [];
-  let decosZaak: DecosZaakBase | null = null;
-
-  if (zaakSourceResponse.status == 'OK') {
-    const decosZaakResponseData = zaakSourceResponse.content;
-    if (decosZaakResponseData) {
-      try {
-        decosZaak = await transformDecosZaakResponse(
-          requestID,
-          decosZaakTransformers,
-          decosZaakResponseData
-        );
-      } catch (error) {
-        captureException(error);
-      }
-    }
-
-    if (documentsResponse.status === 'OK' && decosZaak !== null) {
-      documents = documentsResponse.content;
-    }
-
-    return apiSuccessResult({
-      decosZaak: decosZaak as DZ,
-      documents,
-    });
-  }
-
-  return zaakSourceResponse;
-}
 
 export async function fetchDecosDocument(
   requestID: RequestID,
