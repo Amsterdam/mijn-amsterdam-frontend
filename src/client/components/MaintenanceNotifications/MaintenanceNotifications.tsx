@@ -8,11 +8,13 @@ import InnerHtml from '../InnerHtml/InnerHtml';
 interface MaintenanceNotificationsProps {
   page?: string;
   fromApiDirectly?: boolean;
+  className?: string;
 }
 
 export function MaintenanceNotifications({
   page,
   fromApiDirectly = false,
+  className,
 }: MaintenanceNotificationsProps) {
   const maintenanceNotifications = useCmsMaintenanceNotifications(
     page,
@@ -31,7 +33,7 @@ export function MaintenanceNotifications({
             key={notification.title + index}
             severity="warning"
             heading="Onderhoudsmelding"
-            className={styles.MaintenanceNotification}
+            className={classNames(styles.MaintenanceNotification, className)}
           >
             <InnerHtml className={classNames(styles.Description, 'ams-mb--sm')}>
               {notification.description}
