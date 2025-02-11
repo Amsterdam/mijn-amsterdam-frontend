@@ -33,7 +33,7 @@ import {
   ONE_MINUTE_SECONDS,
   ONE_SECOND_MS,
 } from './config/app';
-import { log, LOGGER_ENABLED } from './logging';
+import { log } from './logging';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
@@ -63,8 +63,14 @@ morgan.token('build', function () {
   return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
 });
 
+// RP TODO: Revise this. Log through pino and/or remove morgan?
+const DEBUG_LEVEL = 20;
+const INFO_LEVEL = 30;
 // Logs all Incoming requests
-if (LOGGER_ENABLED) {
+if (
+  (IS_DEVELOPMENT && log.levelVal <= INFO_LEVEL) ||
+  (!IS_DEVELOPMENT && log.levelVal <= DEBUG_LEVEL)
+) {
   app.use(
     morgan(
       IS_DEVELOPMENT
