@@ -1,4 +1,9 @@
-import { Grid, Icon, Paragraph } from '@amsterdam/design-system-react';
+import {
+  ActionGroup,
+  Grid,
+  Icon,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { transformDetailsIntoRowSet } from './helpers';
@@ -8,6 +13,7 @@ import {
   labelMapThemaRegistratieReder,
   varenMeerInformatieLink,
 } from './Varen-thema-config';
+import styles from './Varen.module.scss';
 import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
@@ -32,15 +38,26 @@ export function Varen() {
     isError,
   } = useVarenThemaData();
 
-  const pageContentTopSecondary = (
-    <MaButtonLink
-      key={exploitatieVergunningAanvragen.to}
-      href={exploitatieVergunningAanvragen.to}
-      variant="secondary"
-    >
-      {exploitatieVergunningAanvragen.title}
-      <Icon svg={ExternalLinkIcon} size="level-5" />
-    </MaButtonLink>
+  const buttons = [
+    exploitatieVergunningAanvragen,
+    exploitatieVergunningAanvragen,
+  ];
+  const pageContentTopSecondary = !!buttons && (
+    <Grid.Cell span="all">
+      <ActionGroup>
+        {buttons.map(({ to, title }) => (
+          <MaButtonLink
+            key={to}
+            href={to}
+            variant="secondary"
+            className={styles.VarenButton}
+          >
+            {title}
+            <Icon svg={ExternalLinkIcon} size="level-5" />
+          </MaButtonLink>
+        ))}
+      </ActionGroup>
+    </Grid.Cell>
   );
 
   const gegevensAanvragerRowSet: RowSet | null = varenRederRegistratie
@@ -64,6 +81,7 @@ export function Varen() {
           title={title}
           zaken={varenVergunningen.filter(filter).sort(sort)}
           displayProps={displayProps}
+          className={styles.VarenTableThemaPagina}
         />
       );
     }

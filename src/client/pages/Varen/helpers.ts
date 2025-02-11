@@ -1,6 +1,7 @@
 import type { GridColumnNumber } from '@amsterdam/design-system-react';
 
 import { LabelMap } from './Varen-thema-config';
+import styles from './Varen.module.scss';
 import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { entries } from '../../../universal/helpers/utils';
 import type { RowSet } from '../../components/Datalist/Datalist';
@@ -19,5 +20,6 @@ export function transformDetailsIntoRowSet<T extends VarenFrontend>(
         span: gridColumnNumber,
       }))
       .filter(({ content }) => !!content),
+    className: styles.VarenGridWithoutRowGap,
   };
 }
