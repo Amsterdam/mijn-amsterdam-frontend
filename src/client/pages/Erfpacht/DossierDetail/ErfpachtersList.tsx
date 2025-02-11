@@ -92,8 +92,10 @@ export function ErfpachtersList({
         {shouldCollapse && (
           <Button
             variant="tertiary"
+            aria-expanded={!isCollapsed}
             style={{ transform: 'translateX(-1.4rem)' }}
             onClick={() => setIsCollapsed(!isCollapsed)}
+            title={`${isCollapsed ? 'Toon meer' : 'Verberg'} erfpachters`}
           >
             {isCollapsed ? 'Toon meer' : 'Verberg'}
           </Button>

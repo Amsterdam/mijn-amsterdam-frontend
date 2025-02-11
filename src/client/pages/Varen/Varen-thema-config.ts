@@ -8,6 +8,8 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
+import { TrackingConfig } from '../../config/routes';
+import { ThemaTitles } from '../../config/thema';
 
 const displayPropsAanvragen: DisplayProps<
   WithDetailLinkComponent<VarenFrontend>
@@ -22,6 +24,9 @@ const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 };
+
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 const tableConfigBase = {
   sort: dateSort('dateRequest', 'desc'),
@@ -60,3 +65,30 @@ export const buttonItems: LinkProps[] = [
     title: 'Exploitatievergunning aanvragen',
   },
 ] as const;
+
+export function getVarenListPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as ListPageParamKind;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${ThemaTitles.VAREN}`
+      : ThemaTitles.VAREN;
+  };
+}
+export function getVarenDetailPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    switch (params?.caseType) {
+      case 'ligplaatsvergunning':
+        return `Ligplaatsvergunning | ${ThemaTitles.VAREN}`;
+      case 'exploitatievergunning':
+        return `Exploitatievergunning | ${ThemaTitles.VAREN}`;
+      default:
+        return `Vergunning | ${ThemaTitles.VAREN}`;
+    }
+  };
+}
