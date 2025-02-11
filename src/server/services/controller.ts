@@ -12,7 +12,6 @@ import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
 import { getAuth } from '../auth/auth-helpers';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { IS_DEBUG } from '../config/app';
 import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
@@ -97,12 +96,10 @@ function getServiceTipsMap(profileType: ProfileType) {
 export function addServiceResultHandler<
   T extends Promise<Record<string, ApiResponse_DEPRECATED<unknown | null>>>,
 >(res: Response, servicePromise: T, serviceName: string) {
-  if (IS_DEBUG) {
-    log.info(
-      'Service-controller: adding service result handler for ',
-      serviceName
-    );
-  }
+  log.debug(
+    'Service-controller: adding service result handler for ',
+    serviceName
+  );
   return servicePromise.then((serviceResponse) => {
     const [apiResponse] = Object.values(serviceResponse ?? {});
     if (
@@ -113,12 +110,10 @@ export function addServiceResultHandler<
     ) {
       sendMessage(res, serviceName, 'message', serviceResponse);
     }
-    if (IS_DEBUG) {
-      log.info(
-        'Service-controller: service result message sent for',
-        serviceName
-      );
-    }
+    log.debug(
+      'Service-controller: service result message sent for',
+      serviceName
+    );
     return serviceResponse;
   });
 }

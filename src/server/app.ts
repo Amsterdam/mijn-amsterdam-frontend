@@ -27,12 +27,7 @@ import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 
-import {
-  BFF_PORT,
-  IS_DEBUG,
-  ONE_MINUTE_SECONDS,
-  ONE_SECOND_MS,
-} from './config/app';
+import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
 import { log } from './logging';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
@@ -66,11 +61,12 @@ morgan.token('build', function () {
 // RP TODO: Revise this. Log through pino and/or remove morgan?
 const DEBUG_LEVEL = 20;
 const INFO_LEVEL = 30;
-// Logs all Incoming requests
-if (
+const ENABLE_EXTRA_LOGGING =
   (IS_DEVELOPMENT && log.levelVal <= INFO_LEVEL) ||
-  (!IS_DEVELOPMENT && log.levelVal <= DEBUG_LEVEL)
-) {
+  (!IS_DEVELOPMENT && log.levelVal <= DEBUG_LEVEL);
+
+// Logs all Incoming requests
+if (ENABLE_EXTRA_LOGGING) {
   app.use(
     morgan(
       IS_DEVELOPMENT
@@ -172,7 +168,8 @@ app.use((_req: Request, res: Response) => {
 });
 
 async function startServerBFF() {
-  if (IS_DEBUG) {
+  // RP TODO: revise this?
+  if (ENABLE_EXTRA_LOGGING) {
     await import('log-that-http');
   }
   const server = app.listen(BFF_PORT, () => {

@@ -4,7 +4,6 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { IS_DEBUG } from '../../config/app';
 import { decrypt } from '../../helpers/encrypt-decrypt';
 import { log } from '../../logging';
 import { captureException } from '../monitoring';
@@ -33,17 +32,15 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
   }
 
   if (!sessionID || !id || authProfileAndToken.profile.sid !== sessionID) {
-    if (IS_DEBUG) {
-      log.info(
-        'ERROR: Incomplete session validation or missing routeParamID',
-        'sessionID:',
-        sessionID,
-        'routeParamID:',
-        id,
-        'profile.sid:',
-        authProfileAndToken.profile.sid
-      );
-    }
+    log.debug(
+      'ERROR: Incomplete session validation or missing routeParamID',
+      'sessionID:',
+      sessionID,
+      'routeParamID:',
+      id,
+      'profile.sid:',
+      authProfileAndToken.profile.sid
+    );
     return apiErrorResult(
       'Not authorized: incomplete session validation',
       null,

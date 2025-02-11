@@ -9,7 +9,6 @@ import {
 } from 'applicationinsights/out/Declarations/Contracts';
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { IS_DEBUG } from '../config/app';
 import { log } from '../logging';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
@@ -106,10 +105,7 @@ export function captureException(error: unknown, properties?: Properties) {
   };
 
   if (IS_DEVELOPMENT) {
-    // Does nothing (As expected) if development is not in debug mode.
-    if (IS_DEBUG) {
-      log.error('Capture Exception', payload);
-    }
+    log.error('Capture Exception', payload);
   } else {
     client?.trackException(payload);
   }
@@ -127,10 +123,7 @@ export function captureMessage(message: string, properties?: Properties) {
   };
 
   if (IS_DEVELOPMENT) {
-    // Does nothing (As expected) if development is not in debug mode.
-    if (IS_DEBUG) {
-      log.info('Capture message', payload);
-    }
+    log.debug('Capture message', payload);
   } else {
     client?.trackTrace(payload);
   }
@@ -138,7 +131,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
 export function trackEvent(name: string, properties: Record<string, unknown>) {
   return IS_DEVELOPMENT
-    ? IS_DEBUG && log.info('Track event', name, properties)
+    ? log.debug('Track event', name, properties)
     : client?.trackEvent({
         name,
         properties,
