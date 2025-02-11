@@ -32,12 +32,13 @@ export function LandingPage() {
           <Heading level={1} className="ams-mb--sm">
             Welkom op Mijn Amsterdam
           </Heading>
-          <Paragraph className="ams-mb--md">
+          <Paragraph className="ams-mb--sm">
             Uw Amsterdamse zaken op 1 plek.
           </Paragraph>
           <MaintenanceNotifications
             fromApiDirectly={true}
             page="landingspagina"
+            className="ams-mb--sm"
           />
 
           {FeatureToggle.eherkenningActive && (
