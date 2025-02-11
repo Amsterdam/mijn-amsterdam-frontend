@@ -4,7 +4,7 @@ import {
   defaultDateTimeFormat,
 } from '../../../../universal/helpers/date';
 import { entries } from '../../../../universal/helpers/utils';
-import { Row, RowSet } from '../../../components/Datalist/Datalist';
+import { Row, RowSet, WrappedRow } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 
 type DataListRowOptions = {
@@ -12,7 +12,10 @@ type DataListRowOptions = {
 };
 
 type VergunningDataListRow<T extends VergunningFrontend = VergunningFrontend> =
-  (vergunning: T, options?: DataListRowOptions) => Row | RowSet | null;
+  (
+    vergunning: T,
+    options?: DataListRowOptions
+  ) => Row | RowSet | WrappedRow | null;
 
 export type RowTransformer<T extends VergunningFrontend = VergunningFrontend> =
   Record<string, VergunningDataListRow<T>>;
@@ -30,20 +33,26 @@ export const onFromTo: VergunningDataListRow<VergunningFrontend> = (
   if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
     return null;
   }
-  const on = {
+  const on: WrappedRow = {
     label: 'Op',
     content: vergunning.dateStart
       ? defaultDateFormat(vergunning.dateStart)
       : '-',
+    span: 4,
   };
-  const from = {
+
+  const from: WrappedRow = {
     label: 'Van',
     content: vergunning.timeStart ? `${vergunning.timeStart} uur` : '-',
+    span: 4,
   };
-  const to = {
+
+  const to: WrappedRow = {
     label: 'Tot',
     content: vergunning.timeEnd ? `${vergunning.timeEnd} uur` : '-',
+    span: 4,
   };
+
   return { rows: [on, from, to] };
 };
 
@@ -55,7 +64,7 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
     return null;
   }
 
-  const from: Row = {
+  const from: WrappedRow = {
     label: 'Van',
     content:
       vergunning?.timeStart && vergunning?.dateStart
@@ -65,9 +74,10 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
         : vergunning.dateStart
           ? defaultDateFormat(vergunning.dateStart)
           : '-',
+    span: 4,
   };
 
-  const to: Row = {
+  const to: WrappedRow = {
     label: 'Tot en met',
     content:
       vergunning?.timeEnd && vergunning?.dateEnd
@@ -75,6 +85,7 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
         : vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
           : '-',
+    span: 4,
   };
 
   const rowSet: RowSet = { rows: [from, to] };
@@ -83,21 +94,18 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
 };
 
 export const dateRange: VergunningDataListRow<VergunningFrontend> = (
-  vergunning
+  vergunning,
+  options: DataListRowOptions = { endDateIncluded: true }
 ) => {
-  const from: Row = {
-    label: 'Van',
-    content: vergunning?.dateStart
-      ? defaultDateTimeFormat(vergunning.dateStart)
-      : null,
-  };
+  const from = commonTransformers.dateStart(vergunning) as WrappedRow;
+  const to = commonTransformers.dateEnd(vergunning, options) as WrappedRow;
 
-  const to: Row = {
-    label: 'Tot en met',
-    content: vergunning.dateEnd ? defaultDateFormat(vergunning.dateEnd) : null,
+  const rowSet: RowSet = {
+    rows: [
+      { ...from, span: 4 },
+      { ...to, span: 4 },
+    ],
   };
-
-  const rowSet: RowSet = { rows: [from, to] };
 
   return rowSet;
 };
