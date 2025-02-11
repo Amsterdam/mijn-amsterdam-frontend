@@ -74,7 +74,7 @@ module.exports = [
   },
   {
     id: 'post-powerbrowser-personen-zaken',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table`,
+    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/Table`,
     method: 'POST',
     variants: [
       {
