@@ -83,6 +83,15 @@ export function captureMessage(message: string, properties?: Properties) {
   }
 }
 
+export function trackEvent(name: string, properties: Record<string, unknown>) {
+  return IS_DEVELOPMENT
+    ? MA_APP_MODE !== 'unittest' && console.log('Track event', name, properties)
+    : client?.trackEvent({
+        name,
+        properties,
+      });
+}
+
 interface TrackRequestProps {
   name: string;
   url: string;

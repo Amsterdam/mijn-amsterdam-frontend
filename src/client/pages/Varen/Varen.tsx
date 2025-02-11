@@ -64,7 +64,6 @@ export function Varen() {
           title={title}
           zaken={varenVergunningen.filter(filter).sort(sort)}
           displayProps={displayProps}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
         />
       );
     }
