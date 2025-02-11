@@ -14,7 +14,7 @@ function Zoom() {
   };
 
   return (
-    <div className={styles.ZoomBar}>
+    <div id="map-zoom" className={styles.ZoomBar}>
       <Button
         className={styles.Button}
         variant="tertiary"
