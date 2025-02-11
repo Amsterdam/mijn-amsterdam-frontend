@@ -12,7 +12,7 @@ export function RvvHeleStad({
 }) {
   const rows = getRows(vergunning, [
     'identifier',
-    'licensePlates',
+    'kentekens',
     'dateRange',
     'decision',
   ]);
