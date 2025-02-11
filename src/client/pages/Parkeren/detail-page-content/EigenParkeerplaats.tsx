@@ -66,7 +66,7 @@ export function EigenParkeerplaats({
     },
     'kentekens',
     {
-      previousLicensePlates: (vergunning) => {
+      vorigeKentekens: (vergunning) => {
         return vergunning.requestTypes.some(
           (type) => type === 'Kentekenwijziging'
         ) && 'vorigeKentekens' in vergunning

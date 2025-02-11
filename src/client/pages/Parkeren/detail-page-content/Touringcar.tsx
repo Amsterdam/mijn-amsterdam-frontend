@@ -3,102 +3,52 @@ import type {
   TouringcarJaarontheffing,
 } from '../../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import {
-  dateTimeFormatYear,
-  defaultDateFormat,
-} from '../../../../universal/helpers/date';
 import { CaseTypeV2 } from '../../../../universal/types/decos-zaken';
-import InfoDetail, {
-  InfoDetailGroup,
-} from '../../../components/InfoDetail/InfoDetail';
+import { Datalist } from '../../../components/Datalist/Datalist';
+import {
+  dateRange,
+  dateTimeRange,
+  getRows,
+} from '../../Vergunningen/detail-page-content/fields-config';
 
-export function Touringcar({ vergunning }: { vergunning: VergunningFrontend }) {
-  const vergunningData = vergunning as VergunningFrontend<
+export function Touringcar({
+  vergunning,
+}: {
+  vergunning: VergunningFrontend<
     TouringcarDagontheffing | TouringcarJaarontheffing
   >;
+}) {
   const isGranted = vergunning.decision === 'Verleend';
 
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunningData.identifier} />
+  const rows = getRows(vergunning, [
+    'identifier',
+    'kentekens',
+    {
+      destination: () => ({
+        label: 'Bestemming',
+        content: vergunning.destination,
+      }),
+    },
+    {
+      dateRangeYear: () => {
+        return vergunning.processed &&
+          isGranted &&
+          vergunning.caseType === CaseTypeV2.TouringcarJaarontheffing
+          ? dateRange(vergunning)
+          : null;
+      },
+    },
+    {
+      dateRangeDay: () => {
+        return vergunning.processed &&
+          isGranted &&
+          vergunning.caseType === CaseTypeV2.TouringcarDagontheffing
+          ? dateTimeRange(vergunning)
+          : null;
+      },
+    },
+    'decision',
+  ]);
 
-      {vergunningData.caseType === CaseTypeV2.TouringcarJaarontheffing ? (
-        <InfoDetail
-          valueWrapperElement="div"
-          label={vergunningData.routetest ? 'Kenteken' : 'Kenteken(s)'}
-          value={
-            vergunningData.kentekens?.includes(' | ') ? (
-              <ul>
-                {vergunningData.kentekens
-                  ?.split(' | ')
-                  .map((plate, index) => <li key={plate + index}>{plate}</li>)}
-              </ul>
-            ) : (
-              vergunningData.kentekens
-            )
-          }
-        />
-      ) : (
-        <InfoDetail label="Kenteken" value={vergunningData.kentekens} />
-      )}
-
-      <InfoDetail label="Bestemming" value={vergunningData.destination} />
-
-      {isGranted &&
-        vergunningData.caseType === CaseTypeV2.TouringcarJaarontheffing && (
-          <InfoDetailGroup>
-            <InfoDetail
-              label="Van"
-              value={
-                vergunningData.dateStart
-                  ? defaultDateFormat(vergunningData.dateStart)
-                  : '-'
-              }
-            />
-            <InfoDetail
-              label="Tot"
-              value={
-                vergunningData.dateEnd
-                  ? defaultDateFormat(vergunningData.dateEnd)
-                  : '-'
-              }
-            />
-          </InfoDetailGroup>
-        )}
-
-      {isGranted &&
-        vergunningData.caseType === CaseTypeV2.TouringcarDagontheffing && (
-          <InfoDetailGroup>
-            <InfoDetail
-              label="Van"
-              value={
-                vergunningData?.timeStart && vergunningData?.dateStart
-                  ? dateTimeFormatYear(
-                      `${vergunningData.dateStart}T${vergunningData.timeStart}`
-                    )
-                  : vergunningData.dateStart
-                    ? defaultDateFormat(vergunningData.dateStart)
-                    : '-'
-              }
-            />
-            <InfoDetail
-              label="Tot"
-              value={
-                vergunningData?.timeEnd && vergunningData?.dateEnd
-                  ? dateTimeFormatYear(
-                      `${vergunningData.dateEnd}T${vergunningData.timeEnd}`
-                    )
-                  : vergunningData.dateEnd
-                    ? defaultDateFormat(vergunningData.dateEnd)
-                    : '-'
-              }
-            />
-          </InfoDetailGroup>
-        )}
-
-      {!!vergunningData.processed && (
-        <InfoDetail label="Resultaat" value={vergunningData.decision} />
-      )}
-    </>
-  );
+  return <Datalist rows={rows} />;
 }
