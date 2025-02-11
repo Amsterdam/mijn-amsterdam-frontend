@@ -17,7 +17,7 @@ const displayPropsAanvragen: DisplayProps<
   detailLinkComponent: '',
   title: 'Omschrijving',
   dateRequestFormatted: 'Aangevraagd',
-  status: 'Status',
+  displayStatus: 'Status',
 };
 
 const listPageParamKind = {

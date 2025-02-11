@@ -7,7 +7,10 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
+import {
+  getDisplayStatus,
+  getStatusSteps,
+} from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchDecosParkeerVergunningen(
   requestID: RequestID,
@@ -29,11 +32,16 @@ export async function fetchDecosParkeerVergunningen(
           AppRoutes['PARKEREN/DETAIL']
         );
 
+        const steps = getStatusSteps(vergunningTransformed);
+        const displayStatus = getDisplayStatus(vergunningTransformed, steps);
+
         return {
           ...vergunningTransformed,
-          steps: getStatusSteps(vergunningTransformed),
+          steps,
+          displayStatus,
         };
       });
+
     return apiSuccessResult(vergunningenFrontend);
   }
 
