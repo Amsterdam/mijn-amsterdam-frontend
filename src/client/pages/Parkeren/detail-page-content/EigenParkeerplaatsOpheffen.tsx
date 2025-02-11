@@ -1,50 +1,55 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import type { EigenParkeerplaatsOpheffen } from '../../../../server/services/parkeren/config-and-types';
-import InfoDetail from '../../../components/InfoDetail/InfoDetail';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { Datalist } from '../../../components/Datalist/Datalist';
 import styles from '../../../components/LocationModal/LocationModal.module.scss';
+import { getRows } from '../../Vergunningen/detail-page-content/fields-config';
 
 export function EigenParkeerplaatsOpheffen({
   vergunning,
 }: {
-  vergunning: EigenParkeerplaatsOpheffen;
+  vergunning: VergunningFrontend<EigenParkeerplaatsOpheffen>;
 }) {
-  const isAfgehandeld = vergunning.processed;
-  const { street, type, url, houseNumber } = vergunning.location;
-
-  return (
-    <>
-      <InfoDetail label="Kenmerk" value={vergunning.identifier || '-'} />
-      <InfoDetail
-        label="Verzoek"
-        value={`Opheffing ${
-          vergunning.isCarsharingpermit ? 'autodeelbedrijf' : ''
-        }`}
-      />
-
-      {/* <Location label="Adres" location={`${street} ${houseNumber}`} /> */}
-
-      {type && <InfoDetail label="Soort plek" value={type} />}
-
-      {url && (
-        <InfoDetail
-          label="Parkeervak"
-          value={
+  const rows = getRows(vergunning, [
+    'identifier',
+    {
+      requestType: (vergunning) => {
+        return {
+          label: 'Verzoek',
+          content: `Opheffing ${
+            vergunning.isCarsharingpermit ? 'autodeelbedrijf' : ''
+          }`,
+        };
+      },
+    },
+    {
+      locationType: (vergunning) => {
+        return {
+          label: 'Soort plek',
+          content: vergunning.location.type,
+        };
+      },
+    },
+    {
+      locationUrl: (vergunning) => {
+        return {
+          label: 'Parkeervak',
+          content: (
             <Link
               rel="noreferrer"
               className={styles.LocationModalLink}
               variant="inline"
-              href={url}
+              href={vergunning.location.url}
             >
               Bekijk parkeervak
             </Link>
-          }
-        />
-      )}
+          ),
+        };
+      },
+    },
+    'decision',
+  ]);
 
-      {isAfgehandeld && (
-        <InfoDetail label="Resultaat" value={vergunning.decision} />
-      )}
-    </>
-  );
+  return <Datalist rows={rows} />;
 }
