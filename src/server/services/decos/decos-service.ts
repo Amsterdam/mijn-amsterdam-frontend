@@ -710,9 +710,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     ),
     link: {
       to: generatePath(appRoute, {
-        title: slug(zaak.caseType, {
-          lower: true,
-        }),
+        caseType: slug(zaak.caseType, { lower: true }),
         id: zaak.id,
       }),
       title: `Bekijk hoe het met uw aanvraag staat`,

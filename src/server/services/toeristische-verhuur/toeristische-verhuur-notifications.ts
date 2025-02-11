@@ -11,9 +11,9 @@ import { Themas } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { isNearEndDate } from '../decos/helpers';
 
 export function createToeristischeVerhuurNotification(
@@ -41,7 +41,7 @@ export function createToeristischeVerhuurNotification(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
-        casetype:
+        caseType:
           vergunning.title === 'Vergunning vakantieverhuur'
             ? 'vakantieverhuur'
             : 'bed-and-breakfast',
