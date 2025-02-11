@@ -77,9 +77,8 @@ export const bffApiHost = 'http://bff-api-host';
 export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';
 
-// Set to some log level to prevent console.logs about this not being set.
-process.env.LOG_LEVEL = 'info';
-process.env.LOGGER_ENABLED = 'false';
+process.env.LOG_LEVEL = 'error';
+process.env.LOGGER_ENABLED = 'true';
 
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
