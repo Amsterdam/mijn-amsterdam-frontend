@@ -50,4 +50,5 @@ const options: LoggerOptions = {
   transport,
 };
 
-export const log = pino(options);
+export const logger = pino(options);
+export const requestLogger = pino({ ...options, enabled: true });

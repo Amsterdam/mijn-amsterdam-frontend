@@ -1,7 +1,7 @@
 import memoizee from 'memoizee';
 
 import { captureException } from '../services/monitoring';
-import { log } from '../logging';
+import { logger } from '../logging';
 
 /** Retrieve an environment variable.
  *
@@ -17,10 +17,10 @@ function getFromEnv_(
   }
   if (isRequired) {
     const error = new Error(`ENV undefined key: ${key}.`);
-    log.error(error); // So we see it in logstream.
+    logger.error(error); // So we see it in logstream.
     captureException(error); // So we see it in monitoring.
   } else {
-    log.warn(`ENV undefined, but not required: ${key}`);
+    logger.warn(`ENV undefined, but not required: ${key}`);
   }
 }
 

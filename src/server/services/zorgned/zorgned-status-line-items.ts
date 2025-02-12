@@ -4,7 +4,7 @@ import {
   ZorgnedStatusLineItemsConfig,
 } from './zorgned-types';
 import { StatusLineItem } from '../../../universal/types';
-import { log } from '../../logging';
+import { logger } from '../../logging';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,
 // we set the match to true so the check doesn't influence the selection criteria and returns items by default.
@@ -67,7 +67,7 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
   );
 
   if (!lineItemTransformer) {
-    log.error(
+    logger.error(
       `No line item formatters found for Service: ${serviceName}, leveringsVorm: ${aanvraagTransformed.leveringsVorm}, productsoortCode: ${aanvraagTransformed.productsoortCode}`
     );
     return null;

@@ -28,7 +28,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 
 import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
-import { log } from './logging';
+import { logger } from './logging';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
@@ -58,23 +58,15 @@ morgan.token('build', function () {
   return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
 });
 
-// RP TODO: Revise this. Log through pino and/or remove morgan?
-const DEBUG_LEVEL = 20;
-const INFO_LEVEL = 30;
-const ENABLE_EXTRA_LOGGING =
-  (IS_DEVELOPMENT && log.levelVal <= INFO_LEVEL) ||
-  (!IS_DEVELOPMENT && log.levelVal <= DEBUG_LEVEL);
-
 // Logs all Incoming requests
-if (ENABLE_EXTRA_LOGGING) {
-  app.use(
-    morgan(
-      IS_DEVELOPMENT
-        ? 'dev'
-        : '[:build] - :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-    )
-  );
-}
+app.use(
+  morgan('dev', {
+    stream: {
+      // Logger adds a newline so we slice of the newline from the formatted morgan string.
+      write: (msg) => logger.info(msg.slice(0, msg.length - 1)),
+    },
+  })
+);
 
 app.use(
   cors({
@@ -96,7 +88,7 @@ app.use(requestID);
 ///// Public routes Voor Acceptance - Development
 ////////////////////////////////////////////////////////////////////////
 if (IS_AP && !IS_OT) {
-  log.info('Using AUTH OIDC Router');
+  logger.info('Using AUTH OIDC Router');
   app.use(oidcRouter);
 }
 
@@ -112,7 +104,7 @@ app.use(BFF_BASE_PATH, publicRouter);
 ///// Development routing for mock data
 ////////////////////////////////////////////////////////////////////////
 if (IS_OT && !IS_AP) {
-  log.info('Using AUTH Development Router');
+  logger.info('Using AUTH Development Router');
   app.use(authRouterDevelopment);
 }
 
@@ -169,11 +161,11 @@ app.use((_req: Request, res: Response) => {
 
 async function startServerBFF() {
   // RP TODO: revise this?
-  if (ENABLE_EXTRA_LOGGING) {
+  if (false) {
     await import('log-that-http');
   }
   const server = app.listen(BFF_PORT, () => {
-    log.info(
+    logger.info(
       `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [IS_DEVELOPMENT: ${IS_DEVELOPMENT}]`
     );
   });

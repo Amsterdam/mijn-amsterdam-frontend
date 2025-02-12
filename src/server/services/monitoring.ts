@@ -9,7 +9,7 @@ import {
 } from 'applicationinsights/out/Declarations/Contracts';
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { log } from '../logging';
+import { logger } from '../logging';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
@@ -105,7 +105,7 @@ export function captureException(error: unknown, properties?: Properties) {
   };
 
   if (IS_DEVELOPMENT) {
-    log.error('Capture Exception', payload);
+    logger.error('Capture Exception', payload);
   } else {
     client?.trackException(payload);
   }
@@ -123,7 +123,7 @@ export function captureMessage(message: string, properties?: Properties) {
   };
 
   if (IS_DEVELOPMENT) {
-    log.debug('Capture message', payload);
+    logger.debug('Capture message', payload);
   } else {
     client?.trackTrace(payload);
   }
@@ -131,7 +131,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
 export function trackEvent(name: string, properties: Record<string, unknown>) {
   return IS_DEVELOPMENT
-    ? log.debug('Track event', name, properties)
+    ? logger.debug('Track event', name, properties)
     : client?.trackEvent({
         name,
         properties,
@@ -143,11 +143,11 @@ function getSamplingPercentage(): number {
 
   let samplePercentage = process.env[samplePercentageKey];
   if (!samplePercentage) {
-    log.error(
+    logger.error(
       `The environment variable ${samplePercentageKey} is not a percentage in the range of 0 up to including 100.`
     );
     samplePercentage = '100';
-    log.error(`Defaulted ${samplePercentageKey} to ${samplePercentage}`);
+    logger.error(`Defaulted ${samplePercentageKey} to ${samplePercentage}`);
   }
 
   return parseInt(samplePercentage);

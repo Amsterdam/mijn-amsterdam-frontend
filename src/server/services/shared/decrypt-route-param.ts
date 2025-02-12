@@ -5,7 +5,7 @@ import {
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { decrypt } from '../../helpers/encrypt-decrypt';
-import { log } from '../../logging';
+import { logger } from '../../logging';
 import { captureException } from '../monitoring';
 
 export type SessionIDAndROuteParamIdEncrypted = string;
@@ -22,7 +22,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
   try {
     [sessionID, id] = decrypt(sessionIDAndRouteParamIdEncrypted).split(':');
   } catch (error) {
-    log.error(error);
+    logger.error(error);
     captureException(error);
     return apiErrorResult(
       'Bad request: failed to process encrypted param',
@@ -32,7 +32,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
   }
 
   if (!sessionID || !id || authProfileAndToken.profile.sid !== sessionID) {
-    log.debug(
+    logger.debug(
       'ERROR: Incomplete session validation or missing routeParamID',
       'sessionID:',
       sessionID,

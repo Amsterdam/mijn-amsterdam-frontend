@@ -19,7 +19,7 @@ import { db } from './db/db';
 import { captureException } from './monitoring';
 import { IS_TAP } from '../../universal/config/env';
 import { defaultDateFormat } from '../../universal/helpers/date';
-import { log } from '../logging';
+import { logger } from '../logging';
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.
@@ -64,10 +64,10 @@ async function setupTables() {
   try {
     await query(createTableQuery);
     await query(alterTableQuery1);
-    log.info(`setupTable: ${tableNameLoginCount} succeeded.`);
+    logger.info(`setupTable: ${tableNameLoginCount} succeeded.`);
   } catch (error) {
-    log.error(`setupTable: ${tableNameLoginCount} failed.`);
-    log.error(error);
+    logger.error(`setupTable: ${tableNameLoginCount} failed.`);
+    logger.error(error);
   }
 }
 

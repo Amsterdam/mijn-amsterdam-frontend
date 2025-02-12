@@ -20,7 +20,7 @@ import {
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
 } from '../config/source-api';
-import { log } from '../logging';
+import { logger } from '../logging';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -29,7 +29,7 @@ export const axiosRequest = axios.create({
 
 function getDebugResponseData(conf: AxiosRequestConfig) {
   return (responseData: any) => {
-    log.debug(
+    logger.debug(
       { from: conf.url, body: JSON.parse(responseData) },
       'Recieved response',
       conf.url

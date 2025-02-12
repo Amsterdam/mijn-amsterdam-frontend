@@ -61,7 +61,7 @@ import {
   fetchTozo,
 } from './wpi';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
-import { log } from '../logging';
+import { logger } from '../logging';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -96,7 +96,7 @@ function getServiceTipsMap(profileType: ProfileType) {
 export function addServiceResultHandler<
   T extends Promise<Record<string, ApiResponse_DEPRECATED<unknown | null>>>,
 >(res: Response, servicePromise: T, serviceName: string) {
-  log.debug(
+  logger.debug(
     'Service-controller: adding service result handler for ',
     serviceName
   );
@@ -110,7 +110,7 @@ export function addServiceResultHandler<
     ) {
       sendMessage(res, serviceName, 'message', serviceResponse);
     }
-    log.debug(
+    logger.debug(
       `Service-controller: service result message sent for ${serviceName}`
     );
     return serviceResponse;
