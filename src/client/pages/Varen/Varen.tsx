@@ -8,11 +8,7 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { transformDetailsIntoRowSet } from './helpers';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import {
-  exploitatieVergunningAanvragen,
-  labelMapThemaRegistratieReder,
-  varenMeerInformatieLink,
-} from './Varen-thema-config';
+import { labelMapThemaRegistratieReder } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
@@ -36,16 +32,14 @@ export function Varen() {
     tableConfig,
     isLoading,
     isError,
+    linkListItems,
+    buttonItems,
   } = useVarenThemaData();
 
-  const buttons = [
-    exploitatieVergunningAanvragen,
-    exploitatieVergunningAanvragen,
-  ];
-  const pageContentTopSecondary = !!buttons && (
+  const pageContentTopSecondary = !!buttonItems && (
     <Grid.Cell span="all">
       <ActionGroup>
-        {buttons.map(({ to, title }) => (
+        {buttonItems.map(({ to, title }) => (
           <MaButtonLink
             key={to}
             href={to}
@@ -101,7 +95,7 @@ export function Varen() {
         </>
       }
       isPartialError={false}
-      linkListItems={[varenMeerInformatieLink]}
+      linkListItems={linkListItems}
     />
   );
 }

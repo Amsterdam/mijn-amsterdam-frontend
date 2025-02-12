@@ -1,4 +1,8 @@
-import { varenMeerInformatieLink, tableConfig } from './Varen-thema-config';
+import {
+  varenMeerInformatieLink,
+  tableConfig,
+  exploitatieVergunningAanvragen,
+} from './Varen-thema-config';
 import {
   caseTypeVaren,
   VarenVergunningFrontend,
@@ -30,6 +34,7 @@ export function useVarenThemaData() {
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
     varenVergunningen,
-    linkListItems: varenMeerInformatieLink,
+    linkListItems: [varenMeerInformatieLink],
+    buttonItems: [exploitatieVergunningAanvragen],
   };
 }

@@ -13,14 +13,14 @@ export function useVarenDetailPage() {
 
   const vergunning = VAREN.content?.find((item) => item.id === id) ?? null;
 
-  const buttons = [
+  const buttonItems = [
     vergunning ? exploitatieVergunningWijzigen(vergunning.key) : [],
     ligplaatsVergunningLink,
   ].flat();
 
   return {
     vergunning,
-    buttons,
+    buttonItems,
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
   };

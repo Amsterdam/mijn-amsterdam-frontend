@@ -19,7 +19,7 @@ import { ThemaTitles } from '../../config/thema';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
-  const { vergunning, buttons, isLoading, isError } = useVarenDetailPage();
+  const { vergunning, buttonItems, isLoading, isError } = useVarenDetailPage();
 
   const halfOfGrid: GridColumnNumber = 6;
   const vergunningRowSet = vergunning
@@ -35,22 +35,20 @@ export function VarenDetail() {
     </Grid.Cell>
   ) : null;
 
-  const pageContentTopSecondary = !!buttons && (
-    <Grid.Cell span="all">
-      <ActionGroup>
-        {buttons.map(({ to, title }) => (
-          <MaButtonLink
-            key={to}
-            href={to}
-            variant="secondary"
-            className={styles.VarenButton}
-          >
-            {title}
-            <Icon svg={ExternalLinkIcon} size="level-5" />
-          </MaButtonLink>
-        ))}
-      </ActionGroup>
-    </Grid.Cell>
+  const pageContentTopSecondary = !!buttonItems && (
+    <ActionGroup>
+      {buttonItems.map(({ to, title }) => (
+        <MaButtonLink
+          key={to}
+          href={to}
+          variant="secondary"
+          className={styles.VarenButton}
+        >
+          {title}
+          <Icon svg={ExternalLinkIcon} size="level-5" />
+        </MaButtonLink>
+      ))}
+    </ActionGroup>
   );
 
   return (
@@ -61,11 +59,8 @@ export function VarenDetail() {
       isError={isError}
       isLoading={isLoading}
       icon={<ThemaIcon />}
-      pageContentTop={
-        <>
-          {vergunningDetails} {pageContentTopSecondary}
-        </>
-      }
+      pageContentTop={vergunningDetails}
+      pageContentTopSecondary={pageContentTopSecondary}
       backLink={{
         title: ThemaTitles.VAREN,
         to: AppRoutes.VAREN,
