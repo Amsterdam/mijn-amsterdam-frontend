@@ -66,20 +66,20 @@ export function Varen() {
   ) : null;
 
   const vergunningenTables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
-      const zaken = varenVergunningen.filter(filter).sort(sort);
+    ([kind, config]) => {
+      const zaken = varenVergunningen.filter(config.filter).sort(config.sort);
       return (
         <ThemaPaginaTable<VarenVergunningFrontend>
           key={kind}
-          title={title}
+          title={config.title}
           zaken={zaken}
-          displayProps={displayProps}
+          displayProps={config.displayProps}
           className={styles.VarenTableThemaPagina}
-          listPageRoute={listPageRoute}
-          listPageLinkLabel={`Alle ${title.toLowerCase()}`}
+          listPageRoute={config.listPageRoute}
+          listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
           totalItems={zaken.length}
           maxItems={5}
-          textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          textNoContent={`U heeft geen ${config.title.toLowerCase()}`}
         />
       );
     }
