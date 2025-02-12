@@ -77,29 +77,35 @@ export const ligplaatsVergunningLink: LinkProps = {
 } as const;
 
 export type LabelMap<T extends object> = Partial<Record<keyof T, string>>;
-export const labelMapThemaRegistratieReder = {
-  company: 'Bedrijfsnaam',
-  email: 'E-mailadres',
-  phone: 'Telefoonnummer',
-  bsnkvk: 'KVK nummer',
-  address: 'Adres',
-} as const satisfies LabelMap<VarenRegistratieRederType>;
+export const labelMapThemaRegistratieReder: LabelMap<VarenRegistratieRederType> =
+  {
+    company: 'Bedrijfsnaam',
+    email: 'E-mailadres',
+    phone: 'Telefoonnummer',
+    bsnkvk: 'KVK nummer',
+    address: 'Adres',
+  } as const;
 
-export const labelMapsThemaDetail = {
+interface labelMapsThemaDetail {
+  'Varen vergunning exploitatie': LabelMap<VarenVergunningExploitatieType>;
+  'Varen ligplaatsvergunning': LabelMap<VarenVergunningLigplaatsType>;
+  'Varen registratie reder': LabelMap<VarenRegistratieRederType>;
+}
+export const labelMapsThemaDetail: labelMapsThemaDetail = {
   'Varen vergunning exploitatie': {
     id: 'Zaaknummer',
     vesselName: 'Naam van het vaartuig',
     segment: 'Segment',
     vesselWidth: 'Breedte van het vaartuig',
     vesselLength: 'Lengte van het vaartuig',
-  } satisfies LabelMap<VarenVergunningExploitatieType>,
+  },
   'Varen ligplaatsvergunning': {
     id: 'Zaaknummer',
     vesselName: 'Naam van het vaartuig',
     location: 'Ligplek',
-  } satisfies LabelMap<VarenVergunningLigplaatsType>,
+  },
   'Varen registratie reder': {
     id: 'Zaaknummer',
     ...labelMapThemaRegistratieReder,
-  } satisfies LabelMap<VarenRegistratieRederType>,
+  },
 } as const;
