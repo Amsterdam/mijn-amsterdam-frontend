@@ -28,7 +28,7 @@ export function VarenDetail() {
     </Grid.Cell>
   ) : null;
 
-  const pageContentTopSecondary = !!buttonItems && (
+  const pageContentTopSecondary = buttonItems.length ? (
     <ActionGroup>
       {buttonItems.map(({ to, title }) => (
         <MaButtonLink
@@ -42,7 +42,7 @@ export function VarenDetail() {
         </MaButtonLink>
       ))}
     </ActionGroup>
-  );
+  ) : null;
 
   return (
     <ThemaDetailPagina<VarenFrontend>

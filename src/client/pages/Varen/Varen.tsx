@@ -36,23 +36,21 @@ export function Varen() {
     buttonItems,
   } = useVarenThemaData();
 
-  const pageContentTopSecondary = !!buttonItems && (
-    <Grid.Cell span="all">
-      <ActionGroup>
-        {buttonItems.map(({ to, title }) => (
-          <MaButtonLink
-            key={to}
-            href={to}
-            variant="secondary"
-            className={styles.VarenButton}
-          >
-            {title}
-            <Icon svg={ExternalLinkIcon} size="level-5" />
-          </MaButtonLink>
-        ))}
-      </ActionGroup>
-    </Grid.Cell>
-  );
+  const pageContentTopSecondary = buttonItems.length ? (
+    <ActionGroup>
+      {buttonItems.map(({ to, title }) => (
+        <MaButtonLink
+          key={to}
+          href={to}
+          variant="secondary"
+          className={styles.VarenButton}
+        >
+          {title}
+          <Icon svg={ExternalLinkIcon} size="level-5" />
+        </MaButtonLink>
+      ))}
+    </ActionGroup>
+  ) : null;
 
   const gegevensAanvragerRowSet: RowSet | null = varenRederRegistratie
     ? transformDetailsIntoRowSet(
