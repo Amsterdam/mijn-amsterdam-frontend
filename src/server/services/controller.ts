@@ -96,9 +96,8 @@ function getServiceTipsMap(profileType: ProfileType) {
 export function addServiceResultHandler<
   T extends Promise<Record<string, ApiResponse_DEPRECATED<unknown | null>>>,
 >(res: Response, servicePromise: T, serviceName: string) {
-  logger.debug(
-    'Service-controller: adding service result handler for ',
-    serviceName
+  logger.trace(
+    `Service-controller: adding service result handler for ${serviceName}`
   );
   return servicePromise.then((serviceResponse) => {
     const [apiResponse] = Object.values(serviceResponse ?? {});
@@ -110,7 +109,7 @@ export function addServiceResultHandler<
     ) {
       sendMessage(res, serviceName, 'message', serviceResponse);
     }
-    logger.debug(
+    logger.trace(
       `Service-controller: service result message sent for ${serviceName}`
     );
     return serviceResponse;

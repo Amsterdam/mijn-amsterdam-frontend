@@ -32,14 +32,13 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
   }
 
   if (!sessionID || !id || authProfileAndToken.profile.sid !== sessionID) {
-    logger.debug(
-      'ERROR: Incomplete session validation or missing routeParamID',
-      'sessionID:',
-      sessionID,
-      'routeParamID:',
-      id,
-      'profile.sid:',
-      authProfileAndToken.profile.sid
+    logger.error(
+      {
+        sessionID,
+        routeParamID: id,
+        sidProfile: authProfileAndToken.profile.sid,
+      },
+      'Incomplete session validation or missing routeParamID'
     );
     return apiErrorResult(
       'Not authorized: incomplete session validation',

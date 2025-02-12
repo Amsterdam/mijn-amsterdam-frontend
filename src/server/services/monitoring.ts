@@ -123,7 +123,7 @@ export function captureMessage(message: string, properties?: Properties) {
   };
 
   if (IS_DEVELOPMENT) {
-    logger.debug('Capture message', payload);
+    logger.debug(payload, 'Capture message');
   } else {
     client?.trackTrace(payload);
   }
@@ -131,7 +131,7 @@ export function captureMessage(message: string, properties?: Properties) {
 
 export function trackEvent(name: string, properties: Record<string, unknown>) {
   return IS_DEVELOPMENT
-    ? logger.debug('Track event', name, properties)
+    ? logger.debug({ name, properties }, 'Track event')
     : client?.trackEvent({
         name,
         properties,
