@@ -257,8 +257,8 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent({
-      cert: IS_TAP ? getCert('BFF_ZORGNED_AV_CERT') : '',
-      key: IS_TAP ? getCert('BFF_ZORGNED_AV_KEY') : '',
+      cert: IS_TAP ? getCert('BFF_SERVER_CLIENT_CERT') : '',
+      key: IS_TAP ? getCert('BFF_SERVER_CLIENT_KEY') : '',
     }),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
