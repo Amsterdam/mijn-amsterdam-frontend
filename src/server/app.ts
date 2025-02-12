@@ -39,6 +39,7 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
+import { getFromEnv } from './helpers/env';
 
 const app = express();
 
@@ -160,8 +161,10 @@ app.use((_req: Request, res: Response) => {
 });
 
 async function startServerBFF() {
-  // RP TODO: revise this?
-  if (false) {
+  if (
+    getFromEnv('LOG_THAT_HTTP_HEADERS') === 'true' ||
+    getFromEnv('LOG_THAT_HTTP_BODY') === 'true'
+  ) {
     await import('log-that-http');
   }
   const server = app.listen(BFF_PORT, () => {
