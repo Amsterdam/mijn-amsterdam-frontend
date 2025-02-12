@@ -116,7 +116,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
                     className={tableClassName}
                   />
                 )}
-                {items.length > pageSize && (
+                {total > pageSize && (
                   <PaginationV2
                     totalCount={total}
                     pageSize={pageSize}
