@@ -1,9 +1,4 @@
-import {
-  ActionGroup,
-  Grid,
-  GridColumnNumber,
-  Icon,
-} from '@amsterdam/design-system-react';
+import { ActionGroup, Grid, Icon } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { transformDetailsIntoRowSet } from './helpers';
@@ -21,12 +16,10 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 export function VarenDetail() {
   const { vergunning, buttonItems, isLoading, isError } = useVarenDetailPage();
 
-  const halfOfGrid: GridColumnNumber = 6;
   const vergunningRowSet = vergunning
     ? transformDetailsIntoRowSet(
         vergunning,
-        labelMapsThemaDetail[vergunning.caseType],
-        halfOfGrid
+        labelMapsThemaDetail[vergunning.caseType]
       )
     : null;
   const vergunningDetails = vergunningRowSet ? (
