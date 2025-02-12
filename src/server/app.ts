@@ -1,9 +1,11 @@
+/* Disable import order here, because this order matters with how we build our environment variables. */
+/* eslint-disable import/order */
+
 /* tslint:disable:no-implicit-dependencies */
 /* tslint:disable:no-submodule-imports */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 
-// eslint-disable-next-line import/order
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -21,14 +23,13 @@ if (IS_DEVELOPMENT) {
   dotenvExpand.expand(envConfig);
 }
 
+import { HttpStatusCode } from 'axios';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
-import morgan from 'morgan';
 
 import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
-import { logger } from './logging';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
 import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
@@ -39,6 +40,7 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
+import { logger } from './logging';
 import { getFromEnv } from './helpers/env';
 
 const app = express();
@@ -54,20 +56,26 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
-// Add request logging attribute (:build)
-morgan.token('build', function () {
-  return `bff-${process.env.MA_BUILD_ID ?? 'latest'}`;
-});
-
 // Logs all Incoming requests
-app.use(
-  morgan('dev', {
-    stream: {
-      // Logger adds a newline so we slice of the newline from the formatted morgan string.
-      write: (msg) => logger.info(msg.slice(0, msg.length - 1)),
-    },
-  })
-);
+app.use((req: Request, res: any, next: NextFunction) => {
+  // RP TODO: Fix typing issue
+  const oldWrite = res.write;
+  const oldEnd = res.end;
+
+  res.write = (...restArgs: (string | Buffer)[]) => {
+    oldWrite.apply(res, restArgs);
+  };
+
+  res.end = (...restArgs: (string | Buffer)[]) => {
+    logger.info(
+      `${req.method} ${req.originalUrl} - responds with ${res.statusCode} ${HttpStatusCode[res.statusCode]}`
+    );
+
+    oldEnd.apply(res, restArgs);
+  };
+
+  next();
+});
 
 app.use(
   cors({
