@@ -11,7 +11,7 @@ import { useVarenThemaData } from './useVarenThemaData.hook';
 import { labelMapThemaRegistratieReder } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
-import { Datalist, RowSet } from '../../components/Datalist/Datalist';
+import { Datalist } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -52,14 +52,14 @@ export function Varen() {
     </ActionGroup>
   ) : null;
 
-  const gegevensAanvragerRowSet: RowSet | null = varenRederRegistratie
-    ? transformDetailsIntoRowSet(
-        varenRederRegistratie,
-        labelMapThemaRegistratieReder
-      )
-    : null;
+  const gegevensAanvragerRowSet =
+    varenRederRegistratie &&
+    transformDetailsIntoRowSet(
+      varenRederRegistratie,
+      labelMapThemaRegistratieReder
+    );
 
-  const gegevensAanvrager = gegevensAanvragerRowSet ? (
+  const gegevensAanvrager = gegevensAanvragerRowSet?.rows.length ? (
     <Grid.Cell span="all">
       <Datalist rows={[gegevensAanvragerRowSet]} />
     </Grid.Cell>

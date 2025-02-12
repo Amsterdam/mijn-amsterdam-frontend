@@ -16,13 +16,13 @@ import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 export function VarenDetail() {
   const { vergunning, buttonItems, isLoading, isError } = useVarenDetailPage();
 
-  const vergunningRowSet = vergunning
-    ? transformDetailsIntoRowSet(
-        vergunning,
-        labelMapsThemaDetail[vergunning.caseType]
-      )
-    : null;
-  const vergunningDetails = vergunningRowSet ? (
+  const vergunningRowSet =
+    vergunning &&
+    transformDetailsIntoRowSet(
+      vergunning,
+      labelMapsThemaDetail[vergunning.caseType]
+    );
+  const vergunningDetails = vergunningRowSet?.rows.length ? (
     <Grid.Cell span="all">
       <Datalist rows={[vergunningRowSet]} />
     </Grid.Cell>
