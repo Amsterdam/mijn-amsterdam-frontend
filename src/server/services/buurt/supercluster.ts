@@ -37,9 +37,8 @@ function addExpansionZoom(superClusterIndex: Supercluster, feature: MaFeature) {
     }
   } catch (_error) {
     logger.error(
-      "Can't add expansion zoom to cluster",
-      feature.properties.cluster_id,
-      feature
+      { cluster_id: feature.properties.cluster_id, feature },
+      "Can't add expansion zoom to cluster"
     );
   }
 }

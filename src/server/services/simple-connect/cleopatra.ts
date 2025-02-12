@@ -31,7 +31,7 @@ function getPublicKey() {
       certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
     }
   } catch (error) {
-    logger.error('Error getting public key', error);
+    logger.error(error, 'Error getting public key');
   }
 
   const pemPubKey = !IS_TAP
