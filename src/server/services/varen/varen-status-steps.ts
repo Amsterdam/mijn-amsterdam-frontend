@@ -23,7 +23,7 @@ export function getStatusSteps(decosZaak: Varen) {
       datePublished: dateInBehandeling || '',
       description: '',
       isActive: hasDateInBehandeling && !isAfgehandeld,
-      isChecked: isAfgehandeld,
+      isChecked: hasDateInBehandeling || isAfgehandeld,
     },
     {
       id: 'step-3',
