@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 const PAGE_SIZE = 10;
-export function VarenLijst() {
+export function VarenList() {
   const { kind, page } = useParams<{
     kind: VarenVergunningKind;
     page: string;

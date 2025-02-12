@@ -85,7 +85,7 @@ import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/Toeristis
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
 import { Varen } from './pages/Varen/Varen';
 import { VarenDetail } from './pages/Varen/VarenDetail';
-import { VarenLijst } from './pages/Varen/VarenLijst';
+import { VarenList } from './pages/Varen/VarenList';
 import VergunningDetail from './pages/VergunningDetail/VergunningDetail';
 import Vergunningen from './pages/Vergunningen/Vergunningen';
 import VergunningV2Detail from './pages/VergunningenV2/VergunningDetail';
@@ -318,7 +318,7 @@ function AppAuthenticated() {
             <Route path={AppRoutes['VAREN/DETAIL']} component={VarenDetail} />
           )}
           {FeatureToggle.varenActive && (
-            <Route path={AppRoutes['VAREN/LIST']} component={VarenLijst} />
+            <Route path={AppRoutes['VAREN/LIST']} component={VarenList} />
           )}
           {FeatureToggle.varenActive && (
             <Route path={AppRoutes.VAREN} component={Varen} />
