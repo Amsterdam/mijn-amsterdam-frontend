@@ -110,6 +110,11 @@ const postponeFetchContactmomenten =
     ? contactmomentenFeatureToggle === 'false'
     : !FeatureToggle.contactmomentenActive;
 
+const httpsAgentConfigBFF = {
+  cert: getCert('BFF_SERVER_CLIENT_CERT'),
+  key: getCert('BFF_SERVER_CLIENT_KEY'),
+};
+
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
     postponeFetch: postponeFetchAfis,
@@ -123,10 +128,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       'Content-type': 'application/json; charset=utf-8',
       'X-Mams-Api-User': 'JZD',
     },
-    httpsAgent: new https.Agent({
-      cert: getCert('BFF_SERVER_CLIENT_CERT'),
-      key: getCert('BFF_SERVER_CLIENT_KEY'),
-    }),
+    httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
   ZORGNED_AV: {
     method: 'post',
@@ -190,10 +192,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_CLEOPATRA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.cleopatraApiActive,
     method: 'POST',
-    httpsAgent: new https.Agent({
-      cert: getCert('BFF_SERVER_CLIENT_CERT'),
-      key: getCert('BFF_SERVER_CLIENT_KEY'),
-    }),
+    httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
   DECOS_API: {
     url: `${getFromEnv('BFF_DECOS_API_BASE_URL')}`,
@@ -256,9 +255,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   ERFPACHTv2: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
-    httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCert('BFF_SERVER_CLIENT_CERT') : [],
-    }),
+    httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
