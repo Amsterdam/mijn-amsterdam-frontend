@@ -1,19 +1,24 @@
-import { ClientConfig, Pool } from 'pg';
+import { PoolConfig, Pool } from 'pg';
 
-import { getFromEnv } from '../../helpers/env';
 import { captureException } from '../monitoring';
 
-export const pgDbConfig: ClientConfig = {
-  host: getFromEnv('PGHOST', true),
-  port: parseInt(getFromEnv('PGPORT', true) ?? '5432', 10),
-  user: getFromEnv('PGUSER', true),
-  password: getFromEnv('PGPASSWORD', true),
-  database: getFromEnv('PGDATABASE', true),
+// Connection params are taken from env variables.
+export const pgDbConfig: PoolConfig = {
   ssl: { rejectUnauthorized: false },
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 3000,
 };
 
-export const pool = new Pool(pgDbConfig);
-let isConnected = false;
+let pool: Pool | null;
+
+export function getPool() {
+  if (pool) {
+    return pool;
+  }
+  pool = new Pool(pgDbConfig);
+  return pool;
+}
 
 /**
  * To develop against a working database you should enable the Datapunt VPN and use the credentials for the connection in your env.local file.
@@ -22,12 +27,8 @@ let isConnected = false;
 export async function query(queryString: string, values?: unknown[]) {
   let result = null;
 
-  if (!isConnected) {
-    await pool.connect();
-    isConnected = true;
-  }
-
   try {
+    const pool = getPool();
     result = await pool.query(queryString, values);
   } catch (error) {
     captureException(error);
@@ -49,5 +50,5 @@ export async function queryALL(queryString: string, values?: unknown[]) {
 export const id = 'postgres';
 
 process.on('beforeExit', () => {
-  pool.end();
+  pool?.end();
 });
