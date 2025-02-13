@@ -57,18 +57,12 @@ app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
 // Logs all Incoming requests
-app.use((req: Request, res: any, next: NextFunction) => {
-  // RP TODO: Fix typing issue
-  const oldWrite = res.write;
+app.use((req: Request, res: Response & { end: any }, next: NextFunction) => {
   const oldEnd = res.end;
 
-  res.write = (...restArgs: (string | Buffer)[]) => {
-    oldWrite.apply(res, restArgs);
-  };
-
-  res.end = (...restArgs: (string | Buffer)[]) => {
+  res.end = (...restArgs: any[]) => {
     logger.info(
-      `${req.method} ${req.originalUrl} - responds with ${res.statusCode} ${HttpStatusCode[res.statusCode]}`
+      `${req.method} ${req.originalUrl} - Responds with ${res.statusCode} ${HttpStatusCode[res.statusCode]}`
     );
 
     oldEnd.apply(res, restArgs);
