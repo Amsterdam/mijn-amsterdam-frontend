@@ -7,7 +7,7 @@ export const pgDbConfig: PoolConfig = {
   ssl: { rejectUnauthorized: false },
   max: 20,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 3000,
+  connectionTimeoutMillis: 2000,
 };
 
 let pool: Pool | null;
