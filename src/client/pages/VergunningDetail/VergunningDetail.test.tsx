@@ -1684,7 +1684,7 @@ function state(state: any) {
 export function MockVergunningDetail({ identifier }: { identifier: string }) {
   const vergunning = content.find((v) => v.identifier === identifier);
   const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
-    title: slug(vergunning?.caseType, {
+    caseType: slug(vergunning?.caseType, {
       lower: true,
     }),
     id: vergunning?.id ?? '',

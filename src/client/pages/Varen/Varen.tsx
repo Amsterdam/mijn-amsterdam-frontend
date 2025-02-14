@@ -1,10 +1,19 @@
-import { Grid, Icon, Paragraph } from '@amsterdam/design-system-react';
+import {
+  ActionGroup,
+  Grid,
+  Icon,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { buttonItems, linkListItems } from './Varen-thema-config';
-import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
-import { Datalist } from '../../components/Datalist/Datalist';
+import styles from './Varen.module.scss';
+import {
+  VarenFrontend,
+  VarenRegistratieRederType,
+  VarenVergunningFrontend,
+} from '../../../server/services/varen/config-and-types';
+import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -18,40 +27,102 @@ const pageContentTop = (
   </Paragraph>
 );
 
+type VarenPageContentRederRegistratieProps = {
+  registratie: VarenFrontend<VarenRegistratieRederType>;
+};
+
+export function VarenPageContentRederRegistratie({
+  registratie,
+}: VarenPageContentRederRegistratieProps) {
+  const rows: RowSet[] = [
+    {
+      rows: [
+        {
+          label: 'Naam aanvrager',
+          content: registratie.company,
+          span: 4,
+        },
+        {
+          label: 'Telefoonnummer',
+          content: registratie.phone,
+          span: 4,
+        },
+        {
+          label: 'KvK nummer',
+          content: registratie.bsnkvk,
+          span: 4,
+        },
+      ],
+    },
+    {
+      rows: [
+        {
+          label: 'Adres',
+          content: `${registratie.address}${registratie.postalCode ? ` ${registratie.postalCode}` : ''}`,
+          span: 4,
+        },
+        {
+          label: 'E-mailadres',
+          content: registratie.email,
+          span: 4,
+        },
+        {
+          label: 'Datum registratie',
+          content: registratie.dateDecisionFormatted,
+          span: 4,
+        },
+      ],
+    },
+  ];
+
+  return (
+    <Grid.Cell span="all">
+      <Datalist rows={rows} className={styles.VarenGridWithoutRowGap} />
+    </Grid.Cell>
+  );
+}
+
 export function Varen() {
   const {
-    gegevensAanvrager,
+    varenRederRegistratie,
     varenVergunningen,
     tableConfig,
     isLoading,
     isError,
+    linkListItems,
+    buttonItems,
   } = useVarenThemaData();
 
-  const pageContentTopSecondary = (
-    <>
-      {buttonItems?.map(({ to, title }) => (
-        <MaButtonLink key={to} href={to} variant="secondary">
+  const pageContentTopSecondary = buttonItems.length ? (
+    <ActionGroup>
+      {buttonItems.map(({ to, title }) => (
+        <MaButtonLink
+          key={to}
+          href={to}
+          variant="secondary"
+          className={styles.VarenButton}
+        >
           {title}
           <Icon svg={ExternalLinkIcon} size="level-5" />
         </MaButtonLink>
       ))}
-    </>
-  );
-
-  const gegevensAanvragerList = gegevensAanvrager ? (
-    <Grid.Cell span="all">
-      <Datalist rows={[gegevensAanvrager]} />
-    </Grid.Cell>
+    </ActionGroup>
   ) : null;
 
   const vergunningenTables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort }]) => {
+    ([kind, config]) => {
+      const zaken = varenVergunningen.filter(config.filter).sort(config.sort);
       return (
         <ThemaPaginaTable<VarenVergunningFrontend>
           key={kind}
-          title={title}
-          zaken={varenVergunningen.filter(filter).sort(sort)}
-          displayProps={displayProps}
+          title={config.title}
+          zaken={zaken}
+          displayProps={config.displayProps}
+          className={styles.VarenTableThemaPagina}
+          listPageRoute={config.listPageRoute}
+          listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
+          totalItems={zaken.length}
+          maxItems={config.maxItems}
         />
       );
     }
@@ -66,7 +137,11 @@ export function Varen() {
       pageContentTopSecondary={pageContentTopSecondary}
       pageContentMain={
         <>
-          {gegevensAanvragerList}
+          {varenRederRegistratie && (
+            <VarenPageContentRederRegistratie
+              registratie={varenRederRegistratie}
+            />
+          )}
           {vergunningenTables}
         </>
       }

@@ -482,7 +482,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     link: {
       to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
         id,
-        casetype: 'bed-and-breakfast',
+        caseType: 'bed-and-breakfast',
       }),
       title,
     },

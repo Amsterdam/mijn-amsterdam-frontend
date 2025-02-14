@@ -21,7 +21,7 @@ export type VarenRegistratieRederType = DecosZaakBase & {
   email: string | null;
 };
 
-export interface VarenVergunningExploitatieType extends DecosZaakBase {
+export type VarenVergunningExploitatieType = DecosZaakBase & {
   caseType: GetCaseType<'VarenVergunningExploitatie'>;
   title: 'Varen vergunning exploitatie';
   decision:
@@ -54,15 +54,15 @@ export interface VarenVergunningExploitatieType extends DecosZaakBase {
   vesselWidth: number | null; // 0.01 meters
   vesselLength: number | null; // 0.01 meters
   vesselName: string | null;
-}
+};
 
-export interface VarenVergunningLigplaatsType extends DecosZaakBase {
+export type VarenVergunningLigplaatsType = DecosZaakBase & {
   caseType: GetCaseType<'VarenVergunningLigplaats'>;
   title: 'Varen ligplaatsvergunning';
   decision: 'Geannuleerd' | 'Afgehandeld';
   location: string | null;
   vesselName: string | null;
-}
+};
 
 export type Varen =
   | VarenRegistratieRederType
