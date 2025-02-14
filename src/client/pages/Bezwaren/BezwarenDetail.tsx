@@ -7,10 +7,6 @@ import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { entries } from '../../../universal/helpers/utils';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import {
-  InfoDetailGroup,
-  InfoDetailHeading,
-} from '../../components/InfoDetail/InfoDetail';
 import { TextClamp } from '../../components/InfoDetail/TextClamp';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
@@ -71,29 +67,29 @@ function BezwaarDetailContent({
   ];
 
   return (
-    <PageContentCell>
-      <Datalist rows={rows} />
-
-      {documentCategories.map((category) => {
-        const docs = documents.filter((d) => d.dossiertype === category);
-        return (
-          <InfoDetailGroup
-            key={category}
-            label={
-              <div className={styles.DocumentListHeader}>
-                <InfoDetailHeading
-                  label={`Document${
-                    documents.length > 1 ? 'en' : ''
-                  } ${category.toLowerCase()}`}
-                />
-              </div>
-            }
-          >
-            <DocumentListV2 documents={docs} />
-          </InfoDetailGroup>
-        );
-      })}
-    </PageContentCell>
+    <>
+      <PageContentCell>
+        <Datalist rows={rows} />
+      </PageContentCell>
+      <PageContentCell>
+        {documentCategories.map((category) => {
+          const docs = documents.filter((d) => d.dossiertype === category);
+          const rows: Row[] = [
+            {
+              classNameLabel: styles.DocumentsListLabel,
+              label: (
+                <>
+                  Document{documents.length > 1 ? 'en' : ''}{' '}
+                  {category.toLowerCase()}
+                </>
+              ),
+              content: <DocumentListV2 documents={docs} />,
+            },
+          ];
+          return <Datalist key={category} rows={rows} />;
+        })}
+      </PageContentCell>
+    </>
   );
 }
 
