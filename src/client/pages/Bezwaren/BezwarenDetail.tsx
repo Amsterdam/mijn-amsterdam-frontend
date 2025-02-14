@@ -8,6 +8,7 @@ import { entries } from '../../../universal/helpers/utils';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
+import { TextClamp } from '../../components/TextClamp/TextClamp';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 type BezwaarDetailContentProps = {
