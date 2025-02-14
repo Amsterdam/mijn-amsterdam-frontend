@@ -5,7 +5,7 @@ import {
   LinkListItems,
   routes,
 } from './Klachten-thema-config';
-import { Klacht } from '../../../server/services/klachten/types';
+import type { Klacht } from '../../../server/services/klachten/types';
 import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
