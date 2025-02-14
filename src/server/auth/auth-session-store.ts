@@ -6,7 +6,7 @@ import createMemorystore from 'memorystore';
 import { OIDC_SESSION_MAX_AGE_SECONDS } from './auth-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { IS_DB_ENABLED } from '../services/db/config';
-import { pool } from '../services/db/postgres';
+import { getPool } from '../services/db/postgres';
 
 type SessionStoreOptions = {
   tableName: string;
@@ -22,7 +22,7 @@ export function getSessionStore<T extends typeof expressSession>(
     const pgSession = connectPGSimple(auth);
     return new pgSession({
       tableName: options.tableName,
-      pool,
+      pool: getPool(),
       createTableIfMissing: true,
     }) as unknown as SessionStore<Session>;
   }
