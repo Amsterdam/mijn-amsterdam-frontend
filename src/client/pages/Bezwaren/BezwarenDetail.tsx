@@ -7,7 +7,6 @@ import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { entries } from '../../../universal/helpers/utils';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { TextClamp } from '../../components/InfoDetail/TextClamp';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
