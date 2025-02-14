@@ -50,12 +50,14 @@ export type Bezwaar = {
   status: string | null;
   statusdatum: string | null;
   datumResultaat: string | null;
+  datumResultaatFormatted: string | null;
   einddatum: string | null;
   primairbesluit: string | null;
   primairbesluitdatum: string | null;
+  primairbesluitdatumFormatted: string | null;
   resultaat: string | null;
   steps: BezwaarStatus[];
-  documenten: GenericDocument[];
+  documenten: BezwaarDocument[];
 } & ZaakDetail;
 
 export type BezwaarStatus = {
@@ -113,9 +115,9 @@ export interface BezwaarSourceDocument {
     | 'Online Aangeleverd';
 }
 
-export interface BezwaarDocument extends GenericDocument {
+export type BezwaarDocument = GenericDocument & {
   dossiertype: BezwaarSourceDocument['dossiertype'];
-}
+};
 
 export interface OctopusApiResponse<T> {
   items: T[];
