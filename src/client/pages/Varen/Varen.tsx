@@ -78,8 +78,7 @@ export function Varen() {
           listPageRoute={config.listPageRoute}
           listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
           totalItems={zaken.length}
-          maxItems={5}
-          textNoContent={`U heeft geen ${config.title.toLowerCase()}`}
+          maxItems={config.maxItems}
         />
       );
     }

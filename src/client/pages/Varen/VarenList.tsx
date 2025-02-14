@@ -5,7 +5,6 @@ import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
-const PAGE_SIZE = 10;
 export function VarenList() {
   const { kind, page } = useParams<{
     kind: VarenVergunningKind;
@@ -18,8 +17,6 @@ export function VarenList() {
     <ListPagePaginated<VarenFrontend>
       items={varenVergunningen}
       title={title}
-      totalCount={varenVergunningen.length}
-      pageSize={PAGE_SIZE}
       isLoading={isLoading}
       isError={isError}
       appRoute={AppRoutes['VAREN/LIST']}

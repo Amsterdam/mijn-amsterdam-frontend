@@ -2,15 +2,14 @@ import {
   varenMeerInformatieLink,
   tableConfig,
   exploitatieVergunningAanvragen,
+  ListPageParamKind,
 } from './Varen-thema-config';
 import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
-export type VarenVergunningKind = 'open' | 'afgehandeld' | 'overgedragen';
-
-export function useVarenListPage(kind: VarenVergunningKind) {
+export function useVarenListPage(kind: ListPageParamKind) {
   const { VAREN } = useAppStateGetter();
 
   const { filter, sort, displayProps, title } = tableConfig[kind];
