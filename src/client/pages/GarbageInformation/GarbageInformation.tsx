@@ -22,9 +22,7 @@ import {
   IconAfvalTextiel,
 } from '../../assets/icons/map';
 import ErrorAlert from '../../components/Alert/Alert';
-import InfoDetail, {
-  InfoDetailProps,
-} from '../../components/InfoDetail/InfoDetail';
+import { Datalist } from '../../components/Datalist/Datalist';
 import InnerHtml from '../../components/InnerHtml/InnerHtml';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
@@ -40,10 +38,6 @@ import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-
-function GarbageInfoDetail({ ...props }: InfoDetailProps) {
-  return <InfoDetail {...props} className={styles.GarbageInfoDetail} />;
-}
 
 interface InstructionCTAProps {
   fraction: GarbageFractionInformationTransformed;
@@ -323,35 +317,38 @@ export function GarbageInformation() {
           </PageContentCell>
         )}
         <PageContentCell>
-          <GarbageInfoDetail
-            label="Uw adres"
-            valueWrapperElement="div"
-            value={
-              <>
-                <Paragraph className="ams-mb--sm">
-                  {MY_LOCATION.content?.[0]?.address ? (
-                    getFullAddress(MY_LOCATION.content?.[0].address)
-                  ) : isLoading(MY_LOCATION) ? (
-                    <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
-                  ) : (
-                    'Onbekend adres'
-                  )}
-                </Paragraph>
-                {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
-                {heeftGeenWoonfunctie && profileType === 'private' && (
-                  <Paragraph>
-                    <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
-                    <Link
-                      href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
-                      rel="noopener noreferrer"
-                    >
-                      Geef het door
-                    </Link>
-                    .
-                  </Paragraph>
-                )}
-              </>
-            }
+          <Datalist
+            rows={[
+              {
+                label: 'Uw adres',
+                content: (
+                  <>
+                    <Paragraph className="ams-mb--sm">
+                      {MY_LOCATION.content?.[0]?.address ? (
+                        getFullAddress(MY_LOCATION.content?.[0].address)
+                      ) : isLoading(MY_LOCATION) ? (
+                        <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
+                      ) : (
+                        'Onbekend adres'
+                      )}
+                    </Paragraph>
+                    {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
+                    {heeftGeenWoonfunctie && profileType === 'private' && (
+                      <Paragraph className="ams-mb--md">
+                        <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
+                        <Link
+                          href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+                          rel="noopener noreferrer"
+                        >
+                          Geef het door
+                        </Link>
+                        .
+                      </Paragraph>
+                    )}
+                  </>
+                ),
+              },
+            ]}
           />
 
           {isApiReady && (
