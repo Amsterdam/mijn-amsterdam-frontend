@@ -265,6 +265,17 @@ function transformBezwarenResults(
           bezwaarBron.uuid
         );
 
+        const datumResultaat =
+          bezwaarBron.publicatiedatum &&
+          !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
+            ? bezwaarBron.publicatiedatum
+            : null;
+
+        const primairbesluitdatum = getKenmerkValue(
+          bezwaarBron.kenmerken,
+          'besluitdatum'
+        );
+
         const bezwaar: Bezwaar = {
           identificatie: bezwaarBron.identificatie,
           id: bezwaarBron.uuid,
@@ -297,17 +308,16 @@ function transformBezwarenResults(
 
           // Gerelateerd aan het besluit waarop het bezwaar is ingediend.
           primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
-          primairbesluitdatum: getKenmerkValue(
-            bezwaarBron.kenmerken,
-            'besluitdatum'
-          ),
+          primairbesluitdatum,
+          primairbesluitdatumFormatted: primairbesluitdatum
+            ? defaultDateFormat(primairbesluitdatum)
+            : null,
 
           // Het resultaat van het bezwaar
-          datumResultaat:
-            bezwaarBron.publicatiedatum &&
-            !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
-              ? bezwaarBron.publicatiedatum
-              : null,
+          datumResultaat,
+          datumResultaatFormatted: datumResultaat
+            ? defaultDateFormat(datumResultaat)
+            : null,
           resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
 
           documenten: [],
