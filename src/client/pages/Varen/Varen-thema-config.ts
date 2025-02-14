@@ -1,11 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
-import {
-  VarenFrontend,
-  VarenRegistratieRederType,
-  VarenVergunningExploitatieType,
-  VarenVergunningLigplaatsType,
-} from '../../../server/services/varen/config-and-types';
+import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -74,38 +69,4 @@ export const exploitatieVergunningWijzigen: (key: string) => LinkProps = (
 export const ligplaatsVergunningLink: LinkProps = {
   to: `${formulierenBaseUrl}/Ligplaatsbedrijfsvaartuig.aspx`,
   title: 'Ligplaatsvergunning aanvragen',
-} as const;
-
-export type LabelMap<T extends object> = Partial<Record<keyof T, string>>;
-export const labelMapThemaRegistratieReder: LabelMap<VarenRegistratieRederType> =
-  {
-    company: 'Bedrijfsnaam',
-    email: 'E-mailadres',
-    phone: 'Telefoonnummer',
-    bsnkvk: 'KVK nummer',
-    address: 'Adres',
-  } as const;
-
-interface labelMapsThemaDetail {
-  'Varen vergunning exploitatie': LabelMap<VarenVergunningExploitatieType>;
-  'Varen ligplaatsvergunning': LabelMap<VarenVergunningLigplaatsType>;
-  'Varen registratie reder': LabelMap<VarenRegistratieRederType>;
-}
-export const labelMapsThemaDetail: labelMapsThemaDetail = {
-  'Varen vergunning exploitatie': {
-    id: 'Zaaknummer',
-    vesselName: 'Naam van het vaartuig',
-    segment: 'Segment',
-    vesselWidth: 'Breedte van het vaartuig',
-    vesselLength: 'Lengte van het vaartuig',
-  },
-  'Varen ligplaatsvergunning': {
-    id: 'Zaaknummer',
-    vesselName: 'Naam van het vaartuig',
-    location: 'Ligplek',
-  },
-  'Varen registratie reder': {
-    id: 'Zaaknummer',
-    ...labelMapThemaRegistratieReder,
-  },
 } as const;

@@ -36,7 +36,6 @@ interface ThemaDetailPaginaProps<T> {
   loadingBarConfig?: BarConfig;
   pageContentBottom?: ReactNode;
   pageContentTop: ReactNode;
-  pageContentTopSecondary?: ReactNode;
   reverseSteps?: boolean;
   showStatusLineConnection?: boolean;
   statusLabel?: string;
@@ -51,7 +50,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   className,
   icon = <ThemaIcon />,
   pageContentTop,
-  pageContentTopSecondary,
   pageContentBottom,
   errorAlertContent = ERROR_ALERT_DEFAULT,
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
@@ -77,10 +75,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
       <Screen className="ams-mb--lg">
         <Grid>
           {pageContentTop}
-
-          {!!pageContentTopSecondary && (
-            <Grid.Cell span="all">{pageContentTopSecondary}</Grid.Cell>
-          )}
 
           {!isLoading && (isError || !zaak) && (
             <Grid.Cell span="all">

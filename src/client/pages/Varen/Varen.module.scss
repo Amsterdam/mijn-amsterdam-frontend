@@ -17,8 +17,8 @@
   }
 }
 
-:global(.ams-grid) {
-  .VarenGridWithoutRowGap {
+.VarenGridWithoutRowGap {
+  :global(.ams-grid) {
     row-gap: 0;
   }
 }

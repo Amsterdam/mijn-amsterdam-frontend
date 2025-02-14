@@ -6,12 +6,14 @@ import {
 } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
-import { transformDetailsIntoRowSet } from './helpers';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import { labelMapThemaRegistratieReder } from './Varen-thema-config';
 import styles from './Varen.module.scss';
-import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
-import { Datalist } from '../../components/Datalist/Datalist';
+import {
+  VarenFrontend,
+  VarenRegistratieRederType,
+  VarenVergunningFrontend,
+} from '../../../server/services/varen/config-and-types';
+import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
@@ -24,6 +26,61 @@ const pageContentTop = (
     boten, met of zonder schipper, vallen onder de passagiersvaart.
   </Paragraph>
 );
+
+type VarenPageContentRederRegistratieProps = {
+  registratie: VarenFrontend<VarenRegistratieRederType>;
+};
+
+export function VarenPageContentRederRegistratie({
+  registratie,
+}: VarenPageContentRederRegistratieProps) {
+  const rows: RowSet[] = [
+    {
+      rows: [
+        {
+          label: 'Naam aanvrager',
+          content: registratie.company,
+          span: 4,
+        },
+        {
+          label: 'Telefoonnummer',
+          content: registratie.phone,
+          span: 4,
+        },
+        {
+          label: 'KvK nummer',
+          content: registratie.bsnkvk,
+          span: 4,
+        },
+      ],
+    },
+    {
+      rows: [
+        {
+          label: 'Adres',
+          content: `${registratie.address}${registratie.postalCode ? ` ${registratie.postalCode}` : ''}`,
+          span: 4,
+        },
+        {
+          label: 'E-mailadres',
+          content: registratie.email,
+          span: 4,
+        },
+        {
+          label: 'Datum registratie',
+          content: registratie.dateDecisionFormatted,
+          span: 4,
+        },
+      ],
+    },
+  ];
+
+  return (
+    <Grid.Cell span="all">
+      <Datalist rows={rows} className={styles.VarenGridWithoutRowGap} />
+    </Grid.Cell>
+  );
+}
 
 export function Varen() {
   const {
@@ -52,19 +109,6 @@ export function Varen() {
     </ActionGroup>
   ) : null;
 
-  const gegevensAanvragerRowSet =
-    varenRederRegistratie &&
-    transformDetailsIntoRowSet(
-      varenRederRegistratie,
-      labelMapThemaRegistratieReder
-    );
-
-  const gegevensAanvrager = gegevensAanvragerRowSet?.rows.length ? (
-    <Grid.Cell span="all">
-      <Datalist rows={[gegevensAanvragerRowSet]} />
-    </Grid.Cell>
-  ) : null;
-
   const vergunningenTables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort }]) => {
       return (
@@ -88,7 +132,11 @@ export function Varen() {
       pageContentTopSecondary={pageContentTopSecondary}
       pageContentMain={
         <>
-          {gegevensAanvrager}
+          {varenRederRegistratie && (
+            <VarenPageContentRederRegistratie
+              registratie={varenRederRegistratie}
+            />
+          )}
           {vergunningenTables}
         </>
       }

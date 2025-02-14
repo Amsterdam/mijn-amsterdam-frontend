@@ -1,59 +1,47 @@
-import { ActionGroup, Grid, Icon } from '@amsterdam/design-system-react';
-import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
-
-import { transformDetailsIntoRowSet } from './helpers';
 import { useVarenDetailPage } from './useVarenDetailPage.hook';
-import { labelMapsThemaDetail } from './Varen-thema-config';
-import styles from './Varen.module.scss';
+import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
+import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
 import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaIcon } from '../../components';
-import { Datalist } from '../../components/Datalist/Datalist';
-import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
   const { vergunning, buttonItems, isLoading, isError } = useVarenDetailPage();
 
-  const vergunningRowSet =
-    vergunning &&
-    transformDetailsIntoRowSet(
-      vergunning,
-      labelMapsThemaDetail[vergunning.caseType]
-    );
-  const vergunningDetails = vergunningRowSet?.rows.length ? (
-    <Grid.Cell span="all">
-      <Datalist rows={[vergunningRowSet]} />
-    </Grid.Cell>
-  ) : null;
-
-  const pageContentTopSecondary = buttonItems.length ? (
-    <ActionGroup>
-      {buttonItems.map(({ to, title }) => (
-        <MaButtonLink
-          key={to}
-          href={to}
-          variant="secondary"
-          className={styles.VarenButton}
-        >
-          {title}
-          <Icon svg={ExternalLinkIcon} size="level-5" />
-        </MaButtonLink>
-      ))}
-    </ActionGroup>
-  ) : null;
+  let noContentError = false;
+  let pageContent = null;
+  switch (vergunning?.caseType) {
+    case 'Varen vergunning exploitatie':
+      pageContent = (
+        <VarenDetailPageContentExploitatie
+          vergunning={vergunning}
+          buttonItems={buttonItems}
+        />
+      );
+      break;
+    case 'Varen ligplaatsvergunning':
+      pageContent = (
+        <VarenDetailPageContentLigplaats
+          vergunning={vergunning}
+          buttonItems={buttonItems}
+        />
+      );
+      break;
+    default:
+      noContentError = true;
+  }
 
   return (
     <ThemaDetailPagina<VarenFrontend>
       statusLabel="Status van uw aanvraag"
       title={vergunning?.title ?? 'Varen vergunning'}
       zaak={vergunning}
-      isError={isError}
+      isError={isError || noContentError}
       isLoading={isLoading}
       icon={<ThemaIcon />}
-      pageContentTop={vergunningDetails}
-      pageContentTopSecondary={pageContentTopSecondary}
+      pageContentTop={pageContent}
       backLink={{
         title: ThemaTitles.VAREN,
         to: AppRoutes.VAREN,
