@@ -2,11 +2,49 @@ import { useParams } from 'react-router-dom';
 
 import { routes } from './Klachten-thema-config';
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
-import { Klacht } from '../../../server/services/klachten/types';
+import type { Klacht } from '../../../server/services/klachten/types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { Row, RowSet } from '../../components/Datalist/Datalist';
 import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+
+type KlachtenDetailContentProps = {
+  klacht: Klacht;
+};
+
+function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
+  const rows: Array<Row | RowSet> = [
+    {
+      label: 'Nummer van uw klacht',
+      content: klacht?.id || '-',
+    },
+    {
+      label: 'Ontvangen op',
+      content: klacht?.ontvangstDatumFormatted,
+    },
+    {
+      label: 'Wat is de klacht?',
+      content: klacht?.omschrijving,
+    },
+    {
+      label: 'Wat is de locatie waar de klacht is ontstaan?',
+      content: klacht?.locatie,
+    },
+    {
+      label: '',
+      content: '',
+    },
+    {
+      label: '',
+      content: '',
+    },
+    {
+      label: '',
+      content: '',
+    },
+  ];
+}
 
 export function KlachtenDetailPagina() {
   const { klachten, isLoading, isError } = useKlachtenThemaData();
