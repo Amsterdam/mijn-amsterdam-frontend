@@ -25,7 +25,7 @@ const displayPropsAanvragen: DisplayProps<
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
-};
+} as const;
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 

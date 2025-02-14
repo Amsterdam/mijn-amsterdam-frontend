@@ -1,21 +1,24 @@
 import { useParams } from 'react-router-dom';
 
-import { useVarenListPage, VarenVergunningKind } from './useVarenListPage.hook';
+import { useVarenThemaData } from './useVarenThemaData.hook';
+import { ListPageParamKind } from './Varen-thema-config';
 import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export function VarenList() {
   const { kind, page } = useParams<{
-    kind: VarenVergunningKind;
+    kind: ListPageParamKind;
     page: string;
   }>();
-  const { varenVergunningen, displayProps, title, isLoading, isError } =
-    useVarenListPage(kind);
+  const { varenVergunningen, tableConfig, isLoading, isError } =
+    useVarenThemaData();
+  const { title, displayProps, filter, sort } = tableConfig[kind];
+  const vergunningen = varenVergunningen.filter(filter).sort(sort);
 
   return (
     <ListPagePaginated<VarenFrontend>
-      items={varenVergunningen}
+      items={vergunningen}
       title={title}
       isLoading={isLoading}
       isError={isError}
