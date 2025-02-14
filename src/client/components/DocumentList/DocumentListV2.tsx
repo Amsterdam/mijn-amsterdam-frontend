@@ -1,3 +1,4 @@
+import { Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import { DocumentLink } from './DocumentLink';
@@ -21,7 +22,7 @@ export default function DocumentListV2({
   const [colH1, colH2] = columns ?? ['Document', 'Datum'];
 
   return (
-    <table className={classNames(styles.DocumentListV2, className)}>
+    <Table className={classNames(styles.DocumentListV2, className)}>
       {(colH1 || colH2) && (
         <thead>
           <tr>
@@ -54,6 +55,6 @@ export default function DocumentListV2({
             </tr>
           ))}
       </tbody>
-    </table>
+    </Table>
   );
 }
