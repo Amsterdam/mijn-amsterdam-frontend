@@ -3,9 +3,7 @@ import { useParams } from 'react-router-dom';
 import { routes } from './Klachten-thema-config';
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import type { Klacht } from '../../../server/services/klachten/types';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { Row, RowSet } from '../../components/Datalist/Datalist';
-import InfoDetail from '../../components/InfoDetail/InfoDetail';
+import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -32,18 +30,17 @@ function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
       content: klacht?.locatie,
     },
     {
-      label: '',
-      content: '',
+      label:
+        'Wat wilt u dat de gemeente gaat doen naar aanleiding van uw klacht?',
+      content: klacht?.gewensteOplossing,
     },
-    {
-      label: '',
-      content: '',
-    },
-    {
-      label: '',
-      content: '',
-    },
-  ];
+  ].filter((row) => !!row.content);
+
+  return (
+    <PageContentCell>
+      <Datalist rows={rows} />
+    </PageContentCell>
+  );
 }
 
 export function KlachtenDetailPagina() {
@@ -57,40 +54,7 @@ export function KlachtenDetailPagina() {
       zaak={klacht}
       isError={isError}
       isLoading={isLoading}
-      pageContentMain={
-        klacht && (
-          <PageContentCell>
-            <InfoDetail
-              label="Nummer van uw klacht"
-              value={klacht?.id || '-'}
-            />
-            <InfoDetail
-              label="Ontvangen op"
-              value={
-                klacht?.ontvangstDatum
-                  ? defaultDateFormat(klacht?.ontvangstDatum)
-                  : '-'
-              }
-            />
-            <InfoDetail
-              label="Wat is de klacht?"
-              value={klacht?.omschrijving}
-            />
-            {klacht?.locatie && (
-              <InfoDetail
-                label="Wat is de locatie waar de klacht is ontstaan?"
-                value={klacht?.locatie}
-              />
-            )}
-            {klacht?.gewensteOplossing && (
-              <InfoDetail
-                label="Wat wilt u dat de gemeente gaat doen naar aanleiding van uw klacht?"
-                value={klacht?.gewensteOplossing}
-              />
-            )}
-          </PageContentCell>
-        )
-      }
+      pageContentMain={klacht && <KlachtenDetailContent klacht={klacht} />}
       backLink={routes.themaPage}
     />
   );
