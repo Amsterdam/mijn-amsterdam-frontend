@@ -17,7 +17,7 @@ type GenericBaseProps = PropsWithChildren<{
 }>;
 
 interface GenericContentProps {
-  panelItem: any;
+  panelItem: Unshaped;
   datasetId: string;
 }
 

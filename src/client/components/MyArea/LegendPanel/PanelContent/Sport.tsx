@@ -1,11 +1,12 @@
-import Description from './Description';
 import GenericBase, { GenericContent } from './GenericBase';
 import Url from './Url';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
-import InfoDetail from '../../../InfoDetail/InfoDetail';
+import { Unshaped } from '../../../../../universal/types/App.types';
+import { Datalist } from '../../../Datalist/Datalist';
+import InnerHtml from '../../../InnerHtml/InnerHtml';
 
 interface MyArePanelContentSportProps {
-  panelItem: any;
+  panelItem: Unshaped;
   datasetId: string;
 }
 
@@ -14,25 +15,37 @@ export default function MyArePanelContentSport({
   panelItem,
 }: MyArePanelContentSportProps) {
   switch (datasetId) {
+    case 'sporthal':
     case 'zwembad':
       return (
-        <GenericBase title={panelItem.naam} supTitle="Zwembaden">
-          <InfoDetail label="Adres" value={panelItem.adres} />
-          {!!panelItem.emailadres && (
-            <Url
-              label="E-mail"
-              url={`mailto:${panelItem.emailadres}`}
-              urlTitle={panelItem.emailadres}
-            />
-          )}
-          {!!panelItem.telefoonnummer && (
-            <Url
-              label="Telefoonnummer"
-              url={`tel:${panelItem.telefoonnummer}`}
-              urlTitle={panelItem.telefoonnummer}
-            />
-          )}
-          {!!panelItem.website && <Url url={panelItem.website} />}
+        <GenericBase
+          title={panelItem.naam}
+          supTitle={datasetId === 'sporthal' ? 'Sporthallen' : 'Zwembaden'}
+        >
+          <Datalist
+            rows={[
+              { label: 'Adres', content: panelItem.adres },
+              {
+                label: 'E-mail',
+                content: (
+                  <Url
+                    url={`mailto:${panelItem.emailadres}`}
+                    urlTitle={panelItem.emailadres}
+                  />
+                ),
+              },
+              {
+                label: 'Telefoonnummer',
+                content: (
+                  <Url
+                    url={`tel:${panelItem.telefoonnummer}`}
+                    urlTitle={panelItem.telefoonnummer}
+                  />
+                ),
+              },
+              { label: 'Website', content: <Url url={panelItem.website} /> },
+            ]}
+          />
         </GenericBase>
       );
     case 'sportpark':
@@ -42,11 +55,15 @@ export default function MyArePanelContentSport({
     case 'sportveld':
       return (
         <GenericBase title={panelItem.sportfunctie} supTitle="Sportvelden">
-          <InfoDetail
-            label="Soort ondergrond"
-            value={panelItem.soortOndergrond}
+          <Datalist
+            rows={[
+              { label: 'Soort ondergrond', content: panelItem.soortOndergrond },
+              {
+                label: 'Sportpark',
+                content: panelItem.sportpark,
+              },
+            ]}
           />
-          <InfoDetail label="Sportpark" value={panelItem.sportpark} />
         </GenericBase>
       );
     case 'gymzaal':
@@ -56,75 +73,84 @@ export default function MyArePanelContentSport({
           title={panelItem.naam}
           supTitle={datasetId === 'sportzaal' ? 'Sportzalen' : 'Gymzalen'}
         >
-          {!!panelItem.omschrijving && (
-            <Description description={panelItem.omschrijving} />
-          )}
-          <InfoDetail label="Adres" value={panelItem.adres} />
-          {!!panelItem.emailadres && (
-            <Url
-              label="E-mail"
-              url={`mailto:${panelItem.emailadres}`}
-              urlTitle={panelItem.emailadres}
-            />
-          )}
-          {!!panelItem.telefoonnummer && (
-            <Url
-              label="Telefoonnummer"
-              url={`tel:${panelItem.telefoonnummer}`}
-              urlTitle={panelItem.telefoonnummer}
-            />
-          )}
-          {!!panelItem.website && <Url url={panelItem.website} />}
-          {!!panelItem.bijzonderheden && (
-            <InfoDetail
-              label="Bijzonderheden"
-              value={panelItem.bijzonderheden}
-            />
-          )}
-        </GenericBase>
-      );
-    case 'sporthal':
-      return (
-        <GenericBase title={panelItem.naam} supTitle="Sporthallen">
-          <InfoDetail label="Adres" value={panelItem.adres} />
-          {!!panelItem.emailadres && (
-            <Url
-              label="E-mail"
-              url={`mailto:${panelItem.emailadres}`}
-              urlTitle={panelItem.emailadres}
-            />
-          )}
-          {!!panelItem.telefoonnummer && (
-            <Url
-              label="Telefoonnummer"
-              url={`tel:${panelItem.telefoonnummer}`}
-              urlTitle={panelItem.telefoonnummer}
-            />
-          )}
-          {!!panelItem.website && <Url url={panelItem.website} />}
+          <Datalist
+            rows={[
+              {
+                label: 'Omschrijving',
+                content: <InnerHtml>{panelItem.omschrijving}</InnerHtml>,
+              },
+              { label: 'Adres', content: panelItem.adres },
+              {
+                label: 'E-mail',
+                content: (
+                  <Url
+                    url={`mailto:${panelItem.emailadres}`}
+                    urlTitle={panelItem.emailadres}
+                  />
+                ),
+                isVisible: !!panelItem.emailadres,
+              },
+              {
+                label: 'Telefoonnummer',
+                content: (
+                  <Url
+                    url={`tel:${panelItem.telefoonnummer}`}
+                    urlTitle={panelItem.telefoonnummer}
+                  />
+                ),
+                isVisible: !!panelItem.telefoonnummer,
+              },
+              {
+                label: 'Website',
+                content: <Url url={panelItem.website} />,
+                isVisible: !!panelItem.website,
+              },
+              {
+                label: 'Bijzonderheden',
+                content: panelItem.bijzonderheden,
+                isVisible: !!panelItem.bijzonderheden,
+              },
+            ]}
+          />
         </GenericBase>
       );
     case 'sportaanbieder':
       return (
         <GenericBase title={panelItem.naamAanbieder} supTitle="Sporten">
-          {panelItem.naamSportfaciliteit &&
-            panelItem.naamAanbieder !== panelItem.naamSportfaciliteit && (
-              <InfoDetail
-                label="Sportfaciliteit"
-                value={panelItem.naamSportfaciliteit}
-              />
-            )}
-          <InfoDetail label="Sport" value={panelItem.typeSport} />
-          <InfoDetail label="Adres" value={panelItem.adres} />
-          <InfoDetail
-            label="Stadspasvergoeding jeugd"
-            value={panelItem.stadspasJeugd ? 'Ja' : 'Nee'}
+          <Datalist
+            rows={[
+              {
+                label: 'Sportfaciliteit',
+                content: panelItem.naamSportfaciliteit,
+                isVisible: !!(
+                  panelItem.naamAanbieder !== panelItem.naamSportfaciliteit &&
+                  panelItem.naamSportfaciliteit
+                ),
+              },
+              {
+                label: 'Sport',
+                content: panelItem.typeSport,
+              },
+              {
+                label: 'Adres',
+                content: panelItem.adres,
+                isVisible: !!panelItem.adres,
+              },
+              {
+                label: 'Stadspasvergoeding jeugd',
+                content: panelItem.stadspasJeugd ? 'Ja' : 'Nee',
+              },
+              {
+                label: 'Aangepast sporten',
+                content: panelItem.aangepastSporten === 'True' ? 'Ja' : 'Nee',
+              },
+              {
+                label: 'Website',
+                content: <Url url={panelItem.website} />,
+                isVisible: !!panelItem.website,
+              },
+            ]}
           />
-          <InfoDetail
-            label="Aangepast sporten"
-            value={panelItem.aangepastSporten === 'True' ? 'Ja' : 'Nee'}
-          />
-          {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
     case 'openbaresportplek':
@@ -133,33 +159,44 @@ export default function MyArePanelContentSport({
           title={`${panelItem.sportvoorziening}`}
           supTitle="Openbare sportplekken"
         >
-          {!!panelItem.naam && (
-            <InfoDetail
-              label="Locatie"
-              value={capitalizeFirstLetter(panelItem.naam.toLowerCase())}
-            />
-          )}
-          {!!panelItem.omschrijving && (
-            <Description description={panelItem.omschrijving} />
-          )}
-          {!!panelItem.soortOndergrond && (
-            <InfoDetail
-              label="Soort ondergrond"
-              value={panelItem.soortOndergrond}
-            />
-          )}
-          {!!panelItem.soortLocatie && (
-            <InfoDetail label="Soort locatie" value={panelItem.soortLocatie} />
-          )}
+          <Datalist
+            rows={[
+              {
+                label: 'Locatie',
+                content: capitalizeFirstLetter(panelItem.naam.toLowerCase()),
+                isVisible: !!panelItem.naam,
+              },
+              {
+                label: 'Omschrijving',
+                content: <InnerHtml>{panelItem.omschrijving}</InnerHtml>,
+                isVisible: !!panelItem.omschrijving,
+              },
+              {
+                label: 'Soort locatie',
+                content: panelItem.soortLocatie,
+                isVisible: !!panelItem.soortLocatie,
+              },
+              {
+                label: 'Soort ondergrond',
+                content: panelItem.soortOndergrond,
+                isVisible: !!panelItem.soortOndergrond,
+              },
+            ]}
+          />
         </GenericBase>
       );
     case 'hardlooproute':
       return (
         <GenericBase title={panelItem.naam} supTitle="Hardlooproutes">
-          {!!panelItem.lengte && (
-            <InfoDetail label="Lengte" value={panelItem.lengte + ' km'} />
-          )}
-          {/* <JsonString data={panelItem} /> */}
+          <Datalist
+            rows={[
+              {
+                label: 'Lengte',
+                content: panelItem.lengte + ' km',
+                isVisible: !!panelItem.lengte,
+              },
+            ]}
+          />
         </GenericBase>
       );
   }
