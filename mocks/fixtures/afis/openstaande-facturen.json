@@ -101,8 +101,8 @@
             "NetDueDate": "2023-03-23T00:00:00",
             "NetPaymentAmount": "-900.98",
             "AmountInBalanceTransacCrcy": "1000.00",
-            "DocumentReferenceID": "5555555-D",
-            "AccountingDocument": "5555555-D",
+            "DocumentReferenceID": "1231231230",
+            "AccountingDocument": "1231231230",
             "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
           }
         }
