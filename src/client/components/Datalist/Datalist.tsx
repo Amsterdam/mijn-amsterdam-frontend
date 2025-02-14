@@ -9,6 +9,12 @@ import classNames from 'classnames';
 
 import styles from './Datalist.module.scss';
 
+const WRAPPED_ROW_SPAN_DEFAULT: GridColumnNumbers = {
+  narrow: 4,
+  medium: 3,
+  wide: 4,
+};
+
 export interface Row {
   label: ReactNode;
   content: ReactNode;
@@ -87,7 +93,7 @@ function DatalistRowsWithWrapper({ rows, className }: RowSet) {
             content={row.content}
             className={row.className}
             isVisible={row.isVisible}
-            span={row.span}
+            span={row.span ?? WRAPPED_ROW_SPAN_DEFAULT}
             start={row.start}
           />
         ))}
