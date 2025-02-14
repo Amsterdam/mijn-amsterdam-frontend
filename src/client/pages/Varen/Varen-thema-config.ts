@@ -10,6 +10,9 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED = 5;
+
 const displayPropsAanvragen: DisplayProps<
   WithDetailLinkComponent<VarenFrontend>
 > = {
@@ -23,6 +26,8 @@ const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
 };
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 const tableConfigBase = {
   sort: dateSort('dateRequest', 'desc'),
@@ -36,6 +41,7 @@ export const tableConfig = {
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     ...tableConfigBase,
   },
   [listPageParamKind.completed]: {
@@ -44,6 +50,7 @@ export const tableConfig = {
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.completed,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED,
     ...tableConfigBase,
   },
 } as const;
