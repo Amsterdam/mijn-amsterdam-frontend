@@ -67,7 +67,6 @@ async function setupTables() {
     logger.info(`setupTable: ${tableNameLoginCount} succeeded.`);
   } catch (error) {
     logger.error(error, `setupTable: ${tableNameLoginCount} failed.`);
-    logger.error(error);
   }
 }
 
