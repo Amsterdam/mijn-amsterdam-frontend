@@ -53,7 +53,10 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
       num5: 'vesselHeight',
       num7: 'vesselDepth',
       num8: 'numberOfSeats',
-      num10: 'isCvoIssued',
+      num10: {
+        name: 'isCvoIssued',
+        transform: (v) => !!v,
+      },
       text10: 'segment',
       text15: 'formAppearance',
     },
