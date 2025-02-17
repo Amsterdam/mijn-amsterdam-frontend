@@ -39,13 +39,15 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
     ? `U heeft (nog) geen ${title.toLowerCase()}`
     : TEXT_NO_CONTENT_DEFAULT;
 
+  const hasListPage = !!listPageRoute && maxItems !== -1;
+
   return (
     <Grid.Cell span="all">
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
         subTitle={subTitle}
-        items={maxItems !== -1 ? zaken.slice(0, maxItems) : zaken}
+        items={hasListPage ? zaken.slice(0, maxItems) : zaken}
         displayProps={displayProps ?? null}
         className={className}
       />
@@ -54,7 +56,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
         <Paragraph>{textNoContent ?? textNoContentDefault}</Paragraph>
       )}
 
-      {!!listPageRoute && maxItems !== -1 && (
+      {hasListPage && (
         <LinkToListPage
           threshold={maxItems}
           label={listPageLinkLabel}
