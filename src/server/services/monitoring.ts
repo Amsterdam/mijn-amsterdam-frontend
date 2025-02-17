@@ -10,7 +10,6 @@ import {
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
-import { getFromEnv } from '../helpers/env';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
@@ -66,9 +65,13 @@ if (client) {
     return true;
   });
 
-  client.config.samplingPercentage = parseInt(
-    getFromEnv('APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE')!
-  );
+  try {
+    client.config.samplingPercentage = parseInt(
+      process.env.APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE ?? '100'
+    );
+  } catch {
+    client.config.samplingPercentage = 100;
+  }
 }
 
 export type Severity =
