@@ -18,4 +18,3 @@ const options: LoggerOptions = {
 };
 
 export const logger = pino(options);
-export const requestLogger = pino({ ...options, enabled: true });
