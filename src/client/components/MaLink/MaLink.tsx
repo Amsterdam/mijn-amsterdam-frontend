@@ -61,6 +61,7 @@ type MaButtonLinkProps = Omit<
   'placeholder'
 > & {
   variant?: ButtonProps['variant'];
+  isDisabled: boolean;
 };
 
 export function MaButtonLink({
@@ -68,19 +69,18 @@ export function MaButtonLink({
   children,
   className,
   variant = 'primary',
+  isDisabled = false,
   ...rest
 }: MaButtonLinkProps) {
+  const classes = classNames(
+    styles.MaButtonLink,
+    'ams-button',
+    `ams-button--${variant}`,
+    isDisabled && styles.ButtonDisabled,
+    className
+  );
   return (
-    <a
-      {...rest}
-      className={classNames(
-        styles.MaButtonLink,
-        'ams-button',
-        `ams-button--${variant}`,
-        className
-      )}
-      href={href}
-    >
+    <a {...rest} className={classes} href={href}>
       {children}
     </a>
   );
