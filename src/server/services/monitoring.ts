@@ -10,7 +10,6 @@ import {
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
-import { getFromEnv } from '../helpers/env';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
