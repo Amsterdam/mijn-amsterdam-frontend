@@ -56,21 +56,6 @@ const viewDir = __dirname.split('/').slice(-2, -1);
 app.set('view engine', 'pug');
 app.set('views', `./${viewDir}/server/views`);
 
-// Logs all Incoming requests
-app.use((req: Request, res: Response & { end: any }, next: NextFunction) => {
-  const oldEnd = res.end;
-
-  res.end = (...restArgs: any[]) => {
-    logger.info(
-      `${req.method} ${req.originalUrl} - Responds with ${res.statusCode} ${HttpStatusCode[res.statusCode]}`
-    );
-
-    oldEnd.apply(res, restArgs);
-  };
-
-  next();
-});
-
 app.use(
   cors({
     origin: process.env.MA_FRONTEND_URL,
@@ -160,6 +145,15 @@ app.use((_req: Request, res: Response) => {
     return send404(res);
   }
   return res.end();
+});
+
+// Logs all Incoming requests
+// Keep this as the LAST app.use(). Else we don't know the resulting statusCode.
+app.use((req: Request, res: Response, next: NextFunction) => {
+  logger.info(
+    `${req.method} ${req.originalUrl} - Responds with ${res.statusCode} ${HttpStatusCode[res.statusCode]}`
+  );
+  next();
 });
 
 async function startServerBFF() {
