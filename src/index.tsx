@@ -2,9 +2,9 @@ import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-j
 import { createRoot } from 'react-dom/client';
 
 import App from './client/App';
+import { reactPlugin } from './client/helpers/monitoring';
 import ApplicationError from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';
-import { reactPlugin } from './client/helpers/monitoring';
 
 if (
   /MSIE (\d+\.\d+);/.test(navigator.userAgent) ||
@@ -15,6 +15,7 @@ if (
 }
 
 const release = `mijnamsterdam-frontend@${MA_APP_VERSION}`;
+// eslint-disable-next-line no-console
 console.info(
   'App version: %s, Commit sha: %s, Build id:, %s',
   release,

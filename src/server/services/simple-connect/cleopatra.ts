@@ -12,6 +12,7 @@ import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getCert } from '../../helpers/cert';
 import { getApiConfig } from '../../helpers/source-api-helpers';
+import { logger } from '../../logging';
 
 const DEV_KEY = {
   kty: 'RSA',
@@ -30,7 +31,7 @@ function getPublicKey() {
       certContent = getCert('BFF_CLEOPATRA_PUBLIC_KEY_CERT');
     }
   } catch (error) {
-    console.error('Error getting public key', error);
+    logger.error(error, 'Error getting public key');
   }
 
   const pemPubKey = !IS_TAP
