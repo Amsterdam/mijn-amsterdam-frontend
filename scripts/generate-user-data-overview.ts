@@ -3,7 +3,7 @@ import dotenvExpand from 'dotenv-expand';
 
 if (!process.env.BFF_API_BASE_URL) {
   const ENV_FILE = '.env.local';
-  log.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
+  console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
   const envConfig = dotenv.config({ path: ENV_FILE });
   dotenvExpand.expand(envConfig);
 }
@@ -34,7 +34,6 @@ import { isThemaActive } from '../src/client/config/themas';
 import { ServiceResults } from '../src/server/services/tips/tip-types';
 import { Thema } from '../src/universal/config';
 import { testAccounts } from '../src/universal/config/auth.development';
-import { log } from '../src/server/logging';
 
 XLSX.set_fs(fs);
 
