@@ -31,7 +31,7 @@ function getDebugResponseData(conf: AxiosRequestConfig) {
   return (responseData: any) => {
     logger.debug(
       { from: conf.url, body: JSON.parse(responseData) },
-      'Recieved response',
+      'Received response',
       conf.url
     );
     return responseData;
