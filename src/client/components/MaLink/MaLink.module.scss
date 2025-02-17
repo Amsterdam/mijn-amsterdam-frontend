@@ -15,4 +15,15 @@
   &:visited {
     // color: var(--ams-color-primary-white);
   }
+
+  &.ButtonDisabled {
+    &,
+    &:hover {
+      background-color: transparent;
+      border: 2px solid $color-neutral-grey2;
+      color: $color-neutral-grey4;
+      box-shadow: none;
+      pointer-events: none;
+    }
+  }
 }
