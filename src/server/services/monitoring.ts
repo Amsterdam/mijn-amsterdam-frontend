@@ -10,6 +10,7 @@ import {
 
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
+import { getFromEnv } from '../helpers/env';
 
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
@@ -65,7 +66,9 @@ if (client) {
     return true;
   });
 
-  client.config.samplingPercentage = getSamplingPercentage();
+  client.config.samplingPercentage = parseInt(
+    getFromEnv('APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE')!
+  );
 }
 
 export type Severity =
@@ -132,19 +135,4 @@ export function trackEvent(name: string, properties: Record<string, unknown>) {
         name,
         properties,
       });
-}
-
-function getSamplingPercentage(): number {
-  const samplePercentageKey = 'APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE';
-
-  let samplePercentage = process.env[samplePercentageKey];
-  if (!samplePercentage) {
-    logger.error(
-      `The environment variable ${samplePercentageKey} is not a percentage in the range of 0 up to including 100.`
-    );
-    samplePercentage = '100';
-    logger.error(`Defaulted ${samplePercentageKey} to ${samplePercentage}`);
-  }
-
-  return parseInt(samplePercentage);
 }
