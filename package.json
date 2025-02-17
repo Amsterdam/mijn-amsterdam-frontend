@@ -61,7 +61,6 @@
     "@types/lodash.isequal": "^4.5.8",
     "@types/memoizee": "^0.4.11",
     "@types/memory-cache": "^0.2.6",
-    "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.2",
     "@types/node-jose": "^1.1.13",
     "@types/pg": "^8.11.10",
@@ -75,7 +74,7 @@
     "@types/uid-safe": "^2.1.5",
     "@utrecht/components": "^7.4.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "applicationinsights": "^3.4.0",
+    "applicationinsights": "2.9.6",
     "axios": "^1.7.9",
     "classnames": "^2.5.1",
     "compression": "^1.7.5",
@@ -114,12 +113,12 @@
     "memory-cache": "^0.2.0",
     "memorystore": "^1.6.7",
     "mockdate": "^3.0.5",
-    "morgan": "^1.10.0",
     "nock": "^13.5.6",
     "node-jose": "^2.2.0",
     "npm": "^10.9.2",
     "outdent": "^0.8.0",
     "pg": "^8.13.1",
+    "pino": "^9.6.0",
     "prettier": "^3.4.2",
     "proj4": "^2.15.0",
     "pug": "^3.0.3",
@@ -161,6 +160,7 @@
     "eslint-plugin-unused-imports": "^4.1.0",
     "formidable": "^3.5.2",
     "globals": "^15.14.0",
+    "pino-pretty": "^13.0.0",
     "typescript-eslint": "^8.21.0"
   }
 }

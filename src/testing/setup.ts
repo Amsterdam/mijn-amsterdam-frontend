@@ -77,6 +77,9 @@ export const bffApiHost = 'http://bff-api-host';
 export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';
 
+process.env.LOG_LEVEL = 'error';
+process.env.LOGGER_ENABLED = 'true';
+
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;

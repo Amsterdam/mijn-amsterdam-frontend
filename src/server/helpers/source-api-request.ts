@@ -1,4 +1,8 @@
-import axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosResponseHeaders,
+} from 'axios';
 import memoryCache from 'memory-cache';
 
 import { Deferred } from './deferred';
@@ -16,40 +20,25 @@ import {
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
 } from '../config/source-api';
-import { captureException } from '../services/monitoring';
+import { logger } from '../logging';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
   headers: { 'User-Agent': 'mijn-amsterdam-bff' },
 });
 
-function debugResponseData(responseData: any) {
-  console.debug('\n\nResponse:\n');
-  console.debug(responseData || '<== NO RESPONSE DATA ==>');
-  console.debug('\nEnd response from');
-  return responseData;
+function getDebugResponseData(conf: AxiosRequestConfig) {
+  return (responseData: any) => {
+    logger.debug(
+      { from: conf.url, body: JSON.parse(responseData) },
+      'Received response',
+      conf.url
+    );
+    return responseData;
+  };
 }
 
 const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA?.split(',');
-
-// Log response url after debugging the response data because the debugTransformer doesn't have access to the url
-// and interceptors cannot log untransformed response data.
-if (debugResponseDataTerms?.length) {
-  axiosRequest.interceptors.response.use((response) => {
-    if (
-      debugResponseDataTerms.some((term) => {
-        return !!term && response.config.url?.includes(term.trim());
-      })
-    ) {
-      console.debug(
-        'url:',
-        response.request?.res?.responseUrl ?? response.config.url,
-        '\n\n'
-      );
-    }
-    return response;
-  });
-}
 
 export const cache = new memoryCache.Cache<string, any>();
 
@@ -105,6 +94,8 @@ export async function requestData<T>(
       requestConfig.transformResponse as any
     );
   }
+
+  const debugResponseData = getDebugResponseData(requestConfig);
 
   // Log/Debug the untransformed response data
   if (
@@ -192,12 +183,6 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
-
-    captureException(error, {
-      properties: {
-        message: errorMessage,
-      },
-    });
 
     const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(
