@@ -37,8 +37,7 @@ const tableConfigBase = {
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VarenFrontend) =>
-      !vergunning.processed || vergunning.decision !== 'Verleend',
+    filter: (vergunning: VarenFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
@@ -47,8 +46,7 @@ export const tableConfig = {
   },
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
-    filter: (vergunning: VarenFrontend) =>
-      vergunning.processed && vergunning.decision === 'Verleend',
+    filter: (vergunning: VarenFrontend) => vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.completed,
     }),
