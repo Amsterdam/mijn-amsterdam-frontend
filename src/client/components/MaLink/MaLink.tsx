@@ -61,7 +61,7 @@ type MaButtonLinkProps = Omit<
   'placeholder'
 > & {
   variant?: ButtonProps['variant'];
-  isDisabled: boolean;
+  isDisabled?: boolean;
 };
 
 export function MaButtonLink({
