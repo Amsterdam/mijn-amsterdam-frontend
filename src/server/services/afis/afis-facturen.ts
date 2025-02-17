@@ -171,6 +171,10 @@ function getFactuurDocumentId(id: string) {
   return id.padStart(FACTUUR_DOCUMENT_ID_LENGTH, '0');
 }
 
+function isFactuurCreatedInAFIS(factuurDocumentId: string) {
+  return factuurDocumentId.length >= FACTUUR_DOCUMENT_ID_LENGTH;
+}
+
 function getInvoiceAmount(
   invoice: Pick<AfisFactuurPropertiesSource, 'AmountInBalanceTransacCrcy'>,
   deelbetalingAmount?: Decimal
@@ -193,13 +197,21 @@ function transformFactuur(
   deelbetalingen?: AfisFactuurDeelbetalingen
 ): AfisFactuur {
   const invoice = replaceXmlNulls(sourceInvoice);
-  const factuurDocumentId = getFactuurDocumentId(
-    String(invoice.AccountingDocument)
-  );
+  const accountingDocumentId = String(invoice.AccountingDocument);
+  const factuurDocumentId = getFactuurDocumentId(accountingDocumentId);
   const factuurNummer = getFactuurnummer(invoice);
-  const factuurDocumentIdEncrypted = factuurDocumentId
-    ? encryptSessionIdWithRouteIdParam(sessionID, factuurDocumentId)
-    : null;
+
+  let factuurDocumentIdEncrypted: string | null = null;
+
+  if (
+    isFactuurCreatedInAFIS(accountingDocumentId) ||
+    FeatureToggle.afisMigratedFacturenDownloadActive
+  ) {
+    factuurDocumentIdEncrypted = encryptSessionIdWithRouteIdParam(
+      sessionID,
+      factuurDocumentId
+    );
+  }
 
   const deelbetaling = deelbetalingen?.[factuurNummer];
   const hasDeelbetaling = !!deelbetaling;
