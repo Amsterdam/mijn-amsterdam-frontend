@@ -66,9 +66,13 @@ if (client) {
     return true;
   });
 
-  client.config.samplingPercentage = parseInt(
-    getFromEnv('APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE')!
-  );
+  try {
+    client.config.samplingPercentage = parseInt(
+      process.env.APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE ?? '100'
+    );
+  } catch {
+    client.config.samplingPercentage = 100;
+  }
 }
 
 export type Severity =
