@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
-import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';

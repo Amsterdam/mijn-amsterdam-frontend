@@ -1,7 +1,7 @@
 import { useVarenDetailPage } from './useVarenDetailPage.hook';
 import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
-import { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaIcon } from '../../components';
 import { ThemaTitles } from '../../config/thema';
