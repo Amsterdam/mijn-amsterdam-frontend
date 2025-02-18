@@ -42,16 +42,24 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle: 'Varen - Behandelen',
+        stepTitle: 'Varen exploitatie vergunning - Afhandelen',
+      },
+      {
+        status: 'In behandeling',
+        stepTitle: 'Varen exploitatie vergunning - ??Meer info??',
+      },
+      {
+        status: 'In behandeling',
+        stepTitle: 'Varen exploitatie vergunning - Afgehandeld',
       },
     ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text18: 'vesselName',
-      num3: 'vesselLength',
-      num4: 'vesselWidth',
-      num5: 'vesselHeight',
-      num7: 'vesselDepth',
+      text21: 'vesselLength',
+      text22: 'vesselWidth',
+      text23: 'vesselHeight',
+      text24: 'vesselDepth',
       num8: 'numberOfSeats',
       num10: {
         name: 'isCvoIssued',
