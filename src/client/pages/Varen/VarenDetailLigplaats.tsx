@@ -1,4 +1,9 @@
-import { ActionGroup, Grid, Icon } from '@amsterdam/design-system-react';
+import {
+  ActionGroup,
+  Grid,
+  GridColumnNumber,
+  Icon,
+} from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './Varen.module.scss';
@@ -15,6 +20,7 @@ type VarenDetailPageContentProps = {
   buttonItems: LinkProps[];
 };
 
+const DEFAULT_GRID_SPAN: GridColumnNumber = 4;
 export function VarenDetailPageContentLigplaats({
   vergunning,
   buttonItems,
@@ -23,9 +29,18 @@ export function VarenDetailPageContentLigplaats({
     {
       rows: [
         {
+          label: 'Zaaknummer',
+          content: vergunning.identifier,
+          span: DEFAULT_GRID_SPAN,
+        },
+      ],
+    },
+    {
+      rows: [
+        {
           label: 'Locatie ligplaats',
           content: vergunning.location,
-          span: 4,
+          span: DEFAULT_GRID_SPAN,
         },
       ],
     },
