@@ -124,7 +124,44 @@ describe('getLatLonByAddress', () => {
   describe('extractAddress tests', () => {
     test('Throws with bad input', () => {
       expect(() => extractAddress('')).toThrowError();
-      expect(() => extractAddress('Only Streetname')).toThrowError();
+    });
+
+    test('Just streetname', () => {
+      expect(extractAddress('Amstel')).toStrictEqual({
+        openbareruimteNaam: 'Amstel',
+        huisnummer: undefined,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+        postcode: undefined,
+      });
+    });
+
+    test('Extracts just postal code', () => {
+      const expected = {
+        openbareruimteNaam: undefined,
+        huisnummer: undefined,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+        postcode: '1023EH',
+      };
+      expect(extractAddress('1023EH')).toStrictEqual(expected);
+      expect(extractAddress('1023 EH')).toStrictEqual(expected);
+    });
+
+    test('Extracts when postal code at the beginning or end', () => {
+      const expected = {
+        openbareruimteNaam: 'PATER V/D ELSENPLEIN',
+        huisnummer: 86,
+        huisnummertoevoeging: undefined,
+        huisletter: undefined,
+        postcode: '1023EH',
+      };
+      expect(extractAddress('1023EH PATER V/D ELSENPLEIN 86')).toStrictEqual(
+        expected
+      );
+      expect(extractAddress('PATER V/D ELSENPLEIN 86 1023 EH')).toStrictEqual(
+        expected
+      );
     });
 
     test('Short streetname with single digit', () => {
@@ -133,6 +170,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 1,
         huisnummertoevoeging: undefined,
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
@@ -142,6 +180,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 44,
         huisnummertoevoeging: undefined,
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
@@ -151,6 +190,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 23,
         huisnummertoevoeging: '1',
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
@@ -160,6 +200,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 23,
         huisnummertoevoeging: '1',
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
@@ -169,6 +210,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 26,
         huisnummertoevoeging: 'A',
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
@@ -178,6 +220,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 40,
         huisnummertoevoeging: undefined,
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
@@ -187,6 +230,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 86,
         huisnummertoevoeging: undefined,
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
@@ -196,17 +240,17 @@ describe('getLatLonByAddress', () => {
         huisnummer: 339,
         huisnummertoevoeging: undefined,
         huisletter: undefined,
+        postcode: undefined,
       });
     });
 
-    test('Ignores postcal code, city name and random charcters', () => {
-      expect(
-        extractAddress('Straatnaam 1, 1015BA, Amsterdam _ ; ,')
-      ).toStrictEqual({
+    test('Ignores city name and random charcters', () => {
+      expect(extractAddress('Straatnaam 1, , Amsterdam _ ; ,')).toStrictEqual({
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
         huisnummertoevoeging: undefined,
         huisletter: undefined,
+        postcode: undefined,
       });
     });
   });
