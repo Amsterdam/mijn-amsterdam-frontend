@@ -53,10 +53,6 @@ export function extractAddress(rawAddress: string): BAGQueryParams {
 function splitHuisnummerFromToevoeging(
   s: string
 ): [string, string | undefined] {
-  const huisnummer = [];
-  const huisnummertoevoeging = [];
-  let i = 0;
-
   // Matches something like 1, 2-5 or 3F.
   const matches = s.match(/(\d+)-?(\d*|\w*)?/);
   if (!matches) {
