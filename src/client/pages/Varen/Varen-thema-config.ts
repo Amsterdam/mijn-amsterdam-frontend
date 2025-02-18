@@ -13,15 +13,6 @@ import {
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED = 5;
 
-const displayPropsAanvragen: DisplayProps<
-  WithDetailLinkComponent<VarenFrontend>
-> = {
-  detailLinkComponent: '',
-  title: 'Omschrijving',
-  dateRequestFormatted: 'Aangevraagd',
-  status: 'Status',
-};
-
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
@@ -29,29 +20,53 @@ const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-const tableConfigBase = {
+const tableConfigSort = {
   sort: dateSort('dateRequest', 'desc'),
-  displayProps: displayPropsAanvragen,
 };
 
-export const tableConfig = {
+type TableConfig<T> = {
+  title: string;
+  maxItems: number;
+  filter: (vergunning: T) => boolean;
+  sort: (a: T, b: T) => number;
+  displayProps: DisplayProps<T>;
+  listPageRoute: string;
+};
+
+type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
+
+export const tableConfig: TableConfigByKind<
+  WithDetailLinkComponent<VarenFrontend>
+> = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     filter: (vergunning: VarenFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    ...tableConfigBase,
+    displayProps: {
+      detailLinkComponent: 'Naam vaartuig',
+      title: 'Omschrijving',
+      dateRequestFormatted: 'Aangevraagd',
+      status: 'Status',
+    },
+    ...tableConfigSort,
   },
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED,
     filter: (vergunning: VarenFrontend) => vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.completed,
     }),
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED,
-    ...tableConfigBase,
+    displayProps: {
+      detailLinkComponent: 'Naam vaartuig',
+      title: 'Omschrijving',
+      dateDecisionFormatted: 'Datum besluit',
+      decision: 'Resultaat',
+    },
+    ...tableConfigSort,
   },
 } as const;
 
