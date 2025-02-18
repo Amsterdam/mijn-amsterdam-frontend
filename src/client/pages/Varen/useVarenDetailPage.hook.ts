@@ -11,7 +11,10 @@ export function useVarenDetailPage() {
   const { VAREN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
-  const vergunning = VAREN.content?.find((item) => item.id === id) ?? null;
+  const vergunning =
+    VAREN.content
+      ?.filter((item) => item.caseType !== 'Varen registratie reder')
+      .find((item) => item.id === id) ?? null;
 
   const buttonItems = [
     vergunning ? exploitatieVergunningWijzigen(vergunning.key) : [],
