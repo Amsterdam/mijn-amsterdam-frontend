@@ -4,6 +4,7 @@ import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
 
 export function extractAddress(rawAddress: string): BAGQueryParams {
   // Remove everything but alphanumeric, dash, dot, apostrophe and space.
+  // @ts-expect-error: This regular expression flag is only available when targeting 'es6' or later.
   const address = rawAddress.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
 
   const words = [];
