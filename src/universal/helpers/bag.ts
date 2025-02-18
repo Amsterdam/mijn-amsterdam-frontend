@@ -1,58 +1,89 @@
 import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
+import { logger } from '../../server/logging';
 import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
 
-export function extractAddress(rawAddress: string): BAGQueryParams {
+export function extractAddress(rawText: string): BAGQueryParams {
+  if (!rawText) {
+    throw 'Cannot extract address out of an empty string';
+  }
+
   // Remove everything but alphanumeric, dash, dot, apostrophe and space.
-  // @ts-expect-error: This regular expression flag is only available when targeting 'es6' or later.
-  const address = rawAddress.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
+  const cleanText = rawText.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
 
-  const words = [];
-  const s = address.split(' ');
-
-  if (s.length < 2) {
-    throw Error(
-      `Address should consist of minimally two parts. A streetname and a housenumber.
-      Address: '${address}'`
-    );
-  }
-
-  let i = 0;
-  const onDigit = new RegExp(/\d/);
-
-  for (; i < s.length; i++) {
-    const word = s[i];
-    if (word[0].match(onDigit)) {
-      // The first housenumber found, so there are no more streetname words left.
-      break;
-    }
-    words.push(word);
-  }
-
-  // We know now that we're past the street name so now we can index into the last identifying part.
-  const houseIdentifier = s[i];
-  if (!houseIdentifier) {
-    throw Error(
-      `No houseIdentifier part, can't parse incomplete address: '${address}'`
-    );
-  }
-
-  const [huisnummer, huisnummertoevoeging] =
-    splitHuisnummerFromToevoeging(houseIdentifier);
+  const [textWithoutPostalCode, postalCode] = extractPostalCode(cleanText);
+  const [, address] = extractAddressInfo(textWithoutPostalCode);
 
   return {
-    openbareruimteNaam: words.join(' '),
-    huisnummer: parseInt(huisnummer),
-    huisnummertoevoeging,
+    openbareruimteNaam: address?.streetname,
+    huisnummer: address?.huisnummer,
+    huisnummertoevoeging: address?.huisnummertoevoeging,
+    postcode: postalCode,
     // Leave out huisletter. This is used to look up a location on the map,
     // and it's okay to show an approximate location.
     huisletter: undefined,
   };
 }
 
+type PostalCode = string;
+
+function extractPostalCode(text: string): [string, PostalCode | undefined] {
+  const onPostalCode = new RegExp(/[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}/i);
+
+  const postcodeMatch = text.match(onPostalCode);
+  if (postcodeMatch) {
+    return [
+      text.replace(onPostalCode, '').trim(),
+      postcodeMatch[0].replace(' ', ''),
+    ];
+  }
+  return [text, undefined];
+}
+
+type Address = {
+  streetname?: string;
+  huisnummer?: number;
+  huisnummertoevoeging?: string;
+};
+
+function extractAddressInfo(text: string): [string, Address | undefined] {
+  const onAddress = new RegExp(
+    /([\w.'/\- \p{L}]+) (\w?[0-9]+[0-9\-\p{L} ]*)/iu
+  );
+  const addressMatch = text.match(onAddress);
+
+  if (addressMatch) {
+    const houseNumberPart = addressMatch[2];
+
+    const [huisnummer, huisnummertoevoeging] = houseNumberPart
+      ? splitHuisnummerFromToevoeging(houseNumberPart)
+      : [undefined, undefined];
+
+    let huisNummerInt;
+    if (huisnummer) {
+      try {
+        huisNummerInt = parseInt(huisnummer);
+      } catch (err) {
+        logger.error(err, `Could not parse '${huisnummer}' to an integer`);
+      }
+    }
+
+    return [
+      text.replace(onAddress, '').trim(),
+      {
+        streetname: addressMatch[1],
+        huisnummer: huisNummerInt,
+        huisnummertoevoeging,
+      },
+    ];
+  }
+
+  return [text, undefined];
+}
+
 function splitHuisnummerFromToevoeging(
   s: string
-): [string, string | undefined] {
+): [string, string | undefined] | undefined {
   // Matches something like 1, 2-5 or 3F.
   const matches = s.match(/(\d+)-?(\d*|\w*)?/);
   if (!matches) {
