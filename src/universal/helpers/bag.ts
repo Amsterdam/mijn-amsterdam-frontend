@@ -1,97 +1,71 @@
 import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
-import { logger } from '../../server/logging';
 import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
+
+type ExtractUtils = {
+  pattern: RegExp;
+  formatter?: (s: string) => unknown;
+};
+
+// The order here is important since we delete our found pattern to make it easier for the next.
+const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
+  postcode: {
+    pattern: /[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}/i,
+    // Postcode can have a space between numbers and letters.
+    formatter: (postcode: string) => postcode.replace(' ', ''),
+  },
+  openbareruimteNaam: {
+    pattern: /(?<![0-9a-z])[a-z_.'/\-\p{L} ]+(?![0-9a-z])/iu,
+  },
+  huisnummer: {
+    pattern: /\d+/i,
+    formatter: (huisnummer) => parseInt(huisnummer),
+  },
+  huisnummertoevoeging: { pattern: /\w/i },
+};
 
 export function extractAddress(rawText: string): BAGQueryParams {
   if (!rawText) {
     throw 'Cannot extract address out of an empty string';
   }
 
-  // Remove everything but alphanumeric, dash, dot, apostrophe and space.
-  const cleanText = rawText.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
+  const cleanText = rawText
+    // Remove everything but alphanumeric, dash, dot, apostrophe and space.
+    .replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '')
+    .replace('Amsterdam', '');
 
-  const [textWithoutPostalCode, postalCode] = extractPostalCode(cleanText);
-  const [, address] = extractAddressInfo(textWithoutPostalCode);
+  const [, result] = Object.entries(patterns).reduce(extract, [cleanText, {}]);
 
-  return {
-    openbareruimteNaam: address?.streetname,
-    huisnummer: address?.huisnummer,
-    huisnummertoevoeging: address?.huisnummertoevoeging,
-    postcode: postalCode,
-    // Leave out huisletter. This is used to look up a location on the map,
-    // and it's okay to show an approximate location.
-    huisletter: undefined,
+  return result;
+}
+
+type Text = string;
+
+function extract(
+  acc: [Text, BAGQueryParams],
+  namedPattern: [string, ExtractUtils]
+): [Text, BAGQueryParams] {
+  const [name, utils] = namedPattern;
+  const { pattern, formatter } = utils;
+
+  const [text, bagQueryParams] = acc;
+  if (!text) {
+    return acc;
+  }
+
+  const match = text.match(pattern);
+  if (!match) {
+    return acc;
+  }
+
+  const newText = text.replace(pattern, '').trim();
+  const matchedText = formatter ? formatter(match[0]) : match[0];
+
+  const newAcc = {
+    ...bagQueryParams,
+    [name]: matchedText,
   };
-}
-
-type PostalCode = string;
-
-function extractPostalCode(text: string): [string, PostalCode | undefined] {
-  const onPostalCode = new RegExp(/[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}/i);
-
-  const postcodeMatch = text.match(onPostalCode);
-  if (postcodeMatch) {
-    return [
-      text.replace(onPostalCode, '').trim(),
-      postcodeMatch[0].replace(' ', ''),
-    ];
-  }
-  return [text, undefined];
-}
-
-type Address = {
-  streetname?: string;
-  huisnummer?: number;
-  huisnummertoevoeging?: string;
-};
-
-function extractAddressInfo(text: string): [string, Address | undefined] {
-  const onAddress = new RegExp(
-    /([\w.'/\- \p{L}]+) (\w?[0-9]+[0-9\-\p{L} ]*)/iu
-  );
-  const addressMatch = text.match(onAddress);
-
-  if (addressMatch) {
-    const houseNumberPart = addressMatch[2];
-
-    const [huisnummer, huisnummertoevoeging] = houseNumberPart
-      ? splitHuisnummerFromToevoeging(houseNumberPart)
-      : [undefined, undefined];
-
-    let huisNummerInt;
-    if (huisnummer) {
-      try {
-        huisNummerInt = parseInt(huisnummer);
-      } catch (err) {
-        logger.error(err, `Could not parse '${huisnummer}' to an integer`);
-      }
-    }
-
-    return [
-      text.replace(onAddress, '').trim(),
-      {
-        streetname: addressMatch[1],
-        huisnummer: huisNummerInt,
-        huisnummertoevoeging,
-      },
-    ];
-  }
-
-  return [text, undefined];
-}
-
-function splitHuisnummerFromToevoeging(
-  s: string
-): [string, string | undefined] | undefined {
-  // Matches something like 1, 2-5 or 3F.
-  const matches = s.match(/(\d+)-?(\d*|\w*)?/);
-  if (!matches) {
-    throw Error(
-      `Match failed for housenumber and/or toevoeging. Input string: '${s}'`
-    );
-  }
-  return [matches[1], matches[2]];
+  return [newText, newAcc];
 }
 
 export type BAGSearchAddress = string;
