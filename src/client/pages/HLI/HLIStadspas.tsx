@@ -79,7 +79,7 @@ const displayPropsBudgets = {
 };
 
 const PHONENUMBERS = {
-  CCA: '14020',
+  CCA: '14 020',
   WerkEnInkomen: '020 252 6000',
 } as const;
 
@@ -369,7 +369,7 @@ function PassBlockedAlert() {
       </Paragraph>
       <Paragraph>
         Stond er nog tegoed op de Stadspas? Dan staat het tegoed dat over was
-        ook op weer op de nieuwe pas.
+        ook weer op de nieuwe pas.
       </Paragraph>
     </Alert>
   );
