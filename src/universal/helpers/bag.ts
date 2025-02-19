@@ -32,6 +32,7 @@ export function extractAddress(rawText: string): BAGQueryParams {
   const cleanText = rawText
     // Remove everything but alphanumeric, dash, dot, apostrophe and space.
     .replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '')
+    // This can mess with matching and we don't need the city name.
     .replace('Amsterdam', '');
 
   const [, result] = Object.entries(patterns).reduce(extract, [cleanText, {}]);
