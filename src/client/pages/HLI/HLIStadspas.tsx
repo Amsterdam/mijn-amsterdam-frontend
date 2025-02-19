@@ -160,7 +160,8 @@ export default function HLIStadspas() {
             <Grid.Cell span="all">
               <Datalist rows={[NAME]} />
               <Paragraph className={styles.StadspasNummerInfo}>
-                Hieronder staat het Stadspasnummer van uw actieve pas.
+                Hieronder staat het Stadspasnummer van uw{' '}
+                {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
                 <br /> Dit pasnummer staat ook op de achterkant van uw pas.
               </Paragraph>
               <Datalist rows={[NUMBER]} />
@@ -294,7 +295,6 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           onClick={() => {
             setIsModalOpen(true);
           }}
-          data-testid="block-stadspas-button"
         >
           Blokkeer deze Stadspas
         </Button>
@@ -357,7 +357,6 @@ function PassBlockedAlert() {
     <Alert
       heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
       severity="warning"
-      data-testid="stadspas-blocked-alert"
     >
       <Paragraph>
         Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
