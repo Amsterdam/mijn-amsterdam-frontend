@@ -334,7 +334,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         <Paragraph className="ams-mb--sm">
           Is uw Stadspas gestolen of bent u deze kwijt? Blokkeer dan hier uw
           Stadspas. Zo zorgt u ervoor dat niemand de Stadspas en eventueel
-          tegoed van uw kind uitgeeft.
+          tegoed uitgeeft.
         </Paragraph>
         <Paragraph className="ams-mb--sm">
           Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
