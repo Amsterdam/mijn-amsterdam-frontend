@@ -7,7 +7,7 @@ import {
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './Varen.module.scss';
-import {
+import type {
   VarenFrontend,
   VarenVergunningLigplaatsType,
 } from '../../../server/services/varen/config-and-types';

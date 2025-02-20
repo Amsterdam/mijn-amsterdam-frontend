@@ -8,7 +8,7 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import styles from './Varen.module.scss';
-import {
+import type {
   VarenFrontend,
   VarenRegistratieRederType,
   VarenVergunningFrontend,

@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
-import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -36,12 +36,12 @@ type TableConfig<T> = {
 type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
 
 export const tableConfig: TableConfigByKind<
-  WithDetailLinkComponent<VarenFrontend>
+  WithDetailLinkComponent<VarenVergunningFrontend>
 > = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    filter: (vergunning: VarenFrontend) => !vergunning.processed,
+    filter: (vergunning: VarenVergunningFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
@@ -56,7 +56,7 @@ export const tableConfig: TableConfigByKind<
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED,
-    filter: (vergunning: VarenFrontend) => vergunning.processed,
+    filter: (vergunning: VarenVergunningFrontend) => vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.completed,
     }),
