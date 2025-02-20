@@ -56,6 +56,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
       text24: 'vesselDepth',
       num8: 'numberOfSeats',
       num10: 'eniNumber',
+      text11: 'permitReference',
       text10: 'segment',
       text15: 'formAppearance',
     },

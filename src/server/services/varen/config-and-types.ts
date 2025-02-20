@@ -48,6 +48,7 @@ export type VarenVergunningExploitatieType = DecosZaakBase & {
     | 'Klein en middelgroot'
     | 'Onbemand';
   eniNumber: string | null;
+  permitReference: string | null;
   numberOfSeats: number | null; // 001 seats
   vesselHeight: number | null; // 0.01 meters
   vesselDepth: number | null; // 0.01 meters
