@@ -1,5 +1,6 @@
 import { useVarenDetailPage } from './useVarenDetailPage.hook';
 import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
+import { VarenDetailPageContentExploitatieWijzigenVaartuigNaam } from './VarenDetailExploitatieWijzigingNaam';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -26,6 +27,13 @@ export function VarenDetail() {
         <VarenDetailPageContentLigplaats
           vergunning={vergunning}
           buttonItems={buttonItems}
+        />
+      );
+      break;
+    case 'Varen vergunning exploitatie Wijziging vaartuignaam':
+      pageContent = (
+        <VarenDetailPageContentExploitatieWijzigenVaartuigNaam
+          vergunning={vergunning}
         />
       );
       break;
