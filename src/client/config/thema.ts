@@ -181,7 +181,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
     `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
   [AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']]:
-    `ALle contactmomenten | ${ThemaTitles.BRP}`,
+    `Alle contactmomenten | ${ThemaTitles.BRP}`,
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
