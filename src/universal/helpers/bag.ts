@@ -2,68 +2,73 @@ import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
 import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
 
-export function extractAddress(rawAddress: string): BAGQueryParams {
-  // Remove everything but alphanumeric, dash, dot, apostrophe and space.
-  const address = rawAddress.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
+type ExtractUtils = {
+  pattern: RegExp;
+  formatter?: (s: string) => unknown;
+};
 
-  const words = [];
-  const s = address.split(' ');
+// The order here is important since we delete our found pattern to make it easier for the next.
+const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
+  postcode: {
+    pattern: /[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}/i,
+    // Postcode can have a space between numbers and letters.
+    formatter: (postcode: string) => postcode.replace(' ', ''),
+  },
+  openbareruimteNaam: {
+    // @ts-ignore unicode does works
+    pattern: /(?<![0-9a-z])[a-z_.'/\-\p{L} ]+(?![0-9a-z])/iu,
+  },
+  huisnummer: {
+    pattern: /\d+/i,
+    formatter: (huisnummer) => parseInt(huisnummer),
+  },
+  huisnummertoevoeging: { pattern: /\w/i },
+};
 
-  if (s.length < 2) {
-    throw Error(
-      `Address should consist of minimally two parts. A streetname and a housenumber.
-      Address: '${address}'`
-    );
+export function extractAddress(rawText: string): BAGQueryParams {
+  if (!rawText) {
+    throw 'Cannot extract address out of an empty string';
   }
 
-  let i = 0;
-  const onDigit = new RegExp(/\d/);
+  const cleanText = rawText
+    // Remove everything but alphanumeric, dash, dot, apostrophe and space.
+    // @ts-ignore unicode does work
+    .replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '')
+    // This can mess with matching and we don't need the city name.
+    .replace('Amsterdam', '');
 
-  for (; i < s.length; i++) {
-    const word = s[i];
-    if (word[0].match(onDigit)) {
-      // The first housenumber found, so there are no more streetname words left.
-      break;
-    }
-    words.push(word);
-  }
+  const [, result] = Object.entries(patterns).reduce(extract, [cleanText, {}]);
 
-  // We know now that we're past the street name so now we can index into the last identifying part.
-  const houseIdentifier = s[i];
-  if (!houseIdentifier) {
-    throw Error(
-      `No houseIdentifier part, can't parse incomplete address: '${address}'`
-    );
-  }
-
-  const [huisnummer, huisnummertoevoeging] =
-    splitHuisnummerFromToevoeging(houseIdentifier);
-
-  return {
-    openbareruimteNaam: words.join(' '),
-    huisnummer: parseInt(huisnummer),
-    huisnummertoevoeging,
-    // Leave out huisletter. This is used to look up a location on the map,
-    // and it's okay to show an approximate location.
-    huisletter: undefined,
-  };
+  return result;
 }
 
-function splitHuisnummerFromToevoeging(
-  s: string
-): [string, string | undefined] {
-  const huisnummer = [];
-  const huisnummertoevoeging = [];
-  let i = 0;
+type Text = string;
 
-  // Matches something like 1, 2-5 or 3F.
-  const matches = s.match(/(\d+)-?(\d*|\w*)?/);
-  if (!matches) {
-    throw Error(
-      `Match failed for housenumber and/or toevoeging. Input string: '${s}'`
-    );
+function extract(
+  acc: [Text, BAGQueryParams],
+  namedPattern: [string, ExtractUtils]
+): [Text, BAGQueryParams] {
+  const [name, utils] = namedPattern;
+  const { pattern, formatter } = utils;
+
+  const [text, bagQueryParams] = acc;
+  if (!text) {
+    return acc;
   }
-  return [matches[1], matches[2]];
+
+  const match = text.match(pattern);
+  if (!match) {
+    return acc;
+  }
+
+  const newText = text.replace(pattern, '').trim();
+  const matchedText = formatter ? formatter(match[0]) : match[0];
+
+  const newAcc = {
+    ...bagQueryParams,
+    [name]: matchedText,
+  };
+  return [newText, newAcc];
 }
 
 export type BAGSearchAddress = string;
