@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { KeyboardEventHandler, ReactNode, useEffect, useRef } from 'react';
 
 import { Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -17,6 +17,7 @@ interface ModalProps {
   onClose?: () => void;
   title?: string;
   showCloseButton?: boolean;
+  onKeyUp?: KeyboardEventHandler<HTMLDialogElement>;
 }
 
 export function Modal({
@@ -28,13 +29,16 @@ export function Modal({
   title,
   showCloseButton = true,
   onClose,
+  onKeyUp,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const marginTop = window.scrollY;
   const appendToElement = useModalRoot(document.getElementById('modal-root')!);
 
   useEffect(() => {
-    dialogRef.current?.focus();
+    if (isOpen) {
+      dialogRef.current?.focus();
+    }
   }, [isOpen]);
 
   return isOpen
@@ -45,6 +49,7 @@ export function Modal({
           <Dialog
             ref={dialogRef}
             onClose={onClose}
+            onKeyUp={onKeyUp}
             open
             heading={title ?? ''}
             closeButtonLabel={closeButtonLabel}

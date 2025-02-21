@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 
 import HLIStadspas from './HLIStadspas';
@@ -36,37 +37,58 @@ const createHLIStadspasComponent = componentCreator({
   routeEntry: generatePath(AppRoutes['HLI/STADSPAS'], { passNumber }),
 });
 
-describe('<HLIStadspas />', () => {
-  test('Find text indicating the pas is active', () => {
-    const HLIStadspas = createHLIStadspasComponent(activePasState);
-    const screen = render(<HLIStadspas />);
-    expect(
-      screen.getByText(/Hieronder staat het Stadspasnummer van uw actieve pas./)
-    ).toBeInTheDocument();
+test('Active pas state', () => {
+  const HLIStadspas = createHLIStadspasComponent(activePasState);
+  const screen = render(<HLIStadspas />);
+
+  expect(
+    screen.getByText(/Hieronder staat het Stadspasnummer van uw actieve pas./)
+  ).toBeInTheDocument();
+
+  expect(
+    screen.getByRole('button', { name: 'Blokkeer deze Stadspas' })
+  ).toBeInTheDocument();
+});
+
+test('Blocked pas state', () => {
+  const HLIStadspas = createHLIStadspasComponent(pasBlockedState);
+  const screen = render(<HLIStadspas />);
+
+  expect(
+    screen.getByText(
+      /Hieronder staat het Stadspasnummer van uw geblokkeerde pas./
+    )
+  ).toBeInTheDocument();
+
+  expect(
+    screen.getByRole('heading', {
+      name: 'Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?',
+    })
+  ).toBeInTheDocument();
+});
+
+test('Modal appears', async () => {
+  const HLIStadspas = createHLIStadspasComponent(activePasState);
+  const screen = render(<HLIStadspas />);
+
+  const user = userEvent.setup();
+
+  await user.click(
+    screen.getByRole('button', { name: 'Blokkeer deze Stadspas' })
+  );
+
+  const heading = screen.getByRole('heading', {
+    name: 'Weet u zeker dat u uw Stadspas wilt blokkeren?',
   });
+  expect(heading).toBeInTheDocument();
 
-  test('Finds the block button', () => {
-    const HLIStadspas = createHLIStadspasComponent(activePasState);
-    const screen = render(<HLIStadspas />);
-    expect(
-      screen.getByRole('button', { name: 'Blokkeer deze Stadspas' })
-    ).toBeInTheDocument();
+  const blockButton = screen.getByRole('button', {
+    name: 'Ja, blokkeer mijn pas',
   });
+  expect(blockButton).toBeInTheDocument();
 
-  test('Find texts communicating that the stadspas is blocked', () => {
-    const HLIStadspas = createHLIStadspasComponent(pasBlockedState);
-    const screen = render(<HLIStadspas />);
-
-    expect(
-      screen.getByText(
-        /Hieronder staat het Stadspasnummer van uw geblokkeerde pas./
-      )
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByRole('heading', {
-        name: 'Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?',
-      })
-    ).toBeInTheDocument();
+  const declineButton = screen.getByRole('button', {
+    name: 'Nee, blokkeer mijn pas niet',
   });
+  expect(declineButton).toBeInTheDocument();
 });
