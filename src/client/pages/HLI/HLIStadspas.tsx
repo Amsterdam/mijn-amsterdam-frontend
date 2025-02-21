@@ -299,12 +299,16 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           Blokkeer deze Stadspas
         </Button>
       )}
-
       <Modal
         title="Weet u zeker dat u uw Stadspas wilt blokkeren?"
         className={styles.BlokkeerDialog}
         isOpen={isModalOpen}
         showCloseButton={false}
+        onKeyUp={(event) => {
+          if (event.code === 'Escape') {
+            setIsModalOpen(false);
+          }
+        }}
         actions={
           <ActionGroup>
             <Button
