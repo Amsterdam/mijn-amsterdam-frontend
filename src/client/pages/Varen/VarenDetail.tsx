@@ -1,7 +1,7 @@
 import { useVarenDetailPage } from './useVarenDetailPage.hook';
 import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
-import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaIcon } from '../../components';
 import { ThemaTitles } from '../../config/thema';
@@ -34,7 +34,7 @@ export function VarenDetail() {
   }
 
   return (
-    <ThemaDetailPagina<VarenFrontend>
+    <ThemaDetailPagina<VarenVergunningFrontend>
       statusLabel="Status van uw aanvraag"
       title={vergunning?.title ?? 'Varen vergunning'}
       zaak={vergunning}

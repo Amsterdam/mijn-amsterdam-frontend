@@ -15,12 +15,6 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
     isActive: true,
     caseType: 'Varen registratie reder',
     title: 'Varen registratie reder',
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Varen - Behandelen',
-      },
-    ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       company: 'company',
