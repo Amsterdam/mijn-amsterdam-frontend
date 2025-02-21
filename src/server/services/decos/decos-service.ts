@@ -689,8 +689,8 @@ export async function fetchDecosDocument(
 
 export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
-  zaak: T,
-  appRoute: AppRoute
+  appRoute: AppRoute,
+  zaak: T
 ) {
   const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
   const zaakFrontend: DecosZaakFrontend<T> = {

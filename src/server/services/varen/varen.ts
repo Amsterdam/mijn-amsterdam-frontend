@@ -12,13 +12,13 @@ import { transformDecosZaakFrontend } from '../decos/decos-service';
 
 function transformVarenFrontend(
   sessionID: SessionID,
-  vergunning: Varen,
-  appRoute: AppRoute
+  appRoute: AppRoute,
+  vergunning: Varen
 ) {
   const vergunningFrontend = transformDecosZaakFrontend<Varen>(
     sessionID,
-    vergunning,
-    appRoute
+    appRoute,
+    vergunning
   );
   // Assign the definitive status steps
   vergunningFrontend.steps = getStatusSteps(vergunningFrontend);
@@ -42,8 +42,8 @@ export async function fetchVaren_(
       (vergunning) =>
         transformVarenFrontend(
           authProfileAndToken.profile.sid,
-          vergunning,
-          AppRoutes['VAREN/DETAIL']
+          AppRoutes['VAREN/DETAIL'],
+          vergunning
         )
     );
     return apiSuccessResult(varenVergunningFrontend);

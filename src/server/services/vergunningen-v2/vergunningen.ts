@@ -25,8 +25,8 @@ function transformVergunningFrontend(
 ) {
   const vergunningFrontend = transformDecosZaakFrontend<VergunningV2>(
     sessionID,
-    vergunning,
-    appRoute
+    appRoute,
+    vergunning
   );
   // Assign the definitive status steps
   vergunningFrontend.steps = getStatusSteps(vergunningFrontend);
@@ -51,8 +51,8 @@ async function fetchVergunningenV2_(
       (vergunning) =>
         transformDecosZaakFrontend<VergunningV2>(
           authProfileAndToken.profile.sid,
-          vergunning,
-          appRoute
+          appRoute,
+          vergunning
         )
     );
     return apiSuccessResult(vergunningenFrontend);

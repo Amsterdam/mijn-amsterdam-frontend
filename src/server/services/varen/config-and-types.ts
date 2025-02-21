@@ -47,7 +47,8 @@ export type VarenVergunningExploitatieType = DecosZaakBase & {
     | 'Historisch klein en middelgroot'
     | 'Klein en middelgroot'
     | 'Onbemand';
-  isCvoIssued: boolean;
+  eniNumber: string | null;
+  permitReference: string | null;
   numberOfSeats: number | null; // 001 seats
   vesselHeight: number | null; // 0.01 meters
   vesselDepth: number | null; // 0.01 meters
