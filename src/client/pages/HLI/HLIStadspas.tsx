@@ -222,7 +222,7 @@ export default function HLIStadspas() {
                   ) : (
                     <>
                       U heeft nog geen uitgaven. Deze informatie kan een dag
-                      achterlopen. Maar het bedrag dat u nog over heeft klopt
+                      achterlopen. Maar het saldo dat u nog over heeft klopt
                       altijd.
                     </>
                   )}
