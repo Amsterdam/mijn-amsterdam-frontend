@@ -10,9 +10,6 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED = 5;
-
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
@@ -26,7 +23,6 @@ const tableConfigSort = {
 
 type TableConfig<T> = {
   title: string;
-  maxItems: number;
   filter: (vergunning: T) => boolean;
   sort: (a: T, b: T) => number;
   displayProps: DisplayProps<T>;
@@ -40,7 +36,6 @@ export const tableConfig: TableConfigByKind<
 > = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     filter: (vergunning: VarenVergunningFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
@@ -55,7 +50,6 @@ export const tableConfig: TableConfigByKind<
   },
   [listPageParamKind.completed]: {
     title: 'Afgehandelde aanvragen',
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_COMPLETED,
     filter: (vergunning: VarenVergunningFrontend) => vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.completed,
