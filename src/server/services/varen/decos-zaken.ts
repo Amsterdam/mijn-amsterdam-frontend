@@ -36,15 +36,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle: 'Varen exploitatie vergunning - Afhandelen',
-      },
-      {
-        status: 'In behandeling',
-        stepTitle: 'Varen exploitatie vergunning - ??Meer info??',
-      },
-      {
-        status: 'In behandeling',
-        stepTitle: 'Varen exploitatie vergunning - Afgehandeld',
+        stepTitle: 'Status bijwerken en notificatie verzenden - Ontvangen',
       },
     ],
     transformFields: {
