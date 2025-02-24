@@ -1,12 +1,15 @@
 import {
   ActionGroup,
+  Alert,
   Grid,
   Icon,
+  Link,
   Paragraph,
 } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
+import { rederRegistratieLink } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type {
   VarenFrontend,
@@ -25,6 +28,23 @@ const pageContentTop = (
     Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook gehuurde
     boten, met of zonder schipper, vallen onder de passagiersvaart.
   </Paragraph>
+);
+
+const VarenDisclaimerRederNotRegistered = (
+  <Grid.Cell span="all">
+    <Alert severity="info">
+      <Paragraph>
+        Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart.
+        U kunt hierdoor geen exploitatievergunningen wijzigen of een nieuwe
+        aanvragen. Registreer uw onderneming via onderstaande link.
+      </Paragraph>
+      <Paragraph>
+        <Link rel="noreferrer" href={rederRegistratieLink.to}>
+          {rederRegistratieLink.title}
+        </Link>
+      </Paragraph>
+    </Alert>
+  </Grid.Cell>
 );
 
 type VarenPageContentRederRegistratieProps = {
@@ -93,21 +113,22 @@ export function Varen() {
     buttonItems,
   } = useVarenThemaData();
 
-  const pageContentTopSecondary = buttonItems.length ? (
-    <ActionGroup>
-      {buttonItems.map(({ to, title }) => (
-        <MaButtonLink
-          key={to}
-          href={to}
-          variant="secondary"
-          className={styles.VarenButton}
-        >
-          {title}
-          <Icon svg={ExternalLinkIcon} size="level-5" />
-        </MaButtonLink>
-      ))}
-    </ActionGroup>
-  ) : null;
+  const actionButtons =
+    varenRederRegistratie && buttonItems.length ? (
+      <ActionGroup>
+        {buttonItems.map(({ to, title }) => (
+          <MaButtonLink
+            key={to}
+            href={to}
+            variant="secondary"
+            className={styles.VarenButton}
+          >
+            {title}
+            <Icon svg={ExternalLinkIcon} size="level-5" />
+          </MaButtonLink>
+        ))}
+      </ActionGroup>
+    ) : null;
 
   const vergunningenTables = Object.entries(tableConfig).map(
     ([kind, config]) => {
@@ -122,10 +143,15 @@ export function Varen() {
           listPageRoute={config.listPageRoute}
           listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
           totalItems={zaken.length}
-          maxItems={config.maxItems}
         />
       );
     }
+  );
+
+  const gegevensRegistratieReder = varenRederRegistratie ? (
+    <VarenPageContentRederRegistratie registratie={varenRederRegistratie} />
+  ) : (
+    VarenDisclaimerRederNotRegistered
   );
 
   return (
@@ -134,14 +160,10 @@ export function Varen() {
       isLoading={isLoading}
       isError={isError}
       pageContentTop={pageContentTop}
-      pageContentTopSecondary={pageContentTopSecondary}
+      pageContentTopSecondary={actionButtons}
       pageContentMain={
         <>
-          {varenRederRegistratie && (
-            <VarenPageContentRederRegistratie
-              registratie={varenRederRegistratie}
-            />
-          )}
+          {gegevensRegistratieReder}
           {vergunningenTables}
         </>
       }
