@@ -1,9 +1,8 @@
-import styles from './VergunningDetail.module.scss';
-import { InfoDetail } from '../../components';
+import { InfoDetail } from '../../../components';
 import {
-  LocationModal,
   LocationModalProps,
-} from '../../components/LocationModal/LocationModal';
+  LocationModal,
+} from '../../../components/LocationModal/LocationModal';
 
 interface LocationProps extends Omit<LocationModalProps, 'address'> {
   // Text content above the "Modal open" link
@@ -23,7 +22,6 @@ export function Location({
 }: LocationProps) {
   return (
     <InfoDetail
-      className={styles.LocationInfo}
       label={label ?? 'Locatie'}
       value={
         <>

@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { fetchHorecaNotifications, fetchHorecaVergunningen } from './horeca';
+import { fetchHorecaNotifications, fetchHorecaVergunning } from './horeca';
 import vergunningenMockData from '../../../mocks/fixtures/vergunningen.json';
 import { remoteApi } from '../../testing/utils';
 import { AuthProfileAndToken } from '../auth/auth-types';
@@ -25,7 +25,7 @@ describe('Horeca service', () => {
       .get(`/decosjoin/getvergunningen`)
       .reply(200, vergunningenMockData);
 
-    const result = await fetchHorecaVergunningen('x', authProfileAndToken);
+    const result = await fetchHorecaVergunning('x', authProfileAndToken);
 
     expect(result.content.length).toEqual(3);
     expect(result.content).toMatchInlineSnapshot(`

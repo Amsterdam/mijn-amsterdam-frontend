@@ -1,13 +1,12 @@
 import { Location } from './Location';
-import styles from './VergunningDetail.module.scss';
-import type { Flyeren as FlyerenVergunning } from '../../../../server/services';
+import type { Flyeren } from '../../../../server/services/vergunningen-v2/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { InfoDetail } from '../../../components';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
 
 // Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
 // In dat geval allen de datum tonen.
-export function Flyeren({ vergunning }: { vergunning: FlyerenVergunning }) {
+export function Flyeren({ vergunning }: { vergunning: Flyeren }) {
   const isVerleend = vergunning.decision === 'Verleend';
   const isAfgehandeld = vergunning.status === 'Afgehandeld';
   const isSameDate =
