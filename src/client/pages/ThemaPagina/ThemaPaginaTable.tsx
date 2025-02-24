@@ -8,7 +8,9 @@ import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
-const DISPLAY_PROPS_DEFAULT = { title: 'Titel' };
+const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
+  title: 'Titel',
+};
 const TEXT_NO_CONTENT_DEFAULT = 'Er zijn (nog) geen zaken gevonden.';
 
 interface ThemaPaginaTableProps<T> {
@@ -21,11 +23,12 @@ interface ThemaPaginaTableProps<T> {
   subTitle?: ReactNode;
   title?: string;
   listPageLinkLabel?: string;
+  listPageLinkTitle?: string;
   zaken: T[];
 }
 
 export default function ThemaPaginaTable<T extends object = ZaakDetail>({
-  title = 'Zaken',
+  title = '',
   subTitle = '',
   zaken,
   className,
@@ -35,6 +38,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   totalItems,
   listPageLinkLabel = 'Toon meer',
+  listPageLinkTitle,
 }: ThemaPaginaTableProps<T>) {
   const textNoContentDefault = title
     ? `U heeft (nog) geen ${title.toLowerCase()}`
@@ -60,6 +64,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
       {hasListPage && (
         <LinkToListPage
           threshold={maxItems}
+          linkTitle={listPageLinkTitle ?? `Bekijk meer ${title.toLowerCase()}`}
           label={listPageLinkLabel}
           count={totalItems ?? zaken.length}
           route={listPageRoute}

@@ -45,6 +45,7 @@ export function PageHeadingV2({
             maVariant="noDefaultUnderline"
             href={backLink || '/'}
             onClick={goBack}
+            title="Terug naar de vorige pagina"
           >
             <Icon size="level-5" svg={ChevronLeftIcon} />
             {label}

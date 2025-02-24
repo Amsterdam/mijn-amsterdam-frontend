@@ -164,6 +164,7 @@ export function LocationModal({
         </Button>
         <Modal
           isOpen={isLocationModalOpen}
+          pollingQuerySelector="#my-area-map"
           onClose={() => {
             setLocationModalOpen(false);
           }}
@@ -182,6 +183,8 @@ export function LocationModal({
                 datasetIds={[]}
                 activeBaseLayerType={BaseLayerType.Aerial}
                 centerMarker={centerMarker}
+                showHomeLocationMarker={false}
+                showSecondaryLocationMarkers={false}
               />
             )}
             {!bagApi.isLoading && !hasLocationDataAndCenterMarker && (

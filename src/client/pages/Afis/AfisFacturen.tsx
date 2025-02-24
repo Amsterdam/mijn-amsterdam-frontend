@@ -8,6 +8,7 @@ import {
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+import { PageContentCell } from '../../components/Page/Page';
 
 function AfisListPageBody({ state }: { state: AfisFactuurState }) {
   switch (state) {
@@ -38,7 +39,11 @@ export function AfisFacturen() {
   return (
     <ListPagePaginated<AfisFactuur>
       items={facturen}
-      pageContentTop={<AfisListPageBody state={state} />}
+      pageContentTop={
+        <PageContentCell>
+          <AfisListPageBody state={state} />
+        </PageContentCell>
+      }
       title={listPageTableConfig.title}
       appRoute={routes.listPageFacturen}
       appRouteParams={{ state }}

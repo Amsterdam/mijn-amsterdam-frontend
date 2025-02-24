@@ -8,6 +8,8 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { TrackingConfig } from '../../config/routes';
+import { ThemaTitles } from '../../config/thema';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
@@ -38,7 +40,7 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-export const bezwarenTableConfig = {
+export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: 'Lopende bezwaren',
     filter: (bezwaar: Bezwaar) => bezwaar.status !== 'Afgehandeld',
@@ -61,3 +63,15 @@ export const bezwarenTableConfig = {
     }),
   },
 } as const;
+
+export function getBezwarenListPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as ListPageParamKind;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${ThemaTitles.BEZWAREN}`
+      : ThemaTitles.BEZWAREN;
+  };
+}

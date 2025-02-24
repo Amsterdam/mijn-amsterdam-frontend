@@ -7,6 +7,7 @@ interface LinkToListPageProps {
   count: number;
   route: string;
   label?: string;
+  linkTitle?: string;
   params?: Record<string, any>;
   threshold?: number;
   translateX?: string;
@@ -14,6 +15,7 @@ interface LinkToListPageProps {
 
 export function LinkToListPage({
   label = 'Toon meer',
+  linkTitle,
   threshold = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   count,
   route,
@@ -21,7 +23,11 @@ export function LinkToListPage({
 }: LinkToListPageProps) {
   const routeGenerated = generatePath(route, params);
   return count > threshold ? (
-    <MaRouterLink maVariant="noDefaultUnderline" href={routeGenerated}>
+    <MaRouterLink
+      title={linkTitle}
+      maVariant="noDefaultUnderline"
+      href={routeGenerated}
+    >
       {label}
     </MaRouterLink>
   ) : null;

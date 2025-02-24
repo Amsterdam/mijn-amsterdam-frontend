@@ -9,6 +9,8 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { TrackingConfig } from '../../config/routes';
+import { ThemaTitles } from '../../config/thema';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
@@ -18,17 +20,20 @@ const displayPropsAanvragen: DisplayProps<
   detailLinkComponent: 'Nummer',
   ontvangstDatumFormatted: 'Ontvangen op',
   themas: 'Onderwerp(en)',
-};
+} as const;
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
-};
+} as const;
+
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 const tableConfigBase = {
   sort: dateSort('dateRequest', 'desc'),
   displayProps: displayPropsAanvragen,
-};
+} as const;
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
@@ -57,3 +62,15 @@ export const linkListItems: LinkProps[] = [
     title: 'Loket persoonsgegevens gemeente Amsterdam',
   },
 ] as const;
+
+export function getAVGListPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as ListPageParamKind;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${ThemaTitles.AVG}`
+      : ThemaTitles.AVG;
+  };
+}

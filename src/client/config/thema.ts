@@ -4,11 +4,23 @@ import { TrackingConfig } from './routes';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
+import { getAfisListPageDocumentTitle } from '../pages/Afis/Afis-thema-config';
+import { getAVGListPageDocumentTitle } from '../pages/AVG/AVG-thema-config';
+import { getBezwarenListPageDocumentTitle } from '../pages/Bezwaren/Bezwaren-thema-config';
 import {
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
 } from '../pages/Burgerzaken/helpers';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
+import {
+  getInkomenListPageDocumentTitle,
+  getInkomenSpecificatiesListPageDocumentTitle,
+} from '../pages/Inkomen/Inkomen-thema-config';
+import {
+  getVarenDetailPageDocumentTitle,
+  getVarenListPageDocumentTitle,
+} from '../pages/Varen/Varen-thema-config';
+import { getListPageDocumentTitle } from '../pages/Vergunningen/Vergunningen-thema-config';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
@@ -63,6 +75,122 @@ export type DocumentTitlesConfig = {
 
 // Used in <html><head><title>{PageTitle}</title></head>
 export const DocumentTitles: DocumentTitlesConfig = {
+  // Afis
+  [AppRoutes.AFIS]: `${ThemaTitles.AFIS} | overzicht`,
+  [AppRoutes['AFIS/FACTUREN']]: getAfisListPageDocumentTitle(),
+  [AppRoutes['AFIS/BETAALVOORKEUREN']]:
+    `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
+  // Contactmomenten
+  [AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']]:
+    `Alle contactmomenten | ${ThemaTitles.BRP}`,
+
+  // Burgerzaken
+  [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
+  [AppRoutes['BURGERZAKEN/LIST']]:
+    `Paspoort en ID-kaart | ${ThemaTitles.BURGERZAKEN}`,
+  [AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']]: (_config, params) =>
+    `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${ThemaTitles.BURGERZAKEN}`,
+
+  // Zorg
+  [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
+  [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
+  [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
+
+  // Inkomen
+  [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
+  [AppRoutes['INKOMEN/SPECIFICATIES']]:
+    getInkomenSpecificatiesListPageDocumentTitle(),
+  [AppRoutes['INKOMEN/LIST']]: getInkomenListPageDocumentTitle(),
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
+    `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
+  [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
+  [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
+  [AppRoutes['INKOMEN/BBZ']]: `Bbz | ${ThemaTitles.INKOMEN}`,
+
+  // HLI
+  [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
+  [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
+  [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
+  [AppRoutes['HLI/REGELINGEN_LIST']]: `Regelingen | ${ThemaTitles.HLI}`,
+
+  // Vergunningen
+  [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
+  [AppRoutes['VERGUNNINGEN/LIST']]:
+    `Vergunningen | ${ThemaTitles.VERGUNNINGEN}`,
+  [AppRoutes['VERGUNNINGEN/DETAIL']]:
+    `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
+
+  // Mijn gegevens
+  [AppRoutes.BRP]: `Mijn gegevens`,
+  [AppRoutes.KVK]: `Mijn onderneming`,
+
+  // Bezwaren
+  [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
+  [AppRoutes['BEZWAREN/LIST']]: getBezwarenListPageDocumentTitle(),
+  [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
+
+  // Toeristische verhuur
+  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]:
+    `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
+  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]: getListPageDocumentTitle(
+    ThemaTitles.TOERISTISCHE_VERHUUR
+  ),
+
+  // Varen
+  [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
+  [AppRoutes['VAREN/LIST']]: getVarenListPageDocumentTitle(),
+  [AppRoutes['VAREN/DETAIL']]: getVarenDetailPageDocumentTitle(),
+
+  // Krefia
+  [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
+
+  // Parkeren
+  [AppRoutes.PARKEREN]: `${ThemaTitles.PARKEREN} | overzicht`,
+  [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
+  [AppRoutes['PARKEREN/LIST']]: getListPageDocumentTitle(ThemaTitles.PARKEREN),
+
+  // Klachten
+  [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
+  [AppRoutes['KLACHTEN/LIST']]: `Klachten | ${ThemaTitles.KLACHTEN}`,
+  [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
+
+  // Horeca
+  [AppRoutes.HORECA]: 'Horeca | overzicht',
+  [AppRoutes['HORECA/LIST']]: getListPageDocumentTitle(ThemaTitles.HORECA),
+  [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
+
+  // AVG
+  [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
+  [AppRoutes['AVG/LIST']]: getAVGListPageDocumentTitle(),
+  [AppRoutes['AVG/DETAIL']]: `AVG verzoek | ${ThemaTitles.AVG}`,
+
+  // Bodem
+  [AppRoutes.BODEM]: `${ThemaTitles.BODEM} | overzicht`,
+  [AppRoutes['BODEM/LIST']]: `Lood in de bodem-checks | ${ThemaTitles.BODEM}`,
+  [AppRoutes['BODEM/LOOD_METING']]:
+    `Lood in de bodem-check | ${ThemaTitles.BODEM}`,
+
+  // Erfpacht
+  [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
+  [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
+  [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
+  [AppRoutes['ERFPACHTv2/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
+  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: 'Erfpacht | dossier',
+
+  // Generic
+  [AppRoutes.SEARCH]: `Zoeken`,
+  [AppRoutes.BUURT]: `Mijn buurt`,
+  [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
+  [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
+  [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
+  [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
+  [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
+  [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
+  [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
+
   [AppRoutes.HOME]: (config) => {
     switch (true) {
       case config.profileType === 'private-attributes' &&
@@ -75,111 +203,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
         return 'Inloggen | Mijn Amsterdam';
     }
   },
-  [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
-  [AppRoutes['BURGERZAKEN/LIST']]:
-    `Paspoort en ID-kaart | ${ThemaTitles.BURGERZAKEN}`,
-  [AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']]: (_config, params) =>
-    `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${ThemaTitles.BURGERZAKEN}`,
-  [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
-  [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
-  [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
-  [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
-  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
-    `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
-  [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
-  [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
-  [AppRoutes['HLI/REGELINGEN_LIST']]: `Regelingen | ${ThemaTitles.HLI}`,
-
-  [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/BBZ']]: `Bbz | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/SPECIFICATIES']]:
-    `Uitkeringsspecificaties | ${ThemaTitles.INKOMEN}`,
-  [`${AppRoutes['INKOMEN/SPECIFICATIES']}/jaaropgaven`]: `Jaaropgaven | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes.BRP]: `Mijn gegevens`,
-  [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
-  [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
-  [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
-  [AppRoutes['VERGUNNINGEN/LIST']]:
-    `Vergunningen | ${ThemaTitles.VERGUNNINGEN}`,
-  [AppRoutes['VERGUNNINGEN/DETAIL']]:
-    `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-  [AppRoutes.KVK]: `Mijn onderneming`,
-  [AppRoutes.BUURT]: `Mijn buurt`,
-  [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
-  [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
-  [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
-  [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
-  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]:
-    `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]:
-    `Vergunningen | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
-  [AppRoutes['VAREN/LIST']]: (_config, params) => {
-    switch (params?.kind) {
-      case 'lopende-aanvragen':
-        return `Lopende aanvragen | ${ThemaTitles.VAREN}`;
-      case 'afgehandelde-aanvragen':
-        return `Afgehandelde aanvragen | ${ThemaTitles.VAREN}`;
-      default:
-        return `Vergunningaanvragen | ${ThemaTitles.VAREN}`;
-    }
-  },
-  [AppRoutes['VAREN/DETAIL']]: (_config, params) => {
-    switch (params?.caseType) {
-      case 'ligplaatsvergunning':
-        return `Ligplaatsvergunning | ${ThemaTitles.VAREN}`;
-      case 'exploitatievergunning':
-        return `Exploitatievergunning | ${ThemaTitles.VAREN}`;
-      default:
-        return `Vergunning | ${ThemaTitles.VAREN}`;
-    }
-  },
-  [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
-  [AppRoutes.SEARCH]: `Zoeken`,
-  [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
-  [AppRoutes.PARKEREN]: `${ThemaTitles.PARKEREN} | overzicht`,
-  [AppRoutes['PARKEREN/LIST']]: `Parkeervergunningen | ${ThemaTitles.PARKEREN}`,
-  [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
-  [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
-  [AppRoutes.HORECA]: 'Horeca | overzicht',
-  [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
-  [AppRoutes['AVG/LIST']]: `AVG verzoeken | ${ThemaTitles.AVG}`,
-  [AppRoutes['AVG/DETAIL']]: `AVG verzoek | ${ThemaTitles.AVG}`,
-  [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
-  [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
-  [AppRoutes['BODEM/LIST']]: `Lood in de bodem-checks | ${ThemaTitles.BODEM}`,
-  [AppRoutes['BODEM/LOOD_METING']]:
-    `Lood in de bodem-check | ${ThemaTitles.BODEM}`,
-  [AppRoutes.BODEM]: `${ThemaTitles.BODEM} | overzicht`,
-  [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
-  [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
-  [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
-  [AppRoutes['ERFPACHTv2/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
-  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: 'Erfpacht | dossier',
-  [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
-  [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
-  [AppRoutes.API2_LOGIN]: 'Inloggen | Mijn Amsterdam',
-  [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
-  [AppRoutes.AFIS]: 'Facturen en betalen | overzicht',
-  [AppRoutes['AFIS/FACTUREN']]: (_config, params) => {
-    switch (params?.state) {
-      case 'open':
-        return `Open facturen | ${ThemaTitles.AFIS}`;
-      case 'afgehandeld':
-        return `Afgehandelde facturen | ${ThemaTitles.AFIS}`;
-      case 'overgedragen':
-        return `Overgedragen aan belastingen facturen | ${ThemaTitles.AFIS}`;
-      default:
-        return `Facturen | ${ThemaTitles.AFIS}`;
-    }
-  },
-  [AppRoutes['AFIS/BETAALVOORKEUREN']]:
-    `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
-  [AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']]:
-    `Alle contactmomenten | ${ThemaTitles.BRP}`,
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
