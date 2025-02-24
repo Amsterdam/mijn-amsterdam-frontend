@@ -11,10 +11,6 @@
   -webkit-appearance: button;
   appearance: button;
   text-decoration: none;
-  &:hover,
-  &:visited {
-    // color: var(--ams-color-primary-white);
-  }
 
   &[aria-disabled='true'] {
     &,

@@ -23,22 +23,3 @@
     display: block;
   }
 }
-
-.ErrorInfo {
-  > p {
-    margin-top: 0;
-  }
-}
-
-.ModalFooter {
-  @include select(Checkbox_Checkbox) {
-    margin-left: 1rem;
-  }
-}
-.MoreInfoButton {
-  flex: 1;
-}
-.DismissButton {
-  margin-left: auto;
-  display: block;
-}
