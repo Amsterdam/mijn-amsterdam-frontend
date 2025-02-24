@@ -14,18 +14,20 @@ describe('<Erfpacht />', () => {
   const routeEntry = generatePath(AppRoutes.ERFPACHTv2);
   const routePath = AppRoutes.ERFPACHTv2;
 
-  const Component = ({
+  function Component({
     initializeState,
   }: {
     initializeState: (snapshot: MutableSnapshot) => void;
-  }) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Erfpacht}
-      initializeState={initializeState}
-    />
-  );
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Erfpacht}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Renders Overviewpage no data', () => {
     const testState = {
