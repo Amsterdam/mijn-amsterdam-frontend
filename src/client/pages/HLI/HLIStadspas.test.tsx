@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 
 import HLIStadspas from './HLIStadspas';
+import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
+import { bffApi } from '../../../testing/utils';
 import { AppState } from '../../../universal/types';
 import { componentCreator } from '../MockApp';
 import { stadspasCreator } from './test-helpers';
@@ -91,4 +93,40 @@ test('Modal appears', async () => {
     name: 'Nee, blokkeer mijn pas niet',
   });
   expect(declineButton).toBeInTheDocument();
+});
+
+describe('Displayed description of uw uitgaven text', () => {
+  // RP TODO: Enable one by one. the last two are not yet correct.
+  // test('Just text about not having made expenses', () => {
+  //   bffApi.persist().get('/url-transactions').reply(200, { content: [] });
+  //   const pas: StadspasFrontend = {
+  //     actief: true,
+  //     balance: 0,
+  //     balanceFormatted: '€0,00',
+  //     blockPassURL: null,
+  //     budgets: [],
+  //   };
+  //   const HLIStadspas = createHLIStadspasComponent(pas);
+  //   const screen = render(<HLIStadspas />);
+  //   expect(screen.getByText('U heeft nog geen uitgaven.')).toBeInTheDocument();
+  // });
+  //   test('Extra text with the word stores', () => {
+  //     bffApi.get('/url-transactions').reply(200, { content: ['item'] });
+  //     const HLIStadspas = createHLIStadspasComponent(activePasState);
+  //     const screen = render(<HLIStadspas />);
+  //     expect(
+  //       screen.getByText(`Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
+  // informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
+  // klopt altijd.`)
+  //     ).toBeInTheDocument();
+  //   });
+  //   test('No expenses but with extra information', () => {
+  //     bffApi.get('/url-transactions').reply(200, { content: ['item'] });
+  //     const HLIStadspas = createHLIStadspasComponent(activePasState);
+  //     const screen = render(<HLIStadspas />);
+  //     expect(
+  //       screen.getByText(`U heeft nog geen uitgaven. Deze informatie kan een dag achterlopen.
+  // Maar het saldo dat u nog over heeft klopt altijd.`)
+  //     ).toBeInTheDocument();
+  //   });
 });
