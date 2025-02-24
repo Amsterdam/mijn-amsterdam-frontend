@@ -118,6 +118,7 @@ export function Varen() {
 
   const actionButtons =
     varenRederRegistratie && buttonItems.length ? (
+  <PageContentCell>
       <ActionGroup>
         {buttonItems.map(({ to, title }) => (
           <MaButtonLink
@@ -131,6 +132,7 @@ export function Varen() {
           </MaButtonLink>
         ))}
       </ActionGroup>
+</PageContentCell>
     ) : null;
 
   const vergunningenTables = Object.entries(tableConfig).map(
@@ -145,7 +147,6 @@ export function Varen() {
           className={styles.VarenTableThemaPagina}
           listPageRoute={config.listPageRoute}
           listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
-          totalItems={zaken.length}
         />
       );
     }
