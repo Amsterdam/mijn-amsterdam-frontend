@@ -83,6 +83,7 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
+// RP TODO: Rename to HLIStadpasDetail
 export default function HLIStadspas() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
@@ -91,7 +92,7 @@ export default function HLIStadspas() {
   const { passNumber } = useParams<{ passNumber: string }>();
   const stadspassen = useStadspassen();
 
-  const stadspas = passNumber
+  const stadspas: StadspasFrontend | null | undefined = passNumber
     ? stadspassen.find((pass) => pass.passNumber.toString() === passNumber)
     : null;
 
@@ -213,19 +214,7 @@ export default function HLIStadspas() {
               )}
               {!isLoadingStadspas && !isLoadingTransacties && (
                 <Paragraph>
-                  {hasTransactions ? (
-                    <>
-                      Hieronder ziet u bij welke winkels u het tegoed hebt
-                      uitgegeven. Deze informatie kan een dag achterlopen. Maar
-                      het saldo dat u nog over heeft klopt altijd.
-                    </>
-                  ) : (
-                    <>
-                      U heeft nog geen uitgaven. Deze informatie kan een dag
-                      achterlopen. Maar het saldo dat u nog over heeft klopt
-                      altijd.
-                    </>
-                  )}
+                  {determineFooterText(stadspas, hasTransactions)}
                 </Paragraph>
               )}
             </Grid.Cell>
@@ -253,6 +242,25 @@ export default function HLIStadspas() {
       </Screen>
     </DetailPage>
   );
+}
+
+function determineFooterText(
+  stadspas: StadspasFrontend,
+  hasTransactions: boolean
+) {
+  const expenseInfoTextBase = 'U heeft nog geen uitgaven.';
+
+  const extraInfo = `Deze informatie kan een dag achterlopen.
+Maar het saldo dat u nog over heeft klopt altijd.`;
+
+  if (hasTransactions) {
+    return `Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
+informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
+klopt altijd.`;
+  } else if (stadspas.budgets && stadspas.balance > 0) {
+    return `${expenseInfoTextBase} ${extraInfo}`;
+  }
+  return expenseInfoTextBase;
 }
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
