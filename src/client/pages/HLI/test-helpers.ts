@@ -2,6 +2,7 @@ import {
   StadspasFrontend,
   StadspasOwner,
 } from '../../../server/services/hli/stadspas-types';
+import { bffApiHost } from '../../../testing/setup';
 
 /** Create a createStadspas function that returns stadspassen with incrementing ID's */
 export function stadspasCreator() {
@@ -24,7 +25,7 @@ export function stadspasCreator() {
     const passNumberComplete = 'volledig.' + passNumber;
 
     return {
-      urlTransactions: 'http://example.com/url-transactions',
+      urlTransactions: `${bffApiHost}/url-transactions`,
       transactionsKeyEncrypted: '123-xxx-000',
       id: `stadspas-id-${id}`,
       passNumber,
