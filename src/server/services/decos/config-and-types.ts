@@ -316,6 +316,7 @@ export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> = T & {
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
   isExpired?: boolean;
+  displayStatus: string;
   // Url to fetch documents for a specific Zaak.
   fetchDocumentsUrl: string;
 } & ZaakDetail<T['status']>;
