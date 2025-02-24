@@ -88,7 +88,7 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   );
 }
 
-export default function ThemaPaginaHLI() {
+export function ThemaPaginaHLI() {
   const {
     hasKindtegoed,
     isError,
