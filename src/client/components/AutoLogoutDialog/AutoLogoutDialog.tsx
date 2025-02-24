@@ -139,6 +139,8 @@ export function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       title={TITLE}
       isOpen={isOpen}
       showCloseButton={false}
+      closeOnEscape={false}
+      closeOnClickOutside={false}
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (

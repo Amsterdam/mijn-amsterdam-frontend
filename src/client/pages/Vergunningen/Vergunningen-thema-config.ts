@@ -10,6 +10,7 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { TrackingConfig } from '../../config/routes';
 
 type VergunningFrontendDisplayProps = DisplayProps<
   WithDetailLinkComponent<VergunningFrontend>
@@ -54,12 +55,6 @@ export const listPageParamKind = {
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const listPageTitle = {
-  [listPageParamKind.actual]: 'Huidige vergunningen en ontheffingen',
-  [listPageParamKind.historic]:
-    'Eerdere en niet verleende vergunningen en ontheffingen',
-};
 
 function isVergunningExpirable(vergunning: { isExpired?: boolean }) {
   // isExpired is only present on vergunningen that have an end date.
@@ -137,3 +132,15 @@ export const linkListItems: LinkProps[] = [
     title: 'Ontheffing RVV en TVM aanvragen',
   },
 ];
+
+export function getListPageDocumentTitle(themaTitle: string) {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as ListPageParamKind;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${themaTitle}`
+      : themaTitle;
+  };
+}

@@ -33,7 +33,7 @@ async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
-): Promise<ApiResponse<VergunningFrontend[]>> {
+): Promise<ApiResponse<VergunningFrontend<DecosVergunning>[]>> {
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
@@ -42,14 +42,14 @@ async function fetchVergunningen_(
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: VergunningFrontend[] = decosVergunningen.map(
-      (vergunning) =>
+    const vergunningenFrontend: VergunningFrontend<DecosVergunning>[] =
+      decosVergunningen.map((vergunning) =>
         transformVergunningFrontend(
           authProfileAndToken.profile.sid,
           appRoute,
           vergunning
         )
-    );
+      );
     return apiSuccessResult(vergunningenFrontend);
   }
 

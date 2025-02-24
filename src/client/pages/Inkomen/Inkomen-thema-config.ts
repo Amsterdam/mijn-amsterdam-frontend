@@ -12,6 +12,8 @@ import {
 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { ExternalUrls } from '../../config/external-urls';
+import { TrackingConfig } from '../../config/routes';
+import { ThemaTitles } from '../../config/thema';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
@@ -133,3 +135,32 @@ export const tableConfigSpecificaties = {
     listPageRoute: routes.listPageJaaropgaven,
   },
 } as const;
+
+export function getInkomenListPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as Exclude<
+      ListPageParamKind,
+      'specificaties' | 'jaaropgaven'
+    >;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${ThemaTitles.INKOMEN}`
+      : ThemaTitles.INKOMEN;
+  };
+}
+export function getInkomenSpecificatiesListPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as Exclude<
+      ListPageParamKind,
+      'lopende-aanvragen' | 'eerdere-aanvragen'
+    >;
+    return kind in tableConfigSpecificaties
+      ? `${tableConfigSpecificaties[kind].title} | ${ThemaTitles.INKOMEN}`
+      : ThemaTitles.INKOMEN;
+  };
+}
