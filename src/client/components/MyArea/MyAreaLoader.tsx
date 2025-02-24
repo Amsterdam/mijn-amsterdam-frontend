@@ -17,6 +17,8 @@ export function MyAreaLoader({
   centerMarker,
   zoom,
   activeBaseLayerType,
+  showHomeLocationMarker,
+  showSecondaryLocationMarkers,
 }: MyAreaLoaderProps) {
   return (
     <Suspense
@@ -33,6 +35,8 @@ export function MyAreaLoader({
           centerMarker={centerMarker}
           activeBaseLayerType={activeBaseLayerType}
           zoom={zoom}
+          showHomeLocationMarker={showHomeLocationMarker}
+          showSecondaryLocationMarkers={showSecondaryLocationMarkers}
         />
       )}
     </Suspense>

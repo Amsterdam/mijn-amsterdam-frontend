@@ -108,7 +108,7 @@ export function ToeristscheVerhuurThema() {
       pageContentMain={
         <>
           {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
-            <PageContentCell spanWide={6}>
+            <PageContentCell>
               <Alert severity="info" title="Voorwaarden en regels">
                 {hasBothVerleend && (
                   <Paragraph className="ams-mb--sm">
