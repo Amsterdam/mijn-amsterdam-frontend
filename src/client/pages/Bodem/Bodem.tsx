@@ -35,7 +35,7 @@ export function Bodem() {
       isLoading={isLoading}
       isError={isError}
       pageContentTop={
-        <PageContentCell>
+        <PageContentCell spanWide={6}>
           <Paragraph>
             Op deze pagina vindt u informatie over uw lood in de bodem-check.
           </Paragraph>
