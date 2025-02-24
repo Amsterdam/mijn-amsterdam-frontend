@@ -14,7 +14,7 @@ import {
   addServiceResultHandler,
   forTesting,
   getServiceResultsForTips,
-  getTipNotifications,
+  fetchContentTipsByServiceResults,
   servicesTipsByProfileType,
 } from './controller';
 import {
@@ -35,7 +35,6 @@ const mocks = vi.hoisted(() => {
         title: 'Kijk op fake.amsterdam',
         to: 'https://fake.amsterdam/',
       },
-      priority: 70,
       reason: ['Omdat dit een fake tip is.'],
       title: 'Voor fake Amsterdammers',
     },
@@ -171,7 +170,7 @@ describe('controller', () => {
       sid: '',
     });
 
-    const result = await getTipNotifications('xx1xx', reqMock);
+    const result = await fetchContentTipsByServiceResults('xx1xx', reqMock);
     expect(result).toMatchInlineSnapshot('[]');
   });
 
@@ -183,7 +182,7 @@ describe('controller', () => {
       sid: '',
     });
 
-    const result = await getTipNotifications('xx2xx', reqMock);
+    const result = await fetchContentTipsByServiceResults('xx2xx', reqMock);
     expect(result).toMatchInlineSnapshot('[]');
   });
 
