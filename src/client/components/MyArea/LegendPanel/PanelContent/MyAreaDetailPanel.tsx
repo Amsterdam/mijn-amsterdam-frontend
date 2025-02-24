@@ -9,7 +9,6 @@ import styles from '../PanelComponent.module.scss';
 import MyAreaPanelContentAfval from './Afval';
 import MyAreaPanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
 import MyAreaPanelContentBekendmaking from './Bekendmaking';
-import MyAreaPanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
 import MyAreaPanelContentLaadpalen from './Laadpalen';
 import MyAreaPanelContentMeldingenBuurt from './MeldingenBuurt';
@@ -37,13 +36,6 @@ function MyAreaPanelContentSwitch({
     case 'afvalcontainers':
       return (
         <MyAreaPanelContentAfval
-          datasetId={feature?.datasetId}
-          panelItem={feature}
-        />
-      );
-    case 'evenementen':
-      return (
-        <MyAreaPanelContentEvenementen
           datasetId={feature?.datasetId}
           panelItem={feature}
         />
