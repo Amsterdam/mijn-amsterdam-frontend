@@ -114,6 +114,8 @@ The main branch should always be production worthy in terms of functionality, st
 Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you create a release on Github, the CI/CD pipeline will automatically detect the branch and starts building a release.
 
 ### Debugging
+`export LOG_LEVEL=debug` will log all debug or higher severity levels of logs.
+Debug includes logging response bodies at the moment. See all log levels at https://getpino.io/#/docs/api?id=loggerlevels-object
 `export DEBUG=1` will log some BFF info and also outgoing http requests via the `log-that-http` package. Headers and Body can be made visible as well by `export LOG_THAT_HTTP_HEADERS=true` for headers and `export LOG_THAT_HTTP_BODY=true` for request bodies.
 
 `export DEBUG_RESPONSE_DATA=term1,term2` Logs response data from incoming responses before any transformation.
