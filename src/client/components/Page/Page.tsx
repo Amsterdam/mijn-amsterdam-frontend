@@ -7,7 +7,6 @@ import {
 } from '@amsterdam/design-system-react';
 import composeClassNames from 'classnames';
 
-import styles from './Page.module.scss';
 import { ComponentChildren } from '../../../universal/types';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
@@ -16,13 +15,11 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
 }
 
 export function PageV2({ className, children, id, ...otherProps }: PageProps) {
-  const classNames = composeClassNames(styles.PageV2, className);
-
   return (
     <main
       {...otherProps}
       id={id}
-      className={composeClassNames('ams-screen ams-screen--wide', classNames)}
+      className={composeClassNames('ams-screen ams-screen--wide', className)}
     >
       {children}
     </main>
@@ -31,7 +28,7 @@ export function PageV2({ className, children, id, ...otherProps }: PageProps) {
 
 export function TextPageV2({ children, className, id }: PageProps) {
   return (
-    <PageV2 id={id} className={composeClassNames(styles.TextPage, className)}>
+    <PageV2 id={id} className={className}>
       {children}
     </PageV2>
   );
@@ -39,10 +36,7 @@ export function TextPageV2({ children, className, id }: PageProps) {
 
 export function OverviewPageV2({ children, className, id }: PageProps) {
   return (
-    <PageV2
-      id={id}
-      className={composeClassNames(styles.OverviewPage, className)}
-    >
+    <PageV2 id={id} className={className}>
       {children}
     </PageV2>
   );
@@ -50,7 +44,7 @@ export function OverviewPageV2({ children, className, id }: PageProps) {
 
 export function DetailPageV2({ children, className, id }: PageProps) {
   return (
-    <PageV2 id={id} className={composeClassNames(styles.DetailPage, className)}>
+    <PageV2 id={id} className={className}>
       {children}
     </PageV2>
   );
@@ -58,7 +52,7 @@ export function DetailPageV2({ children, className, id }: PageProps) {
 
 export function PageContentV2({ children, className, id }: PageProps) {
   return (
-    <Grid id={id} className={composeClassNames(styles.PageContent, className)}>
+    <Grid id={id} className={className}>
       {children}
     </Grid>
   );
@@ -90,11 +84,7 @@ export function PageContentCell({
     start_ = { ...start, wide: startWide };
   }
   return (
-    <Grid.Cell
-      start={start_}
-      span={span_}
-      className={composeClassNames(styles.PageContentCell, className)}
-    >
+    <Grid.Cell start={start_} span={span_} className={className}>
       {children}
     </Grid.Cell>
   );
