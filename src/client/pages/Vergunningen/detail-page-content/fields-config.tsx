@@ -1,7 +1,7 @@
 import {
   VergunningBase,
   VergunningFrontendV2,
-} from '../../../../server/services/vergunningen-v2/config-and-types';
+} from '../../../../server/services/vergunningen/config-and-types';
 import { Row, RowSet } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 

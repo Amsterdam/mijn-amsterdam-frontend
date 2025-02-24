@@ -10,7 +10,7 @@ import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
 import { ParkerenList } from './ParkerenList';
 import { appStateAtom } from '../../hooks/useAppState';
-import { listPageParamKind } from '../VergunningenV2/Vergunningen-thema-config';
+import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
 const testState = {
   PARKEREN: {
@@ -19,7 +19,7 @@ const testState = {
       isKnown: true,
     },
   },
-  VERGUNNINGENv2: {
+  VERGUNNINGEN: {
     status: 'OK',
     content: [
       {

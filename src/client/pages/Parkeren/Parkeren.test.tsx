@@ -109,7 +109,7 @@ const testState = {
       isKnown: true,
     },
   },
-  VERGUNNINGENv2: {
+  VERGUNNINGEN: {
     status: 'OK',
     content: [
       {
