@@ -7,7 +7,7 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <PageContentCell>
+  <PageContentCell spanWide={6}>
     <Paragraph>
       Hier ziet u een overzicht van de klachten die U heeft ingediend bij
       gemeente Amsterdam.

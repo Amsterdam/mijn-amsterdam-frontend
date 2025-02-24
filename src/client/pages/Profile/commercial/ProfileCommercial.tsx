@@ -101,19 +101,19 @@ function ProfileCommercialSectionPanels() {
   );
 }
 
+const pageContentTop = (
+  <PageContentCell spanWide={6}>
+    <Paragraph>
+      Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
+      van de Kamer van Koophandel. In dat register staan onder meer uw
+      bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze
+      gegevens. Het is dus belangrijk dat uw gegevens kloppen.
+    </Paragraph>
+  </PageContentCell>
+);
+
 export function MijnBedrijfsGegevensThema() {
   const { isLoading, isError, linkListItems, title } = useProfileData();
-
-  const pageContentTop = (
-    <PageContentCell>
-      <Paragraph>
-        Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
-        van de Kamer van Koophandel. In dat register staan onder meer uw
-        bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze
-        gegevens. Het is dus belangrijk dat uw gegevens kloppen.
-      </Paragraph>
-    </PageContentCell>
-  );
 
   return (
     <ThemaPagina
