@@ -16,6 +16,10 @@ import {
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
 import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
+import {
+  getDisplayStatus,
+  getStatusSteps,
+} from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchHorecaVergunningen(
   requestID: RequestID,
@@ -28,13 +32,23 @@ export async function fetchHorecaVergunningen(
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
     const vergunningenFrontend: HorecaVergunningFrontend[] =
-      decosVergunningen.map((vergunning) =>
-        transformDecosZaakFrontend(
+      decosVergunningen.map((vergunning) => {
+        const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           AppRoutes['HORECA/DETAIL']
-        )
-      );
+        );
+
+        const steps = getStatusSteps(vergunningTransformed);
+        const displayStatus = getDisplayStatus(vergunningTransformed, steps);
+
+        return {
+          ...vergunningTransformed,
+          steps,
+          displayStatus,
+        };
+      });
+
     return apiSuccessResult(vergunningenFrontend);
   }
 
