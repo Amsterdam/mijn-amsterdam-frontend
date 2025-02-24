@@ -90,7 +90,7 @@ export default function ErrorMessages({
         }
         title={title}
       >
-        <div className={styles.ErrorInfo}>
+        <div>
           <Paragraph>
             Deze gegevens kunnen wij nu niet voor u ophalen:
           </Paragraph>
