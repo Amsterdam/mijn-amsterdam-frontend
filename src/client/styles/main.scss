@@ -64,40 +64,11 @@ body {
   text-size-adjust: none;
 
   overflow-x: hidden; // Prevent scrollbar showing up in super small screens (320px) requirement for WCAG AA
-
-  &.has-modal {
-    position: fixed;
-    width: 100vw;
-
-    > *:not(#modal-root) {
-      pointer-events: none;
-    }
-  }
 }
 
 #root {
   min-height: 100%;
   position: relative;
-}
-
-.is-typeAheadActive {
-  @media screen and (max-width: $ams-breakpoint-medium) {
-    @include select('App') {
-      display: none;
-    }
-
-    @include select('MainFooter') {
-      display: none;
-    }
-
-    @include select('MainHeaderHero') {
-      display: none;
-    }
-
-    @include select('MyArea_MapContainer') {
-      display: none;
-    }
-  }
 }
 
 .ams-grid .ams-grid {
