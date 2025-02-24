@@ -10,7 +10,7 @@ import {
 } from './config-and-types';
 import { decosCaseToZaakTransformers } from './decos-zaken';
 import { isNearEndDate } from './helpers';
-import { fetchVergunningenV2 } from './vergunningen';
+import { fetchVergunningen } from './vergunningen';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { Thema, Themas } from '../../../universal/config/thema';
 import {
@@ -126,13 +126,13 @@ export function getVergunningNotifications(
     );
 }
 
-async function fetchVergunningenV2Notifications_(
+async function fetchVergunningenNotifications_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
-  thema: Thema = Themas.VERGUNNINGENv2
+  thema: Thema = Themas.VERGUNNINGEN
 ) {
-  const VERGUNNINGEN = await fetchVergunningenV2(
+  const VERGUNNINGEN = await fetchVergunningen(
     requestID,
     authProfileAndToken,
     appRoute
@@ -152,8 +152,8 @@ async function fetchVergunningenV2Notifications_(
   return apiDependencyError({ VERGUNNINGEN });
 }
 
-export const fetchVergunningenV2Notifications = memoizee(
-  fetchVergunningenV2Notifications_,
+export const fetchVergunningenNotifications = memoizee(
+  fetchVergunningenNotifications_,
   {
     maxAge: DEFAULT_API_CACHE_TTL_MS,
     length: 5,

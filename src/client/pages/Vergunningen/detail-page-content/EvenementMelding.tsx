@@ -1,5 +1,5 @@
 import { Location } from './Location';
-import type { EvenementMelding } from '../../../../server/services/vergunningen-v2/config-and-types';
+import type { EvenementMelding } from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
