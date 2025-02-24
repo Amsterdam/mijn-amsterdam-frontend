@@ -25,7 +25,7 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <PageContentCell>  
+  <PageContentCell spanWide={6}>
     <Paragraph>
       De passagiersvaart in Amsterdam is erg populair bij bezoekers.
       Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook gehuurde
