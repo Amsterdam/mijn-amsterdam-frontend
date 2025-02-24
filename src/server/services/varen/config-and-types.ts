@@ -3,6 +3,14 @@ import { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
   VarenVergunningExploitatie: 'Varen vergunning exploitatie',
+  VarenVergunningExploitatieWijzigingVergunningshouder:
+    'Varen vergunning exploitatie Wijziging vergunninghouder',
+  VarenVergunningExploitatieWijzigingVervanging:
+    'Varen vergunning exploitatie Wijziging vervanging',
+  VarenVergunningExploitatieWijzigingVerbouwing:
+    'Varen vergunning exploitatie Wijziging verbouwing',
+  VarenVergunningExploitatieWijzigingVaartuignaam:
+    'Varen vergunning exploitatie Wijziging vaartuignaam',
   VarenVergunningLigplaats: 'Varen ligplaatsvergunning',
 } as const;
 export type CaseTypeVaren = keyof typeof caseTypeVaren;
@@ -23,7 +31,6 @@ export type VarenRegistratieRederType = DecosZaakBase & {
 
 export type VarenVergunningExploitatieType = DecosZaakBase & {
   caseType: GetCaseType<'VarenVergunningExploitatie'>;
-  title: 'Varen vergunning exploitatie';
   decision:
     | 'Nog niet bekend'
     | 'Afgewezen'
@@ -57,9 +64,55 @@ export type VarenVergunningExploitatieType = DecosZaakBase & {
   vesselName: string | null;
 };
 
+export type VarenVergunningExploitatieWijzigingVaartuigNaamType =
+  DecosZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVaartuignaam'>;
+    vesselNameOld: string | null;
+  } & Pick<VarenVergunningExploitatieType, 'vesselName'>;
+
+export type VarenVergunningExploitatieWijzigingVergunningshouderType =
+  DecosZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVergunningshouder'>;
+    statutoryName: string | null;
+    businessAddress: string | null;
+    correspondenceAddress: string | null;
+  } & Pick<VarenVergunningExploitatieType, 'segment'>;
+
+export type VarenVergunningExploitatieWijzigingVerbouwingType =
+  DecosZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVerbouwing'>;
+  } & Pick<
+      VarenVergunningExploitatieType,
+      | 'vesselName'
+      | 'segment'
+      | 'formAppearance'
+      | 'numberOfSeats'
+      | 'vesselDepth'
+      | 'vesselHeight'
+      | 'vesselLength'
+      | 'vesselWidth'
+    >;
+
+export type VarenVergunningExploitatieWijzigingVervangingType =
+  DecosZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVervanging'>;
+    vesselNameOld: string | null;
+    vesselName: string | null;
+  } & Pick<
+      VarenVergunningExploitatieType,
+      | 'vesselName'
+      | 'segment'
+      | 'formAppearance'
+      | 'numberOfSeats'
+      | 'vesselDepth'
+      | 'vesselHeight'
+      | 'vesselLength'
+      | 'vesselWidth'
+      | 'eniNumber'
+    >;
+
 export type VarenVergunningLigplaatsType = DecosZaakBase & {
   caseType: GetCaseType<'VarenVergunningLigplaats'>;
-  title: 'Varen ligplaatsvergunning';
   decision: 'Geannuleerd' | 'Afgehandeld';
   location: string | null;
   vesselName: string | null;
@@ -68,7 +121,11 @@ export type VarenVergunningLigplaatsType = DecosZaakBase & {
 export type Varen =
   | VarenRegistratieRederType
   | VarenVergunningExploitatieType
-  | VarenVergunningLigplaatsType;
+  | VarenVergunningLigplaatsType
+  | VarenVergunningExploitatieWijzigingVaartuigNaamType
+  | VarenVergunningExploitatieWijzigingVerbouwingType
+  | VarenVergunningExploitatieWijzigingVergunningshouderType
+  | VarenVergunningExploitatieWijzigingVervangingType;
 
 export type VarenFrontend<T extends DecosZaakBase = Varen> =
   DecosZaakFrontend<T>;
