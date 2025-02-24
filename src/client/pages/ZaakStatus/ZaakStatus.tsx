@@ -101,7 +101,7 @@ function useNavigateToPage(queryParams: URLSearchParams) {
   };
 }
 
-export default function ZaakStatus() {
+export function ZaakStatus() {
   const appStateReady = useAppStateReady();
   const history = useHistory();
   const queryParams = new URLSearchParams(history.location.search);

@@ -5,7 +5,7 @@ import { ListPageParamKind } from './HLI-thema-config';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
-export default function HLIRegelingen() {
+export function HLIRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
   const { regelingen, tableConfig, title, routes, isLoading, isError } =
     useHliThemaData();

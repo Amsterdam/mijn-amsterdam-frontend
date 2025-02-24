@@ -57,24 +57,22 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
 
   const from: Row = {
     label: 'Van',
-    isVisible: isVerleend,
     content:
-      vergunning?.timeStart && vergunning?.dateStart && isVerleend
+      vergunning?.timeStart && vergunning?.dateStart
         ? defaultDateTimeFormat(
             `${vergunning.dateStart}T${vergunning.timeStart}`
           )
-        : vergunning.dateStart && isVerleend
+        : vergunning.dateStart
           ? defaultDateFormat(vergunning.dateStart)
           : '-',
   };
 
   const to: Row = {
     label: 'Tot en met',
-    isVisible: isVerleend,
     content:
-      vergunning?.timeEnd && vergunning?.dateEnd && isVerleend
+      vergunning?.timeEnd && vergunning?.dateEnd
         ? defaultDateTimeFormat(`${vergunning.dateEnd}T${vergunning.timeEnd}`)
-        : vergunning.dateEnd && isVerleend
+        : vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
           : '-',
   };
