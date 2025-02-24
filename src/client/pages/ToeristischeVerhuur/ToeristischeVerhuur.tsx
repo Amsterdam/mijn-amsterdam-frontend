@@ -64,7 +64,7 @@ export function ToeristscheVerhuurThema() {
   );
 
   const pageContentTop = (
-    <PageContentCell>
+    <PageContentCell spanWide={6}>
       <Paragraph>
         Hieronder vindt u een overzicht van uw vergunningen voor toeristische
         verhuur.

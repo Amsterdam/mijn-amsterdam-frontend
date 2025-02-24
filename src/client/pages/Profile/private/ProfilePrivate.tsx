@@ -110,7 +110,7 @@ export function MijnGegevensThema() {
   const isThemaPaginaLoading = isLoadingBrp && isLoadingContactmomenten;
 
   const pageContentTop = (
-    <PageContentCell>
+    <PageContentCell spanWide={6}>
       <Paragraph className="ams-mb--sm">
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u
         vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw
