@@ -67,19 +67,6 @@ export interface MyNotification {
   };
 }
 
-export interface MyTip {
-  thema?: Thema | null;
-  datePublished: string;
-  description: string;
-  id: string;
-  imgUrl?: string;
-  link: LinkProps;
-  priority?: number;
-  profileTypes?: ProfileType[];
-  reason: string;
-  title: string;
-}
-
 export interface GenericDocument {
   id: string;
   title: string;
