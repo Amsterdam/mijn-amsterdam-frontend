@@ -4,7 +4,6 @@ import { renderHook } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import * as remoteConfig from './search-config.json';
 import {
   API_SEARCH_CONFIG_DEFAULT,
   ApiBaseItem,
@@ -12,6 +11,7 @@ import {
   apiSearchConfigs,
   displayPath,
 } from './search-config';
+import * as remoteConfig from './search-config.json';
 import {
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
@@ -154,7 +154,7 @@ describe('Search hooks and helpers', () => {
       [
         {
           ...API_SEARCH_CONFIG_DEFAULT,
-          stateKey: 'VERGUNNINGEN',
+          stateKey: 'VERGUNNINGENv2',
           displayTitle: (vergunning: Vergunning) => (term: string) => {
             return displayPath(term, [vergunning.title, vergunning.identifier]);
           },
