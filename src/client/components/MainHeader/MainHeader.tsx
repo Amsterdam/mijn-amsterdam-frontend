@@ -47,6 +47,7 @@ function MainHeaderLinks() {
             maVariant="noUnderline"
             href={AppRoutes.BRP}
             className="ams-button"
+            title="Ga naar persoonlijke gegevens"
           >
             <span className={styles.ProfileNameInner}>
               <ProfileName fallbackName="Profiel" />

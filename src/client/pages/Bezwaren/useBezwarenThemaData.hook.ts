@@ -1,10 +1,6 @@
 import { isError } from 'lodash';
 
-import {
-  bezwarenTableConfig,
-  LinkListItems,
-  routes,
-} from './Bezwaren-thema-config';
+import { tableConfig, LinkListItems, routes } from './Bezwaren-thema-config';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
@@ -26,7 +22,7 @@ export function useBezwarenThemaData() {
     isError: isError(BEZWAREN),
     linkListItems: LinkListItems,
     routes,
-    tableConfig: bezwarenTableConfig,
+    tableConfig: tableConfig,
     themaTitle: ThemaTitles.BEZWAREN,
   };
 }
