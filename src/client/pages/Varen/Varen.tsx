@@ -36,7 +36,7 @@ const VarenDisclaimerRederNotRegistered = (
       <Paragraph>
         Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart.
         U kunt hierdoor geen exploitatievergunningen wijzigen of een nieuwe
-        aanvraagen. Registreer uw onderneming via onderstaande link.
+        aanvragen. Registreer uw onderneming via onderstaande link.
       </Paragraph>
       <Paragraph>
         <Link rel="noreferrer" href={rederRegistratieLink.to}>
