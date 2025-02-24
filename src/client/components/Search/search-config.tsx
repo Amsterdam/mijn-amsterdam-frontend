@@ -224,7 +224,7 @@ interface ToeristischRegistratieItem {
 
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
-    stateKey: 'VERGUNNINGENv2' as AppStateKey,
+    stateKey: 'VERGUNNINGEN' as AppStateKey,
     displayTitle: (vergunning: Vergunning) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
