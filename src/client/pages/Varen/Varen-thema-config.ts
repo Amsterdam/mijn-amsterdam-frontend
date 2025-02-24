@@ -97,3 +97,30 @@ export const rederRegistratieLink: LinkProps = {
   to: `${formulierenBaseUrl}/VARRegistratieReder.aspx`,
   title: 'Onderneming registreren',
 } as const;
+
+export function getVarenListPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as ListPageParamKind;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${ThemaTitles.VAREN}`
+      : ThemaTitles.VAREN;
+  };
+}
+export function getVarenDetailPageDocumentTitle() {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    switch (params?.caseType) {
+      case 'ligplaatsvergunning':
+        return `Ligplaatsvergunning | ${ThemaTitles.VAREN}`;
+      case 'exploitatievergunning':
+        return `Exploitatievergunning | ${ThemaTitles.VAREN}`;
+      default:
+        return `Vergunning | ${ThemaTitles.VAREN}`;
+    }
+  };
+}

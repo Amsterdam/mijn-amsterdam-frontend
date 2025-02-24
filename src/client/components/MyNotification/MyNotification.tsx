@@ -42,10 +42,11 @@ export function MyNotification({
       <header className={!isCollapsed ? 'ams-mb--xs' : ''}>
         {smallVariant ? (
           <MaLink
-            aria-expanded={isCollapsed}
+            aria-expanded={!isCollapsed}
             maVariant="fatNoUnderline"
             className={styles.HeaderLink}
             href={notification.link?.to}
+            title={`Bekijk inhoud van de melding ${notification.title}`}
             onClick={(event) => {
               event.preventDefault();
               trackEvent('klik-op-tip-titel', {
@@ -130,6 +131,7 @@ export function MyNotification({
                     &mdash;{' '}
                     <MaLink
                       href="/"
+                      aria-expanded={isTipReasonShown}
                       onClick={(event) => {
                         event.preventDefault();
                         if (!isTipReasonShown) {

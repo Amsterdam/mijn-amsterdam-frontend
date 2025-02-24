@@ -34,8 +34,10 @@ export function DatalistCanons({ canons }: DatalistCanonsProps) {
         {shouldCollapse && (
           <Button
             variant="tertiary"
+            aria-expanded={!isCollapsed}
             style={{ transform: 'translateX(-1.4rem)' }}
             onClick={() => setIsCollapsed(!isCollapsed)}
+            title={`${isCollapsed ? 'Toon meer' : 'Verberg'} erfpachtcanons`}
           >
             {isCollapsed ? 'Toon meer' : 'Verberg'}
           </Button>

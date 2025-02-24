@@ -201,6 +201,8 @@ export default function AutoLogoutDialog({
       title={TITLE}
       isOpen
       showCloseButton={false}
+      closeOnEscape={false}
+      closeOnClickOutside={false}
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (

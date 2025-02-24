@@ -1,9 +1,85 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
+import { useKeyUp } from '../../hooks/useKey';
+
+function FocusTrap() {
+  const element = document.getElementById('modal-dialog');
+  element?.focus();
+  const elements = element?.querySelectorAll(
+    'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+  );
+
+  if (!element || !elements) {
+    return null;
+  }
+
+  const focusableEls = Array.from(elements).filter(
+    (element) => window.getComputedStyle(element)?.display !== 'none'
+  );
+
+  const firstFocusableEl = focusableEls[0] as HTMLElement;
+  const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
+
+  function handleTabKey(e: KeyboardEvent) {
+    const isTabPressed = e.key === 'Tab';
+
+    if (!isTabPressed) {
+      return;
+    }
+
+    if (e.shiftKey) {
+      /* shift + tab */
+      if (document.activeElement === firstFocusableEl) {
+        lastFocusableEl.focus();
+        e.preventDefault();
+      }
+      /* tab */
+    } else if (document.activeElement === lastFocusableEl) {
+      firstFocusableEl.focus();
+      e.preventDefault();
+    }
+  }
+
+  window.addEventListener('keydown', handleTabKey);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('keydown', handleTabKey);
+    };
+  }, []);
+
+  return null;
+}
+
+const POLL_INTERVAL_MS = 10;
+const FAIL_TIMEOUT_MS = 1000;
+
+function isElementOnPage(
+  query: string,
+  timeout: number = FAIL_TIMEOUT_MS,
+  interval: number = POLL_INTERVAL_MS
+): Promise<Element | null> {
+  return new Promise((resolve) => {
+    const startTime = Date.now();
+    function checkIfElementIsInDOM() {
+      const elem = document.querySelector(query);
+      if (elem) {
+        resolve(elem); // Found the element
+      } else if (Date.now() - startTime > timeout) {
+        resolve(null); // Give up eventually
+      } else {
+        setTimeout(checkIfElementIsInDOM, interval); // check again every interval ms
+      }
+    }
+    checkIfElementIsInDOM(); // Initial check
+  });
+}
+
+const FAIGIVE_UP_READY_POLLING_AFTER_MS = 3000;
 
 interface ModalProps {
   children: ReactNode;
@@ -14,6 +90,9 @@ interface ModalProps {
   onClose?: () => void;
   title?: string;
   showCloseButton?: boolean;
+  closeOnEscape?: boolean;
+  closeOnClickOutside?: boolean;
+  pollingQuerySelector?: string;
 }
 
 export function Modal({
@@ -25,22 +104,54 @@ export function Modal({
   title,
   showCloseButton = true,
   onClose,
+  closeOnEscape = true,
+  closeOnClickOutside = true,
+  pollingQuerySelector,
 }: ModalProps) {
-  const dialogEl = useRef(null);
-  const marginTop = window.scrollY;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [isReady, setIsReady] = useState(pollingQuerySelector ? false : true);
+
+  const keyHandler = useCallback(
+    (event: KeyboardEvent) => {
+      if (!closeOnEscape) {
+        return;
+      }
+      const isEscape = event.key === 'Escape';
+      if (isEscape) {
+        onClose?.();
+      }
+    },
+    [onClose, closeOnEscape]
+  );
+
+  useKeyUp(keyHandler);
+
+  useEffect(() => {
+    if (!isReady && pollingQuerySelector) {
+      // Delays the initialization of the focus trap. This is necessary because some dialog content is not yet rendered when the dialog is opened.
+      isElementOnPage(
+        pollingQuerySelector,
+        FAIGIVE_UP_READY_POLLING_AFTER_MS
+      ).then(() => {
+        setIsReady(true);
+      });
+    }
+  }, []);
 
   return isOpen ? (
     <div className={styles.ModalContainer}>
-      <div className={styles.Modal} onClick={onClose} />
-
+      <div
+        className={styles.Modal}
+        onClick={() => (closeOnClickOutside ? onClose?.() : void 0)}
+      />
       <Dialog
-        ref={dialogEl}
-        onClose={onClose}
+        ref={dialogRef}
+        id="modal-dialog"
+        onClose={() => onClose?.()}
         open
         heading={title ?? ''}
         closeButtonLabel={closeButtonLabel}
         footer={actions}
-        style={{ transform: `translateY(${marginTop}px)` }}
         className={classnames(
           styles.Dialog,
           !showCloseButton && styles.DialogWithoutCloseButton,
@@ -48,6 +159,7 @@ export function Modal({
         )}
       >
         {children}
+        {isReady && <FocusTrap />}
       </Dialog>
     </div>
   ) : null;
