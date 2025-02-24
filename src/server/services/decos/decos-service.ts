@@ -777,8 +777,8 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
       getStatusDate('In behandeling', zaak)
     ),
     dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
-    // Assign Status steps later on
-    steps: [],
+    steps: [], // NOTE: Assign Status steps later on
+    displayStatus: zaak.status, // NOTE: This is a placeholder, the actual status is assigned later on.
     // Adds an url with encrypted id to the BFF Detail page api for zaken.
     fetchDocumentsUrl: generateFullApiUrlBFF(
       BffEndpoints.DECOS_DOCUMENTS_LIST,
