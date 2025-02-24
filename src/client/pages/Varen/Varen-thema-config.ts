@@ -86,3 +86,8 @@ export const ligplaatsVergunningLink: LinkProps = {
   to: `${formulierenBaseUrl}/Ligplaatsbedrijfsvaartuig.aspx`,
   title: 'Ligplaatsvergunning aanvragen',
 } as const;
+
+export const rederRegistratieLink: LinkProps = {
+  to: `${formulierenBaseUrl}/VARRegistratieReder.aspx`,
+  title: 'Onderneming registreren',
+} as const;
