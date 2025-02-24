@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import BezwarenDetail from './BezwarenDetail';
+import { BezwarenDetailPagina } from './BezwarenDetail';
 
 const testState = {
   BEZWAREN: {
@@ -105,14 +105,16 @@ function setupTestComponent(id: string) {
   });
   const routePath = AppRoutes['BEZWAREN/DETAIL'];
 
-  return () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={BezwarenDetail}
-      initializeState={initializeState(testState)}
-    />
-  );
+  return function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={BezwarenDetailPagina}
+        initializeState={initializeState(testState)}
+      />
+    );
+  };
 }
 
 describe('BezwarenDetail', () => {
