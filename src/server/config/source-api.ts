@@ -3,7 +3,6 @@ import https from 'https';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
-import { IS_TAP } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
@@ -248,6 +247,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     httpsAgent: new https.Agent({
       rejectUnauthorized: false,
     }),
+    postponeFetch: !FeatureToggle.mijnErfpachtActive,
   },
   BAG: {
     url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
