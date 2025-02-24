@@ -30,6 +30,7 @@
 
 .Dialog {
   z-index: z-index(dialog);
+  position: fixed;
 }
 
 .DialogWithoutCloseButton {

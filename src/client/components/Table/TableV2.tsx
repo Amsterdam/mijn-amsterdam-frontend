@@ -21,7 +21,8 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
   propertyName: keyof T | keyof T['link'] = 'title',
   addDetailLinkComponentAttr = false,
-  linkName = 'link'
+  linkTitle?: (item: T) => string,
+  linkName: string = 'link'
 ): WithDetailLinkComponent<T>[] {
   return items.map((item) => {
     if (!item[linkName]?.to) {
@@ -43,7 +44,11 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [linkPropertyName]: (
-        <MaRouterLink maVariant="fatNoUnderline" href={item[linkName].to}>
+        <MaRouterLink
+          maVariant="fatNoUnderline"
+          title={linkTitle ? linkTitle(item) : `Bekijk meer over ${label}`}
+          href={item[linkName].to}
+        >
           {capitalizeFirstLetter(label)}
         </MaRouterLink>
       ),

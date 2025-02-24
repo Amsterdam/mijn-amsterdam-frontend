@@ -71,6 +71,8 @@ export interface MyAreaProps {
   zoom?: number;
   centerMarker?: MapLocationMarker;
   activeBaseLayerType?: BaseLayerType;
+  showHomeLocationMarker?: boolean;
+  showSecondaryLocationMarkers?: boolean;
 }
 
 function updateViewportHeight() {
@@ -89,6 +91,8 @@ export default function MyArea({
   centerMarker,
   zoom = HOOD_ZOOM,
   activeBaseLayerType = BaseLayerType.Topo,
+  showHomeLocationMarker = true,
+  showSecondaryLocationMarkers = true,
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
@@ -164,13 +168,14 @@ export default function MyArea({
         <div className={styles.MapOffset} id="skip-to-id-Map">
           {isReadyToRender && (
             <Map
+              id="my-area-map"
               fullScreen={true}
               aria-label={ariaLabel}
               options={mapOptions}
               setInstance={(mapInstance) => setMapInstance(mapInstance)}
             >
               <AttributionToggle />
-              {!!homeLocationMarker && (
+              {showHomeLocationMarker && !!homeLocationMarker && (
                 <HomeIconMarker
                   label={homeLocationMarker.label}
                   center={homeLocationMarker.latlng}
@@ -186,7 +191,8 @@ export default function MyArea({
                     zoom={zoom}
                   />
                 )}
-              {secondaryLocationMarkers.length &&
+              {showSecondaryLocationMarkers &&
+                secondaryLocationMarkers.length &&
                 secondaryLocationMarkers.map((location) => (
                   <CustomLatLonMarker
                     label={location.label}
