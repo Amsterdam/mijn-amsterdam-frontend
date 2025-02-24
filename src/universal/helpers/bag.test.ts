@@ -219,6 +219,30 @@ describe('getLatLonByAddress', () => {
         huisnummer: 1,
       });
     });
+
+    test('More then one "Amsterdam" in input', () => {
+      expect(
+        extractAddress('Straatnaam 1 Amsterdam Amsterdam amsterdam')
+      ).toStrictEqual({
+        openbareruimteNaam: 'Straatnaam',
+        huisnummer: 1,
+      });
+    });
+
+    test('Whitespace is trimmed', () => {
+      expect(extractAddress('   Straatnaam 1   ')).toStrictEqual({
+        openbareruimteNaam: 'Straatnaam',
+        huisnummer: 1,
+      });
+    });
+
+    test('Extra whitespace in between is removed', () => {
+      expect(extractAddress('Straatnaam  1 1023   EH')).toStrictEqual({
+        openbareruimteNaam: 'Straatnaam',
+        huisnummer: 1,
+        postcode: '1023EH',
+      });
+    });
   });
 
   test('Adres is located in Weesp', () => {
