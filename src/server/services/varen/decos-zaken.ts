@@ -1,16 +1,13 @@
 import type {
   CaseTypeVaren,
-  VarenRegistratieRederType,
-  VarenVergunningExploitatieType,
-  VarenVergunningLigplaatsType,
+  DecosVarenRegistratieReder,
+  DecosVarenVergunningExploitatie,
+  DecosVarenVergunningLigplaats,
 } from './config-and-types';
-import {
-  DecosZaakBase,
-  DecosZaakTransformer,
-  SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/decos-types';
+import { DecosZaakTransformer, DecosZaakBase } from '../decos/config-and-types';
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../decos/decos-field-transformers';
 
-export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
+export const VarenRegistratieReder: DecosZaakTransformer<DecosVarenRegistratieReder> =
   {
     isActive: true,
     caseType: 'Varen registratie reder',
@@ -28,7 +25,7 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
     notificationLabels: {},
   };
 
-export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatieType> =
+export const VarenVergunningExploitatie: DecosZaakTransformer<DecosVarenVergunningExploitatie> =
   {
     isActive: true,
     caseType: 'Varen vergunning exploitatie',
@@ -55,7 +52,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     notificationLabels: {},
   };
 
-export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigplaatsType> =
+export const VarenVergunningLigplaats: DecosZaakTransformer<DecosVarenVergunningLigplaats> =
   {
     isActive: true,
     caseType: 'Varen ligplaatsvergunning',

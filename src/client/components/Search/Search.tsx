@@ -133,6 +133,7 @@ interface SearchProps {
 }
 
 const MAX_RESULT_COUNT_DISPLAY = 10;
+
 export function Search({
   onFinish: onFinishCallback,
   term: termInitial = '',

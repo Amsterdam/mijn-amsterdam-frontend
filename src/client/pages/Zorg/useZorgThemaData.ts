@@ -1,4 +1,5 @@
 import {
+  linkListItems,
   listPageParamKind,
   listPageTitle,
   routes,
@@ -9,7 +10,6 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-
 
 export function useZorgThemaData() {
   const { WMO } = useAppStateGetter();
@@ -31,5 +31,6 @@ export function useZorgThemaData() {
     tableConfig,
     listPageTitle,
     listPageParamKind,
+    linkListItems,
   };
 }

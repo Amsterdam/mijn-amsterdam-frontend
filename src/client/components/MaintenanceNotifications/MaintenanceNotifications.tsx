@@ -2,15 +2,15 @@ import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MaintenanceNotifications.module.scss';
-import { InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
+import InnerHtml from '../InnerHtml/InnerHtml';
 
 interface MaintenanceNotificationsProps {
   page?: string;
   fromApiDirectly?: boolean;
 }
 
-export default function MaintenanceNotifications({
+export function MaintenanceNotifications({
   page,
   fromApiDirectly = false,
 }: MaintenanceNotificationsProps) {

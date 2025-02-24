@@ -252,7 +252,7 @@ interface StatusLineProps {
   className?: string;
 }
 
-export default function StatusLine({
+export function StatusLine({
   items,
   statusLabel = 'Status',
   className,
