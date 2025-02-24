@@ -38,7 +38,7 @@ export type SearchRequestResponse<
   F extends PBRecordField[] = PBRecordField[],
 > = {
   mainTableName: T;
-  records: PBRecord<T, F>[];
+  records?: PBRecord<T, F>[];
 };
 
 export type PBZaakFields =
@@ -90,6 +90,7 @@ export type BBVergunning = ZaakDetail & {
   identifier: string;
   processed: boolean;
   status: BBVergunningZaakStatus | BBVergunningZaakResult;
+  displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
   title: 'Vergunning bed & breakfast';
 };
 

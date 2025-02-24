@@ -9,7 +9,10 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
+import {
+  getDisplayStatus,
+  getStatusSteps,
+} from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchVakantieverhuurVergunningen(
   requestID: RequestID,
@@ -29,9 +32,13 @@ export async function fetchVakantieverhuurVergunningen(
           AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']
         );
 
+        const steps = getStatusSteps(vergunningTransformed);
+        const displayStatus = getDisplayStatus(vergunningTransformed, steps);
+
         return {
           ...vergunningTransformed,
-          steps: getStatusSteps(vergunningTransformed),
+          steps,
+          displayStatus,
         };
       });
     return apiSuccessResult(vergunningenFrontend);

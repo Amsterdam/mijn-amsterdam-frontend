@@ -37,7 +37,7 @@ export const displayPropsHuidigeVergunningen: VergunningFrontendDisplayProps = {
 export const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
-  status: 'Status',
+  displayStatus: 'Status',
   dateRequestFormatted: 'Aangevraagd op',
 };
 
