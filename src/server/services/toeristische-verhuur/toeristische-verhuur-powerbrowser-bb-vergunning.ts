@@ -65,7 +65,7 @@ function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
     },
   });
   // Token is shared between all requests so we give a fixed requestID here.
-  return requestData<PowerBrowserToken>(requestConfig, 	'powerbrowser-token');
+  return requestData<PowerBrowserToken>(requestConfig, 'powerbrowser-token');
 }
 
 /** Fetch any data from Powerbrowser by extending a default `dataRequestConfig`. */
@@ -491,7 +491,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
       title,
     },
     title,
-    processed: isZaakActual({ dateEnd, decision, compareDate: new Date() }),
+    processed: !!decision,
 
     // Added after initial transform
     location: null,

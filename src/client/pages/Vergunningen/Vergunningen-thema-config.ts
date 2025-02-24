@@ -8,10 +8,14 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 type VergunningFrontendDisplayProps = DisplayProps<
   WithDetailLinkComponent<VergunningFrontend>
 >;
+
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 export const displayPropsHuidigeVergunningen: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
@@ -23,6 +27,7 @@ export const displayPropsHuidigeVergunningen: VergunningFrontendDisplayProps = {
 export const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
+  status: 'Status',
   dateRequestFormatted: 'Aangevraagd',
 };
 
@@ -65,6 +70,9 @@ export const tableConfig = {
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
     className: styles.VergunningenTableThemaPagina,
+    listPageRoute: generatePath(routes.listPage, {
+      kind: listPageParamKind.inProgress,
+    }),
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
@@ -81,6 +89,9 @@ export const tableConfig = {
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
     className: styles.VergunningenTableThemaPagina,
+    listPageRoute: generatePath(routes.listPage, {
+      kind: listPageParamKind.actual,
+    }),
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
@@ -96,7 +107,6 @@ export const tableConfig = {
          vergunning.isExpired === true
         );
       }
-
       return false;
     },
     sort: dateSort('dateDecision', 'desc'),
@@ -105,6 +115,7 @@ export const tableConfig = {
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.historic,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
   },
 } as const;
 
