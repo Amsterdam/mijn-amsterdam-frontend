@@ -17,8 +17,10 @@ export function useKlachtenThemaData() {
   const klachten = addLinkElementToProperty<Klacht>(
     KLACHTEN.content?.klachten ?? [],
     'id',
-    true
+    true,
+    (klacht) => `Bekijk meer over klacht ${klacht.id}`
   );
+
   return {
     klachten,
     isLoading: isLoading(KLACHTEN),
