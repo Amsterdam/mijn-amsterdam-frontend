@@ -11,7 +11,7 @@ type ProfileNameProps = {
 
 export function ProfileName({
   fallbackName,
-  loaderBarConfig = [['200px', '20px', '0']],
+  loaderBarConfig = [['300px', '20px', '0']],
 }: ProfileNameProps) {
   const { BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
