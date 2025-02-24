@@ -31,7 +31,7 @@
     // Align bottom of text with rest of page.
     position: relative;
     top: 100%;
-    transform: translateY(calc(-100% + 18px));
+    transform: translateY(calc(-100% + 16px));
     line-height: 0;
     margin: 0;
   }
@@ -51,7 +51,7 @@
   @media screen and (min-width: $ams-breakpoint-medium) {
     white-space: nowrap;
     line-height: 1;
-    font-size: 80px;
+    font-size: 62px;
     overflow: hidden;
     display: block;
     text-overflow: ellipsis;
