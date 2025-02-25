@@ -1,13 +1,13 @@
 import React from 'react';
 
 import styles from './BezwarenDetail.module.scss';
-import { BezwarenStatusLines } from './BezwarenStatusLines';
 import { useBezwarenDetailData } from './useBezwarenDetailData.hook';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { entries } from '../../../universal/helpers/utils';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
+import { Steps } from '../../components/StatusLine/StatusLineV2';
 import { TextClamp } from '../../components/TextClamp/TextClamp';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -141,7 +141,7 @@ export function BezwarenDetailPagina() {
           )}
           {!!statussen?.length && (
             <PageContentCell>
-              <BezwarenStatusLines statussen={statussen} />
+              <Steps steps={statussen} />
             </PageContentCell>
           )}
         </>

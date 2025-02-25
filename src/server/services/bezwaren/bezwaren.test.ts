@@ -7,6 +7,7 @@ import {
   fetchBezwarenNotifications,
   forTesting,
 } from './bezwaren';
+import { BezwaarSourceStatus } from './types';
 import bezwarenDocumenten from '../../../../mocks/fixtures/bezwaren-documents.json';
 import bezwarenStatus from '../../../../mocks/fixtures/bezwaren-status.json';
 import bezwarenApiResponse from '../../../../mocks/fixtures/bezwaren.json';
@@ -220,6 +221,71 @@ describe('Bezwaren', () => {
           "status": "ERROR",
         }
       `);
+    });
+  });
+
+  const statussen = [
+    {
+      uuid: 'b62fdaa9-f7ec-45d1-b23c-7f36fa00b393',
+      datumStatusGezet: '2023-03-29T10:00:00+02:00',
+      statustoelichting: 'Ontvangen',
+    },
+    {
+      uuid: '00000000-0000-0000-0000-000000000000',
+      datumStatusGezet: '',
+      statustoelichting: 'In behandeling',
+    },
+    {
+      uuid: '00000000-0000-0000-0000-000000000000',
+      datumStatusGezet: '',
+      statustoelichting: 'Afgehandeld',
+    },
+  ] as BezwaarSourceStatus[];
+
+  describe('BezwarenStatusLines', () => {
+    it('should render the right snapshot when status is received', () => {
+      expect(
+        forTesting.transformBezwaarStatus({
+          results: statussen,
+          count: 3,
+          next: '',
+          previous: '',
+        })
+      ).toMatchInlineSnapshot();
+    });
+
+    it('should render the right snapshot when status is in progress', () => {
+      const modStatus = structuredClone(statussen);
+
+      modStatus[1].uuid = 'b62fdaa9-1111-45d1-b23c-7f36fa00b393';
+      modStatus[1].datumStatusGezet = '2023-04-02T10:00:00+02:00';
+
+      expect(
+        forTesting.transformBezwaarStatus({
+          results: statussen,
+          count: 3,
+          next: '',
+          previous: '',
+        })
+      ).toMatchInlineSnapshot();
+    });
+
+    it('should render the right snapshot when status is done', () => {
+      const modStatus = structuredClone(statussen);
+
+      modStatus[1].uuid = 'b62fdaa9-1111-45d1-b23c-7f36fa00b393';
+      modStatus[1].datumStatusGezet = '2023-04-02T10:00:00+02:00';
+      modStatus[2].uuid = 'b62fdaa9-2222-45d1-b23c-7f36fa00b393';
+      modStatus[2].datumStatusGezet = '2023-04-05T10:00:00+02:00';
+
+      expect(
+        forTesting.transformBezwaarStatus({
+          results: statussen,
+          count: 3,
+          next: '',
+          previous: '',
+        })
+      ).toMatchInlineSnapshot();
     });
   });
 });
