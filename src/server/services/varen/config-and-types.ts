@@ -97,7 +97,6 @@ export type VarenVergunningExploitatieWijzigingVervangingType =
   DecosZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVervanging'>;
     vesselNameOld: string | null;
-    vesselName: string | null;
   } & Pick<
       VarenVergunningExploitatieType,
       | 'vesselName'
@@ -115,8 +114,7 @@ export type VarenVergunningLigplaatsType = DecosZaakBase & {
   caseType: GetCaseType<'VarenVergunningLigplaats'>;
   decision: 'Geannuleerd' | 'Afgehandeld';
   location: string | null;
-  vesselName: string | null;
-};
+} & Pick<VarenVergunningExploitatieType, 'vesselName'>;
 
 export type Varen =
   | VarenRegistratieRederType

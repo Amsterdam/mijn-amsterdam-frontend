@@ -15,6 +15,7 @@ import {
 } from '../decos/decos-types';
 
 const vesselName = { text18: 'vesselName' } as const;
+const vesselNameOld = { text33: 'vesselNameOld' } as const;
 const vesselLengths = {
   text21: 'vesselLength',
   text22: 'vesselWidth',
@@ -85,8 +86,8 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
     title: 'Wijzigen: Vaartuig een andere naam geven',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      text18: 'vesselName',
-      text33: 'vesselNameOld',
+      ...vesselName,
+      ...vesselNameOld,
     },
     notificationLabels: {},
   };
@@ -130,6 +131,7 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       ...vesselName,
+      ...vesselNameOld,
       ...vesselLengths,
       ...vesselNumberOfSeats,
       ...vesselSegment,
