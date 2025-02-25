@@ -8,7 +8,6 @@ import {
   BezwaarSourceData,
   BezwaarSourceDocument,
   BezwaarSourceStatus,
-  BezwaarStatus,
   BezwarenSourceResponse,
   Kenmerk,
   OctopusApiResponse,
@@ -24,7 +23,7 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification, StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
@@ -131,22 +130,32 @@ async function fetchMultiple<T>(
   return response;
 }
 
+const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
+
 function transformBezwaarStatus(
   response: BezwarenSourceResponse<BezwaarSourceStatus>
-): BezwaarStatus[] {
-  const results = response.results;
-  if (Array.isArray(results)) {
-    return results.map((result) => {
-      const statusDatum = new Date(result.datumStatusGezet);
+): StatusLineItem[] {
+  const statussen = response.results;
+
+  if (Array.isArray(statussen)) {
+    const index = statussen.findIndex((s) => s.uuid === EMPTY_UUID);
+    const activeIndex =
+      index > 0 ? index - 1 : index === 0 ? index : statussen.length - 1;
+
+    return statussen.map((status, index) => {
+      const statusDatum = new Date(status.datumStatusGezet);
       const now = new Date();
 
-      const status = {
-        uuid: result.uuid,
-        datum: statusDatum <= now ? result.datumStatusGezet : '',
-        statustoelichting: result.statustoelichting,
+      const statusLineItem: StatusLineItem = {
+        id: status.uuid,
+        datePublished: statusDatum <= now ? status.datumStatusGezet : '',
+        description: '',
+        isChecked: status.uuid !== EMPTY_UUID,
+        isActive: activeIndex === index,
+        status: status.statustoelichting,
       };
 
-      return status;
+      return statusLineItem;
     });
   }
 
@@ -168,7 +177,7 @@ async function fetchBezwaarStatus(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const statusResponse = await requestData<BezwaarStatus[]>(
+  const statusResponse = await requestData<StatusLineItem[]>(
     requestConfig,
     requestID,
     authProfileAndToken
@@ -443,7 +452,7 @@ export async function fetchBezwarenNotifications(
 }
 
 export type BezwaarDetail = {
-  statussen: BezwaarStatus[] | null;
+  statussen: StatusLineItem[] | null;
   documents: BezwaarDocument[] | null;
 };
 
@@ -515,4 +524,5 @@ export async function fetchBezwaarDocument(
 
 export const forTesting = {
   fetchMultiple,
+  transformBezwaarStatus,
 };
