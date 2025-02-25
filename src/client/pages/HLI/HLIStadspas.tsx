@@ -245,13 +245,17 @@ export default function HLIStadspas() {
 }
 
 function determineFooterText(
-  stadspas: StadspasFrontend,
+  stadspas: StadspasFrontend | undefined,
   hasTransactions: boolean
 ) {
   const expenseInfoTextBase = 'U heeft nog geen uitgaven.';
 
   const extraInfo = `Deze informatie kan een dag achterlopen.
 Maar het saldo dat u nog over heeft klopt altijd.`;
+
+  if (!stadspas) {
+    return expenseInfoTextBase;
+  }
 
   if (hasTransactions) {
     return `Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
