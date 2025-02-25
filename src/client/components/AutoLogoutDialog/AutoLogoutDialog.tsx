@@ -15,6 +15,7 @@ import {
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
+import { useSetDeeplinkEntry } from '../../hooks/useDeeplink.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaButtonLink } from '../MaLink/MaLink';
 import { Modal } from '../Modal/Modal';
@@ -91,6 +92,11 @@ export const DefaultAutologoutDialogSettings = {
   secondsBeforeAutoLogout: AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
   secondsSessionRenewRequestInterval: SESSION_RENEW_INTERVAL_SECONDS,
 };
+
+function AutoLogoutDialogRedirect() {
+  useSetDeeplinkEntry();
+  return null;
+}
 
 export function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useSessionValue();
@@ -169,6 +175,7 @@ export function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       }
     >
       <div className={styles.AutoLogoutDialogChildren}>
+        <AutoLogoutDialogRedirect />
         <Paragraph className="ams-mb--sm">
           U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
           geweest op Mijn Amsterdam.
