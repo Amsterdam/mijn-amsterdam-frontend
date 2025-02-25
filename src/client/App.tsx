@@ -26,6 +26,7 @@ import { useAnalytics } from './hooks/analytics.hook';
 import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
+  clearDeeplinkEntry,
   useDeeplinkRedirect,
   useSetDeeplinkEntry,
 } from './hooks/useDeeplink.hook';
@@ -171,6 +172,7 @@ function AppAuthenticated() {
 
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
+      clearDeeplinkEntry();
       history.push(redirectAfterLogin);
     }
   }, [redirectAfterLogin, history]);
