@@ -16,7 +16,7 @@ const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
   },
   openbareruimteNaam: {
     // @ts-ignore unicode does works
-    pattern: /(?<![0-9a-z])[a-z_.'/\-\p{L} ]+(?![0-9a-z])/iu,
+    pattern: /(?<![0-9a-z])([0-9]e)?[a-z_.'/\-\p{L} ]+(?![0-9a-z])/iu,
   },
   huisnummer: {
     pattern: /\d+/i,
