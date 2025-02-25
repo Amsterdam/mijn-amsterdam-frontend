@@ -56,15 +56,9 @@ export type Bezwaar = {
   primairbesluitdatum: string | null;
   primairbesluitdatumFormatted: string | null;
   resultaat: string | null;
-  steps: BezwaarStatus[];
+  steps: never[];
   documenten: BezwaarDocument[];
 } & ZaakDetail;
-
-export type BezwaarStatus = {
-  uuid: string;
-  datum: string;
-  statustoelichting: string;
-};
 
 export type BezwaarSourceStatus = {
   url: string;
