@@ -101,7 +101,10 @@ export function Steps({ steps, title }: StepsProps) {
                 <StatusIndication step={item} />
                 {item.status}
               </Heading>
-              <time className={styles.StepStatusDate}>
+              <time
+                className={styles.StepStatusDate}
+                dateTime={item.datePublished}
+              >
                 {defaultDateFormat(item.datePublished)}
               </time>
               {item.description && <InnerHtml>{item.description}</InnerHtml>}
