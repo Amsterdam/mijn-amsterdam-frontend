@@ -139,29 +139,31 @@ export function Modal({
     }
   }, []);
 
-  return isOpen ? (
-    <div className={styles.ModalContainer}>
-      <div
-        className={styles.Modal}
-        onClick={() => (closeOnClickOutside ? onClose?.() : void 0)}
-      />
-      <Dialog
-        ref={dialogRef}
-        id="modal-dialog"
-        onClose={() => onClose?.()}
-        open
-        heading={title ?? ''}
-        closeButtonLabel={closeButtonLabel}
-        footer={actions}
-        className={classnames(
-          styles.Dialog,
-          !showCloseButton && styles.DialogWithoutCloseButton,
-          className
-        )}
-      >
-        {children}
-        {isReady && <FocusTrap />}
-      </Dialog>
-    </div>
-  ) : null;
+  return (
+    isOpen && (
+      <div className={styles.ModalContainer}>
+        <div
+          className={styles.Modal}
+          onClick={() => (closeOnClickOutside ? onClose?.() : void 0)}
+        />
+        <Dialog
+          ref={dialogRef}
+          id="modal-dialog"
+          onClose={() => onClose?.()}
+          open
+          heading={title ?? ''}
+          closeButtonLabel={closeButtonLabel}
+          footer={actions}
+          className={classnames(
+            styles.Dialog,
+            !showCloseButton && styles.DialogWithoutCloseButton,
+            className
+          )}
+        >
+          {children}
+          {isReady && <FocusTrap />}
+        </Dialog>
+      </div>
+    )
+  );
 }
