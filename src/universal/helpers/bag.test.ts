@@ -161,10 +161,17 @@ describe('getLatLonByAddress', () => {
       });
     });
 
-    test('Long streetname with simple number', () => {
+    test('Long streetname with latin character', () => {
       expect(extractAddress('Burgemeester Röellstraat 44')).toStrictEqual({
         openbareruimteNaam: 'Burgemeester Röellstraat',
         huisnummer: 44,
+      });
+    });
+
+    test('Handles streetnames with a "-"', () => {
+      expect(extractAddress('NDSM-straat 1')).toStrictEqual({
+        openbareruimteNaam: 'NDSM-straat',
+        huisnummer: 1,
       });
     });
 
