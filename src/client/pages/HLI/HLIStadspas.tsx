@@ -214,7 +214,7 @@ export default function HLIStadspas() {
               )}
               {!isLoadingStadspas && !isLoadingTransacties && (
                 <Paragraph>
-                  {determineFooterText(stadspas, hasTransactions)}
+                  {determineUwUitgavenDescription(stadspas, hasTransactions)}
                 </Paragraph>
               )}
             </Grid.Cell>
@@ -244,7 +244,7 @@ export default function HLIStadspas() {
   );
 }
 
-function determineFooterText(
+function determineUwUitgavenDescription(
   stadspas: StadspasFrontend | undefined,
   hasTransactions: boolean
 ) {
@@ -389,3 +389,5 @@ function PassBlockedAlert() {
     </Alert>
   );
 }
+
+export const forTesting = { determineUwUitgavenDescription };
