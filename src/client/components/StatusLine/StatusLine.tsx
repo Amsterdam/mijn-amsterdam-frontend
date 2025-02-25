@@ -1,11 +1,11 @@
 import { CSSProperties } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, LinkList } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './StatusLine.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { ComponentChildren } from '../../../universal/types';
+import { ComponentChildren, LinkProps } from '../../../universal/types';
 import {
   AltDocumentContent,
   GenericDocument,
@@ -47,14 +47,23 @@ export function StatusLinePanelStatus({
 
 interface StatusLinePanelDescriptionProps {
   content?: string;
+  linkListItems?: LinkProps[];
 }
 
 export function StatusLinePanelDescription({
   content = '',
+  linkListItems = [],
 }: StatusLinePanelDescriptionProps) {
   return (
     <StatusLinePanel name="description">
       <InnerHtml className={styles.PanelContent}>{content}</InnerHtml>
+      <LinkList>
+        {linkListItems.map(({ to, title }) => (
+          <LinkList.Link key={to} rel="noreferrer" href={to}>
+            {title}
+          </LinkList.Link>
+        ))}
+      </LinkList>
     </StatusLinePanel>
   );
 }
@@ -290,7 +299,10 @@ export default function StatusLine({
                 status={item.status}
               />
 
-              <StatusLinePanelDescription content={item.description} />
+              <StatusLinePanelDescription
+                content={item.description}
+                linkListItems={item.linkItems}
+              />
 
               <StatusLinePanelDocuments
                 documents={item.documents ?? []}

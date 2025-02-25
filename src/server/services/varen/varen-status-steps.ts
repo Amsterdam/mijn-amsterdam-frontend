@@ -42,6 +42,15 @@ export function getStatusSteps(decosZaak: Varen) {
         description: isTermijnActive
           ? `Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor ${defaultDateFormat(termijn.dateEnd)}`
           : '',
+        linkItems:
+          isTermijnActive && decosZaak.linkDataRequest
+            ? [
+                {
+                  to: decosZaak.linkDataRequest,
+                  title: 'Documenten nasturen',
+                },
+              ]
+            : [],
         isActive: isTermijnActive,
         isChecked: !isLastTermijn || isDateInPast(termijn.dateEnd),
       };
