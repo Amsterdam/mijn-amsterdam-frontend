@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { Header, Icon, Screen } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 
@@ -8,10 +6,8 @@ import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
 import { useCloseMenu } from './useCloseMenu.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { getApiErrors, LOGOUT_URL } from '../../config/api';
+import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { ErrorMessages } from '../ErrorMessages/ErrorMessages';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import {
@@ -68,29 +64,22 @@ function MainHeaderLinks() {
   );
 }
 
-function MainHeaderSecondary() {
-  const appState = useAppStateGetter();
-  const errors = useMemo(() => getApiErrors(appState), [appState]);
-  const hasErrors = !!errors.length;
+function MainHeaderSearch() {
   const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
     useSearchOnPage();
 
   return (
-    <>
-      {hasErrors && (
-        <div className={styles.ErrorMessagesWrap}>
-          <ErrorMessages errors={errors} />
-        </div>
-      )}
-      {isDisplayLiveSearch && isSearchActive && (
+    isDisplayLiveSearch &&
+    isSearchActive && (
+      <div className={styles.MainHeaderWrap}>
         <div className={styles.SearchBarWrap}>
           <SearchBar
             onFinish={() => setSearchActive(false)}
             className={styles.SearchBar}
           />
         </div>
-      )}
-    </>
+      </div>
+    )
   );
 }
 
@@ -122,11 +111,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
           {isAuthenticated && <MainMenu />}
         </Header>
       </Screen>
-      {isAuthenticated && (
-        <div className={styles.MainHeaderWrap}>
-          <MainHeaderSecondary />
-        </div>
-      )}
+      {isAuthenticated && <MainHeaderSearch />}
     </>
   );
 }
