@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { Alert, Button, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -6,8 +6,8 @@ import classnames from 'classnames';
 import styles from './ErrorMessages.module.scss';
 import { ApiError } from '../../../universal/types';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
-import { LOGOUT_URL } from '../../config/api';
-import { useSessionStorage } from '../../hooks/storage.hook';
+import { getApiErrors, LOGOUT_URL } from '../../config/api';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { Modal } from '../Modal/Modal';
 
 interface ComponentProps {
@@ -16,13 +16,7 @@ interface ComponentProps {
   title?: string;
 }
 
-export function useErrorMessagesDismissed(
-  dismisedKey: string = 'ErrorMessagesDismissed'
-) {
-  return useSessionStorage(dismisedKey, false);
-}
-
-export function ErrorMessages({
+function ErrorMessagesContent({
   className,
   errors,
   title = 'U ziet misschien niet al uw gegevens.',
@@ -107,4 +101,12 @@ export function ErrorMessages({
       </Modal>
     </div>
   );
+}
+
+export function ErrorMessages() {
+  const appState = useAppStateGetter();
+  const errors = useMemo(() => getApiErrors(appState), [appState]);
+  const hasErrors = !!errors.length;
+
+  return hasErrors && <ErrorMessagesContent errors={errors} />;
 }

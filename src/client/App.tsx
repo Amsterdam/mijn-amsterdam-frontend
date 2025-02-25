@@ -14,6 +14,7 @@ import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
 import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
+import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
 import { MainHeaderHero } from './components/MainHeaderHero/MainHeaderHero';
@@ -180,6 +181,7 @@ function AppAuthenticated() {
     <>
       <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
       <MainHeader isAuthenticated />
+      <ErrorMessages />
       {isHeroVisible && <MainHeaderHero />}
       <div className={styles.App}>
         <Switch>
