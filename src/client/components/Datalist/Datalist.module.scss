@@ -12,6 +12,10 @@
     padding: 0;
     margin: 0 0 2rem 0;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     .has-horizontal-rows & {
       margin: 0;
     }

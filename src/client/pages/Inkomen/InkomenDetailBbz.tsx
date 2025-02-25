@@ -34,7 +34,6 @@ export function InkomenDetailBbz() {
   const hasDecisionStep =
     zaak?.steps.some((step) => step.id.includes('besluit')) ?? false;
 
-  const showStatusLineConnection = !hasDecisionStep; // There is no logical connection between the historic BBZ steps, therefor we do not show the checkmarks as they imply a linear proces.
   const reverseSteps = hasDecisionStep; // For an unknown business reason, the historic steps of BBZ are shown in reverse.
 
   return (
@@ -43,7 +42,6 @@ export function InkomenDetailBbz() {
       zaak={zaak}
       isError={isError}
       isLoading={isLoading}
-      showStatusLineConnection={showStatusLineConnection}
       reverseSteps={reverseSteps}
       pageContentMain={pageContentTop}
       backLink={routes.themaPage}
