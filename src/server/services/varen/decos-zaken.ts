@@ -159,6 +159,9 @@ export const decosZaakTransformers = [
   VarenVergunningExploitatie,
   VarenVergunningLigplaats,
   VarenVergunningExploitatieWijzigenVaartuignaam,
+  VarenVergunningExploitatieWijzigenVerbouwing,
+  VarenVergunningExploitatieWijzigingVergunningshouder,
+  VarenVergunningExploitatieWijzigingVervanging,
 ];
 export const decosCaseToZaakTransformers = decosZaakTransformers.reduce(
   (acc, zaakTransformer) => ({
