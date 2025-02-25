@@ -9,6 +9,7 @@ import {
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { OpenFacturenListGrouped } from './ErfpachtOpenFacturen';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
@@ -58,8 +59,10 @@ export default function Erfpacht() {
               <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/">
                 Meer informatie over erfpacht in Amsterdam
               </LinkList.Link>
-              <LinkList.Link href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Erfpacht.aspx">
-                Meer over wijzigen van uw erfpacht
+              <LinkList.Link
+                href={`https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`}
+              >
+                Wijzigen erfpachtcontract
               </LinkList.Link>
               <LinkList.Link href="https://www.amsterdam.nl/veelgevraagd/overstappen-naar-eeuwigdurende-erfpacht-f92c5#">
                 Overstappen erfpachtrecht

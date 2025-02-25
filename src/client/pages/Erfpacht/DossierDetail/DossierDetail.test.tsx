@@ -27,18 +27,20 @@ describe('<Erfpacht/DossierDetail />', () => {
     ERFPACHTv2_DOSSIER_DETAIL as any
   );
 
-  const Component = ({
+  function Component({
     initializeState,
   }: {
     initializeState: (snapshot: MutableSnapshot) => void;
-  }) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ErfpachtDossierDetail}
-      initializeState={initializeState}
-    />
-  );
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ErfpachtDossierDetail}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Renders Dossier Detailpage no data', async () => {
     bffApi
@@ -62,7 +64,9 @@ describe('<Erfpacht/DossierDetail />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Erfpacht V2dossier')).toBeInTheDocument();
+      expect(
+        screen.getByText('Erfpacht V2 (Vernise)dossier')
+      ).toBeInTheDocument();
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
         screen.getByText('We kunnen op dit moment geen erfpachtdossier tonen.')
