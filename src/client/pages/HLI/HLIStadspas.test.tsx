@@ -17,7 +17,9 @@ const activePasState = {
     status: 'OK',
     content: {
       regelingen: [],
-      stadspas: [createStadspas('Kerub', true, passNumber)],
+      stadspas: [
+        createStadspas({ actief: true, passNumber }, { firstname: 'Kerub' }),
+      ],
     },
   },
 } as unknown as AppState;
@@ -27,7 +29,9 @@ const pasBlockedState = {
     status: 'OK',
     content: {
       regelingen: [],
-      stadspas: [createStadspas('Lou', false, passNumber)],
+      stadspas: [
+        createStadspas({ actief: false, passNumber }, { firstname: 'Lou' }),
+      ],
     },
   },
 } as unknown as AppState;

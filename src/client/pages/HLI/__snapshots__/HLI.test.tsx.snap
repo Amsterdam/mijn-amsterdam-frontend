@@ -179,7 +179,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
                         <span
                           class="_Stadspas_balance_2b0bd1"
                         >
-                          Saldo €5,50
+                          Saldo €5,00
                         </span>
                       </a>
                     </td>
@@ -210,7 +210,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
                         <span
                           class="_Stadspas_balance_2b0bd1"
                         >
-                          Saldo €5,50
+                          Saldo €4,00
                         </span>
                       </a>
                     </td>
