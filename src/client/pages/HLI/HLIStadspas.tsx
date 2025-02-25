@@ -315,7 +315,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         title="Weet u zeker dat u uw Stadspas wilt blokkeren?"
         className={styles.BlokkeerDialog}
         isOpen={isModalOpen}
-        showCloseButton={false}
+        onClose={() => setIsModalOpen(false)}
         onKeyUp={(event) => {
           if (event.code === 'Escape') {
             setIsModalOpen(false);
