@@ -107,38 +107,42 @@ describe('With basic request where data returned does not matter', () => {
   });
 });
 
-// describe('Displayed description of uw uitgaven text', () => {
-// RP TODO: Enable one by one. the last two are not yet correct.
-// test('Just text about not having made expenses', () => {
-//   bffApi.persist().get('/url-transactions').reply(200, { content: [] });
-//   const pas: StadspasFrontend = {
-//     actief: true,
-//     balance: 0,
-//     balanceFormatted: '€0,00',
-//     blockPassURL: null,
-//     budgets: [],
-//   };
-//   const HLIStadspas = createHLIStadspasComponent(pas);
-//   const screen = render(<HLIStadspas />);
-//   expect(screen.getByText('U heeft nog geen uitgaven.')).toBeInTheDocument();
-// });
-//   test('Extra text with the word stores', () => {
-//     bffApi.get('/url-transactions').reply(200, { content: ['item'] });
-//     const HLIStadspas = createHLIStadspasComponent(activePasState);
-//     const screen = render(<HLIStadspas />);
-//     expect(
-//       screen.getByText(`Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
-// informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
-// klopt altijd.`)
-//     ).toBeInTheDocument();
-//   });
-//   test('No expenses but with extra information', () => {
-//     bffApi.get('/url-transactions').reply(200, { content: ['item'] });
-//     const HLIStadspas = createHLIStadspasComponent(activePasState);
-//     const screen = render(<HLIStadspas />);
-//     expect(
-//       screen.getByText(`U heeft nog geen uitgaven. Deze informatie kan een dag achterlopen.
-// Maar het saldo dat u nog over heeft klopt altijd.`)
-//     ).toBeInTheDocument();
-//   });
-// });
+describe('Displayed description of uw uitgaven text', () => {
+  test('Just text about not having made expenses', () => {
+    bffApi.persist().get('/url-transactions').reply(200, { content: [] });
+    const state = {
+      HLI: {
+        status: 'OK',
+        content: {
+          regelingen: [],
+          stadspas: [createStadspas()],
+        },
+      },
+    } as unknown as AppState;
+
+    const HLIStadspas = createHLIStadspasComponent(state);
+    const screen = render(<HLIStadspas />);
+    expect(screen.getByText('U heeft nog geen uitgaven.')).toBeInTheDocument();
+  });
+
+  test.skip('Extra text with the word stores', () => {
+    bffApi.get('/url-transactions').reply(200, { content: ['item'] });
+    const HLIStadspas = createHLIStadspasComponent(activePasState);
+    const screen = render(<HLIStadspas />);
+    expect(
+      screen.getByText(`Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
+informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
+klopt altijd.`)
+    ).toBeInTheDocument();
+  });
+
+  test.skip('No expenses but with extra information', () => {
+    bffApi.get('/url-transactions').reply(200, { content: ['item'] });
+    const HLIStadspas = createHLIStadspasComponent(activePasState);
+    const screen = render(<HLIStadspas />);
+    expect(
+      screen.getByText(`U heeft nog geen uitgaven. Deze informatie kan een dag achterlopen.
+Maar het saldo dat u nog over heeft klopt altijd.`)
+    ).toBeInTheDocument();
+  });
+});
