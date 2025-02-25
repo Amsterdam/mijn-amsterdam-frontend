@@ -27,8 +27,8 @@
     &,
     &:hover {
       background-color: transparent;
-      border: 2px solid $color-neutral-grey2;
-      color: $color-neutral-grey4;
+      border: 2px solid var(--ams-color-neutral-grey3);
+      color: var(--ams-color-neutral-grey3);
       box-shadow: none;
       pointer-events: none;
     }
