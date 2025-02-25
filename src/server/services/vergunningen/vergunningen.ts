@@ -19,8 +19,8 @@ function transformVergunningFrontend(
 ) {
   const vergunningFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
-    appRoute,
-    vergunning
+    vergunning,
+    appRoute
   );
 
   const steps = getStatusSteps(vergunningFrontend);
@@ -49,8 +49,8 @@ async function fetchVergunningen_(
       decosVergunningen.map((vergunning) =>
         transformVergunningFrontend(
           authProfileAndToken.profile.sid,
-          appRoute,
-          vergunning
+          vergunning,
+          appRoute
         )
       );
     return apiSuccessResult(vergunningenFrontend);

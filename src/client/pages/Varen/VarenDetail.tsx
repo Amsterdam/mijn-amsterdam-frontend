@@ -3,8 +3,6 @@ import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIcon } from '../../components';
-import { ThemaTitles } from '../../config/thema';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
@@ -40,12 +38,8 @@ export function VarenDetail() {
       zaak={vergunning}
       isError={isError || noContentError}
       isLoading={isLoading}
-      icon={<ThemaIcon />}
-      pageContentTop={pageContent}
-      backLink={{
-        title: ThemaTitles.VAREN,
-        to: AppRoutes.VAREN,
-      }}
+      pageContentMain={pageContent}
+      backLink={AppRoutes.VAREN}
     />
   );
 }
