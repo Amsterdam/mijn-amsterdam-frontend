@@ -64,7 +64,6 @@ export function HorecaDetailPagina() {
                         <DocumentListV2
                           documents={documents}
                           columns={['', '']}
-                          className="ams-mb--sm"
                         />
                       ),
                     },
