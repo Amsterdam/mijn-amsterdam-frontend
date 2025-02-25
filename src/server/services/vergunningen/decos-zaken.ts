@@ -349,6 +349,9 @@ export const OnttrekkingsvergunningSloop: DecosZaakTransformer<Onttrekkingsvergu
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
+      dfunction: transformDecision({
+        Ingetrokken: ['Ingetrokken aanvraag door gemeente'],
+      }),
     },
     notificationLabels: caseNotificationLabelsDefault,
   };
@@ -385,6 +388,9 @@ export const Splitsingsvergunning: DecosZaakTransformer<SplitsingsvergunningType
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
+      dfunction: transformDecision({
+        Ingetrokken: ['Ingetrokken aanvraag op eigen verzoek'],
+      }),
     },
     notificationLabels: caseNotificationLabelsDefault,
   };

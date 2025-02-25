@@ -138,8 +138,9 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
   const hasDateInBehandeling = !!dateInBehandeling;
   const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
   const isExpired = vergunning.isExpired === true;
-  const isIngetrokken = vergunning.decision === 'Ingetrokken';
+  const isIngetrokken = vergunning.decision?.includes('Ingetrokken');
   const isVerlopen = vergunning.status === 'Verlopen' || isExpired;
+  const isVerleend = vergunning.decision === 'Verleend';
 
   const statusOntvangen: StatusLineItem = {
     id: 'step-1',
@@ -182,7 +183,7 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
     statusAfgehandeld,
   ];
 
-  if (isVerlopen || isIngetrokken) {
+  if (isAfgehandeld && ((isVerleend && isVerlopen) || isIngetrokken)) {
     const statusGewijzigd: StatusLineItem = {
       id: 'step-4',
       status: isIngetrokken ? 'Ingetrokken' : 'Verlopen',
@@ -211,5 +212,5 @@ export function getDisplayStatus(
     return vergunning.decision;
   }
 
-  return steps[steps.length - 1]?.status ?? 'Onbekend';
+  return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
 }
