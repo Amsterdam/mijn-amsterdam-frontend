@@ -9,7 +9,6 @@ import {
 import { omit } from '../../universal/helpers/utils';
 import { getAuth } from '../auth/auth-helpers';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { IS_DEBUG } from '../config/app';
 import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
