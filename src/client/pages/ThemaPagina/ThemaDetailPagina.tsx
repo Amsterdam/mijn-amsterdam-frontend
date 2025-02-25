@@ -31,7 +31,6 @@ interface ThemaDetailPaginaProps<T> {
   pageContentMain: ReactNode;
   pageContentBottom?: ReactNode;
   reverseSteps?: boolean;
-  showStatusLineConnection?: boolean;
   statusLabel?: string;
   title?: string;
   className?: string;
@@ -48,7 +47,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   isError,
   isLoading,
   reverseSteps = false,
-  showStatusLineConnection = true,
   statusLabel = 'Status',
 }: ThemaDetailPaginaProps<T>) {
   let statusItemSteps = zaak?.steps ?? [];

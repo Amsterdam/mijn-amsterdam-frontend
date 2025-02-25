@@ -36,11 +36,11 @@
     left: calc(calc(var(--status-circle-box-width) + 2px) * -1);
   }
 
+  // Don't show the line on the last step
   &:last-child:before {
     display: none;
   }
 
-  &--active:first-child:before,
   &--active:last-child:before,
   &--checked:before {
     background-color: var(--status-circle-color-active);
@@ -67,6 +67,7 @@
   position: relative;
   z-index: 0;
 
+  // Inner and outer circle
   &:before,
   &:after {
     display: block;

@@ -155,7 +155,7 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
   location,
   location2,
   decision: (vergunning) =>
-    vergunning.decision
+    vergunning.decision && vergunning.processed
       ? {
           label: 'Resultaat',
           content: vergunning.decision,
