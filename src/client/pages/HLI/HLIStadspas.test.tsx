@@ -2,14 +2,14 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 
-import HLIStadspas from './HLIStadspas';
-import { bffApi } from '../../../testing/utils';
 import { AppState } from '../../../universal/types';
 import { componentCreator } from '../MockApp';
-import { stadspasCreator } from './test-helpers';
-import { AppRoutes } from '../../../universal/config/routes';
+import HLIStadspas from './HLIStadspas';
 import { forTesting } from './HLIStadspas';
+import { stadspasCreator } from './test-helpers';
 import { StadspasBudget } from '../../../server/services/hli/stadspas-types';
+import { bffApi } from '../../../testing/utils';
+import { AppRoutes } from '../../../universal/config/routes';
 
 const createStadspas = stadspasCreator();
 const passNumber = 12345678;
@@ -63,7 +63,6 @@ describe('With basic request where data returned does not matter', () => {
   });
 
   test('Blocked pas state', () => {
-    bffApi.get('/url-transactions').reply(200, { content: [] });
     const HLIStadspas = createHLIStadspasComponent(pasBlockedState);
     const screen = render(<HLIStadspas />);
 
@@ -80,12 +79,9 @@ describe('With basic request where data returned does not matter', () => {
     ).toBeInTheDocument();
   });
 
-  test('Modal appears', async () => {
-    bffApi.get('/url-transactions').reply(200, { content: [] });
-
+  test("Appears with all it's buttons", async () => {
     const HLIStadspas = createHLIStadspasComponent(activePasState);
     const screen = render(<HLIStadspas />);
-
     const user = userEvent.setup();
 
     await user.click(
