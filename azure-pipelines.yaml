@@ -1,7 +1,4 @@
-trigger:
-  branches:
-    include:
-      - production-release-v*
+trigger: none
 pr: none
 
 resources:
@@ -21,57 +18,25 @@ parameters:
   - name: btdDeploy
     type: boolean
     default: true
-
   - name: dtapName
     type: string
     default: t
     values:
       - t
       - a
-
   - name: btdAppBFF
     type: boolean
     default: true
   - name: btdAppUI
     type: boolean
     default: true
-
-variables:
-  - name: dtapName
-    value: ${{ parameters.dtapName }}
-
-  - name: btdBuild
-    value: ${{ parameters.btdBuild }}
-  - name: btdTest
-    value: ${{ parameters.btdTest }}
-  - name: btdDeploy
-    value: ${{ parameters.btdDeploy }}
-
-  - name: btdAppBFF
-    value: ${{ parameters.btdAppBFF }}
-  - name: btdAppUI
-    value: ${{ parameters.btdAppUI }}
-
-  - ${{ if contains(variables['Build.SourceBranchName'], 'production-release') }}:
-      - name: dtapName
-        value: p
-      - name: btdBuild
-        value: true
-      - name: btdTest
-        value: true
-      - name: btdDeploy
-        value: true
-      - name: btdAppBFF
-        value: true
-      - name: btdAppUI
-        value: true
 
 jobs:
   - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
     parameters:
-      dtapName: ${{ variables.dtapName }}
-      btdBuild: ${{ variables.btdBuild }}
-      btdTest: ${{ variables.btdTest }}
-      btdDeploy: ${{ variables.btdDeploy }}
-      btdAppBFF: ${{ variables.btdAppBFF }}
-      btdAppUI: ${{ variables.btdAppUI }}
+      dtapName: ${{ parameters.dtapName }}
+      btdBuild: ${{ parameters.btdBuild }}
+      btdTest: ${{ parameters.btdTest }}
+      btdDeploy: ${{ parameters.btdDeploy }}
+      btdAppBFF: ${{ parameters.btdAppBFF }}
+      btdAppUI: ${{ parameters.btdAppUI }}

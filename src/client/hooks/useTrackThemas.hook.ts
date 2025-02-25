@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 
 import { useSessionStorage } from './storage.hook';
-import { useAppStateGetter } from './useAppState';
 import { useThemaMenuItems } from './useThemaMenuItems';
+import { ThemaMenuItemTransformed } from '../config/thema';
 import { trackEvent } from '../helpers/monitoring';
 
-type ThemaTitleAndId = Record<'title' | 'id', string>;
+type ThemaTitleAndId = Pick<ThemaMenuItemTransformed, 'title' | 'id'>;
 
 export function useTrackThemas() {
-  const appState = useAppStateGetter();
   const [storedThemas, setStoredThemas] = useSessionStorage('themas', null);
 
   const themasState = useThemaMenuItems();
@@ -17,10 +16,7 @@ export function useTrackThemas() {
     if (!storedThemas && !themasState.isLoading) {
       const themaTitlesAndIds: ThemaTitleAndId[] = themasState.items.map(
         (item) => ({
-          title:
-            typeof item.title === 'function'
-              ? item.title(appState)
-              : item.title,
+          title: item.title,
           id: item.id,
         })
       );

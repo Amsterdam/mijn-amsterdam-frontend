@@ -29,8 +29,9 @@ interface ThemaPaginaProps {
   backLink?: LinkProps;
   icon?: ReactElement;
   pageContentTop: ReactNode;
+  pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
-  linkListItems: LinkProps[];
+  linkListItems?: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -47,6 +48,7 @@ export default function ThemaPagina({
   },
   icon = <ThemaIcon />,
   pageContentTop,
+  pageContentTopSecondary,
   linkListItems = [],
   pageContentMain,
   pageContentBottom,
@@ -76,7 +78,9 @@ export default function ThemaPagina({
               </LinkList>
             </Grid.Cell>
           )}
-
+          {!!pageContentTopSecondary && (
+            <Grid.Cell span="all">{pageContentTopSecondary}</Grid.Cell>
+          )}
           {showError && (
             <Grid.Cell span="all">
               <ErrorAlert>
@@ -85,13 +89,11 @@ export default function ThemaPagina({
               </ErrorAlert>
             </Grid.Cell>
           )}
-
           {isLoading && (
             <Grid.Cell span="all">
               <LoadingContent barConfig={loadingBarConfig} />
             </Grid.Cell>
           )}
-
           {!isLoading && !isError && pageContentMain}
           {pageContentBottom}
         </Grid>

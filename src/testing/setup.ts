@@ -77,6 +77,9 @@ export const bffApiHost = 'http://bff-api-host';
 export const frontentHost = 'http://frontend-host';
 export const remoteApiHost = 'http://remote-api-host';
 
+process.env.LOG_LEVEL = 'error';
+process.env.LOGGER_ENABLED = 'true';
+
 process.env.BFF_DB_FILE = ':memory:';
 process.env.REACT_APP_BFF_API_URL = bffApiHost;
 process.env.BFF_API_BASE_URL = `${bffApiHost}/api/v1`;
@@ -161,4 +164,5 @@ process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuz
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
 process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
 process.env.BFF_DEBUG_RESPONSE_DATA = 'afis';
-process.env.BFF_SALESFORCE_API_BASE_URL = `${remoteApiHost}/salesforce`;
+
+process.env.BFF_CONTACTMOMENTEN_BASE_URL = `${remoteApiHost}/salesforce/contactmomenten`;

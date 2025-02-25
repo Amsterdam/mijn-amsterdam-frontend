@@ -2,8 +2,6 @@ import { BFF_BASE_PATH } from '../routing/bff-routes';
 
 export const BFF_API_BASE_URL = process.env.BFF_API_BASE_URL ?? BFF_BASE_PATH;
 
-export const IS_DEBUG = process.env.DEBUG === '1';
-
 export const BFF_REQUEST_CACHE_ENABLED =
   typeof process.env.BFF_REQUEST_CACHE_ENABLED !== 'undefined'
     ? String(process.env.BFF_REQUEST_CACHE_ENABLED).toLowerCase() === 'true'

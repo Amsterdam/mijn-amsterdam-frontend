@@ -1,6 +1,8 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
+import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 
 import {
   caseType,
@@ -20,12 +22,17 @@ import {
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
   DecosWorkflowResponse,
+  DecosZaakFrontend,
 } from './decos-types';
 import {
   getDecosZaakTypeFromSource,
+  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
+  isExpired,
+  toDateFormatted,
 } from './helpers';
+import { AppRoute } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
   ApiResponse,
@@ -33,14 +40,18 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
   DEFAULT_API_CACHE_TTL_MS,
 } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
@@ -53,15 +64,14 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
  * specic AddressBook table that matches a condition (num1 should be the userID)
  *
  * After querying the AddressBook we use the keys that were retrieved to look for Zaken tied to these AddressBookEntry keys.
- * Initially we only select a set of specific api attributes (fields) that we want to be processed/transformed. This reduces the response size and should be faster.
+ * Initially we only select a set of specific api attributes (fields (defined in the transformer of a certain caseTye)) that we want to be processed/transformed. This reduces the response size and should be faster.
  *
- * After retrieving the zaken we first filter these zaken based on configuration found in `decos-zaken.ts`.
- * We check for data quality, payment and other arbitrary checks (hasValidSourceData).
+ * After retrieving the zaken we check for data quality, payment and other arbitrary checks (hasValidSourceData).
  *
  * We now have filtered set of decos zaken which we want to make sense of first by transforming the api attributes to understandable
  * ones for example the source attribute `document_date` becomes `dateRequest`.
  *
- * After transformation of the api attribute names and possibly values we apply another, optional, transform to the data.
+ * After transformation of the api attribute names and possibly values, we apply another, optional, transform to the data.
  * At this point we can fetch other services to enrich the data we retrieved initially or maybe assign values to some properties based on business logic.
  *
  * Service: **fetchDecosZaak**
@@ -284,30 +294,35 @@ async function transformDecosZakenResponse<
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-async function getZakenByUserKey(
-  requestID: RequestID,
-  userKey: string,
-  zaakTypeTransformers: Pick<
-    DecosZaakTransformer<DecosZaakBase>,
-    'addToSelectFieldsBase' | 'caseType'
-  >[] = []
+function getSelectFields(
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[]
 ) {
-  const caseField = 'text45';
-  assert(
-    SELECT_FIELDS_TRANSFORM_BASE[caseField] == caseType,
-    `getZakenByUserKey expects field ${caseField} to be the caseType`
-  );
-
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
-    ...Object.keys(SELECT_FIELDS_TRANSFORM_BASE),
-    ...zaakTypeTransformers.flatMap(
-      (zaakTransformer) => zaakTransformer.addToSelectFieldsBase ?? []
+    ...zaakTypeTransformers.flatMap((zaakTransformer) =>
+      Object.keys(zaakTransformer.transformFields)
     ),
   ]).join(',');
 
+  return fields;
+}
+
+async function getZakenByUserKey(
+  requestID: RequestID,
+  userKey: string,
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
+) {
+  const caseTypeField = 'text45';
+
+  assert(
+    SELECT_FIELDS_TRANSFORM_BASE[caseTypeField] == caseType,
+    `getZakenByUserKey expects field ${caseTypeField} to be the caseType`
+  );
+
+  const fields = getSelectFields(zaakTypeTransformers);
+
   const caseTypes = zaakTypeTransformers
-    .map((transformer) => `${caseField} eq ${transformer.caseType}`)
+    .map((transformer) => `${caseTypeField} eq '${transformer.caseType}'`)
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
@@ -339,10 +354,7 @@ async function getZakenByUserKey(
 export async function fetchDecosZakenFromSource(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakTypeTransformers: Pick<
-    DecosZaakTransformer<any>,
-    'addToSelectFieldsBase' | 'caseType'
-  >[] = []
+  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
   const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
 
@@ -464,13 +476,14 @@ export async function fetchDecosWorkflowDates(
     properties: 'false',
     fetchParents: 'false',
     select: ['mark', 'date1', 'date2', 'text7'].join(','),
-    filter: stepTitles.map((stepTitle) => `text7 eq ${stepTitle}`).join(' or '),
+    filter: stepTitles
+      .map((stepTitle) => `text7 eq '${stepTitle}'`)
+      .join(' or '),
   });
 
   const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
-    formatUrl: (config) => {
-      return `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?'${urlParams}'`;
-    },
+    formatUrl: (config) =>
+      `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?${urlParams}`,
     transformResponse: (responseData: DecosWorkflowResponse) =>
       transformDecosWorkflowDateResponse(stepTitles, responseData),
   });
@@ -674,13 +687,60 @@ export async function fetchDecosDocument(
   );
 }
 
+export function transformDecosZaakFrontend<T extends DecosZaakBase>(
+  sessionID: SessionID,
+  appRoute: AppRoute,
+  zaak: T
+) {
+  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
+  const zaakFrontend: DecosZaakFrontend<T> = {
+    ...zaak,
+    dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
+    dateInBehandeling: getStatusDate('In behandeling', zaak),
+    dateInBehandelingFormatted: toDateFormatted(
+      getStatusDate('In behandeling', zaak)
+    ),
+    dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
+    // Assign Status steps later on
+    steps: [],
+    // Adds an url with encrypted id to the BFF Detail page api for zaken.
+    fetchDocumentsUrl: generateFullApiUrlBFF(
+      BffEndpoints.DECOS_DOCUMENTS_LIST,
+      [{ id: idEncrypted }]
+    ),
+    link: {
+      to: generatePath(appRoute, {
+        caseType: slug(zaak.caseType, { lower: true }),
+        id: zaak.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  };
+
+  // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
+  if (
+    'dateEnd' in zaak &&
+    'dateStart' in zaak &&
+    zaak.dateStart &&
+    zaak.dateEnd
+  ) {
+    zaakFrontend.isExpired = isExpired(zaak);
+    zaakFrontend.dateStartFormatted = defaultDateFormat(zaak.dateStart);
+    zaakFrontend.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
+  }
+
+  return zaakFrontend;
+}
+
 export const forTesting = {
   filterValidDocument,
   getUserKeys,
+  getSelectFields,
   getZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowDateResponse,
   transformDecosWorkflowKeysResponse,
   transformDecosZaakResponse,
   transformDecosZakenResponse,
+  transformDecosZaakFrontend,
 };

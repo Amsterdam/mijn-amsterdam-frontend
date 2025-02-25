@@ -83,7 +83,7 @@ export type SourceApiKey =
   | 'PARKEREN_FRONTOFFICE'
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
-  | 'SALESFORCE'
+  | 'CONTACTMOMENTEN'
   | 'SUBSIDIE'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
@@ -96,9 +96,28 @@ export type SourceApiKey =
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
+const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
+const postponeFetchAfis =
+  typeof afisFeatureToggle !== 'undefined'
+    ? afisFeatureToggle === 'false'
+    : !FeatureToggle.afisActive;
+
+const contactmomentenFeatureToggle = getFromEnv(
+  'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'
+);
+const postponeFetchContactmomenten =
+  typeof contactmomentenFeatureToggle !== 'undefined'
+    ? contactmomentenFeatureToggle === 'false'
+    : !FeatureToggle.contactmomentenActive;
+
+const httpsAgentConfigBFF = {
+  cert: getCert('BFF_SERVER_CLIENT_CERT'),
+  key: getCert('BFF_SERVER_CLIENT_KEY'),
+};
+
 export const ApiConfig: ApiDataRequestConfig = {
   AFIS: {
-    postponeFetch: !FeatureToggle.afisActive,
+    postponeFetch: postponeFetchAfis,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
   },
   ZORGNED_JZD: {
@@ -109,10 +128,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       'Content-type': 'application/json; charset=utf-8',
       'X-Mams-Api-User': 'JZD',
     },
-    httpsAgent: new https.Agent({
-      cert: getCert('BFF_SERVER_CLIENT_CERT'),
-      key: getCert('BFF_SERVER_CLIENT_KEY'),
-    }),
+    httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
   ZORGNED_AV: {
     method: 'post',
@@ -176,10 +192,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_CLEOPATRA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.cleopatraApiActive,
     method: 'POST',
-    httpsAgent: new https.Agent({
-      cert: getCert('BFF_SERVER_CLIENT_CERT'),
-      key: getCert('BFF_SERVER_CLIENT_KEY'),
-    }),
+    httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
   DECOS_API: {
     url: `${getFromEnv('BFF_DECOS_API_BASE_URL')}`,
@@ -203,9 +216,9 @@ export const ApiConfig: ApiDataRequestConfig = {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },
   },
-  SALESFORCE: {
-    url: `${getFromEnv('BFF_SALESFORCE_API_BASE_URL')}`,
-    postponeFetch: !FeatureToggle.salesforceActive,
+  CONTACTMOMENTEN: {
+    url: `${getFromEnv('BFF_CONTACTMOMENTEN_BASE_URL')}`,
+    postponeFetch: postponeFetchContactmomenten,
     headers: {
       apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
     },
@@ -242,9 +255,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   ERFPACHTv2: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
-    httpsAgent: new https.Agent({
-      ca: IS_TAP ? getCert('BFF_SERVER_CLIENT_CERT') : [],
-    }),
+    httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
       !FeatureToggle.erfpachtV2EndpointActive ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),

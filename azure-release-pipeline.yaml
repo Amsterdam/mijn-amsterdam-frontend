@@ -1,0 +1,22 @@
+trigger:
+  tags:
+    include:
+      - release-v*
+pr: none
+
+resources:
+  repositories:
+    - repository: MamsInfra
+      type: git
+      name: MijnAmsterdam/mijn-amsterdam-infra
+      ref: refs/heads/main
+
+jobs:
+  - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
+    parameters:
+      dtapName: p
+      btdBuild: true
+      btdTest: true
+      btdDeploy: true
+      btdAppBFF: true
+      btdAppUI: true

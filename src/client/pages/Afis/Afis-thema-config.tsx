@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { generatePath, LinkProps } from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 
 import {
   AfisFacturenResponse,
@@ -8,7 +8,7 @@ import {
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ZaakDetail } from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { DisplayProps } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
@@ -141,11 +141,7 @@ export const routes = {
 
 export const linkListItems: LinkProps[] = [
   {
-    to: 'https://www.amsterdam.nl/ondernemen/afis/facturen/',
-    title: 'Meer over facturen van de gemeente',
-  },
-  {
-    to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
-    title: 'Belastingen op Mijn Amsterdam',
+    to: 'https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa',
+    title: 'Meer over betalen aan de gemeente',
   },
 ];

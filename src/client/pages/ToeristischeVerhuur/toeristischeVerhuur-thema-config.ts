@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import styles from './ToeristischeVerhuur.module.scss';
-import {
+import type {
   BBVergunning,
   LVVRegistratie,
   VakantieverhuurVergunning,
@@ -37,7 +37,7 @@ export const listPageParamKind = {
   historic: 'eerdere-en-afgewezen-vergunningen',
 } as const;
 
-export type ListPageParamKey = keyof typeof listPageParamKind;
+type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const listPageTitle = {
@@ -69,10 +69,10 @@ export const tableConfigVergunningen = {
 export const tableConfigLVVRegistraties = {
   title: 'Registratienummer(s) toeristische verhuur',
   displayProps: DISPLAY_PROPS_LVV_REGISTRATIES,
-};
+} as const;
 
 export const routes = {
   listPage: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST'],
   detailPageVergunning: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-  themaPage: AppRoutes['TOERISTISCHE_VERHUUR'],
+  themaPage: AppRoutes.TOERISTISCHE_VERHUUR,
 } as const;

@@ -20,6 +20,7 @@ import {
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiErrorResult,
+  ApiResponse,
   ApiResponse_DEPRECATED,
   apiSuccessResult,
   getSettledResult,
@@ -32,6 +33,7 @@ import {
 import { entries } from '../../../universal/helpers/utils';
 import { StatusLineItem } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_HOUR_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -43,26 +45,35 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
 // See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
-function fetchPowerBrowserToken_(requestID: RequestID) {
+const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
+const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
+
+const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_, {
+  maxAge: TOKEN_VALIDITY_PERIOD,
+  preFetch: PERCENTAGE_DISTANCE_FROM_EXPIRY,
+  promise: true,
+});
+
+type PowerBrowserToken = string;
+
+function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
   const requestConfig = getApiConfig('POWERBROWSER', {
-    formatUrl({ url }) {
-      return `${url}/Token`;
-    },
+    formatUrl: ({ url }) => `${url}/Token`,
     responseType: 'text',
     data: {
       apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
     },
   });
-  return requestData<string>(requestConfig, requestID);
+  // Token is shared between all requests so we don't give a requestID here.
+  return requestData<PowerBrowserToken>(requestConfig, '');
 }
 
-const fetchPowerBrowserToken = memoizee(fetchPowerBrowserToken_);
-
+/** Fetch any data from Powerbrowser by extending a default `dataRequestConfig`. */
 async function fetchPowerBrowserData<T>(
   requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
 ) {
-  const tokenResponse = await fetchPowerBrowserToken(requestID);
+  const tokenResponse = await fetchPowerBrowserToken();
   const dataRequestConfigBase = getApiConfig(
     'POWERBROWSER',
     dataRequestConfigSpecific
@@ -75,13 +86,19 @@ async function fetchPowerBrowserData<T>(
     },
   };
 
-  return requestData<T>(dataRequestConfig, requestID);
+  const response = await requestData<T>(dataRequestConfig, requestID);
+
+  if (response.status === 'ERROR') {
+    fetchPowerBrowserToken.clear();
+  }
+
+  return response;
 }
 
 async function fetchPersoonOrMaatschapIdByUid(
   requestID: RequestID,
   options: FetchPersoonOrMaatschapIdByUidOptions
-) {
+): Promise<ApiResponse<string | null>> {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/SearchRequest`;
@@ -114,7 +131,7 @@ async function fetchPersoonOrMaatschapIdByUid(
 async function fetchZaakIds(
   requestID: RequestID,
   options: FetchZaakIdsOptions
-) {
+): Promise<ApiResponse<string[]>> {
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
       return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
@@ -131,7 +148,7 @@ async function fetchZaakIds(
 function getFieldValue(
   pbFieldName: PBZaakFields['fieldName'],
   pbZaakFields: PBZaakFields[]
-) {
+): string | null {
   const pbField = pbZaakFields.find((field) => field.fieldName === pbFieldName);
 
   switch (pbFieldName) {
@@ -191,7 +208,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 function transformZaakStatusResponse(
   zaak: BBVergunning,
   statusResponse: PowerBrowserStatusResponse
-) {
+): StatusLineItem[] {
   function getStatusDate(status: string[]) {
     const datum =
       statusResponse?.find(({ omschrijving }) => status.includes(omschrijving))
@@ -397,7 +414,7 @@ async function fetchAndMergeZaakStatussen(
 async function fetchAndMergeAdressen(
   requestID: RequestID,
   zaken: BBVergunning[]
-) {
+): Promise<BBVergunning[]> {
   const addressRequests = zaken.map((zaak) => {
     return fetchZaakAdres(requestID, zaak.id);
   });
@@ -427,7 +444,7 @@ function isZaakActual({
   result: BBVergunningZaakResult;
   dateEnd: string | null;
   compareDate: string | Date | null;
-}) {
+}): boolean {
   if (!result) {
     return true;
   }
@@ -465,7 +482,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     link: {
       to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
         id,
-        casetype: 'bed-and-breakfast',
+        caseType: 'bed-and-breakfast',
       }),
       title,
     },
@@ -630,7 +647,7 @@ const documentNamenMA_PB = {
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
-) {
+): BBVergunning['documents'] {
   type PBDocument = {
     [K in PBDocumentFields['fieldName']]: string;
   };
@@ -715,8 +732,8 @@ export async function fetchBBDocument(
   requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
   documentId: string
-) {
-  const tokenResponse = await fetchPowerBrowserToken(requestID);
+): Promise<ApiResponse<DocumentDownloadData>> {
+  const tokenResponse = await fetchPowerBrowserToken();
 
   if (tokenResponse.status === 'ERROR') {
     return tokenResponse;
@@ -739,10 +756,12 @@ export async function fetchBBDocument(
     },
   };
 
-  return fetchPowerBrowserData<DocumentDownloadData>(
+  const response = await fetchPowerBrowserData<DocumentDownloadData>(
     requestID,
     dataRequestConfig
   );
+
+  return response;
 }
 
 export const forTesting = {

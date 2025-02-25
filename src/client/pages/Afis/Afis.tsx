@@ -19,16 +19,33 @@ import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-const pageContentTop = (
-  <Paragraph>
-    Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen
-    inzake Gemeentebelastingen. Deze vindt u terug bij{' '}
-    <Link rel="noreferrer" href={import.meta.env.REACT_APP_SSO_URL_BELASTINGEN}>
-      Mijn Belastingen
-    </Link>
-    .
-  </Paragraph>
-);
+function PageContentTop({
+  urlNaarBelastingen,
+}: {
+  urlNaarBelastingen: string;
+}) {
+  return (
+    <>
+      <Paragraph className="ams-mb--sm">
+        Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
+        heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}
+        <Link href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren">
+          debiteurenadministratie@amsterdam.nl
+        </Link>{' '}
+        met de details van de factuur, zoals het factuurnummer of andere
+        relevante informatie, zodat zij u verder kunnen helpen.
+      </Paragraph>
+      <Paragraph>
+        U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u
+        terug bij{' '}
+        <Link rel="noreferrer" href={urlNaarBelastingen}>
+          Mijn Belastingen
+        </Link>
+        .
+      </Paragraph>
+    </>
+  );
+}
 
 export function AfisDisclaimer() {
   return (
@@ -55,11 +72,11 @@ export function AfisDisclaimerOvergedragenFacturen() {
   return (
     <Alert>
       <Paragraph>
-        Bij het uitblijven van een betaling, wordt uw factuur door Financiën
-        overgedragen naar de afdeling Incasso & Invordering van directie
-        Belastingen. Deze afdeling is vanaf dat moment verantwoordelijk voor de
-        invordering van uw factuur en daarmee uw aanspreekpunt. De status van uw
-        factuur wordt hier niet bijgewerkt.
+        Als u niet betaalt, wordt uw factuur door Financiën overgedragen naar de
+        afdeling Incasso & Invordering van directie Belastingen. Deze afdeling
+        is vanaf dat moment verantwoordelijk voor de invordering van uw factuur
+        en daarmee uw aanspreekpunt. De status van uw factuur vindt u terug bij
+        Mijn Belastingen - gemeente Amsterdam.
       </Paragraph>
       <Heading level={4} size="level-5">
         Heeft u vragen?
@@ -91,6 +108,7 @@ export function AfisThemaPagina() {
     listPageTitle,
     routes,
     linkListItems,
+    belastingenLinkListItem,
   } = useAfisThemaData();
 
   const isPartialError = entries(dependencyErrors).some(
@@ -165,7 +183,9 @@ export function AfisThemaPagina() {
       errorAlertContent={pageContentErrorAlert}
       isLoading={!isThemaPaginaError && isThemaPaginaLoading}
       linkListItems={linkListItems}
-      pageContentTop={pageContentTop}
+      pageContentTop={
+        <PageContentTop urlNaarBelastingen={belastingenLinkListItem.to} />
+      }
       pageContentMain={
         <>
           {pageContentSecondary}

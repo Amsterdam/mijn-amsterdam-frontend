@@ -2,35 +2,25 @@ import {
   ContactMomentenResponseSource,
   ContactMoment,
 } from './contactmomenten.types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { apiPostponeResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
+import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-
-// See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
 
 async function fetchSalesforceData<T>(
   requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
 ) {
   const dataRequestConfigBase = getApiConfig(
-    'SALESFORCE',
+    'CONTACTMOMENTEN',
     dataRequestConfigSpecific
   );
-
   return requestData<T>(dataRequestConfigBase, requestID);
-}
-
-// TODO: Implement encryption when the encryption method is known
-function encryptBsn(bsn: string) {
-  if (IS_PRODUCTION) {
-    throw Error(
-      'TODO: Not implemented, waiting for encryption method to be known'
-    );
-  }
-  return bsn;
 }
 
 function transformContactmomentenResponse(
@@ -52,12 +42,30 @@ export async function fetchContactmomenten(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  if (!FeatureToggle.contactmomentenActive) {
+    return apiPostponeResult(null);
+  }
+
+  const base64encodedPK = getFromEnv(
+    'BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY'
+  );
+  if (!base64encodedPK) {
+    throw new Error('BFF_CONTACTMOMENTEN_PRIVATE_ENCRYPTION_KEY not found');
+  }
+
+  const [, encryptedBSN, iv] = encrypt(
+    authProfileAndToken.profile.id,
+    Buffer.from(base64encodedPK, 'base64')
+  );
+
   const requestConfig: DataRequestConfig = {
     formatUrl({ url }) {
-      return `${url}/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
+      return `${url}/services/apexrest/klantinteracties/v1.0/klantcontacten/`;
     },
     params: {
-      hadBetrokkene__uuid: encryptBsn(authProfileAndToken.profile.id),
+      hadBetrokkene__uuid: encryptedBSN.toString('base64'),
+      iv: iv.toString('base64'),
+      pageSize: 100,
     },
     transformResponse: transformContactmomentenResponse,
   };

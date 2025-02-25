@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
-import { isPast } from 'date-fns';
+import { parseISO } from 'date-fns';
+import { isAfter } from 'date-fns';
 import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
@@ -38,6 +39,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -172,9 +174,14 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of pashouders) {
-    const passen = pashouder.passen.filter(
-      (pas) => pas.actief || !isPast(new Date(pas.expiry_date))
-    );
+    // Filter out passes that are not relevant for the user.
+    const passen = pashouder.passen.filter((pas) => {
+      return (
+        pas.actief ||
+        (!pas.vervangen && isBlockedButNotExpired(pas.expiry_date))
+      );
+    });
+
     for (const pas of passen) {
       const response = fetchStadspasSource(
         requestID,
@@ -210,6 +217,24 @@ export async function fetchStadspassenByAdministratienummer(
     );
 
   return apiSuccessResult({ stadspassen, administratienummer });
+}
+
+function isBlockedButNotExpired(expiryDate: string): boolean {
+  const defaultExpiryDate = new Date();
+  const DEFAULT_EXPIRY_DAY = 31;
+  defaultExpiryDate.setDate(DEFAULT_EXPIRY_DAY);
+  const DEFAULT_EXPIRY_MONTH = 7;
+  defaultExpiryDate.setMonth(DEFAULT_EXPIRY_MONTH);
+
+  const expiryDate_ = parseISO(expiryDate);
+  const now = new Date();
+
+  const isSameYear = expiryDate_.getFullYear() === now.getFullYear();
+  if (!isSameYear) {
+    defaultExpiryDate.setFullYear(defaultExpiryDate.getFullYear() - 1);
+  }
+
+  return isAfter(expiryDate, defaultExpiryDate);
 }
 
 export async function fetchStadspassen_(
@@ -380,6 +405,7 @@ export async function mutateGpassBlockPass(
     method: 'POST',
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
+    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
     transformResponse: (pas: StadspasDetailSource) => {
       if (pas.actief) {
         throw Error('City pass is still active after trying to block it.');

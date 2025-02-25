@@ -138,7 +138,7 @@ export function transformVakantieverhuurVergunningen(
       link: {
         to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
           id: idTransformed,
-          casetype: 'vakantieverhuur',
+          caseType: 'vakantieverhuur',
         }),
         title: vergunning.link.title,
       },
@@ -167,11 +167,11 @@ export async function fetchVakantieverhuurVergunningen(
         switch (vergunning.caseType) {
           case CaseType.VakantieverhuurVergunning:
             return generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
-              casetype: 'vakantieverhuur',
+              caseType: 'vakantieverhuur',
               id: ':id',
             });
           default:
-            return AppRoutes['TOERISTISCHE_VERHUUR'];
+            return AppRoutes.TOERISTISCHE_VERHUUR;
         }
       },
       filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>

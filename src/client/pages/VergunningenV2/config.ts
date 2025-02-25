@@ -1,3 +1,4 @@
+import styles from './Vergunningen.module.scss';
 import {
   Vergunning,
   VergunningExpirable,
@@ -7,28 +8,28 @@ import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { dateSort } from '../../../universal/helpers/date';
 import { isExpired } from '../../../universal/helpers/vergunningen';
 
-export const displayPropsHuidigeVergunningen = {
+const displayPropsHuidigeVergunningen = {
   identifier: 'Kenmerk',
   title: 'Soort vergunning',
   dateStartFormatted: 'Startdatum',
   dateEndFormatted: 'Einddatum',
 };
 
-export const displayPropsParkerenHuidigeVergunningen = {
+const displayPropsParkerenHuidigeVergunningen = {
   identifier: 'Kenmerk',
-  title: 'Soort vergunning',
+  title: 'Omschrijving',
   dateRequestFormatted: 'Aangevraagd',
 };
 
-export const displayPropsLopendeAanvragen = {
+const displayPropsLopendeAanvragen = {
   identifier: 'Kenmerk',
-  title: 'Soort vergunning',
+  title: 'Omschrijving',
   dateRequestFormatted: 'Aangevraagd',
 };
 
-export const displayPropsEerdereVergunningen = {
+const displayPropsEerdereVergunningen = {
   identifier: 'Kenmerk',
-  title: 'Soort vergunning',
+  title: 'Omschrijving',
   decision: 'Resultaat',
 };
 
@@ -36,16 +37,10 @@ export const listPageParamKind = {
   actual: 'huidige-vergunningen-en-ontheffingen',
   historic: 'eerdere-vergunningen-en-ontheffingen',
   inProgress: 'lopende-aanvragen',
-};
+} as const;
 
-export type ListPageParamKey = keyof typeof listPageParamKind;
+type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const listPageTitle = {
-  [listPageParamKind.actual]: 'Huidige vergunningen en ontheffingen',
-  [listPageParamKind.historic]:
-    'Eerdere en niet verleende vergunningen en ontheffingen',
-};
 
 function isVergunningExpirable(
   vergunning: Vergunning | VergunningFrontendV2
@@ -60,50 +55,45 @@ export const tableConfig = {
       !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
+    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
     filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
-      if (FeatureToggle.vergunningenV2Active) {
-        return (
-          vergunning.decision === 'Verleend' &&
-          'isExpired' in vergunning &&
-          vergunning.isExpired !== true
-        );
-      }
+      const isCurrentlyActivePermit =
+        vergunning.processed && vergunning.decision === 'Verleend';
+
       if (isVergunningExpirable(vergunning)) {
-        return (
-          vergunning.status === 'Afgehandeld' &&
-          vergunning.decision === 'Verleend' &&
-          !isExpired(vergunning, new Date())
-        );
+        return isCurrentlyActivePermit && !isExpired(vergunning, new Date());
       }
       // Assume if something is not expirable then it's not expired.
-      return (
-        vergunning.status === 'Afgehandeld' &&
-        vergunning.decision === 'Verleend'
-      );
+      return isCurrentlyActivePermit;
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: FeatureToggle.vergunningenV2Active
       ? displayPropsHuidigeVergunningen
       : displayPropsParkerenHuidigeVergunningen,
+    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
     filter: (vergunning: VergunningFrontendV2 | Vergunning) => {
+      if (vergunning.processed && vergunning.decision !== 'Verleend') {
+        return true;
+      }
+
       if (isVergunningExpirable(vergunning)) {
         return (
+          vergunning.processed &&
           vergunning.decision === 'Verleend' &&
           isExpired(vergunning, new Date())
         );
       }
-      return (
-        vergunning.status === 'Afgehandeld' &&
-        vergunning.decision !== 'Verleend'
-      );
+
+      return false;
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
+    className: styles.VergunningenTableThemaPagina,
   },
-};
+} as const;

@@ -81,9 +81,21 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           class="ams-grid__cell ams-grid__cell--span-all"
         >
           <p
+            class="ams-paragraph ams-mb--sm"
+          >
+            Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur een e-mail naar 
+            <a
+              class="ams-link ams-link--standalone"
+              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren"
+            >
+              debiteurenadministratie@amsterdam.nl
+            </a>
+             met de details van de factuur, zoals het factuurnummer of andere relevante informatie, zodat zij u verder kunnen helpen.
+          </p>
+          <p
             class="ams-paragraph"
           >
-            Hieronder ziet u een overzicht van uw facturen. U ziet hier niet de facturen inzake Gemeentebelastingen. Deze vindt u terug bij 
+            U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
             <a
               class="ams-link ams-link--standalone"
               href="http://remote-api-host/sso/portaal/belastingen"
@@ -93,6 +105,62 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             </a>
             .
           </p>
+        </div>
+        <div
+          class="ams-grid__cell ams-grid__cell--span-all"
+        >
+          <ul
+            class="ams-link-list"
+          >
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa"
+                rel="noreferrer"
+              >
+                <span
+                  class="ams-icon ams-icon--size-5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Meer over betalen aan de gemeente
+              </a>
+            </li>
+            <li>
+              <a
+                class="ams-link-list__link"
+                href="http://remote-api-host/sso/portaal/belastingen"
+                rel="noreferrer"
+              >
+                <span
+                  class="ams-icon ams-icon--size-5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Belastingen op Mijn Amsterdam
+              </a>
+            </li>
+          </ul>
         </div>
         <div
           class="ams-grid__cell ams-grid__cell--span-all"

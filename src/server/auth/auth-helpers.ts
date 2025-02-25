@@ -24,6 +24,7 @@ import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
+import { logger } from '../logging';
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,
@@ -126,7 +127,7 @@ export async function isRequestAuthenticated(
       }
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     captureException(error);
   }
   return false;

@@ -44,15 +44,23 @@ export function isProtectedRoute(pathRequested: string) {
  *
  * # Params
  * | path: Path you want to prepend or interpolate the params into.
- * | params: Optional value to interpolate into the url parameters.
+ * | params: Optional value to interpolate into the url parameters or a Tuple with query params and or url (path) params.
  * | baseUrl: Value that will be the base of the route (default value: `BFF_API_BASE_URL`)
  */
+type QueryParams = Record<string, string>;
+type PathParams = Record<string, string>;
+type QueryAndOrPathParams = [QueryParams, PathParams] | [QueryParams];
 export function generateFullApiUrlBFF(
   path: string,
-  pathParams?: Record<string, string>,
+  params?: PathParams | QueryAndOrPathParams,
   baseUrl: string = BFF_API_BASE_URL
 ) {
-  return `${baseUrl}${generatePath(path, pathParams)}`;
+  // QueryParams are only provided when pathParams is a tuple.
+  const [queryParams, pathParams] = Array.isArray(params)
+    ? params
+    : [undefined, params];
+  const query = queryParams ? `?${new URLSearchParams(queryParams)}` : '';
+  return `${baseUrl}${generatePath(path, pathParams)}${query}`;
 }
 
 /** Sets the right statuscode and sends a response. */

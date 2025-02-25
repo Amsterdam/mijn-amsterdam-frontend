@@ -1,13 +1,15 @@
-import { IS_AP, IS_DEVELOPMENT, IS_OT, IS_PRODUCTION } from './env';
+import { IS_AP, IS_OT, IS_PRODUCTION } from './env';
 
 export const FeatureToggle = {
   // AFIS
-  afisActive: !IS_PRODUCTION,
+  afisActive: true,
   afisEmandatesActive: false,
   afisBusinesspartnerPhoneActive: false,
   // We don't filter out the undownloadable facturen for testing purposes.
   // We want to be able to test immediately and not wait until the evening.
   afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
+  // See also MIJN-10042: Bug where migrated documents "$year < 2025" do not have PDF downloads available.
+  afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
 
   // AVG (Smile)
   avgActive: true,
@@ -43,6 +45,7 @@ export const FeatureToggle = {
   // HLI Hulp bij laag inkomen //
   hliThemaActive: true,
   hliThemaStadspasActive: true,
+  hliThemaStadspasBlokkerenActive: !IS_PRODUCTION,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,
@@ -72,7 +75,7 @@ export const FeatureToggle = {
 
   // Parkeren
   parkerenActive: true,
-  parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
+  parkerenCheckForProductAndPermitsActive: true,
 
   // Mijn Gegegvens -> aantal bewoners op adres.
   residentCountActive: true,
@@ -92,12 +95,10 @@ export const FeatureToggle = {
   subsidieActive: true,
 
   // Klant/Contactmomenten (Salesforce) patroon A
-  salesforceActive: !IS_PRODUCTION,
-  klantContactActive: !IS_PRODUCTION,
-  klantContactmomentenActive: !IS_PRODUCTION,
+  contactmomentenActive: !IS_PRODUCTION,
 
   // WPI Portaal
-  svwiLinkActive: !IS_PRODUCTION,
+  svwiLinkActive: false, // NOTE: The status of this feature is unknown.
 
   // Toeristische verhuur
   toeristischeVerhuurActive: true,
@@ -113,7 +114,7 @@ export const FeatureToggle = {
   vergunningenActive: true,
   // Vergunningen V2 met BFF integratie
   vergunningenV2Active: false, // TODO: Enable when working on MIJN-8914
-  decosServiceActive: false, // TODO: Enable when working on MIJN-8914
+  decosServiceActive: !IS_PRODUCTION, // TODO: Enable when working on MIJN-8914
 
   // WIOR Kaar data
   wiorDatasetActive: true,

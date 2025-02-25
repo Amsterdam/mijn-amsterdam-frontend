@@ -1,5 +1,5 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
-import { GenericDocument } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { NotificationLabelByType } from '../vergunningen-v2/config-and-types';
 
 type DecosDocumentBase = {
@@ -129,7 +129,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   // A mapping object that can be used to assign a readable attribute to the data sent to the frontend.
   // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
   // For example String operations like, trim, split, uppercase etc.
-  transformFields?: Partial<DecosFieldTransformerObject<T>>;
+  transformFields: Partial<DecosFieldTransformerObject<T>>;
   // After transform is used to perform additional transformations after the initial transform.
   // Business logic is implemented at this point, also async calls to other services to enrich the data can be done here.
   afterTransform?: (
@@ -145,11 +145,6 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.
   isActive: boolean;
-  // Initially we request a set of fields to be included in the responseData (?select=). For some cases we need a (few) custom field(s) included in the initial response.
-  // For example to show a kenteken in the Notifications. Sadly the requested fields cannot be specified on a case basis.
-  // This means even though we do not want, for example, date7 for case A we will receive it anyway.
-  // We select a specific set of fields because otherwise we receive all the fields of a zaak which are bloated and mostly unused.
-  addToSelectFieldsBase?: string[];
   // Notifications for this specific
   notificationLabels?: Partial<NotificationLabelByType>;
 };
@@ -171,8 +166,8 @@ export interface DecosZaakBase {
   decision: string | null;
   description: string;
 
-  // Url to BFF Detail paga api
-  fetchUrl: string;
+  // Url to fetch vergunnungen for a specific Zaak.
+  fetchDocumentsUrl: string;
 
   identifier: ZaakKenmerk;
   title: string;
@@ -273,3 +268,13 @@ export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 = 'nogniet';
 // Cases with this text12 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
 export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
   'wacht op online betaling';
+
+export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> = T & {
+  dateDecisionFormatted?: string | null;
+  dateInBehandeling: string | null;
+  dateInBehandelingFormatted: string | null;
+  dateRequestFormatted: string;
+  dateStartFormatted?: string | null;
+  dateEndFormatted?: string | null;
+  isExpired?: boolean;
+} & ZaakDetail;

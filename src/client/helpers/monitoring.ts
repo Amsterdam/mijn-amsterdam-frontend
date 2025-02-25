@@ -20,7 +20,7 @@ const severityMap: Record<Severity, string> = {
 };
 
 export type Properties = {
-  properties?: Record<string, any>;
+  properties?: Record<string, unknown>;
   severity?: Severity;
 };
 
@@ -58,9 +58,13 @@ export function captureException(error: unknown, properties?: Properties) {
     properties,
   };
 
-  IS_DEVELOPMENT
-    ? MA_APP_MODE !== 'unittest' && console.log('Capture exception', payload)
-    : appInsights.trackException(payload);
+  if (IS_DEVELOPMENT) {
+    if (MA_APP_MODE !== 'unittest') {
+      console.log('Capture exception', payload);
+    }
+  } else {
+    appInsights.trackException(payload);
+  }
 }
 
 export function captureMessage(message: string, properties?: Properties) {
@@ -70,12 +74,16 @@ export function captureMessage(message: string, properties?: Properties) {
 
   const payload = { message, severity, properties };
 
-  IS_DEVELOPMENT
-    ? MA_APP_MODE !== 'unittest' && console.log('Capture message', payload)
-    : appInsights.trackTrace(payload);
+  if (IS_DEVELOPMENT) {
+    if (MA_APP_MODE !== 'unittest') {
+      console.log('Capture message', payload);
+    }
+  } else {
+    appInsights.trackTrace(payload);
+  }
 }
 
-export function trackEvent(name: string, properties: Record<string, any>) {
+export function trackEvent(name: string, properties: Record<string, unknown>) {
   return IS_DEVELOPMENT
     ? MA_APP_MODE !== 'unittest' && console.log('Track event', name, properties)
     : appInsights.trackEvent({
