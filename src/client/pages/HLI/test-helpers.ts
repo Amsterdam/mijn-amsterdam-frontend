@@ -9,8 +9,8 @@ export function stadspasCreator() {
   let id = 0;
 
   function create(
-    fieldsToOverwrite: Partial<StadspasFrontend>,
-    ownerFieldsToOverwrite: Partial<StadspasOwner>
+    fieldsToOverwrite: Partial<StadspasFrontend> = {},
+    ownerFieldsToOverwrite: Partial<StadspasOwner> = {}
   ): StadspasFrontend {
     id++;
 
