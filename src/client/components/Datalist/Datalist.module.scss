@@ -8,13 +8,16 @@
     font-weight: var(--ams-text-font-weight-bold);
   }
 
+  &:last-child {
+    // NOTE: If the last description in the DL is wrapped by a wrapped row, this doesn't work.
+    > .Datalist__description:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   &__description {
     padding: 0;
     margin: 0 0 2rem 0;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
 
     .has-horizontal-rows & {
       margin: 0;

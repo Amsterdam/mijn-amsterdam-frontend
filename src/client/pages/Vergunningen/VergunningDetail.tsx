@@ -110,7 +110,6 @@ export function VergunningDetailPagina() {
                         <DocumentListV2
                           documents={documents}
                           columns={['', '']}
-                          className="ams-mb--sm"
                         />
                       ),
                     },

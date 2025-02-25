@@ -83,7 +83,6 @@ export function ParkerenDetailPagina() {
                         <DocumentListV2
                           documents={documents}
                           columns={['', '']}
-                          className="ams-mb--sm"
                         />
                       ),
                     },
