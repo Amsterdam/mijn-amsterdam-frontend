@@ -9,18 +9,12 @@ export function stadspasCreator() {
   let id = 0;
 
   function create(
-    firstname: string,
-    actief: boolean,
-    // eslint-disable-next-line no-magic-numbers
-    passNumber: number = 123123123
+    fieldsToOverwrite: Partial<StadspasFrontend>,
+    ownerFieldsToOverwrite: Partial<StadspasOwner>
   ): StadspasFrontend {
     id++;
 
-    const owner: StadspasOwner = {
-      firstname,
-      lastname: 'Crepin',
-      initials: 'KC',
-    };
+    const passNumber = 123123123;
 
     const passNumberComplete = 'volledig.' + passNumber;
 
@@ -30,15 +24,21 @@ export function stadspasCreator() {
       id: `stadspas-id-${id}`,
       passNumber,
       passNumberComplete,
-      owner,
+      owner: {
+        firstname: 'Kerub',
+        lastname: 'Crepin',
+        initials: 'KC',
+        ...ownerFieldsToOverwrite,
+      },
       dateEnd: '31-07-2025',
       dateEndFormatted: '31 juli 2025',
       budgets: [],
-      balanceFormatted: '€5,50',
-      balance: 5.5,
+      balanceFormatted: '€0,00',
+      balance: 0,
       blockPassURL: 'http://example.com/stadspas/block',
-      actief,
+      actief: true,
       securityCode: '123-securitycode-123',
+      ...fieldsToOverwrite,
     };
   }
 

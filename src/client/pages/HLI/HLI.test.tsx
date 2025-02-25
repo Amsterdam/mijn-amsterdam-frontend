@@ -53,7 +53,16 @@ const testState = {
           decision: 'toegewezen',
         },
       ],
-      stadspas: [createStadspas('Kerub', true), createStadspas('Lou', false)],
+      stadspas: [
+        createStadspas(
+          { actief: true, balance: 5, balanceFormatted: '€5,00' },
+          { firstname: 'Kerub' }
+        ),
+        createStadspas(
+          { actief: false, balance: 4, balanceFormatted: '€4,00' },
+          { firstname: 'Lou' }
+        ),
+      ],
     },
   },
 } as unknown as AppState;
