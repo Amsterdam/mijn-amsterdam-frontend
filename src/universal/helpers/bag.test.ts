@@ -175,6 +175,13 @@ describe('getLatLonByAddress', () => {
       });
     });
 
+    test('Streetname with leading number', () => {
+      expect(extractAddress('2e Kekerstraat 1')).toStrictEqual({
+        openbareruimteNaam: '2e Kekerstraat',
+        huisnummer: 1,
+      });
+    });
+
     test('huisnummertoevoeging extracted', () => {
       expect(extractAddress('Herengracht 23-1')).toStrictEqual({
         openbareruimteNaam: 'Herengracht',
