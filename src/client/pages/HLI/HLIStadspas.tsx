@@ -92,9 +92,9 @@ export default function HLIStadspas() {
   const { passNumber } = useParams<{ passNumber: string }>();
   const stadspassen = useStadspassen();
 
-  const stadspas: StadspasFrontend | null | undefined = passNumber
+  const stadspas: StadspasFrontend | undefined = passNumber
     ? stadspassen.find((pass) => pass.passNumber.toString() === passNumber)
-    : null;
+    : undefined;
 
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
