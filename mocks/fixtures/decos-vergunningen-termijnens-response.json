@@ -1,0 +1,41 @@
+{
+  "count": 1,
+  "content": [
+    {
+      "key": "51968C2072AA4323AC5336A59B469A59",
+      "fields": {
+        "date2": "2025-02-20T10:31:20",
+        "date4": "2025-02-17T00:00:00",
+        "date5": "2025-02-20T00:00:00",
+        "parentKey": "91BE018888F34866B3B9CFCB9CCEA835",
+        "sequence": 2.0,
+        "itemtype_key": "TERMIJNEN",
+        "mark": "Z/25/2241151",
+        "num1": 14.0,
+        "subject1": "Verzoek aanvullende gegevens",
+        "subject2": "Extra foto zijkant nodig 2",
+        "text45": "Varen vergunning exploitatie",
+        "num22": 2025.0,
+        "itemrel_key": "8246BE400A3546F7B0BC8CD9DB217865"
+      }
+    },
+    {
+      "key": "51968C2072AA4323AC5336A59B469A58",
+      "fields": {
+        "date2": "2025-02-21T10:31:20",
+        "date4": "2025-02-21T00:00:00",
+        "date5": "2025-03-06T00:00:00",
+        "parentKey": "91BE018888F34866B3B9CFCB9CCEA835",
+        "sequence": 1.0,
+        "itemtype_key": "TERMIJNEN",
+        "mark": "Z/25/2241151",
+        "num1": 14.0,
+        "subject1": "Verzoek aanvullende gegevens",
+        "subject2": "Extra foto zijkant nodig",
+        "text45": "Varen vergunning exploitatie",
+        "num22": 2025.0,
+        "itemrel_key": "8246BE400A3546F7B0BC8CD9DB217865"
+      }
+    }
+  ]
+}
