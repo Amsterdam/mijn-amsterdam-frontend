@@ -66,9 +66,12 @@ export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
   return formattedTime;
 }
 /**
- * Checks if date is a date is historic, today _is_ included.
+ * Checks if date is a date is historic, dateNow _is_ included.
  */
-export function isDateInPast(date: string, dateNow: string | Date) {
+export function isDateInPast(
+  date: string,
+  dateNow: string | Date = new Date()
+) {
   if (typeof dateNow === 'string') {
     dateNow = parseISO(dateNow);
   }

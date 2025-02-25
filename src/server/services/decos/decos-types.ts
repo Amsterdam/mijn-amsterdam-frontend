@@ -41,6 +41,18 @@ export type DecosWorkflowSource = {
   fields: DecosWorkflowFieldsSource;
 };
 
+export type DecosTermijnSource = {
+  fields: DecosTermijnFieldsSource;
+};
+
+export type DecosTermijn = {
+  type: ZaakStatus;
+  description?: string;
+  dateStart: string;
+  dateEnd: string;
+  numberOfDays?: number;
+};
+
 export type DecosDocumentBlobSource = {
   key: DecosZaakID;
   links: string[];
@@ -53,6 +65,7 @@ export type DecosZakenResponse<T = DecosZaakSource[]> = {
 };
 
 export type DecosWorkflowResponse = DecosZakenResponse<DecosWorkflowSource[]>;
+export type DecosTermijnResponse = DecosZakenResponse<DecosTermijnSource[]>;
 
 export type DecosResponse<T> = {
   itemDataResultSet: {
@@ -61,6 +74,8 @@ export type DecosResponse<T> = {
 };
 export type DecosWorkflowStepTitle = string;
 export type DecosWorkflowStepDate = string;
+export type DecosTermijnType = string;
+export type DecosTermijnDate = string;
 export type DecosZaakDocument = GenericDocument & { key: string };
 export type DecosZaakID = string;
 export type DecosFieldNameSource = string;
@@ -94,6 +109,13 @@ export type DecosZaakFieldsSource = {
 type DecosWorkflowFieldsSource = {
   text7: string;
   date1?: string;
+};
+type DecosTermijnFieldsSource = {
+  subject1: string; // Type termijn
+  subject2?: string; // Description
+  date4: string; // dateStart
+  date5: string; // dateEnd
+  num1?: number; // number of days
 };
 export type AddressBookEntry = {
   key: string;
@@ -143,6 +165,11 @@ export type DecosZaakTransformer<T extends DecosZaakBase> = {
   requirePayment?: boolean;
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
   fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
+  // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
+  fetchTermijnenFor?: {
+    status: ZaakStatus;
+    type: DecosTermijnType;
+  }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.
   isActive: boolean;
   // Notifications for this specific
@@ -181,6 +208,7 @@ export interface DecosZaakBase {
 
   // WorkflowStep statusses
   statusDates: ZaakStatusDate[];
+  termijnDates: ZaakTermijnDate[];
 
   paymentStatus: string | null;
   paymentMethod: string | null;
@@ -191,9 +219,16 @@ export type ZaakStatus =
   | 'In behandeling'
   | 'Afgehandeld'
   | SomeOtherString;
+
 export type ZaakStatusDate = {
   status: ZaakStatus;
   datePublished: string | null;
+};
+
+export type ZaakTermijnDate = {
+  status: ZaakStatus;
+  dateStart: string;
+  dateEnd: string;
 };
 export interface DecosZaakWithLocation extends DecosZaakBase {
   location: string | null;
