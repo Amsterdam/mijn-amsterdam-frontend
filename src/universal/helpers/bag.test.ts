@@ -140,7 +140,7 @@ describe('getLatLonByAddress', () => {
       expect(extractAddress('1023 EH')).toStrictEqual(expected);
     });
 
-    test('Extracts when postal code at the beginning or end', () => {
+    test('Extracts postal code at the beginning or end', () => {
       const expected: BAGQueryParams = {
         openbareruimteNaam: 'PATER V/D ELSENPLEIN',
         huisnummer: 86,
@@ -226,6 +226,13 @@ describe('getLatLonByAddress', () => {
         {
           openbareruimteNaam: 'P/A ST. JACOBSLAAN',
           huisnummer: 339,
+        },
+      ],
+      [
+        'Amsterdam Rijnkanaalkade 1',
+        {
+          openbareruimteNaam: 'Amsterdam Rijnkanaalkade',
+          huisnummer: 1,
         },
       ],
     ])('Address: "%s"', (input, expected) => {
