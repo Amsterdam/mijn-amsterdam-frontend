@@ -25,7 +25,10 @@ const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
   huisnummertoevoeging: { pattern: /\w/i },
 };
 
-export function extractAddress(rawText: string): BAGQueryParams | undefined {
+/** Extract an address from free form input.
+ * Can `throw` an `Error`.
+ */
+export function extractAddress(rawText: string): BAGQueryParams {
   if (!rawText) {
     throw `Cannot extract address out of bad input: '${rawText}'`;
   }
@@ -40,6 +43,8 @@ export function extractAddress(rawText: string): BAGQueryParams | undefined {
     .replace(/Amsterdam/gi, '');
 
   const [, result] = Object.entries(patterns).reduce(extract, [cleanText, {}]);
+
+  console.log(result);
 
   if (!(result.openbareruimteNaam || result.postcode)) {
     throw `Cannot execute a BAG query without a openbareruimtenaam (streetname) or postcode.
