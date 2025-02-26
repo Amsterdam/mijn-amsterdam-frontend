@@ -22,11 +22,12 @@ const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
     pattern: /\d+/i,
     formatter: (huisnummer) => parseInt(huisnummer),
   },
-  huisnummertoevoeging: { pattern: /\w/i },
+  huisnummertoevoeging: { pattern: /\b\w{1,5}\b/i },
 };
 
 /** Extract an address from free form input.
- * Can `throw` an `Error`.
+
+ * @throws {Error}
  */
 export function extractAddress(rawText: string): BAGQueryParams {
   if (!rawText) {
@@ -38,9 +39,8 @@ export function extractAddress(rawText: string): BAGQueryParams {
     // Remove everything but alphanumeric, dash, dot, apostrophe and space.
     // @ts-ignore unicode does work
     .replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '')
-    .replace(/\s{2,}/g, ' ')
-    // This can mess with matching and we don't need the city name.
-    .replace(/Amsterdam/gi, '');
+    // Spaces to single space.
+    .replace(/\s{2,}/g, ' ');
 
   const [, result] = Object.entries(patterns).reduce(extract, [cleanText, {}]);
 
