@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
-import MockApp from '../MockApp';
+import MockApp, { componentCreator } from '../MockApp';
 import ThemaPaginaHLI from './HLI';
 import { stadspasCreator } from './test-helpers';
 import { AppState } from '../../../universal/types';
@@ -67,31 +67,15 @@ const testState = {
   },
 } as unknown as AppState;
 
-const routeEntry = generatePath(AppRoutes.HLI);
-const routePath = AppRoutes.HLI;
-
-export function createComponent(state: AppState, component: () => JSX.Element) {
-  function initializeState(snapshot: MutableSnapshot) {
-    snapshot.set(appStateAtom, state);
-  }
-
-  function Component() {
-    return (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={component}
-        initializeState={initializeState}
-      />
-    );
-  }
-
-  return Component;
-}
+const createHLIComponent = componentCreator({
+  component: ThemaPaginaHLI,
+  routeEntry: generatePath(AppRoutes.HLI),
+  routePath: AppRoutes.HLI,
+});
 
 describe('<HLI />', () => {
   it('Matches the Full Page snapshot with an active and a blocked pas', () => {
-    const Component = createComponent(testState, ThemaPaginaHLI);
+    const Component = createHLIComponent(testState);
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
