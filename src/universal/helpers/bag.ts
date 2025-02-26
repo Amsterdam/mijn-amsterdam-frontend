@@ -44,8 +44,6 @@ export function extractAddress(rawText: string): BAGQueryParams {
 
   const [, result] = Object.entries(patterns).reduce(extract, [cleanText, {}]);
 
-  console.log(result);
-
   if (!(result.openbareruimteNaam || result.postcode)) {
     throw `Cannot execute a BAG query without a openbareruimtenaam (streetname) or postcode.
     Error resulted from input: '${rawText}' and got parsed up to:

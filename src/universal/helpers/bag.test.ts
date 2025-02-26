@@ -133,7 +133,7 @@ describe('getLatLonByAddress', () => {
     });
 
     test('Extracts just postal code', () => {
-      const expected = {
+      const expected: BAGQueryParams = {
         postcode: '1023EH',
       };
       expect(extractAddress('1023EH')).toStrictEqual(expected);
@@ -141,7 +141,7 @@ describe('getLatLonByAddress', () => {
     });
 
     test('Extracts when postal code at the beginning or end', () => {
-      const expected = {
+      const expected: BAGQueryParams = {
         openbareruimteNaam: 'PATER V/D ELSENPLEIN',
         huisnummer: 86,
         postcode: '1023EH',
@@ -154,108 +154,119 @@ describe('getLatLonByAddress', () => {
       );
     });
 
-    test('Short streetname with single digit', () => {
-      expect(extractAddress('Amstel 1')).toStrictEqual({
-        openbareruimteNaam: 'Amstel',
-        huisnummer: 1,
-      });
+    test.each<[string, BAGQueryParams]>([
+      [
+        'Amstel 1',
+        {
+          openbareruimteNaam: 'Amstel',
+          huisnummer: 1,
+        },
+      ],
+      [
+        'Burgemeester Röellstraat 44',
+        {
+          openbareruimteNaam: 'Burgemeester Röellstraat',
+          huisnummer: 44,
+        },
+      ],
+      [
+        'NDSM-straat 1',
+        {
+          openbareruimteNaam: 'NDSM-straat',
+          huisnummer: 1,
+        },
+      ],
+      [
+        '2e Kekerstraat 1',
+        {
+          openbareruimteNaam: '2e Kekerstraat',
+          huisnummer: 1,
+        },
+      ],
+      [
+        'Herengracht 23-1',
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisnummertoevoeging: '1',
+        },
+      ],
+      [
+        'Herengracht 23-1,',
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisnummertoevoeging: '1',
+        },
+      ],
+      [
+        'Insulindeweg 26A',
+        {
+          openbareruimteNaam: 'Insulindeweg',
+          huisnummer: 26,
+          huisnummertoevoeging: 'A',
+        },
+      ],
+      [
+        "'t Dijkhuis 40",
+        {
+          openbareruimteNaam: "'t Dijkhuis",
+          huisnummer: 40,
+        },
+      ],
+      [
+        'PATER V/D ELSENPLEIN 86',
+        {
+          openbareruimteNaam: 'PATER V/D ELSENPLEIN',
+          huisnummer: 86,
+        },
+      ],
+      [
+        'P/A ST. JACOBSLAAN 339',
+        {
+          openbareruimteNaam: 'P/A ST. JACOBSLAAN',
+          huisnummer: 339,
+        },
+      ],
+    ])('Address: "%s"', (input, expected) => {
+      expect(extractAddress(input)).toStrictEqual(expected);
     });
 
-    test('Long streetname with latin character', () => {
-      expect(extractAddress('Burgemeester Röellstraat 44')).toStrictEqual({
-        openbareruimteNaam: 'Burgemeester Röellstraat',
-        huisnummer: 44,
-      });
-    });
-
-    test('Handles streetnames with a "-"', () => {
-      expect(extractAddress('NDSM-straat 1')).toStrictEqual({
-        openbareruimteNaam: 'NDSM-straat',
-        huisnummer: 1,
-      });
-    });
-
-    test('Streetname with leading number', () => {
-      expect(extractAddress('2e Kekerstraat 1')).toStrictEqual({
-        openbareruimteNaam: '2e Kekerstraat',
-        huisnummer: 1,
-      });
-    });
-
-    test('huisnummertoevoeging extracted', () => {
-      expect(extractAddress('Herengracht 23-1')).toStrictEqual({
-        openbareruimteNaam: 'Herengracht',
-        huisnummer: 23,
-        huisnummertoevoeging: '1',
-      });
-    });
-
-    test('huisnummertoevoeging extracted with trailing comma', () => {
-      expect(extractAddress('Herengracht 23-1,')).toStrictEqual({
-        openbareruimteNaam: 'Herengracht',
-        huisnummer: 23,
-        huisnummertoevoeging: '1',
-      });
-    });
-
-    test('Letter extracted as toevoeging', () => {
-      expect(extractAddress('Insulindeweg 26A')).toStrictEqual({
-        openbareruimteNaam: 'Insulindeweg',
-        huisnummer: 26,
-        huisnummertoevoeging: 'A',
-      });
-    });
-
-    test('With leading apostrophe', () => {
-      expect(extractAddress("'t Dijkhuis 40")).toStrictEqual({
-        openbareruimteNaam: "'t Dijkhuis",
-        huisnummer: 40,
-      });
-    });
-
-    test('With a slash in the address', () => {
-      expect(extractAddress('PATER V/D ELSENPLEIN 86')).toStrictEqual({
-        openbareruimteNaam: 'PATER V/D ELSENPLEIN',
-        huisnummer: 86,
-      });
-    });
-
-    test('With a dot in the address', () => {
-      expect(extractAddress('P/A ST. JACOBSLAAN 339')).toStrictEqual({
-        openbareruimteNaam: 'P/A ST. JACOBSLAAN',
-        huisnummer: 339,
-      });
-    });
-
-    test('Ignores city name and random charcters', () => {
-      expect(extractAddress('Straatnaam 1, , Amsterdam _ ; ,')).toStrictEqual({
+    test('Ignores city name and random characters', () => {
+      const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
-      });
+      };
+      expect(extractAddress('Straatnaam 1, , Amsterdam _ ; ,')).toStrictEqual(
+        expected
+      );
     });
 
     test('More then one "Amsterdam" in input', () => {
-      expect(
-        extractAddress('Straatnaam 1 Amsterdam Amsterdam amsterdam')
-      ).toStrictEqual({
+      const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
-      });
+      };
+      expect(
+        extractAddress('Straatnaam 1 Amsterdam Amsterdam amsterdam')
+      ).toStrictEqual(expected);
     });
 
     test('Whitespace is trimmed', () => {
-      expect(extractAddress('   Straatnaam 1   ')).toStrictEqual({
+      const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
-      });
+      };
+      expect(extractAddress('   Straatnaam 1   ')).toStrictEqual(expected);
     });
 
     test('Extra whitespace in between is removed', () => {
-      expect(extractAddress('Straatnaam  1 1023   EH')).toStrictEqual({
+      const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
         postcode: '1023EH',
-      });
+      };
+      expect(extractAddress('Straatnaam  1 1023   EH')).toStrictEqual(expected);
     });
   });
 
