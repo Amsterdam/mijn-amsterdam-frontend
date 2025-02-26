@@ -25,6 +25,7 @@ import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
+import { captureException } from '../../helpers/monitoring';
 
 function transformBagSearchResultsResponse(
   response: BAGSourceData,
@@ -99,7 +100,15 @@ export function LocationModal({
       return;
     }
     if (isLocationModalOpen) {
-      const querySearchAddress = extractAddress(address);
+      let querySearchAddress;
+
+      try {
+        querySearchAddress = extractAddress(address);
+      } catch (err: unknown) {
+        captureException(err);
+        return;
+      }
+
       const isWeesp = isLocatedInWeesp(address);
       // Updates bagApi state
       fetchBag({

@@ -124,6 +124,7 @@ describe('getLatLonByAddress', () => {
   describe('extractAddress tests', () => {
     test('Throws with bad input', () => {
       expect(() => extractAddress('')).toThrow();
+      expect(() => extractAddress('1')).toThrow();
     });
 
     test('Just streetname', () => {
