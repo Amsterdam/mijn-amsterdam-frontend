@@ -57,5 +57,5 @@ export const tableConfig = {
 export const routes = {
   listPage: AppRoutes['HLI/REGELINGEN_LIST'],
   detailPage: AppRoutes['HLI/REGELING'],
-  themaPage: AppRoutes['HLI'],
+  themaPage: AppRoutes.HLI,
 } as const;
