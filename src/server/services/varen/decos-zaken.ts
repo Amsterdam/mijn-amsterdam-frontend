@@ -27,6 +27,10 @@ const vesselSegment = { text10: 'segment' } as const;
 const vesselFormAppearance = { text15: 'formAppearance' } as const;
 const vesselEniNumber = { num10: 'eniNumber' } as const;
 
+const SELECT_FIELDS_TRANSFORM = {
+  ...SELECT_FIELDS_TRANSFORM_BASE,
+  text96: 'linkDataRequest' as const,
+};
 export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
   {
     isActive: true,
@@ -39,7 +43,7 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       company: 'company',
       num2: 'bsnkvk',
       mailaddress: 'address',
@@ -63,7 +67,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselLengths,
       ...vesselNumberOfSeats,
@@ -87,7 +91,7 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselNameOld,
     },
@@ -106,7 +110,7 @@ export const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTran
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselSegment,
       text33: 'statutoryName',
       text34: 'businessAddress',
@@ -127,7 +131,7 @@ export const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselLengths,
       ...vesselNumberOfSeats,
@@ -149,7 +153,7 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselNameOld,
       ...vesselLengths,
@@ -173,7 +177,7 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       text6: 'location',
     },
