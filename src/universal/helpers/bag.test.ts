@@ -122,7 +122,7 @@ describe('getLatLonByAddress', () => {
   });
 
   describe('extractAddress tests', () => {
-    test.each([[''], ['1AB']])('Throws with input "%s"', (input) => {
+    test.each([[''], ['1AB'], ['1-2']])('Throws with input "%s"', (input) => {
       expect(() => extractAddress(input)).toThrow();
     });
 
