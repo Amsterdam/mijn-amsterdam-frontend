@@ -15,7 +15,6 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function HistoricItemsMention() {
   return (
-    // RP TODO: Check condition around this component, write test, test on local host
     <Paragraph className={styles.HistoricItemsMention}>
       {HISTORIC_ITEMS_MENTION_TEXT}
     </Paragraph>
@@ -176,7 +175,7 @@ export default function ThemaPaginaHLI() {
         isPartialError={!!dependencyError}
         isLoading={isLoading}
       />
-      {regelingen.length ? <HistoricItemsMention /> : ''}
+      {!!regelingen.length && <HistoricItemsMention />}
     </>
   );
 }
