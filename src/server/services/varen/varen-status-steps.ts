@@ -42,7 +42,7 @@ export function getStatusSteps(decosZaak: Varen) {
         description: isTermijnActive
           ? `Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor ${defaultDateFormat(termijn.dateEnd)}`
           : '',
-        linkItems:
+        actionButtonItems:
           isTermijnActive && decosZaak.linkDataRequest
             ? [
                 {

@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 
-import { Heading, LinkList } from '@amsterdam/design-system-react';
+import { ActionGroup, Heading, Icon } from '@amsterdam/design-system-react';
+import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
 import styles from './StatusLine.module.scss';
@@ -13,6 +14,7 @@ import {
 } from '../../../universal/types/App.types';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
+import { MaButtonLink } from '../MaLink/MaLink';
 
 interface StatusLinePanelProps {
   children: ComponentChildren;
@@ -47,23 +49,27 @@ export function StatusLinePanelStatus({
 
 interface StatusLinePanelDescriptionProps {
   content?: string;
-  linkListItems?: LinkProps[];
+  actionButtonItems?: LinkProps[];
 }
 
 export function StatusLinePanelDescription({
   content = '',
-  linkListItems = [],
+  actionButtonItems = [],
 }: StatusLinePanelDescriptionProps) {
+  const actionButtons = actionButtonItems.length > 0 && (
+    <ActionGroup className={styles.PanelActionGroup}>
+      {actionButtonItems.map(({ to, title }) => (
+        <MaButtonLink key={to} href={to} variant="secondary">
+          {title}
+          <Icon svg={ExternalLinkIcon} size="level-5" />
+        </MaButtonLink>
+      ))}
+    </ActionGroup>
+  );
   return (
     <StatusLinePanel name="description">
       <InnerHtml className={styles.PanelContent}>{content}</InnerHtml>
-      <LinkList>
-        {linkListItems.map(({ to, title }) => (
-          <LinkList.Link key={to} rel="noreferrer" href={to}>
-            {title}
-          </LinkList.Link>
-        ))}
-      </LinkList>
+      {actionButtons}
     </StatusLinePanel>
   );
 }
@@ -301,7 +307,7 @@ export default function StatusLine({
 
               <StatusLinePanelDescription
                 content={item.description}
-                linkListItems={item.linkItems}
+                actionButtonItems={item.actionButtonItems}
               />
 
               <StatusLinePanelDocuments
