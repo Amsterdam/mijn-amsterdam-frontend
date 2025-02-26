@@ -46,7 +46,7 @@ export function extractAddress(rawText: string): BAGQueryParams {
 
   if (!(result.openbareruimteNaam || result.postcode)) {
     throw `Cannot execute a BAG query without a openbareruimtenaam (streetname) or postcode.
-    Error resulted from input: '${rawText}' and got parsed up to:
+    Error resulted from input: '${rawText}' and got parsed into:
     ${JSON.stringify(result, null, 2)}`;
   }
 
