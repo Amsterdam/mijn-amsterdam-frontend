@@ -30,6 +30,9 @@ export const listPageTitle = {
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
 
+export const HISTORIC_ITEMS_MENTION_TEXT =
+  'U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.';
+
 export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
@@ -47,8 +50,7 @@ export const tableConfig = {
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.EerdereRegelingen,
-    textNoContent:
-      'U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.',
+    textNoContent: HISTORIC_ITEMS_MENTION_TEXT,
   },
 } as const;
 

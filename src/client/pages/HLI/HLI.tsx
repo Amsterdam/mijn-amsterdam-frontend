@@ -1,6 +1,7 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
+import { HISTORIC_ITEMS_MENTION_TEXT } from './HLI-thema-config';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -14,9 +15,9 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function HistoricItemsMention() {
   return (
+    // RP TODO: Check condition around this component, write test, test on local host
     <Paragraph className={styles.HistoricItemsMention}>
-      U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier
-      niet ziet, heeft u eerder per post ontvangen.
+      {HISTORIC_ITEMS_MENTION_TEXT}
     </Paragraph>
   );
 }
@@ -175,7 +176,7 @@ export default function ThemaPaginaHLI() {
         isPartialError={!!dependencyError}
         isLoading={isLoading}
       />
-      <HistoricItemsMention />
+      {regelingen.length ? <HistoricItemsMention /> : ''}
     </>
   );
 }
