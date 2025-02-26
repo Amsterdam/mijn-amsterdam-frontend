@@ -122,92 +122,158 @@ describe('getLatLonByAddress', () => {
   });
 
   describe('extractAddress tests', () => {
-    test('Throws with bad input', () => {
-      expect(() => extractAddress('')).toThrowError();
-      expect(() => extractAddress('Only Streetname')).toThrowError();
+    test.each([[''], ['1AB'], ['1-2']])('Throws with input "%s"', (input) => {
+      expect(() => extractAddress(input)).toThrow();
     });
 
-    test('Short streetname with single digit', () => {
-      expect(extractAddress('Amstel 1')).toStrictEqual({
+    test('Just streetname', () => {
+      expect(extractAddress('Amstel')).toStrictEqual({
         openbareruimteNaam: 'Amstel',
-        huisnummer: 1,
-        huisnummertoevoeging: undefined,
-        huisletter: undefined,
       });
     });
 
-    test('Long streetname with simple number', () => {
-      expect(extractAddress('Burgemeester Röellstraat 44')).toStrictEqual({
-        openbareruimteNaam: 'Burgemeester Röellstraat',
-        huisnummer: 44,
-        huisnummertoevoeging: undefined,
-        huisletter: undefined,
-      });
+    test('Extracts just postal code', () => {
+      const expected: BAGQueryParams = {
+        postcode: '1023EH',
+      };
+      expect(extractAddress('1023EH')).toStrictEqual(expected);
+      expect(extractAddress('1023 EH')).toStrictEqual(expected);
     });
 
-    test('huisnummertoevoeging extracted', () => {
-      expect(extractAddress('Herengracht 23-1')).toStrictEqual({
-        openbareruimteNaam: 'Herengracht',
-        huisnummer: 23,
-        huisnummertoevoeging: '1',
-        huisletter: undefined,
-      });
-    });
-
-    test('huisnummertoevoeging extracted with trailing comma', () => {
-      expect(extractAddress('Herengracht 23-1,')).toStrictEqual({
-        openbareruimteNaam: 'Herengracht',
-        huisnummer: 23,
-        huisnummertoevoeging: '1',
-        huisletter: undefined,
-      });
-    });
-
-    test('Letter extracted as toevoeging', () => {
-      expect(extractAddress('Insulindeweg 26A')).toStrictEqual({
-        openbareruimteNaam: 'Insulindeweg',
-        huisnummer: 26,
-        huisnummertoevoeging: 'A',
-        huisletter: undefined,
-      });
-    });
-
-    test('With leading apostrophe', () => {
-      expect(extractAddress("'t Dijkhuis 40")).toStrictEqual({
-        openbareruimteNaam: "'t Dijkhuis",
-        huisnummer: 40,
-        huisnummertoevoeging: undefined,
-        huisletter: undefined,
-      });
-    });
-
-    test('With a slash in the address', () => {
-      expect(extractAddress('PATER V/D ELSENPLEIN 86')).toStrictEqual({
+    test('Extracts postal code at the beginning or end', () => {
+      const expected: BAGQueryParams = {
         openbareruimteNaam: 'PATER V/D ELSENPLEIN',
         huisnummer: 86,
-        huisnummertoevoeging: undefined,
-        huisletter: undefined,
-      });
+        postcode: '1023EH',
+      };
+      expect(extractAddress('1023EH PATER V/D ELSENPLEIN 86')).toStrictEqual(
+        expected
+      );
+      expect(extractAddress('PATER V/D ELSENPLEIN 86 1023 EH')).toStrictEqual(
+        expected
+      );
     });
 
-    test('With a dot in the address', () => {
-      expect(extractAddress('P/A ST. JACOBSLAAN 339')).toStrictEqual({
-        openbareruimteNaam: 'P/A ST. JACOBSLAAN',
-        huisnummer: 339,
-        huisnummertoevoeging: undefined,
-        huisletter: undefined,
-      });
+    test.each<[string, BAGQueryParams]>([
+      [
+        'Amstel 1',
+        {
+          openbareruimteNaam: 'Amstel',
+          huisnummer: 1,
+        },
+      ],
+      [
+        'Burgemeester Röellstraat 44',
+        {
+          openbareruimteNaam: 'Burgemeester Röellstraat',
+          huisnummer: 44,
+        },
+      ],
+      [
+        'NDSM-straat 1',
+        {
+          openbareruimteNaam: 'NDSM-straat',
+          huisnummer: 1,
+        },
+      ],
+      [
+        '2e Kekerstraat 1',
+        {
+          openbareruimteNaam: '2e Kekerstraat',
+          huisnummer: 1,
+        },
+      ],
+      [
+        'Herengracht 23-1',
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisnummertoevoeging: '1',
+        },
+      ],
+      [
+        'Herengracht 23-1,',
+        {
+          openbareruimteNaam: 'Herengracht',
+          huisnummer: 23,
+          huisnummertoevoeging: '1',
+        },
+      ],
+      [
+        'Insulindeweg 26A',
+        {
+          openbareruimteNaam: 'Insulindeweg',
+          huisnummer: 26,
+          huisnummertoevoeging: 'A',
+        },
+      ],
+      [
+        "'t Dijkhuis 40",
+        {
+          openbareruimteNaam: "'t Dijkhuis",
+          huisnummer: 40,
+        },
+      ],
+      [
+        'PATER V/D ELSENPLEIN 86',
+        {
+          openbareruimteNaam: 'PATER V/D ELSENPLEIN',
+          huisnummer: 86,
+        },
+      ],
+      [
+        'P/A ST. JACOBSLAAN 339',
+        {
+          openbareruimteNaam: 'P/A ST. JACOBSLAAN',
+          huisnummer: 339,
+        },
+      ],
+      [
+        'Amsterdam Rijnkanaalkade 1',
+        {
+          openbareruimteNaam: 'Amsterdam Rijnkanaalkade',
+          huisnummer: 1,
+        },
+      ],
+    ])('Address: "%s"', (input, expected) => {
+      expect(extractAddress(input)).toStrictEqual(expected);
     });
 
-    test('Ignores postcal code, city name and random charcters', () => {
-      expect(
-        extractAddress('Straatnaam 1, 1015BA, Amsterdam _ ; ,')
-      ).toStrictEqual({
+    test('Ignores city name and random characters', () => {
+      const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
-        huisnummertoevoeging: undefined,
-        huisletter: undefined,
-      });
+      };
+      expect(extractAddress('Straatnaam 1, , Amsterdam _ ; ,')).toStrictEqual(
+        expected
+      );
+    });
+
+    test('More then one "Amsterdam" in input', () => {
+      const expected: BAGQueryParams = {
+        openbareruimteNaam: 'Straatnaam',
+        huisnummer: 1,
+      };
+      expect(
+        extractAddress('Straatnaam 1 Amsterdam Amsterdam amsterdam')
+      ).toStrictEqual(expected);
+    });
+
+    test('Whitespace is trimmed', () => {
+      const expected: BAGQueryParams = {
+        openbareruimteNaam: 'Straatnaam',
+        huisnummer: 1,
+      };
+      expect(extractAddress('   Straatnaam 1   ')).toStrictEqual(expected);
+    });
+
+    test('Extra whitespace in between is removed', () => {
+      const expected: BAGQueryParams = {
+        openbareruimteNaam: 'Straatnaam',
+        huisnummer: 1,
+        postcode: '1023EH',
+      };
+      expect(extractAddress('Straatnaam  1 1023   EH')).toStrictEqual(expected);
     });
   });
 
