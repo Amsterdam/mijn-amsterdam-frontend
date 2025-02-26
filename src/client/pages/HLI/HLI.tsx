@@ -16,7 +16,8 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 export function HistoricItemsMention() {
   return (
     <Paragraph className={styles.HistoricItemsMention}>
-      {HISTORIC_ITEMS_MENTION_TEXT}
+      U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier
+      niet ziet, heeft u eerder per post ontvangen.
     </Paragraph>
   );
 }
@@ -175,7 +176,7 @@ export default function ThemaPaginaHLI() {
         isPartialError={!!dependencyError}
         isLoading={isLoading}
       />
-      {!!regelingen.length && <HistoricItemsMention />}
+      <HistoricItemsMention />
     </>
   );
 }
