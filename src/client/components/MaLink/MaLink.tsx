@@ -87,7 +87,7 @@ export function MaButtonLink({
     className
   );
   return (
-    <a {...rest} className={classes} href={href}>
+    <a {...rest} className={classes} aria-hidden={isDisabled} href={href}>
       {children}
     </a>
   );
