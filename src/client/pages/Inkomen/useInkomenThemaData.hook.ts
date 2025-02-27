@@ -14,10 +14,10 @@ export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
     useAppStateGetter();
 
-  const aanvragen = WPI_AANVRAGEN.content ?? [];
-  const tozo = WPI_TOZO.content ?? [];
-  const tonk = WPI_TONK.content ?? [];
-  const bbz = WPI_BBZ.content ?? [];
+  const aanvragen = WPI_AANVRAGEN?.content ?? [];
+  const tozo = WPI_TOZO?.content ?? [];
+  const tonk = WPI_TONK?.content ?? [];
+  const bbz = WPI_BBZ?.content ?? [];
 
   const specificaties = useAddDocumentLinkComponents(
     WPI_SPECIFICATIES.content?.uitkeringsspecificaties ?? []

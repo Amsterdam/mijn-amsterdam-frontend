@@ -6,7 +6,6 @@ import styles from './Search.module.scss';
 import type {
   HorecaVergunning,
   Krefia,
-  KrefiaDeepLink,
   VakantieverhuurVergunning,
   Vergunning,
 } from '../../../server/services';
@@ -402,17 +401,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
-        Object.values(apiContent.deepLinks)
-          .filter(
-            (deepLink: KrefiaDeepLink): deepLink is KrefiaDeepLink =>
-              deepLink !== null
-          )
-          .map((deepLink) => {
-            return {
-              ...deepLink,
-              title: deepLink.link.title,
-            };
-          });
+        apiContent.deepLinks.map((deepLink) => {
+          return {
+            ...deepLink,
+            title: deepLink.link.title,
+          };
+        });
       return deepLinks || [];
     },
   },

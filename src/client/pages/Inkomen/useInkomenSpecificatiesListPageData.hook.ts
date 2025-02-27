@@ -126,7 +126,10 @@ export function useInkomenSpecificatiesListPageData() {
     minDate,
     minDateFilterActive,
     noContentMessage: 'Er zijn op dit moment nog geen documenten beschikbaar.',
-    params,
+    params: {
+      kind,
+      page,
+    },
     resetSearch,
     title: isJaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties',
     routes,
