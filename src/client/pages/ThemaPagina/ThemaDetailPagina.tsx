@@ -1,9 +1,6 @@
 import { ReactNode } from 'react';
 
-import {
-  GenericDocument,
-  ZaakDetail,
-} from '../../../universal/types/App.types';
+import { ZaakDetail } from '../../../universal/types/App.types';
 import {
   ErrorAlert,
   LoadingContent,
@@ -28,7 +25,6 @@ const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 interface ThemaDetailPaginaProps<T> {
   zaak?: T | null;
   backLink: string;
-  documentPathForTracking?: (document: GenericDocument) => string;
   errorAlertContent?: ReactNode;
   isError: boolean;
   isLoading: boolean;
@@ -52,7 +48,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
   isError,
   isLoading,
-  documentPathForTracking,
   reverseSteps = false,
   showStatusLineConnection = true,
   statusLabel = 'Status',
@@ -89,7 +84,6 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
               statusLabel={statusLabel}
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
-              documentPathForTracking={documentPathForTracking}
             />
           </PageContentCell>
         )}

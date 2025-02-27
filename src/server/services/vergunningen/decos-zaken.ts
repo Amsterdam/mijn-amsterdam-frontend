@@ -46,13 +46,13 @@ import {
   DecosFieldNameSource,
   DecosZaakBase,
   DecosZaakTransformer,
-  DecosZaakWithKentekens,
   description,
   destination,
   location,
   SELECT_FIELDS_TRANSFORM_BASE,
   timeEnd,
   timeStart,
+  WithKentekens,
 } from '../decos/decos-types';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
@@ -64,7 +64,7 @@ import {
 
 // 1 or multiple kenteken(s)
 const kentekens = {
-  name: 'kentekens' as keyof DecosZaakWithKentekens, // TODO: Can this be typed stricter without casting?
+  name: 'kentekens' as keyof WithKentekens, // TODO: Can this be typed stricter without casting?
   transform: transformKenteken,
 };
 

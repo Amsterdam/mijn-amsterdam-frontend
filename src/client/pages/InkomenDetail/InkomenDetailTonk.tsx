@@ -36,9 +36,6 @@ export default function InkomenDetailTonk() {
       stateKey="WPI_TONK"
       pageContent={pageContent}
       statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
-      documentPathForTracking={(document) =>
-        `/downloads/inkomen/tonk/${document.title.split(/\n/)[0]}`
-      }
     />
   );
 }

@@ -14,7 +14,6 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import {
   AppState,
   AppStateKey,
-  GenericDocument,
   StatusLine,
 } from '../../../universal/types/App.types';
 import {
@@ -37,7 +36,6 @@ export type StatusSourceItem = StatusLine;
 interface StatusDetailProps<T> {
   backLinkTitle?: string;
   backLinkRoute?: string;
-  documentPathForTracking?: (document: GenericDocument) => string;
   getItems?: (content: AppState[AppStateKey]['content']) => T[];
   pageContent?:
     | ReactElement
@@ -52,7 +50,6 @@ interface StatusDetailProps<T> {
 export default function StatusDetail<T extends StatusLine>({
   backLinkTitle,
   backLinkRoute,
-  documentPathForTracking,
   getItems,
   pageContent,
   reverseSteps = false,
@@ -162,7 +159,6 @@ export default function StatusDetail<T extends StatusLine>({
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}
               id={`${thema}-${stateKey}-status`}
-              documentPathForTracking={documentPathForTracking}
             />
           </PageContentCell>
         )}

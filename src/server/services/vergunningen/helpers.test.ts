@@ -1,6 +1,6 @@
 import {
   TouringcarDagontheffing,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from './config-and-types';
 import {
   isNearEndDate,
@@ -43,7 +43,7 @@ describe('vergunningen/helpers', () => {
       d.setDate(d.getDate() + 1);
       expect(
         isExpired(
-          { dateEnd: new Date().toISOString() } as VergunningFrontendV2,
+          { dateEnd: new Date().toISOString() } as VergunningFrontend,
           d
         )
       ).toBe(true);
@@ -55,7 +55,7 @@ describe('vergunningen/helpers', () => {
       d.setDate(d.getDate() - 1);
       expect(
         isExpired(
-          { dateEnd: new Date().toISOString() } as VergunningFrontendV2,
+          { dateEnd: new Date().toISOString() } as VergunningFrontend,
           d
         )
       ).toBe(false);
@@ -64,7 +64,7 @@ describe('vergunningen/helpers', () => {
     test('Is expired same date', () => {
       expect(
         isExpired(
-          { dateEnd: new Date().toISOString() } as VergunningFrontendV2,
+          { dateEnd: new Date().toISOString() } as VergunningFrontend,
           new Date()
         )
       ).toBe(true);
@@ -76,13 +76,13 @@ describe('vergunningen/helpers', () => {
       caseType: 'test1',
       dateEnd: null,
       identifier: 'xx1',
-    } as unknown as VergunningFrontendV2;
+    } as unknown as VergunningFrontend;
 
     test('Has other actual vergunning of same type', () => {
       const decosZaken = [
         { caseType: 'test1', dateEnd: null, identifier: 'xx2' },
         decosZaak,
-      ] as unknown as VergunningFrontendV2[];
+      ] as unknown as VergunningFrontend[];
 
       expect(hasOtherActualVergunningOfSameType(decosZaken, decosZaak)).toBe(
         true

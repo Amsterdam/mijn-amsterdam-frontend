@@ -1,27 +1,28 @@
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
+  DecosZaakBase,
   DecosZaakTransformer,
-  DecosZaakWithDateRange,
-  DecosZaakWithLocation,
   SELECT_FIELDS_TRANSFORM_BASE,
+  WithDateRange,
+  WithLocation,
   dateEnd,
   dateStart,
   location,
 } from '../decos/decos-types';
-import { VergunningFrontendV2 } from '../vergunningen/config-and-types';
+import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
-interface DecosZaakExploitatieHorecabedrijf
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'ExploitatieHorecabedrijf'>;
-  dateStartPermit: string | null;
-  numberOfPermits: string | null;
-}
+export type DecosZaakExploitatieHorecabedrijf = DecosZaakBase &
+  WithLocation &
+  WithDateRange & {
+    caseType: GetCaseType<'ExploitatieHorecabedrijf'>;
+    dateStartPermit: string | null;
+    numberOfPermits: string | null;
+  };
 
 export type HorecaVergunning =
-  VergunningFrontendV2<DecosZaakExploitatieHorecabedrijf>;
+  VergunningFrontend<DecosZaakExploitatieHorecabedrijf>;
 
 export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatieHorecabedrijf> =
   {
