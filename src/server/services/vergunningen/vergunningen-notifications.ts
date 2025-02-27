@@ -19,12 +19,10 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
-import { getStatusDate } from '../decos/decos-helpers';
 
-// prettier-ignore
 export function getNotificationLabels(
   notificationLabels: Partial<NotificationLabelByType>,
-  vergunning: VergunningFrontend,
+  vergunning: VergunningFrontend<DecosZaakBase>,
   compareToDate: Date = new Date()
 ) {
   // Ignore formatting of the switch case statements for readability
@@ -57,7 +55,7 @@ export function getNotificationLabels(
 
     case notificationLabels.statusInBehandeling &&
       !vergunning.processed &&
-      !!getStatusDate('In behandeling', vergunning):
+      vergunning.steps.some((step) => step.status === 'In behandeling'):
       return notificationLabels.statusInBehandeling;
 
     case notificationLabels.statusAanvraag && !vergunning.processed:
@@ -68,7 +66,7 @@ export function getNotificationLabels(
 }
 
 function getNotificationBase(
-  vergunning: VergunningFrontend,
+  vergunning: VergunningFrontend<DecosZaakBase>,
   thema: Thema
 ): Pick<MyNotification, 'thema' | 'id' | 'link'> {
   const notificationBaseProperties = {
@@ -85,7 +83,7 @@ function getNotificationBase(
 function mergeNotificationProperties(
   notificationBase: Pick<MyNotification, 'thema' | 'id' | 'link'>,
   content: NotificationLabels,
-  vergunning: VergunningFrontend
+  vergunning: VergunningFrontend<DecosZaakBase>
 ): MyNotification {
   const notificationLabels: Pick<MyNotification, keyof typeof content> = {
     title: content.title(vergunning),

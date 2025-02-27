@@ -12,7 +12,7 @@ export function getStatusSteps(decosZaak: Varen) {
   const dateInBehandeling = getStatusDate('In behandeling', decosZaak);
   const hasDateInBehandeling = !!dateInBehandeling;
 
-  const hasTermijnen = decosZaak.termijnDates.length > 0;
+  const hasTermijnen = !!decosZaak.termijnDates?.length;
 
   const steps: StatusLineItem[] = [
     {
@@ -29,7 +29,7 @@ export function getStatusSteps(decosZaak: Varen) {
       isActive: hasDateInBehandeling && !hasTermijnen,
       isChecked: hasDateInBehandeling || hasTermijnen,
     },
-    ...decosZaak.termijnDates.flatMap((termijn, index, termijnen) => {
+    ...(decosZaak.termijnDates?.flatMap((termijn, index, termijnen) => {
       const isLastTermijn = index === termijnen.length - 1;
       const isTermijnActive =
         !isAfgehandeld &&
@@ -73,7 +73,7 @@ export function getStatusSteps(decosZaak: Varen) {
       };
 
       return [meerInformatieNodig, inBehandeling];
-    }),
+    }) ?? []),
     {
       status: 'Besluit',
       datePublished: decosZaak.dateDecision || '',

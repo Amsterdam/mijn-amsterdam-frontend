@@ -91,11 +91,9 @@ export const translateValue =
   <T>(translationMapping: { [K in keyof T]: DecosFieldValue[] }) =>
   (input: string) => {
     if (translationMapping) {
-      const maValue = entries(translationMapping).find(
-        ([maValue, decosValues]) => {
-          return decosValues.includes(input);
-        }
-      )?.[0];
+      const maValue = entries(translationMapping).find(([_, decosValues]) => {
+        return decosValues.includes(input);
+      })?.[0];
       return maValue ?? input;
     }
     return input;
@@ -154,7 +152,7 @@ export function getStatusDate(
   decosZaak: DecosZaakBase
 ) {
   return (
-    decosZaak.statusDates.find(({ status }) => status === zaakStatus)
+    decosZaak.statusDates?.find(({ status }) => status === zaakStatus)
       ?.datePublished || null
   );
 }
