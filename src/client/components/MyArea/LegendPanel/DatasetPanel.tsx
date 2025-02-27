@@ -1,3 +1,5 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import {
   DatasetCategoryId,
   DatasetControl,
@@ -47,7 +49,7 @@ export function DatasetPanel({
       label={
         <>
           {getIcon(categoryId, datasetId) || ''}
-          <p>{dataset.title}</p>
+          <Paragraph>{dataset.title}</Paragraph>
         </>
       }
       isIndeterminate={isIndeterminate}

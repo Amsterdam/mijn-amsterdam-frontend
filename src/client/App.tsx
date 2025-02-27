@@ -119,12 +119,11 @@ function AppNotAuthenticated() {
 
   if (shouldRedirectSSO) {
     return (
-      <p className={styles.PreLoader}>
+      <Paragraph className={styles.PreLoader}>
         Automatische toegang tot Mijn Amsterdam wordt gecontroleerd...
-      </p>
+      </Paragraph>
     );
   }
-  console.log('AppNotAuthenticated', location.pathname, AppRoutes.HOME);
   return (
     <>
       <MainHeader isAuthenticated={false} />

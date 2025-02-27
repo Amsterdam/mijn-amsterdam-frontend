@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Section.module.scss';
@@ -52,7 +52,9 @@ export default function Section({
         />
       )}
       {hasNoItemsMessage && !isLoading && !hasItems && (
-        <p className={styles.NoItemsMessage}>{noItemsMessage}</p>
+        <Paragraph className={styles.NoItemsMessage}>
+          {noItemsMessage}
+        </Paragraph>
       )}
       {!isLoading && hasItems && children}
     </section>
