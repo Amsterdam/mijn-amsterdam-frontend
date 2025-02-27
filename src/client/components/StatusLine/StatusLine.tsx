@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-import { ActionGroup, Heading, Icon } from '@amsterdam/design-system-react';
+import { ActionGroup, Heading, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
@@ -320,7 +320,9 @@ export default function StatusLine({
         </ul>
       )}
       {!items.length && (
-        <p className={styles.NoStatusItems}>Er is geen status beschikbaar.</p>
+        <Paragraph className={styles.NoStatusItems}>
+          Er is geen status beschikbaar.
+        </Paragraph>
       )}
     </div>
   );
