@@ -73,19 +73,9 @@ describe('<HLI />', () => {
   });
 
   test('Unlimited amount of citypasses are visible', () => {
-    const stadspassen = [
-      createStadspas({}, { firstname: 'Kerub' }),
-      createStadspas({}, { firstname: 'Lou' }),
-      createStadspas({}, { firstname: 'Hendrick' }),
-      createStadspas({}, { firstname: 'Leonard' }),
-      createStadspas({}, { firstname: 'George' }),
-      createStadspas({}, { firstname: 'Marina' }),
-      createStadspas({}, { firstname: 'Laurens' }),
-      createStadspas({}, { firstname: 'Martina' }),
-      createStadspas({}, { firstname: 'Aris' }),
-      createStadspas({}, { firstname: 'Bomom' }),
-      createStadspas({}, { firstname: 'Talarian' }),
-    ];
+    // 20 is Arbitrary but it exceeds usual limit and might be a huge family.
+    const stadspassen = Array.from({ length: 20 }, () => createStadspas());
+
     const state = createHLIState({ stadspassen });
 
     const Component = createHLIComponent(state);
