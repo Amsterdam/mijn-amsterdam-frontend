@@ -1,7 +1,11 @@
 :global(.ams-ordered-list).StepsList {
   gap: 0;
+  --status-circle-box-width: calc(var(--ams-grid-column-gap) * 2);
 
-  --status-circle-box-width: var(--ams-grid-column-gap);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    --status-circle-box-width: var(--ams-grid-column-gap);
+  }
+
   --status-circle-box-height: calc(var(--status-circle-box-width) / 2);
   --status-circle-size: var(--ams-heading-level-5-font-size);
   --status-circle-size-active: calc(var(--status-circle-size) * 1.8);
