@@ -11,7 +11,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ErfpachtOpenFacturen from './ErfpachtOpenFacturen';
+import { ErfpachtOpenFacturen } from './ErfpachtOpenFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
   const routeEntry = generatePath(AppRoutes['ERFPACHTv2/OPEN_FACTUREN']);
@@ -22,18 +22,20 @@ describe('<ErfpachtOpenFacturen />', () => {
     'xxx-relatie-code-xxx'
   );
 
-  const Component = ({
+  function Component({
     initializeState,
   }: {
     initializeState: (snapshot: MutableSnapshot) => void;
-  }) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ErfpachtOpenFacturen}
-      initializeState={initializeState}
-    />
-  );
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ErfpachtOpenFacturen}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Renders Open Facturen List Page no data', () => {
     const testState = {
