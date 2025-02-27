@@ -30,5 +30,5 @@ export const CaseTypeV2 = {
 } as const;
 
 export type DecosCaseTypeKey = keyof typeof CaseTypeV2;
-export type DecosCaseType = (typeof CaseTypeV2)[DecosCaseTypeKey];
+export type DecosCaseType = string;
 export type GetCaseType<T extends DecosCaseTypeKey> = (typeof CaseTypeV2)[T];
