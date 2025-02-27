@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 
+import { DecosZaakBase } from '../../../../server/services/decos/decos-types';
 import { VergunningFrontendV2 } from '../../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { GenericDocument } from '../../../../universal/types';
@@ -9,14 +10,17 @@ import {
   useAppStateBagApi,
 } from '../../../hooks/useAppState';
 
-export function useVergunningDetailData() {
+export function useVergunningDetailData<
+  V extends DecosZaakBase = DecosZaakBase,
+>() {
+  type VergunningFrontendTyped = VergunningFrontendV2<V>;
   const appState = useAppStateGetter();
   const { VERGUNNINGEN } = appState;
-  const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
+  const { id } = useParams<{ id: VergunningFrontendTyped['id'] }>();
   const vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
   const fetchUrl = vergunning?.fetchUrl ?? '';
   const [vergunningDetailApiResponse] = useAppStateBagApi<{
-    vergunning: VergunningFrontendV2 | null;
+    vergunning: VergunningFrontendTyped | null;
     documents: GenericDocument[];
   }>({
     url: fetchUrl,
