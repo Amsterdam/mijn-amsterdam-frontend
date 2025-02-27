@@ -1,5 +1,5 @@
 import type {
-  VergunningFrontendV2,
+  VergunningFrontend,
   ZwaarVerkeer,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
@@ -10,9 +10,9 @@ import InfoDetail, {
 export function ZwaarVerkeer({
   vergunning,
 }: {
-  vergunning: VergunningFrontendV2;
+  vergunning: VergunningFrontend;
 }) {
-  const vergunningData = vergunning as VergunningFrontendV2<ZwaarVerkeer>;
+  const vergunningData = vergunning as VergunningFrontend<ZwaarVerkeer>;
   const isAfgehandeld = vergunningData.processed;
 
   return (

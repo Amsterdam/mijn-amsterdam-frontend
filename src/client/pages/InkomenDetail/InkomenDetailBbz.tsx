@@ -51,9 +51,6 @@ export default function InkomenDetailBbz() {
       pageContent={pageContent}
       statusLabel={() => `Bbz-aanvraag`}
       showStatusLineConnection={!hasDecisionStep} // There is no logical connection between the historic BBZ steps, therefor we do not show the checkmarks as they imply a linear proces.
-      documentPathForTracking={(document) =>
-        `/downloads/inkomen/bbz/${document.title.split(/\n/)[0]}`
-      }
       reverseSteps={hasDecisionStep} // For an unknown business reason, the historic steps of BBZ are shown in reverse.
     />
   );

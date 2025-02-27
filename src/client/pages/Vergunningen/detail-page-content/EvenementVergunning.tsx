@@ -1,7 +1,7 @@
 import { Location } from './Location';
 import type {
   EvenementVergunning,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
 import {
   defaultDateFormat,
@@ -13,7 +13,7 @@ import InfoDetail, {
 } from '../../../components/InfoDetail/InfoDetail';
 
 export function getEvenementVergunningLineItems(
-  vergunning: VergunningFrontendV2<EvenementVergunning>
+  vergunning: VergunningFrontend<EvenementVergunning>
 ): StatusLineItem[] {
   const isDone = vergunning.processed;
 
@@ -44,10 +44,9 @@ export function getEvenementVergunningLineItems(
 export function EvenementVergunning({
   vergunning,
 }: {
-  vergunning: VergunningFrontendV2;
+  vergunning: VergunningFrontend;
 }) {
-  const vergunningData =
-    vergunning as VergunningFrontendV2<EvenementVergunning>;
+  const vergunningData = vergunning as VergunningFrontend<EvenementVergunning>;
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunningData.identifier || '-'} />

@@ -19,13 +19,13 @@ function transformBezwaarStatusToStatusLines(statussen: BezwaarStatus[]) {
   }));
 }
 
-const BezwarenStatusLines = ({
+function BezwarenStatusLines({
   id,
   statussen,
 }: {
   id: string;
   statussen: BezwaarStatus[];
-}) => {
+}) {
   const statusLineItems = transformBezwaarStatusToStatusLines(statussen);
 
   return (
@@ -33,11 +33,8 @@ const BezwarenStatusLines = ({
       trackCategory="Bezwaar detail / status"
       items={statusLineItems}
       id={`bezwaar-detail-${id}`}
-      documentPathForTracking={(document) =>
-        `/downloads/bezwaren/${document.title}`
-      }
     />
   );
-};
+}
 
 export default BezwarenStatusLines;
