@@ -21,14 +21,13 @@ import {
   IconAfvalRest,
   IconAfvalTextiel,
 } from '../../assets/icons/map';
-import {
-  ErrorAlert,
-  InfoDetail,
-  InnerHtml,
-  LoadingContent,
-  MaintenanceNotifications,
-} from '../../components';
-import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
+import ErrorAlert from '../../components/Alert/Alert';
+import InfoDetail, {
+  InfoDetailProps,
+} from '../../components/InfoDetail/InfoDetail';
+import InnerHtml from '../../components/InnerHtml/InnerHtml';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import {
   DetailPageV2,

@@ -33,7 +33,7 @@ export function InkomenDetailTozo() {
       zaak={zaak}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={pageContentTop}
+      pageContentMain={pageContentTop}
       backLink={routes.themaPage}
     />
   );

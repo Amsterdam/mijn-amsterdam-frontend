@@ -1,12 +1,14 @@
 import { getRows } from './fields-config';
-import { GPP } from '../../../../server/services/parkeren/config-and-types';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import {
+  AanbiedenDiensten,
+  VergunningFrontend,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function AanbiedenDienstenContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<GPP>;
+  vergunning: VergunningFrontend<AanbiedenDiensten>;
 }) {
   const rows = getRows(vergunning, ['identifier', 'decision']);
 

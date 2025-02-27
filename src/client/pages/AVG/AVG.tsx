@@ -2,12 +2,15 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useAVGData } from './useAVGData.hook';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
+import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>Hieronder ziet u een overzicht van uw AVG verzoeken.</Paragraph>
+  <PageContentCell>
+    <Paragraph>Hieronder ziet u een overzicht van uw AVG verzoeken.</Paragraph>
+  </PageContentCell>
 );
 
 function AVG() {

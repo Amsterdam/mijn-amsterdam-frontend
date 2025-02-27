@@ -32,7 +32,7 @@ export function InkomenDetailTonk() {
       zaak={zaak}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={pageContentTop}
+      pageContentMain={pageContentTop}
       backLink={routes.themaPage}
     />
   );
