@@ -1,13 +1,15 @@
 import {
-  EigenParkeerplaats,
-  EigenParkeerplaatsOpheffen,
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  TouringcarDagontheffing,
-  TouringcarJaarontheffing,
   VergunningFrontend,
+  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
+import {
+  TouringcarDagontheffing,
+  TouringcarJaarontheffing,
+  EigenParkeerplaatsOpheffen,
+  EigenParkeerplaats,
+} from '../parkeren/config-and-types';
 
 export function getCustomTitleForVergunningWithLicensePlates(
   vergunning:

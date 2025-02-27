@@ -63,7 +63,7 @@ import HLIRegelingen from './pages/HLI/HLIRegelingen';
 import HLIStadspasDetail from './pages/HLI/HLIStadspasDetail';
 import { HorecaThemaPagina } from './pages/Horeca/Horeca';
 import { HorecaDetailPagina } from './pages/Horeca/HorecaDetail';
-import { HorecaLijstPagina } from './pages/Horeca/HorecaLijst';
+import { HorecaLijstPagina } from './pages/Horeca/HorecaList';
 import Inkomen from './pages/Inkomen/Inkomen';
 import InkomenDetailBbz from './pages/InkomenDetail/InkomenDetailBbz';
 import InkomenDetailTonk from './pages/InkomenDetail/InkomenDetailTonk';

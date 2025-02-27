@@ -40,7 +40,8 @@
         "date5": "2021-05-19T00:00:00",
         "text6": "Amstel 1 1012AA Amsterdam",
         "title": "Ontvangen",
-        "dfunction": null
+        "dfunction": null,
+        "processed": false
       },
       "links": [
         {
@@ -58,7 +59,8 @@
         "date5": "2020-05-20T00:00:00",
         "text6": "Amstel 1 1012AA Amsterdam",
         "title": "Afgehandeld",
-        "dfunction": "Ingetrokken"
+        "dfunction": "Ingetrokken",
+        "processed": true
       },
       "links": [
         {
