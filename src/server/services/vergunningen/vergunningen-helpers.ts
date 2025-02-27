@@ -3,7 +3,7 @@ import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
-import { WithDateEnd } from '../decos/config-and-types';
+import { DecosZaakBase } from '../decos/config-and-types';
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
@@ -33,11 +33,11 @@ export function getCustomTitleForVergunningWithLicensePlates(
 }
 
 export function hasOtherActualVergunningOfSameType(
-  items: VergunningFrontend[],
-  item: VergunningFrontend
+  items: VergunningFrontend<DecosZaakBase>[],
+  item: VergunningFrontend<DecosZaakBase>
 ): boolean {
   return items.some(
-    (otherVergunning: VergunningFrontend) =>
+    (otherVergunning: VergunningFrontend<DecosZaakBase>) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
@@ -59,7 +59,7 @@ export function isNearEndDate(dateEnd?: string | null, dateNow?: Date) {
   );
 }
 
-export function isExpired(vergunning: WithDateEnd, dateNow?: Date) {
+export function isExpired(vergunning: DecosZaakBase, dateNow?: Date) {
   if (!vergunning.dateEnd) {
     return false;
   }

@@ -201,8 +201,8 @@ export type DecosZaakBase = {
   status: ZaakStatus;
 
   // WorkflowStep statusses
-  statusDates: ZaakStatusDate[];
-  termijnDates: ZaakTermijnDate[];
+  statusDates?: ZaakStatusDate[];
+  termijnDates?: ZaakTermijnDate[];
 };
 
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
@@ -234,10 +234,12 @@ export type WithKentekens = {
 
 export type WithDateStart = {
   dateStart: string | null;
+  dateStartFormatted: string | null;
 };
 
 export type WithDateEnd = {
   dateEnd: string | null;
+  dateEndFormatted: string | null;
 };
 
 export type WithDateRange = WithDateStart & WithDateEnd;
@@ -271,11 +273,7 @@ export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
 
 export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> = T & {
   dateDecisionFormatted?: string | null;
-  dateInBehandeling: string | null;
-  dateInBehandelingFormatted: string | null;
   dateRequestFormatted: string;
-  dateStartFormatted?: string | null;
-  dateEndFormatted?: string | null;
   isExpired?: boolean;
   displayStatus: string;
   // Url to fetch documents for a specific Zaak.
