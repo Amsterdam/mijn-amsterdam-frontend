@@ -76,8 +76,6 @@ export interface GenericDocument {
   isVisible?: boolean;
 }
 
-export type AltDocumentContent = string | ReactNode;
-
 export interface StatusLineItem {
   id: string;
   status: string;
@@ -87,7 +85,7 @@ export interface StatusLineItem {
   isActive: boolean;
   isChecked: boolean;
   isVisible?: boolean;
-  altDocumentContent?: AltDocumentContent;
+  altDocumentContent?: string | ReactNode;
   actionButtonItems?: LinkProps[];
 }
 
