@@ -178,7 +178,7 @@ export async function fetchLoodmetingen(
 
   const requestConfig = getApiConfig('LOOD_365', {
     formatUrl(requestConfig) {
-      return `${requestConfig.url}/be_getrequests`;
+      return `${requestConfig.url}/be_getrequestdetails`;
     },
     headers: await getLoodApiHeaders(requestID),
     data,
