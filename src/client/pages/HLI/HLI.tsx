@@ -22,8 +22,8 @@ export function HistoricItemsMention() {
 }
 
 type StadspasDisplayProps = {
-  owner: React.JSX.Element;
-  actief: string;
+  owner: JSX.Element;
+  actief: JSX.Element;
 };
 
 type StadspassenProps = {

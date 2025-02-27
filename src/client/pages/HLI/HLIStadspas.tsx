@@ -79,10 +79,11 @@ const displayPropsBudgets = {
 };
 
 const PHONENUMBERS = {
-  CCA: '14020',
+  CCA: '14 020',
   WerkEnInkomen: '020 252 6000',
 } as const;
 
+// RP TODO: Rename to HLIStadpasDetail
 export default function HLIStadspas() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
@@ -91,9 +92,9 @@ export default function HLIStadspas() {
   const { passNumber } = useParams<{ passNumber: string }>();
   const stadspassen = useStadspassen();
 
-  const stadspas = passNumber
+  const stadspas: StadspasFrontend | undefined = passNumber
     ? stadspassen.find((pass) => pass.passNumber.toString() === passNumber)
-    : null;
+    : undefined;
 
   const isErrorStadspas = isError(HLI);
   const isLoadingStadspas = isLoading(HLI);
@@ -160,7 +161,8 @@ export default function HLIStadspas() {
             <Grid.Cell span="all">
               <Datalist rows={[NAME]} />
               <Paragraph className={styles.StadspasNummerInfo}>
-                Hieronder staat het Stadspasnummer van uw actieve pas.
+                Hieronder staat het Stadspasnummer van uw{' '}
+                {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
                 <br /> Dit pasnummer staat ook op de achterkant van uw pas.
               </Paragraph>
               <Datalist rows={[NUMBER]} />
@@ -212,19 +214,7 @@ export default function HLIStadspas() {
               )}
               {!isLoadingStadspas && !isLoadingTransacties && (
                 <Paragraph>
-                  {hasTransactions ? (
-                    <>
-                      Hieronder ziet u bij welke winkels u het tegoed hebt
-                      uitgegeven. Deze informatie kan een dag achterlopen. Maar
-                      het saldo dat u nog over heeft klopt altijd.
-                    </>
-                  ) : (
-                    <>
-                      U heeft nog geen uitgaven. Deze informatie kan een dag
-                      achterlopen. Maar het bedrag dat u nog over heeft klopt
-                      altijd.
-                    </>
-                  )}
+                  {determineUwUitgavenDescription(stadspas, hasTransactions)}
                 </Paragraph>
               )}
             </Grid.Cell>
@@ -252,6 +242,29 @@ export default function HLIStadspas() {
       </Screen>
     </DetailPage>
   );
+}
+
+function determineUwUitgavenDescription(
+  stadspas: StadspasFrontend | undefined,
+  hasTransactions: boolean
+) {
+  const expenseInfoTextBase = 'U heeft nog geen uitgaven.';
+
+  const extraInfo = `Deze informatie kan een dag achterlopen.
+Maar het saldo dat u nog over heeft klopt altijd.`;
+
+  if (!stadspas) {
+    return expenseInfoTextBase;
+  }
+
+  if (hasTransactions) {
+    return `Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
+informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
+klopt altijd.`;
+  } else if (stadspas.budgets && stadspas.balance > 0) {
+    return `${expenseInfoTextBase} ${extraInfo}`;
+  }
+  return expenseInfoTextBase;
 }
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
@@ -294,17 +307,20 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           onClick={() => {
             setIsModalOpen(true);
           }}
-          data-testid="block-stadspas-button"
         >
           Blokkeer deze Stadspas
         </Button>
       )}
-
       <Modal
         title="Weet u zeker dat u uw Stadspas wilt blokkeren?"
         className={styles.BlokkeerDialog}
         isOpen={isModalOpen}
-        showCloseButton={false}
+        onClose={() => setIsModalOpen(false)}
+        onKeyUp={(event) => {
+          if (event.code === 'Escape') {
+            setIsModalOpen(false);
+          }
+        }}
         actions={
           <ActionGroup>
             <Button
@@ -334,7 +350,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         <Paragraph className="ams-mb--sm">
           Is uw Stadspas gestolen of bent u deze kwijt? Blokkeer dan hier uw
           Stadspas. Zo zorgt u ervoor dat niemand de Stadspas en eventueel
-          tegoed van uw kind uitgeeft.
+          tegoed uitgeeft.
         </Paragraph>
         <Paragraph className="ams-mb--sm">
           Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
@@ -357,7 +373,6 @@ function PassBlockedAlert() {
     <Alert
       heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
       severity="warning"
-      data-testid="stadspas-blocked-alert"
     >
       <Paragraph>
         Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
@@ -369,8 +384,10 @@ function PassBlockedAlert() {
       </Paragraph>
       <Paragraph>
         Stond er nog tegoed op de Stadspas? Dan staat het tegoed dat over was
-        ook op weer op de nieuwe pas.
+        ook weer op de nieuwe pas.
       </Paragraph>
     </Alert>
   );
 }
+
+export const forTesting = { determineUwUitgavenDescription };
