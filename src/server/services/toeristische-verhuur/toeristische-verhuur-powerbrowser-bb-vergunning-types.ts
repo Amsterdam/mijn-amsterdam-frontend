@@ -76,7 +76,7 @@ export type BBVergunningZaakResult =
   | null;
 
 export interface BBVergunning extends ZaakDetail {
-  adres: string | null;
+  location: string | null;
   dateDecision: string | null;
   dateEnd: string | null;
   dateEndFormatted: string | null;
