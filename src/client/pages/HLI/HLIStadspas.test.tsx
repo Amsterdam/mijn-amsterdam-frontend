@@ -2,10 +2,10 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 
-import { AppState } from '../../../universal/types';
 import { componentCreator } from '../MockApp';
 import HLIStadspas from './HLIStadspas';
 import { forTesting } from './HLIStadspas';
+import { createHLIState } from './test-helpers';
 import { stadspasCreator } from './test-helpers';
 import { StadspasBudget } from '../../../server/services/hli/stadspas-types';
 import { bffApi } from '../../../testing/utils';
@@ -14,29 +14,17 @@ import { AppRoutes } from '../../../universal/config/routes';
 const createStadspas = stadspasCreator();
 const passNumber = 12345678;
 
-const activePasState = {
-  HLI: {
-    status: 'OK',
-    content: {
-      regelingen: [],
-      stadspas: [
-        createStadspas({ actief: true, passNumber }, { firstname: 'Kerub' }),
-      ],
-    },
-  },
-} as unknown as AppState;
+const activePasState = createHLIState({
+  stadspassen: [
+    createStadspas({ actief: true, passNumber }, { firstname: 'Kerub' }),
+  ],
+});
 
-const pasBlockedState = {
-  HLI: {
-    status: 'OK',
-    content: {
-      regelingen: [],
-      stadspas: [
-        createStadspas({ actief: false, passNumber }, { firstname: 'Lou' }),
-      ],
-    },
-  },
-} as unknown as AppState;
+const pasBlockedState = createHLIState({
+  stadspassen: [
+    createStadspas({ actief: false, passNumber }, { firstname: 'Lou' }),
+  ],
+});
 
 const createHLIStadspasComponent = componentCreator({
   component: HLIStadspas,

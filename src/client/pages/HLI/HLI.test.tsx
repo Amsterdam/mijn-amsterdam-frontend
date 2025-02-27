@@ -5,8 +5,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { componentCreator } from '../MockApp';
 import ThemaPaginaHLI from './HLI';
 import { stadspasCreator } from './test-helpers';
-import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
-import { AppState } from '../../../universal/types';
+import { createHLIState } from './test-helpers';
 
 const createStadspas = stadspasCreator();
 
@@ -15,23 +14,6 @@ const createHLIComponent = componentCreator({
   routeEntry: generatePath(AppRoutes.HLI),
   routePath: AppRoutes.HLI,
 });
-
-function getState(withData: {
-  status?: string;
-  stadspassen?: StadspasFrontend[];
-  regelingen?: object[];
-}): AppState {
-  const state = {
-    HLI: {
-      status: withData.status || 'OK',
-      content: {
-        regelingen: withData.regelingen,
-        stadspas: withData.stadspassen,
-      },
-    },
-  } as unknown as AppState;
-  return state;
-}
 
 describe('<HLI />', () => {
   test('Matches the Full Page snapshot with an active and a blocked pas', () => {
@@ -83,7 +65,9 @@ describe('<HLI />', () => {
         decision: 'toegewezen',
       },
     ];
-    const Component = createHLIComponent(getState({ stadspassen, regelingen }));
+    const Component = createHLIComponent(
+      createHLIState({ stadspassen, regelingen })
+    );
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
@@ -102,7 +86,7 @@ describe('<HLI />', () => {
       createStadspas({}, { firstname: 'Bomom' }),
       createStadspas({}, { firstname: 'Talarian' }),
     ];
-    const state = getState({ stadspassen });
+    const state = createHLIState({ stadspassen });
 
     const Component = createHLIComponent(state);
     const screen = render(<Component />);
