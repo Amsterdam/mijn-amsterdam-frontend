@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 
+import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { BZB } from './detail-page-content/BZB';
 import { BZP } from './detail-page-content/BZP';
 import { EigenParkeerplaatsOpheffen } from './detail-page-content/EigenParkeerplaatsOpheffen';
@@ -8,6 +9,7 @@ import { EvenementMelding } from './detail-page-content/EvenementMelding';
 import { EvenementVergunning } from './detail-page-content/EvenementVergunning';
 import { Flyeren } from './detail-page-content/Flyeren';
 import { GPK } from './detail-page-content/GPK';
+import { GPPContent } from './detail-page-content/GPP';
 import { Nachtwerkontheffing } from './detail-page-content/Nachtwerkontheffing';
 import { Omzettingsvergunning } from './detail-page-content/Omzettingsvergunning';
 import { RvvHeleStad } from './detail-page-content/RvvHeleStad';
@@ -23,11 +25,7 @@ import { GenericDocument } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { BagThemas } from '../../config/thema';
-import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
-import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
-import { GPPContent } from './detail-page-content/GPP';
 import { WVOSContent } from './detail-page-content/WVOS';
 import { PageContentCell } from '../../components/Page/Page';
 
