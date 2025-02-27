@@ -1,6 +1,10 @@
 import { generatePath } from 'react-router-dom';
 
 import styles from './Vergunningen.module.scss';
+import {
+  DecosZaakBase,
+  WithDateRange,
+} from '../../../server/services/decos/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -16,6 +20,12 @@ type VergunningFrontendDisplayProps = DisplayProps<
   WithDetailLinkComponent<VergunningFrontend>
 >;
 
+type VergunningFrontendExpireableDisplayProps = DisplayProps<
+  WithDetailLinkComponent<
+    VergunningFrontend & VergunningFrontend<DecosZaakBase & WithDateRange>
+  >
+>;
+
 // Created because the tableconfig here is also used for other types of Vergunning, for example ToeristischeVerhuurVergunning.
 // This type extends Decos and PowerBrowser types and the type below satisfies both of them.
 type VergunningPropsCommon = {
@@ -27,12 +37,13 @@ type VergunningPropsCommon = {
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-export const displayPropsHuidigeVergunningen: VergunningFrontendDisplayProps = {
-  detailLinkComponent: 'Kenmerk',
-  title: 'Omschrijving',
-  dateStartFormatted: 'Startdatum',
-  dateEndFormatted: 'Einddatum',
-};
+export const displayPropsHuidigeVergunningen: VergunningFrontendExpireableDisplayProps =
+  {
+    detailLinkComponent: 'Kenmerk',
+    title: 'Omschrijving',
+    dateStartFormatted: 'Startdatum',
+    dateEndFormatted: 'Einddatum',
+  };
 
 export const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
