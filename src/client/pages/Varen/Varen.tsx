@@ -15,7 +15,7 @@ import { rederRegistratieLink } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type {
   VarenFrontend,
-  VarenRegistratieRederType,
+  DecosVarenRegistratieReder,
   VarenVergunningFrontend,
 } from '../../../server/services/varen/config-and-types';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
@@ -29,8 +29,8 @@ const pageContentTop = (
   <PageContentCell spanWide={6}>
     <Paragraph>
       De passagiersvaart in Amsterdam is erg populair bij bezoekers.
-      Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook gehuurde
-      boten, met of zonder schipper, vallen onder de passagiersvaart.
+      Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook
+      gehuurde boten, met of zonder schipper, vallen onder de passagiersvaart.
     </Paragraph>
   </PageContentCell>
 );
@@ -53,7 +53,7 @@ const VarenDisclaimerRederNotRegistered = (
 );
 
 type VarenPageContentRederRegistratieProps = {
-  registratie: VarenFrontend<VarenRegistratieRederType>;
+  registratie: VarenFrontend<DecosVarenRegistratieReder>;
 };
 
 const DEFAULT_GRID_SPAN: GridColumnNumber = 4;
@@ -126,21 +126,21 @@ export function Varen() {
 
   const actionButtons =
     varenRederRegistratie && buttonItems.length ? (
-  <PageContentCell>
-      <ActionGroup>
-        {buttonItems.map(({ to, title }) => (
-          <MaButtonLink
-            key={to}
-            href={to}
-            variant="secondary"
-            className={styles.VarenButton}
-          >
-            {title}
-            <Icon svg={ExternalLinkIcon} size="level-5" />
-          </MaButtonLink>
-        ))}
-      </ActionGroup>
-</PageContentCell>
+      <PageContentCell>
+        <ActionGroup>
+          {buttonItems.map(({ to, title }) => (
+            <MaButtonLink
+              key={to}
+              href={to}
+              variant="secondary"
+              className={styles.VarenButton}
+            >
+              {title}
+              <Icon svg={ExternalLinkIcon} size="level-5" />
+            </MaButtonLink>
+          ))}
+        </ActionGroup>
+      </PageContentCell>
     ) : null;
 
   const vergunningenTables = Object.entries(tableConfig).map(
