@@ -1,5 +1,5 @@
 import type { BezwaarStatus } from '../../../server/services/bezwaren/types';
-import { StatusLine } from '../../components/StatusLine/StatusLine';
+import { Steps } from '../../components/StatusLine/StatusLineV2';
 
 const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
 
@@ -25,11 +25,5 @@ export function BezwarenStatusLines({
   statussen: BezwaarStatus[];
 }) {
   const statusLineItems = transformBezwaarStatusToStatusLines(statussen);
-
-  return (
-    <StatusLine
-      trackCategory="Bezwaar detail / status"
-      items={statusLineItems}
-    />
-  );
+  return <Steps steps={statusLineItems} />;
 }
