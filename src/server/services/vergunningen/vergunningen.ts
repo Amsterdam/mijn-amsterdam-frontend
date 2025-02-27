@@ -38,7 +38,7 @@ async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
-) {
+): Promise<ApiResponse<VergunningFrontendV2[]>> {
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,

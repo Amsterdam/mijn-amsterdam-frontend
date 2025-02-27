@@ -1,20 +1,18 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
-import { generatePath } from 'react-router-dom';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
-import { ThemaTitles } from '../../config/thema';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function Parkeren() {
   const {
+    title,
     tableConfig,
-    parkeerVergunningenFromThemaVergunningen,
+    vergunningen,
     hasMijnParkerenVergunningen,
     isLoading,
     isError,
@@ -23,18 +21,13 @@ export function Parkeren() {
   } = useParkerenData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, className }]) => {
+    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
       return (
         <ThemaPaginaTable<VergunningFrontend>
           key={kind}
           title={title}
-          zaken={parkeerVergunningenFromThemaVergunningen
-            .filter(filter)
-            .sort(sort)}
-          className={className}
-          listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
-            kind,
-          })}
+          zaken={vergunningen.filter(filter).sort(sort)}
+          listPageRoute={listPageRoute}
           displayProps={displayProps}
         />
       );
@@ -48,10 +41,9 @@ export function Parkeren() {
 
   return (
     <ThemaPagina
-      title={ThemaTitles.PARKEREN}
+      title={title}
       isError={isError}
-      isPartialError={false}
-      isLoading={!!isLoading}
+      isLoading={isLoading}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
       pageContentMain={tables}
