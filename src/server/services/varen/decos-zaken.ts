@@ -25,7 +25,7 @@ const vesselLengths = {
 const vesselNumberOfSeats = { num8: 'numberOfSeats' } as const;
 const vesselSegment = { text10: 'segment' } as const;
 const vesselFormAppearance = { text15: 'formAppearance' } as const;
-const vesselEniNumber = { num10: 'eniNumber' } as const;
+const vesselEniNumber = { text36: 'eniNumber' } as const;
 
 const fetchMeerInformatieTermijn: Required<DecosZaakTransformer>['fetchTermijnenFor'][number] =
   {
