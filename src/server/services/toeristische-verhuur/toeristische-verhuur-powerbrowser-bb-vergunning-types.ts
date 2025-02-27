@@ -78,6 +78,7 @@ export type BBVergunningZaakResult =
 export type BBVergunning = ZaakDetail & {
   location: string | null;
   dateDecision: string | null;
+  dateDecisionFormatted: string | null;
   dateEnd: string | null;
   dateEndFormatted: string | null;
   dateRequest: string | null;
