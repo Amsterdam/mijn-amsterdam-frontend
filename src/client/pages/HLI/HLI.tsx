@@ -1,7 +1,6 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
-import { HISTORIC_ITEMS_MENTION_TEXT } from './HLI-thema-config';
 import styles from './HLI.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -23,8 +22,8 @@ export function HistoricItemsMention() {
 }
 
 type StadspasDisplayProps = {
-  owner: React.JSX.Element;
-  actief: string;
+  owner: JSX.Element;
+  actief: JSX.Element;
 };
 
 type StadspassenProps = {
