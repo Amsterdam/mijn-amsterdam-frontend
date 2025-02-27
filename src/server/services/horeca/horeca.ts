@@ -1,5 +1,5 @@
 import {
-  ExploitatieHorecabedrijf,
+  decosZaakTransformers,
   HorecaVergunningFrontend,
 } from './config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -25,9 +25,11 @@ export async function fetchHorecaVergunningen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<HorecaVergunningFrontend[]>> {
-  const response = await fetchDecosZaken(requestID, authProfileAndToken, [
-    ExploitatieHorecabedrijf,
-  ]);
+  const response = await fetchDecosZaken(
+    requestID,
+    authProfileAndToken,
+    decosZaakTransformers
+  );
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
@@ -73,6 +75,7 @@ export async function fetchHorecaNotifications(
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content ?? [],
+      decosZaakTransformers,
       Themas.HORECA
     );
 

@@ -17,7 +17,6 @@ import {
   DecosVergunning,
   VergunningFrontend,
 } from '../../../server/services/vergunningen/config-and-types';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { Datalist } from '../../components/Datalist/Datalist';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { WVOSContent } from './detail-page-content/WVOS';
@@ -36,37 +35,37 @@ function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
     <PageContentCell>
       {(function VergunningDetailContent() {
         switch (vergunning.caseType) {
-          case CaseTypeV2.TVMRVVObject:
+          case 'TVM - RVV - Object':
             return <TVMRVVObject vergunning={vergunning} />;
-          case CaseTypeV2.EvenementMelding:
+          case 'Evenement melding':
             return <EvenementMelding vergunning={vergunning} />;
-          case CaseTypeV2.EvenementVergunning:
+          case 'Evenement vergunning':
             return <EvenementVergunning vergunning={vergunning} />;
-          case CaseTypeV2.Omzettingsvergunning:
+          case 'Omzettingsvergunning':
             return <Omzettingsvergunning vergunning={vergunning} />;
-          case CaseTypeV2.ERVV:
+          case 'E-RVV - TVM':
             return <ERVV vergunning={vergunning} />;
-          case CaseTypeV2.Flyeren:
+          case 'Flyeren-Sampling':
             return <Flyeren vergunning={vergunning} />;
-          case CaseTypeV2.AanbiedenDiensten:
+          case 'Aanbieden van diensten':
             return <AanbiedenDienstenContent vergunning={vergunning} />;
-          case CaseTypeV2.NachtwerkOntheffing:
+          case 'Nachtwerkontheffing':
             return <Nachtwerkontheffing vergunning={vergunning} />;
-          case CaseTypeV2.ZwaarVerkeer:
+          case 'Zwaar verkeer':
             return <ZwaarVerkeer vergunning={vergunning} />;
-          case CaseTypeV2.Samenvoegingsvergunning:
-          case CaseTypeV2.Onttrekkingsvergunning:
-          case CaseTypeV2.OnttrekkingsvergunningSloop:
-          case CaseTypeV2.VormenVanWoonruimte:
-          case CaseTypeV2.Splitsingsvergunning:
+          case 'Samenvoegingsvergunning':
+          case 'Onttrekkingsvergunning voor ander gebruik':
+          case 'Onttrekkingsvergunning voor sloop':
+          case 'Woningvormingsvergunning':
+          case 'Splitsingsvergunning':
             return <Woonvergunningen vergunning={vergunning} />;
-          case CaseTypeV2.VOB:
+          case 'VOB':
             return <VOB vergunning={vergunning} />;
-          case CaseTypeV2.RVVHeleStad:
+          case 'RVV - Hele stad':
             return <RvvHeleStad vergunning={vergunning} />;
-          case CaseTypeV2.RVVSloterweg:
+          case 'RVV Sloterweg':
             return <RvvSloterweg vergunning={vergunning} />;
-          case CaseTypeV2.WVOS:
+          case 'Werk en vervoer op straat':
             return <WVOSContent vergunning={vergunning} />;
 
           default:

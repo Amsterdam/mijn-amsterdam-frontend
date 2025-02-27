@@ -13,7 +13,6 @@ import {
   transformBoolean,
   toDateFormatted,
 } from './decos-helpers';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken';
 
 describe('decos/helpers', () => {
@@ -21,7 +20,7 @@ describe('decos/helpers', () => {
     test('Is waiting', () => {
       const zaak = {
         fields: {
-          text45: CaseTypeV2.WVOS,
+          text45: 'Werk en vervoer op straat',
           text11: 'nogniet',
           text12: 'wacht op online betaling',
         },
@@ -55,7 +54,7 @@ describe('decos/helpers', () => {
     test('Is not waiting', () => {
       const zaak = {
         fields: {
-          text45: CaseTypeV2.WVOS,
+          text45: 'Werk en vervoer op straat',
           text11: 'jahoor',
           text12: 'wacht op online betaling',
         },
@@ -72,7 +71,7 @@ describe('decos/helpers', () => {
     test('Is still waiting', () => {
       const zaak = {
         fields: {
-          text45: CaseTypeV2.WVOS,
+          text45: 'Werk en vervoer op straat',
           subject1: 'wacht op ideal betaling',
         },
       } as DecosZaakSource;
@@ -151,7 +150,7 @@ describe('decos/helpers', () => {
       expect(
         isExcludedFromTransformation(
           { fields: { subject1: '*verwijder' } } as DecosZaakSource,
-          decosCaseToZaakTransformers[CaseTypeV2.AanbiedenDiensten]
+          decosCaseToZaakTransformers['Aanbieden van diensten']
         )
       ).toBe(true);
     });
@@ -160,7 +159,7 @@ describe('decos/helpers', () => {
       expect(
         isExcludedFromTransformation(
           { fields: { dfunction: 'buiten behandeling' } } as DecosZaakSource,
-          decosCaseToZaakTransformers[CaseTypeV2.AanbiedenDiensten]
+          decosCaseToZaakTransformers['Aanbieden van diensten']
         )
       ).toBe(true);
     });
@@ -170,12 +169,12 @@ describe('decos/helpers', () => {
         isExcludedFromTransformation(
           {
             fields: {
-              text45: CaseTypeV2.WVOS,
+              text45: 'Werk en vervoer op straat',
               text11: 'nogniet',
               text12: 'wacht op online betaling',
             },
           } as DecosZaakSource,
-          decosCaseToZaakTransformers[CaseTypeV2.WVOS]
+          decosCaseToZaakTransformers['Werk en vervoer op straat']
         )
       ).toBe(true);
     });
@@ -185,10 +184,13 @@ describe('decos/helpers', () => {
         isExcludedFromTransformation(
           {
             fields: {
-              text45: CaseTypeV2.WVOS,
+              text45: 'Werk en vervoer op straat',
             },
           } as DecosZaakSource,
-          { ...decosCaseToZaakTransformers[CaseTypeV2.WVOS], isActive: false }
+          {
+            ...decosCaseToZaakTransformers['Werk en vervoer op straat'],
+            isActive: false,
+          }
         )
       ).toBe(true);
     });
@@ -198,10 +200,10 @@ describe('decos/helpers', () => {
         isExcludedFromTransformation(
           {
             fields: {
-              text45: CaseTypeV2.WVOS,
+              text45: 'Werk en vervoer op straat',
             },
           } as DecosZaakSource,
-          { ...decosCaseToZaakTransformers[CaseTypeV2.WVOS] }
+          { ...decosCaseToZaakTransformers['Werk en vervoer op straat'] }
         )
       ).toBe(false);
     });
@@ -223,7 +225,7 @@ describe('decos/helpers', () => {
       getDecosZaakTypeFromSource({
         fields: { text45: 'Werk en vervoer op straat' },
       } as unknown as DecosZaakSource)
-    ).toBe(CaseTypeV2.WVOS);
+    ).toBe('Werk en vervoer op straat');
   });
 
   test('transformBoolean', () => {

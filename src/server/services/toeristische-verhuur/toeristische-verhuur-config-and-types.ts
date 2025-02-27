@@ -1,7 +1,6 @@
 import { parseISO } from 'date-fns';
 
 import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakTransformer,
   DecosZaakBase,
@@ -14,6 +13,16 @@ import {
 } from '../decos/decos-field-transformers';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
+
+export const caseTypeToeristischeVerhuur = {
+  VakantieverhuurVergunningaanvraag: 'Vakantieverhuur vergunningsaanvraag',
+} as const;
+
+type CaseTypeToeristischeVerhuurKey = keyof typeof caseTypeToeristischeVerhuur;
+export type CaseTypeToeristischeVerhuur =
+  (typeof caseTypeToeristischeVerhuur)[CaseTypeToeristischeVerhuurKey];
+export type GetCaseType<T extends CaseTypeToeristischeVerhuurKey> =
+  (typeof caseTypeToeristischeVerhuur)[T];
 
 export type DecosVakantieverhuurVergunningaanvraag = DecosZaakBase &
   WithLocation &
@@ -70,7 +79,7 @@ export type ToeristischeVerhuur = {
 export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakantieverhuurVergunningaanvraag> =
   {
     isActive: true,
-    caseType: CaseTypeV2.VakantieverhuurVergunningaanvraag,
+    caseType: caseTypeToeristischeVerhuur.VakantieverhuurVergunningaanvraag,
     title: 'Vergunning vakantieverhuur',
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -106,3 +115,5 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
     },
     notificationLabels: caseNotificationLabelsExpirables,
   };
+
+export const decosZaakTransformers = [VakantieverhuurVergunningaanvraag];

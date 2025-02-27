@@ -324,9 +324,7 @@ async function transformDecosZakenResponse<
     .sort(sortAlpha('identifier', 'desc'));
 }
 
-function getSelectFields(
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[]
-) {
+function getSelectFields(zaakTypeTransformers: DecosZaakTransformer<any>[]) {
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
     ...zaakTypeTransformers.flatMap((zaakTransformer) =>
@@ -340,7 +338,7 @@ function getSelectFields(
 async function getZakenByUserKey(
   requestID: RequestID,
   userKey: string,
-  zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
+  zaakTypeTransformers: DecosZaakTransformer<any>[] = []
 ) {
   assert(
     SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] == caseType,
