@@ -5,12 +5,9 @@ import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
 import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
 import { remoteApi } from '../../../testing/utils';
-import { jsonCopy } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
-const VERGUNNINGEN_DUMMY_RESPONSE = jsonCopy(vergunningenData);
 const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
   {
     registrationNumber: 'AAAAAAAAAAAAAAAAAAAA',
@@ -61,9 +58,7 @@ describe('Toeristische verhuur service', () => {
       .reply(200, REGISTRATIES_DUMMY_RESPONSE)
       .get('/lvv/AAAAAAAAAAAAAAAAAAAA')
       .reply(200, REGISTRATIES_DUMMY_RESPONSE);
-    remoteApi
-      .get('/decosjoin/getvergunningen')
-      .reply(200, VERGUNNINGEN_DUMMY_RESPONSE);
+
     remoteApi.post('/powerbrowser/Token').reply(200, DUMMY_TOKEN);
     remoteApi.post('/powerbrowser/Report/RunSavedReport').reply(200, [
       {
@@ -115,9 +110,6 @@ describe('Toeristische verhuur service', () => {
       .reply(200, REGISTRATIES_DUMMY_RESPONSE)
       .get('/lvv/AAAAAAAAAAAAAAAAAAAA')
       .reply(200, REGISTRATIES_DUMMY_RESPONSE);
-    remoteApi
-      .get('/decosjoin/getvergunningen')
-      .reply(200, VERGUNNINGEN_DUMMY_RESPONSE);
 
     const response = await fetchToeristischeVerhuur('x2', authProfileAndToken);
     const response2 = await fetchToeristischeVerhuur('x2', authProfileAndToken);
@@ -193,9 +185,14 @@ describe('Toeristische verhuur service', () => {
   it('Should create notifcations from vergunningen', async () => {
     const vakantieverhuurVergunning: VakantieverhuurVergunningFrontend = {
       id: 'Z-000-000040',
+      processed: true,
+      key: 'xx123',
       title: 'Vergunning vakantieverhuur',
+      caseType: 'Vakantieverhuur vergunningsaanvraag',
       dateDecision: null,
+      dateDecisionFormatted: null,
       dateRequest: '10 mei 2021',
+      dateRequestFormatted: '10 mei 2021',
       dateStart: '01 juni 2019',
       dateStartFormatted: '01 juni 2019',
       dateEnd: '31 mei 2020',
@@ -243,11 +240,14 @@ describe('Toeristische verhuur service', () => {
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
       status: 'Afgehandeld',
+      displayStatus: 'Afgehandeld',
     };
 
     const bbVergunnig: BBVergunning = {
       dateDecision: '22 maart 2023',
+      dateDecisionFormatted: '22 maart 2023',
       dateRequest: '13 februari 2023',
+      dateRequestFormatted: '13 februari 2023',
       dateStart: '22 maart 2023',
       dateStartFormatted: '22 maart 2023',
       dateEnd: '01 juli 2028',
@@ -281,13 +281,14 @@ describe('Toeristische verhuur service', () => {
         },
       ],
       status: 'Afgehandeld',
-      fetchDocumentsUrl:
-        '/api/v1/services/toeristische-verhuur/bed-and-breakfast/documents/list?id=xxxxx',
+      displayStatus: 'Afgehandeld',
+      processed: true,
+      documents: [],
     };
 
     const notification3 = createToeristischeVerhuurNotification(
       vakantieverhuurVergunning,
-      []
+      new Date()
     );
 
     expect(notification3.title).toBe(
@@ -302,7 +303,7 @@ describe('Toeristische verhuur service', () => {
 
     const notification4 = createToeristischeVerhuurNotification(
       { ...vakantieverhuurVergunning, dateEnd: '2021-05-30' },
-      []
+      new Date()
     );
 
     expect(notification4.title).toBe(
@@ -311,14 +312,14 @@ describe('Toeristische verhuur service', () => {
 
     const notification5 = createToeristischeVerhuurNotification(
       { ...vakantieverhuurVergunning, dateEnd: '2021-08-30' },
-      []
+      new Date()
     );
 
     expect(notification5.title).toBe('Uw vergunning vakantieverhuur loopt af');
 
     const notification6 = createToeristischeVerhuurNotification(
       bbVergunnig,
-      []
+      new Date()
     );
 
     expect(notification6.title).toBe(
@@ -331,7 +332,7 @@ describe('Toeristische verhuur service', () => {
 
     const notification7 = createToeristischeVerhuurNotification(
       { ...bbVergunnig, dateEnd: '2021-05-30' },
-      []
+      new Date()
     );
 
     expect(notification7.title).toBe(
@@ -340,7 +341,7 @@ describe('Toeristische verhuur service', () => {
 
     const notification8 = createToeristischeVerhuurNotification(
       { ...bbVergunnig, dateEnd: '2021-08-30' },
-      []
+      new Date()
     );
 
     expect(notification8.title).toBe('Uw vergunning bed & breakfast loopt af');

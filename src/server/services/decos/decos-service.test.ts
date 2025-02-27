@@ -22,6 +22,16 @@ import {
   decosZaakTransformers,
 } from '../vergunningen/decos-zaken';
 
+vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
+  return {
+    ...((await requireActual()) as object),
+    encryptSessionIdWithRouteIdParam: () => {
+      return 'test-encrypted-id';
+    },
+    decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+  };
+});
+
 const zakenSource = {
   count: 1,
   content: [
@@ -301,7 +311,7 @@ describe('decos-service', () => {
               "id": "D/4379600",
               "key": "blob-key",
               "title": "Systeem - Factuurregel Stadsloket automatisch",
-              "url": "",
+              "url": "http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id",
             },
           ],
           "status": "OK",
@@ -565,7 +575,7 @@ describe('decos-service', () => {
         .query((queryObject) => {
           return (
             queryObject.filter ===
-            `text45 eq 'Aanbieden van diensten' or text45 eq 'GPK'`
+            `text45 eq 'Aanbieden van diensten' or text45 eq 'VOB'`
           );
         })
         .times(numberOfAddressBooksToSearch)
@@ -621,17 +631,15 @@ describe('decos-service', () => {
           'xx',
           documents
         );
-      expect(documentsTransformed).toMatchInlineSnapshot(`
-        [
-          {
-            "datePublished": "2024-06-06",
-            "id": "D/4379600",
-            "key": "blob-key",
-            "title": "Systeem - Factuurregel Stadsloket automatisch",
-            "url": "",
-          },
-        ]
-      `);
+      expect(documentsTransformed).toEqual([
+        {
+          datePublished: '2024-06-06',
+          id: 'D/4379600',
+          key: 'blob-key',
+          title: 'Systeem - Factuurregel Stadsloket automatisch',
+          url: 'http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id',
+        },
+      ]);
     });
   });
 

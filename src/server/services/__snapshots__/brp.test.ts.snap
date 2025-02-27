@@ -155,7 +155,7 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
     "omschrijvingAdellijkeTitel": "Hertogin",
     "omschrijvingBurgerlijkeStaat": "Gehuwd",
     "omschrijvingGeslachtsaanduiding": "Man",
-    "opgemaakteNaam": "W. Beemsterboer",
+    "opgemaakteNaam": "W. B. C. X. Y. Z. Van beuningen Beemsterboer",
     "overlijdensdatum": null,
     "vertrokkenOnbekendWaarheen": true,
     "voornamen": "Wesley",

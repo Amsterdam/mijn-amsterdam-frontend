@@ -477,6 +477,9 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
       ? defaultDateFormat(pbZaak.dateReceived)
       : pbZaak.dateReceived,
     dateDecision: pbZaak.dateDecision,
+    dateDecisionFormatted: pbZaak.dateDecision
+      ? defaultDateFormat(pbZaak.dateDecision)
+      : '-',
     dateStart,
     dateStartFormatted: dateStart ? defaultDateFormat(dateStart) : '-',
     dateEnd,

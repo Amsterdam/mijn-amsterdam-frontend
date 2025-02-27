@@ -49,7 +49,8 @@ describe('fetchVergunningDocumentsList', () => {
   });
 
   it('should return a list of vergunning documents', async () => {
-    (getAuth as Mock).mockReturnValue(getAuthProfileAndToken('private'));
+    const authProfileAndToken = getAuthProfileAndToken('private');
+    (getAuth as Mock).mockReturnValue(authProfileAndToken);
     (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
       content: mockValues.id,
       status: 'OK',
@@ -65,6 +66,7 @@ describe('fetchVergunningDocumentsList', () => {
 
     expect(fetchDecosDocumentList).toHaveBeenCalledWith(
       res.locals.requestID,
+      authProfileAndToken.profile.sid,
       mockValues.id
     );
     expect(res.send).toHaveBeenCalledWith(mockDocumentsResponse);

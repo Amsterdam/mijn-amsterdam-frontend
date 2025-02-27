@@ -1,4 +1,4 @@
-import { fetchParkeren } from './parkeren-egis-service';
+import { fetchParkeren } from './parkeren';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
