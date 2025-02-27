@@ -9,7 +9,7 @@ import { dateFormat } from '../../../universal/helpers/date';
 import { DecosZaakBase } from '../decos/config-and-types';
 import { getStatusDate } from '../decos/decos-helpers';
 
-const link = (vergunning: VergunningFrontend<DecosZaakBase>) => ({
+const link = (vergunning: VergunningFrontend) => ({
   title: 'Bekijk details',
   to: vergunning.link.to,
 });

@@ -33,11 +33,11 @@ export function getCustomTitleForVergunningWithLicensePlates(
 }
 
 export function hasOtherActualVergunningOfSameType(
-  items: VergunningFrontend<DecosZaakBase>[],
-  item: VergunningFrontend<DecosZaakBase>
+  items: VergunningFrontend[],
+  item: VergunningFrontend
 ): boolean {
   return items.some(
-    (otherVergunning: VergunningFrontend<DecosZaakBase>) =>
+    (otherVergunning: VergunningFrontend) =>
       otherVergunning.caseType === item.caseType &&
       otherVergunning.identifier !== item.identifier &&
       !isExpired(otherVergunning)
