@@ -23,6 +23,9 @@ import {
   SELECT_FIELDS_TRANSFORM_BASE,
   DecosWorkflowResponse,
   DecosZaakFrontend,
+  DecosTermijnType,
+  DecosTermijnResponse,
+  DecosTermijn,
 } from './decos-types';
 import {
   getDecosZaakTypeFromSource,
@@ -166,11 +169,6 @@ async function transformDecosZaakResponse<
     return null;
   }
 
-  // Reference to decos workflow service for use in transformers
-  const fetchWorkflowDates = (stepTitles: string[]) => {
-    return fetchDecosWorkflowDates(requestID, decosZaakSource.key, stepTitles);
-  };
-
   // Iterates over the desired data fields (key=>value pairs) and transforms values if necessary.
   const transformedFieldEntries = Object.entries(
     decosZaakTransformer.transformFields
@@ -210,6 +208,7 @@ async function transformDecosZaakResponse<
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
+    termijnDates: [], // Serves as placeholder, values for this property will be added async below.
     ...transformedFields,
   };
 
@@ -217,7 +216,11 @@ async function transformDecosZaakResponse<
     const stepTitles = decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
       ({ stepTitle }) => stepTitle
     );
-    const workFlowDates = await fetchWorkflowDates(stepTitles);
+    const workFlowDates = await fetchDecosWorkflowDates(
+      requestID,
+      decosZaakSource.key,
+      stepTitles
+    );
     if (workFlowDates.status === 'OK') {
       decosZaak.statusDates =
         decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
@@ -226,6 +229,29 @@ async function transformDecosZaakResponse<
             datePublished: workFlowDates.content?.[stepTitle] ?? null,
           })
         );
+    }
+  }
+
+  if (decosZaakTransformer.fetchTermijnenFor) {
+    const termijnMap = Object.fromEntries(
+      decosZaakTransformer.fetchTermijnenFor.map((termijn) => [
+        termijn.type,
+        termijn.status,
+      ])
+    );
+    const termijnDates = await fetchDecosTermijnen(
+      requestID,
+      decosZaakSource.key,
+      Object.keys(termijnMap)
+    );
+    if (termijnDates.status === 'OK') {
+      decosZaak.termijnDates = termijnDates.content
+        .map((termijn) => ({
+          status: termijnMap[termijn.type] ?? null,
+          dateStart: termijn.dateStart,
+          dateEnd: termijn.dateEnd,
+        }))
+        .filter((termijn) => termijn.status !== null);
     }
   }
 
@@ -489,6 +515,42 @@ export async function fetchDecosWorkflowDates(
   });
 
   return requestData(apiConfigSingleWorkflow, requestID);
+}
+
+export async function fetchDecosTermijnen(
+  requestID: RequestID,
+  zaakID: DecosZaakBase['key'],
+  termijnTypes: DecosTermijnType[]
+): Promise<ApiResponse<DecosTermijn[]>> {
+  const urlParams = new URLSearchParams({
+    top: '50',
+    properties: 'false',
+    fetchParents: 'false',
+    select: ['date4', 'date5', 'subject1'].join(','),
+    orderBy: 'date4',
+    filter: termijnTypes
+      .map((termijnType) => `subject1 eq '${termijnType}'`)
+      .join(' or '),
+  });
+
+  const transformDecosTermijnenResponse = (
+    singleTermijnResponseData: DecosTermijnResponse
+  ): DecosTermijn[] => {
+    return singleTermijnResponseData.content.map(({ fields }) => ({
+      type: fields.subject1,
+      dateStart: fields.date4,
+      dateEnd: fields.date5,
+    }));
+  };
+
+  const apiConfigTermijnens = getApiConfig('DECOS_API', {
+    formatUrl: (config) => {
+      return `${config.url}/items/${zaakID}/termijnens?${urlParams}`;
+    },
+    transformResponse: transformDecosTermijnenResponse,
+  });
+
+  return requestData(apiConfigTermijnens, requestID);
 }
 
 async function fetchIsPdfDocument(

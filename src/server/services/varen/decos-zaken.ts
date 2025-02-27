@@ -27,13 +27,23 @@ const vesselSegment = { text10: 'segment' } as const;
 const vesselFormAppearance = { text15: 'formAppearance' } as const;
 const vesselEniNumber = { num10: 'eniNumber' } as const;
 
+const SELECT_FIELDS_TRANSFORM = {
+  ...SELECT_FIELDS_TRANSFORM_BASE,
+  text96: 'linkDataRequest' as const,
+};
 export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
   {
     isActive: true,
     caseType: 'Varen registratie reder',
     title: 'Varen registratie reder',
+    fetchTermijnenFor: [
+      {
+        status: 'Meer informatie nodig',
+        type: 'Verzoek aanvullende gegevens',
+      },
+    ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       company: 'company',
       num2: 'bsnkvk',
       mailaddress: 'address',
@@ -50,24 +60,14 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     isActive: true,
     caseType: 'Varen vergunning exploitatie',
     title: 'Varen vergunning exploitatie',
-    fetchWorkflowStatusDatesFor: [
+    fetchTermijnenFor: [
       {
-        status: 'In behandeling',
-        stepTitle: 'Status bijwerken en notificatie verzenden - Ontvangen',
-      },
-      {
-        status: 'Inhoudelijke toets',
-        stepTitle:
-          'Status bijwerken en notificatie verzenden - Inhoudelijke toets',
-      },
-      {
-        status: 'Volledigheid toets',
-        stepTitle:
-          'Status bijwerken en notificatie verzenden - Volledigheid toets',
+        status: 'Meer informatie nodig',
+        type: 'Verzoek aanvullende gegevens',
       },
     ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselLengths,
       ...vesselNumberOfSeats,
@@ -84,8 +84,14 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vaartuignaam',
     title: 'Wijzigen: Vaartuig een andere naam geven',
+    fetchTermijnenFor: [
+      {
+        status: 'Meer informatie nodig',
+        type: 'Verzoek aanvullende gegevens',
+      },
+    ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselNameOld,
     },
@@ -97,8 +103,14 @@ export const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTran
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vergunninghouder',
     title: 'Wijzigen: Vergunning op naam van een andere onderneming zetten',
+    fetchTermijnenFor: [
+      {
+        status: 'Meer informatie nodig',
+        type: 'Verzoek aanvullende gegevens',
+      },
+    ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselSegment,
       text33: 'statutoryName',
       text34: 'businessAddress',
@@ -112,8 +124,14 @@ export const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging verbouwing',
     title: 'Wijzigen: Vaartuig vervangen door een te (ver)bouwen vaartuig',
+    fetchTermijnenFor: [
+      {
+        status: 'Meer informatie nodig',
+        type: 'Verzoek aanvullende gegevens',
+      },
+    ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselLengths,
       ...vesselNumberOfSeats,
@@ -128,8 +146,14 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vervanging',
     title: 'Wijzigen: Vaartuig vervangen door een bestaand vaartuig',
+    fetchTermijnenFor: [
+      {
+        status: 'Meer informatie nodig',
+        type: 'Verzoek aanvullende gegevens',
+      },
+    ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       ...vesselNameOld,
       ...vesselLengths,
@@ -146,8 +170,14 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
     isActive: true,
     caseType: 'Varen ligplaatsvergunning',
     title: 'Varen ligplaatsvergunning',
+    fetchTermijnenFor: [
+      {
+        status: 'Meer informatie nodig',
+        type: 'Verzoek aanvullende gegevens',
+      },
+    ],
     transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
+      ...SELECT_FIELDS_TRANSFORM,
       ...vesselName,
       text6: 'location',
     },
