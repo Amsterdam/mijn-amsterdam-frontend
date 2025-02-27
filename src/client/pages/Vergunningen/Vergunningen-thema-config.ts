@@ -1,30 +1,42 @@
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
-import { dateSort } from '../../../universal/helpers/date';
+import { generatePath } from 'react-router-dom';
 
-export const displayPropsHuidigeVergunningen = {
-  identifier: 'Kenmerk',
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import { AppRoutes } from '../../../universal/config/routes';
+import { dateSort } from '../../../universal/helpers/date';
+import { LinkProps } from '../../../universal/types/App.types';
+import {
+  DisplayProps,
+  WithDetailLinkComponent,
+} from '../../components/Table/TableV2';
+
+type VergunningFrontendDisplayProps = DisplayProps<
+  WithDetailLinkComponent<VergunningFrontend>
+>;
+
+export const displayPropsHuidigeVergunningen: VergunningFrontendDisplayProps = {
+  detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
   dateStartFormatted: 'Startdatum',
   dateEndFormatted: 'Einddatum',
-} as const;
+};
 
-export const displayPropsLopendeAanvragen = {
-  identifier: 'Kenmerk',
+export const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
+  detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
   dateRequestFormatted: 'Aangevraagd',
-} as const;
+};
 
-export const displayPropsEerdereVergunningen = {
-  identifier: 'Kenmerk',
+export const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
+  detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
   decision: 'Resultaat',
-} as const;
+};
 
 export const listPageParamKind = {
   actual: 'huidige-vergunningen-en-ontheffingen',
   historic: 'eerdere-vergunningen-en-ontheffingen',
   inProgress: 'lopende-aanvragen',
-} as const;
+};
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
@@ -39,6 +51,12 @@ function isVergunningExpirable(vergunning: VergunningFrontendV2) {
   // TODO: is this the correct check ?
   return 'isExpired' in vergunning;
 }
+
+export const routes = {
+  themePage: AppRoutes.VERGUNNINGEN,
+  detailPage: AppRoutes['VERGUNNINGEN/DETAIL'],
+  listPage: AppRoutes['VERGUNNINGEN/LIST'],
+} as const;
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
@@ -84,5 +102,15 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
     className: styles.VergunningenTableThemaPagina,
+    listPageRoute: generatePath(routes.listPage, {
+      kind: listPageParamKind.historic,
+    }),
   },
 } as const;
+
+export const linkListItems: LinkProps[] = [
+  {
+    to: 'https://www.amsterdam.nl/ondernemen/vergunningen/wevos/',
+    title: 'Ontheffing RVV en TVM aanvragen',
+  },
+];
