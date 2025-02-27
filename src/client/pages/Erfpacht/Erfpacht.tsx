@@ -62,9 +62,9 @@ export default function Erfpacht() {
               <LinkList.Link
                 href={`https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`}
               >
-                Wijzigen erfpachtcontract
+                Erfpacht wijzigen
               </LinkList.Link>
-              <LinkList.Link href="https://www.amsterdam.nl/veelgevraagd/overstappen-naar-eeuwigdurende-erfpacht-f92c5#">
+              <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/overstappen-eeuwigdurende-erfpacht/">
                 Overstappen erfpachtrecht
               </LinkList.Link>
             </LinkList>
