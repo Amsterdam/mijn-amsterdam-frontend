@@ -72,7 +72,7 @@ export const FeatureToggle = {
   passQueryParamsToStreamUrl: !IS_AP,
 
   // Milieuzone splitising naar Overtredingen en Boetes
-  overtredingenActive: !IS_PRODUCTION,
+  overtredingenActive: true,
   // Milieuzone patroon C
   cleopatraApiActive: true,
 
