@@ -3,6 +3,24 @@ import {
   StadspasOwner,
 } from '../../../server/services/hli/stadspas-types';
 import { bffApiHost } from '../../../testing/setup';
+import { AppState } from '../../../universal/types';
+
+export function createHLIState(withData: {
+  status?: string;
+  stadspassen?: StadspasFrontend[];
+  regelingen?: object[];
+}): AppState {
+  const state = {
+    HLI: {
+      status: withData.status || 'OK',
+      content: {
+        regelingen: withData.regelingen || [],
+        stadspas: withData.stadspassen || [],
+      },
+    },
+  } as unknown as AppState;
+  return state;
+}
 
 /** Create a createStadspas function that returns stadspassen with incrementing ID's */
 export function stadspasCreator() {
