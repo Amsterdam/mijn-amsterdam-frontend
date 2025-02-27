@@ -29,16 +29,21 @@ interface NotificationTriggers {
   krediet: NotificationTrigger | null;
 }
 
+type KrefiaDeepLinkSource = {
+  title: string;
+  url: string;
+};
+
 export interface KrefiaDeepLinksSource {
-  budgetbeheer: KrefiaDeepLink | null;
-  lening: KrefiaDeepLink | null;
-  schuldhulp: KrefiaDeepLink | null;
+  budgetbeheer: KrefiaDeepLinkSource | null;
+  lening: KrefiaDeepLinkSource | null;
+  schuldhulp: KrefiaDeepLinkSource | null;
 }
 
-export interface KrefiaSource {
+export type KrefiaSourceResponse = ApiResponse<{
   notificationTriggers: NotificationTriggers | null;
   deepLinks: KrefiaDeepLinksSource;
-}
+}>;
 
 export interface Krefia {
   notificationTriggers: NotificationTriggers | null;
@@ -80,7 +85,7 @@ function getLinkText(deepLinkType: KrefiaDeepLink['type']) {
   return linkText;
 }
 
-function transformKrefiaResponse(responseData: ApiResponse<KrefiaSource>) {
+function transformKrefiaResponse(responseData: KrefiaSourceResponse): Krefia {
   return {
     deepLinks: Object.entries(responseData.content?.deepLinks ?? {}).map(
       ([key, deepLink]) => {
@@ -97,7 +102,7 @@ function transformKrefiaResponse(responseData: ApiResponse<KrefiaSource>) {
         return krefiaDeepLink;
       }
     ),
-    notificationTriggers: responseData.content?.notificationTriggers,
+    notificationTriggers: responseData.content?.notificationTriggers ?? null,
   };
 }
 
@@ -161,3 +166,7 @@ export async function fetchKrefiaNotifications(
   }
   return apiDependencyError({ response });
 }
+
+export const forTesting = {
+  transformKrefiaResponse,
+};

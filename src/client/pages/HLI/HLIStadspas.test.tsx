@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 
-import HLIStadspas from './HLIStadspas';
+import { HLIStadspas } from './HLIStadspas';
 import { AppState } from '../../../universal/types';
 import { componentCreator } from '../MockApp';
 import { stadspasCreator } from './test-helpers';

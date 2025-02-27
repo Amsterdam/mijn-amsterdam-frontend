@@ -13,7 +13,6 @@ import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { DisplayProps } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { TrackingConfig } from '../../config/routes';
-import { ThemaTitles } from '../../config/thema';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
@@ -150,20 +149,20 @@ export const linkListItems: LinkProps[] = [
   },
 ];
 
-export function getAfisListPageDocumentTitle() {
+export function getAfisListPageDocumentTitle(themaTitle: string) {
   return <T extends Record<string, string>>(
     config: TrackingConfig,
     params: T | null
   ) => {
     switch (params?.state) {
       case 'open':
-        return `Open facturen | ${ThemaTitles.AFIS}`;
+        return `Open facturen | ${themaTitle}`;
       case 'afgehandeld':
-        return `Afgehandelde facturen | ${ThemaTitles.AFIS}`;
+        return `Afgehandelde facturen | ${themaTitle}`;
       case 'overgedragen':
-        return `Overgedragen aan belastingen facturen | ${ThemaTitles.AFIS}`;
+        return `Overgedragen aan belastingen facturen | ${themaTitle}`;
       default:
-        return `Facturen | ${ThemaTitles.AFIS}`;
+        return `Facturen | ${themaTitle}`;
     }
   };
 }
