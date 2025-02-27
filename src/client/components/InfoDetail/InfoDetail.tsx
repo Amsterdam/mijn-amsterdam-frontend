@@ -4,10 +4,9 @@ import { Heading } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './InfoDetail.module.scss';
-import { ComponentChildren } from '../../../universal/types/App.types';
 
 export interface InfoDetailGroupProps {
-  children: ComponentChildren;
+  children: ReactNode;
   label?: ReactNode;
   className?: string;
 }

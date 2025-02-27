@@ -44,8 +44,6 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
-export type ComponentChildren = ReactNode;
-
 export interface MyNotification {
   thema: Thema;
   datePublished: string;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -7,7 +7,6 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
-import { ComponentChildren } from '../../../universal/types';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
@@ -46,7 +45,7 @@ export interface AutoLogoutDialogSettings {
 }
 
 export interface ComponentProps {
-  children?: ComponentChildren;
+  children?: ReactNode;
   settings?: AutoLogoutDialogSettings;
 }
 
