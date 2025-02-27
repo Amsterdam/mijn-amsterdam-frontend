@@ -8,11 +8,8 @@ import type {
   VarenVergunningExploitatieWijzigingVervangingType,
   VarenVergunningLigplaatsType,
 } from './config-and-types';
-import {
-  DecosZaakBase,
-  DecosZaakTransformer,
-  SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/decos-types';
+import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../decos/decos-field-transformers';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselNameOld = { text33: 'vesselNameOld' } as const;
