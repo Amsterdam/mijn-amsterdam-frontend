@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 
 import { HLIStadspas } from './HLIStadspas';
+import { bffApi } from '../../../testing/utils';
 import { AppState } from '../../../universal/types';
 import { componentCreator } from '../MockApp';
 import { stadspasCreator } from './test-helpers';
@@ -38,12 +39,14 @@ const createHLIStadspasComponent = componentCreator({
 
 describe('<HLIStadspas />', () => {
   test('Finds the block button', () => {
+    bffApi.get('/url-transactions').reply(200, { transactions: [] });
     const HLIStadspas = createHLIStadspasComponent(activePasState);
     const screen = render(<HLIStadspas />);
     expect(screen.getByTestId('block-stadspas-button')).toBeInTheDocument();
   });
 
   test('Find label communicating that the stadspas is blocked', () => {
+    bffApi.get('/url-transactions').reply(200, { transactions: [] });
     const HLIStadspas = createHLIStadspasComponent(pasBlockedState);
     const screen = render(<HLIStadspas />);
     expect(screen.getByTestId('stadspas-blocked-alert')).toBeInTheDocument();
