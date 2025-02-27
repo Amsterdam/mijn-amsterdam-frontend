@@ -126,13 +126,13 @@ export default function Vergunningen() {
       </SectionCollapsible>
       {hasActualGPK && (
         <PageContentV2>
-          <p className={styles.SuppressedParagraph}>
+          <Paragraph className={styles.SuppressedParagraph}>
             Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een
             vaste parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u
             hier in Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra
             de GPK is gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn
             Amsterdam.
-          </p>
+          </Paragraph>
         </PageContentV2>
       )}
     </OverviewPageV2>
