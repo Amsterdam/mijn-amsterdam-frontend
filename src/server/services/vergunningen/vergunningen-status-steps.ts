@@ -211,7 +211,7 @@ export function getStatusSteps<
 }
 
 export function getDisplayStatus(
-  vergunning: VergunningFrontend<DecosZaakBase>,
+  vergunning: VergunningFrontend,
   steps: StatusLineItem[]
 ) {
   if (vergunning.processed && !vergunning.isExpired && vergunning.decision) {
