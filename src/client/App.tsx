@@ -84,7 +84,7 @@ import { ContactmomentenListPage } from './pages/Profile/private/Contactmomenten
 import { MijnGegevensThema } from './pages/Profile/private/ProfilePrivate';
 import Search from './pages/Search/Search';
 import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
-import { ToeristischeVerhuurDetail } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
+import { ToeristischeVerhuurDetailPagina } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
 import Varen from './pages/Varen/Varen';
 import { VarenDetail } from './pages/Varen/VarenDetail';
@@ -306,7 +306,7 @@ function AppAuthenticated() {
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']}
-              component={ToeristischeVerhuurDetail}
+              component={ToeristischeVerhuurDetailPagina}
             />
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
