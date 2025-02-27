@@ -18,7 +18,6 @@ import {
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
-import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getStatusDate } from '../decos/decos-helpers';
@@ -103,8 +102,7 @@ export function createVergunningNotification(
   vergunning: VergunningFrontend,
   thema: Thema
 ): MyNotification | null {
-  const zaakTypeTransformer =
-    decosCaseToZaakTransformers[vergunning.caseType as DecosCaseType];
+  const zaakTypeTransformer = decosCaseToZaakTransformers[vergunning.caseType];
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
