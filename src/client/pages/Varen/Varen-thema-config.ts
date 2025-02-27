@@ -10,11 +10,14 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
+import { TrackingConfig } from '../../config/routes';
+import { ThemaTitles } from '../../config/thema';
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   actief: 'actieve-vergunningen',
 } as const;
+
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
