@@ -66,7 +66,7 @@ function ProfilePrivateSectionPanels() {
       )}
       {isMokum(BRP.content) && (
         <PageContentCell>
-          <p className={styles.SuppressedParagraph}>
+          <Paragraph className={styles.SuppressedParagraph}>
             Het is helaas niet mogelijk om de gegevens van een levenloos geboren
             kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
             in{' '}
@@ -74,12 +74,12 @@ function ProfilePrivateSectionPanels() {
               MijnOverheid
             </Link>
             .
-          </p>
-          <p className={styles.SuppressedParagraph}>
+          </Paragraph>
+          <Paragraph className={styles.SuppressedParagraph}>
             Op deze pagina laten wij uw gegevens zien uit de landelijke en
             Amsterdamse administratie. Gegevens die bij een andere gemeente zijn
             geregistreerd worden hier niet getoond.
-          </p>
+          </Paragraph>
         </PageContentCell>
       )}
     </>

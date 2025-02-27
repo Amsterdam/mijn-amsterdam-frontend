@@ -1,5 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -85,7 +87,7 @@ export function DatasetPropertyFilterPanel({
                       datasetId,
                       getIconChildIdFromValue(datasetId, value)
                     ) || ''}
-                    <p>{value}</p>
+                    <Paragraph>{value}</Paragraph>
                     {featureCount >= 1 ? (
                       <FeatureCount>
                         (

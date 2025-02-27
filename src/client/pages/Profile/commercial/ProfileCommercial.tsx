@@ -84,18 +84,18 @@ function ProfileCommercialSectionPanels() {
           />
         )}
       <PageContentCell>
-        <p className={styles.SuppressedParagraph}>
+        <Paragraph className={styles.SuppressedParagraph}>
           Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
-        </p>
-        <p className={styles.SuppressedParagraph}>
+        </Paragraph>
+        <Paragraph className={styles.SuppressedParagraph}>
           U kunt deze gegevens niet gebruiken als uittreksel. Een gewaarmerkt
           uittreksel vraagt u aan bij de de{' '}
           <Link href="https://kvk.nl" rel="noopener noreferrer">
             Kamer van Koophandel
           </Link>
           .
-        </p>
+        </Paragraph>
       </PageContentCell>
     </>
   );
