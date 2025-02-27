@@ -136,7 +136,7 @@ export const MA_DECISION_DEFAULT = 'Zie besluit';
 
 export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
 
-export type DecosFieldTransformer<T extends DecosZaakBase = DecosZaakBase> = {
+export type DecosFieldTransformer<T extends DecosZaakBase> = {
   name: keyof T;
   transform?: (input: any) => DecosFieldValue;
 };
