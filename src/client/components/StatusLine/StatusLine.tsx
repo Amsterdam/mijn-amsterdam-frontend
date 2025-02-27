@@ -1,11 +1,12 @@
 import { CSSProperties } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { ActionGroup, Heading, Icon } from '@amsterdam/design-system-react';
+import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
 import styles from './StatusLine.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { ComponentChildren } from '../../../universal/types';
+import { ComponentChildren, LinkProps } from '../../../universal/types';
 import {
   AltDocumentContent,
   GenericDocument,
@@ -13,6 +14,7 @@ import {
 } from '../../../universal/types/App.types';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
+import { MaButtonLink } from '../MaLink/MaLink';
 
 interface StatusLinePanelProps {
   children: ComponentChildren;
@@ -47,14 +49,27 @@ export function StatusLinePanelStatus({
 
 interface StatusLinePanelDescriptionProps {
   content?: string;
+  actionButtonItems?: LinkProps[];
 }
 
 export function StatusLinePanelDescription({
   content = '',
+  actionButtonItems = [],
 }: StatusLinePanelDescriptionProps) {
+  const actionButtons = actionButtonItems.length > 0 && (
+    <ActionGroup className={styles.PanelActionGroup}>
+      {actionButtonItems.map(({ to, title }) => (
+        <MaButtonLink key={to} href={to} variant="secondary">
+          {title}
+          <Icon svg={ExternalLinkIcon} size="level-5" />
+        </MaButtonLink>
+      ))}
+    </ActionGroup>
+  );
   return (
     <StatusLinePanel name="description">
       <InnerHtml className={styles.PanelContent}>{content}</InnerHtml>
+      {actionButtons}
     </StatusLinePanel>
   );
 }
@@ -290,7 +305,10 @@ export default function StatusLine({
                 status={item.status}
               />
 
-              <StatusLinePanelDescription content={item.description} />
+              <StatusLinePanelDescription
+                content={item.description}
+                actionButtonItems={item.actionButtonItems}
+              />
 
               <StatusLinePanelDocuments
                 documents={item.documents ?? []}

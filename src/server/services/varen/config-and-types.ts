@@ -16,7 +16,9 @@ export const caseTypeVaren = {
 export type CaseTypeVaren = keyof typeof caseTypeVaren;
 export type GetCaseType<T extends CaseTypeVaren> = (typeof caseTypeVaren)[T];
 
-export type VarenRegistratieRederType = DecosZaakBase & {
+type DecosVarenZaakBase = DecosZaakBase & { linkDataRequest: string | null };
+
+export type VarenRegistratieRederType = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenRederRegistratie'>;
   title: 'Varen registratie reder';
   decision: 'Verleend' | 'Ingetrokken';
@@ -29,7 +31,7 @@ export type VarenRegistratieRederType = DecosZaakBase & {
   email: string | null;
 };
 
-export type VarenVergunningExploitatieType = DecosZaakBase & {
+export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenVergunningExploitatie'>;
   decision:
     | 'Nog niet bekend'
@@ -65,13 +67,13 @@ export type VarenVergunningExploitatieType = DecosZaakBase & {
 };
 
 export type VarenVergunningExploitatieWijzigingVaartuigNaamType =
-  DecosZaakBase & {
+  DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVaartuignaam'>;
     vesselNameOld: string | null;
   } & Pick<VarenVergunningExploitatieType, 'vesselName'>;
 
 export type VarenVergunningExploitatieWijzigingVergunningshouderType =
-  DecosZaakBase & {
+  DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVergunningshouder'>;
     statutoryName: string | null;
     businessAddress: string | null;
@@ -79,7 +81,7 @@ export type VarenVergunningExploitatieWijzigingVergunningshouderType =
   } & Pick<VarenVergunningExploitatieType, 'segment'>;
 
 export type VarenVergunningExploitatieWijzigingVerbouwingType =
-  DecosZaakBase & {
+  DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVerbouwing'>;
   } & Pick<
       VarenVergunningExploitatieType,
@@ -94,7 +96,7 @@ export type VarenVergunningExploitatieWijzigingVerbouwingType =
     >;
 
 export type VarenVergunningExploitatieWijzigingVervangingType =
-  DecosZaakBase & {
+  DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVervanging'>;
     vesselNameOld: string | null;
   } & Pick<
@@ -110,7 +112,7 @@ export type VarenVergunningExploitatieWijzigingVervangingType =
       | 'eniNumber'
     >;
 
-export type VarenVergunningLigplaatsType = DecosZaakBase & {
+export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenVergunningLigplaats'>;
   decision: 'Geannuleerd' | 'Afgehandeld';
   location: string | null;
@@ -125,7 +127,7 @@ export type Varen =
   | VarenVergunningExploitatieWijzigingVergunningshouderType
   | VarenVergunningExploitatieWijzigingVervangingType;
 
-export type VarenFrontend<T extends DecosZaakBase = Varen> =
+export type VarenFrontend<T extends DecosVarenZaakBase = Varen> =
   DecosZaakFrontend<T>;
 
 export type VarenVergunningFrontend = Exclude<

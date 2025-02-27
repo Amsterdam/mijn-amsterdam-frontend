@@ -98,6 +98,7 @@ export interface StatusLineItem {
   isChecked: boolean;
   isVisible?: boolean;
   altDocumentContent?: AltDocumentContent;
+  actionButtonItems?: LinkProps[];
 }
 
 export interface ZaakDetail {
