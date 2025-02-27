@@ -22,7 +22,7 @@ import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
 
 export function getNotificationLabels(
   notificationLabels: Partial<NotificationLabelByType>,
-  vergunning: VergunningFrontend<DecosZaakBase>,
+  vergunning: VergunningFrontend,
   compareToDate: Date = new Date()
 ) {
   // Ignore formatting of the switch case statements for readability
@@ -66,7 +66,7 @@ export function getNotificationLabels(
 }
 
 function getNotificationBase(
-  vergunning: VergunningFrontend<DecosZaakBase>,
+  vergunning: VergunningFrontend,
   thema: Thema
 ): Pick<MyNotification, 'thema' | 'id' | 'link'> {
   const notificationBaseProperties = {
@@ -83,7 +83,7 @@ function getNotificationBase(
 function mergeNotificationProperties(
   notificationBase: Pick<MyNotification, 'thema' | 'id' | 'link'>,
   content: NotificationLabels,
-  vergunning: VergunningFrontend<DecosZaakBase>
+  vergunning: VergunningFrontend
 ): MyNotification {
   const notificationLabels: Pick<MyNotification, keyof typeof content> = {
     title: content.title(vergunning),

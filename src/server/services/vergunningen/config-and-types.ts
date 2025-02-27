@@ -208,7 +208,8 @@ export type VergunningOptions = {
   appRoute: string | ((vergunning: DecosVergunning) => string);
 };
 
-export type VergunningFrontend<T extends DecosZaakBase> = DecosZaakFrontend<T>;
+export type VergunningFrontend<T extends DecosZaakBase = DecosZaakBase> =
+  DecosZaakFrontend<T>;
 
 export type NotificationProperty =
   | 'title'
@@ -216,13 +217,9 @@ export type NotificationProperty =
   | 'datePublished'
   | 'link';
 
-type NotificationPropertyValue = (
-  vergunning: VergunningFrontend<DecosZaakBase>
-) => string;
+type NotificationPropertyValue = (vergunning: VergunningFrontend) => string;
 
-type NotificationLink = (
-  vergunning: VergunningFrontend<DecosZaakBase>
-) => LinkProps;
+type NotificationLink = (vergunning: VergunningFrontend) => LinkProps;
 
 type NotificationLabelsBase = {
   [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;
