@@ -1,4 +1,4 @@
-import { Header, Icon, Screen } from '@amsterdam/design-system-react';
+import { Header, Icon } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './MainHeader.module.scss';
@@ -71,13 +71,11 @@ function MainHeaderSearch() {
   return (
     isDisplayLiveSearch &&
     isSearchActive && (
-      <div className={styles.MainHeaderWrap}>
-        <div className={styles.SearchBarWrap}>
-          <SearchBar
-            onFinish={() => setSearchActive(false)}
-            className={styles.SearchBar}
-          />
-        </div>
+      <div className={styles.SearchBarWrap}>
+        <SearchBar
+          onFinish={() => setSearchActive(false)}
+          className={styles.SearchBar}
+        />
       </div>
     )
   );
@@ -93,24 +91,23 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
 
   return (
     <>
-      <Screen className={styles.MainHeaderWrap}>
-        <Header
-          logoLink="https://www.amsterdam.nl/"
-          brandName={
-            (
-              <MaRouterLink
-                className={styles.BrandNameLink}
-                href={AppRoutes.HOME}
-              >
-                Mijn Amsterdam
-              </MaRouterLink>
-            ) as unknown as string // Hack because brandName is not typed as ReactNode
-          }
-          menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
-        >
-          {isAuthenticated && <MainMenu />}
-        </Header>
-      </Screen>
+      <Header
+        className={styles.MainHeader}
+        logoLink="https://www.amsterdam.nl/"
+        brandName={
+          (
+            <MaRouterLink
+              className={styles.BrandNameLink}
+              href={AppRoutes.HOME}
+            >
+              Mijn Amsterdam
+            </MaRouterLink>
+          ) as unknown as string // Hack because brandName is not typed as ReactNode
+        }
+        menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
+      >
+        {isAuthenticated && <MainMenu />}
+      </Header>
       {isAuthenticated && <MainHeaderSearch />}
     </>
   );
