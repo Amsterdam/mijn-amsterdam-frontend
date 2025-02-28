@@ -30,8 +30,6 @@ export const vergunning: HorecaVergunningFrontend = {
   dateEnd: '2025-01-27T00:00:00',
   location: 'Amstel 1 A 1011PN',
   dateDecisionFormatted: null,
-  dateInBehandeling: '2024-05-02T22:00:00.000Z',
-  dateInBehandelingFormatted: '03 mei 2024',
   dateRequestFormatted: '02 december 2024',
   steps: [
     {
