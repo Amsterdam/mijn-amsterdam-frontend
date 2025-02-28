@@ -62,3 +62,8 @@ async function fetchVergunningen_(
 export const fetchVergunningen = memoizee(fetchVergunningen_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
 });
+
+export const forTesting = {
+  transformVergunningFrontend,
+  fetchVergunningen_,
+};
