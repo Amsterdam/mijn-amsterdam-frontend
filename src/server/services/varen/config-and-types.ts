@@ -38,14 +38,9 @@ export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
     | 'Afgewezen'
     | 'Afgewezen door loting'
     | 'Buiten behandeling'
-    | 'Ingetrokken door aanvaarder'
+    | 'Ingetrokken door aanvrager'
     | 'Verleend';
-  status:
-    | 'Ontvangen'
-    | 'In behandeling'
-    | 'Aanvullende informatie gevraagd'
-    | 'Nadere informatie nodig'
-    | 'Besluit';
+  status: 'Ontvangen' | 'In behandeling' | 'Meer informatie nodig' | 'Besluit';
   // eslint-disable-next-line no-magic-numbers
   formAppearance: 1 | 2 | 3;
   segment:

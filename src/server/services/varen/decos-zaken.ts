@@ -8,6 +8,7 @@ import type {
   VarenVergunningExploitatieWijzigingVervangingType,
   VarenVergunningLigplaatsType,
 } from './config-and-types';
+import { isDateInPast } from '../../../universal/helpers/date';
 import {
   DecosZaakBase,
   DecosZaakTransformer,
@@ -26,6 +27,20 @@ const vesselNumberOfSeats = { num8: 'numberOfSeats' } as const;
 const vesselSegment = { text10: 'segment' } as const;
 const vesselFormAppearance = { text15: 'formAppearance' } as const;
 const vesselEniNumber = { text36: 'eniNumber' } as const;
+const status = {
+  title: {
+    name: 'status' as const,
+    transform: (title: string) => {
+      if (title === 'Afgehandeld') {
+        return 'Besluit';
+      }
+      if (title === 'Ontvangen') {
+        return title;
+      }
+      return 'In behandeling';
+    },
+  },
+};
 
 const fetchMeerInformatieTermijn: Required<DecosZaakTransformer>['fetchTermijnenFor'][number] =
   {
@@ -38,8 +53,22 @@ const fetchInBehandelingWorkflow: Required<DecosZaakTransformer>['fetchWorkflowS
     stepTitle: 'Status bijwerken en notificatie verzenden - Volledigheid toets',
   };
 
+const setStatusIfActiveTermijn = async <T extends DecosZaakBase>(zaak: T) => {
+  if (zaak.processed) {
+    return zaak;
+  }
+  const hasActiveTermijn = zaak.termijnDates.find(
+    (zaak) => isDateInPast(zaak.dateStart) && !isDateInPast(zaak.dateEnd)
+  );
+  if (hasActiveTermijn) {
+    zaak.status = 'Meer informatie nodig';
+  }
+  return zaak;
+};
+
 const SELECT_FIELDS_TRANSFORM = {
   ...SELECT_FIELDS_TRANSFORM_BASE,
+  ...status,
   text96: 'linkDataRequest' as const,
 };
 export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
@@ -79,6 +108,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
       ...vesselEniNumber,
       text11: 'permitReference',
     },
+    afterTransform: setStatusIfActiveTermijn,
     notificationLabels: {},
   };
 
@@ -94,6 +124,7 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
       ...vesselName,
       ...vesselNameOld,
     },
+    afterTransform: setStatusIfActiveTermijn,
     notificationLabels: {},
   };
 
@@ -111,6 +142,7 @@ export const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTran
       text34: 'businessAddress',
       text35: 'correspondenceAddress',
     },
+    afterTransform: setStatusIfActiveTermijn,
     notificationLabels: {},
   };
 
@@ -129,6 +161,7 @@ export const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<
       ...vesselSegment,
       ...vesselFormAppearance,
     },
+    afterTransform: setStatusIfActiveTermijn,
     notificationLabels: {},
   };
 
@@ -149,6 +182,7 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
       ...vesselFormAppearance,
       ...vesselEniNumber,
     },
+    afterTransform: setStatusIfActiveTermijn,
     notificationLabels: {},
   };
 
@@ -164,6 +198,7 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
       ...vesselName,
       text6: 'location',
     },
+    afterTransform: setStatusIfActiveTermijn,
     notificationLabels: {},
   };
 
