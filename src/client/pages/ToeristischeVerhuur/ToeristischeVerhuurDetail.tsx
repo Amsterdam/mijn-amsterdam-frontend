@@ -166,7 +166,11 @@ export function ToeristischeVerhuurDetailPagina() {
                         <DocumentListV2
                           documents={vergunningDocuments}
                           columns={['', '']}
-                          className="ams-mb--sm"
+                          className={
+                            vergunning.title === 'Vergunning bed & breakfast'
+                              ? 'ams-mb--sm'
+                              : ''
+                          }
                         />
                         {vergunning.title === 'Vergunning bed & breakfast' && (
                           <BnBDocumentInfo vergunning={vergunning} />
