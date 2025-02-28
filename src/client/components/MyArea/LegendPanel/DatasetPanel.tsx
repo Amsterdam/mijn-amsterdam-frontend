@@ -10,7 +10,10 @@ import {
   useActiveDatasetFilters,
   useDatasetFilterSelection,
 } from '../MyArea.hooks';
-import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
+import MyAreaCollapsiblePanel, {
+  CollapsedState,
+  MyAreaCollapsiblePanelHeading,
+} from './CollapsiblePanel';
 import {
   datasetCheckboxState,
   DatasetControlCheckbox,
@@ -42,6 +45,8 @@ export function DatasetPanel({
     activeDatasetIds
   );
 
+  const hasFilters = !!(dataset.filters && Object.keys(dataset.filters).length);
+
   const datasetControl = (
     <DatasetControlCheckbox
       isChecked={isChecked}
@@ -49,7 +54,15 @@ export function DatasetPanel({
       label={
         <>
           {getIcon(categoryId, datasetId) || ''}
-          <Paragraph>{dataset.title}</Paragraph>
+
+          {hasFilters && !isChecked ? (
+            <MyAreaCollapsiblePanelHeading
+              onClick={() => onControlItemChange('dataset', [datasetId])}
+              title={<Paragraph>{dataset.title}</Paragraph>}
+            />
+          ) : (
+            <Paragraph>{dataset.title}</Paragraph>
+          )}
         </>
       }
       isIndeterminate={isIndeterminate}
@@ -59,12 +72,11 @@ export function DatasetPanel({
     />
   );
 
-  const hasFilters = !!(dataset.filters && Object.keys(dataset.filters).length);
-
   const initialState =
     datasetId in activeFilters
       ? CollapsedState.Expanded
       : CollapsedState.Collapsed;
+
   return (
     <>
       {(!hasFilters || !isChecked) && datasetControl}
@@ -75,14 +87,10 @@ export function DatasetPanel({
         >
           {Object.entries(dataset.filters!).map(([propertyName, property]) => {
             const filterSelectionValues =
-              filterSelection[datasetId] &&
-              filterSelection[datasetId][propertyName] &&
-              filterSelection[datasetId][propertyName].values;
+              filterSelection?.[datasetId]?.[propertyName]?.values;
 
             const filterSelectionValuesRefined =
-              filterSelection[datasetId] &&
-              filterSelection[datasetId][propertyName] &&
-              filterSelection[datasetId][propertyName].valuesRefined;
+              filterSelection?.[datasetId]?.[propertyName]?.valuesRefined;
 
             const values = property.values || filterSelectionValues || {};
 

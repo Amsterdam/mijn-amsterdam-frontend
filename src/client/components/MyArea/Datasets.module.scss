@@ -56,9 +56,9 @@ $colors: (
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.2rem var(--ams-color-primary-white) solid;
-  width: 2.8rem;
-  height: 2.8rem;
+  border: 2px var(--ams-color-primary-white) solid;
+  width: 32px;
+  height: 32px;
   @include colorStyle('grey');
   @include colorStyle('lightBlue');
   @include colorStyle('yellow');

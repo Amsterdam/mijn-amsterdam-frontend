@@ -6,7 +6,11 @@ import {
   useState,
 } from 'react';
 
-import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
+import { Button } from '@amsterdam/design-system-react';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from '@amsterdam/design-system-react-icons';
 
 import styles from './PanelComponent.module.scss';
 
@@ -29,7 +33,7 @@ interface MyAreaCollapsiblePanelHeadingProps {
   state?: CollapsedState;
 }
 
-function MyAreaCollapsiblePanelHeading({
+export function MyAreaCollapsiblePanelHeading({
   onClick,
   title,
   state = CollapsedState.Collapsed,
@@ -38,13 +42,14 @@ function MyAreaCollapsiblePanelHeading({
     <>
       {title}
       {onClick && (
-        <button
+        <Button
           className={styles.CollapsibleButton}
           onClick={onClick}
           aria-expanded={isExpanded(state)}
-        >
-          <ChevronRightIcon aria-hidden="true" className={styles.CaretIcon} />
-        </button>
+          aria-label={isExpanded(state) ? 'Sluit' : 'Open'}
+          icon={isExpanded(state) ? ChevronDownIcon : ChevronRightIcon}
+          variant="tertiary"
+        />
       )}
     </>
   );
@@ -58,7 +63,7 @@ type MyAreaCollapsiblePanelProps = PropsWithChildren<{
 export default function MyAreaCollapsiblePanel({
   children,
   title,
-  initialState = CollapsedState.Collapsed,
+  initialState = CollapsedState.Expanded,
 }: MyAreaCollapsiblePanelProps) {
   const [collapsedState, setCollapsedState] = useState(initialState);
   const hasChildren = Children.count(children) >= 1;

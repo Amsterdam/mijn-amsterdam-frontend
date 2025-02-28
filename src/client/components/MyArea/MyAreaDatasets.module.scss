@@ -1,14 +1,11 @@
 .MarkerClusterIcon {
+  // Circle around marker cluster icon (count)
   &:before {
     content: '';
     background-color: var(--ams-color-primary-blue);
     border-radius: 50%;
-    color: var(--ams-color-primary-white);
-    font-weight: bold;
     display: flex;
     height: 100%;
-    align-items: center;
-    justify-content: center;
   }
 }
 
@@ -21,12 +18,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--ams-color-primary-white);
 }
 
 .MarkerIcon {
   display: block;
+  position: relative;
   &.Feature--selected {
     color: inherit;
   }

@@ -17,7 +17,7 @@ type GenericBaseProps = PropsWithChildren<{
 }>;
 
 interface GenericContentProps {
-  panelItem: Unshaped;
+  panelItem: Record<string, unknown>;
   datasetId: string;
 }
 
@@ -52,7 +52,11 @@ export default function GenericBase({
         <Heading
           size="level-3"
           level={3}
-          className={classnames(styles.Title, isPhone && styles.IsPhone)}
+          className={classnames(
+            styles.Title,
+            isPhone && styles.IsPhone,
+            'ams-mb--sm'
+          )}
         >
           {title}
         </Heading>
