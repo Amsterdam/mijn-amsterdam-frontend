@@ -220,3 +220,7 @@ export function getDisplayStatus(
 
   return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
 }
+
+export const forTesting = {
+  getStatusStepsRVVSloterweg,
+};
