@@ -41,7 +41,6 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
             <DocumentListV2
               documents={voorziening.documents}
               columns={['Brieven', 'Verzenddatum']}
-              className="ams-mb--lg"
             />
           )}
         </PageContentCell>
