@@ -40,7 +40,7 @@ export const tableConfig = Object.fromEntries(
         ...tableConfig,
         title: tableHeadings[kind],
         listPageRoute: generatePath(routes.listPage, {
-          kind: listPageParamKindVergunningen.inProgress,
+          kind,
         }),
       },
     ];

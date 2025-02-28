@@ -61,7 +61,7 @@ export const tableConfig = Object.fromEntries(
         filter: (vergunning: ToeristischeVerhuurVergunning) =>
           tableConfig.filter(vergunning),
         listPageRoute: generatePath(routes.listPage, {
-          kind: listPageParamKindVergunningen.inProgress,
+          kind,
         }),
       },
     ];
