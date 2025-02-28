@@ -111,7 +111,9 @@ describe('Toeristische verhuur service', () => {
       .get('/lvv/AAAAAAAAAAAAAAAAAAAA')
       .reply(200, REGISTRATIES_DUMMY_RESPONSE);
 
-    remoteApi.get('/decosjoin/getvergunningen').replyWithError('No can do!');
+    remoteApi
+      .post((url) => url.includes('/search/books?properties=false&select=key'))
+      .replyWithError('No can do!');
 
     const response = await fetchToeristischeVerhuur('x3', authProfileAndToken);
 
@@ -139,7 +141,9 @@ describe('Toeristische verhuur service', () => {
 
   it('Should respond with 2 failed dependencies', async () => {
     remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
-    remoteApi.get('/decosjoin/getvergunningen').replyWithError('No can do!');
+    remoteApi
+      .post((url) => url.includes('/search/books?properties=false&select=key'))
+      .replyWithError('No can do!');
     remoteApi.get(/lvv/).times(2).replyWithError('blap!');
 
     const response = await fetchToeristischeVerhuur('x5', authProfileAndToken);
@@ -281,7 +285,7 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag ${vakantieverhuurVergunning.title.toLowerCase()} verleend`
     );
     expect(notification3.description).toBe(
-      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.title.toLowerCase()} met gemeentelijk identifier ${
+      `Wij hebben uw aanvraag voor een ${vakantieverhuurVergunning.title.toLowerCase()} met gemeentelijk zaaknummer ${
         vakantieverhuurVergunning.identifier
       } verleend.`
     );
@@ -312,7 +316,7 @@ describe('Toeristische verhuur service', () => {
       `Aanvraag vergunning bed & breakfast verleend`
     );
     expect(notification6.description).toBe(
-      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met gemeentelijk identifier ${bbVergunnig.identifier} verleend.`
+      `Wij hebben uw aanvraag voor een vergunning bed & breakfast met gemeentelijk zaaknummer ${bbVergunnig.identifier} verleend.`
     );
     expect(notification6.link?.title).toBe('Bekijk uw aanvraag');
 
