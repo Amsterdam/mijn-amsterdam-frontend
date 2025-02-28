@@ -4,12 +4,12 @@
 
 .MessageBar {
   background-color: var(--ams-color-primary-white);
-  width: min(calc(100vw - 2rem), calc(var(--ams-dialog-max-inline-size) * 1.5));
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  margin-top: 1rem;
+  max-width: calc(
+    var(--ams-screen-wide-max-inline-size) - calc(
+        var(--ams-grid-padding-inline) * 2
+      )
+  );
+  margin: 0 auto;
 }
 
 .ErrorFromServer {
