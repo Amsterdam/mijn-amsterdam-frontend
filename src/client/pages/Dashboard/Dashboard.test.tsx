@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import Mockdate from 'mockdate';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, expect, it } from 'vitest';
@@ -107,6 +108,14 @@ describe('<Dashboard />', () => {
       />
     );
   }
+
+  beforeAll(() => {
+    Mockdate.set('2021-09-22T14:00:00');
+  });
+
+  afterAll(() => {
+    Mockdate.reset();
+  });
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
