@@ -7,11 +7,22 @@
   }
 }
 
+:global(.is-typeAheadActive) {
+  @include select(MainHeaderHero_MainHeaderHero) {
+    display: none;
+  }
+  @include select(App_App) {
+    display: none;
+  }
+  @include select('ams-footer') {
+    display: none;
+  }
+}
+
 .Results {
   position: absolute;
-  width: calc(100% - 4rem);
+  width: 100%;
   background-color: var(--ams-color-primary-white);
-  border: 0.1rem solid var(--ams-color-neutral-grey3);
   margin-top: 0;
   border-top: 0;
   // transform: translateX(-1rem);

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Paragraph, SkipLink } from '@amsterdam/design-system-react';
+import { Paragraph, Screen, SkipLink } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import {
   BrowserRouter,
@@ -185,7 +185,7 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated />
       <ErrorMessages />
       {isHeroVisible && <MainHeaderHero />}
-      <div className={styles.App}>
+      <Screen className={styles.App}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
@@ -426,7 +426,7 @@ function AppAuthenticated() {
           <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
           <Route component={NotFound} />
         </Switch>
-      </div>
+      </Screen>
       {/** Remove the footer on the Map view for better UX */}
       {location.pathname !== AppRoutes.BUURT && <MainFooter isAuthenticated />}
     </>

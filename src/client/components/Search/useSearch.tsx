@@ -480,7 +480,7 @@ export function useSearchOnPage(): {
   }, [isSearchActive, isDisplayLiveSearch]);
 
   useKeyUp((event) => {
-    if (event.key === 'z' && !isSearchActive) {
+    if (event.key === 'z' && !isSearchActive && isDisplayLiveSearch) {
       setSearchActive(true);
     }
   });
