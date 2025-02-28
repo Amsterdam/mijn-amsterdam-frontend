@@ -17,7 +17,7 @@
 }
 
 .PanelWide {
-  width: 48rem;
+  width: 40rem;
   top: 0;
   // + 0px acts as a pattern for the react-spring props calculation
   transform: translate3d(calc(-100% + 0px), 0, 0);
@@ -56,8 +56,8 @@
 }
 
 .PanelInnerDesktop {
-  padding-right: 3.2rem;
-  padding-left: 1.6rem;
+  padding-right: 32px;
+  padding-left: 0;
 }
 
 .PanelTogglePhone {
@@ -85,40 +85,30 @@
 
 .PanelToggleDesktop {
   position: absolute;
-  right: 0;
-  bottom: 0;
   top: 0;
-  display: block;
   background-color: var(--ams-color-primary-white);
-  border: 0;
-  padding: 0;
-  box-shadow: none;
-  z-index: 2; // Place above innerpanels so we hide the scrollbar of that panel
-  width: 3.2rem;
-  transform: 'none';
+  z-index: 3;
+
+  &[aria-expanded='false'] {
+    top: 1rem;
+    left: calc(100% + 1rem);
+  }
+
+  &[aria-expanded='true'] {
+    right: 1.6rem;
+  }
+
   &[aria-expanded='true'] .Icon {
     transform: rotate(180deg);
     transition: transform 200ms ease-in;
   }
 }
 
-.Icon {
-  height: 3.2rem;
-  width: 1.6rem;
-  background-color: var(--ams-color-primary-white);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  left: 100%;
-  position: absolute;
-  top: 1.25rem;
-}
-
 .CloseButton {
+  background-color: var(--ams-color-primary-white);
   position: absolute;
-  right: 2.4rem;
-  top: 1.6rem;
+  right: 1rem;
+  top: 0;
   z-index: 3;
 }
 
