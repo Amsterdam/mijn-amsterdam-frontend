@@ -16,7 +16,7 @@ export function HistoricItemsMention() {
       <Link href="tel:08000643" rel="noreferrer">
         0800 0643
       </Link>
-      .<br />U ziet ook geen begeleid thuis en beschermd verblijf (vroeger
+      . U ziet ook geen begeleid thuis en beschermd verblijf (vroeger
       maatschappelijke opvang en beschermd wonen). Hier zijn we nog mee bezig.
     </ParagaphSuppressed>
   );
