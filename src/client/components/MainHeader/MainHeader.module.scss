@@ -12,6 +12,10 @@
   text-overflow: ellipsis;
 }
 
+:global(.ams-link).SearchButtonActive {
+  font-weight: var(--ams-header-mega-menu-button-label-open-font-weight);
+}
+
 .SearchBarWrap {
   position: absolute;
   z-index: z-index(main-header-searchbar);
@@ -28,18 +32,10 @@
   padding: var(--ams-space-lg) 0;
 }
 
-.ErrorMessagesWrap {
-  top: 150px;
-  width: 60rem;
-  position: absolute;
-  transform: translateX(-50%);
-  left: 50%;
-}
-
 :global(.ams-link).BrandNameLink {
   color: var(--ams-heading-color);
   font-weight: var(--ams-heading-font-weight);
-  font-size: var(--ams-heading-level-5-font-size);
+  font-size: var(--ams-heading-level-4-font-size);
   line-height: 1.35;
   text-decoration: none;
 }

@@ -20,10 +20,12 @@ export function useInkomenSpecificatiesListPageData() {
   const params = useParams<{
     kind:
       | typeof listPageParamKind.jaaropgaven
-      | typeof listPageParamKind.specificaties;
+      | typeof listPageParamKind.uitkering;
     page?: string;
   }>();
-  const { kind = listPageParamKind.specificaties, page = '1' } = params;
+  const { kind = listPageParamKind.uitkering, page = '1' } = params;
+
+  console.log('kind', kind, page);
 
   const isJaaropgaven = kind === listPageParamKind.jaaropgaven;
   const history = useHistory();

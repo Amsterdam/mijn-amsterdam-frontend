@@ -26,12 +26,12 @@ export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
 export const listPageParamKind = {
   lopend: 'lopende-aanvragen',
   eerder: 'eerdere-aanvragen',
-  specificaties: 'specificaties',
+  uitkering: 'uitkering',
   jaaropgaven: 'jaaropgaven',
 } as const;
 
 const inkomenSpecificaties = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-  kind: listPageParamKind.specificaties,
+  kind: listPageParamKind.uitkering,
 });
 
 const jaaropgaven = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
@@ -121,7 +121,7 @@ export const tableConfig = {
 } as const;
 
 export const tableConfigSpecificaties = {
-  [listPageParamKind.specificaties]: {
+  [listPageParamKind.uitkering]: {
     title: 'Uitkeringsspecificaties',
     displayProps: specificatiesTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
@@ -142,7 +142,7 @@ export function getInkomenListPageDocumentTitle(themaTitle: string) {
   ) => {
     const kind = params?.kind as Exclude<
       ListPageParamKind,
-      'specificaties' | 'jaaropgaven'
+      'uitkering' | 'jaaropgaven'
     >;
     return kind in tableConfig
       ? `${tableConfig[kind].title} | ${themaTitle}`
