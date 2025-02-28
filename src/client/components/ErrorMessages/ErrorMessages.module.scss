@@ -4,7 +4,7 @@
 
 .MessageBar {
   background-color: var(--ams-color-primary-white);
-  max-width: var(--ams-dialog-max-inline-size);
+  width: min(calc(100vw - 2rem), calc(var(--ams-dialog-max-inline-size) * 1.5));
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
