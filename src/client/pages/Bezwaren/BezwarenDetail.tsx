@@ -7,7 +7,7 @@ import { entries } from '../../../universal/helpers/utils';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
-import { Steps } from '../../components/StatusLine/StatusLineV2';
+import { Steps } from '../../components/StatusSteps/StatusSteps';
 import { TextClamp } from '../../components/TextClamp/TextClamp';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
