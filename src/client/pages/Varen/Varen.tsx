@@ -90,7 +90,7 @@ export function VarenPageContentRederRegistratie({
         },
         {
           label: 'Datum registratie',
-          content: registratie.dateDecisionFormatted,
+          content: registratie.dateRequestFormatted,
           span: DEFAULT_GRID_SPAN,
         },
       ],
