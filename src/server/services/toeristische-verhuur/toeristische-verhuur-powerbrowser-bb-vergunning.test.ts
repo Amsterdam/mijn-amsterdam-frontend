@@ -222,20 +222,17 @@ describe('B&B Vergunningen service', () => {
   });
   describe('fetchPowerBrowserToken_', () => {
     test('should fetch token successfully', async () => {
-      const result =
-        await forTesting.fetchPowerBrowserToken_('test-request-id');
+      const result = await forTesting.fetchPowerBrowserToken_();
       expect(result.status).toBe('OK');
       expect(result.content).toBe('test-token');
     });
 
     test('should return an error if token fetch fails', async () => {
-      const resultSuccess =
-        await forTesting.fetchPowerBrowserToken_('test-request-id');
+      const resultSuccess = await forTesting.fetchPowerBrowserToken_();
       expect(resultSuccess.status).toBe('OK');
 
       remoteApi.post('/powerbrowser/Token').reply(500, 'some-error');
-      const result =
-        await forTesting.fetchPowerBrowserToken_('test-request-id');
+      const result = await forTesting.fetchPowerBrowserToken_();
       expect(result.status).toBe('ERROR');
     });
   });
