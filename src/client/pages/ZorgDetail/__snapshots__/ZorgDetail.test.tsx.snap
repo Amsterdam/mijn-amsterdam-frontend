@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (geleverd) 1`] = `<DocumentFragment />`;
+
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (gestopt) 1`] = `<DocumentFragment />`;
+
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (nog niet geleverd) 1`] = `<DocumentFragment />`;
+
+exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishouden (tijdelijk gestopt) 1`] = `<DocumentFragment />`;
+
+exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `<DocumentFragment />`;

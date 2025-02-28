@@ -66,7 +66,7 @@ function isElementOnPage(
   return new Promise((resolve) => {
     const startTime = Date.now();
     function checkIfElementIsInDOM() {
-      const elem = document.querySelector(query);
+      const elem = document?.querySelector(query);
       if (elem) {
         resolve(elem); // Found the element
       } else if (Date.now() - startTime > timeout) {

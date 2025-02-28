@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked pas 1`] = `<DocumentFragment />`;

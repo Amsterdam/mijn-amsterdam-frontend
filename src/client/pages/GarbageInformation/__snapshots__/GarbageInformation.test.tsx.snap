@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval 1`] = `<DocumentFragment />`;
+
+exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1`] = `<DocumentFragment />`;
+
+exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `<DocumentFragment />`;
