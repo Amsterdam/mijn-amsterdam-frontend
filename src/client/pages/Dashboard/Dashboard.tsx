@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useHistory } from 'react-router-dom';
 
+import styles from './Dashboard.module.scss';
 import { WelcomeHeading } from './WelcomHeading';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
@@ -43,7 +44,7 @@ export function Dashboard() {
   }, []);
 
   return (
-    <PageV2>
+    <PageV2 className={styles.Dashboard}>
       <PageContentV2>
         <WelcomeHeading />
         <PageContentCell spanWide={6}>
