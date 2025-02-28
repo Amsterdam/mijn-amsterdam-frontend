@@ -5,7 +5,6 @@ import {
   GridColumnNumber,
   GridColumnNumbers,
 } from '@amsterdam/design-system-react';
-import composeClassNames from 'classnames';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
@@ -13,15 +12,7 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
 }
 
 export function PageV2({ className, children, id, ...otherProps }: PageProps) {
-  return (
-    <main
-      {...otherProps}
-      id={id}
-      className={composeClassNames('ams-screen ams-screen--wide', className)}
-    >
-      {children}
-    </main>
-  );
+  return <>{children}</>;
 }
 
 export function TextPageV2({ children, className, id }: PageProps) {
