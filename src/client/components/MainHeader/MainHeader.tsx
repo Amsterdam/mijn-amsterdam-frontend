@@ -1,5 +1,6 @@
 import { Header, Icon } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
+import classNames from 'classnames';
 
 import styles from './MainHeader.module.scss';
 import { ProfileName } from './ProfileName';
@@ -26,7 +27,10 @@ function MainHeaderLinks() {
       {isDisplayLiveSearch && (
         <MaLink
           maVariant="noUnderline"
-          className="ams-button"
+          className={classNames(
+            'ams-button',
+            isSearchActive && styles.SearchButtonActive
+          )}
           onClick={(e) => {
             e.preventDefault();
             setSearchActive(!isSearchActive);

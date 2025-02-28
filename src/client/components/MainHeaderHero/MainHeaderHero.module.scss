@@ -4,6 +4,11 @@
   position: relative;
   padding-top: 25%;
   background: var(--ams-color-neutral-grey1);
+  display: none;
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    display: block;
+  }
 }
 
 @media print {
