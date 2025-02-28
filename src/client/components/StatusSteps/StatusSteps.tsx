@@ -87,9 +87,12 @@ export function Steps({ steps, title }: StepsProps) {
   return (
     <Grid className={styles.Steps}>
       {title && (
-        <Grid.Cell start={2} span={10}>
-          <Heading>{title}</Heading>
-        </Grid.Cell>
+        <Heading
+          size="level-2"
+          className={classNames(styles.StatusHeading, 'ams-mb--sm')}
+        >
+          {title}
+        </Heading>
       )}
       <Grid.Cell start={2} span={10}>
         <OrderedList className={styles.StepsList} markers={false}>
