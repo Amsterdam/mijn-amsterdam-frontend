@@ -436,4 +436,5 @@ async function getServiceResultsForTips(requestID: RequestID, req: Request) {
 
 export const forTesting = {
   CMS_CONTENT,
+  getServiceResultsForTips,
 };
