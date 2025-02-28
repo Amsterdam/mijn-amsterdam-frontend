@@ -4,11 +4,7 @@
 
 .MessageBar {
   background-color: var(--ams-color-primary-white);
-  max-width: calc(
-    var(--ams-screen-wide-max-inline-size) - calc(
-        var(--ams-grid-padding-inline) * 2
-      )
-  );
+  max-width: var(--ams-ma-max-screen-width);
   margin: 0 auto;
 }
 

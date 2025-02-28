@@ -145,7 +145,7 @@ export function Search({
   replaceResultUrl,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
-  const resultsRef = useRef<any>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const [isResultsVisible, setResultsVisible] = useState(false);
 
