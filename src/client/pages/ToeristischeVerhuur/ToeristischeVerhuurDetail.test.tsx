@@ -15,8 +15,12 @@ import { AppState } from '../../../universal/types';
 const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
   {
     id: 'Z-XXX-000007C',
+    key: 'xx',
     title: 'Vergunning vakantieverhuur',
+    caseType: 'Vakantieverhuur vergunningsaanvraag',
     dateDecision: '2022-05-12',
+    dateRequest: '2022-08-01',
+    dateRequestFormatted: '01 augustus 2022',
     dateStart: '2022-08-01',
     dateStartFormatted: '01 augustus 2022',
     dateEnd: '2023-08-01',
@@ -62,6 +66,9 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
     status: 'Afgehandeld',
+    displayStatus: 'Verleend',
+    processed: true,
+    location: 'Amstel 1',
   },
 ];
 
@@ -70,6 +77,8 @@ const bbVergunningen: BBVergunning[] = [
     dateDecision: '2023-03-22',
     dateStart: '2023-03-22',
     dateStartFormatted: '22 maart 2023',
+    dateRequest: '2023-03-22',
+    dateRequestFormatted: '22 maart 2023',
     dateEnd: '2028-07-01',
     dateEndFormatted: '01 juli 2028',
     decision: 'Verleend',
@@ -99,6 +108,10 @@ const bbVergunningen: BBVergunning[] = [
       },
     ],
     status: 'Afgehandeld',
+    displayStatus: 'Verleend',
+    location: 'Amstel 1',
+    processed: true,
+    documents: [],
   },
 ];
 
