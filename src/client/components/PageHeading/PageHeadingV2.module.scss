@@ -1,6 +1,11 @@
 .PageHeadingWrap {
   padding-top: var(--ams-space-md);
   background-color: white;
+
+  // Puts the heading closer to the next element on large screens
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    margin-bottom: calc(var(--ams-space-lg) * -1);
+  }
 }
 
 .PageHeading {
