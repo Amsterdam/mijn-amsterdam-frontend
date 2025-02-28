@@ -13,7 +13,7 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
-import styles from './StatusLineV2.module.scss';
+import styles from './StatusSteps.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { DocumentLink } from '../DocumentList/DocumentLink';
