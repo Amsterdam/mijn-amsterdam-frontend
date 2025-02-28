@@ -2,7 +2,6 @@
   display: grid;
   column-gap: var(--ams-grid-column-gap);
   grid-template-columns: 3fr 1fr;
-  padding-top: calc(var(--ams-link-list-gap) * 4);
   padding-bottom: var(--ams-space-xl);
 
   .menuItem {

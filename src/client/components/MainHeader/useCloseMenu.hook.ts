@@ -5,16 +5,16 @@ import { useLocation } from 'react-router-dom';
 import { useKeyUp } from '../../hooks/useKey';
 import { useSearchActive } from '../Search/useSearch';
 
-function getCloseButtonNode() {
+export function getMenuButtonNode() {
   const button = document.querySelector(
-    'button[aria-expanded=true].ams-header__mega-menu-button'
+    'button[aria-controls=ams-mega-menu].ams-header__mega-menu-button'
   );
   return button as HTMLButtonElement;
 }
 
 export function useCloseMenu() {
   const closeMenu = useCallback(() => {
-    getCloseButtonNode()?.click();
+    getMenuButtonNode()?.click();
   }, []);
 
   const location = useLocation();
