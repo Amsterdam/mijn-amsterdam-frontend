@@ -286,7 +286,11 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                   03 juni 2023
                 </time>
                 <div>
-                  Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                  <div
+                    class=""
+                  >
+                    Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                  </div>
                 </div>
               </li>
               <li
