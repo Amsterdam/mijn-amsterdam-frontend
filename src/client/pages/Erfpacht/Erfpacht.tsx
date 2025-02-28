@@ -4,6 +4,7 @@ import { LINKS } from './constants';
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { OpenFacturenListGrouped } from './ErfpachtOpenFacturen';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
