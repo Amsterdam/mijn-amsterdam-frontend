@@ -11,7 +11,7 @@ import {
   PageContentV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { Steps } from '../../components/StatusLine/StatusLineV2';
+import { Steps } from '../../components/StatusSteps/StatusSteps';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
