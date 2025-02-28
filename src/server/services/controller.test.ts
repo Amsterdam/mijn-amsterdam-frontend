@@ -13,8 +13,6 @@ import { fetchCMSCONTENT } from './cms-content';
 import {
   addServiceResultHandler,
   forTesting,
-  getServiceResultsForTips,
-  fetchContentTipsByServiceResults,
   servicesTipsByProfileType,
 } from './controller';
 import {
@@ -113,7 +111,10 @@ describe('controller', () => {
       id: '9988',
     });
 
-    const results = await getServiceResultsForTips('xx12xx', reqMock);
+    const results = await forTesting.getServiceResultsForTips(
+      'xx12xx',
+      reqMock
+    );
 
     expect(results).toMatchInlineSnapshot(`
       {
@@ -135,7 +136,10 @@ describe('controller', () => {
       authMethod: 'eherkenning',
       sid: '',
     });
-    const results2 = await getServiceResultsForTips('xx12xx', reqMock);
+    const results2 = await forTesting.getServiceResultsForTips(
+      'xx12xx',
+      reqMock
+    );
 
     expect(results2).toMatchInlineSnapshot(`
       {
@@ -160,30 +164,6 @@ describe('controller', () => {
         },
       }
     `);
-  });
-
-  test('getTipNotifications private', async () => {
-    const reqMock = await getReqMockWithOidc({
-      id: '123456789',
-      profileType: 'private',
-      authMethod: 'digid',
-      sid: '',
-    });
-
-    const result = await fetchContentTipsByServiceResults('xx1xx', reqMock);
-    expect(result).toMatchInlineSnapshot('[]');
-  });
-
-  test('getTipNotifications commercial', async () => {
-    const reqMock = await getReqMockWithOidc({
-      id: '90006178',
-      profileType: 'commercial',
-      authMethod: 'eherkenning',
-      sid: '',
-    });
-
-    const result = await fetchContentTipsByServiceResults('xx2xx', reqMock);
-    expect(result).toMatchInlineSnapshot('[]');
   });
 
   test('addServiceResultHandler', async () => {
