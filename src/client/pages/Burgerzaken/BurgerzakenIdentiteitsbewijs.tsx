@@ -1,11 +1,10 @@
 // src/client/pages/Burgerzaken/BurgerZakenDetail.tsx
-import { Grid } from '@amsterdam/design-system-react';
 
 import { useBurgerZakenDetailData } from './useBurgerZakenDetailData.hook';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { IdentiteitsbewijsFrontend } from '../../../universal/types';
-import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function BurgerzakenIdentiteitsbewijs() {
@@ -19,9 +18,8 @@ export function BurgerzakenIdentiteitsbewijs() {
       zaak={document}
       isError={isError}
       isLoading={isLoading}
-      icon={<ThemaIcon />}
       backLink={backLink}
-      pageContentTop={
+      pageContentMain={
         !!document && (
           <BurgerzakenIdentiteitsbewijsContent document={document} />
         )
@@ -38,9 +36,9 @@ function BurgerzakenIdentiteitsbewijsContent({
   const rows = getRows(document);
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <Datalist rows={rows} />
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 

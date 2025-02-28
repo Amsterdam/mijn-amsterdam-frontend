@@ -19,11 +19,11 @@ import {
   BAGQueryParams,
   BAGSourceData,
 } from '../../../universal/types/bag';
-import { Modal } from '../../components';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
-import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
+import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
 import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
+import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 
 function transformBagSearchResultsResponse(
@@ -98,8 +98,17 @@ export function LocationModal({
     if (bagApi.isDirty || address === null) {
       return;
     }
+
     if (isLocationModalOpen) {
-      const querySearchAddress = extractAddress(address);
+      let querySearchAddress: BAGQueryParams | null = null;
+      try {
+        querySearchAddress = extractAddress(address);
+      } catch (error) {}
+
+      if (querySearchAddress === null) {
+        return;
+      }
+
       const isWeesp = isLocatedInWeesp(address);
       // Updates bagApi state
       fetchBag({
@@ -155,6 +164,8 @@ export function LocationModal({
         </Button>
         <Modal
           isOpen={isLocationModalOpen}
+          pollingQuerySelector="#map-zoom"
+          giveUpOnReadyPollingAfterMs={5000}
           onClose={() => {
             setLocationModalOpen(false);
           }}
@@ -173,6 +184,8 @@ export function LocationModal({
                 datasetIds={[]}
                 activeBaseLayerType={BaseLayerType.Aerial}
                 centerMarker={centerMarker}
+                showHomeLocationMarker={false}
+                showSecondaryLocationMarkers={false}
               />
             )}
             {!bagApi.isLoading && !hasLocationDataAndCenterMarker && (

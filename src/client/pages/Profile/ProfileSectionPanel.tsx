@@ -5,6 +5,7 @@ import { LinkList, Grid } from '@amsterdam/design-system-react';
 import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
+import { PageContentCell } from '../../components/Page/Page';
 import { usePhoneScreen } from '../../hooks/media.hook';
 
 export interface ActionLink {
@@ -34,7 +35,7 @@ function ProfileSectionActionLinks({
   actionLinks,
 }: ProfileSectionActionLinksProps) {
   return (
-    <LinkList>
+    <LinkList className="ams-mb--sm">
       {actionLinks.map((actionLink) => (
         <LinkList.Link
           key={actionLink.title}
@@ -77,7 +78,7 @@ export function ProfileSectionPanel({
   const sections = Array.isArray(sectionData) ? sectionData : [sectionData];
   const isPhoneScreen = usePhoneScreen();
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>
         <Grid className={styles.ProfileSectionPanelGrid}>
           <Grid.Cell start={1} span={{ narrow: 4, medium: 5, wide: 7 }}>
@@ -100,6 +101,6 @@ export function ProfileSectionPanel({
           )}
         </Grid>
       </CollapsiblePanel>
-    </Grid.Cell>
+    </PageContentCell>
   );
 }

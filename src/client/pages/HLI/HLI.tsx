@@ -1,4 +1,6 @@
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { ReactNode } from 'react';
+
+import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
 import styles from './HLI.module.scss';
@@ -6,24 +8,25 @@ import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
+import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function HistoricItemsMention() {
   return (
-    <Paragraph className={styles.HistoricItemsMention}>
+    <ParagaphSuppressed>
       U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier
       niet ziet, heeft u eerder per post ontvangen.
-    </Paragraph>
+    </ParagaphSuppressed>
   );
 }
 
 type StadspasDisplayProps = {
-  owner: React.JSX.Element;
-  actief: string;
+  owner: ReactNode;
+  actief: ReactNode;
 };
 
 type StadspassenProps = {
@@ -59,9 +62,8 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   });
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <ThemaPaginaTable<StadspasDisplayProps>
-        title=""
         displayProps={displayProps}
         zaken={passen}
         className={styles.Stadspassen}
@@ -82,11 +84,11 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
           )}
         </Paragraph>
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 
-export default function ThemaPaginaHLI() {
+export function ThemaPaginaHLI() {
   const {
     hasKindtegoed,
     isError,
@@ -97,32 +99,17 @@ export default function ThemaPaginaHLI() {
     tableConfig,
     dependencyError,
     stadspassen,
+    linkListItems,
   } = useHliThemaData();
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
-      van een Stadspas ziet u ook de stadspasgegevens.
-    </Paragraph>
+    <PageContentCell spanWide={6}>
+      <Paragraph>
+        Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
+        van een Stadspas ziet u ook de stadspasgegevens.
+      </Paragraph>
+    </PageContentCell>
   );
-
-  const linkListItems: LinkProps[] = [
-    {
-      to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
-      title: 'Meer informatie over regelingen',
-    },
-    {
-      to: 'https://www.amsterdam.nl/stadspas',
-      title: 'Meer informatie over Stadspas',
-    },
-  ];
-
-  if (hasKindtegoed) {
-    linkListItems.push({
-      to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-      title: 'Meer informatie over Kindtegoed declareren',
-    });
-  }
 
   const regelingenTables = FeatureToggle.hliThemaRegelingenActive
     ? Object.entries(tableConfig).map(
@@ -163,11 +150,24 @@ export default function ThemaPaginaHLI() {
       <ThemaPagina
         title={title}
         pageContentTop={pageContentTop}
-        linkListItems={linkListItems}
+        linkListItems={
+          hasKindtegoed
+            ? [
+                ...linkListItems,
+                {
+                  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+                  title: 'Meer informatie over Kindtegoed declareren',
+                },
+              ]
+            : linkListItems
+        }
         pageContentMain={
           <>
             {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
             {!!regelingen?.length && regelingenTables}
+            <PageContentCell startWide={3} spanWide={8}>
+              <HistoricItemsMention />
+            </PageContentCell>
           </>
         }
         isError={isError}
@@ -175,7 +175,6 @@ export default function ThemaPaginaHLI() {
         isPartialError={!!dependencyError}
         isLoading={isLoading}
       />
-      <HistoricItemsMention />
     </>
   );
 }

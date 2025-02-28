@@ -1,7 +1,7 @@
 import GenericBase from './GenericBase';
 
 interface MyArePanelContentParkerenProps {
-  panelItem: any;
+  panelItem: Unshaped;
   datasetId: string;
 }
 

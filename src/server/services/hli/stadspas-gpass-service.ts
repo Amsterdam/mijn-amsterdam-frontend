@@ -24,6 +24,7 @@ import {
   StadspasTransactionQueryParams,
   PasblokkadeByPasnummer,
 } from './stadspas-types';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
@@ -39,7 +40,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],

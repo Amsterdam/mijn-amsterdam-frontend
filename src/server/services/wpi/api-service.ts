@@ -29,7 +29,7 @@ import {
   createProcessNotification,
   getEAanvraagRequestProcessLabels,
   isRequestProcessActual,
-  transformToStatusLine,
+  transformRequestProcess,
 } from './helpers';
 import {
   WpiIncomeSpecificationResponseData,
@@ -58,16 +58,16 @@ function statusLineTransformer(
   const statusLineRequestProcesses = response?.flatMap((requestProcess) => {
     const labels = getLabels(requestProcess);
     if (labels) {
-      return [transformToStatusLine(sessionID, requestProcess, labels)];
-    } else {
-      captureMessage('Unknown request process labels', {
-        properties: {
-          about: requestProcess.about,
-          title: requestProcess.title,
-          status: requestProcess.statusId,
-        },
-      });
+      return [transformRequestProcess(sessionID, requestProcess, labels)];
     }
+    captureMessage('Unknown request process labels', {
+      properties: {
+        about: requestProcess.about,
+        title: requestProcess.title,
+        status: requestProcess.statusId,
+      },
+    });
+
     return [];
   });
   return statusLineRequestProcesses;
@@ -97,7 +97,7 @@ export async function fetchRequestProcess(
   if (response.status === 'OK') {
     const responseFiltered = fetchConfig.filterResponse(response);
     const responseTransformed = statusLineTransformer(
-      authProfileAndToken['profile']['sid'],
+      authProfileAndToken.profile.sid,
       responseFiltered,
       getLabels
     );
@@ -213,21 +213,22 @@ export function transformIncomSpecificationResponse(
   };
 }
 
-export function fetchSpecificaties(
+export async function fetchSpecificaties(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = requestData<WpiIncomeSpecificationResponseDataTransformed>(
-    getApiConfig('WPI_SPECIFICATIES', {
-      transformResponse: (responseData) =>
-        transformIncomSpecificationResponse(
-          authProfileAndToken.profile.sid,
-          responseData
-        ),
-    }),
-    requestID,
-    authProfileAndToken
-  );
+  const response =
+    await requestData<WpiIncomeSpecificationResponseDataTransformed>(
+      getApiConfig('WPI_SPECIFICATIES', {
+        transformResponse: (responseData) =>
+          transformIncomSpecificationResponse(
+            authProfileAndToken.profile.sid,
+            responseData
+          ),
+      }),
+      requestID,
+      authProfileAndToken
+    );
 
   return response;
 }

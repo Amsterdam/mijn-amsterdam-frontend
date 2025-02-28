@@ -163,12 +163,12 @@ function useHeroSrc() {
   }, [imageName, dir]);
 }
 
-export default function MainHeaderHero() {
+export function MainHeaderHero() {
   const srcSet = useHeroSrc();
   const profileType = useProfileTypeValue();
 
   if (srcSet === null) {
-    return <div className={styles.MainHeaderHeroPlaceHolder} />;
+    return null;
   }
 
   return (

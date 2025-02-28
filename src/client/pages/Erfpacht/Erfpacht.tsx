@@ -1,10 +1,4 @@
-import {
-  Grid,
-  Heading,
-  LinkList,
-  Paragraph,
-  Screen,
-} from '@amsterdam/design-system-react';
+import { Heading, LinkList, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
@@ -12,19 +6,20 @@ import { OpenFacturenListGrouped } from './ErfpachtOpenFacturen';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import {
-  ErrorAlert,
-  LoadingContent,
-  OverviewPage,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 
-export default function Erfpacht() {
+export function Erfpacht() {
   const {
     ERFPACHTv2,
     openFacturen,
@@ -37,26 +32,19 @@ export default function Erfpacht() {
   } = useErfpachtV2Data();
 
   return (
-    <OverviewPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        icon={<ThemaIcon />}
-      >
-        {ThemaTitles.ERFPACHTv2}
-      </PageHeading>
-      <Screen>
-        <Grid>
-          <Grid.Cell span="all">
-            <Paragraph>
-              Hieronder ziet u de gegevens van uw erfpachtrechten.
-            </Paragraph>
-          </Grid.Cell>
-          <Grid.Cell span="all">
-            <LinkList>
-              <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/">
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HOME}>
+          {ThemaTitles.ERFPACHTv2}
+        </PageHeadingV2>
+        <PageContentCell spanWide={6}>
+          <Paragraph>
+            Hieronder ziet u de gegevens van uw erfpachtrechten.
+          </Paragraph>
+        </PageContentCell>
+        <PageContentCell>
+          <LinkList>
+            <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/">
                 Meer informatie over erfpacht in Amsterdam
               </LinkList.Link>
               <LinkList.Link
@@ -67,100 +55,95 @@ export default function Erfpacht() {
               <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/overstappen-eeuwigdurende-erfpacht/">
                 Overstappen erfpachtrecht
               </LinkList.Link>
-            </LinkList>
-          </Grid.Cell>
+          </LinkList>
+        </PageContentCell>
 
-          {isError(ERFPACHTv2) && (
-            <Grid.Cell span="all">
-              <ErrorAlert>
-                We kunnen op dit moment geen erfpachtrechten tonen.
-              </ErrorAlert>
-            </Grid.Cell>
-          )}
+        {isError(ERFPACHTv2) && (
+          <PageContentCell>
+            <ErrorAlert>
+              We kunnen op dit moment geen erfpachtrechten tonen.
+            </ErrorAlert>
+          </PageContentCell>
+        )}
 
-          {isLoading(ERFPACHTv2) && (
-            <Grid.Cell span="all">
-              <LoadingContent
-                barConfig={[
-                  ['20rem', '4rem', '4rem'],
-                  ['40rem', '2rem', '4rem'],
-                  ['40rem', '2rem', '8rem'],
-                  ['30rem', '4rem', '4rem'],
-                  ['40rem', '2rem', '4rem'],
-                  ['40rem', '2rem', '4rem'],
-                ]}
+        {isLoading(ERFPACHTv2) && (
+          <PageContentCell>
+            <LoadingContent
+              barConfig={[
+                ['20rem', '4rem', '4rem'],
+                ['40rem', '2rem', '4rem'],
+                ['40rem', '2rem', '8rem'],
+                ['30rem', '4rem', '4rem'],
+                ['40rem', '2rem', '4rem'],
+                ['40rem', '2rem', '4rem'],
+              ]}
+            />
+          </PageContentCell>
+        )}
+
+        {!isLoading(ERFPACHTv2) && !isError(ERFPACHTv2) && (
+          <>
+            <PageContentCell>
+              <TableV2
+                caption={titleDossiers ?? 'Erfpachtrechten'}
+                className={styles.DossiersTable}
+                items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                displayProps={displayPropsDossiers}
               />
-            </Grid.Cell>
-          )}
 
-          {!isLoading(ERFPACHTv2) && !isError(ERFPACHTv2) && (
-            <>
-              <Grid.Cell span="all">
-                <TableV2
-                  caption={titleDossiers ?? 'Erfpachtrechten'}
-                  className={styles.DossiersTable}
-                  items={dossiers.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
-                  displayProps={displayPropsDossiers}
+              {!dossiers.length && (
+                <Paragraph>
+                  U heeft geen{' '}
+                  {titleDossiers?.toLowerCase() ?? 'erfpachtrechten'}.
+                </Paragraph>
+              )}
+
+              {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+                <LinkToListPage
+                  count={dossiers.length}
+                  route={AppRoutes['ERFPACHTv2/DOSSIERS']}
                 />
-
-                {!dossiers.length && (
-                  <Paragraph>
-                    U heeft geen{' '}
-                    {titleDossiers?.toLowerCase() ?? 'erfpachtrechten'}.
-                  </Paragraph>
-                )}
-
-                {dossiers.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-                  <LinkToListPage
-                    count={dossiers.length}
-                    route={AppRoutes['ERFPACHTv2/DOSSIERS']}
-                  />
-                )}
-              </Grid.Cell>
-              <Grid.Cell span="all">
-                {isMediumScreen ? (
-                  <TableV2
-                    caption={titleOpenFacturen ?? 'Openstaande facturen'}
-                    className={styles.OpenFacturenTableThemaPagina}
-                    items={openFacturen.slice(
+              )}
+            </PageContentCell>
+            <PageContentCell>
+              {isMediumScreen ? (
+                <TableV2
+                  caption={titleOpenFacturen ?? 'Openstaande facturen'}
+                  className={styles.OpenFacturenTableThemaPagina}
+                  items={openFacturen.slice(0, MAX_TABLE_ROWS_ON_THEMA_PAGINA)}
+                  displayProps={displayPropsOpenFacturen}
+                />
+              ) : (
+                <>
+                  <Heading level={3} size="level-2">
+                    {titleOpenFacturen ?? 'Openstaande facturen'}
+                  </Heading>
+                  <OpenFacturenListGrouped
+                    tableClassName={styles.OpenFacturenTableThemaPagina}
+                    facturen={openFacturen.slice(
                       0,
                       MAX_TABLE_ROWS_ON_THEMA_PAGINA
                     )}
                     displayProps={displayPropsOpenFacturen}
                   />
-                ) : (
-                  <>
-                    <Heading level={3} size="level-2">
-                      {titleOpenFacturen ?? 'Openstaande facturen'}
-                    </Heading>
-                    <OpenFacturenListGrouped
-                      tableClassName={styles.OpenFacturenTableThemaPagina}
-                      facturen={openFacturen.slice(
-                        0,
-                        MAX_TABLE_ROWS_ON_THEMA_PAGINA
-                      )}
-                      displayProps={displayPropsOpenFacturen}
-                    />
-                  </>
-                )}
+                </>
+              )}
 
-                {!openFacturen.length && (
-                  <Paragraph>
-                    U heeft geen{' '}
-                    {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}
-                    .
-                  </Paragraph>
-                )}
+              {!openFacturen.length && (
+                <Paragraph>
+                  U heeft geen{' '}
+                  {titleOpenFacturen?.toLowerCase() ?? 'openstaande facturen'}.
+                </Paragraph>
+              )}
 
-                <LinkToListPage
-                  count={openFacturen.length}
-                  route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
-                />
-              </Grid.Cell>
-            </>
-          )}
-        </Grid>
-      </Screen>
-    </OverviewPage>
+              <LinkToListPage
+                count={openFacturen.length}
+                route={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+              />
+            </PageContentCell>
+          </>
+        )}
+      </PageContentV2>
+    </OverviewPageV2>
   );
 }

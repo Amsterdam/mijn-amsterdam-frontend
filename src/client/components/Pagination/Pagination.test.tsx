@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 
-import Pagination from './Pagination';
+import { PaginationV2 } from './PaginationV2';
 
 describe('<Pagination />', () => {
   const onPageClick = vi.fn();
@@ -10,31 +10,33 @@ describe('<Pagination />', () => {
     const user = userEvent.setup();
 
     const { rerender } = render(
-      <Pagination
+      <PaginationV2
         totalCount={10}
         onPageClick={onPageClick}
         pageSize={2}
         currentPage={1}
       />
     );
+    expect(screen.getByText('Pagina 1')).toBeInTheDocument();
     expect(
-      screen.getByLabelText('Huidige pagina, pagina 1')
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText('Ga naar pagina 2')).toBeInTheDocument();
+      screen.getByText('Pagina 1').parentElement?.getAttribute('aria-current')
+    ).toBe('true');
+    expect(screen.getByText('Ga naar pagina 2')).toBeInTheDocument();
 
-    await user.click(screen.getByLabelText('Ga naar pagina 2'));
+    await user.click(screen.getByText('Ga naar pagina 2'));
     expect(onPageClick).toHaveBeenCalledWith(2);
 
     rerender(
-      <Pagination
+      <PaginationV2
         totalCount={10}
         onPageClick={onPageClick}
         pageSize={2}
         currentPage={2}
       />
     );
+    expect(screen.getByText('Pagina 2')).toBeInTheDocument();
     expect(
-      screen.getByLabelText('Huidige pagina, pagina 2')
-    ).toBeInTheDocument();
+      screen.getByText('Pagina 2').parentElement?.getAttribute('aria-current')
+    ).toBe('true');
   });
 });

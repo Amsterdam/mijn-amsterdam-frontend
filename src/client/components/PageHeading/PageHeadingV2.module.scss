@@ -1,0 +1,20 @@
+.PageHeadingWrap {
+  padding-top: var(--ams-space-md);
+  background-color: white;
+}
+
+.PageHeading {
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    --ams-heading-level-3-font-size: 58px;
+    --ams-heading-level-3-line-height: 72px;
+  }
+}
+
+:global(.ams-link--standalone) {
+  &.BackLink {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+  }
+}

@@ -1,5 +1,4 @@
 import type {
-  CaseTypeVaren,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
   VarenVergunningExploitatieWijzigingVaartuigNaamType,
@@ -8,11 +7,8 @@ import type {
   VarenVergunningExploitatieWijzigingVervangingType,
   VarenVergunningLigplaatsType,
 } from './config-and-types';
-import {
-  DecosZaakBase,
-  DecosZaakTransformer,
-  SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/decos-types';
+import { DecosZaakTransformer } from '../decos/config-and-types';
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../decos/decos-field-transformers';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselNameOld = { text33: 'vesselNameOld' } as const;
@@ -184,19 +180,18 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
     notificationLabels: {},
   };
 
-export const decosZaakTransformers = [
-  VarenRegistratieReder,
-  VarenVergunningExploitatie,
-  VarenVergunningLigplaats,
-  VarenVergunningExploitatieWijzigenVaartuignaam,
-  VarenVergunningExploitatieWijzigenVerbouwing,
-  VarenVergunningExploitatieWijzigingVergunningshouder,
-  VarenVergunningExploitatieWijzigingVervanging,
-];
-export const decosCaseToZaakTransformers = decosZaakTransformers.reduce(
-  (acc, zaakTransformer) => ({
-    ...acc,
-    [zaakTransformer.caseType]: zaakTransformer,
-  }),
-  {} as Record<CaseTypeVaren, DecosZaakTransformer<DecosZaakBase>>
-);
+export const decosCaseToZaakTransformers = {
+  [VarenRegistratieReder.caseType]: VarenRegistratieReder,
+  [VarenVergunningExploitatie.caseType]: VarenVergunningExploitatie,
+  [VarenVergunningLigplaats.caseType]: VarenVergunningLigplaats,
+  [VarenVergunningExploitatieWijzigenVaartuignaam.caseType]:
+    VarenVergunningExploitatieWijzigenVaartuignaam,
+  [VarenVergunningExploitatieWijzigenVerbouwing.caseType]:
+    VarenVergunningExploitatieWijzigenVerbouwing,
+  [VarenVergunningExploitatieWijzigingVergunningshouder.caseType]:
+    VarenVergunningExploitatieWijzigingVergunningshouder,
+  [VarenVergunningExploitatieWijzigingVervanging.caseType]:
+    VarenVergunningExploitatieWijzigingVervanging,
+} as const;
+
+export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);

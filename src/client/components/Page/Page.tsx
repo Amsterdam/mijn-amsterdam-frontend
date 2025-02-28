@@ -1,58 +1,89 @@
-import { HTMLProps } from 'react';
+import { HTMLProps, ReactNode } from 'react';
 
+import {
+  Grid,
+  GridColumnNumber,
+  GridColumnNumbers,
+} from '@amsterdam/design-system-react';
 import composeClassNames from 'classnames';
-
-import styles from './Page.module.scss';
-import { ComponentChildren } from '../../../universal/types';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
-  children: ComponentChildren;
+  children: ReactNode;
 }
 
-export default function Page({
-  className,
-  children,
-  id,
-  ...otherProps
-}: PageProps) {
-  const classNames = composeClassNames(styles.Page, className);
-
+export function PageV2({ className, children, id, ...otherProps }: PageProps) {
   return (
-    <main {...otherProps} id={id} className={classNames}>
+    <main
+      {...otherProps}
+      id={id}
+      className={composeClassNames('ams-screen ams-screen--wide', className)}
+    >
       {children}
     </main>
   );
 }
 
-export function TextPage({ children, className, id }: PageProps) {
+export function TextPageV2({ children, className, id }: PageProps) {
   return (
-    <Page id={id} className={composeClassNames(styles.TextPage, className)}>
+    <PageV2 id={id} className={className}>
       {children}
-    </Page>
+    </PageV2>
   );
 }
 
-export function OverviewPage({ children, className, id }: PageProps) {
+export function OverviewPageV2({ children, className, id }: PageProps) {
   return (
-    <Page id={id} className={composeClassNames(styles.OverviewPage, className)}>
+    <PageV2 id={id} className={className}>
       {children}
-    </Page>
+    </PageV2>
   );
 }
 
-export function DetailPage({ children, className, id }: PageProps) {
+export function DetailPageV2({ children, className, id }: PageProps) {
   return (
-    <Page id={id} className={composeClassNames(styles.DetailPage, className)}>
+    <PageV2 id={id} className={className}>
       {children}
-    </Page>
+    </PageV2>
   );
 }
 
-export function PageContent({ children, className, id }: PageProps) {
+export function PageContentV2({ children, className, id }: PageProps) {
   return (
-    <div id={id} className={composeClassNames(styles.PageContent, className)}>
+    <Grid id={id} className={className}>
       {children}
-    </div>
+    </Grid>
+  );
+}
+
+type PageContentCellProps = {
+  className?: string;
+  children: ReactNode;
+  start?: GridColumnNumbers;
+  startWide?: GridColumnNumber;
+  span?: GridColumnNumbers;
+  spanWide?: GridColumnNumber;
+};
+
+export function PageContentCell({
+  children,
+  className,
+  start = { narrow: 1, medium: 1, wide: 1 },
+  span = { narrow: 4, medium: 6, wide: 12 },
+  spanWide,
+  startWide,
+}: PageContentCellProps) {
+  let span_ = span;
+  if (spanWide) {
+    span_ = { ...span, wide: spanWide };
+  }
+  let start_ = start;
+  if (startWide) {
+    start_ = { ...start, wide: startWide };
+  }
+  return (
+    <Grid.Cell start={start_} span={span_} className={className}>
+      {children}
+    </Grid.Cell>
   );
 }

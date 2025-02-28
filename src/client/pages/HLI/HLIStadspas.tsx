@@ -4,14 +4,11 @@ import {
   ActionGroup,
   Alert,
   Button,
-  Grid,
   Heading,
   Paragraph,
-  Screen,
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
-import { getThemaTitleWithAppState } from './helpers';
 import styles from './HLIStadspas.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -27,17 +24,19 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
-import {
-  DetailPage,
-  ErrorAlert,
-  LoadingContent,
-  Modal,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import { Datalist } from '../../components/Datalist/Datalist';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import LoadingContent, {
+  BarConfig,
+} from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { Modal } from '../../components/Modal/Modal';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
@@ -83,7 +82,7 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
-export default function HLIStadspas() {
+export function HLIStadspas() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
 
@@ -143,114 +142,99 @@ export default function HLIStadspas() {
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
   return (
-    <DetailPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HLI,
-          title: getThemaTitleWithAppState(appState),
-        }}
-        icon={<ThemaIcon />}
-      >
-        Overzicht Stadspas{' '}
-        {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
-      </PageHeading>
-      <Screen>
-        <Grid>
-          {stadspas ? (
-            <Grid.Cell span="all">
-              <Datalist rows={[NAME]} />
-              <Paragraph className={styles.StadspasNummerInfo}>
-                Hieronder staat het Stadspasnummer van uw actieve pas.
-                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
-              </Paragraph>
-              <Datalist rows={[NUMBER]} />
-              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {FeatureToggle.hliThemaStadspasBlokkerenActive && (
-                <BlockStadspas stadspas={stadspas} />
-              )}
-            </Grid.Cell>
-          ) : (
-            <Grid.Cell span="all">
-              {isLoadingStadspas && (
-                <LoadingContent barConfig={loadingContentBarConfigDetails} />
-              )}
-              {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
-                <ErrorAlert>
-                  We kunnen op dit moment geen gegevens tonen.{' '}
-                  <MaRouterLink href={AppRoutes.HLI}>
-                    Naar het overzicht
-                  </MaRouterLink>
-                </ErrorAlert>
-              )}
-            </Grid.Cell>
-          )}
-          <>
-            <Grid.Cell span="all">
-              <Heading>Gekregen tegoed</Heading>
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              {isLoadingStadspas && (
-                <LoadingContent barConfig={loadingContentBarConfigList} />
-              )}
-              {!isLoadingStadspas && !!stadspas?.budgets.length && (
-                <TableV2<StadspasBudget>
-                  className={styles.Table_budgets}
-                  items={stadspas.budgets}
-                  displayProps={displayPropsBudgets}
-                />
-              )}
-              {!isLoadingStadspas && !stadspas?.budgets.length && (
-                <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
-              )}
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              <Heading>Uw uitgaven</Heading>
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              {(isLoadingTransacties || isLoadingStadspas) && (
-                <LoadingContent barConfig={loadingContentBarConfigList} />
-              )}
-              {!isLoadingStadspas && !isLoadingTransacties && (
-                <Paragraph>
-                  {hasTransactions ? (
-                    <>
-                      Hieronder ziet u bij welke winkels u het tegoed hebt
-                      uitgegeven. Deze informatie kan een dag achterlopen. Maar
-                      het saldo dat u nog over heeft klopt altijd.
-                    </>
-                  ) : (
-                    <>
-                      U heeft nog geen uitgaven. Deze informatie kan een dag
-                      achterlopen. Maar het bedrag dat u nog over heeft klopt
-                      altijd.
-                    </>
-                  )}
-                </Paragraph>
-              )}
-            </Grid.Cell>
-            {!isLoadingTransacties && hasTransactions && (
-              <>
-                <Grid.Cell span="all">
-                  <TableV2<StadspasBudgetTransaction>
-                    className={
-                      showMultiBudgetTransactions
-                        ? styles.Table_transactions__withBudget
-                        : styles.Table_transactions
-                    }
-                    items={transactions}
-                    displayProps={
-                      showMultiBudgetTransactions
-                        ? displayPropsTransactiesWithBudget
-                        : displayPropsTransacties
-                    }
-                  />
-                </Grid.Cell>
-              </>
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HLI}>
+          Overzicht stadspas{' '}
+          {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
+        </PageHeadingV2>
+
+        {stadspas ? (
+          <PageContentCell>
+            <Datalist rows={[NAME]} />
+            <Paragraph className={styles.StadspasNummerInfo}>
+              Hieronder staat het Stadspasnummer van uw actieve pas.
+              <br /> Dit pasnummer staat ook op de achterkant van uw pas.
+            </Paragraph>
+            <Datalist rows={[NUMBER]} />
+            {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
+            {FeatureToggle.hliThemaStadspasBlokkerenActive && (
+              <BlockStadspas stadspas={stadspas} />
             )}
-          </>
-        </Grid>
-      </Screen>
-    </DetailPage>
+          </PageContentCell>
+        ) : (
+          <PageContentCell>
+            {isLoadingStadspas && (
+              <LoadingContent barConfig={loadingContentBarConfigDetails} />
+            )}
+            {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
+              <ErrorAlert>
+                We kunnen op dit moment geen gegevens tonen.{' '}
+                <MaRouterLink href={AppRoutes.HLI}>
+                  Naar het overzicht
+                </MaRouterLink>
+              </ErrorAlert>
+            )}
+          </PageContentCell>
+        )}
+        <PageContentCell>
+          <Heading className="ams-mb--sm">Gekregen tegoed</Heading>
+          {isLoadingStadspas && (
+            <LoadingContent barConfig={loadingContentBarConfigList} />
+          )}
+          {!isLoadingStadspas && !!stadspas?.budgets.length && (
+            <TableV2<StadspasBudget>
+              className={styles.Table_budgets}
+              items={stadspas.budgets}
+              displayProps={displayPropsBudgets}
+            />
+          )}
+          {!isLoadingStadspas && !stadspas?.budgets.length && (
+            <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
+          )}
+        </PageContentCell>
+        <PageContentCell>
+          <Heading className="ams-mb--sm">Uw uitgaven</Heading>
+          {(isLoadingTransacties || isLoadingStadspas) && (
+            <LoadingContent barConfig={loadingContentBarConfigList} />
+          )}
+          {!isLoadingStadspas && !isLoadingTransacties && (
+            <Paragraph>
+              {hasTransactions ? (
+                <>
+                  Hieronder ziet u bij welke winkels u het tegoed hebt
+                  uitgegeven. Deze informatie kan een dag achterlopen. Maar het
+                  saldo dat u nog over heeft klopt altijd.
+                </>
+              ) : (
+                <>
+                  U heeft nog geen uitgaven. Deze informatie kan een dag
+                  achterlopen. Maar het bedrag dat u nog over heeft klopt
+                  altijd.
+                </>
+              )}
+            </Paragraph>
+          )}
+        </PageContentCell>
+        {!isLoadingTransacties && hasTransactions && (
+          <PageContentCell>
+            <TableV2<StadspasBudgetTransaction>
+              className={
+                showMultiBudgetTransactions
+                  ? styles.Table_transactions__withBudget
+                  : styles.Table_transactions
+              }
+              items={transactions}
+              displayProps={
+                showMultiBudgetTransactions
+                  ? displayPropsTransactiesWithBudget
+                  : displayPropsTransacties
+              }
+            />
+          </PageContentCell>
+        )}
+      </PageContentV2>
+    </DetailPageV2>
   );
 }
 

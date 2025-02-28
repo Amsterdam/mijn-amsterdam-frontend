@@ -10,13 +10,15 @@ interface MyAreaLoaderProps extends MyAreaProps {
   isDashboard?: boolean;
 }
 
-export default function MyAreaLoader({
+export function MyAreaLoader({
   isDashboard = false,
   datasetIds,
   showPanels = true,
   centerMarker,
   zoom,
   activeBaseLayerType,
+  showHomeLocationMarker,
+  showSecondaryLocationMarkers,
 }: MyAreaLoaderProps) {
   return (
     <Suspense
@@ -33,6 +35,8 @@ export default function MyAreaLoader({
           centerMarker={centerMarker}
           activeBaseLayerType={activeBaseLayerType}
           zoom={zoom}
+          showHomeLocationMarker={showHomeLocationMarker}
+          showSecondaryLocationMarkers={showSecondaryLocationMarkers}
         />
       )}
     </Suspense>

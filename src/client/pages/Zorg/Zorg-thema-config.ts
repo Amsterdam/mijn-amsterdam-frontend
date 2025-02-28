@@ -1,7 +1,8 @@
 import styles from './Zorg.module.scss';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { LinkProps } from '../../../universal/types/App.types';
+import { ExternalUrls, MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
@@ -50,3 +51,10 @@ export const routes = {
   detailPage: AppRoutes['ZORG/VOORZIENING'],
   themaPage: AppRoutes.ZORG,
 } as const;
+
+export const linkListItems: LinkProps[] = [
+  {
+    to: ExternalUrls.ZORG_LEES_MEER,
+    title: 'Lees hier meer over zorg en ondersteuning',
+  },
+];

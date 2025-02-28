@@ -1,11 +1,12 @@
 import GenericBase from './GenericBase';
-import { InfoDetail } from '../../..';
 import { DATASETS } from '../../../../../universal/config/myarea-datasets';
 import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
+import { Unshaped } from '../../../../../universal/types';
+import { Datalist, Row } from '../../../Datalist/Datalist';
 
 interface MyArePanelContentMeldingenBuurtProps {
-  panelItem: any;
+  panelItem: Unshaped;
   datasetId: string;
 }
 
@@ -22,20 +23,24 @@ export default function MyArePanelContentMeldingenBuurt({
   datasetId,
   panelItem,
 }: MyArePanelContentMeldingenBuurtProps) {
+  const rows: Row[] = [
+    {
+      label: 'Subcategorie',
+      content: panelItem.subcategory,
+      isVisible: !!panelItem.subcategory,
+    },
+    {
+      label: 'Datum en tijd melding',
+      content: dateTimeFormatYear(panelItem.dateCreated),
+      isVisible: !!panelItem.dateCreated,
+    },
+  ];
   return (
     <GenericBase
       supTitle="Meldingen"
       title={displayCategoryTitle(panelItem.category)}
     >
-      {!!panelItem.subcategory && (
-        <InfoDetail label="Subcategorie" value={panelItem.subcategory} />
-      )}
-      {!!panelItem.dateCreated && (
-        <InfoDetail
-          label="Datum en tijd melding"
-          value={dateTimeFormatYear(panelItem.dateCreated)}
-        />
-      )}
+      <Datalist rows={rows} />
     </GenericBase>
   );
 }

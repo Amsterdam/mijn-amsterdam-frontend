@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 
 import {
+  AfisBusinessPartnerDetailsTransformed,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
@@ -11,6 +12,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { DisplayProps } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { TrackingConfig } from '../../config/routes';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
@@ -19,21 +21,21 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
-  afzender: 'Afzender',
   factuurNummerEl: 'Factuurnummer',
+  afzender: 'Afzender',
   paymentDueDateFormatted: 'Vervaldatum',
   statusDescription: 'Status',
 };
 
 const displayPropsFacturenAfgehandeld: DisplayProps<AfisFactuurFrontend> = {
-  afzender: 'Afzender',
   factuurNummerEl: 'Factuurnummer',
+  afzender: 'Afzender',
   statusDescription: 'Status',
 };
 
 const displayPropsFacturenOvergedragen: DisplayProps<AfisFactuurFrontend> = {
-  afzender: 'Afzender',
   factuurNummerEl: 'Factuurnummer',
+  afzender: 'Afzender',
   statusDescription: 'Status',
 };
 
@@ -112,13 +114,14 @@ const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
   name: 'Naam',
 };
 
-export const businessPartnerDetailsLabels = {
-  fullName: 'Debiteurnaam',
-  businessPartnerId: 'Debiteurnummer',
-  email: 'E-mailadres factuur',
-  phone: 'Telefoonnummer',
-  address: 'Adres',
-};
+export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
+  {
+    fullName: 'Debiteurnaam',
+    businessPartnerId: 'Debiteurnummer',
+    email: 'E-mailadres factuur',
+    phone: 'Telefoonnummer',
+    address: 'Adres',
+  };
 
 export const eMandateTableConfig = {
   active: {
@@ -145,3 +148,21 @@ export const linkListItems: LinkProps[] = [
     title: 'Meer over betalen aan de gemeente',
   },
 ];
+
+export function getAfisListPageDocumentTitle(themaTitle: string) {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    switch (params?.state) {
+      case 'open':
+        return `Open facturen | ${themaTitle}`;
+      case 'afgehandeld':
+        return `Afgehandelde facturen | ${themaTitle}`;
+      case 'overgedragen':
+        return `Overgedragen aan belastingen facturen | ${themaTitle}`;
+      default:
+        return `Facturen | ${themaTitle}`;
+    }
+  };
+}

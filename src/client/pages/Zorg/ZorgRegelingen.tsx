@@ -4,10 +4,11 @@ import { useZorgThemaData } from './useZorgThemaData';
 import { HistoricItemsMention } from './Zorg';
 import { ListPageParamKind } from './Zorg-thema-config';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+import { PageContentCell } from '../../components/Page/Page';
 
-export default function ZorgVoorzieningen() {
+export function ZorgRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const { regelingen, tableConfig, title, routes, isLoading, isError } =
+  const { regelingen, tableConfig, routes, isLoading, isError } =
     useZorgThemaData();
   const listPageTableConfig = tableConfig[kind];
 
@@ -15,7 +16,6 @@ export default function ZorgVoorzieningen() {
     <>
       <ListPagePaginated
         items={regelingen.filter(listPageTableConfig.filter)}
-        backLinkTitle={title}
         title={listPageTableConfig.title}
         appRoute={routes.listPage}
         appRouteParams={{ kind }}
@@ -24,8 +24,14 @@ export default function ZorgVoorzieningen() {
         isLoading={isLoading}
         isError={isError}
         tableClassName={listPageTableConfig.className}
+        pageContentBottom={
+          <PageContentCell spanWide={8} startWide={3}>
+            {kind === 'eerdere-en-afgewezen-regelingen' && (
+              <HistoricItemsMention />
+            )}
+          </PageContentCell>
+        }
       />
-      {kind === 'eerdere-en-afgewezen-regelingen' && <HistoricItemsMention />}
     </>
   );
 }

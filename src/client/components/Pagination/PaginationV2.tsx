@@ -15,15 +15,18 @@ export interface PaginationProps {
   pageSize: number;
   maxPages?: number;
   currentPage?: number;
+  className?: string;
 }
 
 const MAX_PAGES = 7;
+
 export function PaginationV2({
   totalCount,
   pageSize,
   maxPages = MAX_PAGES,
   onPageClick,
   currentPage = 1,
+  className,
 }: PaginationProps) {
   const { totalPages } = useMemo(
     () => paginate(totalCount, currentPage, pageSize, maxPages),
@@ -32,6 +35,7 @@ export function PaginationV2({
 
   return (
     <Pagination
+      className={className}
       maxVisiblePages={maxPages}
       onPageChange={onPageClick}
       page={currentPage}

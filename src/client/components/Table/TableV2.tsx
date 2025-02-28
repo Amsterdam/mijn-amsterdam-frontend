@@ -19,16 +19,18 @@ export type WithDetailLinkComponent<T> = T & {
 
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
-  propertyName: keyof T = 'title',
+  propertyName: keyof T | keyof T['link'] = 'title',
   addDetailLinkComponentAttr = false,
-  linkName = 'link'
+  linkTitle?: (item: T) => string,
+  linkName: string = 'link'
 ): WithDetailLinkComponent<T>[] {
   return items.map((item) => {
     if (!item[linkName]?.to) {
       return item;
     }
 
-    let label: string = item[propertyName];
+    let label: string =
+      item[propertyName as keyof T] ?? item?.[linkName]?.[propertyName];
     let linkPropertyName = propertyName;
 
     if (typeof label !== 'string') {
@@ -42,7 +44,11 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [linkPropertyName]: (
-        <MaRouterLink maVariant="fatNoUnderline" href={item[linkName].to}>
+        <MaRouterLink
+          maVariant="fatNoUnderline"
+          title={linkTitle ? linkTitle(item) : `Bekijk meer over ${label}`}
+          href={item[linkName].to}
+        >
           {capitalizeFirstLetter(label)}
         </MaRouterLink>
       ),
@@ -50,9 +56,9 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
-export type DisplayProps<T> = {
+export type DisplayProps<T> = Readonly<{
   [Property in keyof T]+?: string | number | ReactNode;
-};
+}>;
 
 export interface TableV2Props<T> {
   displayProps: DisplayProps<T> | null;

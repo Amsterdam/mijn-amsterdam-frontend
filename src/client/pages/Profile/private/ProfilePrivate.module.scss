@@ -1,13 +1,4 @@
-.SuppressedParagraph {
-  color: $color-neutral-grey4;
-}
-
 .ActionLink--reportIncorrectResidentCount {
-  @include mq-desktop {
-    position: absolute;
-    bottom: 0.3rem;
-    white-space: nowrap;
-  }
 }
 
 .IconWithLabel {

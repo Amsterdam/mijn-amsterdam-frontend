@@ -4,14 +4,14 @@ import { useParams } from 'react-router-dom';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+import { PageContentCell } from '../../components/Page/Page';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 
-export default function ErfpachtFacturen() {
+export function ErfpachtFacturen() {
   const { displayPropsAlleFacturen } = useErfpachtV2Data();
 
   const { dossierNummerUrlParam } = useParams<{
@@ -30,11 +30,13 @@ export default function ErfpachtFacturen() {
 
   return (
     <ListPagePaginated
-      body={
+      pageContentTop={
         !!dossier && (
-          <Heading level={3} size="level-2">
-            {dossier.voorkeursadres}
-          </Heading>
+          <PageContentCell spanWide={6}>
+            <Heading level={3} size="level-2">
+              {dossier.voorkeursadres}
+            </Heading>
+          </PageContentCell>
         )
       }
       items={dossier?.facturen?.facturen ?? []}
@@ -45,9 +47,8 @@ export default function ErfpachtFacturen() {
       noItemsText="U heeft geen facturen."
       appRoute={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
       appRouteParams={{ dossierNummerUrlParam }}
-      appRouteBack={AppRoutes['ERFPACHTv2']}
+      appRouteBack={AppRoutes.ERFPACHTv2}
       displayProps={displayPropsAlleFacturen}
-      thema={Themas.ERFPACHTv2}
       isLoading={isLoading(dossierApiResponse)}
       isError={isError(dossierApiResponse)}
     />

@@ -1,4 +1,4 @@
-import { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
+import { DecosZaakBase, DecosZaakFrontend } from '../decos/config-and-types';
 
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
@@ -13,8 +13,10 @@ export const caseTypeVaren = {
     'Varen vergunning exploitatie Wijziging vaartuignaam',
   VarenVergunningLigplaats: 'Varen ligplaatsvergunning',
 } as const;
-export type CaseTypeVaren = keyof typeof caseTypeVaren;
-export type GetCaseType<T extends CaseTypeVaren> = (typeof caseTypeVaren)[T];
+
+type CaseTypeVarenKey = keyof typeof caseTypeVaren;
+export type GetCaseType<T extends CaseTypeVarenKey> = (typeof caseTypeVaren)[T];
+export type CaseTypeVaren = GetCaseType<CaseTypeVarenKey>;
 
 type DecosVarenZaakBase = DecosZaakBase & { linkDataRequest: string | null };
 

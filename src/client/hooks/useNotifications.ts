@@ -16,11 +16,14 @@ const appStateNotificationsSelector = selectorFamily({
     },
 });
 
-export function useAppStateNotifications() {
+export function useAppStateNotifications(top?: number) {
   const profileType = useProfileTypeValue();
   const notifications = useRecoilValue(
     appStateNotificationsSelector(profileType)
   );
 
-  return notifications;
+  return {
+    notifications: top ? notifications.slice(0, top) : notifications,
+    total: notifications.length,
+  };
 }

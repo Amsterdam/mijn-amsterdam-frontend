@@ -31,7 +31,8 @@ export function VertrokkenOnbekendWaarheen({
           aria-label="Meer informatie over de melding `Vertrokken Onbekend Waarheen (VOW)`"
           href="https://www.amsterdam.nl/veelgevraagd/onderzoek-naar-uw-inschrijving-in-de-basisregistratie-personen-brp-51319"
         >
-          Meer informatie
+          Meer informatie over onderzoek naar uw inschrijving in de
+          Basisregistratie Personen (BRP)
         </Link>
       </Paragraph>
     </Alert>

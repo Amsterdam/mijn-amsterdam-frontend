@@ -23,25 +23,25 @@ export const AppRoutesRedirect = [
   {
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'jaaropgave',
+      kind: 'jaaropgave',
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'jaaropgave',
+      kind: 'jaaropgave',
     }),
   },
   {
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'uitkering',
+      kind: 'uitkering',
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      variant: 'uitkering',
+      kind: 'uitkering',
     }),
   },
   {
@@ -59,7 +59,7 @@ export const PublicRoutes: string[] = [
   AppRoutes.BFF_500_ERROR,
   AppRoutes.ACCESSIBILITY,
   AppRoutes.GENERAL_INFO,
-  AppRoutes.ROOT,
+  AppRoutes.HOME,
 ];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
@@ -103,7 +103,7 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
-  [AppRoutes.ROOT]: (
+  [AppRoutes.HOME]: (
     match: Match,
     { profileType, isAuthenticated }: TrackingConfig
   ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
