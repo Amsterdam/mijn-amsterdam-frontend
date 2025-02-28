@@ -27,7 +27,7 @@ export function getNotificationLabels(
 ) {
   // Ignore formatting of the switch case statements for readability
   switch (true) {
-    // TODO: Check if we always have Verleend as decision for expirable vergunning
+    // NOTE: It's not kown if we always have Verleend as decision for expirable vergunning
     case notificationLabels.verlooptBinnenkort &&
       vergunning.decision === 'Verleend' &&
       isNearEndDate(vergunning.dateEnd, compareToDate):
