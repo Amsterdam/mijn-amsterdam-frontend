@@ -6,7 +6,6 @@ import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
-  listPageParamKind as listPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
 
@@ -26,13 +25,13 @@ export const routes = {
 };
 
 export const tableConfig = Object.fromEntries(
-  entries(cloneDeep(tableConfigVergunningen)).map(([key, tableConfig]) => {
+  entries(cloneDeep(tableConfigVergunningen)).map(([kind, tableConfig]) => {
     return [
-      key,
+      kind,
       {
         ...tableConfig,
         listPageRoute: generatePath(routes.listPage, {
-          kind: listPageParamKindVergunningen.inProgress,
+          kind,
         }),
       },
     ];
