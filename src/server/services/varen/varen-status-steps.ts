@@ -4,11 +4,12 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types';
+import { getStatusDate } from '../decos/helpers';
 
 export function getStatusSteps(decosZaak: Varen) {
   const isAfgehandeld = decosZaak.processed;
 
-  const dateInBehandeling = decosZaak.dateRequest;
+  const dateInBehandeling = getStatusDate('In behandeling', decosZaak);
   const hasDateInBehandeling = !!dateInBehandeling;
 
   const hasTermijnen = decosZaak.termijnDates.length > 0;
