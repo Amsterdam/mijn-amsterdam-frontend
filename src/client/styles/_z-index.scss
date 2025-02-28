@@ -8,6 +8,8 @@ $z-index: (
   my-area-error-messages: 402,
   main-header: 404,
   main-header-searchbar: 405,
+  modal: 400,
+  dialog: 401,
 );
 
 @function z-index($key) {

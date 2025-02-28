@@ -1,0 +1,5 @@
+:global(body) {
+  @include select(ErrorMessages_MessageBar) {
+    margin-bottom: 2rem;
+  }
+}
