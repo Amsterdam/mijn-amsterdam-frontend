@@ -4,6 +4,7 @@
 }
 
 .PageHeading {
+  --ams-hyphenation-hyphens: none;
   @media screen and (min-width: $ams-breakpoint-medium) {
     --ams-heading-level-3-font-size: 58px;
     --ams-heading-level-3-line-height: 72px;
