@@ -4,7 +4,7 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types';
-import { getStatusDate } from '../decos/helpers';
+import { getStatusDate } from '../decos/decos-helpers';
 
 export function getStatusSteps(decosZaak: Varen) {
   const isAfgehandeld = decosZaak.processed;
