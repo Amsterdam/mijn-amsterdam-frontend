@@ -3,7 +3,6 @@ import type {
   TouringcarJaarontheffing,
 } from '../../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { CaseTypeV2 } from '../../../../universal/types/decos-zaken';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import {
   dateRange,
@@ -33,7 +32,7 @@ export function Touringcar({
       dateRangeYear: () => {
         return vergunning.processed &&
           isGranted &&
-          vergunning.caseType === CaseTypeV2.TouringcarJaarontheffing
+          vergunning.caseType === 'Touringcar Jaarontheffing'
           ? dateRange(vergunning)
           : null;
       },
@@ -42,7 +41,7 @@ export function Touringcar({
       dateRangeDay: () => {
         return vergunning.processed &&
           isGranted &&
-          vergunning.caseType === CaseTypeV2.TouringcarDagontheffing
+          vergunning.caseType === 'Touringcar Dagontheffing'
           ? dateTimeRange(vergunning)
           : null;
       },

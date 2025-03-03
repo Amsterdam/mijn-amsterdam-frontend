@@ -3,7 +3,6 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 
 import { useParkerenData } from './useParkerenData.hook';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
 import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
@@ -47,8 +46,7 @@ export function Parkeren() {
   );
 
   const hasActualGPK = vergunningen.find(
-    (vergunning) =>
-      !vergunning.processed && vergunning.caseType === CaseTypeV2.GPK
+    (vergunning) => !vergunning.processed && vergunning.caseType === 'GPK'
   );
 
   const pageContentBottom = hasActualGPK && (

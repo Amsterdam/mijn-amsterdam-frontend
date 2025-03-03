@@ -6,7 +6,6 @@ import { GPPContent } from './detail-page-content/GPP';
 import { useParkerenData } from './useParkerenData.hook';
 import { DecosParkeerVergunning } from '../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
@@ -27,20 +26,20 @@ function DetailPageContent<
     <PageContentCell>
       {(function VergunningDetailContent() {
         switch (vergunning.caseType) {
-          case CaseTypeV2.GPK:
+          case 'GPK':
             return <GPK vergunning={vergunning} />;
-          case CaseTypeV2.GPP:
+          case 'GPP':
             return <GPPContent vergunning={vergunning} />;
-          case CaseTypeV2.BZP:
+          case 'Parkeerontheffingen Blauwe zone particulieren':
             return <BZP vergunning={vergunning} />;
-          case CaseTypeV2.BZB:
+          case 'Parkeerontheffingen Blauwe zone bedrijven':
             return <BZB vergunning={vergunning} />;
-          case CaseTypeV2.EigenParkeerplaats:
+          case 'Eigen parkeerplaats':
             return <EigenParkeerplaats vergunning={vergunning} />;
-          case CaseTypeV2.EigenParkeerplaatsOpheffen:
+          case 'Eigen parkeerplaats opheffen':
             return <EigenParkeerplaatsOpheffen vergunning={vergunning} />;
-          case CaseTypeV2.TouringcarDagontheffing:
-          case CaseTypeV2.TouringcarJaarontheffing:
+          case 'Touringcar Dagontheffing':
+          case 'Touringcar Jaarontheffing':
             return <Touringcar vergunning={vergunning} />;
 
           default:

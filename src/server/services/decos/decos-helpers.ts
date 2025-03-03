@@ -1,5 +1,3 @@
-import keyBy from 'lodash.keyby';
-
 import type {
   DecosZaakTransformer,
   DecosZaakSource,
@@ -17,7 +15,6 @@ import {
 } from './config-and-types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
-import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
@@ -160,10 +157,4 @@ export function getStatusDate(
     decosZaak.statusDates.find(({ status }) => status === zaakStatus)
       ?.datePublished || null
   );
-}
-
-export function getDecosZaakTransformersByCaseType<
-  T extends DecosZaakTransformer<any>,
->(zaaktTransformers: T[]) {
-  return keyBy(zaaktTransformers, 'caseType') as Record<DecosCaseType, T>;
 }

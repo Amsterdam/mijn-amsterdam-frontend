@@ -269,7 +269,11 @@ describe('decos-service', () => {
     test('No content', async () => {
       remoteApi.get(/\/decos\/items\/zaak-id-2\/documents/).reply(200, []);
 
-      const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
+      const responseData = await fetchDecosDocumentList(
+        reqID,
+        'xx',
+        'zaak-id-2'
+      );
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [],
@@ -284,7 +288,11 @@ describe('decos-service', () => {
         .reply(200, documents);
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
 
-      const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
+      const responseData = await fetchDecosDocumentList(
+        reqID,
+        'xx',
+        'zaak-id-2'
+      );
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [
@@ -310,7 +318,11 @@ describe('decos-service', () => {
       blob2.content[0].fields.bol10 = false;
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob2);
 
-      const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
+      const responseData = await fetchDecosDocumentList(
+        reqID,
+        'xx',
+        'zaak-id-2'
+      );
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [],
@@ -563,8 +575,8 @@ describe('decos-service', () => {
 
       const dienstenTransformer =
         decosCaseToZaakTransformers['Aanbieden van diensten'];
-      const gpkTransformer = decosCaseToZaakTransformers.GPK;
-      const transformers = [dienstenTransformer, gpkTransformer];
+      const vobTransformer = decosCaseToZaakTransformers.VOB;
+      const transformers = [dienstenTransformer, vobTransformer];
 
       const responseData = await forTesting.getZakenByUserKey(
         reqID,
@@ -604,7 +616,11 @@ describe('decos-service', () => {
     test('Success', async () => {
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
       const documentsTransformed =
-        await forTesting.transformDecosDocumentListResponse(reqID, documents);
+        await forTesting.transformDecosDocumentListResponse(
+          reqID,
+          'xx',
+          documents
+        );
       expect(documentsTransformed).toMatchInlineSnapshot(`
         [
           {

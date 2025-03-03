@@ -1,6 +1,5 @@
 import { RVVSloterweg, VergunningFrontend } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { getStatusDate } from '../decos/decos-helpers';
 
 function getStatusStepsRVVSloterweg(
@@ -126,8 +125,7 @@ function getStatusStepsRVVSloterweg(
 }
 
 export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
-  // TODO: Ask Terry to assess this compiler problem
-  if (vergunning.caseType === CaseTypeV2.RVVSloterweg) {
+  if (vergunning.caseType === 'RVVSloterweg') {
     return getStatusStepsRVVSloterweg(
       vergunning as unknown as VergunningFrontend<RVVSloterweg>
     );

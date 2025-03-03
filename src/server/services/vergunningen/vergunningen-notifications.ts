@@ -1,5 +1,4 @@
 import { differenceInMonths, parseISO } from 'date-fns';
-import memoizee from 'memoizee';
 
 import {
   NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
@@ -7,10 +6,10 @@ import {
   NotificationLabels,
   VergunningFrontend,
 } from './config-and-types';
-import { decosCaseToZaakTransformers } from './decos-zaken';
+import { decosZaakTransformers } from './decos-zaken';
 import { fetchVergunningen } from './vergunningen';
 import { isNearEndDate } from './vergunningen-helpers';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { AppRoutes } from '../../../universal/config/routes';
 import { Thema, Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
@@ -19,7 +18,7 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
 import { getStatusDate } from '../decos/decos-helpers';
 
 // prettier-ignore
@@ -98,11 +97,11 @@ function mergeNotificationProperties(
   return { ...notificationBase, ...notificationLabels };
 }
 
-export function createVergunningNotification(
-  vergunning: VergunningFrontend,
+export function createVergunningNotification<DZ extends DecosZaakBase>(
+  vergunning: VergunningFrontend<DZ>,
+  zaakTypeTransformer: DecosZaakTransformer<DZ>,
   thema: Thema
 ): MyNotification | null {
-  const zaakTypeTransformer = decosCaseToZaakTransformers[vergunning.caseType];
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
@@ -120,34 +119,42 @@ export function createVergunningNotification(
   return null;
 }
 
-export function getVergunningNotifications(
-  vergunningen: VergunningFrontend[],
+export function getVergunningNotifications<DZ extends DecosZaakBase>(
+  vergunningen: VergunningFrontend<DZ>[],
+  decosZaakTransformers: DecosZaakTransformer<DZ>[],
   thema: Thema
 ) {
   return vergunningen
-    .map((vergunning) => createVergunningNotification(vergunning, thema))
+    .map((vergunning) => {
+      const zaakTransformer = decosZaakTransformers.find(
+        (transformer) => transformer.caseType === vergunning.caseType
+      );
+      if (!zaakTransformer) {
+        return null;
+      }
+      return createVergunningNotification(vergunning, zaakTransformer, thema);
+    })
     .filter(
       (notification: MyNotification | null): notification is MyNotification =>
         notification !== null
     );
 }
 
-async function fetchVergunningenNotifications_(
+export async function fetchVergunningenNotifications(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL'],
-  thema: Thema = Themas.VERGUNNINGEN
+  authProfileAndToken: AuthProfileAndToken
 ) {
   const VERGUNNINGEN = await fetchVergunningen(
     requestID,
     authProfileAndToken,
-    appRoute
+    AppRoutes['VERGUNNINGEN/DETAIL']
   );
 
   if (VERGUNNINGEN.status === 'OK') {
-    const notifications = getVergunningNotifications(
+    const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
-      thema
+      decosZaakTransformers,
+      Themas.VERGUNNINGEN
     );
 
     return apiSuccessResult({
@@ -157,11 +164,3 @@ async function fetchVergunningenNotifications_(
 
   return apiDependencyError({ VERGUNNINGEN });
 }
-
-export const fetchVergunningenNotifications = memoizee(
-  fetchVergunningenNotifications_,
-  {
-    maxAge: DEFAULT_API_CACHE_TTL_MS,
-    length: 5,
-  }
-);
