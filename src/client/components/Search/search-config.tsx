@@ -24,6 +24,7 @@ import {
 } from '../../../server/services/simple-connect/erfpacht';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -42,6 +43,7 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
+import { ThemaTitles } from '../../config/thema';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -460,6 +462,36 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
     },
+  },
+  {
+    isEnabled: FeatureToggle.varenActive,
+    stateKey: 'VAREN' as AppStateKey,
+    profileTypes: ['commercial'],
+    getApiBaseItems: (apiContent: VarenFrontend[]) => {
+      return apiContent?.map((zaak) => {
+        if (zaak.caseType === 'Varen registratie reder') {
+          return {
+            ...zaak,
+            link: {
+              to: AppRoutes.VAREN,
+              title: ThemaTitles.VAREN,
+            },
+          };
+        }
+        return zaak;
+      });
+    },
+    displayTitle: (item: VarenFrontend) => (term: string) => {
+      return displayPath(term, [item.title, item.identifier]);
+    },
+    keywordsGeneratedFromProps: [
+      'identifier',
+      'vesselName',
+      'vesselNameOld',
+      'permitReference',
+      'eniNumber',
+    ],
+    keywords: ['passagiersvaart', 'beroepsvaart', 'varen'],
   },
 ].map((apiConfig) => {
   return {

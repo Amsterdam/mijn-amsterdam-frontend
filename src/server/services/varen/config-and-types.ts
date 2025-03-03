@@ -38,14 +38,9 @@ export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
     | 'Afgewezen'
     | 'Afgewezen door loting'
     | 'Buiten behandeling'
-    | 'Ingetrokken door aanvaarder'
+    | 'Ingetrokken door aanvrager'
     | 'Verleend';
-  status:
-    | 'Ontvangen'
-    | 'In behandeling'
-    | 'Aanvullende informatie gevraagd'
-    | 'Nadere informatie nodig'
-    | 'Besluit';
+  status: 'Ontvangen' | 'In behandeling' | 'Meer informatie nodig' | 'Besluit';
   // eslint-disable-next-line no-magic-numbers
   formAppearance: 1 | 2 | 3;
   segment:
@@ -70,7 +65,7 @@ export type VarenVergunningExploitatieWijzigingVaartuigNaamType =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVaartuignaam'>;
     vesselNameOld: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'vesselName'>;
+  } & Pick<VarenVergunningExploitatieType, 'vesselName' | 'permitReference'>;
 
 export type VarenVergunningExploitatieWijzigingVergunningshouderType =
   DecosVarenZaakBase & {
@@ -78,7 +73,7 @@ export type VarenVergunningExploitatieWijzigingVergunningshouderType =
     statutoryName: string | null;
     businessAddress: string | null;
     correspondenceAddress: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'segment'>;
+  } & Pick<VarenVergunningExploitatieType, 'segment' | 'permitReference'>;
 
 export type VarenVergunningExploitatieWijzigingVerbouwingType =
   DecosVarenZaakBase & {
@@ -93,6 +88,7 @@ export type VarenVergunningExploitatieWijzigingVerbouwingType =
       | 'vesselHeight'
       | 'vesselLength'
       | 'vesselWidth'
+      | 'permitReference'
     >;
 
 export type VarenVergunningExploitatieWijzigingVervangingType =
@@ -110,6 +106,7 @@ export type VarenVergunningExploitatieWijzigingVervangingType =
       | 'vesselLength'
       | 'vesselWidth'
       | 'eniNumber'
+      | 'permitReference'
     >;
 
 export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {

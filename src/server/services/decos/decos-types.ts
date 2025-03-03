@@ -143,7 +143,7 @@ type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
     ? unknown
     : never
   : T['caseType'];
-export type DecosZaakTransformer<T extends DecosZaakBase> = {
+export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   // The caseType (zaaktype) of the sourceData.
   caseType: CaseTypeLiteral<T>;
   // Title of the DecosZaakBase, mostly a slightly different variant of the $caseType

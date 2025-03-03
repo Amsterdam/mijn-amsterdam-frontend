@@ -91,8 +91,9 @@ module.exports = [
           middleware: (req, res, next, core) => {
             if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
               WORKFLOWS.content[0].key = req.params.key;
+              return res.send(WORKFLOWS);
             }
-            return res.send(WORKFLOWS);
+            return res.send({ content: [] });
           },
         },
       },
@@ -145,8 +146,9 @@ module.exports = [
           middleware: (req, res, next, core) => {
             if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
               TERMIJNENS.content[0].key = req.params.key;
+              return res.send(TERMIJNENS);
             }
-            return res.send(TERMIJNENS);
+            return res.send({ content: [] });
           },
         },
       },

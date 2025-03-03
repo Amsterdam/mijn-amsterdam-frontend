@@ -323,6 +323,27 @@
       "keywords": ["Vergunningen", "Aanvragen", "Ontheffingen", "Horeca"]
     },
     {
+      "url": "/passagiers-en-beroepsvaart",
+      "displayTitle": "Passagiers- en beroepsvaart",
+      "description": "Hier ziet u een overzicht van uw aanvragen voor Varen vergunningen en wijzigingen.",
+      "keywords": [
+        "Vergunningen",
+        "Aanvragen",
+        "Varen",
+        "Passagiers- en beroepsvaart",
+        "Passagiersvaart",
+        "Beroepsvaart",
+        "Recreatievaart",
+        "Vaartuig",
+        "Schip",
+        "Boot",
+        "Rondvaartboten",
+        "Salonboten",
+        "Schipper",
+        "Reder"
+      ]
+    },
+    {
       "url": "/parkeren",
       "displayTitle": "Parkeren",
       "description": "Parkeren in de gemeente Amsterdam.",
