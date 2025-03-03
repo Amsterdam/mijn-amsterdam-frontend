@@ -5,7 +5,7 @@ import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
-} from './toeristische-verhuur-types';
+} from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';

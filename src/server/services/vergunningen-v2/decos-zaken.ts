@@ -10,7 +10,6 @@ import {
   EigenParkeerplaats as EigenParkeerplaatsType,
   EvenementMelding as EvenementMeldingType,
   EvenementVergunning as EvenementVergunningType,
-  ExploitatieHorecabedrijf as ExploitatieHorecabedrijfType,
   Flyeren as FlyerenType,
   GPK as GPKType,
   GPP as GPPType,
@@ -26,7 +25,6 @@ import {
   TVMRVVObject as TVMRVVObjectType,
   TouringcarDagontheffing as TouringcarDagontheffingType,
   TouringcarJaarontheffing as TouringcarJaarontheffingType,
-  VakantieverhuurVergunningaanvraag as VakantieverhuurVergunningaanvraagType,
   VormenVanWoonruimte as VormenVanWoonruimteType,
   WVOSActiviteit as WVOSActiviteitType,
   WerkzaamhedenEnVervoerOpStraat as WerkzaamhedenEnVervoerOpStraatType,
@@ -38,7 +36,6 @@ import {
   caseNotificationLabelsRevoke,
 } from './vergunningen-notification-labels';
 import { IS_PRODUCTION } from '../../../universal/config/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   CaseTypeV2,
   DecosCaseType,
@@ -115,46 +112,6 @@ export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
   notificationLabels: caseNotificationLabelsExpirables,
 };
 
-export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<VakantieverhuurVergunningaanvraagType> =
-  {
-    isActive: true,
-    caseType: CaseTypeV2.VakantieverhuurVergunningaanvraag,
-    title: 'VergunningV2 vakantieverhuur',
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      text6: location,
-    },
-    async afterTransform(vergunning) {
-      /**
-       * Vakantieverhuur vergunningen worden na betaling direct verleend en per mail toegekend zonder dat de juiste status in Decos wordt gezet.
-       * Later, na controle, wordt mogelijk de vergunning weer ingetrokken.
-       */
-      if (vergunning.decision) {
-        vergunning.decision = vergunning.decision
-          .toLowerCase()
-          .includes('ingetrokken')
-          ? 'Ingetrokken'
-          : 'Verleend';
-      }
-
-      // Vakantieverhuur vergunningen worden direct verleend (en dus voor Mijn Amsterdam afgehandeld)
-      vergunning.status = 'Afgehandeld';
-
-      const monthIndex = 4;
-      // The validity of this case runs from april 1st until the next. set the end date to the next april the 1st
-      if ('dateEnd' in vergunning && vergunning.dateRequest) {
-        vergunning.dateEnd = new Date(
-          parseISO(vergunning.dateRequest).getFullYear() + 1,
-          monthIndex,
-          1
-        ).toISOString();
-      }
-
-      return vergunning;
-    },
-    notificationLabels: caseNotificationLabelsExpirables,
-  };
-
 export const GPP: DecosZaakTransformer<GPPType> = {
   isActive: true,
   caseType: CaseTypeV2.GPP,
@@ -168,7 +125,7 @@ export const GPP: DecosZaakTransformer<GPPType> = {
     text7: kentekens,
     text8: location,
   },
-  async afterTransform(vergunning, decosZaakSource) {
+  async afterTransform(vergunning, decosZaakSource, options) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
@@ -560,27 +517,6 @@ export const VOBvergunning: DecosZaakTransformer<LigplaatsvergunningType> = {
   notificationLabels: caseNotificationLabelsDefault,
 };
 
-export const ExploitatieHorecabedrijf: DecosZaakTransformer<ExploitatieHorecabedrijfType> =
-  {
-    isActive: FeatureToggle.horecaActive,
-    caseType: CaseTypeV2.ExploitatieHorecabedrijf,
-    title: CaseTypeV2.ExploitatieHorecabedrijf,
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle:
-          'Horeca vergunning exploitatie Horecabedrijf - In behandeling nemen',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      date2: dateEnd,
-      date6: dateStart,
-      text6: location,
-    },
-    notificationLabels: caseNotificationLabelsExpirables,
-  };
-
 export const RVVHeleStad: DecosZaakTransformer<RVVHeleStadType> = {
   isActive: !IS_PRODUCTION,
   caseType: CaseTypeV2.RVVHeleStad,
@@ -888,7 +824,6 @@ export const decosZaakTransformers = [
   EigenParkeerplaatsOpheffen,
   EvenementMelding,
   EvenementVergunning,
-  ExploitatieHorecabedrijf,
   Flyeren,
   GPK,
   GPP,
@@ -902,12 +837,12 @@ export const decosZaakTransformers = [
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
   TVMRVVObject,
-  VakantieverhuurVergunningaanvraag,
   VOBvergunning,
   VormenVanWoonruimte,
   WerkEnVervoerOpStraat,
   ZwaarVerkeer,
 ];
+
 export const decosCaseToZaakTransformers = decosZaakTransformers.reduce(
   (acc, zaakTransformer) => ({
     ...acc,
