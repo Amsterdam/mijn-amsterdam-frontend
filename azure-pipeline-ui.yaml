@@ -30,6 +30,7 @@ pr:
   branches:
     include:
       - main
+  drafts: false
 
 resources:
   repositories:
