@@ -18,7 +18,7 @@ import {
   requestID,
   useSearchIndex,
 } from './useSearch';
-import type { Vergunning } from '../../../server/services';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
@@ -71,21 +71,33 @@ const vergunningenData = [
 ];
 
 const krefiaData = {
-  deepLinks: {
-    budgetbeheer: {
-      title: 'Beheer uw budget op FiBu',
-      url: 'http://host/bbr/2064866/3',
+  deepLinks: [
+    {
+      type: 'budgetbeheer',
+      status: 'unread',
+      link: {
+        title: 'Beheer uw budget op FiBu',
+        to: 'http://host/bbr/2064866/3',
+      },
     },
-    lening: {
-      title:
-        'Kredietsom \u20ac1.689,12 met openstaand termijnbedrag \u20ac79,66',
-      url: 'http://host/pl/2442531/1',
+    {
+      type: 'lening',
+      status: 'unread',
+      link: {
+        title:
+          'Kredietsom \u20ac1.689,12 met openstaand termijnbedrag \u20ac79,66',
+        to: 'http://host/pl/2442531/1',
+      },
     },
-    schuldhulp: {
-      title: 'Afkoopvoorstellen zijn verstuurd',
-      url: 'http://host/srv/2442531/2',
+    {
+      type: 'schuldhulp',
+      status: 'unread',
+      link: {
+        title: 'Afkoopvoorstellen zijn verstuurd',
+        to: 'http://host/srv/2442531/2',
+      },
     },
-  },
+  ],
 };
 
 describe('Search hooks and helpers', () => {
@@ -155,7 +167,7 @@ describe('Search hooks and helpers', () => {
         {
           ...API_SEARCH_CONFIG_DEFAULT,
           stateKey: 'VERGUNNINGEN',
-          displayTitle: (vergunning: Vergunning) => (term: string) => {
+          displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
             return displayPath(term, [vergunning.title, vergunning.identifier]);
           },
           ...apiConfigRemote,
@@ -224,7 +236,7 @@ describe('Search hooks and helpers', () => {
 
     const appState = {
       KREFIA: { content: krefiaData, status: 'OK' },
-    } as AppState;
+    } as unknown as AppState;
 
     const pageEntries = generateSearchIndexPageEntries('private', appState, [
       {

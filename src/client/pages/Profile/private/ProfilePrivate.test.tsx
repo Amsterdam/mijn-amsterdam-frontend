@@ -187,7 +187,9 @@ const testState = (
   responseSF: ContactMoment[] = []
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
+  KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
+  // PARKEREN: { status: 'OK', content: null },
 });
 
 function initializeState(testState: unknown) {
