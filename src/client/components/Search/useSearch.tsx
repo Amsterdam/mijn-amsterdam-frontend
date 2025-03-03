@@ -144,6 +144,11 @@ export function generateSearchIndexPageEntries(
     const apiContent = apiConfig.stateKey.endsWith('_BAG')
       ? appState[apiConfig.stateKey]
       : appState[apiConfig.stateKey]?.content;
+
+    if (!apiContent) {
+      return [];
+    }
+
     return apiConfig
       .getApiBaseItems(apiContent)
       .map((item) => generateSearchIndexPageEntry(item, apiConfig));

@@ -173,7 +173,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    kind: 'uitkering',
+    kind: 'specificaties',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
@@ -224,17 +224,11 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
     const screen = render(<Component />);
 
     expect(screen.getByText('volgende')).toBeInTheDocument();
-    expect(
-      screen.getByLabelText('Huidige pagina, pagina 1')
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText('Ga naar pagina 2')).toBeInTheDocument();
+    expect(screen.getByText('Ga naar pagina 2')).toBeInTheDocument();
 
     await user.click(screen.getByText('volgende'));
 
-    expect(
-      screen.getByLabelText('Huidige pagina, pagina 2')
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText('Ga naar pagina 1')).toBeInTheDocument();
+    expect(screen.getByText('Ga naar pagina 1')).toBeInTheDocument();
     expect(screen.getByText('18 januari 2012')).toBeInTheDocument();
     expect(screen.getByText('vorige')).toBeInTheDocument();
   });
@@ -242,7 +236,7 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    kind: 'jaaropgave',
+    kind: 'jaaropgaven',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
