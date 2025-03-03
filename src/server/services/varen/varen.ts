@@ -2,16 +2,14 @@ import memoize from 'memoizee';
 
 import { VarenFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
+import { getStatusSteps } from './varen-status-steps';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
-import {
-  getStatusSteps,
-  getDisplayStatus,
-} from '../vergunningen/vergunningen-status-steps';
+import { getDisplayStatus } from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchVaren_(
   requestID: RequestID,
