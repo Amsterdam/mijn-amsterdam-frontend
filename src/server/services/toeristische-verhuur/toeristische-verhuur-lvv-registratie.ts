@@ -2,7 +2,7 @@ import {
   LVVRegistratie,
   LVVRegistratieSource,
   ToeristischeVerhuurRegistratieNumberSource,
-} from './toeristische-verhuur-types';
+} from './toeristische-verhuur-config-and-types';
 import {
   apiDependencyError,
   apiErrorResult,

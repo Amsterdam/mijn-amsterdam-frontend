@@ -1,17 +1,12 @@
 import { generatePath } from 'react-router-dom';
 
-import { ExploitatieHorecabedrijf } from '../../../server/services/vergunningen/vergunningen';
-import { ExploitatieHorecabedrijf as ExploitatieHorecabedrijfV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';
 import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
-
-export type HorecaVergunning =
-  | ExploitatieHorecabedrijf
-  | ExploitatieHorecabedrijfV2;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 

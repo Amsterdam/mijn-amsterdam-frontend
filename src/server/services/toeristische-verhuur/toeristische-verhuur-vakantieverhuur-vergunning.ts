@@ -1,17 +1,11 @@
-import { generatePath } from 'react-router-dom';
-
-import { VakantieverhuurVergunning } from './toeristische-verhuur-types';
+import { VakantieverhuurVergunningaanvraag } from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import {
-  defaultDateFormat,
-  isDateInPast,
-} from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types/App.types';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { fetchDecosZaken } from '../decos/decos-service';
 import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
-import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
+import { transformVergunningFrontend } from '../vergunningen-v2/vergunningen';
 
 function getVergunningStatussen(vergunning: VergunningFrontendV2) {
   const isAfgehandeld =
@@ -69,127 +63,31 @@ function getVergunningStatussen(vergunning: VergunningFrontendV2) {
   return statussen;
 }
 
-function getZaakStatus(
-  zaak: VakantieverhuurVergunning
-): VakantieverhuurVergunning['status'] | VakantieverhuurVergunning['result'] {
-  if (zaak.dateEnd && isDateInPast(zaak.dateEnd, new Date())) {
-    return 'Verlopen';
-  }
-  if (zaak.result) {
-    return zaak.result;
-  }
-  const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
-    ?.status as VakantieverhuurVergunning['status'];
-
-  return lastStepStatus ?? 'Ontvangen';
-}
-
-export function transformVakantieverhuurVergunningen(
-  vakantieverhuurVergunningen: VergunningFrontendV2[]
-): VakantieverhuurVergunning[] {
-  const vergunningenTransformed: VakantieverhuurVergunning[] = [];
-
-  for (const vergunning of vakantieverhuurVergunningen) {
-    // From Z/AB/123 to z-ab-123
-    const idTransformed = vergunning.identifier
-      .replace(/\//g, '-')
-      .toUpperCase();
-
-    const isVerleend = !!vergunning.decision
-      ?.toLowerCase()
-      .includes('verleend');
-    const isIngetrokken = vergunning.decision
-      ?.toLowerCase()
-      .includes('ingetrokken');
-    const isVerlopen =
-      vergunning.status === 'Verlopen' ||
-      (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());
-
-    const title = 'Vergunning vakantieverhuur';
-    const steps = getVergunningStatussen(vergunning);
-
-    const vergunningTransformed: VakantieverhuurVergunning = {
-      id: idTransformed,
-      title,
-      dateDecision: vergunning.dateDecision,
-      dateReceived: vergunning.dateRequest,
-      dateStart: vergunning.dateStart ?? '',
-      dateStartFormatted: vergunning.dateStart
-        ? defaultDateFormat(vergunning.dateStart)
-        : '-',
-      dateEnd: vergunning.dateEnd ?? '',
-      dateEndFormatted: vergunning.dateEnd
-        ? defaultDateFormat(vergunning.dateEnd)
-        : '-',
-      adres:
-        ('location' in vergunning && vergunning.location === 'string'
-          ? vergunning.location
-          : undefined) ?? '-',
-      result: vergunning.decision as VakantieverhuurVergunning['result'],
-      zaaknummer: vergunning.identifier,
-      steps,
-      documents: [],
-      fetchDocumentsUrl: vergunning.fetchUrl,
-      link: {
-        to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
-          id: idTransformed,
-          casetype: 'vakantieverhuur',
-        }),
-        title: vergunning.link.title,
-      },
-      isActual: !isIngetrokken && !isVerlopen && isVerleend,
-      status: 'Ontvangen',
-    };
-
-    vergunningTransformed.status =
-      getZaakStatus(vergunningTransformed) ?? vergunningTransformed.status;
-
-    vergunningenTransformed.push(vergunningTransformed);
-  }
-
-  return vergunningenTransformed;
-}
-
-export async function fetchVakantieverhuurVergunningen(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const vakantieverhuurVergunningResponse = await fetchVergunningenV2(
-    requestID,
-    authProfileAndToken,
-    generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
-      casetype: 'vakantieverhuur',
-      id: ':id',
-    }) as (typeof AppRoutes)['TOERISTISCHE_VERHUUR/VERGUNNING']
-  );
-
-  if (vakantieverhuurVergunningResponse.status === 'OK') {
-    return apiSuccessResult(
-      transformVakantieverhuurVergunningen(
-        vakantieverhuurVergunningResponse.content
-      )
-    );
-  }
-
-  return vakantieverhuurVergunningResponse;
-}
-
 export async function fetchVakantieverhuurVergunningenV2(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const vergunningenResponse = await fetchVergunningenV2(
-    requestID,
-    authProfileAndToken
-  );
+  const response = await fetchDecosZaken(requestID, authProfileAndToken, [
+    VakantieverhuurVergunningaanvraag,
+  ]);
 
-  if (vergunningenResponse.status === 'OK') {
-    return apiSuccessResult(
-      vergunningenResponse.content.filter(
-        (zaak) => zaak.caseType === CaseTypeV2.VakantieverhuurVergunningaanvraag
-      )
-    );
+  if (response.status === 'OK') {
+    const decosVergunningen = response.content;
+    const vergunningenFrontend: VergunningFrontendV2<VakantieverhuurVergunningaanvraag>[] =
+      decosVergunningen.map((vergunning) => {
+        const vergunningTransformed = transformVergunningFrontend(
+          authProfileAndToken.profile.sid,
+          vergunning,
+          AppRoutes['HORECA/DETAIL']
+        );
+
+        return {
+          ...vergunningTransformed,
+          steps: getVergunningStatussen(vergunningTransformed),
+        };
+      });
+    return apiSuccessResult(vergunningenFrontend);
   }
 
-  return vergunningenResponse;
+  return response;
 }
