@@ -204,6 +204,8 @@ export async function fetchStadspassenByAdministratienummer(
         return response;
       });
 
+      console.log(JSON.stringify(pas, null, 2));
+
       pasRequests.push(response);
     }
   }
