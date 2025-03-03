@@ -1,4 +1,4 @@
-import { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
+import { DecosZaakBase, DecosZaakFrontend } from '../decos/config-and-types';
 
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
