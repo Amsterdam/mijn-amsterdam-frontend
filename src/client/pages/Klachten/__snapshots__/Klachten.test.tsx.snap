@@ -2,23 +2,65 @@
 
 exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 1`] = `
 <DocumentFragment>
-  <main
-    class="ams-screen ams-screen--wide"
+  <div
+    class="ams-grid"
   >
     <div
-      class="ams-grid"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="_PageHeadingInner_c5a3f1"
-          id="skip-to-id-AppContent"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/"
+          title="Terug naar de vorige pagina"
         >
+          <span
+            class="ams-icon ams-icon--size-5"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Klachten
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph"
+      >
+        Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
           <a
-            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-            href="/"
-            title="Terug naar de vorige pagina"
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+            rel="noreferrer"
           >
             <span
               class="ams-icon ams-icon--size-5"
@@ -30,110 +72,106 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
                   fill-rule="evenodd"
                 />
               </svg>
             </span>
-            Terug
+            Meer informatie over de afhandeling van uw klacht
           </a>
-          <h3
-            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
-          >
-            Klachten
-          </h3>
-        </div>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <p
-          class="ams-paragraph"
-        >
-          Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
-        </p>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <ul
-          class="ams-link-list"
-        >
-          <li>
-            <a
-              class="ams-link-list__link"
-              href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-              rel="noreferrer"
-            >
-              <span
-                class="ams-icon ams-icon--size-5"
-              >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 32 32"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </span>
-              Meer informatie over de afhandeling van uw klacht
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <h3
-          class="ams-heading ams-heading--level-2"
-        >
-          Ingediende klachten
-        </h3>
-        <div
-          class="ams-table"
-        >
-          <table
-            class="ams-table__table _TableV2_4c6825"
-          >
-            <tbody
-              class="ams-table__body"
-            />
-          </table>
-        </div>
-        <p
-          class="ams-paragraph"
-        >
-          U heeft (nog) geen ingediende klachten
-        </p>
-      </div>
+        </li>
+      </ul>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Ingediende klachten
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825"
+        >
+          <tbody
+            class="ams-table__body"
+          />
+        </table>
+      </div>
+      <p
+        class="ams-paragraph"
+      >
+        U heeft (nog) geen ingediende klachten
+      </p>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints 1`] = `
 <DocumentFragment>
-  <main
-    class="ams-screen ams-screen--wide"
+  <div
+    class="ams-grid"
   >
     <div
-      class="ams-grid"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="_PageHeadingInner_c5a3f1"
-          id="skip-to-id-AppContent"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/"
+          title="Terug naar de vorige pagina"
         >
+          <span
+            class="ams-icon ams-icon--size-5"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Klachten
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph"
+      >
+        Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
           <a
-            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-            href="/"
-            title="Terug naar de vorige pagina"
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+            rel="noreferrer"
           >
             <span
               class="ams-icon ams-icon--size-5"
@@ -145,173 +183,169 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
                   fill-rule="evenodd"
                 />
               </svg>
             </span>
-            Terug
+            Meer informatie over de afhandeling van uw klacht
           </a>
-          <h3
-            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Ingediende klachten
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825"
+        >
+          <thead
+            class="ams-table__header"
           >
-            Klachten
-          </h3>
-        </div>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <p
-          class="ams-paragraph"
-        >
-          Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
-        </p>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <ul
-          class="ams-link-list"
-        >
-          <li>
-            <a
-              class="ams-link-list__link"
-              href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-              rel="noreferrer"
+            <tr
+              class="ams-table__row"
             >
-              <span
-                class="ams-icon ams-icon--size-5"
+              <th
+                class="ams-table__header-cell"
               >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 32 32"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </span>
-              Meer informatie over de afhandeling van uw klacht
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <h3
-          class="ams-heading ams-heading--level-2"
-        >
-          Ingediende klachten
-        </h3>
-        <div
-          class="ams-table"
-        >
-          <table
-            class="ams-table__table _TableV2_4c6825"
+                Nummer van uw klacht
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Ontvangen op
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Onderwerp
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="ams-table__body"
           >
-            <thead
-              class="ams-table__header"
+            <tr
+              class="ams-table__row"
             >
-              <tr
-                class="ams-table__row"
+              <td
+                class="ams-table__cell"
               >
-                <th
-                  class="ams-table__header-cell"
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="/klachten/klacht/36049"
+                  title="Bekijk meer over klacht 36049"
                 >
-                  Nummer van uw klacht
-                </th>
-                <th
-                  class="ams-table__header-cell"
-                >
-                  Ontvangen op
-                </th>
-                <th
-                  class="ams-table__header-cell"
-                >
-                  Onderwerp
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              class="ams-table__body"
+                  36049
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              />
+              <td
+                class="ams-table__cell"
+              >
+                Test voor decentrale toewijzing
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
             >
-              <tr
-                class="ams-table__row"
+              <td
+                class="ams-table__cell"
               >
-                <td
-                  class="ams-table__cell"
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="/klachten/klacht/36046"
+                  title="Bekijk meer over klacht 36046"
                 >
-                  <a
-                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                    href="/klachten/klacht/36049"
-                    title="Bekijk meer over klacht 36049"
-                  >
-                    36049
-                  </a>
-                </td>
-                <td
-                  class="ams-table__cell"
-                />
-                <td
-                  class="ams-table__cell"
-                >
-                  Test voor decentrale toewijzing
-                </td>
-              </tr>
-              <tr
-                class="ams-table__row"
-              >
-                <td
-                  class="ams-table__cell"
-                >
-                  <a
-                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                    href="/klachten/klacht/36046"
-                    title="Bekijk meer over klacht 36046"
-                  >
-                    36046
-                  </a>
-                </td>
-                <td
-                  class="ams-table__cell"
-                />
-                <td
-                  class="ams-table__cell"
-                />
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  36046
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              />
+              <td
+                class="ams-table__cell"
+              />
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </main>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`<Klachten /> > Matches the Full Page snapshot when there are no complaints 1`] = `
 <DocumentFragment>
-  <main
-    class="ams-screen ams-screen--wide"
+  <div
+    class="ams-grid"
   >
     <div
-      class="ams-grid"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="_PageHeadingInner_c5a3f1"
-          id="skip-to-id-AppContent"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/"
+          title="Terug naar de vorige pagina"
         >
+          <span
+            class="ams-icon ams-icon--size-5"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Klachten
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph"
+      >
+        Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
           <a
-            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-            href="/"
-            title="Terug naar de vorige pagina"
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+            rel="noreferrer"
           >
             <span
               class="ams-icon ams-icon--size-5"
@@ -323,87 +357,41 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
                   fill-rule="evenodd"
                 />
               </svg>
             </span>
-            Terug
+            Meer informatie over de afhandeling van uw klacht
           </a>
-          <h3
-            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
-          >
-            Klachten
-          </h3>
-        </div>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <p
-          class="ams-paragraph"
-        >
-          Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
-        </p>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <ul
-          class="ams-link-list"
-        >
-          <li>
-            <a
-              class="ams-link-list__link"
-              href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-              rel="noreferrer"
-            >
-              <span
-                class="ams-icon ams-icon--size-5"
-              >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 32 32"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </span>
-              Meer informatie over de afhandeling van uw klacht
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <h3
-          class="ams-heading ams-heading--level-2"
-        >
-          Ingediende klachten
-        </h3>
-        <div
-          class="ams-table"
-        >
-          <table
-            class="ams-table__table _TableV2_4c6825"
-          >
-            <tbody
-              class="ams-table__body"
-            />
-          </table>
-        </div>
-        <p
-          class="ams-paragraph"
-        >
-          U heeft (nog) geen ingediende klachten
-        </p>
-      </div>
+        </li>
+      </ul>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Ingediende klachten
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825"
+        >
+          <tbody
+            class="ams-table__body"
+          />
+        </table>
+      </div>
+      <p
+        class="ams-paragraph"
+      >
+        U heeft (nog) geen ingediende klachten
+      </p>
+    </div>
+  </div>
 </DocumentFragment>
 `;
