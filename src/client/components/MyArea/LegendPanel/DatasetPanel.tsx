@@ -10,10 +10,7 @@ import {
   useActiveDatasetFilters,
   useDatasetFilterSelection,
 } from '../MyArea.hooks';
-import MyAreaCollapsiblePanel, {
-  CollapsedState,
-  MyAreaCollapsiblePanelHeading,
-} from './CollapsiblePanel';
+import MyAreaCollapsiblePanel, { CollapsedState } from './CollapsiblePanel';
 import {
   datasetCheckboxState,
   DatasetControlCheckbox,
@@ -54,15 +51,7 @@ export function DatasetPanel({
       label={
         <>
           {getIcon(categoryId, datasetId) || ''}
-
-          {hasFilters && !isChecked ? (
-            <MyAreaCollapsiblePanelHeading
-              onClick={() => onControlItemChange('dataset', [datasetId])}
-              title={<Paragraph>{dataset.title}</Paragraph>}
-            />
-          ) : (
-            <Paragraph>{dataset.title}</Paragraph>
-          )}
+          <Paragraph>{dataset.title}</Paragraph>
         </>
       }
       isIndeterminate={isIndeterminate}
