@@ -20,7 +20,7 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchHLI } from './hli/hli';
-import { fetchHorecaVergunning } from './horeca';
+import { fetchHorecaVergunningen } from './horeca/horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
@@ -127,7 +127,7 @@ const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only
 const BRP = callAuthenticatedService(fetchBRP);
 const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
 const HLI = callAuthenticatedService(fetchHLI);
-const HORECA = callAuthenticatedService(fetchHorecaVergunning);
+const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
 const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
 const KREFIA = callAuthenticatedService(fetchKrefia);
 const KVK = callAuthenticatedService(fetchKVK);

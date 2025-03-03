@@ -1,9 +1,5 @@
-import { LinkProps } from '../../../universal/types';
-import {
-  CaseTypeV2,
-  DecosCaseType,
-  GetCaseType,
-} from '../../../universal/types/decos-zaken';
+import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakBase,
   DecosZaakWithDateRange,
@@ -11,17 +7,10 @@ import {
   DecosZaakWithLocation,
   DecosZaakWithDateTimeRange,
   ZaakStatus,
-  ZakenFilter,
-  DecosZaakFrontend,
 } from '../decos/decos-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
-
-export const EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA: DecosCaseType[] = [
-  CaseTypeV2.VakantieverhuurVergunningaanvraag,
-  CaseTypeV2.ExploitatieHorecabedrijf,
-];
 
 export type VergunningBase = DecosZaakBase;
 
@@ -67,14 +56,6 @@ export interface ERVV
   extends DecosZaakWithLocation,
     DecosZaakWithDateTimeRange {
   caseType: GetCaseType<'ERVV'>;
-}
-
-export interface VakantieverhuurVergunningaanvraag
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'VakantieverhuurVergunningaanvraag'>;
-  title: 'VergunningV2 vakantieverhuur';
-  decision: 'Verleend' | 'Ingetrokken';
 }
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
@@ -171,14 +152,6 @@ export interface Splitsingsvergunning extends DecosZaakWithLocation {
   caseType: GetCaseType<'Splitsingsvergunning'>;
 }
 
-export interface ExploitatieHorecabedrijf
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'ExploitatieHorecabedrijf'>;
-  dateStartPermit: string | null;
-  numberOfPermits: string | null;
-}
-
 export interface Ligplaatsvergunning extends DecosZaakWithLocation {
   caseType: GetCaseType<'VOB'>;
   requestKind: string | null;
@@ -247,7 +220,6 @@ export type VergunningV2 =
   | ERVV
   | BZB
   | BZP
-  | VakantieverhuurVergunningaanvraag
   | Flyeren
   | AanbiedenDiensten
   | Nachtwerkontheffing
@@ -258,7 +230,6 @@ export type VergunningV2 =
   | VormenVanWoonruimte
   | Splitsingsvergunning
   | Ligplaatsvergunning
-  | ExploitatieHorecabedrijf
   | RVVHeleStad
   | RVVSloterweg
   | EigenParkeerplaats

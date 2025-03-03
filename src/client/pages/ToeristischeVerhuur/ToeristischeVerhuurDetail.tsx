@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
-import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
