@@ -176,7 +176,7 @@ describe('<ToeristischVerhuurDetail />', () => {
     }
     render(<Component />);
     expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
-    expect(screen.getByText('Z/XXX/000007c')).toBeInTheDocument();
+    expect(screen.getByText('Z/123/000007')).toBeInTheDocument();
     expect(screen.getByText('Vanaf')).toBeInTheDocument();
     expect(screen.getByText('Tot')).toBeInTheDocument();
     expect(screen.getByText('01 augustus 2022')).toBeInTheDocument();
