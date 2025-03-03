@@ -2,8 +2,8 @@ import styles from './ToeristischeVerhuur.module.scss';
 import {
   BBVergunning,
   LVVRegistratie,
-  VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+  ToeristischeVerhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import {
@@ -16,7 +16,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const DISPLAY_PROPS_VERGUNNINGEN: DisplayProps<
-  WithDetailLinkComponent<BBVergunning | VakantieverhuurVergunning>
+  WithDetailLinkComponent<ToeristischeVerhuurVergunning>
 > = {
   detailLinkComponent: 'Soort vergunning',
   zaaknummer: 'Zaaknummer',
@@ -47,8 +47,7 @@ export const listPageTitle = {
 export const tableConfigVergunningen = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (vergunning: BBVergunning | VakantieverhuurVergunning) =>
-      vergunning.isActual,
+    filter: (vergunning: ToeristischeVerhuurVergunning) => vergunning.isActual,
     sort: dateSort('dateReceived', 'desc'),
     displayProps: DISPLAY_PROPS_VERGUNNINGEN,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
@@ -56,8 +55,7 @@ export const tableConfigVergunningen = {
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
-    filter: (vergunning: BBVergunning | VakantieverhuurVergunning) =>
-      !vergunning.isActual,
+    filter: (vergunning: ToeristischeVerhuurVergunning) => !vergunning.isActual,
     sort: dateSort('dateReceived', 'desc'),
     displayProps: DISPLAY_PROPS_VERGUNNINGEN,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,

@@ -28,7 +28,8 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
       return item;
     }
 
-    let label: string = item[propertyName] ?? item?.[linkName]?.[propertyName];
+    let label: string =
+      item[propertyName as keyof T] ?? item?.[linkName]?.[propertyName];
     let linkPropertyName = propertyName;
 
     if (typeof label !== 'string') {
@@ -50,9 +51,9 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
-export type DisplayProps<T> = {
+export type DisplayProps<T> = Readonly<{
   [Property in keyof T]+?: string | number | ReactNode;
-};
+}>;
 
 export interface TableV2Props<T> {
   displayProps: DisplayProps<T> | null;
