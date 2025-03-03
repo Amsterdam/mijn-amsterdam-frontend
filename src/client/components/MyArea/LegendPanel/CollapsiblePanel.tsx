@@ -63,7 +63,7 @@ type MyAreaCollapsiblePanelProps = PropsWithChildren<{
 export default function MyAreaCollapsiblePanel({
   children,
   title,
-  initialState = CollapsedState.Expanded,
+  initialState = CollapsedState.Collapsed,
 }: MyAreaCollapsiblePanelProps) {
   const [collapsedState, setCollapsedState] = useState(initialState);
   const hasChildren = Children.count(children) >= 1;
