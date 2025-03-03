@@ -15,6 +15,8 @@ import {
   SELECT_FIELDS_TRANSFORM_BASE,
 } from '../decos/decos-types';
 
+console.log('TESTCIPIPELINE');
+
 const vesselName = { text18: 'vesselName' } as const;
 const vesselNameOld = { text33: 'vesselNameOld' } as const;
 const vesselLengths = {
