@@ -16,11 +16,11 @@ import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { axiosRequest } from '../../helpers/source-api-request';
-import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen-v2/config-and-types';
+import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
 import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
-} from '../vergunningen-v2/decos-zaken';
+} from '../vergunningen/decos-zaken';
 
 const zakenSource = {
   count: 1,
