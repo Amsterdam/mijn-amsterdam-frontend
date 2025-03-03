@@ -136,10 +136,297 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
       <div
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
+        <div
+          class="ams-alert ams-alert--info"
+          title="Voorwaarden en regels"
+        >
+          <div
+            class="ams-alert__icon"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 28 28"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="ams-alert__content"
+          >
+            <p
+              class="ams-paragraph ams-mb--sm"
+            >
+              U heeft een vergunning voor vakantieverhuur én bed & breakfast. Het is niet toegestaan om op hetzelfde adres zowel aan vakantieverhuur als bed & breakfast te doen. U moet daarom 1 van deze vergunningen opzeggen. 
+              <a
+                class="ams-link ams-link--standalone"
+                href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
+                rel="noopener noreferrer"
+              >
+                Meer informatie over voorwaarden vakantieverhuur
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
         <h3
           class="ams-heading ams-heading--level-2"
         >
           Lopende aanvragen
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825 _VergunningenTableThemaPagina_d146a0"
+          >
+            <tbody
+              class="ams-table__body"
+            />
+          </table>
+        </div>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft (nog) geen lopende aanvragen
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Huidige vergunningen
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825 _VergunningenTableThemaPagina_d146a0"
+          >
+            <thead
+              class="ams-table__header"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Zaaknummer
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Soort vergunning
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Status
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Vanaf
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Tot
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="ams-table__body"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C"
+                    title="Bekijk meer over Z/123/000007"
+                  >
+                    Z/123/000007
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Vergunning vakantieverhuur
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Verleend
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  01 augustus 2022
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  22 augustus 2023
+                </td>
+              </tr>
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007B"
+                    title="Bekijk meer over Z/123/0000077"
+                  >
+                    Z/123/0000077
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Vergunning vakantieverhuur
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Verleend
+                </td>
+                <td
+                  class="ams-table__cell"
+                />
+                <td
+                  class="ams-table__cell"
+                />
+              </tr>
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007"
+                    title="Bekijk meer over Z/890/000007"
+                  >
+                    Z/890/000007
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Vergunning vakantieverhuur
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Verlopen
+                </td>
+                <td
+                  class="ams-table__cell"
+                />
+                <td
+                  class="ams-table__cell"
+                />
+              </tr>
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-000-000040"
+                    title="Bekijk meer over Z/000/000040"
+                  >
+                    Z/000/000040
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Vergunning vakantieverhuur
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Verlopen
+                </td>
+                <td
+                  class="ams-table__cell"
+                />
+                <td
+                  class="ams-table__cell"
+                />
+              </tr>
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506"
+                    title="Bekijk meer over Z/23/2130506"
+                  >
+                    Z/23/2130506
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Vergunning bed & breakfast
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Verleend
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  22 maart 2023
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  01 juli 2028
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Eerdere en afgewezen vergunningen
         </h3>
         <div
           class="ams-table"
@@ -166,12 +453,7 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                 <th
                   class="ams-table__header-cell"
                 >
-                  Status
-                </th>
-                <th
-                  class="ams-table__header-cell"
-                >
-                  Aangevraagd op
+                  Resultaat
                 </th>
               </tr>
             </thead>
@@ -186,88 +468,10 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C"
-                    title="Bekijk meer over Onbekend item"
-                  >
-                    Onbekend item
-                  </a>
-                </td>
-                <td
-                  class="ams-table__cell"
-                >
-                  Vergunning vakantieverhuur
-                </td>
-                <td
-                  class="ams-table__cell"
-                />
-                <td
-                  class="ams-table__cell"
-                />
-              </tr>
-              <tr
-                class="ams-table__row"
-              >
-                <td
-                  class="ams-table__cell"
-                >
-                  <a
-                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007B"
-                    title="Bekijk meer over Onbekend item"
-                  >
-                    Onbekend item
-                  </a>
-                </td>
-                <td
-                  class="ams-table__cell"
-                >
-                  Vergunning vakantieverhuur
-                </td>
-                <td
-                  class="ams-table__cell"
-                />
-                <td
-                  class="ams-table__cell"
-                />
-              </tr>
-              <tr
-                class="ams-table__row"
-              >
-                <td
-                  class="ams-table__cell"
-                >
-                  <a
-                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007"
-                    title="Bekijk meer over Onbekend item"
-                  >
-                    Onbekend item
-                  </a>
-                </td>
-                <td
-                  class="ams-table__cell"
-                >
-                  Vergunning vakantieverhuur
-                </td>
-                <td
-                  class="ams-table__cell"
-                />
-                <td
-                  class="ams-table__cell"
-                />
-              </tr>
-              <tr
-                class="ams-table__row"
-              >
-                <td
-                  class="ams-table__cell"
-                >
-                  <a
-                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
                     href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-001-000040"
-                    title="Bekijk meer over Onbekend item"
+                    title="Bekijk meer over Z/001/000040"
                   >
-                    Onbekend item
+                    Z/001/000040
                   </a>
                 </td>
                 <td
@@ -277,7 +481,29 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                 </td>
                 <td
                   class="ams-table__cell"
-                />
+                >
+                  Ingetrokken
+                </td>
+              </tr>
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/toeristische-verhuur/vergunning/bed-and-breakfast/Z2023-WK000236"
+                    title="Bekijk meer over Z2023-WK000236"
+                  >
+                    Z2023-WK000236
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Vergunning bed & breakfast
+                </td>
                 <td
                   class="ams-table__cell"
                 />
@@ -290,20 +516,17 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
                 >
                   <a
                     class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                    href="/toeristische-verhuur/vergunning/vakantieverhuur/Z-000-000040"
-                    title="Bekijk meer over Onbekend item"
+                    href="/toeristische-verhuur/vergunning/bed-and-breakfast/Z2023-WK000284"
+                    title="Bekijk meer over Z2023-WK000284"
                   >
-                    Onbekend item
+                    Z2023-WK000284
                   </a>
                 </td>
                 <td
                   class="ams-table__cell"
                 >
-                  Vergunning vakantieverhuur
+                  Vergunning bed & breakfast
                 </td>
-                <td
-                  class="ams-table__cell"
-                />
                 <td
                   class="ams-table__cell"
                 />
@@ -311,63 +534,6 @@ exports[`<ToeristscheVerhuurThema /> > Matches the Full Page snapshot 1`] = `
             </tbody>
           </table>
         </div>
-        <a
-          class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
-          href="/toeristische-verhuur/vergunning/lijst/lopende-aanvragen"
-          title="Bekijk meer lopende aanvragen"
-        >
-          Toon meer
-        </a>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <h3
-          class="ams-heading ams-heading--level-2"
-        >
-          Huidige vergunningen
-        </h3>
-        <div
-          class="ams-table"
-        >
-          <table
-            class="ams-table__table _TableV2_4c6825 _VergunningenTableThemaPagina_d146a0"
-          >
-            <tbody
-              class="ams-table__body"
-            />
-          </table>
-        </div>
-        <p
-          class="ams-paragraph"
-        >
-          U heeft (nog) geen huidige vergunningen
-        </p>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <h3
-          class="ams-heading ams-heading--level-2"
-        >
-          Eerdere en afgewezen vergunningen
-        </h3>
-        <div
-          class="ams-table"
-        >
-          <table
-            class="ams-table__table _TableV2_4c6825 _VergunningenTableThemaPagina_d146a0"
-          >
-            <tbody
-              class="ams-table__body"
-            />
-          </table>
-        </div>
-        <p
-          class="ams-paragraph"
-        >
-          U heeft (nog) geen eerdere en afgewezen vergunningen
-        </p>
       </div>
       <div
         class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"

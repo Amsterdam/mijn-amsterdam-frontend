@@ -373,7 +373,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: (appState: AppState) => {
       const hasDecosParkeerVergunningen =
         !!appState.PARKEREN?.content?.vergunningen?.length;
-      const urlExternal = appState.PARKEREN.content?.url ?? '/';
+      const urlExternal = appState.PARKEREN?.content?.url ?? '/';
       return hasDecosParkeerVergunningen ? AppRoutes.PARKEREN : urlExternal;
     },
     profileTypes: ['private', 'commercial'],

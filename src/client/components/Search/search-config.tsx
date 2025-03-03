@@ -6,7 +6,6 @@ import styles from './Search.module.scss';
 import type {
   HorecaVergunning,
   Krefia,
-  KrefiaDeepLink,
   VakantieverhuurVergunning,
   Vergunning,
 } from '../../../server/services';

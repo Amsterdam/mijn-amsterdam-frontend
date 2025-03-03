@@ -185,7 +185,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
 
     case Themas.PARKEREN: {
       const hasDecosParkeerVergunningen =
-        !!appState.PARKEREN.content?.vergunningen?.length;
+        !!appState.PARKEREN?.content?.vergunningen?.length;
 
       return (
         FeatureToggle.parkerenActive &&
