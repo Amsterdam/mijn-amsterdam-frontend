@@ -6,7 +6,7 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 
 export function InkomenLijstPagina() {
   const { kind } = useParams<{
-    kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'specificaties'>;
+    kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'uitkering'>;
   }>();
   const { zaken, tableConfig, routes, isLoadingWpi, isErrorWpi } =
     useInkomenThemaData();

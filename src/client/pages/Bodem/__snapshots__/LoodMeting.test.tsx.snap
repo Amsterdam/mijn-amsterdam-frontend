@@ -2,368 +2,352 @@
 
 exports[`LoodMeting > with results > should show the correct detailpage for status afgehandeld 1`] = `
 <DocumentFragment>
-  <main
-    class="ams-screen ams-screen--wide"
+  <div
+    class="ams-grid"
   >
     <div
-      class="ams-grid"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="_PageHeadingInner_c5a3f1"
-          id="skip-to-id-AppContent"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/bodem"
+          title="Terug naar de vorige pagina"
         >
-          <a
-            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-            href="/bodem"
-            title="Terug naar de vorige pagina"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <span
-              class="ams-icon ams-icon--size-5"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 32 32"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
-            Terug
-          </a>
-          <h3
-            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
-          >
-            Lood in bodem-check
-          </h3>
-        </div>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <section
-          class="ams-alert ams-alert--error"
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          <div
-            class="ams-alert__icon"
-          >
-            <span
-              class="ams-icon ams-icon--size-4"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 36 36"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-                />
-                <path
-                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-                />
-              </svg>
-            </span>
-          </div>
-          <div
-            class="ams-alert__content"
-          >
-            <h2
-              class="ams-heading ams-heading--level-4"
-            >
-              Foutmelding
-            </h2>
-            <p
-              class="ams-paragraph"
-            >
-              We kunnen op dit moment geen gegevens tonen.
-            </p>
-          </div>
-        </section>
+          Lood in bodem-check
+        </h3>
       </div>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <section
+        class="ams-alert ams-alert--error"
+      >
+        <div
+          class="ams-alert__icon"
+        >
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Foutmelding
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            We kunnen op dit moment geen gegevens tonen.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`LoodMeting > with results > should show the correct detailpage for status afgewezen 1`] = `
 <DocumentFragment>
-  <main
-    class="ams-screen ams-screen--wide"
+  <div
+    class="ams-grid"
   >
     <div
-      class="ams-grid"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="_PageHeadingInner_c5a3f1"
-          id="skip-to-id-AppContent"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/bodem"
+          title="Terug naar de vorige pagina"
         >
-          <a
-            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-            href="/bodem"
-            title="Terug naar de vorige pagina"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <span
-              class="ams-icon ams-icon--size-5"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 32 32"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
-            Terug
-          </a>
-          <h3
-            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
-          >
-            Lood in bodem-check
-          </h3>
-        </div>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <section
-          class="ams-alert ams-alert--error"
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          <div
-            class="ams-alert__icon"
-          >
-            <span
-              class="ams-icon ams-icon--size-4"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 36 36"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-                />
-                <path
-                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-                />
-              </svg>
-            </span>
-          </div>
-          <div
-            class="ams-alert__content"
-          >
-            <h2
-              class="ams-heading ams-heading--level-4"
-            >
-              Foutmelding
-            </h2>
-            <p
-              class="ams-paragraph"
-            >
-              We kunnen op dit moment geen gegevens tonen.
-            </p>
-          </div>
-        </section>
+          Lood in bodem-check
+        </h3>
       </div>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <section
+        class="ams-alert ams-alert--error"
+      >
+        <div
+          class="ams-alert__icon"
+        >
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Foutmelding
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            We kunnen op dit moment geen gegevens tonen.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`LoodMeting > with results > should show the correct detailpage for status in behandeling 1`] = `
 <DocumentFragment>
-  <main
-    class="ams-screen ams-screen--wide"
+  <div
+    class="ams-grid"
   >
     <div
-      class="ams-grid"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="_PageHeadingInner_c5a3f1"
-          id="skip-to-id-AppContent"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/bodem"
+          title="Terug naar de vorige pagina"
         >
-          <a
-            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-            href="/bodem"
-            title="Terug naar de vorige pagina"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <span
-              class="ams-icon ams-icon--size-5"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 32 32"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
-            Terug
-          </a>
-          <h3
-            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
-          >
-            Lood in bodem-check
-          </h3>
-        </div>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <section
-          class="ams-alert ams-alert--error"
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          <div
-            class="ams-alert__icon"
-          >
-            <span
-              class="ams-icon ams-icon--size-4"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 36 36"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-                />
-                <path
-                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-                />
-              </svg>
-            </span>
-          </div>
-          <div
-            class="ams-alert__content"
-          >
-            <h2
-              class="ams-heading ams-heading--level-4"
-            >
-              Foutmelding
-            </h2>
-            <p
-              class="ams-paragraph"
-            >
-              We kunnen op dit moment geen gegevens tonen.
-            </p>
-          </div>
-        </section>
+          Lood in bodem-check
+        </h3>
       </div>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <section
+        class="ams-alert ams-alert--error"
+      >
+        <div
+          class="ams-alert__icon"
+        >
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Foutmelding
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            We kunnen op dit moment geen gegevens tonen.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`LoodMeting > without results > should show the correct detailpage 1`] = `
 <DocumentFragment>
-  <main
-    class="ams-screen ams-screen--wide"
+  <div
+    class="ams-grid"
   >
     <div
-      class="ams-grid"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="_PageHeadingInner_c5a3f1"
-          id="skip-to-id-AppContent"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/bodem"
+          title="Terug naar de vorige pagina"
         >
-          <a
-            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-            href="/bodem"
-            title="Terug naar de vorige pagina"
+          <span
+            class="ams-icon ams-icon--size-5"
           >
-            <span
-              class="ams-icon ams-icon--size-5"
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 32 32"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </span>
-            Terug
-          </a>
-          <h3
-            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
-          >
-            Lood in bodem-check
-          </h3>
-        </div>
-      </div>
-      <div
-        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-      >
-        <section
-          class="ams-alert ams-alert--error"
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          <div
-            class="ams-alert__icon"
-          >
-            <span
-              class="ams-icon ams-icon--size-4"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 36 36"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-                />
-                <path
-                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-                />
-              </svg>
-            </span>
-          </div>
-          <div
-            class="ams-alert__content"
-          >
-            <h2
-              class="ams-heading ams-heading--level-4"
-            >
-              Foutmelding
-            </h2>
-            <p
-              class="ams-paragraph"
-            >
-              We kunnen op dit moment geen gegevens tonen.
-            </p>
-          </div>
-        </section>
+          Lood in bodem-check
+        </h3>
       </div>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <section
+        class="ams-alert ams-alert--error"
+      >
+        <div
+          class="ams-alert__icon"
+        >
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Foutmelding
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            We kunnen op dit moment geen gegevens tonen.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
 </DocumentFragment>
 `;
