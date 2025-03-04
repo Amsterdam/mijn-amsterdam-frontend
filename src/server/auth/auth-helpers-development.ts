@@ -1,3 +1,4 @@
+import { AccessToken } from 'express-openid-connect';
 import * as jose from 'jose';
 import memoizee from 'memoizee';
 
@@ -22,7 +23,7 @@ async function signDevelopmentToken_(
   authMethod: AuthProfile['authMethod'],
   userID: string,
   sessionID: SessionID
-) {
+): Promise<AccessToken['access_token'] | undefined> {
   const data = {
     [TOKEN_ID_ATTRIBUTE[authMethod]]: userID,
     aud: OIDC_TOKEN_AUD_ATTRIBUTE_VALUE[authMethod],
@@ -30,12 +31,12 @@ async function signDevelopmentToken_(
   };
   const alg = 'RS256';
   try {
-    const idToken = await new jose.SignJWT(data)
+    const accessToken = await new jose.SignJWT(data)
       .setProtectedHeader({ alg })
       .setIssuedAt()
       .setExpirationTime('2h')
       .sign(await getPrivateKeyForDevelopment());
-    return idToken;
+    return accessToken;
   } catch (err) {
     logger.error(err);
   }

@@ -1,4 +1,5 @@
 import express, { CookieOptions, Request, Response } from 'express';
+import { AccessToken } from 'express-openid-connect';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
@@ -20,7 +21,7 @@ import {
 } from '../auth/auth-helpers';
 import { signDevelopmentToken } from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
-import { AuthProfile } from '../auth/auth-types';
+import { AuthProfile, MaSession } from '../auth/auth-types';
 import { ONE_SECOND_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
@@ -30,10 +31,13 @@ authRouterDevelopment.BFF_ID = 'router-dev';
 
 export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
-  (req as any)[OIDC_SESSION_COOKIE_NAME] = {
+  const maSession: MaSession = {
     ...authProfile,
     TMASessionID: 'xx-tma-sid-xx',
+    expires_at:
+      new Date().getTime() + OIDC_SESSION_MAX_AGE_SECONDS * ONE_SECOND_MS,
   };
+  (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
 
   req.oidc = {
     isAuthenticated() {
@@ -46,11 +50,13 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
       [idAttr]: authProfile.id,
       sid: authProfile.sid,
     },
-    idToken: await signDevelopmentToken(
-      authProfile.authMethod,
-      authProfile.id,
-      'xx-tma-sid-xx'
-    ),
+    accessToken: {
+      access_token: await signDevelopmentToken(
+        authProfile.authMethod,
+        authProfile.id,
+        'xx-tma-sid-xx'
+      ),
+    } as AccessToken,
   };
 }
 
