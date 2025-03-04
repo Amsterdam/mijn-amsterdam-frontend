@@ -212,14 +212,14 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
     postponeFetch: !FeatureToggle.powerbrowserActive,
     headers: {
-      apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
   CONTACTMOMENTEN: {
     url: `${getFromEnv('BFF_CONTACTMOMENTEN_BASE_URL')}`,
     postponeFetch: postponeFetchContactmomenten,
     headers: {
-      apiKey: getFromEnv('BFF_POWERBROWSER_API_KEY'), // EnableU api key
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
   CMS_CONTENT_GENERAL_INFO: {
@@ -261,7 +261,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
-      apiKey: getFromEnv('BFF_ENABLEU_ERFPACHT_API_KEY'),
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
     },
   },
   AFVAL: {

@@ -26,7 +26,7 @@ export async function getAfisApiConfig(
   const authHeader =
     getFromEnv('BFF_AFIS_ENABLE_DIRECT_TOKEN_FETCHING') === 'true'
       ? await fetchAfisTokenHeader(requestID)
-      : { apiKey: getFromEnv('BFF_ENABLEU_AFIS_API_KEY') };
+      : { apiKey: getFromEnv('BFF_ENABLEU_API_KEY') };
 
   const additionalConfigWithHeader: DataRequestConfig = {
     ...(additionalConfig ?? null),

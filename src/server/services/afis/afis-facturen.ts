@@ -40,7 +40,6 @@ import {
 } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { entries } from '../../../universal/helpers/utils';
-import { logger } from '../../logging';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
