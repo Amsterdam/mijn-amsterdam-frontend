@@ -21,10 +21,10 @@ import {
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
 import { PROFILE_TYPES } from '../../universal/types/App.types';
+import { logger } from '../logging';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
-import { logger } from '../logging';
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,
