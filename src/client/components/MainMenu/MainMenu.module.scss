@@ -1,11 +1,20 @@
 .MainMenu {
-  display: grid;
-  column-gap: var(--ams-grid-column-gap);
-  grid-template-columns: 3fr 1fr;
   padding-bottom: var(--ams-space-xl);
 
-  .menuItem {
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    display: grid;
+    column-gap: var(--ams-grid-column-gap);
+    grid-template-columns: 3fr 1fr;
+  }
+
+  .MenuItem {
     display: block;
     margin-bottom: var(--ams-link-list-gap);
+  }
+}
+
+.NavSection {
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    padding-bottom: var(--ams-space-xl);
   }
 }
