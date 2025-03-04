@@ -1,4 +1,4 @@
-import styles from './HLI.module.scss';
+import styles from './HLIThemaPagina.module.scss';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';

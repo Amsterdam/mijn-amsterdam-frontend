@@ -1,7 +1,7 @@
 import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
-import styles from './HLI.module.scss';
+import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../components/Datalist/Datalist';

@@ -12,7 +12,7 @@ import {
 import { useParams } from 'react-router-dom';
 
 import { getThemaTitleWithAppState } from './helpers';
-import styles from './HLIStadspas.module.scss';
+import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
   StadspasBudget,

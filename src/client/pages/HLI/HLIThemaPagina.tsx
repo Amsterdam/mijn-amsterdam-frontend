@@ -1,7 +1,7 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
-import styles from './HLI.module.scss';
+import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';

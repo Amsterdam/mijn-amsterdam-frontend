@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
-import { HistoricItemsMention } from './HLI';
 import { ListPageParamKind } from './HLI-thema-config';
+import { HistoricItemsMention } from './HLIThemaPagina';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 

@@ -3,7 +3,7 @@ import { generatePath } from 'react-router-dom';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { componentCreator } from '../MockApp';
-import HLIThemaPagina from './HLI';
+import HLIThemaPagina from './HLIThemaPagina';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
 
