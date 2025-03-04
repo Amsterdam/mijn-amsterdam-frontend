@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 
 import { componentCreator } from '../MockApp';
-import HLIStadspas from './HLIStadspas';
+import HLIStadspasDetail from './HLIStadspas';
 import { forTesting } from './HLIStadspas';
 import { createHLIState } from './test-helpers';
 import { stadspasCreator } from './test-helpers';
@@ -27,7 +27,7 @@ const pasBlockedState = createHLIState({
 });
 
 const createHLIStadspasComponent = componentCreator({
-  component: HLIStadspas,
+  component: HLIStadspasDetail,
   routePath: AppRoutes['HLI/STADSPAS'],
   routeEntry: generatePath(AppRoutes['HLI/STADSPAS'], { passNumber }),
 });
@@ -35,6 +35,13 @@ const createHLIStadspasComponent = componentCreator({
 describe('With basic request where data returned does not matter', () => {
   beforeEach(() => {
     bffApi.get('/url-transactions').reply(200, { content: [] });
+  });
+
+  test('Matches snapshot', () => {
+    const HLIStadspas = createHLIStadspasComponent(activePasState);
+    const { asFragment } = render(<HLIStadspas />);
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test('Active pas state', () => {
