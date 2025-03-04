@@ -75,7 +75,7 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
         return (
           <Paragraph
             inverseColor
-            className={classnames('ams-mb--xs', styles.Paragraph)}
+            className={classnames('ams-mb--md', styles.Paragraph)}
           >
             {children}
           </Paragraph>
