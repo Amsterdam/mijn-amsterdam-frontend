@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 
 import { componentCreator } from '../MockApp';
-import HLIStadspasDetail from './HLIStadspas';
-import { forTesting } from './HLIStadspas';
+import HLIStadspasDetail from './HLIStadspasDetail';
+import { forTesting } from './HLIStadspasDetail';
 import { createHLIState } from './test-helpers';
 import { stadspasCreator } from './test-helpers';
 import { StadspasBudget } from '../../../server/services/hli/stadspas-types';
