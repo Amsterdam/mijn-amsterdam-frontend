@@ -37,7 +37,7 @@ function MainHeaderLinks() {
           }}
           href={AppRoutes.SEARCH}
         >
-          {!isPhoneScreen && <>Zoeken </>}
+          Zoeken
           <Icon svg={isSearchActive ? CloseIcon : SearchIcon} size="level-5" />
         </MaLink>
       )}
