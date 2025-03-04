@@ -17,6 +17,38 @@ import {
   useSearchOnPage,
 } from '../Search/useSearch';
 
+type MainHeaderSecondaryLinksProps = {
+  linkClassName: string;
+};
+
+export function MainHeaderSecondaryLinks({
+  linkClassName,
+}: MainHeaderSecondaryLinksProps) {
+  return (
+    <>
+      <MaRouterLink
+        maVariant="noUnderline"
+        href={AppRoutes.BRP}
+        className={linkClassName}
+        title="Ga naar persoonlijke gegevens"
+      >
+        <span className={styles.ProfileNameInner}>
+          <ProfileName fallbackName="Profiel" />
+        </span>
+      </MaRouterLink>
+
+      <MaLink
+        maVariant="noUnderline"
+        href={LOGOUT_URL}
+        className={linkClassName}
+        rel="noopener noreferrer"
+      >
+        Uitloggen
+      </MaLink>
+    </>
+  );
+}
+
 function MainHeaderLinks() {
   const [isSearchActive, setSearchActive] = useSearchActive();
   const isDisplayLiveSearch = useDisplayLiveSearch();
@@ -42,27 +74,7 @@ function MainHeaderLinks() {
         </MaLink>
       )}
       {!isPhoneScreen && (
-        <>
-          <MaRouterLink
-            maVariant="noUnderline"
-            href={AppRoutes.BRP}
-            className="ams-button"
-            title="Ga naar persoonlijke gegevens"
-          >
-            <span className={styles.ProfileNameInner}>
-              <ProfileName fallbackName="Profiel" />
-            </span>
-          </MaRouterLink>
-
-          <MaLink
-            maVariant="noUnderline"
-            href={LOGOUT_URL}
-            className="ams-button"
-            rel="noopener noreferrer"
-          >
-            Uitloggen
-          </MaLink>
-        </>
+        <MainHeaderSecondaryLinks linkClassName="ams-button" />
       )}
     </>
   );
