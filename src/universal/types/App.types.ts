@@ -36,6 +36,10 @@ export interface LinkProps {
   download?: string;
 }
 
+export type ButtonLinkProps = LinkProps & {
+  isDisabled?: boolean;
+};
+
 export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;

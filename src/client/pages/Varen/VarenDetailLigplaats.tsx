@@ -11,13 +11,13 @@ import type {
   VarenFrontend,
   VarenVergunningLigplaatsType,
 } from '../../../server/services/varen/config-and-types';
-import { LinkProps } from '../../../universal/types';
+import { ButtonLinkProps } from '../../../universal/types/App.types';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 
 type VarenDetailPageContentProps = {
   vergunning: VarenFrontend<VarenVergunningLigplaatsType>;
-  buttonItems: LinkProps[];
+  buttonItems: ButtonLinkProps[];
 };
 
 const DEFAULT_GRID_SPAN: GridColumnNumber = 4;
@@ -53,12 +53,13 @@ export function VarenDetailPageContentLigplaats({
       </Grid.Cell>
       <Grid.Cell span="all">
         <ActionGroup>
-          {buttonItems.map(({ to, title }) => (
+          {buttonItems.map(({ to, title, isDisabled }) => (
             <MaButtonLink
               key={to}
               href={to}
               variant="secondary"
               className={styles.VarenButton}
+              isDisabled={isDisabled}
             >
               {title}
               <Icon svg={ExternalLinkIcon} size="level-5" />
