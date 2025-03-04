@@ -83,8 +83,7 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
-// RP TODO: Rename to HLIStadpasDetail
-export default function HLIStadspas() {
+export default function HLIStadspasDetail() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
 

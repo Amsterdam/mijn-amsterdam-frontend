@@ -59,7 +59,7 @@ import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
 import HLI from './pages/HLI/HLI';
 import HLIRegeling from './pages/HLI/HLIRegeling';
 import HLIRegelingen from './pages/HLI/HLIRegelingen';
-import HLIStadspas from './pages/HLI/HLIStadspas';
+import HLIStadspasDetail from './pages/HLI/HLIStadspas';
 import Horeca from './pages/Horeca/Horeca';
 import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 import Inkomen from './pages/Inkomen/Inkomen';
@@ -188,7 +188,10 @@ function AppAuthenticated() {
           <Route path={AppRoutes.BRP} component={MijnGegevensThema} />
           <Route path={AppRoutes.KVK} component={MijnBedrijfsGegevensThema} />
           {FeatureToggle.hliThemaStadspasActive && (
-            <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
+            <Route
+              path={AppRoutes['HLI/STADSPAS']}
+              component={HLIStadspasDetail}
+            />
           )}
           {FeatureToggle.hliThemaRegelingenActive && (
             <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
