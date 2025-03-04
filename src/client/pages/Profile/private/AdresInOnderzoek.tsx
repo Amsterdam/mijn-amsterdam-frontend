@@ -1,5 +1,6 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
+import styles from './ProfilePrivate.module.scss';
 import { AppState } from '../../../../universal/types';
 
 type AdresInOnderzoekProps = {
@@ -32,6 +33,7 @@ export function AdresInOnderzoek({ brpContent }: AdresInOnderzoekProps) {
       <Paragraph>
         Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail naar{' '}
         <Link
+          className={styles.Email}
           href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
           rel="noopener noreferrer"
         >
