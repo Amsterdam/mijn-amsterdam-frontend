@@ -22,6 +22,7 @@ export default [
       },
     },
     rules: {
+      'react/prop-types': 'off',
       'no-console': 'warn',
       'dot-notation': 'error',
       'no-else-return': 'error',

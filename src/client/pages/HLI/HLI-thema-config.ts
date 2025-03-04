@@ -1,4 +1,4 @@
-import styles from './HLI.module.scss';
+import styles from './HLIThemaPagina.module.scss';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -30,6 +30,8 @@ export const listPageTitle = {
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
 
+const textNoContent = 'U heeft geen huidige regelingen';
+
 export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
@@ -38,7 +40,7 @@ export const tableConfig = {
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.HuidigeRegelingen,
-    textNoContent: 'U heeft geen huidige regelingen',
+    textNoContent,
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
@@ -47,13 +49,12 @@ export const tableConfig = {
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.EerdereRegelingen,
-    textNoContent:
-      'U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.',
+    textNoContent,
   },
 } as const;
 
 export const routes = {
   listPage: AppRoutes['HLI/REGELINGEN_LIST'],
   detailPage: AppRoutes['HLI/REGELING'],
-  themaPage: AppRoutes['HLI'],
+  themaPage: AppRoutes.HLI,
 } as const;

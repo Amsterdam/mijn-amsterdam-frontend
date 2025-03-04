@@ -11,12 +11,28 @@ import {
   StadspasDiscountTransactions,
   StadspasDiscountTransactionsResponseSource,
   StadspasHouderPasSource,
+  StadspasHouderSource,
   StadspasOwner,
   StadspasPasHouderResponse,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+
+const FAKE_API_KEY = '22222xx22222';
+
+const defaultPashouderResponse = createStadspasHouderResponse();
+const defaultPasResponse = createPas();
+
+const authProfileAndToken: AuthProfileAndToken = {
+  profile: {
+    authMethod: 'digid',
+    profileType: 'private',
+    id: '8899776655',
+    sid: 'my-unique-session-id',
+  },
+  token: '',
+};
 
 function createStadspasHouderResponse(): StadspasPasHouderResponse {
   const stadspasHouderResponse = {
@@ -128,22 +144,43 @@ function createTransformedPas(
   };
 }
 
-const defaultPashouderResponse = createStadspasHouderResponse();
-const defaultPasResponse = createPas();
+function setupStadspashouderRequests(response: {
+  passen?: StadspasHouderPasSource[];
+  sub_pashouders?: StadspasHouderSource[];
+}): void {
+  vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
+    '1x2x3x-##########-4x5x6x',
+    Buffer.from('xx'),
+    Buffer.from('yy'),
+  ]);
 
-const authProfileAndToken: AuthProfileAndToken = {
-  profile: {
-    authMethod: 'digid',
-    profileType: 'private',
-    id: '8899776655',
-    sid: 'my-unique-session-id',
-  },
-  token: '',
-};
+  vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue('123-unencrypted-456');
+
+  remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
+    persoon: {
+      clientidentificatie: '123-123',
+    },
+  });
+  const pasHouderResponse: StadspasPasHouderResponse = {
+    initialen: 'A',
+    achternaam: 'Achternaam',
+    voornaam: 'Vadertje',
+    passen: response.passen || [],
+    sub_pashouders: response.sub_pashouders || [],
+  };
+
+  remoteApi
+    .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
+    .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
+    .reply(200, pasHouderResponse);
+  remoteApi
+    .persist()
+    .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
+    .matchHeader('authorization', `AppBearer ${FAKE_API_KEY},0363000123-123`)
+    .reply(200, defaultPasResponse);
+}
 
 describe('stadspas services', () => {
-  const FAKE_API_KEY = '22222xx22222';
-
   beforeEach(() => {
     Mockdate.set('2025-01-01');
   });
@@ -264,96 +301,18 @@ describe('stadspas services', () => {
     });
 
     describe('filter inside of fetchStadspassen', async () => {
-      beforeEach(() => {
-        vi.spyOn(encryptDecrypt, 'encrypt').mockReturnValue([
-          '1x2x3x-##########-4x5x6x',
-          Buffer.from('xx'),
-          Buffer.from('yy'),
-        ]);
-
-        vi.spyOn(encryptDecrypt, 'decrypt').mockReturnValue(
-          '123-unencrypted-456'
-        );
-
-        const relevantPas = createPas({
-          actief: true,
-          pasnummer: 111111111111,
-        });
-        const blockedRelevantPas = createPas({
-          actief: false,
-          pasnummer: 222222222222,
-        });
-        const replacedPas = createPas({
-          actief: false,
-          pasnummer: 333333333333,
-          securitycode: '012345',
-          vervangen: true,
-        });
-        const expiredPas = createPas({
-          actief: false,
-          pasnummer: 444444444444,
-          securitycode: '012345',
-          vervangen: false,
-          expiry_date: '2024-07-31T21:59:59.000Z',
-        });
-        const expiredPas2 = createPas({
-          actief: false,
-          pasnummer: 555555555555,
-          securitycode: '012345',
-          vervangen: false,
-          expiry_date: '2024-06-31T21:59:59.000Z',
-        });
-
-        remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-          persoon: {
-            clientidentificatie: '123-123',
-          },
-        });
-        const pasHouderResponse: StadspasPasHouderResponse = {
-          initialen: 'A',
-          achternaam: 'Achternaam',
-          voornaam: 'Vadertje',
-          passen: [relevantPas, replacedPas, expiredPas, expiredPas2],
-          sub_pashouders: [
-            {
-              initialen: 'B',
-              achternaam: 'Achternaam',
-              voornaam: 'Moedertje',
-              passen: [relevantPas, blockedRelevantPas],
-            },
-            {
-              initialen: 'C',
-              achternaam: 'Achternaam',
-              voornaam: 'Kindje',
-              passen: [relevantPas, blockedRelevantPas],
-            },
-          ],
-        };
-        remoteApi
-          .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
-          .matchHeader(
-            'authorization',
-            `AppBearer ${FAKE_API_KEY},0363000123-123`
-          )
-          .reply(200, pasHouderResponse);
-        remoteApi
-          .persist()
-          .get(/\/stadspas\/rest\/sales\/v1\/pas\//)
-          .matchHeader(
-            'authorization',
-            `AppBearer ${FAKE_API_KEY},0363000123-123`
-          )
-          .reply(200, defaultPasResponse);
+      const relevantPas = createPas({
+        actief: true,
+        pasnummer: 111111111111,
       });
 
-      test('filters out replaced passes and returns pass correctly', async () => {
-        Mockdate.set('2024-12-01');
+      test('Transforms pas correctly', async () => {
+        setupStadspashouderRequests({ passen: [relevantPas] });
 
         const response = await fetchStadspassen_(
           'fake-request-id',
           authProfileAndToken
         );
-        expect(response.content?.stadspassen.length).toBe(6);
         expect(response.content?.stadspassen[0]).toStrictEqual({
           actief: true,
           balance: 0,
@@ -386,12 +345,115 @@ describe('stadspas services', () => {
         });
       });
 
-      test('Subtracts a year when expiry date is in the last year', async () => {
+      test('filters out replaced passes and returns pass correctly', async () => {
+        Mockdate.set('2024-12-01');
+        // current pas year range 2024-08-01 untill 2025-07-31
+
+        const toFilterOutPasses = [
+          createPas({
+            actief: false,
+            securitycode: '012345',
+            vervangen: true,
+          }),
+          createPas({
+            actief: false,
+            securitycode: '012345',
+            vervangen: false,
+            expiry_date: '2024-07-31T21:59:59.000Z',
+          }),
+          createPas({
+            actief: false,
+            vervangen: false,
+            expiry_date: '2024-06-31T21:59:59.000Z',
+          }),
+        ];
+
+        const passen = [relevantPas, ...toFilterOutPasses];
+        setupStadspashouderRequests({ passen });
+
         const response = await fetchStadspassen_(
           'fake-request-id',
           authProfileAndToken
         );
-        expect(response.content?.stadspassen.length).toBe(5);
+
+        expect(response.content?.stadspassen.length).toBe(
+          passen.length - toFilterOutPasses.length
+        );
+      });
+
+      test('Subtracts a year when expiry date is in the last year', async () => {
+        Mockdate.set('2025-01-01');
+        setupStadspashouderRequests({
+          passen: [
+            createPas({
+              actief: false,
+              vervangen: false,
+              expiry_date: '2024-07-31T21:59:59.000Z',
+            }),
+            createPas({
+              actief: false,
+              vervangen: false,
+              expiry_date: '2024-06-31T21:59:59.000Z',
+            }),
+          ],
+        });
+
+        const response = await fetchStadspassen_(
+          'fake-request-id',
+          authProfileAndToken
+        );
+        expect(response.content?.stadspassen.length).toBe(0);
+      });
+
+      test('Keeps pas that has just been blocked a few days ago.', async () => {
+        Mockdate.set('2025-02-27');
+
+        setupStadspashouderRequests({
+          passen: [
+            createPas({
+              actief: false,
+              expiry_date: '2025-02-25T15:04:46.924Z',
+              vervangen: false,
+            }),
+          ],
+        });
+
+        const response = await fetchStadspassen_(
+          'fake-request-id',
+          authProfileAndToken
+        );
+
+        expect(response.content?.stadspassen.length).toBe(1);
+      });
+
+      test('Filters reaches subpashouders', async () => {
+        const passesToFilterOut = [
+          createPas({
+            actief: false,
+            pasnummer: 444444444444,
+            securitycode: '012345',
+            vervangen: false,
+            expiry_date: '2024-07-31T21:59:59.000Z',
+          }),
+        ];
+        const passen = [relevantPas, ...passesToFilterOut];
+        const sub_pashouders = [
+          {
+            initialen: 'B',
+            achternaam: 'Achternaam',
+            voornaam: 'Moedertje',
+            passen,
+          },
+        ];
+        setupStadspashouderRequests({ sub_pashouders });
+
+        const response = await fetchStadspassen_(
+          'fake-request-id',
+          authProfileAndToken
+        );
+        expect(response.content?.stadspassen.length).toBe(
+          passen.length - passesToFilterOut.length
+        );
       });
     });
   });

@@ -1,7 +1,7 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
-import styles from './HLI.module.scss';
+import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
@@ -22,8 +22,8 @@ export function HistoricItemsMention() {
 }
 
 type StadspasDisplayProps = {
-  owner: React.JSX.Element;
-  actief: string;
+  owner: JSX.Element;
+  actief: JSX.Element;
 };
 
 type StadspassenProps = {
@@ -86,7 +86,7 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   );
 }
 
-export default function ThemaPaginaHLI() {
+export default function HLIThemaPagina() {
   const {
     hasKindtegoed,
     isError,
