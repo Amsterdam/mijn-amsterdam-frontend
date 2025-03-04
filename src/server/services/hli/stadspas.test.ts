@@ -352,21 +352,17 @@ describe('stadspas services', () => {
         const toFilterOutPasses = [
           createPas({
             actief: false,
-            pasnummer: 333333333333,
             securitycode: '012345',
             vervangen: true,
           }),
           createPas({
             actief: false,
-            pasnummer: 444444444444,
             securitycode: '012345',
             vervangen: false,
             expiry_date: '2024-07-31T21:59:59.000Z',
           }),
           createPas({
             actief: false,
-            pasnummer: 555555555555,
-            securitycode: '012345',
             vervangen: false,
             expiry_date: '2024-06-31T21:59:59.000Z',
           }),
@@ -391,15 +387,11 @@ describe('stadspas services', () => {
           passen: [
             createPas({
               actief: false,
-              pasnummer: 444444444444,
-              securitycode: '012345',
               vervangen: false,
               expiry_date: '2024-07-31T21:59:59.000Z',
             }),
             createPas({
               actief: false,
-              pasnummer: 555555555555,
-              securitycode: '012345',
               vervangen: false,
               expiry_date: '2024-06-31T21:59:59.000Z',
             }),
@@ -418,39 +410,11 @@ describe('stadspas services', () => {
 
         setupStadspashouderRequests({
           passen: [
-            {
-              id: 201616,
-              pasnummer: 6011013125823,
-              pasnummer_volledig: '6064366011013125823',
-              categorie: 'Minima stadspas',
-              categorie_code: 'M',
+            createPas({
               actief: false,
               expiry_date: '2025-02-25T15:04:46.924Z',
-              heeft_budget: true,
               vervangen: false,
-              securitycode: '542716',
-              passoort: {
-                id: 11,
-                naam: 'Digitale Stadspas',
-              },
-              budgetten: [
-                {
-                  code: '2024Witgoedregeling',
-                  naam: 'Witgoedregeling: dit tegoed komt uit een beperkte subsidiepot, dus op = op!',
-                  omschrijving:
-                    'Witgoedregeling: U kunt dit tegoed gebruiken zolang er budget is. Op = op! ',
-                },
-                {
-                  code: '2024_AMSTEG_15-17',
-                  naam: '24/25 Kindtegoed 15 tm 17 jaar',
-                },
-                {
-                  code: '2024_AMSTEG_PC',
-                  naam: '24/25 PC Tegoed',
-                  omschrijving: 'Tegoed Gratis laptop of tablet',
-                },
-              ],
-            },
+            }),
           ],
         });
 
