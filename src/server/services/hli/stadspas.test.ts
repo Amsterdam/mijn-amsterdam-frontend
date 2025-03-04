@@ -305,30 +305,6 @@ describe('stadspas services', () => {
         actief: true,
         pasnummer: 111111111111,
       });
-      const blockedRelevantPas = createPas({
-        actief: false,
-        pasnummer: 222222222222,
-      });
-      const replacedPas = createPas({
-        actief: false,
-        pasnummer: 333333333333,
-        securitycode: '012345',
-        vervangen: true,
-      });
-      const expiredPas = createPas({
-        actief: false,
-        pasnummer: 444444444444,
-        securitycode: '012345',
-        vervangen: false,
-        expiry_date: '2024-07-31T21:59:59.000Z',
-      });
-      const expiredPas2 = createPas({
-        actief: false,
-        pasnummer: 555555555555,
-        securitycode: '012345',
-        vervangen: false,
-        expiry_date: '2024-06-31T21:59:59.000Z',
-      });
 
       test('Transforms pas correctly', async () => {
         setupStadspashouderRequests({ passen: [relevantPas] });
@@ -371,19 +347,64 @@ describe('stadspas services', () => {
 
       test('filters out replaced passes and returns pass correctly', async () => {
         Mockdate.set('2024-12-01');
-        const passen = [relevantPas, replacedPas, expiredPas, expiredPas2];
+        // current pas year range 2024-08-01 untill 2025-07-31
+
+        const toFilterOutPasses = [
+          createPas({
+            actief: false,
+            pasnummer: 333333333333,
+            securitycode: '012345',
+            vervangen: true,
+          }),
+          createPas({
+            actief: false,
+            pasnummer: 444444444444,
+            securitycode: '012345',
+            vervangen: false,
+            expiry_date: '2024-07-31T21:59:59.000Z',
+          }),
+          createPas({
+            actief: false,
+            pasnummer: 555555555555,
+            securitycode: '012345',
+            vervangen: false,
+            expiry_date: '2024-06-31T21:59:59.000Z',
+          }),
+        ];
+
+        const passen = [relevantPas, ...toFilterOutPasses];
         setupStadspashouderRequests({ passen });
 
         const response = await fetchStadspassen_(
           'fake-request-id',
           authProfileAndToken
         );
-        expect(response.content?.stadspassen.length).toBe(passen.length - 2);
+
+        expect(response.content?.stadspassen.length).toBe(
+          passen.length - toFilterOutPasses.length
+        );
       });
 
       test('Subtracts a year when expiry date is in the last year', async () => {
         Mockdate.set('2025-01-01');
-        setupStadspashouderRequests({ passen: [expiredPas, expiredPas2] });
+        setupStadspashouderRequests({
+          passen: [
+            createPas({
+              actief: false,
+              pasnummer: 444444444444,
+              securitycode: '012345',
+              vervangen: false,
+              expiry_date: '2024-07-31T21:59:59.000Z',
+            }),
+            createPas({
+              actief: false,
+              pasnummer: 555555555555,
+              securitycode: '012345',
+              vervangen: false,
+              expiry_date: '2024-06-31T21:59:59.000Z',
+            }),
+          ],
+        });
 
         const response = await fetchStadspassen_(
           'fake-request-id',
@@ -392,8 +413,66 @@ describe('stadspas services', () => {
         expect(response.content?.stadspassen.length).toBe(0);
       });
 
+      test('Keeps pas that has just been blocked a few days ago.', async () => {
+        Mockdate.set('2025-02-27');
+
+        setupStadspashouderRequests({
+          passen: [
+            {
+              id: 201616,
+              pasnummer: 6011013125823,
+              pasnummer_volledig: '6064366011013125823',
+              categorie: 'Minima stadspas',
+              categorie_code: 'M',
+              actief: false,
+              expiry_date: '2025-02-25T15:04:46.924Z',
+              heeft_budget: true,
+              vervangen: false,
+              securitycode: '542716',
+              passoort: {
+                id: 11,
+                naam: 'Digitale Stadspas',
+              },
+              budgetten: [
+                {
+                  code: '2024Witgoedregeling',
+                  naam: 'Witgoedregeling: dit tegoed komt uit een beperkte subsidiepot, dus op = op!',
+                  omschrijving:
+                    'Witgoedregeling: U kunt dit tegoed gebruiken zolang er budget is. Op = op! ',
+                },
+                {
+                  code: '2024_AMSTEG_15-17',
+                  naam: '24/25 Kindtegoed 15 tm 17 jaar',
+                },
+                {
+                  code: '2024_AMSTEG_PC',
+                  naam: '24/25 PC Tegoed',
+                  omschrijving: 'Tegoed Gratis laptop of tablet',
+                },
+              ],
+            },
+          ],
+        });
+
+        const response = await fetchStadspassen_(
+          'fake-request-id',
+          authProfileAndToken
+        );
+
+        expect(response.content?.stadspassen.length).toBe(1);
+      });
+
       test('Filters reaches subpashouders', async () => {
-        const passen = [relevantPas, expiredPas];
+        const passesToFilterOut = [
+          createPas({
+            actief: false,
+            pasnummer: 444444444444,
+            securitycode: '012345',
+            vervangen: false,
+            expiry_date: '2024-07-31T21:59:59.000Z',
+          }),
+        ];
+        const passen = [relevantPas, ...passesToFilterOut];
         const sub_pashouders = [
           {
             initialen: 'B',
@@ -408,7 +487,9 @@ describe('stadspas services', () => {
           'fake-request-id',
           authProfileAndToken
         );
-        expect(response.content?.stadspassen.length).toBe(passen.length - 1);
+        expect(response.content?.stadspassen.length).toBe(
+          passen.length - passesToFilterOut.length
+        );
       });
     });
   });
