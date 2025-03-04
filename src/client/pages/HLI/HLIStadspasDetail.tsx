@@ -9,7 +9,7 @@ import {
   Paragraph,
   Screen,
 } from '@amsterdam/design-system-react';
-import { isAfter } from 'date-fns';
+import { isAfter, isEqual } from 'date-fns';
 import { useParams } from 'react-router-dom';
 
 import { getThemaTitleWithAppState } from './helpers';
@@ -44,6 +44,7 @@ import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { dateSort } from '../../../universal/helpers/date';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -197,9 +198,7 @@ export default function HLIStadspasDetail() {
               {!isLoadingStadspas && !!stadspas?.budgets.length && (
                 <TableV2<StadspasBudget>
                   className={styles.Table_budgets}
-                  items={stadspas.budgets.toSorted((a, b) =>
-                    sortAscending(a.dateEnd, b.dateEnd)
-                  )}
+                  items={stadspas.budgets.toSorted(dateSort('dateEnd', 'asc'))}
                   displayProps={displayPropsBudgets}
                 />
               )}
@@ -229,8 +228,8 @@ export default function HLIStadspasDetail() {
                         ? styles.Table_transactions__withBudget
                         : styles.Table_transactions
                     }
-                    items={transactions.toSorted((a, b) =>
-                      sortDescending(a.datePublished, b.datePublished)
+                    items={transactions.toSorted(
+                      dateSort('datePublished', 'desc')
                     )}
                     displayProps={
                       showMultiBudgetTransactions
@@ -246,19 +245,6 @@ export default function HLIStadspasDetail() {
       </Screen>
     </DetailPage>
   );
-}
-
-type DateString = string;
-
-function sortAscending(a: DateString, b: DateString): number {
-  const LESS_THEN = -1;
-  const GREATER_THEN = 1;
-  if (isAfter(a, b)) return GREATER_THEN;
-  return LESS_THEN;
-}
-
-function sortDescending(a: DateString, b: DateString): number {
-  return sortAscending(b, a);
 }
 
 function determineUwUitgavenDescription(
@@ -407,4 +393,6 @@ function PassBlockedAlert() {
   );
 }
 
-export const forTesting = { determineUwUitgavenDescription };
+export const forTesting = {
+  determineUwUitgavenDescription,
+};
