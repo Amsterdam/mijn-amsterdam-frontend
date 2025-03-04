@@ -79,7 +79,10 @@ export function isDateInPast(
   return date_.getTime() <= dateNow.getTime();
 }
 
-export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
+export function dateSort<T extends object>(
+  sortKey: keyof T,
+  direction: 'asc' | 'desc' = 'asc'
+) {
   function getDateCompareValue(value: unknown) {
     if (value instanceof Date) {
       return value.getTime();
@@ -90,9 +93,9 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
     return null;
   }
 
-  return (a: unknown, b: unknown) => {
-    const c = getDateCompareValue((a as Record<string, unknown>)[sortKey]);
-    const d = getDateCompareValue((b as Record<string, unknown>)[sortKey]);
+  return (a: T, b: T) => {
+    const c = getDateCompareValue(a[sortKey]);
+    const d = getDateCompareValue(b[sortKey]);
 
     if (c === null || d === null) {
       return 0;
