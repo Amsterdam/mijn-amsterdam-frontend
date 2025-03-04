@@ -47,7 +47,6 @@ describe('router-oids', () => {
           authMethod: 'digid',
           isAuthenticated: true,
           profileType: 'private',
-          expiresAt: expect.any(Number),
         },
         status: 'OK',
       });
@@ -65,7 +64,6 @@ describe('router-oids', () => {
           authMethod: 'eherkenning',
           isAuthenticated: true,
           profileType: 'commercial',
-          expiresAt: expect.any(Number),
         },
         status: 'OK',
       });

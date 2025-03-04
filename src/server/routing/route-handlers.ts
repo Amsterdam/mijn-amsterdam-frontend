@@ -24,6 +24,18 @@ export function handleCheckProtectedRoute(
   return next();
 }
 
+export async function handleRefresh(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.oidc.accessToken?.isExpired?.()) {
+    // Assigns the newly aquired access_token to the oidc context.
+    await req.oidc.accessToken?.refresh?.();
+  }
+  next();
+}
+
 export async function isAuthenticated(
   req: Request,
   res: Response,
@@ -42,14 +54,15 @@ export function verifyAuthenticated(
   return async (req: AuthenticatedRequest, res: Response) => {
     if (await isRequestAuthenticated(req, authMethod)) {
       const auth = getAuth(req);
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType,
-          authMethod,
-          expiresAt: auth?.expiresAt,
-        })
-      );
+      if (auth) {
+        return res.send(
+          apiSuccessResult({
+            isAuthenticated: true,
+            profileType,
+            authMethod,
+          })
+        );
+      }
     }
     destroySession(req, res);
     return sendUnauthorized(res);

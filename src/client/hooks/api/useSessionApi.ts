@@ -57,7 +57,7 @@ const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
 };
 
-export function useSessionApi() {
+export function useSessionApi(): SessionState {
   const [sessionResponse, fetch] = useDataApi<SessionResponseData>(
     requestOptions,
     apiSuccessResult(INITIAL_SESSION_CONTENT)
