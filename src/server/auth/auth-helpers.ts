@@ -85,7 +85,7 @@ function getSessionData(req: Request) {
 
 export function getAuth(req: Request) {
   const tokenData = (req.oidc?.user as TokenData | null) ?? null;
-  const oidcToken = req.oidc?.idToken ?? '';
+  const accessToken = req.oidc?.accessToken?.access_token ?? '';
   const maSession = getSessionData(req);
 
   if (
@@ -99,7 +99,7 @@ export function getAuth(req: Request) {
   const profile = getAuthProfile(maSession, tokenData);
 
   return {
-    token: oidcToken,
+    token: accessToken,
     profile,
     expiresAt: maSession.expires_at,
   };
