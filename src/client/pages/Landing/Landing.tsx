@@ -16,7 +16,7 @@ import {
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 
-export default function Landing() {
+export function LandingPage() {
   const loginButton = useRef(null);
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);

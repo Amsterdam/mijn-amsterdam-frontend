@@ -5,9 +5,9 @@ import { HistoricItemsMention } from './Zorg';
 import { ListPageParamKind } from './Zorg-thema-config';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
-export default function ZorgVoorzieningen() {
+export function ZorgRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const { regelingen, tableConfig, title, routes, isLoading, isError } =
+  const { regelingen, tableConfig, routes, isLoading, isError } =
     useZorgThemaData();
   const listPageTableConfig = tableConfig[kind];
 
@@ -15,7 +15,6 @@ export default function ZorgVoorzieningen() {
     <>
       <ListPagePaginated
         items={regelingen.filter(listPageTableConfig.filter)}
-        backLinkTitle={title}
         title={listPageTableConfig.title}
         appRoute={routes.listPage}
         appRouteParams={{ kind }}

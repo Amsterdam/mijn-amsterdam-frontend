@@ -14,8 +14,8 @@ import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
-import MainHeaderHero from './components/MainHeaderHero/MainHeaderHero';
-import MyAreaLoader from './components/MyArea/MyAreaLoader';
+import { MainHeaderHero } from './components/MainHeaderHero/MainHeaderHero';
+import { MyAreaLoader } from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
 import { useMonitoring } from './helpers/monitoring';
@@ -32,7 +32,7 @@ import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { AppRoutes } from '../universal/config/routes';
-import Accessibility from './pages/Accessibility/Accessibility';
+import { Accessibility } from './pages/Accessibility/Accessibility';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
@@ -42,7 +42,7 @@ import { AVGList } from './pages/AVG/AVGLijst';
 import { BezwarenThemaPagina } from './pages/Bezwaren/Bezwaren';
 import { BezwarenDetailPagina } from './pages/Bezwaren/BezwarenDetail';
 import { BezwarenLijstPagina } from './pages/Bezwaren/BezwarenLijst';
-import BFF500Error from './pages/BffError/BffError';
+import { Bff500Error } from './pages/BffError/BffError';
 import { Bodem } from './pages/Bodem/Bodem';
 import { BodemList } from './pages/Bodem/BodemList';
 import { LoodMeting } from './pages/Bodem/LoodMeting';
@@ -50,17 +50,17 @@ import { Burgerzaken } from './pages/Burgerzaken/Burgerzaken';
 import { BurgerzakenIdentiteitsbewijs } from './pages/Burgerzaken/BurgerzakenIdentiteitsbewijs';
 import { BurgerZakenList } from './pages/Burgerzaken/BurgerZakenList';
 import { Dashboard } from './pages/Dashboard/Dashboard';
-import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
-import Erfpacht from './pages/Erfpacht/Erfpacht';
-import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
+import { ErfpachtDossierDetail } from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
+import { Erfpacht } from './pages/Erfpacht/Erfpacht';
+import { ErfpachtDossiers } from './pages/Erfpacht/ErfpachtDossiers';
 import { ErfpachtFacturen } from './pages/Erfpacht/ErfpachtFacturen';
-import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
-import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
-import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
-import HLI from './pages/HLI/HLIThemaPagina';
-import HLIRegeling from './pages/HLI/HLIRegeling';
-import HLIRegelingen from './pages/HLI/HLIRegelingen';
-import HLIStadspasDetail from './pages/HLI/HLIStadspasDetail';
+import { ErfpachtOpenFacturen } from './pages/Erfpacht/ErfpachtOpenFacturen';
+import { GarbageInformation } from './pages/GarbageInformation/GarbageInformation';
+import { GeneralInfo } from './pages/GeneralInfo/GeneralInfo';
+import { ThemaPaginaHLI } from './pages/HLI/HLI';
+import { HLIRegeling } from './pages/HLI/HLIRegeling';
+import { HLIRegelingen } from './pages/HLI/HLIRegelingen';
+import { HLIStadspas } from './pages/HLI/HLIStadspas';
 import { HorecaThemaPagina } from './pages/Horeca/Horeca';
 import { HorecaDetailPagina } from './pages/Horeca/HorecaDetail';
 import { HorecaLijstPagina } from './pages/Horeca/HorecaList';
@@ -75,29 +75,29 @@ import { KlachtenThemaPagina } from './pages/Klachten/Klachten';
 import { KlachtenDetailPagina } from './pages/Klachten/KlachtenDetail';
 import { KlachtenLijstPagina } from './pages/Klachten/KlachtenLijst';
 import { KrefiaThemaPagina } from './pages/Krefia/Krefia';
-import { default as LandingPage } from './pages/Landing/Landing';
+import { LandingPage } from './pages/Landing/Landing';
 import { MyNotificationsPage } from './pages/MyNotifications/MyNotifications';
-import NotFound from './pages/NotFound/NotFound';
+import { NotFound } from './pages/NotFound/NotFound';
 import { Parkeren } from './pages/Parkeren/Parkeren';
 import { ParkerenDetailPagina } from './pages/Parkeren/ParkerenDetail';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import { MijnBedrijfsGegevensThema } from './pages/Profile/commercial/ProfileCommercial';
 import { ContactmomentenListPage } from './pages/Profile/private/ContactmomentenListPage';
 import { MijnGegevensThema } from './pages/Profile/private/ProfilePrivate';
-import Search from './pages/Search/Search';
+import { Search } from './pages/Search/Search';
 import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
 import { ToeristischeVerhuurDetailPagina } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
-import Varen from './pages/Varen/Varen';
+import { Varen } from './pages/Varen/Varen';
 import { VarenDetail } from './pages/Varen/VarenDetail';
 import { VarenList } from './pages/Varen/VarenList';
 import { VergunningDetailPagina } from './pages/Vergunningen/VergunningDetail';
 import { VergunningenThemaPagina } from './pages/Vergunningen/Vergunningen';
 import { VergunningenList } from './pages/Vergunningen/VergunningenList';
-import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
-import ZorgThemaPagina from './pages/Zorg/Zorg';
-import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
-import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
+import { ZaakStatus } from './pages/ZaakStatus/ZaakStatus';
+import { ZorgThemaPagina } from './pages/Zorg/Zorg';
+import { ZorgRegelingen } from './pages/Zorg/ZorgRegelingen';
+import { ZorgDetail } from './pages/ZorgDetail/ZorgDetail';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -137,7 +137,7 @@ function AppNotAuthenticated() {
           ))}
           <Route exact path={AppRoutes.HOME} component={LandingPage} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-          <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
+          <Route path={AppRoutes.BFF_500_ERROR} component={Bff500Error} />
           <Route
             render={({ location: { pathname } }) => {
               if (isPrivateRoute(pathname)) {
@@ -194,10 +194,7 @@ function AppAuthenticated() {
           <Route path={AppRoutes.BRP} component={MijnGegevensThema} />
           <Route path={AppRoutes.KVK} component={MijnBedrijfsGegevensThema} />
           {FeatureToggle.hliThemaStadspasActive && (
-            <Route
-              path={AppRoutes['HLI/STADSPAS']}
-              component={HLIStadspasDetail}
-            />
+            <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
           )}
           {FeatureToggle.hliThemaRegelingenActive && (
             <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
@@ -209,7 +206,7 @@ function AppAuthenticated() {
             />
           )}
           {FeatureToggle.hliThemaActive && (
-            <Route path={AppRoutes.HLI} component={HLI} />
+            <Route path={AppRoutes.HLI} component={ThemaPaginaHLI} />
           )}
 
           <Route
@@ -244,7 +241,7 @@ function AppAuthenticated() {
           {FeatureToggle.zorgv2ThemapaginaActive && (
             <Route
               path={AppRoutes['ZORG/VOORZIENINGEN_LIST']}
-              component={ZorgVoorzieningen}
+              component={ZorgRegelingen}
             />
           )}
           {FeatureToggle.zorgv2ThemapaginaActive && (

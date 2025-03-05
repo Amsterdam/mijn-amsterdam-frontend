@@ -8,7 +8,7 @@ import {
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
-export default function GeneralInfo() {
+export function GeneralInfo() {
   const { CMS_CONTENT } = useAppStateGetter();
   const generalInfo = CMS_CONTENT.content?.generalInfo;
 

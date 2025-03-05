@@ -10,7 +10,7 @@ interface MyAreaLoaderProps extends MyAreaProps {
   isDashboard?: boolean;
 }
 
-export default function MyAreaLoader({
+export function MyAreaLoader({
   isDashboard = false,
   datasetIds,
   showPanels = true,
