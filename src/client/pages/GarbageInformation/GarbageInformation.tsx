@@ -208,7 +208,7 @@ function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
   );
 }
 
-export default function GarbageInformation() {
+export function GarbageInformation() {
   const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();

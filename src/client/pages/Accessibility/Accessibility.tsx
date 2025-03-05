@@ -14,7 +14,7 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 
-export default function Accessibility() {
+export function Accessibility() {
   const termReplace = useTermReplacement();
   return (
     <TextPageV2>

@@ -48,7 +48,7 @@ export function OpenFacturenListGrouped({
   });
 }
 
-export default function ErfpachtOpenFacturen() {
+export function ErfpachtOpenFacturen() {
   const {
     ERFPACHTv2,
     titleOpenFacturen,

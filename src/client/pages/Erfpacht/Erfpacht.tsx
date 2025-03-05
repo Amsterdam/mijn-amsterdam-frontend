@@ -18,7 +18,7 @@ import { TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 
-export default function Erfpacht() {
+export function Erfpacht() {
   const {
     ERFPACHTv2,
     openFacturen,
