@@ -96,7 +96,7 @@ export function VergunningDetailPagina() {
       zaak={vergunning}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
+      pageContentMain={
         vergunning && (
           <>
             <DetailPageContent vergunning={vergunning} />

@@ -69,7 +69,7 @@ export function ParkerenDetailPagina() {
       zaak={vergunning}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
+      pageContentMain={
         vergunning && (
           <>
             <DetailPageContent vergunning={vergunning} />

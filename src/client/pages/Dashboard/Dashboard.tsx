@@ -6,7 +6,7 @@ import { generatePath, useHistory } from 'react-router-dom';
 import { WelcomeHeading } from './WelcomHeading';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
-import { LoadingContent } from '../../components';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard';
 import { MyNotification } from '../../components/MyNotification/MyNotification';

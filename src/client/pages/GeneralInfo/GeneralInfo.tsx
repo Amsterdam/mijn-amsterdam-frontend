@@ -1,5 +1,7 @@
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ErrorAlert, InnerHtml, LoadingContent } from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
+import InnerHtml from '../../components/InnerHtml/InnerHtml';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import {
   PageContentCell,
   PageContentV2,

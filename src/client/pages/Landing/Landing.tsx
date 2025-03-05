@@ -5,9 +5,9 @@ import classnames from 'classnames';
 
 import styles from './Landing.module.scss';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import DigiDLogo from '../../assets/images/LogoDigiD';
+import { LogoDigiD } from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
-import { MaintenanceNotifications } from '../../components';
+import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import {
   PageContentCell,
   PageContentV2,
@@ -58,7 +58,7 @@ export function LandingPage() {
               )}
             >
               <span className={styles.LoginLogoWrap}>
-                <DigiDLogo />
+                <LogoDigiD />
               </span>
               <span className={styles.LoginButtonText}>
                 {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}

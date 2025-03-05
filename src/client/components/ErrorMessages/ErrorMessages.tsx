@@ -22,7 +22,7 @@ export function useErrorMessagesDismissed(
   return useSessionStorage(dismisedKey, false);
 }
 
-export default function ErrorMessages({
+export function ErrorMessages({
   className,
   errors,
   title = 'U ziet misschien niet al uw gegevens.',

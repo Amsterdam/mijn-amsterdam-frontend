@@ -4,7 +4,7 @@ import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtDossierFactuur } from '../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError } from '../../../universal/helpers/api';
-import { ErrorAlert } from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import {
   OverviewPageV2,
   PageContentCell,
