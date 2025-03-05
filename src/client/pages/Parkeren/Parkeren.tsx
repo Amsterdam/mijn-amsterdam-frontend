@@ -24,7 +24,10 @@ export function Parkeren() {
   } = useParkerenData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, listPageRoute, className },
+    ]) => {
       return (
         <ThemaPaginaTable<VergunningFrontend>
           key={kind}
@@ -32,6 +35,7 @@ export function Parkeren() {
           zaken={vergunningen.filter(filter).sort(sort)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}
+          className={className}
         />
       );
     }
@@ -46,6 +50,7 @@ export function Parkeren() {
     (vergunning) =>
       !vergunning.processed && vergunning.caseType === CaseTypeV2.GPK
   );
+
   const pageContentBottom = hasActualGPK && (
     <PageContentCell startWide={3} spanWide={7}>
       <Paragraph className={styles.SuppressedParagraph}>

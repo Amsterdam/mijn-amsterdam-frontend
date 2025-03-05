@@ -1,0 +1,47 @@
+.LopendeAanvragen,
+.HuidigeVergunningenEnOntheffingen {
+  tr {
+    th,
+    td {
+      @media screen and (min-width: $ams-breakpoint-medium) {
+        &:nth-child(1) {
+          width: 20%;
+        }
+
+        &:nth-child(2) {
+          width: 50%;
+        }
+
+        &:nth-child(3) {
+          width: 15%;
+        }
+
+        &:nth-child(4) {
+          width: 15%;
+        }
+      }
+    }
+  }
+}
+.EerderEnNietVerleend {
+  tr {
+    th,
+    td {
+      @media screen and (min-width: $ams-breakpoint-medium) {
+        &:nth-child(1) {
+          width: 20%;
+        }
+
+        &:nth-child(2) {
+          width: 50%;
+        }
+
+        &:nth-child(3) {
+          width: 30%;
+        }
+      }
+    }
+  }
+}
+.VergunningenTableThemaPagina {
+}
