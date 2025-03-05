@@ -1,6 +1,7 @@
 import {
   ErfpachtDossierFactuur,
   ErfpachtV2Dossier,
+  ErfpachtV2DossiersDetail,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
 import { IS_PRODUCTION } from '../../../universal/config/env';
@@ -59,8 +60,10 @@ export type DisplayPropsFacturen = DisplayProps<
 
 export function getTableConfig({
   erfpachtData,
+  dossier,
 }: {
   erfpachtData: ErfpachtV2DossiersResponse | null;
+  dossier?: ErfpachtV2DossiersDetail;
 }) {
   if (!erfpachtData) {
     return null;
@@ -106,7 +109,7 @@ export function getTableConfig({
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN,
     },
     [listPageParamKind.alleFacturen]: {
-      title: titleOpenFacturen ?? 'Facturen',
+      title: dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'Facturen',
       listPageRoute: routes.listPageAlleFacturen,
       displayProps: displayPropsAlleFacturen,
       maxItems: MAX_TABLE_ROWS_ON_DETAIL_PAGINA_FACTUREN,
