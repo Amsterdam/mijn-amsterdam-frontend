@@ -65,13 +65,14 @@ function extract(
     return acc;
   }
 
-  const newText = text.replace(pattern, '').trim();
   const matchedText = formatter ? formatter(match[0]) : match[0];
 
+  const newText = text.replace(pattern, '').trim();
   const newAcc = {
     ...bagQueryParams,
     [name]: matchedText,
   };
+
   return [newText, newAcc];
 }
 
