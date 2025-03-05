@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import { Paragraph, Screen, SkipLink } from '@amsterdam/design-system-react';
-import classnames from 'classnames';
 import {
   BrowserRouter,
   Redirect,
@@ -133,8 +132,7 @@ function AppNotAuthenticated() {
   return (
     <>
       <MainHeader isAuthenticated={false} />
-      {location.pathname !== AppRoutes.HOME && <MainHeaderHero />}
-      <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
+      <Screen>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
@@ -153,7 +151,7 @@ function AppNotAuthenticated() {
             }}
           />
         </Switch>
-      </div>
+      </Screen>
       <MainFooter />
     </>
   );
