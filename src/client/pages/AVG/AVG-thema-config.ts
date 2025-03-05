@@ -4,6 +4,7 @@ import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
@@ -13,13 +14,18 @@ import { TrackingConfig } from '../../config/routes';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
-const displayPropsAanvragen: DisplayProps<
+const displayPropsAanvragenBase: DisplayProps<
   WithDetailLinkComponent<AVGRequestFrontend>
 > = {
   detailLinkComponent: 'Nummer',
   ontvangstDatumFormatted: 'Ontvangen op',
   themas: 'Onderwerp(en)',
-} as const;
+};
+
+const displayPropsAanvragen = withOmitDisplayPropsForSmallScreens(
+  displayPropsAanvragenBase,
+  ['themas']
+);
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',

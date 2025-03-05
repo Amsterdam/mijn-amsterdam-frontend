@@ -83,7 +83,12 @@ function BezwaarDetailContent({
                   {category.toLowerCase()}
                 </>
               ),
-              content: <DocumentListV2 documents={docs} />,
+              content: (
+                <DocumentListV2
+                  className={styles.DocumentList}
+                  documents={docs}
+                />
+              ),
             },
           ];
           return <Datalist key={category} rows={rows} />;

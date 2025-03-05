@@ -1,3 +1,11 @@
 .DocumentsListLabel {
   font-size: var(--ams-heading-level-4-font-size);
 }
+
+.DocumentList {
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    thead {
+      display: none;
+    }
+  }
+}

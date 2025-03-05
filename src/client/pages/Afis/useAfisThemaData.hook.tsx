@@ -25,7 +25,7 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
-import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
+import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { usePhoneScreen } from '../../hooks/media.hook';
@@ -55,7 +55,7 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
 function mapFactuur(factuur: AfisFactuur, isPhoneScreen: boolean) {
   let factuurNummerEl: ReactNode = factuur.factuurNummer;
 
-  if (!isPhoneScreen && factuur.documentDownloadLink) {
+  if (factuur.documentDownloadLink) {
     factuurNummerEl = (
       <DocumentLink
         document={{
@@ -65,16 +65,6 @@ function mapFactuur(factuur: AfisFactuur, isPhoneScreen: boolean) {
           title: `factuur ${factuur.factuurNummer}`,
         }}
       />
-    );
-  } else if (isPhoneScreen) {
-    factuurNummerEl = (
-      <MaRouterLink
-        maVariant="fatNoUnderline"
-        href={factuur.documentDownloadLink ?? '#missing-document-link'}
-        title={`Bekijk factuur ${factuur.factuurNummer}`}
-      >
-        {factuur.factuurNummer}
-      </MaRouterLink>
     );
   }
 

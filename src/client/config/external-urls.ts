@@ -21,7 +21,6 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
   AMSTERDAM_TAXI: 'https://www.amsterdam.nl/parkeren-verkeer/taxi/',
   AMSTERDAM_VAREN: 'https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/',
-  ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
     'https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077',
   AMSTERDAM: 'https://www.amsterdam.nl',
