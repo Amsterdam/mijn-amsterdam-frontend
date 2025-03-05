@@ -1,12 +1,21 @@
 .Stadspas_owner {
   color: var(--ams-link-color);
-  font-size: var(--ams-text-level-2-font-size);
+  font-size: var(--ams-text-level-3-font-size);
+  line-height: 1;
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    font-size: var(--ams-text-level-2-font-size);
+  }
 }
 
 .Stadspas_balance {
   color: var(--ams-paragraph-color);
   font-weight: var(--ams-paragraph-font-weight);
   padding-left: 1rem;
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    display: block;
+    padding: 0;
+  }
 }
 
 .Stadspas_secondaryInfo {
