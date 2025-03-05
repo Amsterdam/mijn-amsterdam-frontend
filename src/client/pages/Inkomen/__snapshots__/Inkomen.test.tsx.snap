@@ -1,5 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page snapshot 1`] = `<DocumentFragment />`;
-
-exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Page snapshot 1`] = `<DocumentFragment />`;
