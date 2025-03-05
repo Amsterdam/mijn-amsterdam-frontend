@@ -7,7 +7,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
-import { LinkProps } from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -284,11 +284,11 @@ interface ErfpachtV2DossiersDetailSource {
   };
 }
 
-interface ErfpachtDossierPropsFrontend {
+type ErfpachtDossierPropsFrontend = ZaakDetail & {
   dossierNummerUrlParam: string;
   link: LinkProps;
   title: string;
-}
+};
 
 export type ErfpachtV2DossiersDetail = ErfpachtV2DossiersDetailSource &
   ErfpachtDossierPropsFrontend;
@@ -416,10 +416,11 @@ export function transformErfpachtDossierProperties<
       return factuur;
     });
   }
-
-  return Object.assign(dossier, {
+  const zaak: T & ErfpachtDossierPropsFrontend = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
+    steps: [],
+    id: dossierNummerUrlParam,
     link: {
       to: generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {
         dossierNummerUrlParam,
@@ -427,6 +428,8 @@ export function transformErfpachtDossierProperties<
       title,
     },
   });
+
+  return zaak;
 }
 
 export function transformDossierResponse(

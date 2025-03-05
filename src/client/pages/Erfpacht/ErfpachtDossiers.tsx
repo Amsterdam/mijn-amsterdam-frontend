@@ -1,11 +1,14 @@
+import { listPageParamKind } from './Erfpacht-thema-config';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export function ErfpachtDossiers() {
-  const { ERFPACHTv2, dossiers, displayPropsDossiers, titleDossiers } =
-    useErfpachtV2Data();
+  const { ERFPACHTv2, dossiers, tableConfig } = useErfpachtV2Data();
+
+  const tableConfigDossiers = tableConfig?.[listPageParamKind.dossiers];
+  const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};
 
   return (
     <ListPagePaginated
