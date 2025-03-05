@@ -15,6 +15,8 @@ import {
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS;
+const MAX_TABLE_ROWS_ON_DETAIL_PAGINA_FACTUREN =
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN;
 
 export const linkListItems: LinkProps[] = [
   {
@@ -31,9 +33,18 @@ export const linkListItems: LinkProps[] = [
   },
 ];
 
-const listPageParamKind = {
+export const routes = {
+  listPageOpenFacturen: AppRoutes['ERFPACHTv2/OPEN_FACTUREN'],
+  listPageAlleFacturen: AppRoutes['ERFPACHTv2/ALLE_FACTUREN'],
+  listPageDossiers: AppRoutes['ERFPACHTv2/DOSSIERS'],
+  detailPageDossier: AppRoutes['ERFPACHTv2/DOSSIERDETAIL'],
+  themaPage: AppRoutes.ERFPACHTv2,
+} as const;
+
+export const listPageParamKind = {
   erfpachtRechten: 'erfpachtrechten',
   openFacturen: 'openstaande-facturen',
+  alleFacturen: 'alle-facturen',
 } as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
@@ -42,7 +53,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 type DisplayPropsDossiers = DisplayProps<
   WithDetailLinkComponent<ErfpachtV2Dossier>
 >;
-type DisplayPropsFacturen = DisplayProps<
+export type DisplayPropsFacturen = DisplayProps<
   WithDetailLinkComponent<ErfpachtDossierFactuur>
 >;
 
@@ -84,15 +95,21 @@ export function getTableConfig({
   const tableConfig = {
     [listPageParamKind.erfpachtRechten]: {
       title: titleDossiers ?? 'Erfpachtrechten',
-      listPageRoute: AppRoutes['ERFPACHTv2/DOSSIERS'],
+      listPageRoute: routes.listPageDossiers,
       displayProps: displayPropsDossiers,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
     },
     [listPageParamKind.openFacturen]: {
       title: titleOpenFacturen ?? 'Openstaande facturen',
-      listPageRoute: AppRoutes['ERFPACHTv2/ALLE_FACTUREN'],
+      listPageRoute: routes.listPageOpenFacturen,
       displayProps: displayPropsOpenFacturen,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN,
+    },
+    [listPageParamKind.alleFacturen]: {
+      title: titleOpenFacturen ?? 'Facturen',
+      listPageRoute: routes.listPageAlleFacturen,
+      displayProps: displayPropsAlleFacturen,
+      maxItems: MAX_TABLE_ROWS_ON_DETAIL_PAGINA_FACTUREN,
     },
   } as const;
 

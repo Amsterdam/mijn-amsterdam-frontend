@@ -1,118 +1,74 @@
-import { useParams } from 'react-router-dom';
-
 import { DataTableBijzondereBepalingen } from './DatalistBijzondereBepalingen';
 import { DatalistGeneral } from './DatalistGeneral';
 import { DatalistJuridisch } from './DatalistJuridisch';
 import { DatalistsFinancieel } from './DatalistsFinancieel';
-import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
-import { AppRoutes } from '../../../../universal/config/routes';
-import ErrorAlert from '../../../components/Alert/Alert';
-import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import LoadingContent, {
-  BarConfig,
-} from '../../../components/LoadingContent/LoadingContent';
-import { BFFApiUrls } from '../../../config/api';
-import { BagThemas, ThemaTitles } from '../../../config/thema';
-import { useAppStateBagApi } from '../../../hooks/useAppState';
-import { useErfpachtV2Data } from '../erfpachtData.hook';
 import { DataTableFacturen } from './DataTableFacturen';
+import { useDossierDetaiLData as useDossierDetailData } from './erfpachtDossierData.hook';
 import styles from './ErfpachtDossierDetail.module.scss';
-import { isError, isLoading } from '../../../../universal/helpers/api';
-import {
-  DetailPageV2,
-  PageContentCell,
-  PageContentV2,
-} from '../../../components/Page/Page';
-import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
-
-const loadingContentBarConfig: BarConfig = [
-  ['12rem', '2rem', '.5rem'],
-  ['8rem', '2rem', '4rem'],
-  ['5rem', '2rem', '.5rem'],
-  ['16rem', '2rem', '4rem'],
-  ['20rem', '2rem', '.5rem'],
-  ['16rem', '2rem', '4rem'],
-  ['20rem', '2rem', '.5rem'],
-  ['16rem', '2rem', '4rem'],
-  ['8rem', '2rem', '.5rem'],
-  ['20rem', '2rem', '.5rem'],
-  ['20rem', '2rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
-  ['14rem', '4rem', '4rem'],
-];
+import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
+import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
+import { PageContentCell } from '../../../components/Page/Page';
+import ThemaDetailPagina from '../../ThemaPagina/ThemaDetailPagina';
 
 export function ErfpachtDossierDetail() {
-  const { dossierNummerUrlParam } = useParams<{
-    dossierNummerUrlParam: string;
-  }>();
-  const { ERFPACHTv2 } = useErfpachtV2Data();
-  const [dossierApiResponse] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
-    url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagThema: BagThemas.ERFPACHTv2,
-    key: dossierNummerUrlParam,
-  });
-  const dossier = dossierApiResponse.content;
-  const noContent = !isLoading(dossierApiResponse) && !dossier;
+  const {
+    dossier,
+    isError,
+    isLoading,
+    isErrorThemaData,
+    isLoadingThemaData,
+    routes,
+    relatieCode,
+    displayPropsDossierFacturen,
+  } = useDossierDetailData();
 
   return (
-    <DetailPageV2>
-      <PageContentV2>
-        <PageHeadingV2 backLink={AppRoutes.ERFPACHTv2}>
-          {dossier?.title ?? `${ThemaTitles.ERFPACHTv2}dossier`}
-        </PageHeadingV2>
-        {isLoading(dossierApiResponse) && (
-          <PageContentCell>
-            <LoadingContent barConfig={loadingContentBarConfig} />
-          </PageContentCell>
-        )}
-        {(isError(dossierApiResponse) || noContent) && (
-          <PageContentCell>
-            <ErrorAlert>
-              We kunnen op dit moment geen erfpachtdossier tonen.
-            </ErrorAlert>
-          </PageContentCell>
-        )}
+    <ThemaDetailPagina<ErfpachtV2DossiersDetail>
+      title={dossier?.title}
+      zaak={dossier}
+      isError={isError || isErrorThemaData}
+      isLoading={isLoading || isLoadingThemaData}
+      pageContentMain={
+        <>
+          {!!dossier && (
+            <>
+              <PageContentCell>
+                <DatalistGeneral dossier={dossier} relatieCode={relatieCode} />
+              </PageContentCell>
 
-        {!!dossier && (
-          <>
-            <PageContentCell>
-              <DatalistGeneral
-                dossier={dossier}
-                relatieCode={ERFPACHTv2.content?.relatieCode}
-              />
-            </PageContentCell>
+              <PageContentCell>
+                <CollapsiblePanel title={dossier.titelKopJuridisch}>
+                  <DatalistJuridisch dossier={dossier} />
+                </CollapsiblePanel>
+              </PageContentCell>
 
-            <PageContentCell>
-              <CollapsiblePanel title={dossier.titelKopJuridisch}>
-                <DatalistJuridisch dossier={dossier} />
-              </CollapsiblePanel>
-            </PageContentCell>
+              <PageContentCell>
+                <CollapsiblePanel title={dossier.titelKopBijzondereBepalingen}>
+                  <DataTableBijzondereBepalingen dossier={dossier} />
+                </CollapsiblePanel>
+              </PageContentCell>
 
-            <PageContentCell>
-              <CollapsiblePanel title={dossier.titelKopBijzondereBepalingen}>
-                <DataTableBijzondereBepalingen dossier={dossier} />
-              </CollapsiblePanel>
-            </PageContentCell>
+              <PageContentCell>
+                <CollapsiblePanel title={dossier.titelKopFinancieel}>
+                  <DatalistsFinancieel dossier={dossier} />
+                </CollapsiblePanel>
+              </PageContentCell>
 
-            <PageContentCell>
-              <CollapsiblePanel title={dossier.titelKopFinancieel}>
-                <DatalistsFinancieel dossier={dossier} />
-              </CollapsiblePanel>
-            </PageContentCell>
-
-            <PageContentCell className={styles.Section}>
-              <CollapsiblePanel title="Facturen">
-                <DataTableFacturen
-                  dossier={dossier}
-                  relatieCode={ERFPACHTv2.content?.relatieCode}
-                />
-              </CollapsiblePanel>
-            </PageContentCell>
-          </>
-        )}
-      </PageContentV2>
-    </DetailPageV2>
+              <PageContentCell className={styles.Section}>
+                <CollapsiblePanel title="Facturen">
+                  <DataTableFacturen
+                    dossier={dossier}
+                    relatieCode={relatieCode}
+                    isLoading={isLoading || isLoadingThemaData}
+                    displayProps={displayPropsDossierFacturen}
+                  />
+                </CollapsiblePanel>
+              </PageContentCell>
+            </>
+          )}
+        </>
+      }
+      backLink={routes.themaPage}
+    />
   );
 }

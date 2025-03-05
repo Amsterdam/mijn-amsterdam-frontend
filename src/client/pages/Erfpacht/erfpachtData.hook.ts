@@ -1,4 +1,9 @@
-import { getTableConfig, linkListItems } from './Erfpacht-thema-config';
+import {
+  getTableConfig,
+  linkListItems,
+  listPageParamKind,
+  routes,
+} from './Erfpacht-thema-config';
 import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
@@ -26,11 +31,14 @@ export function useErfpachtV2Data() {
   return {
     title: ThemaTitles.ERFPACHTv2,
     ERFPACHTv2,
+    relatieCode: erfpachtData?.relatieCode,
     openFacturen,
     dossiers,
     isLoading: isLoading(ERFPACHTv2),
     isError: isError(ERFPACHTv2),
     linkListItems,
     tableConfig,
+    listPageParamKind,
+    routes,
   };
 }
