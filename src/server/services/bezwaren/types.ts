@@ -1,4 +1,4 @@
-import { GenericDocument, LinkProps } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 
 export type kenmerkKey =
   | 'statustekst'
@@ -44,6 +44,7 @@ export type Bezwaar = {
   uuidEncrypted: string;
   startdatum: string;
   ontvangstdatum: string;
+  ontvangstdatumFormatted: string | null;
   omschrijving: string | null;
   toelichting: string | null;
   status: string | null;
@@ -53,10 +54,9 @@ export type Bezwaar = {
   primairbesluit: string | null;
   primairbesluitdatum: string | null;
   resultaat: string | null;
-  statussen: BezwaarStatus[];
+  steps: BezwaarStatus[];
   documenten: GenericDocument[];
-  link: LinkProps;
-};
+} & ZaakDetail;
 
 export type BezwaarStatus = {
   uuid: string;

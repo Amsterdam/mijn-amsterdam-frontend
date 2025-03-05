@@ -22,6 +22,7 @@ import {
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -265,16 +266,21 @@ function transformBezwarenResults(
 
         const bezwaar: Bezwaar = {
           identificatie: bezwaarBron.identificatie,
+          id: bezwaarBron.uuid,
           uuid: bezwaarBron.uuid,
           uuidEncrypted: idEncrypted,
 
           // Wanneer het bezwaar is ontvangen
           ontvangstdatum: bezwaarBron.registratiedatum,
+          ontvangstdatumFormatted: bezwaarBron.registratiedatum
+            ? defaultDateFormat(bezwaarBron.registratiedatum)
+            : null,
           // Wanneer het bezwaar in behandeling is genomen
           startdatum: bezwaarBron.startdatum,
           // Wanneer het bezwaar is afgehandeld
           einddatum: bezwaarBron.einddatum,
 
+          title: `Bezwaar ${bezwaarBron.identificatie}`,
           omschrijving: bezwaarBron.omschrijving,
           toelichting: bezwaarBron.toelichting,
 
@@ -283,7 +289,7 @@ function transformBezwarenResults(
           statusdatum: getKenmerkValue(bezwaarBron.kenmerken, 'statusdatum'),
 
           // Placeholder voor alle (historische) statussen van het bezwaar
-          statussen: [],
+          steps: [],
 
           // Gerelateerd aan het besluit waarop het bezwaar is ingediend.
           primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
