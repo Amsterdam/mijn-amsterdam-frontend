@@ -5,20 +5,39 @@ import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types/App.types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
+import {
+  DisplayProps,
+  WithDetailLinkComponent,
+} from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsHuidigeRegelingen = {
+const displayPropsHuidigeRegelingenBase: DisplayProps<
+  WithDetailLinkComponent<HLIRegeling>
+> = {
   detailLinkComponent: 'Regeling',
   receiver: 'Naam ontvanger',
 };
 
-const displayPropsEerdereRegelingen = {
+const displayPropsHuidigeRegelingen = withOmitDisplayPropsForSmallScreens(
+  displayPropsHuidigeRegelingenBase,
+  ['receiver']
+);
+
+const displayPropsEerdereRegelingenBase: DisplayProps<
+  WithDetailLinkComponent<HLIRegeling>
+> = {
   detailLinkComponent: displayPropsHuidigeRegelingen.detailLinkComponent,
   displayStatus: 'Status',
 };
+
+const displayPropsEerdereRegelingen = withOmitDisplayPropsForSmallScreens(
+  displayPropsEerdereRegelingenBase,
+  ['displayStatus']
+);
 
 export const listPageParamKind = {
   actual: 'huidige-regelingen',
