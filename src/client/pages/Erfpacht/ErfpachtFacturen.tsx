@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
-import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../components/Page/Page';
@@ -12,7 +11,7 @@ import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 
 export function ErfpachtFacturen() {
-  const { displayPropsAlleFacturen } = useErfpachtV2Data();
+  const { tableConfig, listPageParamKind, routes } = useErfpachtV2Data();
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
@@ -27,6 +26,8 @@ export function ErfpachtFacturen() {
   );
 
   const dossier = dossierApiResponse.content;
+  const tableConfigFacturen = tableConfig?.[listPageParamKind.alleFacturen];
+  const displayProps = tableConfigFacturen?.displayProps ?? {};
 
   return (
     <ListPagePaginated
@@ -40,15 +41,13 @@ export function ErfpachtFacturen() {
         )
       }
       items={dossier?.facturen?.facturen ?? []}
-      title={`Alle ${
-        dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'facturen'
-      }`}
+      title={tableConfigFacturen?.title ?? 'Facturen'}
       errorText="We kunnen op dit moment geen facturen tonen."
       noItemsText="U heeft geen facturen."
-      appRoute={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
+      appRoute={tableConfigFacturen?.listPageRoute ?? ''}
       appRouteParams={{ dossierNummerUrlParam }}
-      appRouteBack={AppRoutes.ERFPACHTv2}
-      displayProps={displayPropsAlleFacturen}
+      appRouteBack={routes.themaPage}
+      displayProps={displayProps}
       isLoading={isLoading(dossierApiResponse)}
       isError={isError(dossierApiResponse)}
     />
