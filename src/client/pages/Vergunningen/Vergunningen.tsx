@@ -26,7 +26,10 @@ export function VergunningenThemaPagina() {
   } = useVergunningenThemaData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, listPageRoute, className },
+    ]) => {
       return (
         <ThemaPaginaTable<VergunningFrontend<DecosVergunning>>
           key={kind}
@@ -34,6 +37,7 @@ export function VergunningenThemaPagina() {
           zaken={vergunningen.filter(filter).sort(sort)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}
+          className={className}
         />
       );
     }

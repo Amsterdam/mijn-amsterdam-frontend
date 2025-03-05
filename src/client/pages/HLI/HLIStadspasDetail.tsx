@@ -4,7 +4,6 @@ import {
   ActionGroup,
   Alert,
   Button,
-  Grid,
   Heading,
   Paragraph,
   Screen,
@@ -39,6 +38,8 @@ import {
 import { Datalist } from '../../components/Datalist/Datalist';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
 import { useDataApi } from '../../hooks/api/useDataApi';
@@ -144,20 +145,14 @@ export default function HLIStadspasDetail() {
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
   return (
-    <DetailPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HLI,
-          title: getThemaTitleWithAppState(appState),
-        }}
-        icon={<ThemaIcon />}
-      >
-        Overzicht Stadspas{' '}
-        {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
-      </PageHeading>
-      <Screen>
-        <Grid>
-          {stadspas ? (
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HLI}>
+          Overzicht stadspas{' '}
+          {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
+        </PageHeadingV2>
+
+        {stadspas ? (
             <PageContentCell>
               <Datalist rows={[NAME]} />
               <Paragraph className={styles.StadspasNummerInfo}>
@@ -233,9 +228,8 @@ export default function HLIStadspasDetail() {
                 </PageContentCell>
             )}
           </>
-        </Grid>
-      </Screen>
-    </DetailPage>
+      </PageContentV2>
+    </DetailPageV2>
   );
 }
 
