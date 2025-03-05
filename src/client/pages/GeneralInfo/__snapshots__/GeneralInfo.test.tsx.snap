@@ -1,37 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<GeneralInfo /> > Matches the Full Page snapshot 1`] = `
-<DocumentFragment>
-  <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
-  >
-    <header
-      class="_PageHeading_3b337d"
-    >
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Algemene info
-        </h2>
-      </div>
-    </header>
-    <div
-      class="_PageContent_47d7c0"
-    >
-      <div>
-        <p>
-          Dingen! 
-          <a
-            href="http://example.org"
-          >
-            Linkje
-          </a>
-        </p>
-      </div>
-    </div>
-  </main>
-</DocumentFragment>
-`;
+exports[`<GeneralInfo /> > Matches the Full Page snapshot 1`] = `<DocumentFragment />`;

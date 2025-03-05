@@ -251,7 +251,34 @@ describe('Bezwaren', () => {
           next: '',
           previous: '',
         })
-      ).toMatchInlineSnapshot();
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "datePublished": "2023-03-29T10:00:00+02:00",
+            "description": "",
+            "id": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
+            "isActive": true,
+            "isChecked": true,
+            "status": "Ontvangen",
+          },
+          {
+            "datePublished": "",
+            "description": "",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "isActive": false,
+            "isChecked": false,
+            "status": "In behandeling",
+          },
+          {
+            "datePublished": "",
+            "description": "",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "isActive": false,
+            "isChecked": false,
+            "status": "Afgehandeld",
+          },
+        ]
+      `);
     });
 
     it('should render the right snapshot when status is in progress', () => {
@@ -267,7 +294,34 @@ describe('Bezwaren', () => {
           next: '',
           previous: '',
         })
-      ).toMatchInlineSnapshot();
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "datePublished": "2023-03-29T10:00:00+02:00",
+            "description": "",
+            "id": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
+            "isActive": true,
+            "isChecked": true,
+            "status": "Ontvangen",
+          },
+          {
+            "datePublished": "",
+            "description": "",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "isActive": false,
+            "isChecked": false,
+            "status": "In behandeling",
+          },
+          {
+            "datePublished": "",
+            "description": "",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "isActive": false,
+            "isChecked": false,
+            "status": "Afgehandeld",
+          },
+        ]
+      `);
     });
 
     it('should render the right snapshot when status is done', () => {
@@ -285,7 +339,34 @@ describe('Bezwaren', () => {
           next: '',
           previous: '',
         })
-      ).toMatchInlineSnapshot();
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "datePublished": "2023-03-29T10:00:00+02:00",
+            "description": "",
+            "id": "b62fdaa9-f7ec-45d1-b23c-7f36fa00b393",
+            "isActive": true,
+            "isChecked": true,
+            "status": "Ontvangen",
+          },
+          {
+            "datePublished": "",
+            "description": "",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "isActive": false,
+            "isChecked": false,
+            "status": "In behandeling",
+          },
+          {
+            "datePublished": "",
+            "description": "",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "isActive": false,
+            "isChecked": false,
+            "status": "Afgehandeld",
+          },
+        ]
+      `);
     });
   });
 });

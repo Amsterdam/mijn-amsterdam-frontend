@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 
-import Page from './Page';
+import { PageV2 } from './Page';
 
 it('Renders without crashing', () => {
-  render(<Page>Hela!</Page>);
+  render(<PageV2>Hela!</PageV2>);
   expect(screen.getByText('Hela!')).toBeInTheDocument();
 });

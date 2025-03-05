@@ -190,7 +190,6 @@ export type DecosZaakBase = {
   dateEnd: string | null;
 
   decision: string | null;
-  description: string;
 
   identifier: ZaakKenmerk;
   title: string;
@@ -205,9 +204,6 @@ export type DecosZaakBase = {
   // WorkflowStep statusses
   statusDates: ZaakStatusDate[];
   termijnDates: ZaakTermijnDate[];
-
-  paymentStatus: string | null;
-  paymentMethod: string | null;
 }
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
 export type ZaakStatus =
@@ -219,7 +215,7 @@ export type ZaakStatusDate = {
   status: ZaakStatus;
   datePublished: string | null;
 };
-export interface DecosZaakWithLocation extends DecosZaakBase {
+export type WithLocation = {
   location: string | null;
 };
 
