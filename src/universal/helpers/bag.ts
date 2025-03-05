@@ -33,13 +33,13 @@ export function extractAddressParts(rawText: string): BAGQueryParams {
     // Spaces to single space.
     .replace(/\s{2,}/g, ' ');
   const [, result] = Object.entries(patterns).reduce(
-    extractAdressPartFromEntry,
+    extractAddressPartFromEntry,
     [cleanText, {}]
   );
   return result;
 }
 
-function extractAdressPartFromEntry(
+function extractAddressPartFromEntry(
   addressParts: [string, BAGQueryParams],
   namedPattern: [string, ExtractUtils]
 ): [string, BAGQueryParams] {
@@ -90,7 +90,8 @@ export function getMatchingBagResult(
       const isAddressMatch =
         adresseerbaarObject.openbareruimteNaam ===
           bagSearchAddress.openbareruimteNaam &&
-        adresseerbaarObject.huisnummer === bagSearchAddress.huisnummer &&
+        String(adresseerbaarObject.huisnummer) ===
+          bagSearchAddress.huisnummer &&
         adresseerbaarObject.huisletter ===
           (bagSearchAddress.huisletter ?? null);
 
@@ -113,9 +114,6 @@ export function getLatLngWithAddress(
 }
 
 function formatAddress(result: BAGAdreseerbaarObject): string {
-  if (result.huisletter) {
-    throw Error('Huisletter found but formatting not implemented.');
-  }
   if (result.huisnummertoevoeging) {
     return `${result.openbareruimteNaam} ${result.huisnummer}-${result.huisnummertoevoeging}`;
   }

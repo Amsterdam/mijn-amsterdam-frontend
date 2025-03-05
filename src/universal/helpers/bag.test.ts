@@ -8,11 +8,11 @@ import { BAGQueryParams, BAGSourceData } from '../types/bag';
 describe('getLatLonByAddress', () => {
   const weesp: BAGQueryParams = {
     openbareruimteNaam: 'Herengracht',
-    huisnummer: 23,
+    huisnummer: '23',
   };
   const amsterdam: BAGQueryParams = {
     openbareruimteNaam: 'Herengracht',
-    huisnummer: 23,
+    huisnummer: '23',
     huisnummertoevoeging: '1',
   };
 
