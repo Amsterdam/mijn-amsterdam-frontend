@@ -1,17 +1,13 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-import { Grid, LinkList, Screen } from '@amsterdam/design-system-react';
+import { Grid, LinkList } from '@amsterdam/design-system-react';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
-import {
-  ErrorAlert,
-  LoadingContent,
-  OverviewPage,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import { ErrorAlert, LoadingContent } from '../../components';
 import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import { OverviewPageV2, PageContentV2 } from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['20rem', '4rem', '4rem'],
@@ -26,12 +22,11 @@ const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment niet alle gegevens tonen.';
 
 interface ThemaPaginaProps {
   title: string;
-  backLink?: LinkProps;
-  icon?: ReactElement;
+  backLink?: string;
   pageContentTop: ReactNode;
   pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
-  linkListItems?: LinkProps[];
+  linkListItems: LinkProps[];
   pageContentBottom?: ReactNode;
   errorAlertContent?: ReactNode;
   loadingBarConfig?: BarConfig;
@@ -42,11 +37,7 @@ interface ThemaPaginaProps {
 
 export default function ThemaPagina({
   title,
-  backLink = {
-    to: AppRoutes.HOME,
-    title: 'Home',
-  },
-  icon = <ThemaIcon />,
+  backLink = AppRoutes.HOME,
   pageContentTop,
   pageContentTopSecondary,
   linkListItems = [],
@@ -60,44 +51,43 @@ export default function ThemaPagina({
 }: ThemaPaginaProps) {
   const showError = (!isError && isPartialError) || isError;
   return (
-    <OverviewPage>
-      <PageHeading backLink={backLink} icon={icon}>
-        {title}
-      </PageHeading>
-      <Screen>
-        <Grid>
-          <Grid.Cell span="all">{pageContentTop}</Grid.Cell>
-          {!!linkListItems.length && (
-            <Grid.Cell span="all">
-              <LinkList>
-                {linkListItems.map(({ to, title }) => (
-                  <LinkList.Link key={to} rel="noreferrer" href={to}>
-                    {title}
-                  </LinkList.Link>
-                ))}
-              </LinkList>
-            </Grid.Cell>
-          )}
-          {!!pageContentTopSecondary && (
-            <Grid.Cell span="all">{pageContentTopSecondary}</Grid.Cell>
-          )}
-          {showError && (
-            <Grid.Cell span="all">
-              <ErrorAlert>
-                {errorAlertContent || ERROR_ALERT_DEFAULT}
-                {/* errorAlertContent could be an empty string, force to show an error. **/}
-              </ErrorAlert>
-            </Grid.Cell>
-          )}
-          {isLoading && (
-            <Grid.Cell span="all">
-              <LoadingContent barConfig={loadingBarConfig} />
-            </Grid.Cell>
-          )}
-          {!isLoading && !isError && pageContentMain}
-          {pageContentBottom}
-        </Grid>
-      </Screen>
-    </OverviewPage>
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
+
+        <Grid.Cell span="all">{pageContentTop}</Grid.Cell>
+        {!!linkListItems.length && (
+          <Grid.Cell span="all">
+            <LinkList>
+              {linkListItems.map(({ to, title }) => (
+                <LinkList.Link key={to} rel="noreferrer" href={to}>
+                  {title}
+                </LinkList.Link>
+              ))}
+            </LinkList>
+          </Grid.Cell>
+        )}
+        {!!pageContentTopSecondary && (
+          <Grid.Cell span="all">{pageContentTopSecondary}</Grid.Cell>
+        )}
+        {showError && (
+          <Grid.Cell span="all">
+            <ErrorAlert>
+              {errorAlertContent || ERROR_ALERT_DEFAULT}
+              {/* errorAlertContent could be an emty string, force to show an error. **/}
+            </ErrorAlert>
+          </Grid.Cell>
+        )}
+
+        {isLoading && (
+          <Grid.Cell span="all">
+            <LoadingContent barConfig={loadingBarConfig} />
+          </Grid.Cell>
+        )}
+
+        {!isLoading && !isError && pageContentMain}
+        {pageContentBottom}
+      </PageContentV2>
+    </OverviewPageV2>
   );
 }
