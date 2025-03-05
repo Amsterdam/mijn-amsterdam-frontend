@@ -1,6 +1,5 @@
 import { Location } from './Location';
-import styles from './VergunningDetail.module.scss';
-import type { EvenementMelding as EvenementMeldingType } from '../../../../server/services';
+import type { EvenementMelding } from '../../../../server/services/vergunningen-v2/config-and-types';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
@@ -9,14 +8,14 @@ import InfoDetail, {
 export function EvenementMelding({
   vergunning,
 }: {
-  vergunning: EvenementMeldingType;
+  vergunning: EvenementMelding;
 }) {
   return (
     <>
       <InfoDetail label="Kenmerk" value={vergunning?.identifier || '-'} />
       {!!vergunning.location && <Location location={vergunning.location} />}
 
-      <InfoDetailGroup className={styles.EvenementMelding_DateAndTime}>
+      <InfoDetailGroup>
         <InfoDetail
           label="Op"
           value={

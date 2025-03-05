@@ -11,7 +11,7 @@ import {
   getThemaUrlBurgerzakenWithAppState,
 } from '../pages/Burgerzaken/helpers';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
-import { PARKEER_CASE_TYPES } from '../pages/Parkeren/Parkeren.config';
+import { PARKEER_CASE_TYPES } from '../pages/Parkeren/Parkeren-thema-config';
 
 export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {

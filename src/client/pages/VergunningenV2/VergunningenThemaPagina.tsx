@@ -1,7 +1,7 @@
 import { Grid, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath } from 'react-router-dom';
 
-import { tableConfig } from './config';
+import { tableConfig } from './Vergunningen-thema-config';
 import styles from './Vergunningen.module.scss';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -14,7 +14,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-export default function VergunningenV2() {
+export function VergunningenThemaPagina() {
   const { VERGUNNINGENv2 } = useAppStateGetter();
   const vergunningen = addLinkElementToProperty<VergunningFrontendV2>(
     VERGUNNINGENv2.content ?? [],

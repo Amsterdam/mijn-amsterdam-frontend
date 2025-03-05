@@ -1,22 +1,18 @@
 import { useEffect } from 'react';
 
-import type {
-  Vergunning,
-  VergunningDocument,
-} from '../../../server/services/vergunningen/vergunningen';
+import { VergunningFrontendV2 } from '../../../../server/services/vergunningen-v2/config-and-types';
 import {
   ApiResponse_DEPRECATED,
-  apiPristineResult,
   apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { GenericDocument } from '../../../universal/types';
-import DocumentList from '../../components/DocumentList/DocumentList';
-import { InfoDetailGroup } from '../../components/InfoDetail/InfoDetail';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import { useDataApi } from '../../hooks/api/useDataApi';
+  apiPristineResult,
+} from '../../../../universal/helpers/api';
+import { GenericDocument } from '../../../../universal/types';
+import { LoadingContent, DocumentList } from '../../../components';
+import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
+import { useDataApi } from '../../../hooks/api/useDataApi';
 
 interface DocumentDetailsProps {
-  vergunning: Vergunning;
+  vergunning: VergunningFrontendV2;
   opaque?: boolean; // Does not show loading feedback and no InfoDetail to the user if 0 documents are retrieved.
   trackPath?: (document: GenericDocument) => string;
 }
@@ -26,7 +22,7 @@ export function DocumentDetails({
   opaque = true,
   trackPath,
 }: DocumentDetailsProps) {
-  const documentsUrl = vergunning?.documentsUrl;
+  const documentsUrl = vergunning?.fetchDocumentsUrl;
 
   // Set-up the documents api source
   const [
@@ -35,7 +31,7 @@ export function DocumentDetails({
       isLoading: isLoadingDocuments,
     },
     fetchDocuments,
-  ] = useDataApi<ApiResponse_DEPRECATED<VergunningDocument[]>>(
+  ] = useDataApi<ApiResponse_DEPRECATED<GenericDocument[]>>(
     {
       postpone: true,
       transformResponse: ({ content }) => {
@@ -43,7 +39,7 @@ export function DocumentDetails({
           return [];
         }
         return apiSuccessResult(
-          content.map((document: VergunningDocument) => {
+          content.map((document: GenericDocument) => {
             // Some documents don't have titles, assign a default title.
             return Object.assign(document, {
               title: document.title || 'Document',

@@ -3,8 +3,7 @@ import { generatePath, useParams } from 'react-router-dom';
 import ExploitatieHorecabedrijf from './ExploitatieHorecabedrijf';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { showDocuments } from '../../../universal/helpers/vergunningen';
-import { CaseType } from '../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { ErrorAlert, LoadingContent } from '../../components';
 import {
   DetailPageV2,
@@ -13,22 +12,22 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { DocumentDetails } from '../VergunningDetail/DocumentDetails';
-import { StatusLineItems } from '../VergunningDetail/StatusLineItems';
+import { DocumentDetails } from '../VergunningenV2/detail-page-content/DocumentDetails';
+import { StatusLineItems } from '../VergunningenV2/detail-page-content/StatusLineItems';
 
 export default function HorecaDetail() {
   const { HORECA } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
-  const Vergunning = HORECA.content?.find((item) => item.id === id);
+  const vergunning = HORECA.content?.find((item) => item.id === id);
 
   const isLoadingContent = isLoading(HORECA);
-  const noContent = !isLoadingContent && !Vergunning;
+  const noContent = !isLoadingContent && !vergunning;
 
   return (
     <DetailPageV2>
       <PageContentV2>
         <PageHeadingV2 backLink={generatePath(AppRoutes.HORECA)}>
-          {Vergunning?.title || 'Horecavergunning'}
+          {vergunning?.title || 'Horecavergunning'}
         </PageHeadingV2>
         <PageContentCell>
           {(isError(HORECA) || noContent) && (
@@ -37,26 +36,25 @@ export default function HorecaDetail() {
             </ErrorAlert>
           )}
           {isLoadingContent && <LoadingContent className="" />}
-          {!isLoadingContent && Vergunning && (
+          {!isLoadingContent && vergunning && (
             <>
-              {Vergunning.caseType === CaseType.ExploitatieHorecabedrijf && (
-                <ExploitatieHorecabedrijf vergunning={Vergunning} />
+              {vergunning.caseType === CaseTypeV2.ExploitatieHorecabedrijf && (
+                <ExploitatieHorecabedrijf vergunning={vergunning} />
               )}
 
-              {showDocuments(Vergunning.caseType) &&
-                !!Vergunning.documentsUrl && (
-                  <DocumentDetails vergunning={Vergunning} />
-                )}
+              {!!vergunning.fetchDocumentsUrl && (
+                <DocumentDetails vergunning={vergunning} />
+              )}
             </>
           )}
         </PageContentCell>
 
-        {!isLoadingContent && Vergunning && (
+        {!isLoadingContent && vergunning && (
           <PageContentCell>
             <StatusLineItems
-              vergunning={Vergunning}
+              vergunning={vergunning}
               trackPath={(document) =>
-                `/downloads/vergunningen/${Vergunning.caseType.toLocaleLowerCase()}/${
+                `/downloads/vergunningen/${vergunning.caseType.toLocaleLowerCase()}/${
                   document.title
                 }`
               }
