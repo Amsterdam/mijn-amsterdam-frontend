@@ -1,0 +1,821 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no result 1`] = `
+<DocumentFragment>
+  <main
+    class="ams-screen ams-screen--wide"
+  >
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            AVG persoonsgegevens
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <p
+          class="ams-paragraph"
+        >
+          Hieronder ziet u een overzicht van uw AVG verzoeken.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <ul
+          class="ams-link-list"
+        >
+          <li>
+            <a
+              class="ams-link-list__link"
+              href="https://www.amsterdam.nl/privacy/loket/"
+              rel="noreferrer"
+            >
+              <span
+                class="ams-icon ams-icon--size-5"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              Loket persoonsgegevens gemeente Amsterdam
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <section
+          class="ams-alert ams-alert--error"
+        >
+          <div
+            class="ams-alert__icon"
+          >
+            <span
+              class="ams-icon ams-icon--size-4"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                />
+                <path
+                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="ams-alert__content"
+          >
+            <h2
+              class="ams-heading ams-heading--level-4"
+            >
+              Foutmelding
+            </h2>
+            <p
+              class="ams-paragraph"
+            >
+              We kunnen op dit moment niet alle gegevens tonen.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`AVG thema pagina > Matches the Full Page snapshot when there are no requests 1`] = `
+<DocumentFragment>
+  <main
+    class="ams-screen ams-screen--wide"
+  >
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            AVG persoonsgegevens
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <p
+          class="ams-paragraph"
+        >
+          Hieronder ziet u een overzicht van uw AVG verzoeken.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <ul
+          class="ams-link-list"
+        >
+          <li>
+            <a
+              class="ams-link-list__link"
+              href="https://www.amsterdam.nl/privacy/loket/"
+              rel="noreferrer"
+            >
+              <span
+                class="ams-icon ams-icon--size-5"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              Loket persoonsgegevens gemeente Amsterdam
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Lopende aanvragen
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
+          >
+            <tbody
+              class="ams-table__body"
+            />
+          </table>
+        </div>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft (nog) geen lopende aanvragen
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Afgehandelde aanvragen
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
+          >
+            <tbody
+              class="ams-table__body"
+            />
+          </table>
+        </div>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft (nog) geen afgehandelde aanvragen
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`AVG thema pagina > Matches the Full Page snapshot when there are requests 1`] = `
+<DocumentFragment>
+  <main
+    class="ams-screen ams-screen--wide"
+  >
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            AVG persoonsgegevens
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <p
+          class="ams-paragraph"
+        >
+          Hieronder ziet u een overzicht van uw AVG verzoeken.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <ul
+          class="ams-link-list"
+        >
+          <li>
+            <a
+              class="ams-link-list__link"
+              href="https://www.amsterdam.nl/privacy/loket/"
+              rel="noreferrer"
+            >
+              <span
+                class="ams-icon ams-icon--size-5"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              Loket persoonsgegevens gemeente Amsterdam
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Lopende aanvragen
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
+          >
+            <thead
+              class="ams-table__header"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Nummer
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Onderwerp(en)
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="ams-table__body"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/avg/verzoek/1"
+                    title="Bekijk meer over avg verzoek met nummer 1"
+                  >
+                    1
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  06 maart 2023
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Parkeren, Foo, Bar
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Afgehandelde aanvragen
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
+          >
+            <thead
+              class="ams-table__header"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Nummer
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Ontvangen op
+                </th>
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Onderwerp(en)
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="ams-table__body"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                    href="/avg/verzoek/223"
+                    title="Bekijk meer over avg verzoek met nummer 223"
+                  >
+                    223
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  09 maart 2022
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  Vergunningen, Enzo
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="ams-screen ams-screen--wide"
+  >
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/avg"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            AVG verzoek
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <section
+          class="ams-alert ams-alert--error"
+        >
+          <div
+            class="ams-alert__icon"
+          >
+            <span
+              class="ams-icon ams-icon--size-4"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                />
+                <path
+                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="ams-alert__content"
+          >
+            <h2
+              class="ams-heading ams-heading--level-4"
+            >
+              Foutmelding
+            </h2>
+            <p
+              class="ams-paragraph"
+            >
+              We kunnen op dit moment geen gegevens tonen.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="ams-screen ams-screen--wide"
+  >
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/avg"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            AVG verzoek
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <dl
+          class="_Datalist_08bf39"
+        >
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Nummer
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            223
+          </dd>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Type verzoek
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Verwijderen gegevens
+          </dd>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Onderwerp(en)
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Vergunningen, Enzo
+          </dd>
+        </dl>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <div
+          class="ams-grid _Steps_78b528"
+        >
+          <div
+            class="ams-grid__cell ams-grid__cell--span-10 ams-grid__cell--start-2"
+          >
+            <h1
+              class="ams-heading ams-heading--level-1"
+            >
+              Status
+            </h1>
+          </div>
+          <div
+            class="ams-grid__cell ams-grid__cell--span-10 ams-grid__cell--start-2"
+          >
+            <ol
+              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_78b528"
+            >
+              <li
+                class="ams-ordered-list__item _Step_78b528 _Step--checked_78b528"
+              >
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
+                >
+                  <span
+                    aria-label="Status Afgerond"
+                    class="_StepStatusIndication_78b528"
+                  >
+                    <span
+                      aria-label="Status Afgerond"
+                      class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_78b528"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 32 32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  Ontvangen
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime="2023-03-18T00:00:00.000Z"
+                >
+                  18 maart 2023
+                </time>
+              </li>
+              <li
+                class="ams-ordered-list__item _Step_78b528 _Step--checked_78b528"
+              >
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
+                >
+                  <span
+                    aria-label="Status Afgerond"
+                    class="_StepStatusIndication_78b528"
+                  >
+                    <span
+                      aria-label="Status Afgerond"
+                      class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_78b528"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 32 32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  In behandeling
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime="2023-05-30T00:00:00.000Z"
+                >
+                  30 mei 2023
+                </time>
+              </li>
+              <li
+                class="ams-ordered-list__item _Step_78b528 _Step--active_78b528"
+              >
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
+                >
+                  <span
+                    aria-label="Huidige status"
+                    class="_StepStatusIndication_78b528"
+                  />
+                  Extra informatie nodig
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime="2023-06-03T00:00:00.000Z"
+                >
+                  03 juni 2023
+                </time>
+                <div>
+                  <div
+                    class=""
+                  >
+                    Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                  </div>
+                </div>
+              </li>
+              <li
+                class="ams-ordered-list__item _Step_78b528"
+              >
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
+                >
+                  <span
+                    aria-label="Toekomstige status"
+                    class="_StepStatusIndication_78b528"
+                  />
+                  Afgehandeld
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime=""
+                />
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
