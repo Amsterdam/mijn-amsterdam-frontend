@@ -61,7 +61,7 @@ export type DisplayProps<T> = Readonly<{
 }>;
 
 export interface TableV2Props<T> {
-  displayProps: DisplayProps<T> | null;
+  displayProps: DisplayProps<T>;
   items: T[];
   className?: string;
   showTHead?: boolean;
@@ -77,7 +77,7 @@ export function TableV2<T extends object = ZaakDetail>({
   className,
   showTHead = true,
 }: TableV2Props<T>) {
-  const displayPropEntries = displayProps !== null ? entries(displayProps) : [];
+  const displayPropEntries = entries(displayProps);
   return (
     <>
       {!!caption && (
