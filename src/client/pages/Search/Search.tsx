@@ -11,7 +11,7 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateReady } from '../../hooks/useAppState';
 
-export default function Search() {
+export function Search() {
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';
   const isReady = useAppStateReady();

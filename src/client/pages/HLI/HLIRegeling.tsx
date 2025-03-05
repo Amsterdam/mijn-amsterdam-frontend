@@ -39,7 +39,7 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
   );
 }
 
-export default function HLIRegelingDetailPagina() {
+export function HLIRegeling() {
   const { regelingen, isError, isLoading, routes } = useHliThemaData();
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
