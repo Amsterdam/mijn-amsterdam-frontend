@@ -6,9 +6,8 @@ import { useBezwarenDetailData } from './useBezwarenDetailData.hook';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
-import { InfoDetail } from '../../components';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import {
+import InfoDetail, {
   InfoDetailGroup,
   InfoDetailHeading,
 } from '../../components/InfoDetail/InfoDetail';
@@ -53,7 +52,7 @@ export function BezwarenDetailPagina() {
       isError={isError || isErrorThemaData}
       isLoading={isLoading || isLoadingThemaData}
       errorAlertContent={pageContentErrorAlert}
-      pageContentTop={
+      pageContentMain={
         <>
           <PageContentCell>
             {!!bezwaar && (

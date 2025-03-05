@@ -45,7 +45,7 @@ export function InkomenDetailBbz() {
       isLoading={isLoading}
       showStatusLineConnection={showStatusLineConnection}
       reverseSteps={reverseSteps}
-      pageContentTop={pageContentTop}
+      pageContentMain={pageContentTop}
       backLink={routes.themaPage}
     />
   );

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
-import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
+import type { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
@@ -50,7 +50,7 @@ export function HLIRegeling() {
       zaak={regelingDetail}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
+      pageContentMain={
         regelingDetail && <DetailPageContent hliRegeling={regelingDetail} />
       }
       backLink={routes.themaPage}

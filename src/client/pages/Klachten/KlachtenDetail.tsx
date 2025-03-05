@@ -4,7 +4,7 @@ import { routes } from './Klachten-thema-config';
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import { Klacht } from '../../../server/services/klachten/types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { InfoDetail } from '../../components';
+import InfoDetail from '../../components/InfoDetail/InfoDetail';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -19,7 +19,7 @@ export function KlachtenDetailPagina() {
       zaak={klacht}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
+      pageContentMain={
         klacht && (
           <PageContentCell>
             <InfoDetail

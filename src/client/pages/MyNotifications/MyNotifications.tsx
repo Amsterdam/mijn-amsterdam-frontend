@@ -5,7 +5,8 @@ import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ErrorAlert, Pagination, LoadingContent } from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MyNotification } from '../../components/MyNotification/MyNotification';
 import {
   OverviewPageV2,
@@ -13,6 +14,7 @@ import {
   PageContentV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { PaginationV2 } from '../../components/Pagination/PaginationV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 
@@ -78,13 +80,13 @@ export function MyNotificationsPage() {
               })}
           </OrderedList>
           {total > PAGE_SIZE && (
-            <Pagination
+            <PaginationV2
               totalCount={total}
               pageSize={PAGE_SIZE}
-              currentPage={currentPage}
               onPageClick={(page) => {
                 history.push(generatePath(AppRoutes.NOTIFICATIONS, { page }));
               }}
+              currentPage={currentPage}
             />
           )}
         </PageContentCell>

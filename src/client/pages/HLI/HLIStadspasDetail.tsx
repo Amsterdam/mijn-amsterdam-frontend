@@ -26,19 +26,17 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
-import { dateSort } from '../../../universal/helpers/date';
-import {
-  DetailPage,
-  ErrorAlert,
-  LoadingContent,
-  Modal,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import { ErrorAlert, LoadingContent, Modal } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import LoadingContent, {
+  BarConfig,
+} from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
-import { DetailPageV2, PageContentV2 } from '../../components/Page/Page';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';

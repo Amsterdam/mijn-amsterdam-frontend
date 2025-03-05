@@ -29,7 +29,7 @@ import {
   DatasetId,
 } from '../../../universal/config/myarea-datasets';
 import { AppRoutes } from '../../../universal/config/routes';
-import ErrorMessages from '../ErrorMessages/ErrorMessages';
+import { ErrorMessages } from '../ErrorMessages/ErrorMessages';
 
 interface MyAreaDatasetsProps {
   datasetIds?: DatasetId[];

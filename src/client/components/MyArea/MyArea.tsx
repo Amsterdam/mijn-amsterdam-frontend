@@ -10,7 +10,7 @@ import { ThemaTitles } from '../../config/thema';
 import { useWidescreen } from '../../hooks/media.hook';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
+import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications';
 import { LegendPanel } from './LegendPanel/LegendPanel';
 import {
   PanelState,

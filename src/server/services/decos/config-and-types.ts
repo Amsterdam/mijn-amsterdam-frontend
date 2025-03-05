@@ -1,5 +1,5 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
-import { GenericDocument } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
@@ -133,6 +133,9 @@ export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
 };
 
 export const MA_DECISION_DEFAULT = 'Zie besluit';
+
+export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
+
 export type DecosFieldTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   name: keyof T;
   transform?: (input: any) => DecosFieldValue;
@@ -224,10 +227,15 @@ export type WithKentekens = {
   kentekens: string | null;
 };
 
-export type WithDateRange = {
+export type WithDateStart = {
   dateStart: string | null;
+};
+
+export type WithDateEnd = {
   dateEnd: string | null;
 };
+
+export type WithDateRange = WithDateStart & WithDateEnd;
 
 export type WithTimeRange = {
   timeStart: string | null;
