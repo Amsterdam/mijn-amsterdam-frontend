@@ -5,6 +5,7 @@ import { isError, isLoading } from '../../../../universal/helpers/api';
 import { BFFApiUrls } from '../../../config/api';
 import { BagThemas } from '../../../config/thema';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
+import { getTableConfig } from '../Erfpacht-thema-config';
 import { useErfpachtV2Data } from '../erfpachtData.hook';
 
 export function useDossierDetaiLData() {
@@ -17,8 +18,8 @@ export function useDossierDetaiLData() {
     isError: isErrorThemaData,
     routes,
     relatieCode,
-    tableConfig,
     listPageParamKind,
+    erfpachtData,
   } = useErfpachtV2Data();
 
   const [dossierApiResponse] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
@@ -27,6 +28,9 @@ export function useDossierDetaiLData() {
     key: dossierNummerUrlParam,
   });
   const dossier = dossierApiResponse.content;
+  const tableConfig = dossier
+    ? getTableConfig({ erfpachtData, dossier })
+    : null;
 
   return {
     dossier,
