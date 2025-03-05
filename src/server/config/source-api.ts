@@ -86,7 +86,6 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
-  | 'VERGUNNINGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
@@ -201,11 +200,6 @@ export const ApiConfig: ApiDataRequestConfig = {
       Authorization: `Basic ${Buffer.from(`${getFromEnv('BFF_DECOS_API_USERNAME')}:${getFromEnv('BFF_DECOS_API_PASSWORD')}`).toString('base64')}`,
       'Content-type': 'application/json; charset=utf-8',
     },
-  },
-  VERGUNNINGEN: {
-    url: `${getFromEnv('BFF_VERGUNNINGEN_API_BASE_URL')}/decosjoin/getvergunningen`,
-    postponeFetch: !FeatureToggle.vergunningenActive,
-    passthroughOIDCToken: true,
   },
   POWERBROWSER: {
     method: 'POST',

@@ -11,6 +11,5 @@ export type { Krefia, KrefiaDeepLink } from './krefia';
 export * from './simple-connect';
 export * from './content-tips/tips-service';
 export * from './toeristische-verhuur/toeristische-verhuur';
-export * from './vergunningen/vergunningen';
 export * from './wmo/wmo';
 export * from './wpi';

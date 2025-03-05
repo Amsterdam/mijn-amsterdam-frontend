@@ -8,18 +8,12 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types/App.types';
-import { CaseType, CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  VakantieverhuurVergunning as VakantieverhuurVergunningDecos,
-  Vergunning,
-  VergunningenData,
-  fetchVergunningen,
-  toeristischeVerhuurVergunningTypes,
-} from '../vergunningen/vergunningen';
+import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
 import { fetchVergunningenV2 } from '../vergunningen-v2/vergunningen';
 
-function getVergunningStatussen(vergunning: VakantieverhuurVergunningDecos) {
+function getVergunningStatussen(vergunning: VergunningFrontendV2) {
   const isAfgehandeld =
     vergunning.status === 'Afgehandeld' || !!vergunning.decision;
   const isIngetrokken = vergunning.decision === 'Ingetrokken';
@@ -91,11 +85,11 @@ function getZaakStatus(
 }
 
 export function transformVakantieverhuurVergunningen(
-  vakantieverhuurVergunningen: VergunningenData
+  vakantieverhuurVergunningen: VergunningFrontendV2[]
 ): VakantieverhuurVergunning[] {
   const vergunningenTransformed: VakantieverhuurVergunning[] = [];
 
-  for (const vergunning of vakantieverhuurVergunningen as VakantieverhuurVergunningDecos[]) {
+  for (const vergunning of vakantieverhuurVergunningen) {
     // From Z/AB/123 to z-ab-123
     const idTransformed = vergunning.identifier
       .replace(/\//g, '-')
@@ -112,9 +106,7 @@ export function transformVakantieverhuurVergunningen(
       (vergunning.dateEnd && new Date(vergunning.dateEnd) <= new Date());
 
     const title = 'Vergunning vakantieverhuur';
-    const steps = getVergunningStatussen(
-      vergunning as VakantieverhuurVergunningDecos
-    );
+    const steps = getVergunningStatussen(vergunning);
 
     const vergunningTransformed: VakantieverhuurVergunning = {
       id: idTransformed,
@@ -129,16 +121,19 @@ export function transformVakantieverhuurVergunningen(
       dateEndFormatted: vergunning.dateEnd
         ? defaultDateFormat(vergunning.dateEnd)
         : '-',
-      adres: vergunning.location ?? '-',
+      adres:
+        ('location' in vergunning && vergunning.location === 'string'
+          ? vergunning.location
+          : undefined) ?? '-',
       result: vergunning.decision as VakantieverhuurVergunning['result'],
       zaaknummer: vergunning.identifier,
       steps,
       documents: [],
-      fetchDocumentsUrl: vergunning.documentsUrl,
+      fetchDocumentsUrl: vergunning.fetchUrl,
       link: {
         to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
           id: idTransformed,
-          caseType: 'vakantieverhuur',
+          casetype: 'vakantieverhuur',
         }),
         title: vergunning.link.title,
       },
@@ -159,24 +154,13 @@ export async function fetchVakantieverhuurVergunningen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const vakantieverhuurVergunningResponse = await fetchVergunningen(
+  const vakantieverhuurVergunningResponse = await fetchVergunningenV2(
     requestID,
     authProfileAndToken,
-    {
-      appRoute: (vergunning: Vergunning) => {
-        switch (vergunning.caseType) {
-          case CaseType.VakantieverhuurVergunning:
-            return generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
-              caseType: 'vakantieverhuur',
-              id: ':id',
-            });
-          default:
-            return AppRoutes.TOERISTISCHE_VERHUUR;
-        }
-      },
-      filter: (vergunning): vergunning is VakantieverhuurVergunningDecos =>
-        toeristischeVerhuurVergunningTypes.includes(vergunning.caseType),
-    }
+    generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
+      casetype: 'vakantieverhuur',
+      id: ':id',
+    }) as (typeof AppRoutes)['TOERISTISCHE_VERHUUR/VERGUNNING']
   );
 
   if (vakantieverhuurVergunningResponse.status === 'OK') {
