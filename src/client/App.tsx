@@ -60,10 +60,10 @@ import { ErfpachtFacturen } from './pages/Erfpacht/ErfpachtFacturen';
 import { ErfpachtOpenFacturen } from './pages/Erfpacht/ErfpachtOpenFacturen';
 import { GarbageInformation } from './pages/GarbageInformation/GarbageInformation';
 import { GeneralInfo } from './pages/GeneralInfo/GeneralInfo';
-import { ThemaPaginaHLI } from './pages/HLI/HLI';
 import { HLIRegeling } from './pages/HLI/HLIRegeling';
 import { HLIRegelingen } from './pages/HLI/HLIRegelingen';
-import { HLIStadspas } from './pages/HLI/HLIStadspas';
+import { HLIStadspasDetail } from './pages/HLI/HLIStadspasDetail';
+import { HLIThemaPagina } from './pages/HLI/HLIThemaPagina';
 import { HorecaThemaPagina } from './pages/Horeca/Horeca';
 import { HorecaDetailPagina } from './pages/Horeca/HorecaDetail';
 import { HorecaLijstPagina } from './pages/Horeca/HorecaList';
@@ -198,7 +198,10 @@ function AppAuthenticated() {
           <Route path={AppRoutes.BRP} component={MijnGegevensThema} />
           <Route path={AppRoutes.KVK} component={MijnBedrijfsGegevensThema} />
           {FeatureToggle.hliThemaStadspasActive && (
-            <Route path={AppRoutes['HLI/STADSPAS']} component={HLIStadspas} />
+            <Route
+              path={AppRoutes['HLI/STADSPAS']}
+              component={HLIStadspasDetail}
+            />
           )}
           {FeatureToggle.hliThemaRegelingenActive && (
             <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
@@ -210,7 +213,7 @@ function AppAuthenticated() {
             />
           )}
           {FeatureToggle.hliThemaActive && (
-            <Route path={AppRoutes.HLI} component={ThemaPaginaHLI} />
+            <Route path={AppRoutes.HLI} component={HLIThemaPagina} />
           )}
 
           <Route
