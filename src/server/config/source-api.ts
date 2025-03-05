@@ -261,7 +261,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
-      apiKey: getFromEnv('BFF_ENABLEU_API_KEY'),
+      apiKey: getFromEnv('BFF_ENABLEU_API_KEY_ERFPACHT'),
     },
   },
   AFVAL: {
