@@ -30,7 +30,11 @@ export function Erfpacht() {
             <ThemaPaginaTable<ErfpachtV2Dossier | ErfpachtDossierFactuur>
               key={kind}
               title={title}
-              zaken={kind === 'erfpachtrechten' ? dossiers : openFacturen}
+              zaken={
+                kind === listPageParamKind.erfpachtRechten
+                  ? dossiers
+                  : openFacturen
+              }
               displayProps={displayProps}
               maxItems={maxItems}
               listPageRoute={listPageRoute}
