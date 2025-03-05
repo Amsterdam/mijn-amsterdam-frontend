@@ -1,5 +1,4 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
 
 import { useZorgThemaData } from './useZorgThemaData';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
@@ -23,15 +22,8 @@ export function HistoricItemsMention() {
 }
 
 export function ZorgThemaPagina() {
-  const {
-    isError,
-    isLoading,
-    regelingen,
-    title,
-    routes,
-    tableConfig,
-    linkListItems,
-  } = useZorgThemaData();
+  const { isError, isLoading, regelingen, title, tableConfig, linkListItems } =
+    useZorgThemaData();
 
   const pageContentTop = (
     <PageContentCell spanWide={6}>
@@ -54,7 +46,15 @@ export function ZorgThemaPagina() {
   const tables = Object.entries(tableConfig).map(
     ([
       kind,
-      { title, displayProps, textNoContent, filter, maxItems, className },
+      {
+        title,
+        displayProps,
+        textNoContent,
+        filter,
+        maxItems,
+        className,
+        listPageRoute,
+      },
     ]) => {
       return (
         <ThemaPaginaTable<WMOVoorzieningFrontend>
@@ -62,9 +62,7 @@ export function ZorgThemaPagina() {
           title={title}
           className={className}
           zaken={regelingen.filter(filter)}
-          listPageRoute={generatePath(routes.listPage, {
-            kind,
-          })}
+          listPageRoute={listPageRoute}
           displayProps={displayProps}
           textNoContent={textNoContent}
           maxItems={maxItems}

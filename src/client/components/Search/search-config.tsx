@@ -21,8 +21,8 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
+import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { VarenFrontend } from '../../../server/services/varen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
