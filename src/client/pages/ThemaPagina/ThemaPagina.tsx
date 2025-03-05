@@ -85,7 +85,7 @@ export default function ThemaPagina({
             <Grid.Cell span="all">
               <ErrorAlert>
                 {errorAlertContent || ERROR_ALERT_DEFAULT}
-                {/* errorAlertContent could be an emty string, force to show an error. **/}
+                {/* errorAlertContent could be an empty string, force to show an error. **/}
               </ErrorAlert>
             </Grid.Cell>
           )}
