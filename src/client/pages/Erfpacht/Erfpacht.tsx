@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { listPageParamKind } from './Erfpacht-thema-config';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import {
   ErfpachtDossierFactuur,
@@ -21,20 +22,22 @@ export function Erfpacht() {
     openFacturen,
   } = useErfpachtV2Data();
 
-  const pageContentTables = entries(tableConfig).map(
-    ([kind, { title, displayProps, listPageRoute, maxItems }]) => {
-      return (
-        <ThemaPaginaTable<ErfpachtV2Dossier | ErfpachtDossierFactuur>
-          key={kind}
-          title={title}
-          zaken={kind === 'erfpachtrechten' ? dossiers : openFacturen}
-          displayProps={displayProps}
-          maxItems={maxItems}
-          listPageRoute={listPageRoute}
-        />
-      );
-    }
-  );
+  const pageContentTables = tableConfig
+    ? entries(tableConfig)
+        .filter(([kind]) => kind !== listPageParamKind.alleFacturen)
+        .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
+          return (
+            <ThemaPaginaTable<ErfpachtV2Dossier | ErfpachtDossierFactuur>
+              key={kind}
+              title={title}
+              zaken={kind === 'erfpachtrechten' ? dossiers : openFacturen}
+              displayProps={displayProps}
+              maxItems={maxItems}
+              listPageRoute={listPageRoute}
+            />
+          );
+        })
+    : [];
 
   return (
     <ThemaPagina
