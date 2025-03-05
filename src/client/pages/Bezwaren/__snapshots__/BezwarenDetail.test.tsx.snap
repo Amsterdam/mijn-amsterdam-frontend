@@ -1,0 +1,221 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="ams-screen ams-screen--wide"
+  >
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/bezwaren"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Bezwaar
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <section
+          class="ams-alert ams-alert--error"
+        >
+          <div
+            class="ams-alert__icon"
+          >
+            <span
+              class="ams-icon ams-icon--size-4"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                />
+                <path
+                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="ams-alert__content"
+          >
+            <h2
+              class="ams-heading ams-heading--level-4"
+            >
+              Foutmelding
+            </h2>
+            <p
+              class="ams-paragraph"
+            >
+              We kunnen niet alle gegevens tonen. 
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="ams-screen ams-screen--wide"
+  >
+    <div
+      class="ams-grid"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/bezwaren"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            BI.21.014121.001
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <dl
+          class="_Datalist_08bf39"
+        >
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Onderwerp
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Korte omschrijving van het bezwaar
+          </dd>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Reden bezwaar
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.
+          </dd>
+          <div
+            class="ams-grid _Datalist__row-wrapper_08bf39"
+          >
+            <div
+              class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
+            >
+              <dt
+                class="_Datalist__title_08bf39"
+              >
+                Besluit waartegen u bezwaar maakt
+              </dt>
+              <dd
+                class="_Datalist__description_08bf39"
+              >
+                F2021.0008
+              </dd>
+            </div>
+            <div
+              class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
+            >
+              <dt
+                class="_Datalist__title_08bf39"
+              >
+                Datum
+              </dt>
+              <dd
+                class="_Datalist__description_08bf39"
+              />
+            </div>
+          </div>
+          <div
+            class="ams-grid _Datalist__row-wrapper_08bf39"
+          >
+            <div
+              class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
+            >
+              <dt
+                class="_Datalist__title_08bf39"
+              >
+                Resultaat bezwaar
+              </dt>
+              <dd
+                class="_Datalist__description_08bf39"
+              >
+                Niet-ontvankelijk
+              </dd>
+            </div>
+          </div>
+        </dl>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      />
+    </div>
+  </main>
+</DocumentFragment>
+`;
