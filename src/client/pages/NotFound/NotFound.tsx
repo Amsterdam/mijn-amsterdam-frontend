@@ -11,7 +11,7 @@ import {
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { captureMessage } from '../../helpers/monitoring';
 
-export default function NotFound() {
+export function NotFound() {
   const location = useLocation();
 
   useEffect(() => {

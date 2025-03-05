@@ -50,7 +50,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   );
 }
 
-export default function ZorgDetail() {
+export function ZorgDetail() {
   const appState = useAppStateGetter();
   const { WMO } = appState;
   const { id } = useParams<{ id: WMOVoorzieningFrontend['id'] }>();

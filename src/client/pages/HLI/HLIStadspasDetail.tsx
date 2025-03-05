@@ -85,7 +85,7 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
-export default function HLIStadspasDetail() {
+export function HLIStadspasDetail() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
 
