@@ -28,7 +28,7 @@ export function LandingPage() {
         id="skip-to-id-AppContent"
         className={styles.LandingPageContent}
       >
-        <PageContentCell startWide={3}>
+        <PageContentCell>
           <Heading level={1} className="ams-mb--sm">
             Welkom op Mijn Amsterdam
           </Heading>
