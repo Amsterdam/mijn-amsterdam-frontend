@@ -25,7 +25,7 @@ export async function fetchBAG(
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
 
-  const params: BAGQueryParams<string> = {
+  const params: BAGQueryParams = {
     openbareruimteNaam: sourceAddress.straatnaam,
     huisnummer: sourceAddress.huisnummer,
     huisletter: sourceAddress.huisletter || undefined,

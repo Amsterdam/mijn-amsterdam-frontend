@@ -37,20 +37,18 @@ async function fetchPrivate(
             profileType: 'private',
           },
         ]);
-      } else {
-        return apiSuccessResult([
-          Object.assign(BAGLocation, { profileType: 'private' }),
-        ]);
       }
-    } else {
       return apiSuccessResult([
-        {
-          latlng: null,
-          address: null,
-          profileType: 'private',
-        },
+        Object.assign(BAGLocation, { profileType: 'private' }),
       ]);
     }
+    return apiSuccessResult([
+      {
+        latlng: null,
+        address: null,
+        profileType: 'private',
+      },
+    ]);
   }
 
   return apiDependencyError({ BRP });

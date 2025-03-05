@@ -67,7 +67,8 @@ if (client) {
 
   try {
     client.config.samplingPercentage = parseInt(
-      process.env.APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE ?? '100'
+      process.env.APPLICATIONINSIGHTS_SAMPLING_PERCENTAGE ?? '100',
+      10
     );
   } catch {
     client.config.samplingPercentage = 100;
