@@ -3,7 +3,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
-export default function ErfpachtDossiers() {
+export function ErfpachtDossiers() {
   const { ERFPACHTv2, dossiers, displayPropsDossiers, titleDossiers } =
     useErfpachtV2Data();
 

@@ -23,7 +23,7 @@ export function HistoricItemsMention() {
   );
 }
 
-export default function ThemaPaginaZorg() {
+export function ZorgThemaPagina() {
   const { isError, isLoading, regelingen, title, routes, tableConfig } =
     useZorgThemaData();
 

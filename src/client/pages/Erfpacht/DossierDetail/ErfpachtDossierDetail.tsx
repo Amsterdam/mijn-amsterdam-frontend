@@ -41,7 +41,7 @@ const loadingContentBarConfig: BarConfig = [
   ['14rem', '4rem', '4rem'],
 ];
 
-export default function ErfpachtDossierDetail() {
+export function ErfpachtDossierDetail() {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
