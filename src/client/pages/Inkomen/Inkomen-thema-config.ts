@@ -13,7 +13,6 @@ import {
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { ExternalUrls } from '../../config/external-urls';
 import { TrackingConfig } from '../../config/routes';
-import { ThemaTitles } from '../../config/thema';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
@@ -136,7 +135,7 @@ export const tableConfigSpecificaties = {
   },
 } as const;
 
-export function getInkomenListPageDocumentTitle() {
+export function getInkomenListPageDocumentTitle(themaTitle: string) {
   return <T extends Record<string, string>>(
     config: TrackingConfig,
     params: T | null
@@ -146,11 +145,13 @@ export function getInkomenListPageDocumentTitle() {
       'specificaties' | 'jaaropgaven'
     >;
     return kind in tableConfig
-      ? `${tableConfig[kind].title} | ${ThemaTitles.INKOMEN}`
-      : ThemaTitles.INKOMEN;
+      ? `${tableConfig[kind].title} | ${themaTitle}`
+      : themaTitle;
   };
 }
-export function getInkomenSpecificatiesListPageDocumentTitle() {
+export function getInkomenSpecificatiesListPageDocumentTitle(
+  themaTitle: string
+) {
   return <T extends Record<string, string>>(
     config: TrackingConfig,
     params: T | null
@@ -160,7 +161,7 @@ export function getInkomenSpecificatiesListPageDocumentTitle() {
       'lopende-aanvragen' | 'eerdere-aanvragen'
     >;
     return kind in tableConfigSpecificaties
-      ? `${tableConfigSpecificaties[kind].title} | ${ThemaTitles.INKOMEN}`
-      : ThemaTitles.INKOMEN;
+      ? `${tableConfigSpecificaties[kind].title} | ${themaTitle}`
+      : themaTitle;
   };
 }

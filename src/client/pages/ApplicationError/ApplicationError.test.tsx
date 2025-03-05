@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import ApplicationError from './ApplicationError';
+import { ApplicationError } from './ApplicationError';
 
 describe('ApplicationError', () => {
   it('Renders without crashing', () => {
