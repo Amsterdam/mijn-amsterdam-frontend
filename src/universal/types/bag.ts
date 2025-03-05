@@ -25,10 +25,10 @@ export interface BAGSourceData {
 }
 
 /** Query Parameters for doing Axios requests to BAG_ADRESSEERBARE_OBJECTEN. */
-export type BAGQueryParams<T = number> = {
+export type BAGQueryParams = {
   openbareruimteNaam?: string;
   postcode?: string;
-  huisnummer?: T;
+  huisnummer?: string;
   huisletter?: string;
   huisnummertoevoeging?: string;
 };

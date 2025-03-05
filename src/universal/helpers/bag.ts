@@ -20,18 +20,11 @@ const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
   },
   huisnummer: {
     pattern: /\d+/i,
-    formatter: (huisnummer) => parseInt(huisnummer),
   },
 };
 
 /** Extract an address from free form input. */
-export function extractAddressParts(
-  rawText: string
-): BAGQueryParams | undefined {
-  if (!rawText) {
-    return undefined;
-  }
-
+export function extractAddressParts(rawText: string): BAGQueryParams {
   const cleanText = rawText
     .trim()
     // Remove everything but alphanumeric, dash, dot, apostrophe and space.
@@ -39,29 +32,27 @@ export function extractAddressParts(
     .replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '')
     // Spaces to single space.
     .replace(/\s{2,}/g, ' ');
-
-  const [, result] = Object.entries(patterns).reduce(extract, [cleanText, {}]);
-  if (!(result.huisnummer && (result.openbareruimteNaam || result.postcode))) {
-    return undefined;
-  }
-
+  const [, result] = Object.entries(patterns).reduce(
+    extractAdressPartFromEntry,
+    [cleanText, {}]
+  );
   return result;
 }
 
-function extract(
-  acc: [string, BAGQueryParams],
+function extractAdressPartFromEntry(
+  addressParts: [string, BAGQueryParams],
   namedPattern: [string, ExtractUtils]
 ): [string, BAGQueryParams] {
   const [name, { pattern, formatter }] = namedPattern;
 
-  const [text, bagQueryParams] = acc;
+  const [text, bagQueryParams] = addressParts;
   if (!text) {
-    return acc;
+    return addressParts;
   }
 
   const match = text.match(pattern);
   if (!match) {
-    return acc;
+    return addressParts;
   }
 
   const matchedText = formatter ? formatter(match[0]) : match[0];

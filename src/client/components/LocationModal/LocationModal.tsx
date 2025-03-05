@@ -100,7 +100,12 @@ export function LocationModal({
     }
     if (isLocationModalOpen) {
       const querySearchAddress = extractAddressParts(address);
-      if (!querySearchAddress) {
+      if (
+        !(
+          querySearchAddress.huisnummer &&
+          (querySearchAddress.openbareruimteNaam || querySearchAddress.postcode)
+        )
+      ) {
         return;
       }
 

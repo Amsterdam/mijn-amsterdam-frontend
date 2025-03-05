@@ -126,17 +126,10 @@ describe('getLatLonByAddress', () => {
   });
 
   describe('extractAddressParts tests', () => {
-    test.each([[''], ['1AB'], ['1-2'], ['Amstel'], ['1023EH']])(
-      'Throws with input "%s"',
-      (input) => {
-        expect(extractAddressParts(input)).toBeUndefined();
-      }
-    );
-
     test('Extracts postal code at the beginning or end', () => {
       const expected: BAGQueryParams = {
         openbareruimteNaam: 'PATER V/D ELSENPLEIN',
-        huisnummer: 86,
+        huisnummer: '86',
         postcode: '1023EH',
       };
       expect(
@@ -152,91 +145,84 @@ describe('getLatLonByAddress', () => {
         'Amstel 1',
         {
           openbareruimteNaam: 'Amstel',
-          huisnummer: 1,
+          huisnummer: '1',
         },
       ],
       [
         'Burgemeester Röellstraat 44',
         {
           openbareruimteNaam: 'Burgemeester Röellstraat',
-          huisnummer: 44,
+          huisnummer: '44',
         },
       ],
       [
         'NDSM-straat 1',
         {
           openbareruimteNaam: 'NDSM-straat',
-          huisnummer: 1,
+          huisnummer: '1',
         },
       ],
       [
         '2e Kekerstraat 1',
         {
           openbareruimteNaam: '2e Kekerstraat',
-          huisnummer: 1,
-        },
-      ],
-      [
-        'Herengracht 23-1',
-        {
-          openbareruimteNaam: 'Herengracht',
-          huisnummer: 23,
+          huisnummer: '1',
         },
       ],
       [
         'Herengracht 23-1,',
         {
           openbareruimteNaam: 'Herengracht',
-          huisnummer: 23,
+          huisnummer: '23',
         },
       ],
       [
         'Insulindeweg 26A',
         {
           openbareruimteNaam: 'Insulindeweg',
-          huisnummer: 26,
+          huisnummer: '26',
         },
       ],
       [
         "'t Dijkhuis 40",
         {
           openbareruimteNaam: "'t Dijkhuis",
-          huisnummer: 40,
+          huisnummer: '40',
         },
       ],
       [
         'PATER V/D ELSENPLEIN 86',
         {
           openbareruimteNaam: 'PATER V/D ELSENPLEIN',
-          huisnummer: 86,
+          huisnummer: '86',
         },
       ],
       [
         'P/A ST. JACOBSLAAN 339',
         {
           openbareruimteNaam: 'P/A ST. JACOBSLAAN',
-          huisnummer: 339,
+          huisnummer: '339',
         },
       ],
       [
         'Amsterdam Rijnkanaalkade 1',
         {
           openbareruimteNaam: 'Amsterdam Rijnkanaalkade',
-          huisnummer: 1,
+          huisnummer: '1',
         },
       ],
       [
         '1023EH 23',
         {
           postcode: '1023EH',
-          huisnummer: 23,
+          huisnummer: '23',
         },
       ],
       [
         '1023 EH 5',
         {
           postcode: '1023EH',
-          huisnummer: 5,
+          huisnummer: '5',
         },
       ],
     ])('Address: "%s"', (input, expected) => {
@@ -246,7 +232,7 @@ describe('getLatLonByAddress', () => {
     test('Ignores city name and random characters', () => {
       const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
-        huisnummer: 1,
+        huisnummer: '1',
       };
       expect(
         extractAddressParts('Straatnaam 1, , Amsterdam _ ; ,')
@@ -256,7 +242,7 @@ describe('getLatLonByAddress', () => {
     test('More then one "Amsterdam" in input', () => {
       const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
-        huisnummer: 1,
+        huisnummer: '1',
       };
       expect(
         extractAddressParts('Straatnaam 1 Amsterdam Amsterdam amsterdam')
@@ -266,7 +252,7 @@ describe('getLatLonByAddress', () => {
     test('Whitespace is trimmed', () => {
       const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
-        huisnummer: 1,
+        huisnummer: '1',
       };
       expect(extractAddressParts('   Straatnaam 1   ')).toStrictEqual(expected);
     });
@@ -274,7 +260,7 @@ describe('getLatLonByAddress', () => {
     test('Extra whitespace in between is removed', () => {
       const expected: BAGQueryParams = {
         openbareruimteNaam: 'Straatnaam',
-        huisnummer: 1,
+        huisnummer: '1',
         postcode: '1023EH',
       };
       expect(extractAddressParts('Straatnaam  1 1023   EH')).toStrictEqual(
