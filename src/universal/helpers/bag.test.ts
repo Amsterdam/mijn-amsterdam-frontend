@@ -181,7 +181,6 @@ describe('getLatLonByAddress', () => {
         {
           openbareruimteNaam: 'Herengracht',
           huisnummer: 23,
-          huisnummertoevoeging: '1',
         },
       ],
       [
@@ -189,7 +188,6 @@ describe('getLatLonByAddress', () => {
         {
           openbareruimteNaam: 'Herengracht',
           huisnummer: 23,
-          huisnummertoevoeging: '1',
         },
       ],
       [
@@ -197,7 +195,6 @@ describe('getLatLonByAddress', () => {
         {
           openbareruimteNaam: 'Insulindeweg',
           huisnummer: 26,
-          huisnummertoevoeging: 'A',
         },
       ],
       [

@@ -22,7 +22,6 @@ const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
     pattern: /\d+/i,
     formatter: (huisnummer) => parseInt(huisnummer),
   },
-  huisnummertoevoeging: { pattern: /\b\w{1,5}\b/i },
 };
 
 /** Extract an address from free form input. */
