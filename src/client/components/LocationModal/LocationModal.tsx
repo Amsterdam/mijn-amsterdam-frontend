@@ -25,7 +25,6 @@ import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
-import { captureException } from '../../helpers/monitoring';
 
 function transformBagSearchResultsResponse(
   response: BAGSourceData,

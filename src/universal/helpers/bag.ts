@@ -49,14 +49,11 @@ export function extractAddressParts(
   return result;
 }
 
-type Text = string;
-
 function extract(
-  acc: [Text, BAGQueryParams],
+  acc: [string, BAGQueryParams],
   namedPattern: [string, ExtractUtils]
-): [Text, BAGQueryParams] {
-  const [name, utils] = namedPattern;
-  const { pattern, formatter } = utils;
+): [string, BAGQueryParams] {
+  const [name, { pattern, formatter }] = namedPattern;
 
   const [text, bagQueryParams] = acc;
   if (!text) {
