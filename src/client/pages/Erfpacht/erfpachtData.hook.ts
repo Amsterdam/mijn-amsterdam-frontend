@@ -30,7 +30,7 @@ export function useErfpachtV2Data() {
 
   return {
     title: ThemaTitles.ERFPACHTv2,
-    ERFPACHTv2,
+    erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
     openFacturen,
     dossiers,
