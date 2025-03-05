@@ -30,8 +30,6 @@ export const listPageTitle = {
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
 
-const textNoContent = 'U heeft geen huidige regelingen';
-
 export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
@@ -40,7 +38,6 @@ export const tableConfig = {
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.HuidigeRegelingen,
-    textNoContent,
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
@@ -49,7 +46,6 @@ export const tableConfig = {
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.EerdereRegelingen,
-    textNoContent,
   },
 } as const;
 
