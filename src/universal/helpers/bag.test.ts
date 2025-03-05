@@ -1,4 +1,8 @@
-import { extractAddress, getLatLonByAddress, isLocatedInWeesp } from './bag';
+import {
+  extractAddressParts,
+  getLatLonByAddress,
+  isLocatedInWeesp,
+} from './bag';
 import { BAGQueryParams, BAGSourceData } from '../types/bag';
 
 describe('getLatLonByAddress', () => {
@@ -121,24 +125,13 @@ describe('getLatLonByAddress', () => {
     });
   });
 
-  describe('extractAddress tests', () => {
-    test.each([[''], ['1AB'], ['1-2']])('Throws with input "%s"', (input) => {
-      expect(() => extractAddress(input)).toThrow();
-    });
-
-    test('Just streetname', () => {
-      expect(extractAddress('Amstel')).toStrictEqual({
-        openbareruimteNaam: 'Amstel',
-      });
-    });
-
-    test('Extracts just postal code', () => {
-      const expected: BAGQueryParams = {
-        postcode: '1023EH',
-      };
-      expect(extractAddress('1023EH')).toStrictEqual(expected);
-      expect(extractAddress('1023 EH')).toStrictEqual(expected);
-    });
+  describe('extractAddressParts tests', () => {
+    test.each([[''], ['1AB'], ['1-2'], ['Amstel'], ['1023EH']])(
+      'Throws with input "%s"',
+      (input) => {
+        expect(extractAddressParts(input)).toBeUndefined();
+      }
+    );
 
     test('Extracts postal code at the beginning or end', () => {
       const expected: BAGQueryParams = {
@@ -146,12 +139,12 @@ describe('getLatLonByAddress', () => {
         huisnummer: 86,
         postcode: '1023EH',
       };
-      expect(extractAddress('1023EH PATER V/D ELSENPLEIN 86')).toStrictEqual(
-        expected
-      );
-      expect(extractAddress('PATER V/D ELSENPLEIN 86 1023 EH')).toStrictEqual(
-        expected
-      );
+      expect(
+        extractAddressParts('1023EH PATER V/D ELSENPLEIN 86')
+      ).toStrictEqual(expected);
+      expect(
+        extractAddressParts('PATER V/D ELSENPLEIN 86 1023 EH')
+      ).toStrictEqual(expected);
     });
 
     test.each<[string, BAGQueryParams]>([
@@ -235,8 +228,22 @@ describe('getLatLonByAddress', () => {
           huisnummer: 1,
         },
       ],
+      [
+        '1023EH 23',
+        {
+          postcode: '1023EH',
+          huisnummer: 23,
+        },
+      ],
+      [
+        '1023 EH 5',
+        {
+          postcode: '1023EH',
+          huisnummer: 5,
+        },
+      ],
     ])('Address: "%s"', (input, expected) => {
-      expect(extractAddress(input)).toStrictEqual(expected);
+      expect(extractAddressParts(input)).toStrictEqual(expected);
     });
 
     test('Ignores city name and random characters', () => {
@@ -244,9 +251,9 @@ describe('getLatLonByAddress', () => {
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
       };
-      expect(extractAddress('Straatnaam 1, , Amsterdam _ ; ,')).toStrictEqual(
-        expected
-      );
+      expect(
+        extractAddressParts('Straatnaam 1, , Amsterdam _ ; ,')
+      ).toStrictEqual(expected);
     });
 
     test('More then one "Amsterdam" in input', () => {
@@ -255,7 +262,7 @@ describe('getLatLonByAddress', () => {
         huisnummer: 1,
       };
       expect(
-        extractAddress('Straatnaam 1 Amsterdam Amsterdam amsterdam')
+        extractAddressParts('Straatnaam 1 Amsterdam Amsterdam amsterdam')
       ).toStrictEqual(expected);
     });
 
@@ -264,7 +271,7 @@ describe('getLatLonByAddress', () => {
         openbareruimteNaam: 'Straatnaam',
         huisnummer: 1,
       };
-      expect(extractAddress('   Straatnaam 1   ')).toStrictEqual(expected);
+      expect(extractAddressParts('   Straatnaam 1   ')).toStrictEqual(expected);
     });
 
     test('Extra whitespace in between is removed', () => {
@@ -273,7 +280,9 @@ describe('getLatLonByAddress', () => {
         huisnummer: 1,
         postcode: '1023EH',
       };
-      expect(extractAddress('Straatnaam  1 1023   EH')).toStrictEqual(expected);
+      expect(extractAddressParts('Straatnaam  1 1023   EH')).toStrictEqual(
+        expected
+      );
     });
   });
 

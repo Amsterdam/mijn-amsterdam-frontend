@@ -8,7 +8,7 @@ import styles from './LocationModal.module.scss';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
 import { PUBLIC_API_URLS } from '../../../universal/config/url';
 import {
-  extractAddress,
+  extractAddressParts,
   getLatLngWithAddress,
   getLatLonByAddress,
   isLocatedInWeesp,
@@ -100,12 +100,8 @@ export function LocationModal({
       return;
     }
     if (isLocationModalOpen) {
-      let querySearchAddress;
-
-      try {
-        querySearchAddress = extractAddress(address);
-      } catch (err: unknown) {
-        captureException(err);
+      const querySearchAddress = extractAddressParts(address);
+      if (!querySearchAddress) {
         return;
       }
 
