@@ -20,7 +20,10 @@ import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
-  labels: DisplayProps<AfisBusinessPartnerDetailsTransformed>;
+  labels: Omit<
+    DisplayProps<AfisBusinessPartnerDetailsTransformed>,
+    'smallscreen'
+  >;
   isLoading: boolean;
   startCollapsed: boolean;
 };

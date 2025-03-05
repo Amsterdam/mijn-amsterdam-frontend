@@ -10,6 +10,7 @@ import {
 } from '../../../server/services/afis/afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import { DisplayProps } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { TrackingConfig } from '../../config/routes';
@@ -20,24 +21,40 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
+const displayPropsFacturenOpenBase: DisplayProps<AfisFactuurFrontend> = {
   factuurNummerEl: 'Factuurnummer',
   afzender: 'Afzender',
   paymentDueDateFormatted: 'Vervaldatum',
   statusDescription: 'Status',
 };
 
-const displayPropsFacturenAfgehandeld: DisplayProps<AfisFactuurFrontend> = {
+const displayPropsFacturenOpen = withOmitDisplayPropsForSmallScreens(
+  displayPropsFacturenOpenBase,
+  ['statusDescription', 'paymentDueDateFormatted', 'afzender']
+);
+
+const displayPropsFacturenAfgehandeldBase: DisplayProps<AfisFactuurFrontend> = {
   factuurNummerEl: 'Factuurnummer',
   afzender: 'Afzender',
   statusDescription: 'Status',
 };
 
-const displayPropsFacturenOvergedragen: DisplayProps<AfisFactuurFrontend> = {
-  factuurNummerEl: 'Factuurnummer',
-  afzender: 'Afzender',
-  statusDescription: 'Status',
-};
+const displayPropsFacturenAfgehandeld = withOmitDisplayPropsForSmallScreens(
+  displayPropsFacturenAfgehandeldBase,
+  ['statusDescription', 'afzender']
+);
+
+const displayPropsFacturenOvergedragenBase: DisplayProps<AfisFactuurFrontend> =
+  {
+    factuurNummerEl: 'Factuurnummer',
+    afzender: 'Afzender',
+    statusDescription: 'Status',
+  };
+
+const displayPropsFacturenOvergedragen = withOmitDisplayPropsForSmallScreens(
+  displayPropsFacturenOvergedragenBase,
+  ['statusDescription', 'afzender']
+);
 
 export const listPageTitle: Record<AfisFactuurState, string> = {
   open: 'Openstaande facturen',

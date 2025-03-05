@@ -3,6 +3,7 @@ import { generatePath } from 'react-router-dom';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
@@ -19,11 +20,17 @@ export const LinkListItems: LinkProps[] = [
   },
 ];
 
-const displayPropsBezwaren: DisplayProps<WithDetailLinkComponent<Bezwaar>> = {
-  detailLinkComponent: 'Zaaknummer',
-  ontvangstdatumFormatted: 'Ontvangen op',
-  omschrijving: 'Onderwerp',
-};
+const displayPropsBezwarenBase: DisplayProps<WithDetailLinkComponent<Bezwaar>> =
+  {
+    detailLinkComponent: 'Zaaknummer',
+    ontvangstdatumFormatted: 'Ontvangen op',
+    omschrijving: 'Onderwerp',
+  };
+
+const displayPropsBezwaren = withOmitDisplayPropsForSmallScreens(
+  displayPropsBezwarenBase,
+  ['omschrijving', 'ontvangstdatumFormatted']
+);
 
 export const routes = {
   listPage: AppRoutes['BEZWAREN/LIST'],
