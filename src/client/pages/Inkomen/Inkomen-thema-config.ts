@@ -6,12 +6,12 @@ import {
 } from '../../../server/services/wpi/wpi-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
-import { ExternalUrls } from '../../config/external-urls';
 import { TrackingConfig } from '../../config/routes';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
@@ -45,7 +45,7 @@ export const routes = {
   listPageJaaropgaven: jaaropgaven,
 } as const;
 
-const lopendeAanvragenDisplayProps: DisplayProps<
+const lopendeAanvragenDisplayPropsBase: DisplayProps<
   WithDetailLinkComponent<WpiRequestProcess>
 > = {
   detailLinkComponent: '',
@@ -53,7 +53,7 @@ const lopendeAanvragenDisplayProps: DisplayProps<
   statusId: 'Status',
 };
 
-const afgehandeldeAanvragenDisplayProps: DisplayProps<
+const afgehandeldeAanvragenDisplayPropsBase: DisplayProps<
   WithDetailLinkComponent<WpiRequestProcess>
 > = {
   detailLinkComponent: '',
@@ -61,7 +61,7 @@ const afgehandeldeAanvragenDisplayProps: DisplayProps<
   dateEndFormatted: 'Datum besluit',
 };
 
-export const specificatiesTableDisplayProps: DisplayProps<
+const specificatiesTableDisplayPropsBase: DisplayProps<
   WithDetailLinkComponent<
     WpiIncomeSpecificationTransformed & { documentUrl: string }
   >
@@ -71,7 +71,7 @@ export const specificatiesTableDisplayProps: DisplayProps<
   documentUrl: 'Documenten',
 };
 
-export const jaaropgavenTableDisplayProps: DisplayProps<
+const jaaropgavenTableDisplayPropsBase: DisplayProps<
   WithDetailLinkComponent<
     WpiIncomeSpecificationTransformed & { documentUrl: string }
   >
@@ -80,12 +80,32 @@ export const jaaropgavenTableDisplayProps: DisplayProps<
   documentUrl: 'Documenten',
 };
 
+const lopendeAanvragenDisplayProps = withOmitDisplayPropsForSmallScreens(
+  lopendeAanvragenDisplayPropsBase,
+  ['statusId', 'dateStartFormatted']
+);
+const afgehandeldeAanvragenDisplayProps = withOmitDisplayPropsForSmallScreens(
+  afgehandeldeAanvragenDisplayPropsBase,
+  ['statusId', 'dateStartFormatted', 'dateEndFormatted']
+);
+const specificatiesTableDisplayProps = withOmitDisplayPropsForSmallScreens(
+  specificatiesTableDisplayPropsBase,
+  ['category']
+);
+const jaaropgavenTableDisplayProps = withOmitDisplayPropsForSmallScreens(
+  jaaropgavenTableDisplayPropsBase,
+  []
+);
+
 export const linkListItems: LinkProps[] = [
   {
-    to: ExternalUrls.WPI_ALGEMEEN,
+    to: 'https://www.amsterdam.nl/werk-inkomen',
     title: 'Algemene informatie over Werk en Inkomen',
   },
-  { to: ExternalUrls.WPI_ALGEMEEN, title: 'Contact Werk en Inkomen' },
+  {
+    to: 'https://www.amsterdam.nl/werk-inkomen/contact/',
+    title: 'Contact Werk en Inkomen',
+  },
 ];
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
