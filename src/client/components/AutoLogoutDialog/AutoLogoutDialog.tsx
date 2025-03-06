@@ -147,10 +147,12 @@ export function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       showCloseButton={false}
       closeOnEscape={false}
       closeOnClickOutside={false}
+      pollingQuerySelector="#continue-button"
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (
             <MaButtonLink
+              id="continue-button"
               variant="primary"
               className="continue-button"
               href={
