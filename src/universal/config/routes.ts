@@ -15,10 +15,11 @@ export const AppRoutes = {
   'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/:kind/:page?',
 
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:variant/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
   'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
   'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
+  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:kind/:page?',
+  'INKOMEN/LIST': '/inkomen/:kind/:page?',
   INKOMEN: '/inkomen',
   AFIS: '/facturen-en-betalen',
   'AFIS/BETAALVOORKEUREN': '/facturen-en-betalen/betaalvoorkeuren',
@@ -28,6 +29,7 @@ export const AppRoutes = {
   BUURT: '/buurt',
   BEZWAREN: '/bezwaren',
   'BEZWAREN/DETAIL': '/bezwaren/:uuid',
+  'BEZWAREN/LIST': '/bezwaren/lijst/:kind/:page?',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',
@@ -40,20 +42,22 @@ export const AppRoutes = {
   'VERGUNNINGEN/DETAIL': '/vergunningen/:caseType/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
   'TOERISTISCHE_VERHUUR/VERGUNNING/LIST':
-    '/toeristische-verhuur/vergunning/list/:kind/:page?',
+    '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
   'TOERISTISCHE_VERHUUR/VERGUNNING':
     '/toeristische-verhuur/vergunning/:caseType/:id',
-  VAREN: '/passagiers-en-beroepsvaart',
   'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?',
   'VAREN/DETAIL': '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
+  VAREN: '/passagiers-en-beroepsvaart',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
   'PARKEREN/DETAIL': '/parkeren/:caseType/:id',
-  PARKEREN: '/parkeren',
   'PARKEREN/LIST': '/parkeren/lijst/:kind/:page?',
-  KLACHTEN: '/klachten/:page?',
+  PARKEREN: '/parkeren',
+  'KLACHTEN/LIST': '/klachten/lijst/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
+  KLACHTEN: '/klachten',
   HORECA: '/horeca/',
+  'HORECA/LIST': '/horeca/list/:kind/:page?',
   'HORECA/DETAIL': '/horeca/:caseType/:id',
   AVG: '/avg',
   'AVG/LIST': '/avg/lijst/:kind/:page?',
@@ -71,7 +75,7 @@ export const AppRoutes = {
   'ERFPACHTv2/ALLE_FACTUREN':
     '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
 
-  'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten/:page?',
+  'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten',
 
   ZAAK_STATUS: '/zaak-status',
 } as const;

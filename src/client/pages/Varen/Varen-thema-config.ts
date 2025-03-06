@@ -10,11 +10,13 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
+import { TrackingConfig } from '../../config/routes';
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   actief: 'actieve-vergunningen',
 } as const;
+
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
@@ -92,3 +94,30 @@ export const rederRegistratieLink: LinkProps = {
   to: `${formulierenBaseUrl}/VARRegistratieReder.aspx`,
   title: 'Onderneming registreren',
 } as const;
+
+export function getVarenListPageDocumentTitle(themaTitle: string) {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as ListPageParamKind;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${themaTitle}`
+      : themaTitle;
+  };
+}
+export function getVarenDetailPageDocumentTitle(themaTitle: string) {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    switch (params?.caseType) {
+      case 'ligplaatsvergunning':
+        return `Ligplaatsvergunning | ${themaTitle}`;
+      case 'exploitatievergunning':
+        return `Exploitatievergunning | ${themaTitle}`;
+      default:
+        return `Vergunning | ${themaTitle}`;
+    }
+  };
+}

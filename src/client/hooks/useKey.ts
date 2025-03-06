@@ -19,7 +19,6 @@ export function useKey(
     return () => {
       window.removeEventListener(eventName, eventListener);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 

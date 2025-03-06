@@ -1,3 +1,5 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import {
   DatasetCategoryId,
   DatasetControl,
@@ -40,6 +42,8 @@ export function DatasetPanel({
     activeDatasetIds
   );
 
+  const hasFilters = !!(dataset.filters && Object.keys(dataset.filters).length);
+
   const datasetControl = (
     <DatasetControlCheckbox
       isChecked={isChecked}
@@ -47,7 +51,7 @@ export function DatasetPanel({
       label={
         <>
           {getIcon(categoryId, datasetId) || ''}
-          <p>{dataset.title}</p>
+          <Paragraph>{dataset.title}</Paragraph>
         </>
       }
       isIndeterminate={isIndeterminate}
@@ -57,12 +61,11 @@ export function DatasetPanel({
     />
   );
 
-  const hasFilters = !!(dataset.filters && Object.keys(dataset.filters).length);
-
   const initialState =
     datasetId in activeFilters
       ? CollapsedState.Expanded
       : CollapsedState.Collapsed;
+
   return (
     <>
       {(!hasFilters || !isChecked) && datasetControl}
@@ -73,14 +76,10 @@ export function DatasetPanel({
         >
           {Object.entries(dataset.filters!).map(([propertyName, property]) => {
             const filterSelectionValues =
-              filterSelection[datasetId] &&
-              filterSelection[datasetId][propertyName] &&
-              filterSelection[datasetId][propertyName].values;
+              filterSelection?.[datasetId]?.[propertyName]?.values;
 
             const filterSelectionValuesRefined =
-              filterSelection[datasetId] &&
-              filterSelection[datasetId][propertyName] &&
-              filterSelection[datasetId][propertyName].valuesRefined;
+              filterSelection?.[datasetId]?.[propertyName]?.valuesRefined;
 
             const values = property.values || filterSelectionValues || {};
 

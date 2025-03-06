@@ -1,4 +1,4 @@
-import { linkListItems, tableConfig } from './config';
+import { linkListItems, tableConfig } from './Bodem-thema-config';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';

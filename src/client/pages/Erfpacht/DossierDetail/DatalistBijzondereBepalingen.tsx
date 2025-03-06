@@ -1,5 +1,4 @@
 import { ErfpachtDatalistProps } from './DatalistGeneral';
-import styles from './ErfpachtDossierDetail.module.scss';
 import { TableV2 } from '../../../components/Table/TableV2';
 
 export function DataTableBijzondereBepalingen({
@@ -13,7 +12,6 @@ export function DataTableBijzondereBepalingen({
     };
     return (
       <TableV2
-        className={styles.BijzondereBepalingen}
         items={dossier.bijzondereBepalingen}
         displayProps={displayPropsBijzondereBepalingen}
       />

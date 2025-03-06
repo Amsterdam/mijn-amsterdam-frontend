@@ -1,7 +1,11 @@
-import { setupMockApp } from '../setupMockApp';
-import { Bodem } from './Bodem';
+import { render } from '@testing-library/react';
 
-const testState: any = {
+import { AppRoutes } from '../../../universal/config/routes';
+import { componentCreator } from '../MockApp';
+import { Bodem } from './Bodem';
+import { AppState } from '../../../universal/types';
+
+const testState = {
   BODEM: {
     content: {
       metingen: [
@@ -135,28 +139,34 @@ const testState: any = {
     },
     status: 'OK',
   },
-};
+} as AppState;
 
 describe('Bodem', () => {
-  describe('with results', () => {
-    const renderBodem = setupMockApp(Bodem, 'BODEM', testState);
+  const createComponent = componentCreator({
+    component: Bodem,
+    routeEntry: AppRoutes.BODEM,
+    routePath: AppRoutes.BODEM,
+  });
 
+  describe('with results', () => {
     it('should show the right overviewpage', () => {
-      const { asFragment } = renderBodem();
+      const Component = createComponent(testState);
+      const { asFragment } = render(<Component />);
 
       expect(asFragment()).toMatchSnapshot();
     });
   });
 
   describe('without results', () => {
-    const renderBodem = setupMockApp(Bodem, 'BODEM', {
+    const Component = createComponent({
       BODEM: {
-        content: {},
+        content: { metingen: [] },
+        status: 'OK',
       },
-    });
+    } as unknown as AppState);
 
     it('should show the right overviewpage', () => {
-      const { asFragment } = renderBodem();
+      const { asFragment } = render(<Component />);
       expect(asFragment()).toMatchSnapshot();
     });
   });

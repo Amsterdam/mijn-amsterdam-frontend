@@ -1,5 +1,9 @@
+import {
+  BuildingsIcon,
+  HousingIcon,
+} from '@amsterdam/design-system-react-icons';
+
 import styles from './MyAreaLoadingIndicator.module.scss';
-import { IconHome, MapIconHomeCommercial } from '../../assets/icons';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 interface MyAreaLoadingIndicatorProps {
@@ -14,9 +18,9 @@ export default function MyAreaLoadingIndicator({
     <div className={styles.MyAreaLoader}>
       <span>
         {profileType === 'private' ? (
-          <IconHome aria-hidden="true" />
+          <HousingIcon aria-hidden="true" />
         ) : (
-          <MapIconHomeCommercial aria-hidden="true" />
+          <BuildingsIcon aria-hidden="true" />
         )}
         {label}
       </span>

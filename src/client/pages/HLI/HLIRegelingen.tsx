@@ -4,8 +4,9 @@ import { ListPageParamKind } from './HLI-thema-config';
 import { HistoricItemsMention } from './HLIThemaPagina';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+import { PageContentCell } from '../../components/Page/Page';
 
-export default function HLIRegelingen() {
+export function HLIRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
   const { regelingen, tableConfig, title, routes, isLoading, isError } =
     useHliThemaData();
@@ -17,7 +18,6 @@ export default function HLIRegelingen() {
         items={regelingen
           .filter(listPageTableConfig.filter)
           .sort(listPageTableConfig.sort)}
-        backLinkTitle={title}
         title={listPageTableConfig.title}
         appRoute={routes.listPage}
         appRouteParams={{ kind }}
@@ -26,8 +26,14 @@ export default function HLIRegelingen() {
         isLoading={isLoading}
         isError={isError}
         tableClassName={listPageTableConfig.className}
+        pageContentBottom={
+          <PageContentCell startWide={3} spanWide={8}>
+            {kind === 'eerdere-en-afgewezen-regelingen' && (
+              <HistoricItemsMention />
+            )}
+          </PageContentCell>
+        }
       />
-      {kind === 'eerdere-en-afgewezen-regelingen' && <HistoricItemsMention />}
     </>
   );
 }

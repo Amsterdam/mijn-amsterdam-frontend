@@ -82,7 +82,7 @@ export function getAvgStatusLineItems(
     lineItems.push(
       createStatusLineItem(
         'item-2',
-        'Extra informatie nodig',
+        'Meer informatie nodig',
         request.opschortenGestartOp,
         true,
         false,
@@ -108,7 +108,7 @@ export function getAvgStatusLineItems(
         ),
         createStatusLineItem(
           'item-2',
-          'Extra informatie nodig',
+          'Meer informatie nodig',
           request.opschortenGestartOp,
           !isDone,
           true,
@@ -119,7 +119,7 @@ export function getAvgStatusLineItems(
       lineItems.push(
         createStatusLineItem(
           'item-2',
-          'Extra informatie nodig',
+          'Meer informatie nodig',
           request.opschortenGestartOp,
           false,
           true

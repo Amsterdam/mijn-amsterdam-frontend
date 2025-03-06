@@ -1,6 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
+import {
+  ExternalLinkIcon,
+  LocationIcon,
+} from '@amsterdam/design-system-react-icons';
 import axios, { AxiosResponse } from 'axios';
 import Fuse from 'fuse.js';
 import { LatLngTuple } from 'leaflet';
@@ -16,7 +19,6 @@ import {
   useRecoilValueLoadable,
 } from 'recoil';
 
-import styles from './Search.module.scss';
 import {
   ApiBaseItem,
   ApiSearchConfig,
@@ -25,6 +27,7 @@ import {
   apiSearchConfigs,
   displayPath,
 } from './search-config';
+import styles from './Search.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse_DEPRECATED,
@@ -32,7 +35,6 @@ import {
 } from '../../../universal/helpers/api';
 import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState, AppStateKey } from '../../../universal/types/App.types';
-import { IconMarker } from '../../assets/icons';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
@@ -142,6 +144,11 @@ export function generateSearchIndexPageEntries(
     const apiContent = apiConfig.stateKey.endsWith('_BAG')
       ? appState[apiConfig.stateKey]
       : appState[apiConfig.stateKey]?.content;
+
+    if (!apiContent) {
+      return [];
+    }
+
     return apiConfig
       .getApiBaseItems(apiContent)
       .map((item) => generateSearchIndexPageEntry(item, apiConfig));
@@ -224,7 +231,11 @@ function transformSearchBagresponse(responseData: any): SearchEntry[] {
             })
           )}`,
           trailingIcon: (
-            <IconMarker width="14" height="14" className={styles.ExternalUrl} />
+            <LocationIcon
+              width="14"
+              height="14"
+              className={styles.ExternalUrl}
+            />
           ),
         };
       });
@@ -309,6 +320,7 @@ function useDynamicSearchEntries() {
 }
 
 let fuseInstance: any;
+
 export function useSearchIndex() {
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();
@@ -322,7 +334,7 @@ export function useSearchIndex() {
         if (searchEntry.url.startsWith(AppRoutes.BUURT)) {
           return Object.assign({}, searchEntry, {
             trailingIcon: (
-              <IconMarker
+              <LocationIcon
                 width="14"
                 height="14"
                 className={styles.ExternalUrl}
@@ -434,16 +446,30 @@ export function useSearchResults(
   };
 }
 
+const isSearchActiveAtom = atom<boolean>({
+  key: 'searchActive',
+  default: false,
+});
+
+export function useSearchActive() {
+  return useRecoilState(isSearchActiveAtom);
+}
+
+export function useDisplayLiveSearch() {
+  const location = useLocation();
+  const isDisplayLiveSearch = !matchPath(location.pathname, {
+    path: AppRoutes.SEARCH,
+  });
+  return isDisplayLiveSearch;
+}
+
 export function useSearchOnPage(): {
   isSearchActive: boolean;
   setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
   isDisplayLiveSearch: boolean;
 } {
-  const [isSearchActive, setSearchActive] = useState(false);
-  const location = useLocation();
-  const isDisplayLiveSearch = !matchPath(location.pathname, {
-    path: AppRoutes.SEARCH,
-  });
+  const [isSearchActive, setSearchActive] = useSearchActive();
+  const isDisplayLiveSearch = useDisplayLiveSearch();
 
   useEffect(() => {
     if (isSearchActive && isDisplayLiveSearch) {
@@ -454,7 +480,7 @@ export function useSearchOnPage(): {
   }, [isSearchActive, isDisplayLiveSearch]);
 
   useKeyUp((event) => {
-    if (event.key === 'z' && !isSearchActive) {
+    if (event.key === 'z' && !isSearchActive && isDisplayLiveSearch) {
       setSearchActive(true);
     }
   });

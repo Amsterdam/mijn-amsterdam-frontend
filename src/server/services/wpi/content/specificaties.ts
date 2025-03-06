@@ -7,7 +7,7 @@ import {
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import { ServiceResults } from '../../tips/tip-types';
+import { ServiceResults } from '../../content-tips/tip-types';
 import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
 import type {
   WpiIncomeSpecification,
@@ -117,7 +117,7 @@ export function transformIncomeSpecificationItem(
   sessionID: SessionID,
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
-  const displayDatePublished = defaultDateFormat(item.datePublished);
+  const datePublishedFormatted = defaultDateFormat(item.datePublished);
   const [{ url }] = addApiBasePathToDocumentUrls(sessionID, [item]);
   const categoryFromSource = item.variant;
 
@@ -126,6 +126,6 @@ export function transformIncomeSpecificationItem(
     category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
     url,
     download: documentDownloadName(item),
-    displayDatePublished,
+    datePublishedFormatted,
   };
 }

@@ -3,16 +3,15 @@ import { useParams } from 'react-router-dom';
 
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
-import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+import { PageContentCell } from '../../components/Page/Page';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 
-export default function ErfpachtFacturen() {
-  const { displayPropsAlleFacturen } = useErfpachtV2Data();
+export function ErfpachtFacturen() {
+  const { tableConfig, listPageParamKind, routes } = useErfpachtV2Data();
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
@@ -27,27 +26,28 @@ export default function ErfpachtFacturen() {
   );
 
   const dossier = dossierApiResponse.content;
+  const tableConfigFacturen = tableConfig?.[listPageParamKind.alleFacturen];
+  const displayProps = tableConfigFacturen?.displayProps ?? {};
 
   return (
     <ListPagePaginated
-      body={
+      pageContentTop={
         !!dossier && (
-          <Heading level={3} size="level-2">
-            {dossier.voorkeursadres}
-          </Heading>
+          <PageContentCell spanWide={6}>
+            <Heading level={3} size="level-2">
+              {dossier.voorkeursadres}
+            </Heading>
+          </PageContentCell>
         )
       }
       items={dossier?.facturen?.facturen ?? []}
-      title={`Alle ${
-        dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'facturen'
-      }`}
+      title={tableConfigFacturen?.title ?? 'Facturen'}
       errorText="We kunnen op dit moment geen facturen tonen."
       noItemsText="U heeft geen facturen."
-      appRoute={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
+      appRoute={tableConfigFacturen?.listPageRoute ?? ''}
       appRouteParams={{ dossierNummerUrlParam }}
-      appRouteBack={AppRoutes['ERFPACHTv2']}
-      displayProps={displayPropsAlleFacturen}
-      thema={Themas.ERFPACHTv2}
+      appRouteBack={routes.themaPage}
+      displayProps={displayProps}
       isLoading={isLoading(dossierApiResponse)}
       isError={isError(dossierApiResponse)}
     />

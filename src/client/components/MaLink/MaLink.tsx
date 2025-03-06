@@ -2,11 +2,15 @@ import { AnchorHTMLAttributes } from 'react';
 
 import { ButtonProps, Link, LinkProps } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import styles from './MaLink.module.scss';
 
-type MaClassNameVariant = 'fatNoUnderline' | 'noDefaultUnderline';
+type MaClassNameVariant =
+  | 'fatNoUnderline'
+  | 'noDefaultUnderline'
+  | 'noUnderline'
+  | 'fatNoDefaultUnderline';
 
 type MaLinkProps = LinkProps & {
   maVariant?: MaClassNameVariant;
@@ -15,6 +19,8 @@ type MaLinkProps = LinkProps & {
 const maClassName: Record<MaClassNameVariant, string> = {
   fatNoUnderline: 'MaRouterLink__no-underline-fat',
   noDefaultUnderline: 'MaRouterLink__no-default-underline',
+  fatNoDefaultUnderline: 'MaRouterLink__no-default-underline-fat',
+  noUnderline: 'MaRouterLink__no-underline',
 };
 
 export function MaLink({
@@ -45,11 +51,12 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
       {...rest}
       href={href}
       onClick={(event) => {
+        event.preventDefault();
+
         if (onClick) {
           onClick(event);
         }
 
-        event.preventDefault();
         history.push(href as string);
       }}
     />
@@ -80,8 +87,31 @@ export function MaButtonLink({
     className
   );
   return (
-    <a {...rest} className={classes} href={href}>
+    <a {...rest} className={classes} aria-hidden={isDisabled} href={href}>
       {children}
     </a>
+  );
+}
+
+export function MaButtonRouterLink({
+  href,
+  children,
+  className,
+  variant = 'primary',
+  ...rest
+}: MaButtonLinkProps) {
+  return (
+    <NavLink
+      {...rest}
+      className={classNames(
+        styles.MaButtonLink,
+        'ams-button',
+        `ams-button--${variant}`,
+        className
+      )}
+      to={href}
+    >
+      {children}
+    </NavLink>
   );
 }

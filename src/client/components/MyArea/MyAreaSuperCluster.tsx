@@ -16,6 +16,9 @@ import type {
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
 
+const ICON_SIZE = 40;
+const ICON_ANCHOR = 20;
+
 function createClusterMarker(
   feature: MaSuperClusterFeature,
   latlng: LatLngLiteral
@@ -23,8 +26,7 @@ function createClusterMarker(
   let icon;
   if (!feature?.properties.cluster) {
     const html = getIconHtml(feature);
-    const ICON_SIZE = 32;
-    const ICON_ANCHOR = 14;
+
     icon = L.divIcon({
       html: `<div role="button" aria-label="Toon meer informatie over ${feature.properties.datasetId} met id ${feature.properties.id}." class="${styles.MarkerClusterIconLabel}">${html}</div>`,
       className: styles.MarkerIcon,
@@ -43,8 +45,6 @@ function createClusterMarker(
           : 'large';
     const label = count.toString();
 
-    const ICON_SIZE = 40;
-    const ICON_ANCHOR = 20;
     icon = L.divIcon({
       className: classnames(
         styles.MarkerClusterIcon,
