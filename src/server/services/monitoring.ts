@@ -37,7 +37,6 @@ if (client) {
   ];
 
   const EXCLUDE_OUTGOING_DEPENDENCY: Record<string, string> = {
-    'GET /stadspas/rest/sales/v1/pashouder': '401',
     'POST /zorgned/persoonsgegevensNAW': '404',
     'POST /v2/track': '400',
   };

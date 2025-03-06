@@ -27,6 +27,11 @@ export const axiosRequest = axios.create({
   headers: { 'User-Agent': 'mijn-amsterdam-bff' },
 });
 
+export function isSuccessStatus(statusCode: number): boolean {
+  // eslint-disable-next-line no-magic-numbers
+  return statusCode >= 200 && statusCode < 300;
+}
+
 function getDebugResponseData(conf: AxiosRequestConfig) {
   return (responseData: any) => {
     logger.debug(
