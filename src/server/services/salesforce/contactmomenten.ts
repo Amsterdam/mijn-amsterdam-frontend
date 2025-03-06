@@ -27,13 +27,17 @@ function transformContactmomentenResponse(
   responseData: ContactMomentenResponseSource
 ) {
   if (responseData.results) {
-    return responseData.results.map((contactMoment) => ({
-      referenceNumber: contactMoment.nummer,
-      subject: contactMoment.onderwerp,
-      themaKanaal: contactMoment.kanaal,
-      datePublishedFormatted: defaultDateFormat(contactMoment.plaatsgevondenOp),
-      datePublished: contactMoment.plaatsgevondenOp,
-    }));
+    return responseData.results
+      .map((contactMoment) => ({
+        referenceNumber: contactMoment.nummer,
+        subject: contactMoment.onderwerp,
+        themaKanaal: contactMoment.kanaal,
+        datePublishedFormatted: defaultDateFormat(
+          contactMoment.plaatsgevondenOp
+        ),
+        datePublished: contactMoment.plaatsgevondenOp,
+      }))
+      .sort((a, b) => b.datePublished.localeCompare(a.datePublished));
   }
   return [];
 }

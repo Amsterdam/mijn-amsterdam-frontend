@@ -98,7 +98,7 @@ export const FeatureToggle = {
   subsidieActive: true,
 
   // Klant/Contactmomenten (Salesforce) patroon A
-  contactmomentenActive: !IS_PRODUCTION,
+  contactmomentenActive: true,
 
   // WPI Portaal
   svwiLinkActive: false, // NOTE: The status of this feature is unknown.
