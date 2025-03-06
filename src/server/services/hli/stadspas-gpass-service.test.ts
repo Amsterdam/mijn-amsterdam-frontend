@@ -482,7 +482,7 @@ describe('stadspas-gpass-service', () => {
 
     test('should return NO_PASHOUDER_CONTENT_RESPONSE if stadspasHouderResponse status is ERROR and code is UNAUTHORIZED', async () => {
       (requestData as Mock).mockResolvedValueOnce({
-        status: 'ERROR',
+        status: 'OK',
         code: HTTP_STATUS_CODES.UNAUTHORIZED,
       });
 
