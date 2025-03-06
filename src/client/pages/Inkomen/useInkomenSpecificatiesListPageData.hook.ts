@@ -25,8 +25,6 @@ export function useInkomenSpecificatiesListPageData() {
   }>();
   const { kind = listPageParamKind.uitkering, page = '1' } = params;
 
-  console.log('kind', kind, page);
-
   const isJaaropgaven = kind === listPageParamKind.jaaropgaven;
   const history = useHistory();
 
