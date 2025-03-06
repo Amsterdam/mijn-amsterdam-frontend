@@ -9,6 +9,7 @@ import { VergunningFrontend } from '../../../server/services/vergunningen/config
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types/App.types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
@@ -37,7 +38,7 @@ type VergunningPropsCommon = {
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-export const displayPropsHuidigeVergunningen: VergunningFrontendExpireableDisplayProps =
+const displayPropsHuidigeVergunningenBase: VergunningFrontendExpireableDisplayProps =
   {
     detailLinkComponent: 'Kenmerk',
     title: 'Omschrijving',
@@ -45,18 +46,34 @@ export const displayPropsHuidigeVergunningen: VergunningFrontendExpireableDispla
     dateEndFormatted: 'Einddatum',
   };
 
-export const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
+const displayPropsLopendeAanvragenBase: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
   displayStatus: 'Status',
   dateRequestFormatted: 'Aangevraagd op',
 };
 
-export const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
+const displayPropsEerdereVergunningenBase: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
   decision: 'Resultaat',
 };
+
+export const displayPropsHuidigeVergunningen =
+  withOmitDisplayPropsForSmallScreens(displayPropsHuidigeVergunningenBase, [
+    'dateStartFormatted',
+    'dateEndFormatted',
+  ]);
+
+export const displayPropsLopendeAanvragen = withOmitDisplayPropsForSmallScreens(
+  displayPropsLopendeAanvragenBase,
+  ['displayStatus', 'dateRequestFormatted']
+);
+
+export const displayPropsEerdereVergunningen =
+  withOmitDisplayPropsForSmallScreens(displayPropsEerdereVergunningenBase, [
+    'decision',
+  ]);
 
 export const listPageParamKind = {
   actual: 'huidige-vergunningen-en-ontheffingen',
