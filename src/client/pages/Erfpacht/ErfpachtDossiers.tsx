@@ -7,7 +7,6 @@ export function ErfpachtDossiers() {
     useErfpachtV2Data();
 
   const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtRechten];
-  console.log('tableConfigDossiers', tableConfigDossiers);
   const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};
 
   return (
