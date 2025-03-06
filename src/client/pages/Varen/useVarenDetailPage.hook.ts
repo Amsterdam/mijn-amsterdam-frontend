@@ -1,25 +1,39 @@
 import { useParams } from 'react-router-dom';
 
 import {
-  exploitatieVergunningWijzigen,
+  exploitatieVergunningWijzigenLink,
   ligplaatsVergunningLink,
 } from './Varen-thema-config';
 import { isError, isLoading } from '../../../universal/helpers/api';
+import { ButtonLinkProps } from '../../../universal/types';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 export function useVarenDetailPage() {
   const { VAREN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
+  const hasRegistratieReder = !!VAREN.content?.find(
+    (item) => item.caseType !== 'Varen registratie reder'
+  );
+
   const vergunning =
     VAREN.content
       ?.filter((item) => item.caseType !== 'Varen registratie reder')
       .find((item) => item.id === id) ?? null;
 
-  const buttonItems = [
-    vergunning ? exploitatieVergunningWijzigen(vergunning.key) : [],
-    ligplaatsVergunningLink,
-  ].flat();
+  const showButtons =
+    vergunning?.processed && vergunning.decision === 'Verleend';
+  const buttonItemsToShow: ButtonLinkProps[] = showButtons
+    ? [
+        exploitatieVergunningWijzigenLink(vergunning.key, 'Wijzigen'),
+        ligplaatsVergunningLink,
+      ]
+    : [];
+
+  const buttonItems = buttonItemsToShow.map((button) => ({
+    ...button,
+    isDisabled: !hasRegistratieReder,
+  }));
 
   return {
     vergunning,

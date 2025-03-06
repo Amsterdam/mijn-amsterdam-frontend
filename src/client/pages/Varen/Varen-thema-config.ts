@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
+import { isVergunning } from './helper';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -12,7 +13,7 @@ import {
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
-  completed: 'afgehandelde-aanvragen',
+  actief: 'actieve-vergunningen',
 } as const;
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
@@ -30,7 +31,6 @@ type TableConfig<T> = {
 };
 
 type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
-
 export const tableConfig: TableConfigByKind<
   WithDetailLinkComponent<VarenVergunningFrontend>
 > = {
@@ -48,11 +48,11 @@ export const tableConfig: TableConfigByKind<
     },
     ...tableConfigSort,
   },
-  [listPageParamKind.completed]: {
-    title: 'Afgehandelde aanvragen',
-    filter: (vergunning: VarenVergunningFrontend) => vergunning.processed,
+  [listPageParamKind.actief]: {
+    title: 'Actieve vergunningen',
+    filter: isVergunning,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
-      kind: listPageParamKind.completed,
+      kind: listPageParamKind.actief,
     }),
     displayProps: {
       detailLinkComponent: 'Naam vaartuig',
@@ -75,11 +75,12 @@ export const exploitatieVergunningAanvragen: LinkProps = {
   title: 'Exploitatievergunning aanvragen',
 } as const;
 
-export const exploitatieVergunningWijzigen: (key: string) => LinkProps = (
-  key
-) => ({
+export const exploitatieVergunningWijzigenLink: (
+  key: string,
+  title: string
+) => LinkProps = (key, title = 'Wijzigen') => ({
   to: `${formulierenBaseUrl}/VARExploitatievergunningWijzigen.aspx?guid=${key}`,
-  title: 'Wijzigen',
+  title,
 });
 
 export const ligplaatsVergunningLink: LinkProps = {
