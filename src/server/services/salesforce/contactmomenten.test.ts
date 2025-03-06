@@ -30,17 +30,17 @@ describe('Contactmomenten service', () => {
     expect(result.status).toBe('OK');
     expect(result.content).toEqual([
       {
-        datePublished: '2024-05-22 08:28:45',
-        datePublishedFormatted: '22 mei 2024',
-        referenceNumber: '10001875',
-        subject: 'Algemeen',
-        themaKanaal: 'Telefoon',
-      },
-      {
         datePublished: '2024-05-29 08:02:38',
         datePublishedFormatted: '29 mei 2024',
         referenceNumber: '00002032',
         subject: 'Meldingen',
+        themaKanaal: 'Telefoon',
+      },
+      {
+        datePublished: '2024-05-22 08:28:45',
+        datePublishedFormatted: '22 mei 2024',
+        referenceNumber: '10001875',
+        subject: 'Algemeen',
         themaKanaal: 'Telefoon',
       },
     ]);
