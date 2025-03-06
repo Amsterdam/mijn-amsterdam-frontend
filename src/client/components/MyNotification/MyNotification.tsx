@@ -57,14 +57,10 @@ export function MyNotification({
               return false;
             }}
           >
-            {notification.isAlert ? '⚠ ' : ''}
             {notification.title}
           </MaLink>
         ) : (
-          <Heading level={4}>
-            {notification.isAlert ? '⚠ ' : ''}
-            {notification.title}
-          </Heading>
+          <Heading level={4}>{notification.title}</Heading>
         )}
         <div className={styles.MetaInfoSecondary}>
           <em className={styles.ThemaIndication}>
@@ -127,8 +123,7 @@ export function MyNotification({
                 )}
                 {hasTipReason && (
                   <>
-                    {' '}
-                    &mdash;{' '}
+                    <br />
                     <MaLink
                       href="/"
                       aria-expanded={isTipReasonShown}
