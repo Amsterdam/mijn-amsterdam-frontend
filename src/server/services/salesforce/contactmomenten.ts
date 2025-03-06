@@ -4,7 +4,7 @@ import {
 } from './contactmomenten.types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { apiPostponeResult } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { encrypt } from '../../helpers/encrypt-decrypt';
@@ -37,7 +37,7 @@ function transformContactmomentenResponse(
         ),
         datePublished: contactMoment.plaatsgevondenOp,
       }))
-      .sort((a, b) => b.datePublished.localeCompare(a.datePublished));
+      .sort(dateSort('datePublished', 'desc'));
   }
   return [];
 }
