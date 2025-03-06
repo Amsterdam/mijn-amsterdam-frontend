@@ -14,7 +14,15 @@
       "code": "AMSTEG_06-30",
       "naam": "Tegoed automatisch laden",
       "omschrijving": "Tegoed automatisch laden",
-      "expiry_date": "2021-08-31T21:59:59.000Z",
+      "expiry_date": "2019-08-31T21:59:59.000Z",
+      "budget_assigned": 75,
+      "budget_balance": 22
+    },
+    {
+      "code": "AMSTEG_06-30",
+      "naam": "Tegoed automatisch laden",
+      "omschrijving": "Tegoed automatisch laden",
+      "expiry_date": "2020-08-31T21:59:59.000Z",
       "budget_assigned": 75,
       "budget_balance": 22
     }

@@ -2,68 +2,68 @@ import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
 import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
 
-export function extractAddress(rawAddress: string): BAGQueryParams {
-  // Remove everything but alphanumeric, dash, dot, apostrophe and space.
-  const address = rawAddress.replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '');
+type ExtractUtils = {
+  pattern: RegExp;
+  formatter?: (s: string) => unknown;
+};
 
-  const words = [];
-  const s = address.split(' ');
+// The order here is important since we delete our found pattern to make it easier for the next.
+const patterns: Partial<Record<keyof BAGQueryParams, ExtractUtils>> = {
+  postcode: {
+    pattern: /[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}/i,
+    // Postcode can have a space between numbers and letters.
+    formatter: (postcode: string) => postcode.replace(' ', ''),
+  },
+  openbareruimteNaam: {
+    // @ts-ignore unicode does works
+    pattern: /(?<![0-9a-z])([0-9]e)?[a-z_.'/\-\p{L} ]+(?![0-9a-z])/iu,
+  },
+  huisnummer: {
+    pattern: /\d+/i,
+  },
+};
 
-  if (s.length < 2) {
-    throw Error(
-      `Address should consist of minimally two parts. A streetname and a housenumber.
-      Address: '${address}'`
-    );
-  }
-
-  let i = 0;
-  const onDigit = new RegExp(/\d/);
-
-  for (; i < s.length; i++) {
-    const word = s[i];
-    if (word[0].match(onDigit)) {
-      // The first housenumber found, so there are no more streetname words left.
-      break;
-    }
-    words.push(word);
-  }
-
-  // We know now that we're past the street name so now we can index into the last identifying part.
-  const houseIdentifier = s[i];
-  if (!houseIdentifier) {
-    throw Error(
-      `No houseIdentifier part, can't parse incomplete address: '${address}'`
-    );
-  }
-
-  const [huisnummer, huisnummertoevoeging] =
-    splitHuisnummerFromToevoeging(houseIdentifier);
-
-  return {
-    openbareruimteNaam: words.join(' '),
-    huisnummer: parseInt(huisnummer),
-    huisnummertoevoeging,
-    // Leave out huisletter. This is used to look up a location on the map,
-    // and it's okay to show an approximate location.
-    huisletter: undefined,
-  };
+/** Extract an address from free form input. */
+export function extractAddressParts(rawText: string): BAGQueryParams {
+  const cleanText = rawText
+    .trim()
+    // Remove everything but alphanumeric, dash, dot, apostrophe and space.
+    // @ts-ignore unicode does work
+    .replace(/[^/'0-9-.\s\p{Script=Latin}+]/giu, '')
+    // Spaces to single space.
+    .replace(/\s{2,}/g, ' ');
+  const [, result] = Object.entries(patterns).reduce(
+    extractAddressPartFromEntry,
+    [cleanText, {}]
+  );
+  return result;
 }
 
-function splitHuisnummerFromToevoeging(
-  s: string
-): [string, string | undefined] {
-  const huisnummer = [];
-  const huisnummertoevoeging = [];
-  let i = 0;
+function extractAddressPartFromEntry(
+  addressParts: [string, BAGQueryParams],
+  namedPattern: [string, ExtractUtils]
+): [string, BAGQueryParams] {
+  const [name, { pattern, formatter }] = namedPattern;
 
-  // Matches something like 1, 2-5 or 3F.
-  const matches = s.match(/(\d+)-?(\d*|\w*)?/);
-  if (!matches) {
-    throw Error(
-      `Match failed for housenumber and/or toevoeging. Input string: '${s}'`
-    );
+  const [text, bagQueryParams] = addressParts;
+  if (!text) {
+    return addressParts;
   }
-  return [matches[1], matches[2]];
+
+  const match = text.match(pattern);
+  if (!match) {
+    return addressParts;
+  }
+
+  const matchedText = formatter ? formatter(match[0]) : match[0];
+
+  const newText = text.replace(pattern, '').trim();
+  const newAcc = {
+    ...bagQueryParams,
+    [name]: matchedText,
+  };
+
+  return [newText, newAcc];
 }
 
 export type BAGSearchAddress = string;
@@ -90,7 +90,8 @@ export function getMatchingBagResult(
       const isAddressMatch =
         adresseerbaarObject.openbareruimteNaam ===
           bagSearchAddress.openbareruimteNaam &&
-        adresseerbaarObject.huisnummer === bagSearchAddress.huisnummer &&
+        String(adresseerbaarObject.huisnummer) ===
+          bagSearchAddress.huisnummer &&
         adresseerbaarObject.huisletter ===
           (bagSearchAddress.huisletter ?? null);
 
@@ -113,9 +114,6 @@ export function getLatLngWithAddress(
 }
 
 function formatAddress(result: BAGAdreseerbaarObject): string {
-  if (result.huisletter) {
-    throw Error('Huisletter found but formatting not implemented.');
-  }
   if (result.huisnummertoevoeging) {
     return `${result.openbareruimteNaam} ${result.huisnummer}-${result.huisnummertoevoeging}`;
   }

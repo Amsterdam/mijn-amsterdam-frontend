@@ -141,7 +141,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
               class="ams-table"
             >
               <table
-                class="ams-table__table _TableV2_4c6825 _Stadspassen_2b0bd1"
+                class="ams-table__table _TableV2_4c6825 _Stadspassen_3b9c27"
               >
                 <thead
                   class="ams-table__header"
@@ -172,12 +172,12 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
                         class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
                       >
                         <span
-                          class="_Stadspas_owner_2b0bd1"
+                          class="_Stadspas_owner_3b9c27"
                         >
                           Stadspas van Kerub
                         </span>
                         <span
-                          class="_Stadspas_balance_2b0bd1"
+                          class="_Stadspas_balance_3b9c27"
                         >
                           Saldo €5,00
                         </span>
@@ -187,7 +187,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
                       class="ams-table__cell"
                     >
                       <span
-                        class="_StatusValue_2b0bd1"
+                        class="_StatusValue_3b9c27"
                       >
                         Actief
                       </span>
@@ -203,12 +203,12 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
                         class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
                       >
                         <span
-                          class="_Stadspas_owner_2b0bd1"
+                          class="_Stadspas_owner_3b9c27"
                         >
                           Stadspas van Lou
                         </span>
                         <span
-                          class="_Stadspas_balance_2b0bd1"
+                          class="_Stadspas_balance_3b9c27"
                         >
                           Saldo €4,00
                         </span>
@@ -218,7 +218,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
                       class="ams-table__cell"
                     >
                       <span
-                        class="_StatusValue_2b0bd1"
+                        class="_StatusValue_3b9c27"
                       >
                         Geblokkeerd
                       </span>
@@ -246,7 +246,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_2b0bd1"
+              class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_3b9c27"
             >
               <thead
                 class="ams-table__header"
@@ -304,7 +304,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
             class="ams-table"
           >
             <table
-              class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_2b0bd1"
+              class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_3b9c27"
             >
               <tbody
                 class="ams-table__body"
@@ -314,14 +314,14 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
           <p
             class="ams-paragraph"
           >
-            U heeft geen huidige regelingen
+            U heeft (nog) geen eerdere en afgewezen regelingen
           </p>
         </div>
       </div>
     </div>
   </main>
   <p
-    class="ams-paragraph _HistoricItemsMention_2b0bd1"
+    class="ams-paragraph _HistoricItemsMention_3b9c27"
   >
     U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.
   </p>

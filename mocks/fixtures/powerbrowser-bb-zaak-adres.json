@@ -2,14 +2,14 @@
   "mainTableName": "ADRESSEN",
   "records": [
     {
-      "fmtCpn": "Jan en allemanplein 58 1122AB Amsterdam",
+      "fmtCpn": "Oudezijds Voorburgwal 300 1012GL Amsterdam",
       "mainTableName": "ADRESSEN",
       "id": "-999752",
       "fields": [
         {
           "fieldName": "FMT_CAPTION",
-          "text": "Jan en allemanplein 58 1122AB Amsterdam",
-          "fieldValue": "Jan en allemanplein 58 1122AB Amsterdam"
+          "text": "Oudezijds Voorburgwal 300 1012GL Amsterdam",
+          "fieldValue": "Oudezijds Voorburgwal 300 1012GL Amsterdam"
         }
       ]
     }

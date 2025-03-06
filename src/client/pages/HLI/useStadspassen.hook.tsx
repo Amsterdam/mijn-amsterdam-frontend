@@ -1,7 +1,10 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { PasblokkadeByPasnummer } from '../../../server/services/hli/stadspas-types';
+import {
+  PasblokkadeByPasnummer,
+  StadspasFrontend,
+} from '../../../server/services/hli/stadspas-types';
 import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
@@ -10,7 +13,7 @@ export function useStadspassen() {
   const { data: passBlokkadeByPasnummer } = useBlockStadspas();
   const stadspassen = (HLI.content?.stadspas || []).map((pas) => {
     const isGeblokkeerd = passBlokkadeByPasnummer?.[pas.passNumber];
-    const stadspas = {
+    const stadspas: StadspasFrontend = {
       ...pas,
       actief: isGeblokkeerd ?? pas.actief,
     };
