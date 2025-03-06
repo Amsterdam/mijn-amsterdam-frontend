@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { generatePath } from 'react-router-dom';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
@@ -13,7 +14,6 @@ import {
   StadspasFrontend,
 } from './stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -88,7 +88,7 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
     return apiErrorResult(
       'Bad request: Failed to decrypt transactions key',
       null,
-      HTTP_STATUS_CODES.BAD_REQUEST
+      HttpStatusCode.BadRequest
     );
   }
 
@@ -102,7 +102,7 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
       return apiErrorResult(
         'Not authorized',
         null,
-        HTTP_STATUS_CODES.UNAUTHORIZED
+        HttpStatusCode.Unauthorized
       );
     }
   } else {
@@ -110,11 +110,7 @@ async function decryptEncryptedRouteParamAndValidateSessionIDStadspasTransaction
   }
 
   if (!administratienummer || !pasnummer) {
-    return apiErrorResult(
-      'Not authorized',
-      null,
-      HTTP_STATUS_CODES.UNAUTHORIZED
-    );
+    return apiErrorResult('Not authorized', null, HttpStatusCode.Unauthorized);
   }
 
   return apiSuccessResult({

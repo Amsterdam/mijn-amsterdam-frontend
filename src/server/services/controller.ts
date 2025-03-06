@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
@@ -60,7 +61,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { logger } from '../logging';
 
 // Default service call just passing requestID and query params as arguments
@@ -174,11 +174,7 @@ export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
-    return apiErrorResult(
-      'Not authorized',
-      null,
-      HTTP_STATUS_CODES.UNAUTHORIZED
-    );
+    return apiErrorResult('Not authorized', null, HttpStatusCode.Unauthorized);
   }
 
   const [tipNotifications, themaAndTipNotifications] = await Promise.all([
