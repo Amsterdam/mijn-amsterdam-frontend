@@ -6,7 +6,31 @@ import classnames from 'classnames';
 import styles from './Modal.module.scss';
 import { useKeyUp } from '../../hooks/useKey';
 
-function FocusTrap() {
+const POLL_INTERVAL_MS = 10;
+const FAIL_TIMEOUT_MS = 1000;
+
+function isElementOnPage(
+  query: string,
+  timeout: number = FAIL_TIMEOUT_MS,
+  interval: number = POLL_INTERVAL_MS
+): Promise<Element | null> {
+  return new Promise((resolve) => {
+    const startTime = Date.now();
+    function checkIfElementIsInDOM() {
+      const elem = document?.querySelector(query);
+      if (elem) {
+        resolve(elem); // Found the element
+      } else if (Date.now() - startTime > timeout) {
+        resolve(null); // Give up eventually
+      } else {
+        setTimeout(checkIfElementIsInDOM, interval); // check again every interval ms
+      }
+    }
+    checkIfElementIsInDOM(); // Initial check
+  });
+}
+
+function FocusTrapInner() {
   const element = document.getElementById('modal-dialog');
   element?.focus();
   const elements = element?.querySelectorAll(
@@ -51,32 +75,29 @@ function FocusTrap() {
       window.removeEventListener('keydown', handleTabKey);
     };
   }, []);
-
-  return null;
 }
 
-const POLL_INTERVAL_MS = 10;
-const FAIL_TIMEOUT_MS = 1000;
+function FocusTrap({
+  pollingQuerySelector,
+  giveUpOnReadyPollingAfterMs,
+}: {
+  pollingQuerySelector: string;
+  giveUpOnReadyPollingAfterMs: number;
+}) {
+  const [isReady, setIsReady] = useState(pollingQuerySelector ? false : true);
 
-function isElementOnPage(
-  query: string,
-  timeout: number = FAIL_TIMEOUT_MS,
-  interval: number = POLL_INTERVAL_MS
-): Promise<Element | null> {
-  return new Promise((resolve) => {
-    const startTime = Date.now();
-    function checkIfElementIsInDOM() {
-      const elem = document?.querySelector(query);
-      if (elem) {
-        resolve(elem); // Found the element
-      } else if (Date.now() - startTime > timeout) {
-        resolve(null); // Give up eventually
-      } else {
-        setTimeout(checkIfElementIsInDOM, interval); // check again every interval ms
-      }
+  useEffect(() => {
+    if (!isReady && pollingQuerySelector) {
+      // Delays the initialization of the focus trap. This is necessary because some dialog content is not yet rendered when the dialog is opened.
+      isElementOnPage(pollingQuerySelector, giveUpOnReadyPollingAfterMs).then(
+        () => {
+          setIsReady(true);
+        }
+      );
     }
-    checkIfElementIsInDOM(); // Initial check
-  });
+  }, []);
+
+  return isReady ? <FocusTrapInner /> : null;
 }
 
 const GIVE_UP_READY_POLLING_AFTER_MS = 5000;
@@ -92,7 +113,7 @@ interface ModalProps {
   showCloseButton?: boolean;
   closeOnEscape?: boolean;
   closeOnClickOutside?: boolean;
-  pollingQuerySelector?: string;
+  pollingQuerySelector: string;
   giveUpOnReadyPollingAfterMs?: number;
 }
 
@@ -111,7 +132,6 @@ export function Modal({
   giveUpOnReadyPollingAfterMs = GIVE_UP_READY_POLLING_AFTER_MS,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [isReady, setIsReady] = useState(pollingQuerySelector ? false : true);
 
   const keyHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -127,17 +147,6 @@ export function Modal({
   );
 
   useKeyUp(keyHandler);
-
-  useEffect(() => {
-    if (!isReady && pollingQuerySelector) {
-      // Delays the initialization of the focus trap. This is necessary because some dialog content is not yet rendered when the dialog is opened.
-      isElementOnPage(pollingQuerySelector, giveUpOnReadyPollingAfterMs).then(
-        () => {
-          setIsReady(true);
-        }
-      );
-    }
-  }, []);
 
   return (
     isOpen && (
@@ -161,7 +170,12 @@ export function Modal({
           )}
         >
           {children}
-          {isReady && <FocusTrap />}
+          {pollingQuerySelector && (
+            <FocusTrap
+              pollingQuerySelector={pollingQuerySelector}
+              giveUpOnReadyPollingAfterMs={giveUpOnReadyPollingAfterMs}
+            />
+          )}
         </Dialog>
       </div>
     )
