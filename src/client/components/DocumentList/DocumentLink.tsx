@@ -1,16 +1,16 @@
 import { useCallback, useState } from 'react';
 
 import { Icon } from '@amsterdam/design-system-react';
+import { HttpStatusCode } from 'axios';
 import classnames from 'classnames';
 
 import styles from './DocumentLink.module.scss';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { GenericDocument } from '../../../universal/types';
 import { IconAlert, IconDownload } from '../../assets/icons';
+import { captureException } from '../../helpers/monitoring';
 import { trackDownload } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useUserCity } from '../../hooks/useUserCity';
-import { captureException } from '../../helpers/monitoring';
 import { MaLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
@@ -69,7 +69,7 @@ export function DocumentLink({
         .then((res) => {
           setLoading(false);
 
-          if (res.status !== HTTP_STATUS_CODES.OK) {
+          if (res.status !== HttpStatusCode.Ok) {
             throw new Error(
               `Failed to download document. Error: ${res.statusText}, Code: ${res.status}`
             );

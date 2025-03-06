@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 
 import { getAuth } from '../auth/auth-helpers';
@@ -9,7 +10,6 @@ import {
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
-import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   handleFetchAfisBusinessPartner,
@@ -76,7 +76,7 @@ router.get(
     // See https://nodejs.org/api/net.html#net_socket_setnodelay_nodelay
     req.socket.setNoDelay(true);
     // Tell the client we respond with an event stream
-    res.writeHead(HTTP_STATUS_CODES.OK, {
+    res.writeHead(HttpStatusCode.Ok, {
       'Content-type': 'text/event-stream',
       'Cache-Control': 'no-cache, no-transform',
       Connection: 'keep-alive',
@@ -215,7 +215,7 @@ router.get(
         res.status(
           typeof response.code === 'number'
             ? response.code
-            : HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+            : HttpStatusCode.InternalServerError
         );
       }
 

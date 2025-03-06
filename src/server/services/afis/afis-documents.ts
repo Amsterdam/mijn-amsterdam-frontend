@@ -1,3 +1,5 @@
+import { HttpStatusCode } from 'axios';
+
 import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import {
   AfisArcDocID,
@@ -5,7 +7,6 @@ import {
   AfisDocumentIDSource,
   AfisFactuur,
 } from './afis-types';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { requestData } from '../../helpers/source-api-request';
@@ -32,7 +33,7 @@ export async function fetchAfisDocument(
     return apiErrorResult(
       'ArcDocumentID not found',
       null,
-      HTTP_STATUS_CODES.NOT_FOUND
+      HttpStatusCode.NotFound
     );
   }
 
