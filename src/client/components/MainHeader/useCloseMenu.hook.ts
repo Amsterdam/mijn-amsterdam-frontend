@@ -18,7 +18,7 @@ export function useCloseMenu() {
   }, []);
 
   const location = useLocation();
-  const [isSearchActive] = useSearchActive();
+  const [isSearchActive, setSearchActive] = useSearchActive();
 
   useEffect(() => {
     if (isSearchActive) {
@@ -28,6 +28,7 @@ export function useCloseMenu() {
 
   useEffect(() => {
     closeMenu();
+    setSearchActive(false);
   }, [location.pathname, closeMenu]);
 
   const keyHandler = useCallback(
