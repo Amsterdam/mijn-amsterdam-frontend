@@ -72,7 +72,6 @@ export function Dashboard() {
                     <MyNotification
                       notification={notification}
                       trackCategory="Dashboard / Actueel"
-                      smallVariant={true}
                     />
                   </OrderedList.Item>
                 );
