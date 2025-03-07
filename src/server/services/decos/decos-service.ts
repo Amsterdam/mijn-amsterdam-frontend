@@ -44,7 +44,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
@@ -202,9 +202,9 @@ async function transformDecosZaakResponse<
   // It depends on the query and resturned result to the decos api which field value ends up in the decosZaak.
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
   let decosZaak: DZ = {
-    id:
-      transformedFields.identifier?.replace(/\//g, '-') ??
-      'unknown-decoszaak-id',
+    id: hash(
+      `${transformedFields.identifier}${transformedFields.caseType}${transformedFields.dateRequest}`
+    ),
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
