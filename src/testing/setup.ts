@@ -10,6 +10,20 @@ const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
+// Turn off memoization to make tests more stateless.
+// Often tests pass or fail without a clear reason because of this caching.
+vi.mock('memoizee', async (importOriginal) => {
+  const actual: object = await importOriginal();
+  return {
+    ...actual,
+    default: (fn: { clear: () => undefined; delete: () => undefined }) => {
+      fn.clear = () => undefined;
+      fn.delete = () => undefined;
+      return fn;
+    },
+  };
+});
+
 vi.mock('../server/helpers/env.ts', async (importOriginal) => {
   const envModule: object = await importOriginal();
   return {

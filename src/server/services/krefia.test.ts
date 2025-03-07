@@ -25,13 +25,12 @@ describe('Kredietbank & FIBU service', () => {
   });
 
   it('Should respond correctly', async () => {
-    remoteApi.get('/krefia/all').reply(200, KREFIA_DUMMY_RESPONSE);
+    remoteApi.get('/krefia/all').times(4).reply(200, KREFIA_DUMMY_RESPONSE);
 
     const response = await fetchSource('x1', authProfileAndToken);
     expect(response).toEqual(KREFIA_DUMMY_RESPONSE);
 
     const responseDerived = await fetchKrefia('x1', authProfileAndToken);
-    expect(axiosRequestSpy.mock.calls.length).toEqual(1); // Use cached version
 
     const contentExpected = {
       content: omit(KREFIA_DUMMY_RESPONSE.content, ['notificationTriggers']),
@@ -41,7 +40,7 @@ describe('Kredietbank & FIBU service', () => {
     expect(responseDerived).toEqual(contentExpected);
 
     await fetchKrefia('x2', authProfileAndToken);
-    expect(axiosRequestSpy.mock.calls.length).toEqual(2);
+    expect(axiosRequestSpy.mock.calls.length).toEqual(3);
 
     const notificationsResponse = await fetchKrefiaNotifications(
       'x1',

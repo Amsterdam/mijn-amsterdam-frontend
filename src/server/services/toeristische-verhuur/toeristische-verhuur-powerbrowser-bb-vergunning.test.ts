@@ -43,7 +43,7 @@ describe('B&B Vergunningen service', () => {
     test('should return vergunningen if all fetches are successful', async () => {
       remoteApi
         .post(/\/powerbrowser/)
-        .times(2)
+        .times(3)
         .reply((uri) => {
           if (uri.includes('SearchRequest')) {
             return [200, { records: [{ id: 'test-person-id' }] }];

@@ -103,6 +103,10 @@ describe('Horeca service', () => {
   });
 
   it('should return the expected notifications', async () => {
+    remoteApi
+      .get(`/decosjoin/getvergunningen`)
+      .reply(200, vergunningenMockData);
+
     const result = await fetchHorecaNotifications('x', authProfileAndToken);
 
     expect(result.content).toMatchInlineSnapshot(`
