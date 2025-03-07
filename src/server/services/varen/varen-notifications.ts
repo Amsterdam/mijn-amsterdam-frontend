@@ -1,6 +1,10 @@
 import { generatePath } from 'react-router-dom';
 
-import { VarenVergunningFrontend } from './config-and-types';
+import {
+  VarenFrontend,
+  VarenRegistratieRederType,
+  VarenVergunningFrontend,
+} from './config-and-types';
 import { fetchVaren } from './varen';
 import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -12,7 +16,23 @@ import {
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
-export function createVarenNotifications(
+function createVarenRederRegisteredNotification(
+  zaak: VarenFrontend<VarenRegistratieRederType>
+): MyNotification {
+  return {
+    id: `varen-${zaak.id}-reder-notification`,
+    datePublished: zaak.dateRequestFormatted,
+    thema: Themas.VAREN,
+    title: `Reder geregistreerd`,
+    description: `U heeft zich geregistreerd.`,
+    link: {
+      to: AppRoutes.VAREN,
+      title: 'Bekijk details',
+    },
+  };
+}
+
+function createVarenNotifications(
   zaak: VarenVergunningFrontend
 ): MyNotification[] {
   const notifications = [];
@@ -57,8 +77,8 @@ export function createVarenNotifications(
       id: `varen-${zaak.id}-meerinformatienodig-notification`,
       datePublished: termijn.dateStart,
       thema: Themas.VAREN,
-      title: `Meer informatie nodig omtrent uw aanvraag`,
-      description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken`,
+      title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
+      description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.`,
       link: {
         to: ctaLinkToThemaOrDetail,
         title: 'Bekijk details',
@@ -93,11 +113,21 @@ export async function fetchVarenNotifications(
   if (varenResponse.status === 'ERROR') {
     return apiDependencyError({ varen: varenResponse });
   }
+  const notifications = [];
+
+  const rederRegistration = varenResponse.content.find(
+    (zaak) => zaak.caseType === 'Varen registratie reder'
+  );
+  if (rederRegistration) {
+    notifications.push(
+      createVarenRederRegisteredNotification(rederRegistration)
+    );
+  }
+
   const zaken = varenResponse.content.filter(
     (zaak) => zaak.caseType !== 'Varen registratie reder'
   );
-
-  const notifications = zaken.map(createVarenNotifications).flat();
+  notifications.push(...zaken.map(createVarenNotifications).flat());
 
   return apiSuccessResult({
     notifications,
