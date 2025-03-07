@@ -28,23 +28,39 @@ const client: appInsights.TelemetryClient | undefined =
 // See also: https://www.npmjs.com/package/applicationinsights
 
 if (client) {
-  const EXCLUDE_REQUESTS = [
-    'GET /api/v1/auth/check',
-    'GET /robots933456.txt',
-    'GET /admin/host/status',
-    'POST /admin/host/ping',
-    'POST /api/v1/services/telemetry/v2/track',
-  ];
+  // TODO MIJN-10074: Refactor when using validation with ZOD or other solution.
 
-  const EXCLUDE_OUTGOING_DEPENDENCY: Record<string, string> = {
-    'POST /v2/track': '400',
-  };
+  /** Example: "GET /api/users". This is how a 'name' is represented in telemetry data */
+  type MethodWithUrl = string;
+
+  /** Example: "404" */
+  type StatusCode = string;
+
+  let excludedRequests: MethodWithUrl[];
+  try {
+    excludedRequests = JSON.parse(
+      process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
+    );
+  } catch (err) {
+    logger.error(err);
+    excludedRequests = [];
+  }
+
+  let excludedOutoingDependencies: Record<MethodWithUrl, StatusCode>;
+  try {
+    excludedOutoingDependencies = JSON.parse(
+      process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '{}'
+    );
+  } catch (err) {
+    logger.error(err);
+    excludedOutoingDependencies = {};
+  }
 
   client.addTelemetryProcessor((envelope) => {
     if (envelope?.data?.baseType === 'RequestData') {
       const reqData = envelope.data.baseData as RequestData;
 
-      if (EXCLUDE_REQUESTS.includes(reqData.name)) {
+      if (excludedRequests.includes(reqData.name)) {
         // Do not send telemetry.
         return false;
       }
@@ -53,7 +69,7 @@ if (client) {
     if (envelope?.data?.baseType === 'RemoteDependencyData') {
       const reqData = envelope.data.baseData as RemoteDependencyData;
 
-      if (EXCLUDE_OUTGOING_DEPENDENCY[reqData.name] === reqData.resultCode) {
+      if (excludedOutoingDependencies[reqData.name] === reqData.resultCode) {
         // Do not send telemetry.
         return false;
       }
