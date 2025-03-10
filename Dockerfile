@@ -9,6 +9,8 @@ FROM node:23.6.0 AS updated-local
 ENV TZ=Europe/Amsterdam
 ENV CI=true
 
+RUN sed -i 's|http:|https:|' /etc/apt/sources.list.d/*.sources
+
 RUN apt-get update \
   && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
