@@ -62,10 +62,10 @@ export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
   eniNumber: string | null;
   permitReference: string | null;
   numberOfSeats: number | null; // 001 seats
-  vesselHeight: number | null; // 0.01 meters
-  vesselDepth: number | null; // 0.01 meters
-  vesselWidth: number | null; // 0.01 meters
-  vesselLength: number | null; // 0.01 meters
+  vesselHeight: string | null; // 0.01 meters
+  vesselDepth: string | null; // 0.01 meters
+  vesselWidth: string | null; // 0.01 meters
+  vesselLength: string | null; // 0.01 meters
   vesselName: string | null;
 };
 
