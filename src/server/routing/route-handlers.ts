@@ -60,6 +60,7 @@ export function verifyAuthenticated(
             isAuthenticated: true,
             profileType,
             authMethod,
+            expiresAt: auth.expiresAt,
           })
         );
       }
