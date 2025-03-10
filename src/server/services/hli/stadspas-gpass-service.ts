@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios';
-import { parseISO } from 'date-fns';
 import { isAfter } from 'date-fns';
 import memoizee from 'memoizee';
 
@@ -84,7 +83,7 @@ function transformBudget(budget: StadspasDetailBudgetSource) {
 function transformStadspasResponse(
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource,
-  securityCode: SecurityCode
+  securityCode?: SecurityCode
 ) {
   if (
     typeof gpassStadspasResonseData === 'object' &&
@@ -109,7 +108,7 @@ function transformStadspasResponse(
       passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
       actief: gpassStadspasResonseData.actief,
-      securityCode,
+      securityCode: securityCode ?? null,
     };
 
     return stadspasTransformed;
