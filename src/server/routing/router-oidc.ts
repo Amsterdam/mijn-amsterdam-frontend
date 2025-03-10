@@ -81,6 +81,20 @@ oidcRouter.get(
     });
   }
 );
+oidcRouter.get(
+  authRoutes.AUTH_BASE_DIGID + '/refresh',
+  async (req: Request, res: Response) => {
+    // if (req.oidc.accessToken?.isExpired?.()) {
+    // Assigns the newly aquired access_token to the oidc context.
+    try {
+      await req.oidc.accessToken?.refresh?.();
+    } catch (error) {
+      return res.send(error);
+    }
+    // }
+    return res.send('OKIDO - ' + req.oidc.accessToken?.isExpired?.());
+  }
+);
 
 oidcRouter.get(
   authRoutes.AUTH_LOGIN_DIGID,
