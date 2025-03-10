@@ -87,7 +87,11 @@ oidcRouter.get(
     // if (req.oidc.accessToken?.isExpired?.()) {
     // Assigns the newly aquired access_token to the oidc context.
     try {
-      await req.oidc.accessToken?.refresh?.();
+      await req.oidc.accessToken?.refresh?.({
+        tokenEndpointParams: {
+          refresh_token: req.oidc.accessToken.access_token,
+        },
+      });
     } catch (error) {
       const _error = error as Error;
       const err = {
