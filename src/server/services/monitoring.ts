@@ -30,55 +30,54 @@ const client: appInsights.TelemetryClient | undefined =
 if (client) {
   // TODO MIJN-10074: Refactor when using validation with ZOD or other solution.
 
-  type RouteSegment = string;
-  type StatusCode = string;
-
-  let excludedRequestsSegments: RouteSegment[];
+  // Example: "GET /api/users". This is how a 'name' is represented in telemetry data
+  let excludedRequests: string[];
   try {
-    excludedRequestsSegments = JSON.parse(
+    excludedRequests = JSON.parse(
       process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
     );
   } catch (err) {
     logger.error(err);
-    excludedRequestsSegments = [];
+    excludedRequests = [];
   }
 
-  let excludedOutoingDependencies: Record<RouteSegment, StatusCode>;
+  let excludedOutoingDependencies: Array<{
+    method: string;
+    url: string;
+    statusCode: string;
+  }>;
   try {
     excludedOutoingDependencies = JSON.parse(
-      process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '{}'
+      process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]'
     );
   } catch (err) {
     logger.error(err);
-    excludedOutoingDependencies = {};
+    excludedOutoingDependencies = [];
   }
 
   client.addTelemetryProcessor((envelope) => {
     const SEND_TELEMETRY = true;
-    const DISCARD_TELEMTRY = false;
+    const DISCARD_TELEMETRY = false;
 
     if (envelope?.data?.baseType === 'RequestData') {
       const reqData = envelope.data.baseData as RequestData;
 
-      for (const excludedSegment of excludedRequestsSegments) {
-        if (reqData.name.includes(excludedSegment)) {
-          return DISCARD_TELEMTRY;
-        }
+      if (excludedRequests.includes(reqData.name)) {
+        return DISCARD_TELEMETRY;
       }
     }
 
     if (envelope?.data?.baseType === 'RemoteDependencyData') {
       const reqData = envelope.data.baseData as RemoteDependencyData;
+      const [method, route] = reqData.name.split(' ');
 
-      for (const excludedNameSegment of Object.keys(
-        excludedOutoingDependencies
-      )) {
+      for (const excludeReqParts of excludedOutoingDependencies) {
         if (
-          reqData.name.includes(excludedNameSegment) &&
-          excludedOutoingDependencies[excludedNameSegment] ===
-            reqData.resultCode
+          route.includes(excludeReqParts.url) &&
+          method === excludeReqParts.method &&
+          reqData.resultCode === excludeReqParts.statusCode
         ) {
-          return DISCARD_TELEMTRY;
+          return DISCARD_TELEMETRY;
         }
       }
     }
