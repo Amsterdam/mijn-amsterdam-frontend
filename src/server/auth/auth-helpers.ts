@@ -101,7 +101,7 @@ export function getAuth(req: Request) {
   return {
     token: accessToken,
     profile,
-    expiresAt: maSession.expires_at,
+    expiresAt: tokenData.expires_at,
   };
 }
 
