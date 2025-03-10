@@ -182,6 +182,13 @@ describe('stadspas-gpass-service', () => {
         passNumberComplete: '12345-67890',
         securityCode: '0123456',
       });
+
+      const transformedResponseNoSecurityCode =
+        forTesting.transformStadspasResponse(
+          gpassStadspasResonseData,
+          pashouder
+        );
+      expect(transformedResponseNoSecurityCode.securityCode).toBeNull();
     });
 
     test('should return input if not an object with pasnummer property', () => {
@@ -199,8 +206,7 @@ describe('stadspas-gpass-service', () => {
 
       const transformedResponse = forTesting.transformStadspasResponse(
         gpassStadspasResonseData,
-        pashouder,
-        '0123456'
+        pashouder
       );
       expect(transformedResponse).toEqual(gpassStadspasResonseData);
     });
