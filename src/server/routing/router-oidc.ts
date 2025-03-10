@@ -89,7 +89,13 @@ oidcRouter.get(
     try {
       await req.oidc.accessToken?.refresh?.();
     } catch (error) {
-      return res.send(error);
+      const _error = error as Error;
+      const err = {
+        name: _error.name,
+        name2: _error.toString(),
+        stack: _error.stack,
+      };
+      return res.send(err);
     }
     // }
     return res.send('OKIDO - ' + req.oidc.accessToken?.isExpired?.());
