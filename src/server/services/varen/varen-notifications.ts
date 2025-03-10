@@ -47,54 +47,42 @@ function createVarenNotifications(
   const notifications = zaak.steps
     .filter((step) => step.isChecked)
     .map((step) => {
+      const baseNotification = {
+        datePublished: step.datePublished,
+        thema: Themas.VAREN,
+        link: {
+          to: ctaLinkToThemaOrDetail,
+          title: 'Bekijk details',
+        },
+      };
       switch (step.status) {
         case 'Ontvangen':
           return {
+            ...baseNotification,
             id: `varen-${zaak.id}-ontvangen-notification`,
-            datePublished: step.datePublished,
-            thema: Themas.VAREN,
             title: `Aanvraag ${zaak.caseType} ontvangen`,
             description: `Wij hebben uw aanvraag ontvangen.`,
-            link: {
-              to: ctaLinkToThemaOrDetail,
-              title: 'Bekijk details',
-            },
           };
         case 'In behandeling':
           return {
+            ...baseNotification,
             id: `varen-${zaak.id}-inbehandeling-notification`,
-            datePublished: step.datePublished,
-            thema: Themas.VAREN,
             title: `Aanvraag ${zaak.caseType} in behandeling`,
             description: `Wij hebben uw aanvraag in behandeling genomen.`,
-            link: {
-              to: ctaLinkToThemaOrDetail,
-              title: 'Bekijk details',
-            },
           };
         case 'Meer informatie nodig':
           return {
+            ...baseNotification,
             id: `varen-${zaak.id}-meerinformatienodig-notification`,
-            datePublished: step.datePublished,
-            thema: Themas.VAREN,
             title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
             description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.`,
-            link: {
-              to: ctaLinkToThemaOrDetail,
-              title: 'Bekijk details',
-            },
           };
         case 'Besluit':
           return {
+            ...baseNotification,
             id: `varen-${zaak.id}-afgehandeld-notification`,
-            datePublished: step.datePublished,
-            thema: Themas.VAREN,
             title: `Aanvraag ${zaak.caseType} afgehandeld`,
             description: `Wij hebben uw aanvraag afgehandeld.`,
-            link: {
-              to: ctaLinkToThemaOrDetail,
-              title: 'Bekijk details',
-            },
           };
       }
     });
