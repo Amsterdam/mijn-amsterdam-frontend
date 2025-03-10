@@ -294,6 +294,9 @@ components:
         description:
           type: string
           nullable: true
+        title:
+          type: string
+          nullable: true
         discountTitle:
           type: string
           nullable: true
