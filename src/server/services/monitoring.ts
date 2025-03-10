@@ -30,23 +30,20 @@ const client: appInsights.TelemetryClient | undefined =
 if (client) {
   // TODO MIJN-10074: Refactor when using validation with ZOD or other solution.
 
-  /** Example: "GET /api/users". This is how a 'name' is represented in telemetry data */
-  type MethodWithUrl = string;
-
-  /** Example: "404" */
+  type RouteSegment = string;
   type StatusCode = string;
 
-  let excludedRequests: MethodWithUrl[];
+  let excludedRequestsSegments: RouteSegment[];
   try {
-    excludedRequests = JSON.parse(
+    excludedRequestsSegments = JSON.parse(
       process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
     );
   } catch (err) {
     logger.error(err);
-    excludedRequests = [];
+    excludedRequestsSegments = [];
   }
 
-  let excludedOutoingDependencies: Record<MethodWithUrl, StatusCode>;
+  let excludedOutoingDependencies: Record<RouteSegment, StatusCode>;
   try {
     excludedOutoingDependencies = JSON.parse(
       process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '{}'
@@ -57,26 +54,36 @@ if (client) {
   }
 
   client.addTelemetryProcessor((envelope) => {
+    const SEND_TELEMETRY = true;
+    const DISCARD_TELEMTRY = false;
+
     if (envelope?.data?.baseType === 'RequestData') {
       const reqData = envelope.data.baseData as RequestData;
 
-      if (excludedRequests.includes(reqData.name)) {
-        // Do not send telemetry.
-        return false;
+      for (const excludedSegment of excludedRequestsSegments) {
+        if (reqData.name.includes(excludedSegment)) {
+          return DISCARD_TELEMTRY;
+        }
       }
     }
 
     if (envelope?.data?.baseType === 'RemoteDependencyData') {
       const reqData = envelope.data.baseData as RemoteDependencyData;
 
-      if (excludedOutoingDependencies[reqData.name] === reqData.resultCode) {
-        // Do not send telemetry.
-        return false;
+      for (const excludedNameSegment of Object.keys(
+        excludedOutoingDependencies
+      )) {
+        if (
+          reqData.name.includes(excludedNameSegment) &&
+          excludedOutoingDependencies[excludedNameSegment] ===
+            reqData.resultCode
+        ) {
+          return DISCARD_TELEMTRY;
+        }
       }
     }
 
-    // Send telemetry.
-    return true;
+    return SEND_TELEMETRY;
   });
 
   try {
