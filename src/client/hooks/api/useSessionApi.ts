@@ -14,16 +14,20 @@ import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
 import { ApiRequestOptions, useDataApi } from './useDataApi';
 
+export const ONE_SECOND_MS = 1000;
+
 export type SessionData = {
   isAuthenticated: boolean;
   profileType: ProfileType | null;
   authMethod: AuthProfile['authMethod'] | null;
+  expiresAt: number;
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   profileType: null,
   authMethod: null,
+  expiresAt: -1,
 };
 
 export interface SessionState extends SessionData {
