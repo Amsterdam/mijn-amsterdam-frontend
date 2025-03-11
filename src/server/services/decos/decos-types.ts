@@ -191,7 +191,6 @@ export interface DecosZaakBase {
   dateEnd: string | null;
 
   decision: string | null;
-  description: string;
 
   // Url to fetch vergunnungen for a specific Zaak.
   fetchDocumentsUrl: string;
@@ -209,9 +208,6 @@ export interface DecosZaakBase {
   // WorkflowStep statusses
   statusDates: ZaakStatusDate[];
   termijnDates: ZaakTermijnDate[];
-
-  paymentStatus: string | null;
-  paymentMethod: string | null;
 }
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
 export type ZaakStatus =
