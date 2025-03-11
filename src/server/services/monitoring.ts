@@ -43,7 +43,7 @@ if (client) {
 
   let excludedOutoingDependencies: Array<{
     method: string;
-    url: string;
+    routeSegment: string;
     statusCode: string;
   }>;
   try {
@@ -73,7 +73,7 @@ if (client) {
 
       for (const excludeReqParts of excludedOutoingDependencies) {
         if (
-          route.includes(excludeReqParts.url) &&
+          route.includes(excludeReqParts.routeSegment) &&
           method === excludeReqParts.method &&
           reqData.resultCode === excludeReqParts.statusCode
         ) {
