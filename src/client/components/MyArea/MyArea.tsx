@@ -36,7 +36,7 @@ import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButt
 import { MyAreaDatasets } from './MyAreaDatasets';
 import HomeControlButton from './MyAreaHomeControlButton';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import { AmsMainMenuClassname } from '../MainMenu/MainMenu';
+import { AmsMainMenuClassname } from '../MainHeader/MainHeader';
 
 const baseLayerOptions: TileLayerOptions = {
   subdomains: ['t1', 't2', 't3', 't4'],
