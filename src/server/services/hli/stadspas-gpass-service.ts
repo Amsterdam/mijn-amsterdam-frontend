@@ -146,6 +146,7 @@ export async function fetchStadspassenByAdministratienummer(
       url: GPASS_ENDPOINT_PASHOUDER,
       validateStatus: (statusCode) =>
         isSuccessStatus(statusCode) ||
+        // 401 means there is no record available in the GPASS api for the requested administratienummer.
         statusCode === HttpStatusCode.Unauthorized,
       headers,
       params: {
