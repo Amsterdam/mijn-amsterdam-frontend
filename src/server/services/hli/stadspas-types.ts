@@ -157,7 +157,7 @@ export interface StadspasBudget {
 }
 
 export interface StadspasOwner {
-  initials: string;
+  initials: string | null;
   firstname: string;
   infix?: string;
   lastname: string;

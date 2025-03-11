@@ -337,6 +337,7 @@ components:
       properties:
         initials:
           type: string
+          nullable: true
         firstname:
           type: string
         infix:
