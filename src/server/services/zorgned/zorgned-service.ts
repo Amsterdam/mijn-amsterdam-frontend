@@ -348,6 +348,7 @@ export async function fetchPersoonsgegevensNAW_(
       return `${requestConfig.url}/persoonsgegevensNAW`;
     },
     validateStatus: (statusCode) =>
+      // 404 means there is no record available in the ZORGNED api for the requested BSN
       isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
     data: {
       burgerservicenummer: userID,

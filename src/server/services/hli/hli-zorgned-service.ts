@@ -56,14 +56,6 @@ export async function fetchAdministratienummer(
     return apiSuccessResult(administratienummer);
   }
 
-  if (
-    response.status === 'ERROR' &&
-    response.code === HttpStatusCode.NotFound
-  ) {
-    // 404 means there is no record available in the ZORGNED api for the requested BSN
-    return apiSuccessResult(administratienummer);
-  }
-
   return response;
 }
 

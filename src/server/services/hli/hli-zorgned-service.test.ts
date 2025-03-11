@@ -48,42 +48,56 @@ describe('hli-zorgned-service', () => {
     expect(response2).toBe(null);
   });
 
-  test('fetchAdministratienummer success', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        clientidentificatie: 567890,
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
+  describe('fetchAdministratienummer', () => {
+    const persoongegevensURL = '/zorgned/persoonsgegevensNAW';
 
-    const response = await fetchAdministratienummer(
-      'x0xx',
-      authProfileAndToken
-    );
+    test('Success response', async () => {
+      remoteApi.post(persoongegevensURL).reply(200, {
+        persoon: {
+          clientidentificatie: 567890,
+        },
+      } as ZorgnedPersoonsgegevensNAWResponse);
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": "03630000567890",
-        "status": "OK",
-      }
-    `);
-  });
+      const response = await fetchAdministratienummer(
+        'x0xx',
+        authProfileAndToken
+      );
 
-  test('fetchAdministratienummer fail', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
+      expect(response).toStrictEqual({
+        content: '03630000567890',
+        status: 'OK',
+      });
+    });
 
-    const response = await fetchAdministratienummer(
-      'x2xx',
-      authProfileAndToken
-    );
+    test('No person found in system response', async () => {
+      remoteApi.post(persoongegevensURL).reply(404);
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "code": 500,
-        "content": null,
-        "message": "Request failed with status code 500",
-        "status": "ERROR",
-      }
-    `);
+      const response = await fetchAdministratienummer(
+        'x2xx',
+        authProfileAndToken
+      );
+
+      expect(response).toStrictEqual({
+        content: null,
+        status: 'OK',
+      });
+    });
+
+    test('Server error response', async () => {
+      remoteApi.post(persoongegevensURL).reply(500);
+
+      const response = await fetchAdministratienummer(
+        'x2xx',
+        authProfileAndToken
+      );
+
+      expect(response).toStrictEqual({
+        code: 500,
+        content: null,
+        message: 'Request failed with status code 500',
+        status: 'ERROR',
+      });
+    });
   });
 
   test('isActueel', () => {
