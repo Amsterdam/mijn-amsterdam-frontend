@@ -1,11 +1,8 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
-import slug from 'slugme';
 
 import {
-  caseType,
   DecosZaakBase,
   DecosZaakTransformer,
   MA_DECISION_DEFAULT,
@@ -19,23 +16,21 @@ import {
   DecosDocumentSource,
   DecosZaakSource,
   DecosZakenResponse,
-  SELECT_FIELDS_META,
-  SELECT_FIELDS_TRANSFORM_BASE,
   DecosWorkflowResponse,
-  DecosZaakFrontend,
   DecosTermijnType,
   DecosTermijnResponse,
   DecosTermijn,
-} from './decos-types';
+} from './config-and-types';
+import {
+  SELECT_FIELDS_META,
+  SELECT_FIELDS_TRANSFORM_BASE,
+  caseType,
+} from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
-  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
-  isExpired,
-  toDateFormatted,
-} from './helpers';
-import { AppRoute } from '../../../universal/config/routes';
+} from './decos-helpers';
 import {
   ApiErrorResponse,
   ApiResponse,
@@ -44,17 +39,14 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
   DEFAULT_API_CACHE_TTL_MS,
 } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
@@ -202,9 +194,9 @@ async function transformDecosZaakResponse<
   // It depends on the query and resturned result to the decos api which field value ends up in the decosZaak.
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
   let decosZaak: DZ = {
-    id: hash(
-      `${transformedFields.identifier}${transformedFields.caseType}${transformedFields.dateRequest}`
-    ),
+    id:
+      transformedFields.identifier?.replace(/\//g, '-') ??
+      'unknown-decoszaak-id',
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
