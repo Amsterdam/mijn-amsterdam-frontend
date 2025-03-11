@@ -67,7 +67,6 @@ export function getHulpmiddelenDisclaimer(
     aanvragen.some(
       (aanvraag) =>
         aanvraag.datumEindeGeldigheid === datumEindeGeldigheid &&
-        aanvraag.titel === detailAanvraag.titel &&
         !aanvraag.isActueel
     );
 
@@ -77,7 +76,6 @@ export function getHulpmiddelenDisclaimer(
     aanvragen.some(
       (aanvraag) =>
         aanvraag.datumIngangGeldigheid === datumIngangGeldigheid &&
-        aanvraag.titel === detailAanvraag.titel &&
         aanvraag.isActueel
     );
 
