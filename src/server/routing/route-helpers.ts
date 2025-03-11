@@ -104,8 +104,10 @@ export function sendUnauthorized(
 }
 
 export function send404(res: Response) {
-  res.status(HttpStatusCode.NotFound);
-  return res.send(apiErrorResult('Not Found', null, HttpStatusCode.NotFound));
+  return sendResponse(
+    res,
+    apiErrorResult('Not Found', null, HttpStatusCode.NotFound)
+  );
 }
 export function sendMessage(
   res: Response,
