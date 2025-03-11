@@ -225,9 +225,7 @@ export function GarbageInformation() {
   return (
     <DetailPageV2>
       <PageContentV2>
-        <PageHeadingV2 backLink={AppRoutes.HOME}>
-          {termReplace(ThemaTitles.AFVAL)}
-        </PageHeadingV2>
+        <PageHeadingV2>{termReplace(ThemaTitles.AFVAL)}</PageHeadingV2>
         <PageContentCell spanWide={6}>
           {profileType === 'private' && (
             <>

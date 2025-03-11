@@ -6,11 +6,11 @@ import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploit
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
-  const { vergunning, buttonItems, isLoading, isError } = useVarenDetailPage();
+  const { vergunning, buttonItems, isLoading, isError, themaPaginaBreadcrumb } =
+    useVarenDetailPage();
 
   let noContentError = false;
   let pageContent = null;
@@ -63,7 +63,7 @@ export function VarenDetail() {
       isError={isError || noContentError}
       isLoading={isLoading}
       pageContentMain={pageContent}
-      backLink={AppRoutes.VAREN}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

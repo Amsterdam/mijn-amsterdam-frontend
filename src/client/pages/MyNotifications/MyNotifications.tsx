@@ -51,7 +51,7 @@ export function MyNotificationsPage() {
   return (
     <OverviewPageV2>
       <PageContentV2>
-        <PageHeadingV2 backLink={AppRoutes.HOME}>Actueel</PageHeadingV2>
+        <PageHeadingV2>Actueel</PageHeadingV2>
         <PageContentCell>
           {isError(NOTIFICATIONS) && (
             <ErrorAlert className="ams-mb--sm">
