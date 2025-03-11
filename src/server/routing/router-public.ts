@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 
@@ -9,7 +10,6 @@ import {
   getDatasetCategoryId,
 } from '../../universal/config/myarea-datasets';
 import { AppRoutes } from '../../universal/config/routes';
-import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
@@ -162,7 +162,7 @@ router.get(
       }
 
       if (response?.status !== 'OK') {
-        res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+        res.status(HttpStatusCode.InternalServerError);
       }
 
       return res.json(response);

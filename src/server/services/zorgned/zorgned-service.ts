@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import memoizee from 'memoizee';
 
 import {
@@ -27,7 +28,7 @@ import { GenericDocument } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
@@ -325,14 +326,13 @@ export async function fetchRelatedPersons(
       response.status === 'OK'
         ? transformZorgnedPersonResponse(response.content)
         : null;
-    if (person) {
-      namesAndDatesOfBirth.push(person);
-    } else {
+    if (!person) {
       return apiErrorResult(
         'Something went wrong when retrieving related persons.',
         null
       );
     }
+    namesAndDatesOfBirth.push(person);
   }
 
   return apiSuccessResult(namesAndDatesOfBirth);
@@ -347,6 +347,9 @@ export async function fetchPersoonsgegevensNAW_(
     formatUrl(requestConfig) {
       return `${requestConfig.url}/persoonsgegevensNAW`;
     },
+    validateStatus: (statusCode) =>
+      // 404 means there is no record available in the ZORGNED api for the requested BSN
+      isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
     data: {
       burgerservicenummer: userID,
       gemeentecode: ZORGNED_GEMEENTE_CODE,
