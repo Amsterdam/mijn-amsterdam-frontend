@@ -6,12 +6,10 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import axios, { AxiosResponse } from 'axios';
 import Fuse from 'fuse.js';
-import { LatLngTuple } from 'leaflet';
 import { matchPath, useLocation } from 'react-router-dom';
 import {
   Loadable,
   atom,
-  noWait,
   selector,
   selectorFamily,
   useRecoilState,
@@ -38,7 +36,6 @@ import { AppState, AppStateKey } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
-import { useKeyUp } from '../../hooks/useKey';
 import {
   useProfileTypeSwitch,
   useProfileTypeValue,
@@ -186,6 +183,7 @@ function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
 }
 
 const RESULT_COUNT_PER_PAGE = 5;
+
 export async function searchAmsterdamNL(
   keywords: string,
   resultCountPerPage: number = RESULT_COUNT_PER_PAGE,
@@ -200,63 +198,6 @@ export async function searchAmsterdamNL(
       transformSearchAmsterdamNLresponse
     ),
   });
-  return response.data;
-}
-
-interface BagSearchResult {
-  adres: string;
-  postcode: string;
-  straatnaam: string;
-  huisnummer: number;
-  toevoeging: string;
-  woonplaats: string;
-  centroid: LatLngTuple;
-}
-
-function transformSearchBagresponse(responseData: any): SearchEntry[] {
-  if (Array.isArray(responseData?.results)) {
-    const MAX_SEARCH_RESULTS = 5;
-    return responseData.results
-      .slice(0, MAX_SEARCH_RESULTS)
-      .map((address: BagSearchResult) => {
-        const displayTitle = `${address.adres} ${address.postcode} ${address.woonplaats}`;
-        return {
-          displayTitle,
-          keywords: [address.adres, 'bag'],
-          description: `${address.adres} ${address.postcode} ${address.woonplaats}`,
-          url: `/buurt?zoom=12&centerMarker=${encodeURIComponent(
-            JSON.stringify({
-              latlng: { lat: address.centroid[1], lng: address.centroid[0] },
-              label: displayTitle,
-            })
-          )}`,
-          trailingIcon: (
-            <LocationIcon
-              width="14"
-              height="14"
-              className={styles.ExternalUrl}
-            />
-          ),
-        };
-      });
-  }
-
-  return [];
-}
-
-async function searchBag(keywords: string) {
-  if (!keywords || keywords?.length === 0) {
-    return null;
-  }
-  const url = `https://api.data.amsterdam.nl/atlas/search/adres/?features=2&q=${keywords}`;
-
-  const response = await axios.get<SearchEntry[]>(url, {
-    transformResponse: addAxiosResponseTransform(transformSearchBagresponse),
-    headers: {
-      'X-Api-Key': import.meta.env.REACT_APP_DATA_AMSTERDAM_API_KEY,
-    },
-  });
-
   return response.data;
 }
 
@@ -365,6 +306,7 @@ export function useSearchTerm() {
 }
 
 const RESULTS_PER_PAGE = 10;
+
 const amsterdamNLQuery = selectorFamily({
   key: 'amsterdamNLQuery',
   get:
@@ -398,30 +340,10 @@ export const searchConfigRemote = selector<SearchConfigRemote | null>({
   },
 });
 
-const bagSeachResults = selector<SearchEntry[] | null>({
-  key: 'BagSearchResults',
-  get: async ({ get }) => {
-    const term = get(searchTermAtom);
-    const response = await searchBag(term);
-
-    if (fuseInstance && response?.length) {
-      fuseInstance.remove((doc: SearchEntry) => {
-        return doc.keywords.indexOf('bag') !== -1;
-      });
-      for (const entry of response) {
-        fuseInstance.add(entry);
-      }
-    }
-
-    return response;
-  },
-});
-
 const mijnQuery = selector({
   key: 'mijnQuery',
   get: ({ get }) => {
     const term = get(searchTermAtom);
-    get(noWait(bagSeachResults)); // Subscribes to updates from the bag results
 
     if (fuseInstance && !!term) {
       const rawResults = fuseInstance.search(term);
@@ -478,12 +400,6 @@ export function useSearchOnPage(): {
       document.body.classList.remove('is-typeAheadActive');
     }
   }, [isSearchActive, isDisplayLiveSearch]);
-
-  useKeyUp((event) => {
-    if (event.key === 'z' && !isSearchActive && isDisplayLiveSearch) {
-      setSearchActive(true);
-    }
-  });
 
   return {
     isSearchActive,

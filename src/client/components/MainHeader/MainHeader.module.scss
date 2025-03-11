@@ -3,6 +3,7 @@
   z-index: z-index(main-header);
   max-width: var(--ams-ma-max-screen-width-no-padding);
   margin: 0 auto;
+  background-color: var(--ams-color-primary-white);
 }
 
 @media screen and (max-width: $ams-breakpoint-medium) {
@@ -71,4 +72,14 @@
   font-size: var(--ams-heading-level-4-font-size);
   line-height: 1.35;
   text-decoration: none;
+}
+
+.MainMenuOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 402;
+  background-color: rgba(0, 0, 0, 0.5);
 }
