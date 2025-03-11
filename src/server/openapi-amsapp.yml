@@ -294,6 +294,9 @@ components:
         description:
           type: string
           nullable: true
+        title:
+          type: string
+          nullable: true
         discountTitle:
           type: string
           nullable: true
@@ -334,6 +337,7 @@ components:
       properties:
         initials:
           type: string
+          nullable: true
         firstname:
           type: string
         infix:
@@ -365,8 +369,6 @@ components:
         passNumberComplete:
           type: string
         securityCode:
-          description: |
-            Untill a new GPASS release in the fourth quarter (Q4) this value will always be null.
           nullable: true
           type: string
         transactionsKeyEncrypted:
