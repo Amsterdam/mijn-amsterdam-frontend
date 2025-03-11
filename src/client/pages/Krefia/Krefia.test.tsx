@@ -42,7 +42,11 @@ describe('<Krefia />', () => {
 
   it('Shows the page succesfully', () => {
     render(<Component state={testState} />);
-    expect(screen.getByText('Kredietbank & FIBU')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: 'Kredietbank & FIBU',
+      })
+    ).toBeInTheDocument();
     expect(
       screen.getByText('Meer informatie over Kredietbank Amsterdam')
     ).toBeInTheDocument();

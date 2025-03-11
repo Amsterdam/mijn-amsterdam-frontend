@@ -3,12 +3,7 @@ import { ReactNode } from 'react';
 import escapeRegex from 'lodash.escaperegexp';
 
 import styles from './Search.module.scss';
-import type {
-  HorecaVergunning,
-  Krefia,
-  VakantieverhuurVergunning,
-  Vergunning,
-} from '../../../server/services';
+import type { Krefia, KrefiaDeepLink } from '../../../server/services';
 import {
   AfisThemaResponse,
   AfisFactuur,
@@ -21,9 +16,13 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/simple-connect/erfpacht';
-import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
+import {
+  LVVRegistratie,
+  VakantieverhuurVergunningFrontend,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -224,7 +223,7 @@ interface ToeristischRegistratieItem {
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'VERGUNNINGEN' as AppStateKey,
-    displayTitle: (vergunning: Vergunning) => (term: string) => {
+    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
   },
@@ -244,7 +243,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
-      vakantieverhuurVergunningen: VakantieverhuurVergunning[];
+      vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];
       bbVergunningen: BBVergunning[];
     }) => {
       const registratienummers = apiContent.lvvRegistraties?.map(
@@ -403,19 +402,13 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
-        Object.values(apiContent.deepLinks)
-          .filter(
-            (deepLink: KrefiaDeepLink): deepLink is KrefiaDeepLink =>
-              deepLink !== null
-          )
+        apiContent.deepLinks
+          .filter((deepLink: KrefiaDeepLink) => deepLink !== null)
           .map((deepLink) => {
             return {
               ...deepLink,
-              title: deepLink.title,
-              link: {
-                to: deepLink.url,
-                title: deepLink.title,
-              },
+              title: deepLink.link.title,
+              link: deepLink.link,
             };
           });
       return deepLinks || [];

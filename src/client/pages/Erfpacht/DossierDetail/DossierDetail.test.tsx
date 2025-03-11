@@ -65,11 +65,11 @@ describe('<Erfpacht/DossierDetail />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Erfpacht V2 (Vernise)dossier')
+        screen.getByRole('heading', { name: 'Erfpachtdossier' })
       ).toBeInTheDocument();
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
-        screen.getByText('We kunnen op dit moment geen erfpachtdossier tonen.')
+        screen.getByText('We kunnen op dit moment geen gegevens tonen.')
       ).toBeInTheDocument();
     });
   });
@@ -109,7 +109,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('E123/456: Dit en dat plein 22 H')
+        screen.getByRole('heading', { name: 'E123/456: Dit en dat plein 22 H' })
       ).toBeInTheDocument();
       expect(screen.getByText('12132/345345/456757/ff')).toBeInTheDocument();
       expect(screen.getByText('H.J de Gruyter')).toBeInTheDocument();
@@ -245,7 +245,7 @@ describe('<Erfpacht/DossierDetail />', () => {
     await waitFor(() => {
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
-        screen.getByText('We kunnen op dit moment geen erfpachtdossier tonen.')
+        screen.getByText('We kunnen op dit moment geen gegevens tonen.')
       ).toBeInTheDocument();
     });
   });

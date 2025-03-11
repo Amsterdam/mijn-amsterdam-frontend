@@ -55,7 +55,9 @@ describe('<HorecaDetail />', () => {
     test('DetailPagina should be rendered', () => {
       render(<MockVergunningDetail identifier="Z/24/2238078" />);
       expect(
-        screen.getByText('Horeca vergunning exploitatie Horecabedrijf')
+        screen.getByRole('heading', {
+          name: 'Horeca vergunning exploitatie Horecabedrijf',
+        })
       ).toBeInTheDocument();
       expect(screen.getByText('Ontvangen')).toBeInTheDocument();
       expect(screen.getByText('In behandeling')).toBeInTheDocument();
@@ -66,7 +68,9 @@ describe('<HorecaDetail />', () => {
     test('DetailPagina with verleende vergunning should be rendered', () => {
       render(<MockVergunningDetail identifier="Z/24/2238079" />);
       expect(
-        screen.getByText('Horeca vergunning exploitatie Horecabedrijf')
+        screen.getByRole('heading', {
+          name: 'Horeca vergunning exploitatie Horecabedrijf',
+        })
       ).toBeInTheDocument();
       expect(screen.getByText('Ontvangen')).toBeInTheDocument();
       expect(screen.getByText('In behandeling')).toBeInTheDocument();
