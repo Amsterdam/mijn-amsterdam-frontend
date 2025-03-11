@@ -1,7 +1,9 @@
-import { tableConfig, linkListItems } from './config';
+import { tableConfig, linkListItems, routes } from './BurgerZaken-thema-config';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useBurgerZakenData() {
   const { BRP } = useAppStateGetter();
@@ -12,11 +14,15 @@ export function useBurgerZakenData() {
     true
   );
 
+  const themaLink = useThemaMenuItemByThemaID(Themas.BURGERZAKEN);
+
   return {
     tableConfig,
     linkListItems,
     isLoading: isLoading(BRP),
     isError: isError(BRP),
     documents,
+    routes,
+    themaPaginaBreadcrumb: themaLink,
   };
 }

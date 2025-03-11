@@ -1,17 +1,17 @@
 import { contactmomentenDisplayProps } from './Contactmomenten.config';
 import { useContactmomenten } from './useContactmomenten.hook';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
 export function ContactmomentenListPage() {
-  const { contactmomenten, isLoading, isError, title } = useContactmomenten();
+  const { contactmomenten, isLoading, isError, title, routes } =
+    useContactmomenten();
 
   return (
     <ListPagePaginated
       items={contactmomenten}
       title={`Alle ${title.toLowerCase()}`}
-      appRoute={AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']}
-      appRouteBack={AppRoutes.BRP}
+      appRoute={routes.listPage}
+      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
       displayProps={contactmomentenDisplayProps}
       isLoading={isLoading}
       isError={isError}

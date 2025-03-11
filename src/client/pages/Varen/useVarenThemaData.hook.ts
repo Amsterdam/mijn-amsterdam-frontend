@@ -2,6 +2,7 @@ import {
   varenMeerInformatieLink,
   tableConfig,
   exploitatieVergunningAanvragen,
+  routes,
 } from './Varen-thema-config';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -33,5 +34,6 @@ export function useVarenThemaData() {
     varenVergunningen,
     linkListItems: [varenMeerInformatieLink],
     buttonItems: [exploitatieVergunningAanvragen],
+    routes,
   };
 }

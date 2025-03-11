@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { AppRoutes } from '../../../../universal/config/routes';
 import { Themas, Thema } from '../../../../universal/config/thema';
 import { DisplayProps } from '../../../components/Table/TableV2';
 
@@ -17,6 +18,11 @@ export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
     datePublishedFormatted: 'Datum',
     referenceNumber: 'Referentienummer',
   };
+
+export const routes = {
+  listPage: AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN'],
+  themaPage: AppRoutes.BRP,
+};
 
 const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? Themas.SVWI : Themas.INKOMEN;
 

@@ -17,7 +17,7 @@ export function VergunningenList() {
       title={title}
       appRoute={routes.listPage}
       appRouteParams={params}
-      appRouteBack={routes.themePage}
+      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}
