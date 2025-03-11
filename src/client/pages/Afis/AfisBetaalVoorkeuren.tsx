@@ -8,7 +8,6 @@ import {
 } from './useAfisThemaData.hook';
 import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
 import { entries } from '../../../universal/helpers/utils';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
@@ -82,6 +81,7 @@ export function AfisBetaalVoorkeuren() {
   const {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
+    themaPaginaBreadcrumb,
     eMandates,
     eMandateTableConfig,
     hasBusinessPartnerDetailsError,
@@ -228,7 +228,7 @@ export function AfisBetaalVoorkeuren() {
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
-      backLink={AppRoutes.AFIS}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}

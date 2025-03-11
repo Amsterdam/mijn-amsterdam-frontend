@@ -17,9 +17,9 @@ export function ErfpachtDossierDetail() {
     isLoading,
     isErrorThemaData,
     isLoadingThemaData,
-    routes,
     relatieCode,
     displayPropsDossierFacturen,
+    themaPaginaBreadcrumb,
   } = useDossierDetailData();
 
   return (
@@ -68,7 +68,7 @@ export function ErfpachtDossierDetail() {
           )}
         </>
       }
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

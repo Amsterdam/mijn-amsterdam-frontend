@@ -16,6 +16,7 @@ import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
+import { Themas } from '../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -31,6 +32,7 @@ import { BagThemas } from '../../config/thema';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
@@ -223,6 +225,8 @@ export function useAfisBetaalVoorkeurenData(
     key: `afis-betaalvoorkeuren`,
   });
 
+  const themaLink = useThemaMenuItemByThemaID(Themas.AFIS);
+
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
       fetchBusinessPartnerDetails({
@@ -261,5 +265,6 @@ export function useAfisBetaalVoorkeurenData(
     eMandateTableConfig,
     eMandates: [],
     isLoadingEmandates: false,
+    themaPaginaBreadcrumb: themaLink,
   };
 }

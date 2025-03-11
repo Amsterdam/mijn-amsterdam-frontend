@@ -4,12 +4,14 @@ import useSWR from 'swr';
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { BezwaarDetail } from '../../../server/services/bezwaren/bezwaren';
 import { FIFTEEN_MINUTES_MS } from '../../../universal/config/app';
+import { Themas } from '../../../universal/config/thema';
 import {
   ApiSuccessResponse,
   hasFailedDependency,
   isError,
 } from '../../../universal/helpers/api';
 import { uniqueArray } from '../../../universal/helpers/utils';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useBezwarenDetailData() {
   const {
@@ -44,7 +46,10 @@ export function useBezwarenDetailData() {
     documents.map((d) => d.dossiertype).filter(Boolean)
   ).sort();
 
+  const themaLink = useThemaMenuItemByThemaID(Themas.BEZWAREN);
+
   return {
+    title: bezwaar?.identificatie ?? 'Bezwaar',
     routes,
     bezwaar,
     bezwaarDetail,
@@ -63,5 +68,6 @@ export function useBezwarenDetailData() {
           Statussen: hasFailedDependency(bezwaarDetailResponse, 'statussen'),
         }
       : null,
+    themaPaginaBreadcrumb: themaLink,
   };
 }

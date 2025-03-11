@@ -4,7 +4,6 @@ import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
-import { routes } from '../Afis/Afis-thema-config';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 const pageContentTop = (
@@ -24,7 +23,8 @@ const pageContentTop = (
 );
 
 export function InkomenDetailTonk() {
-  const { isLoading, isError, zaak } = useInkomenDetailData('WPI_TONK');
+  const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
+    useInkomenDetailData('WPI_TONK');
 
   return (
     <ThemaDetailPagina<WpiRequestProcess>
@@ -33,7 +33,7 @@ export function InkomenDetailTonk() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={pageContentTop}
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

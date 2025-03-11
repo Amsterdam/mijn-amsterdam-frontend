@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 
-import { routes } from './Klachten-thema-config';
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import type { Klacht } from '../../../server/services/klachten/types';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
@@ -44,7 +43,8 @@ function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
 }
 
 export function KlachtenDetailPagina() {
-  const { klachten, isLoading, isError } = useKlachtenThemaData();
+  const { klachten, isLoading, isError, themaPaginaBreadcrumb } =
+    useKlachtenThemaData();
   const { id } = useParams<{ id: string }>();
   const klacht = klachten.find((klacht) => klacht.id === id);
 
@@ -55,7 +55,7 @@ export function KlachtenDetailPagina() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={klacht && <KlachtenDetailContent klacht={klacht} />}
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

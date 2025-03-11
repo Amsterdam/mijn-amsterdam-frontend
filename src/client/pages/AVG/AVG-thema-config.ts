@@ -36,7 +36,7 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 const tableConfigBase = {
-  sort: dateSort('dateRequest', 'desc'),
+  sort: dateSort('registratieDatum', 'desc'),
   displayProps: displayPropsAanvragen,
 } as const;
 

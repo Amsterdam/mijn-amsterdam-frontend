@@ -1,6 +1,12 @@
 import { AnchorHTMLAttributes } from 'react';
 
-import { ButtonProps, Link, LinkProps } from '@amsterdam/design-system-react';
+import {
+  Breadcrumb,
+  BreadcrumbLinkProps,
+  ButtonProps,
+  Link,
+  LinkProps,
+} from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { NavLink, useHistory } from 'react-router-dom';
 
@@ -48,6 +54,29 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
   const history = useHistory();
   return (
     <MaLink
+      {...rest}
+      href={href}
+      onClick={(event) => {
+        event.preventDefault();
+
+        if (onClick) {
+          onClick(event);
+        }
+
+        history.push(href as string);
+      }}
+    />
+  );
+}
+
+export function MaBreadcrumbLink({
+  href,
+  onClick,
+  ...rest
+}: BreadcrumbLinkProps & React.RefAttributes<HTMLAnchorElement>) {
+  const history = useHistory();
+  return (
+    <Breadcrumb.Link
       {...rest}
       href={href}
       onClick={(event) => {

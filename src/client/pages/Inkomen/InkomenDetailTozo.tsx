@@ -4,11 +4,11 @@ import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
-import { routes } from '../Afis/Afis-thema-config';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function InkomenDetailTozo() {
-  const { isLoading, isError, zaak } = useInkomenDetailData('WPI_TOZO');
+  const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
+    useInkomenDetailData('WPI_TOZO');
   const pageContentTop = (
     <PageContentCell spanWide={6}>
       <Paragraph className="ams-mb--sm">
@@ -34,7 +34,7 @@ export function InkomenDetailTozo() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={pageContentTop}
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }
