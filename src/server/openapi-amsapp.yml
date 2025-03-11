@@ -369,8 +369,6 @@ components:
         passNumberComplete:
           type: string
         securityCode:
-          description: |
-            Untill a new GPASS release in the fourth quarter (Q4) this value will always be null.
           nullable: true
           type: string
         transactionsKeyEncrypted:
