@@ -1,5 +1,4 @@
-import Linkd from '../../../Button/Button';
-import InfoDetail from '../../../InfoDetail/InfoDetail';
+import { Link } from '@amsterdam/design-system-react';
 
 interface UrlProps {
   url: string;
@@ -7,24 +6,15 @@ interface UrlProps {
   urlTitle?: string;
 }
 
-export default function Url({
-  url,
-  urlTitle,
-  label = 'Meer informatie',
-}: UrlProps) {
+export default function Url({ url, urlTitle }: UrlProps) {
   const theUrl =
     url.startsWith('www.') ||
     (!url.startsWith('http') && !url.startsWith('mailto'))
       ? `https://${url}`
       : url;
   return (
-    <InfoDetail
-      label={label}
-      value={
-        <Linkd icon={null} external={true} href={theUrl}>
-          {urlTitle || url}
-        </Linkd>
-      }
-    />
+    <Link rel="noopener noreferrer" href={theUrl}>
+      {urlTitle || url}
+    </Link>
   );
 }

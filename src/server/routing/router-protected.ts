@@ -1,30 +1,29 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { getAuth } from '../auth/auth-helpers';
-import {
-  fetchAantalBewoners,
-  fetchVergunningenDocument,
-  fetchVergunningenDocumentsList,
-} from '../services';
+import { fetchAantalBewoners } from '../services';
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
+import { IS_PRODUCTION } from '../../universal/config/env';
 import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   handleFetchAfisBusinessPartner,
   handleFetchAfisFacturen,
 } from '../services/afis/afis-route-handlers';
-import {
-  fetchBezwaarDetail,
-  fetchBezwaarDocument,
-} from '../services/bezwaren/bezwaren';
+import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
+import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
 import {
   NOTIFICATIONS,
   loadServicesAll,
   loadServicesSSE,
 } from '../services/controller';
+import {
+  fetchDecosDocumentsList,
+  fetchZakenByUserIDs,
+} from '../services/decos/decos-route-handlers';
 import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchZorgnedAVDocument,
@@ -34,7 +33,6 @@ import {
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchErfpachtV2DossiersDetail } from '../services/simple-connect/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
-import { fetchDecosDocumentsList } from '../services/vergunningen-v2/vergunningen-route-handlers';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
@@ -116,48 +114,12 @@ router.get(
   }
 );
 
-// Deprecated, will be removed in MIJN-8916
-router.get(
-  BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
-
-    if (authProfileAndToken) {
-      const documentsListResponse = await fetchVergunningenDocumentsList(
-        res.locals.requestID,
-        authProfileAndToken,
-        req.params.id
-      );
-
-      return res.send(documentsListResponse);
-    }
-
-    return sendUnauthorized(res);
-  }
-);
-
-// Deprecated, will be removed in MIJN-8916
-router.get(
-  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
-    if (authProfileAndToken) {
-      const documentResponse = await fetchVergunningenDocument(
-        res.locals.requestID,
-        authProfileAndToken,
-        req.params.id
-      );
-
-      const contentType = documentResponse.headers['content-type'];
-      res.setHeader('content-type', contentType);
-      return documentResponse.data.pipe(res);
-    }
-    return sendUnauthorized(res);
-  }
-);
-
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
 router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
+
+if (!IS_PRODUCTION) {
+  router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
+}
 
 attachDocumentDownloadRoute(
   router,
@@ -183,22 +145,7 @@ attachDocumentDownloadRoute(
   fetchBezwaarDocument
 );
 
-router.get(
-  BffEndpoints.BEZWAREN_DETAIL,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
-    if (authProfileAndToken) {
-      const response = await fetchBezwaarDetail(
-        res.locals.requestID,
-        authProfileAndToken,
-        req.params.id
-      );
-
-      return res.send(response);
-    }
-    return sendUnauthorized(res);
-  }
-);
+router.get(BffEndpoints.BEZWAREN_DETAIL, handleFetchBezwaarDetail);
 
 router.get(
   BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,

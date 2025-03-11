@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useBodemData } from './useBodemData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
-import { ListPageParamKind } from '../VergunningenV2/config';
+import { ListPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
 export function BodemList() {
   const { items, isLoading, isError, tableConfig } = useBodemData();
@@ -16,7 +15,6 @@ export function BodemList() {
       items={items
         .filter(tableConfig[params.kind].filter)
         .sort(tableConfig[params.kind].sort)}
-      backLinkTitle={ThemaTitles.BODEM}
       title={tableConfig[params.kind].title}
       appRoute={AppRoutes['BODEM/LIST']}
       appRouteParams={params}

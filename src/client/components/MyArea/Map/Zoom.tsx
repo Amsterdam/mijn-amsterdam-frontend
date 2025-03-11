@@ -1,12 +1,12 @@
 import { memo } from 'react';
 
+import { Button } from '@amsterdam/design-system-react';
 import { useMapInstance } from '@amsterdam/react-maps';
 
 import styles from './Zoom.module.scss';
 import { IconEnlarge, IconMinimise } from '../../../assets/icons';
-import { IconButton } from '../../Button/Button';
 
-const Zoom: React.FC = () => {
+function Zoom() {
   const mapInstance = useMapInstance();
 
   const handleZoom = (out = false) => {
@@ -14,22 +14,20 @@ const Zoom: React.FC = () => {
   };
 
   return (
-    <div className={styles.ZoomBar}>
-      <IconButton
+    <div id="map-zoom" className={styles.ZoomBar}>
+      <Button
         className={styles.Button}
-        type="button"
+        variant="tertiary"
         title="Inzoomen"
-        iconSize="22"
         onClick={() => {
           handleZoom();
         }}
         icon={IconEnlarge}
       />
-      <IconButton
+      <Button
         className={styles.Button}
-        type="button"
+        variant="tertiary"
         title="Uitzoomen"
-        iconSize="22"
         onClick={() => {
           handleZoom(true);
         }}
@@ -37,6 +35,6 @@ const Zoom: React.FC = () => {
       />
     </div>
   );
-};
+}
 
 export default memo(Zoom);

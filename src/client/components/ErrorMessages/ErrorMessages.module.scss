@@ -3,26 +3,15 @@
 }
 
 .MessageBar {
-  background-color: $color-neutral-grey2;
-  margin: 0;
-  padding: 1rem 3.5rem 0.8rem 1rem;
-  transition: all 200ms ease-in-out;
-  width: 100%;
-  position: absolute;
-  right: 0;
-  left: auto;
-  z-index: 1;
-}
-
-.MessageBarInner {
-  opacity: 1;
-  transition: opacity 100ms ease-in-out;
+  background-color: var(--ams-color-primary-white);
+  max-width: var(--ams-ma-max-screen-width);
+  margin: 0 auto;
 }
 
 .ErrorFromServer {
   display: block;
   font-size: 0.8em;
-  color: $color-neutral-grey4;
+  color: var(--ams-color-neutral-grey3);
   display: none;
 }
 
@@ -30,43 +19,4 @@
   .ErrorFromServer {
     display: block;
   }
-}
-
-.ErrorInfo {
-  > p {
-    margin-top: 0;
-  }
-}
-
-.AlertIcon {
-  display: inline-block;
-  vertical-align: text-bottom;
-  width: 2rem;
-  height: 2rem;
-  fill: $color-support-warning;
-}
-
-.ModalFooter {
-  @include select(Checkbox_Checkbox) {
-    margin-left: 1rem;
-  }
-}
-
-.CloseButton {
-  position: absolute;
-  right: 0.5rem;
-  height: 2.4rem;
-  width: 2.4rem;
-  > svg {
-    height: 2.4rem;
-    width: 2.4rem;
-  }
-
-  &,
-  &:hover {
-    background: none;
-  }
-
-  top: 50%;
-  transform: translateY(-50%);
 }

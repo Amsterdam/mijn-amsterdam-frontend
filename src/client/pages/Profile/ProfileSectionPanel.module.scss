@@ -14,16 +14,13 @@
 
     .Content {
       grid-column-start: 6;
-      grid-column-end: span 6;
+      grid-column-end: span 7;
     }
   }
 }
 
 .ProfileSection {
   + .ProfileSection {
-    margin-top: calc(var(--ams-grid-row-gap) * 2);
-    @media screen and (min-width: $ams-breakpoint-medium) {
-      margin-top: var(--ams-grid-row-gap);
-    }
+    margin-top: calc(var(--ams-space-lg) * 2);
   }
 }

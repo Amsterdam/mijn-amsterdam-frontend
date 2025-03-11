@@ -6,13 +6,13 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
-import { MyNotification, MyTip } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { requestData } from '../../helpers/source-api-request';
 
 export interface ApiPatternResponseA {
-  tips?: MyTip[];
+  tips?: MyNotification[];
   isKnown: boolean;
   notifications?: MyNotification[];
 }

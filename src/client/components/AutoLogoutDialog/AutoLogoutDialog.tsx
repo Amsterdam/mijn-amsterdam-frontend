@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -7,7 +7,6 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
-import { ComponentChildren } from '../../../universal/types';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
@@ -16,6 +15,7 @@ import {
 import { Colors } from '../../config/app';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
+import { useSetDeeplinkEntry } from '../../hooks/useDeeplink.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaButtonLink } from '../MaLink/MaLink';
 import { Modal } from '../Modal/Modal';
@@ -46,7 +46,7 @@ export interface AutoLogoutDialogSettings {
 }
 
 export interface ComponentProps {
-  children?: ComponentChildren;
+  children?: ReactNode;
   settings?: AutoLogoutDialogSettings;
 }
 
@@ -93,7 +93,12 @@ export const DefaultAutologoutDialogSettings = {
   secondsSessionRenewRequestInterval: SESSION_RENEW_INTERVAL_SECONDS,
 };
 
-export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
+function AutoLogoutDialogRedirect() {
+  useSetDeeplinkEntry();
+  return null;
+}
+
+export function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
   // Will open the dialog if maxCount is reached.
@@ -140,10 +145,14 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       title={TITLE}
       isOpen={isOpen}
       showCloseButton={false}
+      closeOnEscape={false}
+      closeOnClickOutside={false}
+      pollingQuerySelector="#continue-button"
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (
             <MaButtonLink
+              id="continue-button"
               variant="primary"
               className="continue-button"
               href={
@@ -168,6 +177,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       }
     >
       <div className={styles.AutoLogoutDialogChildren}>
+        <AutoLogoutDialogRedirect />
         <Paragraph className="ams-mb--sm">
           U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
           geweest op Mijn Amsterdam.

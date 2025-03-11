@@ -7,7 +7,7 @@ import { transformDossierResponse } from '../../../server/services/simple-connec
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Erfpacht from './Erfpacht';
+import { Erfpacht } from './Erfpacht';
 import { AppState } from '../../../universal/types/App.types';
 
 describe('<Erfpacht />', () => {

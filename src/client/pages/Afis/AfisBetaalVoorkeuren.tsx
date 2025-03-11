@@ -10,17 +10,20 @@ import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { entries } from '../../../universal/helpers/utils';
-import { LoadingContent } from '../../components';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../components/Datalist/Datalist';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps } from '../../components/Table/TableV2';
-import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
-  labels: DisplayProps<AfisBusinessPartnerDetailsTransformed>;
+  labels: Omit<
+    DisplayProps<AfisBusinessPartnerDetailsTransformed>,
+    'smallscreen'
+  >;
   isLoading: boolean;
   startCollapsed: boolean;
 };
@@ -46,7 +49,7 @@ function AfisBusinessPartnerDetails({
     : [];
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <CollapsiblePanel
         title="Facturatiegegevens"
         startCollapsed={startCollapsed}
@@ -64,7 +67,7 @@ function AfisBusinessPartnerDetails({
           </Grid>
         )}
       </CollapsiblePanel>
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 
@@ -114,7 +117,7 @@ export function AfisBetaalVoorkeuren() {
   const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
 
   const pageContentTop = (
-    <>
+    <PageContentCell spanWide={6}>
       <Paragraph className="ams-mb--sm">
         Hieronder kunt u uw facturatiegegevens bekijken en een automatische
         incasso instellen per afdeling van de gemeente. Wil u uw
@@ -155,7 +158,7 @@ export function AfisBetaalVoorkeuren() {
           <Paragraph>Een postzegel is niet nodig.</Paragraph>
         </>
       )}
-    </>
+    </PageContentCell>
   );
 
   const pageContentMain = (
@@ -225,7 +228,7 @@ export function AfisBetaalVoorkeuren() {
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
-      backLink={{ to: AppRoutes.AFIS, title: ThemaTitles.AFIS }}
+      backLink={AppRoutes.AFIS}
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}

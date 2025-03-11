@@ -33,22 +33,18 @@ export const EMPTY_OKAY_RESPONSE = {
 
 /** Quikly create an AuthProfileAndToken object */
 export function getAuthProfileAndToken(
-  profileType: ProfileType = 'private'
+  profileType: ProfileType = 'private',
+  id: string = 'I.M Mokum'
 ): AuthProfileAndToken {
   const authProfileAndToken: AuthProfileAndToken = {
     profile: {
       authMethod: profileType === 'private' ? 'digid' : 'eherkenning',
       profileType,
-      id: 'I.M Mokum',
+      id,
       sid: '0D8ugZyqnzPTyknBDwxsMPb7',
     },
-    token:
-      'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
+    token: 'tttttttttttttttttttttttttttttt',
   };
-
-  if (profileType === 'commercial') {
-    authProfileAndToken.profile.authMethod = 'eherkenning';
-  }
 
   return authProfileAndToken;
 }

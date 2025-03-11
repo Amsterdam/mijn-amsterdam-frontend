@@ -1,11 +1,11 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
-import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
+import type { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { Datalist, Row } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 type DetailPageContentProps = {
@@ -26,21 +26,21 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
   return (
     <>
       {!!rows.length && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Datalist rows={rows} />
-        </Grid.Cell>
+        </PageContentCell>
       )}
       {!!hliRegeling.documents.length && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <DocumentListV2 documents={hliRegeling.documents} />
-        </Grid.Cell>
+        </PageContentCell>
       )}
     </>
   );
 }
 
-export default function HLIRegelingDetailPagina() {
-  const { regelingen, isError, isLoading, title, routes } = useHliThemaData();
+export function HLIRegeling() {
+  const { regelingen, isError, isLoading, routes } = useHliThemaData();
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 
@@ -50,16 +50,10 @@ export default function HLIRegelingDetailPagina() {
       zaak={regelingDetail}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
+      pageContentMain={
         regelingDetail && <DetailPageContent hliRegeling={regelingDetail} />
       }
-      backLink={{
-        title: title,
-        to: routes.themaPage,
-      }}
-      documentPathForTracking={(document) =>
-        `/downloads/hli/regeling/${regelingDetail?.title}/${document.title.split(/\n/)[0]}`
-      }
+      backLink={routes.themaPage}
     />
   );
 }

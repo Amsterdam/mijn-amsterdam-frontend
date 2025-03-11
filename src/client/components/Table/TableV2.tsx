@@ -3,10 +3,12 @@ import { ReactNode } from 'react';
 import { Heading, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
+import { getDisplayPropsForScreenSize } from './helpers';
 import styles from './TableV2.module.scss';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped, ZaakDetail } from '../../../universal/types';
+import { usePhoneScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
@@ -19,16 +21,18 @@ export type WithDetailLinkComponent<T> = T & {
 
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],
-  propertyName: keyof T = 'title',
+  propertyName: keyof T | keyof T['link'] = 'title',
   addDetailLinkComponentAttr = false,
-  linkName = 'link'
+  linkTitle?: (item: T) => string,
+  linkName: string = 'link'
 ): WithDetailLinkComponent<T>[] {
   return items.map((item) => {
     if (!item[linkName]?.to) {
       return item;
     }
 
-    let label: string = item[propertyName];
+    let label: string =
+      item[propertyName as keyof T] ?? item?.[linkName]?.[propertyName];
     let linkPropertyName = propertyName;
 
     if (typeof label !== 'string') {
@@ -42,7 +46,11 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
     return {
       ...item,
       [linkPropertyName]: (
-        <MaRouterLink maVariant="fatNoUnderline" href={item[linkName].to}>
+        <MaRouterLink
+          maVariant="fatNoUnderline"
+          title={linkTitle ? linkTitle(item) : `Bekijk meer over ${label}`}
+          href={item[linkName].to}
+        >
           {capitalizeFirstLetter(label)}
         </MaRouterLink>
       ),
@@ -50,12 +58,14 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
-export type DisplayProps<T> = {
-  [Property in keyof T]+?: string | number | ReactNode;
-};
+export type DisplayProps<T> = Readonly<
+  {
+    [Property in keyof T]+?: string | number | ReactNode;
+  } & { smallscreen?: Omit<DisplayProps<T>, 'smallscreen'> }
+>;
 
 export interface TableV2Props<T> {
-  displayProps: DisplayProps<T> | null;
+  displayProps: DisplayProps<T>;
   items: T[];
   className?: string;
   showTHead?: boolean;
@@ -71,7 +81,10 @@ export function TableV2<T extends object = ZaakDetail>({
   className,
   showTHead = true,
 }: TableV2Props<T>) {
-  const displayPropEntries = displayProps !== null ? entries(displayProps) : [];
+  const isPhoneScreen = usePhoneScreen();
+  const props = getDisplayPropsForScreenSize(displayProps, isPhoneScreen);
+  const displayPropEntries = entries(props);
+
   return (
     <>
       {!!caption && (

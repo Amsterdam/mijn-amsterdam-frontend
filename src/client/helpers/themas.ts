@@ -3,9 +3,7 @@ import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import { DecosCaseType } from '../../universal/types/vergunningen';
 import { ThemaMenuItem } from '../config/thema';
-import { PARKEER_CASE_TYPES } from '../pages/Parkeren/Parkeren.config';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -32,7 +30,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,
-    VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -166,7 +163,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.VERGUNNINGEN:
       return (
         (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length) ||
-        (!isLoading(VERGUNNINGENv2) && !!VERGUNNINGENv2.content?.length)
+        (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length)
       );
 
     case Themas.KVK:
@@ -187,18 +184,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
 
     case Themas.PARKEREN: {
-      const hasParkeerVergunningenFromThemaVergunningen = (
-        appState.VERGUNNINGEN?.content ?? []
-      ).some((vergunning) =>
-        PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
-      );
+      const hasDecosParkeerVergunningen =
+        !!appState.PARKEREN?.content?.vergunningen?.length;
 
       return (
         FeatureToggle.parkerenActive &&
         !isLoading(PARKEREN) &&
-        !isLoading(VERGUNNINGEN) &&
-        (!!PARKEREN?.content?.isKnown ||
-          hasParkeerVergunningenFromThemaVergunningen)
+        (!!PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
       );
     }
 

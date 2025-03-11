@@ -208,7 +208,7 @@ module.exports = [
 
             const stateName = Object.entries(stateFilters).find(
               ([_name, filterValueSegment]) => {
-                return req.query?.['$filter']?.includes(filterValueSegment);
+                return req.query?.$filter?.includes(filterValueSegment);
               }
             )?.[0];
 
@@ -222,13 +222,13 @@ module.exports = [
               `../fixtures/afis/${stateName}-facturen.json`
             );
 
-            if (req.query?.['$top']) {
+            if (req.query?.$top) {
               return res.send({
                 feed: {
                   count: facturenData.feed.count,
                   entry: facturenData.feed.entry.slice(
                     0,
-                    parseInt(req.query?.['$top'], 10)
+                    parseInt(req.query?.$top, 10)
                   ),
                 },
               });
@@ -241,7 +241,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-afis-factuur-id',
+    id: 'post-afis-factuur-download',
     url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
     method: 'POST',
     variants: [
@@ -256,7 +256,7 @@ module.exports = [
     ],
   },
   {
-    id: 'get-afis-factuur-document',
+    id: 'get-afis-factuur-document-id',
     url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
     method: 'GET',
     variants: [
@@ -265,7 +265,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: require('../fixtures/afis/document.json'),
+          body: require('../fixtures/afis/arc-doc-id.json'),
         },
       },
     ],

@@ -127,7 +127,7 @@ describe('AVG', () => {
                   id: 'item-2',
                   isActive: true,
                   isChecked: false,
-                  status: 'Extra informatie nodig',
+                  status: 'Meer informatie nodig',
                 },
                 {
                   datePublished: '',
@@ -281,7 +281,7 @@ describe('AVG', () => {
                   id: 'item-2',
                   isActive: false,
                   isChecked: true,
-                  status: 'Extra informatie nodig',
+                  status: 'Meer informatie nodig',
                 },
                 {
                   datePublished: '2023-03-20T00:00:00.000Z',
@@ -350,7 +350,7 @@ describe('AVG', () => {
                   id: 'item-2',
                   isActive: true,
                   isChecked: true,
-                  status: 'Extra informatie nodig',
+                  status: 'Meer informatie nodig',
                 },
                 {
                   datePublished: '',

@@ -1,5 +1,5 @@
 .DashboardMapContainer {
-  background-color: $color-neutral-grey1;
+  background-color: var(--ams-color-neutral-grey1);
   min-height: 50rem;
   margin-top: 8rem;
   margin-bottom: 10rem;
@@ -19,7 +19,8 @@
   right: 0;
   bottom: 0;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
+  justify-content: flex-end;
   text-decoration: none;
   z-index: z-index(my-area-dashboard-content);
   text-decoration: none;
@@ -27,8 +28,7 @@
 
 .NavLinkContentWrap {
   display: block;
-  background-color: $color-white;
+  background-color: var(--ams-color-primary-white);
   padding: 2rem 4rem;
   width: 46rem;
-  margin-left: calc(50% + 2rem);
 }

@@ -2,24 +2,47 @@
 
 exports[`ZaakStatus > No query params passed 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/"
+          title="Terug naar de vorige pagina"
+        >
+          <span
+            class="ams-icon ams-icon--size-5"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
         class="ams-paragraph"
@@ -32,30 +55,53 @@ exports[`ZaakStatus > No query params passed 1`] = `
         </a>
       </p>
     </div>
-  </main>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`ZaakStatus > should show error alert 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/"
+          title="Terug naar de vorige pagina"
+        >
+          <span
+            class="ams-icon ams-icon--size-5"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
         class="ams-alert ams-alert--error ams-mb--xs"
@@ -107,30 +153,53 @@ exports[`ZaakStatus > should show error alert 1`] = `
         </a>
       </p>
     </div>
-  </main>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`ZaakStatus > should show not found message 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/"
+          title="Terug naar de vorige pagina"
+        >
+          <span
+            class="ams-icon ams-icon--size-5"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
         class="ams-paragraph ams-mb--xs"
@@ -148,30 +217,53 @@ exports[`ZaakStatus > should show not found message 1`] = `
         </a>
       </p>
     </div>
-  </main>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`ZaakStatus > should show wachten op betaling 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <a
+          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+          href="/"
+          title="Terug naar de vorige pagina"
+        >
+          <span
+            class="ams-icon ams-icon--size-5"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+          Terug
+        </a>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
         class="ams-paragraph ams-mb--xs"
@@ -194,6 +286,6 @@ exports[`ZaakStatus > should show wachten op betaling 1`] = `
         </a>
       </p>
     </div>
-  </main>
+  </div>
 </DocumentFragment>
 `;

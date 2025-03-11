@@ -1,16 +1,16 @@
 import {
-  listPageParamKind,
   listPageTitle,
   routes,
   tableConfigLVVRegistraties,
-  tableConfigVergunningen,
+  tableConfig,
 } from './toeristischeVerhuur-thema-config';
-import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
   hasFailedDependency,
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
+import { LinkProps } from '../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -26,7 +26,7 @@ export function useToeristischeVerhuurThemaData() {
 
   const hasVergunningenVakantieVerhuurVerleend =
     TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen?.some(
-      (vergunning) => vergunning.result === 'Verleend'
+      (vergunning) => vergunning.decision === 'Verleend'
     );
 
   const hasVergunningBB =
@@ -34,7 +34,7 @@ export function useToeristischeVerhuurThemaData() {
 
   const hasVergunningBBVerleend =
     TOERISTISCHE_VERHUUR.content?.bbVergunningen?.some(
-      (vergunning) => vergunning.result === 'Verleend'
+      (vergunning) => vergunning.decision === 'Verleend'
     );
 
   const vergunningen = addLinkElementToProperty<ToeristischeVerhuurVergunning>(
@@ -42,7 +42,7 @@ export function useToeristischeVerhuurThemaData() {
       ...(TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen ?? []),
       ...(TOERISTISCHE_VERHUUR.content?.bbVergunningen ?? []),
     ],
-    'title',
+    'identifier',
     true
   );
 
@@ -65,6 +65,31 @@ export function useToeristischeVerhuurThemaData() {
     'lvvRegistraties'
   );
 
+  const linkListItems: LinkProps[] = [
+    {
+      title: 'Meer over toeristenbelasting',
+      to: 'https://www.amsterdam.nl/veelgevraagd/toeristenbelasting-2c7c2',
+    },
+    {
+      title: 'Vakantieverhuur melden of registratienummer aanvragen',
+      to: 'https://www.toeristischeverhuur.nl/portaal/login',
+    },
+  ];
+
+  if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
+    linkListItems.unshift({
+      title: 'Meer informatie over bed & breakfast',
+      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/',
+    });
+  }
+
+  if (hasVergunningenVakantieVerhuur) {
+    linkListItems.unshift({
+      title: 'Meer informatie over particuliere vakantieverhuur',
+      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
+    });
+  }
+
   return {
     vergunningen,
     lvvRegistraties,
@@ -75,14 +100,14 @@ export function useToeristischeVerhuurThemaData() {
     hasBBVergunningError,
     hasVakantieVerhuurVergunningError,
     routes,
-    tableConfigVergunningen,
+    tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
     listPageTitle,
-    listPageParamKind,
     hasRegistrations,
     hasPermits,
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
+    linkListItems,
   };
 }

@@ -1,6 +1,6 @@
 .DistanceToHome {
   font-size: 1.3rem;
-  color: $color-neutral-grey4;
+  color: var(--ams-color-neutral-grey3);
   font-weight: normal;
   display: inline-block;
   margin-left: 0.5rem;
@@ -11,37 +11,15 @@
   margin-bottom: 0;
 }
 
-.GarbageInfoDetail {
-  a {
-    color: $color-black;
+.GarbageFractionPanel {
+  p a {
+    color: var(--ams-link-color);
+    text-decoration-line: var(--ams-link-standalone-text-decoration-line);
+    text-decoration-thickness: var(
+      --ams-link-standalone-text-decoration-thickness
+    );
+    text-underline-offset: var(--ams-link-standalone-text-underline-offset);
   }
-}
-
-.GarbageSectionCollapsible {
-  @include select(SectionCollapsible_PanelInner) {
-    padding-left: 16rem;
-
-    @include mq-tablet {
-      padding-left: 9.5rem;
-    }
-
-    @include mq-phone {
-      padding-left: 2rem;
-    }
-  }
-}
-
-.Afvalpunten {
-  @include select(InfoDetail_InfoDetail) {
-    border-top: 0;
-  }
-}
-
-.AfvalpuntContentHeading {
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 0.1rem solid $color-neutral-grey2;
 }
 
 .GarbageFractionPanels {
@@ -49,10 +27,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-
-  @include mq-phone() {
-    display: block;
-  }
 }
 
 .GarbageFractionPanelsColumn {
@@ -64,20 +38,11 @@
     width: calc(50% - 1rem);
     margin-left: 1rem;
   }
-
-  @include mq-phone() {
-    &:first-child,
-    &:last-child {
-      margin: 0;
-      width: auto;
-    }
-  }
 }
 
 .GarbageFractionPanel {
-  background-color: $color-neutral-grey1;
-  margin-bottom: 1.6rem;
-  padding: 0.8rem 1.6rem;
+  // background-color: var(--ams-color-neutral-grey1);
+  margin-bottom: var(--ams-space-xl);
 
   dl {
     display: flex;
@@ -86,16 +51,12 @@
 
   dt {
     min-width: 22%;
-    color: $color-neutral-grey4;
+    font-weight: bold;
   }
 
   dd {
     width: 80%;
-    font-weight: bold;
-
     p {
-      margin: 0;
-
       + p {
         margin-top: 1rem;
       }
@@ -104,9 +65,8 @@
 }
 
 .GarbageFractionPanelTitle {
-  font-size: 1.8rem;
   margin: 0;
-  border-bottom: 0.1rem solid $color-neutral-grey4;
+  // border-bottom: 0.1rem solid var(--ams-color-neutral-grey3);
   display: flex;
 }
 
@@ -116,45 +76,17 @@
 }
 
 .GarbageFractionPanelOpmerking {
-  a {
-    color: $color-primary-darkblue;
-
-    &:hover {
-      color: $color-primary-red;
-    }
-
-    &:visited {
-      color: $color-support-purple;
-    }
-  }
+  border: 2px solid var(--ams-link-color);
+  padding: var(--ams-space-md);
+  margin-top: var(--ams-space-md) !important;
 }
 
 .GarbageFractionPanelHighlight {
-  background-color: $color-support-focus;
-  padding: 0.5rem 1rem;
+  border: 2px solid var(--ams-alert-warning-border-color);
+  padding: var(--ams-space-md);
+  margin-top: var(--ams-space-md) !important;
 }
 
 .UnstyledList {
   @include reset-list-style();
-}
-
-.WoonFunctieWaarschuwing {
-  font-size: 1.6rem;
-}
-
-.AdresWeergave {
-  padding: 0;
-  margin: 0;
-}
-
-.WeespWarning {
-  background-color: $color-support-blue;
-  padding: 1rem;
-
-  &,
-  a,
-  a:visited,
-  a:hover {
-    color: $color-white;
-  }
 }
