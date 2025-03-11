@@ -13,7 +13,7 @@ export function useVarenDetailPage() {
   const { id } = useParams<{ id: string }>();
 
   const hasRegistratieReder = !!VAREN.content?.find(
-    (item) => item.caseType !== 'Varen registratie reder'
+    (item) => item.caseType === 'Varen registratie reder'
   );
 
   const vergunning =
