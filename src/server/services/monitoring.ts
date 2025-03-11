@@ -28,32 +28,16 @@ const client: appInsights.TelemetryClient | undefined =
 // See also: https://www.npmjs.com/package/applicationinsights
 
 if (client) {
-  // TODO MIJN-10074: Refactor when using validation with ZOD or other solution.
+  // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
+  const excludedRequests: string[] = JSON.parse(
+    process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
+  );
 
-  // Example: "GET /api/users". This is how a 'name' is represented in telemetry data
-  let excludedRequests: string[];
-  try {
-    excludedRequests = JSON.parse(
-      process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
-    );
-  } catch (err) {
-    logger.error(err);
-    excludedRequests = [];
-  }
-
-  let excludedOutoingDependencies: Array<{
+  const excludedOutoingDependencies: Array<{
     method: string;
     routeSegment: string;
     statusCode: string;
-  }>;
-  try {
-    excludedOutoingDependencies = JSON.parse(
-      process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]'
-    );
-  } catch (err) {
-    logger.error(err);
-    excludedOutoingDependencies = [];
-  }
+  }> = JSON.parse(process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
 
   client.addTelemetryProcessor((envelope) => {
     const SEND_TELEMETRY = true;
