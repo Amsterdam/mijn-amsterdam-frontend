@@ -7,64 +7,65 @@ import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
-export const AmsMainMenuClassname = 'ma-main-header';
-export const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
+export const MAIN_MENU_ID = 'main-menu';
 
 export function MainMenu() {
   const { items } = useThemaMenuItems();
   const isPhoneScreen = usePhoneScreen();
 
   return (
-    <MegaMenu className={styles.MainMenu}>
-      <nav className={styles.NavSection}>
-        <Heading level={3} size="level-4">
-          Thema&apos;s
-        </Heading>
-        <MegaMenu.ListCategory>
-          {items.map((thema) => {
-            const LinkComponent =
-              thema.rel === 'external' ? MaLink : MaRouterLink;
-            return (
-              <LinkComponent
-                key={thema.id}
-                href={thema.to}
-                maVariant="fatNoDefaultUnderline"
-                rel={thema.rel === 'external' ? 'noreferrer' : undefined}
-                className={styles.MenuItem}
-              >
-                {thema.title}
-              </LinkComponent>
-            );
-          })}
-        </MegaMenu.ListCategory>
-      </nav>
-      <nav className={styles.NavSection}>
-        <Heading level={3} size="level-4">
-          Categorieën
-        </Heading>
-        <MegaMenu.ListCategory>
-          {categoryMenuItems.map((item) => (
-            <MaRouterLink
-              key={item.id}
-              href={item.to}
-              maVariant="noDefaultUnderline"
-              className={styles.MenuItem}
-            >
-              {item.title}
-            </MaRouterLink>
-          ))}
-        </MegaMenu.ListCategory>
-      </nav>
-      {isPhoneScreen && (
-        <nav>
+    <>
+      <MegaMenu id={MAIN_MENU_ID} className={styles.MainMenu}>
+        <nav className={styles.NavSection}>
+          <Heading level={3} size="level-4">
+            Thema&apos;s
+          </Heading>
           <MegaMenu.ListCategory>
-            <MainHeaderSecondaryLinks
-              wrapInListElement={false}
-              linkClassName={styles.MenuItem}
-            />
+            {items.map((thema) => {
+              const LinkComponent =
+                thema.rel === 'external' ? MaLink : MaRouterLink;
+              return (
+                <LinkComponent
+                  key={thema.id}
+                  href={thema.to}
+                  maVariant="fatNoDefaultUnderline"
+                  rel={thema.rel === 'external' ? 'noreferrer' : undefined}
+                  className={styles.MenuItem}
+                >
+                  {thema.title}
+                </LinkComponent>
+              );
+            })}
           </MegaMenu.ListCategory>
         </nav>
-      )}
-    </MegaMenu>
+        <nav className={styles.NavSection}>
+          <Heading level={3} size="level-4">
+            Categorieën
+          </Heading>
+          <MegaMenu.ListCategory>
+            {categoryMenuItems.map((item) => (
+              <MaRouterLink
+                key={item.id}
+                href={item.to}
+                maVariant="noDefaultUnderline"
+                className={styles.MenuItem}
+              >
+                {item.title}
+              </MaRouterLink>
+            ))}
+          </MegaMenu.ListCategory>
+        </nav>
+        {isPhoneScreen && (
+          <nav>
+            <MegaMenu.ListCategory>
+              <MainHeaderSecondaryLinks
+                wrapInListElement={false}
+                linkClassName={styles.MenuItem}
+              />
+            </MegaMenu.ListCategory>
+          </nav>
+        )}
+      </MegaMenu>
+    </>
   );
 }

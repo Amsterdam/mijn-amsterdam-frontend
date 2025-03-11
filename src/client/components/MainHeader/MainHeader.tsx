@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import styles from './MainHeader.module.scss';
 import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
-import { useCloseMenu } from './useCloseMenu.hook';
+import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
@@ -18,6 +18,8 @@ import {
   useSearchActive,
   useSearchOnPage,
 } from '../Search/useSearch';
+
+export const AmsMainMenuClassname = 'ma-main-header';
 
 type MainHeaderSecondaryLinksProps = {
   linkClassName: string;
@@ -113,18 +115,42 @@ function MainHeaderSearch() {
   );
 }
 
+type MainHeaderMenuOverlayProps = {
+  isMainMenuOpen: boolean;
+  headerHeight: number;
+  closeMenuAndSearch: () => void;
+};
+
+function MainHeaderMenuOverlay({
+  isMainMenuOpen,
+  headerHeight,
+  closeMenuAndSearch,
+}: MainHeaderMenuOverlayProps) {
+  return (
+    isMainMenuOpen &&
+    headerHeight !== 0 && (
+      <div
+        onClick={closeMenuAndSearch}
+        style={{ top: headerHeight }}
+        className={styles.MainMenuOverlay}
+      />
+    )
+  );
+}
+
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
 }
 
 export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
-  // Closes menu on location.pathname change, Escape key press and Search activation.
-  useCloseMenu();
+  const { ref, isMainMenuOpen, closeMenuAndSearch, headerHeight } =
+    useMainHeaderControl();
 
   return (
     <>
       <Header
-        className={styles.MainHeader}
+        ref={ref}
+        className={classNames(styles.MainHeader, AmsMainMenuClassname)}
         logoLink="https://www.amsterdam.nl/"
         brandName={
           (
@@ -140,6 +166,11 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
       >
         {isAuthenticated && <MainMenu />}
       </Header>
+      <MainHeaderMenuOverlay
+        isMainMenuOpen={isMainMenuOpen}
+        closeMenuAndSearch={closeMenuAndSearch}
+        headerHeight={headerHeight}
+      />
       {isAuthenticated && <MainHeaderSearch />}
     </>
   );
