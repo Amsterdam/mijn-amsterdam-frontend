@@ -1,10 +1,12 @@
 import { linkListItems, routes, tableConfig } from './Parkeren-thema-config';
 import { DecosParkeerVergunning } from '../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useParkerenData() {
   const { PARKEREN } = useAppStateGetter();
@@ -13,6 +15,8 @@ export function useParkerenData() {
   const vergunningen = addLinkElementToProperty<
     VergunningFrontend<DecosParkeerVergunning>
   >(PARKEREN.content?.vergunningen ?? [], 'identifier', true);
+
+  const themaLink = useThemaMenuItemByThemaID(Themas.PARKEREN);
 
   return {
     title: ThemaTitles.PARKEREN,
@@ -25,5 +29,6 @@ export function useParkerenData() {
     isLoadingParkerenUrl: isLoading(PARKEREN),
     linkListItems,
     routes,
+    themaPaginaBreadcrumb: themaLink,
   };
 }

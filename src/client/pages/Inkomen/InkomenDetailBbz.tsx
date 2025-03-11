@@ -4,7 +4,6 @@ import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
-import { routes } from '../Afis/Afis-thema-config';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 const pageContentTop = (
@@ -29,7 +28,8 @@ const pageContentTop = (
 );
 
 export function InkomenDetailBbz() {
-  const { isLoading, isError, zaak } = useInkomenDetailData('WPI_BBZ');
+  const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
+    useInkomenDetailData('WPI_BBZ');
 
   const hasDecisionStep =
     zaak?.steps.some((step) => step.id.includes('besluit')) ?? false;
@@ -44,7 +44,7 @@ export function InkomenDetailBbz() {
       isLoading={isLoading}
       reverseSteps={reverseSteps}
       pageContentMain={pageContentTop}
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

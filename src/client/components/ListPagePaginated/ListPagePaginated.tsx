@@ -73,7 +73,9 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   return (
     <OverviewPageV2>
       <PageContentV2>
-        <PageHeadingV2 backLink={appRouteBack}>{title}</PageHeadingV2>
+        <PageHeadingV2 breadcrumbs={[{ to: appRouteBack, title: 'iets' }]}>
+          {title}
+        </PageHeadingV2>
         {isError && (
           <PageContentCell>
             <ErrorAlert>{errorText}</ErrorAlert>

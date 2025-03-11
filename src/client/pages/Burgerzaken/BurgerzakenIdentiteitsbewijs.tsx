@@ -8,7 +8,8 @@ import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function BurgerzakenIdentiteitsbewijs() {
-  const { document, isLoading, isError, backLink } = useBurgerZakenDetailData();
+  const { document, isLoading, isError, themaPaginaBreadcrumb } =
+    useBurgerZakenDetailData();
 
   return (
     <ThemaDetailPagina<IdentiteitsbewijsFrontend>
@@ -18,7 +19,7 @@ export function BurgerzakenIdentiteitsbewijs() {
       zaak={document}
       isError={isError}
       isLoading={isLoading}
-      backLink={backLink}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       pageContentMain={
         !!document && (
           <BurgerzakenIdentiteitsbewijsContent document={document} />

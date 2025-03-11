@@ -5,6 +5,7 @@ import {
   tableConfig,
 } from './toeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
+import { Themas } from '../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -14,6 +15,7 @@ import { LinkProps } from '../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export const BB_VERGUNNING_DISCLAIMER =
   'Bed & breakfast vergunningen die vóór 14 mei 2021 zijn aangevraagd kunnen niet worden getoond';
@@ -90,6 +92,8 @@ export function useToeristischeVerhuurThemaData() {
     });
   }
 
+  const themaLink = useThemaMenuItemByThemaID(Themas.TOERISTISCHE_VERHUUR);
+
   return {
     vergunningen,
     lvvRegistraties,
@@ -109,5 +113,6 @@ export function useToeristischeVerhuurThemaData() {
     hasBothVerleend,
     hasVergunningBB,
     linkListItems,
+    themaPaginaBreadcrumb: themaLink,
   };
 }

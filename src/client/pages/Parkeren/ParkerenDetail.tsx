@@ -58,7 +58,8 @@ function DetailPageContent<
 }
 
 export function ParkerenDetailPagina() {
-  const { vergunningen, isLoading, isError, routes } = useParkerenData();
+  const { vergunningen, isLoading, isError, themaPaginaBreadcrumb } =
+    useParkerenData();
   const { vergunning, title, documents } =
     useVergunningenDetailData(vergunningen);
 
@@ -92,7 +93,7 @@ export function ParkerenDetailPagina() {
           </>
         )
       }
-      backLink={routes.themePage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

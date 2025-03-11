@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 import { LinkList } from '@amsterdam/design-system-react';
 
-import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent, {
@@ -28,7 +27,7 @@ const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment niet alle gegevens tonen.';
 
 interface ThemaPaginaProps {
   title: string;
-  backLink?: string;
+  breadcrumbs?: LinkProps[];
   pageContentTop: ReactNode;
   pageContentTopSecondary?: ReactNode;
   pageContentMain: ReactNode;
@@ -43,7 +42,7 @@ interface ThemaPaginaProps {
 
 export default function ThemaPagina({
   title,
-  backLink = AppRoutes.HOME,
+  breadcrumbs,
   pageContentTop,
   pageContentTopSecondary,
   linkListItems = [],
@@ -59,7 +58,7 @@ export default function ThemaPagina({
   return (
     <OverviewPageV2>
       <PageContentV2>
-        <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
+        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
         {pageContentTop}
         {!!linkListItems.length && (
           <PageContentCell>

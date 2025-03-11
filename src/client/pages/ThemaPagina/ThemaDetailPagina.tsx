@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { ZaakDetail } from '../../../universal/types/App.types';
+import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent, {
   BarConfig,
@@ -23,7 +23,7 @@ const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 
 interface ThemaDetailPaginaProps<T> {
   zaak?: T | null;
-  backLink: string;
+  breadcrumbs?: LinkProps[];
   errorAlertContent?: ReactNode;
   isError: boolean;
   isLoading: boolean;
@@ -39,7 +39,7 @@ interface ThemaDetailPaginaProps<T> {
 export default function ThemaDetailPagina<T extends ZaakDetail>({
   zaak,
   title = 'Detailpagina',
-  backLink,
+  breadcrumbs,
   pageContentMain,
   pageContentBottom,
   errorAlertContent = ERROR_ALERT_DEFAULT,
@@ -59,7 +59,7 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   return (
     <DetailPageV2>
       <PageContentV2>
-        <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
+        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
 
         {!isLoading && (isError || !zaak) && (
           <PageContentCell>

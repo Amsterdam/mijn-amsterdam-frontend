@@ -41,5 +41,3 @@ export const linkListItems: LinkProps[] = [
     title: 'Overzicht en aanvragen bij burgerzaken',
   },
 ] as const;
-
-export const backLinkDetailPage = AppRoutes.BURGERZAKEN;

@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ZorgDetail from './ZorgDetail';
+import { ZorgDetail } from './ZorgDetail';
 
 const testState: any = {
   WMO: {
@@ -262,14 +262,16 @@ function testDetailPage(id: string, title: string) {
   });
   const routePath = AppRoutes['ZORG/VOORZIENING'];
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ZorgDetail}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ZorgDetail}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot for item ' + title, () => {
     const { asFragment } = render(<Component />);
