@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { millisecondsToSeconds } from 'date-fns';
 import { Request, Response } from 'express';
 import nock from 'nock';
@@ -11,7 +12,6 @@ import {
   AuthProfileAndToken,
 } from '../server/auth/auth-types';
 import { createOIDCStub } from '../server/routing/router-development';
-import { HTTP_STATUS_CODES } from '../universal/constants/errorCodes';
 
 const defaultReplyHeaders = {
   'access-control-allow-origin': '*',
@@ -63,7 +63,7 @@ export class ResponseMock {
   }
 
   private constructor() {
-    this.statusCode = HTTP_STATUS_CODES.OK;
+    this.statusCode = HttpStatusCode.Ok;
     const REQUEST_ID_LENGTH = 18;
     this.locals = {
       requestID: UID.sync(REQUEST_ID_LENGTH),

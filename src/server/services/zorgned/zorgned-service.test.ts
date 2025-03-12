@@ -9,12 +9,17 @@ import {
 } from './zorgned-service';
 import {
   ZORGNED_GEMEENTE_CODE,
+  ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
 } from './zorgned-types';
 import ZORGNED_JZD_AANVRAGEN from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
 import { remoteApiHost } from '../../../testing/setup';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import {
+  apiErrorResult,
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
 
@@ -243,50 +248,6 @@ describe('zorgned-service', () => {
     expect(naam3).toBe(null);
   });
 
-  test('fetchRelatedPersons', async () => {
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        voorvoegsel: 'de',
-        geboortenaam: 'Jarvis',
-        voornamen: 'Baron',
-        geboortedatum: '2016-07-09',
-        bsn: 'x123z',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, {
-      persoon: {
-        voorvoegsel: null,
-        geboortenaam: 'Alex',
-        voornamen: 'Flex',
-        geboortedatum: '2016-07-09',
-        bsn: 'x123z',
-      },
-    } as ZorgnedPersoonsgegevensNAWResponse);
-
-    const response = await fetchRelatedPersons('xx2xxx', ['1', '2']);
-
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": [
-          {
-            "bsn": "x123z",
-            "dateOfBirth": "2016-07-09",
-            "dateOfBirthFormatted": "09 juli 2016",
-            "name": "Baron",
-          },
-          {
-            "bsn": "x123z",
-            "dateOfBirth": "2016-07-09",
-            "dateOfBirthFormatted": "09 juli 2016",
-            "name": "Flex",
-          },
-        ],
-        "status": "OK",
-      }
-    `);
-  });
-
   describe('fetchAndMergeRelatedPersons', () => {
     const ZORGNED_RESPONSE_CONTENT = {
       _links: null,
@@ -438,5 +399,114 @@ describe('zorgned-service', () => {
           'relatedPersons' in result.failedDependencies!
       ).toBe(true);
     });
+  });
+});
+
+describe('fetchRelatedPersons', async () => {
+  type Person = ZorgnedPersoonsgegevensNAWResponse['persoon'];
+
+  function createPerson(person: Partial<Person>): Person {
+    if (person.voornamen) {
+      person.roepnaam = person.voornamen;
+      person.voorletters = person.voornamen[0];
+    }
+
+    return {
+      voornamen: 'Jay',
+      roepnaam: 'Jay',
+      voorletters: 'J',
+      voorvoegsel: 'De',
+      geboortenaam: 'Jay',
+      geboortedatum: '20-20-2020',
+      bsn: `bsn-${person.voornamen}`,
+      clientidentificatie: null,
+      ...person,
+    };
+  }
+
+  function setupEndpointForFetchRelatedPersons({
+    statusCode,
+    persoongegevensNAWResponse,
+  }: {
+    statusCode: number;
+    persoongegevensNAWResponse?: ZorgnedPersoonsgegevensNAWResponse | null;
+  }): void {
+    remoteApi
+      .post('/zorgned/persoonsgegevensNAW')
+      .reply(statusCode || 200, persoongegevensNAWResponse || {});
+  }
+
+  test('Did not return a person', async () => {
+    setupEndpointForFetchRelatedPersons({
+      statusCode: 200,
+      persoongegevensNAWResponse: null,
+    });
+    setupEndpointForFetchRelatedPersons({
+      statusCode: 404,
+      persoongegevensNAWResponse: null,
+    });
+
+    const userIDs = ['1', '2'];
+
+    const response = await fetchRelatedPersons('1', userIDs);
+    expect(response).toStrictEqual(
+      apiErrorResult(
+        'Something went wrong when retrieving related persons.',
+        null
+      )
+    );
+  });
+
+  test('Returns a person', async () => {
+    setupEndpointForFetchRelatedPersons({
+      statusCode: 200,
+      persoongegevensNAWResponse: {
+        persoon: createPerson({
+          voorvoegsel: 'de',
+          geboortenaam: 'Jarvis',
+          voornamen: 'Baron',
+          geboortedatum: '2016-07-09',
+          bsn: 'x123z',
+        }),
+      },
+    });
+    setupEndpointForFetchRelatedPersons({
+      statusCode: 200,
+      persoongegevensNAWResponse: {
+        persoon: createPerson({
+          voorvoegsel: null,
+          geboortenaam: 'Alex',
+          voornamen: 'Flex',
+          geboortedatum: '2016-07-09',
+          bsn: 'x123z',
+          clientidentificatie: null,
+          roepnaam: 'Alex',
+          voorletters: 'A',
+        }),
+      },
+    });
+
+    const userIDs = ['1', '2'];
+
+    const response = await fetchRelatedPersons('1', userIDs);
+    const expected: ApiSuccessResponse<ZorgnedPerson[]> = {
+      content: [
+        {
+          bsn: 'x123z',
+          dateOfBirth: '2016-07-09',
+          dateOfBirthFormatted: '09 juli 2016',
+          name: 'Baron',
+        },
+        {
+          bsn: 'x123z',
+          dateOfBirth: '2016-07-09',
+          dateOfBirthFormatted: '09 juli 2016',
+          name: 'Flex',
+        },
+      ],
+      status: 'OK',
+    };
+
+    expect(response).toStrictEqual(expected);
   });
 });

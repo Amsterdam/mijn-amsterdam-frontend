@@ -1,6 +1,6 @@
+import { HttpStatusCode } from 'axios';
 import memoizee from 'memoizee';
 
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -53,14 +53,6 @@ export async function fetchAdministratienummer(
         response.content
       );
     }
-    return apiSuccessResult(administratienummer);
-  }
-
-  if (
-    response.status === 'ERROR' &&
-    response.code === HTTP_STATUS_CODES.NOT_FOUND
-  ) {
-    // 404 means there is no record available in the ZORGNED api for the requested BSN
     return apiSuccessResult(administratienummer);
   }
 
