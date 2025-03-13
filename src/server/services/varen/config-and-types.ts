@@ -16,7 +16,16 @@ export const caseTypeVaren = {
 export type CaseTypeVaren = keyof typeof caseTypeVaren;
 export type GetCaseType<T extends CaseTypeVaren> = (typeof caseTypeVaren)[T];
 
-type DecosVarenZaakBase = DecosZaakBase & { linkDataRequest: string | null };
+export type VarenStatus =
+  | 'Ontvangen'
+  | 'In behandeling'
+  | 'Meer informatie nodig'
+  | 'Besluit';
+
+type DecosVarenZaakBase = DecosZaakBase & {
+  linkDataRequest: string | null;
+  status: VarenStatus;
+};
 
 export type VarenRegistratieRederType = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenRederRegistratie'>;
@@ -40,7 +49,6 @@ export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
     | 'Buiten behandeling'
     | 'Ingetrokken door aanvrager'
     | 'Verleend';
-  status: 'Ontvangen' | 'In behandeling' | 'Meer informatie nodig' | 'Besluit';
   // eslint-disable-next-line no-magic-numbers
   formAppearance: 1 | 2 | 3;
   segment:

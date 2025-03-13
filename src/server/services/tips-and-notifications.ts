@@ -34,6 +34,7 @@ import {
   prefixTipNotification,
 } from './tips/tips-service';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
+import { fetchVarenNotifications } from './varen/varen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
@@ -182,6 +183,7 @@ const notificationServices: NotificationServicesByProfileType = {
       ),
     bodem: fetchLoodMetingNotifications,
     bezwaren: fetchBezwarenNotifications,
+    varen: fetchVarenNotifications,
   },
   'private-attributes': {},
   private: {

@@ -14,8 +14,8 @@ function transformVarenFrontend(
   sessionID: SessionID,
   appRoute: AppRoute,
   vergunning: Varen
-) {
-  const vergunningFrontend = transformDecosZaakFrontend<Varen>(
+): VarenFrontend {
+  const vergunningFrontend = transformDecosZaakFrontend(
     sessionID,
     appRoute,
     vergunning
