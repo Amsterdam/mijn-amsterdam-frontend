@@ -18,7 +18,6 @@ import {
   StadspasTransactiesResponseSource,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   ApiErrorResponse,
   apiSuccessResult,
@@ -26,6 +25,7 @@ import {
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
+import { HttpStatusCode } from 'axios';
 
 vi.mock('../../helpers/source-api-request');
 vi.mock('../../helpers/source-api-helpers');
@@ -182,6 +182,13 @@ describe('stadspas-gpass-service', () => {
         passNumberComplete: '12345-67890',
         securityCode: '0123456',
       });
+
+      const transformedResponseNoSecurityCode =
+        forTesting.transformStadspasResponse(
+          gpassStadspasResonseData,
+          pashouder
+        );
+      expect(transformedResponseNoSecurityCode.securityCode).toBeNull();
     });
 
     test('should return input if not an object with pasnummer property', () => {
@@ -199,8 +206,7 @@ describe('stadspas-gpass-service', () => {
 
       const transformedResponse = forTesting.transformStadspasResponse(
         gpassStadspasResonseData,
-        pashouder,
-        '0123456'
+        pashouder
       );
       expect(transformedResponse).toEqual(gpassStadspasResonseData);
     });
@@ -476,8 +482,8 @@ describe('stadspas-gpass-service', () => {
 
     test('should return NO_PASHOUDER_CONTENT_RESPONSE if stadspasHouderResponse status is ERROR and code is UNAUTHORIZED', async () => {
       (requestData as Mock).mockResolvedValueOnce({
-        status: 'ERROR',
-        code: HTTP_STATUS_CODES.UNAUTHORIZED,
+        status: 'OK',
+        code: HttpStatusCode.Unauthorized,
       });
 
       const result = await fetchStadspassenByAdministratienummer(
@@ -496,7 +502,7 @@ describe('stadspas-gpass-service', () => {
     test('should return stadspasHouderResponse if status is ERROR and code is not UNAUTHORIZED', async () => {
       const errorResponse = {
         status: 'ERROR',
-        code: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        code: HttpStatusCode.InternalServerError,
       };
       (requestData as Mock).mockResolvedValueOnce(errorResponse);
 
@@ -754,7 +760,7 @@ describe('stadspas-gpass-service', () => {
     test('should return error response if request fails', async () => {
       const errorResponse = {
         status: 'ERROR',
-        code: HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
+        code: HttpStatusCode.InternalServerError,
       };
 
       (requestData as Mock).mockResolvedValueOnce(errorResponse);

@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios';
-import { parseISO } from 'date-fns';
 import { isAfter } from 'date-fns';
 import memoizee from 'memoizee';
 
@@ -25,7 +24,6 @@ import {
   PasblokkadeByPasnummer,
 } from './stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -39,7 +37,7 @@ import displayAmount from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -84,7 +82,7 @@ function transformBudget(budget: StadspasDetailBudgetSource) {
 function transformStadspasResponse(
   gpassStadspasResonseData: StadspasDetailSource,
   pashouder: StadspasHouderSource,
-  securityCode: SecurityCode
+  securityCode?: SecurityCode
 ) {
   if (
     typeof gpassStadspasResonseData === 'object' &&
@@ -109,7 +107,7 @@ function transformStadspasResponse(
       passNumber: gpassStadspasResonseData.pasnummer,
       passNumberComplete: gpassStadspasResonseData.pasnummer_volledig,
       actief: gpassStadspasResonseData.actief,
-      securityCode,
+      securityCode: securityCode ?? null,
     };
 
     return stadspasTransformed;
@@ -146,6 +144,10 @@ export async function fetchStadspassenByAdministratienummer(
     {
       ...dataRequestConfig,
       url: GPASS_ENDPOINT_PASHOUDER,
+      validateStatus: (statusCode) =>
+        isSuccessStatus(statusCode) ||
+        // 401 means there is no record available in the GPASS api for the requested administratienummer.
+        statusCode === HttpStatusCode.Unauthorized,
       headers,
       params: {
         addsubs: true,
@@ -155,11 +157,9 @@ export async function fetchStadspassenByAdministratienummer(
   );
 
   if (stadspasHouderResponse.status === 'ERROR') {
-    if (stadspasHouderResponse.code === HTTP_STATUS_CODES.UNAUTHORIZED) {
-      // 401 means there is no record available in the GPASS api for the requested administratienummer
-      return NO_PASHOUDER_CONTENT_RESPONSE;
-    }
     return stadspasHouderResponse;
+  } else if (!stadspasHouderResponse.content) {
+    return NO_PASHOUDER_CONTENT_RESPONSE;
   }
 
   const pashouder = stadspasHouderResponse.content;

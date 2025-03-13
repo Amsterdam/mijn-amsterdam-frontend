@@ -1,8 +1,8 @@
+import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
 import { generatePath, matchPath } from 'react-router-dom';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
-import { HTTP_STATUS_CODES } from '../../universal/constants/errorCodes';
 import {
   ApiResponse_DEPRECATED,
   apiErrorResult,
@@ -72,7 +72,7 @@ export function sendResponse(
     res.status(
       typeof apiResponse.code === 'number'
         ? apiResponse.code
-        : HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR
+        : HttpStatusCode.InternalServerError
     );
   }
 
@@ -85,12 +85,12 @@ export function sendBadRequest(
   content: object | string | null = null
 ) {
   return res
-    .status(HTTP_STATUS_CODES.BAD_REQUEST)
+    .status(HttpStatusCode.BadRequest)
     .send(
       apiErrorResult(
         `Bad request: ${reason}`,
         content,
-        HTTP_STATUS_CODES.BAD_REQUEST
+        HttpStatusCode.BadRequest
       )
     );
 }
@@ -99,16 +99,14 @@ export function sendUnauthorized(
   res: Response,
   message: string = 'Unauthorized'
 ) {
-  res.status(HTTP_STATUS_CODES.UNAUTHORIZED);
-  return res.send(
-    apiErrorResult(message, null, HTTP_STATUS_CODES.UNAUTHORIZED)
-  );
+  res.status(HttpStatusCode.Unauthorized);
+  return res.send(apiErrorResult(message, null, HttpStatusCode.Unauthorized));
 }
 
 export function send404(res: Response) {
-  res.status(HTTP_STATUS_CODES.NOT_FOUND);
-  return res.send(
-    apiErrorResult('Not Found', null, HTTP_STATUS_CODES.NOT_FOUND)
+  return sendResponse(
+    res,
+    apiErrorResult('Not Found', null, HttpStatusCode.NotFound)
   );
 }
 export function sendMessage(
