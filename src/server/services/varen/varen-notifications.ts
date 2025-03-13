@@ -10,7 +10,8 @@ import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import {
-  apiDependencyError,
+  apiErrorResult,
+  ApiResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
@@ -94,11 +95,15 @@ function createVarenNotifications(
 export async function fetchVarenNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<{ notifications: MyNotification[] }>> {
   const varenResponse = await fetchVaren(requestID, authProfileAndToken);
 
   if (varenResponse.status === 'ERROR') {
-    return apiDependencyError({ varen: varenResponse });
+    return apiErrorResult(
+      'Error fetching Varen zaken data',
+      null,
+      varenResponse.code
+    );
   }
   const notifications = [];
 
