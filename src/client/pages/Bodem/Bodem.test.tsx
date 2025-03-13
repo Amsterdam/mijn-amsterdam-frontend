@@ -1,7 +1,11 @@
-import { setupMockApp } from '../setupMockApp';
-import { Bodem } from './Bodem';
+import { render, within } from '@testing-library/react';
 
-const testState: any = {
+import { AppRoutes } from '../../../universal/config/routes';
+import { componentCreator } from '../MockApp';
+import { Bodem } from './Bodem';
+import { AppState } from '../../../universal/types';
+
+const testState = {
   BODEM: {
     content: {
       metingen: [
@@ -44,6 +48,44 @@ const testState: any = {
           ],
         },
         {
+          adres: 'Schipluidenlaan 12A',
+          datumAanvraag: '2022-12-01T09:53:11Z',
+          datumAanvraagFormatted: '01 december 2022',
+          status: 'In behandeling',
+          kenmerk: 'OL-001478',
+          aanvraagNummer: 'AV-001447',
+          rapportBeschikbaar: false,
+          redenAfwijzing: '',
+          link: {
+            to: '/lood-meting/OL-001478',
+            title: 'Bekijk loodmeting',
+          },
+          document: null,
+          steps: [
+            {
+              status: 'Ontvangen',
+              id: '',
+              datePublished: '2022-12-01T09:53:11Z',
+              isActive: false,
+              isChecked: false,
+            },
+            {
+              status: 'In behandeling',
+              id: '',
+              datePublished: '',
+              isActive: true,
+              isChecked: true,
+            },
+            {
+              status: 'Afgehandeld',
+              id: '',
+              datePublished: '',
+              isActive: false,
+              isChecked: false,
+            },
+          ],
+        },
+        {
           adres: 'Schipluidenlaan 16A',
           datumAanvraag: '2022-11-29T09:54:22Z',
           datumAanvraagFormatted: '29 november 2022',
@@ -65,8 +107,8 @@ const testState: any = {
               status: 'Ontvangen',
               id: '',
               datePublished: '2022-12-01T09:53:11Z',
-              isActive: true,
-              isChecked: true,
+              isActive: false,
+              isChecked: false,
             },
             {
               status: 'In behandeling',
@@ -79,8 +121,8 @@ const testState: any = {
               status: 'Afgehandeld',
               id: '',
               datePublished: '',
-              isActive: false,
-              isChecked: false,
+              isActive: true,
+              isChecked: true,
             },
           ],
         },
@@ -112,8 +154,8 @@ const testState: any = {
               status: 'Ontvangen',
               id: '',
               datePublished: '2022-12-01T09:53:11Z',
-              isActive: true,
-              isChecked: true,
+              isActive: false,
+              isChecked: false,
             },
             {
               status: 'In behandeling',
@@ -126,8 +168,8 @@ const testState: any = {
               status: 'Afgehandeld',
               id: '',
               datePublished: '',
-              isActive: false,
-              isChecked: false,
+              isActive: true,
+              isChecked: true,
             },
           ],
         },
@@ -135,28 +177,100 @@ const testState: any = {
     },
     status: 'OK',
   },
-};
+} as unknown as AppState;
+
+const createComponent = componentCreator({
+  component: Bodem,
+  routeEntry: AppRoutes.BODEM,
+  routePath: AppRoutes.BODEM,
+});
 
 describe('Bodem', () => {
-  describe('with results', () => {
-    const renderBodem = setupMockApp(Bodem, 'BODEM', testState);
+  describe('With aanvragen', () => {
+    const MockBodem = createComponent(testState);
 
-    it('should show the right overviewpage', () => {
-      const { asFragment } = renderBodem();
+    describe('Tables', () => {
+      const screen = render(<MockBodem />);
+
+      const lopendeAanvraagTableHeader = screen.getByRole('heading', {
+        name: 'Lopende aanvragen',
+      });
+
+      const afgehandeldeAanvraagTableHeader = screen.getByRole('heading', {
+        name: 'Afgehandelde aanvragen',
+      });
+
+      test('Headers are found', () => {
+        expect(lopendeAanvraagTableHeader).toBeInTheDocument();
+        expect(afgehandeldeAanvraagTableHeader).toBeInTheDocument();
+      });
+
+      const lopendePattern = /(In behandeling)|Ontvangen/;
+      const afgehandeldePattern = /Afgehandeld|Afgewezen/;
+
+      const lopendeAanvraagTable =
+        lopendeAanvraagTableHeader.nextSibling as HTMLElement;
+      if (!lopendeAanvraagTable) {
+        throw Error('No sibling found');
+      }
+
+      const afgehandeldeAanvraagTable =
+        afgehandeldeAanvraagTableHeader.nextSibling as HTMLElement;
+      if (!afgehandeldeAanvraagTable) {
+        throw Error('No sibling found');
+      }
+
+      test('Table items found', () => {
+        const lopendeAanvraagRows = within(lopendeAanvraagTable).getAllByRole(
+          'row',
+          {
+            name: lopendePattern,
+          }
+        );
+        expect(lopendeAanvraagRows.length).toBe(2);
+
+        const afgehandeldeAanvraagRows = within(
+          afgehandeldeAanvraagTable
+        ).queryAllByRole('row', {
+          name: afgehandeldePattern,
+        });
+        expect(afgehandeldeAanvraagRows.length).toBe(2);
+      });
+
+      test('Items are not in the wrong place', () => {
+        const lopendeAanvraagRows = within(
+          afgehandeldeAanvraagTable
+        ).queryAllByRole('row', { name: lopendePattern });
+
+        expect(lopendeAanvraagRows.length).toBe(0);
+
+        const afgehandeldeAanvraagRows = within(
+          lopendeAanvraagTable
+        ).queryAllByRole('row', {
+          name: afgehandeldePattern,
+        });
+
+        expect(afgehandeldeAanvraagRows.length).toBe(0);
+      });
+    });
+
+    test('should show the right overviewpage', () => {
+      const { asFragment } = render(<MockBodem />);
 
       expect(asFragment()).toMatchSnapshot();
     });
   });
 
   describe('without results', () => {
-    const renderBodem = setupMockApp(Bodem, 'BODEM', {
+    const MockBodem = createComponent({
       BODEM: {
-        content: {},
+        content: { metingen: [] },
+        status: 'OK',
       },
-    });
+    } as unknown as AppState);
 
-    it('should show the right overviewpage', () => {
-      const { asFragment } = renderBodem();
+    test('should show the right overviewpage', () => {
+      const { asFragment } = render(<MockBodem />);
       expect(asFragment()).toMatchSnapshot();
     });
   });
