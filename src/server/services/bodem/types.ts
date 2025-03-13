@@ -27,6 +27,8 @@ type LoodMetingRequestSource = {
   Researchlocations: LoodMetingResearchLocationSource[];
 };
 
+type SourceStatus = 'Ontvangen' | 'In behandeling' | 'Afgewezen';
+
 type LoodMetingResearchLocationSource = {
   Reference: string;
   Street: string;
@@ -36,7 +38,7 @@ type LoodMetingResearchLocationSource = {
   City: string;
   Workorderid: string | null;
   Workordercreatedon: string | null;
-  Friendlystatus: string;
+  Friendlystatus: SourceStatus;
   Rejectionreason: string | null;
   ReviewedOn: string | null;
   Reportsenton: string | null;
@@ -47,6 +49,8 @@ export type LoodMetingen = {
   metingen: LoodMetingFrontend[];
 };
 
+export type LoodMetingStatus = SourceStatus | 'Afgehandeld';
+
 export interface LoodMetingFrontend extends ZaakDetail {
   adres: string;
   datumAanvraag: string; // RequestedOn
@@ -54,7 +58,7 @@ export interface LoodMetingFrontend extends ZaakDetail {
   datumInbehandeling: string | null; // Workordercreatedon
   datumAfgehandeld: string | null; // Reportsenton
   datumBeoordeling: string | null; // ReviewedOn
-  status: string;
+  status: LoodMetingStatus;
   kenmerk: string;
   aanvraagNummer: string;
   rapportBeschikbaar: boolean;
