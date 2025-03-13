@@ -341,7 +341,8 @@
         "Salonboten",
         "Schipper",
         "Reder"
-      ]
+      ],
+      "profileTypes": ["commercial"]
     },
     {
       "url": "/parkeren",
