@@ -33,9 +33,14 @@ function createVarenRederRegisteredNotification(
   };
 }
 
-function createVarenNotifications(
+function createVarenNotification(
   zaak: VarenVergunningFrontend
-): MyNotification[] {
+): MyNotification | null {
+  const currentStep = zaak.steps.find((step) => step.isActive);
+  if (!currentStep) {
+    return null;
+  }
+
   // We do not link to or show processed aanvragen, only vergunningen
   const ctaLinkToThemaOrDetail =
     !zaak.processed || isVergunning(zaak)
@@ -45,51 +50,45 @@ function createVarenNotifications(
         })
       : AppRoutes.VAREN;
 
-  const notifications = zaak.steps
-    .filter((step) => step.isChecked)
-    .map((step) => {
-      const baseNotification = {
-        datePublished: step.datePublished,
-        thema: Themas.VAREN,
-        link: {
-          to: ctaLinkToThemaOrDetail,
-          title: 'Bekijk details',
-        },
-      };
-      switch (step.status) {
-        case 'Ontvangen':
-          return {
-            ...baseNotification,
-            id: `varen-${zaak.id}-ontvangen-notification`,
-            title: `Aanvraag ${zaak.caseType} ontvangen`,
-            description: `Wij hebben uw aanvraag ontvangen.`,
-          };
-        case 'In behandeling':
-          return {
-            ...baseNotification,
-            id: `varen-${zaak.id}-inbehandeling-notification`,
-            title: `Aanvraag ${zaak.caseType} in behandeling`,
-            description: `Wij hebben uw aanvraag in behandeling genomen.`,
-          };
-        case 'Meer informatie nodig':
-          return {
-            ...baseNotification,
-            id: `varen-${zaak.id}-meerinformatienodig-notification`,
-            title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
-            description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.`,
-          };
-        case 'Besluit':
-          return {
-            ...baseNotification,
-            id: `varen-${zaak.id}-afgehandeld-notification`,
-            title: `Aanvraag ${zaak.caseType} afgehandeld`,
-            description: `Wij hebben uw aanvraag afgehandeld.`,
-          };
-      }
-    });
+  const baseNotification = {
+    datePublished: currentStep.datePublished,
+    thema: Themas.VAREN,
+    link: {
+      to: ctaLinkToThemaOrDetail,
+      title: 'Bekijk details',
+    },
+  };
 
-  // If datePublished of notifications are equal, the last notification is shown first
-  return notifications.reverse();
+  switch (currentStep.status) {
+    case 'Ontvangen':
+      return {
+        ...baseNotification,
+        id: `varen-${zaak.id}-ontvangen-notification`,
+        title: `Aanvraag ${zaak.caseType} ontvangen`,
+        description: `Wij hebben uw aanvraag ontvangen.`,
+      };
+    case 'In behandeling':
+      return {
+        ...baseNotification,
+        id: `varen-${zaak.id}-inbehandeling-notification`,
+        title: `Aanvraag ${zaak.caseType} in behandeling`,
+        description: `Wij hebben uw aanvraag in behandeling genomen.`,
+      };
+    case 'Meer informatie nodig':
+      return {
+        ...baseNotification,
+        id: `varen-${zaak.id}-meerinformatienodig-notification`,
+        title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
+        description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.`,
+      };
+    case 'Besluit':
+      return {
+        ...baseNotification,
+        id: `varen-${zaak.id}-afgehandeld-notification`,
+        title: `Aanvraag ${zaak.caseType} afgehandeld`,
+        description: `Wij hebben uw aanvraag afgehandeld.`,
+      };
+  }
 }
 
 export async function fetchVarenNotifications(
@@ -119,7 +118,7 @@ export async function fetchVarenNotifications(
   const zaken = varenResponse.content.filter(
     (zaak) => zaak.caseType !== 'Varen registratie reder'
   );
-  notifications.push(...zaken.map(createVarenNotifications).flat());
+  notifications.push(...zaken.map(createVarenNotification).filter((n) => !!n));
 
   return apiSuccessResult({
     notifications,
