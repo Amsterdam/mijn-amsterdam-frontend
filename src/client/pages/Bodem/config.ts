@@ -23,20 +23,20 @@ const tableConfigBase = {
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
+    ...tableConfigBase,
     title: 'Lopende aanvragen',
     filter: (bodemAanvraag: LoodMetingFrontend) => isInProgress(bodemAanvraag),
     listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
-    ...tableConfigBase,
   },
   [listPageParamKind.completed]: {
+    ...tableConfigBase,
     title: 'Afgehandelde aanvragen',
     filter: (bodemAanvraag: LoodMetingFrontend) => !isInProgress(bodemAanvraag),
     listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
       kind: listPageParamKind.completed,
     }),
-    ...tableConfigBase,
   },
 } as const;
 
