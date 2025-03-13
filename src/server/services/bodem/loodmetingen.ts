@@ -7,6 +7,7 @@ import {
   LoodMetingDocument,
   LoodMetingFrontend,
   LoodMetingRequestsSource,
+  LoodMetingStatus,
   LoodMetingen,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -20,7 +21,7 @@ import {
   isRecentNotification,
   sortAlpha,
 } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification, StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
