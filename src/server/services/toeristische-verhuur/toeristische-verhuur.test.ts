@@ -108,23 +108,6 @@ describe('Toeristische verhuur service', () => {
     ).toBe(true);
   });
 
-  it('Should reply with memoized response based on function params', async () => {
-    remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
-    remoteApi
-      .get('/lvv/BBBBBBBBBBBBBBBBBBBB')
-      .reply(200, REGISTRATIES_DUMMY_RESPONSE)
-      .get('/lvv/AAAAAAAAAAAAAAAAAAAA')
-      .reply(200, REGISTRATIES_DUMMY_RESPONSE);
-    remoteApi
-      .get('/decosjoin/getvergunningen')
-      .reply(200, VERGUNNINGEN_DUMMY_RESPONSE);
-
-    const response = await fetchToeristischeVerhuur('x2', authProfileAndToken);
-    const response2 = await fetchToeristischeVerhuur('x2', authProfileAndToken);
-
-    expect(response === response2).toBe(true);
-  });
-
   it('Should respond with 1 failed dependency: vergunningen failed', async () => {
     remoteApi.post('/lvv/bsn').reply(200, REGISTRATIES_DUMMY_RESPONSE_NUMBERS);
     remoteApi

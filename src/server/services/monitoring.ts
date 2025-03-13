@@ -28,41 +28,45 @@ const client: appInsights.TelemetryClient | undefined =
 // See also: https://www.npmjs.com/package/applicationinsights
 
 if (client) {
-  const EXCLUDE_REQUESTS = [
-    'GET /api/v1/auth/check',
-    'GET /robots933456.txt',
-    'GET /admin/host/status',
-    'POST /admin/host/ping',
-    'POST /api/v1/services/telemetry/v2/track',
-  ];
+  // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
+  const excludedRequests: string[] = JSON.parse(
+    process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
+  );
 
-  const EXCLUDE_OUTGOING_DEPENDENCY: Record<string, string> = {
-    'GET /stadspas/rest/sales/v1/pashouder': '401',
-    'POST /zorgned/persoonsgegevensNAW': '404',
-    'POST /v2/track': '400',
-  };
+  const excludedOutoingDependencies: Array<{
+    method: string;
+    routeSegment: string;
+    statusCode: string;
+  }> = JSON.parse(process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
 
   client.addTelemetryProcessor((envelope) => {
+    const SEND_TELEMETRY = true;
+    const DISCARD_TELEMETRY = false;
+
     if (envelope?.data?.baseType === 'RequestData') {
       const reqData = envelope.data.baseData as RequestData;
 
-      if (EXCLUDE_REQUESTS.includes(reqData.name)) {
-        // Do not send telemetry.
-        return false;
+      if (excludedRequests.includes(reqData.name)) {
+        return DISCARD_TELEMETRY;
       }
     }
 
     if (envelope?.data?.baseType === 'RemoteDependencyData') {
       const reqData = envelope.data.baseData as RemoteDependencyData;
+      const [method, route] = reqData.name.split(' ');
 
-      if (EXCLUDE_OUTGOING_DEPENDENCY[reqData.name] === reqData.resultCode) {
-        // Do not send telemetry.
-        return false;
+      for (const excludeReqParts of excludedOutoingDependencies) {
+        if (
+          route.includes(excludeReqParts.routeSegment) &&
+          method === excludeReqParts.method &&
+          reqData.resultCode === excludeReqParts.statusCode
+        ) {
+          return DISCARD_TELEMETRY;
+        }
       }
     }
 
-    // Send telemetry.
-    return true;
+    return SEND_TELEMETRY;
   });
 
   try {

@@ -1,4 +1,5 @@
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
+import { HttpStatusCode } from 'axios';
+
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -27,7 +28,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
     return apiErrorResult(
       'Bad request: failed to process encrypted param',
       null,
-      HTTP_STATUS_CODES.BAD_REQUEST
+      HttpStatusCode.BadRequest
     );
   }
 
@@ -43,7 +44,7 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
     return apiErrorResult(
       'Not authorized: incomplete session validation',
       null,
-      HTTP_STATUS_CODES.UNAUTHORIZED
+      HttpStatusCode.Unauthorized
     );
   }
 
