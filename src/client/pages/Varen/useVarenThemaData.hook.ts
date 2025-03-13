@@ -1,8 +1,4 @@
-import {
-  varenMeerInformatieLink,
-  tableConfig,
-  exploitatieVergunningAanvragen,
-} from './Varen-thema-config';
+import { varenMeerInformatieLink, tableConfig } from './Varen-thema-config';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
@@ -32,6 +28,6 @@ export function useVarenThemaData() {
     isError: isError(VAREN),
     varenVergunningen,
     linkListItems: [varenMeerInformatieLink],
-    buttonItems: [exploitatieVergunningAanvragen],
+    buttonItems: [],
   };
 }
