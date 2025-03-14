@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -165,9 +165,15 @@ describe('<Varen />', () => {
   it('Shows the expected links', () => {
     const screen = render(<Component state={getTestState([])} />);
     expect(
-      screen.getByText('Meer informatie over passagiers- en beroepsvaart')
+      screen.getByRole('link', {
+        name: 'Meer informatie over passagiers- en beroepsvaart',
+      })
     ).toBeInTheDocument();
-    expect(screen.getByText('Legestabel')).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', {
+        name: 'Legestabel',
+      })
+    ).toBeInTheDocument();
   });
 
   it('Shows the expected top text', () => {
@@ -179,81 +185,145 @@ describe('<Varen />', () => {
     ).toBeInTheDocument();
   });
 
-  it('Shows an alert when the reder does not have a registration', () => {
-    const screen = render(<Component state={getTestState([])} />);
-    expect(
-      screen.getByText(
-        /Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart./
-      )
-    ).toBeInTheDocument();
-    expect(screen.queryByText('Naam aanvrager')).toBeNull();
+  describe('Reder registratie', () => {
+    const alertRegexNoRederRegistratie =
+      /Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart./;
+
+    it('Shows an alert when the reder does not have a registration', () => {
+      const screen = render(<Component state={getTestState([])} />);
+      expect(
+        screen.getByText(alertRegexNoRederRegistratie)
+      ).toBeInTheDocument();
+      expect(screen.queryByText('Naam aanvrager')).toBeNull();
+    });
+
+    it('Does not show an alert when the reder has a registration', () => {
+      const screen = render(
+        <Component state={getTestState([rederRegistratie])} />
+      );
+      expect(screen.queryByText(alertRegexNoRederRegistratie)).toBeNull();
+    });
+
+    it('Shows the reder data', () => {
+      const screen = render(
+        <Component state={getTestState([rederRegistratie])} />
+      );
+
+      const naamAanvrager = screen.getByText('Naam aanvrager');
+      expect(naamAanvrager.nextElementSibling).toHaveTextContent(
+        'Balonnenfabriek'
+      );
+
+      const telefoonnummer = screen.getByText('Telefoonnummer');
+      expect(telefoonnummer.nextElementSibling).toHaveTextContent('0612345678');
+
+      const bsnKvk = screen.getByText('KvK nummer');
+      expect(bsnKvk).toBeInTheDocument();
+      expect(bsnKvk.nextElementSibling).toHaveTextContent('012345678');
+
+      const adres = screen.getByText('Adres');
+      expect(adres.nextElementSibling).toHaveTextContent(
+        'Amstel 1, 1011 PN Amsterdam'
+      );
+
+      const email = screen.getByText('E-mailadres');
+      expect(email.nextElementSibling).toHaveTextContent(
+        'myemailadres@example.com'
+      );
+
+      const datumRegistratie = screen.getByText('Datum registratie');
+      expect(datumRegistratie.nextElementSibling).toHaveTextContent(
+        '06 november 2023'
+      );
+    });
   });
 
-  it('Does not show an alert when the reder has a registration', () => {
-    const screen = render(
-      <Component state={getTestState([rederRegistratie])} />
-    );
-    expect(
-      screen.queryByText(
-        /Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart./
-      )
-    ).toBeNull();
-  });
+  describe('Tables', () => {
+    it('Shows the expected empty tables', () => {
+      const screen = render(<Component state={getTestState([])} />);
 
-  it('Shows the reder data', () => {
-    const screen = render(
-      <Component state={getTestState([rederRegistratie])} />
-    );
-    expect(screen.getByText('Naam aanvrager')).toBeInTheDocument();
-    expect(screen.getByText('Balonnenfabriek')).toBeInTheDocument();
+      const lopendeAanvraagTableHeader = screen.getByRole('heading', {
+        name: 'Lopende aanvragen',
+      });
+      expect(lopendeAanvraagTableHeader).toBeInTheDocument();
+      const lopendeAanvraagTableNoContent = screen.getByText(
+        'U heeft (nog) geen lopende aanvragen'
+      );
+      expect(lopendeAanvraagTableHeader.parentNode).toContainElement(
+        lopendeAanvraagTableNoContent
+      );
 
-    expect(screen.getByText('Telefoonnummer')).toBeInTheDocument();
-    expect(screen.getByText('0612345678')).toBeInTheDocument();
+      const actieveVergunningenTableHeader = screen.getByRole('heading', {
+        name: 'Actieve vergunningen',
+      });
+      expect(actieveVergunningenTableHeader).toBeInTheDocument();
+      const actieveVergunningTableNoContent = screen.getByText(
+        'U heeft (nog) geen actieve vergunningen'
+      );
+      expect(actieveVergunningenTableHeader.parentNode).toContainElement(
+        actieveVergunningTableNoContent
+      );
+    });
 
-    expect(screen.getByText('KvK nummer')).toBeInTheDocument();
-    expect(screen.getByText('012345678')).toBeInTheDocument();
+    it('Shows the expected rows in the tables', () => {
+      const screen = render(<Component state={getTestState()} />);
 
-    expect(screen.getByText('Adres')).toBeInTheDocument();
-    expect(screen.getByText('Adres')).toBeInTheDocument();
+      const lopendeAanvraagTableHeader = screen.getByRole('heading', {
+        name: 'Lopende aanvragen',
+      });
+      const lopendeAanvraagTable = within(
+        within(lopendeAanvraagTableHeader.parentNode as HTMLElement).getByRole(
+          'table'
+        )
+      );
 
-    expect(screen.getByText('E-mailadres')).toBeInTheDocument();
-    expect(screen.getByText('myemailadres@example.com')).toBeInTheDocument();
+      const lopendeAanvraagColumnHeaders = lopendeAanvraagTable.getAllByRole(
+        'columnheader'
+      ) as HTMLElement[];
+      expect(
+        lopendeAanvraagColumnHeaders.map((h) => h.textContent)
+      ).toMatchObject([
+        'Naam vaartuig',
+        'Omschrijving',
+        'Aangevraagd',
+        'Status',
+      ]);
+      expect(lopendeAanvraagTable.getByText('Titanic')).toBeDefined();
+      expect(
+        lopendeAanvraagTable.getByText('Varen vergunning exploitatie')
+      ).toBeDefined();
+      expect(lopendeAanvraagTable.getByText('In behandeling')).toBeDefined();
+      expect(lopendeAanvraagTable.getByText('07 november 2023')).toBeDefined();
 
-    expect(screen.getByText('Datum registratie')).toBeInTheDocument();
-    expect(screen.getByText('06 november 2023')).toBeInTheDocument();
-  });
+      const actieveVergunningTableHeader = screen.getByRole('heading', {
+        name: 'Actieve vergunningen',
+      });
+      const actieveVergunningTable = within(
+        within(
+          actieveVergunningTableHeader.parentNode as HTMLElement
+        ).getByRole('table')
+      );
 
-  it('Shows the expected empty tables', () => {
-    const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByText('Lopende aanvragen')).toBeInTheDocument();
-    expect(screen.getByText('Actieve vergunningen')).toBeInTheDocument();
+      const actieveVergunningenColumnHeaders =
+        actieveVergunningTable.getAllByRole('columnheader') as HTMLElement[];
+      expect(
+        actieveVergunningenColumnHeaders.map((h) => h.textContent)
+      ).toMatchObject([
+        'Naam vaartuig',
+        'Omschrijving',
+        'Datum besluit',
+        'Resultaat',
+      ]);
 
-    expect(
-      screen.getByText('U heeft (nog) geen lopende aanvragen')
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText('U heeft (nog) geen actieve vergunningen')
-    ).toBeInTheDocument();
-  });
-
-  it('Shows the expected rows in the tables', () => {
-    const screen = render(<Component state={getTestState()} />);
-    expect(screen.getAllByText('Naam vaartuig').length).toBe(2);
-    expect(screen.getAllByText('Omschrijving').length).toBe(2);
-    expect(screen.getByText('Aangevraagd')).toBeInTheDocument();
-    expect(screen.getByText('Datum besluit')).toBeInTheDocument();
-    expect(screen.getByText('Status')).toBeInTheDocument();
-    expect(screen.getByText('Resultaat')).toBeInTheDocument();
-
-    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(2);
-    expect(screen.getByText('Titanic')).toBeInTheDocument();
-    expect(screen.getByText('In behandeling')).toBeInTheDocument();
-    expect(screen.getByText('07 november 2023')).toBeInTheDocument();
-
-    expect(screen.getByText('BootjeVanBerend')).toBeInTheDocument();
-    expect(screen.getByText('10 november 2023')).toBeInTheDocument();
-    expect(screen.getByText('Verleend')).toBeInTheDocument();
+      expect(actieveVergunningTable.getByText('BootjeVanBerend')).toBeDefined();
+      expect(
+        actieveVergunningTable.getByText('Varen vergunning exploitatie')
+      ).toBeDefined();
+      expect(
+        actieveVergunningTable.getByText('10 november 2023')
+      ).toBeDefined();
+      expect(actieveVergunningTable.getByText('Verleend')).toBeDefined();
+    });
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {

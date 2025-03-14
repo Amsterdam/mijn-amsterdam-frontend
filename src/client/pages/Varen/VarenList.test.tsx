@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -96,17 +96,21 @@ describe('<VarenList />', () => {
         )}
       />
     );
-    expect(screen.getByText('Naam vaartuig')).toBeInTheDocument();
-    expect(screen.getAllByText('BootjeVanBerend').length).toBe(4);
 
-    expect(screen.getByText('Omschrijving')).toBeInTheDocument();
-    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(4);
+    const table = within(screen.getByRole('table'));
 
-    expect(screen.getByText('Datum besluit')).toBeInTheDocument();
-    expect(screen.getAllByText('10 november 2023').length).toBe(4);
+    const columnHeaders = table.getAllByRole('columnheader') as HTMLElement[];
+    expect(columnHeaders.map((h) => h.textContent)).toMatchObject([
+      'Naam vaartuig',
+      'Omschrijving',
+      'Datum besluit',
+      'Resultaat',
+    ]);
 
-    expect(screen.getByText('Resultaat')).toBeInTheDocument();
-    expect(screen.getAllByText('Verleend').length).toBe(4);
+    expect(table.getAllByText('BootjeVanBerend')).toHaveLength(4);
+    expect(table.getAllByText('Varen vergunning exploitatie')).toHaveLength(4);
+    expect(table.getAllByText('10 november 2023')).toHaveLength(4);
+    expect(table.getAllByText('Verleend')).toHaveLength(4);
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {
@@ -114,8 +118,8 @@ describe('<VarenList />', () => {
       <Component state={getTestState([exploitatieDecision])} />
     );
 
-    expect(screen.getByText('BootjeVanBerend').getAttribute('href')).toContain(
-      'Z-24-0000001'
-    );
+    expect(
+      screen.getByRole('link', { name: 'BootjeVanBerend' }).getAttribute('href')
+    ).toContain('Z-24-0000001');
   });
 });
