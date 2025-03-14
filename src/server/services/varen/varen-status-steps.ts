@@ -9,9 +9,6 @@ import { getStatusDate } from '../decos/helpers';
 export function getStatusSteps(decosZaak: Varen) {
   const isAfgehandeld = decosZaak.processed;
 
-  const dateInBehandeling = getStatusDate('In behandeling', decosZaak);
-  const hasDateInBehandeling = !!dateInBehandeling;
-
   const hasTermijnen = decosZaak.termijnDates.length > 0;
 
   const steps: StatusLineItem[] = [
@@ -19,15 +16,13 @@ export function getStatusSteps(decosZaak: Varen) {
       status: 'Ontvangen',
       datePublished: decosZaak.dateRequest,
       description: '',
-      isActive: !hasDateInBehandeling,
       isChecked: true,
     },
     {
       status: 'In behandeling',
-      datePublished: dateInBehandeling || '',
+      datePublished: getStatusDate('In behandeling', decosZaak) || '',
       description: '',
-      isActive: hasDateInBehandeling && !hasTermijnen,
-      isChecked: hasDateInBehandeling || hasTermijnen,
+      isChecked: hasTermijnen,
     },
     ...decosZaak.termijnDates.flatMap((termijn, index, termijnen) => {
       const isLastTermijn = index === termijnen.length - 1;
@@ -52,7 +47,6 @@ export function getStatusSteps(decosZaak: Varen) {
                 },
               ]
             : [],
-        isActive: isTermijnActive,
         isChecked: !isLastTermijn || isDateInPast(termijn.dateEnd),
       };
 
@@ -68,7 +62,6 @@ export function getStatusSteps(decosZaak: Varen) {
           ? termijn.dateEnd
           : nextTermijnDateStart, // Technically termijn dateRanges can overlap. To minimize confusion the earlier date is taken
         description: '',
-        isActive: isDateInPast(termijn.dateEnd) && isLastTermijn,
         isChecked: !isLastTermijn,
       };
 
@@ -77,15 +70,24 @@ export function getStatusSteps(decosZaak: Varen) {
     {
       status: 'Besluit',
       datePublished: decosZaak.dateDecision || '',
-      isActive: false,
       isChecked: isAfgehandeld,
     },
-  ].map((step, i) => ({
-    ...step,
-    id: `step-${i}`,
-    isActive: step.isActive && !isAfgehandeld,
-    isChecked: step.isChecked || isAfgehandeld,
-  }));
+  ]
+    .map((step, i, steps) => ({
+      ...step,
+      id: `step-${i}`,
+      isChecked: step.isChecked || steps.at(i + 1)?.isChecked || false,
+    }))
+    // Second mapping because the updated isChecked is needed to determine isActive
+    .map((step, i, steps) => {
+      const previousStepChecked =
+        steps.at(Math.max(0, i - 1))?.isChecked ?? true;
+      const isLastStep = i === steps.length - 1;
+      return {
+        ...step,
+        isActive: previousStepChecked && (!step.isChecked || isLastStep),
+      };
+    });
 
   return steps;
 }
