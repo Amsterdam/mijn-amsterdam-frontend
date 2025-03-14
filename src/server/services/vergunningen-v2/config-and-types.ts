@@ -29,6 +29,7 @@ export interface TVMRVVObject
     DecosZaakWithDateTimeRange,
     DecosZaakWithKentekens {
   caseType: GetCaseType<'TVMRVVObject'>;
+  description: string | null;
 }
 
 export interface GPK extends DecosZaakWithLocation {

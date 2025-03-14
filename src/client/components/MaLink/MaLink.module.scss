@@ -16,7 +16,7 @@
     // color: var(--ams-color-primary-white);
   }
 
-  &.ButtonDisabled {
+  &[aria-disabled='true'] {
     &,
     &:hover {
       background-color: transparent;

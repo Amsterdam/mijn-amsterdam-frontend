@@ -76,11 +76,15 @@ export function MaButtonLink({
     styles.MaButtonLink,
     'ams-button',
     `ams-button--${variant}`,
-    isDisabled && styles.ButtonDisabled,
     className
   );
   return (
-    <a {...rest} className={classes} href={href}>
+    <a
+      {...rest}
+      className={classes}
+      aria-disabled={isDisabled}
+      href={!isDisabled ? href : undefined}
+    >
       {children}
     </a>
   );
