@@ -11,7 +11,7 @@ export function getStatusSteps(decosZaak: Varen) {
 
   const hasTermijnen = decosZaak.termijnDates.length > 0;
 
-  const steps: StatusLineItem[] = [
+  const steps = [
     {
       status: 'Ontvangen',
       datePublished: decosZaak.dateRequest,
@@ -72,22 +72,17 @@ export function getStatusSteps(decosZaak: Varen) {
       datePublished: decosZaak.dateDecision || '',
       isChecked: isAfgehandeld,
     },
-  ]
-    .map((step, i, steps) => ({
-      ...step,
-      id: `step-${i}`,
-      isChecked: step.isChecked || steps.at(i + 1)?.isChecked || false,
-    }))
-    // Second mapping because the updated isChecked is needed to determine isActive
-    .map((step, i, steps) => {
-      const previousStepChecked =
-        steps.at(Math.max(0, i - 1))?.isChecked ?? true;
-      const isLastStep = i === steps.length - 1;
-      return {
-        ...step,
-        isActive: previousStepChecked && (!step.isChecked || isLastStep),
-      };
-    });
+  ] satisfies Partial<StatusLineItem>[];
 
-  return steps;
+  const lastIndexStepChecked = steps.findLastIndex((step) => step.isChecked);
+  return steps.map((step, stepIndex) => {
+    const isStepLastAndChecked =
+      step.isChecked && stepIndex === steps.length - 1;
+    return {
+      ...step,
+      id: `step-${stepIndex}`,
+      isChecked: stepIndex <= lastIndexStepChecked,
+      isActive: stepIndex === lastIndexStepChecked + 1 || isStepLastAndChecked,
+    };
+  });
 }
