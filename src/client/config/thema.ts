@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
 import { TrackingConfig } from './routes';
-import { IS_PRODUCTION } from '../../universal/config/env';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { Thema, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
@@ -31,7 +30,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
   ERFPACHT: 'Erfpacht',
-  ERFPACHTv2: `Erfpacht${IS_PRODUCTION ? '' : ' V2 (Vernise)'}`,
+  ERFPACHTv2: `Erfpacht`,
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
   INKOMEN: 'Inkomen',
