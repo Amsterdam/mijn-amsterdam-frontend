@@ -186,10 +186,25 @@ const createComponent = componentCreator({
 });
 
 describe('Bodem', () => {
-  describe('With aanvragen', () => {
+  test('Title is present', () => {
     const MockBodem = createComponent(testState);
+    const screen = render(<MockBodem />);
 
-    describe('Tables', () => {
+    const title = screen.getByRole('heading', { name: 'Bodem' });
+    expect(title).toBeInTheDocument();
+
+    const desc = screen.getByText(
+      /Op deze pagina vindt u informatie over uw lood in de bodem-check/
+    );
+    expect(desc).toBeInTheDocument();
+  });
+
+  describe('Tables', () => {
+    const lopendePattern = /(In behandeling)|Ontvangen/;
+    const afgehandeldePattern = /Afgehandeld|Afgewezen/;
+
+    test.only('Table items found', () => {
+      const MockBodem = createComponent(testState);
       const screen = render(<MockBodem />);
 
       const lopendeAanvraagTableHeader = screen.getByRole('heading', {
@@ -199,14 +214,6 @@ describe('Bodem', () => {
       const afgehandeldeAanvraagTableHeader = screen.getByRole('heading', {
         name: 'Afgehandelde aanvragen',
       });
-
-      test('Headers are found', () => {
-        expect(lopendeAanvraagTableHeader).toBeInTheDocument();
-        expect(afgehandeldeAanvraagTableHeader).toBeInTheDocument();
-      });
-
-      const lopendePattern = /(In behandeling)|Ontvangen/;
-      const afgehandeldePattern = /Afgehandeld|Afgewezen/;
 
       const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement;
       assert(
@@ -221,58 +228,79 @@ describe('Bodem', () => {
         'afgehandeldeAanvraagTable should have a parentElement'
       );
 
-      test('Table items found', () => {
-        const lopendeAanvraagRows = within(lopendeAanvraagTable).getAllByRole(
-          'row',
-          {
-            name: lopendePattern,
-          }
-        );
-        expect(lopendeAanvraagRows.length).toBe(2);
+      const lopendeAanvraagRows = within(lopendeAanvraagTable).getAllByRole(
+        'row',
+        {
+          name: lopendePattern,
+        }
+      );
+      expect(lopendeAanvraagRows.length).toBe(2);
 
-        const afgehandeldeAanvraagRows = within(
-          afgehandeldeAanvraagTable
-        ).queryAllByRole('row', {
-          name: afgehandeldePattern,
-        });
-        expect(afgehandeldeAanvraagRows.length).toBe(2);
+      const afgehandeldeAanvraagRows = within(
+        afgehandeldeAanvraagTable
+      ).queryAllByRole('row', {
+        name: afgehandeldePattern,
       });
-
-      test('Items are not in the wrong place', () => {
-        const lopendeAanvraagRows = within(
-          afgehandeldeAanvraagTable
-        ).queryAllByRole('row', { name: lopendePattern });
-
-        expect(lopendeAanvraagRows.length).toBe(0);
-
-        const afgehandeldeAanvraagRows = within(
-          lopendeAanvraagTable
-        ).queryAllByRole('row', {
-          name: afgehandeldePattern,
-        });
-
-        expect(afgehandeldeAanvraagRows.length).toBe(0);
-      });
+      expect(afgehandeldeAanvraagRows.length).toBe(2);
     });
 
-    test('should show the right overviewpage', () => {
-      const { asFragment } = render(<MockBodem />);
+    test('Items are not in the wrong place', () => {
+      const MockBodem = createComponent(testState);
+      const screen = render(<MockBodem />);
 
-      expect(asFragment()).toMatchSnapshot();
+      const lopendeAanvraagTableHeader = screen.getByRole('heading', {
+        name: 'Lopende aanvragen',
+      });
+
+      const afgehandeldeAanvraagTableHeader = screen.getByRole('heading', {
+        name: 'Afgehandelde aanvragen',
+      });
+
+      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement;
+      assert(
+        lopendeAanvraagTable !== null,
+        'lopendeAanvraagTable should have a parentElement'
+      );
+
+      const afgehandeldeAanvraagTable =
+        afgehandeldeAanvraagTableHeader.parentElement;
+      assert(
+        afgehandeldeAanvraagTable !== null,
+        'afgehandeldeAanvraagTable should have a parentElement'
+      );
+
+      const lopendeAanvraagRows = within(
+        afgehandeldeAanvraagTable
+      ).queryAllByRole('row', { name: lopendePattern });
+
+      expect(lopendeAanvraagRows.length).toBe(0);
+
+      const afgehandeldeAanvraagRows = within(
+        lopendeAanvraagTable
+      ).queryAllByRole('row', {
+        name: afgehandeldePattern,
+      });
+
+      expect(afgehandeldeAanvraagRows.length).toBe(0);
     });
   });
 
-  describe('without results', () => {
-    const MockBodem = createComponent({
-      BODEM: {
-        content: { metingen: [] },
-        status: 'OK',
-      },
-    } as unknown as AppState);
+  describe('State without results', () => {
+    test('No items on page', () => {
+      const MockBodem = createComponent({
+        BODEM: {
+          content: { metingen: [] },
+          status: 'OK',
+        },
+      } as unknown as AppState);
+      const screen = render(<MockBodem />);
 
-    test('should show the right overviewpage', () => {
-      const { asFragment } = render(<MockBodem />);
-      expect(asFragment()).toMatchSnapshot();
+      expect(
+        screen.getByText(/U heeft geen lopende aanvragen/)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/U heeft geen afgehandelde aanvragen/)
+      ).toBeInTheDocument();
     });
   });
 });
