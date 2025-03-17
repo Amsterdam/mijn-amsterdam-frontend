@@ -35,11 +35,11 @@ export const FeatureToggle = {
   eherkenningActive: true,
 
   // ErfachtV2 VerNise
-  erfpachtV2Active: !IS_PRODUCTION,
-  erfpachtV2EndpointActive: !IS_PRODUCTION,
+  erfpachtV2Active: true,
+  erfpachtV2EndpointActive: true,
 
   // Legacy Mijn Erfpacht
-  mijnErfpachtActive: true,
+  mijnErfpachtActive: false,
 
   // Afval api + Afval thema
   garbageInformationPage: true,

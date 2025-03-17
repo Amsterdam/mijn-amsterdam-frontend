@@ -1,7 +1,7 @@
 import {
-  varenMeerInformatieLink,
   tableConfig,
   varenLegesTableLink,
+  varenMeerInformatieLink,
 } from './Varen-thema-config';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
