@@ -208,17 +208,18 @@ describe('Bodem', () => {
       const lopendePattern = /(In behandeling)|Ontvangen/;
       const afgehandeldePattern = /Afgehandeld|Afgewezen/;
 
-      const lopendeAanvraagTable =
-        lopendeAanvraagTableHeader.nextSibling as HTMLElement;
-      if (!lopendeAanvraagTable) {
-        throw Error('No sibling found');
-      }
+      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement;
+      assert(
+        lopendeAanvraagTable !== null,
+        'lopendeAanvraagTable should have a parentElement'
+      );
 
       const afgehandeldeAanvraagTable =
-        afgehandeldeAanvraagTableHeader.nextSibling as HTMLElement;
-      if (!afgehandeldeAanvraagTable) {
-        throw Error('No sibling found');
-      }
+        afgehandeldeAanvraagTableHeader.parentElement;
+      assert(
+        afgehandeldeAanvraagTable !== null,
+        'afgehandeldeAanvraagTable should have a parentElement'
+      );
 
       test('Table items found', () => {
         const lopendeAanvraagRows = within(lopendeAanvraagTable).getAllByRole(
