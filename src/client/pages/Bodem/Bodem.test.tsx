@@ -67,7 +67,7 @@ const testState = {
               id: '',
               datePublished: '2022-12-01T09:53:11Z',
               isActive: false,
-              isChecked: false,
+              isChecked: true,
             },
             {
               status: 'In behandeling',
@@ -108,7 +108,7 @@ const testState = {
               id: '',
               datePublished: '2022-12-01T09:53:11Z',
               isActive: false,
-              isChecked: false,
+              isChecked: true,
             },
             {
               status: 'In behandeling',
@@ -154,14 +154,14 @@ const testState = {
               status: 'Ontvangen',
               id: '',
               datePublished: '2022-12-01T09:53:11Z',
-              isActive: false,
+              isActive: true,
               isChecked: false,
             },
             {
               status: 'In behandeling',
               id: '',
               datePublished: '',
-              isActive: false,
+              isActive: true,
               isChecked: false,
             },
             {
