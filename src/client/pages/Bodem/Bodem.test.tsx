@@ -72,7 +72,7 @@ const testState = {
             {
               status: 'In behandeling',
               id: '',
-              datePublished: '',
+              datePublished: '2022-12-01T09:54:11Z',
               isActive: true,
               isChecked: true,
             },
@@ -113,14 +113,14 @@ const testState = {
             {
               status: 'In behandeling',
               id: '',
-              datePublished: '',
+              datePublished: '2022-12-01T09:54:11Z',
               isActive: false,
-              isChecked: false,
+              isChecked: true,
             },
             {
               status: 'Afgehandeld',
               id: '',
-              datePublished: '',
+              datePublished: '2022-12-01T09:55:11Z',
               isActive: true,
               isChecked: true,
             },
@@ -160,14 +160,14 @@ const testState = {
             {
               status: 'In behandeling',
               id: '',
-              datePublished: '',
+              datePublished: '2022-12-01T09:54:11Z',
               isActive: true,
               isChecked: false,
             },
             {
               status: 'Afgehandeld',
               id: '',
-              datePublished: '',
+              datePublished: '2022-12-01T09:55:11Z',
               isActive: true,
               isChecked: true,
             },
