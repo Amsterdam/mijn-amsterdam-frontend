@@ -69,7 +69,7 @@ export const varenMeerInformatieLink: LinkProps = {
   title: 'Meer informatie over passagiers- en beroepsvaart',
 } as const;
 
-export const varenLegestabelLink: LinkProps = {
+export const varenLegesTableLink: LinkProps = {
   to: 'https://lokaleregelgeving.overheid.nl/CVDR728175#bijlage_1.',
   title: 'Legestabel',
 } as const;

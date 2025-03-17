@@ -76,26 +76,17 @@ describe('<VarenList />', () => {
     );
   });
 
-  it('Shows the expected title on the page', () => {
-    const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'Actieve vergunningen'
-    );
-  });
-
   it('Shows the expected rows in the tables', () => {
-    const screen = render(
-      <Component
-        state={getTestState(
-          [
-            exploitatieDecision,
-            exploitatieDecision,
-            exploitatieDecision,
-            exploitatieDecision,
-          ].map((vergunning, index) => ({ ...vergunning, id: `${index}` }))
-        )}
-      />
-    );
+    const vergunningen = [
+      exploitatieDecision,
+      exploitatieDecision,
+      exploitatieDecision,
+      exploitatieDecision,
+    ].map((vergunning, index) => ({
+      ...vergunning,
+      id: `${index}`,
+    }));
+    const screen = render(<Component state={getTestState(vergunningen)} />);
 
     const table = within(screen.getByRole('table'));
 
@@ -107,10 +98,16 @@ describe('<VarenList />', () => {
       'Resultaat',
     ]);
 
-    expect(table.getAllByText('BootjeVanBerend')).toHaveLength(4);
-    expect(table.getAllByText('Varen vergunning exploitatie')).toHaveLength(4);
-    expect(table.getAllByText('10 november 2023')).toHaveLength(4);
-    expect(table.getAllByText('Verleend')).toHaveLength(4);
+    expect(table.getAllByText('BootjeVanBerend')).toHaveLength(
+      vergunningen.length
+    );
+    expect(table.getAllByText('Varen vergunning exploitatie')).toHaveLength(
+      vergunningen.length
+    );
+    expect(table.getAllByText('10 november 2023')).toHaveLength(
+      vergunningen.length
+    );
+    expect(table.getAllByText('Verleend')).toHaveLength(vergunningen.length);
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {

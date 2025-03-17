@@ -1,7 +1,7 @@
 import {
   varenMeerInformatieLink,
   tableConfig,
-  varenLegestabelLink,
+  varenLegesTableLink,
 } from './Varen-thema-config';
 import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -31,7 +31,7 @@ export function useVarenThemaData() {
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
     varenVergunningen,
-    linkListItems: [varenMeerInformatieLink, varenLegestabelLink],
+    linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
   };
 }
