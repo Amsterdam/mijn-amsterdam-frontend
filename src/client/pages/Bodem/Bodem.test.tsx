@@ -215,14 +215,9 @@ describe('Bodem', () => {
         name: 'Afgehandelde aanvragen',
       });
 
-      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement;
-      assert(
-        lopendeAanvraagTable !== null,
-        'lopendeAanvraagTable should have a parentElement'
-      );
-
       const columnHeaders = ['Adres', 'Aangevraagd', 'Status'];
 
+      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement!;
       const lopendeAanvraagColumnHeaders =
         within(lopendeAanvraagTable).getAllByRole('columnheader');
       expect(
@@ -238,11 +233,7 @@ describe('Bodem', () => {
       expect(lopendeAanvraagRows.length).toBe(2);
 
       const afgehandeldeAanvraagTable =
-        afgehandeldeAanvraagTableHeader.parentElement;
-      assert(
-        afgehandeldeAanvraagTable !== null,
-        'afgehandeldeAanvraagTable should have a parentElement'
-      );
+        afgehandeldeAanvraagTableHeader.parentElement!;
 
       const afgehandeldeAanvraagColumnHeaders =
         within(lopendeAanvraagTable).getAllByRole('columnheader');
@@ -270,18 +261,10 @@ describe('Bodem', () => {
         name: 'Afgehandelde aanvragen',
       });
 
-      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement;
-      assert(
-        lopendeAanvraagTable !== null,
-        'lopendeAanvraagTable should have a parentElement'
-      );
+      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement!;
 
       const afgehandeldeAanvraagTable =
-        afgehandeldeAanvraagTableHeader.parentElement;
-      assert(
-        afgehandeldeAanvraagTable !== null,
-        'afgehandeldeAanvraagTable should have a parentElement'
-      );
+        afgehandeldeAanvraagTableHeader.parentElement!;
 
       const lopendeAanvraagRows = within(
         afgehandeldeAanvraagTable
