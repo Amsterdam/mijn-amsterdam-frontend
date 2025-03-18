@@ -92,7 +92,7 @@ export interface GenericDocument {
 
 export type AltDocumentContent = string | ReactNode;
 
-export interface StatusLineItem<T = string> {
+export interface StatusLineItem<T extends string = string> {
   id: string;
   status: T;
   datePublished: string;
