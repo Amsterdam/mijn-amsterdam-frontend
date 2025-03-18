@@ -203,10 +203,6 @@ export async function fetchStadspassenByAdministratienummer(
     .flat()
     .filter((stadspas) => stadspas !== null);
 
-  if (!stadspassen || !stadspassen.length) {
-    return NO_PASHOUDER_CONTENT_RESPONSE;
-  }
-
   return apiSuccessResult({ stadspassen, administratienummer });
 }
 

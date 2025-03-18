@@ -512,7 +512,7 @@ describe('stadspas-gpass-service', () => {
       expect(result2).toStrictEqual(
         apiSuccessResult({
           stadspassen: [],
-          administratienummer: null,
+          administratienummer: '12345',
         })
       );
     });
