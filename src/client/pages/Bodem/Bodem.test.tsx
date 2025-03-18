@@ -203,7 +203,7 @@ describe('Bodem', () => {
     const lopendePattern = /(In behandeling)|Ontvangen/;
     const afgehandeldePattern = /Afgehandeld|Afgewezen/;
 
-    test.only('Table items found', () => {
+    test('Table items found', () => {
       const MockBodem = createComponent(testState);
       const screen = render(<MockBodem />);
 
@@ -221,12 +221,13 @@ describe('Bodem', () => {
         'lopendeAanvraagTable should have a parentElement'
       );
 
-      const afgehandeldeAanvraagTable =
-        afgehandeldeAanvraagTableHeader.parentElement;
-      assert(
-        afgehandeldeAanvraagTable !== null,
-        'afgehandeldeAanvraagTable should have a parentElement'
-      );
+      const columnHeaders = ['Adres', 'Aangevraagd', 'Status'];
+
+      const lopendeAanvraagColumnHeaders =
+        within(lopendeAanvraagTable).getAllByRole('columnheader');
+      expect(
+        lopendeAanvraagColumnHeaders.map((header) => header.textContent)
+      ).toStrictEqual(columnHeaders);
 
       const lopendeAanvraagRows = within(lopendeAanvraagTable).getAllByRole(
         'row',
@@ -235,6 +236,19 @@ describe('Bodem', () => {
         }
       );
       expect(lopendeAanvraagRows.length).toBe(2);
+
+      const afgehandeldeAanvraagTable =
+        afgehandeldeAanvraagTableHeader.parentElement;
+      assert(
+        afgehandeldeAanvraagTable !== null,
+        'afgehandeldeAanvraagTable should have a parentElement'
+      );
+
+      const afgehandeldeAanvraagColumnHeaders =
+        within(lopendeAanvraagTable).getAllByRole('columnheader');
+      expect(
+        afgehandeldeAanvraagColumnHeaders.map((header) => header.textContent)
+      ).toStrictEqual(columnHeaders);
 
       const afgehandeldeAanvraagRows = within(
         afgehandeldeAanvraagTable
