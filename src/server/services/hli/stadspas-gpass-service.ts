@@ -161,49 +161,42 @@ export async function fetchStadspassenByAdministratienummer(
   }
 
   const pashouder = stadspasHouderResponse.content;
-
-  if (!pashouder?.sub_pashouders) {
+  if (!pashouder) {
     return NO_PASHOUDER_CONTENT_RESPONSE;
   }
 
-  const pashouders = [
-    pashouder,
-    ...stadspasHouderResponse.content.sub_pashouders.filter(Boolean),
-  ].filter((pashouder) => pashouder !== null);
-
+  const pashouders = [pashouder, ...(pashouder.sub_pashouders ?? [])];
   const pasRequests = [];
 
   for (const pashouder of pashouders) {
-    // Filter out passes that are not relevant for the user.
-    const passen = pashouder.passen.filter((pas) => {
-      return (
-        pas.actief || (!pas.vervangen && isCurrentPasYear(pas.expiry_date))
-      );
-    });
+    if (!pashouder) {
+      break;
+    }
+    for (const pas of pashouder.passen ?? []) {
+      if (pas.actief || (!pas.vervangen && isCurrentPasYear(pas.expiry_date))) {
+        const response = fetchStadspasSource(
+          requestID,
+          pas.pasnummer,
+          administratienummer
+        ).then((response) => {
+          if (response.content && response.status === 'OK') {
+            const pasTransformed = transformStadspasResponse(
+              response.content,
+              pashouder,
+              pas.securitycode
+            );
+            const stadspas: ApiSuccessResponse<Stadspas> = {
+              ...response,
+              content: pasTransformed,
+            };
 
-    for (const pas of passen) {
-      const response = fetchStadspasSource(
-        requestID,
-        pas.pasnummer,
-        administratienummer
-      ).then((response) => {
-        if (response.content && response.status === 'OK') {
-          const pasTransformed = transformStadspasResponse(
-            response.content,
-            pashouder,
-            pas.securitycode
-          );
-          const stadspas: ApiSuccessResponse<Stadspas> = {
-            ...response,
-            content: pasTransformed,
-          };
+            return stadspas;
+          }
+          return response;
+        });
 
-          return stadspas;
-        }
-        return response;
-      });
-
-      pasRequests.push(response);
+        pasRequests.push(response);
+      }
     }
   }
 
@@ -212,6 +205,10 @@ export async function fetchStadspassenByAdministratienummer(
     .map((stadspasResponse) => getSettledResult(stadspasResponse).content)
     .flat()
     .filter((stadspas) => stadspas !== null);
+
+  if (!stadspassen || !stadspassen.length) {
+    return NO_PASHOUDER_CONTENT_RESPONSE;
+  }
 
   return apiSuccessResult({ stadspassen, administratienummer });
 }

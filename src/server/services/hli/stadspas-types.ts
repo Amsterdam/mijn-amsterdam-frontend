@@ -108,7 +108,7 @@ export interface StadspasHouderSource {
 }
 
 export interface StadspasPasHouderResponse extends StadspasHouderSource {
-  sub_pashouders: StadspasHouderSource[];
+  sub_pashouders?: StadspasHouderSource[];
 }
 
 export interface StadspasDetailBudgetSource {
