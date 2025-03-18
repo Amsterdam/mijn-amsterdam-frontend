@@ -169,9 +169,6 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of pashouders) {
-    if (!pashouder) {
-      break;
-    }
     for (const pas of pashouder.passen ?? []) {
       if (pas.actief || (!pas.vervangen && isCurrentPasYear(pas.expiry_date))) {
         const response = fetchStadspasSource(
