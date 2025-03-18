@@ -48,7 +48,7 @@ export const linkListItems: LinkProps[] = [
 ] as const;
 
 function isInProgress(bodemAanvraag: LoodMetingFrontend): boolean {
-  return !!(
+  return (
     (bodemAanvraag.status === 'In behandeling' ||
       bodemAanvraag.status === 'Ontvangen') &&
     !bodemAanvraag.datumAfgehandeld
