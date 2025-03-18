@@ -158,18 +158,18 @@ export async function fetchStadspassenByAdministratienummer(
 
   if (stadspasHouderResponse.status === 'ERROR') {
     return stadspasHouderResponse;
-  } else if (!stadspasHouderResponse.content) {
-    return NO_PASHOUDER_CONTENT_RESPONSE;
   }
 
   const pashouder = stadspasHouderResponse.content;
 
+  if (!pashouder?.sub_pashouders) {
+    return NO_PASHOUDER_CONTENT_RESPONSE;
+  }
+
   const pashouders = [
     pashouder,
-    ...(stadspasHouderResponse.content?.sub_pashouders?.filter(Boolean) ?? []),
-  ].filter(
-    (p: StadspasHouderSource | null): p is StadspasHouderSource => p !== null
-  );
+    ...stadspasHouderResponse.content.sub_pashouders.filter(Boolean),
+  ].filter((pashouder) => pashouder !== null);
 
   const pasRequests = [];
 
@@ -211,9 +211,7 @@ export async function fetchStadspassenByAdministratienummer(
   const stadspassen = stadspasResponses
     .map((stadspasResponse) => getSettledResult(stadspasResponse).content)
     .flat()
-    .filter(
-      (stadspas: Stadspas | null): stadspas is Stadspas => stadspas !== null
-    );
+    .filter((stadspas) => stadspas !== null);
 
   return apiSuccessResult({ stadspassen, administratienummer });
 }
