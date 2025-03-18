@@ -21,6 +21,7 @@ import {
   DataRequestConfig,
 } from '../config/source-api';
 import { logger } from '../logging';
+import { captureException } from '../services/monitoring';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -188,6 +189,12 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
+
+    captureException(error, {
+      properties: {
+        message: errorMessage,
+      },
+    });
 
     const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(

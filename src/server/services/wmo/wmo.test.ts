@@ -150,7 +150,7 @@ describe('Transform api items', () => {
 
       const result = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
       expect(result).toBe(
-        'Door een fout staat dit hulpmiddel ten onrechte bij Eerdere en afgewezen voorzieningen. Kijk bij "Huidige voorzieningen" of in de brief bovenaan.'
+        'Door een fout kan het zijn dat dit hulpmiddel ten onrechte bij "Eerdere en afgewezen voorzieningen" staat.'
       );
     });
 
@@ -172,7 +172,7 @@ describe('Transform api items', () => {
 
       const result = getHulpmiddelenDisclaimer(aanvraag, aanvragen);
       expect(result).toBe(
-        'Dit hulpmiddel staat per ongeluk ook bij "Eerdere en afgewezen voorzieningen". Daar vindt u het originele besluit met de juiste datums.'
+        'Door een fout kan het zijn dat dit hulpmiddel ook bij "Eerdere en afgewezen voorzieningen" staat. Daar vindt u dan het originele besluit met de juiste datums.'
       );
     });
   });
