@@ -1,29 +1,34 @@
 import memoize from 'memoizee';
+import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 
 import { Varen, VarenFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
-import { transformDecosZaakFrontend } from '../decos/decos-service';
+import { toDateFormatted } from '../decos/helpers';
 
-function transformVarenFrontend(
-  sessionID: SessionID,
-  appRoute: AppRoute,
-  vergunning: Varen
-) {
-  const vergunningFrontend = transformDecosZaakFrontend<Varen>(
-    sessionID,
-    appRoute,
-    vergunning
-  );
-  // Assign the definitive status steps
-  vergunningFrontend.steps = getStatusSteps(vergunningFrontend);
+function transformVarenFrontend(appRoute: AppRoute, zaak: Varen) {
+  const zaakFrontend: VarenFrontend = {
+    ...zaak,
+    steps: getStatusSteps(zaak),
+    dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
+    dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
+    link: {
+      to: generatePath(appRoute, {
+        caseType: slug(zaak.caseType, { lower: true }),
+        id: zaak.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  };
 
-  return vergunningFrontend;
+  return zaakFrontend;
 }
 
 export async function fetchVaren_(
@@ -40,11 +45,7 @@ export async function fetchVaren_(
     const decosVergunningen = response.content;
     const varenVergunningFrontend: VarenFrontend[] = decosVergunningen.map(
       (vergunning) =>
-        transformVarenFrontend(
-          authProfileAndToken.profile.sid,
-          AppRoutes['VAREN/DETAIL'],
-          vergunning
-        )
+        transformVarenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
     );
     return apiSuccessResult(varenVergunningFrontend);
   }

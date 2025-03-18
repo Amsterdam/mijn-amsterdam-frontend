@@ -1,4 +1,5 @@
-import { DecosZaakBase, DecosZaakFrontend } from '../decos/decos-types';
+import { ZaakDetail } from '../../../universal/types/App.types';
+import { DecosZaakBase } from '../decos/decos-types';
 
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
@@ -123,8 +124,10 @@ export type Varen =
   | VarenVergunningExploitatieWijzigingVergunningshouderType
   | VarenVergunningExploitatieWijzigingVervangingType;
 
-export type VarenFrontend<T extends DecosVarenZaakBase = Varen> =
-  DecosZaakFrontend<T>;
+export type VarenFrontend<T extends DecosVarenZaakBase = Varen> = T & {
+  dateRequestFormatted: string;
+  dateDecisionFormatted?: string | null;
+} & ZaakDetail<T['status']>;
 
 export type VarenVergunningFrontend = Exclude<
   VarenFrontend,
