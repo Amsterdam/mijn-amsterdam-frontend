@@ -272,14 +272,11 @@ describe('<Varen />', () => {
         name: 'Lopende aanvragen',
       });
       const lopendeAanvraagTable = within(
-        within(lopendeAanvraagTableHeader.parentNode as HTMLElement).getByRole(
-          'table'
-        )
+        within(lopendeAanvraagTableHeader.parentElement!).getByRole('table')
       );
 
-      const lopendeAanvraagColumnHeaders = lopendeAanvraagTable.getAllByRole(
-        'columnheader'
-      ) as HTMLElement[];
+      const lopendeAanvraagColumnHeaders =
+        lopendeAanvraagTable.getAllByRole('columnheader');
       expect(
         lopendeAanvraagColumnHeaders.map((h) => h.textContent)
       ).toMatchObject([
@@ -299,13 +296,11 @@ describe('<Varen />', () => {
         name: 'Actieve vergunningen',
       });
       const actieveVergunningTable = within(
-        within(
-          actieveVergunningTableHeader.parentNode as HTMLElement
-        ).getByRole('table')
+        within(actieveVergunningTableHeader.parentElement!).getByRole('table')
       );
 
       const actieveVergunningenColumnHeaders =
-        actieveVergunningTable.getAllByRole('columnheader') as HTMLElement[];
+        actieveVergunningTable.getAllByRole('columnheader');
       expect(
         actieveVergunningenColumnHeaders.map((h) => h.textContent)
       ).toMatchObject([

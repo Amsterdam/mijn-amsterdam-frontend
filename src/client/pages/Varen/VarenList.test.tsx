@@ -90,7 +90,7 @@ describe('<VarenList />', () => {
 
     const table = within(screen.getByRole('table'));
 
-    const columnHeaders = table.getAllByRole('columnheader') as HTMLElement[];
+    const columnHeaders = table.getAllByRole('columnheader');
     expect(columnHeaders.map((h) => h.textContent)).toMatchObject([
       'Naam vaartuig',
       'Omschrijving',
