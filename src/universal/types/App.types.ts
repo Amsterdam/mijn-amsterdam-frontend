@@ -105,10 +105,10 @@ export interface StatusLineItem<T extends string = string> {
   actionButtonItems?: LinkProps[];
 }
 
-export interface ZaakDetail {
+export interface ZaakDetail<T extends string = string> {
   id: string;
   title: string;
-  steps: StatusLineItem[];
+  steps: StatusLineItem<T>[];
   link: LinkProps;
   about?: string;
 }
