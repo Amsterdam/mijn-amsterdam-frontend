@@ -154,18 +154,18 @@ const testState = {
               status: 'Ontvangen',
               id: '',
               datePublished: '2022-12-01T09:53:11Z',
-              isActive: true,
-              isChecked: false,
+              isActive: false,
+              isChecked: true,
             },
             {
               status: 'In behandeling',
               id: '',
               datePublished: '2022-12-01T09:54:11Z',
-              isActive: true,
-              isChecked: false,
+              isActive: false,
+              isChecked: true,
             },
             {
-              status: 'Afgehandeld',
+              status: 'Afgewezen',
               id: '',
               datePublished: '2022-12-01T09:55:11Z',
               isActive: true,
@@ -197,19 +197,12 @@ describe('Bodem', () => {
   });
 
   describe('Tables', () => {
-    const lopendePattern = /(In behandeling)|Ontvangen/;
-    const afgehandeldePattern = /Afgehandeld|Afgewezen/;
-
-    test('Table items found', () => {
+    test('Column headers are correct', () => {
       const MockBodem = createComponent(testState);
       const screen = render(<MockBodem />);
 
       const lopendeAanvraagTableHeader = screen.getByRole('heading', {
         name: 'Lopende aanvragen',
-      });
-
-      const afgehandeldeAanvraagTableHeader = screen.getByRole('heading', {
-        name: 'Afgehandelde aanvragen',
       });
 
       const columnHeaders = ['Adres', 'Aangevraagd', 'Status'];
@@ -221,32 +214,14 @@ describe('Bodem', () => {
         lopendeAanvraagColumnHeaders.map((header) => header.textContent)
       ).toStrictEqual(columnHeaders);
 
-      const lopendeAanvraagRows = within(lopendeAanvraagTable).getAllByRole(
-        'row',
-        {
-          name: lopendePattern,
-        }
-      );
-      expect(lopendeAanvraagRows.length).toBe(2);
-
-      const afgehandeldeAanvraagTable =
-        afgehandeldeAanvraagTableHeader.parentElement!;
-
       const afgehandeldeAanvraagColumnHeaders =
         within(lopendeAanvraagTable).getAllByRole('columnheader');
       expect(
         afgehandeldeAanvraagColumnHeaders.map((header) => header.textContent)
       ).toStrictEqual(columnHeaders);
-
-      const afgehandeldeAanvraagRows = within(
-        afgehandeldeAanvraagTable
-      ).queryAllByRole('row', {
-        name: afgehandeldePattern,
-      });
-      expect(afgehandeldeAanvraagRows.length).toBe(2);
     });
 
-    test('Items are not in the wrong place', () => {
+    test('Items are sorted correctly', () => {
       const MockBodem = createComponent(testState);
       const screen = render(<MockBodem />);
 
@@ -263,18 +238,58 @@ describe('Bodem', () => {
       const afgehandeldeAanvraagTable =
         afgehandeldeAanvraagTableHeader.parentElement!;
 
+      const statusPatterns = {
+        ontvangen: /Ontvangen/,
+        inBehandeling: /In behandeling/,
+        afgehandeld: /Afgehandeld/,
+        afgewezen: /Afgewezen/,
+      };
+
+      // Our patterns need to work for the next queries to be accurate.
+      // If our query are bad then the next test assertion will always be correct.
+      {
+        const statusOntvangenRows = within(lopendeAanvraagTable).getAllByRole(
+          'row',
+          {
+            name: statusPatterns.ontvangen,
+          }
+        );
+        expect(statusOntvangenRows.length).toBe(1);
+
+        const statusInBehandelingRows = within(
+          lopendeAanvraagTable
+        ).getAllByRole('row', {
+          name: statusPatterns.inBehandeling,
+        });
+        expect(statusInBehandelingRows.length).toBe(1);
+
+        const statusAfgehandeldRows = within(
+          afgehandeldeAanvraagTable
+        ).queryAllByRole('row', {
+          name: statusPatterns.afgehandeld,
+        });
+        expect(statusAfgehandeldRows.length).toBe(1);
+
+        const statusAfgewezenRows = within(
+          afgehandeldeAanvraagTable
+        ).queryAllByRole('row', {
+          name: statusPatterns.afgewezen,
+        });
+        expect(statusAfgewezenRows.length).toBe(1);
+      }
+
       const lopendeAanvraagRows = within(
         afgehandeldeAanvraagTable
-      ).queryAllByRole('row', { name: lopendePattern });
-
+      ).queryAllByRole('row', {
+        name: `(${statusPatterns.inBehandeling})|${statusPatterns.ontvangen}`,
+      });
       expect(lopendeAanvraagRows.length).toBe(0);
 
       const afgehandeldeAanvraagRows = within(
         lopendeAanvraagTable
       ).queryAllByRole('row', {
-        name: afgehandeldePattern,
+        name: `(${statusPatterns.afgehandeld})|${statusPatterns.afgewezen}`,
       });
-
       expect(afgehandeldeAanvraagRows.length).toBe(0);
     });
   });

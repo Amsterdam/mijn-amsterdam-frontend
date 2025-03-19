@@ -7,12 +7,11 @@ import { StatusLineItem } from '../../../universal/types';
 export function getBodemStatusLineItems(
   request: LoodMetingFrontend
 ): StatusLineItem<LoodMetingStatus>[] {
-  const status = request.status.toLowerCase();
-  const isInProgress = status === 'in behandeling';
-  const isDenied = status === 'afgewezen';
-  const isDone = status === 'afgehandeld' || isDenied;
+  const status: LoodMetingStatus = request.status;
+  const isInProgress = status === 'In behandeling';
+  const isDone = status === 'Afgehandeld' || status === 'Afgewezen';
 
-  const statusLines: StatusLineItem<LoodMetingStatus>[] = [
+  return [
     {
       id: 'first-item',
       status: 'Ontvangen',
@@ -33,18 +32,17 @@ export function getBodemStatusLineItems(
       isActive: isInProgress,
       isChecked: isInProgress || isDone,
     },
+    {
+      id: 'third-item',
+      status: status === 'Afgewezen' ? 'Afgewezen' : 'Afgehandeld',
+      datePublished:
+        (status === 'Afgewezen'
+          ? request.datumBeoordeling
+          : request.datumAfgehandeld) ?? '',
+      description: '',
+      documents: [],
+      isActive: isDone,
+      isChecked: isDone,
+    },
   ];
-
-  statusLines.push({
-    id: 'third-item',
-    status: isDenied ? 'Afgewezen' : 'Afgehandeld',
-    datePublished:
-      (isDenied ? request.datumBeoordeling : request.datumAfgehandeld) ?? '',
-    description: '',
-    documents: [],
-    isActive: isDone,
-    isChecked: isDone,
-  });
-
-  return statusLines;
 }
