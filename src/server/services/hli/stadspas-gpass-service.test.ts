@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { describe, expect, Mock } from 'vitest';
 
 import { blockStadspas } from './stadspas';
@@ -25,7 +26,6 @@ import {
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
-import { HttpStatusCode } from 'axios';
 
 vi.mock('../../helpers/source-api-request');
 vi.mock('../../helpers/source-api-helpers');
@@ -480,7 +480,7 @@ describe('stadspas-gpass-service', () => {
       (getApiConfig as Mock).mockReturnValue(dataRequestConfig);
     });
 
-    test('should return NO_PASHOUDER_CONTENT_RESPONSE if stadspasHouderResponse status is ERROR and code is UNAUTHORIZED', async () => {
+    test('User not found or has no passen/pashouders', async () => {
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
         code: HttpStatusCode.Unauthorized,
@@ -497,9 +497,27 @@ describe('stadspas-gpass-service', () => {
           administratienummer: null,
         })
       );
+
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        code: HttpStatusCode.Unauthorized,
+        content: { message: 'API key invalid' },
+      });
+
+      const result2 = await fetchStadspassenByAdministratienummer(
+        requestID,
+        administratienummer
+      );
+
+      expect(result2).toStrictEqual(
+        apiSuccessResult({
+          stadspassen: [],
+          administratienummer: '12345',
+        })
+      );
     });
 
-    test('should return stadspasHouderResponse if status is ERROR and code is not UNAUTHORIZED', async () => {
+    test('Internal server error is passed through', async () => {
       const errorResponse = {
         status: 'ERROR',
         code: HttpStatusCode.InternalServerError,
