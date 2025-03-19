@@ -1,4 +1,5 @@
 import {
+  Mock,
   MockInstance,
   afterAll,
   afterEach,
@@ -27,7 +28,7 @@ import {
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { ApiUrlEntries } from '../config/source-api';
-
+import { captureException } from '../services/monitoring';
 const mocks = vi.hoisted(() => {
   return {
     cacheEnabled: true,
@@ -42,6 +43,8 @@ vi.mock('../config/app', async (importOrigModule) => {
     },
   };
 });
+
+vi.mock('../services/monitoring');
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
@@ -79,6 +82,7 @@ describe('requestData.ts', () => {
   afterEach(() => {
     cache.clear();
     axiosRequestSpy.mockRestore();
+    (captureException as Mock).mockClear();
   });
 
   afterAll(() => {
@@ -228,6 +232,7 @@ describe('requestData.ts', () => {
     );
 
     expect(rs).toStrictEqual(apiErrorResult('Network Error', null));
+    expect(captureException).toHaveBeenCalledTimes(1);
   });
 
   test('Find corresponding api', () => {
