@@ -190,13 +190,10 @@ describe('Bodem', () => {
     const MockBodem = createComponent(testState);
     const screen = render(<MockBodem />);
 
-    const title = screen.getByRole('heading', { name: 'Bodem' });
-    expect(title).toBeInTheDocument();
-
-    const desc = screen.getByText(
+    screen.getByRole('heading', { name: 'Bodem' });
+    screen.getByText(
       /Op deze pagina vindt u informatie over uw lood in de bodem-check/
     );
-    expect(desc).toBeInTheDocument();
   });
 
   describe('Tables', () => {
@@ -292,12 +289,8 @@ describe('Bodem', () => {
       } as unknown as AppState);
       const screen = render(<MockBodem />);
 
-      expect(
-        screen.getByText(/U heeft geen lopende aanvragen/)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/U heeft geen afgehandelde aanvragen/)
-      ).toBeInTheDocument();
+      screen.getByText(/U heeft geen lopende aanvragen/);
+      screen.getByText(/U heeft geen afgehandelde aanvragen/);
     });
   });
 });
