@@ -868,6 +868,33 @@
         "phone1": "0612345678"
       },
       "links": []
+    },
+    {
+      "key": "HEKSJDHKCKEI4672828O8888B7B11002",
+      "fields": {
+        "mark": "Z/24/2238023",
+        "subject1": "Aanvraag wijziging Exploitatievergunning varen (vaartuignaam)",
+        "document_date": "2025-03-01T00:00:00",
+        "date5": "2025-03-01T00:00:00",
+        "dfunction": "Verleend",
+        "processed": true,
+        "text11": "Nvt",
+        "text12": "Geen kosten",
+        "text50": "Controle niet nodig",
+        "text45": "Varen vergunning exploitatie Wijziging vaartuignaam",
+        "num22": 2024.0,
+        "text18": "Nieuwe naam",
+        "text33": "Oude naam",
+        "subject2": "Varen vergunning",
+        "department": "Varen",
+        "text5": "Varen vergunning",
+        "title": "Besluit",
+        "mailaddress": "Amstel 1, 1011 PN Amsterdam",
+        "zipcode": "1234 ZG",
+        "city": "Amsterdam",
+        "phone1": "0612345678"
+      },
+      "links": []
     }
   ]
 }
