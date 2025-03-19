@@ -363,7 +363,6 @@ export default function GarbageInformation() {
             )}
             <p>
               <Button
-                className={styles.ContactLink}
                 onClick={() =>
                   (window.location.href = ExternalUrls.AFVAL_MELDING_FORMULIER)
                 }
