@@ -75,7 +75,7 @@ function InstructionCTA({ fraction }: InstructionCTAProps) {
   if (fraction.instructieCTA) {
     return (
       <>
-        <p>
+        <p className="ams-paragraph">
           <ButtonLink
             href={fraction.instructieCTA.to}
             external={!fraction.instructieCTA.to.startsWith(AppRoutes.BUURT)}
