@@ -14,6 +14,7 @@ import {
   ApiResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
@@ -120,7 +121,13 @@ export async function fetchVarenNotifications(
   );
   notifications.push(...zaken.map(createVarenNotification).filter((n) => !!n));
 
+  const recentNotifications = notifications.filter(
+    (notification) =>
+      !!notification.datePublished &&
+      isRecentNotification(notification.datePublished)
+  );
+
   return apiSuccessResult({
-    notifications,
+    notifications: recentNotifications,
   });
 }
