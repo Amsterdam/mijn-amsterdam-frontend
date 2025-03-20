@@ -2,7 +2,7 @@ import MockDate from 'mockdate';
 import { afterAll, describe, expect, it } from 'vitest';
 
 import { VarenFrontend } from './config-and-types';
-import { fetchVaren_ } from './varen';
+import { fetchVaren } from './varen';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -52,7 +52,7 @@ describe('Varen service', () => {
         apiSuccessResult([])
       );
 
-      const response = await fetchVaren_('x1', authProfileAndToken);
+      const response = await fetchVaren('x1', authProfileAndToken);
       const successResponse = {
         status: 'OK',
         content: [],
@@ -65,7 +65,7 @@ describe('Varen service', () => {
         apiErrorResult('Error', null)
       );
 
-      const response = await fetchVaren_('x2', authProfileAndToken);
+      const response = await fetchVaren('x2', authProfileAndToken);
       const errorResponse = {
         content: null,
         message: 'Error',
@@ -79,7 +79,7 @@ describe('Varen service', () => {
         apiSuccessResult(zakenContent)
       );
 
-      const response = await fetchVaren_('x3', authProfileAndToken);
+      const response = await fetchVaren('x3', authProfileAndToken);
       const successResponse = {
         status: 'OK',
         content: [

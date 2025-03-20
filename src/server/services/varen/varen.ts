@@ -31,7 +31,7 @@ function transformVarenFrontend(appRoute: AppRoute, zaak: Varen) {
   return zaakFrontend;
 }
 
-export async function fetchVaren_(
+async function fetchVaren_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
