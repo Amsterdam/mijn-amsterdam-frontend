@@ -1,7 +1,4 @@
-import {
-  VergunningFrontend,
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-} from './config-and-types';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
 import { DecosZaakBase } from '../decos/config-and-types';
 import {
@@ -30,18 +27,6 @@ export function getCustomTitleForVergunningWithLicensePlates(
     }
   }
   return vergunning.title;
-}
-
-export function hasOtherActualVergunningOfSameType(
-  items: VergunningFrontend[],
-  item: VergunningFrontend
-): boolean {
-  return items.some(
-    (otherVergunning: VergunningFrontend) =>
-      otherVergunning.caseType === item.caseType &&
-      otherVergunning.identifier !== item.identifier &&
-      !isExpired(otherVergunning)
-  );
 }
 
 export function isNearEndDate(dateEnd?: string | null, dateNow?: Date) {
