@@ -6,7 +6,9 @@ import {
 import { StatusLineItem } from '../../../universal/types';
 import { getStatusDate } from '../decos/helpers';
 
-export function getStatusSteps(decosZaak: Varen) {
+export function getStatusSteps(
+  decosZaak: Varen
+): StatusLineItem<Varen['status']>[] {
   const isAfgehandeld = decosZaak.processed;
 
   const dateInBehandeling = getStatusDate('In behandeling', decosZaak);
@@ -14,16 +16,16 @@ export function getStatusSteps(decosZaak: Varen) {
 
   const hasTermijnen = decosZaak.termijnDates.length > 0;
 
-  const steps: StatusLineItem[] = [
+  const steps = [
     {
-      status: 'Ontvangen',
+      status: 'Ontvangen' as const,
       datePublished: decosZaak.dateRequest,
       description: '',
       isActive: !hasDateInBehandeling,
       isChecked: true,
     },
     {
-      status: 'In behandeling',
+      status: 'In behandeling' as const,
       datePublished: dateInBehandeling || '',
       description: '',
       isActive: hasDateInBehandeling && !hasTermijnen,
@@ -38,7 +40,7 @@ export function getStatusSteps(decosZaak: Varen) {
         !isDateInPast(termijn.dateEnd);
 
       const meerInformatieNodig = {
-        status: 'Meer informatie nodig',
+        status: 'Meer informatie nodig' as const,
         datePublished: termijn.dateStart || '',
         description: isTermijnActive
           ? `Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor ${defaultDateFormat(termijn.dateEnd)}`
@@ -63,7 +65,7 @@ export function getStatusSteps(decosZaak: Varen) {
       const nextTermijnDateStart =
         termijnen.at(index + 1)?.dateStart ?? termijn.dateEnd;
       const inBehandeling = {
-        status: 'In behandeling',
+        status: 'In behandeling' as const,
         datePublished: isDateInPast(termijn.dateEnd, nextTermijnDateStart)
           ? termijn.dateEnd
           : nextTermijnDateStart, // Technically termijn dateRanges can overlap. To minimize confusion the earlier date is taken
@@ -75,7 +77,7 @@ export function getStatusSteps(decosZaak: Varen) {
       return [meerInformatieNodig, inBehandeling];
     }),
     {
-      status: 'Besluit',
+      status: 'Besluit' as const,
       datePublished: decosZaak.dateDecision || '',
       isActive: false,
       isChecked: isAfgehandeld,
