@@ -35,7 +35,7 @@ resources:
     - repository: MamsInfra
       type: git
       name: MijnAmsterdam/mijn-amsterdam-infra
-      ref: refs/heads/main
+      ref: refs/heads/MIJN-9268-Chore-release-pipeline-improvements
 
 variables:
   - name: system.debug
