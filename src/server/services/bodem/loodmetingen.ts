@@ -106,6 +106,9 @@ function transformLood365Response(
           datumAfgehandeld: location?.Reportsenton,
           datumBeoordeling: location?.ReviewedOn,
           status: location.Friendlystatus,
+          processed: ['afgewezen', 'afgehandeld', 'toegewezen'].includes(
+            location.Friendlystatus.toLowerCase()
+          ),
           kenmerk: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,

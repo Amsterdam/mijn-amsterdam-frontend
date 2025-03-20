@@ -52,21 +52,33 @@ describe('Loodmeting', () => {
     it('should transform the data correctly', async () => {
       const res = await fetchLoodmetingen(requestId, profileAndToken);
 
-      expect(res.content?.metingen.length).toEqual(12);
+      const metingen = res.content?.metingen;
+      assert(metingen, 'Test data has metingen');
+
+      const inBehandelingMelding = metingen[0];
+      expect(inBehandelingMelding.processed).toBe(false);
+
+      const afgewezenMelding = metingen[1];
+      expect(afgewezenMelding.processed).toBe(true);
+
+      const ontvangenMelding = metingen[5];
+      expect(ontvangenMelding.processed).toBe(false);
+
+      expect(metingen.length).toEqual(12);
 
       // Open aanvraag
       expect(
-        res.content?.metingen.find((meting) => meting.kenmerk === 'AV-001481')
+        metingen.find((meting) => meting.kenmerk === 'AV-001481')
       ).toMatchInlineSnapshot(`undefined`);
 
       // Afgewezen aanvraag
       expect(
-        res.content?.metingen.find((meting) => meting.kenmerk === 'AV-001485')
+        metingen.find((meting) => meting.kenmerk === 'AV-001485')
       ).toMatchInlineSnapshot(`undefined`);
 
       // Afgehandelde aanvraag
       expect(
-        res.content?.metingen.find((meting) => meting.kenmerk === 'AV-001480')
+        metingen.find((meting) => meting.kenmerk === 'AV-001480')
       ).toMatchInlineSnapshot(`undefined`);
     });
 
