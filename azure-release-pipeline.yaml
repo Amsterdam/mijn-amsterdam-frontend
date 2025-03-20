@@ -12,11 +12,4 @@ resources:
       ref: refs/heads/main
 
 jobs:
-  - template: pipelines/jobs/apps/btd-frontend.yaml@MamsInfra
-    parameters:
-      dtapName: p
-      btdBuild: true
-      btdTest: true
-      btdDeploy: true
-      btdAppBFF: true
-      btdAppUI: true
+  - template: pipelines/btd-release-bff-ui.yaml@MamsInfra
