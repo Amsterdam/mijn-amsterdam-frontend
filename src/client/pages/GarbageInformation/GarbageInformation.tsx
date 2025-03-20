@@ -75,7 +75,7 @@ function InstructionCTA({ fraction }: InstructionCTAProps) {
   if (fraction.instructieCTA) {
     return (
       <>
-        <p>
+        <p className="ams-paragraph">
           <ButtonLink
             href={fraction.instructieCTA.to}
             external={!fraction.instructieCTA.to.startsWith(AppRoutes.BUURT)}
@@ -363,7 +363,6 @@ export default function GarbageInformation() {
             )}
             <p>
               <Button
-                className={styles.ContactLink}
                 onClick={() =>
                   (window.location.href = ExternalUrls.AFVAL_MELDING_FORMULIER)
                 }

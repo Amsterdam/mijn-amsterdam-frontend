@@ -576,7 +576,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing bedrijfsafval
       </div>
       <p>
         <button
-          class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
+          class="_Button_c3ab45 _Button__secondary_c3ab45"
         >
           Klopt de informatie niet? Geef het door
         </button>
@@ -1255,7 +1255,7 @@ exports[`<GarbageInformation /> > Does not show warning concercing woonfunctie 1
       </div>
       <p>
         <button
-          class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
+          class="_Button_c3ab45 _Button__secondary_c3ab45"
         >
           Klopt de informatie niet? Geef het door
         </button>
@@ -1950,7 +1950,7 @@ exports[`<GarbageInformation /> > Matches the Full Page snapshot 1`] = `
       </div>
       <p>
         <button
-          class="_Button_c3ab45 _Button__secondary_c3ab45 _ContactLink_3a64c8"
+          class="_Button_c3ab45 _Button__secondary_c3ab45"
         >
           Klopt de informatie niet? Geef het door
         </button>
