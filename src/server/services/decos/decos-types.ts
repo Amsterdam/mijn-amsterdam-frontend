@@ -308,4 +308,4 @@ export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> = T & {
   dateStartFormatted?: string | null;
   dateEndFormatted?: string | null;
   isExpired?: boolean;
-} & ZaakDetail;
+} & ZaakDetail<T['status']>;
