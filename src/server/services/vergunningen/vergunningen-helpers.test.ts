@@ -2,7 +2,6 @@ import { VergunningFrontend } from './config-and-types';
 import {
   isNearEndDate,
   isExpired,
-  hasOtherActualVergunningOfSameType,
   getCustomTitleForVergunningWithLicensePlates,
 } from './vergunningen-helpers';
 import { TouringcarDagontheffing } from '../parkeren/config-and-types';
@@ -66,33 +65,6 @@ describe('vergunningen/helpers', () => {
           new Date()
         )
       ).toBe(true);
-    });
-  });
-
-  describe('hasOtherActualVergunningOfSameType', () => {
-    const decosZaak = {
-      caseType: 'test1',
-      dateEnd: null,
-      identifier: 'xx1',
-    } as unknown as VergunningFrontend;
-
-    test('Has other actual vergunning of same type', () => {
-      const decosZaken = [
-        { caseType: 'test1', dateEnd: null, identifier: 'xx2' },
-        decosZaak,
-      ] as unknown as VergunningFrontend[];
-
-      expect(hasOtherActualVergunningOfSameType(decosZaken, decosZaak)).toBe(
-        true
-      );
-    });
-
-    test('Does not have other actual vergunning of same type', () => {
-      const decosZaken = [decosZaak];
-
-      expect(hasOtherActualVergunningOfSameType(decosZaken, decosZaak)).toBe(
-        false
-      );
     });
   });
 
