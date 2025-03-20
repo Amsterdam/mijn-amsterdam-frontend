@@ -189,7 +189,7 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
-
+    console.log('errormessage', errorMessage);
     captureException(error, {
       properties: {
         message: errorMessage,

@@ -273,6 +273,12 @@ export async function fetchDocument(
             'Zorgned document download - no valid response data provided'
           );
         }
+        console.log({
+          mimetype: documentResponseData.mimetype,
+          filename:
+            documentResponseData.omschrijvingclientportaal ||
+            documentResponseData.omschrijving,
+        });
         const data = Buffer.from(documentResponseData.inhoud, 'base64');
         return {
           data,

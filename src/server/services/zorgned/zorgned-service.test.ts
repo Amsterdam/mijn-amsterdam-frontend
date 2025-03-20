@@ -154,6 +154,50 @@ describe('zorgned-service', () => {
     `);
   });
 
+  it.each([
+    null,
+    {
+      omschrijving: 'test',
+      mimetype: 'application/pdf',
+    },
+    '"xxx"',
+  ])('should return error for response %s', async (payload: any) => {
+    remoteApi.post('/zorgned/document').reply(200, payload);
+
+    const result = await fetchDocument(
+      mocks.mockRequestID,
+      mocks.mockAuthProfileAndToken as AuthProfileAndToken,
+      'ZORGNED_JZD',
+      mocks.mockDocumentId
+    );
+
+    expect(result).toMatchObject({
+      content: null,
+      message: 'Zorgned document download - no valid response data provided',
+      status: 'ERROR',
+    });
+  });
+
+  it('should fetch document with error', async () => {
+    remoteApi.post('/zorgned/document').reply(200, {
+      omschrijving: 'test',
+      mimetype: 'application/pdf',
+    });
+
+    const result = await fetchDocument(
+      mocks.mockRequestID,
+      mocks.mockAuthProfileAndToken as AuthProfileAndToken,
+      'ZORGNED_JZD',
+      mocks.mockDocumentId
+    );
+
+    expect(result).toMatchObject({
+      content: null,
+      message: 'Zorgned document download - no valid response data provided',
+      status: 'ERROR',
+    });
+  });
+
   it('should fetch document successfully', async () => {
     const filename = 'Naam documentje';
     const mimetype = 'foo/bar';
