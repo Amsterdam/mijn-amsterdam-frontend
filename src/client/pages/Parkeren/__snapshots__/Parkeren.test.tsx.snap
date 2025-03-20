@@ -112,6 +112,7 @@ exports[`Parkeren > should display the list of parkeervergunningen 1`] = `
                 class="ams-paragraph"
               >
                 <a
+                  aria-disabled="false"
                   class="_MaButtonLink_aa758a ams-button ams-button--primary"
                   href="https://parkeervergunningen.amsterdam.nl/"
                 >

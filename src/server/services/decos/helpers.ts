@@ -189,8 +189,18 @@ export function hasOtherActualDecosZaakOfSameType(
   );
 }
 
-export function toDateFormatted(input: string | null) {
-  return input ? defaultDateFormat(input) : null;
+export function toDateFormatted(input: string | Date | number): string;
+export function toDateFormatted(
+  input: string | Date | number | null | undefined
+): string | null;
+// This is not a duplicate, this is the required implementation signature
+export function toDateFormatted(
+  input: string | Date | number | null | undefined
+): string | null {
+  if (input == null) {
+    return null;
+  }
+  return defaultDateFormat(input);
 }
 
 // Try to fetch and assign a specific date on which the zaak was "In behandeling"
