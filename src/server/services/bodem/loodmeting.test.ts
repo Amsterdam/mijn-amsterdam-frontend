@@ -61,6 +61,9 @@ describe('Loodmeting', () => {
       const afgewezenMelding = metingen[1];
       expect(afgewezenMelding.processed).toBe(true);
 
+      const afgehandeldMelding = metingen[2];
+      expect(afgehandeldMelding.processed).toBe(true);
+
       const ontvangenMelding = metingen[5];
       expect(ontvangenMelding.processed).toBe(false);
 
