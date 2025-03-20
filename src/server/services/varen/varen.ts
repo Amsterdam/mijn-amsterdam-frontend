@@ -7,7 +7,6 @@ import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
@@ -17,7 +16,7 @@ function transformVarenFrontend(appRoute: AppRoute, zaak: Varen) {
   const zaakFrontend: VarenFrontend = {
     ...zaak,
     steps: getStatusSteps(zaak),
-    dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
+    dateRequestFormatted: toDateFormatted(zaak.dateRequest),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
     link: {
       to: generatePath(appRoute, {

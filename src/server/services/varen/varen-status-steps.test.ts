@@ -20,7 +20,7 @@ describe('getStatusSteps', () => {
       termijnDates: [],
     } as unknown as VarenVergunningExploitatieType;
 
-    expect(getStatusSteps(exploitatieInProgress)).toMatchObject([
+    expect(getStatusSteps(exploitatieInProgress)).toStrictEqual([
       {
         datePublished: '2025-01-01T00:00:00',
         description: '',
@@ -30,7 +30,7 @@ describe('getStatusSteps', () => {
         status: 'Ontvangen',
       },
       {
-        datePublished: '',
+        datePublished: '2025-01-01T00:00:00',
         description: '',
         id: 'step-1',
         isActive: true,
@@ -70,7 +70,7 @@ describe('getStatusSteps', () => {
       ],
     } as unknown as VarenVergunningExploitatieType;
 
-    expect(getStatusSteps(exploitatieMeerInformatieWithin)).toMatchObject([
+    expect(getStatusSteps(exploitatieMeerInformatieWithin)).toStrictEqual([
       {
         datePublished: '2025-01-01T00:00:00',
         description: '',
@@ -80,7 +80,7 @@ describe('getStatusSteps', () => {
         status: 'Ontvangen',
       },
       {
-        datePublished: '2025-01-01T00:00:00Z',
+        datePublished: '2025-01-01T00:00:00',
         description: '',
         id: 'step-1',
         isActive: false,
@@ -142,7 +142,7 @@ describe('getStatusSteps', () => {
       ],
     } as unknown as VarenVergunningExploitatieType;
 
-    expect(getStatusSteps(exploitatieMeerInformatieAfter)).toMatchObject([
+    expect(getStatusSteps(exploitatieMeerInformatieAfter)).toStrictEqual([
       {
         datePublished: '2025-01-01T00:00:00',
         description: '',
@@ -152,7 +152,7 @@ describe('getStatusSteps', () => {
         status: 'Ontvangen',
       },
       {
-        datePublished: '2025-01-01T00:00:00Z',
+        datePublished: '2025-01-01T00:00:00',
         description: '',
         id: 'step-1',
         isActive: false,
@@ -209,7 +209,7 @@ describe('getStatusSteps', () => {
       ],
     } as unknown as VarenVergunningExploitatieType;
 
-    expect(getStatusSteps(exploitatieMeerInformatieOverlap)).toMatchObject([
+    expect(getStatusSteps(exploitatieMeerInformatieOverlap)).toStrictEqual([
       {
         datePublished: '2025-01-01T00:00:00',
         description: '',
@@ -219,7 +219,7 @@ describe('getStatusSteps', () => {
         status: 'Ontvangen',
       },
       {
-        datePublished: '2025-01-01T00:00:00Z',
+        datePublished: '2025-01-01T00:00:00',
         description: '',
         id: 'step-1',
         isActive: false,
@@ -283,7 +283,7 @@ describe('getStatusSteps', () => {
       ],
     } as unknown as VarenVergunningExploitatieType;
 
-    expect(getStatusSteps(exploitatieMeerInformatieDecision)).toMatchObject([
+    expect(getStatusSteps(exploitatieMeerInformatieDecision)).toStrictEqual([
       {
         datePublished: '2025-01-01T00:00:00',
         description: '',
@@ -293,7 +293,7 @@ describe('getStatusSteps', () => {
         status: 'Ontvangen',
       },
       {
-        datePublished: '2025-01-01T00:00:00Z',
+        datePublished: '2025-01-01T00:00:00',
         description: '',
         id: 'step-1',
         isActive: false,
@@ -341,7 +341,7 @@ describe('getStatusSteps', () => {
       termijnDates: [],
     } as unknown as VarenVergunningExploitatieType;
 
-    expect(getStatusSteps(exploitatieDecision)).toMatchObject([
+    expect(getStatusSteps(exploitatieDecision)).toStrictEqual([
       {
         datePublished: '2025-01-01T00:00:00',
         description: '',
@@ -351,7 +351,7 @@ describe('getStatusSteps', () => {
         status: 'Ontvangen',
       },
       {
-        datePublished: '2025-01-01T00:00:00Z',
+        datePublished: '2025-01-01T00:00:00',
         description: '',
         id: 'step-1',
         isActive: false,

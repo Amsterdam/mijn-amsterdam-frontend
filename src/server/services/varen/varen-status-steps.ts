@@ -4,7 +4,6 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types';
-import { getStatusDate } from '../decos/helpers';
 
 export function getStatusSteps(
   decosZaak: Varen
@@ -22,7 +21,8 @@ export function getStatusSteps(
     },
     {
       status: 'In behandeling' as const,
-      datePublished: getStatusDate('In behandeling', decosZaak) || '',
+      // Varen zaken are immediateley in behandeling
+      datePublished: decosZaak.dateRequest,
       description: '',
       isChecked: hasTermijnen,
     },

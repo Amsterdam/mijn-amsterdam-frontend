@@ -115,7 +115,7 @@ describe('Varen service', () => {
                 status: 'Ontvangen',
               },
               {
-                datePublished: '',
+                datePublished: '2025-01-01T00:00:00',
                 description: '',
                 id: 'step-1',
                 isActive: false,
