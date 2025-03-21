@@ -209,8 +209,18 @@ async function transformDecosZaakResponse<
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
     termijnDates: [], // Serves as placeholder, values for this property will be added async below.
+    hasVarens: false,
     ...transformedFields,
   };
+
+  if (decosZaakTransformer.caseType === 'Varen vergunning exploitatie') {
+    const r = await fetchLinkedField(requestID, decosZaakSource.key, 'varens');
+    if (r.status === 'OK') {
+      console.error(r.content);
+      decosZaak.varens = r.content;
+      decosZaak.hasVarens = true;
+    }
+  }
 
   if (decosZaakTransformer.fetchWorkflowStatusDatesFor) {
     const stepTitles = decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
@@ -551,6 +561,20 @@ export async function fetchDecosTermijnen(
   });
 
   return requestData(apiConfigTermijnens, requestID);
+}
+
+export async function fetchLinkedField(
+  requestID: RequestID,
+  zaakID: DecosZaakBase['key'],
+  field: string
+): Promise<ApiResponse<Record<string, unknown>>> {
+  const apiConfigLinkedField = getApiConfig('DECOS_API', {
+    formatUrl: (config) => {
+      return `${config.url}/items/${zaakID}/${field}`;
+    },
+  });
+
+  return requestData(apiConfigLinkedField, requestID);
 }
 
 async function fetchIsPdfDocument(

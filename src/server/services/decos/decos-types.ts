@@ -161,7 +161,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   // A function to check if the source data quality and/or prerequisites for showing the data to the user are valid.
   // This function is run before transformation of the zaak.
   hasValidSourceData?: (decosZaakSource: DecosZaakSource) => boolean;
-  // Indicate if the zaak requires payment to be processed and complete. This function is run before transformation of the zaak.
+  // Indicate if the zaak requires pawyment to be processed and complete. This function is run before transformation of the zaak.
   requirePayment?: boolean;
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
   fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
@@ -182,6 +182,8 @@ export type DecosZakenSourceFilter = (
   decosZaakSource: DecosZaakSource
 ) => boolean;
 export interface DecosZaakBase {
+  varens?: Record<string, unknown>;
+  hasVarens?: boolean;
   caseType: string;
   dateDecision: string | null;
   dateRequest: string;
