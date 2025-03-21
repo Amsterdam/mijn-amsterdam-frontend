@@ -96,7 +96,7 @@ function transformLood365Response(
         const lowercaseStatus =
           location.Friendlystatus.toLowerCase() as LoodMetingStatusLowerCase;
 
-        const loodMetingBase: LoodMetingFrontend = {
+        const loodMeting: LoodMetingFrontend = {
           id: location.Reference,
           title: 'Lood in de bodem-check',
           adres: `${location.Street} ${location.Housenumber}${
@@ -126,17 +126,9 @@ function transformLood365Response(
           steps: [],
         };
 
-        const steps = getBodemStatusLineItems(loodMetingBase, lowercaseStatus);
+        loodMeting.steps = getBodemStatusLineItems(loodMeting, lowercaseStatus);
 
-        const result: LoodMetingFrontend = {
-          ...loodMetingBase,
-          steps,
-          status:
-            steps.find((step) => step.isActive)?.status ??
-            loodMetingBase.status,
-        };
-
-        return result;
+        return loodMeting;
       });
     });
   } catch (e) {
@@ -253,10 +245,7 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const status = meting.status.toLocaleLowerCase();
-  const inProgress = status === 'in behandeling';
-  const isDone = status === 'afgehandeld';
-  const isDenied = status === 'afgewezen';
+  const status = meting.status.toLowerCase() as LoodMetingStatusLowerCase;
 
   const notification: MyNotification = {
     thema: Themas.BODEM,
@@ -270,23 +259,25 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
     },
   };
 
-  if (inProgress) {
-    notification.title = 'Aanvraag lood in de bodem-check in behandeling';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`;
-    notification.datePublished = meting.datumInbehandeling!;
+  switch (status) {
+    case 'in behandeling': {
+      notification.title = 'Aanvraag lood in de bodem-check in behandeling';
+      notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`;
+      notification.datePublished = meting.datumInbehandeling!;
+      break;
+    }
+    case 'afgehandeld': {
+      notification.title = 'Aanvraag lood in de bodem-check afgehandeld';
+      notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`;
+      notification.datePublished = meting.datumAfgehandeld!;
+      break;
+    }
+    case 'afgewezen': {
+      notification.title = 'Aanvraag lood in de bodem-check afgewezen';
+      notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`;
+      notification.datePublished = meting.datumBeoordeling!;
+      break;
+    }
   }
-
-  if (isDone) {
-    notification.title = 'Aanvraag lood in de bodem-check afgehandeld';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`;
-    notification.datePublished = meting.datumAfgehandeld!;
-  }
-
-  if (isDenied) {
-    notification.title = 'Aanvraag lood in de bodem-check afgewezen';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`;
-    notification.datePublished = meting.datumBeoordeling!;
-  }
-
   return notification;
 }
