@@ -245,39 +245,48 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const status = meting.status.toLowerCase() as LoodMetingStatusLowerCase;
-
-  const notification: MyNotification = {
+  const baseNotification = {
     thema: Themas.BODEM,
     id: meting.kenmerk,
-    title: 'Aanvraag lood in de bodem-check ontvangen',
-    description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is ontvangen.`,
-    datePublished: meting.datumAanvraag,
     link: {
       to: meting.link.to,
       title: 'Bekijk details',
     },
   };
 
-  switch (status) {
+  switch (meting.status.toLowerCase() as LoodMetingStatusLowerCase) {
     case 'in behandeling': {
-      notification.title = 'Aanvraag lood in de bodem-check in behandeling';
-      notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`;
-      notification.datePublished = meting.datumInbehandeling!;
-      break;
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check in behandeling',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`,
+        datePublished: meting.datumInbehandeling!,
+      };
     }
     case 'afgehandeld': {
-      notification.title = 'Aanvraag lood in de bodem-check afgehandeld';
-      notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`;
-      notification.datePublished = meting.datumAfgehandeld!;
-      break;
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check afgehandeld',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`,
+        datePublished: meting.datumAfgehandeld!,
+      };
     }
     case 'afgewezen': {
-      notification.title = 'Aanvraag lood in de bodem-check afgewezen';
-      notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`;
-      notification.datePublished = meting.datumBeoordeling!;
-      break;
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check afgewezen',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`,
+        datePublished: meting.datumBeoordeling!,
+      };
+    }
+    default: {
+      // Ontvangen as default since we are not sure what else to show if something unexpected comes from the source API.
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check ontvangen',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is ontvangen.`,
+        datePublished: meting.datumAanvraag,
+      };
     }
   }
-  return notification;
 }
