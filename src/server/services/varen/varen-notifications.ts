@@ -82,7 +82,7 @@ function createVarenNotification(
         title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
         description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.`,
       };
-    case 'Besluit':
+    case 'Afgehandeld':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-afgehandeld-notification`,

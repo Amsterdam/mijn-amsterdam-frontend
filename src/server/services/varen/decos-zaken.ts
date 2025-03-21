@@ -1,6 +1,7 @@
 import type {
   CaseTypeVaren,
   VarenRegistratieRederType,
+  VarenStatus,
   VarenVergunningExploitatieType,
   VarenVergunningExploitatieWijzigingVaartuigNaamType,
   VarenVergunningExploitatieWijzigingVerbouwingType,
@@ -30,11 +31,8 @@ const vesselEniNumber = { text36: 'eniNumber' } as const;
 const status = {
   title: {
     name: 'status' as const,
-    transform: (title: string) => {
+    transform: (title: string): VarenStatus => {
       if (title === 'Afgehandeld') {
-        return 'Besluit';
-      }
-      if (title === 'Ontvangen') {
         return title;
       }
       return 'In behandeling';

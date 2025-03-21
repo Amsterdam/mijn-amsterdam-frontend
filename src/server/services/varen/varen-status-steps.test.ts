@@ -42,7 +42,7 @@ describe('getStatusSteps', () => {
         id: 'step-2',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
@@ -119,7 +119,7 @@ describe('getStatusSteps', () => {
         id: 'step-5',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
@@ -181,7 +181,7 @@ describe('getStatusSteps', () => {
         id: 'step-4',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
@@ -258,7 +258,7 @@ describe('getStatusSteps', () => {
         id: 'step-5',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
@@ -322,7 +322,7 @@ describe('getStatusSteps', () => {
         id: 'step-4',
         isActive: true,
         isChecked: true,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
@@ -363,7 +363,7 @@ describe('getStatusSteps', () => {
         id: 'step-2',
         isActive: true,
         isChecked: true,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });

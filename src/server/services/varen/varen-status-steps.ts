@@ -70,21 +70,22 @@ export function getStatusSteps(
       return [meerInformatieNodig, inBehandeling];
     }),
     {
-      status: 'Besluit' as const,
+      status: 'Afgehandeld' as const,
       datePublished: decosZaak.dateDecision || '',
       isChecked: isAfgehandeld,
     },
   ] satisfies Partial<StatusLineItem>[];
 
-  const lastIndexStepChecked = steps.findLastIndex((step) => step.isChecked);
+  const lastIndexOfCheckedStep = steps.findLastIndex((step) => step.isChecked);
   return steps.map((step, stepIndex) => {
     const isStepLastAndChecked =
       step.isChecked && stepIndex === steps.length - 1;
     return {
       ...step,
       id: `step-${stepIndex}`,
-      isChecked: stepIndex <= lastIndexStepChecked,
-      isActive: stepIndex === lastIndexStepChecked + 1 || isStepLastAndChecked,
+      isChecked: stepIndex <= lastIndexOfCheckedStep,
+      isActive:
+        stepIndex === lastIndexOfCheckedStep + 1 || isStepLastAndChecked,
     };
   });
 }
