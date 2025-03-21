@@ -23,7 +23,7 @@ function createVarenRederRegisteredNotification(
 ): MyNotification {
   return {
     id: `varen-${zaak.id}-reder-notification`,
-    datePublished: zaak.dateRequestFormatted,
+    datePublished: zaak.dateRequest,
     thema: Themas.VAREN,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,

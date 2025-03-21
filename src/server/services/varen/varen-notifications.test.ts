@@ -71,7 +71,9 @@ describe('Notifications', () => {
     );
 
     expect(content?.notifications).toHaveLength(1);
-    expect(content?.notifications[0].datePublished).toBe('2025-01-01T00:00:00');
+    expect(content?.notifications[0].datePublished).toBe(
+      zaakRecent.dateRequest
+    );
   });
 
   it('should show a notification for registratie reder', async () => {
@@ -97,7 +99,7 @@ describe('Notifications', () => {
           {
             thema: 'VAREN',
             id: 'varen-Z-25-0000001-reder-notification',
-            datePublished: '01 januari 2025',
+            datePublished: rederRegistratie.dateRequest,
             title: 'Reder geregistreerd',
             description: 'U heeft zich geregistreerd.',
             link: {
@@ -116,15 +118,14 @@ describe('Notifications', () => {
       ...exploitatieBase,
     } as unknown as VarenVergunningExploitatieType;
 
+    const zaakMeerInformatieTermijn = {
+      status: 'Meer informatie nodig',
+      dateStart: '2025-01-17T00:00:00',
+      dateEnd: '2025-01-30T00:00:00',
+    };
     const zaakMeerInformatie = {
       ...exploitatieBase,
-      termijnDates: [
-        {
-          status: 'Meer informatie nodig',
-          dateStart: '2025-01-17T00:00:00',
-          dateEnd: '2025-01-30T00:00:00',
-        },
-      ],
+      termijnDates: [zaakMeerInformatieTermijn],
     } as unknown as VarenVergunningExploitatieType;
 
     const zaakDecision = {
@@ -147,7 +148,7 @@ describe('Notifications', () => {
             id: 'varen-Z-25-0000001-inbehandeling-notification',
             title: 'Aanvraag Varen vergunning exploitatie in behandeling',
             description: 'Wij hebben uw aanvraag in behandeling genomen.',
-            datePublished: '2025-01-01T00:00:00',
+            datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
               to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
@@ -160,7 +161,7 @@ describe('Notifications', () => {
               'Meer informatie nodig omtrent uw Varen vergunning exploitatie aanvraag',
             description:
               'Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.',
-            datePublished: '2025-01-17T00:00:00',
+            datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
               to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
@@ -171,7 +172,7 @@ describe('Notifications', () => {
             id: 'varen-Z-25-0000001-afgehandeld-notification',
             title: 'Aanvraag Varen vergunning exploitatie afgehandeld',
             description: 'Wij hebben uw aanvraag afgehandeld.',
-            datePublished: '2025-01-20T00:00:00',
+            datePublished: zaakDecision.dateDecision,
             link: {
               title: 'Bekijk details',
               to: '/passagiers-en-beroepsvaart',
