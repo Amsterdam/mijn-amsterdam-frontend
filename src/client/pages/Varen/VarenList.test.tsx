@@ -21,7 +21,7 @@ const exploitatieDecision: ExploitatieAanvraag = {
   identifier: 'Z/24/0000001',
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  status: 'Besluit',
+  status: 'Afgehandeld',
   decision: 'Verleend',
   processed: true,
   vesselName: 'BootjeVanBerend',

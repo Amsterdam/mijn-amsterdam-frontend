@@ -17,7 +17,7 @@ import MockApp from '../MockApp';
 import { Varen } from './Varen';
 
 type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatieType>;
-const exploitatieInProgress: ExploitatieAanvraag = {
+const exploitatieInProgress = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
   caseType: 'Varen vergunning exploitatie',
@@ -45,7 +45,7 @@ const exploitatieInProgress: ExploitatieAanvraag = {
       id: 'step-1',
     },
     {
-      status: 'Besluit',
+      status: 'Afgehandeld',
       datePublished: '2023-11-09T00:00:00',
       isActive: false,
       isChecked: false,
@@ -63,7 +63,7 @@ const exploitatieDecision: ExploitatieAanvraag = {
   identifier: 'Z/24/0000001',
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  status: 'Besluit',
+  status: 'Afgehandeld',
   decision: 'Verleend',
   processed: true,
   vesselName: 'BootjeVanBerend',
@@ -87,7 +87,7 @@ const exploitatieDecision: ExploitatieAanvraag = {
       id: 'step-1',
     },
     {
-      status: 'Besluit',
+      status: 'Afgehandeld',
       datePublished: '2023-11-10T00:00:00',
       isActive: true,
       isChecked: false,
