@@ -256,7 +256,7 @@ describe('Bodem', () => {
       // If we don't do this, we can run into the situation that these -
       // fail and that the tests afterwards always succeed while the pattern is incorrect.
       {
-        within(lopendeAanvraagTable).getAllByRole('row', {
+        within(lopendeAanvraagTable).getByRole('row', {
           name: statusPatterns.ontvangen,
         });
 
