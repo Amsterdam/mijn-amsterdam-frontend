@@ -252,8 +252,9 @@ describe('Bodem', () => {
         afgewezen: /Afgewezen/,
       };
 
-      // Our patterns need to work for the next queries to be accurate.
-      // If our query are bad then the next test assertion will always be correct.
+      // Test if the patterns we use are correct in this scope.
+      // If we don't do this, we can run into the situation that these -
+      // fail and that the tests afterwards always succeed while the pattern is incorrect.
       {
         within(lopendeAanvraagTable).getAllByRole('row', {
           name: statusPatterns.ontvangen,
