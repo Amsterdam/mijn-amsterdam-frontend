@@ -8,7 +8,7 @@ import { LinkProps } from '../../../universal/types';
 const displayPropsAanvragen = {
   detailLinkComponent: 'Adres',
   datumAanvraagFormatted: 'Aangevraagd',
-  status: 'Status',
+  status: 'Resultaat',
 };
 
 const listPageParamKind = {
