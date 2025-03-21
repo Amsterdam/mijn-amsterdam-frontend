@@ -1,7 +1,7 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
 
-import { getBodemStatusLineItems } from './loodmeting-status-line-items';
+import { getBodemStatusSteps } from './loodmeting-status-line-items';
 import {
   Lood365Response,
   LoodMetingDocument,
@@ -126,7 +126,7 @@ function transformLood365Response(
           steps: [],
         };
 
-        loodMeting.steps = getBodemStatusLineItems(loodMeting, lowercaseStatus);
+        loodMeting.steps = getBodemStatusSteps(loodMeting, lowercaseStatus);
 
         return loodMeting;
       });

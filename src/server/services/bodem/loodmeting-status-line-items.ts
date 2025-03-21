@@ -5,7 +5,7 @@ import {
 } from '../../../server/services/bodem/types';
 import { StatusLineItem } from '../../../universal/types';
 
-export function getBodemStatusLineItems(
+export function getBodemStatusSteps(
   request: LoodMetingFrontend,
   lowercaseStatus: LoodMetingStatusLowerCase
 ): StatusLineItem<LoodMetingStatus>[] {
