@@ -264,11 +264,11 @@ describe('Bodem', () => {
           name: statusPatterns.inBehandeling,
         });
 
-        within(afgehandeldeAanvraagTable).queryByRole('row', {
+        within(afgehandeldeAanvraagTable).getByRole('row', {
           name: statusPatterns.afgehandeld,
         });
 
-        within(afgehandeldeAanvraagTable).queryByRole('row', {
+        within(afgehandeldeAanvraagTable).getByRole('row', {
           name: statusPatterns.afgewezen,
         });
       }
