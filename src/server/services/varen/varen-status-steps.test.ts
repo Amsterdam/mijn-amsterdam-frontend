@@ -7,22 +7,23 @@ import { getStatusSteps } from './varen-status-steps';
 const exploitatieBase = {
   vesselName: 'boatName',
   processed: false,
+  statusDates: [],
   dateRequest: '2025-01-01T00:00:00',
 } as unknown as VarenVergunningExploitatieType;
 
 describe('getStatusSteps', () => {
-  MockDate.set('2025-01-20');
+  const MOCK_CURRENT_DATE = '2025-01-20';
+  MockDate.set(MOCK_CURRENT_DATE);
 
   it('exploitatieInProgress', () => {
     const exploitatieInProgress = {
       ...exploitatieBase,
-      statusDates: [],
       termijnDates: [],
     } as unknown as VarenVergunningExploitatieType;
 
-    expect(getStatusSteps(exploitatieInProgress)).toMatchObject([
+    expect(getStatusSteps(exploitatieInProgress)).toStrictEqual([
       {
-        datePublished: '2025-01-01T00:00:00',
+        datePublished: exploitatieInProgress.dateRequest,
         description: '',
         id: 'step-0',
         isActive: false,
@@ -30,7 +31,7 @@ describe('getStatusSteps', () => {
         status: 'Ontvangen',
       },
       {
-        datePublished: '',
+        datePublished: exploitatieInProgress.dateRequest,
         description: '',
         id: 'step-1',
         isActive: true,
@@ -42,287 +43,185 @@ describe('getStatusSteps', () => {
         id: 'step-2',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
 
   it('exploitatieMeerInformatie', () => {
+    const termijn1 = {
+      status: 'Meer informatie nodig',
+      dateStart: '2025-01-02T00:00:00',
+      dateEnd: '2025-01-16T00:00:00',
+    };
+    const termijn2 = {
+      status: 'Meer informatie nodig',
+      dateStart: '2025-01-17T00:00:00',
+      dateEnd: '2025-01-30T00:00:00',
+    };
     const exploitatieMeerInformatieWithin = {
       ...exploitatieBase,
-      statusDates: [
-        {
-          status: 'In behandeling',
-          datePublished: '2025-01-01T00:00:00Z',
-        },
-      ],
-      termijnDates: [
-        {
-          status: 'Meer informatie nodig',
-          dateStart: '2025-01-02T00:00:00',
-          dateEnd: '2025-01-16T00:00:00',
-        },
-        {
-          status: 'Meer informatie nodig',
-          dateStart: '2025-01-17T00:00:00',
-          dateEnd: '2025-01-30T00:00:00',
-        },
-      ],
+      termijnDates: [termijn1, termijn2],
     } as unknown as VarenVergunningExploitatieType;
 
     expect(getStatusSteps(exploitatieMeerInformatieWithin)).toMatchObject([
       {
-        datePublished: '2025-01-01T00:00:00',
-        description: '',
-        id: 'step-0',
+        datePublished: exploitatieMeerInformatieWithin.dateRequest,
         isActive: false,
         isChecked: true,
         status: 'Ontvangen',
       },
       {
-        datePublished: '2025-01-01T00:00:00Z',
-        description: '',
-        id: 'step-1',
+        datePublished: exploitatieMeerInformatieWithin.dateRequest,
         isActive: false,
         isChecked: true,
         status: 'In behandeling',
       },
       {
         actionButtonItems: [],
-        datePublished: '2025-01-02T00:00:00',
-        description: '',
-        id: 'step-2',
+        datePublished: termijn1.dateStart,
         isActive: false,
         isChecked: true,
         status: 'Meer informatie nodig',
       },
       {
-        datePublished: '2025-01-16T00:00:00',
-        description: '',
-        id: 'step-3',
+        datePublished: termijn1.dateEnd,
         isActive: false,
         isChecked: true,
         status: 'In behandeling',
       },
       {
         actionButtonItems: [],
-        datePublished: '2025-01-17T00:00:00',
+        datePublished: termijn2.dateStart,
         description:
           'Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor 30 januari 2025',
-        id: 'step-4',
         isActive: true,
         isChecked: false,
         status: 'Meer informatie nodig',
       },
       {
         datePublished: '',
-        id: 'step-5',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
 
   it('exploitatieMeerInformatie in behandeling', () => {
+    const termijn = {
+      status: 'Meer informatie nodig',
+      dateStart: '2025-01-02T00:00:00',
+      dateEnd: '2025-01-16T00:00:00',
+    };
     const exploitatieMeerInformatieAfter = {
       ...exploitatieBase,
-      statusDates: [
-        {
-          status: 'In behandeling',
-          datePublished: '2025-01-01T00:00:00Z',
-        },
-      ],
-      termijnDates: [
-        {
-          status: 'Meer informatie nodig',
-          dateStart: '2025-01-02T00:00:00',
-          dateEnd: '2025-01-16T00:00:00',
-        },
-      ],
+      termijnDates: [termijn],
     } as unknown as VarenVergunningExploitatieType;
 
     expect(getStatusSteps(exploitatieMeerInformatieAfter)).toMatchObject([
-      {
-        datePublished: '2025-01-01T00:00:00',
-        description: '',
-        id: 'step-0',
-        isActive: false,
-        isChecked: true,
-        status: 'Ontvangen',
-      },
-      {
-        datePublished: '2025-01-01T00:00:00Z',
-        description: '',
-        id: 'step-1',
-        isActive: false,
-        isChecked: true,
-        status: 'In behandeling',
-      },
+      {},
+      {},
       {
         actionButtonItems: [],
-        datePublished: '2025-01-02T00:00:00',
-        description: '',
-        id: 'step-2',
+        datePublished: termijn.dateStart,
         isActive: false,
         isChecked: true,
         status: 'Meer informatie nodig',
       },
       {
-        datePublished: '2025-01-16T00:00:00',
-        description: '',
-        id: 'step-3',
+        datePublished: termijn.dateEnd,
         isActive: true,
         isChecked: false,
         status: 'In behandeling',
       },
       {
         datePublished: '',
-        id: 'step-4',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
 
   it('exploitatieMeerInformatie has termijn overlap', () => {
+    const termijn1 = {
+      status: 'Meer informatie nodig',
+      dateStart: '2025-01-02T00:00:00',
+      dateEnd: '2025-01-16T00:00:00',
+    };
+    const termijn2 = {
+      status: 'Meer informatie nodig',
+      dateStart: '2025-01-10T00:00:00',
+      dateEnd: '2025-01-24T00:00:00',
+    };
     const exploitatieMeerInformatieOverlap = {
       ...exploitatieBase,
-      statusDates: [
-        {
-          status: 'In behandeling',
-          datePublished: '2025-01-01T00:00:00Z',
-        },
-      ],
-      termijnDates: [
-        {
-          status: 'Meer informatie nodig',
-          dateStart: '2025-01-02T00:00:00',
-          dateEnd: '2025-01-16T00:00:00',
-        },
-        {
-          status: 'Meer informatie nodig',
-          dateStart: '2025-01-10T00:00:00',
-          dateEnd: '2025-01-24T00:00:00',
-        },
-      ],
+      termijnDates: [termijn1, termijn2],
     } as unknown as VarenVergunningExploitatieType;
 
     expect(getStatusSteps(exploitatieMeerInformatieOverlap)).toMatchObject([
-      {
-        datePublished: '2025-01-01T00:00:00',
-        description: '',
-        id: 'step-0',
-        isActive: false,
-        isChecked: true,
-        status: 'Ontvangen',
-      },
-      {
-        datePublished: '2025-01-01T00:00:00Z',
-        description: '',
-        id: 'step-1',
-        isActive: false,
-        isChecked: true,
-        status: 'In behandeling',
-      },
+      {},
+      {},
       {
         actionButtonItems: [],
-        datePublished: '2025-01-02T00:00:00',
-        description: '',
-        id: 'step-2',
+        datePublished: termijn1.dateStart,
         isActive: false,
         isChecked: true,
         status: 'Meer informatie nodig',
       },
       {
-        datePublished: '2025-01-10T00:00:00',
-        description: '',
-        id: 'step-3',
+        datePublished: termijn2.dateStart,
         isActive: false,
         isChecked: true,
         status: 'In behandeling',
       },
       {
         actionButtonItems: [],
-        datePublished: '2025-01-10T00:00:00',
+        datePublished: termijn2.dateStart,
         description:
           'Er is meer informatie nodig om uw aanvraag verder te kunnen verwerken. Lever deze informatie aan voor 24 januari 2025',
-        id: 'step-4',
         isActive: true,
         isChecked: false,
         status: 'Meer informatie nodig',
       },
       {
         datePublished: '',
-        id: 'step-5',
         isActive: false,
         isChecked: false,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
 
   it('exploitatieMeerInformatie - decision', () => {
+    const termijn = {
+      status: 'Meer informatie nodig',
+      dateStart: '2025-01-02T00:00:00',
+      dateEnd: '2025-01-16T00:00:00',
+    };
     const exploitatieMeerInformatieDecision = {
       ...exploitatieBase,
       processed: true,
-      dateDecision: '2025-01-20T00:00:00',
-      statusDates: [
-        {
-          status: 'In behandeling',
-          datePublished: '2025-01-01T00:00:00Z',
-        },
-      ],
-      termijnDates: [
-        {
-          status: 'Meer informatie nodig',
-          dateStart: '2025-01-02T00:00:00',
-          dateEnd: '2025-01-16T00:00:00',
-        },
-      ],
+      dateDecision: `${MOCK_CURRENT_DATE}T00:00:00`,
+      termijnDates: [termijn],
     } as unknown as VarenVergunningExploitatieType;
 
     expect(getStatusSteps(exploitatieMeerInformatieDecision)).toMatchObject([
+      {},
+      {},
+      {},
       {
-        datePublished: '2025-01-01T00:00:00',
-        description: '',
-        id: 'step-0',
-        isActive: false,
-        isChecked: true,
-        status: 'Ontvangen',
-      },
-      {
-        datePublished: '2025-01-01T00:00:00Z',
-        description: '',
-        id: 'step-1',
+        datePublished: termijn.dateEnd,
         isActive: false,
         isChecked: true,
         status: 'In behandeling',
       },
       {
-        actionButtonItems: [],
-        datePublished: '2025-01-02T00:00:00',
-        description: '',
-        id: 'step-2',
-        isActive: false,
-        isChecked: true,
-        status: 'Meer informatie nodig',
-      },
-      {
-        datePublished: '2025-01-16T00:00:00',
-        description: '',
-        id: 'step-3',
-        isActive: false,
-        isChecked: true,
-        status: 'In behandeling',
-      },
-      {
-        datePublished: '2025-01-20T00:00:00',
-        id: 'step-4',
+        datePublished: exploitatieMeerInformatieDecision.dateDecision,
         isActive: true,
         isChecked: true,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });
@@ -332,38 +231,27 @@ describe('getStatusSteps', () => {
       ...exploitatieBase,
       processed: true,
       dateDecision: '2025-01-20T00:00:00',
-      statusDates: [
-        {
-          status: 'In behandeling',
-          datePublished: '2025-01-01T00:00:00Z',
-        },
-      ],
       termijnDates: [],
     } as unknown as VarenVergunningExploitatieType;
 
     expect(getStatusSteps(exploitatieDecision)).toMatchObject([
       {
-        datePublished: '2025-01-01T00:00:00',
-        description: '',
-        id: 'step-0',
+        datePublished: exploitatieDecision.dateRequest,
         isActive: false,
         isChecked: true,
         status: 'Ontvangen',
       },
       {
-        datePublished: '2025-01-01T00:00:00Z',
-        description: '',
-        id: 'step-1',
+        datePublished: exploitatieDecision.dateRequest,
         isActive: false,
         isChecked: true,
         status: 'In behandeling',
       },
       {
-        datePublished: '2025-01-20T00:00:00',
-        id: 'step-2',
+        datePublished: exploitatieDecision.dateDecision,
         isActive: true,
         isChecked: true,
-        status: 'Besluit',
+        status: 'Afgehandeld',
       },
     ]);
   });

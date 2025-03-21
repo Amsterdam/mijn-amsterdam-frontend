@@ -1,6 +1,7 @@
 import type {
   CaseTypeVaren,
   VarenRegistratieRederType,
+  VarenStatus,
   VarenVergunningExploitatieType,
   VarenVergunningExploitatieWijzigingVaartuigNaamType,
   VarenVergunningExploitatieWijzigingVerbouwingType,
@@ -30,11 +31,8 @@ const vesselEniNumber = { text36: 'eniNumber' } as const;
 const status = {
   title: {
     name: 'status' as const,
-    transform: (title: string) => {
+    transform: (title: string): VarenStatus => {
       if (title === 'Afgehandeld') {
-        return 'Besluit';
-      }
-      if (title === 'Ontvangen') {
         return title;
       }
       return 'In behandeling';
@@ -46,11 +44,6 @@ const fetchMeerInformatieTermijn: Required<DecosZaakTransformer>['fetchTermijnen
   {
     status: 'Meer informatie nodig',
     type: 'Verzoek aanvullende gegevens',
-  };
-const fetchInBehandelingWorkflow: Required<DecosZaakTransformer>['fetchWorkflowStatusDatesFor'][number] =
-  {
-    status: 'In behandeling',
-    stepTitle: 'Status bijwerken en notificatie verzenden - Volledigheid toets',
   };
 
 const setStatusIfActiveTermijn = async <T extends DecosZaakBase>(zaak: T) => {
@@ -76,7 +69,6 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
     isActive: true,
     caseType: 'Varen registratie reder',
     title: 'Varen registratie reder',
-    fetchWorkflowStatusDatesFor: [fetchInBehandelingWorkflow],
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM,
@@ -96,7 +88,6 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     isActive: true,
     caseType: 'Varen vergunning exploitatie',
     title: 'Varen vergunning exploitatie',
-    fetchWorkflowStatusDatesFor: [fetchInBehandelingWorkflow],
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM,
@@ -117,7 +108,6 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vaartuignaam',
     title: 'Wijzigen: Vaartuig een andere naam geven',
-    fetchWorkflowStatusDatesFor: [fetchInBehandelingWorkflow],
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM,
@@ -134,7 +124,6 @@ export const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTran
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vergunninghouder',
     title: 'Wijzigen: Vergunning op naam van een andere onderneming zetten',
-    fetchWorkflowStatusDatesFor: [fetchInBehandelingWorkflow],
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM,
@@ -153,7 +142,6 @@ export const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging verbouwing',
     title: 'Wijzigen: Vaartuig vervangen door een te (ver)bouwen vaartuig',
-    fetchWorkflowStatusDatesFor: [fetchInBehandelingWorkflow],
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM,
@@ -173,7 +161,6 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vervanging',
     title: 'Wijzigen: Vaartuig vervangen door een bestaand vaartuig',
-    fetchWorkflowStatusDatesFor: [fetchInBehandelingWorkflow],
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM,
@@ -195,7 +182,6 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
     isActive: true,
     caseType: 'Varen ligplaatsvergunning',
     title: 'Varen ligplaatsvergunning',
-    fetchWorkflowStatusDatesFor: [fetchInBehandelingWorkflow],
     fetchTermijnenFor: [fetchMeerInformatieTermijn],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM,
