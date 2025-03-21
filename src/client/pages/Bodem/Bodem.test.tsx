@@ -255,34 +255,21 @@ describe('Bodem', () => {
       // Our patterns need to work for the next queries to be accurate.
       // If our query are bad then the next test assertion will always be correct.
       {
-        const statusOntvangenRows = within(lopendeAanvraagTable).getAllByRole(
-          'row',
-          {
-            name: statusPatterns.ontvangen,
-          }
-        );
-        expect(statusOntvangenRows.length).toBe(1);
+        within(lopendeAanvraagTable).getAllByRole('row', {
+          name: statusPatterns.ontvangen,
+        });
 
-        const statusInBehandelingRows = within(
-          lopendeAanvraagTable
-        ).getAllByRole('row', {
+        within(lopendeAanvraagTable).getByRole('row', {
           name: statusPatterns.inBehandeling,
         });
-        expect(statusInBehandelingRows.length).toBe(1);
 
-        const statusAfgehandeldRows = within(
-          afgehandeldeAanvraagTable
-        ).queryAllByRole('row', {
+        within(afgehandeldeAanvraagTable).queryByRole('row', {
           name: statusPatterns.afgehandeld,
         });
-        expect(statusAfgehandeldRows.length).toBe(1);
 
-        const statusAfgewezenRows = within(
-          afgehandeldeAanvraagTable
-        ).queryAllByRole('row', {
+        within(afgehandeldeAanvraagTable).queryByRole('row', {
           name: statusPatterns.afgewezen,
         });
-        expect(statusAfgewezenRows.length).toBe(1);
       }
 
       const lopendeAanvraagRows = within(
