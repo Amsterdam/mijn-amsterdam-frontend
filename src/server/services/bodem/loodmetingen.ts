@@ -7,6 +7,7 @@ import {
   LoodMetingDocument,
   LoodMetingFrontend,
   LoodMetingRequestsSource,
+  LoodMetingStatusLowerCase,
   LoodMetingen,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -92,6 +93,9 @@ function transformLood365Response(
           };
         }
 
+        const lowercaseStatus =
+          location.Friendlystatus.toLowerCase() as LoodMetingStatusLowerCase;
+
         const loodMetingBase: LoodMetingFrontend = {
           id: location.Reference,
           title: 'Lood in de bodem-check',
@@ -106,9 +110,7 @@ function transformLood365Response(
           datumAfgehandeld: location?.Reportsenton,
           datumBeoordeling: location?.ReviewedOn,
           status: location.Friendlystatus,
-          processed: ['afgewezen', 'afgehandeld', 'toegewezen'].includes(
-            location.Friendlystatus.toLowerCase()
-          ),
+          processed: ['afgewezen', 'afgehandeld'].includes(lowercaseStatus),
           kenmerk: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,
@@ -124,15 +126,17 @@ function transformLood365Response(
           steps: [],
         };
 
-        const steps = getBodemStatusLineItems(loodMetingBase);
+        const steps = getBodemStatusLineItems(loodMetingBase, lowercaseStatus);
 
-        return {
+        const result: LoodMetingFrontend = {
           ...loodMetingBase,
           steps,
           status:
             steps.find((step) => step.isActive)?.status ??
             loodMetingBase.status,
         };
+
+        return result;
       });
     });
   } catch (e) {

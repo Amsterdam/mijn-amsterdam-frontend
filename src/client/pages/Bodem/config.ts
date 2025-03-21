@@ -25,7 +25,7 @@ export const tableConfig = {
   [listPageParamKind.inProgress]: {
     ...tableConfigBase,
     title: 'Lopende aanvragen',
-    filter: (bodemAanvraag: LoodMetingFrontend) => isInProgress(bodemAanvraag),
+    filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
     listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
@@ -33,7 +33,7 @@ export const tableConfig = {
   [listPageParamKind.completed]: {
     ...tableConfigBase,
     title: 'Afgehandelde aanvragen',
-    filter: (bodemAanvraag: LoodMetingFrontend) => !isInProgress(bodemAanvraag),
+    filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
     listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
       kind: listPageParamKind.completed,
     }),
@@ -46,11 +46,3 @@ export const linkListItems: LinkProps[] = [
     to: 'https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/',
   },
 ] as const;
-
-function isInProgress(bodemAanvraag: LoodMetingFrontend): boolean {
-  return (
-    (bodemAanvraag.status === 'In behandeling' ||
-      bodemAanvraag.status === 'Ontvangen') &&
-    !bodemAanvraag.datumAfgehandeld
-  );
-}

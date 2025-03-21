@@ -1,15 +1,19 @@
 import {
   LoodMetingFrontend,
   LoodMetingStatus,
+  LoodMetingStatusLowerCase,
 } from '../../../server/services/bodem/types';
 import { StatusLineItem } from '../../../universal/types';
 
 export function getBodemStatusLineItems(
-  request: LoodMetingFrontend
+  request: LoodMetingFrontend,
+  lowercaseStatus: LoodMetingStatusLowerCase
 ): StatusLineItem<LoodMetingStatus>[] {
-  const status: LoodMetingStatus = request.status;
-  const isInProgress = status === 'In behandeling';
-  const isDone = status === 'Afgehandeld' || status === 'Afgewezen';
+  const status: LoodMetingStatusLowerCase = lowercaseStatus;
+  const isInProgress = status === 'in behandeling';
+
+  const afgewezen = status === 'afgewezen';
+  const isDone = status === 'afgehandeld' || status === 'afgewezen';
 
   return [
     {
@@ -34,11 +38,9 @@ export function getBodemStatusLineItems(
     },
     {
       id: 'third-item',
-      status: status === 'Afgewezen' ? 'Afgewezen' : 'Afgehandeld',
+      status: afgewezen ? 'Afgewezen' : 'Afgehandeld',
       datePublished:
-        (status === 'Afgewezen'
-          ? request.datumBeoordeling
-          : request.datumAfgehandeld) ?? '',
+        (afgewezen ? request.datumBeoordeling : request.datumAfgehandeld) ?? '',
       description: '',
       documents: [],
       isActive: isDone,
