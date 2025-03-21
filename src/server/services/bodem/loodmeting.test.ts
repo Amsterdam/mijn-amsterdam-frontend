@@ -55,16 +55,24 @@ describe('Loodmeting', () => {
       const metingen = res.content?.metingen;
       assert(metingen, 'Test data has metingen');
 
-      const inBehandelingMelding = metingen[0];
+      const inBehandelingMelding = metingen.find(
+        (meting) => meting.status === 'In behandeling'
+      )!;
       expect(inBehandelingMelding.processed).toBe(false);
 
-      const afgewezenMelding = metingen[1];
+      const afgewezenMelding = metingen.find(
+        (meting) => meting.status === 'Afgewezen'
+      )!;
       expect(afgewezenMelding.processed).toBe(true);
 
-      const afgehandeldMelding = metingen[2];
+      const afgehandeldMelding = metingen.find(
+        (meting) => meting.status === 'Afgehandeld'
+      )!;
       expect(afgehandeldMelding.processed).toBe(true);
 
-      const ontvangenMelding = metingen[5];
+      const ontvangenMelding = metingen.find(
+        (meting) => meting.status === 'Ontvangen'
+      )!;
       expect(ontvangenMelding.processed).toBe(false);
 
       expect(metingen.length).toEqual(12);
