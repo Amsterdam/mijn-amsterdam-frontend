@@ -16,6 +16,11 @@ type DecosDocumentBlobBase = {
   bol10: boolean;
 };
 
+type DecosLinksSource = {
+  rel: string;
+  href: string;
+};
+
 export type DecosFieldsObject = Record<
   DecosFieldNameSource,
   string | boolean | null | number
@@ -25,25 +30,22 @@ export type DecosFieldTransformerObject<
   T extends DecosZaakBase = DecosZaakBase,
 > = Record<DecosFieldNameSource, DecosFieldTransformer<T> | keyof T>;
 
-export type DecosZaakSource = {
+export type DecosContent<T> = {
   key: DecosZaakID;
-  links: string[];
-  fields: DecosZaakFieldsSource & DecosFieldsObject;
+  fields: T;
+  links: DecosLinksSource[];
 };
 
-export type DecosDocumentSource = {
-  key: DecosZaakID;
-  links: string[];
-  fields: DecosDocumentBase & DecosFieldsObject;
-};
+export type DecosZaakSource = DecosContent<
+  DecosZaakFieldsSource & DecosFieldsObject
+>;
+export type DecosDocumentSource = DecosContent<
+  DecosDocumentBase & DecosFieldsObject
+>;
 
-export type DecosWorkflowSource = {
-  fields: DecosWorkflowFieldsSource;
-};
-
-export type DecosTermijnSource = {
-  fields: DecosTermijnFieldsSource;
-};
+export type DecosDocumentBlobSource = DecosContent<
+  DecosDocumentBlobBase & DecosFieldsObject
+>;
 
 export type DecosTermijn = {
   type: ZaakStatus;
@@ -53,19 +55,18 @@ export type DecosTermijn = {
   numberOfDays?: number;
 };
 
-export type DecosDocumentBlobSource = {
-  key: DecosZaakID;
-  links: string[];
-  fields: DecosDocumentBlobBase & DecosFieldsObject;
-};
+export type DecosWorkflowSource = DecosContent<DecosWorkflowFieldsSource>;
+export type DecosTermijnSource = DecosContent<DecosTermijnFieldsSource>;
 
 export type DecosZakenResponse<T = DecosZaakSource[]> = {
   count: number;
   content: T;
 };
-
 export type DecosWorkflowResponse = DecosZakenResponse<DecosWorkflowSource[]>;
 export type DecosTermijnResponse = DecosZakenResponse<DecosTermijnSource[]>;
+export type DecosLinkedFieldResponse = DecosZakenResponse<
+  DecosContent<object>[]
+>;
 
 export type DecosResponse<T> = {
   itemDataResultSet: {
@@ -182,8 +183,7 @@ export type DecosZakenSourceFilter = (
   decosZaakSource: DecosZaakSource
 ) => boolean;
 export interface DecosZaakBase {
-  varens?: Record<string, unknown>;
-  hasVarens?: boolean;
+  varens?: object;
   caseType: string;
   dateDecision: string | null;
   dateRequest: string;
