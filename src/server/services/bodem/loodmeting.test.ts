@@ -10,6 +10,13 @@ import metingen from '../../../../mocks/fixtures/loodmetingen.json';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
+vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
+  return {
+    ...importOriginal,
+    generateFullApiUrlBFF: () => 'https://document.doc',
+  };
+});
+
 describe('Loodmeting', () => {
   const requestId = '456';
 
@@ -49,25 +56,101 @@ describe('Loodmeting', () => {
       remoteApi.post('/lood365/be_getrequestdetails').reply(200, metingen);
     });
 
-    it('should transform the data correctly', async () => {
+    test('All fields are correctly formatted', async () => {
       const res = await fetchLoodmetingen(requestId, profileAndToken);
 
-      expect(res.content?.metingen.length).toEqual(12);
+      // Grab the most complete meting item, to prevent checking more then 600 lines of items for nothing.
+      const mostCompleteMeting = res.content?.metingen.find(
+        (meting) =>
+          meting.datumAanvraag &&
+          meting.datumAfgehandeld &&
+          meting.datumBeoordeling &&
+          meting.datumInbehandeling
+      );
 
-      // Open aanvraag
-      expect(
-        res.content?.metingen.find((meting) => meting.kenmerk === 'AV-001481')
-      ).toMatchInlineSnapshot(`undefined`);
+      expect(mostCompleteMeting).toStrictEqual({
+        aanvraagNummer: 'AV-001480',
+        adres: 'Insulindeweg 26A',
+        datumAanvraag: '2023-07-12T12:39:15Z',
+        datumAanvraagFormatted: '12 juli 2023',
+        datumAfgehandeld: '2023-07-19T12:14:20Z',
+        datumBeoordeling: '2023-07-13T11:18:41Z',
+        datumInbehandeling: '2023-07-13T11:18:42Z',
+        document: {
+          datePublished: '2023-07-19T12:14:20Z',
+          id: '690d8303-6f21-ee11-9966-0022489fda17',
+          title: 'Rapport Lood in de bodem-check',
+          url: 'https://document.doc',
+        },
+        id: 'OL-001518',
+        kenmerk: 'OL-001518',
+        link: {
+          title: 'Bekijk loodmeting',
+          to: '/bodem/lood-meting/OL-001518',
+        },
+        processed: true,
+        rapportBeschikbaar: true,
+        rapportId: '690d8303-6f21-ee11-9966-0022489fda17',
+        redenAfwijzing: '',
+        status: 'Afgehandeld',
+        steps: [
+          {
+            datePublished: '2023-07-12T12:39:15Z',
+            description: '',
+            documents: [],
+            id: 'first-item',
+            isActive: false,
+            isChecked: true,
+            status: 'Ontvangen',
+          },
+          {
+            datePublished: '2023-07-13T11:18:42Z',
+            description: '',
+            documents: [],
+            id: 'second-item',
+            isActive: false,
+            isChecked: true,
+            status: 'In behandeling',
+          },
+          {
+            datePublished: '2023-07-19T12:14:20Z',
+            description: '',
+            documents: [],
+            id: 'third-item',
+            isActive: true,
+            isChecked: true,
+            status: 'Afgehandeld',
+          },
+        ],
+        title: 'Lood in de bodem-check',
+      });
+    });
 
-      // Afgewezen aanvraag
-      expect(
-        res.content?.metingen.find((meting) => meting.kenmerk === 'AV-001485')
-      ).toMatchInlineSnapshot(`undefined`);
+    test('Assigns processed status based on status', async () => {
+      const res = await fetchLoodmetingen(requestId, profileAndToken);
 
-      // Afgehandelde aanvraag
-      expect(
-        res.content?.metingen.find((meting) => meting.kenmerk === 'AV-001480')
-      ).toMatchInlineSnapshot(`undefined`);
+      const metingen = res.content?.metingen;
+      assert(metingen, 'Test data has metingen');
+
+      const inBehandelingMeting = metingen.find(
+        (meting) => meting.status === 'In behandeling'
+      )!;
+      expect(inBehandelingMeting.processed).toBe(false);
+
+      const afgewezenMeting = metingen.find(
+        (meting) => meting.status === 'Afgewezen'
+      )!;
+      expect(afgewezenMeting.processed).toBe(true);
+
+      const afgehandeldMeting = metingen.find(
+        (meting) => meting.status === 'Afgehandeld'
+      )!;
+      expect(afgehandeldMeting.processed).toBe(true);
+
+      const ontvangenMeting = metingen.find(
+        (meting) => meting.status === 'Ontvangen'
+      )!;
+      expect(ontvangenMeting.processed).toBe(false);
     });
 
     it('should return the right notifications', async () => {
@@ -76,147 +159,157 @@ describe('Loodmeting', () => {
         profileAndToken
       );
 
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "content": {
-            "notifications": [
-              {
-                "datePublished": "2023-07-19T12:16:23Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Insulindeweg 26 is in behandeling genomen",
-                "id": "OL-001521",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001521",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check in behandeling",
+      expect(res).toStrictEqual({
+        content: {
+          notifications: [
+            {
+              datePublished: '2023-07-19T12:16:23Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Insulindeweg 26 is in behandeling genomen',
+              id: 'OL-001521',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001521',
               },
-              {
-                "datePublished": "2023-07-13T11:19:10Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Insulindeweg 26 is afgewezen.",
-                "id": "OL-001520",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001520",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check afgewezen",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check in behandeling',
+            },
+            {
+              datePublished: '2023-07-13T11:19:10Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Insulindeweg 26 is afgewezen.',
+              id: 'OL-001520',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001520',
               },
-              {
-                "datePublished": "2023-07-19T12:14:20Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Insulindeweg 26A is afgehandeld.",
-                "id": "OL-001518",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001518",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check afgehandeld",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check afgewezen',
+            },
+            {
+              datePublished: '2023-07-19T12:14:20Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Insulindeweg 26A is afgehandeld.',
+              id: 'OL-001518',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001518',
               },
-              {
-                "datePublished": "2023-07-19T12:19:32Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is in behandeling genomen",
-                "id": "OL-001525",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001525",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check in behandeling",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check afgehandeld',
+            },
+            {
+              datePublished: '2023-07-19T12:19:32Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is in behandeling genomen',
+              id: 'OL-001525',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001525',
               },
-              {
-                "datePublished": "2023-07-18T12:04:57Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is afgewezen.",
-                "id": "OL-001529",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001529",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check afgewezen",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check in behandeling',
+            },
+            {
+              datePublished: '2023-07-18T12:04:57Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is afgewezen.',
+              id: 'OL-001529',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001529',
               },
-              {
-                "datePublished": "2023-07-12T12:53:41Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is ontvangen.",
-                "id": "OL-001522",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001522",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check ontvangen",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check afgewezen',
+            },
+            {
+              datePublished: '2023-07-12T12:53:41Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Insulindeweg 641 is ontvangen.',
+              id: 'OL-001522',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001522',
               },
-              {
-                "datePublished": "2023-07-18T11:57:06Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Javastraat 603 is afgewezen.",
-                "id": "OL-001527",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001527",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check afgewezen",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check ontvangen',
+            },
+            {
+              datePublished: '2023-07-18T11:57:06Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Javastraat 603 is afgewezen.',
+              id: 'OL-001527',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001527',
               },
-              {
-                "datePublished": "2023-07-13T11:18:29Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Maanzicht 5 is in behandeling genomen",
-                "id": "OL-001519",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001519",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check in behandeling",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check afgewezen',
+            },
+            {
+              datePublished: '2023-07-13T11:18:29Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Maanzicht 5 is in behandeling genomen',
+              id: 'OL-001519',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001519',
               },
-              {
-                "datePublished": "2023-07-19T11:17:10Z",
-                "description": "Uw aanvraag lood in de bodem-check voor p.boorsmastraat 30 is ontvangen.",
-                "id": "OL-001532",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001532",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check ontvangen",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check in behandeling',
+            },
+            {
+              datePublished: '2023-07-19T11:17:10Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor p.boorsmastraat 30 is ontvangen.',
+              id: 'OL-001532',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001532',
               },
-              {
-                "datePublished": "2023-07-19T12:23:22Z",
-                "description": "Uw aanvraag lood in de bodem-check voor P.Javastraat 603 is in behandeling genomen",
-                "id": "OL-001528",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001528",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check in behandeling",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check ontvangen',
+            },
+            {
+              datePublished: '2023-07-19T12:23:22Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor P.Javastraat 603 is in behandeling genomen',
+              id: 'OL-001528',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001528',
               },
-              {
-                "datePublished": "2023-07-19T12:20:42Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Tweede Ceramstraat 1 is afgehandeld.",
-                "id": "OL-001526",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001526",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check afgehandeld",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check in behandeling',
+            },
+            {
+              datePublished: '2023-07-19T12:20:42Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Tweede Ceramstraat 1 is afgehandeld.',
+              id: 'OL-001526',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001526',
               },
-              {
-                "datePublished": "2023-07-24T06:03:03Z",
-                "description": "Uw aanvraag lood in de bodem-check voor Wilhelminastraat 90B is ontvangen.",
-                "id": "OL-001534",
-                "link": {
-                  "title": "Bekijk details",
-                  "to": "/bodem/lood-meting/OL-001534",
-                },
-                "thema": "BODEM",
-                "title": "Aanvraag lood in de bodem-check ontvangen",
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check afgehandeld',
+            },
+            {
+              datePublished: '2023-07-24T06:03:03Z',
+              description:
+                'Uw aanvraag lood in de bodem-check voor Wilhelminastraat 90B is ontvangen.',
+              id: 'OL-001534',
+              link: {
+                title: 'Bekijk details',
+                to: '/bodem/lood-meting/OL-001534',
               },
-            ],
-          },
-          "status": "OK",
-        }
-      `);
+              thema: 'BODEM',
+              title: 'Aanvraag lood in de bodem-check ontvangen',
+            },
+          ],
+        },
+        status: 'OK',
+      });
     });
   });
 
