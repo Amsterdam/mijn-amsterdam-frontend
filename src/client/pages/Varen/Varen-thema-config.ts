@@ -69,6 +69,11 @@ export const varenMeerInformatieLink: LinkProps = {
   title: 'Meer informatie over passagiers- en beroepsvaart',
 } as const;
 
+export const varenLegesTableLink: LinkProps = {
+  to: 'https://lokaleregelgeving.overheid.nl/CVDR728175#bijlage_1.',
+  title: 'Legestabel',
+} as const;
+
 const formulierenBaseUrl = `https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam`;
 export const exploitatieVergunningAanvragen: LinkProps = {
   to: `${formulierenBaseUrl}/VARExploitatievergunningAanvragen.aspx`,

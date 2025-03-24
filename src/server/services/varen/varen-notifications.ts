@@ -14,6 +14,7 @@ import {
   ApiResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
@@ -22,7 +23,7 @@ function createVarenRederRegisteredNotification(
 ): MyNotification {
   return {
     id: `varen-${zaak.id}-reder-notification`,
-    datePublished: zaak.dateRequestFormatted,
+    datePublished: zaak.dateRequest,
     thema: Themas.VAREN,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
@@ -81,7 +82,7 @@ function createVarenNotification(
         title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
         description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.`,
       };
-    case 'Besluit':
+    case 'Afgehandeld':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-afgehandeld-notification`,
@@ -120,7 +121,13 @@ export async function fetchVarenNotifications(
   );
   notifications.push(...zaken.map(createVarenNotification).filter((n) => !!n));
 
+  const recentNotifications = notifications.filter(
+    (notification) =>
+      !!notification.datePublished &&
+      isRecentNotification(notification.datePublished)
+  );
+
   return apiSuccessResult({
-    notifications,
+    notifications: recentNotifications,
   });
 }

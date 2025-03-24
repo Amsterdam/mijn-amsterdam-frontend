@@ -1,15 +1,21 @@
-import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+import {
+  LoodMetingFrontend,
+  LoodMetingStatus,
+  LoodMetingStatusLowerCase,
+} from '../../../server/services/bodem/types';
 import { StatusLineItem } from '../../../universal/types';
 
-export function getBodemStatusLineItems(
-  request: LoodMetingFrontend
-): StatusLineItem[] {
-  const status = request.status.toLowerCase();
-  const isInProgress = status === 'in behandeling';
-  const isDenied = status === 'afgewezen';
-  const isDone = status === 'afgehandeld' || isDenied;
+export function getBodemStatusSteps(
+  request: LoodMetingFrontend,
+  lowercaseStatus: LoodMetingStatusLowerCase
+): StatusLineItem<LoodMetingStatus>[] {
+  const status: LoodMetingStatusLowerCase = lowercaseStatus;
 
-  const statusLines: StatusLineItem[] = [
+  const isInProgress = status === 'in behandeling';
+  const isDeclined = status === 'afgewezen';
+  const isDone = status === 'afgehandeld' || status === 'afgewezen';
+
+  return [
     {
       id: 'first-item',
       status: 'Ontvangen',
@@ -30,18 +36,16 @@ export function getBodemStatusLineItems(
       isActive: isInProgress,
       isChecked: isInProgress || isDone,
     },
+    {
+      id: 'third-item',
+      status: 'Afgehandeld',
+      datePublished:
+        (isDeclined ? request.datumBeoordeling : request.datumAfgehandeld) ??
+        '',
+      description: '',
+      documents: [],
+      isActive: isDone,
+      isChecked: isDone,
+    },
   ];
-
-  statusLines.push({
-    id: 'third-item',
-    status: isDenied ? 'Afgewezen' : 'Afgehandeld',
-    datePublished:
-      (isDenied ? request.datumBeoordeling : request.datumAfgehandeld) ?? '',
-    description: '',
-    documents: [],
-    isActive: isDone,
-    isChecked: isDone,
-  });
-
-  return statusLines;
 }

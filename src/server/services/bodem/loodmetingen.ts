@@ -1,12 +1,13 @@
 import FormData from 'form-data';
 import { generatePath } from 'react-router-dom';
 
-import { getBodemStatusLineItems } from './loodmeting-status-line-items';
+import { getBodemStatusSteps } from './loodmeting-status-line-items';
 import {
   Lood365Response,
   LoodMetingDocument,
   LoodMetingFrontend,
   LoodMetingRequestsSource,
+  LoodMetingStatusLowerCase,
   LoodMetingen,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -92,7 +93,10 @@ function transformLood365Response(
           };
         }
 
-        const loodMetingBase: LoodMetingFrontend = {
+        const lowercaseStatus =
+          location.Friendlystatus.toLowerCase() as LoodMetingStatusLowerCase;
+
+        const loodMeting: LoodMetingFrontend = {
           id: location.Reference,
           title: 'Lood in de bodem-check',
           adres: `${location.Street} ${location.Housenumber}${
@@ -106,6 +110,7 @@ function transformLood365Response(
           datumAfgehandeld: location?.Reportsenton,
           datumBeoordeling: location?.ReviewedOn,
           status: location.Friendlystatus,
+          processed: ['afgewezen', 'afgehandeld'].includes(lowercaseStatus),
           kenmerk: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,
@@ -121,15 +126,9 @@ function transformLood365Response(
           steps: [],
         };
 
-        const steps = getBodemStatusLineItems(loodMetingBase);
+        loodMeting.steps = getBodemStatusSteps(loodMeting, lowercaseStatus);
 
-        return {
-          ...loodMetingBase,
-          steps,
-          status:
-            steps.find((step) => step.isActive)?.status ??
-            loodMetingBase.status,
-        };
+        return loodMeting;
       });
     });
   } catch (e) {
@@ -246,40 +245,48 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const status = meting.status.toLocaleLowerCase();
-  const inProgress = status === 'in behandeling';
-  const isDone = status === 'afgehandeld';
-  const isDenied = status === 'afgewezen';
-
-  const notification: MyNotification = {
+  const baseNotification = {
     thema: Themas.BODEM,
     id: meting.kenmerk,
-    title: 'Aanvraag lood in de bodem-check ontvangen',
-    description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is ontvangen.`,
-    datePublished: meting.datumAanvraag,
     link: {
       to: meting.link.to,
       title: 'Bekijk details',
     },
   };
 
-  if (inProgress) {
-    notification.title = 'Aanvraag lood in de bodem-check in behandeling';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`;
-    notification.datePublished = meting.datumInbehandeling!;
+  switch (meting.status.toLowerCase() as LoodMetingStatusLowerCase) {
+    case 'in behandeling': {
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check in behandeling',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is in behandeling genomen`,
+        datePublished: meting.datumInbehandeling!,
+      };
+    }
+    case 'afgehandeld': {
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check afgehandeld',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`,
+        datePublished: meting.datumAfgehandeld!,
+      };
+    }
+    case 'afgewezen': {
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check afgewezen',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`,
+        datePublished: meting.datumBeoordeling!,
+      };
+    }
+    default: {
+      // Ontvangen as default since we are not sure what else to show if something unexpected comes from the source API.
+      return {
+        ...baseNotification,
+        title: 'Aanvraag lood in de bodem-check ontvangen',
+        description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is ontvangen.`,
+        datePublished: meting.datumAanvraag,
+      };
+    }
   }
-
-  if (isDone) {
-    notification.title = 'Aanvraag lood in de bodem-check afgehandeld';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgehandeld.`;
-    notification.datePublished = meting.datumAfgehandeld!;
-  }
-
-  if (isDenied) {
-    notification.title = 'Aanvraag lood in de bodem-check afgewezen';
-    notification.description = `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`;
-    notification.datePublished = meting.datumBeoordeling!;
-  }
-
-  return notification;
 }
