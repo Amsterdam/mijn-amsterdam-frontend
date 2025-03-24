@@ -6,10 +6,10 @@ import {
   Screen,
 } from '@amsterdam/design-system-react';
 
+import { LINKS } from './constants';
 import styles from './Erfpacht.module.scss';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import { OpenFacturenListGrouped } from './ErfpachtOpenFacturen';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import {
@@ -59,12 +59,10 @@ export default function Erfpacht() {
               <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/">
                 Meer informatie over erfpacht in Amsterdam
               </LinkList.Link>
-              <LinkList.Link
-                href={`https://formulieren${IS_PRODUCTION ? '' : '.acc'}.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/ErfpachtWijzigen.aspx`}
-              >
+              <LinkList.Link href={LINKS.erfpachtWijzigenForm}>
                 Erfpacht wijzigen
               </LinkList.Link>
-              <LinkList.Link href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/overstappen-eeuwigdurende-erfpacht/">
+              <LinkList.Link href={LINKS.overstappenEewigdurendeErfpacht}>
                 Overstappen erfpachtrecht
               </LinkList.Link>
             </LinkList>

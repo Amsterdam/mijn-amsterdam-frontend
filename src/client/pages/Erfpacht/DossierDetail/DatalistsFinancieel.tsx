@@ -10,6 +10,7 @@ import {
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import { LINKS } from '../constants';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;
@@ -33,10 +34,7 @@ function DatalistFinancieelPeriode({
       label: titelAlgemeneBepaling,
       content: (
         <>
-          <Link
-            rel="noopener noreferrer"
-            href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/algemene-bepalingen/"
-          >
+          <Link rel="noopener noreferrer" href={LINKS.algemeneBepalingen}>
             {periode.algemeneBepaling}
           </Link>{' '}
           - {periode.regime}

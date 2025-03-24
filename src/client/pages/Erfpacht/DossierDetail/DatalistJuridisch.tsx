@@ -2,6 +2,7 @@ import { Link } from '@amsterdam/design-system-react';
 
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import { Datalist } from '../../../components/Datalist/Datalist';
+import { LINKS } from '../constants';
 
 export function DatalistJuridisch({ dossier }: ErfpachtDatalistProps) {
   if (dossier.juridisch) {
@@ -9,10 +10,7 @@ export function DatalistJuridisch({ dossier }: ErfpachtDatalistProps) {
       {
         label: dossier.juridisch.titelAlgemeneBepaling,
         content: (
-          <Link
-            rel="noopener noreferrer"
-            href="https://www.amsterdam.nl/wonen-leefomgeving/erfpacht/algemene-bepalingen/"
-          >
+          <Link rel="noopener noreferrer" href={LINKS.algemeneBepalingen}>
             {dossier.juridisch.algemeneBepaling}
           </Link>
         ),
