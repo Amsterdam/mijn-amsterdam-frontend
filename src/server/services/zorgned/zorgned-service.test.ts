@@ -171,7 +171,7 @@ describe('zorgned-service', () => {
       mocks.mockDocumentId
     );
 
-    expect(result).toMatchObject({
+    expect(result).toStrictEqual({
       content: null,
       message: 'Zorgned document download - no valid response data provided',
       status: 'ERROR',
@@ -191,7 +191,7 @@ describe('zorgned-service', () => {
       mocks.mockDocumentId
     );
 
-    expect(result).toMatchObject({
+    expect(result).toStrictEqual({
       content: null,
       message: 'Zorgned document download - no valid response data provided',
       status: 'ERROR',
