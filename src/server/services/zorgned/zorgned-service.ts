@@ -277,7 +277,9 @@ export async function fetchDocument(
         return {
           data,
           mimetype: documentResponseData.mimetype,
-          filename: 'bestandsnaam',
+          filename:
+            documentResponseData.omschrijvingclientportaal ||
+            documentResponseData.omschrijving,
         };
       },
     },
