@@ -21,7 +21,7 @@ export type VarenStatus =
   | 'Ontvangen'
   | 'In behandeling'
   | 'Meer informatie nodig'
-  | 'Besluit';
+  | 'Afgehandeld';
 
 type DecosVarenZaakBase = DecosZaakBase & {
   linkDataRequest: string | null;
