@@ -28,6 +28,7 @@ export interface TokenData {
   aud: string;
   sid: string;
   id: string;
+  expires_at: number;
   [key: string]: unknown;
 }
 
