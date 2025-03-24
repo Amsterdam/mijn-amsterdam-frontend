@@ -20,161 +20,159 @@ vi.mock('../../routing/route-helpers', () => ({
 }));
 
 describe('document-download-route-handler', () => {
-  describe('downloadDocumentRouteHandler', () => {
-    it('should handle a successful document fetch', async () => {
-      const fetchDocument = vi.fn().mockResolvedValue({
-        status: 'OK',
-        content: {
-          data: Buffer.from('test'),
-          mimetype: 'application/pdf',
-          filename: 'test.pdf',
-        },
-      });
-
-      const req = RequestMock.new();
-      const res = ResponseMock.new();
-
-      (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
-      (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
-        status: 'OK',
-        content: 'decrypted-id',
-      });
-
-      const handler = downloadDocumentRouteHandler(fetchDocument);
-      await handler(req, res);
-
-      expect(fetchDocument).toHaveBeenCalledWith(
-        res.locals.requestID,
-        { profile: { sid: 'test-sid' } },
-        'decrypted-id',
-        req.query
-      );
-      expect(res.type).toHaveBeenCalledWith('application/pdf');
-      expect(res.header).toHaveBeenCalledWith(
-        'Content-Disposition',
-        'attachment; filename*="test.pdf"'
-      );
-      expect(res.send).toHaveBeenCalledWith(Buffer.from('test'));
+  it('should handle a successful document fetch', async () => {
+    const fetchDocument = vi.fn().mockResolvedValue({
+      status: 'OK',
+      content: {
+        data: Buffer.from('test'),
+        mimetype: 'application/pdf',
+        filename: 'test.pdf',
+      },
     });
 
-    it('should handle a filename with non-ASCII characters and spaces', async () => {
-      const fetchDocument = vi.fn().mockResolvedValue({
-        status: 'OK',
-        content: {
-          data: Buffer.from('test'),
-          mimetype: 'application/pdf',
-          filename: 'test file riëlé.pdf',
-        },
-      });
+    const req = RequestMock.new();
+    const res = ResponseMock.new();
 
-      const req = RequestMock.new()
-        .setQuery({ id: 'encrypted-id' })
-        .setParams({ id: 'encrypted-id' });
-      const res = ResponseMock.new();
-
-      (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
-      (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
-        status: 'OK',
-        content: 'decrypted-id',
-      });
-
-      const handler = downloadDocumentRouteHandler(fetchDocument);
-      await handler(req, res);
-
-      expect(fetchDocument).toHaveBeenCalledWith(
-        res.locals.requestID,
-        { profile: { sid: 'test-sid' } },
-        'decrypted-id',
-        req.query
-      );
-      expect(res.type).toHaveBeenCalledWith('application/pdf');
-      expect(res.header).toHaveBeenCalledWith(
-        'Content-Disposition',
-        'attachment; filename*="test%20file%20ri%C3%ABl%C3%A9.pdf"'
-      );
-      expect(res.send).toHaveBeenCalledWith(Buffer.from('test'));
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
+    (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
+      status: 'OK',
+      content: 'decrypted-id',
     });
 
-    it('should handle a document fetch without a filename', async () => {
-      const fetchDocument = vi.fn().mockResolvedValue({
-        status: 'OK',
-        content: {
-          data: Buffer.from('test'),
-          mimetype: 'application/pdf',
-        },
-      });
+    const handler = downloadDocumentRouteHandler(fetchDocument);
+    await handler(req, res);
 
-      const req = RequestMock.new()
-        .setQuery({ id: 'encrypted-id' })
-        .setParams({ id: 'encrypted-id' });
-      const res = ResponseMock.new();
+    expect(fetchDocument).toHaveBeenCalledWith(
+      res.locals.requestID,
+      { profile: { sid: 'test-sid' } },
+      'decrypted-id',
+      req.query
+    );
+    expect(res.type).toHaveBeenCalledWith('application/pdf');
+    expect(res.header).toHaveBeenCalledWith(
+      'Content-Disposition',
+      'attachment; filename*="test.pdf"'
+    );
+    expect(res.send).toHaveBeenCalledWith(Buffer.from('test'));
+  });
 
-      (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
-      (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
-        status: 'OK',
-        content: 'decrypted-id',
-      });
-
-      const handler = downloadDocumentRouteHandler(fetchDocument);
-      await handler(req, res);
-
-      expect(fetchDocument).toHaveBeenCalledWith(
-        res.locals.requestID,
-        { profile: { sid: 'test-sid' } },
-        'decrypted-id',
-        req.query
-      );
-      expect(res.type).toHaveBeenCalledWith('application/pdf');
-      expect(res.header).toHaveBeenCalledWith(
-        'Content-Disposition',
-        'attachment'
-      );
-      expect(res.send).toHaveBeenCalledWith(Buffer.from('test'));
+  it('should handle a filename with non-ASCII characters and spaces', async () => {
+    const fetchDocument = vi.fn().mockResolvedValue({
+      status: 'OK',
+      content: {
+        data: Buffer.from('test'),
+        mimetype: 'application/pdf',
+        filename: 'test file riëlé.pdf',
+      },
     });
 
-    it('should handle an error document fetch', async () => {
-      const fetchDocument = vi.fn().mockResolvedValue({
-        status: 'ERROR',
-        content: null,
-      });
+    const req = RequestMock.new()
+      .setQuery({ id: 'encrypted-id' })
+      .setParams({ id: 'encrypted-id' });
+    const res = ResponseMock.new();
 
-      const req = RequestMock.new();
-      const res = ResponseMock.new();
-
-      (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
-      (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
-        status: 'OK',
-        content: 'decrypted-id',
-      });
-
-      const handler = downloadDocumentRouteHandler(fetchDocument);
-      await handler(req, res);
-
-      expect(fetchDocument).toHaveBeenCalledWith(
-        res.locals.requestID,
-        { profile: { sid: 'test-sid' } },
-        'decrypted-id',
-        req.query
-      );
-      expect(sendResponse).toHaveBeenCalledWith(res, {
-        status: 'ERROR',
-        content: null,
-      });
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
+    (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
+      status: 'OK',
+      content: 'decrypted-id',
     });
 
-    it('should handle an unauthorized request', async () => {
-      const fetchDocument = vi.fn();
+    const handler = downloadDocumentRouteHandler(fetchDocument);
+    await handler(req, res);
 
-      const req = RequestMock.new();
-      const res = ResponseMock.new();
+    expect(fetchDocument).toHaveBeenCalledWith(
+      res.locals.requestID,
+      { profile: { sid: 'test-sid' } },
+      'decrypted-id',
+      req.query
+    );
+    expect(res.type).toHaveBeenCalledWith('application/pdf');
+    expect(res.header).toHaveBeenCalledWith(
+      'Content-Disposition',
+      'attachment; filename*="test%20file%20ri%C3%ABl%C3%A9.pdf"'
+    );
+    expect(res.send).toHaveBeenCalledWith(Buffer.from('test'));
+  });
 
-      (getAuth as Mock).mockReturnValue(null);
-
-      const handler = downloadDocumentRouteHandler(fetchDocument);
-      await handler(req, res);
-
-      expect(fetchDocument).not.toHaveBeenCalled();
-      expect(sendUnauthorized).toHaveBeenCalledWith(res);
+  it('should handle a document fetch without a filename', async () => {
+    const fetchDocument = vi.fn().mockResolvedValue({
+      status: 'OK',
+      content: {
+        data: Buffer.from('test'),
+        mimetype: 'application/pdf',
+      },
     });
+
+    const req = RequestMock.new()
+      .setQuery({ id: 'encrypted-id' })
+      .setParams({ id: 'encrypted-id' });
+    const res = ResponseMock.new();
+
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
+    (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
+      status: 'OK',
+      content: 'decrypted-id',
+    });
+
+    const handler = downloadDocumentRouteHandler(fetchDocument);
+    await handler(req, res);
+
+    expect(fetchDocument).toHaveBeenCalledWith(
+      res.locals.requestID,
+      { profile: { sid: 'test-sid' } },
+      'decrypted-id',
+      req.query
+    );
+    expect(res.type).toHaveBeenCalledWith('application/pdf');
+    expect(res.header).toHaveBeenCalledWith(
+      'Content-Disposition',
+      'attachment'
+    );
+    expect(res.send).toHaveBeenCalledWith(Buffer.from('test'));
+  });
+
+  it('should handle an error document fetch', async () => {
+    const fetchDocument = vi.fn().mockResolvedValue({
+      status: 'ERROR',
+      content: null,
+    });
+
+    const req = RequestMock.new();
+    const res = ResponseMock.new();
+
+    (getAuth as Mock).mockReturnValue({ profile: { sid: 'test-sid' } });
+    (decryptEncryptedRouteParamAndValidateSessionID as Mock).mockReturnValue({
+      status: 'OK',
+      content: 'decrypted-id',
+    });
+
+    const handler = downloadDocumentRouteHandler(fetchDocument);
+    await handler(req, res);
+
+    expect(fetchDocument).toHaveBeenCalledWith(
+      res.locals.requestID,
+      { profile: { sid: 'test-sid' } },
+      'decrypted-id',
+      req.query
+    );
+    expect(sendResponse).toHaveBeenCalledWith(res, {
+      status: 'ERROR',
+      content: null,
+    });
+  });
+
+  it('should handle an unauthorized request', async () => {
+    const fetchDocument = vi.fn();
+
+    const req = RequestMock.new();
+    const res = ResponseMock.new();
+
+    (getAuth as Mock).mockReturnValue(null);
+
+    const handler = downloadDocumentRouteHandler(fetchDocument);
+    await handler(req, res);
+
+    expect(fetchDocument).not.toHaveBeenCalled();
+    expect(sendUnauthorized).toHaveBeenCalledWith(res);
   });
 });
