@@ -84,6 +84,10 @@ export default function AutoLogoutDialog({
     getExpiresInSeconds(expiresAtMilliseconds) -
     lastChanceBeforeAutoLogoutSeconds;
 
+  const [isOpen, setOpen] = useState(false);
+  const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
+  const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       console.log(
@@ -95,24 +99,28 @@ export default function AutoLogoutDialog({
         formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
         new Date(expiresAtMilliseconds)
       );
-    }, ONE_SECOND_MS);
+    }, ONE_SECOND_MS * 10);
 
-    const timeoutId = setTimeout(() => {
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
-      setOpen(true);
-    }, secondsBeforeAutoLogoutDialogOpens * ONE_SECOND_MS);
+    const timeoutId = setTimeout(
+      () => {
+        clearInterval(intervalId);
+        clearTimeout(timeoutId);
+        setOpen(true);
+      },
+      Math.max(secondsBeforeAutoLogoutDialogOpens * ONE_SECOND_MS, 0)
+    );
 
     return () => {
-      console.log('unmount timer effect');
+      console.log('unmount timer effect', expiresAtMilliseconds);
       clearInterval(intervalId);
       clearTimeout(timeoutId);
     };
   }, [secondsBeforeAutoLogoutDialogOpens, expiresAtMilliseconds]);
 
-  const [isOpen, setOpen] = useState(false);
-  const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
-  const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
+  const maxCount = Math.min(
+    lastChanceBeforeAutoLogoutSeconds,
+    getExpiresInSeconds(expiresAtMilliseconds)
+  );
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
@@ -176,7 +184,7 @@ export default function AutoLogoutDialog({
         </Paragraph>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
-            maxCount={lastChanceBeforeAutoLogoutSeconds}
+            maxCount={maxCount}
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />
