@@ -62,6 +62,7 @@ import {
   fetchTozo,
 } from './wpi';
 import { logger } from '../logging';
+import { fetchJeugd } from './jeugd/jeugd';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -144,6 +145,7 @@ const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
 const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const WMO = callAuthenticatedService(fetchWmo);
+const JEUGD = callAuthenticatedService(fetchJeugd);
 const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
 const VAREN = callAuthenticatedService(fetchVaren);
 
@@ -232,6 +234,7 @@ const SERVICES_INDEX = {
   VERGUNNINGEN,
   VERGUNNINGENv2,
   WMO,
+  JEUGD,
   WPI_AANVRAGEN,
   WPI_BBZ,
   WPI_SPECIFICATIES,

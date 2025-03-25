@@ -91,7 +91,8 @@ export type SourceApiKey =
   | 'WPI_E_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
   | 'ZORGNED_AV'
-  | 'ZORGNED_JZD';
+  | 'ZORGNED_JZD'
+  | 'ZORGNED_JEUGD';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 

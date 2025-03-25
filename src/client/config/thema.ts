@@ -49,6 +49,7 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
+  JEUGD: 'Onderwijs en Jeugd',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
