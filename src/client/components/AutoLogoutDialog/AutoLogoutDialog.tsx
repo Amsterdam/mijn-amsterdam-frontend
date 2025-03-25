@@ -85,9 +85,7 @@ function CountDownTimer({
 }
 
 export function getExpiresInSeconds(expiresAtMilliseconds: number): number {
-  return Math.abs(
-    differenceInSeconds(new Date(expiresAtMilliseconds), new Date())
-  );
+  return differenceInSeconds(new Date(expiresAtMilliseconds), new Date());
 }
 
 export default function AutoLogoutDialog({
