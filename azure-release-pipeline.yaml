@@ -6,10 +6,14 @@ pr: none
 
 resources:
   repositories:
+    - repository: MamsFrontend
+      type: github
+      endpoint: Amsterdam
+      name: amsterdam/mijn-amsterdam-frontend
     - repository: MamsInfra
       type: git
       name: MijnAmsterdam/mijn-amsterdam-infra
       ref: refs/heads/main
 
-jobs:
+stages:
   - template: pipelines/btd-release-bff-ui.yaml@MamsInfra
