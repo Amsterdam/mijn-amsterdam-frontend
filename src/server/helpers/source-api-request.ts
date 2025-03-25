@@ -1,4 +1,5 @@
 import axios, {
+  AxiosError,
   AxiosRequestConfig,
   AxiosResponse,
   AxiosResponseHeaders,
@@ -189,11 +190,14 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
-    captureException(error, {
-      properties: {
-        message: errorMessage,
-      },
-    });
+
+    if (!(error instanceof AxiosError)) {
+      captureException(error, {
+        properties: {
+          message: errorMessage,
+        },
+      });
+    }
 
     const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(
