@@ -374,16 +374,17 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
 function PassBlockedAlert() {
   return (
     <Alert
-      heading="Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?"
+      heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
     >
       <Paragraph>
         Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
-        naar {PHONENUMBERS.WerkEnInkomen} of {PHONENUMBERS.CCA}.
+        naar {PHONENUMBERS.WerkEnInkomen}. Na het telefoongesprek kun je de pas
+        meteen weer gebruiken.
       </Paragraph>
       <Paragraph>
-        Het aanvragen van een nieuwe pas is gratis. De pas wordt binnen drie
-        weken thuisgestuurd en is dan gelijk te gebruiken.
+        De nieuwe pas wordt binnen drie weken thuisgestuurd en is dan meteen te
+        gebruiken.
       </Paragraph>
       <Paragraph>
         Stond er nog tegoed op de Stadspas? Dan staat het tegoed dat over was
