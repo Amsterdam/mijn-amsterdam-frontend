@@ -22,7 +22,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaButtonLink } from '../MaLink/MaLink';
 import { Modal } from '../Modal/Modal';
 
-const TITLE = 'Wilt u doorgaan?';
+const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;
 
 export interface ComponentProps {
@@ -89,15 +89,17 @@ export default function AutoLogoutDialog({
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function logtime() {
-    console.log(
-      'Dialog opens in %s seconds, expires in %s seconds at %s',
-      formattedTimeFromSeconds(
-        getExpiresInSeconds(expiresAtMilliseconds) -
-          lastChanceBeforeAutoLogoutSeconds
-      ),
-      formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
-      new Date(expiresAtMilliseconds)
-    );
+    if ((window as any).MA_LOG_DIALOG_TIME) {
+      console.log(
+        'Dialog opens in %s seconds, expires in %s seconds at %s',
+        formattedTimeFromSeconds(
+          getExpiresInSeconds(expiresAtMilliseconds) -
+            lastChanceBeforeAutoLogoutSeconds
+        ),
+        formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
+        new Date(expiresAtMilliseconds)
+      );
+    }
   }
 
   useEffect(() => {
@@ -116,7 +118,6 @@ export default function AutoLogoutDialog({
     );
 
     return () => {
-      console.log('unmount timer effect', expiresAtMilliseconds);
       clearInterval(intervalId);
       clearTimeout(timeoutId);
     };
@@ -184,9 +185,6 @@ export default function AutoLogoutDialog({
       }
     >
       <div className={styles.AutoLogoutDialogChildren}>
-        <Paragraph className="ams-mb--sm">
-          Wilt u ingelogd blijven op Mijn Amsterdam?
-        </Paragraph>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
             maxCount={maxCount}
