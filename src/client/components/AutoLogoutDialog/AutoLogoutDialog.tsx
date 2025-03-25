@@ -38,7 +38,6 @@ const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = Math.round(
   AUTOLOGOUT_DIALOG_TIMEOUT_MINUTES * ONE_MINUTE_SECONDS
 );
 const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
-const DEBOUNCE_RESTART_TIMER_MS = 1000; // Restarts the timer after 1 second of inactivity
 const TITLE = 'Wilt u doorgaan?';
 
 export interface ComponentProps {
@@ -88,16 +87,19 @@ export function getExpiresInSeconds(expiresAtMilliseconds: number): number {
   return differenceInSeconds(new Date(expiresAtMilliseconds), new Date());
 }
 
+const EXPIRES_AT_MILLISECONDS =
+  Date.now() + AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS * ONE_SECOND_MS;
+
 export default function AutoLogoutDialog({
-  expiresAtMilliseconds = Date.now() / ONE_SECOND_MS +
-    AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
+  expiresAtMilliseconds = EXPIRES_AT_MILLISECONDS,
   secondsBeforeAutoLogout = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
 }: ComponentProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
 
   // Will open the dialog if maxCount is reached.
-  const maxCount = getExpiresInSeconds(expiresAtMilliseconds);
+  const maxCount =
+    getExpiresInSeconds(expiresAtMilliseconds) - secondsBeforeAutoLogout;
 
   console.log(
     'Expires in %s seconds',
@@ -173,7 +175,7 @@ export default function AutoLogoutDialog({
     >
       <div className={styles.AutoLogoutDialogChildren}>
         <Paragraph className="ams-mb--sm">
-          Uw huidige sessie verloopt over {formattedTimeFromSeconds(maxCount)}.
+          Wilt ingelogd blijven op Mijn Amsterdam?
         </Paragraph>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
@@ -183,7 +185,6 @@ export default function AutoLogoutDialog({
           />
           Als u niets doet wordt u automatisch uitgelogd.
         </Paragraph>
-        <Paragraph>Wilt u doorgaan of uitloggen?</Paragraph>
       </div>
     </Modal>
   );

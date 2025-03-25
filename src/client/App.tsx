@@ -446,7 +446,11 @@ function AppLanding() {
   return isAuthenticated ? (
     <>
       <AppAuthenticated />
-      <AutoLogoutDialog expiresAtMilliseconds={session.expiresAtMilliseconds} />
+      {!!session.expiresAtMilliseconds && (
+        <AutoLogoutDialog
+          expiresAtMilliseconds={session.expiresAtMilliseconds}
+        />
+      )}
     </>
   ) : (
     <AppNotAuthenticated />
