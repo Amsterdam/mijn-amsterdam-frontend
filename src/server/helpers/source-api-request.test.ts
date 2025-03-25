@@ -233,29 +233,6 @@ describe('requestData.ts', () => {
     );
 
     expect(rs).toStrictEqual(apiErrorResult('Network Error', null));
-  });
-
-  test('Sends non AxiosErrors to telemetry', async () => {
-    remoteApi.get(DUMMY_ROUTE_2).replyWithError('Network Error');
-
-    await requestData(
-      {
-        url: DUMMY_URL_2,
-      },
-      SESS_ID_1,
-      AUTH_PROFILE_AND_TOKEN
-    );
-    expect(captureException).not.toHaveBeenCalled();
-
-    await requestData(
-      {
-        request: () => {
-          throw new Error('This should be send to telemetry!');
-        },
-      },
-      SESS_ID_1,
-      AUTH_PROFILE_AND_TOKEN
-    );
     expect(captureException).toHaveBeenCalled();
   });
 

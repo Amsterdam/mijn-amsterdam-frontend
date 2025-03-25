@@ -191,14 +191,11 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    // This is already handled by our dependency telemetry logging.
-    if (!(error instanceof AxiosError)) {
-      captureException(error, {
-        properties: {
-          message: errorMessage,
-        },
-      });
-    }
+    captureException(error, {
+      properties: {
+        message: errorMessage,
+      },
+    });
 
     const statusCode = error.statusCode ?? error?.response?.status;
     const responseData = apiErrorResult(
