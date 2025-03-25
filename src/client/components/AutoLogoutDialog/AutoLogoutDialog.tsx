@@ -88,18 +88,23 @@ export default function AutoLogoutDialog({
   const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
+  function logtime() {
+    console.log(
+      'Dialog opens in %s seconds, expires in %s seconds at %s',
+      formattedTimeFromSeconds(
+        getExpiresInSeconds(expiresAtMilliseconds) -
+          lastChanceBeforeAutoLogoutSeconds
+      ),
+      formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
+      new Date(expiresAtMilliseconds)
+    );
+  }
+
   useEffect(() => {
+    logtime();
     const intervalId = setInterval(() => {
-      console.log(
-        'Dialog opens in %s seconds, expires in %s seconds at %s',
-        formattedTimeFromSeconds(
-          getExpiresInSeconds(expiresAtMilliseconds) -
-            lastChanceBeforeAutoLogoutSeconds
-        ),
-        formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
-        new Date(expiresAtMilliseconds)
-      );
-    }, ONE_SECOND_MS * 10);
+      logtime();
+    }, ONE_SECOND_MS);
 
     const timeoutId = setTimeout(
       () => {
