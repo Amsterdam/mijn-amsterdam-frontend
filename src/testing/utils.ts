@@ -117,12 +117,13 @@ export class RequestMock {
     return this;
   }
 
-  async createOIDCStub(authProfile: AuthProfile, expiresAt?: number) {
+  async createOIDCStub(authProfile: AuthProfile, expiresAtSeconds?: number) {
     const self = this as unknown as AuthenticatedRequest;
     await createOIDCStub(self, authProfile);
     const sessionObj = self[OIDC_SESSION_COOKIE_NAME];
     if (sessionObj) {
-      sessionObj.expires_at = expiresAt ?? millisecondsToSeconds(Date.now());
+      sessionObj.expires_at =
+        expiresAtSeconds ?? millisecondsToSeconds(Date.now());
     }
     return this;
   }
@@ -134,10 +135,10 @@ export class RequestMock {
 
 export async function getReqMockWithOidc(
   profile: AuthProfile,
-  expiresAt?: number
+  expiresAtSeconds?: number
 ) {
   const reqMockWithOidc = RequestMock.new();
-  await reqMockWithOidc.createOIDCStub(profile, expiresAt);
+  await reqMockWithOidc.createOIDCStub(profile, expiresAtSeconds);
   const mock = reqMockWithOidc.get() as unknown as AuthenticatedRequest;
 
   return mock;

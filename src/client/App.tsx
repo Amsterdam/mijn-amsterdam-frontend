@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import classnames from 'classnames';
-import { differenceInSeconds } from 'date-fns';
 import {
   BrowserRouter,
   Redirect,
@@ -21,7 +20,7 @@ import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
 import { ThemaTitles } from './config/thema';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
-import { ONE_SECOND_MS, useSessionApi } from './hooks/api/useSessionApi';
+import { useSessionApi } from './hooks/api/useSessionApi';
 import { useAppStateRemote } from './hooks/useAppState';
 import {
   useDeeplinkRedirect,
@@ -447,13 +446,7 @@ function AppLanding() {
   return isAuthenticated ? (
     <>
       <AppAuthenticated />
-      <AutoLogoutDialog
-        settings={{
-          secondsBeforeDialogShow: Math.abs(
-            differenceInSeconds(new Date(), session.expiresAt * ONE_SECOND_MS)
-          ),
-        }}
-      />
+      <AutoLogoutDialog expiresAtMilliseconds={session.expiresAtMilliseconds} />
     </>
   ) : (
     <AppNotAuthenticated />

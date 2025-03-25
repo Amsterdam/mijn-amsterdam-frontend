@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
+import { differenceInSeconds } from 'date-fns/differenceInSeconds';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
-
-import { useDebouncedCallback } from 'use-debounce';
 
 import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
@@ -17,7 +16,7 @@ import {
   LOGOUT_URL,
 } from '../../config/api';
 import { Colors } from '../../config/app';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
+import { ONE_SECOND_MS, useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaButtonLink } from '../MaLink/MaLink';
@@ -40,18 +39,12 @@ const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = Math.round(
 );
 const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
 const DEBOUNCE_RESTART_TIMER_MS = 1000; // Restarts the timer after 1 second of inactivity
-const SESSION_RENEW_INTERVAL_SECONDS = 300;
 const TITLE = 'Wilt u doorgaan?';
-
-export interface AutoLogoutDialogSettings {
-  secondsBeforeDialogShow?: number;
-  secondsBeforeAutoLogout?: number;
-  secondsSessionRenewRequestInterval?: number;
-}
 
 export interface ComponentProps {
   children?: ComponentChildren;
-  settings?: AutoLogoutDialogSettings;
+  expiresAtMilliseconds?: number;
+  secondsBeforeAutoLogout?: number;
 }
 
 export interface CountDownTimerComponentProps {
@@ -91,25 +84,32 @@ function CountDownTimer({
   );
 }
 
-export const DefaultAutologoutDialogSettings = {
-  secondsBeforeDialogShow: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
-  secondsBeforeAutoLogout: AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
-  secondsSessionRenewRequestInterval: SESSION_RENEW_INTERVAL_SECONDS,
-};
+export function getExpiresInSeconds(expiresAtMilliseconds: number): number {
+  return Math.abs(
+    differenceInSeconds(new Date(expiresAtMilliseconds), new Date())
+  );
+}
 
-export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
+export default function AutoLogoutDialog({
+  expiresAtMilliseconds = Date.now() / ONE_SECOND_MS +
+    AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
+  secondsBeforeAutoLogout = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
+}: ComponentProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
-  const nSettings = { ...DefaultAutologoutDialogSettings, ...settings };
 
   // Will open the dialog if maxCount is reached.
-  const maxCount = nSettings.secondsBeforeDialogShow;
+  const maxCount = getExpiresInSeconds(expiresAtMilliseconds);
 
-  console.log('Expires in %s seconds', maxCount);
+  console.log(
+    'Expires in %s seconds',
+    maxCount,
+    new Date(expiresAtMilliseconds)
+  );
 
   // Opens the Logout dialog with last change counter
   // MaxCount = Number of seconds before dialog will show
-  const { reset, resume } = useCounter({
+  useCounter({
     maxCount,
     onMaxCount: () => {
       setOpen(true);
@@ -119,13 +119,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const [isOpen, setOpen] = useState(false);
   const [originalTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
-
-  const restartTimer = useDebouncedCallback(() => {
-    if (!isOpen) {
-      reset();
-      resume();
-    }
-  }, DEBOUNCE_RESTART_TIMER_MS);
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
@@ -139,10 +132,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
-    window.addEventListener('mousemove touchmove', restartTimer);
     return () => {
       document.title = originalTitle;
-      window.removeEventListener('mousemove touchmove', restartTimer);
     };
   }, []);
 
@@ -153,7 +144,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   return (
     <Modal
       title={TITLE}
-      isOpen={isOpen}
+      isOpen
       showCloseButton={false}
       actions={
         <ActionGroup>
@@ -161,11 +152,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             <MaButtonLink
               variant="primary"
               className="continue-button"
-              onClick={(event) => {
-                event.preventDefault();
-                session.refetch();
-                setOpen(false);
-              }}
               href={
                 profileType === 'private'
                   ? LOGIN_URL_DIGID
@@ -194,7 +180,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
         </Paragraph>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
-            maxCount={nSettings.secondsBeforeAutoLogout}
+            maxCount={secondsBeforeAutoLogout}
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />

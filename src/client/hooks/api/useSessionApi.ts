@@ -20,14 +20,14 @@ export type SessionData = {
   isAuthenticated: boolean;
   profileType: ProfileType | null;
   authMethod: AuthProfile['authMethod'] | null;
-  expiresAt: number;
+  expiresAtMilliseconds: number; // In milliseconds
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   profileType: null,
   authMethod: null,
-  expiresAt: -1,
+  expiresAtMilliseconds: -1,
 };
 
 export interface SessionState extends SessionData {
