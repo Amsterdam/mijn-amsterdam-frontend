@@ -1,4 +1,3 @@
-import { millisecondsToSeconds } from 'date-fns/millisecondsToSeconds';
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import { ParsedQs } from 'qs';
@@ -149,10 +148,6 @@ export function decodeToken<T extends Record<string, string>>(
   return jose.decodeJwt(jwtToken) as unknown as T;
 }
 
-function isIDPSessionExpired(expiresAtInSeconds: number) {
-  return expiresAtInSeconds < millisecondsToSeconds(Date.now());
-}
-
 export function destroySession(req: AuthenticatedRequest, res: Response) {
   req[OIDC_SESSION_COOKIE_NAME] = undefined;
   res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
@@ -168,12 +163,14 @@ export function createLogoutHandler(
   doIDPLogout: boolean = true
 ) {
   return async (req: AuthenticatedRequest, res: Response) => {
-    const auth = getAuth(req);
     const returnTo = getReturnToUrl(req.query, postLogoutRedirectUrl);
+    const auth = getAuth(req);
+
     if (
       doIDPLogout &&
-      auth?.expiresAtMilliseconds &&
-      !isIDPSessionExpired(auth.expiresAtMilliseconds)
+      auth?.token &&
+      req.oidc.accessToken &&
+      !req.oidc.accessToken?.isExpired()
     ) {
       return res.oidc.logout({
         returnTo,
