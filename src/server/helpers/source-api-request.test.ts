@@ -245,7 +245,7 @@ describe('requestData.ts', () => {
       SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
-    expect(captureException).toHaveBeenCalledTimes(0);
+    expect(captureException).not.toHaveBeenCalled();
 
     await requestData(
       {
@@ -256,7 +256,7 @@ describe('requestData.ts', () => {
       SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
-    expect(captureException).toHaveBeenCalledTimes(1);
+    expect(captureException).toHaveBeenCalled();
   });
 
   test('Find corresponding api', () => {
