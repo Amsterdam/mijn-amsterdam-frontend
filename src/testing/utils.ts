@@ -82,6 +82,8 @@ export class ResponseMock {
   render = vi.fn();
   redirect = vi.fn();
   append = vi.fn();
+  type = vi.fn();
+  header = vi.fn();
 }
 
 export class RequestMock {
