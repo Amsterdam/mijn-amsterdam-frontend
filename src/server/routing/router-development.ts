@@ -34,6 +34,8 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const maSession: MaSession = {
     ...authProfile,
     TMASessionID: 'xx-tma-sid-xx',
+    expires_at:
+      new Date().getTime() / ONE_SECOND_MS + OIDC_SESSION_MAX_AGE_SECONDS,
   };
   (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
 
@@ -47,8 +49,6 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
     user: {
       [idAttr]: authProfile.id,
       sid: authProfile.sid,
-      expires_at:
-        new Date().getTime() / ONE_SECOND_MS + OIDC_SESSION_MAX_AGE_SECONDS,
     },
     accessToken: {
       access_token: await signDevelopmentToken(

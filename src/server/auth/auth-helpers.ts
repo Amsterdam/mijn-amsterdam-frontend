@@ -103,7 +103,7 @@ export function getAuth(req: Request): AuthProfileAndToken | null {
   return {
     token: accessToken,
     profile,
-    expiresAtMilliseconds: tokenData.expires_at * ONE_SECOND_MS,
+    expiresAtMilliseconds: maSession.expires_at * ONE_SECOND_MS,
   };
 }
 

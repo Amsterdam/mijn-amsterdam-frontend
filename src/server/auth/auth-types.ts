@@ -15,6 +15,7 @@ export interface MaSession extends Omit<Session, 'expires_at'> {
   TMASessionID: string; // TMA Session ID
   profileType: ProfileType;
   authMethod: AuthMethod;
+  expires_at: number; // In Seconds
 }
 
 export interface AuthProfileAndToken {
@@ -28,7 +29,6 @@ export interface TokenData {
   aud: string;
   sid: string;
   id: string;
-  expires_at: number; // In seconds
   [key: string]: unknown;
 }
 
