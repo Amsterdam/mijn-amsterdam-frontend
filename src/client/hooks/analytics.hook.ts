@@ -117,8 +117,9 @@ function _trackPageView(href: string, customDimensions?: CustomDimension[]) {
   return PiwikInstance && PiwikInstance.trackPageView(payload);
 }
 
+// Prevents double pageviews.
 export const trackPageView = memoize(_trackPageView, {
-  length: 2,
+  length: 1,
   max: 1,
 });
 
