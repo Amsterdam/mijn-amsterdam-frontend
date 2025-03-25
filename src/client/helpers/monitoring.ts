@@ -26,6 +26,10 @@ export type Properties = {
 
 const browserHistory = createBrowserHistory();
 
+browserHistory.listen(() => {
+  console.log('Track page view', browserHistory.location.pathname);
+});
+
 export const reactPlugin = new ReactPlugin();
 
 const appInsights = new ApplicationInsights({
