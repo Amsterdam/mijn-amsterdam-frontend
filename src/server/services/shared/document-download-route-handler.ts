@@ -85,7 +85,7 @@ export function downloadDocumentRouteHandler(
         }
         res.header(
           'Content-Disposition',
-          `attachment${documentResponse.content.filename ? `;${documentResponse.content.filename}` : ''}`
+          `attachment${documentResponse.content.filename ? `; filename*="${encodeURIComponent(documentResponse.content.filename)}"` : ''}`
         );
         return 'pipe' in documentResponse.content.data &&
           typeof documentResponse.content.data.pipe === 'function'

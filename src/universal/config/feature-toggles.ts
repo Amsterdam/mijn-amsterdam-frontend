@@ -48,7 +48,7 @@ export const FeatureToggle = {
   // HLI Hulp bij laag inkomen //
   hliThemaActive: true,
   hliThemaStadspasActive: true,
-  hliThemaStadspasBlokkerenActive: !IS_PRODUCTION,
+  hliThemaStadspasBlokkerenActive: true,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,
@@ -78,7 +78,7 @@ export const FeatureToggle = {
 
   // Parkeren
   parkerenActive: true,
-  parkerenCheckForProductAndPermitsActive: true,
+  parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
 
   // Mijn Gegegvens -> aantal bewoners op adres.
   residentCountActive: true,
