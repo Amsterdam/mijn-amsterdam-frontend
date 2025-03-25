@@ -15,12 +15,14 @@ import { authRoutes } from './auth-routes';
 import {
   AuthenticatedRequest,
   AuthProfile,
+  AuthProfileAndToken,
   MaSession,
   TokenData,
 } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
 import { PROFILE_TYPES } from '../../universal/types/App.types';
+import { ONE_SECOND_MS } from '../config/app';
 import { logger } from '../logging';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
@@ -83,7 +85,7 @@ function getSessionData(req: Request) {
   return reqWithSession?.[OIDC_SESSION_COOKIE_NAME] ?? null;
 }
 
-export function getAuth(req: Request) {
+export function getAuth(req: Request): AuthProfileAndToken | null {
   const tokenData = (req.oidc?.user as TokenData | null) ?? null;
   const accessToken = req.oidc?.accessToken?.access_token ?? '';
   const maSession = getSessionData(req);
@@ -101,7 +103,7 @@ export function getAuth(req: Request) {
   return {
     token: accessToken,
     profile,
-    expiresAt: tokenData.expires_at,
+    expiresAtMilliseconds: tokenData.expires_at * ONE_SECOND_MS,
   };
 }
 
@@ -162,8 +164,8 @@ export function createLogoutHandler(
     const returnTo = getReturnToUrl(req.query, postLogoutRedirectUrl);
     if (
       doIDPLogout &&
-      auth?.expiresAt &&
-      !isIDPSessionExpired(auth.expiresAt)
+      auth?.expiresAtMilliseconds &&
+      !isIDPSessionExpired(auth.expiresAtMilliseconds)
     ) {
       return res.oidc.logout({
         returnTo,
