@@ -1,5 +1,6 @@
 import * as appInsights from 'applicationinsights';
 import {
+  ExceptionData,
   ExceptionTelemetry,
   RemoteDependencyData,
   RequestData,
@@ -43,26 +44,44 @@ if (client) {
     const SEND_TELEMETRY = true;
     const DISCARD_TELEMETRY = false;
 
-    if (envelope?.data?.baseType === 'RequestData') {
-      const reqData = envelope.data.baseData as RequestData;
-
-      if (excludedRequests.includes(reqData.name)) {
-        return DISCARD_TELEMETRY;
-      }
+    if (!envelope.data.baseType) {
+      return SEND_TELEMETRY;
     }
 
-    if (envelope?.data?.baseType === 'RemoteDependencyData') {
-      const reqData = envelope.data.baseData as RemoteDependencyData;
-      const [method, route] = reqData.name.split(' ');
+    switch (envelope.data.baseType) {
+      case 'RequestData': {
+        const reqData = envelope.data.baseData as RequestData;
 
-      for (const excludeReqParts of excludedOutoingDependencies) {
+        if (excludedRequests.includes(reqData.name)) {
+          return DISCARD_TELEMETRY;
+        }
+        break;
+      }
+      case 'RemoteDependencyData': {
+        const reqData = envelope.data.baseData as RemoteDependencyData;
+        const [method, route] = reqData.name.split(' ');
+
+        for (const excludeReqParts of excludedOutoingDependencies) {
+          if (
+            route.includes(excludeReqParts.routeSegment) &&
+            method === excludeReqParts.method &&
+            reqData.resultCode === excludeReqParts.statusCode
+          ) {
+            return DISCARD_TELEMETRY;
+          }
+        }
+        break;
+      }
+      case 'ExceptionData': {
+        const exceptionData = envelope.data.baseData as ExceptionData;
         if (
-          route.includes(excludeReqParts.routeSegment) &&
-          method === excludeReqParts.method &&
-          reqData.resultCode === excludeReqParts.statusCode
+          exceptionData.exceptions.some(
+            (exception) => exception.typeName === 'AxiosError'
+          )
         ) {
           return DISCARD_TELEMETRY;
         }
+        break;
       }
     }
 
