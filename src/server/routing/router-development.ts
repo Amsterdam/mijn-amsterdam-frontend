@@ -1,3 +1,4 @@
+import { differenceInSeconds } from 'date-fns';
 import express, { CookieOptions, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import UID from 'uid-safe';
@@ -31,12 +32,17 @@ authRouterDevelopment.BFF_ID = 'router-dev';
 
 export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
+
+  // In seconds
+  const expires_at =
+    new Date().getTime() / ONE_SECOND_MS + OIDC_SESSION_MAX_AGE_SECONDS;
+
   const maSession: MaSession = {
     ...authProfile,
     TMASessionID: 'xx-tma-sid-xx',
-    expires_at:
-      new Date().getTime() / ONE_SECOND_MS + OIDC_SESSION_MAX_AGE_SECONDS,
+    expires_at,
   };
+
   (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
 
   req.oidc = {
@@ -56,6 +62,12 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
         authProfile.id,
         'xx-tma-sid-xx'
       ),
+      get expires_in() {
+        return differenceInSeconds(
+          new Date(expires_at * ONE_SECOND_MS),
+          new Date()
+        );
+      },
     } as AccessToken,
   };
 }
