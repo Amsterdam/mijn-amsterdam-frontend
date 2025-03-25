@@ -22,38 +22,23 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaButtonLink } from '../MaLink/MaLink';
 import { Modal } from '../Modal/Modal';
 
-/**
- * This component is essentially a dialog with a countdown timer presented to the user
- * after a certain time {`AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS`}.
- * If the dialog is shown the countdown timer starts to count down from {`AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS`}.
- * Essentially loggoing out automatically after AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS + AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS
- * If the countdown is complete a request to the auth status endpoint is made and the response is put into the state.
- * Whether the Dialog and timer are reset or the User is automatically logged out is dependent on the response and how the app
- * interacts with that. In our case, if the `isAuthenticated` flag is `false`, the app will show the login screen. This logic can
- * be found in App.tsx.
- */
-const ONE_MINUTE_SECONDS = 60;
-const AUTOLOGOUT_DIALOG_TIMEOUT_MINUTES = 12.5;
-const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = Math.round(
-  AUTOLOGOUT_DIALOG_TIMEOUT_MINUTES * ONE_MINUTE_SECONDS
-);
-const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
 const TITLE = 'Wilt u doorgaan?';
+const ONE_MINUTE_SECONDS = 60;
 
 export interface ComponentProps {
   children?: ComponentChildren;
-  expiresAtMilliseconds?: number;
-  secondsBeforeAutoLogout?: number;
+  expiresAtMilliseconds: number;
+  lastChanceBeforeAutoLogoutSeconds?: number;
 }
 
 export interface CountDownTimerComponentProps {
-  maxCount?: number;
+  maxCount: number;
   onMaxCount?: CounterProps['onMaxCount'];
   onTick?: CounterProps['onTick'];
 }
 
 function CountDownTimer({
-  maxCount = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
+  maxCount,
   onMaxCount,
   onTick,
 }: CountDownTimerComponentProps) {
@@ -87,37 +72,46 @@ export function getExpiresInSeconds(expiresAtMilliseconds: number): number {
   return differenceInSeconds(new Date(expiresAtMilliseconds), new Date());
 }
 
-const EXPIRES_AT_MILLISECONDS =
-  Date.now() + AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS * ONE_SECOND_MS;
-
 export default function AutoLogoutDialog({
-  expiresAtMilliseconds = EXPIRES_AT_MILLISECONDS,
-  secondsBeforeAutoLogout = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
+  expiresAtMilliseconds,
+  lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS,
 }: ComponentProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
 
-  // Will open the dialog if maxCount is reached.
-  const maxCount =
-    getExpiresInSeconds(expiresAtMilliseconds) - secondsBeforeAutoLogout;
+  // Will open the dialog if secondsBeforeAutoLogoutDialogOpens is reached.
+  const secondsBeforeAutoLogoutDialogOpens =
+    getExpiresInSeconds(expiresAtMilliseconds) -
+    lastChanceBeforeAutoLogoutSeconds;
 
-  console.log(
-    'Expires in %s seconds',
-    maxCount,
-    new Date(expiresAtMilliseconds)
-  );
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log(
+        'Dialog opens in %s seconds, expires in %s seconds at %s',
+        formattedTimeFromSeconds(
+          getExpiresInSeconds(expiresAtMilliseconds) -
+            lastChanceBeforeAutoLogoutSeconds
+        ),
+        formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
+        new Date(expiresAtMilliseconds)
+      );
+    }, ONE_SECOND_MS);
 
-  // Opens the Logout dialog with last change counter
-  // MaxCount = Number of seconds before dialog will show
-  useCounter({
-    maxCount,
-    onMaxCount: () => {
+    const timeoutId = setTimeout(() => {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
       setOpen(true);
-    },
-  });
+    }, secondsBeforeAutoLogoutDialogOpens * ONE_SECOND_MS);
+
+    return () => {
+      console.log('unmount timer effect');
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, [secondsBeforeAutoLogoutDialogOpens, expiresAtMilliseconds]);
 
   const [isOpen, setOpen] = useState(false);
-  const [originalTitle] = useState(document.title);
+  const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function showLoginScreen() {
@@ -132,10 +126,13 @@ export default function AutoLogoutDialog({
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
+    if (isOpen) {
+      setOriginalDocumentTitle(document.title);
+    }
     return () => {
       document.title = originalTitle;
     };
-  }, []);
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;
@@ -175,11 +172,11 @@ export default function AutoLogoutDialog({
     >
       <div className={styles.AutoLogoutDialogChildren}>
         <Paragraph className="ams-mb--sm">
-          Wilt ingelogd blijven op Mijn Amsterdam?
+          Wilt u ingelogd blijven op Mijn Amsterdam?
         </Paragraph>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
-            maxCount={secondsBeforeAutoLogout}
+            maxCount={lastChanceBeforeAutoLogoutSeconds}
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />
