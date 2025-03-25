@@ -51,7 +51,8 @@ describe('requestData.ts', () => {
   const DUMMY_RESPONSE_2 = { foo: 'baz' };
 
   const DUMMY_URL = `${remoteApiHost}/1`;
-  const DUMMY_URL_2 = `${remoteApiHost}/2`;
+  const DUMMY_ROUTE_2 = '/2';
+  const DUMMY_URL_2 = `${remoteApiHost}${DUMMY_ROUTE_2}`;
 
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
@@ -221,7 +222,7 @@ describe('requestData.ts', () => {
   });
 
   it('A requests responds with error', async () => {
-    remoteApi.get('/2').replyWithError('Network Error');
+    remoteApi.get(DUMMY_ROUTE_2).replyWithError('Network Error');
 
     const rs = await requestData(
       {
@@ -232,6 +233,29 @@ describe('requestData.ts', () => {
     );
 
     expect(rs).toStrictEqual(apiErrorResult('Network Error', null));
+  });
+
+  test('Sends non AxiosErrors to telemetry', async () => {
+    remoteApi.get(DUMMY_ROUTE_2).replyWithError('Network Error');
+
+    await requestData(
+      {
+        url: DUMMY_URL_2,
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
+    expect(captureException).toHaveBeenCalledTimes(0);
+
+    await requestData(
+      {
+        request: () => {
+          throw new Error('This should be send to telemetry!');
+        },
+      },
+      SESS_ID_1,
+      AUTH_PROFILE_AND_TOKEN
+    );
     expect(captureException).toHaveBeenCalledTimes(1);
   });
 
