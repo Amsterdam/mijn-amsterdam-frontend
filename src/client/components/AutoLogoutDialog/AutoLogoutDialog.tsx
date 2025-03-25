@@ -173,8 +173,7 @@ export default function AutoLogoutDialog({
     >
       <div className={styles.AutoLogoutDialogChildren}>
         <Paragraph className="ams-mb--sm">
-          U bent langer dan {Math.floor(maxCount / ONE_MINUTE_SECONDS)} minuten
-          niet actief geweest op Mijn Amsterdam.
+          Uw huidige sessie verloopt over {formattedTimeFromSeconds(maxCount)}.
         </Paragraph>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
