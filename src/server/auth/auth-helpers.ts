@@ -87,8 +87,16 @@ function getSessionData(req: Request) {
 
 export function getAuth(req: Request): AuthProfileAndToken | null {
   const tokenData = (req.oidc?.user as TokenData | null) ?? null;
-  const accessToken = req.oidc?.accessToken?.access_token ?? '';
+  const accessTokenData = req.oidc?.accessToken;
+  const accessToken = accessTokenData?.access_token ?? '';
   const maSession = getSessionData(req);
+  const accessTokenExpiresInSeconds = accessTokenData?.expires_in;
+
+  const expiresAtMilliseconds = accessTokenExpiresInSeconds
+    ? // Take Access token expiry time if available
+      Date.now() + accessTokenExpiresInSeconds * ONE_SECOND_MS
+    : // Otherwise take session expiry time
+      maSession.expires_at * ONE_SECOND_MS;
 
   if (
     !maSession?.authMethod ||
@@ -103,7 +111,7 @@ export function getAuth(req: Request): AuthProfileAndToken | null {
   return {
     token: accessToken,
     profile,
-    expiresAtMilliseconds: maSession.expires_at * ONE_SECOND_MS,
+    expiresAtMilliseconds,
   };
 }
 
