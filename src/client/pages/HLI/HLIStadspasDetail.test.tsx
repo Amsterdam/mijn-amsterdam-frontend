@@ -69,7 +69,7 @@ describe('With basic request where data returned does not matter', () => {
 
     expect(
       screen.getByRole('heading', {
-        name: 'Deze pas is geblokkeerd, hoe vraag ik een nieuwe aan?',
+        name: 'Deze pas heeft u geblokkeerd, hoe nu verder?',
       })
     ).toBeInTheDocument();
   });
