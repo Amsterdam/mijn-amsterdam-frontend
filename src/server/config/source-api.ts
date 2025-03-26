@@ -92,7 +92,7 @@ export type SourceApiKey =
   | 'WPI_SPECIFICATIES'
   | 'ZORGNED_AV'
   | 'ZORGNED_JZD'
-  | 'ZORGNED_JEUGD';
+  | 'ZORGNED_LEERLINGENVERVOER';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -143,6 +143,20 @@ export const ApiConfig: ApiDataRequestConfig = {
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
     postponeFetch: !FeatureToggle.hliThemaActive,
+  },
+  ZORGNED_LEERLINGENVERVOER: {
+    method: 'post',
+    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
+    headers: {
+      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
+      'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': 'LLV',
+    },
+    httpsAgent: new https.Agent({
+      cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
+      key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
+    }),
+    postponeFetch: FeatureToggle.zorgnedLeerlingenvervoerActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,

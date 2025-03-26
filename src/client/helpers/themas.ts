@@ -104,6 +104,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !!WMO.content?.length
       );
 
+    case Themas.JEUGD:
+      return (
+        FeatureToggle.zorgnedLeerlingenvervoerActive &&
+        !isLoading(JEUGD) &&
+        !!JEUGD.content?.isKnown
+      );
+
     case Themas.BELASTINGEN: {
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =

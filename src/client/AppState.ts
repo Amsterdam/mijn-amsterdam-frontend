@@ -67,9 +67,15 @@ export const PRISTINE_APPSTATE: AppState = {
   WMO: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  JEUGD: apiPristineResult([], {
-    profileTypes: ['private'],
-  }),
+  JEUGD: apiPristineResult(
+    {
+      isKnown: true,
+    },
+    {
+      isActive: FeatureToggle.zorgnedLeerlingenvervoerActive,
+      profileTypes: ['private'],
+    }
+  ),
   ERFPACHT: apiPristineResult({ isKnown: false }),
   ERFPACHTv2: apiPristineResult(null, {
     isActive: FeatureToggle.erfpachtV2Active,

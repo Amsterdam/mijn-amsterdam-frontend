@@ -320,6 +320,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_SPECIFICATIES,
     WPI_TONK,
     WPI_TOZO,
+    JEUGD,
   },
   'private-attributes': {
     CMS_CONTENT,

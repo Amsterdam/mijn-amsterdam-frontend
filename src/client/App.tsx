@@ -56,10 +56,10 @@ import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
 import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
 import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
 import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
-import HLI from './pages/HLI/HLIThemaPagina';
 import HLIRegeling from './pages/HLI/HLIRegeling';
 import HLIRegelingen from './pages/HLI/HLIRegelingen';
 import HLIStadspasDetail from './pages/HLI/HLIStadspasDetail';
+import HLI from './pages/HLI/HLIThemaPagina';
 import Horeca from './pages/Horeca/Horeca';
 import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 import Inkomen from './pages/Inkomen/Inkomen';
@@ -68,6 +68,7 @@ import InkomenDetailTonk from './pages/InkomenDetail/InkomenDetailTonk';
 import InkomenDetailTozo from './pages/InkomenDetail/InkomenDetailTozo';
 import InkomenDetailUitkering from './pages/InkomenDetail/InkomenDetailUitkering';
 import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificaties';
+import JeugdThemaPagina from './pages/Jeugd/Jeugd';
 import Klachten from './pages/Klachten/Klachten';
 import KlachtenDetail from './pages/KlachtenDetail/KlachtenDetail';
 import Krefia from './pages/Krefia/Krefia';
@@ -238,7 +239,7 @@ function AppAuthenticated() {
           {FeatureToggle.zorgv2ThemapaginaActive && (
             <Route path={AppRoutes.ZORG} component={ZorgThemaPagina} />
           )}
-
+          <Route path={AppRoutes.JEUGD} component={JeugdThemaPagina} />
           <Route
             path={AppRoutes['BURGERZAKEN/LIST']}
             component={BurgerZakenList}

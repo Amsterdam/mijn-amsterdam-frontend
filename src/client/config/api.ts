@@ -1,3 +1,4 @@
+import { ThemaTitles } from './thema';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
@@ -83,6 +84,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   WMO: 'Zorg en ondersteuning',
+  Jeugd: ThemaTitles.JEUGD,
   WPI_AANVRAGEN: 'Uitkeringaanvragen',
   WPI_BBZ: 'Aanvraag Bbz',
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',

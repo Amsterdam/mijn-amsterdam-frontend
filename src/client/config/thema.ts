@@ -302,6 +302,12 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private'],
   },
   {
+    title: ThemaTitles.JEUGD,
+    id: Themas.JEUGD,
+    to: AppRoutes.JEUGD,
+    profileTypes: ['private'],
+  },
+  {
     title: ThemaTitles.INKOMEN,
     id: Themas.INKOMEN,
     to: AppRoutes.INKOMEN,
