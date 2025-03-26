@@ -40,6 +40,8 @@ if (client) {
     statusCode: string;
   }> = JSON.parse(process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
 
+  const excludedExceptions: string[] = ['AxiosError'];
+
   client.addTelemetryProcessor((envelope) => {
     const SEND_TELEMETRY = true;
     const DISCARD_TELEMETRY = false;
@@ -74,10 +76,11 @@ if (client) {
       }
       case 'ExceptionData': {
         const exceptionData = envelope.data.baseData as ExceptionData;
+        const exceptionSource = exceptionData.exceptions.at(-1);
         if (
-          exceptionData.exceptions.some(
-            (exception) => exception.typeName === 'AxiosError'
-          )
+          exceptionSource &&
+          // Message was the only field observed to always contain the exception type.
+          excludedExceptions.includes(exceptionSource.message.split(':')[0])
         ) {
           return DISCARD_TELEMETRY;
         }
