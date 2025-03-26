@@ -170,7 +170,10 @@ export async function fetchAanvragen(
       ...dataRequestConfig,
       url,
       data: postBody,
-      transformResponse: transformZorgnedAanvragen,
+      transformResponse:
+        options.zorgnedApiConfigKey === 'ZORGNED_LEERLINGENVERVOER'
+          ? undefined
+          : transformZorgnedAanvragen,
     },
     requestID,
     authProfileAndToken

@@ -14,6 +14,8 @@ export async function fetchJeugd(
     }
   );
 
+  console.log(JSON.stringify(aanvragenResponse, null, 2));
+
   if (aanvragenResponse.status !== 'OK') {
     return apiSuccessResult({ isKnown: false });
   }
