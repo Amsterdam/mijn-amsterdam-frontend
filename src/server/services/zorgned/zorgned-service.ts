@@ -176,6 +176,8 @@ export async function fetchAanvragen(
     authProfileAndToken
   );
 
+  console.log(JSON.stringify(zorgnedAanvragenResponse, null, 2));
+
   return zorgnedAanvragenResponse;
 }
 
