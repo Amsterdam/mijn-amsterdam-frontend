@@ -156,7 +156,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
       key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
     }),
-    postponeFetch: FeatureToggle.zorgnedLeerlingenvervoerActive,
+    postponeFetch: !FeatureToggle.zorgnedLeerlingenvervoerActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
