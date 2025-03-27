@@ -1,9 +1,10 @@
+const { HttpStatusCode } = require('axios');
+
 const ZORGNED_AV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-av-aanvragen.json');
+const ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE = require('../fixtures/zorgned-av-persoonsgegevensNAW.json');
 const ZORGNED_JZD_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-jzd-aanvragen.json');
 const ZORGNED_LLV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-leerlingenvervoer-aanvragen.json');
-const ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE = require('../fixtures/zorgned-av-persoonsgegevensNAW.json');
 const settings = require('../settings.js');
-const { HttpStatusCode } = require('axios');
 
 module.exports = [
   {
