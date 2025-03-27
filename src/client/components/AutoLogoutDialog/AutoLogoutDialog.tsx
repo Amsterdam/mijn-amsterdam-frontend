@@ -132,16 +132,13 @@ export default function AutoLogoutDialog({
     clearInterval(intervalId.current);
     clearTimeout(timeoutId.current);
 
-    if (autoLogoutLoggingEnabled) {
-      if (millisecondsBeforeAutoLogoutDialogOpens > 0) {
-        setOpen(false);
-      }
+    if (millisecondsBeforeAutoLogoutDialogOpens > 0) {
+      setOpen(false);
+    }
 
+    if (autoLogoutLoggingEnabled) {
       logtime();
-      console.log(
-        millisecondsBeforeAutoLogoutDialogOpens,
-        new Date(millisecondsBeforeAutoLogoutDialogOpens)
-      );
+
       intervalId.current = window.setInterval(() => {
         logtime();
       }, ONE_SECOND_MS);
