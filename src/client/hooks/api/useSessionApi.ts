@@ -27,7 +27,7 @@ const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   profileType: null,
   authMethod: null,
-  expiresAtMilliseconds: -1,
+  expiresAtMilliseconds: 0,
 };
 
 export interface SessionState extends SessionData {
