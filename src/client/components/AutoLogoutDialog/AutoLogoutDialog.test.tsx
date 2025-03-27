@@ -57,7 +57,7 @@ describe('AutoLogoutDialog', () => {
 
     render(
       <AutoLogoutDialog
-        expiresAtMilliseconds={Date.now() + 15 * 60000} // 15 seconds into the future
+        expiresAtMilliseconds={Date.now() + 15 * 60000} // 15 minutes into the future
         lastChanceBeforeAutoLogoutSeconds={120}
       />
     );
