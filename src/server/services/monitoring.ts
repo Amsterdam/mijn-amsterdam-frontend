@@ -31,64 +31,58 @@ const client: appInsights.TelemetryClient | undefined =
 if (client) {
   // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
   const excludedRequests: string[] = JSON.parse(
-    process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
+    process.env.BFF_EXCLUDE_INCOMING_REQUESTS || '[]'
   );
 
   const excludedOutoingDependencies: Array<{
     method: string;
     routeSegment: string;
     statusCode: string;
-  }> = JSON.parse(process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
+  }> = JSON.parse(process.env.BFF_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
 
-  const excludedExceptions: string[] = ['AxiosError'];
+  // Exceptions like "AxiosError: Request failed" are loaded in here.
+  const excludedExceptions: string[] = JSON.parse(
+    process.env.BFF_EXCLUDE_EXCEPTIONS || '[]'
+  );
+
+  // Reason: Type is known. It is the same type as the keyname.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const shouldSendTelemetry: Record<string, (data: any) => boolean> = {
+    RequestData: (data: RequestData) => !excludedRequests.includes(data.name),
+    RemoteDependencyData: (data: RemoteDependencyData) => {
+      const [method, route] = data.name.split(' ');
+
+      for (const excludeReqParts of excludedOutoingDependencies) {
+        if (
+          route.includes(excludeReqParts.routeSegment) &&
+          method === excludeReqParts.method &&
+          data.resultCode === excludeReqParts.statusCode
+        ) {
+          return false;
+        }
+      }
+      return true;
+    },
+    ExceptionData: (data: ExceptionData) => {
+      const exceptionSource = data.exceptions.at(-1);
+      return !(
+        !!exceptionSource &&
+        excludedExceptions.some((exceptionTextStart) =>
+          exceptionSource.message.startsWith(exceptionTextStart)
+        )
+      );
+    },
+  };
 
   client.addTelemetryProcessor((envelope) => {
     const SEND_TELEMETRY = true;
-    const DISCARD_TELEMETRY = false;
 
     if (!envelope.data.baseType) {
       return SEND_TELEMETRY;
     }
 
-    switch (envelope.data.baseType) {
-      case 'RequestData': {
-        const reqData = envelope.data.baseData as RequestData;
-
-        if (excludedRequests.includes(reqData.name)) {
-          return DISCARD_TELEMETRY;
-        }
-        break;
-      }
-      case 'RemoteDependencyData': {
-        const reqData = envelope.data.baseData as RemoteDependencyData;
-        const [method, route] = reqData.name.split(' ');
-
-        for (const excludeReqParts of excludedOutoingDependencies) {
-          if (
-            route.includes(excludeReqParts.routeSegment) &&
-            method === excludeReqParts.method &&
-            reqData.resultCode === excludeReqParts.statusCode
-          ) {
-            return DISCARD_TELEMETRY;
-          }
-        }
-        break;
-      }
-      case 'ExceptionData': {
-        const exceptionData = envelope.data.baseData as ExceptionData;
-        const exceptionSource = exceptionData.exceptions.at(-1);
-        if (
-          exceptionSource &&
-          // Message was the only field observed to always contain the exception type.
-          excludedExceptions.includes(exceptionSource.message.split(':')[0])
-        ) {
-          return DISCARD_TELEMETRY;
-        }
-        break;
-      }
-    }
-
-    return SEND_TELEMETRY;
+    const shouldSend = shouldSendTelemetry[envelope.data.baseType];
+    return shouldSend ? shouldSend(envelope.data.baseData) : SEND_TELEMETRY;
   });
 
   try {
