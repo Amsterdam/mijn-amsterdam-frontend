@@ -101,15 +101,10 @@ export default function AutoLogoutDialog({
   const profileType = useProfileTypeValue();
 
   // Will open the dialog if secondsBeforeAutoLogoutDialogOpens is reached.
-  const millisecondsBeforeAutoLogoutDialogOpens_ = getOpensDialogInMilliseconds(
+  const millisecondsBeforeAutoLogoutDialogOpens = getOpensDialogInMilliseconds(
     expiresAtMilliseconds,
     lastChanceBeforeAutoLogoutSeconds
   );
-
-  const [
-    millisecondsBeforeAutoLogoutDialogOpens,
-    setDialogOpenTimeoutMilliSeconds,
-  ] = useState(millisecondsBeforeAutoLogoutDialogOpens_);
 
   const [isOpen, setOpen] = useState(false);
   const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
@@ -127,16 +122,6 @@ export default function AutoLogoutDialog({
       new Date(expiresAtMilliseconds)
     );
   }
-
-  useEffect(() => {
-    const millisecondsBeforeAutoLogoutDialogOpens =
-      getOpensDialogInMilliseconds(
-        expiresAtMilliseconds,
-        lastChanceBeforeAutoLogoutSeconds
-      );
-
-    setDialogOpenTimeoutMilliSeconds(millisecondsBeforeAutoLogoutDialogOpens);
-  }, [session.expiresAtMilliseconds]);
 
   useEffect(() => {
     let intervalId: number;
