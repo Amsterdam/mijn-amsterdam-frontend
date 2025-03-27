@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
-import { differenceInSeconds } from 'date-fns/differenceInSeconds';
+import { differenceInMilliseconds } from 'date-fns';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
@@ -71,21 +71,45 @@ function CountDownTimer({
 const autoLogoutLoggingEnabled =
   window.localStorage.getItem('AUTO_LOGOUT_TIMER_LOGGING') === 'true';
 
-export function getExpiresInSeconds(expiresAtMilliseconds: number): number {
-  return differenceInSeconds(new Date(expiresAtMilliseconds), new Date());
+function getExpiresInMilliseconds(expiresAtMilliseconds: number): number {
+  return differenceInMilliseconds(new Date(expiresAtMilliseconds), new Date());
+}
+
+function getExpiresInSeconds(expiresAtMilliseconds: number): number {
+  return Math.floor(
+    getExpiresInMilliseconds(expiresAtMilliseconds) / ONE_SECOND_MS
+  );
+}
+
+function getOpensDialogInMilliseconds(
+  expiresAtMilliseconds: number,
+  lastChanceBeforeAutoLogoutSeconds: number
+): number {
+  const lastChangeInMilliseconds =
+    lastChanceBeforeAutoLogoutSeconds * ONE_SECOND_MS;
+  const millisecondsBeforeAutoLogoutDialogOpens =
+    expiresAtMilliseconds - lastChangeInMilliseconds;
+
+  return millisecondsBeforeAutoLogoutDialogOpens;
 }
 
 export default function AutoLogoutDialog({
   expiresAtMilliseconds,
-  lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS,
+  lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS, // 120 seconds
 }: ComponentProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
 
   // Will open the dialog if secondsBeforeAutoLogoutDialogOpens is reached.
-  const secondsBeforeAutoLogoutDialogOpens =
-    getExpiresInSeconds(expiresAtMilliseconds) -
-    lastChanceBeforeAutoLogoutSeconds;
+  const millisecondsBeforeAutoLogoutDialogOpens_ = getOpensDialogInMilliseconds(
+    expiresAtMilliseconds,
+    lastChanceBeforeAutoLogoutSeconds
+  );
+
+  const [
+    millisecondsBeforeAutoLogoutDialogOpens,
+    setDialogOpenTimeoutMilliSeconds,
+  ] = useState(millisecondsBeforeAutoLogoutDialogOpens_);
 
   const [isOpen, setOpen] = useState(false);
   const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
@@ -105,6 +129,16 @@ export default function AutoLogoutDialog({
   }
 
   useEffect(() => {
+    const millisecondsBeforeAutoLogoutDialogOpens =
+      getOpensDialogInMilliseconds(
+        expiresAtMilliseconds,
+        lastChanceBeforeAutoLogoutSeconds
+      );
+
+    setDialogOpenTimeoutMilliSeconds(millisecondsBeforeAutoLogoutDialogOpens);
+  }, [session.expiresAtMilliseconds]);
+
+  useEffect(() => {
     let intervalId: number;
     if (autoLogoutLoggingEnabled) {
       logtime();
@@ -113,22 +147,23 @@ export default function AutoLogoutDialog({
       }, ONE_SECOND_MS);
     }
 
+    // Open the dialog when the time is up.
     const timeoutId = setTimeout(
       () => {
         clearInterval(intervalId);
         clearTimeout(timeoutId);
         setOpen(true);
       },
-      Math.max(secondsBeforeAutoLogoutDialogOpens * ONE_SECOND_MS, 0)
+      Math.max(millisecondsBeforeAutoLogoutDialogOpens, 0)
     );
 
     return () => {
       clearInterval(intervalId);
       clearTimeout(timeoutId);
     };
-  }, [secondsBeforeAutoLogoutDialogOpens, expiresAtMilliseconds]);
+  }, [millisecondsBeforeAutoLogoutDialogOpens, expiresAtMilliseconds]);
 
-  const maxCount = Math.min(
+  const maxCountInSeconds = Math.min(
     lastChanceBeforeAutoLogoutSeconds,
     getExpiresInSeconds(expiresAtMilliseconds)
   );
@@ -193,7 +228,7 @@ export default function AutoLogoutDialog({
       <div className={styles.AutoLogoutDialogChildren}>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
-            maxCount={maxCount}
+            maxCount={maxCountInSeconds}
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />
