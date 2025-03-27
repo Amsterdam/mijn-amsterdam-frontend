@@ -24,18 +24,6 @@ export function handleCheckProtectedRoute(
   return next();
 }
 
-export async function handleRefresh(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  if (req.oidc.accessToken?.isExpired?.()) {
-    // Assigns the newly aquired access_token to the oidc context.
-    await req.oidc.accessToken?.refresh?.();
-  }
-  next();
-}
-
 export async function isAuthenticated(
   req: Request,
   res: Response,
