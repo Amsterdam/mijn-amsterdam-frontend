@@ -161,6 +161,10 @@ export async function fetchAanvragen(
   };
 
   const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
+  if (options.zorgnedApiConfigKey === 'ZORGNED_LEERLINGENVERVOER') {
+    console.log('Using dataRequestConfig:');
+    console.log(JSON.stringify(dataRequestConfig, null, 2));
+  }
   const url = `${dataRequestConfig.url}/aanvragen`;
 
   const zorgnedAanvragenResponse = await requestData<

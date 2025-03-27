@@ -6,6 +6,7 @@ export async function fetchJeugd(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<{ isKnown: boolean }>> {
+  console.log('START LLV REQUEST\n========================');
   const aanvragenResponse = await fetchAanvragen(
     requestID,
     authProfileAndToken,
@@ -13,8 +14,9 @@ export async function fetchJeugd(
       zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
     }
   );
-
+  console.log('RESPONSE\n==============');
   console.log(JSON.stringify(aanvragenResponse, null, 2));
+  console.log('========================\nEND LLV REQUEST');
 
   if (aanvragenResponse.status !== 'OK') {
     return apiSuccessResult({ isKnown: false });
