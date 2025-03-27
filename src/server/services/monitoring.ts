@@ -1,5 +1,6 @@
 import * as appInsights from 'applicationinsights';
 import {
+  ExceptionData,
   ExceptionTelemetry,
   RemoteDependencyData,
   RequestData,
@@ -30,43 +31,58 @@ const client: appInsights.TelemetryClient | undefined =
 if (client) {
   // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
   const excludedRequests: string[] = JSON.parse(
-    process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
+    process.env.BFF_EXCLUDE_INCOMING_REQUESTS || '[]'
   );
 
   const excludedOutoingDependencies: Array<{
     method: string;
     routeSegment: string;
     statusCode: string;
-  }> = JSON.parse(process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
+  }> = JSON.parse(process.env.BFF_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
 
-  client.addTelemetryProcessor((envelope) => {
-    const SEND_TELEMETRY = true;
-    const DISCARD_TELEMETRY = false;
+  // Exceptions like "AxiosError: Request failed" are loaded in here.
+  const excludedExceptions: string[] = JSON.parse(
+    process.env.BFF_EXCLUDE_EXCEPTIONS || '[]'
+  );
 
-    if (envelope?.data?.baseType === 'RequestData') {
-      const reqData = envelope.data.baseData as RequestData;
-
-      if (excludedRequests.includes(reqData.name)) {
-        return DISCARD_TELEMETRY;
-      }
-    }
-
-    if (envelope?.data?.baseType === 'RemoteDependencyData') {
-      const reqData = envelope.data.baseData as RemoteDependencyData;
-      const [method, route] = reqData.name.split(' ');
+  // Reason: Type is known. It is the same type as the keyname.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const shouldSendTelemetry: Record<string, (data: any) => boolean> = {
+    RequestData: (data: RequestData) => !excludedRequests.includes(data.name),
+    RemoteDependencyData: (data: RemoteDependencyData) => {
+      const [method, route] = data.name.split(' ');
 
       for (const excludeReqParts of excludedOutoingDependencies) {
         if (
           route.includes(excludeReqParts.routeSegment) &&
           method === excludeReqParts.method &&
-          reqData.resultCode === excludeReqParts.statusCode
+          data.resultCode === excludeReqParts.statusCode
         ) {
-          return DISCARD_TELEMETRY;
+          return false;
         }
       }
+      return true;
+    },
+    ExceptionData: (data: ExceptionData) => {
+      const exceptionSource = data.exceptions.at(-1);
+      return !(
+        !!exceptionSource &&
+        excludedExceptions.some((exceptionTextStart) =>
+          exceptionSource.message.startsWith(exceptionTextStart)
+        )
+      );
+    },
+  };
+
+  client.addTelemetryProcessor((envelope) => {
+    const SEND_TELEMETRY = true;
+
+    if (!envelope.data.baseType) {
+      return SEND_TELEMETRY;
     }
 
-    return SEND_TELEMETRY;
+    const shouldSend = shouldSendTelemetry[envelope.data.baseType];
+    return shouldSend ? shouldSend(envelope.data.baseData) : SEND_TELEMETRY;
   });
 
   try {
