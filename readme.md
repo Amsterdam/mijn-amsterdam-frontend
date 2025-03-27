@@ -127,6 +127,10 @@ To logs response data from incoming responses before any transformation.
 A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
 `export DEBUG_RESPONSE_DATA=term1,term2`
 
+#### React Autologout timer
+To debug the autologout timer you can add a localstorage item `AUTO_LOGOUT_TIMER_LOGGING` with value `true`. This enables some logging in the console
+that shows information about the timer expiry.
+
 ## Guides
 
 ### Making use of an ENV variable in frontend
