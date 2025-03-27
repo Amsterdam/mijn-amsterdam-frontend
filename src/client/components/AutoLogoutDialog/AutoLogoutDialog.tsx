@@ -68,6 +68,9 @@ function CountDownTimer({
   );
 }
 
+const autoLogoutLoggingEnabled =
+  window.localStorage.getItem('AUTO_LOGOUT_TIMER_LOGGING') === 'true';
+
 export function getExpiresInSeconds(expiresAtMilliseconds: number): number {
   return differenceInSeconds(new Date(expiresAtMilliseconds), new Date());
 }
@@ -89,24 +92,26 @@ export default function AutoLogoutDialog({
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function logtime() {
-    if ((window as any).MA_LOG_DIALOG_TIME) {
-      console.log(
-        'Dialog opens in %s seconds, expires in %s seconds at %s',
-        formattedTimeFromSeconds(
-          getExpiresInSeconds(expiresAtMilliseconds) -
-            lastChanceBeforeAutoLogoutSeconds
-        ),
-        formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
-        new Date(expiresAtMilliseconds)
-      );
-    }
+    // eslint-disable-next-line no-console
+    console.log(
+      'Dialog opens in %s seconds, expires in %s seconds at %s',
+      formattedTimeFromSeconds(
+        getExpiresInSeconds(expiresAtMilliseconds) -
+          lastChanceBeforeAutoLogoutSeconds
+      ),
+      formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
+      new Date(expiresAtMilliseconds)
+    );
   }
 
   useEffect(() => {
-    logtime();
-    const intervalId = setInterval(() => {
+    let intervalId: number;
+    if (autoLogoutLoggingEnabled) {
       logtime();
-    }, ONE_SECOND_MS);
+      intervalId = window.setInterval(() => {
+        logtime();
+      }, ONE_SECOND_MS);
+    }
 
     const timeoutId = setTimeout(
       () => {
