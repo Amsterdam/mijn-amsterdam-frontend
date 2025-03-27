@@ -33,7 +33,7 @@ authRouterDevelopment.BFF_ID = 'router-dev';
 export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
 
-  // In seconds
+  // 15 minutes In seconds
   const expires_at =
     new Date().getTime() / ONE_SECOND_MS + OIDC_SESSION_MAX_AGE_SECONDS;
 

@@ -448,6 +448,7 @@ function AppLanding() {
       <AppAuthenticated />
       {!!session.expiresAtMilliseconds && (
         <AutoLogoutDialog
+          asynRefreshEnabled
           expiresAtMilliseconds={session.expiresAtMilliseconds}
         />
       )}

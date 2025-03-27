@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
+import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 import { differenceInMilliseconds } from 'date-fns';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -25,10 +25,11 @@ import { Modal } from '../Modal/Modal';
 const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;
 
-export interface ComponentProps {
+export interface AutoLogoutDialogProps {
   children?: ComponentChildren;
   expiresAtMilliseconds: number;
   lastChanceBeforeAutoLogoutSeconds?: number;
+  asynRefreshEnabled?: boolean;
 }
 
 export interface CountDownTimerComponentProps {
@@ -85,18 +86,19 @@ function getOpensDialogInMilliseconds(
   expiresAtMilliseconds: number,
   lastChanceBeforeAutoLogoutSeconds: number
 ): number {
-  const lastChangeInMilliseconds =
+  const lastChaceInMilliseconds =
     lastChanceBeforeAutoLogoutSeconds * ONE_SECOND_MS;
   const millisecondsBeforeAutoLogoutDialogOpens =
-    expiresAtMilliseconds - lastChangeInMilliseconds;
+    getExpiresInMilliseconds(expiresAtMilliseconds) - lastChaceInMilliseconds;
 
   return millisecondsBeforeAutoLogoutDialogOpens;
 }
 
 export default function AutoLogoutDialog({
+  asynRefreshEnabled = false,
   expiresAtMilliseconds,
   lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS, // 120 seconds
-}: ComponentProps) {
+}: AutoLogoutDialogProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
 
@@ -123,30 +125,43 @@ export default function AutoLogoutDialog({
     );
   }
 
+  const intervalId = useRef<number | undefined>(undefined);
+  const timeoutId = useRef<number | undefined>(undefined);
+
   useEffect(() => {
-    let intervalId: number;
+    clearInterval(intervalId.current);
+    clearTimeout(timeoutId.current);
+
     if (autoLogoutLoggingEnabled) {
+      if (millisecondsBeforeAutoLogoutDialogOpens > 0) {
+        setOpen(false);
+      }
+
       logtime();
-      intervalId = window.setInterval(() => {
+      console.log(
+        millisecondsBeforeAutoLogoutDialogOpens,
+        new Date(millisecondsBeforeAutoLogoutDialogOpens)
+      );
+      intervalId.current = window.setInterval(() => {
         logtime();
       }, ONE_SECOND_MS);
     }
 
     // Open the dialog when the time is up.
-    const timeoutId = setTimeout(
+    timeoutId.current = window.setTimeout(
       () => {
-        clearInterval(intervalId);
-        clearTimeout(timeoutId);
+        clearInterval(intervalId.current);
+        clearTimeout(timeoutId.current);
         setOpen(true);
       },
       Math.max(millisecondsBeforeAutoLogoutDialogOpens, 0)
     );
 
     return () => {
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
+      clearInterval(intervalId.current);
+      clearTimeout(timeoutId.current);
     };
-  }, [millisecondsBeforeAutoLogoutDialogOpens, expiresAtMilliseconds]);
+  }, [millisecondsBeforeAutoLogoutDialogOpens]);
 
   const maxCountInSeconds = Math.min(
     lastChanceBeforeAutoLogoutSeconds,
@@ -192,13 +207,30 @@ export default function AutoLogoutDialog({
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (
-            <MaButtonLink
-              variant="primary"
-              className="continue-button"
-              href={continueLink}
-            >
-              Doorgaan
-            </MaButtonLink>
+            <>
+              {asynRefreshEnabled ? (
+                <Button
+                  variant="primary"
+                  className="continue-button"
+                  disabled={session.isLoading}
+                  onClick={() => {
+                    session.refetch();
+                    return false;
+                    // setOpen(false);
+                  }}
+                >
+                  Doorgaan
+                </Button>
+              ) : (
+                <MaButtonLink
+                  variant="primary"
+                  className="continue-button"
+                  href={continueLink}
+                >
+                  Doorgaan
+                </MaButtonLink>
+              )}
+            </>
           )}
           <MaButtonLink
             variant="secondary"
