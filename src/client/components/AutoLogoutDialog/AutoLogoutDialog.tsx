@@ -157,6 +157,13 @@ export default function AutoLogoutDialog({
     return null;
   }
 
+  const continueLink =
+    profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING;
+  const logoutLink = LOGOUT_URL;
+  const logoutLabel = continueButtonIsVisible
+    ? 'Nu uitloggen'
+    : 'Bezig met controleren van uw sessie..';
+
   return (
     <Modal
       title={TITLE}
@@ -168,11 +175,7 @@ export default function AutoLogoutDialog({
             <MaButtonLink
               variant="primary"
               className="continue-button"
-              href={
-                profileType === 'private'
-                  ? LOGIN_URL_DIGID
-                  : LOGIN_URL_EHERKENNING
-              }
+              href={continueLink}
             >
               Doorgaan
             </MaButtonLink>
@@ -180,11 +183,9 @@ export default function AutoLogoutDialog({
           <MaButtonLink
             variant="secondary"
             className={classnames('logout-button', styles.LogoutButton)}
-            href={LOGOUT_URL}
+            href={logoutLink}
           >
-            {continueButtonIsVisible
-              ? 'Nu uitloggen'
-              : 'Bezig met controleren van uw sessie..'}
+            {logoutLabel}
           </MaButtonLink>
         </ActionGroup>
       }
