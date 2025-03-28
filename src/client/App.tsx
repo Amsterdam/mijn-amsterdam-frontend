@@ -176,6 +176,7 @@ function AppAuthenticated() {
   }, [redirectAfterLogin, history]);
 
   const isHeroVisible = history.location.pathname === AppRoutes.HOME;
+  const isBuurt = location.pathname === AppRoutes.BUURT;
 
   return (
     <>
@@ -183,7 +184,7 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated />
       <ErrorMessages />
       {isHeroVisible && <MainHeaderHero />}
-      <Screen className={styles.App}>
+      <Screen className={!isBuurt ? styles.App : ''}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
@@ -429,7 +430,7 @@ function AppAuthenticated() {
         </Switch>
       </Screen>
       {/** Remove the footer on the Map view for better UX */}
-      {location.pathname !== AppRoutes.BUURT && <MainFooter isAuthenticated />}
+      {!isBuurt && <MainFooter isAuthenticated />}
     </>
   );
 }
