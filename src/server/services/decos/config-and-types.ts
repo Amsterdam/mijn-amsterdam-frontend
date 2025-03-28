@@ -141,8 +141,6 @@ export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
 
 export const MA_DECISION_DEFAULT = 'Zie besluit';
 
-export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
-
 export type DecosFieldTransformer<T extends DecosZaakBase> = {
   name: keyof T;
   transform?: (input: any) => DecosFieldValue;
@@ -187,12 +185,8 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   // Notifications for this specific
   notificationLabels?: Partial<NotificationLabelByType>;
 };
-export type MADecision = string;
-export type DecosDecision = string;
+
 export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
-export type DecosZakenSourceFilter = (
-  decosZaakSource: DecosZaakSource
-) => boolean;
 
 export type DecosZaakBase = {
   caseType: string;
@@ -219,8 +213,8 @@ export type DecosZaakBase = {
   status: ZaakStatus;
 
   // WorkflowStep statusses
-  statusDates?: ZaakStatusDate[];
-  termijnDates?: ZaakTermijnDate[];
+  statusDates: ZaakStatusDate[];
+  termijnDates: ZaakTermijnDate[];
 };
 
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
