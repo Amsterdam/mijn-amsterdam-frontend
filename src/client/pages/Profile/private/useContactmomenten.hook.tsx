@@ -14,11 +14,15 @@ import {
   routes,
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
+import { Themas } from '../../../../universal/config/thema';
 import { isLoading, isError } from '../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
-import { useThemaMenuItems } from '../../../hooks/useThemaMenuItems';
+import {
+  useThemaMenuItemByThemaID,
+  useThemaMenuItems,
+} from '../../../hooks/useThemaMenuItems';
 
 function getLinkToThemaPage(
   onderwerp: string,
@@ -61,6 +65,7 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
+  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.BRP);
 
   const contactmomenten: ContactMomentFrontend[] =
     KLANT_CONTACT.content?.map((contactMomentItem) => {
@@ -81,5 +86,6 @@ export function useContactmomenten() {
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
     routes,
+    themaPaginaBreadcrumb,
   };
 }

@@ -1,18 +1,17 @@
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
-import { Klacht } from '../../../server/services/klachten/types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export function KlachtenLijstPagina() {
-  const { klachten, tableConfig, routes, isLoading, isError } =
+  const { klachten, tableConfig, themaPaginaBreadcrumb, isLoading, isError } =
     useKlachtenThemaData();
 
   return (
-    <ListPagePaginated<Klacht>
+    <ListPagePaginated
       items={klachten}
       title={tableConfig.title}
       appRoute={tableConfig.listPageRoute}
       appRouteParams={{}}
-      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={tableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

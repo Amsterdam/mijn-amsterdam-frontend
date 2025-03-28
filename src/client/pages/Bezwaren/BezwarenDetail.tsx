@@ -130,7 +130,7 @@ export function BezwarenDetailPagina() {
   );
 
   return (
-    <ThemaDetailPagina<Bezwaar>
+    <ThemaDetailPagina
       title={title}
       zaak={bezwaar}
       isError={isError || isErrorThemaData}

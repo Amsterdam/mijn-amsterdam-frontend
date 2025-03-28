@@ -27,7 +27,7 @@ function AVGDetail() {
   const { verzoek, isLoading, isError, themaPaginaBreadcrumb, title } =
     useAVGDetailPage();
   return (
-    <ThemaDetailPagina<AVGRequestFrontend>
+    <ThemaDetailPagina
       title={title}
       zaak={verzoek}
       isError={isError}

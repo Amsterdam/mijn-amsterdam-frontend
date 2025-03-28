@@ -1,6 +1,7 @@
 import { defaultDateTimeFormat } from '../../../../universal/helpers/date';
 import { documentDownloadName, productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
+import { LINK_MEER_INFO } from './tonk';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
@@ -108,9 +109,9 @@ const besluitLabels: WpiRequestStatusLabels = {
       </p>
       ${
         statusStep.productSpecific !== 'lening'
-          ? "<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel='external noopener noreferrer' class='inline' href='https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-zelfstandigen/wijzigingen-doorgeven/'>Kijk dan bij 'Wijziging of inkomsten doorgeven'</a></p>"
+          ? '<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Kijk dan bij \'Wijziging of inkomsten doorgeven\'</a></p>'
           : ''
-      }<p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+      }<p>${LINK_MEER_INFO}</p>`;
 
       case 'toekenningVoorlopig':
         return `<p>
@@ -118,10 +119,10 @@ const besluitLabels: WpiRequestStatusLabels = {
             requestProcess,
             statusStep
           )}. Kijk voor de voorwaarden in de brief.
-        </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+        </p><p>${LINK_MEER_INFO}</p>`;
 
       case 'beschikking':
-        return '<p>Wij hebben uw Bbz uitkering definitief berekend. Bekijk het besluit om te zien of u de uitkering mag houden of (voor een deel) moet terugbetalen.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>';
+        return '<p>Wij hebben uw Bbz uitkering definitief berekend. Bekijk het besluit om te zien of u de uitkering mag houden of (voor een deel) moet terugbetalen.</p><p>${LINK_MEER_INFO}</p>';
 
       default:
         return tozoRequestProcess.besluit.description(

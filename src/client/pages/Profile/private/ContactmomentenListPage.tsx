@@ -3,15 +3,21 @@ import { useContactmomenten } from './useContactmomenten.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
 export function ContactmomentenListPage() {
-  const { contactmomenten, isLoading, isError, title, routes } =
-    useContactmomenten();
+  const {
+    contactmomenten,
+    isLoading,
+    isError,
+    title,
+    routes,
+    themaPaginaBreadcrumb,
+  } = useContactmomenten();
 
   return (
     <ListPagePaginated
       items={contactmomenten}
       title={`Alle ${title.toLowerCase()}`}
       appRoute={routes.listPage}
-      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={contactmomentenDisplayProps}
       isLoading={isLoading}
       isError={isError}

@@ -20,7 +20,7 @@ function transformVergunningFrontend(
   const vergunningFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
     vergunning,
-    appRoute
+    { appRoute, includeFetchDocumentsUrl: true }
   );
 
   const steps = getStatusSteps(vergunningFrontend);

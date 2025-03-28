@@ -64,7 +64,7 @@ export function ParkerenDetailPagina() {
     useVergunningenDetailData(vergunningen);
 
   return (
-    <ThemaDetailPagina<VergunningFrontend<DecosParkeerVergunning>>
+    <ThemaDetailPagina
       title={title}
       zaak={vergunning}
       isError={isError}
