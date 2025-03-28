@@ -11,7 +11,7 @@ import {
   PageContentV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { StatusLine } from '../../components/StatusLine/StatusLine';
+import { Steps } from '../../components/StatusLine/StatusLineV2';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
@@ -79,11 +79,7 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
 
         {!!statusItemSteps.length && zaak && (
           <PageContentCell startWide={1} spanWide={12}>
-            <StatusLine
-              statusLabel={statusLabel}
-              showStatusLineConnection={showStatusLineConnection}
-              items={statusItemSteps}
-            />
+            <Steps title={statusLabel} steps={statusItemSteps} />
           </PageContentCell>
         )}
         {pageContentBottom}
