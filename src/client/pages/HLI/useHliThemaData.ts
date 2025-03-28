@@ -1,5 +1,6 @@
 import { getThemaTitle } from './helpers';
 import {
+  kindTegoedLinkListItem,
   linkListItems,
   listPageParamKind,
   listPageTitle,
@@ -58,6 +59,8 @@ export function useHliThemaData() {
     tableConfig,
     listPageTitle,
     listPageParamKind,
-    linkListItems,
+    linkListItems: hasKindtegoed
+      ? [...linkListItems, kindTegoedLinkListItem]
+      : linkListItems,
   };
 }

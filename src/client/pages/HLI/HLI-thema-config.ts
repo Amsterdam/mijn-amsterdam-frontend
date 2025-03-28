@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router-dom';
+
 import styles from './HLIThemaPagina.module.scss';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -31,25 +33,6 @@ export const listPageTitle = {
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
 
-export const tableConfig = {
-  [listPageParamKind.actual]: {
-    title: listPageTitle[listPageParamKind.actual],
-    filter: (regeling: HLIRegeling) => regeling.isActual,
-    sort: dateSort('dateDecision', 'desc'),
-    displayProps: displayPropsHuidigeRegelingen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    className: styles.HuidigeRegelingen,
-  },
-  [listPageParamKind.historic]: {
-    title: listPageTitle[listPageParamKind.historic],
-    filter: (regeling: HLIRegeling) => !regeling.isActual,
-    sort: dateSort('dateDecision', 'desc'),
-    displayProps: displayPropsEerdereRegelingen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    className: styles.EerdereRegelingen,
-  },
-} as const;
-
 export const routes = {
   listPage: AppRoutes['HLI/REGELINGEN_LIST'],
   detailPage: AppRoutes['HLI/REGELING'],
@@ -66,3 +49,33 @@ export const linkListItems: LinkProps[] = [
     title: 'Meer informatie over Stadspas',
   },
 ] as const;
+
+export const kindTegoedLinkListItem: LinkProps = {
+  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
+  title: 'Meer informatie over Kindtegoed declareren',
+};
+
+export const tableConfig = {
+  [listPageParamKind.actual]: {
+    title: listPageTitle[listPageParamKind.actual],
+    filter: (regeling: HLIRegeling) => regeling.isActual,
+    sort: dateSort('dateDecision', 'desc'),
+    displayProps: displayPropsHuidigeRegelingen,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
+    className: styles.HuidigeRegelingen,
+    listPageRoute: generatePath(routes.listPage, {
+      kind: listPageParamKind.actual,
+    }),
+  },
+  [listPageParamKind.historic]: {
+    title: listPageTitle[listPageParamKind.historic],
+    filter: (regeling: HLIRegeling) => !regeling.isActual,
+    sort: dateSort('dateDecision', 'desc'),
+    displayProps: displayPropsEerdereRegelingen,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
+    className: styles.EerdereRegelingen,
+    listPageRoute: generatePath(routes.listPage, {
+      kind: listPageParamKind.historic,
+    }),
+  },
+} as const;
