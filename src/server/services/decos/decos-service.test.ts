@@ -6,6 +6,8 @@ import {
   fetchDecosWorkflowDates,
   fetchDecosZakenFromSource,
   forTesting,
+  fetchDecosTermijnen,
+  fetchDecosLinkedField,
 } from './decos-service';
 import {
   DecosDocumentSource,
@@ -66,6 +68,35 @@ const workflowInstance = {
         date2: '2021-09-13T17:09:00',
         text7: 'Zaak - behandelen',
         sequence: 1.0,
+      },
+    },
+  ],
+};
+
+const termijns = {
+  count: 1,
+  content: [
+    {
+      fields: {
+        date2: '2025-02-20T10:31:20',
+        date4: '2025-02-17T00:00:00',
+        date5: '2025-02-20T00:00:00',
+        itemtype_key: 'TERMIJNEN',
+        mark: 'Z/25/000001',
+        subject1: 'Verzoek aanvullende gegevens',
+      },
+    },
+  ],
+};
+
+const linkedItem = {
+  count: 1,
+  content: [
+    {
+      key: '1234',
+      fields: {
+        itemtype_key: 'LINKEDFIELD',
+        mark: 'Z/25/0000001-10001',
       },
     },
   ],
@@ -260,6 +291,114 @@ describe('decos-service', () => {
 
       expect(responseData).toMatchObject({
         content: { 'Zaak - behandelen': null },
+        status: 'OK',
+      });
+    });
+  });
+
+  describe('fetchDecosTermijns', async () => {
+    test('Termijnen does not exist on item', async () => {
+      remoteApi.get(/\/decos\/items\/zaak-id-1\/termijnens/).reply(404);
+
+      const responseData = await fetchDecosTermijnen(reqID, 'zaak-id-1', [
+        'Termijn',
+      ]);
+
+      expect(responseData).toMatchObject({
+        content: null,
+        status: 'ERROR',
+      });
+    });
+
+    test('No content', async () => {
+      remoteApi.get(/\/decos\/items\/zaak-id-1\/termijnens/).reply(200);
+
+      const responseData = await fetchDecosTermijnen(reqID, 'zaak-id-1', [
+        'Termijn',
+      ]);
+
+      expect(responseData).toMatchInlineSnapshot(`
+        {
+          "content": [],
+          "status": "OK",
+        }
+      `);
+    });
+
+    test('Has termijn', async () => {
+      remoteApi
+        .get(/\/decos\/items\/zaak-id-1\/termijnens/)
+        .reply(200, termijns);
+
+      const responseData = await fetchDecosTermijnen(reqID, 'zaak-id-1', [
+        'Termijn',
+      ]);
+
+      expect(responseData).toMatchInlineSnapshot(`
+        {
+          "content": [
+            {
+              "dateEnd": "2025-02-20T00:00:00",
+              "dateStart": "2025-02-17T00:00:00",
+              "type": "Verzoek aanvullende gegevens",
+            },
+          ],
+          "status": "OK",
+        }
+      `);
+    });
+  });
+
+  describe('fetchDecosLinkedItem', async () => {
+    test('Linked field does not exist on item', async () => {
+      remoteApi.get(/\/decos\/items\/zaak-id-1\/linkedField/).reply(404);
+
+      const responseData = await fetchDecosLinkedField(
+        reqID,
+        'zaak-id-1',
+        'linkedField'
+      );
+
+      expect(responseData).toMatchObject({
+        content: null,
+        status: 'ERROR',
+      });
+    });
+
+    test('No content', async () => {
+      remoteApi.get(/\/decos\/items\/zaak-id-1\/linkedField/).reply(200);
+
+      const responseData = await fetchDecosLinkedField(
+        reqID,
+        'zaak-id-1',
+        'linkedField'
+      );
+
+      expect(responseData).toStrictEqual({
+        content: [],
+        status: 'OK',
+      });
+    });
+
+    test('Has linkedItem', async () => {
+      remoteApi
+        .get(/\/decos\/items\/zaak-id-1\/linkedField/)
+        .reply(200, linkedItem);
+
+      const responseData = await fetchDecosLinkedField(
+        reqID,
+        'zaak-id-1',
+        'linkedField'
+      );
+
+      expect(responseData).toStrictEqual({
+        content: [
+          {
+            itemtype_key: 'LINKEDFIELD',
+            mark: 'Z/25/0000001-10001',
+            key: '1234',
+          },
+        ],
         status: 'OK',
       });
     });

@@ -177,7 +177,7 @@ async function transformDecosZaakResponse<
       return [];
     }
     const fetchLinkedItem = async (decosLinkName: string) => {
-      const r = await fetchLinkedField(
+      const r = await fetchDecosLinkedField(
         requestID,
         decosZaakSource.key,
         decosLinkName
@@ -574,6 +574,9 @@ export async function fetchDecosTermijnen(
   const transformDecosTermijnenResponse = (
     singleTermijnResponseData: DecosTermijnResponse
   ): DecosTermijn[] => {
+    if (!singleTermijnResponseData?.content?.length) {
+      return [];
+    }
     return singleTermijnResponseData.content.map(({ fields }) => ({
       type: fields.subject1,
       dateStart: fields.date4,
@@ -591,12 +594,15 @@ export async function fetchDecosTermijnen(
   return requestData(apiConfigTermijnens, requestID);
 }
 
-export async function fetchLinkedField(
+export async function fetchDecosLinkedField(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   field: string
 ): Promise<ApiResponse<Record<string, unknown>>> {
   const extractContentList = (singleResponseData: DecosLinkedFieldResponse) => {
+    if (!singleResponseData?.content?.length) {
+      return [];
+    }
     return singleResponseData.content.map(({ key, fields }) => ({
       key,
       ...fields,
