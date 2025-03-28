@@ -31,7 +31,10 @@ export async function fetchVakantieverhuurVergunningen(
         const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
-          AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']
+          {
+            appRoute: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+            includeFetchDocumentsUrl: true,
+          }
         );
 
         const steps = getStatusSteps(vergunningTransformed);
