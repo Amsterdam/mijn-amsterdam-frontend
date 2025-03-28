@@ -3,117 +3,91 @@
 exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="AVG persoonsgegevens"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32"
-          viewBox="0 0 32 32"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M0 9C0 13.9706 4.02945 18 9 18V32H32V4H16.4845C14.8699 1.58801 12.1204 0 9 0C4.02945 0 0 4.02942 0 9ZM18 9C18 9.68738 17.9229 10.3568 17.777 11H26V13H17.0645C16.7026 13.7281 16.2451 14.4003 15.7083 15H26V17H15V15.7083C14.4003 16.2451 13.7281 16.7026 13 17.0645V28H28V8H17.9451C17.9814 8.32831 18 8.66199 18 9ZM15 19H26V21H15V19ZM26 23H15V25H26V23ZM9 3C7.34315 3 6 4.34315 6 6V8H5V14H13V8H12V6C12 4.34315 10.6569 3 9 3ZM9 5C8.44772 5 8 5.44772 8 6V8H10V6C10 5.44772 9.55228 5 9 5Z"
-            fill-rule="evenodd"
-          />
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/avg"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          AVG persoonsgegevens
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          AVG verzoek
-        </h2>
-      </div>
-    </header>
-    <div
-      class="ams-screen ams-screen--wide ams-mb--lg"
-    >
-      <div
-        class="ams-grid"
-      >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <section
-            class="ams-alert ams-alert--error"
-          >
-            <div
-              class="ams-alert__icon"
-            >
-              <span
-                class="ams-icon ams-icon--size-4"
-              >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 36 36"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-                  />
-                  <path
-                    d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div
-              class="ams-alert__content"
-            >
-              <h2
-                class="ams-heading ams-heading--level-4"
-              >
-                Foutmelding
-              </h2>
-              <p
-                class="ams-paragraph"
-              >
-                We kunnen op dit moment geen gegevens tonen.
-              </p>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
     <div
       class="ams-grid"
-    />
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/avg"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            AVG verzoek
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <section
+          class="ams-alert ams-alert--error"
+        >
+          <div
+            class="ams-alert__icon"
+          >
+            <span
+              class="ams-icon ams-icon--size-4"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                />
+                <path
+                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="ams-alert__content"
+          >
+            <h2
+              class="ams-heading ams-heading--level-4"
+            >
+              Foutmelding
+            </h2>
+            <p
+              class="ams-paragraph"
+            >
+              We kunnen op dit moment geen gegevens tonen.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
   </main>
 </DocumentFragment>
 `;
@@ -121,296 +95,219 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
 exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _DetailPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="AVG persoonsgegevens"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32"
-          viewBox="0 0 32 32"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M0 9C0 13.9706 4.02945 18 9 18V32H32V4H16.4845C14.8699 1.58801 12.1204 0 9 0C4.02945 0 0 4.02942 0 9ZM18 9C18 9.68738 17.9229 10.3568 17.777 11H26V13H17.0645C16.7026 13.7281 16.2451 14.4003 15.7083 15H26V17H15V15.7083C14.4003 16.2451 13.7281 16.7026 13 17.0645V28H28V8H17.9451C17.9814 8.32831 18 8.66199 18 9ZM15 19H26V21H15V19ZM26 23H15V25H26V23ZM9 3C7.34315 3 6 4.34315 6 6V8H5V14H13V8H12V6C12 4.34315 10.6569 3 9 3ZM9 5C8.44772 5 8 5.44772 8 6V8H10V6C10 5.44772 9.55228 5 9 5Z"
-            fill-rule="evenodd"
-          />
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/avg"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          AVG persoonsgegevens
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          AVG verzoek
-        </h2>
-      </div>
-    </header>
-    <div
-      class="ams-screen ams-screen--wide ams-mb--lg"
-    >
-      <div
-        class="ams-grid"
-      >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <dl
-            class="_Datalist_08bf39"
-          >
-            <dt
-              class="_Datalist__title_08bf39"
-            >
-              Nummer
-            </dt>
-            <dd
-              class="_Datalist__description_08bf39"
-            >
-              223
-            </dd>
-            <dt
-              class="_Datalist__title_08bf39"
-            >
-              Type verzoek
-            </dt>
-            <dd
-              class="_Datalist__description_08bf39"
-            >
-              Verwijderen gegevens
-            </dd>
-            <dt
-              class="_Datalist__title_08bf39"
-            >
-              Onderwerp(en)
-            </dt>
-            <dd
-              class="_Datalist__description_08bf39"
-            >
-              Vergunningen, Enzo
-            </dd>
-          </dl>
-        </div>
-      </div>
-    </div>
     <div
       class="ams-grid"
     >
       <div
-        class="ams-grid__cell ams-grid__cell--span-all"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
         <div
-          class="_StatusLine_a12ff2"
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          <h4
-            class="ams-heading ams-heading--level-4 _ListHeading_a12ff2"
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/avg"
+            title="Terug naar de vorige pagina"
           >
-            Status
-          </h4>
-          <ul
-            class="_List_a12ff2"
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
           >
-            <li
-              class="_ListItem_a12ff2"
+            AVG verzoek
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <dl
+          class="_Datalist_08bf39"
+        >
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Nummer
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            223
+          </dd>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Type verzoek
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Verwijderen gegevens
+          </dd>
+          <dt
+            class="_Datalist__title_08bf39"
+          >
+            Onderwerp(en)
+          </dt>
+          <dd
+            class="_Datalist__description_08bf39"
+          >
+            Vergunningen, Enzo
+          </dd>
+        </dl>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <div
+          class="ams-grid _Steps_78b528"
+        >
+          <div
+            class="ams-grid__cell ams-grid__cell--span-10 ams-grid__cell--start-2"
+          >
+            <h1
+              class="ams-heading ams-heading--level-1"
             >
-              <div
-                class="_ListItemInner_a12ff2"
-              >
-                <div
-                  aria-label="Status aangevinkt."
-                  class="_StatusConnection_a12ff2"
-                >
-                  <span
-                    class="_ConnectLine_a12ff2 _ConnectLine--start-checked_a12ff2"
-                  />
-                  <span
-                    class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-                  />
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--status_a12ff2"
-                >
-                  <strong
-                    class="_StatusTitle_a12ff2"
-                  >
-                    Ontvangen
-                  </strong>
-                  <time
-                    class="_StatusDate_a12ff2"
-                  >
-                    18 maart 2023
-                  </time>
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--description_a12ff2"
-                >
-                  <div
-                    class="_PanelContent_a12ff2"
-                  />
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
-                />
-              </div>
-            </li>
-            <li
-              class="_ListItem_a12ff2"
+              Status
+            </h1>
+          </div>
+          <div
+            class="ams-grid__cell ams-grid__cell--span-10 ams-grid__cell--start-2"
+          >
+            <ol
+              class="ams-ordered-list ams-ordered-list--no-markers _StepsList_78b528"
             >
-              <div
-                class="_ListItemInner_a12ff2"
+              <li
+                class="ams-ordered-list__item _Step_78b528 _Step--checked_78b528"
               >
-                <div
-                  aria-label="Status aangevinkt."
-                  class="_StatusConnection_a12ff2"
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
                 >
                   <span
-                    class="_ConnectLine_a12ff2 _ConnectLine--checked_a12ff2"
-                  />
-                  <span
-                    class="_Checkmark_a12ff2 _Checkmark--checked_a12ff2"
-                  />
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--status_a12ff2"
-                >
-                  <strong
-                    class="_StatusTitle_a12ff2"
+                    aria-label="Status Afgerond"
+                    class="_StepStatusIndication_78b528"
                   >
-                    In behandeling
-                  </strong>
-                  <time
-                    class="_StatusDate_a12ff2"
-                  >
-                    30 mei 2023
-                  </time>
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--description_a12ff2"
+                    <span
+                      aria-label="Status Afgerond"
+                      class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_78b528"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 32 32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  Ontvangen
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime="2023-03-18T00:00:00.000Z"
                 >
-                  <div
-                    class="_PanelContent_a12ff2"
-                  />
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
-                />
-              </div>
-            </li>
-            <li
-              class="_ListItem_a12ff2 _ListItem--highlight_a12ff2"
-            >
-              <div
-                class="_ListItemInner_a12ff2"
+                  18 maart 2023
+                </time>
+              </li>
+              <li
+                class="ams-ordered-list__item _Step_78b528 _Step--checked_78b528"
               >
-                <div
-                  aria-label="Huidige status, aangevinkt."
-                  class="_StatusConnection_a12ff2"
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
                 >
                   <span
-                    class="_ConnectLine_a12ff2 _ConnectLine--middle-checked-next_a12ff2"
-                  />
-                  <span
-                    class="_Checkmark_a12ff2 _Checkmark--active_a12ff2 _Checkmark--checked_a12ff2"
-                  />
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--status_a12ff2"
+                    aria-label="Status Afgerond"
+                    class="_StepStatusIndication_78b528"
+                  >
+                    <span
+                      aria-label="Status Afgerond"
+                      class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_78b528"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 32 32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
+                          fill-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  In behandeling
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime="2023-05-30T00:00:00.000Z"
                 >
-                  <strong
-                    class="_StatusTitle_a12ff2"
-                  >
-                    Extra informatie nodig
-                  </strong>
-                  <time
-                    class="_StatusDate_a12ff2"
-                  >
-                    03 juni 2023
-                  </time>
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--description_a12ff2"
-                >
-                  <div
-                    class="_PanelContent_a12ff2"
-                  >
-                    Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
-                  </div>
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
-                />
-              </div>
-            </li>
-            <li
-              class="_ListItem_a12ff2"
-            >
-              <div
-                class="_ListItemInner_a12ff2"
+                  30 mei 2023
+                </time>
+              </li>
+              <li
+                class="ams-ordered-list__item _Step_78b528 _Step--active_78b528"
               >
-                <div
-                  aria-label="Toekomstige status, nog niet aangevinkt."
-                  class="_StatusConnection_a12ff2"
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
                 >
                   <span
-                    class="_ConnectLine_a12ff2 _ConnectLine--end_a12ff2"
+                    aria-label="Huidige status"
+                    class="_StepStatusIndication_78b528"
                   />
+                  Extra informatie nodig
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime="2023-06-03T00:00:00.000Z"
+                >
+                  03 juni 2023
+                </time>
+                <div>
+                  Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+                </div>
+              </li>
+              <li
+                class="ams-ordered-list__item _Step_78b528"
+              >
+                <h4
+                  class="ams-heading ams-heading--level-4 _StepStatus_78b528"
+                >
                   <span
-                    class="_Checkmark_a12ff2"
+                    aria-label="Toekomstige status"
+                    class="_StepStatusIndication_78b528"
                   />
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--status_a12ff2"
-                >
-                  <strong
-                    class="_StatusTitle_a12ff2"
-                  >
-                    Afgehandeld
-                  </strong>
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--description_a12ff2"
-                >
-                  <div
-                    class="_PanelContent_a12ff2"
-                  />
-                </div>
-                <div
-                  class="_Panel_a12ff2 _Panel--documents_a12ff2"
+                  Afgehandeld
+                </h4>
+                <time
+                  class="_StepStatusDate_78b528"
+                  datetime=""
                 />
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
     </div>

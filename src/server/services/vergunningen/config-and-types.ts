@@ -19,6 +19,7 @@ export type TVMRVVObject = DecosZaakBase &
   WithKentekens &
   WithDateTimeRange & {
     caseType: GetCaseType<'TVMRVVObject'>;
+    description: string | null;
   };
 
 export type EvenementMelding = DecosZaakBase &

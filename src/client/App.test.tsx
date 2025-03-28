@@ -1,7 +1,7 @@
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { vi, describe, it, expect } from 'vitest';
 
-import App from './App';
+import { App } from './App';
 import { bffApi } from '../testing/utils';
 
 const mocks = vi.hoisted(() => {
@@ -50,7 +50,7 @@ describe('App', () => {
 
     const screen = render(<App />);
 
-    expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
+    expect(screen.getAllByText('Mijn Amsterdam').length).toBe(2);
     await screen.findByText('Voor particulieren en eenmanszaken');
     expect(
       screen.getByText('Voor particulieren en eenmanszaken')
@@ -71,15 +71,12 @@ describe('App', () => {
 
     const screen = render(<App />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Mijn Amsterdam')).toBeInTheDocument();
-    });
+    expect(screen.getAllByText('Mijn Amsterdam').length).toBe(2);
+    await screen.findByRole('heading', { name: /Recente berichten/i });
 
-    await screen.findByRole('heading', { name: /actueel/i });
-
-    expect(screen.getByRole('heading', { name: /actueel/i })).toHaveTextContent(
-      'Actueel'
-    );
+    expect(
+      screen.getByRole('heading', { name: /Recente berichten/i })
+    ).toHaveTextContent('Recente berichten');
     expect(
       screen.getByRole('heading', { name: /mijn thema's/i })
     ).toHaveTextContent(/Mijn thema's/gi);

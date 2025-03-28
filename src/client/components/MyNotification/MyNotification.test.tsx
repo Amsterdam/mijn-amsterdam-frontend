@@ -1,14 +1,25 @@
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { MutableSnapshot } from 'recoil';
+import { describe, expect, vi } from 'vitest';
 
+import { MyNotification } from './MyNotification';
 import { Thema } from '../../../universal/config/thema';
-import { MyNotification } from '../../../universal/types';
+import type {
+  AppState,
+  MyNotification as MyNotificationType,
+} from '../../../universal/types';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../../pages/MockApp';
 
-describe('<MyNotifications />', () => {
+function initializeState(testState: AppState) {
+  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
+}
+
+describe('<MyNotification />', () => {
   const callback = vi.fn();
 
-  const NOTIFICATIONS: MyNotification[] = [
+  const NOTIFICATIONS: MyNotificationType[] = [
     {
       id: 'test-notification',
       thema: 'TEST_THEMA' as Thema,
@@ -37,11 +48,80 @@ describe('<MyNotifications />', () => {
     },
   ];
 
-  it('Tests custom link with callback', async () => {
+  function Component() {
+    return (
+      <MockApp
+        routeEntry="/"
+        routePath="/"
+        component={() => (
+          <>
+            <MyNotification notification={NOTIFICATIONS[0]} />
+            <MyNotification notification={NOTIFICATIONS[1]} />
+          </>
+        )}
+        initializeState={initializeState({} as unknown as AppState)}
+      />
+    );
+  }
+
+  test('Tests custom link with callback', async () => {
     const user = userEvent.setup();
 
-    expect(screen.getByText('Custom test link')).toBeInTheDocument();
-    await user.click(screen.getByText('Custom test link'));
+    render(<Component />);
+
+    expect(screen.getByText(/Custom test link/)).toBeInTheDocument();
+    await user.click(screen.getByText(/Custom test link/));
     expect(callback).toHaveBeenCalled();
+
+    expect(
+      screen.getByText(/A text related to this notification/)
+    ).toBeInTheDocument();
+  });
+
+  function ComponentSmall() {
+    return (
+      <MockApp
+        routeEntry="/"
+        routePath="/"
+        component={() => (
+          <>
+            <MyNotification smallVariant notification={NOTIFICATIONS[0]} />
+            <MyNotification smallVariant notification={NOTIFICATIONS[1]} />
+          </>
+        )}
+        initializeState={initializeState({} as unknown as AppState)}
+      />
+    );
+  }
+
+  test('Small variant', async () => {
+    const user = userEvent.setup();
+
+    render(<ComponentSmall />);
+
+    const title = /Bekijk inhoud van de melding Second Test notification/;
+    const description = /A second text related to this notification/;
+
+    expect(screen.getByTitle(title).getAttribute('aria-expanded')).toBe(
+      'false'
+    );
+
+    expect(screen.queryByText(description)).not.toBeInTheDocument();
+
+    expect(
+      await screen.queryByText(/Custom test link/)
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByTitle(title));
+
+    await user.click(screen.getByText(/Custom test link/));
+
+    expect(callback).toHaveBeenCalled();
+
+    expect(screen.getByTitle(title).getAttribute('aria-expanded')).toBe('true');
+
+    expect(
+      screen.getByText(/A second text related to this notification/)
+    ).toBeInTheDocument();
   });
 });

@@ -11,7 +11,6 @@ import {
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
 import { TrackingConfig } from '../../config/routes';
-import { ThemaTitles } from '../../config/thema';
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
@@ -101,29 +100,29 @@ export const rederRegistratieLink: LinkProps = {
   title: 'Onderneming registreren',
 } as const;
 
-export function getVarenListPageDocumentTitle() {
+export function getVarenListPageDocumentTitle(themaTitle: string) {
   return <T extends Record<string, string>>(
     config: TrackingConfig,
     params: T | null
   ) => {
     const kind = params?.kind as ListPageParamKind;
     return kind in tableConfig
-      ? `${tableConfig[kind].title} | ${ThemaTitles.VAREN}`
-      : ThemaTitles.VAREN;
+      ? `${tableConfig[kind].title} | ${themaTitle}`
+      : themaTitle;
   };
 }
-export function getVarenDetailPageDocumentTitle() {
+export function getVarenDetailPageDocumentTitle(themaTitle: string) {
   return <T extends Record<string, string>>(
     config: TrackingConfig,
     params: T | null
   ) => {
     switch (params?.caseType) {
       case 'ligplaatsvergunning':
-        return `Ligplaatsvergunning | ${ThemaTitles.VAREN}`;
+        return `Ligplaatsvergunning | ${themaTitle}`;
       case 'exploitatievergunning':
-        return `Exploitatievergunning | ${ThemaTitles.VAREN}`;
+        return `Exploitatievergunning | ${themaTitle}`;
       default:
-        return `Vergunning | ${ThemaTitles.VAREN}`;
+        return `Vergunning | ${themaTitle}`;
     }
   };
 }

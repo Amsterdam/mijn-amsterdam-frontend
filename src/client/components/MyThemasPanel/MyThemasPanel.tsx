@@ -30,7 +30,6 @@ function ThemaLinkLoader({ width }: ThemaLinkLoaderProps) {
 export interface MyThemasPanelProps {
   items: ThemaMenuItemTransformed[];
   isLoading: boolean;
-  trackCategory: string;
 }
 
 export function MyThemasPanel({

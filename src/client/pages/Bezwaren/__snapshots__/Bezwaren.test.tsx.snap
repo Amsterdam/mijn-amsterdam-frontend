@@ -3,241 +3,139 @@
 exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives no result 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Bezwaren"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32"
-          viewBox="0 0 32 32"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 19H26V21H15V19Z"
-          />
-          <path
-            d="M26 23H15V25H26V23Z"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M9 18C4.02945 18 0 13.9706 0 9C0 4.02942 4.02945 0 9 0C12.1204 0 14.8699 1.58801 16.4845 4H32V32H9V18ZM17.777 11C17.9229 10.3568 18 9.68738 18 9C18 8.66199 17.9814 8.32831 17.9451 8H28V28H13V17.0645C13.7281 16.7026 14.4003 16.2451 15 15.7083V17H26V15H15.7083C16.2451 14.4003 16.7026 13.7281 17.0645 13H26V11H17.777Z"
-            fill-rule="evenodd"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="7"
-            width="2"
-            x="8"
-            y="3"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="2"
-            transform="matrix(1 0 0 -1 8 14)"
-            width="2"
-          />
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Bezwaren
-        </h2>
-      </div>
-    </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid"
     >
-      <p>
-        Hier ziet u een overzicht van uw ingediende bezwaren.
-      </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Meer informatie over Bezwaar maken
-        </a>
-      </p>
-      <section
-        class="ams-alert ams-alert--error"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
         <div
-          class="ams-alert__icon"
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          <span
-            class="ams-icon ams-icon--size-4"
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
           >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 36 36"
-              xmlns="http://www.w3.org/2000/svg"
+            <span
+              class="ams-icon ams-icon--size-5"
             >
-              <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-              />
-            </svg>
-          </span>
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Bezwaren
+          </h3>
         </div>
-        <div
-          class="ams-alert__content"
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <p
+          class="ams-paragraph"
         >
-          <h2
-            class="ams-heading ams-heading--level-4"
+          Hier ziet u een overzicht van uw ingediende bezwaren.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <ul
+          class="ams-link-list"
+        >
+          <li>
+            <a
+              class="ams-link-list__link"
+              href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
+              rel="noreferrer"
+            >
+              <span
+                class="ams-icon ams-icon--size-5"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              Meer informatie over Bezwaar maken
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Lopende bezwaren
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
           >
-            Foutmelding
-          </h2>
-          <p
-            class="ams-paragraph"
-          >
-            We kunnen op dit moment geen bezwaren tonen.
-          </p>
+            <tbody
+              class="ams-table__body"
+            />
+          </table>
         </div>
-      </section>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Afgehandelde bezwaren
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
+          >
+            <tbody
+              class="ams-table__body"
+            />
+          </table>
+        </div>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft nog geen afgehandelde bezwaren.
+        </p>
+      </div>
     </div>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Lopende bezwaren
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
-      >
-        <div
-          class="_PanelInner_b93dc7"
-        >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.
-          </p>
-        </div>
-      </div>
-    </section>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Afgehandelde bezwaren
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
-      >
-        <div
-          class="_PanelInner_b93dc7"
-        >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft nog geen afgehandelde bezwaren.
-          </p>
-        </div>
-      </div>
-    </section>
   </main>
 </DocumentFragment>
 `;
@@ -245,202 +143,139 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
 exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are no requests 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Bezwaren"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32"
-          viewBox="0 0 32 32"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 19H26V21H15V19Z"
-          />
-          <path
-            d="M26 23H15V25H26V23Z"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M9 18C4.02945 18 0 13.9706 0 9C0 4.02942 4.02945 0 9 0C12.1204 0 14.8699 1.58801 16.4845 4H32V32H9V18ZM17.777 11C17.9229 10.3568 18 9.68738 18 9C18 8.66199 17.9814 8.32831 17.9451 8H28V28H13V17.0645C13.7281 16.7026 14.4003 16.2451 15 15.7083V17H26V15H15.7083C16.2451 14.4003 16.7026 13.7281 17.0645 13H26V11H17.777Z"
-            fill-rule="evenodd"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="7"
-            width="2"
-            x="8"
-            y="3"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="2"
-            transform="matrix(1 0 0 -1 8 14)"
-            width="2"
-          />
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Bezwaren
-        </h2>
-      </div>
-    </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid"
     >
-      <p>
-        Hier ziet u een overzicht van uw ingediende bezwaren.
-      </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          rel="external noopener noreferrer"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      >
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
           >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Bezwaren
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <p
+          class="ams-paragraph"
+        >
+          Hier ziet u een overzicht van uw ingediende bezwaren.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <ul
+          class="ams-link-list"
+        >
+          <li>
+            <a
+              class="ams-link-list__link"
+              href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
+              rel="noreferrer"
+            >
+              <span
+                class="ams-icon ams-icon--size-5"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              Meer informatie over Bezwaar maken
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Lopende bezwaren
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
+          >
+            <tbody
+              class="ams-table__body"
             />
-          </svg>
-          Meer informatie over Bezwaar maken
-        </a>
-      </p>
+          </table>
+        </div>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Afgehandelde bezwaren
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
+          >
+            <tbody
+              class="ams-table__body"
+            />
+          </table>
+        </div>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft nog geen afgehandelde bezwaren.
+        </p>
+      </div>
     </div>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Lopende bezwaren
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
-      >
-        <div
-          class="_PanelInner_b93dc7"
-        >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.
-          </p>
-        </div>
-      </div>
-    </section>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Afgehandelde bezwaren
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
-      >
-        <div
-          class="_PanelInner_b93dc7"
-        >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft nog geen afgehandelde bezwaren.
-          </p>
-        </div>
-      </div>
-    </section>
   </main>
 </DocumentFragment>
 `;
@@ -448,281 +283,181 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
 exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are requests 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Bezwaren"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32"
-          viewBox="0 0 32 32"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 19H26V21H15V19Z"
-          />
-          <path
-            d="M26 23H15V25H26V23Z"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M9 18C4.02945 18 0 13.9706 0 9C0 4.02942 4.02945 0 9 0C12.1204 0 14.8699 1.58801 16.4845 4H32V32H9V18ZM17.777 11C17.9229 10.3568 18 9.68738 18 9C18 8.66199 17.9814 8.32831 17.9451 8H28V28H13V17.0645C13.7281 16.7026 14.4003 16.2451 15 15.7083V17H26V15H15.7083C16.2451 14.4003 16.7026 13.7281 17.0645 13H26V11H17.777Z"
-            fill-rule="evenodd"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="7"
-            width="2"
-            x="8"
-            y="3"
-          />
-          <rect
-            fill="#D9D9D9"
-            height="2"
-            transform="matrix(1 0 0 -1 8 14)"
-            width="2"
-          />
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Bezwaren
-        </h2>
-      </div>
-    </header>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid"
     >
-      <p>
-        Hier ziet u een overzicht van uw ingediende bezwaren.
-      </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Meer informatie over Bezwaar maken
-        </a>
-      </p>
-    </div>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Lopende bezwaren
-        </button>
-      </h3>
       <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
         <div
-          class="_PanelInner_b93dc7"
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
+        >
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Bezwaren
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <p
+          class="ams-paragraph"
+        >
+          Hier ziet u een overzicht van uw ingediende bezwaren.
+        </p>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <ul
+          class="ams-link-list"
+        >
+          <li>
+            <a
+              class="ams-link-list__link"
+              href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
+              rel="noreferrer"
+            >
+              <span
+                class="ams-icon ams-icon--size-5"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </span>
+              Meer informatie over Bezwaar maken
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <h3
+          class="ams-heading ams-heading--level-2"
+        >
+          Lopende bezwaren
+        </h3>
+        <div
+          class="ams-table"
         >
           <table
-            class="_Table_a66dcc _DocumentsTable_995d68"
+            class="ams-table__table _TableV2_4c6825"
           >
-            <thead>
+            <thead
+              class="ams-table__header"
+            >
               <tr
-                class="_TableRow_a66dcc"
+                class="ams-table__row"
               >
                 <th
-                  class="_DisplayProp_a66dcc"
+                  class="ams-table__header-cell"
                 >
                   Zaaknummer
                 </th>
                 <th
-                  class="_DisplayProp_a66dcc"
+                  class="ams-table__header-cell"
                 >
                   Ontvangen op
                 </th>
                 <th
-                  class="_DisplayProp_a66dcc"
+                  class="ams-table__header-cell"
                 >
                   Onderwerp
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody
+              class="ams-table__body"
+            >
               <tr
-                class="_TableRow_a66dcc"
+                class="ams-table__row"
               >
                 <td
-                  class="_DisplayProp_a66dcc"
+                  class="ams-table__cell"
                 >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Zaaknummer:
-                  </span>
                   <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
                     href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
+                    title="Bekijk meer over BI.21.014121.001"
                   >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
                     BI.21.014121.001
                   </a>
                 </td>
                 <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Ontvangen op:
-                  </span>
-                  <span />
-                </td>
+                  class="ams-table__cell"
+                />
                 <td
-                  class="_DisplayProp_a66dcc"
+                  class="ams-table__cell"
                 >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Onderwerp:
-                  </span>
-                  <span>
-                    Korte omschrijving van het bezwaar
-                  </span>
+                  Korte omschrijving van het bezwaar
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    </section>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_995d68"
-    >
-      <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
-      >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Afgehandelde bezwaren
-        </button>
-      </h3>
       <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
-        <div
-          class="_PanelInner_b93dc7"
+        <h3
+          class="ams-heading ams-heading--level-2"
         >
-          <p
-            class="_NoItemsMessage_b93dc7"
+          Afgehandelde bezwaren
+        </h3>
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825"
           >
-            U heeft nog geen afgehandelde bezwaren.
-          </p>
+            <tbody
+              class="ams-table__body"
+            />
+          </table>
         </div>
+        <p
+          class="ams-paragraph"
+        >
+          U heeft nog geen afgehandelde bezwaren.
+        </p>
       </div>
-    </section>
+    </div>
   </main>
 </DocumentFragment>
 `;

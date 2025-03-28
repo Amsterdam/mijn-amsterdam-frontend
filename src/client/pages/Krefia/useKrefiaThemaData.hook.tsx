@@ -3,6 +3,7 @@ import { KrefiaDeepLink } from '../../../server/services';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 const kredietBankLink: LinkProps = {
@@ -49,6 +50,6 @@ export function useKrefiaThemaData() {
     isLoading: isLoading(KREFIA),
     linkListItems,
     tableConfig: krefiaTableConfig,
-    title: 'Krefia',
+    title: ThemaTitles.KREFIA,
   };
 }

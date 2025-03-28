@@ -9,7 +9,6 @@ import {
 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { TrackingConfig } from '../../config/routes';
-import { ThemaTitles } from '../../config/thema';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
@@ -64,14 +63,14 @@ export const tableConfig = {
   },
 } as const;
 
-export function getBezwarenListPageDocumentTitle() {
+export function getBezwarenListPageDocumentTitle(themaTitle: string) {
   return <T extends Record<string, string>>(
     config: TrackingConfig,
     params: T | null
   ) => {
     const kind = params?.kind as ListPageParamKind;
     return kind in tableConfig
-      ? `${tableConfig[kind].title} | ${ThemaTitles.BEZWAREN}`
-      : ThemaTitles.BEZWAREN;
+      ? `${tableConfig[kind].title} | ${themaTitle}`
+      : themaTitle;
   };
 }
