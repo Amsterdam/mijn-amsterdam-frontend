@@ -185,7 +185,6 @@ export type DecosZakenSourceFilter = (
   decosZaakSource: DecosZaakSource
 ) => boolean;
 
-
 export type DecosZaakBase = {
   caseType: string;
   dateDecision: string | null;
@@ -213,13 +212,16 @@ export type DecosZaakBase = {
   // WorkflowStep statusses
   statusDates: ZaakStatusDate[];
   termijnDates: ZaakTermijnDate[];
-}
+};
+
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
+
 export type ZaakStatus =
   | 'Ontvangen'
   | 'In behandeling'
   | 'Afgehandeld'
   | SomeOtherString;
+
 export type ZaakStatusDate = {
   status: ZaakStatus;
   datePublished: string | null;
@@ -231,7 +233,7 @@ export type ZaakTermijnDate = {
   dateEnd: string;
 };
 
-export interface DecosZaakWithLocation extends DecosZaakBase {
+export type WithLocation = {
   location: string | null;
 };
 
