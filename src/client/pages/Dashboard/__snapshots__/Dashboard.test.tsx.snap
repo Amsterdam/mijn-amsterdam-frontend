@@ -220,67 +220,68 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
             >
               <p
                 class="ams-paragraph ams-mb--xs"
-              />
-              <div>
-                
-      
-                <p>
+              >
+                <span>
                   
+      
+                </span>
+              </p>
+              <p>
+                
         De persoonlijke digitale pagina voor burgers en ondernemers bij de
         gemeente Amsterdam. Hier ziet u op 1 centrale plek:
       
-                </p>
-                
+              </p>
+              
       
-                <ul>
-                  
+              <ul>
+                
         
-                  <li>
-                    welke gegevens de gemeente van u heeft vastgelegd; 
-                  </li>
-                  
+                <li>
+                  welke gegevens de gemeente van u heeft vastgelegd; 
+                </li>
+                
         
-                  <li>
-                    hoe het met uw aanvraag staat; 
-                  </li>
-                  
+                <li>
+                  hoe het met uw aanvraag staat; 
+                </li>
+                
         
-                  <li>
-                    hoe u wijzigingen kunt doorgeven als er iets niet klopt;
-                  </li>
-                  
+                <li>
+                  hoe u wijzigingen kunt doorgeven als er iets niet klopt;
+                </li>
+                
         
-                  <li>
-                    
+                <li>
+                  
           informatie over uw buurt op een overzichtelijke
           
-                    <a
-                      href="/buurt"
-                    >
-                      kaart
-                    </a>
-                    .
+                  <a
+                    href="/buurt"
+                  >
+                    kaart
+                  </a>
+                  .
         
-                  </li>
-                  
-      
-                </ul>
+                </li>
                 
       
-                <p>
-                  
+              </ul>
+              
+      
+              <p>
+                
         
-                  <a
-                    href="/uitleg"
-                  >
-                    Hier
-                  </a>
-                   kunt u
+                <a
+                  href="/uitleg"
+                >
+                  Hier
+                </a>
+                 kunt u
         zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam
         wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
       
-                </p>
-              </div>
+              </p>
               <p />
               <p
                 class="ams-paragraph"
