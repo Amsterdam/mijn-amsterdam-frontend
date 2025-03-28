@@ -32,7 +32,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,
-    VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -166,7 +165,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.VERGUNNINGEN:
       return (
         (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length) ||
-        (!isLoading(VERGUNNINGENv2) && !!VERGUNNINGENv2.content?.length)
+        (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length)
       );
 
     case Themas.KVK:

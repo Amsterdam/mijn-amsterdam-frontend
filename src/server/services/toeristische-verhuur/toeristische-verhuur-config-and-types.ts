@@ -9,8 +9,8 @@ import {
   SELECT_FIELDS_TRANSFORM_BASE,
   location,
 } from '../decos/decos-types';
-import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
-import { caseNotificationLabelsExpirables } from '../vergunningen-v2/vergunningen-notification-labels';
+import { VergunningFrontendV2 } from '../vergunningen/config-and-types';
+import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
 export interface VakantieverhuurVergunningaanvraag
   extends DecosZaakWithLocation,

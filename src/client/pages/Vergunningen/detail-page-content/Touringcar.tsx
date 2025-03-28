@@ -1,7 +1,7 @@
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
-} from '../../../../server/services/vergunningen-v2/config-and-types';
+} from '../../../../server/services/vergunningen/config-and-types';
 import {
   dateTimeFormatYear,
   defaultDateFormat,

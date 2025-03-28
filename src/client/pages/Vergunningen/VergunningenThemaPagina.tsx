@@ -3,7 +3,7 @@ import { generatePath } from 'react-router-dom';
 
 import { tableConfig } from './Vergunningen-thema-config';
 import styles from './Vergunningen.module.scss';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { LinkProps } from '../../../universal/types';
@@ -15,9 +15,9 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function VergunningenThemaPagina() {
-  const { VERGUNNINGENv2 } = useAppStateGetter();
+  const { VERGUNNINGEN } = useAppStateGetter();
   const vergunningen = addLinkElementToProperty<VergunningFrontendV2>(
-    VERGUNNINGENv2.content ?? [],
+    VERGUNNINGEN.content ?? [],
     'title'
   );
 
@@ -84,8 +84,8 @@ export function VergunningenThemaPagina() {
       linkListItems={linkListItems}
       pageContentBottom={pageContentBottom}
       pageContentMain={tables}
-      isError={isError(VERGUNNINGENv2)}
-      isLoading={isLoading(VERGUNNINGENv2)}
+      isError={isError(VERGUNNINGEN)}
+      isLoading={isLoading(VERGUNNINGEN)}
     />
   );
 }

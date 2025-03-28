@@ -40,7 +40,7 @@ import { fetchSVWI } from './simple-connect/svwi';
 import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVaren } from './varen/varen';
-import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
+import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {
   fetchBbz,
@@ -136,7 +136,7 @@ const PROFILE = callAuthenticatedService(fetchProfile);
 const SVWI = callAuthenticatedService(fetchSVWI);
 const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
 const VAREN = callAuthenticatedService(fetchVaren);
-const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
+const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
 const WMO = callAuthenticatedService(fetchWmo);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);
@@ -201,7 +201,7 @@ const SERVICES_INDEX = {
   KLANT_CONTACT,
   TOERISTISCHE_VERHUUR,
   VAREN,
-  VERGUNNINGENv2,
+  VERGUNNINGEN,
   WMO,
   WPI_AANVRAGEN,
   WPI_BBZ,
@@ -242,7 +242,7 @@ type CommercialServices = Pick<
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
   | 'VAREN'
-  | 'VERGUNNINGENv2'
+  | 'VERGUNNINGEN'
 >;
 
 type ServicesByProfileType = {
@@ -279,7 +279,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
-    VERGUNNINGENv2,
+    VERGUNNINGEN,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -313,7 +313,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VAREN,
-    VERGUNNINGENv2,
+    VERGUNNINGEN,
   },
 };
 
