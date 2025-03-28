@@ -2,13 +2,13 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import { GarbageFractionData } from '../../../server/services/afval/afvalwijzer';
+import { AfvalInformation } from './Afval';
+import { AfvalFractionData } from '../../../server/services/afval/afvalwijzer';
 import { AppRoutes } from '../../../universal/config/routes';
 import { jsonCopy } from '../../../universal/helpers/utils';
+import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import GarbageInformation from './GarbageInformation';
-import { AppState } from '../../../universal/types';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
 
@@ -154,7 +154,7 @@ function initializeState(snapshot: MutableSnapshot, state: any = testState) {
   snapshot.set(appStateAtom, state);
 }
 
-describe('<GarbageInformation />', () => {
+describe('<AfvalInformation />', () => {
   const routeEntry = generatePath(AppRoutes.AFVAL);
   const routePath = AppRoutes.AFVAL;
 
@@ -163,7 +163,7 @@ describe('<GarbageInformation />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={GarbageInformation}
+        component={AfvalInformation}
         initializeState={(snapshot) => initializeState(snapshot)}
       />
     );
@@ -184,7 +184,7 @@ describe('<GarbageInformation />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={GarbageInformation}
+          component={AfvalInformation}
           initializeState={(snapshot) => initializeState(snapshot, testState2)}
         />
       );
@@ -197,7 +197,7 @@ describe('<GarbageInformation />', () => {
   it('Does not show warning concercing woonfunctie', () => {
     const testState2 = jsonCopy(testState);
     testState2.AFVAL.content = testState2.AFVAL.content.map(
-      (fractie: GarbageFractionData) => ({
+      (fractie: AfvalFractionData) => ({
         ...fractie,
         gebruiksdoelWoonfunctie: true,
       })
@@ -208,7 +208,7 @@ describe('<GarbageInformation />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={GarbageInformation}
+          component={AfvalInformation}
           initializeState={(snapshot) => initializeState(snapshot, testState2)}
         />
       );
