@@ -4,10 +4,9 @@ import { Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
-import { ComponentChildren } from '../../../universal/types';
 
 interface ModalProps {
-  children: ComponentChildren;
+  children: ReactNode;
   closeButtonLabel?: string;
   actions?: ReactNode;
   className?: string;
