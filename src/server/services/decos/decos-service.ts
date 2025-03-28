@@ -23,6 +23,7 @@ import {
   DecosTermijnResponse,
   DecosTermijn,
   DecosTermijnType,
+  WithDateRange,
 } from './config-and-types';
 import {
   SELECT_FIELDS_META,
@@ -32,7 +33,6 @@ import {
 import { CASE_TYP_FIELD_DECOS } from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
-  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
   toDateFormatted,
@@ -774,10 +774,6 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   const zaakFrontend: DecosZaakFrontend<T> = {
     ...zaak,
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
-    dateInBehandeling: getStatusDate('In behandeling', zaak),
-    dateInBehandelingFormatted: toDateFormatted(
-      getStatusDate('In behandeling', zaak)
-    ),
     dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
     steps: [], // NOTE: Assign Status steps later on
     displayStatus: zaak.status, // NOTE: This is a placeholder, the actual status is assigned later on.
@@ -804,9 +800,14 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     zaak.dateStart &&
     zaak.dateEnd
   ) {
-    zaakFrontend.isExpired = isExpired(zaak);
-    zaakFrontend.dateStartFormatted = defaultDateFormat(zaak.dateStart);
-    zaakFrontend.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
+    const zaakFrontendWithExpiry = zaakFrontend as unknown as DecosZaakFrontend<
+      DecosZaakBase & WithDateRange
+    >;
+    zaakFrontendWithExpiry.isExpired = isExpired(zaakFrontendWithExpiry);
+    zaakFrontendWithExpiry.dateStartFormatted = defaultDateFormat(
+      zaak.dateStart
+    );
+    zaakFrontendWithExpiry.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
   }
 
   return zaakFrontend;
