@@ -11,6 +11,7 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers/api';
+import { LinkProps } from '../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -65,6 +66,31 @@ export function useToeristischeVerhuurThemaData() {
     'lvvRegistraties'
   );
 
+  const linkListItems: LinkProps[] = [
+    {
+      title: 'Meer over toeristenbelasting',
+      to: 'https://www.amsterdam.nl/veelgevraagd/toeristenbelasting-2c7c2',
+    },
+    {
+      title: 'Vakantieverhuur melden of registratienummer aanvragen',
+      to: 'https://www.toeristischeverhuur.nl/portaal/login',
+    },
+  ];
+
+  if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
+    linkListItems.unshift({
+      title: 'Meer informatie over bed & breakfast',
+      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/',
+    });
+  }
+
+  if (hasVergunningenVakantieVerhuur) {
+    linkListItems.unshift({
+      title: 'Meer informatie over particuliere vakantieverhuur',
+      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
+    });
+  }
+
   return {
     vergunningen,
     lvvRegistraties,
@@ -84,5 +110,6 @@ export function useToeristischeVerhuurThemaData() {
     hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasVergunningBB,
+    linkListItems,
   };
 }
