@@ -95,7 +95,9 @@ describe('ParkerenList', () => {
 
   it('should render the component and show the correct title', () => {
     render(<Component />);
-    expect(screen.getByText('Lopende aanvragen')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Lopende aanvragen' })
+    ).toBeInTheDocument();
   });
 
   it('should display the list of parkeervergunningen', async () => {

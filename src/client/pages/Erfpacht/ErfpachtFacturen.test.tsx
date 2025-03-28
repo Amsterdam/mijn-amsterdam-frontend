@@ -48,6 +48,7 @@ describe('<ErfpachtOpenFacturen />', () => {
     bffApi
       .get('/services/erfpachtv2/dossier/E.123.123')
       .reply(200, { content: null, status: 'OK' });
+
     const testState = {
       ERFPACHTv2: {
         status: 'OK',
@@ -64,7 +65,9 @@ describe('<ErfpachtOpenFacturen />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Alle facturen')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: 'Facturen' })
+      ).toBeInTheDocument();
       expect(screen.getByText('U heeft geen facturen.')).toBeInTheDocument();
     });
   });
@@ -93,9 +96,11 @@ describe('<ErfpachtOpenFacturen />', () => {
     );
 
     await waitFor(async () => {
-      expect(screen.getByText('Alle facturen')).toBeInTheDocument();
       expect(
-        screen.queryByText('U heeft geen facturen.')
+        screen.getByRole('heading', { name: 'Facturen' })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('U heeft (nog) geen facturen.')
       ).not.toBeInTheDocument();
 
       const facturenPage1 = [
@@ -115,10 +120,7 @@ describe('<ErfpachtOpenFacturen />', () => {
         expect(screen.getByText(factuur.factuurNummer)).toBeInTheDocument();
       }
 
-      expect(screen.getByText('volgende')).toBeInTheDocument();
-      user.click(screen.getByText('volgende'));
-
-      expect(screen.getByText('vorige')).toBeInTheDocument();
+      expect(screen.queryByText('volgende')).not.toBeInTheDocument();
     });
 
     await waitFor(() => {

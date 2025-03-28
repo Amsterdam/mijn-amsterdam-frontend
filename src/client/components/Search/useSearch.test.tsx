@@ -221,6 +221,7 @@ describe('Search hooks and helpers', () => {
     const config = apiSearchConfigs.find(
       (config) => config.stateKey === 'KREFIA'
     )!;
+
     const remoteConfig = {
       keywords: [
         'lening',
@@ -231,6 +232,7 @@ describe('Search hooks and helpers', () => {
         'budgetbeheer',
       ],
     };
+
     const origVal = config.isEnabled;
     config.isEnabled = false;
 
@@ -244,8 +246,11 @@ describe('Search hooks and helpers', () => {
         ...remoteConfig,
       },
     ]);
+
     expect(pageEntries).toMatchInlineSnapshot('[]');
+
     config.isEnabled = true;
+
     const pageEntriesEnabled = generateSearchIndexPageEntries(
       'private',
       appState,
@@ -256,6 +261,7 @@ describe('Search hooks and helpers', () => {
         },
       ]
     );
+
     expect(pageEntriesEnabled).toMatchInlineSnapshot(`
       [
         {
@@ -306,7 +312,7 @@ describe('Search hooks and helpers', () => {
   });
 
   test('useSearchIndex <failure>', async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject() as any);
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject());
 
     const wrapper = ({ children }: { children: ReactNode }) => (
       <RecoilRoot
@@ -314,6 +320,7 @@ describe('Search hooks and helpers', () => {
           snapshot.set(appStateAtom, {
             VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
           } as AppState);
+
           snapshot.set(requestID, 1);
         }}
       >

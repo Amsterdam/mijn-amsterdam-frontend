@@ -44,16 +44,13 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         >
           <article>
             <header
-              class=""
+              class="ams-mb--xs"
             >
-              <a
-                aria-expanded="false"
-                class="ams-link ams-link--standalone _HeaderLink_e4b76a _MaRouterLink__no-underline-fat_aa758a"
-                href="/item-1"
-                title="Bekijk inhoud van de melding Notification"
+              <h4
+                class="ams-heading ams-heading--level-4"
               >
                 Notification
-              </a>
+              </h4>
               <div
                 class="_MetaInfoSecondary_e4b76a"
               >
@@ -71,6 +68,26 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </time>
               </div>
             </header>
+            <div
+              class="_Body_e4b76a"
+            >
+              <p
+                class="ams-paragraph ams-mb--xs"
+              >
+                Notificatie1
+              </p>
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="/item-1"
+                  title="Meer informatie over de melding: Notification"
+                >
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </article>
         </li>
         <li
@@ -78,16 +95,13 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         >
           <article>
             <header
-              class=""
+              class="ams-mb--xs"
             >
-              <a
-                aria-expanded="false"
-                class="ams-link ams-link--standalone _HeaderLink_e4b76a _MaRouterLink__no-underline-fat_aa758a"
-                href="/item-2"
-                title="Bekijk inhoud van de melding Notification"
+              <h4
+                class="ams-heading ams-heading--level-4"
               >
                 Notification
-              </a>
+              </h4>
               <div
                 class="_MetaInfoSecondary_e4b76a"
               >
@@ -105,6 +119,26 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </time>
               </div>
             </header>
+            <div
+              class="_Body_e4b76a"
+            >
+              <p
+                class="ams-paragraph ams-mb--xs"
+              >
+                Notificatie2
+              </p>
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="/item-2"
+                  title="Meer informatie over de melding: Notification"
+                >
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </article>
         </li>
         <li
@@ -112,16 +146,13 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         >
           <article>
             <header
-              class=""
+              class="ams-mb--xs"
             >
-              <a
-                aria-expanded="false"
-                class="ams-link ams-link--standalone _HeaderLink_e4b76a _MaRouterLink__no-underline-fat_aa758a"
-                href="/item-3"
-                title="Bekijk inhoud van de melding Notification"
+              <h4
+                class="ams-heading ams-heading--level-4"
               >
-                ⚠ Notification
-              </a>
+                Notification
+              </h4>
               <div
                 class="_MetaInfoSecondary_e4b76a"
               >
@@ -139,6 +170,26 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </time>
               </div>
             </header>
+            <div
+              class="_Body_e4b76a"
+            >
+              <p
+                class="ams-paragraph ams-mb--xs"
+              >
+                Notificatie3
+              </p>
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="/item-3"
+                  title="Meer informatie over de melding: Notification"
+                >
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </article>
         </li>
         <li
@@ -146,15 +197,13 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         >
           <article>
             <header
-              class=""
+              class="ams-mb--xs"
             >
-              <a
-                aria-expanded="false"
-                class="ams-link ams-link--standalone _HeaderLink_e4b76a _MaRouterLink__no-underline-fat_aa758a"
-                title="Bekijk inhoud van de melding Welkom op Mijn Amsterdam!"
+              <h4
+                class="ams-heading ams-heading--level-4"
               >
                 Welkom op Mijn Amsterdam!
-              </a>
+              </h4>
               <div
                 class="_MetaInfoSecondary_e4b76a"
               >
@@ -166,6 +215,85 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                  
               </div>
             </header>
+            <div
+              class="_Body_e4b76a"
+            >
+              <p
+                class="ams-paragraph ams-mb--xs"
+              />
+              <div>
+                
+      
+                <p>
+                  
+        De persoonlijke digitale pagina voor burgers en ondernemers bij de
+        gemeente Amsterdam. Hier ziet u op 1 centrale plek:
+      
+                </p>
+                
+      
+                <ul>
+                  
+        
+                  <li>
+                    welke gegevens de gemeente van u heeft vastgelegd; 
+                  </li>
+                  
+        
+                  <li>
+                    hoe het met uw aanvraag staat; 
+                  </li>
+                  
+        
+                  <li>
+                    hoe u wijzigingen kunt doorgeven als er iets niet klopt;
+                  </li>
+                  
+        
+                  <li>
+                    
+          informatie over uw buurt op een overzichtelijke
+          
+                    <a
+                      href="/buurt"
+                    >
+                      kaart
+                    </a>
+                    .
+        
+                  </li>
+                  
+      
+                </ul>
+                
+      
+                <p>
+                  
+        
+                  <a
+                    href="/uitleg"
+                  >
+                    Hier
+                  </a>
+                   kunt u
+        zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam
+        wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
+      
+                </p>
+              </div>
+              <p />
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="#"
+                  title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
+                >
+                  Laat ons weten wat u ervan vindt
+                </a>
+              </p>
+            </div>
           </article>
         </li>
       </ol>

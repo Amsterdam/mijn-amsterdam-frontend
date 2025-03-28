@@ -7,7 +7,6 @@ import { MijnBedrijfsGegevensThema } from './ProfileCommercial';
 import { KVKData } from '../../../../server/services/kvk';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { AppState } from '../../../../universal/types';
-import { ThemaTitles } from '../../../config/thema';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
@@ -201,8 +200,6 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
-const PAGE_TITLE = ThemaTitles.KVK;
-
 const panelHeadings = [
   'Onderneming',
   'Hoofdvestiging',
@@ -233,7 +230,11 @@ describe('<MijnBedrijfsGegevensThema />', () => {
     render(<Component />);
     const user = userEvent.setup();
 
-    expect(screen.getByText(PAGE_TITLE)).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: 'Mijn onderneming',
+      })
+    ).toBeInTheDocument();
 
     panelHeadings.forEach((heading) => {
       expect(screen.getByText(heading)).toBeInTheDocument();
