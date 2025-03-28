@@ -107,7 +107,7 @@ function BezwarenDetailPartial({ uuidEncrypted }: BezwarenDetailPartialProps) {
   );
 }
 
-function BezwarenDetail() {
+export function BezwarenDetailPagina() {
   const { BEZWAREN } = useAppStateGetter();
   const { uuid } = useParams<{ uuid: string }>();
 
@@ -183,5 +183,3 @@ function BezwarenDetail() {
     </DetailPageV2>
   );
 }
-
-export default BezwarenDetail;

@@ -54,6 +54,7 @@ export interface VergunningBase {
   description: string;
   identifier: string;
   dateRequest: string;
+  dateRequestFormatted: string | null;
   dateWorkflowActive: string | null;
   decision: string | null;
   dateDecision?: string | null;
@@ -369,7 +370,7 @@ export function transformVergunningenData(
     // documentsUrl is added by Koppel Api
     const idEncrypted = item.documentsUrl?.split('/').pop();
 
-    const vergunning = Object.assign({}, item, {
+    const vergunning: Vergunning = Object.assign({}, item, {
       id,
       dateRequestFormatted: defaultDateFormat(item.dateRequest),
       documentsUrl: idEncrypted
