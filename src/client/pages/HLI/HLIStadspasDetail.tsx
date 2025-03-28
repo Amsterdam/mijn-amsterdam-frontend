@@ -271,7 +271,6 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-
   const { error, isMutating, trigger: blokkeerStadspas } = useBlockStadspas();
 
   useEffect(() => {
@@ -310,6 +309,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           Blokkeer deze Stadspas
         </Button>
       )}
+
       <Modal
         title="Weet u zeker dat u uw Stadspas wilt blokkeren?"
         className={styles.BlokkeerDialog}
@@ -317,9 +317,11 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         showCloseButton
         closeOnEscape
         onClose={() => setIsModalOpen(false)}
+        pollingQuerySelector="#blokkeer-pas"
         actions={
           <ActionGroup>
             <Button
+              id="blokkeer-pas"
               type="submit"
               variant="primary"
               onClick={() => {

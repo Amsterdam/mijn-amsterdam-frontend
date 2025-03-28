@@ -67,6 +67,7 @@ function ErrorMessagesContent({
       <Modal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
+        pollingQuerySelector="#ok-button"
         actions={
           <div>
             <Paragraph className="ams-mb--sm">
@@ -79,7 +80,9 @@ function ErrorMessagesContent({
                 ''
               )}
             </Paragraph>
-            <Button onClick={() => setModalOpen(false)}>OK</Button>
+            <Button id="ok-button" onClick={() => setModalOpen(false)}>
+              OK
+            </Button>
           </div>
         }
         title={title}

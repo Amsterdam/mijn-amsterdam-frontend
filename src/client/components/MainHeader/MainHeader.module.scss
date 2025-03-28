@@ -5,8 +5,41 @@
   margin: 0 auto;
 }
 
+@media screen and (max-width: $ams-breakpoint-medium) {
+  :global(.ams-header > .ams-header__branding > .ams-header__logo-link) {
+    width: 14px;
+    overflow: hidden;
+  }
+
+  :global(
+    .ams-header
+      .ams-header__navigation
+      .ams-header__menu
+      .ams-header__mega-menu-button
+      .ams-header__mega-menu-button-label
+  ) {
+    display: none;
+  }
+  :global(
+    .ams-header
+      .ams-header__navigation
+      .ams-header__menu
+      .ams-header__mega-menu-button
+      .ams-header__mega-menu-button-hidden-label
+  ) {
+    display: none;
+  }
+
+  :global(.ams-header .ams-header__navigation .ams-header__menu) {
+    position: absolute;
+    right: var(--ams-space-lg);
+    top: 4px;
+    column-gap: 0;
+  }
+}
+
 .ProfileNameInner {
-  max-width: 300px;
+  max-width: 220px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
