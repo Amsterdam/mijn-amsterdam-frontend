@@ -38,24 +38,26 @@ export const AppRoutes = {
   GENERAL_INFO: '/uitleg',
   VERGUNNINGEN: '/vergunningen',
   'VERGUNNINGEN/LIST': '/vergunningen/lijst/:kind/:page?',
-  'VERGUNNINGEN/DETAIL': '/vergunningen/:caseType/:id',
+  'VERGUNNINGEN/DETAIL': '/vergunningen/:title/:id',
   TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
   'TOERISTISCHE_VERHUUR/VERGUNNING/LIST':
     '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
   'TOERISTISCHE_VERHUUR/VERGUNNING':
-    '/toeristische-verhuur/vergunning/:caseType/:id',
+    '/toeristische-verhuur/vergunning/:casetype/:id',
   VAREN: '/passagiers-en-beroepsvaart',
   'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/:kind/:page?',
   'VAREN/DETAIL': '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
-  'PARKEREN/DETAIL': '/parkeren/:caseType/:id',
+  'PARKEREN/DETAIL': '/parkeren/:title/:id',
   PARKEREN: '/parkeren',
   'PARKEREN/LIST': '/parkeren/lijst/:kind/:page?',
-  KLACHTEN: '/klachten/:page?',
+  'KLACHTEN/LIST': '/klachten/lijst/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
+  KLACHTEN: '/klachten',
   HORECA: '/horeca/',
-  'HORECA/DETAIL': '/horeca/:caseType/:id',
+  'HORECA/LIST': '/horeca/list/:page?',
+  'HORECA/DETAIL': '/horeca/:title/:id',
   AVG: '/avg',
   'AVG/LIST': '/avg/lijst/:kind/:page?',
   'AVG/DETAIL': '/avg/verzoek/:id',
@@ -72,7 +74,7 @@ export const AppRoutes = {
   'ERFPACHTv2/ALLE_FACTUREN':
     '/erfpacht/facturen/:dossierNummerUrlParam/:page?',
 
-  'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten/:page?',
+  'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten',
 
   ZAAK_STATUS: '/zaak-status',
 } as const;

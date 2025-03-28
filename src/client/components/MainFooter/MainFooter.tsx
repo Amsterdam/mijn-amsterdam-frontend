@@ -24,7 +24,6 @@ import { useCMSApi } from '../../hooks/api/useCmsApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
 function FooterBlock({ id, title, links, description }: FooterBlockProps) {
-  console.log('FooterBlock', id, title, links, description);
   return (
     <Grid.Cell key={title} span={4}>
       <Heading inverseColor level={4} className="ams-mb--xs">

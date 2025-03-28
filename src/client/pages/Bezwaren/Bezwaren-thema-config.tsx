@@ -20,7 +20,7 @@ export const LinkListItems: LinkProps[] = [
 
 const displayPropsBezwaren: DisplayProps<WithDetailLinkComponent<Bezwaar>> = {
   detailLinkComponent: 'Zaaknummer',
-  ontvangstdatum: 'Ontvangen op',
+  ontvangstdatumFormatted: 'Ontvangen op',
   omschrijving: 'Onderwerp',
 };
 
