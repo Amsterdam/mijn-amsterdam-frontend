@@ -81,7 +81,9 @@ export function VarenPageContentRederRegistratie({
       rows: [
         {
           label: 'Adres',
-          content: `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
+          content:
+            registratie.correspondenceAddress ||
+            `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
           span: DEFAULT_GRID_SPAN,
         },
         {
