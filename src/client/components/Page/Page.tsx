@@ -1,4 +1,4 @@
-import { HTMLProps } from 'react';
+import { HTMLProps, ReactNode } from 'react';
 
 import {
   Grid,
@@ -7,11 +7,9 @@ import {
 } from '@amsterdam/design-system-react';
 import composeClassNames from 'classnames';
 
-import { ComponentChildren } from '../../../universal/types';
-
 export interface PageProps extends HTMLProps<HTMLDivElement> {
   className?: string;
-  children: ComponentChildren;
+  children: ReactNode;
 }
 
 export function PageV2({ className, children, id, ...otherProps }: PageProps) {
@@ -60,7 +58,7 @@ export function PageContentV2({ children, className, id }: PageProps) {
 
 type PageContentCellProps = {
   className?: string;
-  children: ComponentChildren;
+  children: ReactNode;
   start?: GridColumnNumbers;
   startWide?: GridColumnNumber;
   span?: GridColumnNumbers;

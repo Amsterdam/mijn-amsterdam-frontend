@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 import { ActionGroup, Heading, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 import styles from './StatusLine.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { ComponentChildren, LinkProps } from '../../../universal/types';
+import { ComponentChildren } from '../../../universal/types';
 import {
   AltDocumentContent,
   GenericDocument,
@@ -17,7 +17,7 @@ import InnerHtml from '../InnerHtml/InnerHtml';
 import { MaButtonLink } from '../MaLink/MaLink';
 
 interface StatusLinePanelProps {
-  children: ComponentChildren;
+  children: ReactNode;
   name?: string;
 }
 
@@ -102,7 +102,7 @@ export function StatusLinePanelDocuments({
 }
 
 interface StatusLineItemProps {
-  children: ComponentChildren;
+  children: ReactNode;
   highlight?: boolean;
   style?: CSSProperties;
 }

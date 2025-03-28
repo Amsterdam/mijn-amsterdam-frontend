@@ -1,16 +1,15 @@
-import { MouseEventHandler, useCallback } from 'react';
+import { MouseEventHandler, ReactNode, useCallback } from 'react';
 
 import { Heading, Icon } from '@amsterdam/design-system-react';
 import { ChevronLeftIcon } from '@amsterdam/design-system-react-icons';
 import { useHistory } from 'react-router-dom';
 
 import styles from './PageHeadingV2.module.scss';
-import { ComponentChildren } from '../../../universal/types';
 import { MaRouterLink } from '../MaLink/MaLink';
 import { PageContentCell } from '../Page/Page';
 
 export type PageHeadingProps = {
-  children: ComponentChildren;
+  children: ReactNode;
   backLink?: string;
   showBacklink?: boolean;
   className?: string;
