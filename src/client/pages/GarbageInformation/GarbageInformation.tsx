@@ -1,10 +1,14 @@
-import { Link } from '@amsterdam/design-system-react';
-import classNames from 'classnames';
+import {
+  Heading,
+  Link,
+  LinkList,
+  Paragraph,
+} from '@amsterdam/design-system-react';
 
 import styles from './GarbageInformation.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { getFullAddress } from '../../../universal/helpers/brp';
+import { getFullAddress, isMokum } from '../../../universal/helpers/brp';
 import {
   GarbageFractionCode,
   GarbageFractionInformationTransformed,
@@ -18,21 +22,20 @@ import {
   IconAfvalTextiel,
 } from '../../assets/icons/map';
 import {
-  Button,
-  DetailPage,
   ErrorAlert,
   InfoDetail,
   InnerHtml,
-  Linkd,
-  LinkdInline,
   LoadingContent,
   MaintenanceNotifications,
-  PageContent,
-  PageHeading,
-  ThemaIcon,
 } from '../../components';
-import { ButtonBody, buttonStyle } from '../../components/Button/Button';
 import { InfoDetailProps } from '../../components/InfoDetail/InfoDetail';
+import { MaButtonLink } from '../../components/MaLink/MaLink';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ExternalUrls } from '../../config/app';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -47,52 +50,30 @@ interface InstructionCTAProps {
   fraction: GarbageFractionInformationTransformed;
 }
 
-function ButtonLink({
-  children,
-  href,
-  external,
-}: {
-  children: any;
-  href: string;
-  external: boolean;
-}) {
-  const relProp = external ? { rel: 'external noopener noreferrer' } : null;
-  return (
-    <a
-      className={buttonStyle({
-        variant: 'secondary',
-        className: classNames(styles.ProfileLink, styles.LogoutLink),
-      })}
-      href={href}
-      {...relProp}
-    >
-      <ButtonBody>{children}</ButtonBody>
-    </a>
-  );
-}
-
 function InstructionCTA({ fraction }: InstructionCTAProps) {
   if (fraction.instructieCTA) {
     return (
       <>
-        <p className="ams-paragraph">
-          <ButtonLink
+        <Paragraph>
+          <MaButtonLink
             href={fraction.instructieCTA.to}
-            external={!fraction.instructieCTA.to.startsWith(AppRoutes.BUURT)}
+            rel="noopener noreferrer"
           >
             {fraction.instructieCTA.title}
-          </ButtonLink>
-        </p>
+          </MaButtonLink>
+        </Paragraph>
         {fraction.instructie ? (
-          <>
-            <InnerHtml el="p">{fraction.instructie}</InnerHtml>
-          </>
+          <Paragraph>
+            <InnerHtml el="span">{fraction.instructie}</InnerHtml>
+          </Paragraph>
         ) : null}
       </>
     );
   }
   return fraction.instructie ? (
-    <InnerHtml el="p">{fraction.instructie}</InnerHtml>
+    <Paragraph>
+      <InnerHtml el="span">{fraction.instructie}</InnerHtml>
+    </Paragraph>
   ) : null;
 }
 
@@ -133,14 +114,18 @@ interface GarbageFractionPanelProps {
 function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
   return (
     <article className={styles.GarbageFractionPanel}>
-      <h3 className={styles.GarbageFractionPanelTitle}>
+      <Heading
+        level={3}
+        size="level-4"
+        className={styles.GarbageFractionPanelTitle}
+      >
         <GarbageFractionIcon fractionCode={fraction.fractieCode} />
         {fraction.titel}
-      </h3>
+      </Heading>
       {!!fraction.kalendermelding && (
-        <p className={styles.GarbageFractionPanelHighlight}>
-          <InnerHtml>{fraction.kalendermelding}</InnerHtml>
-        </p>
+        <Paragraph className={styles.GarbageFractionPanelHighlight}>
+          <InnerHtml el="span">{fraction.kalendermelding}</InnerHtml>
+        </Paragraph>
       )}
       {(fraction.instructieCTA || fraction.instructie) && (
         <dl>
@@ -167,12 +152,9 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
           <dt>Waar</dt>
           <dd>
             {typeof fraction.waar === 'object' ? (
-              <LinkdInline
-                href={fraction.waar.to}
-                external={!fraction.waar.to.startsWith(AppRoutes.BUURT)}
-              >
+              <Link href={fraction.waar.to} rel="noopener noreferrer">
                 {fraction.waar.title}
-              </LinkdInline>
+              </Link>
             ) : (
               fraction.waar
             )}
@@ -180,9 +162,9 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
         </dl>
       )}
       {!!fraction.opmerking && (
-        <div className={styles.GarbageFractionPanelOpmerking}>
-          <InnerHtml>{fraction.opmerking}</InnerHtml>
-        </div>
+        <Paragraph>
+          <InnerHtml el="span">{fraction.opmerking}</InnerHtml>
+        </Paragraph>
       )}
     </article>
   );
@@ -227,9 +209,12 @@ function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
 }
 
 export default function GarbageInformation() {
-  const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
+  const { AFVAL, AFVALPUNTEN, MY_LOCATION, BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();
+  const address = MY_LOCATION.content?.[0]?.address;
+  const inMokum =
+    profileType === 'private' ? isMokum(BRP.content) : isMokum(KVK.content);
   const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
 
   const heeftGeenWoonfunctie = AFVAL.content?.some(
@@ -247,155 +232,171 @@ export default function GarbageInformation() {
     privateLocation?.bagNummeraanduidingId;
 
   return (
-    <DetailPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={false}
-        icon={<ThemaIcon />}
-      >
-        {termReplace(ThemaTitles.AFVAL)}
-      </PageHeading>
-      <PageContent>
-        {profileType === 'private' && (
-          <>
-            <p>Dit zijn de afvalregels voor uw adres.</p>
-            {!!commercialLocation && !privateIsCommercial && (
-              <ErrorAlert title="Bedrijfsafval informatie" severity="info">
-                Let op deze regels gaan over uw woonadres. Lees hier{' '}
-                <LinkdInline
-                  href={ExternalUrls.AFVAL_COMMERCIAL}
-                  external={true}
-                >
-                  regels over bedrijfsafval in Amsterdam
-                </LinkdInline>
-                .
-              </ErrorAlert>
-            )}
-            <p>
-              <Linkd href={ExternalUrls.AFVAL} external={true}>
-                Meer informatie over regels voor afval en hergebruik
-              </Linkd>
-              <br />
-              <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
-                Doe een melding als afval is blijven liggen
-              </Linkd>
-            </p>
-          </>
-        )}
-        {profileType !== 'private' && (
-          <>
-            <p>
-              De afvalregels hieronder gelden alleen als u maximaal 9
-              vuilniszakken afval per week heeft en reinigingsrecht betaalt. Of
-              als u ondernemer bent in de 9 straatjes of Sluisbuurt en
-              afvalstoffenheffing betaalt. Anders moet u een
-              bedrijfsafvalcontract afsluiten bij een{' '}
-              <Link
-                rel="noopener noreferrer"
-                href="https://www.afvalgids.nl/afval/inzamelaar/"
-              >
-                erkende afvalinzamelaar
-              </Link>{' '}
-              of met{' '}
-              <Link
-                rel="noopener noreferrer"
-                href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/bedrijfsafval-laten-ophalen/"
-              >
-                de gemeente
-              </Link>
-              .
-            </p>
-            <p>
-              <Linkd href={ExternalUrls.AFVAL_COMMERCIAL} external={true}>
-                Regels bedrijfsafval in Amsterdam
-              </Linkd>
-              <br />
-              <Linkd href={ExternalUrls.AFVAL_MELDING} external={true}>
-                Doe een melding als afval is blijven liggen
-              </Linkd>
-            </p>
-          </>
-        )}
-        <MaintenanceNotifications page="afval" />
-        {isError(AFVAL) && (
-          <ErrorAlert>
-            We kunnen op dit moment niet alle gegevens tonen
-          </ErrorAlert>
-        )}
-
-        <GarbageInfoDetail
-          label="Uw adres"
-          valueWrapperElement="div"
-          value={
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HOME}>
+          {termReplace(ThemaTitles.AFVAL)}
+        </PageHeadingV2>
+        <PageContentCell>
+          {profileType === 'private' && (
             <>
-              <p className={styles.AdresWeergave}>
-                {MY_LOCATION.content?.[0]?.address ? (
-                  getFullAddress(MY_LOCATION.content?.[0].address)
-                ) : isLoading(MY_LOCATION) ? (
-                  <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
-                ) : (
-                  'Onbekend adres'
-                )}
-              </p>
-              {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
-              {heeftGeenWoonfunctie && (
-                <p className={styles.WoonFunctieWaarschuwing}>
-                  <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
-                  <LinkdInline
-                    external
-                    href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+              <Paragraph className="ams-mb--sm">
+                Dit zijn de afvalregels voor uw adres.
+              </Paragraph>
+              {!!commercialLocation && !privateIsCommercial && (
+                <ErrorAlert
+                  title="Bedrijfsafval informatie"
+                  severity="info"
+                  className="ams-mb--sm"
+                >
+                  Let op deze regels gaan over uw woonadres. Lees hier{' '}
+                  <Link
+                    href={ExternalUrls.AFVAL_COMMERCIAL}
+                    rel="noopener noreferrer"
                   >
-                    Geef het door
-                  </LinkdInline>
+                    regels over bedrijfsafval in Amsterdam
+                  </Link>
                   .
-                </p>
+                </ErrorAlert>
               )}
+              <LinkList>
+                <LinkList.Link
+                  href={ExternalUrls.AFVAL}
+                  rel="noopener noreferrer"
+                >
+                  Meer informatie over regels voor afval en hergebruik
+                </LinkList.Link>
+                <LinkList.Link
+                  href={ExternalUrls.AFVAL_MELDING}
+                  rel="noopener noreferrer"
+                >
+                  Doe een melding als afval is blijven liggen
+                </LinkList.Link>
+              </LinkList>
             </>
-          }
-        />
-        {isApiReady && (
-          <>
-            {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
-              <GarbageFractionPanels fractions={AFVAL.content} />
-            )}
-            <p>
-              <Button
-                onClick={() =>
-                  (window.location.href = ExternalUrls.AFVAL_MELDING_FORMULIER)
-                }
-              >
-                Klopt de informatie niet? Geef het door
-              </Button>
-            </p>
-            <h3>Afvalcontainers in de buurt</h3>
-            <p>
-              <Linkd
-                href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14`}
-              >
-                Kaart met containers in de buurt
-              </Linkd>
-            </p>
-            <h3>Adressen recyclepunten</h3>
-            <ul className={styles.UnstyledList}>
-              {AFVALPUNTEN.content?.centers.map((item, index) => (
-                <li key={item.title}>
-                  <Linkd href={item.website} external={true}>
+          )}
+          {profileType !== 'private' && (
+            <>
+              <Paragraph className="ams-mb--md">
+                De afvalregels hieronder gelden alleen als u maximaal 9
+                vuilniszakken afval per week heeft en reinigingsrecht betaalt.
+                Of als u ondernemer bent in de 9 straatjes of Sluisbuurt en
+                afvalstoffenheffing betaalt. Anders moet u een
+                bedrijfsafvalcontract afsluiten bij een{' '}
+                <Link
+                  rel="noopener noreferrer"
+                  href="https://www.afvalgids.nl/afval/inzamelaar/"
+                >
+                  erkende afvalinzamelaar
+                </Link>{' '}
+                of met{' '}
+                <Link
+                  rel="noopener noreferrer"
+                  href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/bedrijfsafval-laten-ophalen/"
+                >
+                  de gemeente
+                </Link>
+                .
+              </Paragraph>
+              <LinkList>
+                <LinkList.Link
+                  href={ExternalUrls.AFVAL_COMMERCIAL}
+                  rel="noopener noreferrer"
+                >
+                  Regels bedrijfsafval in Amsterdam
+                </LinkList.Link>
+                <LinkList.Link
+                  href={ExternalUrls.AFVAL_MELDING}
+                  rel="noopener noreferrer"
+                >
+                  Doe een melding als afval is blijven liggen
+                </LinkList.Link>
+              </LinkList>
+            </>
+          )}
+          <MaintenanceNotifications page="afval" />
+        </PageContentCell>
+        {isError(AFVAL) && (
+          <PageContentCell>
+            <ErrorAlert>
+              We kunnen op dit moment niet alle gegevens tonen
+            </ErrorAlert>
+          </PageContentCell>
+        )}
+        <PageContentCell>
+          <GarbageInfoDetail
+            label="Uw adres"
+            valueWrapperElement="div"
+            value={
+              <>
+                <Paragraph className="ams-mb--sm">
+                  {MY_LOCATION.content?.[0]?.address ? (
+                    getFullAddress(MY_LOCATION.content?.[0].address)
+                  ) : isLoading(MY_LOCATION) ? (
+                    <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
+                  ) : (
+                    'Onbekend adres'
+                  )}
+                </Paragraph>
+                {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
+                {heeftGeenWoonfunctie && profileType === 'private' && (
+                  <Paragraph>
+                    <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
+                    <Link
+                      href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+                      rel="noopener noreferrer"
+                    >
+                      Geef het door
+                    </Link>
+                    .
+                  </Paragraph>
+                )}
+              </>
+            }
+          />
+
+          {isApiReady && (
+            <>
+              {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
+                <GarbageFractionPanels fractions={AFVAL.content} />
+              )}
+              <Paragraph className="ams-mb--xl">
+                <MaButtonLink
+                  className={styles.ContactLink}
+                  href={ExternalUrls.AFVAL_MELDING_FORMULIER}
+                >
+                  Klopt de informatie niet? Geef het door
+                </MaButtonLink>
+              </Paragraph>
+              <Heading level={3} className="ams-mb--sm">
+                Afvalcontainers in de buurt
+              </Heading>
+              <LinkList className="ams-mb--sm">
+                <LinkList.Link
+                  href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14`}
+                >
+                  Kaart met containers in de buurt
+                </LinkList.Link>
+              </LinkList>
+              <Heading level={3} className="ams-mb--sm">
+                Adressen recyclepunten
+              </Heading>
+              <LinkList>
+                {AFVALPUNTEN.content?.centers.map((item) => (
+                  <LinkList.Link key={item.title} href={item.website}>
                     {item.title}
                     {item.distance !== 0 && (
                       <span className={styles.DistanceToHome}>
                         +/-{item.distance}KM
                       </span>
                     )}
-                  </Linkd>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-      </PageContent>
-    </DetailPage>
+                  </LinkList.Link>
+                ))}
+              </LinkList>
+            </>
+          )}
+        </PageContentCell>
+      </PageContentV2>
+    </DetailPageV2>
   );
 }
