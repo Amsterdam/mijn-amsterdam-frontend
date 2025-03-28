@@ -14,6 +14,7 @@ import { smileDateParser } from '../smile/smile-helpers';
 import { AppRoutes } from './../../../universal/config/routes';
 import { AuthProfileAndToken } from './../../auth/auth-types';
 import { Klacht, KlachtenResponse, SmileKlachtenReponse } from './types';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 
 const DEFAULT_PAGE_SIZE = 250;
 
@@ -72,29 +73,39 @@ export function transformKlachtenResponse(
     };
   }
 
-  const klachten = data.List.map((klacht) => {
+  const klachten = data.List.map((klachtSource) => {
     const BYTE_LENGTH = 18;
-    const id = klacht.klacht_id.value || UID.sync(BYTE_LENGTH);
+    const id = klachtSource.klacht_id.value || UID.sync(BYTE_LENGTH);
+    const ontvangstDatum = smileDateParser(
+      klachtSource?.klacht_datumontvangstklacht.value || ''
+    );
 
-    return {
+    const klacht: Klacht = {
       id,
+      title: id,
       inbehandelingSinds: smileDateParser(
-        klacht?.klacht_inbehandeling.value || ''
+        klachtSource?.klacht_inbehandeling.value || ''
       ),
-      ontvangstDatum: smileDateParser(
-        klacht?.klacht_datumontvangstklacht.value || ''
+      ontvangstDatum,
+      ontvangstDatumFormatted: ontvangstDatum
+        ? defaultDateFormat(ontvangstDatum)
+        : null,
+      omschrijving: klachtSource?.klacht_omschrijving.value || '',
+      gewensteOplossing: klachtSource?.klacht_gewensteoplossing.value,
+      onderwerp: klachtSubjectParser(
+        klachtSource?.klacht_klachtonderwerp.value
       ),
-      omschrijving: klacht?.klacht_omschrijving.value || '',
-      gewensteOplossing: klacht?.klacht_gewensteoplossing.value,
-      onderwerp: klachtSubjectParser(klacht?.klacht_klachtonderwerp.value),
-      locatie: klacht?.klacht_locatieadres.value,
+      locatie: klachtSource?.klacht_locatieadres.value,
       link: {
         to: generatePath(AppRoutes['KLACHTEN/KLACHT'], {
           id,
         }),
         title: `Klacht ${id}`,
       },
+      steps: [],
     };
+
+    return klacht;
   });
 
   return {

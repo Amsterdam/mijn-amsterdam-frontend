@@ -1,4 +1,4 @@
-import { generatePath, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import type { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -12,9 +12,8 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { KLACHTEN_PAGE_SIZE } from '../Klachten/Klachten';
 
-export default function KlachtenDetail() {
+export function KlachtenDetailPagina() {
   const { KLACHTEN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const klachtIndex = (KLACHTEN.content?.klachten || []).findIndex(
@@ -28,14 +27,7 @@ export default function KlachtenDetail() {
   return (
     <DetailPageV2>
       <PageContentV2>
-        <PageHeadingV2
-          backLink={generatePath(AppRoutes.KLACHTEN, {
-            page:
-              klachtIndex > 0
-                ? Math.ceil((klachtIndex + 1) / KLACHTEN_PAGE_SIZE)
-                : 1,
-          })}
-        >
+        <PageHeadingV2 backLink={AppRoutes.KLACHTEN}>
           {klacht?.onderwerp || 'Klacht'}
         </PageHeadingV2>
         <PageContentCell>
