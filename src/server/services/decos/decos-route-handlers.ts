@@ -103,6 +103,7 @@ export async function fetchZakenByUserIDs(
         sid: authProfileAndToken.profile.sid,
       },
       token: '',
+      expiresAtMilliseconds: authProfileAndToken.expiresAtMilliseconds,
     };
 
     const regexCaseTypeFilter = new RegExp('^[.a-zA-Z0-9,!? ]*$', 'g');
