@@ -25,9 +25,10 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
-import { MaLink } from '../../components/MaLink/MaLink';
+import { MaLink, MaRouterLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
+import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
@@ -51,11 +52,11 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   }
 }
 
-function mapFactuur(factuur: AfisFactuur) {
-  return {
-    ...factuur,
-    statusDescription: getInvoiceStatusDescriptionFrontend(factuur),
-    factuurNummerEl: factuur.documentDownloadLink ? (
+function mapFactuur(factuur: AfisFactuur, isPhoneScreen: boolean) {
+  let factuurNummerEl: ReactNode = factuur.factuurNummer;
+
+  if (!isPhoneScreen && factuur.documentDownloadLink) {
+    factuurNummerEl = (
       <DocumentLink
         document={{
           id: factuur.factuurNummer,
@@ -64,15 +65,30 @@ function mapFactuur(factuur: AfisFactuur) {
           title: `factuur ${factuur.factuurNummer}`,
         }}
       />
-    ) : (
-      factuur.factuurNummer
-    ),
+    );
+  } else if (isPhoneScreen) {
+    factuurNummerEl = (
+      <MaRouterLink
+        maVariant="fatNoUnderline"
+        href={factuur.documentDownloadLink ?? '#missing-document-link'}
+        title={`Bekijk factuur ${factuur.factuurNummer}`}
+      >
+        {factuur.factuurNummer}
+      </MaRouterLink>
+    );
+  }
+
+  return {
+    ...factuur,
+    statusDescription: getInvoiceStatusDescriptionFrontend(factuur),
+    factuurNummerEl,
   };
 }
 
 function useTransformFacturen(
   facturenByState: AfisFacturenByStateResponse | null
 ): AfisFacturenByStateFrontend | null {
+  const isPhoneScreen = usePhoneScreen();
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
       if (facturenByState) {
@@ -83,7 +99,10 @@ function useTransformFacturen(
               state,
               {
                 ...facturenResponse,
-                facturen: facturenResponse?.facturen?.map(mapFactuur) ?? [],
+                facturen:
+                  facturenResponse?.facturen?.map((factuur) =>
+                    mapFactuur(factuur, isPhoneScreen)
+                  ) ?? [],
               },
             ])
         );
