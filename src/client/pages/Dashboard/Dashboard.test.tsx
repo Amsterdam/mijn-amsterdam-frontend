@@ -73,7 +73,7 @@ const testState = {
   VERGUNNINGEN: {
     isActive: true,
   },
-  VERGUNNINGENv2: {
+  VERGUNNINGEN: {
     isActive: true,
   },
   PARKEREN: {

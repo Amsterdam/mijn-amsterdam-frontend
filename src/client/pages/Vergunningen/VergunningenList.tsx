@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import { ListPageParamKind, tableConfig } from './Vergunningen-thema-config';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
@@ -11,7 +11,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 export function VergunningenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
   const appState = useAppStateGetter();
-  const { VERGUNNINGENv2 } = appState;
+  const { VERGUNNINGEN } = appState;
   const {
     title,
     displayProps,
@@ -20,7 +20,7 @@ export function VergunningenList() {
   } = tableConfig[params.kind] ?? null;
 
   const vergunningenFiltered: VergunningFrontendV2[] =
-    VERGUNNINGENv2.content
+    VERGUNNINGEN.content
       ?.filter(vergunningenListFilter)
       .sort(vergunningenListSort) ?? [];
   const vergunningen =
@@ -36,8 +36,8 @@ export function VergunningenList() {
       appRouteParams={params}
       appRouteBack={appRouteBack}
       displayProps={displayProps}
-      isLoading={isLoading(VERGUNNINGENv2)}
-      isError={isError(VERGUNNINGENv2)}
+      isLoading={isLoading(VERGUNNINGEN)}
+      isError={isError(VERGUNNINGEN)}
     />
   );
 }

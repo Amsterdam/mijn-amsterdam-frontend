@@ -4,7 +4,7 @@ import { getRowsByKey } from './fields-config';
 import {
   VergunningFrontendV2,
   WerkzaamhedenEnVervoerOpStraat,
-} from '../../../../server/services/vergunningen-v2/config-and-types';
+} from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function WVOSContent({

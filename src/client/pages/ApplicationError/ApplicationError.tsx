@@ -72,7 +72,7 @@ export default function ApplicationError({
       <TextPageV2>
         <PageContentV2>
           <PageContentCell startWide={1} spanWide={12}>
-            <Header appName="Mijn Amsterdam" />
+            <Header brandName="Mijn Amsterdam" />
           </PageContentCell>
           <ApplicationErrorContent error={error} />
         </PageContentV2>

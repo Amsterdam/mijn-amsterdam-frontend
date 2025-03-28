@@ -9,8 +9,8 @@ import {
   dateStart,
   location,
 } from '../decos/decos-types';
-import { VergunningFrontendV2 } from '../vergunningen-v2/config-and-types';
-import { caseNotificationLabelsExpirables } from '../vergunningen-v2/vergunningen-notification-labels';
+import { VergunningFrontendV2 } from '../vergunningen/config-and-types';
+import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
 interface DecosZaakExploitatieHorecabedrijf
   extends DecosZaakWithLocation,
