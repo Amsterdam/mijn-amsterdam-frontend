@@ -3,13 +3,14 @@
   display: block;
 }
 
-.DocumentLinkIcon {
-  margin-right: 3px;
-  transform: translateY(2px);
+:global(.ams-link--standalone).DocumentLink {
+  display: inline-flex;
+  align-items: center;
 }
 
-.LinkIcon {
-  transform: translateY(1px);
+.DocumentLinkIcon {
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 .DownloadInfo {
