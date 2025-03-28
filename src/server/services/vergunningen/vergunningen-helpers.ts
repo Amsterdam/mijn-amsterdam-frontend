@@ -3,7 +3,6 @@ import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { WithDateEnd } from '../decos/config-and-types';
 import {
   TouringcarDagontheffing,
@@ -19,7 +18,7 @@ export function getCustomTitleForVergunningWithLicensePlates(
     | EigenParkeerplaatsOpheffen
     | EigenParkeerplaats
 ) {
-  if (vergunning.caseType === CaseTypeV2.TouringcarDagontheffing) {
+  if (vergunning.caseType === 'Touringcar Dagontheffing') {
     return `${vergunning.title} (${vergunning.kentekens})`;
   }
   if ('kentekens' in vergunning) {

@@ -1,5 +1,4 @@
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakBase,
   DecosZaakTransformer,
@@ -15,6 +14,16 @@ import {
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
+export const caseTypeHorecaVergunningen = {
+  ExploitatieHorecabedrijf: 'Horeca vergunning exploitatie Horecabedrijf',
+} as const;
+
+type CaseTypeHorecaVergunningenKey = keyof typeof caseTypeHorecaVergunningen;
+export type CaseTypeHorecaVergunningen =
+  (typeof caseTypeHorecaVergunningen)[CaseTypeHorecaVergunningenKey];
+export type GetCaseType<T extends CaseTypeHorecaVergunningenKey> =
+  (typeof caseTypeHorecaVergunningen)[T];
+
 export type DecosZaakExploitatieHorecabedrijf = DecosZaakBase &
   WithLocation &
   WithDateRange & {
@@ -27,8 +36,8 @@ export type HorecaVergunningFrontend =
 export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatieHorecabedrijf> =
   {
     isActive: FeatureToggle.horecaActive,
-    caseType: CaseTypeV2.ExploitatieHorecabedrijf,
-    title: CaseTypeV2.ExploitatieHorecabedrijf,
+    caseType: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,
+    title: caseTypeHorecaVergunningen.ExploitatieHorecabedrijf,
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
@@ -44,3 +53,5 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
     },
     notificationLabels: caseNotificationLabelsExpirables,
   };
+
+export const decosZaakTransformers = [ExploitatieHorecabedrijf];

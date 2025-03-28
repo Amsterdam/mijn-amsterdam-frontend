@@ -1,6 +1,6 @@
 import {
   VakantieverhuurVergunningFrontend,
-  VakantieverhuurVergunningaanvraag,
+  decosZaakTransformers,
 } from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -18,9 +18,11 @@ export async function fetchVakantieverhuurVergunningen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchDecosZaken(requestID, authProfileAndToken, [
-    VakantieverhuurVergunningaanvraag,
-  ]);
+  const response = await fetchDecosZaken(
+    requestID,
+    authProfileAndToken,
+    decosZaakTransformers
+  );
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;

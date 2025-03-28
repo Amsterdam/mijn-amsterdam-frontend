@@ -1,5 +1,4 @@
 import { LinkProps } from '../../../universal/types';
-import { GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakBase,
   WithLocation,
@@ -13,6 +12,33 @@ import {
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
+
+export const caseTypeVergunningen = {
+  TVMRVVObject: 'TVM - RVV - Object',
+  EvenementMelding: 'Evenement melding',
+  EvenementVergunning: 'Evenement vergunning',
+  Omzettingsvergunning: 'Omzettingsvergunning',
+  ERVV: 'E-RVV - TVM',
+  Flyeren: 'Flyeren-Sampling',
+  AanbiedenDiensten: 'Aanbieden van diensten',
+  NachtwerkOntheffing: 'Nachtwerkontheffing',
+  ZwaarVerkeer: 'Zwaar verkeer',
+  Samenvoegingsvergunning: 'Samenvoegingsvergunning',
+  Onttrekkingsvergunning: 'Onttrekkingsvergunning voor ander gebruik',
+  OnttrekkingsvergunningSloop: 'Onttrekkingsvergunning voor sloop',
+  VormenVanWoonruimte: 'Woningvormingsvergunning',
+  Splitsingsvergunning: 'Splitsingsvergunning',
+  VOB: 'VOB',
+  RVVHeleStad: 'RVV - Hele stad',
+  RVVSloterweg: 'RVV Sloterweg',
+  WVOS: 'Werk en vervoer op straat',
+} as const;
+
+type CaseTypeVergunningenKey = keyof typeof caseTypeVergunningen;
+export type CaseTypeVergunningen =
+  (typeof caseTypeVergunningen)[CaseTypeVergunningenKey];
+export type GetCaseType<T extends CaseTypeVergunningenKey> =
+  (typeof caseTypeVergunningen)[T];
 
 export type TVMRVVObject = DecosZaakBase &
   WithLocation &

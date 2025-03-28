@@ -3,6 +3,7 @@ import { parseISO } from 'date-fns';
 import {
   BZB as BZBType,
   BZP as BZPType,
+  caseTypeParkeren,
   EigenParkeerplaatsOpheffen as EigenParkeerplaatsOpheffenType,
   EigenParkeerplaatsRequestType,
   EigenParkeerplaats as EigenParkeerplaatsType,
@@ -11,7 +12,6 @@ import {
   TouringcarDagontheffing as TouringcarDagontheffingType,
   TouringcarJaarontheffing as TouringcarJaarontheffingType,
 } from './config-and-types';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { DecosZaakTransformer } from '../decos/config-and-types';
 import {
   dateEnd,
@@ -26,7 +26,6 @@ import {
 } from '../decos/decos-field-transformers';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
-  getDecosZaakTransformersByCaseType,
   transformBoolean,
 } from '../decos/decos-helpers';
 import {
@@ -36,7 +35,7 @@ import {
 
 export const GPP: DecosZaakTransformer<GPPType> = {
   isActive: true,
-  caseType: CaseTypeV2.GPP,
+  caseType: caseTypeParkeren.GPP,
   title: 'Vaste parkeerplaats voor gehandicapten (GPP)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -56,7 +55,7 @@ export const GPP: DecosZaakTransformer<GPPType> = {
 
 export const GPK: DecosZaakTransformer<GPKType> = {
   isActive: true,
-  caseType: CaseTypeV2.GPK,
+  caseType: caseTypeParkeren.GPK,
   title: 'Europese gehandicaptenparkeerkaart (GPK)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -87,8 +86,8 @@ export const GPK: DecosZaakTransformer<GPKType> = {
 
 export const BZP: DecosZaakTransformer<BZPType> = {
   isActive: true,
-  caseType: CaseTypeV2.BZP,
-  title: CaseTypeV2.BZP,
+  caseType: caseTypeParkeren.BZP,
+  title: caseTypeParkeren.BZP,
   requirePayment: true,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -105,8 +104,8 @@ export const BZP: DecosZaakTransformer<BZPType> = {
 
 export const BZB: DecosZaakTransformer<BZBType> = {
   isActive: true,
-  caseType: CaseTypeV2.BZB,
-  title: CaseTypeV2.BZB,
+  caseType: caseTypeParkeren.BZB,
+  title: caseTypeParkeren.BZB,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     date6: dateStart,
@@ -120,8 +119,8 @@ export const BZB: DecosZaakTransformer<BZBType> = {
 export const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaatsType> =
   {
     isActive: true,
-    caseType: CaseTypeV2.EigenParkeerplaats,
-    title: CaseTypeV2.EigenParkeerplaats,
+    caseType: caseTypeParkeren.EigenParkeerplaats,
+    title: caseTypeParkeren.EigenParkeerplaats,
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
@@ -199,8 +198,8 @@ export const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaatsType> =
 export const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffenType> =
   {
     isActive: true,
-    caseType: CaseTypeV2.EigenParkeerplaatsOpheffen,
-    title: CaseTypeV2.EigenParkeerplaatsOpheffen,
+    caseType: caseTypeParkeren.EigenParkeerplaatsOpheffen,
+    title: caseTypeParkeren.EigenParkeerplaatsOpheffen,
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
@@ -230,8 +229,8 @@ export const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaats
 export const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffingType> =
   {
     isActive: true,
-    caseType: CaseTypeV2.TouringcarDagontheffing,
-    title: CaseTypeV2.TouringcarDagontheffing,
+    caseType: caseTypeParkeren.TouringcarDagontheffing,
+    title: caseTypeParkeren.TouringcarDagontheffing,
     fetchWorkflowStatusDatesFor: [
       { status: 'In behandeling', stepTitle: 'Status naar in behandeling' },
     ],
@@ -256,8 +255,8 @@ export const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffi
 export const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffingType> =
   {
     isActive: true,
-    caseType: CaseTypeV2.TouringcarJaarontheffing,
-    title: CaseTypeV2.TouringcarJaarontheffing,
+    caseType: caseTypeParkeren.TouringcarJaarontheffing,
+    title: caseTypeParkeren.TouringcarJaarontheffing,
     fetchWorkflowStatusDatesFor: [
       { status: 'In behandeling', stepTitle: 'Status naar In Behandeling' },
     ],
@@ -282,17 +281,15 @@ export const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaaronthef
     notificationLabels: caseNotificationLabelsExpirables,
   };
 
-export const decosZaakTransformers = [
-  GPP,
-  GPK,
-  BZP,
-  BZB,
-  EigenParkeerplaats,
-  EigenParkeerplaatsOpheffen,
-  TouringcarDagontheffing,
-  TouringcarJaarontheffing,
-];
+export const decosCaseToZaakTransformers = {
+  [caseTypeParkeren.GPP]: GPP,
+  [caseTypeParkeren.GPK]: GPK,
+  [caseTypeParkeren.BZP]: BZP,
+  [caseTypeParkeren.BZB]: BZB,
+  [caseTypeParkeren.EigenParkeerplaats]: EigenParkeerplaats,
+  [caseTypeParkeren.EigenParkeerplaatsOpheffen]: EigenParkeerplaatsOpheffen,
+  [caseTypeParkeren.TouringcarDagontheffing]: TouringcarDagontheffing,
+  [caseTypeParkeren.TouringcarJaarontheffing]: TouringcarJaarontheffing,
+} as const;
 
-export const decosCaseToZaakTransformers = getDecosZaakTransformersByCaseType(
-  decosZaakTransformers
-);
+export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);
