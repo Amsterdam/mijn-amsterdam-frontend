@@ -14,9 +14,14 @@ import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import { Thema } from '../../../universal/config/thema';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
+import { WpiRequestProcess } from '../wpi/wpi-types';
 
-const TOZO = {
-  content: WPI_E.content.filter((c) => c.about === 'Tozo 5'),
+const tozoContent = WPI_E.content.filter(
+  (c) => c.about === 'Tozo 5'
+) as unknown as WpiRequestProcess[];
+
+const TOZO: ApiSuccessResponse<WpiRequestProcess[]> = {
+  content: tozoContent,
   status: 'OK',
 };
 
@@ -42,55 +47,60 @@ describe('createTipsFromServiceResults', () => {
   });
 
   it('should show tip mijn-36', async () => {
-    vi.setSystemTime(new Date('2021-09-25'));
+    const now = new Date('2021-09-25');
+    vi.setSystemTime(now);
 
-    const TOZO_copy = { ...TOZO };
+    const TOZO_copy = { ...structuredClone(TOZO) };
 
     TOZO_copy.content[0].decision = 'toekenning';
     TOZO_copy.content[0].datePublished = '2021-07-24';
 
-    const personalTips = await fetchContentTips('private', {
-      serviceResults: {
-        WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
+    const personalTips = await fetchContentTips(
+      {
+        WPI_TOZO: TOZO_copy,
       },
-      tipsDirectlyFromServices: [],
-    });
+      now,
+      'private'
+    );
 
-    expect(personalTips.content?.find((t) => t.id === 'mijn-36')).toBeTruthy();
+    expect(personalTips.find((t) => t.id === 'mijn-36')).toBeTruthy();
   });
 
   it('should show tip mijn-35 and mijn-36', async () => {
-    vi.setSystemTime(new Date('2021-09-25'));
+    const now = new Date('2021-09-25');
+    vi.setSystemTime(now);
 
-    const TOZO_copy = { ...TOZO };
-    const VERHUUR_copy = { ...TOERISTISCHE_VERHUUR };
+    const TOZO_copy = structuredClone(TOZO);
+    const VERHUUR_copy = structuredClone(TOERISTISCHE_VERHUUR);
 
     TOZO_copy.content[0].decision = 'toekenning';
     TOZO_copy.content[0].datePublished = '2021-07-24';
 
-    const tips = await fetchContentTips('private', {
-      serviceResults: {
+    const tips = await fetchContentTips(
+      {
         WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
         TOERISTISCHE_VERHUUR: VERHUUR_copy as ApiSuccessResponse<any>,
         BRP: BRP as ApiSuccessResponse<any>,
       },
-      tipsDirectlyFromServices: [],
-    });
+      now,
+      'private'
+    );
 
     expect(
-      tips.content?.filter((t) => ['mijn-35', 'mijn-36'].includes(t.id)).length
+      tips.filter((t) => ['mijn-35', 'mijn-36'].includes(t.id)).length
     ).toBe(2);
   });
 
   it("should return tip mijn-43 when user has only expired id's", async () => {
-    vi.setSystemTime(new Date('2023-11-25'));
+    const now = new Date('2023-11-25');
+    vi.setSystemTime(now);
 
-    const BRPCopy = { ...BRP };
+    const BRPCopy = structuredClone(BRP);
 
     BRPCopy.content.identiteitsbewijzen[0].datumAfloop = '2020-07-24';
 
-    const tips = await fetchContentTips('private', {
-      serviceResults: {
+    const tips = await fetchContentTips(
+      {
         BRP: BRPCopy as ApiSuccessResponse<any>,
         HLI: {
           content: {
@@ -100,10 +110,11 @@ describe('createTipsFromServiceResults', () => {
           status: 'OK',
         },
       },
-      tipsDirectlyFromServices: [],
-    });
+      now,
+      'private'
+    );
 
-    expect(tips.content?.find((t) => t.id === 'mijn-43')).toBeTruthy();
+    expect(tips.find((t) => t.id === 'mijn-43')).toBeTruthy();
   });
 
   describe('prefixTipNotification', () => {
