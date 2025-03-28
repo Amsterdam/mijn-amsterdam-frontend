@@ -4,7 +4,6 @@ import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { TipFrontend } from '../content-tips/tip-types';
 
 const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
   ? JSON.parse(process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS)
@@ -36,7 +35,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
   const isKnown: boolean =
     !!response?.status && response.status !== 'BSN unknown';
   const notifications: MyNotification[] = [];
-  const tips: TipFrontend[] = [];
+  const tips: MyNotification[] = [];
 
   if (Array.isArray(response?.data)) {
     for (const message of response.data) {
@@ -65,7 +64,8 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             datePublished: message.datum,
             title: message.titel,
             description: message.omschrijving,
-            reason: message.informatie,
+            tipReason: message.informatie,
+            isTip: true,
             thema: Themas.BELASTINGEN,
             link: {
               title: message.url_naam,
@@ -110,8 +110,6 @@ export async function fetchBelastingNotifications(
     getConfig(authProfileAndToken.profile.id),
     Themas.BELASTINGEN
   );
-
-  console.log('from belasting', r);
 
   return r;
 }
