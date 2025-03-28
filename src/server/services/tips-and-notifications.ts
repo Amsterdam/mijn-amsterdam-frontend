@@ -40,6 +40,7 @@ import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { getFromEnv } from '../helpers/env';
+import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
@@ -82,6 +83,7 @@ const notificationServices: NotificationServicesByProfileType = {
       ),
     bodem: fetchLoodMetingNotifications,
     bezwaren: fetchBezwarenNotifications,
+    parkeren: fetchParkeerVergunningenNotifications,
     varen: fetchVarenNotifications,
   },
   'private-attributes': {},
@@ -107,6 +109,7 @@ const notificationServices: NotificationServicesByProfileType = {
     subsidie: fetchSubsidieNotifications,
     toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
     vergunningen: fetchVergunningenNotifications,
+    parkeren: fetchParkeerVergunningenNotifications,
   },
 };
 
