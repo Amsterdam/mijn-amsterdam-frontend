@@ -6,7 +6,6 @@ import {
   Redirect,
   Route,
   Switch,
-  matchPath,
   useHistory,
   useLocation,
 } from 'react-router-dom';
@@ -14,6 +13,7 @@ import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
 import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
+import MainHeaderHero from './components/MainHeaderHero/MainHeaderHero';
 import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
 import { AppRoutesRedirect, isPrivateRoute } from './config/routes';
@@ -169,13 +169,12 @@ function AppAuthenticated() {
     }
   }, [redirectAfterLogin, history]);
 
-  const isHeroVisible = !matchPath(history.location.pathname, {
-    path: AppRoutes.BUURT,
-  });
+  const isHeroVisible = history.location.pathname === AppRoutes.ROOT;
 
   return (
     <>
-      <MainHeader isAuthenticated isHeroVisible={isHeroVisible} />
+      <MainHeader isAuthenticated />
+      {isHeroVisible && <MainHeaderHero />}
       <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
