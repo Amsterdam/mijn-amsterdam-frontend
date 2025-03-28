@@ -8,7 +8,7 @@ import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
+import { ToeristischeVerhuurDetailPagina } from './ToeristischeVerhuurDetail';
 import { VakantieverhuurVergunningFrontend } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { AppState } from '../../../universal/types';
 
@@ -17,14 +17,12 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
     id: 'Z-XXX-000007C',
     title: 'Vergunning vakantieverhuur',
     dateDecision: '2022-05-12',
-    dateReceived: '2022-05-10',
     dateStart: '2022-08-01',
     dateStartFormatted: '01 augustus 2022',
     dateEnd: '2023-08-01',
     dateEndFormatted: '22 augustus 2023',
-    adres: 'Amstel 1 1017AB Amsterdam',
-    result: 'Verleend',
-    zaaknummer: 'Z/XXX/000007c',
+    decision: 'Verleend',
+    identifier: 'Z/123/000007',
     steps: [
       {
         id: 'step-1',
@@ -63,29 +61,25 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
       to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
-    isActual: false,
     status: 'Afgehandeld',
-    documents: [],
   },
 ];
 
 const bbVergunningen: BBVergunning[] = [
   {
     dateDecision: '2023-03-22',
-    dateReceived: '2023-02-13',
     dateStart: '2023-03-22',
     dateStartFormatted: '22 maart 2023',
     dateEnd: '2028-07-01',
     dateEndFormatted: '01 juli 2028',
-    result: 'Verleend',
+    decision: 'Verleend',
     heeftOvergangsRecht: true,
     id: 'Z-23-2130506',
-    zaaknummer: 'Z/23/2130506',
+    identifier: 'Z/23/2130506',
     link: {
       to: '/toeristische-verhuur/vergunning/bed-and-breakfast/Z-23-2130506',
       title: 'Vergunning bed & breakfast',
     },
-    adres: 'Amstel 3 Amsterdam',
     title: 'Vergunning bed & breakfast',
     steps: [
       {
@@ -105,17 +99,6 @@ const bbVergunningen: BBVergunning[] = [
       },
     ],
     status: 'Afgehandeld',
-    isActual: true,
-    documents: [
-      {
-        id: 'xiup_IrPSXXuB6bI5sNz6Zrwl5UbqsqYoeEQXwGLrvA',
-        title: 'Documentje.pdf  ',
-        url: 'http://bff-api-host/api/v1/services/toeristische-verhuur/bb/document/xiup_IrPSXXuB6bI5sNz6Zrwl5UbqsqYoeEQXwGLrvA',
-        download: 'Documentje.pdf  ',
-        external: true,
-        datePublished: '',
-      },
-    ],
   },
 ];
 
@@ -173,7 +156,7 @@ describe('<ToeristischVerhuurDetail />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={ToeristischeVerhuurDetail}
+          component={ToeristischeVerhuurDetailPagina}
           initializeState={state(testState)}
         />
       );
@@ -206,7 +189,7 @@ describe('<ToeristischVerhuurDetail />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={ToeristischeVerhuurDetail}
+          component={ToeristischeVerhuurDetailPagina}
           initializeState={state(testState)}
         />
       );

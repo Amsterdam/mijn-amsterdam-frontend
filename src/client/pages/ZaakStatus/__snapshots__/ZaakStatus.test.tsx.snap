@@ -3,34 +3,61 @@
 exports[`ZaakStatus > No query params passed 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          Status van uw aanvraag
-        </h2>
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Status van uw aanvraag
+          </h3>
+        </div>
       </div>
-    </header>
-    <div
-      class="_PageContent_47d7c0"
-    >
-      <p
-        class="ams-paragraph"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
-        <a
-          class="ams-link ams-link--standalone"
-          href="/"
+        <p
+          class="ams-paragraph"
         >
-          Ga naar het dashboard
-        </a>
-      </p>
+          <a
+            class="ams-link ams-link--standalone"
+            href="/"
+          >
+            Ga naar het dashboard
+          </a>
+        </p>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -39,73 +66,100 @@ exports[`ZaakStatus > No query params passed 1`] = `
 exports[`ZaakStatus > should show error alert 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid"
     >
       <div
-        class="_HeadingInner_3b337d"
-      >
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Status van uw aanvraag
-        </h2>
-      </div>
-    </header>
-    <div
-      class="_PageContent_47d7c0"
-    >
-      <section
-        class="ams-alert ams-alert--error ams-mb--xs"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
         <div
-          class="ams-alert__icon"
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          <span
-            class="ams-icon ams-icon--size-4"
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
           >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 36 36"
-              xmlns="http://www.w3.org/2000/svg"
+            <span
+              class="ams-icon ams-icon--size-5"
             >
-              <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-              />
-            </svg>
-          </span>
-        </div>
-        <div
-          class="ams-alert__content"
-        >
-          <h2
-            class="ams-heading ams-heading--level-4"
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
           >
-            Foutmelding
-          </h2>
-          <p
-            class="ams-paragraph"
-          >
-            Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
-          </p>
+            Status van uw aanvraag
+          </h3>
         </div>
-      </section>
-      <p
-        class="ams-paragraph"
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
-        <a
-          class="ams-link ams-link--standalone"
-          href="/"
+        <section
+          class="ams-alert ams-alert--error ams-mb--xs"
         >
-          Ga naar het dashboard
-        </a>
-      </p>
+          <div
+            class="ams-alert__icon"
+          >
+            <span
+              class="ams-icon ams-icon--size-4"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+                />
+                <path
+                  d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="ams-alert__content"
+          >
+            <h2
+              class="ams-heading ams-heading--level-4"
+            >
+              Foutmelding
+            </h2>
+            <p
+              class="ams-paragraph"
+            >
+              Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
+            </p>
+          </div>
+        </section>
+        <p
+          class="ams-paragraph"
+        >
+          <a
+            class="ams-link ams-link--standalone"
+            href="/"
+          >
+            Ga naar het dashboard
+          </a>
+        </p>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -114,39 +168,66 @@ exports[`ZaakStatus > should show error alert 1`] = `
 exports[`ZaakStatus > should show not found message 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          Status van uw aanvraag
-        </h2>
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Status van uw aanvraag
+          </h3>
+        </div>
       </div>
-    </header>
-    <div
-      class="_PageContent_47d7c0"
-    >
-      <p
-        class="ams-paragraph ams-mb--xs"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
-        Wij kunnen de status van uw aanvraag niet laten zien.
-      </p>
-      <p
-        class="ams-paragraph"
-      >
-        <a
-          class="ams-link ams-link--standalone"
-          href="/vergunningen"
+        <p
+          class="ams-paragraph ams-mb--xs"
         >
-          Bekijk het overzicht
-        </a>
-      </p>
+          Wij kunnen de status van uw aanvraag niet laten zien.
+        </p>
+        <p
+          class="ams-paragraph"
+        >
+          <a
+            class="ams-link ams-link--standalone"
+            href="/vergunningen"
+          >
+            Bekijk het overzicht
+          </a>
+        </p>
+      </div>
     </div>
   </main>
 </DocumentFragment>
@@ -155,44 +236,71 @@ exports[`ZaakStatus > should show not found message 1`] = `
 exports[`ZaakStatus > should show wachten op betaling 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <div
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          Status van uw aanvraag
-        </h2>
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/"
+            title="Terug naar de vorige pagina"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Status van uw aanvraag
+          </h3>
+        </div>
       </div>
-    </header>
-    <div
-      class="_PageContent_47d7c0"
-    >
-      <p
-        class="ams-paragraph ams-mb--xs"
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
       >
-        Wij kunnen de status van uw aanvraag niet laten zien.
-      </p>
-      <p
-        class="ams-paragraph ams-mb--xs"
-      >
-        U heeft betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.
-      </p>
-      <p
-        class="ams-paragraph"
-      >
-        <a
-          class="ams-link ams-link--standalone"
-          href="/vergunningen"
+        <p
+          class="ams-paragraph ams-mb--xs"
         >
-          Bekijk het overzicht
-        </a>
-      </p>
+          Wij kunnen de status van uw aanvraag niet laten zien.
+        </p>
+        <p
+          class="ams-paragraph ams-mb--xs"
+        >
+          U heeft betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.
+        </p>
+        <p
+          class="ams-paragraph"
+        >
+          <a
+            class="ams-link ams-link--standalone"
+            href="/vergunningen"
+          >
+            Bekijk het overzicht
+          </a>
+        </p>
+      </div>
     </div>
   </main>
 </DocumentFragment>
