@@ -36,6 +36,7 @@ export type VarenRegistratieRederType = DecosVarenZaakBase & {
   bsnkvk: string | null;
   address: string | null;
   postalCode: string | null;
+  correspondenceAddress: string | null;
   city: string | null;
   phone: string | null;
   email: string | null;
