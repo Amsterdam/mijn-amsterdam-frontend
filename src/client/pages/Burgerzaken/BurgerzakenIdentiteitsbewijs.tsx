@@ -19,7 +19,7 @@ export function BurgerzakenIdentiteitsbewijs() {
       isError={isError}
       isLoading={isLoading}
       backLink={backLink}
-      pageContentTop={
+      pageContentMain={
         !!document && (
           <BurgerzakenIdentiteitsbewijsContent document={document} />
         )

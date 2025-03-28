@@ -1,17 +1,17 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { AppRoutes } from '../../../universal/config/routes';
-import { Search as SearchBar } from '../../components';
 import {
   PageContentCell,
   PageContentV2,
   PageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { Search } from '../../components/Search/Search';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateReady } from '../../hooks/useAppState';
 
-export function Search() {
+export function SearchPage() {
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';
   const isReady = useAppStateReady();
@@ -23,7 +23,7 @@ export function Search() {
         </PageHeadingV2>
         <PageContentCell>
           {isReady ? (
-            <SearchBar
+            <Search
               autoFocus={true}
               term={termParam}
               extendedAMResults={true}

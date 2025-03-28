@@ -31,7 +31,7 @@ function AVGDetail() {
       zaak={verzoek}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
+      pageContentMain={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
       backLink={backLink}
     />
   );

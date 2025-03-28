@@ -4,8 +4,9 @@ import classnames from 'classnames';
 import styles from './InkomenSpecificaties.module.scss';
 import { useInkomenSpecificatiesListPageData } from './useInkomenSpecificatiesListPageData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { DateInput } from '../../components';
-import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
+import DateInput, {
+  isNativeDatePickerInputSupported,
+} from '../../components/DateInput/DateInput';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../components/Page/Page';
 

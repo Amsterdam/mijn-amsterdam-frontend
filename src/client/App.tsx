@@ -13,7 +13,9 @@ import {
 import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
-import { AutoLogoutDialog, MainFooter, MainHeader } from './components';
+import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog';
+import { MainFooter } from './components/MainFooter/MainFooter';
+import { MainHeader } from './components/MainHeader/MainHeader';
 import { MainHeaderHero } from './components/MainHeaderHero/MainHeaderHero';
 import { MyAreaLoader } from './components/MyArea/MyAreaLoader';
 import { loginUrlByAuthMethod } from './config/api';
@@ -84,7 +86,7 @@ import { ParkerenList } from './pages/Parkeren/ParkerenList';
 import { MijnBedrijfsGegevensThema } from './pages/Profile/commercial/ProfileCommercial';
 import { ContactmomentenListPage } from './pages/Profile/private/ContactmomentenListPage';
 import { MijnGegevensThema } from './pages/Profile/private/ProfilePrivate';
-import { Search } from './pages/Search/Search';
+import { SearchPage } from './pages/Search/Search';
 import { ToeristscheVerhuurThema } from './pages/ToeristischeVerhuur/ToeristischeVerhuur';
 import { ToeristischeVerhuurDetailPagina } from './pages/ToeristischeVerhuur/ToeristischeVerhuurDetail';
 import { ToeristischeVerhuurVergunningen } from './pages/ToeristischeVerhuur/ToeristischeVerhuurVergunningenList';
@@ -410,7 +412,7 @@ function AppAuthenticated() {
           {FeatureToggle.erfpachtV2Active && (
             <Route path={AppRoutes.ERFPACHTv2} component={Erfpacht} />
           )}
-          <Route path={AppRoutes.SEARCH} component={Search} />
+          <Route path={AppRoutes.SEARCH} component={SearchPage} />
           <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />
           <Route
             path={AppRoutes['PARKEREN/DETAIL']}
@@ -454,7 +456,7 @@ function AppLanding() {
   );
 }
 
-export default function App() {
+export function App() {
   /**
    * Visitor analytics and support
    */

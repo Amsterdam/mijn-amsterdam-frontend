@@ -7,7 +7,7 @@ import styles from './ZaakStatus.module.scss';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types/App.types';
-import { ErrorAlert } from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import {
@@ -62,7 +62,7 @@ const pageRouteResolvers: PageRouteResolvers = {
             appState.TOERISTISCHE_VERHUUR.content
               ?.vakantieverhuurVergunningen || []
           ).find((toeristischeVerhuur) => {
-            if (toeristischeVerhuur.zaaknummer === detailPageItemId) {
+            if (toeristischeVerhuur.identifier === detailPageItemId) {
               return toeristischeVerhuur;
             }
           })?.link.to ?? ITEM_NOT_FOUND

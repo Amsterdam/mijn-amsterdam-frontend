@@ -3,8 +3,9 @@ import { ReactNode, useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
-import { ErrorAlert, LoadingContent } from '..';
 import { ZaakDetail } from '../../../universal/types';
+import ErrorAlert from '../Alert/Alert';
+import LoadingContent from '../LoadingContent/LoadingContent';
 import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
 import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../Pagination/PaginationV2';

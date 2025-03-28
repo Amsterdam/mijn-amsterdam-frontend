@@ -35,7 +35,7 @@ export function InkomenDetailUitkering() {
       zaak={zaak}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={pageContentTop}
+      pageContentMain={pageContentTop}
       backLink={routes.themaPage}
     />
   );

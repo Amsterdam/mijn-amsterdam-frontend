@@ -1,18 +1,17 @@
 import { ReactNode } from 'react';
 
 import { ZaakDetail } from '../../../universal/types/App.types';
-import {
-  ErrorAlert,
-  LoadingContent,
-  StatusLine as StatusLineComponent,
-} from '../../components';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import ErrorAlert from '../../components/Alert/Alert';
+import LoadingContent, {
+  BarConfig,
+} from '../../components/LoadingContent/LoadingContent';
 import {
   DetailPageV2,
   PageContentCell,
   PageContentV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { StatusLine } from '../../components/StatusLine/StatusLine';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
@@ -29,8 +28,8 @@ interface ThemaDetailPaginaProps<T> {
   isError: boolean;
   isLoading: boolean;
   loadingBarConfig?: BarConfig;
+  pageContentMain: ReactNode;
   pageContentBottom?: ReactNode;
-  pageContentTop: ReactNode;
   reverseSteps?: boolean;
   showStatusLineConnection?: boolean;
   statusLabel?: string;
@@ -42,7 +41,7 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   zaak,
   title = 'Detailpagina',
   backLink,
-  pageContentTop,
+  pageContentMain,
   pageContentBottom,
   errorAlertContent = ERROR_ALERT_DEFAULT,
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
@@ -76,11 +75,11 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
           </PageContentCell>
         )}
 
-        {pageContentTop}
+        {pageContentMain}
 
         {!!statusItemSteps.length && zaak && (
           <PageContentCell startWide={1} spanWide={12}>
-            <StatusLineComponent
+            <StatusLine
               statusLabel={statusLabel}
               showStatusLineConnection={showStatusLineConnection}
               items={statusItemSteps}

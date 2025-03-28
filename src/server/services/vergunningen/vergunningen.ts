@@ -1,21 +1,21 @@
 import memoizee from 'memoizee';
 
-import { VergunningFrontendV2, VergunningV2 } from './config-and-types';
+import { DecosVergunning, VergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
-import { apiSuccessResult } from '../../../universal/helpers/api';
+import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { DecosZaakDocument } from '../decos/config-and-types';
 import {
   fetchDecosZaak,
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import { DecosZaakDocument } from '../decos/decos-types';
 import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 
 function transformVergunningFrontend(
@@ -38,7 +38,7 @@ async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
-): Promise<ApiResponse<VergunningFrontendV2[]>> {
+): Promise<ApiResponse<VergunningFrontend[]>> {
   const response = await fetchDecosZaken(
     requestID,
     authProfileAndToken,
@@ -47,7 +47,7 @@ async function fetchVergunningen_(
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: VergunningFrontendV2[] = decosVergunningen.map(
+    const vergunningenFrontend: VergunningFrontend[] = decosVergunningen.map(
       (vergunning) =>
         transformDecosZaakFrontend<DecosVergunning>(
           authProfileAndToken.profile.sid,

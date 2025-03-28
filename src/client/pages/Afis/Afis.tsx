@@ -7,7 +7,6 @@ import {
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
-import { useHistory } from 'react-router-dom';
 
 import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
@@ -25,7 +24,7 @@ function PageContentTop({
   urlNaarBelastingen: string;
 }) {
   return (
-    <>
+    <PageContentCell>
       <Paragraph className="ams-mb--sm">
         Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
         heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}
@@ -43,7 +42,7 @@ function PageContentTop({
         </Link>
         .
       </Paragraph>
-    </>
+    </PageContentCell>
   );
 }
 
@@ -98,7 +97,6 @@ export function AfisDisclaimerOvergedragenFacturen() {
 }
 
 export function AfisThemaPagina() {
-  const history = useHistory();
   const {
     dependencyErrors,
     facturenByState,
@@ -116,7 +114,7 @@ export function AfisThemaPagina() {
   );
 
   const pageContentSecondary = (
-    <PageContentCell>
+    <PageContentCell spanWide={12}>
       <MaButtonRouterLink
         className="ams-mb--sm"
         variant="secondary"

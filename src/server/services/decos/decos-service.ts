@@ -1,6 +1,8 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
+import { generatePath } from 'react-router-dom';
+import slug from 'slugme';
 
 import {
   DecosZaakBase,
@@ -17,9 +19,6 @@ import {
   DecosZaakSource,
   DecosZakenResponse,
   DecosWorkflowResponse,
-  DecosTermijnType,
-  DecosTermijnResponse,
-  DecosTermijn,
 } from './config-and-types';
 import {
   SELECT_FIELDS_META,
@@ -29,9 +28,12 @@ import {
 import { CASE_TYP_FIELD_DECOS } from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
+  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
+  toDateFormatted,
 } from './decos-helpers';
+import { AppRoute } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
   apiErrorResult,
@@ -47,10 +49,14 @@ import {
   DataRequestConfig,
   DEFAULT_API_CACHE_TTL_MS,
 } from '../../config/source-api';
+import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+import { isExpired } from '../vergunningen/vergunningen-helpers';
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of decosZaken.
  *
@@ -799,9 +805,9 @@ export async function fetchDecosDocument(
 
 export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
-  appRoute: AppRoute,
-  zaak: T
-) {
+  zaak: T,
+  appRoute: AppRoute
+): DecosZaakFrontend<T> {
   const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
   const zaakFrontend: DecosZaakFrontend<T> = {
     ...zaak,
@@ -820,7 +826,9 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     ),
     link: {
       to: generatePath(appRoute, {
-        caseType: slug(zaak.caseType, { lower: true }),
+        caseType: slug(zaak.caseType, {
+          lower: true,
+        }),
         id: zaak.id,
       }),
       title: `Bekijk hoe het met uw aanvraag staat`,

@@ -8,10 +8,10 @@ import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
 import { useCloseMenu } from './useCloseMenu.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ErrorMessages } from '../../components';
 import { getApiErrors, LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { ErrorMessages } from '../ErrorMessages/ErrorMessages';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import {
@@ -97,9 +97,7 @@ export interface MainHeaderProps {
   isAuthenticated?: boolean;
 }
 
-export default function MainHeader({
-  isAuthenticated = false,
-}: MainHeaderProps) {
+export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
   // Closes menu on location.pathname change, Escape key press and Search activation.
   useCloseMenu();
 

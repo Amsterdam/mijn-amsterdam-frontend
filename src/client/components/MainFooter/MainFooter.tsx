@@ -113,7 +113,7 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
   }
 }
 
-export default function MainFooter({
+export function MainFooter({
   isAuthenticated = false,
 }: {
   isAuthenticated?: boolean;

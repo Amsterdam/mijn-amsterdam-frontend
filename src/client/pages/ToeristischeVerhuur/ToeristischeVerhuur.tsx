@@ -64,10 +64,12 @@ export function ToeristscheVerhuurThema() {
   );
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder vindt u een overzicht van uw vergunningen voor toeristische
-      verhuur.
-    </Paragraph>
+    <PageContentCell>
+      <Paragraph>
+        Hieronder vindt u een overzicht van uw vergunningen voor toeristische
+        verhuur.
+      </Paragraph>
+    </PageContentCell>
   );
 
   const vergunningenTables = entries(tableConfigVergunningen).map(
