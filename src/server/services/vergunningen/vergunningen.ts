@@ -20,10 +20,10 @@ import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decryp
 
 function transformVergunningFrontend(
   sessionID: SessionID,
-  vergunning: VergunningV2,
+  vergunning: DecosVergunning,
   appRoute: AppRoute
 ) {
-  const vergunningFrontend = transformDecosZaakFrontend<VergunningV2>(
+  const vergunningFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
     appRoute,
     vergunning
@@ -49,7 +49,7 @@ async function fetchVergunningen_(
     const decosVergunningen = response.content;
     const vergunningenFrontend: VergunningFrontendV2[] = decosVergunningen.map(
       (vergunning) =>
-        transformDecosZaakFrontend<VergunningV2>(
+        transformDecosZaakFrontend<DecosVergunning>(
           authProfileAndToken.profile.sid,
           appRoute,
           vergunning

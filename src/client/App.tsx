@@ -62,8 +62,8 @@ import HLIRegeling from './pages/HLI/HLIRegeling';
 import HLIRegelingen from './pages/HLI/HLIRegelingen';
 import HLIStadspasDetail from './pages/HLI/HLIStadspasDetail';
 import { HorecaThemaPagina } from './pages/Horeca/Horeca';
+import { HorecaDetailPagina } from './pages/Horeca/HorecaDetail';
 import { HorecaLijstPagina } from './pages/Horeca/HorecaLijst';
-import { HorecaDetail } from './pages/HorecaDetail/HorecaDetail';
 import Inkomen from './pages/Inkomen/Inkomen';
 import InkomenDetailBbz from './pages/InkomenDetail/InkomenDetailBbz';
 import InkomenDetailTonk from './pages/InkomenDetail/InkomenDetailTonk';
@@ -90,8 +90,8 @@ import Varen from './pages/Varen/Varen';
 import { VarenDetail } from './pages/Varen/VarenDetail';
 import { VarenList } from './pages/Varen/VarenList';
 import { VergunningDetailPagina } from './pages/Vergunningen/VergunningDetail';
+import { VergunningenThemaPagina } from './pages/Vergunningen/Vergunningen';
 import { VergunningenList } from './pages/Vergunningen/VergunningenList';
-import { VergunningenThemaPagina } from './pages/Vergunningen/VergunningenThemaPagina';
 import ZaakStatus from './pages/ZaakStatus/ZaakStatus';
 import ZorgThemaPagina from './pages/Zorg/Zorg';
 import ZorgVoorzieningen from './pages/Zorg/ZorgRegelingen';
@@ -346,7 +346,10 @@ function AppAuthenticated() {
             />
           )}
           {FeatureToggle.horecaActive && (
-            <Route path={AppRoutes['HORECA/DETAIL']} component={HorecaDetail} />
+            <Route
+              path={AppRoutes['HORECA/DETAIL']}
+              component={HorecaDetailPagina}
+            />
           )}
           {FeatureToggle.horecaActive && (
             <Route path={AppRoutes.HORECA} component={HorecaThemaPagina} />

@@ -37,9 +37,6 @@ export default function InkomenDetailTozo() {
       stateKey="WPI_TOZO"
       pageContent={pageContent}
       statusLabel={(statusItem) => `${statusItem?.about}-aanvraag`}
-      documentPathForTracking={(document) =>
-        `/downloads/inkomen/tozo/${document.title.split(/\n/)[0]}`
-      }
     />
   );
 }

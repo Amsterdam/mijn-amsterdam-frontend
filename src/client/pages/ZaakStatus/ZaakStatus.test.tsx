@@ -10,7 +10,7 @@ import {
   horecaVergunningTypes,
   toeristischeVerhuurVergunningTypes,
   transformVergunningenData,
-  VergunningenSourceData,
+  VergunningenDecos,
 } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
@@ -23,9 +23,7 @@ const testState = {
   VERGUNNINGEN: {
     status: 'OK',
     content: addLinks(
-      transformVergunningenData(
-        vergunningenData as VergunningenSourceData
-      ).filter(
+      transformVergunningenData(vergunningenData as VergunningenDecos).filter(
         (vergunning) =>
           ![
             ...toeristischeVerhuurVergunningTypes,

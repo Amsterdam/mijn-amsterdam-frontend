@@ -8,7 +8,7 @@ import { horecaOptions } from '../../../server/services/horeca';
 import {
   addLinks,
   transformVergunningenData,
-  VergunningenSourceData,
+  VergunningenDecos,
 } from '../../../server/services/vergunningen/vergunningen';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
@@ -18,9 +18,9 @@ const testState: any = {
   HORECA: {
     status: 'OK',
     content: addLinks(
-      transformVergunningenData(
-        vergunningenData as VergunningenSourceData
-      ).filter(horecaOptions.filter),
+      transformVergunningenData(vergunningenData as VergunningenDecos).filter(
+        horecaOptions.filter
+      ),
       AppRoutes['HORECA/DETAIL']
     ),
   },
