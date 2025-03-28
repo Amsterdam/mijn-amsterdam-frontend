@@ -215,10 +215,23 @@ describe('Bezwaren', () => {
 
       expect(res).toMatchInlineSnapshot(`
         {
-          "code": 401,
-          "content": null,
-          "message": "Not authorized: incomplete session validation",
-          "status": "ERROR",
+          "content": {
+            "documents": null,
+            "statussen": null,
+          },
+          "failedDependencies": {
+            "documents": {
+              "content": null,
+              "message": "Nock: Disallowed net connect for "remote-api-host:80/bezwaren/zgw/v1/enkelvoudiginformatieobjecten?page=1&identifier=xxx"",
+              "status": "ERROR",
+            },
+            "statussen": {
+              "content": null,
+              "message": "Nock: Disallowed net connect for "remote-api-host:80/bezwaren/zgw/v1/statussen?zaak=http:%2F%2Fremote-api-host%2Fbezwaren%2Fzaken%2Fxxx"",
+              "status": "ERROR",
+            },
+          },
+          "status": "OK",
         }
       `);
     });
