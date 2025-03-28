@@ -3,15 +3,7 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
-import ZaakStatus from './ZaakStatus';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import {
-  addLinks,
-  horecaVergunningTypes,
-  toeristischeVerhuurVergunningTypes,
-  transformVergunningenData,
-  VergunningenDecos,
-} from '../../../server/services';
+import { ZaakStatus } from './ZaakStatus';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
@@ -22,16 +14,14 @@ const pushMock = vi.fn();
 const testState = {
   VERGUNNINGEN: {
     status: 'OK',
-    content: addLinks(
-      transformVergunningenData(vergunningenData as VergunningenDecos).filter(
-        (vergunning) =>
-          ![
-            ...toeristischeVerhuurVergunningTypes,
-            ...horecaVergunningTypes,
-          ].includes(vergunning.caseType)
-      ),
-      AppRoutes['VERGUNNINGEN/DETAIL']
-    ),
+    content: [
+      {
+        identifier: 'Z/000/000001.c',
+        link: {
+          to: '/vergunningen/vergunning/Z/000/000001.c',
+        },
+      },
+    ],
   },
 } as unknown as AppState;
 
