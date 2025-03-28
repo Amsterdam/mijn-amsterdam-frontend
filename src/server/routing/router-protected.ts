@@ -19,7 +19,10 @@ import {
   loadServicesAll,
   loadServicesSSE,
 } from '../services/controller';
-import { fetchDecosDocumentsList } from '../services/decos/decos-route-handlers';
+import {
+  fetchDecosDocumentsList,
+  fetchZakenByUserIDs,
+} from '../services/decos/decos-route-handlers';
 import { fetchDecosDocument } from '../services/decos/decos-service';
 import {
   fetchZorgnedAVDocument,
@@ -113,6 +116,7 @@ router.get(
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
 router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
+router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
 
 attachDocumentDownloadRoute(
   router,
