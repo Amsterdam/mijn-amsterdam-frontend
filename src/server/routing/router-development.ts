@@ -33,18 +33,21 @@ authRouterDevelopment.BFF_ID = 'router-dev';
 export async function createOIDCStub(
   req: Request,
   authProfile: AuthProfile,
-  expiresAtSeconds?: number
+  expiresInSeconds: number = OIDC_SESSION_MAX_AGE_SECONDS
 ) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
 
   // 15 minutes In seconds
-  const expiresAt =
-    expiresAtSeconds ??
-    new Date().getTime() / ONE_SECOND_MS + OIDC_SESSION_MAX_AGE_SECONDS;
+  const expiresAt = Date.now() + expiresInSeconds * ONE_SECOND_MS;
 
   const maSession: MaSession = {
     ...authProfile,
     TMASessionID: 'xx-tma-sid-xx',
+    id_token: '',
+    access_token: '',
+    refresh_token: '',
+    token_type: '',
+    expires_at: '',
   };
 
   (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
@@ -67,10 +70,7 @@ export async function createOIDCStub(
         'xx-tma-sid-xx'
       ),
       get expires_in() {
-        return differenceInSeconds(
-          new Date(expiresAt * ONE_SECOND_MS),
-          new Date()
-        );
+        return differenceInSeconds(new Date(expiresAt), new Date());
       },
       isExpired() {
         return this.expires_in <= 0;

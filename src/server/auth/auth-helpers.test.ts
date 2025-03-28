@@ -216,7 +216,7 @@ describe('auth-helpers', () => {
       const handler = createLogoutHandler('http://foo.bar');
       const reqMock = await getReqMockWithOidc(
         authProfileAndToken.profile,
-        millisecondsToSeconds(Date.now()) - ONE_MINUTE_SECONDS
+        -ONE_MINUTE_SECONDS
       );
 
       await handler(reqMock, resMock);
@@ -239,7 +239,7 @@ describe('auth-helpers', () => {
       const handler2 = createLogoutHandler('http://foo.bar', false);
       const reqMock = await getReqMockWithOidc(
         authProfileAndToken.profile,
-        millisecondsToSeconds(Date.now()) + ONE_MINUTE_SECONDS
+        ONE_MINUTE_SECONDS
       );
       await handler2(reqMock, resMock);
 

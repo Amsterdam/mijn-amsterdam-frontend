@@ -4,7 +4,10 @@ import nock from 'nock';
 import UID from 'uid-safe';
 
 import { bffApiHost, remoteApiHost } from './setup';
-import { OIDC_SESSION_COOKIE_NAME } from '../server/auth/auth-config';
+import {
+  OIDC_SESSION_COOKIE_NAME,
+  OIDC_SESSION_MAX_AGE_SECONDS,
+} from '../server/auth/auth-config';
 import {
   AuthenticatedRequest,
   AuthProfile,
@@ -118,7 +121,10 @@ export class RequestMock {
     return this;
   }
 
-  async createOIDCStub(authProfile: AuthProfile, expiresAtSeconds: number = 0) {
+  async createOIDCStub(
+    authProfile: AuthProfile,
+    expiresAtSeconds: number = OIDC_SESSION_MAX_AGE_SECONDS
+  ) {
     const self = this as unknown as AuthenticatedRequest;
     await createOIDCStub(self, authProfile, expiresAtSeconds);
     return this;
@@ -131,7 +137,7 @@ export class RequestMock {
 
 export async function getReqMockWithOidc(
   profile: AuthProfile,
-  expiresAtSeconds: number = 0
+  expiresAtSeconds: number = OIDC_SESSION_MAX_AGE_SECONDS
 ) {
   const reqMockWithOidc = RequestMock.new();
   reqMockWithOidc.setCookies({
