@@ -1,6 +1,6 @@
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 import { Themas } from '../../../universal/config/thema';
-import { MyNotification, MyTip } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -35,7 +35,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
   const isKnown: boolean =
     !!response?.status && response.status !== 'BSN unknown';
   const notifications: MyNotification[] = [];
-  const tips: MyTip[] = [];
+  const tips: MyNotification[] = [];
 
   if (Array.isArray(response?.data)) {
     for (const message of response.data) {
@@ -61,11 +61,11 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
         case 'M2':
           tips.push({
             id: `belasting-${message.nummer}`,
-            priority: message.prioriteit,
             datePublished: message.datum,
             title: message.titel,
             description: message.omschrijving,
-            reason: message.informatie,
+            tipReason: message.informatie,
+            isTip: true,
             thema: Themas.BELASTINGEN,
             link: {
               title: message.url_naam,
@@ -105,9 +105,11 @@ export async function fetchBelastingNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchTipsAndNotifications(
+  const r = await fetchTipsAndNotifications(
     requestID,
     getConfig(authProfileAndToken.profile.id),
     Themas.BELASTINGEN
   );
+
+  return r;
 }

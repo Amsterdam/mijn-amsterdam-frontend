@@ -1,50 +1,52 @@
 import { useRef, useState } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import { Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Landing.module.scss';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import DigiDLogo from '../../assets/images/LogoDigiD';
+import { LogoDigiD } from '../../assets/images/LogoDigiD';
 import LogoEherkenning from '../../assets/images/LogoEherkenning';
+import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import {
-  LinkdInline,
-  MaintenanceNotifications,
-  PageContent,
-  PageHeading,
-  TextPage,
-} from '../../components';
+  PageContentCell,
+  PageContentV2,
+  TextPageV2,
+} from '../../components/Page/Page';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { ExternalUrls } from '../../config/app';
 
-export default function Landing() {
+export function LandingPage() {
   const loginButton = useRef(null);
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
   const isRedirectingAny = isRedirecting || isRedirectingEherkenning;
 
   return (
-    <TextPage>
-      <PageHeading className={styles.Heading}>
-        Welkom op Mijn Amsterdam
-      </PageHeading>
-      <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
-        <p>Uw Amsterdamse zaken op 1 plek.</p>
-        <MaintenanceNotifications
-          fromApiDirectly={true}
-          page="landingspagina"
-        />
-        <div className={styles.LoginOption}>
+    <TextPageV2>
+      <PageContentV2
+        id="skip-to-id-AppContent"
+        className={styles.LandingPageContent}
+      >
+        <PageContentCell>
+          <Heading level={1} className="ams-mb--sm">
+            Welkom op Mijn Amsterdam
+          </Heading>
+          <Paragraph className="ams-mb--sm">
+            Uw Amsterdamse zaken op 1 plek.
+          </Paragraph>
+          <MaintenanceNotifications
+            fromApiDirectly={true}
+            page="landingspagina"
+            className="ams-mb--sm"
+          />
+
           {FeatureToggle.eherkenningActive && (
-            <Heading
-              className={styles.LoginOptionHeading}
-              size="level-4"
-              level={3}
-            >
+            <Heading className="ams-mb--xs" level={3}>
               Voor particulieren en eenmanszaken
             </Heading>
           )}
-          <p>
+          <Paragraph>
             <a
               ref={loginButton}
               role="button"
@@ -57,86 +59,79 @@ export default function Landing() {
               )}
             >
               <span className={styles.LoginLogoWrap}>
-                <DigiDLogo />
+                <LogoDigiD />
               </span>
               <span className={styles.LoginButtonText}>
                 {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
               </span>
             </a>
-          </p>
-          <Heading size="level-4" level={4}>
+          </Paragraph>
+          <Paragraph className="ams-mb--md">
             Hebt u nog geen DigiD? Regel dit dan eerst.
-          </Heading>
-          <p>
+            <br />
             Ga naar{' '}
-            <a rel="noopener noreferrer" href={ExternalUrls.DIGID_AANVRAGEN}>
+            <Link rel="noopener noreferrer" href={ExternalUrls.DIGID_AANVRAGEN}>
               DigiD aanvragen
-            </a>
-          </p>
-        </div>
-        {FeatureToggle.eherkenningActive && (
-          <div
-            className={classnames(
-              styles.LoginOption,
-              styles['LoginOption--eherkenning']
-            )}
-          >
-            <Heading
-              className={styles.LoginOptionHeading}
-              size="level-4"
-              level={3}
-            >
-              Voor ondernemers
-            </Heading>
-            <p>
-              <a
-                ref={loginButton}
-                role="button"
-                href={LOGIN_URL_EHERKENNING}
-                onClick={() => setRedirectingEherkenning(true)}
-                rel="noopener noreferrer"
-                className={classnames(
-                  styles.LoginBtn,
-                  styles['LoginBtn--eherkenning'],
-                  isRedirectingAny && styles.LoginBtnDisabled
-                )}
-              >
-                <span className={styles.LoginLogoWrap}>
-                  <LogoEherkenning />
-                </span>
-                <span className={styles.LoginButtonText}>
-                  {isRedirectingEherkenning
-                    ? 'Bezig met inloggen...'
-                    : 'Inloggen met eHerkenning'}
-                </span>
-              </a>
-            </p>
-            <Heading size="level-4" level={4}>
-              U heeft eHerkenning niveau 3 nodig om in te loggen.
-            </Heading>
-            <p>
-              Ga naar{' '}
-              <a rel="noopener noreferrer" href="https://eherkenning.nl">
-                eherkenning.nl
-              </a>{' '}
-              voor meer informatie.
-            </p>
-          </div>
-        )}
+            </Link>
+          </Paragraph>
 
-        <Heading size="level-4" level={4}>
-          Vragen over Mijn Amsterdam?
-        </Heading>
-        <p className={styles.FaqInfo}>
-          Kijk bij{' '}
-          <LinkdInline
-            external={true}
-            href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
-          >
-            veelgestelde vragen over Mijn Amsterdam
-          </LinkdInline>
-        </p>
-      </PageContent>
-    </TextPage>
+          {FeatureToggle.eherkenningActive && (
+            <>
+              <Heading className="ams-mb--xs" level={3}>
+                Voor ondernemers
+              </Heading>
+              <Paragraph>
+                <a
+                  ref={loginButton}
+                  role="button"
+                  href={LOGIN_URL_EHERKENNING}
+                  onClick={() => setRedirectingEherkenning(true)}
+                  rel="noopener noreferrer"
+                  className={classnames(
+                    styles.LoginBtn,
+                    styles['LoginBtn--eherkenning'],
+                    isRedirectingAny && styles.LoginBtnDisabled
+                  )}
+                >
+                  <span
+                    className={classnames(
+                      styles.LoginLogoWrap,
+                      styles.LogoEherkenning
+                    )}
+                  >
+                    <LogoEherkenning />
+                  </span>
+                  <span className={styles.LoginButtonText}>
+                    {isRedirectingEherkenning
+                      ? 'Bezig met inloggen...'
+                      : 'Inloggen met eHerkenning'}
+                  </span>
+                </a>
+              </Paragraph>
+              <Paragraph className="ams-mb--md">
+                U heeft eHerkenning niveau 3 nodig om in te loggen.
+                <br />
+                Ga naar{' '}
+                <Link rel="noopener noreferrer" href="https://eherkenning.nl">
+                  eherkenning.nl
+                </Link>{' '}
+                voor meer informatie.
+              </Paragraph>
+            </>
+          )}
+
+          <Heading level={4}>Vragen over Mijn Amsterdam?</Heading>
+          <Paragraph className="ams-mb--md">
+            Kijk bij{' '}
+            <Link
+              rel="noopener noreferrer"
+              href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+            >
+              veelgestelde vragen over Mijn Amsterdam
+            </Link>
+          </Paragraph>
+        </PageContentCell>
+      </PageContentV2>
+    </TextPageV2>
   );
 }

@@ -1,3 +1,5 @@
+import { Link } from '@amsterdam/design-system-react';
+
 import styles from './ProfilePrivate.module.scss';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import {
@@ -14,7 +16,6 @@ import {
   Persoon,
   VerbintenisHistorisch,
 } from '../../../../universal/types';
-import { LinkdInline } from '../../../components/Button/Button';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { ExternalUrls } from '../../../config/external-urls';
 import {
@@ -97,12 +98,12 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
       value ? (
         <>
           Voor dit adres geldt{' '}
-          <LinkdInline
-            external={true}
+          <Link
+            rel="noopener noreferrer"
             href="https://www.amsterdam.nl/veelgevraagd/geheimhouding-persoonsgegevens-7ed1c"
           >
             geheimhouding
-          </LinkdInline>
+          </Link>
         </>
       ) : null,
   ],

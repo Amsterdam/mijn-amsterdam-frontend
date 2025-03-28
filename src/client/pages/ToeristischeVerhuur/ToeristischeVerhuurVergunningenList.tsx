@@ -9,10 +9,10 @@ export function ToeristischeVerhuurVergunningen() {
   const {
     vergunningen,
     tableConfigVergunningen,
-    title,
     routes,
     isLoading,
     isError,
+    breadcrumbs,
   } = useToeristischeVerhuurThemaData();
   const listPageTableConfig = tableConfigVergunningen[kind];
 
@@ -21,12 +21,11 @@ export function ToeristischeVerhuurVergunningen() {
       items={vergunningen
         .filter(listPageTableConfig.filter)
         .sort(listPageTableConfig.sort)}
-      backLinkTitle={title}
       tableClassName={listPageTableConfig.className}
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

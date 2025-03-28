@@ -44,8 +44,6 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
-export type ComponentChildren = ReactNode;
-
 export interface MyNotification {
   thema: Thema;
   datePublished: string;
@@ -53,31 +51,19 @@ export interface MyNotification {
   hideDatePublished?: boolean;
   id: string;
   isAlert?: boolean;
-  isTip?: boolean;
-  tipReason?: string;
   link?: LinkProps;
-  moreInformation?: string;
   subject?: string;
   title: string;
+
+  // TIP notifications
+  tipReason?: string;
+  isTip?: true;
 
   // NOTE: Maybe move this to client?
   customLink?: {
     callback: () => void;
     title: string;
   };
-}
-
-export interface MyTip {
-  thema?: Thema | null;
-  datePublished: string;
-  description: string;
-  id: string;
-  imgUrl?: string;
-  link: LinkProps;
-  priority?: number;
-  profileTypes?: ProfileType[];
-  reason: string;
-  title: string;
 }
 
 export interface GenericDocument {

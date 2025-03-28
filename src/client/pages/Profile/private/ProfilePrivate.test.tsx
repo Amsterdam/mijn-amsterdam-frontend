@@ -7,7 +7,6 @@ import { MijnGegevensThema } from './ProfilePrivate';
 import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { Adres, AppState, BRPData } from '../../../../universal/types';
-import { ThemaTitles } from '../../../config/thema';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
@@ -187,15 +186,15 @@ const testState = (
   responseSF: ContactMoment[] = []
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
+  KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
+  // PARKEREN: { status: 'OK', content: null },
 });
 
 function initializeState(testState: unknown) {
   return (snapshot: MutableSnapshot) =>
     snapshot.set(appStateAtom, testState as AppState);
 }
-
-const PAGE_TITLE = ThemaTitles.BRP;
 
 const panelHeadings = [
   'Persoonlijke gegevens',
@@ -232,7 +231,11 @@ describe('<Profile />', () => {
       );
     }
     render(<Component />);
-    expect(screen.getByText(PAGE_TITLE)).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: 'Mijn gegevens',
+      })
+    ).toBeInTheDocument();
     expect(
       screen.getByText(responseData.persoon.geslachtsnaam as string)
     ).toBeInTheDocument();

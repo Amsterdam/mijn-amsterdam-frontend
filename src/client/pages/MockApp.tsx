@@ -1,16 +1,16 @@
-import { Component } from 'react';
+import { ComponentType } from 'react';
 
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
-import { AppState } from '../../universal/types';
+import { AppState } from '../../universal/types/App.types';
 import { appStateAtom } from '../hooks/useAppState';
 
 interface MockAppProps {
   routePath: string;
   routeEntry: string;
   initializeState?: (mutableSnapshot: MutableSnapshot) => void;
-  component: Component | any;
+  component: ComponentType;
 }
 
 export default function MockApp({

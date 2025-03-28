@@ -4,6 +4,7 @@ import {
 } from '../../../../universal/helpers/date';
 import { productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
+import { LINK_MEER_INFO } from './tonk';
 
 const aanvraagLabels: WpiRequestStatusLabels = {
   notification: {
@@ -98,7 +99,7 @@ const terugvorderingLabels: WpiRequestStatusLabels = {
     )} terugbetalen.
     Bekijk de brief voor meer details.
     </p>
-    <p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    <p>${LINK_MEER_INFO}</p>`,
 };
 
 const intrekkenLabels: WpiRequestStatusLabels = {
@@ -113,7 +114,7 @@ const intrekkenLabels: WpiRequestStatusLabels = {
   description: (requestProcess, statusStep) =>
     `<p>U heeft uw ${
       statusStep.about || requestProcess.about
-    } aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    } aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p>${LINK_MEER_INFO}</p>`,
 };
 
 const besluitLabels: WpiRequestStatusLabels = {
@@ -184,9 +185,9 @@ const besluitLabels: WpiRequestStatusLabels = {
       </p>
       ${
         statusStep.productSpecific !== 'lening'
-          ? "<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel='external noopener noreferrer' class='inline' href='https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/'>Kijk dan bij 'Wijziging of inkomsten doorgeven'</a></p>"
+          ? '<p>Wilt u een wijziging in uw inkomen doorgeven? <a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/wijzigingen-doorgeven/">Kijk dan bij \'Wijziging of inkomsten doorgeven\'</a></p>'
           : ''
-      }<p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+      }<p>${LINK_MEER_INFO}</p>`;
 
       case 'afwijzing':
         return `<p>
@@ -194,12 +195,12 @@ const besluitLabels: WpiRequestStatusLabels = {
           requestProcess,
           statusStep
         )}. Bekijk de brief voor meer details.
-      </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+      </p><p>${LINK_MEER_INFO}</p>`;
 
       case 'buitenBehandeling':
         return `<p>Wij behandelen uw aanvraag voor ${
           statusStep.about || requestProcess.about
-        } niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+        } niet meer. Bekijk de brief voor meer details.</p><p>${LINK_MEER_INFO}</p>`;
 
       default:
       case 'vrijeBeschikking':

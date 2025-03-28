@@ -1,21 +1,17 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-import { Grid, Screen } from '@amsterdam/design-system-react';
-
+import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
+import ErrorAlert from '../../components/Alert/Alert';
+import LoadingContent, {
+  BarConfig,
+} from '../../components/LoadingContent/LoadingContent';
 import {
-  GenericDocument,
-  LinkProps,
-  ZaakDetail,
-} from '../../../universal/types/App.types';
-import {
-  DetailPage,
-  ErrorAlert,
-  LoadingContent,
-  PageHeading,
-  StatusLine as StatusLineComponent,
-  ThemaIcon,
-} from '../../components';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { Steps } from '../../components/StatusSteps/StatusSteps';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],
@@ -27,17 +23,14 @@ const ERROR_ALERT_DEFAULT = 'We kunnen op dit moment geen gegevens tonen.';
 
 interface ThemaDetailPaginaProps<T> {
   zaak?: T | null;
-  backLink: LinkProps;
-  documentPathForTracking?: (document: GenericDocument) => string;
+  breadcrumbs?: LinkProps[];
   errorAlertContent?: ReactNode;
-  icon?: ReactElement;
   isError: boolean;
   isLoading: boolean;
   loadingBarConfig?: BarConfig;
+  pageContentMain: ReactNode;
   pageContentBottom?: ReactNode;
-  pageContentTop: ReactNode;
   reverseSteps?: boolean;
-  showStatusLineConnection?: boolean;
   statusLabel?: string;
   title?: string;
   className?: string;
@@ -46,18 +39,14 @@ interface ThemaDetailPaginaProps<T> {
 export default function ThemaDetailPagina<T extends ZaakDetail>({
   zaak,
   title = 'Detailpagina',
-  backLink,
-  className,
-  icon = <ThemaIcon />,
-  pageContentTop,
+  breadcrumbs,
+  pageContentMain,
   pageContentBottom,
   errorAlertContent = ERROR_ALERT_DEFAULT,
   loadingBarConfig = LOADING_BAR_CONFIG_DEFAULT,
   isError,
   isLoading,
-  documentPathForTracking,
   reverseSteps = false,
-  showStatusLineConnection = true,
   statusLabel = 'Status',
 }: ThemaDetailPaginaProps<T>) {
   let statusItemSteps = zaak?.steps ?? [];
@@ -68,44 +57,31 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   }
 
   return (
-    <DetailPage className={className}>
-      <PageHeading icon={icon} backLink={backLink}>
-        {title}
-      </PageHeading>
-      <Screen className="ams-mb--lg">
-        <Grid>
-          {pageContentTop}
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
 
-          {!isLoading && (isError || !zaak) && (
-            <Grid.Cell span="all">
-              <ErrorAlert>{errorAlertContent}</ErrorAlert>
-            </Grid.Cell>
-          )}
-
-          {isLoading && (
-            <Grid.Cell span="all">
-              <LoadingContent barConfig={loadingBarConfig} />
-            </Grid.Cell>
-          )}
-        </Grid>
-      </Screen>
-      <Grid>
-        {!!statusItemSteps.length && zaak && (
-          <Grid.Cell span="all">
-            <StatusLineComponent
-              statusLabel={statusLabel}
-              showStatusLineConnection={showStatusLineConnection}
-              items={statusItemSteps}
-              documentPathForTracking={documentPathForTracking}
-            />
-          </Grid.Cell>
+        {!isLoading && (isError || !zaak) && (
+          <PageContentCell>
+            <ErrorAlert>{errorAlertContent}</ErrorAlert>
+          </PageContentCell>
         )}
-      </Grid>
-      {!!pageContentBottom && (
-        <Screen>
-          <Grid>{pageContentBottom}</Grid>
-        </Screen>
-      )}
-    </DetailPage>
+
+        {isLoading && (
+          <PageContentCell>
+            <LoadingContent barConfig={loadingBarConfig} />
+          </PageContentCell>
+        )}
+
+        {pageContentMain}
+
+        {!!statusItemSteps.length && zaak && (
+          <PageContentCell startWide={1} spanWide={12}>
+            <Steps title={statusLabel} steps={statusItemSteps} />
+          </PageContentCell>
+        )}
+        {pageContentBottom}
+      </PageContentV2>
+    </DetailPageV2>
   );
 }

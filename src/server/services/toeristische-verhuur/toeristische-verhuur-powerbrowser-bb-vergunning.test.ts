@@ -222,20 +222,17 @@ describe('B&B Vergunningen service', () => {
   });
   describe('fetchPowerBrowserToken_', () => {
     test('should fetch token successfully', async () => {
-      const result =
-        await forTesting.fetchPowerBrowserToken_('test-request-id');
+      const result = await forTesting.fetchPowerBrowserToken_();
       expect(result.status).toBe('OK');
       expect(result.content).toBe('test-token');
     });
 
     test('should return an error if token fetch fails', async () => {
-      const resultSuccess =
-        await forTesting.fetchPowerBrowserToken_('test-request-id');
+      const resultSuccess = await forTesting.fetchPowerBrowserToken_();
       expect(resultSuccess.status).toBe('OK');
 
       remoteApi.post('/powerbrowser/Token').reply(500, 'some-error');
-      const result =
-        await forTesting.fetchPowerBrowserToken_('test-request-id');
+      const result = await forTesting.fetchPowerBrowserToken_();
       expect(result.status).toBe('ERROR');
     });
   });
@@ -374,7 +371,7 @@ describe('B&B Vergunningen service', () => {
     test('should return zaak status', () => {
       const zaak = {
         steps: [{ isActive: true, status: 'In behandeling' }],
-        result: 'Verleend',
+        decision: 'Verleend',
       } as unknown as BBVergunning;
 
       const result = forTesting.getZaakStatus(zaak);
@@ -384,7 +381,7 @@ describe('B&B Vergunningen service', () => {
     test('should return last step status if no result', () => {
       const zaak = {
         steps: [{ isActive: true, status: 'In behandeling' }],
-        result: null,
+        decision: null,
       } as unknown as BBVergunning;
 
       const result = forTesting.getZaakStatus(zaak);
@@ -408,10 +405,10 @@ describe('B&B Vergunningen service', () => {
     test('should transform zaak status response correctly', () => {
       const zaak = {
         id: 'test-zaak-id',
-        dateReceived: '2023-01-01',
+        dateRequest: '2023-01-01',
         dateDecision: '2023-02-01',
         dateEnd: '2023-12-31',
-        result: 'Verleend',
+        decision: 'Verleend',
         documents: [
           {
             title: 'Verzoek aanvullende gegevens',
@@ -475,10 +472,10 @@ describe('B&B Vergunningen service', () => {
     test('should handle case with no result and no documents', () => {
       const zaak = {
         id: 'test-zaak-id',
-        dateReceived: '2023-01-01',
+        dateRequest: '2023-01-01',
         dateDecision: null,
         dateEnd: null,
-        result: null,
+        decision: null,
         documents: [],
       } as unknown as BBVergunning;
 
@@ -518,10 +515,10 @@ describe('B&B Vergunningen service', () => {
     test('should handle case with no status response', () => {
       const zaak = {
         id: 'test-zaak-id',
-        dateReceived: '2023-01-01',
+        dateRequest: '2023-01-01',
         dateDecision: null,
         dateEnd: null,
-        result: null,
+        decision: null,
         documents: [],
       } as unknown as BBVergunning;
 
@@ -609,7 +606,7 @@ describe('B&B Vergunningen service', () => {
 
       const zaak = {
         id: 'test-zaak-id',
-        dateReceived: '2023-01-01',
+        dateRequest: '2023-01-01',
         dateEnd: null,
         documents: [],
       } as unknown as BBVergunning;
@@ -629,7 +626,7 @@ describe('B&B Vergunningen service', () => {
 
       const zaak = {
         id: 'test-zaak-id',
-        dateReceived: '2023-01-01',
+        dateRequest: '2023-01-01',
         dateEnd: null,
       } as unknown as BBVergunning;
 
@@ -650,7 +647,7 @@ describe('B&B Vergunningen service', () => {
       const zaken = [
         {
           id: 'test-zaak-id',
-          dateReceived: '2023-01-01',
+          dateRequest: '2023-01-01',
           dateEnd: null,
           documents: [],
         },
@@ -682,7 +679,7 @@ describe('B&B Vergunningen service', () => {
       });
 
       const zaken = [
-        { id: 'test-zaak-id', dateReceived: '2023-01-01', dateEnd: null },
+        { id: 'test-zaak-id', dateRequest: '2023-01-01', dateEnd: null },
       ] as unknown as BBVergunning[];
 
       const result = await forTesting.fetchAndMergeDocuments(
@@ -699,7 +696,7 @@ describe('B&B Vergunningen service', () => {
       remoteApi.post('/powerbrowser/SearchRequest').reply(500, 'some-error');
 
       const zaken = [
-        { id: 'test-zaak-id', dateReceived: '2023-01-01', dateEnd: null },
+        { id: 'test-zaak-id', dateRequest: '2023-01-01', dateEnd: null },
       ] as unknown as BBVergunning[];
 
       const result = await forTesting.fetchAndMergeDocuments(
@@ -723,7 +720,7 @@ describe('B&B Vergunningen service', () => {
       });
 
       const zaken = [
-        { id: 'test-zaak-id', dateReceived: '2023-01-01', dateEnd: null },
+        { id: 'test-zaak-id', dateRequest: '2023-01-01', dateEnd: null },
       ] as unknown as BBVergunning[];
 
       const result = await forTesting.fetchAndMergeAdressen(
@@ -731,7 +728,7 @@ describe('B&B Vergunningen service', () => {
         zaken
       );
       expect(result).toHaveLength(1);
-      expect(result[0].adres).toBe('Test Address');
+      expect(result[0].location).toBe('Test Address');
     });
   });
 
@@ -741,7 +738,7 @@ describe('B&B Vergunningen service', () => {
 
     test('should return true if zaak is actual', () => {
       const result = forTesting.isZaakActual({
-        result: 'Verleend',
+        decision: 'Verleend',
         dateEnd: '2023-12-31',
         compareDate: now,
       });
@@ -750,7 +747,7 @@ describe('B&B Vergunningen service', () => {
 
     test('should return false if zaak is not actual based on result', () => {
       const result = forTesting.isZaakActual({
-        result: 'Niet verleend',
+        decision: 'Niet verleend',
         dateEnd: '2023-12-31',
         compareDate: now,
       });
@@ -759,7 +756,7 @@ describe('B&B Vergunningen service', () => {
 
     test('should return false if zaak is not actual based on date', () => {
       const result = forTesting.isZaakActual({
-        result: 'Verleend',
+        decision: 'Verleend',
         dateEnd: '2011-12-31',
         compareDate: now,
       });
@@ -811,26 +808,29 @@ describe('B&B Vergunningen service', () => {
 
       const result = forTesting.transformZaak(zaak);
       expect(result).toEqual({
-        adres: null,
         dateDecision: '2024-10-17T22:00:00.0000000Z',
+        dateDecisionFormatted: '18 oktober 2024',
         dateEnd: '2024-12-30T23:00:00.0000000Z',
         dateEndFormatted: '31 december 2024',
-        dateReceived: '2024-09-30T22:00:00.0000000Z',
+        dateRequest: '2024-09-30T22:00:00.0000000Z',
+        dateRequestFormatted: '01 oktober 2024',
         dateStart: '2024-10-17T22:00:00.0000000Z',
         dateStartFormatted: '18 oktober 2024',
+        decision: 'Verleend',
+        displayStatus: 'Ontvangen',
         documents: [],
         heeftOvergangsRecht: false,
         id: '126088685',
-        isActual: true,
+        identifier: 'Z2024-WK000245',
         link: {
           title: 'Vergunning bed & breakfast',
           to: '/toeristische-verhuur/vergunning/bed-and-breakfast/126088685',
         },
-        result: 'Verleend',
+        location: null,
+        processed: true,
         status: 'Ontvangen',
         steps: [],
         title: 'Vergunning bed & breakfast',
-        zaaknummer: 'Z2024-WK000245',
       });
     });
   });

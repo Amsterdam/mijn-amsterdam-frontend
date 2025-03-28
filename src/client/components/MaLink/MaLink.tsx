@@ -1,12 +1,22 @@
 import { AnchorHTMLAttributes } from 'react';
 
-import { ButtonProps, Link, LinkProps } from '@amsterdam/design-system-react';
+import {
+  Breadcrumb,
+  BreadcrumbLinkProps,
+  ButtonProps,
+  Link,
+  LinkProps,
+} from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
 import styles from './MaLink.module.scss';
 
-type MaClassNameVariant = 'fatNoUnderline' | 'noDefaultUnderline';
+type MaClassNameVariant =
+  | 'fatNoUnderline'
+  | 'noDefaultUnderline'
+  | 'noUnderline'
+  | 'fatNoDefaultUnderline';
 
 type MaLinkProps = LinkProps & {
   maVariant?: MaClassNameVariant;
@@ -15,6 +25,8 @@ type MaLinkProps = LinkProps & {
 const maClassName: Record<MaClassNameVariant, string> = {
   fatNoUnderline: 'MaRouterLink__no-underline-fat',
   noDefaultUnderline: 'MaRouterLink__no-default-underline',
+  fatNoDefaultUnderline: 'MaRouterLink__no-default-underline-fat',
+  noUnderline: 'MaRouterLink__no-underline',
 };
 
 export function MaLink({
@@ -45,11 +57,35 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
       {...rest}
       href={href}
       onClick={(event) => {
+        event.preventDefault();
+
         if (onClick) {
           onClick(event);
         }
 
+        history.push(href as string, { from: history.location.pathname });
+      }}
+    />
+  );
+}
+
+export function MaBreadcrumbLink({
+  href,
+  onClick,
+  ...rest
+}: BreadcrumbLinkProps & React.RefAttributes<HTMLAnchorElement>) {
+  const history = useHistory();
+  return (
+    <Breadcrumb.Link
+      {...rest}
+      href={href}
+      onClick={(event) => {
         event.preventDefault();
+
+        if (onClick) {
+          onClick(event);
+        }
+
         history.push(href as string);
       }}
     />
@@ -84,6 +120,40 @@ export function MaButtonLink({
       className={classes}
       aria-disabled={isDisabled}
       href={!isDisabled ? href : undefined}
+    >
+      {children}
+    </a>
+  );
+}
+
+export function MaButtonRouterLink({
+  href,
+  children,
+  className,
+  variant = 'primary',
+  onClick,
+  ...rest
+}: MaButtonLinkProps) {
+  const history = useHistory();
+  return (
+    <a
+      {...rest}
+      className={classNames(
+        styles.MaButtonLink,
+        'ams-button',
+        `ams-button--${variant}`,
+        className
+      )}
+      href={href}
+      onClick={(event) => {
+        event.preventDefault();
+
+        if (onClick) {
+          onClick(event);
+        }
+
+        history.push(href as string, { from: history.location.pathname });
+      }}
     >
       {children}
     </a>

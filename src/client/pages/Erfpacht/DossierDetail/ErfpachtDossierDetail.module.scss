@@ -1,7 +1,5 @@
 @import '../../../styles/global';
 
-@include DesignSystemStyleAdjust();
-
 .DossierDetail__ordered_list {
   margin-bottom: 2rem;
 }
@@ -36,74 +34,6 @@
 .DossierDetailFacturenTable {
   > thead > tr {
     margin-top: 0;
-  }
-}
-
-.FacturenBetalerDebiteur {
-  padding: 0;
-
-  @media screen and (max-width: $ams-breakpoint-medium) {
-    dd {
-      margin: 0;
-    }
-  }
-
-  &_Col1 {
-    grid-column-start: 1;
-    grid-column-end: span 2;
-  }
-
-  &_Col2 {
-    grid-column-start: 3;
-    grid-column-end: span 2;
-  }
-
-  &_Col3 {
-    grid-column-start: 1;
-    grid-column-end: span 2;
-  }
-
-  @media screen and (min-width: $ams-breakpoint-medium) {
-    &_Col1 {
-      grid-column-start: 1;
-      grid-column-end: span 3;
-    }
-
-    &_Col2 {
-      grid-column-start: 4;
-      grid-column-end: span 3;
-    }
-
-    &_Col3 {
-      grid-column-start: 7;
-      grid-column-end: span 3;
-    }
-  }
-}
-
-.BijzondereBepalingen {
-  padding: 0;
-
-  &_Col1 {
-    grid-column-start: 1;
-    grid-column-end: span 2;
-  }
-
-  &_Col2 {
-    grid-column-start: 3;
-    grid-column-end: span 2;
-  }
-
-  @media screen and (min-width: $ams-breakpoint-medium) {
-    &_Col1 {
-      grid-column-start: 1;
-      grid-column-end: span 4;
-    }
-
-    &_Col2 {
-      grid-column-start: 5;
-      grid-column-end: span 4;
-    }
   }
 }
 

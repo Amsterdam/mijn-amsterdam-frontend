@@ -1,0 +1,58 @@
+@use 'sass:list';
+@use 'sass:map';
+
+@mixin reset-list-style {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+@mixin select($names...) {
+  $selectors: ();
+
+  @each $name in $names {
+    $selectors: list.append($selectors, ('[class*="#{$name}"]'), comma);
+  }
+
+  #{$selectors} {
+    @content;
+  }
+}
+
+@mixin input() {
+  display: block;
+  color: var(--ams-color-primary-black);
+  padding: 0.6em 1.2em 0.5em 0.6em;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: 0.1rem solid var(--ams-color-neutral-grey3);
+  border-radius: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+@mixin inputSelect() {
+  @include input();
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--ams-color-primary-white);
+  background-image: url('../../assets/icons/Chevron-Down.svg');
+  background-repeat: no-repeat, repeat;
+  background-position:
+    right 0.7em top 50%,
+    0 0;
+  background-size:
+    0.85em auto,
+    100%;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  option {
+    font-weight: normal;
+  }
+}

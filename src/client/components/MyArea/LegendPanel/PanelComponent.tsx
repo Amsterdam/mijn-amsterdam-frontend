@@ -11,15 +11,18 @@ import {
   useRef,
 } from 'react';
 
+import { Button } from '@amsterdam/design-system-react';
+import {
+  ChevronRightIcon,
+  CloseIcon,
+} from '@amsterdam/design-system-react-icons';
 import { animated, AnimatedValue, useSpring } from '@react-spring/web';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 
 import styles from './PanelComponent.module.scss';
-import { IconChevronRight } from '../../../assets/icons';
 import { useWidescreen } from '../../../hooks/media.hook';
-import { CloseButton } from '../../Button/Button';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible
@@ -35,10 +38,11 @@ function px(size: number) {
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 const UNIT_SIZE = 4;
-const TIP_WIDTH = 8;
+const TIP_WIDTH = 0;
 const PREVIEW_WIDTH = 60;
-const FULL_WIDTH = 120;
-const NARROW_TIP_HEIGHT = 10;
+const FULL_WIDTH = 160;
+const NARROW_TIP_HEIGHT = 15;
+
 export const WIDE_PANEL_TIP_WIDTH = px(TIP_WIDTH * UNIT_SIZE);
 export const WIDE_PANEL_PREVIEW_WIDTH = px(PREVIEW_WIDTH * UNIT_SIZE);
 export const WIDE_PANEL_WIDTH = px(FULL_WIDTH * UNIT_SIZE);
@@ -257,14 +261,6 @@ function ToggleButtonPhone({ ...rest }: ButtonProps) {
   return <button {...rest} className={styles.PanelTogglePhone} />;
 }
 
-function ToggleButtonDesktop({ children, ...rest }: ButtonProps) {
-  return (
-    <button {...rest} className={styles.PanelToggleDesktop}>
-      {children}
-    </button>
-  );
-}
-
 function PanelWideAnimated({ children, width }: PanelWideAnimatedProps) {
   const anim = useSpring({
     transform: `translate3d(calc(-100% + ${width}), 0, 0)`,
@@ -375,13 +371,14 @@ export function PanelComponent({
       height={getPanelSize(state, true, availableHeight)}
     >
       {showCloseButton && (
-        <CloseButton
-          iconSize="24"
+        <Button
           className={styles.CloseButton}
           onClick={(event) => {
             cycleState();
-            onClose && onClose(event);
+            onClose?.(event);
           }}
+          icon={CloseIcon}
+          iconOnly
           aria-label={`${id} paneel sluiten`}
         />
       )}
@@ -399,27 +396,29 @@ export function PanelComponent({
   ) : (
     <PanelWideAnimated width={getPanelSize(state, false)}>
       {showCloseButton && (
-        <CloseButton
+        <Button
           className={styles.CloseButton}
+          variant="tertiary"
           onClick={(event) => {
             cycleState();
-            onClose && onClose(event);
+            onClose?.(event);
           }}
+          icon={CloseIcon}
+          iconOnly
+          aria-label={`${id} paneel sluiten`}
         />
       )}
       {showToggleButton && (
-        <ToggleButtonDesktop
+        <Button
           className={styles.PanelToggleDesktop}
           aria-expanded={isPanelExpanded}
-          aria-label={
-            isPanelExpanded ? `Verberg ${id} paneel` : `Toon ${id} paneel`
-          }
+          aria-label={`${isPanelExpanded ? 'Sluit' : 'Open'} ${id} paneel`}
           onClick={cycleState}
+          icon={isPanelExpanded ? CloseIcon : ChevronRightIcon}
+          variant={isPanelExpanded ? 'tertiary' : 'secondary'}
         >
-          <span className={styles.Icon}>
-            <IconChevronRight />
-          </span>
-        </ToggleButtonDesktop>
+          {isPanelExpanded ? '' : 'Legenda'}
+        </Button>
       )}
       <PanelInnerDesktop ref={ref}>{children}</PanelInnerDesktop>
     </PanelWideAnimated>

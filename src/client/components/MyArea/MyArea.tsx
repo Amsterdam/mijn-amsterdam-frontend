@@ -10,7 +10,7 @@ import { ThemaTitles } from '../../config/thema';
 import { useWidescreen } from '../../hooks/media.hook';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
+import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications';
 import { LegendPanel } from './LegendPanel/LegendPanel';
 import {
   PanelState,
@@ -36,6 +36,7 @@ import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButt
 import { MyAreaDatasets } from './MyAreaDatasets';
 import HomeControlButton from './MyAreaHomeControlButton';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
+import { AmsMainMenuClassname } from '../MainHeader/MainHeader';
 
 const baseLayerOptions: TileLayerOptions = {
   subdomains: ['t1', 't2', 't3', 't4'],
@@ -43,7 +44,7 @@ const baseLayerOptions: TileLayerOptions = {
 };
 
 // The height of the header. If we account for it the full map will be onscreen and scrolling is only needed to reach the footer.
-const HEADERHEIGHT = 150;
+const HEADERHEIGHT = 119;
 
 const mapLayers = {
   aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
@@ -70,12 +71,17 @@ export interface MyAreaProps {
   zoom?: number;
   centerMarker?: MapLocationMarker;
   activeBaseLayerType?: BaseLayerType;
+  showHomeLocationMarker?: boolean;
+  showSecondaryLocationMarkers?: boolean;
 }
 
 function updateViewportHeight() {
+  const headerHeight =
+    document.querySelector(`.${AmsMainMenuClassname}`)?.getBoundingClientRect()
+      .height ?? HEADERHEIGHT;
   document.documentElement.style.setProperty(
     '--map-container-height',
-    `${window.innerHeight - HEADERHEIGHT}px`
+    `${window.innerHeight - headerHeight}px`
   );
 }
 
@@ -85,6 +91,8 @@ export default function MyArea({
   centerMarker,
   zoom = HOOD_ZOOM,
   activeBaseLayerType = BaseLayerType.Topo,
+  showHomeLocationMarker = true,
+  showSecondaryLocationMarkers = true,
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
@@ -166,7 +174,7 @@ export default function MyArea({
               setInstance={(mapInstance) => setMapInstance(mapInstance)}
             >
               <AttributionToggle />
-              {!!homeLocationMarker && (
+              {showHomeLocationMarker && !!homeLocationMarker && (
                 <HomeIconMarker
                   label={homeLocationMarker.label}
                   center={homeLocationMarker.latlng}
@@ -182,7 +190,8 @@ export default function MyArea({
                     zoom={zoom}
                   />
                 )}
-              {secondaryLocationMarkers.length &&
+              {showSecondaryLocationMarkers &&
+                secondaryLocationMarkers.length &&
                 secondaryLocationMarkers.map((location) => (
                   <CustomLatLonMarker
                     label={location.label}

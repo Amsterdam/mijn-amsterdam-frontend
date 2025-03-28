@@ -11,7 +11,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ErfpachtOpenFacturen from './ErfpachtOpenFacturen';
+import { ErfpachtOpenFacturen } from './ErfpachtOpenFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
   const routeEntry = generatePath(AppRoutes['ERFPACHTv2/OPEN_FACTUREN']);
@@ -22,18 +22,20 @@ describe('<ErfpachtOpenFacturen />', () => {
     'xxx-relatie-code-xxx'
   );
 
-  const Component = ({
+  function Component({
     initializeState,
   }: {
     initializeState: (snapshot: MutableSnapshot) => void;
-  }) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ErfpachtOpenFacturen}
-      initializeState={initializeState}
-    />
-  );
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ErfpachtOpenFacturen}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Renders Open Facturen List Page no data', () => {
     const testState = {
@@ -51,9 +53,11 @@ describe('<ErfpachtOpenFacturen />', () => {
       />
     );
 
-    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
     expect(
-      screen.getByText('U heeft geen openstaande facturen.')
+      screen.getByRole('heading', { name: 'Openstaande facturen' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('U heeft (nog) geen gegevens op deze pagina.')
     ).toBeInTheDocument();
   });
 
@@ -73,9 +77,11 @@ describe('<ErfpachtOpenFacturen />', () => {
       />
     );
 
-    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
     expect(
-      screen.queryByText('U heeft geen openstaande facturen.')
+      screen.getByRole('heading', { name: 'Openstaande facturen' })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('U heeft (nog) geen gegevens op deze pagina.')
     ).not.toBeInTheDocument();
 
     expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
@@ -91,7 +97,7 @@ describe('<ErfpachtOpenFacturen />', () => {
     expect(screen.getByText('€ 123,02')).toBeInTheDocument();
 
     expect(screen.getByText('16 april 2023')).toBeInTheDocument();
-    expect(screen.getByText('16 oktober 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 maart 2023')).toBeInTheDocument();
     expect(screen.getByText('16 december 2023')).toBeInTheDocument();
   });
 
@@ -118,9 +124,11 @@ describe('<ErfpachtOpenFacturen />', () => {
       };
     });
 
-    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
     expect(
-      screen.queryByText('U heeft geen openstaande facturen.')
+      screen.getByRole('heading', { name: 'Openstaande facturen' })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('U heeft (nog) geen gegevens op deze pagina.')
     ).not.toBeInTheDocument();
 
     expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
@@ -136,7 +144,7 @@ describe('<ErfpachtOpenFacturen />', () => {
     expect(screen.getByText('€ 123,02')).toBeInTheDocument();
 
     expect(screen.getByText('16 april 2023')).toBeInTheDocument();
-    expect(screen.getByText('16 oktober 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 maart 2023')).toBeInTheDocument();
     expect(screen.getByText('16 december 2023')).toBeInTheDocument();
   });
 
@@ -158,9 +166,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
     expect(screen.getByText('Foutmelding')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        'We kunnen op dit moment geen openstaande facturen tonen.'
-      )
+      screen.getByText('We kunnen op dit moment niet alle gegevens tonen.')
     ).toBeInTheDocument();
   });
 });

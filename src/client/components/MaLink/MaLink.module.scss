@@ -7,21 +7,28 @@
   --ams-link-standalone-text-decoration-line: none;
 }
 
+.MaRouterLink__no-underline {
+  --ams-link-standalone-text-decoration-line: none;
+}
+
+.MaRouterLink__no-default-underline-fat {
+  --ams-link-font-weight: bold;
+  &:not(:hover) {
+    --ams-link-standalone-text-decoration-line: none;
+  }
+}
+
 .MaButtonLink {
   -webkit-appearance: button;
   appearance: button;
   text-decoration: none;
-  &:hover,
-  &:visited {
-    // color: var(--ams-color-primary-white);
-  }
 
   &[aria-disabled='true'] {
     &,
     &:hover {
       background-color: transparent;
-      border: 2px solid $color-neutral-grey2;
-      color: $color-neutral-grey4;
+      border: 2px solid var(--ams-color-neutral-grey3);
+      color: var(--ams-color-neutral-grey3);
       box-shadow: none;
       pointer-events: none;
     }
