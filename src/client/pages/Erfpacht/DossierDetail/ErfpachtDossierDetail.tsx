@@ -20,11 +20,12 @@ export function ErfpachtDossierDetail() {
     relatieCode,
     displayPropsDossierFacturen,
     themaPaginaBreadcrumb,
+    title,
   } = useDossierDetailData();
 
   return (
     <ThemaDetailPagina<ErfpachtV2DossiersDetail>
-      title={dossier?.title}
+      title={title}
       zaak={dossier}
       isError={isError || isErrorThemaData}
       isLoading={isLoading || isLoadingThemaData}

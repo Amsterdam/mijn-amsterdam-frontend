@@ -128,8 +128,10 @@ export function generateSearchIndexPageEntries(
     const hasProperAppState = !apiConfig.stateKey.endsWith('_BAG')
       ? !isError(appState[apiConfig.stateKey]) && !!appState[apiConfig.stateKey]
       : !!appState[apiConfig.stateKey];
+
     const isEnabled =
       !!apiConfig && 'isEnabled' in apiConfig ? apiConfig.isEnabled : true;
+
     return (
       apiConfig.profileTypes?.includes(profileType) &&
       isEnabled &&
@@ -154,13 +156,23 @@ export function generateSearchIndexPageEntries(
 
 interface AmsterdamSearchResult {
   title: string;
+  highlight: {
+    title?: string;
+  };
   sections: string[];
   description: string;
   url: string;
-  highlight: { title: string };
 }
 
-function transformSearchAmsterdamNLresponse(responseData: any): SearchEntry[] {
+interface ResponseData {
+  records: {
+    page: AmsterdamSearchResult[];
+  };
+}
+
+function transformSearchAmsterdamNLresponse(
+  responseData: ResponseData
+): SearchEntry[] {
   if (Array.isArray(responseData?.records?.page)) {
     return responseData.records.page.map((page: AmsterdamSearchResult) => {
       return {

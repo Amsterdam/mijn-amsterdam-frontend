@@ -99,8 +99,8 @@ import { VergunningenThemaPagina } from './pages/Vergunningen/Vergunningen';
 import { VergunningenList } from './pages/Vergunningen/VergunningenList';
 import { ZaakStatus } from './pages/ZaakStatus/ZaakStatus';
 import { ZorgThemaPagina } from './pages/Zorg/Zorg';
+import { ZorgDetail } from './pages/Zorg/ZorgDetail';
 import { ZorgRegelingen } from './pages/Zorg/ZorgRegelingen';
-import { ZorgDetail } from './pages/ZorgDetail/ZorgDetail';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);

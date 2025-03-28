@@ -12,28 +12,39 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
         class="_PageHeadingInner_c5a3f1"
         id="skip-to-id-AppContent"
       >
-        <a
-          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-          href="/"
-          title="Terug naar de vorige pagina"
+        <nav
+          class="ams-breadcrumb"
         >
-          <span
-            class="ams-icon ams-icon--size-5"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 32 32"
-              xmlns="http://www.w3.org/2000/svg"
+            <li
+              class="ams-breadcrumb__item"
             >
-              <path
-                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                fill-rule="evenodd"
-              />
-            </svg>
-          </span>
-          Terug
-        </a>
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/paspoort-en-id-kaart"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Paspoort en ID-kaart
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
         <h3
           class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >

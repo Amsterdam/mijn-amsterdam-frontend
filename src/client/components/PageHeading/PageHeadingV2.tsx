@@ -57,7 +57,7 @@ export function PageHeadingV2({
             <MaBreadcrumbLink href={AppRoutes.HOME}>
               {ThemaTitles.HOME}
             </MaBreadcrumbLink>
-            {breadcrumbs.map(({ to, title }) => (
+            {breadcrumbs.filter(Boolean).map(({ to, title }) => (
               <MaBreadcrumbLink key={to} href={to}>
                 {title}
               </MaBreadcrumbLink>

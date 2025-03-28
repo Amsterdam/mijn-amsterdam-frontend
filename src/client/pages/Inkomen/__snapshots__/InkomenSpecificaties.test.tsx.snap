@@ -12,28 +12,49 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
         class="_PageHeadingInner_c5a3f1"
         id="skip-to-id-AppContent"
       >
-        <a
-          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-          href="/inkomen"
-          title="Terug naar de vorige pagina"
+        <nav
+          class="ams-breadcrumb"
         >
-          <span
-            class="ams-icon ams-icon--size-5"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 32 32"
-              xmlns="http://www.w3.org/2000/svg"
+            <li
+              class="ams-breadcrumb__item"
             >
-              <path
-                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                fill-rule="evenodd"
-              />
-            </svg>
-          </span>
-          Terug
-        </a>
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/inkomen"
+              >
+                iets
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/inkomen/specificaties/jaaropgaven"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Jaaropgaven
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
         <h3
           class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
@@ -275,28 +296,49 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
         class="_PageHeadingInner_c5a3f1"
         id="skip-to-id-AppContent"
       >
-        <a
-          class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
-          href="/inkomen"
-          title="Terug naar de vorige pagina"
+        <nav
+          class="ams-breadcrumb"
         >
-          <span
-            class="ams-icon ams-icon--size-5"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 32 32"
-              xmlns="http://www.w3.org/2000/svg"
+            <li
+              class="ams-breadcrumb__item"
             >
-              <path
-                d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                fill-rule="evenodd"
-              />
-            </svg>
-          </span>
-          Terug
-        </a>
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/inkomen"
+              >
+                iets
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/inkomen/specificaties/uitkering"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Uitkeringsspecificaties
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
         <h3
           class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
@@ -365,12 +407,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <td
                 class="ams-table__cell"
               >
-                Participatiewet
+                Bijzondere Bijstand
               </td>
               <td
                 class="ams-table__cell"
               >
-                18 mei 2019
+                30 april 2019
               </td>
               <td
                 class="ams-table__cell"
@@ -416,7 +458,421 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <td
                 class="ams-table__cell"
               >
-                18 mei 2019
+                29 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                28 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                27 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                26 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                25 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                24 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                23 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                22 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                21 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                20 april 2019
               </td>
               <td
                 class="ams-table__cell"
@@ -503,58 +959,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <td
                 class="ams-table__cell"
               >
-                Participatiewet
+                Bijzondere Bijstand
               </td>
               <td
                 class="ams-table__cell"
               >
-                19 april 2019
-              </td>
-              <td
-                class="ams-table__cell"
-              >
-                <span
-                  class="_DocumentLinkWrap_81c3b4"
-                >
-                  <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
-                  >
-                    <span
-                      class="_DocumentLinkIcon_81c3b4"
-                    >
-                      <span
-                        class="ams-icon ams-icon--size-5"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                    PDF
-                  </a>
-                </span>
-              </td>
-            </tr>
-            <tr
-              class="ams-table__row"
-            >
-              <td
-                class="ams-table__cell"
-              >
-                Participatiewet
-              </td>
-              <td
-                class="ams-table__cell"
-              >
-                23 maart 2019
+                18 april 2019
               </td>
               <td
                 class="ams-table__cell"
@@ -600,99 +1010,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <td
                 class="ams-table__cell"
               >
-                23 maart 2019
-              </td>
-              <td
-                class="ams-table__cell"
-              >
-                <span
-                  class="_DocumentLinkWrap_81c3b4"
-                >
-                  <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
-                  >
-                    <span
-                      class="_DocumentLinkIcon_81c3b4"
-                    >
-                      <span
-                        class="ams-icon ams-icon--size-5"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                    PDF
-                  </a>
-                </span>
-              </td>
-            </tr>
-            <tr
-              class="ams-table__row"
-            >
-              <td
-                class="ams-table__cell"
-              >
-                WWB
-              </td>
-              <td
-                class="ams-table__cell"
-              >
-                18 januari 2014
-              </td>
-              <td
-                class="ams-table__cell"
-              >
-                <span
-                  class="_DocumentLinkWrap_81c3b4"
-                >
-                  <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
-                  >
-                    <span
-                      class="_DocumentLinkIcon_81c3b4"
-                    >
-                      <span
-                        class="ams-icon ams-icon--size-5"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          focusable="false"
-                          viewBox="0 0 32 32"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                    PDF
-                  </a>
-                </span>
-              </td>
-            </tr>
-            <tr
-              class="ams-table__row"
-            >
-              <td
-                class="ams-table__cell"
-              >
-                Participatiewet
-              </td>
-              <td
-                class="ams-table__cell"
-              >
-                18 mei 2012
+                17 april 2019
               </td>
               <td
                 class="ams-table__cell"
@@ -738,7 +1056,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <td
                 class="ams-table__cell"
               >
-                18 mei 2012
+                16 april 2019
               </td>
               <td
                 class="ams-table__cell"
@@ -784,7 +1102,191 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
               <td
                 class="ams-table__cell"
               >
-                19 april 2012
+                15 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                14 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                13 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                12 april 2019
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    PDF
+                  </a>
+                </span>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                Bijzondere Bijstand
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                11 april 2019
               </td>
               <td
                 class="ams-table__cell"
