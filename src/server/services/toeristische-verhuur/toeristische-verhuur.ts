@@ -73,9 +73,9 @@ async function fetchAndTransformToeristischeVerhuur(
       ),
       vakantieverhuurVergunningen: (
         vakantieverhuurVergunningen.content ?? []
-      ).sort(dateSort('dateReceived', 'desc')),
+      ).sort(dateSort('dateRequest', 'desc')),
       bbVergunningen: (bbVergunningen.content ?? []).sort(
-        dateSort('dateReceived', 'desc')
+        dateSort('dateRequest', 'desc')
       ),
     },
     failedDependencies

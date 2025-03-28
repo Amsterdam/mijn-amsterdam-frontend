@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
 
 import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
@@ -95,7 +94,6 @@ export function HLIThemaPagina() {
     isLoading,
     regelingen,
     title,
-    routes,
     tableConfig,
     dependencyError,
     stadspassen,
@@ -122,7 +120,7 @@ export function HLIThemaPagina() {
             sort: regelingenListSort,
             maxItems,
             className,
-            textNoContent,
+            listPageRoute,
           },
         ]) => {
           return (
@@ -133,11 +131,8 @@ export function HLIThemaPagina() {
               zaken={regelingen
                 .filter(regelingenListFilter)
                 .sort(regelingenListSort)}
-              listPageRoute={generatePath(routes.listPage, {
-                kind,
-              })}
+              listPageRoute={listPageRoute}
               displayProps={displayProps}
-              textNoContent={textNoContent}
               maxItems={maxItems}
             />
           );
@@ -150,17 +145,7 @@ export function HLIThemaPagina() {
       <ThemaPagina
         title={title}
         pageContentTop={pageContentTop}
-        linkListItems={
-          hasKindtegoed
-            ? [
-                ...linkListItems,
-                {
-                  to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-                  title: 'Meer informatie over Kindtegoed declareren',
-                },
-              ]
-            : linkListItems
-        }
+        linkListItems={linkListItems}
         pageContentMain={
           <>
             {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
