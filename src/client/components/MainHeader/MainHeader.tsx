@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Header, Icon } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
@@ -19,32 +21,38 @@ import {
 
 type MainHeaderSecondaryLinksProps = {
   linkClassName: string;
+  wrapInListElement: boolean;
 };
 
 export function MainHeaderSecondaryLinks({
   linkClassName,
+  wrapInListElement = false,
 }: MainHeaderSecondaryLinksProps) {
+  const Wrap = wrapInListElement ? 'li' : React.Fragment;
   return (
     <>
-      <MaRouterLink
-        maVariant="noUnderline"
-        href={AppRoutes.BRP}
-        className={linkClassName}
-        title="Ga naar persoonlijke gegevens"
-      >
-        <span className={styles.ProfileNameInner}>
-          <ProfileName fallbackName="Profiel" />
-        </span>
-      </MaRouterLink>
-
-      <MaLink
-        maVariant="noUnderline"
-        href={LOGOUT_URL}
-        className={linkClassName}
-        rel="noopener noreferrer"
-      >
-        Uitloggen
-      </MaLink>
+      <Wrap>
+        <MaRouterLink
+          maVariant="noUnderline"
+          href={AppRoutes.BRP}
+          className={linkClassName}
+          title="Ga naar persoonlijke gegevens"
+        >
+          <span className={styles.ProfileNameInner}>
+            <ProfileName fallbackName="Profiel" />
+          </span>
+        </MaRouterLink>
+      </Wrap>
+      <Wrap>
+        <MaLink
+          maVariant="noUnderline"
+          href={LOGOUT_URL}
+          className={linkClassName}
+          rel="noopener noreferrer"
+        >
+          Uitloggen
+        </MaLink>
+      </Wrap>
     </>
   );
 }
@@ -57,24 +65,32 @@ function MainHeaderLinks() {
   return (
     <>
       {isDisplayLiveSearch && (
-        <MaLink
-          maVariant="noUnderline"
-          className={classNames(
-            'ams-button',
-            isSearchActive && styles.SearchButtonActive
-          )}
-          onClick={(e) => {
-            e.preventDefault();
-            setSearchActive(!isSearchActive);
-          }}
-          href={AppRoutes.SEARCH}
-        >
-          Zoeken
-          <Icon svg={isSearchActive ? CloseIcon : SearchIcon} size="level-5" />
-        </MaLink>
+        <li>
+          <MaLink
+            maVariant="noUnderline"
+            className={classNames(
+              'ams-button',
+              isSearchActive && styles.SearchButtonActive
+            )}
+            onClick={(e) => {
+              e.preventDefault();
+              setSearchActive(!isSearchActive);
+            }}
+            href={AppRoutes.SEARCH}
+          >
+            {!isPhoneScreen ? 'Zoeken' : ''}
+            <Icon
+              svg={isSearchActive ? CloseIcon : SearchIcon}
+              size="level-5"
+            />
+          </MaLink>
+        </li>
       )}
       {!isPhoneScreen && (
-        <MainHeaderSecondaryLinks linkClassName="ams-button" />
+        <MainHeaderSecondaryLinks
+          wrapInListElement
+          linkClassName="ams-button"
+        />
       )}
     </>
   );

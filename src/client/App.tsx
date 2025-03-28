@@ -132,7 +132,7 @@ function AppNotAuthenticated() {
   return (
     <>
       <MainHeader isAuthenticated={false} />
-      <Screen>
+      <Screen className={styles.App}>
         <Switch>
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />

@@ -58,7 +58,10 @@ export function MainMenu() {
       {isPhoneScreen && (
         <nav>
           <MegaMenu.ListCategory>
-            <MainHeaderSecondaryLinks linkClassName={styles.MenuItem} />
+            <MainHeaderSecondaryLinks
+              wrapInListElement={false}
+              linkClassName={styles.MenuItem}
+            />
           </MegaMenu.ListCategory>
         </nav>
       )}

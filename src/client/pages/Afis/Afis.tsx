@@ -48,8 +48,8 @@ function PageContentTop({
 
 export function AfisDisclaimer() {
   return (
-    <Alert severity="warning">
-      <UnorderedList>
+    <Alert severity="warning" heading="Belangrijk om te weten">
+      <UnorderedList markers={false}>
         <UnorderedList.Item>
           Het verwerken van uw betaling kan tot 4 werkdagen duren.
         </UnorderedList.Item>
@@ -69,7 +69,7 @@ export function AfisDisclaimer() {
 
 export function AfisDisclaimerOvergedragenFacturen() {
   return (
-    <Alert>
+    <Alert heading="Belangrijk om te weten" severity="warning">
       <Paragraph>
         Als u niet betaalt, wordt uw factuur door Financiën overgedragen naar de
         afdeling Incasso & Invordering van directie Belastingen. Deze afdeling
