@@ -20,7 +20,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
-import MegaMenu from '../MegaMenu/MegaMenu';
+import { MainMenu } from '../MainMenu/MainMenu';
 import { Search } from '../Search/Search';
 import { SearchEntry } from '../Search/search-config';
 import { useSearchOnPage } from '../Search/useSearch';
@@ -258,7 +258,7 @@ export default function MainHeader({
         )}
 
         {isBurgerMenuVisible && (
-          <MegaMenu
+          <MainMenu
             isPhoneScreen={isPhoneScreen}
             themas={myThemasMenuItems}
             menuItems={menuItems}

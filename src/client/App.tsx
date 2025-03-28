@@ -48,7 +48,7 @@ import { LoodMeting } from './pages/Bodem/LoodMeting';
 import { Burgerzaken } from './pages/Burgerzaken/Burgerzaken';
 import { BurgerzakenIdentiteitsbewijs } from './pages/Burgerzaken/BurgerzakenIdentiteitsbewijs';
 import { BurgerZakenList } from './pages/Burgerzaken/BurgerZakenList';
-import Dashboard from './pages/Dashboard/Dashboard';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 import ErfpachtDossierDetail from './pages/Erfpacht/DossierDetail/ErfpachtDossierDetail';
 import Erfpacht from './pages/Erfpacht/Erfpacht';
 import ErfpachtDossiers from './pages/Erfpacht/ErfpachtDossiers';
@@ -72,7 +72,7 @@ import Klachten from './pages/Klachten/Klachten';
 import KlachtenDetail from './pages/KlachtenDetail/KlachtenDetail';
 import Krefia from './pages/Krefia/Krefia';
 import { default as LandingPage } from './pages/Landing/Landing';
-import MyNotifications from './pages/MyNotifications/MyNotifications';
+import { MyNotificationsPage } from './pages/MyNotifications/MyNotifications';
 import NotFound from './pages/NotFound/NotFound';
 import { Parkeren } from './pages/Parkeren/Parkeren';
 import { ParkerenList } from './pages/Parkeren/ParkerenList';
@@ -184,7 +184,10 @@ function AppAuthenticated() {
           <Route path={AppRoutes.ZAAK_STATUS} component={ZaakStatus} />
           <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
-          <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
+          <Route
+            path={AppRoutes.NOTIFICATIONS}
+            component={MyNotificationsPage}
+          />
           <Route path={AppRoutes.BRP} component={MijnGegevensThema} />
           <Route path={AppRoutes.KVK} component={MijnBedrijfsGegevensThema} />
           {FeatureToggle.hliThemaStadspasActive && (
