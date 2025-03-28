@@ -6,7 +6,7 @@ import {
   NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from './config-and-types';
 import { dateFormat } from '../../../universal/helpers/date';
-import { getStatusDate } from '../decos/helpers';
+import { getStatusDate } from '../decos/decos-helpers';
 
 const link = (vergunning: VergunningFrontend) => ({
   title: 'Bekijk details',

@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
+import { DecosZaakBase } from './config-and-types';
 import { fetchDecosDocumentList } from './decos-service';
-import { DecosZaakBase } from './decos-types';
 import { getAuth } from '../../auth/auth-helpers';
 import {
   RequestWithQueryParams,
