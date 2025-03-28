@@ -39,6 +39,7 @@ import { Accessibility } from './pages/Accessibility/Accessibility';
 import { AfisThemaPagina } from './pages/Afis/Afis';
 import { AfisBetaalVoorkeuren } from './pages/Afis/AfisBetaalVoorkeuren';
 import { AfisFacturen } from './pages/Afis/AfisFacturen';
+import { AfvalInformation } from './pages/Afval/Afval';
 import { AVG } from './pages/AVG/AVG';
 import { AVGDetail } from './pages/AVG/AVGDetail';
 import { AVGList } from './pages/AVG/AVGLijst';
@@ -58,7 +59,6 @@ import { Erfpacht } from './pages/Erfpacht/Erfpacht';
 import { ErfpachtDossiers } from './pages/Erfpacht/ErfpachtDossiers';
 import { ErfpachtFacturen } from './pages/Erfpacht/ErfpachtFacturen';
 import { ErfpachtOpenFacturen } from './pages/Erfpacht/ErfpachtOpenFacturen';
-import { GarbageInformation } from './pages/GarbageInformation/GarbageInformation';
 import { GeneralInfo } from './pages/GeneralInfo/GeneralInfo';
 import { HLIRegeling } from './pages/HLI/HLIRegeling';
 import { HLIRegelingen } from './pages/HLI/HLIRegelingen';
@@ -266,7 +266,7 @@ function AppAuthenticated() {
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           {FeatureToggle.garbageInformationPage && (
-            <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
+            <Route path={AppRoutes.AFVAL} component={AfvalInformation} />
           )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />

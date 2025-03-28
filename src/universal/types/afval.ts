@@ -2,7 +2,7 @@ import { LatLngLiteral } from 'leaflet';
 
 import { LinkProps } from './App.types';
 
-export type GarbageFractionCode =
+export type AfvalFractionCode =
   | 'Textiel'
   | 'Rest'
   | 'Glas'
@@ -11,7 +11,7 @@ export type GarbageFractionCode =
   | 'Papier'
   | 'GFT';
 
-export interface GarbageFractionInformationTransformed {
+export interface AfvalFractionInformationTransformed {
   titel: string;
   instructie: string | null;
   instructieCTA: LinkProps | null;
@@ -20,15 +20,15 @@ export interface GarbageFractionInformationTransformed {
   buitenzetten: string | null;
   opmerking: string | null;
   kalendermelding: string | null;
-  fractieCode: GarbageFractionCode;
+  fractieCode: AfvalFractionCode;
   gebruiksdoelWoonfunctie: boolean;
 }
 
-export interface GarbageCenter {
+export interface AfvalCenter {
   title: string;
   latlng: LatLngLiteral;
   distance: number;
   website: string;
 }
 
-export type AfvalPuntenData = GarbageCenter[];
+export type AfvalPuntenData = AfvalCenter[];

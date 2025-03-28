@@ -11,7 +11,7 @@
   margin-bottom: 0;
 }
 
-.GarbageFractionPanel {
+.AfvalFractionPanel {
   p a {
     color: var(--ams-link-color);
     text-decoration-line: var(--ams-link-standalone-text-decoration-line);
@@ -22,27 +22,10 @@
   }
 }
 
-.GarbageFractionPanels {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.GarbageFractionPanelsColumn {
-  &:first-child {
-    width: calc(50% - 1rem);
-  }
-
-  &:last-child {
-    width: calc(50% - 1rem);
-    margin-left: 1rem;
-  }
-}
-
-.GarbageFractionPanel {
-  // background-color: var(--ams-color-neutral-grey1);
+.AfvalFractionPanel {
+  background-color: var(--ams-color-neutral-grey1);
   margin-bottom: var(--ams-space-xl);
+  padding: var(--ams-space-xl);
 
   dl {
     display: flex;
@@ -64,24 +47,24 @@
   }
 }
 
-.GarbageFractionPanelTitle {
+.AfvalFractionPanelTitle {
   margin: 0;
   // border-bottom: 0.1rem solid var(--ams-color-neutral-grey3);
   display: flex;
 }
 
-.GarbageFractionIcon {
+.AfvalFractionIcon {
   display: inline-block;
   margin-right: 2rem;
 }
 
-.GarbageFractionPanelOpmerking {
+.AfvalFractionPanelOpmerking {
   border: 2px solid var(--ams-link-color);
   padding: var(--ams-space-md);
   margin-top: var(--ams-space-md) !important;
 }
 
-.GarbageFractionPanelHighlight {
+.AfvalFractionPanelHighlight {
   border: 2px solid var(--ams-alert-warning-border-color);
   padding: var(--ams-space-md);
   margin-top: var(--ams-space-md) !important;

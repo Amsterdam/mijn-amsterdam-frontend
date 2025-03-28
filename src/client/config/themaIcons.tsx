@@ -14,7 +14,7 @@ import {
   IconBodem,
   IconBurgerZaken,
   IconErfpacht,
-  IconGarbage,
+  IconAfval,
   IconHLI,
   IconHoreca,
   IconInkomen,
@@ -36,7 +36,7 @@ import {
 export const ThemaIcons: Record<Thema, SVGComponent> = {
   AFIS: IconAFIS,
   VAREN: IconVaren,
-  AFVAL: IconGarbage,
+  AFVAL: IconAfval,
   AVG: IconAVG,
   BELASTINGEN: IconBelastingen,
   BEZWAREN: IconBezwaren,

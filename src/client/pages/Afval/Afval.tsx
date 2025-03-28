@@ -5,13 +5,13 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
-import styles from './GarbageInformation.module.scss';
+import styles from './Afval.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import {
-  GarbageFractionCode,
-  GarbageFractionInformationTransformed,
+  AfvalFractionCode,
+  AfvalFractionInformationTransformed,
 } from '../../../universal/types';
 import {
   IconAfvalGft,
@@ -40,7 +40,7 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 interface InstructionCTAProps {
-  fraction: GarbageFractionInformationTransformed;
+  fraction: AfvalFractionInformationTransformed;
 }
 
 function InstructionCTA({ fraction }: InstructionCTAProps) {
@@ -70,11 +70,11 @@ function InstructionCTA({ fraction }: InstructionCTAProps) {
   ) : null;
 }
 
-interface GarbageFractionIconProps {
-  fractionCode: GarbageFractionCode;
+interface AfvalFractionIconProps {
+  fractionCode: AfvalFractionCode;
 }
 
-function GarbageFractionIcon({ fractionCode }: GarbageFractionIconProps) {
+function AfvalFractionIcon({ fractionCode }: AfvalFractionIconProps) {
   let icon = <IconAfvalRest />;
   switch (fractionCode.toLowerCase()) {
     case 'ga':
@@ -97,26 +97,26 @@ function GarbageFractionIcon({ fractionCode }: GarbageFractionIconProps) {
       icon = <IconAfvalRest />;
       break;
   }
-  return <span className={styles.GarbageFractionIcon}>{icon}</span>;
+  return <span className={styles.AfvalFractionIcon}>{icon}</span>;
 }
 
-interface GarbageFractionPanelProps {
-  fraction: GarbageFractionInformationTransformed;
+interface AfvalFractionPanelProps {
+  fraction: AfvalFractionInformationTransformed;
 }
 
-function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
+function AfvalFractionPanel({ fraction }: AfvalFractionPanelProps) {
   return (
-    <article className={styles.GarbageFractionPanel}>
+    <article className={styles.AfvalFractionPanel}>
       <Heading
         level={3}
         size="level-4"
-        className={styles.GarbageFractionPanelTitle}
+        className={styles.AfvalFractionPanelTitle}
       >
-        <GarbageFractionIcon fractionCode={fraction.fractieCode} />
+        <AfvalFractionIcon fractionCode={fraction.fractieCode} />
         {fraction.titel}
       </Heading>
       {!!fraction.kalendermelding && (
-        <Paragraph className={styles.GarbageFractionPanelHighlight}>
+        <Paragraph className={styles.AfvalFractionPanelHighlight}>
           <InnerHtml el="span">{fraction.kalendermelding}</InnerHtml>
         </Paragraph>
       )}
@@ -155,7 +155,7 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
         </dl>
       )}
       {!!fraction.opmerking && (
-        <Paragraph className={styles.GarbageFractionPanelOpmerking}>
+        <Paragraph className={styles.AfvalFractionPanelOpmerking}>
           <InnerHtml el="span">{fraction.opmerking}</InnerHtml>
         </Paragraph>
       )}
@@ -163,45 +163,51 @@ function GarbageFractionPanel({ fraction }: GarbageFractionPanelProps) {
   );
 }
 
-interface GarbageFractionPanelsProps {
-  fractions: GarbageFractionInformationTransformed[];
+interface AfvalFractionPanelsProps {
+  fractions: AfvalFractionInformationTransformed[];
 }
 
 const fractions1 = ['rest', 'ga', 'papier'];
 const fractions2 = ['gft', 'glas', 'textiel'];
 
-function GarbageFractionPanels({ fractions }: GarbageFractionPanelsProps) {
+function AfvalFractionPanels({ fractions }: AfvalFractionPanelsProps) {
   const fractionsByCode = Object.fromEntries(
     fractions.map((fraction) => [fraction.fractieCode.toLowerCase(), fraction])
   );
 
   return (
-    <div className={styles.GarbageFractionPanels}>
-      <div className={styles.GarbageFractionPanelsColumn}>
+    <>
+      <PageContentCell
+        start={{ wide: 1, medium: 1, narrow: 1 }}
+        span={{ wide: 6, medium: 8, narrow: 4 }}
+      >
         {fractions1
           .filter((fractionCode) => fractionCode in fractionsByCode)
           .map((fractionCode) => (
-            <GarbageFractionPanel
+            <AfvalFractionPanel
               key={fractionCode}
               fraction={fractionsByCode[fractionCode]}
             />
           ))}
-      </div>
-      <div className={styles.GarbageFractionPanelsColumn}>
+      </PageContentCell>
+      <PageContentCell
+        start={{ wide: 7, medium: 1, narrow: 1 }}
+        span={{ wide: 6, medium: 1, narrow: 1 }}
+      >
         {fractions2
           .filter((fractionCode) => fractionCode in fractionsByCode)
           .map((fractionCode) => (
-            <GarbageFractionPanel
+            <AfvalFractionPanel
               key={fractionCode}
               fraction={fractionsByCode[fractionCode]}
             />
           ))}
-      </div>
-    </div>
+      </PageContentCell>
+    </>
   );
 }
 
-export function GarbageInformation() {
+export function AfvalInformation() {
   const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();
@@ -332,7 +338,7 @@ export function GarbageInformation() {
                     </Paragraph>
                     {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
                     {heeftGeenWoonfunctie && profileType === 'private' && (
-                      <Paragraph className="ams-mb--md">
+                      <Paragraph className="ams-mb--sm">
                         <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
                         <Link
                           href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
@@ -348,12 +354,14 @@ export function GarbageInformation() {
               },
             ]}
           />
+        </PageContentCell>
 
-          {isApiReady && (
-            <>
-              {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
-                <GarbageFractionPanels fractions={AFVAL.content} />
-              )}
+        {isApiReady && (
+          <>
+            {AFVAL.status === 'OK' && !!AFVAL.content?.length && (
+              <AfvalFractionPanels fractions={AFVAL.content} />
+            )}
+            <PageContentCell>
               <Paragraph className="ams-mb--xl">
                 <MaButtonLink
                   className={styles.ContactLink}
@@ -387,9 +395,9 @@ export function GarbageInformation() {
                   </LinkList.Link>
                 ))}
               </LinkList>
-            </>
-          )}
-        </PageContentCell>
+            </PageContentCell>
+          </>
+        )}
       </PageContentV2>
     </DetailPageV2>
   );

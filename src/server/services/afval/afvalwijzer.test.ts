@@ -3,8 +3,8 @@ import { LatLngLiteral } from 'leaflet';
 import {
   AFVALSourceData,
   exportedForTesting,
-  GarbageFractionData,
-  transformGarbageDataResponse,
+  AfvalFractionData,
+  transformAfvalDataResponse,
 } from './afvalwijzer';
 
 const today = new Date();
@@ -22,7 +22,7 @@ describe('Afvalwijzer service', () => {
   });
 
   test('formatKalenderMelding', () => {
-    const fractionData: Partial<GarbageFractionData> = {
+    const fractionData: Partial<AfvalFractionData> = {
       afvalwijzerAfvalkalenderMelding:
         'Kerstbomen kun je van 2 t/m 13 januari kwijt op een <a href="https://kaart.amsterdam.nl/ophaalpunten-kerstbomen-2023">inleverplek in de buurt</a>',
       afvalwijzerAfvalkalenderVan: dateStr,
@@ -30,7 +30,7 @@ describe('Afvalwijzer service', () => {
     };
     expect(
       exportedForTesting.formatKalenderMelding(
-        fractionData as GarbageFractionData
+        fractionData as AfvalFractionData
       )
     ).toMatchInlineSnapshot(
       `"Kerstbomen kun je van 2 t/m 13 januari kwijt op een <a href="https://kaart.amsterdam.nl/ophaalpunten-kerstbomen-2023">inleverplek in de buurt</a>"`
@@ -38,7 +38,7 @@ describe('Afvalwijzer service', () => {
   });
 
   test('formatKalenderMelding.2', () => {
-    const fractionData: Partial<GarbageFractionData> = {
+    const fractionData: Partial<AfvalFractionData> = {
       afvalwijzerAfvalkalenderMelding:
         '<p>dingen <a class="test" tabindex href="https://amsterdam.nl">test</a></p>',
       afvalwijzerAfvalkalenderVan: dateStr,
@@ -46,7 +46,7 @@ describe('Afvalwijzer service', () => {
     };
     expect(
       exportedForTesting.formatKalenderMelding(
-        fractionData as GarbageFractionData
+        fractionData as AfvalFractionData
       )
     ).toMatchInlineSnapshot(
       `"<p>dingen <a href="https://amsterdam.nl">test</a></p>"`
@@ -78,11 +78,11 @@ describe('Afvalwijzer service', () => {
   });
 
   test('getBuurtLink', () => {
-    const fractionData: Partial<GarbageFractionData> = {
+    const fractionData: Partial<AfvalFractionData> = {
       afvalwijzerFractieCode: 'Textiel',
       afvalwijzerWaar: 'Somewhere in a galaxy far away',
     };
-    expect(exportedForTesting.getBuurtLink(fractionData as GarbageFractionData))
+    expect(exportedForTesting.getBuurtLink(fractionData as AfvalFractionData))
       .toMatchInlineSnapshot(`
         {
           "title": "Somewhere in a galaxy far away",
@@ -92,7 +92,7 @@ describe('Afvalwijzer service', () => {
   });
 
   test('transformFractionData', () => {
-    const fractionData1: Partial<GarbageFractionData> = {
+    const fractionData1: Partial<AfvalFractionData> = {
       afvalwijzerPerXWeken: '1',
       afvalwijzerBuitenzettenVanafTot: 'Tussen 06.00 en 07.30 uur',
       afvalwijzerAfvalkalenderOpmerking:
@@ -114,7 +114,7 @@ describe('Afvalwijzer service', () => {
     };
     expect(
       exportedForTesting.transformFractionData(
-        fractionData1 as GarbageFractionData,
+        fractionData1 as AfvalFractionData,
         centroid
       )
     ).toMatchInlineSnapshot(`
@@ -136,7 +136,7 @@ describe('Afvalwijzer service', () => {
     `);
   });
 
-  test('transformGarbageDataResponse', () => {
+  test('transformAfvalDataResponse', () => {
     const centroid: LatLngLiteral = {
       lat: 5.123456789,
       lng: 6.789012345,
@@ -170,10 +170,10 @@ describe('Afvalwijzer service', () => {
     ];
 
     const response: AFVALSourceData = {
-      _embedded: { afvalwijzer: fractions as unknown as GarbageFractionData[] },
+      _embedded: { afvalwijzer: fractions as unknown as AfvalFractionData[] },
     };
 
-    expect(transformGarbageDataResponse(response, centroid))
+    expect(transformAfvalDataResponse(response, centroid))
       .toMatchInlineSnapshot(`
         [
           {
