@@ -38,7 +38,10 @@ export async function fetchHorecaVergunningen(
         const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
-          AppRoutes['HORECA/DETAIL']
+          {
+            appRoute: AppRoutes['HORECA/DETAIL'],
+            includeFetchDocumentsUrl: true,
+          }
         );
 
         const steps = getStatusSteps(vergunningTransformed);

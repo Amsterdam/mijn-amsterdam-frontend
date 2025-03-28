@@ -765,10 +765,15 @@ export async function fetchDecosDocument(
   );
 }
 
+export type DecosZaakFrontendTransformOptions = {
+  appRoute: AppRoute;
+  includeFetchDocumentsUrl?: boolean;
+};
+
 export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
   zaak: T,
-  appRoute: AppRoute
+  options: DecosZaakFrontendTransformOptions
 ): DecosZaakFrontend<T> {
   const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
   const zaakFrontend: DecosZaakFrontend<T> = {
@@ -777,13 +782,8 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
     steps: [], // NOTE: Assign Status steps later on
     displayStatus: zaak.status, // NOTE: This is a placeholder, the actual status is assigned later on.
-    // Adds an url with encrypted id to the BFF Detail page api for zaken.
-    fetchDocumentsUrl: generateFullApiUrlBFF(
-      BffEndpoints.DECOS_DOCUMENTS_LIST,
-      [{ id: idEncrypted }]
-    ),
     link: {
-      to: generatePath(appRoute, {
+      to: generatePath(options.appRoute, {
         caseType: slug(zaak.caseType, {
           lower: true,
         }),
@@ -792,6 +792,14 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
   };
+
+  if (options.includeFetchDocumentsUrl) {
+    // Adds an url with encrypted id to the BFF Detail page api for zaken.
+    zaakFrontend.fetchDocumentsUrl = generateFullApiUrlBFF(
+      BffEndpoints.DECOS_DOCUMENTS_LIST,
+      [{ id: idEncrypted }]
+    );
+  }
 
   // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
   if (

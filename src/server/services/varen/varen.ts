@@ -28,7 +28,10 @@ export async function fetchVaren_(
         const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
-          AppRoutes['VAREN/DETAIL']
+          {
+            appRoute: AppRoutes['VAREN/DETAIL'],
+            includeFetchDocumentsUrl: false,
+          }
         );
 
         const steps = getStatusSteps(vergunningTransformed);
