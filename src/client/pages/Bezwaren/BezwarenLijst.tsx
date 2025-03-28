@@ -6,14 +6,8 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 
 export function BezwarenLijstPagina() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const {
-    bezwaren,
-    tableConfig,
-    routes,
-    isLoading,
-    isError,
-    themaPaginaBreadcrumb,
-  } = useBezwarenThemaData();
+  const { bezwaren, tableConfig, routes, isLoading, isError, breadcrumbs } =
+    useBezwarenThemaData();
   const listPageTableConfig = tableConfig[kind];
 
   return (
@@ -22,7 +16,7 @@ export function BezwarenLijstPagina() {
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

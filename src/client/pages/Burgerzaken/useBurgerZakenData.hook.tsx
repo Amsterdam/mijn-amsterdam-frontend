@@ -3,7 +3,7 @@ import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useBurgerZakenData() {
   const { BRP } = useAppStateGetter();
@@ -14,7 +14,7 @@ export function useBurgerZakenData() {
     true
   );
 
-  const themaLink = useThemaMenuItemByThemaID(Themas.BURGERZAKEN);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.BURGERZAKEN);
 
   return {
     tableConfig,
@@ -23,6 +23,6 @@ export function useBurgerZakenData() {
     isError: isError(BRP),
     documents,
     routes,
-    themaPaginaBreadcrumb: themaLink,
+    breadcrumbs,
   };
 }

@@ -11,7 +11,7 @@ import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { DisplayProps, TableV2 } from '../Table/TableV2';
 
-const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_PAGE_SIZE = 10;
 
 interface ListPagePaginatedProps<T> {
   appRoute: string;

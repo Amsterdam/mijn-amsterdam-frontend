@@ -43,8 +43,7 @@ function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
 }
 
 export function KlachtenDetailPagina() {
-  const { klachten, isLoading, isError, themaPaginaBreadcrumb } =
-    useKlachtenThemaData();
+  const { klachten, isLoading, isError, breadcrumbs } = useKlachtenThemaData();
   const { id } = useParams<{ id: string }>();
   const klacht = klachten.find((klacht) => klacht.id === id);
 
@@ -55,7 +54,7 @@ export function KlachtenDetailPagina() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={klacht && <KlachtenDetailContent klacht={klacht} />}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

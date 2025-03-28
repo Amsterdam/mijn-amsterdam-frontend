@@ -10,7 +10,7 @@ import { defaultDateFormat, dateSort } from '../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useInkomenThemaData() {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =
@@ -28,7 +28,7 @@ export function useInkomenThemaData() {
     WPI_SPECIFICATIES.content?.jaaropgaven ?? []
   );
 
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.INKOMEN);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.INKOMEN);
 
   const zaken = useMemo(() => {
     if ((!aanvragen.length && !tozo.length) || !tonk.length) {
@@ -94,6 +94,6 @@ export function useInkomenThemaData() {
     listPageParamKind,
     routes,
     tableConfig,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   };
 }

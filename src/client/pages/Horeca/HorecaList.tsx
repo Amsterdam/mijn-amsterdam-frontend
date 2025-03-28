@@ -6,14 +6,8 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 
 export function HorecaLijstPagina() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const {
-    vergunningen,
-    tableConfig,
-    routes,
-    isLoading,
-    isError,
-    themaPaginaBreadcrumb,
-  } = useHorecaThemaData();
+  const { vergunningen, tableConfig, routes, isLoading, isError, breadcrumbs } =
+    useHorecaThemaData();
   const listPageTableConfig = tableConfig[kind];
 
   return (
@@ -22,7 +16,7 @@ export function HorecaLijstPagina() {
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

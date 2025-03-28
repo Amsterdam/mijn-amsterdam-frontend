@@ -46,7 +46,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
 }
 
 export function ZorgDetail() {
-  const { title, voorziening, themaPaginaBreadcrumb, isError, isLoading } =
+  const { title, voorziening, breadcrumbs, isError, isLoading } =
     useZorgDetailData();
 
   return (
@@ -58,7 +58,7 @@ export function ZorgDetail() {
       pageContentMain={
         !!voorziening && <WMODetailContent voorziening={voorziening} />
       }
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

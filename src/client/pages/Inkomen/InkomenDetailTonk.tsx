@@ -22,7 +22,7 @@ const pageContentTop = (
 );
 
 export function InkomenDetailTonk() {
-  const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
+  const { isLoading, isError, zaak, breadcrumbs } =
     useInkomenDetailData('WPI_TONK');
 
   return (
@@ -32,7 +32,7 @@ export function InkomenDetailTonk() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={pageContentTop}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

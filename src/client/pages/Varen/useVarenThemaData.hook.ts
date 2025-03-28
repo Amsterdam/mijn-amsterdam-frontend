@@ -9,7 +9,7 @@ import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
@@ -28,7 +28,7 @@ export function useVarenThemaData() {
     true
   );
 
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.VAREN);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.VAREN);
 
   return {
     varenRederRegistratie,
@@ -39,6 +39,6 @@ export function useVarenThemaData() {
     linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
     routes,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   };
 }

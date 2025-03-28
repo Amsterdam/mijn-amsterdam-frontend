@@ -5,14 +5,8 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 import { ListPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
 export function BurgerZakenList() {
-  const {
-    documents,
-    isLoading,
-    isError,
-    tableConfig,
-    routes,
-    themaPaginaBreadcrumb,
-  } = useBurgerZakenData();
+  const { documents, isLoading, isError, tableConfig, routes, breadcrumbs } =
+    useBurgerZakenData();
   const params = useParams<{ kind: ListPageParamKind }>();
 
   const { sort, title, displayProps } = tableConfig[params.kind];
@@ -23,7 +17,7 @@ export function BurgerZakenList() {
       title={title}
       appRoute={routes.listPage}
       appRouteParams={params}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}

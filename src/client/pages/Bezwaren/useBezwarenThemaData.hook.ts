@@ -7,7 +7,7 @@ import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useBezwarenThemaData() {
   const { BEZWAREN } = useAppStateGetter();
@@ -18,7 +18,7 @@ export function useBezwarenThemaData() {
     true
   );
 
-  const themaLink = useThemaMenuItemByThemaID(Themas.BEZWAREN);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.AVG);
 
   return {
     bezwaren,
@@ -28,6 +28,6 @@ export function useBezwarenThemaData() {
     routes,
     tableConfig,
     themaTitle: ThemaTitles.BEZWAREN,
-    themaPaginaBreadcrumb: themaLink,
+    breadcrumbs,
   };
 }

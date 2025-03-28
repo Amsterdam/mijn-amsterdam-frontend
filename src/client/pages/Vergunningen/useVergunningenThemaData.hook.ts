@@ -14,14 +14,14 @@ import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useVergunningenThemaData() {
   const { VERGUNNINGEN } = useAppStateGetter();
   const vergunningen = addLinkElementToProperty<
     VergunningFrontend<DecosVergunning>
   >(VERGUNNINGEN.content ?? [], 'identifier', true);
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.VERGUNNINGEN);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.VERGUNNINGEN);
 
   return {
     title: ThemaTitles.VERGUNNINGEN,
@@ -31,6 +31,6 @@ export function useVergunningenThemaData() {
     tableConfig,
     linkListItems,
     routes,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   };
 }

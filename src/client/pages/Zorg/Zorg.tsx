@@ -22,8 +22,14 @@ export function HistoricItemsMention() {
 }
 
 export function ZorgThemaPagina() {
-  const { isError, isLoading, regelingen, title, tableConfig, linkListItems } =
-    useZorgThemaData();
+  const {
+    isError,
+    isLoading,
+    voorzieningen,
+    title,
+    tableConfig,
+    linkListItems,
+  } = useZorgThemaData();
 
   const pageContentTop = (
     <PageContentCell spanWide={6}>
@@ -61,7 +67,7 @@ export function ZorgThemaPagina() {
           key={kind}
           title={title}
           className={className}
-          zaken={regelingen.filter(filter)}
+          zaken={voorzieningen.filter(filter)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}
           textNoContent={textNoContent}

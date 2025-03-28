@@ -12,7 +12,7 @@ export function ToeristischeVerhuurVergunningen() {
     routes,
     isLoading,
     isError,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   } = useToeristischeVerhuurThemaData();
   const listPageTableConfig = tableConfigVergunningen[kind];
 
@@ -25,7 +25,7 @@ export function ToeristischeVerhuurVergunningen() {
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

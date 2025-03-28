@@ -1,22 +1,18 @@
 import { useParams } from 'react-router-dom';
 
+import { useZorgThemaData } from './useZorgThemaData';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { Themas } from '../../../universal/config/thema';
-import { isLoading, isError } from '../../../universal/helpers/api';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useZorgDetailData() {
-  const { WMO } = useAppStateGetter();
+  const { voorzieningen, isLoading, isError, breadcrumbs } = useZorgThemaData();
   const { id } = useParams<{ id: WMOVoorzieningFrontend['id'] }>();
-  const voorziening = WMO.content?.find((item) => item.id === id);
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.ZORG);
+  const voorziening = voorzieningen.find((item) => item.id === id);
 
   return {
     title: voorziening?.title ?? 'Voorziening',
     voorziening,
-    themaPaginaBreadcrumb,
-    isError: isError(WMO),
-    isLoading: isLoading(WMO),
+    breadcrumbs,
+    isError,
+    isLoading,
   };
 }

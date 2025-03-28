@@ -39,7 +39,7 @@ export function InkomenSpecificaties() {
     title,
     toggleSearchPanel,
     total,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   } = useInkomenSpecificatiesListPageData();
 
   const pageContentMain = (
@@ -165,7 +165,7 @@ export function InkomenSpecificaties() {
       isError={isError}
       isLoading={isLoading}
       appRoute={`${tableConfig.listPageRoute}/:page?`}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       appRouteParams={params}
       pageContentTop={pageContentMain}
       displayProps={tableConfig.displayProps}

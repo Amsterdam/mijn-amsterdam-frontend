@@ -8,7 +8,7 @@ import {
   LinkProps,
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import styles from './MaLink.module.scss';
 
@@ -63,7 +63,7 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
           onClick(event);
         }
 
-        history.push(href as string);
+        history.push(href as string, { from: history.location.pathname });
       }}
     />
   );
@@ -131,10 +131,12 @@ export function MaButtonRouterLink({
   children,
   className,
   variant = 'primary',
+  onClick,
   ...rest
 }: MaButtonLinkProps) {
+  const history = useHistory();
   return (
-    <NavLink
+    <a
       {...rest}
       className={classNames(
         styles.MaButtonLink,
@@ -142,9 +144,18 @@ export function MaButtonRouterLink({
         `ams-button--${variant}`,
         className
       )}
-      to={href}
+      href={href}
+      onClick={(event) => {
+        event.preventDefault();
+
+        if (onClick) {
+          onClick(event);
+        }
+
+        history.push(href as string, { from: history.location.pathname });
+      }}
     >
       {children}
-    </NavLink>
+    </a>
   );
 }

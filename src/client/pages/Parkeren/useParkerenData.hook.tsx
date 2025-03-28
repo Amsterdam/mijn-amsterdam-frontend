@@ -6,7 +6,7 @@ import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useParkerenData() {
   const { PARKEREN } = useAppStateGetter();
@@ -16,7 +16,7 @@ export function useParkerenData() {
     VergunningFrontend<DecosParkeerVergunning>
   >(PARKEREN.content?.vergunningen ?? [], 'identifier', true);
 
-  const themaLink = useThemaMenuItemByThemaID(Themas.PARKEREN);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.PARKEREN);
 
   return {
     title: ThemaTitles.PARKEREN,
@@ -29,6 +29,6 @@ export function useParkerenData() {
     isLoadingParkerenUrl: isLoading(PARKEREN),
     linkListItems,
     routes,
-    themaPaginaBreadcrumb: themaLink,
+    breadcrumbs,
   };
 }

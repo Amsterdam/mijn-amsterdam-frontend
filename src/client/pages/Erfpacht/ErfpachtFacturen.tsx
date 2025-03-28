@@ -11,8 +11,7 @@ import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 
 export function ErfpachtFacturen() {
-  const { tableConfig, listPageParamKind, themaPaginaBreadcrumb } =
-    useErfpachtV2Data();
+  const { tableConfig, listPageParamKind, breadcrumbs } = useErfpachtV2Data();
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
@@ -45,7 +44,7 @@ export function ErfpachtFacturen() {
       title={tableConfigFacturen?.title ?? 'Facturen'}
       appRoute={tableConfigFacturen?.listPageRoute ?? ''}
       appRouteParams={{ dossierNummerUrlParam }}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading(dossierApiResponse)}
       isError={isError(dossierApiResponse)}

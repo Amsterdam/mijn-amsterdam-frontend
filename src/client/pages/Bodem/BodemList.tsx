@@ -10,7 +10,7 @@ export function BodemList() {
     title,
     displayProps,
     params,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
     routes,
   } = useBodemListPageData();
 
@@ -20,7 +20,7 @@ export function BodemList() {
       title={title}
       appRoute={routes.listPage}
       appRouteParams={params}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}

@@ -9,23 +9,23 @@ import { PageContentCell } from '../../components/Page/Page';
 export function ZorgRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
   const {
-    regelingen,
+    voorzieningen,
     tableConfig,
     routes,
     isLoading,
     isError,
     listPageParamKind,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   } = useZorgThemaData();
   const listPageTableConfig = tableConfig[kind];
 
   return (
     <ListPagePaginated
-      items={regelingen.filter(listPageTableConfig.filter)}
+      items={voorzieningen.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

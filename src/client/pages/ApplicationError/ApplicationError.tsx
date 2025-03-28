@@ -6,6 +6,7 @@ import {
   Header,
   Heading,
   Link,
+  Screen,
   LinkList,
   Paragraph,
 } from '@amsterdam/design-system-react';
@@ -69,14 +70,21 @@ export function ApplicationError({
   useUsabilla();
   return (
     <>
-      <TextPageV2>
-        <PageContentV2>
-          <PageContentCell startWide={1} spanWide={12}>
-            <Header brandName="Mijn Amsterdam" />
-          </PageContentCell>
-          <ApplicationErrorContent error={error} />
-        </PageContentV2>
-      </TextPageV2>
+      <Screen>
+        <TextPageV2>
+          <PageContentV2>
+            <PageContentCell startWide={1} spanWide={12}>
+              <Header
+                brandName={
+                  (<a href="/">Mijn Amsterdam</a>) as ReactNode as string
+                }
+                logoLink="https://www.amsterdam.nl"
+              />
+            </PageContentCell>
+            <ApplicationErrorContent error={error} />
+          </PageContentV2>
+        </TextPageV2>
+      </Screen>
       <Footer>
         <Footer.Top>
           <Grid gapVertical="large" paddingVertical="medium">
