@@ -209,6 +209,9 @@ describe('<Varen />', () => {
         <Component state={getTestState([rederRegistratie])} />
       );
 
+      const gegevensAanvragerTitle = screen.getByText('Gegevens Aanvrager');
+      expect(gegevensAanvragerTitle).toBeInTheDocument();
+
       const naamAanvrager = screen.getByText('Naam aanvrager');
       expect(naamAanvrager.nextElementSibling).toHaveTextContent(
         'Balonnenfabriek'
