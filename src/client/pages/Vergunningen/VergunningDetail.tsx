@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import useSWR from 'swr';
 
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { BZB } from './detail-page-content/BZB';
@@ -20,7 +21,11 @@ import { VOB } from './detail-page-content/VOB';
 import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
-import { isError, isLoading } from '../../../universal/helpers/api';
+import {
+  ApiResponse,
+  isError,
+  isLoading,
+} from '../../../universal/helpers/api';
 import { GenericDocument } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { Datalist } from '../../components/Datalist/Datalist';
@@ -28,6 +33,7 @@ import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { WVOSContent } from './detail-page-content/WVOS';
 import { PageContentCell } from '../../components/Page/Page';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 const ONE_MINUTE_MS = 60000;
 // eslint-disable-next-line no-magic-numbers
@@ -115,13 +121,13 @@ interface VergunningV2DetailProps {
 
 export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
   const appState = useAppStateGetter();
-  const { VERGUNNINGENv2 } = appState;
+  const { VERGUNNINGEN } = appState;
   const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
-  const vergunning = VERGUNNINGENv2.content?.find((item) => item.id === id);
-   const fetchDocumentsUrl = vergunning?.fetchDocumentsUrl;
+  const vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
+  const fetchDocumentsUrl = vergunning?.fetchDocumentsUrl;
 
   const { data: vergunningDocumentsResponse } = useSWR<
-    ApiResponse<VergunningDocument[]>
+    ApiResponse<GenericDocument[]>
   >(
     fetchDocumentsUrl,
     (url: string) =>
@@ -137,8 +143,8 @@ export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
     <ThemaDetailPagina<VergunningFrontendV2>
       title={vergunning?.title ?? 'Vergunning'}
       zaak={vergunning}
-      isError={isError(VERGUNNINGENv2)}
-      isLoading={isLoading(VERGUNNINGENv2)}
+      isError={isError(VERGUNNINGEN)}
+      isLoading={isLoading(VERGUNNINGEN)}
       pageContentTop={
         vergunning && (
           <DetailPageContent

@@ -125,7 +125,7 @@ export const GPP: DecosZaakTransformer<GPPType> = {
     text7: kentekens,
     text8: location,
   },
-  async afterTransform(vergunning, decosZaakSource, options) {
+  async afterTransform(vergunning) {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
