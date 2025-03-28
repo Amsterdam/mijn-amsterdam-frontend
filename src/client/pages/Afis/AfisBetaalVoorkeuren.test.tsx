@@ -56,14 +56,16 @@ describe('<AfisBetaalVoorkeuren />', () => {
   const routePath = AppRoutes['AFIS/BETAALVOORKEUREN'];
   const routeEntry = generatePath(routePath);
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={AfisBetaalVoorkeuren}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={AfisBetaalVoorkeuren}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Display business partner details', async () => {
     const user = userEvent.setup();

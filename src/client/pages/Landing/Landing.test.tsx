@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
-import Landing from './Landing';
+import { LandingPage } from './Landing';
 import { bffApi } from '../../../testing/utils';
 import { SessionState, sessionAtom } from '../../hooks/api/useSessionApi';
 
@@ -18,7 +18,7 @@ describe('<Landing />', () => {
       <RecoilRoot
         initializeState={(snapshot) => snapshot.set(sessionAtom, appState)}
       >
-        <Landing />
+        <LandingPage />
       </RecoilRoot>
     );
     expect(asFragment()).toMatchSnapshot();

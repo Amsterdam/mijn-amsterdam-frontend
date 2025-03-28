@@ -19,8 +19,6 @@ export type DecosZaakExploitatieHorecabedrijf = DecosZaakBase &
   WithLocation &
   WithDateRange & {
     caseType: GetCaseType<'ExploitatieHorecabedrijf'>;
-    dateStartPermit: string | null;
-    numberOfPermits: string | null;
   };
 
 export type HorecaVergunningFrontend =

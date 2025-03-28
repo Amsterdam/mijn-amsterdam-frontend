@@ -3,160 +3,55 @@
 exports[`ParkerenList > should display the list of parkeervergunningen 1`] = `
 <DocumentFragment>
   <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0"
+    class="ams-screen ams-screen--wide"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Parkeren"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="34px"
-          viewBox="0 0 56 34"
-          width="56px"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <g
-            transform="translate(0, -12.000000)"
-          >
-            <path
-              d="M42,35 C44.8994949,35 47.25,37.3505051 47.25,40.25 C47.25,43.1494949 44.8994949,45.5 42,45.5 C39.1005051,45.5 36.75,43.1494949 36.75,40.25 C36.75,37.3505051 39.1005051,35 42,35 Z M12.25,35 C15.1494949,35 17.5,37.3505051 17.5,40.25 C17.5,43.1494949 15.1494949,45.5 12.25,45.5 C9.35050506,45.5 7,43.1494949 7,40.25 C7,37.3505051 9.35050506,35 12.25,35 Z M33.25,12.25 L45.5,24.5 L56,24.5 L56,40.25 L50.75,40.25 C50.75,35.4175084 46.8324916,31.5 42,31.5 C37.1675084,31.5 33.25,35.4175084 33.25,40.25 L21,40.25 C21,35.4175084 17.0824916,31.5 12.25,31.5 C7.41750844,31.5 3.5,35.4175084 3.5,40.25 L-9.9475983e-14,40.25 L-9.9475983e-14,24.5 L12.25,12.25 L33.25,12.25 Z M31.5,15.75 L22.75,15.75 L22.75,24.5 L40.1833496,24.5 L31.5,15.75 Z M19.25,15.75 L14,15.75 L5.25,24.5 L19.25,24.5 L19.25,15.75 Z"
-              id="Combined-Shape"
-            />
-          </g>
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/parkeren"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Parkeren
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Lopende aanvragen
-        </h2>
-      </div>
-    </header>
     <div
-      class="ams-screen ams-screen--wide"
+      class="ams-grid"
     >
       <div
-        class="ams-grid"
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
       >
         <div
-          class="ams-grid__cell ams-grid__cell--span-all"
+          class="_PageHeadingInner_c5a3f1"
+          id="skip-to-id-AppContent"
         >
-          <div
-            class="ams-table"
+          <a
+            class="ams-link ams-link--standalone _BackLink_c5a3f1 _MaRouterLink__no-default-underline_aa758a"
+            href="/parkeren"
+            title="Terug naar de vorige pagina"
           >
-            <table
-              class="ams-table__table _TableV2_4c6825"
+            <span
+              class="ams-icon ams-icon--size-5"
             >
-              <thead
-                class="ams-table__header"
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <tr
-                  class="ams-table__row"
-                >
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Kenmerk
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Omschrijving
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Aangevraagd
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ams-table__body"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/parkeren/gpp/Z-24-2233516"
-                    >
-                      Z/24/2233516
-                    </a>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Vergunning 1
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    05 juni 2024
-                  </td>
-                </tr>
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/parkeren/gpp/Z-24-2233516"
-                    >
-                      Z/24/2233516
-                    </a>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Vergunning 2
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    05 juni 2024
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                <path
+                  d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Terug
+          </a>
+          <h3
+            class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          >
+            Lopende aanvragen
+          </h3>
         </div>
+      </div>
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <p
+          class="ams-paragraph"
+        >
+          U heeft (nog) geen gegevens op deze pagina.
+        </p>
       </div>
     </div>
   </main>

@@ -18,6 +18,10 @@ const testState = {
       mokum: true,
     },
   },
+  KVK: {
+    status: 'OK',
+    content: null,
+  },
   MY_LOCATION: { status: 'OK', content: [{ latlng: { lat: 5, lng: 40 } }] },
   NOTIFICATIONS: {
     status: 'OK',
@@ -27,7 +31,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        thema: Themas.HOME,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -38,7 +42,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        thema: Themas.HOME,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -49,7 +53,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        thema: Themas.HOME,
         isAlert: true,
         link: {
           to: '/item-3',
@@ -69,9 +73,6 @@ const testState = {
     content: {
       isKnown: true,
     },
-  },
-  VERGUNNINGEN: {
-    isActive: true,
   },
   VERGUNNINGEN: {
     isActive: true,
