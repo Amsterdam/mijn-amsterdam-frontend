@@ -14,8 +14,6 @@ export { default as LoadingContent } from './LoadingContent/LoadingContent';
 export { default as MainFooter } from './MainFooter/MainFooter';
 export { default as MainHeader } from './MainHeader/MainHeader';
 export { Modal } from './Modal/Modal';
-export { default as MyThemasPanel } from './MyThemasPanel/MyThemasPanel';
-export { default as MyNotifications } from './MyNotifications/MyNotifications';
 export {
   default as Page,
   DetailPage,
