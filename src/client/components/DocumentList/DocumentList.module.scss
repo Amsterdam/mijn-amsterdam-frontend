@@ -1,14 +1,6 @@
 .DocumentList {
   @include reset-list-style;
-
   padding-bottom: 2.5rem;
-
-  &--expandedView {
-    @include select('DocumentLink') {
-      font-weight: normal;
-      font-size: 1.6rem;
-    }
-  }
 }
 
 .DocumentListHeaders,
@@ -17,7 +9,6 @@
   align-items: baseline;
   vertical-align: top;
   margin-bottom: 0.6rem;
-  font-size: 1.8rem;
 
   > * {
     flex: 1;
