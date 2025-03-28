@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useLocation } from 'react-router-dom';
 
 import { removeLocalStorageKey, useLocalStorage } from './storage.hook';
@@ -10,28 +12,28 @@ export function useSetDeeplinkEntry(excludeQueryParams: string[] = []) {
   const location = useLocation();
   const [routeEntry, setRouteEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
 
-  if (
-    (!routeEntry || routeEntry === '/') &&
-    location.pathname !== '/' &&
-    isPrivateRoute(location.pathname)
-  ) {
-    let search = location.search;
-    if (excludeQueryParams) {
-      const params = new URLSearchParams(location.search);
-      excludeQueryParams.forEach((name) => {
-        params.delete(name);
-      });
-      search = `?${params.toString()}`;
+  useEffect(() => {
+    if (
+      (!routeEntry || routeEntry === '/') &&
+      location.pathname !== '/' &&
+      isPrivateRoute(location.pathname)
+    ) {
+      let search = location.search;
+      if (excludeQueryParams) {
+        const params = new URLSearchParams(location.search);
+        excludeQueryParams.forEach((name) => {
+          params.delete(name);
+        });
+        search = `?${params.toString()}`;
+      }
+      setRouteEntry(location.pathname + search);
     }
-    setRouteEntry(location.pathname + search);
-  }
+  }, [location.pathname, routeEntry, setRouteEntry]);
 }
 
 export function useDeeplinkRedirect() {
   const [routeEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
   const redirectAfterLogin = routeEntry || AppRoutes.HOME;
-
-  clearDeeplinkEntry();
 
   return redirectAfterLogin;
 }
