@@ -1,21 +1,24 @@
 import { ReactNode, useMemo } from 'react';
 
+import { LinkList, Paragraph } from '@amsterdam/design-system-react';
+
 import styles from './Krefia.module.scss';
 import type { KrefiaDeepLink, KrefiaDeepLinks } from '../../../server/services';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading, isError } from '../../../universal/helpers/api';
 import {
   ErrorAlert,
-  ThemaIcon,
-  Linkd,
   LinkdInline,
   LoadingContent,
-  OverviewPage,
-  PageContent,
-  PageHeading,
   SectionCollapsible,
   Table,
 } from '../../components';
+import {
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
@@ -71,63 +74,64 @@ export default function Krefia() {
     showText = true;
   }
   return (
-    <OverviewPage className={styles.Krefia}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        icon={<ThemaIcon />}
-      >
-        {ThemaTitles.KREFIA}
-      </PageHeading>
-      <PageContent>
-        {isLoading(KREFIA) && <LoadingContent />}
-        {((isKredietbank && isFIBU) || showText) && (
-          <p>
-            Een online plek waar u alle informatie over uw geldzaken kunt vinden
-            als klant van Budgetbeheer (FIBU) en/of Kredietbank Amsterdam.
-          </p>
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2 backLink={AppRoutes.HOME}>
+          {ThemaTitles.KREFIA}
+        </PageHeadingV2>
+        {isLoading(KREFIA) && (
+          <PageContentCell>
+            <LoadingContent />
+          </PageContentCell>
         )}
-        {isKredietbank && !isFIBU && (
-          <p>
-            Een online plek waar u alle informatie over uw geldzaken kunt vinden
-            als klant van Kredietbank Amsterdam.
-          </p>
-        )}
-        {!isKredietbank && isFIBU && (
-          <p>
-            Een online plek waar u alle informatie over uw geldzaken kunt vinden
-            als klant van Budgetbeheer (FIBU).
-          </p>
-        )}
+        <PageContentCell>
+          {((isKredietbank && isFIBU) || showText) && (
+            <Paragraph className="ams-mb--md">
+              Een online plek waar u alle informatie over uw geldzaken kunt
+              vinden als klant van Budgetbeheer (FIBU) en/of Kredietbank
+              Amsterdam.
+            </Paragraph>
+          )}
+          {isKredietbank && !isFIBU && (
+            <Paragraph className="ams-mb--md">
+              Een online plek waar u alle informatie over uw geldzaken kunt
+              vinden als klant van Kredietbank Amsterdam.
+            </Paragraph>
+          )}
+          {!isKredietbank && isFIBU && (
+            <Paragraph className="ams-mb--md">
+              Een online plek waar u alle informatie over uw geldzaken kunt
+              vinden als klant van Budgetbeheer (FIBU).
+            </Paragraph>
+          )}
 
-        <p>
-          {(isKredietbank || showText) && (
-            <>
-              <Linkd
-                external={true}
+          <LinkList className="ams-mb--md">
+            {(isKredietbank || showText) && (
+              <LinkList.Link
+                rel="noopener noreferrer"
                 href="https://www.amsterdam.nl/werk-inkomen/kredietbank-amsterdam/"
               >
                 Meer informatie over Kredietbank Amsterdam
-              </Linkd>
-              <br />
-            </>
-          )}
-
-          {(isFIBU || showText) && (
-            <Linkd
-              external={true}
-              href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer"
-            >
-              Meer informatie over Budgetbeheer (FIBU)
-            </Linkd>
-          )}
-        </p>
+              </LinkList.Link>
+            )}
+            {(isFIBU || showText) && (
+              <LinkList.Link
+                href="https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer"
+                rel="noreferrer noopener"
+              >
+                Meer informatie over Budgetbeheer (FIBU)
+              </LinkList.Link>
+            )}
+          </LinkList>
+        </PageContentCell>
         {isError(KREFIA) && (
-          <ErrorAlert>We kunnen op dit moment geen geldzaken tonen.</ErrorAlert>
+          <PageContentCell>
+            <ErrorAlert>
+              We kunnen op dit moment geen geldzaken tonen.
+            </ErrorAlert>
+          </PageContentCell>
         )}
-      </PageContent>
+      </PageContentV2>
       {deepLinks?.schuldhulp && (
         <SectionCollapsible
           id="SectionCollapsible-krefia-schuldregeling"
@@ -173,6 +177,6 @@ export default function Krefia() {
           />
         </SectionCollapsible>
       )}
-    </OverviewPage>
+    </OverviewPageV2>
   );
 }
