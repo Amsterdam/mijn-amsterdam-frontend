@@ -1,5 +1,6 @@
 import { RVVSloterweg, VergunningFrontend } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
+import { DecosZaakBase } from '../decos/config-and-types';
 import { getStatusDate } from '../decos/decos-helpers';
 
 function getStatusStepsRVVSloterweg(
@@ -124,7 +125,10 @@ function getStatusStepsRVVSloterweg(
   return steps;
 }
 
-export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
+export function getStatusSteps<
+  DZ extends DecosZaakBase,
+  V extends VergunningFrontend<DZ>,
+>(vergunning: V) {
   if (vergunning.caseType === 'RVVSloterweg') {
     return getStatusStepsRVVSloterweg(
       vergunning as unknown as VergunningFrontend<RVVSloterweg>
@@ -182,13 +186,17 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
   ];
 
   if (isAfgehandeld && ((isVerleend && isVerlopen) || isIngetrokken)) {
+    let datePublished = vergunning.dateDecision ?? '';
+
+    // dateEnd is generic enough for most types of vergunningen.
+    if (isVerlopen && 'dateEnd' in vergunning && vergunning.dateEnd) {
+      datePublished = vergunning.dateEnd as string;
+    }
+
     const statusGewijzigd: StatusLineItem = {
       id: 'step-4',
       status: isIngetrokken ? 'Ingetrokken' : 'Verlopen',
-      datePublished:
-        (isVerlopen && !isIngetrokken
-          ? (vergunning.dateDecision ?? vergunning.dateEnd)
-          : vergunning.dateDecision) ?? '',
+      datePublished,
       description: isIngetrokken
         ? `Wij hebben uw ${vergunning.title} ingetrokken.`
         : `Uw ${vergunning.title} is verlopen.`,
@@ -203,7 +211,7 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
 }
 
 export function getDisplayStatus(
-  vergunning: VergunningFrontend,
+  vergunning: VergunningFrontend<DecosZaakBase>,
   steps: StatusLineItem[]
 ) {
   if (vergunning.processed && !vergunning.isExpired && vergunning.decision) {

@@ -4,6 +4,7 @@ import {
   WithDateRange,
   WithKentekens,
   WithDateTimeRange,
+  WithDateEnd,
 } from '../decos/config-and-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 
@@ -58,11 +59,11 @@ export type ClientProductDetailsSourceResponse = BaseSourceResponse<
 >;
 
 export type GPK = DecosZaakBase &
+  WithDateEnd &
   WithLocation & {
     caseType: GetCaseType<'GPK'>;
     cardType: 'driver' | 'passenger';
     cardNumber: number | null;
-    dateEnd: string | null;
     requestReason: string | null;
   };
 
