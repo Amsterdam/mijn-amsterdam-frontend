@@ -13,6 +13,7 @@ export const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 export function MainMenu() {
   const { items } = useThemaMenuItems();
   const isPhoneScreen = usePhoneScreen();
+
   return (
     <MegaMenu className={styles.MainMenu}>
       <nav className={styles.NavSection}>

@@ -2,11 +2,13 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { keys } from '../../../universal/helpers/utils';
 import { ZaakDetail } from '../../../universal/types';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
 import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { usePhoneScreen } from '../../hooks/media.hook';
 
 const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
   title: 'Titel',
@@ -45,6 +47,14 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
     : TEXT_NO_CONTENT_DEFAULT;
 
   const hasListPage = !!listPageRoute && maxItems !== -1;
+  const isPhoneScreen = usePhoneScreen();
+
+  let displayPropsTable = displayProps;
+  if (isPhoneScreen) {
+    displayPropsTable = {
+      [keys(displayProps)[0]]: displayProps[keys(displayProps)[0]],
+    };
+  }
 
   return (
     <PageContentCell>
@@ -53,7 +63,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
         caption={title}
         subTitle={subTitle}
         items={hasListPage ? zaken.slice(0, maxItems) : zaken}
-        displayProps={displayProps ?? null}
+        displayProps={displayPropsTable}
         className={className}
       />
 
