@@ -2,32 +2,47 @@ import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
-import { Varen, VarenFrontend } from './config-and-types';
+import { Varen } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
 
-function transformVarenFrontend(appRoute: AppRoute, zaak: Varen) {
-  const zaakFrontend: VarenFrontend = {
-    ...zaak,
+function transformVarenFrontend<T extends Varen>(appRoute: AppRoute, zaak: T) {
+  const createLink = (id: string) => ({
+    to: generatePath(appRoute, {
+      caseType: slug(zaak.caseType, { lower: true }),
+      id: id,
+    }),
+    title: `Bekijk hoe het met uw aanvraag staat`,
+  });
+  const zaakFrontend = {
+    ...omit(zaak, ['statusDates', 'termijnDates', 'vergunningen']),
     steps: getStatusSteps(zaak),
     dateRequestFormatted: toDateFormatted(zaak.dateRequest),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
-    link: {
-      to: generatePath(appRoute, {
-        caseType: slug(zaak.caseType, { lower: true }),
-        id: zaak.id,
-      }),
-      title: `Bekijk hoe het met uw aanvraag staat`,
-    },
+    link: createLink(zaak.id),
   };
 
-  return zaakFrontend;
+  if (!zaak.vergunningen || zaak.vergunningen.length === 0) {
+    return [zaakFrontend];
+  }
+
+  const zakenFrontend = zaak.vergunningen.map((vergunning) => {
+    const combinedIdZaakVergunning = `${zaak.id}-${vergunning.id}`;
+    return {
+      ...zaakFrontend,
+      ...vergunning,
+      id: combinedIdZaakVergunning,
+      link: createLink(combinedIdZaakVergunning),
+    };
+  });
+
+  return zakenFrontend;
 }
 
 async function fetchVaren_(
@@ -48,12 +63,12 @@ async function fetchVaren_(
     const zaken = decosZaken.filter(
       (zaak) => zaak.caseType !== 'Varen registratie reder'
     );
-    const varenVergunningFrontend = zaken.map((vergunning) =>
+    const zakenFrontend = zaken.flatMap((vergunning) =>
       transformVarenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
     );
     return apiSuccessResult({
       reder: registratieReder,
-      zaken: varenVergunningFrontend,
+      zaken: zakenFrontend,
     });
   }
 

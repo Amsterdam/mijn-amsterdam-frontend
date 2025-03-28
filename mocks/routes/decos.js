@@ -1,6 +1,7 @@
 const ADDRESS_BOOKS = require('../fixtures/decos-vergunningen-addressbook-response.json');
 const DOCUMENTS_LIST = require('../fixtures/decos-vergunningen-documents-list-response.json');
 const TERMIJNENS = require('../fixtures/decos-vergunningen-termijnens-response.json');
+const VARENS = require('../fixtures/decos-vergunningen-varens-response.json');
 const WORKFLOW_INSTANCES = require('../fixtures/decos-vergunningen-workflowinstances-response.json');
 const WORKFLOWS = require('../fixtures/decos-vergunningen-workflows-response.json');
 const ZAKEN = require('../fixtures/decos-vergunningen-zaken-response.json');
@@ -8,6 +9,14 @@ const settings = require('../settings.js');
 
 const zakenKeysStatusInBehandeling = ZAKEN.content
   .filter((zaak) => zaak.fields.title === 'In behandeling')
+  .map((zaak) => zaak.key);
+
+const zakenKeysHasVarens = ZAKEN.content
+  .filter(
+    (zaak) =>
+      zaak.fields.text45 !== 'Varen vergunning exploitatie' ||
+      zaak.fields.processed
+  )
   .map((zaak) => zaak.key);
 
 function getZaakByKey(key) {
@@ -147,6 +156,26 @@ module.exports = [
             if (zakenKeysStatusInBehandeling.includes(req.params.key)) {
               TERMIJNENS.content[0].key = req.params.key;
               return res.send(TERMIJNENS);
+            }
+            return res.send({ content: [] });
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-decos-zaak-varens',
+    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/varens`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (req, res, next, core) => {
+            if (zakenKeysHasVarens.includes(req.params.key)) {
+              VARENS.content[0].key = req.params.key;
+              return res.send(VARENS);
             }
             return res.send({ content: [] });
           },

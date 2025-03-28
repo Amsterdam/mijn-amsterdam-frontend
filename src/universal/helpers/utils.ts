@@ -1,4 +1,5 @@
 import { differenceInMonths } from 'date-fns';
+
 import { defaultDateFormat } from './date';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -16,13 +17,15 @@ export function range(a: number, b: number) {
   );
 }
 
+// This forces typescript to expand the intersection T<A | B> into T<A> | T<B>
+export type OmitMapped<T, U extends keyof T> = T extends T ? Omit<T, U> : never;
 export const omit = <T extends object, U extends keyof T>(
   obj: T,
   keys: U[]
-): Omit<T, U> =>
+): OmitMapped<T, U> =>
   (Object.keys(obj) as U[]).reduce(
     (acc, curr) => (keys.includes(curr) ? acc : { ...acc, [curr]: obj[curr] }),
-    {} as Omit<T, U>
+    {} as OmitMapped<T, U>
   );
 
 export function pick<T extends object>(source: T, keys: string[]) {

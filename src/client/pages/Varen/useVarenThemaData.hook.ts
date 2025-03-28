@@ -13,10 +13,10 @@ export function useVarenThemaData() {
 
   const varenRederRegistratie = VAREN.content?.reder;
 
-  const vergunningen = VAREN.content?.zaken;
+  const vergunningen = VAREN.content?.zaken ?? [];
 
   const varenVergunningen = addLinkElementToProperty<VarenFrontend>(
-    vergunningen ?? [],
+    vergunningen,
     'vesselName',
     true
   );

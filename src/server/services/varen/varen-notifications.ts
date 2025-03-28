@@ -84,6 +84,7 @@ function createVarenNotification(zaak: VarenFrontend): MyNotification | null {
         description: `Wij hebben uw aanvraag afgehandeld.`,
       };
   }
+  return null;
 }
 
 export async function fetchVarenNotifications(

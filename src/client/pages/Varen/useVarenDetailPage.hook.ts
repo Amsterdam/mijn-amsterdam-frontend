@@ -15,7 +15,7 @@ export function useVarenDetailPage() {
   const hasRegistratieReder = !!VAREN.content?.reder;
 
   const vergunning =
-    VAREN.content?.zaken.find((item) => item.id === id) ?? null;
+    VAREN.content?.zaken?.find((item) => item.id === id) ?? null;
 
   const showButtons =
     vergunning?.processed && vergunning.decision === 'Verleend';

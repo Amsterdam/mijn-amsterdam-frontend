@@ -100,7 +100,7 @@ const exploitatieDecision: ExploitatieAanvraag = {
   },
 } as unknown as ExploitatieAanvraag;
 
-const rederRegistratie: VarenFrontend<VarenRegistratieRederType> = {
+const rederRegistratie = {
   id: '2801937838',
   title: 'Varen registratie reder',
   caseType: 'Varen registratie reder',
@@ -112,7 +112,7 @@ const rederRegistratie: VarenFrontend<VarenRegistratieRederType> = {
   phone: '0612345678',
   email: 'myemailadres@example.com',
   dateRequest: '2023-11-06T00:00:00',
-} as unknown as VarenFrontend<VarenRegistratieRederType>;
+} as unknown as VarenRegistratieRederType;
 
 const varenContent = [exploitatieInProgress, exploitatieDecision];
 
