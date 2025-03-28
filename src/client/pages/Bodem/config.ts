@@ -4,11 +4,14 @@ import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
+import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
 const displayPropsAanvragen = {
   detailLinkComponent: 'Adres',
   datumAanvraagFormatted: 'Aangevraagd',
-  status: 'Resultaat',
+  status: 'Status',
 };
 
 const listPageParamKind = {
@@ -29,6 +32,7 @@ export const tableConfig = {
     listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
       kind: listPageParamKind.inProgress,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
   [listPageParamKind.completed]: {
     ...tableConfigBase,
@@ -37,6 +41,8 @@ export const tableConfig = {
     listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
       kind: listPageParamKind.completed,
     }),
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    
   },
 } as const;
 
