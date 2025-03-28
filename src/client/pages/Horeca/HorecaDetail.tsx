@@ -31,8 +31,6 @@ function ExploitatieHorecaBedrijf({
     'decision',
   ]);
 
-  console.log('rrr', rows);
-
   return <Datalist rows={rows} />;
 }
 

@@ -1,5 +1,5 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
-import { GenericDocument } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
@@ -230,6 +230,7 @@ export type ZaakTermijnDate = {
   dateStart: string;
   dateEnd: string;
 };
+
 export interface DecosZaakWithLocation extends DecosZaakBase {
   location: string | null;
 };

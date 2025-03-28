@@ -77,7 +77,7 @@ export type DocumentTitlesConfig = {
 export const DocumentTitles: DocumentTitlesConfig = {
   // Afis
   [AppRoutes.AFIS]: `${ThemaTitles.AFIS} | overzicht`,
-  [AppRoutes['AFIS/FACTUREN']]: getAfisListPageDocumentTitle(),
+  [AppRoutes['AFIS/FACTUREN']]: getAfisListPageDocumentTitle(ThemaTitles.AFIS),
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
     `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
   // Contactmomenten
@@ -99,8 +99,10 @@ export const DocumentTitles: DocumentTitlesConfig = {
   // Inkomen
   [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
   [AppRoutes['INKOMEN/SPECIFICATIES']]:
-    getInkomenSpecificatiesListPageDocumentTitle(),
-  [AppRoutes['INKOMEN/LIST']]: getInkomenListPageDocumentTitle(),
+    getInkomenSpecificatiesListPageDocumentTitle(ThemaTitles.INKOMEN),
+  [AppRoutes['INKOMEN/LIST']]: getInkomenListPageDocumentTitle(
+    ThemaTitles.INKOMEN
+  ),
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
     `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
@@ -126,7 +128,9 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // Bezwaren
   [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
-  [AppRoutes['BEZWAREN/LIST']]: getBezwarenListPageDocumentTitle(),
+  [AppRoutes['BEZWAREN/LIST']]: getBezwarenListPageDocumentTitle(
+    ThemaTitles.BEZWAREN
+  ),
   [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
 
   // Toeristische verhuur
@@ -139,8 +143,10 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // Varen
   [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
-  [AppRoutes['VAREN/LIST']]: getVarenListPageDocumentTitle(),
-  [AppRoutes['VAREN/DETAIL']]: getVarenDetailPageDocumentTitle(),
+  [AppRoutes['VAREN/LIST']]: getVarenListPageDocumentTitle(ThemaTitles.VAREN),
+  [AppRoutes['VAREN/DETAIL']]: getVarenDetailPageDocumentTitle(
+    ThemaTitles.VAREN
+  ),
 
   // Krefia
   [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
@@ -162,7 +168,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // AVG
   [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
-  [AppRoutes['AVG/LIST']]: getAVGListPageDocumentTitle(),
+  [AppRoutes['AVG/LIST']]: getAVGListPageDocumentTitle(ThemaTitles.AVG),
   [AppRoutes['AVG/DETAIL']]: `AVG verzoek | ${ThemaTitles.AVG}`,
 
   // Bodem
