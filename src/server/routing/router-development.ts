@@ -30,17 +30,21 @@ import { countLoggedInVisit } from '../services/visitors';
 export const authRouterDevelopment = express.Router();
 authRouterDevelopment.BFF_ID = 'router-dev';
 
-export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
+export async function createOIDCStub(
+  req: Request,
+  authProfile: AuthProfile,
+  expiresAtSeconds?: number
+) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
 
   // 15 minutes In seconds
-  const expires_at =
+  const expiresAt =
+    expiresAtSeconds ??
     new Date().getTime() / ONE_SECOND_MS + OIDC_SESSION_MAX_AGE_SECONDS;
 
   const maSession: MaSession = {
     ...authProfile,
     TMASessionID: 'xx-tma-sid-xx',
-    expires_at,
   };
 
   (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
@@ -64,9 +68,12 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
       ),
       get expires_in() {
         return differenceInSeconds(
-          new Date(expires_at * ONE_SECOND_MS),
+          new Date(expiresAt * ONE_SECOND_MS),
           new Date()
         );
+      },
+      isExpired() {
+        return this.expires_in <= 0;
       },
     } as AccessToken,
   };

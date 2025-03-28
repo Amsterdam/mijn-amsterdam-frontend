@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios';
-import { millisecondsToSeconds } from 'date-fns';
 import { Request, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
@@ -33,7 +32,8 @@ export const EMPTY_OKAY_RESPONSE = {
 
 /** Quikly create an AuthProfileAndToken object */
 export function getAuthProfileAndToken(
-  profileType: ProfileType = 'private'
+  profileType: ProfileType = 'private',
+  expiresAtMilliseconds: number = 0
 ): AuthProfileAndToken {
   const authProfileAndToken: AuthProfileAndToken = {
     profile: {
@@ -42,6 +42,7 @@ export function getAuthProfileAndToken(
       id: 'I.M Mokum',
       sid: '0D8ugZyqnzPTyknBDwxsMPb7',
     },
+    expiresAtMilliseconds,
     token:
       'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
   };
@@ -117,14 +118,9 @@ export class RequestMock {
     return this;
   }
 
-  async createOIDCStub(authProfile: AuthProfile, expiresAtSeconds?: number) {
+  async createOIDCStub(authProfile: AuthProfile, expiresAtSeconds: number = 0) {
     const self = this as unknown as AuthenticatedRequest;
-    await createOIDCStub(self, authProfile);
-    const sessionObj = self[OIDC_SESSION_COOKIE_NAME];
-    if (sessionObj) {
-      sessionObj.expires_at =
-        expiresAtSeconds ?? millisecondsToSeconds(Date.now());
-    }
+    await createOIDCStub(self, authProfile, expiresAtSeconds);
     return this;
   }
 
@@ -135,9 +131,12 @@ export class RequestMock {
 
 export async function getReqMockWithOidc(
   profile: AuthProfile,
-  expiresAtSeconds?: number
+  expiresAtSeconds: number = 0
 ) {
   const reqMockWithOidc = RequestMock.new();
+  reqMockWithOidc.setCookies({
+    [OIDC_SESSION_COOKIE_NAME]: 'oidc-session-cookie-value',
+  });
   await reqMockWithOidc.createOIDCStub(profile, expiresAtSeconds);
   const mock = reqMockWithOidc.get() as unknown as AuthenticatedRequest;
 

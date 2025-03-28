@@ -78,7 +78,7 @@ export function getAuthProfile(
   };
 }
 
-function getSessionData(req: Request) {
+function getSessionData(req: Request): MaSession | null {
   const reqWithSession = req as Request &
     Record<typeof OIDC_SESSION_COOKIE_NAME, MaSession>;
   return reqWithSession?.[OIDC_SESSION_COOKIE_NAME] ?? null;
@@ -94,8 +94,7 @@ export function getAuth(req: Request): AuthProfileAndToken | null {
   const expiresAtMilliseconds = accessTokenExpiresInSeconds
     ? // Take Access token expiry time if available
       Date.now() + accessTokenExpiresInSeconds * ONE_SECOND_MS
-    : // Otherwise take session expiry time
-      maSession.expires_at * ONE_SECOND_MS;
+    : 0;
 
   if (
     !maSession?.authMethod ||
@@ -169,8 +168,7 @@ export function createLogoutHandler(
     if (
       doIDPLogout &&
       auth?.token &&
-      req.oidc.accessToken &&
-      !req.oidc.accessToken?.isExpired()
+      req.oidc.accessToken?.isExpired?.() === false
     ) {
       return res.oidc.logout({
         returnTo,
