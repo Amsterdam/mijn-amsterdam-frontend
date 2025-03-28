@@ -7,21 +7,24 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 export function ParkerenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
 
-  const { vergunningen, isLoading, isError, tableConfig, routes } =
-    useParkerenData();
+  const {
+    vergunningen,
+    isLoading,
+    isError,
+    tableConfig,
+    routes,
+    themaPaginaBreadcrumb,
+  } = useParkerenData();
 
-  const title = tableConfig[params.kind].title;
-  const displayProps = tableConfig[params.kind].displayProps;
+  const { displayProps, title, filter, sort } = tableConfig[params.kind];
 
   return (
     <ListPagePaginated
-      items={vergunningen
-        .filter(tableConfig[params.kind].filter)
-        .sort(tableConfig[params.kind].sort)}
-      title={title ?? ''}
+      items={vergunningen.filter(filter).sort(sort)}
+      title={title}
       appRoute={routes.listPage}
       appRouteParams={params}
-      appRouteBack={routes.themePage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}

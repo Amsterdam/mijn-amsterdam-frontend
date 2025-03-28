@@ -5,10 +5,12 @@ import {
   routes,
 } from './Erfpacht-thema-config';
 import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useErfpachtV2Data() {
   const { ERFPACHTv2 } = useAppStateGetter();
@@ -21,6 +23,8 @@ export function useErfpachtV2Data() {
     dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );
+
+  const themaLink = useThemaMenuItemByThemaID(Themas.ERFPACHTv2);
 
   // Facturen
   const openFacturenBase = erfpachtData?.openstaandeFacturen ?? null;
@@ -39,5 +43,6 @@ export function useErfpachtV2Data() {
     tableConfig,
     listPageParamKind,
     routes,
+    themaPaginaBreadcrumb: themaLink,
   };
 }

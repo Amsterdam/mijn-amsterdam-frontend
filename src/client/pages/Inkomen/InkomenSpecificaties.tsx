@@ -165,7 +165,7 @@ export function InkomenSpecificaties() {
       isError={isError}
       isLoading={isLoading}
       appRoute={`${tableConfig.listPageRoute}/:page?`}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
       appRouteParams={params}
       pageContentTop={pageContentMain}
       displayProps={tableConfig.displayProps}

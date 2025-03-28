@@ -11,7 +11,8 @@ import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 
 export function ErfpachtFacturen() {
-  const { tableConfig, listPageParamKind, routes } = useErfpachtV2Data();
+  const { tableConfig, listPageParamKind, themaPaginaBreadcrumb } =
+    useErfpachtV2Data();
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
@@ -42,11 +43,9 @@ export function ErfpachtFacturen() {
       }
       items={dossier?.facturen?.facturen ?? []}
       title={tableConfigFacturen?.title ?? 'Facturen'}
-      errorText="We kunnen op dit moment geen facturen tonen."
-      noItemsText="U heeft geen facturen."
       appRoute={tableConfigFacturen?.listPageRoute ?? ''}
       appRouteParams={{ dossierNummerUrlParam }}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={displayProps}
       isLoading={isLoading(dossierApiResponse)}
       isError={isError(dossierApiResponse)}

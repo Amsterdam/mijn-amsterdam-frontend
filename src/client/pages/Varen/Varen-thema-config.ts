@@ -32,14 +32,21 @@ type TableConfig<T> = {
   listPageRoute: string;
 };
 
+export const routes = {
+  listPage: AppRoutes['VAREN/LIST'],
+  themaPage: AppRoutes.VAREN,
+  detailPage: AppRoutes['VAREN/DETAIL'],
+} as const;
+
 type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
+
 export const tableConfig: TableConfigByKind<
   WithDetailLinkComponent<VarenVergunningFrontend>
 > = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (vergunning: VarenVergunningFrontend) => !vergunning.processed,
-    listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
     }),
     displayProps: {
@@ -53,7 +60,7 @@ export const tableConfig: TableConfigByKind<
   [listPageParamKind.actief]: {
     title: 'Actieve vergunningen',
     filter: isVergunning,
-    listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actief,
     }),
     displayProps: {

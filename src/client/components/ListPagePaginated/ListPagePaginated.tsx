@@ -3,7 +3,7 @@ import { ReactNode, useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
-import { ZaakDetail } from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
@@ -15,7 +15,7 @@ const DEFAULT_PAGE_SIZE = 20;
 
 interface ListPagePaginatedProps<T> {
   appRoute: string;
-  appRouteBack: string;
+  breadcrumbs?: LinkProps[];
   appRouteParams?: Record<string, string> | null;
   pageContentTop?: ReactNode;
   pageContentBottom?: ReactNode;
@@ -33,7 +33,7 @@ interface ListPagePaginatedProps<T> {
 
 export function ListPagePaginated<T extends object = ZaakDetail>({
   appRoute,
-  appRouteBack,
+  breadcrumbs,
   appRouteParams = null,
   pageContentTop,
   pageContentBottom,
@@ -73,9 +73,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   return (
     <OverviewPageV2>
       <PageContentV2>
-        <PageHeadingV2 breadcrumbs={[{ to: appRouteBack, title: 'iets' }]}>
-          {title}
-        </PageHeadingV2>
+        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
         {isError && (
           <PageContentCell>
             <ErrorAlert>{errorText}</ErrorAlert>

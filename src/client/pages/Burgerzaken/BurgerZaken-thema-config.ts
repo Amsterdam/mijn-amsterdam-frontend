@@ -24,12 +24,18 @@ const displayProps = withOmitDisplayPropsForSmallScreens(displayPropsBase, [
   'datumAfloopFormatted',
 ]);
 
+export const routes = {
+  listPage: AppRoutes['BURGERZAKEN/LIST'],
+  themaPage: AppRoutes.BURGERZAKEN,
+  detailPage: AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'],
+};
+
 export const tableConfig = {
   [listPageParamKind.identiteitsbewijzen]: {
     title: 'Mijn reisdocumenten',
     displayProps,
     sort: dateSort('datumAfloop', 'desc'),
-    listPageRoute: generatePath(AppRoutes['BURGERZAKEN/LIST'], {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.identiteitsbewijzen,
     }),
   },
