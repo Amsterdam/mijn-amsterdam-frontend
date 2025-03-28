@@ -1,11 +1,14 @@
 import { getRows } from './fields-config';
-import { VergunningFrontendV2 } from '../../../../server/services/vergunningen/config-and-types';
+import {
+  GPP,
+  VergunningFrontend,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 
 export function GPPContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontendV2;
+  vergunning: VergunningFrontend<GPP>;
 }) {
   const rows = getRows(vergunning, [
     'identifier',

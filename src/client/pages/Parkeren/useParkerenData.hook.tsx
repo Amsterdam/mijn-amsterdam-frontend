@@ -1,12 +1,12 @@
 import { PARKEER_CASE_TYPES } from './Parkeren-thema-config';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { tableConfig } from '../Vergunningen/Vergunningen-thema-config';
 
-function getVergunningenFromThemaVergunningen(content: VergunningFrontendV2[]) {
+function getVergunningenFromThemaVergunningen(content: VergunningFrontend[]) {
   const vergunningen = (content ?? [])
     .filter((vergunning) => {
       return PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType);
@@ -19,7 +19,7 @@ function getVergunningenFromThemaVergunningen(content: VergunningFrontendV2[]) {
       },
     }));
 
-  return addLinkElementToProperty<VergunningFrontendV2>(
+  return addLinkElementToProperty<VergunningFrontend>(
     vergunningen,
     'identifier'
   );

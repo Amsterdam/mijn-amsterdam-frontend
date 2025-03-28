@@ -1,5 +1,6 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
-import { GenericDocument, ZaakDetail } from '../../../universal/types';
+import { GenericDocument } from '../../../universal/types';
+import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
@@ -182,7 +183,8 @@ export type DecosZakenSourceFilter = (
   decosZaakSource: DecosZaakSource
 ) => boolean;
 
-export interface DecosZaakBase {
+
+export type DecosZaakBase = {
   caseType: string;
   dateDecision: string | null;
   dateRequest: string;
@@ -216,7 +218,6 @@ export type ZaakStatus =
   | 'In behandeling'
   | 'Afgehandeld'
   | SomeOtherString;
-
 export type ZaakStatusDate = {
   status: ZaakStatus;
   datePublished: string | null;
@@ -229,24 +230,23 @@ export type ZaakTermijnDate = {
 };
 export interface DecosZaakWithLocation extends DecosZaakBase {
   location: string | null;
-}
+};
 
-export interface DecosZaakWithKentekens extends DecosZaakBase {
+export type WithKentekens = {
   kentekens: string | null;
-}
+};
 
-export interface DecosZaakWithDateRange extends DecosZaakBase {
+export type WithDateRange = {
   dateStart: string | null;
   dateEnd: string | null;
-}
+};
 
-export interface DecosZaakWithTimeRange extends DecosZaakBase {
+export type WithTimeRange = {
   timeStart: string | null;
   timeEnd: string | null;
-}
-export interface DecosZaakWithDateTimeRange
-  extends DecosZaakWithDateRange,
-    DecosZaakWithTimeRange {} // A list of common readable api attributes
+};
+export type WithDateTimeRange = WithDateRange & WithTimeRange; // A list of common readable api attributes
+
 const status = 'status';
 export const caseType = 'caseType';
 const identifier = 'identifier';

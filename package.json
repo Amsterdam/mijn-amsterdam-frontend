@@ -137,6 +137,7 @@
     "thenby": "^1.3.4",
     "throttle-debounce": "^5.0.2",
     "ts-node": "^10.9.2",
+    "type-fest": "^4.33.0",
     "typescript": "^5.7.2",
     "uid-safe": "^2.1.5",
     "use-debounce": "^10.0.4",

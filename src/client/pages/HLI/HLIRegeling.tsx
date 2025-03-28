@@ -40,7 +40,7 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
 }
 
 export default function HLIRegelingDetailPagina() {
-  const { regelingen, isError, isLoading, title, routes } = useHliThemaData();
+  const { regelingen, isError, isLoading, routes } = useHliThemaData();
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 
@@ -54,9 +54,6 @@ export default function HLIRegelingDetailPagina() {
         regelingDetail && <DetailPageContent hliRegeling={regelingDetail} />
       }
       backLink={routes.themaPage}
-      documentPathForTracking={(document) =>
-        `/downloads/hli/regeling/${regelingDetail?.title}/${document.title.split(/\n/)[0]}`
-      }
     />
   );
 }

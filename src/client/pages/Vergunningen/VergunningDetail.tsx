@@ -1,5 +1,3 @@
-import { useParams } from 'react-router-dom';
-
 import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
 import { BZB } from './detail-page-content/BZB';
 import { BZP } from './detail-page-content/BZP';
@@ -16,29 +14,27 @@ import { RvvHeleStad } from './detail-page-content/RvvHeleStad';
 import { RvvSloterweg } from './detail-page-content/RvvSloterweg';
 import { Touringcar } from './detail-page-content/Touringcar';
 import { TVMRVVObject } from './detail-page-content/TVMRVVObject';
-import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
 import { VOB } from './detail-page-content/VOB';
 import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import { GenericDocument } from '../../../universal/types';
+import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
+import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { Datalist } from '../../components/Datalist/Datalist';
-import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { WVOSContent } from './detail-page-content/WVOS';
+import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
-import { useAppStateGetter } from '../../hooks/useAppState';
 
-interface DetailPageContentProps {
-  vergunning: VergunningFrontendV2;
-  documents: GenericDocument[];
-  backLink: string;
+interface DetailPageContentProps<V> {
+  vergunning: V;
 }
 
 // TODO: Implement detailpages per case
-function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
+function DetailPageContent<V extends VergunningFrontend>({
+  vergunning,
+}: DetailPageContentProps<V>) {
   return (
     <PageContentCell>
       {(function VergunningDetailContent() {
@@ -102,7 +98,6 @@ function DetailPageContent({ vergunning, documents }: DetailPageContentProps) {
             );
         }
       })()}
-      {!!documents.length && <DocumentListV2 documents={documents} />}
     </PageContentCell>
   );
 }
@@ -112,33 +107,42 @@ interface VergunningV2DetailProps {
 }
 
 export function VergunningDetailPagina({ backLink }: VergunningV2DetailProps) {
-  const appState = useAppStateGetter();
-  const { VERGUNNINGEN } = appState;
-  const { id } = useParams<{ id: VergunningFrontendV2['id'] }>();
-  const vergunning = VERGUNNINGEN.content?.find((item) => item.id === id);
-  const fetchDocumentsUrl = vergunning?.fetchDocumentsUrl;
-
-  const vergunningDocuments = useVergunningDocumentList(fetchDocumentsUrl);
+  const { vergunningen, isLoading, isError } = useVergunningenThemaData();
+  const { vergunning, title, documents } =
+    useVergunningenDetailData(vergunningen);
 
   return (
-    <ThemaDetailPagina<VergunningFrontendV2>
-      title={vergunning?.title ?? 'Vergunning'}
+    <ThemaDetailPagina<VergunningFrontend>
+      title={title}
       zaak={vergunning}
-      isError={isError(VERGUNNINGEN)}
-      isLoading={isLoading(VERGUNNINGEN)}
+      isError={isError}
+      isLoading={isLoading}
       pageContentTop={
         vergunning && (
-          <DetailPageContent
-            vergunning={vergunning}
-            documents={vergunningDocuments}
-            backLink={backLink}
-          />
+          <>
+            <DetailPageContent vergunning={vergunning} backLink={backLink} />
+            {!!documents.length && (
+              <PageContentCell spanWide={8}>
+                <Datalist
+                  rows={[
+                    {
+                      label: 'Documenten',
+                      content: (
+                        <DocumentListV2
+                          documents={documents}
+                          columns={['', '']}
+                          className="ams-mb--sm"
+                        />
+                      ),
+                    },
+                  ]}
+                />
+              </PageContentCell>
+            )}
+          </>
         )
       }
       backLink={backLink}
-      documentPathForTracking={(document) =>
-        `/downloads/vergunningen/${vergunning?.caseType}/${document.title.split(/\n/)[0]}`
-      }
     />
   );
 }

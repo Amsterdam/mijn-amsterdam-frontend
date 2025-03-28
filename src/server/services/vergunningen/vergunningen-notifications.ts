@@ -6,7 +6,7 @@ import {
   NotificationLabelByType,
   NotificationLabels,
   NotificationProperty,
-  VergunningFrontendV2,
+  VergunningFrontend,
 } from './config-and-types';
 import { decosCaseToZaakTransformers } from './decos-zaken';
 import { isNearEndDate } from './helpers';
@@ -26,7 +26,7 @@ import { getStatusDate } from '../decos/helpers';
 // prettier-ignore
 export function getNotificationLabels(
   notificationLabels: Partial<NotificationLabelByType>,
-  vergunning: VergunningFrontendV2,
+  vergunning: VergunningFrontend,
   compareToDate: Date = new Date()
 ) {
   // Ignore formatting of the switch case statements for readability
@@ -69,7 +69,7 @@ export function getNotificationLabels(
   return null;
 }
 
-function getNotificationBase(vergunning: VergunningFrontendV2, thema: Thema) {
+function getNotificationBase(vergunning: VergunningFrontend, thema: Thema) {
   const notificationBaseProperties = {
     thema: thema,
     id: `vergunning-${vergunning.id}-notification`,
@@ -84,7 +84,7 @@ function getNotificationBase(vergunning: VergunningFrontendV2, thema: Thema) {
 function mergeNotificationProperties(
   notification: Partial<MyNotification>,
   content: NotificationLabels,
-  vergunning: VergunningFrontendV2
+  vergunning: VergunningFrontend
 ) {
   for (const [key, getValue] of Object.entries(content)) {
     notification[key as NotificationProperty] = getValue(vergunning);
@@ -93,7 +93,7 @@ function mergeNotificationProperties(
 }
 
 export function createVergunningNotification(
-  vergunning: VergunningFrontendV2,
+  vergunning: VergunningFrontend,
   thema: Thema
 ): MyNotification | null {
   const zaakTypeTransformer = decosCaseToZaakTransformers[vergunning.caseType];
@@ -115,7 +115,7 @@ export function createVergunningNotification(
 }
 
 export function getVergunningNotifications(
-  vergunningen: VergunningFrontendV2[],
+  vergunningen: VergunningFrontend[],
   thema: Thema
 ) {
   return vergunningen
