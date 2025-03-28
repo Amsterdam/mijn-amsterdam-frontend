@@ -1,4 +1,4 @@
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
 import { dateSort } from '../../../universal/helpers/date';
 
 export const displayPropsHuidigeVergunningen = {

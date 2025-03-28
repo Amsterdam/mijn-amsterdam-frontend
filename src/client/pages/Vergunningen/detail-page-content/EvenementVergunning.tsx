@@ -1,5 +1,5 @@
 import { Location } from './Location';
-import type { EvenementVergunning } from '../../../../server/services/vergunningen-v2/config-and-types';
+import type { EvenementVergunning } from '../../../../server/services/vergunningen/config-and-types';
 import {
   defaultDateFormat,
   defaultDateTimeFormat,

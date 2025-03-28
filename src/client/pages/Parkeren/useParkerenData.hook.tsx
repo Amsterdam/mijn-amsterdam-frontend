@@ -1,10 +1,10 @@
 import { PARKEER_CASE_TYPES } from './Parkeren-thema-config';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
+import { VergunningFrontendV2 } from '../../../server/services/vergunningen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { tableConfig } from '../VergunningenV2/Vergunningen-thema-config';
+import { tableConfig } from '../Vergunningen/Vergunningen-thema-config';
 
 function getVergunningenFromThemaVergunningen(content: VergunningFrontendV2[]) {
   const vergunningen = (content ?? [])
@@ -26,8 +26,8 @@ function getVergunningenFromThemaVergunningen(content: VergunningFrontendV2[]) {
 }
 
 export function useParkerenData() {
-  const { VERGUNNINGENv2, PARKEREN } = useAppStateGetter();
-  const vergunningen = VERGUNNINGENv2.content ?? [];
+  const { VERGUNNINGEN, PARKEREN } = useAppStateGetter();
+  const vergunningen = VERGUNNINGEN.content ?? [];
 
   const parkeerVergunningenFromThemaVergunningen =
     getVergunningenFromThemaVergunningen(vergunningen);
@@ -37,8 +37,8 @@ export function useParkerenData() {
     tableConfig,
     parkeerVergunningenFromThemaVergunningen,
     hasMijnParkerenVergunningen,
-    isLoading: isLoading(VERGUNNINGENv2) || isLoading(PARKEREN),
-    isError: isError(VERGUNNINGENv2) || isError(PARKEREN),
+    isLoading: isLoading(VERGUNNINGEN) || isLoading(PARKEREN),
+    isError: isError(VERGUNNINGEN) || isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
     linkListItems: [
