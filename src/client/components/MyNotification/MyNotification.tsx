@@ -81,7 +81,7 @@ export function MyNotification({
         <div className={styles.Body}>
           <Paragraph className="ams-mb--xs">
             {notification.description.includes('<p') ? (
-              <InnerHtml>{notification.description}</InnerHtml>
+              <InnerHtml el="span">{notification.description}</InnerHtml>
             ) : (
               notification.description
             )}
