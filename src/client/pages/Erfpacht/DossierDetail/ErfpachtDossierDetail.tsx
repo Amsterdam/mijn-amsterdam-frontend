@@ -5,7 +5,6 @@ import { DatalistsFinancieel } from './DatalistsFinancieel';
 import { DataTableFacturen } from './DataTableFacturen';
 import { useDossierDetaiLData as useDossierDetailData } from './erfpachtDossierData.hook';
 import styles from './ErfpachtDossierDetail.module.scss';
-import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../ThemaPagina/ThemaDetailPagina';
@@ -24,7 +23,7 @@ export function ErfpachtDossierDetail() {
   } = useDossierDetailData();
 
   return (
-    <ThemaDetailPagina<ErfpachtV2DossiersDetail>
+    <ThemaDetailPagina
       title={title}
       zaak={dossier}
       isError={isError || isErrorThemaData}

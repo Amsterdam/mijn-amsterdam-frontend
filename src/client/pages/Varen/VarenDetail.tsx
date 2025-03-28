@@ -5,7 +5,6 @@ import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploi
 import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
-import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
@@ -56,7 +55,7 @@ export function VarenDetail() {
   }
 
   return (
-    <ThemaDetailPagina<VarenVergunningFrontend>
+    <ThemaDetailPagina
       statusLabel="Status van uw aanvraag"
       title={vergunning?.title ?? 'Varen vergunning'}
       zaak={vergunning}

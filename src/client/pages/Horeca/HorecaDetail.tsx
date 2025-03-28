@@ -41,7 +41,7 @@ export function HorecaDetailPagina() {
     useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
 
   return (
-    <ThemaDetailPagina<HorecaVergunningFrontend>
+    <ThemaDetailPagina
       title={title}
       zaak={vergunning}
       isError={isError}

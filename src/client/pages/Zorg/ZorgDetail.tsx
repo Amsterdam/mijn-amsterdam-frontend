@@ -50,7 +50,7 @@ export function ZorgDetail() {
     useZorgDetailData();
 
   return (
-    <ThemaDetailPagina<WMOVoorzieningFrontend>
+    <ThemaDetailPagina
       title={title}
       zaak={voorziening}
       isError={isError}

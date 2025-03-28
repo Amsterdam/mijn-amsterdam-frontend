@@ -1,7 +1,6 @@
 import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
-import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
@@ -30,7 +29,7 @@ export function InkomenDetailUitkering() {
     useInkomenDetailData('WPI_AANVRAGEN');
 
   return (
-    <ThemaDetailPagina<WpiRequestProcess>
+    <ThemaDetailPagina
       title={zaak?.title || 'Aanvraag bijstandsuitkering'}
       zaak={zaak}
       isError={isError}

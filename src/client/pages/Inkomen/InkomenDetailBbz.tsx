@@ -1,7 +1,6 @@
 import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
-import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
@@ -31,18 +30,12 @@ export function InkomenDetailBbz() {
   const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
     useInkomenDetailData('WPI_BBZ');
 
-  const hasDecisionStep =
-    zaak?.steps.some((step) => step.id.includes('besluit')) ?? false;
-
-  const reverseSteps = hasDecisionStep; // For an unknown business reason, the historic steps of BBZ are shown in reverse.
-
   return (
-    <ThemaDetailPagina<WpiRequestProcess>
+    <ThemaDetailPagina
       title={zaak?.title || 'Bbz aanvraag'}
       zaak={zaak}
       isError={isError}
       isLoading={isLoading}
-      reverseSteps={reverseSteps}
       pageContentMain={pageContentTop}
       breadcrumbs={[themaPaginaBreadcrumb]}
     />

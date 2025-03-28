@@ -61,6 +61,7 @@ export const requestProcess: WpiRequestProcessLabels = {
               href=${
                 WpiExternalUrls.BijstandsUitkeringAanvragenRechtenEnPlichten
               }
+              class="ams-link
               rel="external noopener noreferrer"
             >
               rechten en plichten
@@ -137,6 +138,7 @@ export const requestProcess: WpiRequestProcessLabels = {
             <p>
               <a
                 href=${WpiExternalUrls.BetaalDataUitkering}
+                class="ams-link"
                 rel="external noopener noreferrer"
               >
                 Bekijk hier de betaaldata van de uitkering

@@ -3,10 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AfisDisclaimer, AfisDisclaimerOvergedragenFacturen } from './Afis';
 import styles from './Afis.module.scss';
 import { useAfisListPageData } from './useAfisThemaData.hook';
-import {
-  AfisFactuur,
-  AfisFactuurState,
-} from '../../../server/services/afis/afis-types';
+import { AfisFactuurState } from '../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../components/Page/Page';
 
@@ -38,7 +35,7 @@ export function AfisFacturen() {
   const facturen = facturenListResponse?.facturen ?? [];
 
   return (
-    <ListPagePaginated<AfisFactuur>
+    <ListPagePaginated
       items={facturen}
       pageContentTop={
         <PageContentCell>

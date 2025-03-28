@@ -6,8 +6,14 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 
 export function ToeristischeVerhuurVergunningen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const { vergunningen, tableConfigVergunningen, routes, isLoading, isError } =
-    useToeristischeVerhuurThemaData();
+  const {
+    vergunningen,
+    tableConfigVergunningen,
+    routes,
+    isLoading,
+    isError,
+    themaPaginaBreadcrumb,
+  } = useToeristischeVerhuurThemaData();
   const listPageTableConfig = tableConfigVergunningen[kind];
 
   return (
@@ -19,7 +25,7 @@ export function ToeristischeVerhuurVergunningen() {
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

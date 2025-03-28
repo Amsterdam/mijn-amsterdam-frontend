@@ -6,10 +6,12 @@ import {
   tableConfig,
 } from './Zorg-thema-config';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useZorgThemaData() {
   const { WMO } = useAppStateGetter();
@@ -19,7 +21,7 @@ export function useZorgThemaData() {
     'title',
     true
   );
-
+  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.ZORG);
   const title = ThemaTitles.ZORG;
 
   return {
@@ -32,5 +34,6 @@ export function useZorgThemaData() {
     listPageTitle,
     listPageParamKind,
     linkListItems,
+    themaPaginaBreadcrumb,
   };
 }

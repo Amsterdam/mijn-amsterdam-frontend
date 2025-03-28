@@ -46,7 +46,7 @@ export function HLIRegeling() {
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 
   return (
-    <ThemaDetailPagina<HLIRegeling>
+    <ThemaDetailPagina
       title={regelingDetail?.title ?? 'Regeling bij laag inkomen'}
       zaak={regelingDetail}
       isError={isError}

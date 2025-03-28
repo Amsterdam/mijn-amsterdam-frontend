@@ -12,7 +12,7 @@ export function BurgerzakenIdentiteitsbewijs() {
     useBurgerZakenDetailData();
 
   return (
-    <ThemaDetailPagina<IdentiteitsbewijsFrontend>
+    <ThemaDetailPagina
       title={capitalizeFirstLetter(
         document?.documentType || 'Identiteitsbewijs'
       )}
