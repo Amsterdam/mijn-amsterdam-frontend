@@ -3,7 +3,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import styles from './MyThemasPanel.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { IconInfo } from '../../assets/icons';
-import { ThemaMenuItem } from '../../config/thema';
+import { ThemaMenuItemTransformed } from '../../config/thema';
 import { ThemaIcons } from '../../config/themaIcons';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -12,7 +12,7 @@ import Panel from '../Panel/Panel';
 
 export interface MyThemasPanelProps {
   title: string;
-  items: ThemaMenuItem[];
+  items: ThemaMenuItemTransformed[];
   isLoading: boolean;
   trackCategory: string;
   className?: string;
