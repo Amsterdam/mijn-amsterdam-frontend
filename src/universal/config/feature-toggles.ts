@@ -113,11 +113,8 @@ export const FeatureToggle = {
   //Varen (komt uit Decos)
   varenActive: !IS_PRODUCTION,
 
-  // Vergunningen V1 (met koppel api)
   vergunningenActive: true,
-  // Vergunningen V2 met BFF integratie
-  vergunningenV2Active: false, // TODO: Enable when working on MIJN-8914
-  decosServiceActive: !IS_PRODUCTION, // TODO: Enable when working on MIJN-8914
+  decosServiceActive: true,
 
   // WIOR Kaar data
   wiorDatasetActive: true,

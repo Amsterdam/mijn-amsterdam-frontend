@@ -11,14 +11,13 @@ import { Themas } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { isNearEndDate } from '../decos/helpers';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen-v2/config-and-types';
+import { isNearEndDate } from '../vergunningen-v2/helpers';
 
 export function createToeristischeVerhuurNotification(
   vergunning: ToeristischeVerhuurVergunning,
-  items: ToeristischeVerhuurVergunning[],
   dateNow: Date = new Date()
 ): MyNotification {
   const vergunningTitleLower = vergunning.title.toLowerCase();
@@ -41,7 +40,7 @@ export function createToeristischeVerhuurNotification(
       AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
       {
         id: vergunning.id,
-        caseType:
+        casetype:
           vergunning.title === 'Vergunning vakantieverhuur'
             ? 'vakantieverhuur'
             : 'bed-and-breakfast',
@@ -58,7 +57,7 @@ export function createToeristischeVerhuurNotification(
       // B&B + Vakantieverhuurvergunning
       case vergunning.result === 'Verleend' &&
         !!vergunning.dateEnd &&
-        isNearEndDate(vergunning):
+        isNearEndDate(vergunning.dateEnd):
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
@@ -167,14 +166,11 @@ export async function fetchToeristischeVerhuurNotifications(
     TOERISTISCHE_VERHUUR.content.vakantieverhuurVergunningen ?? [];
   const vakantieverhuurVergunningNotifications =
     vakantieverhuurVergunningen.map((vergunning) =>
-      createToeristischeVerhuurNotification(
-        vergunning,
-        vakantieverhuurVergunningen
-      )
+      createToeristischeVerhuurNotification(vergunning)
     );
   const bbVergunningen = TOERISTISCHE_VERHUUR.content.bbVergunningen ?? [];
   const vergunningNotifications = bbVergunningen.map((vergunning) =>
-    createToeristischeVerhuurNotification(vergunning, bbVergunningen)
+    createToeristischeVerhuurNotification(vergunning)
   );
 
   const registrationsNotifications =

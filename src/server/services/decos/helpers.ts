@@ -18,8 +18,8 @@ import {
   isDateInPast,
   monthsFromNow,
 } from '../../../universal/helpers/date';
-import { entries } from '../../../universal/helpers/utils';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
+import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
@@ -149,58 +149,8 @@ export function getUserKeysSearchQuery(
   return searchQuery;
 }
 
-export function isNearEndDate(
-  decosZaak: { dateEnd: string | null },
-  dateNow: Date = new Date()
-) {
-  if (!decosZaak.dateEnd) {
-    return false;
-  }
-
-  const monthsTillEnd = monthsFromNow(decosZaak.dateEnd, dateNow);
-
-  return (
-    !isExpired(decosZaak, dateNow) &&
-    monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
-    monthsTillEnd >= 0 // Only show the notification if we have a long-running permit validity
-  );
-}
-
-export function isExpired(
-  decosZaak: { dateEnd: string | null },
-  dateNow: Date = new Date()
-) {
-  if (!decosZaak.dateEnd) {
-    return false;
-  }
-
-  return isDateInPast(decosZaak.dateEnd, dateNow);
-}
-
-export function hasOtherActualDecosZaakOfSameType(
-  items: Array<DecosZaakBase>,
-  item: DecosZaakBase
-): boolean {
-  return items.some(
-    (otherDecosZaak: DecosZaakBase) =>
-      otherDecosZaak.caseType === item.caseType &&
-      otherDecosZaak.identifier !== item.identifier &&
-      !isExpired(otherDecosZaak)
-  );
-}
-
-export function toDateFormatted(input: string | Date | number): string;
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null;
-// This is not a duplicate, this is the required implementation signature
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null {
-  if (input == null) {
-    return null;
-  }
-  return defaultDateFormat(input);
+export function toDateFormatted(input: string | null) {
+  return input ? defaultDateFormat(input) : null;
 }
 
 // Try to fetch and assign a specific date on which the zaak was "In behandeling"

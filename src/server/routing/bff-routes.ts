@@ -35,11 +35,6 @@ export const BffEndpoints = {
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
 
-  // Vergunningen / Koppel api
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD:
-    '/services/vergunningen/documents/download/:id',
-  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
-
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
 

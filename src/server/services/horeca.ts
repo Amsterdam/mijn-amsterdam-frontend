@@ -1,33 +1,21 @@
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
+import { Themas } from '../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { CaseType } from '../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../universal/types/vergunningen';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import {
-  HorecaVergunningen,
-  Vergunning,
-  fetchVergunningen,
-  getVergunningNotifications,
-  horecaVergunningTypes,
-} from './vergunningen/vergunningen';
+import { HorecaVergunning } from './vergunningen-v2/config-and-types';
+import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
+import { getVergunningNotifications } from './vergunningen-v2/vergunningen-notifications';
 
-export const horecaOptions = {
-  appRoute: (vergunning: Vergunning) => {
-    switch (vergunning.caseType) {
-      case CaseType.ExploitatieHorecabedrijf:
-        return AppRoutes['HORECA/DETAIL'];
-      default:
-        return AppRoutes.HORECA;
-    }
-  },
-  filter: (vergunning: Vergunning) =>
-    horecaVergunningTypes.includes(vergunning.caseType),
-};
+export const horecaVergunningTypes: HorecaVergunning['caseType'][] = [
+  CaseTypeV2.ExploitatieHorecabedrijf,
+];
 
-export async function fetchHorecaVergunningen(
+export async function fetchHorecaVergunning(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -35,19 +23,18 @@ export async function fetchHorecaVergunningen(
     return apiSuccessResult([]);
   }
 
-  const vergunningenResponse = await fetchVergunningen(
+  const vergunningenResponse = await fetchVergunningenV2(
     requestID,
     authProfileAndToken,
-    horecaOptions
+    AppRoutes['HORECA/DETAIL']
   );
 
-  return apiSuccessResult(vergunningenResponse.content as HorecaVergunningen[]);
+  return apiSuccessResult(vergunningenResponse.content as HorecaVergunning[]);
 }
 
 export async function fetchHorecaNotifications(
   requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
-  compareDate?: Date
+  authProfileAndToken: AuthProfileAndToken
 ) {
   if (!FeatureToggle.horecaActive) {
     return apiSuccessResult({
@@ -55,16 +42,16 @@ export async function fetchHorecaNotifications(
     });
   }
 
-  const VERGUNNINGEN = await fetchVergunningen(
+  const VERGUNNINGEN = await fetchVergunningenV2(
     requestID,
     authProfileAndToken,
-    horecaOptions
+    AppRoutes['HORECA/DETAIL']
   );
 
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content ?? [],
-      compareDate
+      Themas.HORECA
     );
 
     return apiSuccessResult({
