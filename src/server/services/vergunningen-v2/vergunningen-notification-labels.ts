@@ -5,9 +5,9 @@ import {
   RVVSloterweg,
   DecosZaakExpirable,
   VergunningFrontendV2,
+  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
 } from './config-and-types';
 import { dateFormat } from '../../../universal/helpers/date';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { getStatusDate } from '../decos/helpers';
 
 const link = (vergunning: VergunningFrontendV2) => ({

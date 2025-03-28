@@ -1,13 +1,12 @@
-import styles from './VergunningDetail.module.scss';
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
-} from '../../../../server/services';
+} from '../../../../server/services/vergunningen-v2/config-and-types';
 import {
   dateTimeFormatYear,
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
-import { CaseType } from '../../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../../universal/types/vergunningen';
 import { InfoDetail } from '../../../components';
 import { InfoDetailGroup } from '../../../components/InfoDetail/InfoDetail';
 
@@ -22,30 +21,30 @@ export function Touringcar({
     <>
       <InfoDetail label="Kenmerk" value={vergunning.identifier} />
 
-      {vergunning.caseType === CaseType.TouringcarJaarontheffing ? (
+      {vergunning.caseType === CaseTypeV2.TouringcarJaarontheffing ? (
         <InfoDetail
           valueWrapperElement="div"
           label={vergunning.routetest ? 'Kenteken' : 'Kenteken(s)'}
           value={
-            vergunning.licensePlates?.includes(' | ') ? (
-              <ul className={styles.LicensePlatesList}>
-                {vergunning.licensePlates
+            vergunning.kentekens?.includes(' | ') ? (
+              <ul>
+                {vergunning.kentekens
                   ?.split(' | ')
                   .map((plate, index) => <li key={plate + index}>{plate}</li>)}
               </ul>
             ) : (
-              vergunning.licensePlates
+              vergunning.kentekens
             )
           }
         />
       ) : (
-        <InfoDetail label="Kenteken" value={vergunning.licensePlate} />
+        <InfoDetail label="Kenteken" value={vergunning.kentekens} />
       )}
 
       <InfoDetail label="Bestemming" value={vergunning.destination} />
 
       {isGranted &&
-        vergunning.caseType === CaseType.TouringcarJaarontheffing && (
+        vergunning.caseType === CaseTypeV2.TouringcarJaarontheffing && (
           <InfoDetailGroup>
             <InfoDetail
               label="Van"
@@ -65,7 +64,7 @@ export function Touringcar({
         )}
 
       {isGranted &&
-        vergunning.caseType === CaseType.TouringcarDagontheffing && (
+        vergunning.caseType === CaseTypeV2.TouringcarDagontheffing && (
           <InfoDetailGroup>
             <InfoDetail
               label="Van"

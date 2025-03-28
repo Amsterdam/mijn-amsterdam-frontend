@@ -16,6 +16,7 @@ import {
 } from '../decos/decos-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
+export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
 export const EXCLUDE_CASE_TYPES_FROM_VERGUNNINGEN_THEMA: DecosCaseType[] = [
   CaseTypeV2.VakantieverhuurVergunningaanvraag,
@@ -266,8 +267,6 @@ export type VergunningV2 =
   | TouringcarJaarontheffing
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type HorecaVergunningen = ExploitatieHorecabedrijf;
-
 export type VergunningenSourceData = {
   content?: VergunningV2[];
   status: 'OK' | 'ERROR';
@@ -282,6 +281,8 @@ export interface VergunningOptions {
 
 export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> =
   DecosZaakFrontend<T>;
+
+export type HorecaVergunning = VergunningFrontendV2<ExploitatieHorecabedrijf>;
 
 export type NotificationProperty =
   | 'title'

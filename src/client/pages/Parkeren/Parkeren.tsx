@@ -3,7 +3,6 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import { generatePath } from 'react-router-dom';
 
 import { useParkerenData } from './useParkerenData.hook';
-import { Vergunning } from '../../../server/services';
 import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
@@ -26,7 +25,7 @@ export function Parkeren() {
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, sort, className }]) => {
       return (
-        <ThemaPaginaTable<VergunningFrontendV2 | Vergunning>
+        <ThemaPaginaTable<VergunningFrontendV2>
           key={kind}
           title={title}
           zaken={parkeerVergunningenFromThemaVergunningen

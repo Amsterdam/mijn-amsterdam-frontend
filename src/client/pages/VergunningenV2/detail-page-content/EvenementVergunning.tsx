@@ -1,4 +1,5 @@
-import type { EvenementVergunning as EvenementVergunningType } from '../../../../server/services';
+import { Location } from './Location';
+import type { EvenementVergunning } from '../../../../server/services/vergunningen-v2/config-and-types';
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
@@ -7,10 +8,9 @@ import { StatusLineItem } from '../../../../universal/types';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../../components/InfoDetail/InfoDetail';
-import { Location } from '../../VergunningDetail/Location';
 
 export function getEvenementVergunningLineItems(
-  vergunning: EvenementVergunningType
+  vergunning: EvenementVergunning
 ): StatusLineItem[] {
   const isDone = vergunning.processed;
 
@@ -41,7 +41,7 @@ export function getEvenementVergunningLineItems(
 export function EvenementVergunning({
   vergunning,
 }: {
-  vergunning: EvenementVergunningType;
+  vergunning: EvenementVergunning;
 }) {
   return (
     <>

@@ -20,7 +20,7 @@ import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchHLI } from './hli/hli';
-import { fetchHorecaVergunningen } from './horeca';
+import { fetchHorecaVergunning } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
@@ -40,7 +40,6 @@ import { fetchSVWI } from './simple-connect/svwi';
 import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVaren } from './varen/varen';
-import { fetchVergunningen } from './vergunningen/vergunningen';
 import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {
@@ -119,44 +118,44 @@ const CMS_CONTENT = (requestID: RequestID, req: Request) => {
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
 );
+
 // Protected services
 const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
+const AVG = callAuthenticatedService(fetchAVG);
+const BEZWAREN = callAuthenticatedService(fetchBezwaren);
+const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 const BRP = callAuthenticatedService(fetchBRP);
+const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
 const HLI = callAuthenticatedService(fetchHLI);
+const HORECA = callAuthenticatedService(fetchHorecaVergunning);
+const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
 const KREFIA = callAuthenticatedService(fetchKrefia);
 const KVK = callAuthenticatedService(fetchKVK);
 const PARKEREN = callAuthenticatedService(fetchParkeren);
+const PROFILE = callAuthenticatedService(fetchProfile);
 const SVWI = callAuthenticatedService(fetchSVWI);
+const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
+const VAREN = callAuthenticatedService(fetchVaren);
+const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
+const WMO = callAuthenticatedService(fetchWmo);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);
 const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
 const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
-const WMO = callAuthenticatedService(fetchWmo);
-const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
-const VAREN = callAuthenticatedService(fetchVaren);
 
-const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
-const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
-const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
-// Location, address, based services
-const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
-const AFVAL = callAuthenticatedService(fetchAfval);
-const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
 const ERFPACHT = callAuthenticatedService(fetchErfpacht);
-const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
 const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
-const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
-
-const BEZWAREN = callAuthenticatedService(fetchBezwaren);
-const PROFILE = callAuthenticatedService(fetchProfile);
-const AVG = callAuthenticatedService(fetchAVG);
-const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
+
+// Location, address, based services
+const AFVAL = callAuthenticatedService(fetchAfval);
+const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
+const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
@@ -202,7 +201,6 @@ const SERVICES_INDEX = {
   KLANT_CONTACT,
   TOERISTISCHE_VERHUUR,
   VAREN,
-  VERGUNNINGEN,
   VERGUNNINGENv2,
   WMO,
   WPI_AANVRAGEN,
@@ -244,7 +242,6 @@ type CommercialServices = Pick<
   | 'SUBSIDIE'
   | 'TOERISTISCHE_VERHUUR'
   | 'VAREN'
-  | 'VERGUNNINGEN'
   | 'VERGUNNINGENv2'
 >;
 
@@ -282,7 +279,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
-    VERGUNNINGEN,
     VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
@@ -317,7 +313,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     SUBSIDIE,
     TOERISTISCHE_VERHUUR,
     VAREN,
-    VERGUNNINGEN,
     VERGUNNINGENv2,
   },
 };
