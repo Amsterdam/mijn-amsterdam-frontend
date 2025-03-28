@@ -18,9 +18,9 @@ import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBrpNotifications } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
-import { TipFrontend } from './content-tips/tip-types';
+import { ServiceResults } from './content-tips/tip-types';
 import {
-  convertTipToNotication,
+  fetchContentTips,
   prefixTipNotification,
 } from './content-tips/tips-service';
 import { fetchHorecaNotifications } from './horeca';
@@ -40,113 +40,15 @@ import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
 import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { getFromEnv } from '../helpers/env';
 
+// Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
 
-export function sortNotificationsAndInsertTips(
-  notifications: MyNotification[],
-  doRandomize: boolean = true
-) {
-  // sort the notifications with and without a tip
-  const sorted = notifications
-    .sort(dateSort('datePublished', 'desc'))
-    // Put the alerts on the top regardless of the publication date
-    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
-
-  const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
-
-  let notificationsWithTips = sorted.filter((n) => n.isTip);
-
-  if (doRandomize) {
-    // Simple randomization
-    notificationsWithTips = notificationsWithTips
-      .map((tip) => ({ tip, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ tip }) => tip);
-  }
-
-  // Insert a tip after every 3 notifications
-  const notificationsWithTipsInserted = notificationsWithoutTips.reduce(
-    (acc, notification, index) => {
-      // Add tip before next notification
-      if (
-        index !== 0 &&
-        index % INSERT_TIP_AT_EVERY_NTH_INDEX === 0 &&
-        notificationsWithTips.length > 0
-      ) {
-        const tip = notificationsWithTips.shift();
-        if (tip) {
-          acc.push(tip);
-        }
-      }
-      acc.push(notification);
-      return acc;
-    },
-    [] as MyNotification[]
-  );
-
-  // Add the remaining tips at the end.
-  if (notificationsWithTips.length) {
-    notificationsWithTipsInserted.push(...notificationsWithTips);
-  }
-
-  return notificationsWithTipsInserted;
-}
-
-export function getTipsAndNotificationsFromApiResults(
-  responses: Array<ApiResponse_DEPRECATED<unknown>>
-): MyNotification[] {
-  const notifications: MyNotification[] = [];
-  const tips: TipFrontend[] = [];
-
-  // Collect the success response data from the service results and send to the tips Api.
-  for (const { content } of responses) {
-    if (content === null || typeof content !== 'object') {
-      continue;
-    }
-    // Collection of notifications
-    if ('notifications' in content && Array.isArray(content.notifications)) {
-      notifications.push(...content.notifications);
-    }
-
-    // Collection of tips
-    if ('tips' in content && Array.isArray(content.tips)) {
-      for (const tip of content.tips) {
-        if (tip.isNotification) {
-          notifications.push(tip);
-        } else {
-          tips.push(tip);
-        }
-      }
-    }
-  }
-
-  const notificationsResult = notifications.map((notification) => {
-    if (notification.description) {
-      notification.description = sanitizeCmsContent(
-        marked(notification.description)
-      );
-    }
-    if (notification.moreInformation) {
-      notification.moreInformation = sanitizeCmsContent(
-        marked(notification.moreInformation)
-      );
-    }
-    return notification;
-  });
-
-  const tipsResult = tips
-    .map((notification) => {
-      if (notification.description) {
-        notification.description = sanitizeCmsContent(notification.description);
-      }
-      return notification;
-    })
-    .map(convertTipToNotication)
-    .map(prefixTipNotification);
-
-  return [...notificationsResult, ...tipsResult];
-}
+const TIP_IDS_DISABLED = (
+  getFromEnv('BFF_TIPS_DISABLED_IDS', false) ?? ''
+).split(',');
 
 type FetchNotificationFunction = (
   requestID: RequestID,
@@ -214,6 +116,58 @@ const notificationServices: NotificationServicesByProfileType = {
   },
 };
 
+function getTipsAndNotificationsFromApiResults(
+  responses: Array<ApiResponse<unknown>>
+): MyNotification[] {
+  const notifications: MyNotification[] = [];
+  const tips: MyNotification[] = [];
+
+  // Collect the success response data from the service results and send to the tips Api.
+  for (const { content } of responses) {
+    if (content === null || typeof content !== 'object') {
+      continue;
+    }
+    // Collection of notifications
+    if ('notifications' in content && Array.isArray(content.notifications)) {
+      notifications.push(...content.notifications);
+    }
+
+    // Collection of tips
+    if ('tips' in content && Array.isArray(content.tips)) {
+      for (const tip of content.tips) {
+        if (tip.isNotification) {
+          notifications.push(tip);
+        } else {
+          tips.push(tip);
+        }
+      }
+    }
+  }
+
+  const notificationsResult = notifications.map((notification) => {
+    if (notification.description) {
+      notification.description = sanitizeCmsContent(
+        marked(notification.description)
+      );
+    }
+    if (notification.moreInformation) {
+      notification.moreInformation = sanitizeCmsContent(
+        marked(notification.moreInformation)
+      );
+    }
+    return notification;
+  });
+
+  const tipsResult = tips.map((tip) => {
+    if (tip.description) {
+      tip.description = sanitizeCmsContent(tip.description);
+    }
+    return tip;
+  });
+
+  return [...notificationsResult, ...tipsResult];
+}
+
 // Services can return Source tips and Content tips.
 async function fetchNotificationsAndTipsFromServices_(
   requestID: RequestID,
@@ -245,3 +199,107 @@ export const fetchNotificationsAndTipsFromServices = memoize(
     },
   }
 );
+
+export function sortNotificationsAndInsertTips(
+  notifications: MyNotification[],
+  doRandomize: boolean = true
+): MyNotification[] {
+  // sort the notifications with and without a tip
+  const sorted = notifications
+    .sort(dateSort('datePublished', 'desc'))
+    // Put the alerts on the top regardless of the publication date
+    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+
+  const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
+
+  let tips = sorted.filter((n) => n.isTip);
+
+  if (doRandomize) {
+    // Simple randomization
+    tips = tips
+      .map((tip) => ({ tip, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ tip }) => tip);
+  }
+
+  let notificationsWithTipsInserted: MyNotification[] = [];
+
+  // Insert a tip after every 3 notifications
+  notificationsWithTipsInserted = notificationsWithoutTips.reduce(
+    (acc, notification, index) => {
+      // Add tip before next notification
+      if (
+        index !== 0 &&
+        index % INSERT_TIP_AT_EVERY_NTH_INDEX === 0 &&
+        tips.length > 0
+      ) {
+        const tip = tips.shift();
+        if (tip) {
+          acc.push(tip);
+        }
+      }
+      acc.push(notification);
+      return acc;
+    },
+    notificationsWithTipsInserted
+  );
+
+  // Add the remaining tips at the end.
+  if (tips.length) {
+    notificationsWithTipsInserted.push(...tips);
+  }
+
+  return notificationsWithTipsInserted;
+}
+
+export async function fetchNotificationsWithTipsInserted(
+  requestID: RequestID,
+  serviceResults: ServiceResults | null,
+  authProfileAndToken: AuthProfileAndToken | null,
+  queryParams?: Record<string, string>
+) {
+  const compareDate =
+    FeatureToggle.passQueryParamsToStreamUrl &&
+    queryParams?.[streamEndpointQueryParamKeys.tipsCompareDate]
+      ? new Date(
+          queryParams[streamEndpointQueryParamKeys.tipsCompareDate] as string
+        )
+      : new Date();
+
+  const [contentTips, notificationsTipsAndServices] = await Promise.all([
+    serviceResults
+      ? fetchContentTips(
+          serviceResults,
+          compareDate,
+          authProfileAndToken?.profile.profileType
+        )
+      : [],
+    authProfileAndToken
+      ? fetchNotificationsAndTipsFromServices(requestID, authProfileAndToken)
+      : [],
+  ]);
+
+  const notifications: MyNotification[] = [
+    ...contentTips,
+    ...notificationsTipsAndServices,
+  ]
+    .map((notification) => {
+      if (notification.isTip) {
+        notification.hideDatePublished = true;
+        return prefixTipNotification(notification);
+      }
+      return notification;
+    })
+    // Filter out disabled tips
+    .filter((notification) => {
+      if (notification.isTip) {
+        return !TIP_IDS_DISABLED.includes(notification.id);
+      }
+      return true;
+    });
+
+  const notificationsWithTipsInserted =
+    sortNotificationsAndInsertTips(notifications);
+
+  return notificationsWithTipsInserted;
+}
