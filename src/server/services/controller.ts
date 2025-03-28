@@ -13,6 +13,7 @@ import { omit } from '../../universal/helpers/utils';
 import { MyNotification } from '../../universal/types';
 import { getAuth } from '../auth/auth-helpers';
 import { AuthProfileAndToken } from '../auth/auth-types';
+import { IS_DEBUG } from '../config/app';
 import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
@@ -22,6 +23,11 @@ import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
+import {
+  convertTipToNotication,
+  fetchContentTips,
+  prefixTipNotification,
+} from './content-tips/tips-service';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca';
 import { fetchAllKlachten } from './klachten/klachten';
@@ -41,13 +47,8 @@ import {
 import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
 import {
-  convertTipToNotication,
-  createTipsFromServiceResults,
-  prefixTipNotification,
-} from './tips/tips-service';
-import {
-  fetchTipsAndNotifications,
-  sortNotifications,
+  fetchNotificationsAndTipsFromServices,
+  sortNotificationsAndInsertTips,
 } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVaren } from './varen/varen';
@@ -177,14 +178,16 @@ export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
     return apiErrorResult('Not authorized', null, HttpStatusCode.Unauthorized);
   }
 
-  const [tipNotifications, themaAndTipNotifications] = await Promise.all([
-    getTipNotifications(requestID, req),
-    fetchTipsAndNotifications(requestID, authProfileAndToken),
+  const [tipNotifications, notificationsTipsAndServices] = await Promise.all([
+    fetchContentTipsByServiceResults(requestID, req),
+    authProfileAndToken
+      ? fetchNotificationsAndTipsFromServices(requestID, authProfileAndToken)
+      : [],
   ]);
 
   const notifications: Array<MyNotification> = [
     ...tipNotifications,
-    ...themaAndTipNotifications,
+    ...notificationsTipsAndServices,
   ].map((notification) => {
     if (notification.isTip) {
       notification.hideDatePublished = true;
@@ -193,7 +196,8 @@ export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
     return notification;
   });
 
-  const notificationsWithTipsInserted = sortNotifications(notifications);
+  const notificationsWithTipsInserted =
+    sortNotificationsAndInsertTips(notifications);
 
   return apiSuccessResult(notificationsWithTipsInserted);
 };
@@ -444,7 +448,8 @@ export async function loadServicesAll(req: Request, res: Response) {
 }
 
 /**
- * TIPS specific services
+ * Services specific to TIPS
+ * Retrieves service results based on profile type to generate tips.
  */
 export async function getServiceResultsForTips(
   requestID: RequestID,
@@ -469,7 +474,7 @@ export async function getServiceResultsForTips(
   return requestData;
 }
 
-export async function getTipNotifications(
+export async function fetchContentTipsByServiceResults(
   requestID: RequestID,
   req: Request
 ): Promise<MyNotification[]> {
@@ -477,11 +482,10 @@ export async function getTipNotifications(
   const authProfileAndToken = getAuth(req);
 
   if (authProfileAndToken) {
-    const { content: tipNotifications } = await createTipsFromServiceResults(
+    const { content } = await fetchContentTips(
       authProfileAndToken.profile.profileType,
       {
         serviceResults,
-        tipsDirectlyFromServices: [],
         compareDate:
           FeatureToggle.passQueryParamsToStreamUrl &&
           req.query?.[streamEndpointQueryParamKeys.tipsCompareDate]
@@ -494,7 +498,7 @@ export async function getTipNotifications(
       }
     );
 
-    return tipNotifications.map(convertTipToNotication);
+    return content.map(convertTipToNotication);
   }
 
   return [];

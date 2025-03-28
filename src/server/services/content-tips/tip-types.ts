@@ -6,25 +6,37 @@ export type ServiceResults = {
   [serviceId: string]: ApiResponse_DEPRECATED<any>;
 };
 
-export type Tip = {
-  id: string;
-  owner?: string;
-  dateActiveStart: string | null;
-  dateActiveEnd: string | null;
+export type ContentTipSource = {
   active: boolean;
-  priority: number;
-  datePublished: string;
-  title: string;
-  profileTypes: ProfileType[];
-  description: string;
-  predicates?: TipsPredicateFN[];
-  reason?: string;
-  link: LinkProps;
-  imgUrl?: string;
   alwaysVisible?: boolean;
+  dateActiveEnd: string | null;
+  dateActiveStart: string | null;
+  datePublished: string;
+  description: string;
+  id: string;
+  imgUrl?: string;
+  // A tip that acts like a notification for better visibility.
   isNotification?: boolean;
+  link: LinkProps;
+  owner?: string;
+  predicates?: TipsPredicateFN[];
+  profileTypes: ProfileType[];
+  reason?: string;
   thema?: Thema;
+  title: string;
 };
+
+export type TipFrontend = Pick<
+  ContentTipSource,
+  | 'datePublished'
+  | 'description'
+  | 'id'
+  | 'imgUrl'
+  | 'link'
+  | 'reason'
+  | 'thema'
+  | 'title'
+>;
 
 export type TipsPredicateFN = (
   stateData: Partial<AppState>,

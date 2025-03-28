@@ -8,10 +8,7 @@ import {
   vi,
 } from 'vitest';
 
-import {
-  createTipsFromServiceResults,
-  prefixTipNotification,
-} from './tips-service';
+import { fetchContentTips, prefixTipNotification } from './tips-service';
 import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import { Thema } from '../../../universal/config/thema';
@@ -52,7 +49,7 @@ describe('createTipsFromServiceResults', () => {
     TOZO_copy.content[0].decision = 'toekenning';
     TOZO_copy.content[0].datePublished = '2021-07-24';
 
-    const personalTips = await createTipsFromServiceResults('private', {
+    const personalTips = await fetchContentTips('private', {
       serviceResults: {
         WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
       },
@@ -71,7 +68,7 @@ describe('createTipsFromServiceResults', () => {
     TOZO_copy.content[0].decision = 'toekenning';
     TOZO_copy.content[0].datePublished = '2021-07-24';
 
-    const tips = await createTipsFromServiceResults('private', {
+    const tips = await fetchContentTips('private', {
       serviceResults: {
         WPI_TOZO: TOZO_copy as ApiSuccessResponse<any>,
         TOERISTISCHE_VERHUUR: VERHUUR_copy as ApiSuccessResponse<any>,
@@ -92,7 +89,7 @@ describe('createTipsFromServiceResults', () => {
 
     BRPCopy.content.identiteitsbewijzen[0].datumAfloop = '2020-07-24';
 
-    const tips = await createTipsFromServiceResults('private', {
+    const tips = await fetchContentTips('private', {
       serviceResults: {
         BRP: BRPCopy as ApiSuccessResponse<any>,
         HLI: {
