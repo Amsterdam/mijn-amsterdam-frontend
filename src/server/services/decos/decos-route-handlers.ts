@@ -1,8 +1,17 @@
 import { Response } from 'express';
 
 import { DecosZaakBase } from './config-and-types';
-import { fetchDecosDocumentList } from './decos-service';
+import {
+  fetchDecosDocumentList,
+  fetchDecosZakenFromSourceRaw,
+} from './decos-service';
+import {
+  testAccountsDigid,
+  testAccountsEherkenning,
+} from '../../../universal/config/auth.development';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { getAuth } from '../../auth/auth-helpers';
+import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   RequestWithQueryParams,
   sendResponse,
@@ -36,4 +45,44 @@ export async function fetchDecosDocumentsList(
   }
 
   return sendUnauthorized(res);
+}
+
+export async function fetchZakenByUserIDs(
+  req: RequestWithQueryParams<{ profileType: ProfileType }>,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const userIDsFromEnv =
+    req.query.profileType === 'private'
+      ? Object.keys(testAccountsDigid)
+      : Object.keys(testAccountsEherkenning);
+
+  const userIDs = userIDsFromEnv.length
+    ? userIDsFromEnv
+    : [authProfileAndToken.profile.id];
+
+  const response = await Promise.all(
+    userIDs.map((id) => {
+      const authProfileAndTokenSubject: AuthProfileAndToken = {
+        profile: {
+          authMethod: 'digid',
+          profileType: 'private',
+          id,
+          sid: authProfileAndToken.profile.sid,
+        },
+        token: '',
+      };
+
+      return fetchDecosZakenFromSourceRaw(
+        res.locals.requestID,
+        authProfileAndTokenSubject
+      );
+    })
+  );
+  return res.send(apiSuccessResult(response.map((r) => r.content).flat()));
 }
