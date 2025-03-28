@@ -4,7 +4,7 @@ import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, NavLink } from 'react-router-dom';
 
 import styles from './MyAreaDashboard.module.scss';
-import MyAreaLoader from './MyAreaLoader';
+import { MyAreaLoader } from './MyAreaLoader';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isMokum } from '../../../universal/helpers/brp';
 import { ThemaTitles } from '../../config/thema';

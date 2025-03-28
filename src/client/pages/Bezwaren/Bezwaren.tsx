@@ -2,11 +2,14 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>Hier ziet u een overzicht van uw ingediende bezwaren.</Paragraph>
+  <PageContentCell>
+    <Paragraph>Hier ziet u een overzicht van uw ingediende bezwaren.</Paragraph>
+  </PageContentCell>
 );
 
 export function BezwarenThemaPagina() {

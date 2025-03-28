@@ -19,6 +19,7 @@ export interface PaginationProps {
 }
 
 const MAX_PAGES = 7;
+
 export function PaginationV2({
   totalCount,
   pageSize,

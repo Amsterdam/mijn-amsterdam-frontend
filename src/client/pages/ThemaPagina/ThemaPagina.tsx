@@ -4,8 +4,10 @@ import { LinkList } from '@amsterdam/design-system-react';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
-import { ErrorAlert, LoadingContent } from '../../components';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import ErrorAlert from '../../components/Alert/Alert';
+import LoadingContent, {
+  BarConfig,
+} from '../../components/LoadingContent/LoadingContent';
 import {
   OverviewPageV2,
   PageContentCell,
@@ -58,8 +60,7 @@ export default function ThemaPagina({
     <OverviewPageV2>
       <PageContentV2>
         <PageHeadingV2 backLink={backLink}>{title}</PageHeadingV2>
-
-        <PageContentCell spanWide={6}>{pageContentTop}</PageContentCell>
+        {pageContentTop}
         {!!linkListItems.length && (
           <PageContentCell>
             <LinkList>
@@ -71,9 +72,9 @@ export default function ThemaPagina({
             </LinkList>
           </PageContentCell>
         )}
-        {!!pageContentTopSecondary && (
-          <Grid.Cell span="all">{pageContentTopSecondary}</Grid.Cell>
-        )}
+
+        {pageContentTopSecondary}
+
         {showError && (
           <PageContentCell>
             <ErrorAlert>

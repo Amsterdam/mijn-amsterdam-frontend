@@ -4,6 +4,7 @@ import {
 } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
+import { WithDateEnd } from '../decos/config-and-types';
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
@@ -59,7 +60,7 @@ export function isNearEndDate(dateEnd?: string | null, dateNow?: Date) {
   );
 }
 
-export function isExpired(vergunning: VergunningFrontend, dateNow?: Date) {
+export function isExpired(vergunning: WithDateEnd, dateNow?: Date) {
   if (!vergunning.dateEnd) {
     return false;
   }

@@ -1,4 +1,4 @@
-import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { LinkProps } from '../../../universal/types';
 import { GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakBase,
@@ -7,6 +7,8 @@ import {
   WithDateTimeRange,
   WithDateRange,
   ZaakStatus,
+  DecosZaakFrontend,
+  ZakenFilter,
 } from '../decos/config-and-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
@@ -108,16 +110,17 @@ export type VormenVanWoonruimte = DecosZaakBase &
     caseType: GetCaseType<'VormenVanWoonruimte'>;
   };
 
-export type WoningVergunning =
-  | Samenvoegingsvergunning
-  | Onttrekkingsvergunning
-  | OnttrekkingsvergunningSloop
-  | VormenVanWoonruimte;
-
 export type Splitsingsvergunning = DecosZaakBase &
   WithLocation & {
     caseType: GetCaseType<'Splitsingsvergunning'>;
   };
+
+export type WoningVergunning =
+  | Samenvoegingsvergunning
+  | Onttrekkingsvergunning
+  | OnttrekkingsvergunningSloop
+  | Splitsingsvergunning
+  | VormenVanWoonruimte;
 
 export type Ligplaatsvergunning = DecosZaakBase &
   WithLocation & {
@@ -176,12 +179,10 @@ export type DecosZaakExpirable = DecosVergunning & { dateEnd?: string | null };
 export type VergunningOptions = {
   filter?: ZakenFilter;
   appRoute: string | ((vergunning: DecosVergunning) => string);
-}
+};
 
-export type VergunningFrontendV2<T extends DecosVergunning = DecosVergunning> =
+export type VergunningFrontend<T extends DecosZaakBase = DecosZaakBase> =
   DecosZaakFrontend<T>;
-
-export type HorecaVergunning = VergunningFrontendV2<ExploitatieHorecabedrijf>;
 
 export type NotificationProperty =
   | 'title'

@@ -1,14 +1,16 @@
 import {
-  VakantieverhuurVergunningaanvraagTransformer,
+  DecosVakantieverhuurVergunningaanvraag,
   VakantieverhuurVergunningaanvraag,
 } from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchDecosZaken } from '../decos/decos-service';
+import {
+  fetchDecosZaken,
+  transformDecosZaakFrontend,
+} from '../decos/decos-service';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
-import { transformVergunningFrontend } from '../vergunningen/vergunningen';
 
 function getVergunningStatussen(vergunning: VergunningFrontend) {
   const isAfgehandeld =
@@ -71,14 +73,14 @@ export async function fetchVakantieverhuurVergunningen(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchDecosZaken(requestID, authProfileAndToken, [
-    VakantieverhuurVergunningaanvraagTransformer,
+    VakantieverhuurVergunningaanvraag,
   ]);
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: VergunningFrontend<VakantieverhuurVergunningaanvraag>[] =
+    const vergunningenFrontend: VergunningFrontend<DecosVakantieverhuurVergunningaanvraag>[] =
       decosVergunningen.map((vergunning) => {
-        const vergunningTransformed = transformVergunningFrontend(
+        const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']

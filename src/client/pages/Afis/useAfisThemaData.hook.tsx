@@ -197,7 +197,6 @@ export function useAfisThemaData() {
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
       overgedragen: hasFailedDependency(AFIS, 'overgedragen'),
     },
-    linkListItems,
   };
 }
 

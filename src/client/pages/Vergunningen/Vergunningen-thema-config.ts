@@ -15,6 +15,14 @@ type VergunningFrontendDisplayProps = DisplayProps<
   WithDetailLinkComponent<VergunningFrontend>
 >;
 
+// Created because the tableconfig here is also used for other types of Vergunning, for example ToeristischeVerhuurVergunning.
+// This type extends Decos and PowerBrowser types and the type below satisfies both of them.
+type VergunningPropsCommon = {
+  processed: boolean;
+  decision: string | null;
+  isExpired?: boolean;
+};
+
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
@@ -53,8 +61,8 @@ export const listPageTitle = {
     'Eerdere en niet verleende vergunningen en ontheffingen',
 };
 
-function isVergunningExpirable(vergunning: VergunningFrontend) {
-  // TODO: is this the correct check ?
+function isVergunningExpirable(vergunning: { isExpired?: boolean }) {
+  // isExpired is only present on vergunningen that have an end date.
   return 'isExpired' in vergunning;
 }
 
@@ -67,7 +75,8 @@ export const routes = {
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VergunningFrontend) => !vergunning.processed,
+    filter: <T extends VergunningPropsCommon>(vergunning: T) =>
+      !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
     listPageRoute: generatePath(routes.listPage, {
@@ -78,7 +87,7 @@ export const tableConfig = {
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontend) => {
+    filter: <T extends VergunningPropsCommon>(vergunning: T) => {
       const isCurrentlyActivePermit =
         vergunning.processed && vergunning.decision === 'Verleend';
 
@@ -98,7 +107,7 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: (vergunning: VergunningFrontend) => {
+    filter: <T extends VergunningPropsCommon>(vergunning: T) => {
       if (vergunning.processed && vergunning.decision !== 'Verleend') {
         return true;
       }
