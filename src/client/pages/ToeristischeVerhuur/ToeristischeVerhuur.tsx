@@ -12,14 +12,12 @@ import {
   VakantieverhuurVergunning,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import { entries } from '../../../universal/helpers/utils';
-import { LinkProps } from '../../../universal/types/App.types';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function ToeristscheVerhuurThema() {
   const {
-    hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasPermits,
     hasRegistrations,
@@ -34,6 +32,7 @@ export function ToeristscheVerhuurThema() {
     hasBBVergunningError,
     hasLVVRegistratiesError,
     hasVakantieVerhuurVergunningError,
+    linkListItems,
   } = useToeristischeVerhuurThemaData();
 
   const errorAlertContent = isError ? (
@@ -71,31 +70,6 @@ export function ToeristscheVerhuurThema() {
       verhuur.
     </Paragraph>
   );
-
-  const linkListItems: LinkProps[] = [
-    {
-      title: 'Meer over toeristenbelasting',
-      to: 'https://www.amsterdam.nl/veelgevraagd/toeristenbelasting-2c7c2',
-    },
-    {
-      title: 'Vakantieverhuur melden of registratienummer aanvragen',
-      to: 'https://www.toeristischeverhuur.nl/portaal/login',
-    },
-  ];
-
-  if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over bed & breakfast',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/',
-    });
-  }
-
-  if (hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over particuliere vakantieverhuur',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
-    });
-  }
 
   const vergunningenTables = entries(tableConfigVergunningen).map(
     ([kind, { title, displayProps, filter, sort, maxItems, className }]) => {
