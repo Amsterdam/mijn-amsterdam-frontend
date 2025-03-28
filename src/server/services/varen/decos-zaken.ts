@@ -1,12 +1,12 @@
 import type {
-  VarenRegistratieRederType,
+  VarenRegistratieReder,
   VarenStatus,
-  VarenVergunningExploitatieType,
-  VarenVergunningExploitatieWijzigingVaartuigNaamType,
-  VarenVergunningExploitatieWijzigingVerbouwingType,
-  VarenVergunningExploitatieWijzigingVergunningshouderType,
-  VarenVergunningExploitatieWijzigingVervangingType,
-  VarenVergunningLigplaatsType,
+  VarenVergunningExploitatie,
+  VarenVergunningExploitatieWijzigingVaartuigNaam,
+  VarenVergunningExploitatieWijzigingVerbouwing,
+  VarenVergunningExploitatieWijzigingVergunningshouder,
+  VarenVergunningExploitatieWijzigingVervanging,
+  VarenVergunningLigplaats,
 } from './config-and-types';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { DecosZaakTransformer, DecosZaakBase } from '../decos/config-and-types';
@@ -60,26 +60,25 @@ const SELECT_FIELDS_TRANSFORM = {
   ...status,
   text96: 'linkDataRequest' as const,
 };
-export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
-  {
-    isActive: true,
-    caseType: 'Varen registratie reder',
-    title: 'Varen registratie reder',
-    fetchTermijnenFor: [fetchMeerInformatieTermijn],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM,
-      company: 'company',
-      num2: 'bsnkvk',
-      mailaddress: 'address',
-      zipcode: 'postalCode',
-      city: 'city',
-      phone1: 'phone',
-      email1: 'email',
-    },
-    notificationLabels: {},
-  };
+const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieReder> = {
+  isActive: true,
+  caseType: 'Varen registratie reder',
+  title: 'Varen registratie reder',
+  fetchTermijnenFor: [fetchMeerInformatieTermijn],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM,
+    company: 'company',
+    num2: 'bsnkvk',
+    mailaddress: 'address',
+    zipcode: 'postalCode',
+    city: 'city',
+    phone1: 'phone',
+    email1: 'email',
+  },
+  notificationLabels: {},
+};
 
-export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatieType> =
+const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatie> =
   {
     isActive: true,
     caseType: 'Varen vergunning exploitatie',
@@ -99,7 +98,7 @@ export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExp
     notificationLabels: {},
   };
 
-export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVaartuigNaamType> =
+const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVaartuigNaam> =
   {
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vaartuignaam',
@@ -115,7 +114,7 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
     notificationLabels: {},
   };
 
-export const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVergunningshouderType> =
+const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVergunningshouder> =
   {
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vergunninghouder',
@@ -133,7 +132,7 @@ export const VarenVergunningExploitatieWijzigingVergunningshouder: DecosZaakTran
     notificationLabels: {},
   };
 
-export const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVerbouwingType> =
+const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVerbouwing> =
   {
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging verbouwing',
@@ -152,7 +151,7 @@ export const VarenVergunningExploitatieWijzigenVerbouwing: DecosZaakTransformer<
     notificationLabels: {},
   };
 
-export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVervangingType> =
+const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer<VarenVergunningExploitatieWijzigingVervanging> =
   {
     isActive: true,
     caseType: 'Varen vergunning exploitatie Wijziging vervanging',
@@ -173,7 +172,7 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
     notificationLabels: {},
   };
 
-export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigplaatsType> =
+const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigplaats> =
   {
     isActive: true,
     caseType: 'Varen ligplaatsvergunning',

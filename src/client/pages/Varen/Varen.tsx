@@ -2,7 +2,6 @@ import {
   ActionGroup,
   Alert,
   Grid,
-  GridColumnNumber,
   Icon,
   Link,
   Paragraph,
@@ -14,7 +13,7 @@ import { rederRegistratieLink } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type {
   VarenFrontend,
-  DecosVarenRegistratieReder,
+  VarenRegistratieReder,
   VarenVergunningFrontend,
 } from '../../../server/services/varen/config-and-types';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
@@ -52,10 +51,9 @@ const VarenDisclaimerRederNotRegistered = (
 );
 
 type VarenPageContentRederRegistratieProps = {
-  registratie: VarenFrontend<DecosVarenRegistratieReder>;
+  registratie: VarenFrontend<VarenRegistratieReder>;
 };
 
-const DEFAULT_GRID_SPAN: GridColumnNumber = 4;
 export function VarenPageContentRederRegistratie({
   registratie,
 }: VarenPageContentRederRegistratieProps) {
@@ -65,17 +63,14 @@ export function VarenPageContentRederRegistratie({
         {
           label: 'Naam aanvrager',
           content: registratie.company,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'Telefoonnummer',
           content: registratie.phone,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'KvK nummer',
           content: registratie.bsnkvk,
-          span: DEFAULT_GRID_SPAN,
         },
       ],
     },
@@ -84,17 +79,14 @@ export function VarenPageContentRederRegistratie({
         {
           label: 'Adres',
           content: `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'E-mailadres',
           content: registratie.email,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'Datum registratie',
           content: registratie.dateRequestFormatted,
-          span: DEFAULT_GRID_SPAN,
         },
       ],
     },

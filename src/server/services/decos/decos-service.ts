@@ -775,7 +775,6 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   zaak: T,
   options: DecosZaakFrontendTransformOptions
 ): DecosZaakFrontend<T> {
-  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
   const zaakFrontend: DecosZaakFrontend<T> = {
     ...zaak,
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
@@ -794,6 +793,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   };
 
   if (options.includeFetchDocumentsUrl) {
+    const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
     // Adds an url with encrypted id to the BFF Detail page api for zaken.
     zaakFrontend.fetchDocumentsUrl = generateFullApiUrlBFF(
       BffEndpoints.DECOS_DOCUMENTS_LIST,

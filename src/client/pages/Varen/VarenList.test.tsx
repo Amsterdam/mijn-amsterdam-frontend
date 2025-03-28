@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
   VarenFrontend,
-  VarenVergunningExploitatieType,
+  VarenVergunningExploitatie,
 } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { jsonCopy } from '../../../universal/helpers/utils';
@@ -15,7 +15,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { VarenList } from './VarenList';
 
-type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatieType>;
+type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatie>;
 const exploitatieDecision: ExploitatieAanvraag = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
@@ -71,7 +71,7 @@ describe('<VarenList />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(
       'Actieve vergunningen'
     );
   });
