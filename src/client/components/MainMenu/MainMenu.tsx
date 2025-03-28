@@ -1,18 +1,18 @@
 import { Heading, MegaMenu } from '@amsterdam/design-system-react';
 
-import styles from './MegaMenu.module.scss';
-import { ThemaMenuItem } from '../../config/thema';
+import styles from './MainMenu.module.scss';
+import { ThemaMenuItemTransformed } from '../../config/thema';
 import { MenuItem } from '../MainHeader/MainHeader.constants';
 import { SecondaryLinks } from '../MainHeader/SecondaryLinks';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
-type Props = {
+type MainMenuProps = {
   menuItems: MenuItem[];
-  themas: ThemaMenuItem[];
+  themas: ThemaMenuItemTransformed[];
   isPhoneScreen: boolean;
 };
 
-export default function Menu({ menuItems, themas, isPhoneScreen }: Props) {
+export function MainMenu({ menuItems, themas, isPhoneScreen }: MainMenuProps) {
   return (
     <MegaMenu>
       <div className={styles.menu}>
