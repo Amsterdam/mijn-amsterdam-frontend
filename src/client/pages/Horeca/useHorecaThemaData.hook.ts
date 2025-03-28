@@ -1,10 +1,6 @@
 import { isError } from 'lodash';
 
-import {
-  horecaTableConfig,
-  LinkListItems,
-  routes,
-} from './Horeca-thema-config';
+import { tableConfig, LinkListItems, routes } from './Horeca-thema-config';
 import { HorecaVergunning } from '../../../server/services/horeca/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { isLoading } from '../../../universal/helpers/api';
@@ -25,7 +21,7 @@ export function useHorecaThemaData() {
     isError: isError(HORECA),
     linkListItems: LinkListItems,
     routes,
-    tableConfig: horecaTableConfig,
+    tableConfig,
     themaTitle: ThemaTitles.HORECA,
   };
 }

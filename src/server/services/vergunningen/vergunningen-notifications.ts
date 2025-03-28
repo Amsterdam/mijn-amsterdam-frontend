@@ -8,8 +8,8 @@ import {
   VergunningFrontend,
 } from './config-and-types';
 import { decosCaseToZaakTransformers } from './decos-zaken';
-import { isNearEndDate } from './helpers';
 import { fetchVergunningen } from './vergunningen';
+import { isNearEndDate } from './vergunningen-helpers';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { Thema, Themas } from '../../../universal/config/thema';
 import {
@@ -21,7 +21,7 @@ import { MyNotification } from '../../../universal/types';
 import { DecosCaseType } from '../../../universal/types/decos-zaken';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-import { getStatusDate } from '../decos/helpers';
+import { getStatusDate } from '../decos/decos-helpers';
 
 // prettier-ignore
 export function getNotificationLabels(
