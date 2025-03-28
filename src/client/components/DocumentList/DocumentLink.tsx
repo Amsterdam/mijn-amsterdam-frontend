@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 
 import { Icon } from '@amsterdam/design-system-react';
-import { HttpStatusCode } from 'axios';
+import { AlertIcon, DownloadIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
 import styles from './DocumentLink.module.scss';
+import { HttpStatusCode } from 'axios';
 import { GenericDocument } from '../../../universal/types';
-import { IconAlert, IconDownload } from '../../assets/icons';
 import { captureException } from '../../helpers/monitoring';
 import { trackDownload } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -147,8 +147,7 @@ export function DocumentLink({
           {isLoading && <Spinner />}
           {!isLoading && (
             <Icon
-              className={styles.LinkIcon}
-              svg={isErrorVisible ? IconAlert : IconDownload}
+              svg={isErrorVisible ? AlertIcon : DownloadIcon}
               size="level-5"
             />
           )}
