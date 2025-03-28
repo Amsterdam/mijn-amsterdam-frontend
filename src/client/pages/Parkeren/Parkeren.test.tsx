@@ -5,7 +5,6 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
-import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { ThemaTitles } from '../../config/thema';
 import MockApp from '../MockApp';
 import { Parkeren } from './Parkeren';
@@ -26,7 +25,7 @@ const testState = {
       isKnown: true,
       vergunningen: [
         {
-          caseType: CaseTypeV2.GPP,
+          caseType: 'GPP',
           dateDecision: null,
           dateDecisionFormatted: null,
           dateEnd: null,
@@ -51,7 +50,7 @@ const testState = {
           title: 'Vergunning 1',
         },
         {
-          caseType: CaseTypeV2.GPK,
+          caseType: 'GPK',
           dateDecision: null,
           dateDecisionFormatted: null,
           dateEnd: null,

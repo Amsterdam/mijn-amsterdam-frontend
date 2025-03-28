@@ -1,4 +1,3 @@
-import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakBase,
   WithLocation,
@@ -7,6 +6,21 @@ import {
   WithDateTimeRange,
 } from '../decos/config-and-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
+
+export const caseTypeParkeren = {
+  GPK: 'GPK',
+  GPP: 'GPP',
+  BZP: 'Parkeerontheffingen Blauwe zone particulieren',
+  BZB: 'Parkeerontheffingen Blauwe zone bedrijven',
+  EigenParkeerplaats: 'Eigen parkeerplaats',
+  EigenParkeerplaatsOpheffen: 'Eigen parkeerplaats opheffen',
+  TouringcarDagontheffing: 'Touringcar Dagontheffing',
+  TouringcarJaarontheffing: 'Touringcar Jaarontheffing',
+} as const;
+
+export type CaseTypeParkeren = keyof typeof caseTypeParkeren;
+export type GetCaseType<T extends CaseTypeParkeren> =
+  (typeof caseTypeParkeren)[T];
 
 type BaseSourceResponse<T> = {
   result: 'success' | unknown;
@@ -54,7 +68,7 @@ export type GPK = DecosZaakBase &
 
 export type GPP = DecosZaakBase &
   WithLocation & {
-    caseType: typeof CaseTypeV2.GPP;
+    caseType: GetCaseType<'GPP'>;
     kentekens: string | null;
   };
 
