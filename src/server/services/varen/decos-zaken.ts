@@ -93,7 +93,7 @@ const VarenBaseExploitatieVergunning = {
     varens: {
       name: 'vergunningen',
       transform: (vergunningen: DecosZaakVarensFieldsSource[] | null) =>
-        (vergunningen || []).map((v) =>
+        (vergunningen || []).map((vergunning) =>
           transformFieldValuePairs<VarenVergunningExploitatieType>(
             {
               ...vesselLengths,
@@ -106,7 +106,7 @@ const VarenBaseExploitatieVergunning = {
               subject2: 'vesselName' as const,
               text11: 'vergunningKenmerk' as const,
             },
-            v
+            vergunning
           )
         ),
     },

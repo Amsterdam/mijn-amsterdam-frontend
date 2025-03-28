@@ -37,7 +37,6 @@ import {
   isExcludedFromTransformation,
   isExpired,
 } from './helpers';
-import { toDateFormatted } from '../../../universal/helpers/utils';
 import { AppRoute } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
@@ -47,11 +46,8 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import {
-  jsonCopy,
-  sortAlpha,
-  uniqueArray,
-} from '../../../universal/helpers/utils';
+import { toDateFormatted } from '../../../universal/helpers/utils';
+import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
@@ -176,12 +172,14 @@ async function transformDecosZaakResponse<
     return null;
   }
 
-  const zaakSource = jsonCopy(decosZaakSource);
-  if (decosZaakTransformer.fetchLinkedItem) {
+  const linkedItems = await (async () => {
+    if (!decosZaakTransformer.fetchLinkedItem) {
+      return [];
+    }
     const fetchLinkedItem = async (decosLinkName: string) => {
       const r = await fetchLinkedField(
         requestID,
-        zaakSource.key,
+        decosZaakSource.key,
         decosLinkName
       );
       if (r.status === 'OK') {
@@ -192,16 +190,17 @@ async function transformDecosZaakResponse<
     const decosLinkItems = await Promise.all(
       decosZaakTransformer.fetchLinkedItem.map(fetchLinkedItem)
     );
-    decosZaakTransformer.fetchLinkedItem.forEach((decosLinkName, index) => {
-      const items = decosLinkItems[index];
-      zaakSource.fields[decosLinkName] = items;
-    });
-  }
+    const fields = decosZaakTransformer.fetchLinkedItem.map(
+      (decosLinkName, index) => [decosLinkName, decosLinkItems[index]]
+    );
+
+    return Object.fromEntries(fields);
+  })();
 
   // Iterates over the desired data fields (key=>value pairs) and transforms values if necessary.
   const transformedFields = transformFieldValuePairs(
     decosZaakTransformer.transformFields,
-    zaakSource.fields
+    { ...decosZaakSource.fields, ...linkedItems }
   );
 
   // Create the base data for the decosZaak. This object is not guaranteed to have all fields defined in the type for a specific decosZaak.
@@ -211,7 +210,7 @@ async function transformDecosZaakResponse<
     id:
       transformedFields.identifier?.replace(/\//g, '-') ??
       'unknown-decoszaak-id',
-    key: zaakSource.key,
+    key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
     termijnDates: [], // Serves as placeholder, values for this property will be added async below.
@@ -224,7 +223,7 @@ async function transformDecosZaakResponse<
     );
     const workFlowDates = await fetchDecosWorkflowDates(
       requestID,
-      zaakSource.key,
+      decosZaakSource.key,
       stepTitles
     );
     if (workFlowDates.status === 'OK') {
@@ -247,7 +246,7 @@ async function transformDecosZaakResponse<
     );
     const termijnDates = await fetchDecosTermijnen(
       requestID,
-      zaakSource.key,
+      decosZaakSource.key,
       Object.keys(termijnMap)
     );
     if (termijnDates.status === 'OK') {
@@ -270,7 +269,7 @@ async function transformDecosZaakResponse<
   if (decosZaakTransformer.afterTransform) {
     decosZaak = await decosZaakTransformer.afterTransform(
       decosZaak,
-      zaakSource
+      decosZaakSource
     );
   }
 
