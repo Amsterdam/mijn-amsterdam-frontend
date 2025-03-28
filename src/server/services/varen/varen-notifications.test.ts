@@ -2,7 +2,6 @@ import MockDate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
 import {
-  VarenFrontend,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
 } from './config-and-types';
@@ -27,7 +26,7 @@ const exploitatieBase_ = {
   dateRequest: '2025-01-01T00:00:00',
   statusDates: [],
   termijnDates: [],
-} satisfies Partial<VarenFrontend>;
+} satisfies Partial<VarenVergunningExploitatieType>;
 const exploitatieBase =
   exploitatieBase_ as unknown as VarenVergunningExploitatieType;
 

@@ -13,11 +13,7 @@ import {
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
 } from './decos-types';
-import {
-  defaultDateFormat,
-  isDateInPast,
-  monthsFromNow,
-} from '../../../universal/helpers/date';
+import { isDateInPast, monthsFromNow } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -187,20 +183,6 @@ export function hasOtherActualDecosZaakOfSameType(
       otherDecosZaak.identifier !== item.identifier &&
       !isExpired(otherDecosZaak)
   );
-}
-
-export function toDateFormatted(input: string | Date | number): string;
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null;
-// This is not a duplicate, this is the required implementation signature
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null {
-  if (input == null) {
-    return null;
-  }
-  return defaultDateFormat(input);
 }
 
 // Try to fetch and assign a specific date on which the zaak was "In behandeling"

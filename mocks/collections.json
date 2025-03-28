@@ -23,6 +23,7 @@
       "get-decos-zaak-workflows:standard",
       "get-decos-zaak-workflowdetails:standard",
       "get-decos-zaak-termijnens:standard",
+      "get-decos-zaak-varens:standard",
       "get-decos-document-blob:standard",
       "get-decos-document-download:standard",
       "post-enableu2smile-klachten:standard",

@@ -5,9 +5,9 @@ import {
 } from '../../../universal/helpers/date';
 import { StatusLineItem } from '../../../universal/types';
 
-export function getStatusSteps(
-  decosZaak: Varen
-): StatusLineItem<Varen['status']>[] {
+export function getStatusSteps<T extends Varen>(
+  decosZaak: T
+): StatusLineItem<T['status']>[] {
   const isAfgehandeld = decosZaak.processed;
 
   const hasTermijnen = decosZaak.termijnDates.length > 0;

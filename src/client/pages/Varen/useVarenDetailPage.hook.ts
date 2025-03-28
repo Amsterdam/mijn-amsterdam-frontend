@@ -12,28 +12,36 @@ export function useVarenDetailPage() {
   const { VAREN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
-  const hasRegistratieReder = !!VAREN.content?.find(
-    (item) => item.caseType === 'Varen registratie reder'
-  );
+  const hasRegistratieReder = !!VAREN.content?.reder;
 
   const vergunning =
-    VAREN.content
-      ?.filter((item) => item.caseType !== 'Varen registratie reder')
-      .find((item) => item.id === id) ?? null;
+    VAREN.content?.zaken?.find((item) => item.id === id) ?? null;
+
+  const hasVergunningChangeInProgress = !!VAREN.content?.zaken?.find(
+    (zaak) =>
+      zaak.vergunningKenmerk === vergunning?.vergunningKenmerk &&
+      zaak.processed === false
+  );
+
+  const buttonItems: ButtonLinkProps[] = [];
 
   const showButtons =
     vergunning?.processed && vergunning.decision === 'Verleend';
-  const buttonItemsToShow: ButtonLinkProps[] = showButtons
-    ? [
-        exploitatieVergunningWijzigenLink(vergunning.key, 'Wijzigen'),
-        ligplaatsVergunningLink,
-      ]
-    : [];
+  if (showButtons) {
+    const EVWijzigenBtnText = hasVergunningChangeInProgress
+      ? 'Wijziging in behandeling'
+      : 'Wijzigen';
 
-  const buttonItems = buttonItemsToShow.map((button) => ({
-    ...button,
-    isDisabled: !hasRegistratieReder,
-  }));
+    const buttons = [
+      exploitatieVergunningWijzigenLink(vergunning.key, EVWijzigenBtnText),
+      ligplaatsVergunningLink,
+    ].map((button) => ({
+      ...button,
+      isDisabled: !hasRegistratieReder || hasVergunningChangeInProgress,
+    }));
+
+    buttonItems.push(...buttons);
+  }
 
   return {
     vergunning,
