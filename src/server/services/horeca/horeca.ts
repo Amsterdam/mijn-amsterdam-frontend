@@ -8,29 +8,30 @@ import {
   ApiResponse,
 } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { fetchDecosZaken } from '../decos/decos-service';
-import { VergunningFrontend } from '../vergunningen/config-and-types';
-import { transformVergunningFrontend } from '../vergunningen/vergunningen';
+import {
+  fetchDecosZaken,
+  transformDecosZaakFrontend,
+} from '../decos/decos-service';
 import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
 
 export async function fetchHorecaVergunningen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<VergunningFrontend<HorecaVergunning>[]>> {
+): Promise<ApiResponse<HorecaVergunning[]>> {
   const response = await fetchDecosZaken(requestID, authProfileAndToken, [
     ExploitatieHorecabedrijf,
   ]);
 
   if (response.status === 'OK') {
     const decosVergunningen = response.content;
-    const vergunningenFrontend: VergunningFrontend<HorecaVergunning>[] =
-      decosVergunningen.map((vergunning) =>
-        transformVergunningFrontend(
+    const vergunningenFrontend: HorecaVergunning[] = decosVergunningen.map(
+      (vergunning) =>
+        transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           AppRoutes['HORECA/DETAIL']
         )
-      );
+    );
     return apiSuccessResult(vergunningenFrontend);
   }
 

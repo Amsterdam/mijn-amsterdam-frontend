@@ -58,6 +58,8 @@ export const tableConfig = Object.fromEntries(
             ? DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN
             : tableConfig.displayProps,
         title: listPageTitle[kind],
+        filter: (vergunning: ToeristischeVerhuurVergunning) =>
+          tableConfig.filter(vergunning),
         listPageRoute: generatePath(routes.listPage, {
           kind: listPageParamKindVergunningen.inProgress,
         }),

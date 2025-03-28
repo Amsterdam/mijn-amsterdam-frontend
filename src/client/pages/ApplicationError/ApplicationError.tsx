@@ -62,7 +62,7 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
   );
 }
 
-export default function ApplicationError({
+export function ApplicationError({
   error,
   children,
 }: FallbackProps & { children?: ReactNode }) {

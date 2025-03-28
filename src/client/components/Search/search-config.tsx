@@ -42,7 +42,7 @@ import { uniqueArray } from '../../../universal/helpers/utils';
 import {
   AppStateKey,
   BRPData,
-  Identiteitsbewijs,
+  IdentiteitsbewijsFrontend,
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
@@ -396,7 +396,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       ];
       return [...identiteitsBewijzen, ...brpDataItems];
     },
-    displayTitle: (item: Identiteitsbewijs | ApiBaseItem) => {
+    displayTitle: (item: IdentiteitsbewijsFrontend | ApiBaseItem) => {
       return (term: string) =>
         displayPath(term, [capitalizeFirstLetter(item.title)]);
     },

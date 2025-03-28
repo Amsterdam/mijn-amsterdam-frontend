@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ErrorAlert } from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
@@ -62,7 +62,7 @@ export function ZorgDetail() {
       zaak={voorziening}
       isError={isError(WMO)}
       isLoading={isLoading(WMO)}
-      pageContentTop={
+      pageContentMain={
         !!voorziening && <WMODetailContent voorziening={voorziening} />
       }
       backLink={AppRoutes.ZORG}

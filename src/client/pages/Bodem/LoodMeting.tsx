@@ -45,7 +45,7 @@ export function LoodMeting() {
       backLink={generatePath(AppRoutes.BODEM)}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={!!meting && <BodemDetailContent meting={meting} />}
+      pageContentMain={!!meting && <BodemDetailContent meting={meting} />}
     />
   );
 }

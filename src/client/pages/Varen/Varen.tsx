@@ -19,16 +19,19 @@ import type {
 } from '../../../server/services/varen/config-and-types';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>
-    De passagiersvaart in Amsterdam is erg populair bij bezoekers.
-    Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook gehuurde
-    boten, met of zonder schipper, vallen onder de passagiersvaart.
-  </Paragraph>
+  <PageContentCell>  
+    <Paragraph>
+      De passagiersvaart in Amsterdam is erg populair bij bezoekers.
+      Rondvaartboten en salonboten zijn een vorm van passagiersvaart. Ook gehuurde
+      boten, met of zonder schipper, vallen onder de passagiersvaart.
+    </Paragraph>
+  </PageContentCell>
 );
 
 const VarenDisclaimerRederNotRegistered = (

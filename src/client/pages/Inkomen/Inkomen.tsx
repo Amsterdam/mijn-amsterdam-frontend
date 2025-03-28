@@ -2,14 +2,17 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import { tableConfigSpecificaties } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <Paragraph>
-    Op deze pagina vindt u informatie over uw uitkering en de ondersteuning die
-    u krijgt omdat u weinig geld hebt.
-  </Paragraph>
+  <PageContentCell>
+    <Paragraph>
+      Op deze pagina vindt u informatie over uw uitkering en de ondersteuning
+      die u krijgt omdat u weinig geld hebt.
+    </Paragraph>
+  </PageContentCell>
 );
 
 export function InkomenThemaPagina() {

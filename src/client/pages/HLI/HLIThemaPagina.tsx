@@ -11,16 +11,17 @@ import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
+import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function HistoricItemsMention() {
   return (
-    <Paragraph className={styles.HistoricItemsMention}>
+    <ParagaphSuppressed>
       U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier
       niet ziet, heeft u eerder per post ontvangen.
-    </Paragraph>
+    </ParagaphSuppressed>
   );
 }
 
@@ -102,10 +103,12 @@ export function HLIThemaPagina() {
   } = useHliThemaData();
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
-      van een Stadspas ziet u ook de stadspasgegevens.
-    </Paragraph>
+    <PageContentCell>
+      <Paragraph>
+        Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
+        van een Stadspas ziet u ook de stadspasgegevens.
+      </Paragraph>
+    </PageContentCell>
   );
 
   const linkListItems: LinkProps[] = [
@@ -170,6 +173,9 @@ export function HLIThemaPagina() {
           <>
             {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
             {!!regelingen?.length && regelingenTables}
+            <PageContentCell startWide={3} spanWide={8}>
+              <HistoricItemsMention />
+            </PageContentCell>
           </>
         }
         isError={isError}
@@ -177,7 +183,6 @@ export function HLIThemaPagina() {
         isPartialError={!!dependencyError}
         isLoading={isLoading}
       />
-      <HistoricItemsMention />
     </>
   );
 }

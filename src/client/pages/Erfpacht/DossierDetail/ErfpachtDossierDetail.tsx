@@ -6,9 +6,11 @@ import { DatalistJuridisch } from './DatalistJuridisch';
 import { DatalistsFinancieel } from './DatalistsFinancieel';
 import type { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
 import { AppRoutes } from '../../../../universal/config/routes';
-import { ErrorAlert, LoadingContent } from '../../../components';
+import ErrorAlert from '../../../components/Alert/Alert';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import { BarConfig } from '../../../components/LoadingContent/LoadingContent';
+import LoadingContent, {
+  BarConfig,
+} from '../../../components/LoadingContent/LoadingContent';
 import { BFFApiUrls } from '../../../config/api';
 import { BagThemas, ThemaTitles } from '../../../config/thema';
 import { useAppStateBagApi } from '../../../hooks/useAppState';

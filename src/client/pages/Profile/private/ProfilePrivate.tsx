@@ -2,7 +2,6 @@ import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
-import styles from './ProfilePrivate.module.scss';
 import { panelConfig } from './ProfilePrivate.transform';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
 import { useProfileData } from './useProfileData.hook';
@@ -13,6 +12,7 @@ import {
   isMokum,
 } from '../../../../universal/helpers/brp';
 import { PageContentCell } from '../../../components/Page/Page';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
 
 function ProfilePrivateSectionPanels() {
@@ -66,7 +66,7 @@ function ProfilePrivateSectionPanels() {
       )}
       {isMokum(BRP.content) && (
         <PageContentCell>
-          <Paragraph className={styles.SuppressedParagraph}>
+          <ParagaphSuppressed className="ams-mb--sm">
             Het is helaas niet mogelijk om de gegevens van een levenloos geboren
             kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
             in{' '}
@@ -74,12 +74,12 @@ function ProfilePrivateSectionPanels() {
               MijnOverheid
             </Link>
             .
-          </Paragraph>
-          <Paragraph className={styles.SuppressedParagraph}>
+          </ParagaphSuppressed>
+          <ParagaphSuppressed>
             Op deze pagina laten wij uw gegevens zien uit de landelijke en
             Amsterdamse administratie. Gegevens die bij een andere gemeente zijn
             geregistreerd worden hier niet getoond.
-          </Paragraph>
+          </ParagaphSuppressed>
         </PageContentCell>
       )}
     </>
@@ -110,7 +110,7 @@ export function MijnGegevensThema() {
   const isThemaPaginaLoading = isLoadingBrp && isLoadingContactmomenten;
 
   const pageContentTop = (
-    <PageContentCell spanWide={6}>
+    <PageContentCell>
       <Paragraph className="ams-mb--sm">
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u
         vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw

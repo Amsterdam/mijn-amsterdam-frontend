@@ -6,8 +6,9 @@ import { useErfpachtV2Data } from './erfpachtData.hook';
 import { OpenFacturenListGrouped } from './ErfpachtOpenFacturen';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { ErrorAlert, LoadingContent } from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import {
   OverviewPageV2,
   PageContentCell,

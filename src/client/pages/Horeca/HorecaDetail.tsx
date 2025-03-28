@@ -43,12 +43,12 @@ export function HorecaDetailPagina() {
     useVergunningenDetailData<HorecaVergunning>(vergunningen);
 
   return (
-    <ThemaDetailPagina<VergunningFrontend<HorecaVergunning>>
+    <ThemaDetailPagina<HorecaVergunning>
       title={title}
       zaak={vergunning}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
+      pageContentMain={
         vergunning && (
           <>
             <PageContentCell>
