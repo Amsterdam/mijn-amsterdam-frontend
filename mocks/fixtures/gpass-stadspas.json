@@ -11,6 +11,14 @@
       "budget_balance": 132
     },
     {
+      "code": "WITGOEDREGELING",
+      "naam": "Witgoedregeling: dit tegoed komt uit een beperkte subsidiepot, dus op = op!",
+      "omschrijving": "Witgoedregeling: dit tegoed komt uit een beperkte subsidiepot, dus op = op!",
+      "expiry_date": "2025-03-25T21:59:59.000Z",
+      "budget_assigned": 300,
+      "budget_balance": 0
+    },
+    {
       "code": "AMSTEG_06-30",
       "naam": "Tegoed automatisch laden",
       "omschrijving": "Tegoed automatisch laden",

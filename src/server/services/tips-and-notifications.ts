@@ -8,7 +8,7 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
-import type { MyNotification, MyTip } from '../../universal/types';
+import type { MyNotification } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { fetchAfisNotifications } from './afis/afis-notifications';
@@ -18,6 +18,11 @@ import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBrpNotifications } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
+import { TipFrontend } from './content-tips/tip-types';
+import {
+  convertTipToNotication,
+  prefixTipNotification,
+} from './content-tips/tips-service';
 import { fetchHorecaNotifications } from './horeca';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia';
@@ -29,10 +34,6 @@ import {
   fetchSubsidieNotifications,
 } from './simple-connect';
 import { fetchSVWINotifications } from './simple-connect/svwi';
-import {
-  convertTipToNotication,
-  prefixTipNotification,
-} from './tips/tips-service';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
 import { fetchVarenNotifications } from './varen/varen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
@@ -42,7 +43,7 @@ import { fetchWpiNotifications } from './wpi';
 
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
 
-export function sortNotifications(
+export function sortNotificationsAndInsertTips(
   notifications: MyNotification[],
   doRandomize: boolean = true
 ) {
@@ -96,7 +97,7 @@ export function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse_DEPRECATED<unknown>>
 ): MyNotification[] {
   const notifications: MyNotification[] = [];
-  const tips: MyTip[] = [];
+  const tips: TipFrontend[] = [];
 
   // Collect the success response data from the service results and send to the tips Api.
   for (const { content } of responses) {
@@ -213,7 +214,8 @@ const notificationServices: NotificationServicesByProfileType = {
   },
 };
 
-async function fetchServicesNotifications(
+// Services can return Source tips and Content tips.
+async function fetchNotificationsAndTipsFromServices_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<MyNotification[]> {
@@ -233,10 +235,13 @@ async function fetchServicesNotifications(
   return [];
 }
 
-export const fetchTipsAndNotifications = memoize(fetchServicesNotifications, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args) {
-    // args is arguments object as accessible in memoized function
-    return args[0] + JSON.stringify(args[1]);
-  },
-});
+export const fetchNotificationsAndTipsFromServices = memoize(
+  fetchNotificationsAndTipsFromServices_,
+  {
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
+    normalizer: function (args) {
+      // args is arguments object as accessible in memoized function
+      return args[0] + JSON.stringify(args[1]);
+    },
+  }
+);
