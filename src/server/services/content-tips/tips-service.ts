@@ -1,24 +1,6 @@
-import { TipFrontend, ServiceResults, ContentTipSource } from './tip-types';
+import { ServiceResults, ContentTipSource } from './tip-types';
 import { tips } from './tips-content';
-import { apiSuccessResult } from '../../../universal/helpers/api';
-import { pick } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
-
-export function convertTipToNotication(tip: TipFrontend): MyNotification {
-  return {
-    ...pick(tip, [
-      'thema',
-      'datePublished',
-      'description',
-      'id',
-      'title',
-      'link',
-    ]),
-    tipReason: tip.reason,
-    isTip: true,
-    isAlert: false,
-  } as MyNotification;
-}
 
 export function prefixTipNotification(
   notification: MyNotification
@@ -61,11 +43,11 @@ function tipsFilter(serviceResults: ServiceResults, now: Date = new Date()) {
   };
 }
 
-export function getFilteredTips(
+export function fetchContentTips(
   serviceResults: ServiceResults,
-  profileType?: ProfileType,
-  compareDate?: Date
-): TipFrontend[] {
+  compareDate: Date,
+  profileType?: ProfileType
+): MyNotification[] {
   /**
    * Iterate over tips database and filter out requested tips based on props:
    * - date period
@@ -86,32 +68,16 @@ export function getFilteredTips(
   filteredTips = filteredTips.filter(tipsFilter(serviceResults, compareDate));
 
   return filteredTips.map((t) => {
-    const tip: TipFrontend = {
+    const tip: MyNotification = {
       id: t.id,
       datePublished: t.datePublished,
       title: t.title,
       description: t.description,
       link: t.link,
       thema: t.thema,
-      reason: t.reason,
+      tipReason: t.reason,
+      isTip: true,
     };
     return tip;
   });
-}
-
-export async function fetchContentTips(
-  profileType: ProfileType,
-  {
-    serviceResults,
-    compareDate,
-  }: {
-    serviceResults: ServiceResults | null;
-    compareDate?: Date;
-  }
-) {
-  const tips = serviceResults
-    ? getFilteredTips(serviceResults, profileType, compareDate)
-    : [];
-
-  return apiSuccessResult(tips);
 }
