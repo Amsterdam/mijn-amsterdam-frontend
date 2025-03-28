@@ -7,10 +7,10 @@ import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
+import { toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
-import { toDateFormatted } from '../decos/helpers';
 
 function transformVarenFrontend(appRoute: AppRoute, zaak: Varen) {
   const zaakFrontend: VarenFrontend = {
@@ -41,12 +41,20 @@ async function fetchVaren_(
   );
 
   if (response.status === 'OK') {
-    const decosVergunningen = response.content;
-    const varenVergunningFrontend: VarenFrontend[] = decosVergunningen.map(
-      (vergunning) =>
-        transformVarenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
+    const decosZaken = response.content;
+    const registratieReder =
+      decosZaken.find((zaak) => zaak.caseType === 'Varen registratie reder') ??
+      null;
+    const zaken = decosZaken.filter(
+      (zaak) => zaak.caseType !== 'Varen registratie reder'
     );
-    return apiSuccessResult(varenVergunningFrontend);
+    const varenVergunningFrontend = zaken.map((vergunning) =>
+      transformVarenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
+    );
+    return apiSuccessResult({
+      reder: registratieReder,
+      zaken: varenVergunningFrontend,
+    });
   }
 
   return response;

@@ -124,9 +124,8 @@ export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {
 } & Pick<VarenVergunningExploitatieType, 'vesselName' | 'decision'>;
 
 export type Varen =
-  | VarenRegistratieRederType
-  | VarenVergunningExploitatieType
   | VarenVergunningLigplaatsType
+  | VarenVergunningExploitatieType
   | VarenVergunningExploitatieWijzigingVaartuigNaamType
   | VarenVergunningExploitatieWijzigingVerbouwingType
   | VarenVergunningExploitatieWijzigingVergunningshouderType
@@ -136,8 +135,3 @@ export type VarenFrontend<T extends DecosVarenZaakBase = Varen> = T & {
   dateRequestFormatted: string;
   dateDecisionFormatted?: string | null;
 } & ZaakDetail<T['status']>;
-
-export type VarenVergunningFrontend = Exclude<
-  VarenFrontend,
-  VarenRegistratieRederType
->;

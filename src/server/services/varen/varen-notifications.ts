@@ -1,10 +1,6 @@
 import { generatePath } from 'react-router-dom';
 
-import {
-  VarenFrontend,
-  VarenRegistratieRederType,
-  VarenVergunningFrontend,
-} from './config-and-types';
+import { VarenFrontend, VarenRegistratieRederType } from './config-and-types';
 import { fetchVaren } from './varen';
 import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -19,7 +15,7 @@ import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 function createVarenRederRegisteredNotification(
-  zaak: VarenFrontend<VarenRegistratieRederType>
+  zaak: VarenRegistratieRederType
 ): MyNotification {
   return {
     id: `varen-${zaak.id}-reder-notification`,
@@ -34,9 +30,7 @@ function createVarenRederRegisteredNotification(
   };
 }
 
-function createVarenNotification(
-  zaak: VarenVergunningFrontend
-): MyNotification | null {
+function createVarenNotification(zaak: VarenFrontend): MyNotification | null {
   const currentStep = zaak.steps.find((step) => step.isActive);
   if (!currentStep) {
     return null;
@@ -107,18 +101,14 @@ export async function fetchVarenNotifications(
   }
   const notifications = [];
 
-  const rederRegistration = varenResponse.content.find(
-    (zaak) => zaak.caseType === 'Varen registratie reder'
-  );
+  const rederRegistration = varenResponse.content.reder;
   if (rederRegistration) {
     notifications.push(
       createVarenRederRegisteredNotification(rederRegistration)
     );
   }
 
-  const zaken = varenResponse.content.filter(
-    (zaak) => zaak.caseType !== 'Varen registratie reder'
-  );
+  const zaken = varenResponse.content.zaken;
   notifications.push(...zaken.map(createVarenNotification).filter((n) => !!n));
 
   const recentNotifications = notifications.filter(

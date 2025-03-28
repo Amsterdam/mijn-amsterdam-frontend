@@ -111,19 +111,21 @@ const rederRegistratie: VarenFrontend<VarenRegistratieRederType> = {
   city: null,
   phone: '0612345678',
   email: 'myemailadres@example.com',
-  dateRequestFormatted: '06 november 2023',
+  dateRequest: '2023-11-06T00:00:00',
 } as unknown as VarenFrontend<VarenRegistratieRederType>;
 
-const varenContent: AppState['VAREN']['content'] = [
-  exploitatieInProgress,
-  exploitatieDecision,
-  rederRegistratie,
-];
+const varenContent = [exploitatieInProgress, exploitatieDecision];
 
-const getTestState = (content: VarenFrontend[] = varenContent): AppState =>
+const getTestState = (
+  zaken: VarenFrontend[] = varenContent,
+  reder: VarenRegistratieRederType | null = rederRegistratie
+): AppState =>
   jsonCopy({
     VAREN: {
-      content: content,
+      content: {
+        reder,
+        zaken,
+      },
       status: 'OK',
     },
   });
@@ -190,7 +192,7 @@ describe('<Varen />', () => {
       /Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart./;
 
     it('Shows an alert when the reder does not have a registration', () => {
-      const screen = render(<Component state={getTestState([])} />);
+      const screen = render(<Component state={getTestState([], null)} />);
       expect(
         screen.getByText(alertRegexNoRederRegistratie)
       ).toBeInTheDocument();
@@ -198,16 +200,12 @@ describe('<Varen />', () => {
     });
 
     it('Does not show an alert when the reder has a registration', () => {
-      const screen = render(
-        <Component state={getTestState([rederRegistratie])} />
-      );
+      const screen = render(<Component state={getTestState([])} />);
       expect(screen.queryByText(alertRegexNoRederRegistratie)).toBeNull();
     });
 
     it('Shows the reder data', () => {
-      const screen = render(
-        <Component state={getTestState([rederRegistratie])} />
-      );
+      const screen = render(<Component state={getTestState([])} />);
 
       const naamAanvrager = screen.getByText('Naam aanvrager');
       expect(naamAanvrager.nextElementSibling).toHaveTextContent(

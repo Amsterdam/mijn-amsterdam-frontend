@@ -55,7 +55,10 @@ describe('Varen service', () => {
       const response = await fetchVaren('x1', authProfileAndToken);
       const successResponse = {
         status: 'OK',
-        content: [],
+        content: {
+          reder: null,
+          zaken: [],
+        },
       };
       expect(response).toStrictEqual(successResponse);
     });
@@ -82,60 +85,63 @@ describe('Varen service', () => {
       const response = await fetchVaren('x3', authProfileAndToken);
       const successResponse = {
         status: 'OK',
-        content: [
-          {
-            caseType: 'Varen vergunning exploitatie',
-            dateRequest: '2025-01-01T00:00:00',
-            dateRequestFormatted: '01 januari 2025',
-            dateDecision: '2025-01-03T00:00:00',
-            dateDecisionFormatted: '03 januari 2025',
-            decision: 'Verleend',
-            eniNumber: '7654321',
-            id: 'Z-24-0000001',
-            identifier: 'Z/24/3421790',
-            key: 'ABCDEF0123456789ABCDEF0123456789',
-            linkDataRequest: 'https://test.test',
-            permitReference: '123456789',
-            processed: true,
-            segment: 'Onbemand',
-            status: 'Afgehandeld',
-            title: 'Varen vergunning exploitatie',
-            vesselLength: '2,31',
-            vesselName: 'Titanic',
-            vesselWidth: '2,32',
-            statusDates: [],
-            termijnDates: [],
-            steps: [
-              {
-                datePublished: '2025-01-01T00:00:00',
-                description: '',
-                id: 'step-0',
-                isActive: false,
-                isChecked: true,
-                status: 'Ontvangen',
+        content: {
+          reder: null,
+          zaken: [
+            {
+              caseType: 'Varen vergunning exploitatie',
+              dateRequest: '2025-01-01T00:00:00',
+              dateRequestFormatted: '01 januari 2025',
+              dateDecision: '2025-01-03T00:00:00',
+              dateDecisionFormatted: '03 januari 2025',
+              decision: 'Verleend',
+              eniNumber: '7654321',
+              id: 'Z-24-0000001',
+              identifier: 'Z/24/3421790',
+              key: 'ABCDEF0123456789ABCDEF0123456789',
+              linkDataRequest: 'https://test.test',
+              permitReference: '123456789',
+              processed: true,
+              segment: 'Onbemand',
+              status: 'Afgehandeld',
+              title: 'Varen vergunning exploitatie',
+              vesselLength: '2,31',
+              vesselName: 'Titanic',
+              vesselWidth: '2,32',
+              statusDates: [],
+              termijnDates: [],
+              steps: [
+                {
+                  datePublished: '2025-01-01T00:00:00',
+                  description: '',
+                  id: 'step-0',
+                  isActive: false,
+                  isChecked: true,
+                  status: 'Ontvangen',
+                },
+                {
+                  datePublished: '2025-01-01T00:00:00',
+                  description: '',
+                  id: 'step-1',
+                  isActive: false,
+                  isChecked: true,
+                  status: 'In behandeling',
+                },
+                {
+                  datePublished: '2025-01-03T00:00:00',
+                  id: 'step-2',
+                  isActive: true,
+                  isChecked: true,
+                  status: 'Afgehandeld',
+                },
+              ],
+              link: {
+                title: 'Bekijk hoe het met uw aanvraag staat',
+                to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-24-0000001',
               },
-              {
-                datePublished: '2025-01-01T00:00:00',
-                description: '',
-                id: 'step-1',
-                isActive: false,
-                isChecked: true,
-                status: 'In behandeling',
-              },
-              {
-                datePublished: '2025-01-03T00:00:00',
-                id: 'step-2',
-                isActive: true,
-                isChecked: true,
-                status: 'Afgehandeld',
-              },
-            ],
-            link: {
-              title: 'Bekijk hoe het met uw aanvraag staat',
-              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-24-0000001',
             },
-          },
-        ],
+          ],
+        },
       };
       expect(response).toStrictEqual(successResponse);
     });

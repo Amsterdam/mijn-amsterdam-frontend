@@ -32,12 +32,15 @@ const exploitatieDecision: ExploitatieAanvraag = {
   },
 } as unknown as ExploitatieAanvraag;
 
-const varenContent: AppState['VAREN']['content'] = [exploitatieDecision];
+const varenZaken = [exploitatieDecision];
 
-const getTestState = (content: VarenFrontend[] = varenContent): AppState =>
+const getTestState = (content: VarenFrontend[] = varenZaken): AppState =>
   jsonCopy({
     VAREN: {
-      content: content,
+      content: {
+        reder: {},
+        zaken: content,
+      },
       status: 'OK',
     },
   });

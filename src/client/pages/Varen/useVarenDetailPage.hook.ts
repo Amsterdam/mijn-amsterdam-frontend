@@ -12,14 +12,10 @@ export function useVarenDetailPage() {
   const { VAREN } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
-  const hasRegistratieReder = !!VAREN.content?.find(
-    (item) => item.caseType === 'Varen registratie reder'
-  );
+  const hasRegistratieReder = !!VAREN.content?.reder;
 
   const vergunning =
-    VAREN.content
-      ?.filter((item) => item.caseType !== 'Varen registratie reder')
-      .find((item) => item.id === id) ?? null;
+    VAREN.content?.zaken.find((item) => item.id === id) ?? null;
 
   const showButtons =
     vergunning?.processed && vergunning.decision === 'Verleend';
