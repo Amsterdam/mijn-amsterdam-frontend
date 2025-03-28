@@ -2,12 +2,12 @@ import { useMemo } from 'react';
 
 import { getEvenementVergunningLineItems } from './EvenementVergunning';
 import { getRVVSloterwegLineItems } from './RvvSloterweg';
-import { VergunningFrontendV2 } from '../../../../server/services/vergunningen/config-and-types';
+import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { GenericDocument, StatusLineItem } from '../../../../universal/types';
 import { CaseTypeV2 } from '../../../../universal/types/decos-zaken';
 import StatusLine from '../../../components/StatusLine/StatusLine';
 
-function useVergunningStatusLineItems(vergunning?: VergunningFrontendV2) {
+function useVergunningStatusLineItems(vergunning?: VergunningFrontend) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
     if (!vergunning) {
       return [];
@@ -70,7 +70,7 @@ export function StatusLineItems({
   vergunning,
   trackPath,
 }: {
-  vergunning: VergunningFrontendV2;
+  vergunning: VergunningFrontend;
   trackPath?: (document: GenericDocument) => string;
 }) {
   const statusLineItems = useVergunningStatusLineItems(vergunning);
@@ -83,7 +83,6 @@ export function StatusLineItems({
       trackCategory="Vergunningen detail / status"
       items={statusLineItems}
       id={`vergunning-detail-${vergunning.id}`}
-      documentPathForTracking={trackPath}
     />
   );
 }

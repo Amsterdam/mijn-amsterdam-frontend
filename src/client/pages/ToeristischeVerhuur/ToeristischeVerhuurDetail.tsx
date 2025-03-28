@@ -6,7 +6,6 @@ import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
-import { GenericDocument } from '../../../universal/types';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
@@ -59,22 +58,6 @@ function BnBDocumentInfo({
       </Link>{' '}
       om uw document op te vragen.
     </Paragraph>
-  );
-}
-
-interface VerhuurDocumentListProps {
-  vergunningDocuments: GenericDocument[];
-}
-
-function VerhuurDocumentList({
-  vergunningDocuments,
-}: VerhuurDocumentListProps) {
-  return (
-    <DocumentListV2
-      documents={vergunningDocuments}
-      columns={['', '']}
-      className="ams-mb--sm"
-    />
   );
 }
 
@@ -180,8 +163,10 @@ export function ToeristischeVerhuurDetailPagina() {
                     label: 'Document',
                     content: (
                       <>
-                        <VerhuurDocumentList
-                          vergunningDocuments={vergunningDocuments}
+                        <DocumentListV2
+                          documents={vergunningDocuments}
+                          columns={['', '']}
+                          className="ams-mb--sm"
                         />
                         {vergunning.title === 'Vergunning bed & breakfast' && (
                           <BnBDocumentInfo vergunning={vergunning} />
@@ -196,9 +181,6 @@ export function ToeristischeVerhuurDetailPagina() {
         )
       }
       backLink={routes.themaPage}
-      documentPathForTracking={(document) =>
-        `/downloads/toeristische-verhuur/vergunning/${vergunning?.title}/${document.title.split(/\n/)[0]}`
-      }
     />
   );
 }

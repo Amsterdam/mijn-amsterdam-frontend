@@ -7,6 +7,13 @@ export const entries = Object.entries as <T>(
   o: T
 ) => [Extract<keyof T, string>, T[keyof T]][];
 
+// export function entries<T>(obj: T extends object ? T : never) {
+//   return Object.entries(obj) as Entries<T>;
+// }
+
+// export const entries = <T extends object>(obj: T) =>
+//   Object.entries(obj) as Entries<T>;
+
 export const keys = Object.keys as <T>(o: T) => (keyof T)[];
 
 export function range(a: number, b: number) {

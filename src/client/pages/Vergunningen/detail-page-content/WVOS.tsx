@@ -2,7 +2,7 @@ import { UnorderedList } from '@amsterdam/design-system-react';
 
 import { getRowsByKey } from './fields-config';
 import {
-  VergunningFrontendV2,
+  VergunningFrontend,
   WerkzaamhedenEnVervoerOpStraat,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -10,10 +10,10 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 export function WVOSContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontendV2;
+  vergunning: VergunningFrontend;
 }) {
   const vergunningData =
-    vergunning as VergunningFrontendV2<WerkzaamhedenEnVervoerOpStraat>;
+    vergunning as VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
 
   const rowsByKey = getRowsByKey(vergunning, [
     'identifier',

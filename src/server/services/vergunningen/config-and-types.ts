@@ -1,10 +1,10 @@
 import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { GetCaseType } from '../../../universal/types/decos-zaken';
 import {
-  DecosZaakWithDateRange,
-  DecosZaakWithKentekens,
-  DecosZaakWithLocation,
-  DecosZaakWithDateTimeRange,
+  WithDateRange,
+  WithKentekens,
+  WithLocation,
+  WithDateTimeRange,
   ZaakStatus,
   DecosZaakBase,
 } from '../decos/decos-types';
@@ -12,159 +12,170 @@ import {
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
 
-export interface TVMRVVObject
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateTimeRange,
-    DecosZaakWithKentekens {
-  caseType: GetCaseType<'TVMRVVObject'>;
-  description: string | null;
-}
+export type TVMRVVObject = DecosZaakBase &
+  WithLocation &
+  WithKentekens &
+  WithDateTimeRange & {
+    caseType: GetCaseType<'TVMRVVObject'>;
+  };
 
-export interface GPK extends DecosZaakWithLocation {
-  caseType: GetCaseType<'GPK'>;
-  cardType: 'driver' | 'passenger';
-  cardNumber: number | null;
-  dateEnd: string | null;
-  requestReason: string | null;
-}
+export type GPK = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'GPK'>;
+    cardType: 'driver' | 'passenger';
+    cardNumber: number | null;
+    dateEnd: string | null;
+    requestReason: string | null;
+  };
 
-export interface GPP extends DecosZaakWithLocation {
+export type GPP = DecosZaakBase & {
+  location: string | null;
   caseType: GetCaseType<'GPP'>;
   kentekens: string | null;
-}
+};
 
-export interface EvenementMelding
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateTimeRange {
-  caseType: GetCaseType<'EvenementMelding'>;
-}
+export type EvenementMelding = DecosZaakBase &
+  WithLocation &
+  WithDateTimeRange & {
+    caseType: GetCaseType<'EvenementMelding'>;
+  };
 
-export interface EvenementVergunning
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateTimeRange {
-  caseType: GetCaseType<'EvenementVergunning'>;
-}
+export type EvenementVergunning = DecosZaakBase &
+  WithLocation &
+  WithDateTimeRange & {
+    caseType: GetCaseType<'EvenementVergunning'>;
+  };
 
-export interface Omzettingsvergunning extends DecosZaakWithLocation {
-  caseType: GetCaseType<'Omzettingsvergunning'>;
-  dateInBehandeling: string | null;
-}
+export type Omzettingsvergunning = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Omzettingsvergunning'>;
+    dateInBehandeling: string | null;
+  };
 
-export interface ERVV
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateTimeRange {
-  caseType: GetCaseType<'ERVV'>;
-}
+export type ERVV = DecosZaakBase &
+  WithLocation &
+  WithDateTimeRange & {
+    caseType: GetCaseType<'ERVV'>;
+  };
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
-export interface BZB extends DecosZaakWithDateRange {
-  caseType: GetCaseType<'BZB'>;
-  companyName: string | null;
-  numberOfPermits: string | null;
-  decision: string | null;
-}
+export type BZB = DecosZaakBase &
+  WithDateRange & {
+    caseType: GetCaseType<'BZB'>;
+    companyName: string | null;
+    numberOfPermits: string | null;
+    decision: string | null;
+  };
 
 // BZP is short for Parkeerontheffingen Blauwe zone particulieren
-export interface BZP extends DecosZaakWithDateRange, DecosZaakWithKentekens {
-  caseType: GetCaseType<'BZP'>;
-  kentekens: string | null;
-  decision: string | null;
-}
+export type BZP = DecosZaakBase &
+  WithDateRange &
+  WithKentekens & {
+    caseType: GetCaseType<'BZP'>;
+    kentekens: string | null;
+    decision: string | null;
+  };
 
-export interface Flyeren
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateTimeRange {
-  caseType: GetCaseType<'Flyeren'>;
-  decision: 'Verleend' | 'Niet verleend' | 'Ingetrokken';
-}
+export type Flyeren = DecosZaakBase &
+  WithLocation &
+  WithDateTimeRange & {
+    caseType: GetCaseType<'Flyeren'>;
+    decision: 'Verleend' | 'Niet verleend' | 'Ingetrokken';
+  };
 
-export interface AanbiedenDiensten
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'AanbiedenDiensten'>;
-}
+export type AanbiedenDiensten = DecosZaakBase &
+  WithLocation &
+  WithDateRange & {
+    caseType: GetCaseType<'AanbiedenDiensten'>;
+  };
 
-export interface Nachtwerkontheffing
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateTimeRange {
-  caseType: GetCaseType<'NachtwerkOntheffing'>;
-}
+export type Nachtwerkontheffing = DecosZaakBase &
+  WithLocation &
+  WithDateTimeRange & {
+    caseType: GetCaseType<'NachtwerkOntheffing'>;
+  };
 
-export interface ZwaarVerkeer
-  extends DecosZaakWithKentekens,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'ZwaarVerkeer'>;
-  exemptionKind: string | null;
-}
+export type ZwaarVerkeer = DecosZaakBase &
+  WithKentekens &
+  WithDateRange & {
+    caseType: GetCaseType<'ZwaarVerkeer'>;
+    exemptionKind: string | null;
+  };
 
-export interface RVVHeleStad
-  extends DecosZaakWithKentekens,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'RVVHeleStad'>;
-}
+export type RVVHeleStad = DecosZaakBase &
+  WithKentekens &
+  WithDateRange & {
+    caseType: GetCaseType<'RVVHeleStad'>;
+  };
 
-export interface RVVSloterweg
-  extends DecosZaakWithKentekens,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'RVVSloterweg'>;
-  vorigeKentekens: string | null;
-  dateWorkflowVerleend: string | null;
-  requestType: 'Nieuw' | 'Wijziging';
-  area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
-  decision: 'Verlopen' | 'Ingetrokken' | 'Vervallen' | 'Verleend';
-  status: ZaakStatus & 'Actief';
-}
+export type RVVSloterweg = DecosZaakBase &
+  WithKentekens &
+  WithDateRange & {
+    caseType: GetCaseType<'RVVSloterweg'>;
+    vorigeKentekens: string | null;
+    dateWorkflowVerleend: string | null;
+    requestType: 'Nieuw' | 'Wijziging';
+    area: 'Sloterweg-West' | 'Laan van Vlaanderen' | 'Sloterweg-Oost';
+    decision: 'Verlopen' | 'Ingetrokken' | 'Vervallen' | 'Verleend';
+    status: ZaakStatus & 'Actief';
+  };
 
-export interface TouringcarDagontheffing
-  extends DecosZaakWithKentekens,
-    DecosZaakWithDateTimeRange {
-  caseType: GetCaseType<'TouringcarDagontheffing'>;
-  destination: string | null;
-}
+export type TouringcarDagontheffing = DecosZaakBase &
+  WithKentekens &
+  WithDateTimeRange & {
+    caseType: GetCaseType<'TouringcarDagontheffing'>;
+    destination: string | null;
+  };
 
-export interface TouringcarJaarontheffing
-  extends DecosZaakWithKentekens,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'TouringcarJaarontheffing'>;
-  destination: string | null;
-  routetest: boolean;
-}
+export type TouringcarJaarontheffing = DecosZaakBase &
+  WithKentekens &
+  WithDateRange & {
+    caseType: GetCaseType<'TouringcarJaarontheffing'>;
+    destination: string | null;
+    routetest: boolean;
+  };
 
-export interface Samenvoegingsvergunning extends DecosZaakWithLocation {
-  caseType: GetCaseType<'Samenvoegingsvergunning'>;
-}
+export type Samenvoegingsvergunning = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Samenvoegingsvergunning'>;
+  };
 
-export interface Onttrekkingsvergunning extends DecosZaakWithLocation {
-  caseType: GetCaseType<'Onttrekkingsvergunning'>;
-}
+export type Onttrekkingsvergunning = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Onttrekkingsvergunning'>;
+  };
 
-export interface OnttrekkingsvergunningSloop extends DecosZaakWithLocation {
-  caseType: GetCaseType<'OnttrekkingsvergunningSloop'>;
-}
+export type OnttrekkingsvergunningSloop = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'OnttrekkingsvergunningSloop'>;
+  };
 
-export interface VormenVanWoonruimte extends DecosZaakWithLocation {
-  caseType: GetCaseType<'VormenVanWoonruimte'>;
-}
+export type VormenVanWoonruimte = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'VormenVanWoonruimte'>;
+  };
 
-export interface Splitsingsvergunning extends DecosZaakWithLocation {
-  caseType: GetCaseType<'Splitsingsvergunning'>;
-}
+export type Splitsingsvergunning = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'Splitsingsvergunning'>;
+  };
 
-export interface Ligplaatsvergunning extends DecosZaakWithLocation {
-  caseType: GetCaseType<'VOB'>;
-  requestKind: string | null;
-  reason: string | null;
-  vesselKind: string | null;
-  vesselName: string | null;
-}
+export type Ligplaatsvergunning = DecosZaakBase &
+  WithLocation & {
+    caseType: GetCaseType<'VOB'>;
+    requestKind: string | null;
+    reason: string | null;
+    vesselKind: string | null;
+    vesselName: string | null;
+  };
 
-export interface Parkeerplaats {
+export type Parkeerplaats = {
   fiscalNumber: string;
   houseNumber: string;
   street: string;
   type: string;
   url: string;
-}
+};
 
 export type EigenParkeerplaatsRequestType =
   | 'Nieuwe aanvraag'
@@ -173,22 +184,21 @@ export type EigenParkeerplaatsRequestType =
   | 'Verhuizing'
   | 'Verlenging';
 
-export interface EigenParkeerplaats
-  extends DecosZaakBase,
-    DecosZaakWithKentekens,
-    DecosZaakWithDateRange {
-  caseType: GetCaseType<'EigenParkeerplaats'>;
-  vorigeKentekens: string | null;
-  requestTypes: EigenParkeerplaatsRequestType[];
-  locations: Parkeerplaats[];
-}
+export type EigenParkeerplaats = DecosZaakBase &
+  WithKentekens &
+  WithDateRange & {
+    caseType: GetCaseType<'EigenParkeerplaats'>;
+    vorigeKentekens: string | null;
+    requestTypes: EigenParkeerplaatsRequestType[];
+    locations: Parkeerplaats[];
+  };
 
-export interface EigenParkeerplaatsOpheffen extends DecosZaakBase {
+export type EigenParkeerplaatsOpheffen = DecosZaakBase & {
   caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
   isCarsharingpermit: boolean;
   dateEnd: string | null;
   location: Parkeerplaats;
-}
+};
 
 export type WVOSActiviteit =
   | 'Rijden of een voertuig neerzetten waar dat normaal niet mag'
@@ -200,15 +210,15 @@ export type WVOSActiviteit =
   | 'Verhuizing tussen twee locaties binnen Amsterdam'
   | 'Filmen';
 
-export interface WerkzaamhedenEnVervoerOpStraat
-  extends DecosZaakWithLocation,
-    DecosZaakWithDateRange,
-    DecosZaakWithKentekens {
-  caseType: GetCaseType<'WVOS'>;
-  werkzaamheden: WVOSActiviteit[];
-}
+export type WerkzaamhedenEnVervoerOpStraat = DecosZaakBase &
+  WithLocation &
+  WithDateRange &
+  WithKentekens & {
+    caseType: GetCaseType<'WVOS'>;
+    werkzaamheden: WVOSActiviteit[];
+  };
 
-export type VergunningV2 =
+export type DecosVergunning =
   | TVMRVVObject
   | GPK
   | GPP
@@ -236,19 +246,19 @@ export type VergunningV2 =
   | TouringcarJaarontheffing
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type VergunningenSourceData = {
-  content?: VergunningV2[];
+export type VergunningenDecos = {
+  content?: DecosVergunning[];
   status: 'OK' | 'ERROR';
 };
 
-export type DecosZaakExpirable = VergunningV2 & { dateEnd?: string | null };
+export type DecosZaakExpirable = DecosVergunning & { dateEnd?: string | null };
 
-export interface VergunningOptions {
+export type VergunningOptions = {
   filter?: ZakenFilter;
-  appRoute: string | ((vergunning: VergunningV2) => string);
+  appRoute: string | ((vergunning: DecosVergunning) => string);
 }
 
-export type VergunningFrontendV2<T extends VergunningV2 = VergunningV2> =
+export type VergunningFrontendV2<T extends DecosVergunning = DecosVergunning> =
   DecosZaakFrontend<T>;
 
 export type HorecaVergunning = VergunningFrontendV2<ExploitatieHorecabedrijf>;
@@ -260,22 +270,22 @@ export type NotificationProperty =
   | 'link';
 
 type NotificationPropertyValue = (
-  vergunning: VergunningFrontendV2
+  vergunning: VergunningFrontend
 ) => string | null;
 
-type NotificationLink = (vergunning: VergunningFrontendV2) => LinkProps;
+type NotificationLink = (vergunning: VergunningFrontend) => LinkProps;
 
 export type NotificationLinks = {
-  [key in VergunningFrontendV2['caseType']]?: string;
+  [key in VergunningFrontend['caseType']]?: string;
 };
 
 type NotificationLabelsBase = {
   [key in Exclude<NotificationProperty, 'link'>]: NotificationPropertyValue;
 };
 
-export interface NotificationLabels extends NotificationLabelsBase {
+export type NotificationLabels = NotificationLabelsBase & {
   link: NotificationLink;
-}
+};
 
 export type NotificationTypeKey =
   | 'statusAanvraag'

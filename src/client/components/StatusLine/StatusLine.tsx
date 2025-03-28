@@ -12,7 +12,7 @@ import {
   GenericDocument,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import DocumentList from '../DocumentList/DocumentList';
+import DocumentListV2 from '../DocumentList/DocumentListV2';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import { MaButtonLink } from '../MaLink/MaLink';
 
@@ -95,7 +95,7 @@ export function StatusLinePanelDocuments({
         altDocumentContent
       )}
       {!!documents?.length && (
-        <DocumentList documents={documents} trackPath={trackPath} />
+        <DocumentListV2 documents={documents} trackPath={trackPath} />
       )}
     </StatusLinePanel>
   );
@@ -265,7 +265,6 @@ interface StatusLineProps {
   statusLabel?: string;
   showStatusLineConnection?: boolean;
   className?: string;
-  documentPathForTracking?: (document: GenericDocument) => string;
 }
 
 export default function StatusLine({
@@ -273,7 +272,6 @@ export default function StatusLine({
   statusLabel = 'Status',
   className,
   showStatusLineConnection = true,
-  documentPathForTracking,
 }: StatusLineProps) {
   return (
     <div className={classnames(styles.StatusLine, className)}>
@@ -313,7 +311,6 @@ export default function StatusLine({
               <StatusLinePanelDocuments
                 documents={item.documents ?? []}
                 altDocumentContent={item.altDocumentContent}
-                trackPath={documentPathForTracking}
               />
             </LineItem>
           ))}
