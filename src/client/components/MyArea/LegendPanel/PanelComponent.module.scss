@@ -5,8 +5,10 @@
   background-color: var(--ams-color-primary-white);
   max-height: 100%;
   height: auto;
-  padding-top: 3.2rem;
   z-index: 401;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    padding-top: 3.2rem;
+  }
 }
 
 .PanelInner {
@@ -72,6 +74,7 @@
   background: transparent;
   height: 4rem;
   z-index: 2;
+  cursor: pointer;
 
   &:after {
     content: '';
