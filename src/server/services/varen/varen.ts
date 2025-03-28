@@ -1,36 +1,15 @@
 import memoize from 'memoizee';
-import { generatePath } from 'react-router-dom';
-import slug from 'slugme';
 
-import { Varen, VarenFrontend } from './config-and-types';
+import { DecosVaren, VarenFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
-import { getStatusSteps } from './varen-status-steps';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
-import { toDateFormatted } from '../decos/helpers';
+import { transformDecosZaakFrontend } from '../decos/decos-service';
 
-function transformVarenFrontend(appRoute: AppRoute, zaak: Varen) {
-  const zaakFrontend: VarenFrontend = {
-    ...zaak,
-    steps: getStatusSteps(zaak),
-    dateRequestFormatted: toDateFormatted(zaak.dateRequest),
-    dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
-    link: {
-      to: generatePath(appRoute, {
-        caseType: slug(zaak.caseType, { lower: true }),
-        id: zaak.id,
-      }),
-      title: `Bekijk hoe het met uw aanvraag staat`,
-    },
-  };
-
-  return zaakFrontend;
-}
-
-async function fetchVaren_(
+export async function fetchVaren_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -44,7 +23,11 @@ async function fetchVaren_(
     const decosVergunningen = response.content;
     const varenVergunningFrontend: VarenFrontend[] = decosVergunningen.map(
       (vergunning) =>
-        transformVarenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
+        transformDecosZaakFrontend<DecosVaren>(
+          authProfileAndToken.profile.sid,
+          vergunning,
+          AppRoutes['VAREN/DETAIL']
+        )
     );
     return apiSuccessResult(varenVergunningFrontend);
   }
