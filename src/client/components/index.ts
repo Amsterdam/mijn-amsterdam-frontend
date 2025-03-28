@@ -1,11 +1,9 @@
 export { default as ErrorAlert } from './Alert/Alert';
-export { default as AlphaComponent } from './AlphaComponent/AlphaComponent';
 export { default as ApplicationError } from '../pages/ApplicationError/ApplicationError';
 export { default as AutoLogoutDialog } from './AutoLogoutDialog/AutoLogoutDialog';
 export { Button, default as Linkd, LinkdInline } from './Button/Button';
 export { default as ThemaIcon } from './ThemaIcon/ThemaIcon';
 export { default as DateInput } from './DateInput/DateInput';
-export { default as DirectLinks } from './DirectLinks/DirectLinks';
 export { default as DocumentList } from './DocumentList/DocumentList';
 export { default as ErrorMessages } from './ErrorMessages/ErrorMessages';
 export { default as InfoDetail } from './InfoDetail/InfoDetail';
