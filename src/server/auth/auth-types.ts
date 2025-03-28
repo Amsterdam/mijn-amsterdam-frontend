@@ -10,17 +10,17 @@ export interface AuthProfile {
   sid: SessionID;
 }
 
-export interface MaSession extends Omit<Session, 'expires_at'> {
+export interface MaSession extends Session {
   sid: SessionID;
   TMASessionID: string; // TMA Session ID
   profileType: ProfileType;
   authMethod: AuthMethod;
-  expires_at: number;
 }
 
 export interface AuthProfileAndToken {
   token: string;
   profile: AuthProfile;
+  expiresAtMilliseconds: number;
 }
 
 export interface TokenData {

@@ -14,16 +14,20 @@ import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
 import { ApiRequestOptions, useDataApi } from './useDataApi';
 
+export const ONE_SECOND_MS = 1000;
+
 export type SessionData = {
   isAuthenticated: boolean;
   profileType: ProfileType | null;
   authMethod: AuthProfile['authMethod'] | null;
+  expiresAtMilliseconds: number; // In milliseconds
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   profileType: null,
   authMethod: null,
+  expiresAtMilliseconds: 0,
 };
 
 export interface SessionState extends SessionData {
@@ -57,7 +61,7 @@ const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
 };
 
-export function useSessionApi() {
+export function useSessionApi(): SessionState {
   const [sessionResponse, fetch] = useDataApi<SessionResponseData>(
     requestOptions,
     apiSuccessResult(INITIAL_SESSION_CONTENT)

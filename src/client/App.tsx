@@ -56,10 +56,10 @@ import ErfpachtFacturen from './pages/Erfpacht/ErfpachtFacturen';
 import ErfpachtOpenFacturen from './pages/Erfpacht/ErfpachtOpenFacturen';
 import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
 import GeneralInfo from './pages/GeneralInfo/GeneralInfo';
-import HLI from './pages/HLI/HLIThemaPagina';
 import HLIRegeling from './pages/HLI/HLIRegeling';
 import HLIRegelingen from './pages/HLI/HLIRegelingen';
 import HLIStadspasDetail from './pages/HLI/HLIStadspasDetail';
+import HLI from './pages/HLI/HLIThemaPagina';
 import Horeca from './pages/Horeca/Horeca';
 import HorecaDetail from './pages/HorecaDetail/HorecaDetail';
 import Inkomen from './pages/Inkomen/Inkomen';
@@ -446,7 +446,11 @@ function AppLanding() {
   return isAuthenticated ? (
     <>
       <AppAuthenticated />
-      <AutoLogoutDialog />
+      {!!session.expiresAtMilliseconds && (
+        <AutoLogoutDialog
+          expiresAtMilliseconds={session.expiresAtMilliseconds}
+        />
+      )}
     </>
   ) : (
     <AppNotAuthenticated />
