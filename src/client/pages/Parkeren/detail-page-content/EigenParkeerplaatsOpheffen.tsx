@@ -3,7 +3,6 @@ import { Link } from '@amsterdam/design-system-react';
 import type { EigenParkeerplaatsOpheffen } from '../../../../server/services/parkeren/config-and-types';
 import InfoDetail from '../../../components/InfoDetail/InfoDetail';
 import styles from '../../../components/LocationModal/LocationModal.module.scss';
-import { Location } from '../../Vergunningen/detail-page-content/Location';
 
 export function EigenParkeerplaatsOpheffen({
   vergunning,
@@ -23,7 +22,7 @@ export function EigenParkeerplaatsOpheffen({
         }`}
       />
 
-      <Location label="Adres" location={`${street} ${houseNumber}`} />
+      {/* <Location label="Adres" location={`${street} ${houseNumber}`} /> */}
 
       {type && <InfoDetail label="Soort plek" value={type} />}
 

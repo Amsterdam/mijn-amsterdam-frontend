@@ -1,4 +1,5 @@
 import { HttpStatusCode } from 'axios';
+import { millisecondsToSeconds } from 'date-fns';
 import { Request, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
@@ -46,8 +47,7 @@ export function getAuthProfileAndToken(
       sid: '0D8ugZyqnzPTyknBDwxsMPb7',
     },
     expiresAtMilliseconds,
-    token:
-      'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
+    token: 'tttttttttttttttttttttttttttttt',
   };
 
   if (profileType === 'commercial') {

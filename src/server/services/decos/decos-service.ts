@@ -33,6 +33,7 @@ import {
 } from './decos-helpers';
 import {
   ApiErrorResponse,
+  apiErrorResult,
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
@@ -367,6 +368,44 @@ async function getZakenByUserKey(
   );
 
   return responseSource;
+}
+
+export async function fetchDecosZakenFromSourceRaw(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
+
+  async function fetchZakenByUserKey(userKey: string) {
+    const apiConfig = getApiConfig('DECOS_API', {
+      formatUrl: (config) => {
+        return `${config.url}/items/${userKey}/folders?properties=true`;
+      },
+      transformResponse: (responseData: DecosZakenResponse) => {
+        if (!Array.isArray(responseData?.content)) {
+          return [];
+        }
+        return responseData.content;
+      },
+    });
+
+    return requestData<DecosZaakSource[]>(apiConfig, requestID);
+  }
+
+  if (userKeysResponse.status === 'ERROR') {
+    return apiErrorResult('Failed to fetch user keys', null);
+  }
+
+  const zakenSourceResponses = await Promise.allSettled(
+    userKeysResponse.content.map((userKey) => fetchZakenByUserKey(userKey))
+  );
+
+  const responseContent = zakenSourceResponses
+    .map((response) => getSettledResult(response))
+    .filter((response) => response.status === 'OK')
+    .flatMap((response) => response.content);
+
+  return apiSuccessResult(responseContent);
 }
 
 export async function fetchDecosZakenFromSource(
