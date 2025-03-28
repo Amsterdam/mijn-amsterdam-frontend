@@ -131,7 +131,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
 }
 
 export function ToeristischeVerhuurDetailPagina() {
-  const { vergunningen, isError, isLoading, themaPaginaBreadcrumb } =
+  const { vergunningen, isError, isLoading, breadcrumbs } =
     useToeristischeVerhuurThemaData();
   const { id } = useParams<{ id: string }>();
   const vergunning = vergunningen.find((v) => v.id === id);
@@ -184,7 +184,7 @@ export function ToeristischeVerhuurDetailPagina() {
           </>
         )
       }
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

@@ -35,7 +35,7 @@ function ExploitatieHorecaBedrijf({
 }
 
 export function HorecaDetailPagina() {
-  const { vergunningen, isLoading, isError, themaPaginaBreadcrumb } =
+  const { vergunningen, isLoading, isError, breadcrumbs } =
     useHorecaThemaData();
   const { vergunning, title, documents } =
     useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
@@ -72,7 +72,7 @@ export function HorecaDetailPagina() {
           </>
         )
       }
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

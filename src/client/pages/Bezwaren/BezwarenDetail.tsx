@@ -108,7 +108,7 @@ export function BezwarenDetailPagina() {
     isErrorThemaData,
     isLoading,
     isLoadingThemaData,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
     statussen,
     title,
   } = useBezwarenDetailData();
@@ -152,7 +152,7 @@ export function BezwarenDetailPagina() {
           )}
         </>
       }
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

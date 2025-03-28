@@ -2,12 +2,10 @@ import { useParams } from 'react-router-dom';
 
 import { ListPageParamKind, routes } from './AVG-thema-config';
 import { useAVGData } from './useAVGData.hook';
-import { Themas } from '../../../universal/config/thema';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useAVGListPageData() {
-  const { avgVerzoeken, isLoading, isError, tableConfig } = useAVGData();
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.AVG);
+  const { avgVerzoeken, isLoading, isError, tableConfig, breadcrumbs } =
+    useAVGData();
   const params = useParams<{ kind: ListPageParamKind }>();
 
   const { filter, sort, title, displayProps } =
@@ -21,7 +19,7 @@ export function useAVGListPageData() {
     displayProps,
     isLoading,
     isError,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
     params,
     listPageRoute: routes.listPage,
   };

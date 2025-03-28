@@ -8,14 +8,8 @@ export function InkomenLijstPagina() {
   const { kind } = useParams<{
     kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'uitkering'>;
   }>();
-  const {
-    zaken,
-    tableConfig,
-    routes,
-    isLoadingWpi,
-    isErrorWpi,
-    themaPaginaBreadcrumb,
-  } = useInkomenThemaData();
+  const { zaken, tableConfig, routes, isLoadingWpi, isErrorWpi, breadcrumbs } =
+    useInkomenThemaData();
   const listPageTableConfig = tableConfig[kind];
 
   return (
@@ -24,7 +18,7 @@ export function InkomenLijstPagina() {
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoadingWpi}
       isError={isErrorWpi}

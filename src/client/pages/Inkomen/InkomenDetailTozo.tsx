@@ -6,7 +6,7 @@ import { ExternalUrls } from '../../config/app';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function InkomenDetailTozo() {
-  const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
+  const { isLoading, isError, zaak, breadcrumbs } =
     useInkomenDetailData('WPI_TOZO');
   const pageContentTop = (
     <PageContentCell spanWide={6}>
@@ -33,7 +33,7 @@ export function InkomenDetailTozo() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={pageContentTop}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

@@ -7,8 +7,7 @@ import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function LoodMeting() {
-  const { meting, isLoading, isError, themaPaginaBreadcrumb } =
-    useBodemDetailData();
+  const { meting, isLoading, isError, breadcrumbs } = useBodemDetailData();
 
   const BodemDetailRows = (meting: LoodMetingFrontend) => {
     return [
@@ -40,7 +39,7 @@ export function LoodMeting() {
     <ThemaDetailPagina
       title="Lood in bodem-check"
       zaak={meting}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       isError={isError}
       isLoading={isLoading}
       pageContentMain={!!meting && <BodemDetailContent meting={meting} />}

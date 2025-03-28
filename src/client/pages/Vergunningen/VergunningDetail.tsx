@@ -84,8 +84,9 @@ function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
 }
 
 export function VergunningDetailPagina() {
-  const { vergunningen, isLoading, isError } = useVergunningenThemaData();
-  const { vergunning, title, documents, themaPaginaBreadcrumb } =
+  const { vergunningen, isLoading, isError, breadcrumbs } =
+    useVergunningenThemaData();
+  const { vergunning, title, documents } =
     useVergunningenDetailData(vergunningen);
 
   return (
@@ -118,7 +119,7 @@ export function VergunningDetailPagina() {
           </>
         )
       }
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

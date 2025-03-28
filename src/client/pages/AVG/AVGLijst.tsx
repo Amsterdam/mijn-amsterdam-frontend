@@ -9,7 +9,7 @@ export function AVGList() {
     filter,
     sort,
     title,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
     displayProps,
     params,
     listPageRoute,
@@ -21,7 +21,7 @@ export function AVGList() {
       title={title}
       appRoute={listPageRoute}
       appRouteParams={params}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}

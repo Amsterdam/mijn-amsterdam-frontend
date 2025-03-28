@@ -32,7 +32,7 @@ import { BagThemas } from '../../config/thema';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
@@ -158,7 +158,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
     AFIS.content?.facturen ?? null
   );
 
-  const themaLink = useThemaMenuItemByThemaID(Themas.AFIS);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.AFIS);
 
   return {
     facturenListResponse:
@@ -174,7 +174,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
       state !== 'open' ? isLoading(facturenByStateApiResponse) : false,
     listPageTitle,
     routes,
-    themaPaginaBreadcrumb: themaLink,
+    breadcrumbs,
   };
 }
 
@@ -196,6 +196,8 @@ export function useAfisThemaData() {
     to: urlNaarBelastingen,
   };
 
+  const breadcrumbs = useThemaBreadcrumbs(Themas.AFIS);
+
   return {
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
@@ -206,6 +208,7 @@ export function useAfisThemaData() {
     listPageTitle,
     linkListItems: [...linkListItems, belastingenLinkListItem],
     routes,
+    breadcrumbs,
     dependencyErrors: {
       open: hasFailedDependency(AFIS, 'open'),
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),
@@ -227,8 +230,6 @@ export function useAfisBetaalVoorkeurenData(
     bagThema: BagThemas.AFIS,
     key: `afis-betaalvoorkeuren`,
   });
-
-  const themaLink = useThemaMenuItemByThemaID(Themas.AFIS);
 
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
@@ -268,6 +269,5 @@ export function useAfisBetaalVoorkeurenData(
     eMandateTableConfig,
     eMandates: [],
     isLoadingEmandates: false,
-    themaPaginaBreadcrumb: themaLink,
   };
 }

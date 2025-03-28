@@ -8,14 +8,8 @@ import { PageContentCell } from '../../components/Page/Page';
 
 export function HLIRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const {
-    regelingen,
-    tableConfig,
-    routes,
-    isLoading,
-    isError,
-    themaPaginaBreadcrumb,
-  } = useHliThemaData();
+  const { regelingen, tableConfig, routes, isLoading, isError, breadcrumbs } =
+    useHliThemaData();
 
   const { filter, sort, title, displayProps, className } = tableConfig[kind];
 
@@ -26,7 +20,7 @@ export function HLIRegelingen() {
         title={title}
         appRoute={routes.listPage}
         appRouteParams={{ kind }}
-        breadcrumbs={[themaPaginaBreadcrumb]}
+        breadcrumbs={breadcrumbs}
         displayProps={displayProps}
         isLoading={isLoading}
         isError={isError}
