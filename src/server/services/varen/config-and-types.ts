@@ -1,5 +1,5 @@
 import { ZaakDetail } from '../../../universal/types/App.types';
-import { DecosZaakBase } from '../decos/decos-types';
+import { DecosZaakBase } from '../decos/config-and-types';
 
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
