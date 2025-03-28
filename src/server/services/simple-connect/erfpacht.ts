@@ -367,6 +367,9 @@ export interface ErfpachtV2DossiersResponse
   dossiers: ErfpachtV2DossiersResponseSource['dossiers'] & {
     dossiers?: ErfpachtV2Dossier[];
   };
+  openstaandeFacturen: ErfpachtV2DossiersResponseSource['openstaandeFacturen'] & {
+    dossiers: ErfpachtDossierFactuur[];
+  };
   isKnown: boolean;
   relatieCode: string;
 }
@@ -444,24 +447,21 @@ export function transformDossierResponse(
     : {};
   const hasDossiers = !!responseData?.dossiers?.dossiers?.length;
 
-  if (hasDossiers) {
-    responseData.dossiers.dossiers = responseData.dossiers?.dossiers
+  responseData.dossiers.dossiers =
+    responseData.dossiers?.dossiers
       .map((dossier) => {
         return transformErfpachtDossierProperties(dossier);
       })
-      .sort(sortAlpha('voorkeursadres', 'asc'));
-  }
+      .sort(sortAlpha('voorkeursadres', 'asc')) ?? [];
 
-  if (responseData?.openstaandeFacturen?.facturen?.length) {
-    responseData.openstaandeFacturen.facturen =
-      responseData.openstaandeFacturen?.facturen.map((factuur) => {
-        return {
-          ...factuur,
-          dossierNummerUrlParam: getDossierNummerUrlParam(factuur.dossierAdres),
-          vervalDatum: defaultDateFormat(factuur.vervalDatum),
-        };
-      });
-  }
+  responseData.openstaandeFacturen.facturen =
+    responseData.openstaandeFacturen?.facturen?.map((factuur) => {
+      return {
+        ...factuur,
+        dossierNummerUrlParam: getDossierNummerUrlParam(factuur.dossierAdres),
+        vervalDatum: defaultDateFormat(factuur.vervalDatum),
+      };
+    }) ?? [];
 
   responseData.relatieCode = relatieCode;
   responseData.isKnown = hasDossiers;
