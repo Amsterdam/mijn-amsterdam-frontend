@@ -196,6 +196,7 @@ export default function MainHeader({
           ref={menuRef}
           className={styles.header}
           appName="Mijn Amsterdam"
+          logoLink="https://www.amsterdam.nl/"
           links={
             isAuthenticated && (
               <PageMenu alignEnd>
