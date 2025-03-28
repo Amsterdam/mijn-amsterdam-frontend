@@ -6,6 +6,7 @@ import { fetchAantalBewoners } from '../services';
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
+import { IS_PRODUCTION } from '../../universal/config/env';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   handleFetchAfisBusinessPartner,
@@ -115,7 +116,10 @@ router.get(
 
 // Decos (Vergunningen, Horeca, Toeristische verhuur, Parkeren)
 router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
-router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
+
+if (!IS_PRODUCTION) {
+  router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
+}
 
 attachDocumentDownloadRoute(
   router,
