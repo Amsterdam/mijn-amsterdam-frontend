@@ -29,6 +29,15 @@ const displayPropsAanvragen = withOmitDisplayPropsForSmallScreens(
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
+} as const;
+
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+
+export const routes = {
+  listPage: AppRoutes['BODEM/LIST'],
+  themaPage: AppRoutes.BODEM,
+  detailPage: AppRoutes['BODEM/LOOD_METING'],
 };
 
 const tableConfigBase = {
@@ -41,7 +50,7 @@ export const tableConfig = {
     ...tableConfigBase,
     title: 'Lopende aanvragen',
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
-    listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
@@ -50,7 +59,7 @@ export const tableConfig = {
     ...tableConfigBase,
     title: 'Afgehandelde aanvragen',
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
-    listPageRoute: generatePath(AppRoutes['BODEM/LIST'], {
+     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.completed,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,

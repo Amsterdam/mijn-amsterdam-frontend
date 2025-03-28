@@ -8,7 +8,7 @@ export function ErfpachtOpenFacturen() {
     isError,
     openFacturen,
     listPageParamKind,
-    routes,
+    themaPaginaBreadcrumb,
   } = useErfpachtV2Data();
 
   const tableConfigFacturen = tableConfig?.[listPageParamKind.openFacturen];
@@ -19,7 +19,7 @@ export function ErfpachtOpenFacturen() {
       items={openFacturen}
       title={tableConfigFacturen?.title ?? 'Openstaande facturen'}
       appRoute={tableConfigFacturen?.listPageRoute ?? ''}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}

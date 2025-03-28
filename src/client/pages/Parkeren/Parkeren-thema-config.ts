@@ -20,7 +20,7 @@ export type ListPageParamKind = ListPageParamKindVergunningen;
 
 export const routes = {
   listPage: AppRoutes['PARKEREN/LIST'],
-  themePage: AppRoutes.PARKEREN,
+  themaPage: AppRoutes.PARKEREN,
   detailPage: AppRoutes['PARKEREN/DETAIL'],
 };
 

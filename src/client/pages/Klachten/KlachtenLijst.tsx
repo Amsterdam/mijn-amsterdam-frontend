@@ -12,7 +12,7 @@ export function KlachtenLijstPagina() {
       title={tableConfig.title}
       appRoute={tableConfig.listPageRoute}
       appRouteParams={{}}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
       displayProps={tableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}
