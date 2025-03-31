@@ -45,9 +45,9 @@ import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notif
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
 
-const TIP_IDS_DISABLED = (
-  getFromEnv('BFF_TIPS_DISABLED_IDS', false) ?? ''
-).split(',');
+const TIP_IDS_DISABLED = (getFromEnv('BFF_TIPS_DISABLED_IDS', false) ?? '')
+  .split(',')
+  .map((id) => id.trim());
 
 type FetchNotificationFunction = (
   requestID: RequestID,
