@@ -11,6 +11,7 @@ import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import {
@@ -31,12 +32,13 @@ export function MainHeaderSecondaryLinks({
   wrapInListElement = false,
 }: MainHeaderSecondaryLinksProps) {
   const Wrap = wrapInListElement ? 'li' : React.Fragment;
+  const profileType = useProfileTypeValue();
   return (
     <>
       <Wrap>
         <MaRouterLink
           maVariant="noUnderline"
-          href={AppRoutes.BRP}
+          href={profileType === 'private' ? AppRoutes.BRP : AppRoutes.KVK}
           className={linkClassName}
           title="Ga naar persoonlijke gegevens"
         >
