@@ -21,7 +21,7 @@ const exploitatieBase_ = {
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
   status: 'In behandeling',
-  decision: 'Nog niet bekend',
+  decision: null,
   processed: false,
   dateRequest: '2025-01-01T00:00:00',
   statusDates: [],
@@ -34,6 +34,7 @@ describe('Notifications', () => {
   const authProfileAndToken: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxxx',
+    expiresAtMilliseconds: Number.MAX_SAFE_INTEGER,
   };
 
   MockDate.set('2025-01-20');

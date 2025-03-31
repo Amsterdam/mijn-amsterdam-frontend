@@ -54,13 +54,7 @@ export type DecosVarenZaakBase = DecosZaakBase &
   DecosVarenZaakVergunning & {
     linkDataRequest: string | null;
     status: VarenStatus;
-    decision:
-      | 'Nog niet bekend'
-      | 'Afgewezen'
-      | 'Afgewezen door loting'
-      | 'Buiten behandeling'
-      | 'Ingetrokken door aanvrager'
-      | 'Verleend';
+    decision: 'Verleend' | null;
     vergunningKenmerk: string | null;
     vergunningen: DecosVarenZaakVergunning[];
   };

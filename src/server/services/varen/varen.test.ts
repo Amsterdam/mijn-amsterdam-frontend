@@ -59,6 +59,7 @@ describe('Varen service', () => {
   const authProfileAndToken: AuthProfileAndToken = {
     profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
     token: 'xxxxxx',
+    expiresAtMilliseconds: Number.MAX_SAFE_INTEGER,
   };
 
   MockDate.set('2022-10-06');

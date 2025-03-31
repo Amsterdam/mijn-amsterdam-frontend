@@ -87,6 +87,10 @@ const VarenBaseExploitatieVergunning = {
   fetchLinkedItem: ['varens'],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM,
+    dfunction: {
+      name: 'decision' as const,
+      transform: (dfunction) => (dfunction === 'Verleend' ? dfunction : null),
+    },
     ...vesselName,
     ...vesselLengths,
     ...vesselSegment,
@@ -113,7 +117,10 @@ const VarenBaseExploitatieVergunning = {
     },
   },
   afterTransform: setStatusIfActiveTermijn,
-} satisfies Partial<DecosZaakTransformer<VarenVergunningExploitatieType>>;
+} satisfies Omit<
+  DecosZaakTransformer<VarenVergunningExploitatieType>,
+  'caseType' | 'title'
+>;
 
 export const VarenVergunningExploitatie: DecosZaakTransformer<VarenVergunningExploitatieType> =
   {
