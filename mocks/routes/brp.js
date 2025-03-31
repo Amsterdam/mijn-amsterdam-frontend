@@ -10,7 +10,6 @@ module.exports = [
       {
         id: 'standard',
         type: 'json',
-        // delay: 4000,
         options: {
           status: 200,
           body: BRP_RESPONSE,
