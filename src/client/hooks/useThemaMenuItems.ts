@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useHistory } from 'react-router-dom';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
@@ -66,13 +67,12 @@ export function useThemaMenuItemByThemaID(themaID: Thema) {
   return itemsById[themaID];
 }
 
-export function useThemaBreadcrumbs(
-  themaID: Thema,
-  listPageTitle: string = 'Lijst'
-): LinkProps[] {
+export function useThemaBreadcrumbs(themaID: Thema): LinkProps[] {
   const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
   const history = useHistory();
   const from = history.location?.state?.from;
+  const fromPageType = history.location?.state?.pageType;
+
   return [
     themaPaginaBreadcrumb
       ? {
@@ -80,13 +80,35 @@ export function useThemaBreadcrumbs(
           title: themaPaginaBreadcrumb?.title,
         }
       : null,
-    typeof from === 'string' &&
-    from !== themaPaginaBreadcrumb?.to &&
-    from !== history.location.pathname
+    fromPageType === 'listpage'
       ? {
-          title: listPageTitle,
           to: from,
+          title: 'Lijst',
         }
       : null,
   ].filter((link) => link !== null);
+}
+
+type PageTypeSetting = 'listpage' | 'none';
+
+const pageTypeSetting = atom<PageTypeSetting>({
+  default: 'none',
+  key: 'pageTypeSetting',
+});
+
+export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
+  const [pageType, setPageType] = useRecoilState(pageTypeSetting);
+
+  useEffect(() => {
+    setPageType(pageTypeRequested);
+    return () => {
+      setPageType(() => 'none');
+    };
+  }, [pageTypeRequested]);
+
+  return pageType;
+}
+
+export function usePageTypeSettingValue() {
+  return useRecoilValue(pageTypeSetting);
 }

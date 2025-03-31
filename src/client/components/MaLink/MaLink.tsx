@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
 import styles from './MaLink.module.scss';
+import { usePageTypeSettingValue } from '../../hooks/useThemaMenuItems';
 
 type MaClassNameVariant =
   | 'fatNoUnderline'
@@ -52,6 +53,7 @@ export function MaLink({
 
 export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
   const history = useHistory();
+  const pageType = usePageTypeSettingValue();
   return (
     <MaLink
       {...rest}
@@ -63,7 +65,10 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
           onClick(event);
         }
 
-        history.push(href as string, { from: history.location.pathname });
+        history.push(href as string, {
+          from: history.location.pathname,
+          pageType,
+        });
       }}
     />
   );
@@ -135,6 +140,7 @@ export function MaButtonRouterLink({
   ...rest
 }: MaButtonLinkProps) {
   const history = useHistory();
+  const pageType = usePageTypeSettingValue();
   return (
     <a
       {...rest}
@@ -152,7 +158,10 @@ export function MaButtonRouterLink({
           onClick(event);
         }
 
-        history.push(href as string, { from: history.location.pathname });
+        history.push(href as string, {
+          from: history.location.pathname,
+          pageType,
+        });
       }}
     >
       {children}
