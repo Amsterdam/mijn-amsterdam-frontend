@@ -27,7 +27,6 @@ import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia';
 import {
   fetchBelastingNotifications,
-  fetchErfpachtNotifications,
   fetchMilieuzoneNotifications,
   fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
@@ -68,7 +67,6 @@ const notificationServices: NotificationServicesByProfileType = {
     overtredingen: fetchOvertredingenNotifications,
     vergunningen: fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
-    erfpacht: fetchErfpachtNotifications,
     maintenanceNotifications: (requestID: RequestID) =>
       fetchMaintenanceNotificationsDashboard(requestID),
     subsidie: fetchSubsidieNotifications,
@@ -95,7 +93,6 @@ const notificationServices: NotificationServicesByProfileType = {
     bezwaren: fetchBezwarenNotifications,
     bodem: fetchLoodMetingNotifications,
     brp: fetchBrpNotifications,
-    erfpacht: fetchErfpachtNotifications,
     fetchKrefia: fetchKrefiaNotifications,
     fetchSVWI: fetchSVWINotifications,
     fetchWior: fetchWiorNotifications,
