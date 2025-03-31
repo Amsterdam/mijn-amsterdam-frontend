@@ -22,7 +22,6 @@ import { MaSession, TokenData } from './auth-types';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
-  RequestMock,
   ResponseMock,
 } from '../../testing/utils';
 import { ONE_MINUTE_SECONDS } from '../config/app';
@@ -190,15 +189,7 @@ describe('auth-helpers', () => {
 
   describe('createLogoutHandler', async () => {
     const authProfileAndToken = getAuthProfileAndToken('commercial');
-    const reqMock = await getReqMockWithOidc(authProfileAndToken.profile);
-
-    (reqMock as unknown as RequestMock).setCookies({
-      [OIDC_SESSION_COOKIE_NAME]: 'foo-bar',
-    });
-
     const resMock = ResponseMock.new();
-
-    const nowInSeconds = millisecondsToSeconds(Date.now());
 
     beforeEach(() => {
       resMock.oidc.logout.mockClear();
@@ -206,10 +197,10 @@ describe('auth-helpers', () => {
 
     test('Authenticated IDP logout calls oidc.logout', async () => {
       const handler = createLogoutHandler('http://foo.bar');
-
-      reqMock[OIDC_SESSION_COOKIE_NAME]!.expires_at =
-        nowInSeconds + ONE_MINUTE_SECONDS; // Expires in one minute
-
+      const reqMock = await getReqMockWithOidc(
+        authProfileAndToken.profile,
+        millisecondsToSeconds(Date.now()) + ONE_MINUTE_SECONDS
+      );
       await handler(reqMock, resMock);
 
       expect(resMock.oidc.logout).toHaveBeenCalledWith({
@@ -223,9 +214,10 @@ describe('auth-helpers', () => {
 
     test('Expired authenticated IDP logout should not call oidc.logout', async () => {
       const handler = createLogoutHandler('http://foo.bar');
-
-      reqMock[OIDC_SESSION_COOKIE_NAME]!.expires_at =
-        nowInSeconds - ONE_MINUTE_SECONDS; // Expired one minute ago
+      const reqMock = await getReqMockWithOidc(
+        authProfileAndToken.profile,
+        -ONE_MINUTE_SECONDS
+      );
 
       await handler(reqMock, resMock);
 
@@ -245,6 +237,10 @@ describe('auth-helpers', () => {
 
     test('Local logout should not call oidc.logout', async () => {
       const handler2 = createLogoutHandler('http://foo.bar', false);
+      const reqMock = await getReqMockWithOidc(
+        authProfileAndToken.profile,
+        ONE_MINUTE_SECONDS
+      );
       await handler2(reqMock, resMock);
 
       expect(resMock.clearCookie).toHaveBeenCalledWith(
