@@ -3,6 +3,7 @@ import {
   Alert,
   Grid,
   GridColumnNumber,
+  Heading,
   Icon,
   Link,
   Paragraph,
@@ -80,7 +81,9 @@ export function VarenPageContentRederRegistratie({
       rows: [
         {
           label: 'Adres',
-          content: `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
+          content:
+            registratie.correspondenceAddress ||
+            `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
           span: DEFAULT_GRID_SPAN,
         },
         {
@@ -99,6 +102,9 @@ export function VarenPageContentRederRegistratie({
 
   return (
     <Grid.Cell span="all">
+      <Heading level={3} size="level-2">
+        Gegevens Aanvrager
+      </Heading>
       <Datalist rows={rows} className={styles.VarenGridWithoutRowGap} />
     </Grid.Cell>
   );
