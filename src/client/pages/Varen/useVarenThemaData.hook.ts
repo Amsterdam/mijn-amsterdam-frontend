@@ -3,7 +3,7 @@ import {
   varenLegesTableLink,
   varenMeerInformatieLink,
 } from './Varen-thema-config';
-import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -15,7 +15,7 @@ export function useVarenThemaData() {
 
   const vergunningen = VAREN.content?.zaken ?? [];
 
-  const varenVergunningen = addLinkElementToProperty<VarenFrontend>(
+  const varenVergunningen = addLinkElementToProperty<VarenZakenFrontend>(
     vergunningen,
     'vesselName',
     true

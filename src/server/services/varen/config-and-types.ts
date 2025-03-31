@@ -114,6 +114,10 @@ export type VarenRegistratieRederType = DecosZaakBase & {
   email: string | null;
 };
 
+export type VarenRegistratieRederFrontend = VarenRegistratieRederType & {
+  dateRequestFormatted: string;
+};
+
 export type Varen =
   | VarenVergunningLigplaatsType
   | VarenVergunningExploitatieType
@@ -122,7 +126,7 @@ export type Varen =
   | VarenVergunningExploitatieWijzigingVergunningshouderType
   | VarenVergunningExploitatieWijzigingVervangingType;
 
-export type VarenFrontend<T extends Varen = Varen> = OmitMapped<
+export type VarenZakenFrontend<T extends Varen = Varen> = OmitMapped<
   T,
   'statusDates' | 'termijnDates' | 'vergunningen'
 > & {

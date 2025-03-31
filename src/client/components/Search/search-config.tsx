@@ -25,7 +25,7 @@ import {
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import {
-  VarenFrontend,
+  VarenZakenFrontend,
   VarenRegistratieRederType,
 } from '../../../server/services/varen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
@@ -472,7 +472,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     profileTypes: ['commercial'],
     getApiBaseItems: (apiContent: {
       reder: VarenRegistratieRederType;
-      zaken: VarenFrontend[];
+      zaken: VarenZakenFrontend[];
     }) => {
       const zaken =
         apiContent?.zaken.map((zaak) => ({
@@ -490,7 +490,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       };
       return [reder, ...zaken];
     },
-    displayTitle: (item: VarenFrontend) => (term: string) => {
+    displayTitle: (item: VarenZakenFrontend) => (term: string) => {
       return displayPath(term, [
         item.title,
         item.vesselName ?? item.identifier,

@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router-dom';
 
 import { isVergunning } from './helper';
-import type { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -32,11 +32,11 @@ type TableConfig<T> = {
 
 type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
 export const tableConfig: TableConfigByKind<
-  WithDetailLinkComponent<VarenFrontend>
+  WithDetailLinkComponent<VarenZakenFrontend>
 > = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VarenFrontend) => !vergunning.processed,
+    filter: (vergunning: VarenZakenFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
     }),

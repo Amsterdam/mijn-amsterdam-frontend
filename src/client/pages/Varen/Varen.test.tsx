@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
-  VarenFrontend,
+  VarenZakenFrontend,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
 } from '../../../server/services/varen/config-and-types';
@@ -16,7 +16,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { Varen } from './Varen';
 
-type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatieType>;
+type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieInProgress = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
@@ -113,12 +113,13 @@ const rederRegistratie = {
   phone: '0612345678',
   email: 'myemailadres@example.com',
   dateRequest: '2023-11-06T00:00:00',
+  dateRequestFormatted: '06 november 2023',
 } as unknown as VarenRegistratieRederType;
 
 const varenContent = [exploitatieInProgress, exploitatieDecision];
 
 const getTestState = (
-  zaken: VarenFrontend[] = varenContent,
+  zaken: VarenZakenFrontend[] = varenContent,
   reder: VarenRegistratieRederType | null = rederRegistratie
 ): AppState =>
   jsonCopy({

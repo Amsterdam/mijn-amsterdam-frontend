@@ -1,6 +1,9 @@
 import { generatePath } from 'react-router-dom';
 
-import { VarenFrontend, VarenRegistratieRederType } from './config-and-types';
+import {
+  VarenZakenFrontend,
+  VarenRegistratieRederType,
+} from './config-and-types';
 import { fetchVaren } from './varen';
 import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -30,7 +33,9 @@ function createVarenRederRegisteredNotification(
   };
 }
 
-function createVarenNotification(zaak: VarenFrontend): MyNotification | null {
+function createVarenNotification(
+  zaak: VarenZakenFrontend
+): MyNotification | null {
   const currentStep = zaak.steps.find((step) => step.isActive);
   if (!currentStep) {
     return null;

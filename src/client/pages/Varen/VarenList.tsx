@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { ListPageParamKind } from './Varen-thema-config';
-import type { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
@@ -17,7 +17,7 @@ export function VarenList() {
   const vergunningen = varenVergunningen.filter(filter).sort(sort);
 
   return (
-    <ListPagePaginated<VarenFrontend>
+    <ListPagePaginated<VarenZakenFrontend>
       items={vergunningen}
       title={title}
       isLoading={isLoading}

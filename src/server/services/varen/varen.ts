@@ -2,7 +2,7 @@ import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
-import { Varen } from './config-and-types';
+import { Varen, VarenRegistratieRederType } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
@@ -12,7 +12,10 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
 
-function transformVarenFrontend<T extends Varen>(appRoute: AppRoute, zaak: T) {
+function transformVarenZakenFrontend<T extends Varen>(
+  appRoute: AppRoute,
+  zaak: T
+) {
   const createLink = (id: string) => ({
     to: generatePath(appRoute, {
       caseType: slug(zaak.caseType, { lower: true }),
@@ -45,6 +48,18 @@ function transformVarenFrontend<T extends Varen>(appRoute: AppRoute, zaak: T) {
   return zakenFrontend;
 }
 
+function transformVarenRederFrontend(
+  zaak: VarenRegistratieRederType | null | undefined
+) {
+  if (!zaak) {
+    return null;
+  }
+  return {
+    ...zaak,
+    dateRequestFormatted: toDateFormatted(zaak.dateRequest),
+  };
+}
+
 async function fetchVaren_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
@@ -57,17 +72,17 @@ async function fetchVaren_(
 
   if (response.status === 'OK') {
     const decosZaken = response.content;
-    const registratieReder =
-      decosZaken.find((zaak) => zaak.caseType === 'Varen registratie reder') ??
-      null;
-    const zaken = decosZaken.filter(
-      (zaak) => zaak.caseType !== 'Varen registratie reder'
+    const reder = decosZaken.find(
+      (zaak) => zaak.caseType === 'Varen registratie reder'
     );
-    const zakenFrontend = zaken.flatMap((vergunning) =>
-      transformVarenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
-    );
+    const rederFrontend = transformVarenRederFrontend(reder);
+    const zakenFrontend = decosZaken
+      .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
+      .flatMap((vergunning) =>
+        transformVarenZakenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
+      );
     return apiSuccessResult({
-      reder: registratieReder,
+      reder: rederFrontend,
       zaken: zakenFrontend,
     });
   }

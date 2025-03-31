@@ -14,10 +14,9 @@ import { useVarenThemaData } from './useVarenThemaData.hook';
 import { rederRegistratieLink } from './Varen-thema-config';
 import styles from './Varen.module.scss';
 import type {
-  VarenFrontend,
-  VarenRegistratieRederType,
+  VarenRegistratieRederFrontend,
+  VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
-import { toDateFormatted } from '../../../universal/helpers/utils';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { ThemaTitles } from '../../config/thema';
@@ -50,7 +49,7 @@ const VarenDisclaimerRederNotRegistered = (
 );
 
 type VarenPageContentRederRegistratieProps = {
-  registratie: VarenRegistratieRederType;
+  registratie: VarenRegistratieRederFrontend;
 };
 
 const DEFAULT_GRID_SPAN: GridColumnNumber = 4;
@@ -93,7 +92,7 @@ export function VarenPageContentRederRegistratie({
         },
         {
           label: 'Datum registratie',
-          content: toDateFormatted(registratie.dateRequest),
+          content: registratie.dateRequestFormatted,
           span: DEFAULT_GRID_SPAN,
         },
       ],
@@ -142,7 +141,7 @@ export function Varen() {
     ([kind, config]) => {
       const zaken = varenVergunningen.filter(config.filter).sort(config.sort);
       return (
-        <ThemaPaginaTable<VarenFrontend>
+        <ThemaPaginaTable<VarenZakenFrontend>
           key={kind}
           title={config.title}
           zaken={zaken}
