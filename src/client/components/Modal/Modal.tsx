@@ -113,7 +113,7 @@ interface ModalProps {
   showCloseButton?: boolean;
   closeOnEscape?: boolean;
   closeOnClickOutside?: boolean;
-  pollingQuerySelector: string;
+  pollingQuerySelector?: string;
   giveUpOnReadyPollingAfterMs?: number;
 }
 

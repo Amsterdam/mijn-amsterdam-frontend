@@ -2,7 +2,7 @@ import {
   ActionGroup,
   Alert,
   Grid,
-  GridColumnNumber,
+  Heading,
   Icon,
   Link,
   Paragraph,

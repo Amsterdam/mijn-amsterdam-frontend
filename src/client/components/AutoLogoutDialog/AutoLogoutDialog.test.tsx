@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
-import AutoLogoutDialog from './AutoLogoutDialog';
+import { AutoLogoutDialog } from './AutoLogoutDialog';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useCounter } from '../../hooks/timer.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';

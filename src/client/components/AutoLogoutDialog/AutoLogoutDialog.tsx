@@ -201,7 +201,6 @@ export function AutoLogoutDialog({
       isOpen
       showCloseButton={false}
       closeOnEscape={false}
-      pollingQuerySelector="#logout-button"
       closeOnClickOutside={false}
       actions={
         <ActionGroup>
