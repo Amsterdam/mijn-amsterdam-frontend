@@ -4,7 +4,7 @@ import {
   listPageParamKind,
   routes,
 } from './Erfpacht-thema-config';
-import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
+import { ErfpachtV2DossiersResponse } from '../../../server/services/erfpacht/erfpacht';
 import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';

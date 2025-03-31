@@ -3,7 +3,7 @@ import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersDetail,
   ErfpachtV2DossiersResponse,
-} from '../../../server/services/simple-connect/erfpacht';
+} from '../../../server/services/erfpacht/erfpacht';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';

@@ -9,6 +9,7 @@ import {
 import { omit } from '../../universal/helpers/utils';
 import { getAuth } from '../auth/auth-helpers';
 import { AuthProfileAndToken } from '../auth/auth-types';
+import { logger } from '../logging';
 import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
@@ -18,6 +19,7 @@ import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
+import { fetchErfpachtV2 } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
 import { fetchAllKlachten } from './klachten/klachten';
@@ -34,7 +36,6 @@ import {
   fetchOvertredingen,
   fetchSubsidie,
 } from './simple-connect';
-import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
 import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
@@ -48,7 +49,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { logger } from '../logging';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -147,7 +147,6 @@ const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
-const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
 
@@ -182,7 +181,6 @@ const SERVICES_INDEX = {
   BRP,
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
-  ERFPACHT,
   ERFPACHTv2,
   HLI,
   HORECA,
@@ -229,7 +227,6 @@ type CommercialServices = Pick<
   | 'BODEM'
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'ERFPACHT'
   | 'ERFPACHTv2'
   | 'HORECA'
   | 'KVK'
@@ -262,7 +259,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     BRP,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
-    ERFPACHT,
     ERFPACHTv2,
     HLI,
     HORECA,
@@ -300,7 +296,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     BODEM,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
-    ERFPACHT,
     ERFPACHTv2,
     HORECA,
     KVK,

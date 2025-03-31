@@ -14,7 +14,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     BEZWAREN,
     BODEM,
     BRP,
-    ERFPACHT,
     ERFPACHTv2,
     HLI,
     HORECA,
@@ -130,9 +129,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(MY_LOCATION) &&
         isAmsterdam
       );
-
-    case Themas.ERFPACHT:
-      return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
 
     case Themas.ERFPACHTv2:
       return (

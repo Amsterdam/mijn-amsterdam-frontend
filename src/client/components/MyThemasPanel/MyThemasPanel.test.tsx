@@ -5,19 +5,11 @@ import { RecoilRoot } from 'recoil';
 import { MyThemasPanel } from './MyThemasPanel';
 import { ThemaMenuItemTransformed } from '../../config/thema';
 
-const PANEL_TITLE = 'whoa!';
 const items: ThemaMenuItemTransformed[] = [
   {
     title: 'Belastingen',
     id: 'BELASTINGEN',
     to: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: 'Erfpacht',
-    id: 'ERFPACHT',
-    to: 'https://example.org/erfpachtdingen',
     rel: 'external',
     profileTypes: ['private'],
   },
@@ -33,7 +25,6 @@ describe('Thema panel display', () => {
       </RecoilRoot>
     );
     expect(screen.getByText('Belastingen')).toBeInTheDocument();
-    expect(screen.getByText('Erfpacht')).toBeInTheDocument();
     expect(
       screen.getByText('Dit ziet u in Mijn Amsterdam')
     ).toBeInTheDocument();

@@ -4,7 +4,7 @@ import { Button, OrderedList } from '@amsterdam/design-system-react';
 
 import styles from './ErfpachtDossierDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
-import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
+import { ErfpachtV2DossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
 import { useMediumScreen } from '../../../hooks/media.hook';
 
 const MAX_ERFPACHTERS_VISIBLE_INITIALLY = 3;

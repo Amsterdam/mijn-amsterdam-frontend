@@ -1,6 +1,6 @@
 import { ErfpachtersList } from './ErfpachtersList';
 import { KadastraleAanduidingList } from './KadastraleAanduidingList';
-import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
+import { ErfpachtV2DossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 

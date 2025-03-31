@@ -6,7 +6,7 @@ import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers
 import {
   ErfpachtV2DossiersResponse,
   transformDossierResponse,
-} from '../../../server/services/simple-connect/erfpacht';
+} from '../../../server/services/erfpacht/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';

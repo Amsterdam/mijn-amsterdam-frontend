@@ -2,7 +2,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import { useErfpachtV2Data } from './erfpachtData.hook';
-import { ErfpachtV2DossiersDetail } from '../../../server/services/simple-connect/erfpacht';
+import { ErfpachtV2DossiersDetail } from '../../../server/services/erfpacht/erfpacht';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../components/Page/Page';

@@ -38,9 +38,6 @@ export const FeatureToggle = {
   erfpachtV2Active: true,
   erfpachtV2EndpointActive: true,
 
-  // Legacy Mijn Erfpacht
-  mijnErfpachtActive: false,
-
   // Afval api + Afval thema
   garbageInformationPage: true,
   adopteerbareAfvalContainerMeldingen: !IS_PRODUCTION,
