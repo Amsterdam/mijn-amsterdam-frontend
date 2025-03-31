@@ -52,7 +52,6 @@ export function useMainHeaderControl() {
     };
   }, [ref.current, isMainMenuOpen, isSearchActive]);
 
-  // Close the main menu or search
   const closeMenuAndSearch = useCallback(() => {
     if (isMainMenuOpen) {
       getMainMenuControlButtonNode(ref.current)?.click();
@@ -62,7 +61,6 @@ export function useMainHeaderControl() {
     }
   }, [ref.current, isMainMenuOpen, isSearchActive]);
 
-  // Close the main menu or search when the escape key is pressed
   const closeByEscapeKey = useCallback(
     (event: KeyboardEvent) => {
       const isEscape = event.key === 'Escape';
