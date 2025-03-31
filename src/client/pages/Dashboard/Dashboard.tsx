@@ -82,11 +82,7 @@ export function Dashboard() {
           <Heading level={2} size="level-3" className="ams-mb--sm">
             Mijn thema&apos;s
           </Heading>
-          <MyThemasPanel
-            isLoading={isMyThemasLoading}
-            items={myThemaItems}
-            trackCategory="Dashboard / Mijn Thema's"
-          />
+          <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
         </PageContentCell>
       </PageContentV2>
       {!isPhoneScreen && <MyAreaDashboard />}

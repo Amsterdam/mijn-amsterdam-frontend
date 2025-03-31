@@ -4,6 +4,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
@@ -48,6 +49,8 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   tableClassName,
   title,
 }: ListPagePaginatedProps<T>) {
+  usePageTypeSetting('listpage');
+
   const history = useHistory();
 
   const { page = '1' } = useParams<{
