@@ -23,9 +23,8 @@
 }
 
 .Stadspassen {
-  height: fit-content;
-  tr {
-    height: 100%;
+  td {
+    vertical-align: middle;
   }
 }
 
