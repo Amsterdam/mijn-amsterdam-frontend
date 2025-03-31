@@ -168,7 +168,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   // A function to check if the source data quality and/or prerequisites for showing the data to the user are valid.
   // This function is run before transformation of the zaak.
   hasValidSourceData?: (decosZaakSource: DecosZaakSource) => boolean;
-  // Indicate if the zaak requires pawyment to be processed and complete. This function is run before transformation of the zaak.
+  // Indicate if the zaak requires payment to be processed and complete. This function is run before transformation of the zaak.
   requirePayment?: boolean;
   // Expands the selection of fields, based on the link address, with linked items as objects or array of objects
   fetchLinkedItem?: string[];
