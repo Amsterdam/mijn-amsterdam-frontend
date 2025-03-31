@@ -1,5 +1,4 @@
 import { render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
@@ -18,13 +17,10 @@ import MockApp from '../MockApp';
 import { ErfpachtFacturen } from './ErfpachtFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
-  const user = userEvent.setup();
-
   const routeEntry = generatePath(AppRoutes['ERFPACHTv2/ALLE_FACTUREN'], {
     dossierNummerUrlParam: 'E.123.123',
   });
   const routePath = AppRoutes['ERFPACHTv2/ALLE_FACTUREN'];
-
   const dossierDetailTransformed = transformErfpachtDossierProperties(
     ERFPACHTv2_DOSSIER_DETAIL as any
   );
@@ -68,7 +64,9 @@ describe('<ErfpachtOpenFacturen />', () => {
       expect(
         screen.getByRole('heading', { name: 'Facturen' })
       ).toBeInTheDocument();
-      expect(screen.getByText('U heeft geen facturen.')).toBeInTheDocument();
+      expect(
+        screen.getByText('U heeft (nog) geen gegevens op deze pagina.')
+      ).toBeInTheDocument();
     });
   });
 
@@ -159,7 +157,7 @@ describe('<ErfpachtOpenFacturen />', () => {
     await waitFor(() => {
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
-        screen.getByText('We kunnen op dit moment geen facturen tonen.')
+        screen.getByText('We kunnen op dit moment niet alle gegevens tonen.')
       ).toBeInTheDocument();
     });
   });

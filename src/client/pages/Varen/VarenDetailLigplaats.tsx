@@ -9,14 +9,14 @@ import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
 import styles from './Varen.module.scss';
 import type {
   VarenFrontend,
-  VarenVergunningLigplaatsType,
+  VarenVergunningLigplaats,
 } from '../../../server/services/varen/config-and-types';
 import { ButtonLinkProps } from '../../../universal/types/App.types';
 import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 
 type VarenDetailPageContentProps = {
-  vergunning: VarenFrontend<VarenVergunningLigplaatsType>;
+  vergunning: VarenFrontend<VarenVergunningLigplaats>;
   buttonItems: ButtonLinkProps[];
 };
 

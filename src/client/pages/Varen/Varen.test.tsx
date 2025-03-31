@@ -6,8 +6,8 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
   VarenFrontend,
-  VarenRegistratieRederType,
-  VarenVergunningExploitatieType,
+  VarenRegistratieReder,
+  VarenVergunningExploitatie,
 } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { jsonCopy } from '../../../universal/helpers/utils';
@@ -16,7 +16,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { Varen } from './Varen';
 
-type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatieType>;
+type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatie>;
 const exploitatieInProgress = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
@@ -100,7 +100,7 @@ const exploitatieDecision: ExploitatieAanvraag = {
   },
 } as unknown as ExploitatieAanvraag;
 
-const rederRegistratie: VarenFrontend<VarenRegistratieRederType> = {
+const rederRegistratie: VarenFrontend<VarenRegistratieReder> = {
   id: '2801937838',
   title: 'Varen registratie reder',
   caseType: 'Varen registratie reder',
@@ -113,7 +113,7 @@ const rederRegistratie: VarenFrontend<VarenRegistratieRederType> = {
   phone: '0612345678',
   email: 'myemailadres@example.com',
   dateRequestFormatted: '06 november 2023',
-} as unknown as VarenFrontend<VarenRegistratieRederType>;
+} as unknown as VarenFrontend<VarenRegistratieReder>;
 
 const varenContent: AppState['VAREN']['content'] = [
   exploitatieInProgress,
@@ -158,7 +158,7 @@ describe('<Varen />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    expect(screen.getAllByRole('heading', { level: 3 })[0]).toHaveTextContent(
       'Passagiers- en beroepsvaart'
     );
   });

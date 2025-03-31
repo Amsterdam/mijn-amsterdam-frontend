@@ -30,7 +30,7 @@ type DecosVarenZaakBase = DecosZaakBase & {
   status: VarenStatus;
 };
 
-export type VarenRegistratieRederType = DecosVarenZaakBase & {
+export type VarenRegistratieReder = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenRederRegistratie'>;
   title: 'Varen registratie reder';
   decision: 'Verleend' | 'Ingetrokken';
@@ -44,7 +44,7 @@ export type VarenRegistratieRederType = DecosVarenZaakBase & {
   email: string | null;
 };
 
-export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
+export type VarenVergunningExploitatie = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenVergunningExploitatie'>;
   decision:
     | 'Nog niet bekend'
@@ -73,25 +73,25 @@ export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
   vesselName: string | null;
 };
 
-export type VarenVergunningExploitatieWijzigingVaartuigNaamType =
+export type VarenVergunningExploitatieWijzigingVaartuigNaam =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVaartuignaam'>;
     vesselNameOld: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'vesselName' | 'permitReference'>;
+  } & Pick<VarenVergunningExploitatie, 'vesselName' | 'permitReference'>;
 
-export type VarenVergunningExploitatieWijzigingVergunningshouderType =
+export type VarenVergunningExploitatieWijzigingVergunningshouder =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVergunningshouder'>;
     statutoryName: string | null;
     businessAddress: string | null;
     correspondenceAddress: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'segment' | 'permitReference'>;
+  } & Pick<VarenVergunningExploitatie, 'segment' | 'permitReference'>;
 
-export type VarenVergunningExploitatieWijzigingVerbouwingType =
+export type VarenVergunningExploitatieWijzigingVerbouwing =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVerbouwing'>;
   } & Pick<
-      VarenVergunningExploitatieType,
+      VarenVergunningExploitatie,
       | 'vesselName'
       | 'segment'
       | 'formAppearance'
@@ -103,12 +103,12 @@ export type VarenVergunningExploitatieWijzigingVerbouwingType =
       | 'permitReference'
     >;
 
-export type VarenVergunningExploitatieWijzigingVervangingType =
+export type VarenVergunningExploitatieWijzigingVervanging =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVervanging'>;
     vesselNameOld: string | null;
   } & Pick<
-      VarenVergunningExploitatieType,
+      VarenVergunningExploitatie,
       | 'vesselName'
       | 'segment'
       | 'formAppearance'
@@ -121,19 +121,19 @@ export type VarenVergunningExploitatieWijzigingVervangingType =
       | 'permitReference'
     >;
 
-export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {
+export type VarenVergunningLigplaats = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenVergunningLigplaats'>;
   location: string | null;
-} & Pick<VarenVergunningExploitatieType, 'vesselName' | 'decision'>;
+} & Pick<VarenVergunningExploitatie, 'vesselName' | 'decision'>;
 
 export type Varen =
-  | VarenRegistratieRederType
-  | VarenVergunningExploitatieType
-  | VarenVergunningLigplaatsType
-  | VarenVergunningExploitatieWijzigingVaartuigNaamType
-  | VarenVergunningExploitatieWijzigingVerbouwingType
-  | VarenVergunningExploitatieWijzigingVergunningshouderType
-  | VarenVergunningExploitatieWijzigingVervangingType;
+  | VarenRegistratieReder
+  | VarenVergunningExploitatie
+  | VarenVergunningLigplaats
+  | VarenVergunningExploitatieWijzigingVaartuigNaam
+  | VarenVergunningExploitatieWijzigingVerbouwing
+  | VarenVergunningExploitatieWijzigingVergunningshouder
+  | VarenVergunningExploitatieWijzigingVervanging;
 
 export type VarenFrontend<T extends DecosVarenZaakBase = Varen> = T & {
   dateRequestFormatted: string;
@@ -142,5 +142,5 @@ export type VarenFrontend<T extends DecosVarenZaakBase = Varen> = T & {
 
 export type VarenVergunningFrontend = Exclude<
   VarenFrontend,
-  VarenRegistratieRederType
+  VarenRegistratieReder
 >;

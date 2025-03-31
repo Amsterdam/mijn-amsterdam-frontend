@@ -90,6 +90,7 @@ describe('Varen service', () => {
             dateDecision: '2025-01-03T00:00:00',
             dateDecisionFormatted: '03 januari 2025',
             decision: 'Verleend',
+            displayStatus: 'Verleend',
             eniNumber: '7654321',
             id: 'Z-24-0000001',
             identifier: 'Z/24/3421790',

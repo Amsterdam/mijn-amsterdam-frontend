@@ -2,7 +2,7 @@ import { generatePath } from 'react-router-dom';
 
 import {
   VarenFrontend,
-  VarenRegistratieRederType,
+  VarenRegistratieReder,
   VarenVergunningFrontend,
 } from './config-and-types';
 import { fetchVaren } from './varen';
@@ -19,7 +19,7 @@ import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 function createVarenRederRegisteredNotification(
-  zaak: VarenFrontend<VarenRegistratieRederType>
+  zaak: VarenFrontend<VarenRegistratieReder>
 ): MyNotification {
   return {
     id: `varen-${zaak.id}-reder-notification`,

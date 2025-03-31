@@ -212,7 +212,7 @@ describe('Bodem', () => {
         name: 'Lopende aanvragen',
       });
 
-      const columnHeaders = ['Adres', 'Aangevraagd', 'Resultaat'];
+      const columnHeaders = ['Adres', 'Aangevraagd', 'Status'];
 
       const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement!;
       const lopendeAanvraagColumnHeaders =
