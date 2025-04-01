@@ -22,7 +22,6 @@ const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<
 > = {
   detailLinkComponent: 'Zaaknummer',
   title: 'Soort vergunning',
-  displayStatus: 'Status',
   dateStartFormatted: 'Vanaf',
   dateEndFormatted: 'Tot',
 };
