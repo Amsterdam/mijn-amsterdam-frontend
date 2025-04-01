@@ -24,7 +24,10 @@ import {
 } from '../../../server/services/simple-connect/erfpacht';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
-import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import {
+  VarenZakenFrontend,
+  VarenRegistratieRederType,
+} from '../../../server/services/varen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -467,28 +470,37 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: FeatureToggle.varenActive,
     stateKey: 'VAREN' as AppStateKey,
     profileTypes: ['commercial'],
-    getApiBaseItems: (apiContent: VarenFrontend[]) => {
-      return apiContent?.map((zaak) => {
-        if (zaak.caseType === 'Varen registratie reder') {
-          return {
-            ...zaak,
-            link: {
-              to: AppRoutes.VAREN,
-              title: ThemaTitles.VAREN,
-            },
-          };
-        }
-        return zaak;
-      });
+    getApiBaseItems: (apiContent: {
+      reder: VarenRegistratieRederType;
+      zaken: VarenZakenFrontend[];
+    }) => {
+      const zaken =
+        apiContent?.zaken.map((zaak) => ({
+          ...zaak,
+        })) ?? [];
+      if (!apiContent.reder) {
+        return zaken;
+      }
+      const reder = {
+        ...apiContent.reder,
+        link: {
+          to: AppRoutes.VAREN,
+          title: ThemaTitles.VAREN,
+        },
+      };
+      return [reder, ...zaken];
     },
-    displayTitle: (item: VarenFrontend) => (term: string) => {
-      return displayPath(term, [item.title, item.identifier]);
+    displayTitle: (item: VarenZakenFrontend) => (term: string) => {
+      return displayPath(term, [
+        item.title,
+        item.vesselName ?? item.identifier,
+      ]);
     },
     keywordsGeneratedFromProps: [
       'identifier',
       'vesselName',
-      'vesselNameOld',
-      'permitReference',
+      'vesselNameNew',
+      'vergunningKenmerk',
       'eniNumber',
     ],
     keywords: ['passagiersvaart', 'beroepsvaart', 'varen'],

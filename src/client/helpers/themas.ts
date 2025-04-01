@@ -219,7 +219,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.VAREN:
       return (
         !isLoading(VAREN) &&
-        !!VAREN?.content?.length &&
+        (!!VAREN?.content?.reder || !!VAREN?.content?.zaken?.length) &&
         FeatureToggle.varenActive
       );
 

@@ -1,5 +1,16 @@
+import { OmitMapped } from '../../../universal/helpers/utils';
 import { ZaakDetail } from '../../../universal/types/App.types';
 import { DecosZaakBase } from '../decos/decos-types';
+
+export type DecosZaakVarensFieldsSource = {
+  mark: string;
+  subject2: string | null;
+  text10: string | null;
+  text11: string | null;
+  text21: string | null;
+  text22: string | null;
+  text36: string | null;
+};
 
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
@@ -23,12 +34,67 @@ export type VarenStatus =
   | 'Meer informatie nodig'
   | 'Afgehandeld';
 
-type DecosVarenZaakBase = DecosZaakBase & {
-  linkDataRequest: string | null;
-  status: VarenStatus;
+type DecosVarenZaakVergunning = {
+  id: string;
+  vergunningKenmerk: string | null;
+  segment:
+    | 'Beeldbepalend groot'
+    | 'Beeldbepalend klein en middelgroot'
+    | 'Groot'
+    | 'Historisch groot'
+    | 'Historisch klein en middelgroot'
+    | 'Klein en middelgroot'
+    | 'Onbemand';
+  eniNumber: string | null;
+  vesselName: string | null;
+  vesselWidth: string | null; // 0.01 meters
+  vesselLength: string | null; // 0.01 meters
+};
+export type DecosVarenZaakBase = DecosZaakBase &
+  DecosVarenZaakVergunning & {
+    linkDataRequest: string | null;
+    status: VarenStatus;
+    decision: 'Verleend' | null;
+    vergunningKenmerk: string | null;
+    vergunningen: DecosVarenZaakVergunning[];
+  };
+
+export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
+  caseType: GetCaseType<'VarenVergunningExploitatie'>;
 };
 
-export type VarenRegistratieRederType = DecosVarenZaakBase & {
+export type VarenVergunningExploitatieWijzigingVaartuigNaamType =
+  DecosVarenZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVaartuignaam'>;
+    vesselNameNew: string | null;
+  };
+
+export type VarenVergunningExploitatieWijzigingVergunningshouderType =
+  DecosVarenZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVergunningshouder'>;
+    statutoryName: string | null;
+    businessAddress: string | null;
+    correspondenceAddress: string | null;
+  };
+
+export type VarenVergunningExploitatieWijzigingVerbouwingType =
+  DecosVarenZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVerbouwing'>;
+  };
+
+export type VarenVergunningExploitatieWijzigingVervangingType =
+  DecosVarenZaakBase & {
+    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVervanging'>;
+    vesselNameNew: string | null;
+  };
+
+export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {
+  caseType: GetCaseType<'VarenVergunningLigplaats'>;
+  location: string | null;
+};
+
+export type VarenRegistratieRederType = DecosZaakBase & {
+  linkDataRequest: string | null;
   caseType: GetCaseType<'VarenRederRegistratie'>;
   title: 'Varen registratie reder';
   decision: 'Verleend' | 'Ingetrokken';
@@ -42,103 +108,22 @@ export type VarenRegistratieRederType = DecosVarenZaakBase & {
   email: string | null;
 };
 
-export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
-  caseType: GetCaseType<'VarenVergunningExploitatie'>;
-  decision:
-    | 'Nog niet bekend'
-    | 'Afgewezen'
-    | 'Afgewezen door loting'
-    | 'Buiten behandeling'
-    | 'Ingetrokken door aanvrager'
-    | 'Verleend';
-  // eslint-disable-next-line no-magic-numbers
-  formAppearance: 1 | 2 | 3;
-  segment:
-    | 'Beeldbepalend groot'
-    | 'Beeldbepalend klein en middelgroot'
-    | 'Groot'
-    | 'Historisch groot'
-    | 'Historisch klein en middelgroot'
-    | 'Klein en middelgroot'
-    | 'Onbemand';
-  eniNumber: string | null;
-  permitReference: string | null;
-  numberOfSeats: number | null; // 001 seats
-  vesselHeight: string | null; // 0.01 meters
-  vesselDepth: string | null; // 0.01 meters
-  vesselWidth: string | null; // 0.01 meters
-  vesselLength: string | null; // 0.01 meters
-  vesselName: string | null;
+export type VarenRegistratieRederFrontend = VarenRegistratieRederType & {
+  dateRequestFormatted: string;
 };
 
-export type VarenVergunningExploitatieWijzigingVaartuigNaamType =
-  DecosVarenZaakBase & {
-    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVaartuignaam'>;
-    vesselNameOld: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'vesselName' | 'permitReference'>;
-
-export type VarenVergunningExploitatieWijzigingVergunningshouderType =
-  DecosVarenZaakBase & {
-    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVergunningshouder'>;
-    statutoryName: string | null;
-    businessAddress: string | null;
-    correspondenceAddress: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'segment' | 'permitReference'>;
-
-export type VarenVergunningExploitatieWijzigingVerbouwingType =
-  DecosVarenZaakBase & {
-    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVerbouwing'>;
-  } & Pick<
-      VarenVergunningExploitatieType,
-      | 'vesselName'
-      | 'segment'
-      | 'formAppearance'
-      | 'numberOfSeats'
-      | 'vesselDepth'
-      | 'vesselHeight'
-      | 'vesselLength'
-      | 'vesselWidth'
-      | 'permitReference'
-    >;
-
-export type VarenVergunningExploitatieWijzigingVervangingType =
-  DecosVarenZaakBase & {
-    caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVervanging'>;
-    vesselNameOld: string | null;
-  } & Pick<
-      VarenVergunningExploitatieType,
-      | 'vesselName'
-      | 'segment'
-      | 'formAppearance'
-      | 'numberOfSeats'
-      | 'vesselDepth'
-      | 'vesselHeight'
-      | 'vesselLength'
-      | 'vesselWidth'
-      | 'eniNumber'
-      | 'permitReference'
-    >;
-
-export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {
-  caseType: GetCaseType<'VarenVergunningLigplaats'>;
-  location: string | null;
-} & Pick<VarenVergunningExploitatieType, 'vesselName' | 'decision'>;
-
 export type Varen =
-  | VarenRegistratieRederType
-  | VarenVergunningExploitatieType
   | VarenVergunningLigplaatsType
+  | VarenVergunningExploitatieType
   | VarenVergunningExploitatieWijzigingVaartuigNaamType
   | VarenVergunningExploitatieWijzigingVerbouwingType
   | VarenVergunningExploitatieWijzigingVergunningshouderType
   | VarenVergunningExploitatieWijzigingVervangingType;
 
-export type VarenFrontend<T extends DecosVarenZaakBase = Varen> = T & {
+export type VarenZakenFrontend<T extends Varen = Varen> = OmitMapped<
+  T,
+  'statusDates' | 'termijnDates' | 'vergunningen'
+> & {
   dateRequestFormatted: string;
-  dateDecisionFormatted?: string | null;
+  dateDecisionFormatted: string | null;
 } & ZaakDetail<T['status']>;
-
-export type VarenVergunningFrontend = Exclude<
-  VarenFrontend,
-  VarenRegistratieRederType
->;

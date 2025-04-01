@@ -3,7 +3,7 @@ import {
   varenLegesTableLink,
   varenMeerInformatieLink,
 } from './Varen-thema-config';
-import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
+import { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -11,16 +11,12 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
 
-  const varenRederRegistratie = VAREN.content?.find(
-    (item) => item.caseType === 'Varen registratie reder'
-  );
+  const varenRederRegistratie = VAREN.content?.reder;
 
-  const vergunningen = VAREN.content?.filter(
-    (item) => item.caseType !== 'Varen registratie reder'
-  );
+  const vergunningen = VAREN.content?.zaken ?? [];
 
-  const varenVergunningen = addLinkElementToProperty<VarenVergunningFrontend>(
-    vergunningen ?? [],
+  const varenVergunningen = addLinkElementToProperty<VarenZakenFrontend>(
+    vergunningen,
     'vesselName',
     true
   );
