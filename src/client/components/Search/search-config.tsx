@@ -11,11 +11,11 @@ import {
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import {
   ErfpachtDossier,
   ErfpachtDossiersResponse,
 } from '../../../server/services/erfpacht/erfpacht';
+import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
@@ -230,9 +230,9 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'ERFPACHT' as AppStateKey,
     getApiBaseItems: (
-      erfpachtV2DossiersResponse: ErfpachtDossiersResponse
+      erfpachtDossiersResponse: ErfpachtDossiersResponse
     ): ErfpachtDossier[] => {
-      return erfpachtV2DossiersResponse?.dossiers?.dossiers ?? [];
+      return erfpachtDossiersResponse?.dossiers?.dossiers ?? [];
     },
     displayTitle: (dossier: ErfpachtDossier) => (term: string) => {
       return displayPath(term, [dossier.title]);

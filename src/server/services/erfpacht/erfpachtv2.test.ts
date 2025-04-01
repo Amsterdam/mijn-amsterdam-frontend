@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { fetchErfpachtV2, fetchErfpachtV2DossiersDetail } from './erfpacht';
+import { fetchErfpachtV2, fetchErfpachtDossiersDetail } from './erfpacht';
 import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHT_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';
@@ -78,7 +78,7 @@ describe('simple-connect/erfpacht', () => {
       .get('/erfpacht/vernise/api/dossierinfo/E.477.46')
       .reply(200, ERFPACHT_DOSSIERINFO_DETAILS);
 
-    const responseContent = await fetchErfpachtV2DossiersDetail(
+    const responseContent = await fetchErfpachtDossiersDetail(
       REQUEST_ID,
       authProfileAndToken,
       'E.477.46'

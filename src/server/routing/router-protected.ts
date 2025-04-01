@@ -25,13 +25,13 @@ import {
   fetchZakenByUserIDs,
 } from '../services/decos/decos-route-handlers';
 import { fetchDecosDocument } from '../services/decos/decos-service';
+import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
 import {
   fetchZorgnedAVDocument,
   handleBlockStadspas,
   handleFetchTransactionsRequest,
 } from '../services/hli/hli-route-handlers';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
-import { fetchErfpachtV2DossiersDetail } from '../services/erfpacht/erfpacht';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
@@ -152,7 +152,7 @@ router.get(
   async (req: Request, res: Response) => {
     const authProfileAndToken = getAuth(req);
     if (authProfileAndToken) {
-      const response = await fetchErfpachtV2DossiersDetail(
+      const response = await fetchErfpachtDossiersDetail(
         res.locals.requestID,
         authProfileAndToken,
         req.params.dossierNummerUrlParam

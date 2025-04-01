@@ -402,7 +402,7 @@ export async function fetchErfpachtV2(
   return erfpachterResponse;
 }
 
-export async function fetchErfpachtV2DossiersDetail(
+export async function fetchErfpachtDossiersDetail(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   dossierNummerUrlParam: string
