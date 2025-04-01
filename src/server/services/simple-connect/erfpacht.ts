@@ -5,6 +5,7 @@ import { generatePath } from 'react-router-dom';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
+import { apiPostponeResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types';
@@ -70,6 +71,10 @@ export async function fetchErfpacht(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  if (!authProfileAndToken) {
+    return Promise.resolve(apiPostponeResult(null));
+  }
+
   return fetchService(
     requestID,
     getConfigMain(authProfileAndToken, requestID),
