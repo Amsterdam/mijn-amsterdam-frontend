@@ -157,10 +157,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     }
 
     case Themas.VERGUNNINGEN:
-      return (
-        (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length) ||
-        (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length)
-      );
+      return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 
     case Themas.KVK:
       return !isLoading(KVK) && !!KVK.content;
