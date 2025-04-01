@@ -174,7 +174,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     }
 
     case Themas.KREFIA:
-      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
+      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks.length;
 
     case Themas.PARKEREN: {
       const hasDecosParkeerVergunningen =
