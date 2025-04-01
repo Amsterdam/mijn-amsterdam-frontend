@@ -5,7 +5,7 @@ import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-import { Thema } from '../../universal/config/thema';
+import { ThemaID } from '../../universal/config/thema';
 import { LinkProps } from '../../universal/types';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema';
@@ -54,7 +54,7 @@ export function useThemaMenuItemsByThemaID() {
           acc[item.id] = item;
           return acc;
         },
-        {} as Record<Thema, ThemaMenuItemTransformed>
+        {} as Record<ThemaID, ThemaMenuItemTransformed>
       ),
     [items]
   );
@@ -62,12 +62,12 @@ export function useThemaMenuItemsByThemaID() {
   return themaById;
 }
 
-export function useThemaMenuItemByThemaID(themaID: Thema) {
+export function useThemaMenuItemByThemaID(themaID: ThemaID) {
   const itemsById = useThemaMenuItemsByThemaID();
   return itemsById[themaID];
 }
 
-export function useThemaBreadcrumbs(themaID: Thema): LinkProps[] {
+export function useThemaBreadcrumbs(themaID: ThemaID): LinkProps[] {
   const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
   const history = useHistory();
   const from = history.location?.state?.from;

@@ -11,7 +11,7 @@ import {
   WpiRequestStatus,
 } from './wpi-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Thema } from '../../../universal/config/thema';
+import { ThemaID } from '../../../universal/config/thema';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
@@ -88,7 +88,7 @@ export function createProcessNotification(
   requestProcess: WpiRequestProcess,
   statusStep: WpiRequestStatus,
   labels: WpiRequestProcessLabels,
-  thema: Thema
+  thema: ThemaID
 ): MyNotification {
   const notificationLabels = labels[statusStep.id].notification;
   const titleTransform = notificationLabels.title;

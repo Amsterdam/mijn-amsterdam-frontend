@@ -4,7 +4,7 @@ import {
   SearchIcon,
 } from '@amsterdam/design-system-react-icons';
 
-import { Thema } from '../../universal/config/thema';
+import { ThemaID } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
   IconAFIS,
@@ -33,7 +33,7 @@ import {
   IconZorg,
 } from '../assets/icons';
 
-export const ThemaIcons: Record<Thema, SVGComponent> = {
+export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   AFIS: IconAFIS,
   VAREN: IconVaren,
   AFVAL: IconAfval,

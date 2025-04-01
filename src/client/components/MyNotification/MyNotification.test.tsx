@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
 import { MyNotification } from './MyNotification';
-import { Thema } from '../../../universal/config/thema';
+import { ThemaID } from '../../../universal/config/thema';
 import type {
   AppState,
   MyNotification as MyNotificationType,
@@ -22,7 +22,7 @@ describe('<MyNotification />', () => {
   const NOTIFICATIONS: MyNotificationType[] = [
     {
       id: 'test-notification',
-      thema: 'TEST_THEMA' as Thema,
+      thema: 'TEST_THEMA' as ThemaID,
       datePublished: '2020-10-10',
       title: 'Test notification',
       description: 'A text related to this notification',
@@ -35,7 +35,7 @@ describe('<MyNotification />', () => {
     },
     {
       id: 'test-notification2',
-      thema: 'TEST_THEMA' as Thema,
+      thema: 'TEST_THEMA' as ThemaID,
       datePublished: '2021-01-01',
       title: 'Second Test notification',
       description: 'A second text related to this notification',

@@ -1,10 +1,10 @@
 import { LinkProps, generatePath } from 'react-router-dom';
 
 import { AppRoutes } from '../../../universal/config/routes';
-import { Thema } from '../../../universal/config/thema';
+import { ThemaID } from '../../../universal/config/thema';
 import { ThemaMenuItem, ThemaTitles } from '../../config/thema';
 
-type MainMenuId = Thema | 'MIJN_THEMAS';
+type MainMenuId = ThemaID | 'MIJN_THEMAS';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;

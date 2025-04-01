@@ -10,7 +10,7 @@ import { decosZaakTransformers } from './decos-zaken';
 import { fetchVergunningen } from './vergunningen';
 import { isNearEndDate } from './vergunningen-helpers';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Thema, Themas } from '../../../universal/config/thema';
+import { ThemaID, Themas } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -67,7 +67,7 @@ export function getNotificationLabels(
 
 function getNotificationBase(
   vergunning: VergunningFrontend,
-  thema: Thema
+  thema: ThemaID
 ): Pick<MyNotification, 'thema' | 'id' | 'link'> {
   const notificationBaseProperties = {
     thema: thema,
@@ -98,7 +98,7 @@ function mergeNotificationProperties(
 export function createVergunningNotification<DZ extends DecosZaakBase>(
   vergunning: VergunningFrontend<DZ>,
   zaakTypeTransformer: DecosZaakTransformer<DZ>,
-  thema: Thema
+  thema: ThemaID
 ): MyNotification | null {
   const labels = zaakTypeTransformer.notificationLabels;
 
@@ -120,7 +120,7 @@ export function createVergunningNotification<DZ extends DecosZaakBase>(
 export function getVergunningNotifications<DZ extends DecosZaakBase>(
   vergunningen: VergunningFrontend<DZ>[],
   decosZaakTransformers: DecosZaakTransformer<DZ>[],
-  thema: Thema
+  thema: ThemaID
 ) {
   return vergunningen
     .map((vergunning) => {
