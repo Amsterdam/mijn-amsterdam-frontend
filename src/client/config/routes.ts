@@ -117,5 +117,9 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 };
 
 export function isPrivateRoute(pathname: string) {
-  return PrivateRoutes.some((path) => !!matchPath(path, pathname));
+  return PrivateRoutes.some((path) => {
+    const isMatched = !!matchPath(path, pathname);
+    console.log(pathname, path, isMatched);
+    return isMatched;
+  });
 }
