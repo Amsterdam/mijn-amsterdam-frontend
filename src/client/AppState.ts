@@ -70,6 +70,7 @@ export const PRISTINE_APPSTATE: AppState = {
   JEUGD: apiPristineResult(
     {
       isKnown: true,
+      voorzieningen: [],
     },
     {
       isActive: FeatureToggle.zorgnedLeerlingenvervoerActive,

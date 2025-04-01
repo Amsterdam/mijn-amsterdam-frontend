@@ -57,6 +57,7 @@ export { default as IconVaren } from './varen.svg?react';
 export { default as IconVergunningen } from './vergunningen.svg?react';
 export { default as IconWior } from './wior.svg?react';
 export { default as IconZorg } from './zorg.svg?react';
+export { default as IconJeugd } from './jeugd.svg?react';
 export { default as MapIconHomeCommercial } from './map/homeCommercial__primary-red.svg?react';
 export { default as ThumbsDown } from './thumbs_down.svg?react';
 export { default as ThumbsUp } from './thumbs_up.svg?react';
