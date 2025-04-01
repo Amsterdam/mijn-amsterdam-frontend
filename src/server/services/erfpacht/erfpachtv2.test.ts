@@ -4,43 +4,16 @@ import { fetchErfpacht, fetchErfpachtDossiersDetail } from './erfpacht';
 import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHT_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';
-import { remoteApi } from '../../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-
-// const mocks = vi.hoisted(() => {
-//   return {
-//     useSessionApi: vi.fn(),
-//     useSessionValue: vi.fn(),
-//   };
-// });
-
-vi.mock('../../../universal/config/app', async (importOriginal) => {
-  const module = (await importOriginal()) as any;
-
-  return {
-    ...module,
-    FeatureToggle: {
-      ...module.FeatureToggle,
-      erfpachtV2EndpointActive: true,
-    },
-  };
-});
 
 describe('simple-connect/erfpacht', () => {
   const REQUEST_ID = 'test-x-789';
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: {
-      authMethod: 'digid',
-      profileType: 'private',
-      id: 'TEST-DIGID-BSN',
-      sid: '',
-    },
-    token: 'xxxxxx',
-  };
+  const authProfileAndToken: AuthProfileAndToken = getAuthProfileAndToken();
 
-  test('fetchErfpachtV2: null', async () => {
-    remoteApi.get('/erfpacht/vernise/api/erfpachter').reply(200, null as any);
-    remoteApi.get('/erfpacht/vernise/api/dossierinfo').reply(200, null as any);
+  test('fetchErfpacht: null', async () => {
+    remoteApi.get('/erfpacht/vernise/api/erfpachter').reply(200, undefined);
+    remoteApi.get('/erfpacht/vernise/api/dossierinfo').reply(200, undefined);
 
     const responseContent = await fetchErfpacht(
       REQUEST_ID,
@@ -58,10 +31,10 @@ describe('simple-connect/erfpacht', () => {
     `);
   });
 
-  test('fetchErfpachtV2: dossiers', async () => {
+  test('fetchErfpacht: dossiers', async () => {
     remoteApi
       .get('/erfpacht/vernise/api/erfpachter')
-      .reply(200, { erfpachter: true, relationCode: '123-abc' } as any);
+      .reply(200, { erfpachter: true, relationCode: '123-abc' });
     remoteApi
       .get('/erfpacht/vernise/api/dossierinfo')
       .reply(200, ERFPACHT_DOSSIERS);
@@ -73,7 +46,7 @@ describe('simple-connect/erfpacht', () => {
     expect(responseContent).toMatchSnapshot();
   });
 
-  test('fetchErfpachtV2: dossier detail', async () => {
+  test('fetchErfpacht: dossier detail', async () => {
     remoteApi
       .get('/erfpacht/vernise/api/dossierinfo/E.477.46')
       .reply(200, ERFPACHT_DOSSIERINFO_DETAILS);
@@ -86,7 +59,7 @@ describe('simple-connect/erfpacht', () => {
     expect(responseContent).toMatchSnapshot();
   });
 
-  test('fetchErfpachtV2 zakelijk', async () => {
+  test('fetchErfpacht zakelijk', async () => {
     remoteApi
       .get('/erfpacht/vernise/api/erfpachter')
       .reply(200, ERFPACHT_ERFPACHTER);

@@ -8,7 +8,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
-interface Erfpachtv2ErpachterResponseSource {
+interface ErfpachtErpachterResponseSource {
   erfpachter: boolean;
   relationID: string;
   relationCode: string;
@@ -20,16 +20,16 @@ interface Erfpachtv2ErpachterResponseSource {
   businessType: string;
 }
 
-interface Erfpachtv2ErpachterResponse {
+interface ErfpachtErpachterResponse {
   isKnown: boolean;
-  relatieCode: Erfpachtv2ErpachterResponseSource['relationCode'];
+  relatieCode: ErfpachtErpachterResponseSource['relationCode'];
   profileType: ProfileType;
 }
 
 function transformIsErfpachterResponseSource(
-  responseData: Erfpachtv2ErpachterResponseSource,
+  responseData: ErfpachtErpachterResponseSource,
   profileType: ProfileType
-): Erfpachtv2ErpachterResponse {
+): ErfpachtErpachterResponse {
   return {
     isKnown: !!responseData?.erfpachter,
     relatieCode: responseData?.relationCode,
@@ -331,7 +331,7 @@ export function transformErfpachtDossierProperties<
 
 export function transformDossierResponse(
   responseDataSource: ErfpachtDossiersResponse,
-  relatieCode: Erfpachtv2ErpachterResponseSource['relationCode']
+  relatieCode: ErfpachtErpachterResponseSource['relationCode']
 ) {
   const responseData: ErfpachtDossiersResponse = responseDataSource
     ? jsonCopy(responseDataSource)
@@ -366,7 +366,7 @@ export async function fetchErfpacht(
 ) {
   const config = getApiConfig('ERFPACHT');
 
-  const erfpachterResponse = await requestData<Erfpachtv2ErpachterResponse>(
+  const erfpachterResponse = await requestData<ErfpachtErpachterResponse>(
     {
       ...config,
       url: `${config.url}/vernise/api/erfpachter`,
