@@ -11,7 +11,7 @@ import {
 import { fetchContentTips, prefixTipNotification } from './tips-service';
 import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import { Thema } from '../../../universal/config/thema';
+import { ThemaID } from '../../../universal/config/thema';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { WpiRequestProcess } from '../wpi/wpi-types';
@@ -122,7 +122,7 @@ describe('createTipsFromServiceResults', () => {
       id: 'test',
       title: 'test',
       description: 'test',
-      thema: 'test' as Thema,
+      thema: 'test' as ThemaID,
       datePublished: 'test',
       isTip: true,
       isAlert: false,

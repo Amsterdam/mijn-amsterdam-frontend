@@ -1,4 +1,4 @@
-import { Thema } from '../../../universal/config/thema';
+import { ThemaID } from '../../../universal/config/thema';
 import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { AppState, LinkProps } from '../../../universal/types';
 
@@ -22,7 +22,7 @@ export type ContentTipSource = {
   predicates?: TipsPredicateFN[];
   profileTypes: ProfileType[];
   reason?: string;
-  thema: Thema;
+  thema: ThemaID;
   title: string;
 };
 

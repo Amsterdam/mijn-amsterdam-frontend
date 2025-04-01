@@ -1,5 +1,5 @@
 // Within the team we call these Themes / Thema's
-export type Thema =
+export type ThemaID =
   | 'AFIS'
   | 'AFVAL'
   | 'BELASTINGEN'
@@ -29,7 +29,7 @@ export type Thema =
   | 'AVG'
   | 'BODEM';
 
-export const Themas: Record<Thema, Thema> = {
+export const Themas: Record<ThemaID, ThemaID> = {
   AFIS: 'AFIS',
   AFVAL: 'AFVAL',
   AVG: 'AVG',

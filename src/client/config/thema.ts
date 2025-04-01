@@ -2,7 +2,7 @@ import { generatePath } from 'react-router-dom';
 
 import { TrackingConfig } from './routes';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
-import { Thema, Themas } from '../../universal/config/thema';
+import { ThemaID, Themas } from '../../universal/config/thema';
 import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
 import { getAfisListPageDocumentTitle } from '../pages/Afis/Afis-thema-config';
 import { getAVGListPageDocumentTitle } from '../pages/AVG/AVG-thema-config';
@@ -22,14 +22,14 @@ import {
 } from '../pages/Varen/Varen-thema-config';
 import { getListPageDocumentTitle } from '../pages/Vergunningen/Vergunningen-thema-config';
 
-export const BagThemas: Record<Thema, BagThema> = Object.fromEntries(
+export const BagThemas: Record<ThemaID, BagThema> = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
     return [key, `${key2}_BAG`];
   })
 );
 
 // These are used for PageHeadings and link title props for example.
-export const ThemaTitles: { [thema in Thema]: string } = {
+export const ThemaTitles: { [thema in ThemaID]: string } = {
   AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   AVG: 'AVG persoonsgegevens',
@@ -210,7 +210,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
 };
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
-  id: Thema;
+  id: ThemaID;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;

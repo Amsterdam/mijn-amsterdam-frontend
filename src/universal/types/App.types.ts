@@ -1,10 +1,10 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
-import { Thema } from '../config/thema';
+import { ThemaID } from '../config/thema';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
 
-export type BagThema = `${Thema}_BAG`;
+export type BagThema = `${ThemaID}_BAG`;
 
 export type AppState = {
   [key in ServiceID]: ApiResponse_DEPRECATED<
@@ -45,7 +45,7 @@ export type SVGComponent = FunctionComponent<
 >;
 
 export interface MyNotification {
-  thema: Thema;
+  thema: ThemaID;
   datePublished: string;
   description: string;
   hideDatePublished?: boolean;

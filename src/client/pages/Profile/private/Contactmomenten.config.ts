@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../../universal/config/routes';
-import { Themas, Thema } from '../../../../universal/config/thema';
+import { Themas, ThemaID } from '../../../../universal/config/thema';
 import { DisplayProps } from '../../../components/Table/TableV2';
 
 export type ContactMomentFrontend = ContactMoment & {
@@ -26,7 +26,7 @@ export const routes = {
 
 const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? Themas.SVWI : Themas.INKOMEN;
 
-export const mapperContactmomentToMenuItem: Record<string, Thema> = {
+export const mapperContactmomentToMenuItem: Record<string, ThemaID> = {
   Parkeren: Themas.PARKEREN,
   Zorg: Themas.ZORG,
   'Werk en Inkomen': SVWIv1ORv2,
