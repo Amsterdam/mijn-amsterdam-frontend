@@ -44,7 +44,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
   test('Renders Dossier Detailpage no data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .times(1)
       .reply(200, { content: null, status: 'OK' });
 
@@ -76,7 +76,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
   test('Renders Dossier Detailpage with data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .times(1)
       .reply(200, {
         content: jsonCopy(dossierDetailTransformed),
@@ -192,7 +192,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
   test('Renders Dossier Detailpage with betaler aanpassen link', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .times(1)
       .reply(200, {
         content: jsonCopy(dossierDetailTransformed),
@@ -227,9 +227,9 @@ describe('<Erfpacht/DossierDetail />', () => {
       },
     } as AppState;
 
-    //http://bff-api-host/services/erfpachtv2/dossier/E.123.123
+    //http://bff-api-host/services/erfpacht/dossier/E.123.123
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(500, { content: null, status: 'ERROR' });
 
     const screen = render(

@@ -39,10 +39,8 @@ describe('simple-connect/erfpacht', () => {
   };
 
   test('fetchErfpachtV2: null', async () => {
-    remoteApi.get('/erfpachtv2/vernise/api/erfpachter').reply(200, null as any);
-    remoteApi
-      .get('/erfpachtv2/vernise/api/dossierinfo')
-      .reply(200, null as any);
+    remoteApi.get('/erfpacht/vernise/api/erfpachter').reply(200, null as any);
+    remoteApi.get('/erfpacht/vernise/api/dossierinfo').reply(200, null as any);
 
     const responseContent = await fetchErfpachtV2(
       REQUEST_ID,
@@ -62,10 +60,10 @@ describe('simple-connect/erfpacht', () => {
 
   test('fetchErfpachtV2: dossiers', async () => {
     remoteApi
-      .get('/erfpachtv2/vernise/api/erfpachter')
+      .get('/erfpacht/vernise/api/erfpachter')
       .reply(200, { erfpachter: true, relationCode: '123-abc' } as any);
     remoteApi
-      .get('/erfpachtv2/vernise/api/dossierinfo')
+      .get('/erfpacht/vernise/api/dossierinfo')
       .reply(200, ERFPACHT_DOSSIERS);
 
     const responseContent = await fetchErfpachtV2(
@@ -77,7 +75,7 @@ describe('simple-connect/erfpacht', () => {
 
   test('fetchErfpachtV2: dossier detail', async () => {
     remoteApi
-      .get('/erfpachtv2/vernise/api/dossierinfo/E.477.46')
+      .get('/erfpacht/vernise/api/dossierinfo/E.477.46')
       .reply(200, ERFPACHT_DOSSIERINFO_DETAILS);
 
     const responseContent = await fetchErfpachtV2DossiersDetail(
@@ -90,7 +88,7 @@ describe('simple-connect/erfpacht', () => {
 
   test('fetchErfpachtV2 zakelijk', async () => {
     remoteApi
-      .get('/erfpachtv2/vernise/api/erfpachter')
+      .get('/erfpacht/vernise/api/erfpachter')
       .reply(200, ERFPACHT_ERFPACHTER);
 
     authProfileAndToken.profile.profileType = 'commercial';

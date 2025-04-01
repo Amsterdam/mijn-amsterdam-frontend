@@ -15,7 +15,7 @@ export const BFFApiUrls = {
   SERVICES_CMS_URL: `${BFF_API_BASE_URL}/services/cms`,
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
-  ERFPACHT_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpachtv2/dossier`,
+  ERFPACHT_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpacht/dossier`,
   AFIS_BUSINESSPARTNER: `${BFF_API_BASE_URL}/services/afis/businesspartner`,
   AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen`,
 };

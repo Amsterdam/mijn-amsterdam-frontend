@@ -58,7 +58,7 @@ export const BffEndpoints = {
 
   // ErfpachtV2
   ERFPACHT_DOSSIER_DETAILS:
-    '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
+    '/services/erfpacht/dossier/:dossierNummerUrlParam?',
 
   // Toeristische verhuur / Bed & Breakfast
   TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:

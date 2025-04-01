@@ -42,7 +42,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Facturen List Page no data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(200, { content: null, status: 'OK' });
 
     const testState = {
@@ -72,7 +72,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Facturen List Page with data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(200, { content: dossierDetailTransformed, status: 'OK' });
 
     const testState = {
@@ -144,7 +144,7 @@ describe('<ErfpachtOpenFacturen />', () => {
     } as AppState;
 
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(500, { content: null, status: 'ERROR' });
 
     const screen = render(
