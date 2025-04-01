@@ -367,7 +367,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Paragraph>
         <Paragraph>
           Let op: het blokkeren kan alleen worden teruggedraaid door te bellen
-          met <br />{' '}
+          met{' '}
           <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
             {PHONENUMBERS.WerkEnInkomen}
           </Link>
@@ -390,8 +390,7 @@ function PassBlockedAlert() {
         <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
           {PHONENUMBERS.WerkEnInkomen}
         </Link>{' '}
-        Na het telefoongesprek kun je de pas
-        meteen weer gebruiken.
+        Na het telefoongesprek kun je de pas meteen weer gebruiken.
       </Paragraph>
       <Paragraph>
         De nieuwe pas wordt binnen drie weken thuisgestuurd en is dan meteen te
