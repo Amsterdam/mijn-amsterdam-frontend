@@ -1,17 +1,18 @@
 import * as appInsights from 'applicationinsights';
 import {
-  ExceptionData,
   ExceptionTelemetry,
-  RemoteDependencyData,
-  RequestData,
   SeverityLevel,
   Telemetry,
   TraceTelemetry,
 } from 'applicationinsights/out/Declarations/Contracts';
 
+import {
+  shouldSendRemoteDependencyData,
+  shouldSendRequestData,
+  shouldSendExceptionData,
+} from './should-send-telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
-
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
@@ -29,49 +30,12 @@ const client: appInsights.TelemetryClient | undefined =
 // See also: https://www.npmjs.com/package/applicationinsights
 
 if (client) {
-  // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
-  const excludedRequests: string[] = JSON.parse(
-    process.env.BFF_EXCLUDE_INCOMING_REQUESTS || '[]'
-  );
-
-  const excludedOutoingDependencies: Array<{
-    method: string;
-    routeSegment: string;
-    statusCode: string;
-  }> = JSON.parse(process.env.BFF_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
-
-  // Exceptions like "AxiosError: Request failed" are loaded in here.
-  const excludedExceptions: string[] = JSON.parse(
-    process.env.BFF_EXCLUDE_EXCEPTIONS || '[]'
-  );
-
   // Reason: Type is known. It is the same type as the keyname.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const shouldSendTelemetry: Record<string, (data: any) => boolean> = {
-    RequestData: (data: RequestData) => !excludedRequests.includes(data.name),
-    RemoteDependencyData: (data: RemoteDependencyData) => {
-      const [method, route] = data.name.split(' ');
-
-      for (const excludeReqParts of excludedOutoingDependencies) {
-        if (
-          route.includes(excludeReqParts.routeSegment) &&
-          method === excludeReqParts.method &&
-          data.resultCode === excludeReqParts.statusCode
-        ) {
-          return false;
-        }
-      }
-      return true;
-    },
-    ExceptionData: (data: ExceptionData) => {
-      const exceptionSource = data.exceptions.at(-1);
-      return !(
-        !!exceptionSource &&
-        excludedExceptions.some((exceptionTextStart) =>
-          exceptionSource.message.startsWith(exceptionTextStart)
-        )
-      );
-    },
+    RequestData: shouldSendRequestData,
+    RemoteDependencyData: shouldSendRemoteDependencyData,
+    ExceptionData: shouldSendExceptionData,
   };
 
   client.addTelemetryProcessor((envelope) => {
