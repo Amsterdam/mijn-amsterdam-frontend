@@ -129,7 +129,7 @@ export function getStatusSteps<
   DZ extends DecosZaakBase,
   V extends VergunningFrontend<DZ>,
 >(vergunning: V) {
-  if (vergunning.caseType === 'RVVSloterweg') {
+  if (vergunning.caseType === 'RVV Sloterweg') {
     return getStatusStepsRVVSloterweg(
       vergunning as unknown as VergunningFrontend<RVVSloterweg>
     );
