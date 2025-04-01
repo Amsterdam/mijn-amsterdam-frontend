@@ -13,7 +13,7 @@ import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import {
-  ErfpachtV2Dossier,
+  ErfpachtDossier,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/erfpacht/erfpacht';
 import {
@@ -231,10 +231,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'ERFPACHT' as AppStateKey,
     getApiBaseItems: (
       erfpachtV2DossiersResponse: ErfpachtV2DossiersResponse
-    ): ErfpachtV2Dossier[] => {
+    ): ErfpachtDossier[] => {
       return erfpachtV2DossiersResponse?.dossiers?.dossiers ?? [];
     },
-    displayTitle: (dossier: ErfpachtV2Dossier) => (term: string) => {
+    displayTitle: (dossier: ErfpachtDossier) => (term: string) => {
       return displayPath(term, [dossier.title]);
     },
   },

@@ -247,13 +247,13 @@ interface ErfpachtV2DossiersResponseSource {
   };
 }
 
-export type ErfpachtV2Dossier = ErfpachtV2DossierSource &
+export type ErfpachtDossier = ErfpachtV2DossierSource &
   ErfpachtDossierPropsFrontend;
 
 export interface ErfpachtV2DossiersResponse
   extends ErfpachtV2DossiersResponseSource {
   dossiers: ErfpachtV2DossiersResponseSource['dossiers'] & {
-    dossiers?: ErfpachtV2Dossier[];
+    dossiers?: ErfpachtDossier[];
   };
   openstaandeFacturen: ErfpachtV2DossiersResponseSource['openstaandeFacturen'] & {
     dossiers: ErfpachtDossierFactuur[];

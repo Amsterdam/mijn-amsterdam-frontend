@@ -1,6 +1,6 @@
 import {
   ErfpachtDossierFactuur,
-  ErfpachtV2Dossier,
+  ErfpachtDossier,
   ErfpachtV2DossiersDetail,
   ErfpachtV2DossiersResponse,
 } from '../../../server/services/erfpacht/erfpacht';
@@ -61,7 +61,7 @@ export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 type DisplayPropsDossiers = DisplayProps<
-  WithDetailLinkComponent<ErfpachtV2Dossier>
+  WithDetailLinkComponent<ErfpachtDossier>
 >;
 export type DisplayPropsFacturen = DisplayProps<
   WithDetailLinkComponent<ErfpachtDossierFactuur>

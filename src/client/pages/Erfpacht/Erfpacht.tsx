@@ -4,7 +4,7 @@ import { listPageParamKind } from './Erfpacht-thema-config';
 import { useErfpachtV2Data } from './erfpachtData.hook';
 import {
   ErfpachtDossierFactuur,
-  ErfpachtV2Dossier,
+  ErfpachtDossier,
 } from '../../../server/services/erfpacht/erfpacht';
 import { entries } from '../../../universal/helpers/utils';
 import { PageContentCell } from '../../components/Page/Page';
@@ -27,7 +27,7 @@ export function Erfpacht() {
         .filter(([kind]) => kind !== listPageParamKind.alleFacturen)
         .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
           return (
-            <ThemaPaginaTable<ErfpachtV2Dossier | ErfpachtDossierFactuur>
+            <ThemaPaginaTable<ErfpachtDossier | ErfpachtDossierFactuur>
               key={kind}
               title={title}
               zaken={
