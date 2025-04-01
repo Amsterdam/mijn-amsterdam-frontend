@@ -148,7 +148,7 @@ attachDocumentDownloadRoute(
 router.get(BffEndpoints.BEZWAREN_DETAIL, handleFetchBezwaarDetail);
 
 router.get(
-  BffEndpoints.ERFPACHTv2_DOSSIER_DETAILS,
+  BffEndpoints.ERFPACHT_DOSSIER_DETAILS,
   async (req: Request, res: Response) => {
     const authProfileAndToken = getAuth(req);
     if (authProfileAndToken) {

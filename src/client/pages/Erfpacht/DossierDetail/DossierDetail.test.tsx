@@ -4,8 +4,8 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
 import { ErfpachtDossierDetail } from './ErfpachtDossierDetail';
-import ERFPACHTv2_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHTv2_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
+import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
@@ -24,7 +24,7 @@ describe('<Erfpacht/DossierDetail />', () => {
   const routePath = AppRoutes['ERFPACHT/DOSSIERDETAIL'];
 
   const dossierDetailTransformed = transformErfpachtDossierProperties(
-    ERFPACHTv2_DOSSIER_DETAIL as any
+    ERFPACHT_DOSSIER_DETAIL as any
   );
 
   function Component({
@@ -86,10 +86,7 @@ describe('<Erfpacht/DossierDetail />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(
-          ERFPACHTv2_DOSSIERS as any,
-          '123-abc'
-        ),
+        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '123-abc'),
       },
     } as AppState;
 
@@ -205,7 +202,7 @@ describe('<Erfpacht/DossierDetail />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHTv2_DOSSIERS as any, '999999'),
+        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '999999'),
       },
     } as AppState;
 

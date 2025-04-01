@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
+import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import { transformDossierResponse } from '../../../server/services/erfpacht/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
@@ -95,10 +95,7 @@ describe('<Erfpacht />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(
-          ERFPACHTv2_DOSSIERS as any,
-          '123-abc'
-        ),
+        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '123-abc'),
       },
     } as AppState;
 

@@ -19,7 +19,7 @@ export function ErfpachtFacturen() {
 
   const [dossierApiResponse, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>(
     {
-      url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
+      url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
       bagThema: BagThemas.ERFPACHT,
       key: dossierNummerUrlParam,
     }
