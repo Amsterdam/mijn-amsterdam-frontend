@@ -44,11 +44,11 @@ export const linkListItems: LinkProps[] = [
 ];
 
 export const routes = {
-  listPageOpenFacturen: AppRoutes['ERFPACHTv2/OPEN_FACTUREN'],
-  listPageAlleFacturen: AppRoutes['ERFPACHTv2/ALLE_FACTUREN'],
-  listPageDossiers: AppRoutes['ERFPACHTv2/DOSSIERS'],
-  detailPageDossier: AppRoutes['ERFPACHTv2/DOSSIERDETAIL'],
-  themaPage: AppRoutes.ERFPACHTv2,
+  listPageOpenFacturen: AppRoutes['ERFPACHT/OPEN_FACTUREN'],
+  listPageAlleFacturen: AppRoutes['ERFPACHT/ALLE_FACTUREN'],
+  listPageDossiers: AppRoutes['ERFPACHT/DOSSIERS'],
+  detailPageDossier: AppRoutes['ERFPACHT/DOSSIERDETAIL'],
+  themaPage: AppRoutes.ERFPACHT,
 } as const;
 
 export const listPageParamKind = {

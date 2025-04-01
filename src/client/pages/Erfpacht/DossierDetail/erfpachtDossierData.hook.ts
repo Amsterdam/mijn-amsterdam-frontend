@@ -25,7 +25,7 @@ export function useDossierDetaiLData() {
 
   const [dossierApiResponse] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
     url: `${BFFApiUrls.ERFPACHTv2_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagThema: BagThemas.ERFPACHTv2,
+    bagThema: BagThemas.ERFPACHT,
     key: dossierNummerUrlParam,
   });
   const dossier = dossierApiResponse.content;

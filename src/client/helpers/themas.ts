@@ -14,7 +14,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     BEZWAREN,
     BODEM,
     BRP,
-    ERFPACHTv2,
+    ERFPACHT,
     HLI,
     HORECA,
     KLACHTEN,
@@ -130,14 +130,14 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         isAmsterdam
       );
 
-    case Themas.ERFPACHTv2:
+    case Themas.ERFPACHT:
       return (
         FeatureToggle.erfpachtV2Active &&
-        !isLoading(ERFPACHTv2) &&
-        ERFPACHTv2.content !== null &&
-        (('dossiers' in ERFPACHTv2.content &&
-          !!ERFPACHTv2.content.dossiers.dossiers?.length) ||
-          !!ERFPACHTv2.content?.isKnown)
+        !isLoading(ERFPACHT) &&
+        ERFPACHT.content !== null &&
+        (('dossiers' in ERFPACHT.content &&
+          !!ERFPACHT.content.dossiers.dossiers?.length) ||
+          !!ERFPACHT.content?.isKnown)
       );
 
     case Themas.SUBSIDIE:

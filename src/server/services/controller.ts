@@ -124,7 +124,7 @@ const AVG = callAuthenticatedService(fetchAVG);
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 const BRP = callAuthenticatedService(fetchBRP);
-const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
+const ERFPACHT = callAuthenticatedService(fetchErfpachtV2);
 const HLI = callAuthenticatedService(fetchHLI);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
 const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
@@ -181,7 +181,7 @@ const SERVICES_INDEX = {
   BRP,
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
-  ERFPACHTv2,
+  ERFPACHT,
   HLI,
   HORECA,
   KLACHTEN,
@@ -227,7 +227,7 @@ type CommercialServices = Pick<
   | 'BODEM'
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'ERFPACHTv2'
+  | 'ERFPACHT'
   | 'HORECA'
   | 'KVK'
   | 'MILIEUZONE'
@@ -259,7 +259,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BRP,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
-    ERFPACHTv2,
+    ERFPACHT,
     HLI,
     HORECA,
     KLACHTEN,
@@ -296,7 +296,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BODEM,
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
-    ERFPACHTv2,
+    ERFPACHT,
     HORECA,
     KVK,
     MILIEUZONE,

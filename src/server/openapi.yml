@@ -250,7 +250,7 @@ components:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         TOERISTISCHE_VERHUUR:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        ERFPACHTv2:
+        ERFPACHT:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         SUBSIDIE:
           $ref: '#/components/schemas/ApiSearchConfigResult'
@@ -284,7 +284,7 @@ components:
           type: object
         CMS_MAINTENANCE_NOTIFICATIONS:
           type: object
-        ERFPACHTv2:
+        ERFPACHT:
           type: object
         KREFIA:
           type: object

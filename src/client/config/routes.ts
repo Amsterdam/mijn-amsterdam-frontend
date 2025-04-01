@@ -101,7 +101,7 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
 
-  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
+  [AppRoutes['ERFPACHT/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
   [AppRoutes.HOME]: (
     match: Match,

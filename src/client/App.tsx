@@ -393,30 +393,30 @@ function AppAuthenticated() {
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route
-              path={AppRoutes['ERFPACHTv2/DOSSIERS']}
+              path={AppRoutes['ERFPACHT/DOSSIERS']}
               component={ErfpachtDossiers}
             />
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route
-              path={AppRoutes['ERFPACHTv2/ALLE_FACTUREN']}
+              path={AppRoutes['ERFPACHT/ALLE_FACTUREN']}
               component={ErfpachtFacturen}
             />
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route
-              path={AppRoutes['ERFPACHTv2/OPEN_FACTUREN']}
+              path={AppRoutes['ERFPACHT/OPEN_FACTUREN']}
               component={ErfpachtOpenFacturen}
             />
           )}
           {FeatureToggle.erfpachtV2Active && (
             <Route
-              path={AppRoutes['ERFPACHTv2/DOSSIERDETAIL']}
+              path={AppRoutes['ERFPACHT/DOSSIERDETAIL']}
               component={ErfpachtDossierDetail}
             />
           )}
           {FeatureToggle.erfpachtV2Active && (
-            <Route path={AppRoutes.ERFPACHTv2} component={Erfpacht} />
+            <Route path={AppRoutes.ERFPACHT} component={Erfpacht} />
           )}
           <Route path={AppRoutes.SEARCH} component={SearchPage} />
           <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />

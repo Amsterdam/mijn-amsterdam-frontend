@@ -228,7 +228,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'ERFPACHTv2' as AppStateKey,
+    stateKey: 'ERFPACHT' as AppStateKey,
     getApiBaseItems: (
       erfpachtV2DossiersResponse: ErfpachtV2DossiersResponse
     ): ErfpachtV2Dossier[] => {

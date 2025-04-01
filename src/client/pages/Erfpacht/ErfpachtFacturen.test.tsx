@@ -17,10 +17,10 @@ import MockApp from '../MockApp';
 import { ErfpachtFacturen } from './ErfpachtFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
-  const routeEntry = generatePath(AppRoutes['ERFPACHTv2/ALLE_FACTUREN'], {
+  const routeEntry = generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
     dossierNummerUrlParam: 'E.123.123',
   });
-  const routePath = AppRoutes['ERFPACHTv2/ALLE_FACTUREN'];
+  const routePath = AppRoutes['ERFPACHT/ALLE_FACTUREN'];
   const dossierDetailTransformed = transformErfpachtDossierProperties(
     ERFPACHTv2_DOSSIER_DETAIL as any
   );
@@ -46,7 +46,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       .reply(200, { content: null, status: 'OK' });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: null,
       },
@@ -76,7 +76,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       .reply(200, { content: dossierDetailTransformed, status: 'OK' });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: transformDossierResponse(
           ERFPACHTv2_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
@@ -137,7 +137,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Facturen List Page with error', async () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'ERROR',
         content: null,
       },

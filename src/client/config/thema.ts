@@ -39,7 +39,7 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   BRP: 'Mijn gegevens',
   BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
-  ERFPACHTv2: `Erfpacht`,
+  ERFPACHT: `Erfpacht`,
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
   INKOMEN: 'Inkomen',
@@ -176,11 +176,11 @@ export const DocumentTitles: DocumentTitlesConfig = {
     `Lood in de bodem-check | ${ThemaTitles.BODEM}`,
 
   // Erfpacht
-  [AppRoutes.ERFPACHTv2]: 'Erfpacht | overzicht',
-  [AppRoutes['ERFPACHTv2/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
-  [AppRoutes['ERFPACHTv2/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
-  [AppRoutes['ERFPACHTv2/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
-  [AppRoutes['ERFPACHTv2/DOSSIERDETAIL']]: 'Erfpacht | dossier',
+  [AppRoutes.ERFPACHT]: 'Erfpacht | overzicht',
+  [AppRoutes['ERFPACHT/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
+  [AppRoutes['ERFPACHT/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
+  [AppRoutes['ERFPACHT/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
+  [AppRoutes['ERFPACHT/DOSSIERDETAIL']]: 'Erfpacht | dossier',
 
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
@@ -279,14 +279,14 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private'],
   },
   {
-    title: ThemaTitles.ERFPACHTv2,
-    id: Themas.ERFPACHTv2,
-    to: AppRoutes.ERFPACHTv2,
+    title: ThemaTitles.ERFPACHT,
+    id: Themas.ERFPACHT,
+    to: AppRoutes.ERFPACHT,
     profileTypes: ['private'],
   },
   {
-    title: ThemaTitles.ERFPACHTv2,
-    id: Themas.ERFPACHTv2,
+    title: ThemaTitles.ERFPACHT,
+    id: Themas.ERFPACHT,
     to: import.meta.env.REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK,
     profileTypes: ['commercial'],
     rel: 'external',

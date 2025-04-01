@@ -117,7 +117,7 @@ export function DataTableFacturen({
         dossier.facturen.facturen.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
           <LinkToListPage
             count={dossier.facturen.facturen.length}
-            route={generatePath(AppRoutes['ERFPACHTv2/ALLE_FACTUREN'], {
+            route={generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
               dossierNummerUrlParam,
             })}
           />

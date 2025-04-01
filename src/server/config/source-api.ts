@@ -71,7 +71,7 @@ export type SourceApiKey =
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'DECOS_API'
   | 'ENABLEU_2_SMILE'
-  | 'ERFPACHTv2'
+  | 'ERFPACHT'
   | 'GPASS'
   | 'KREFIA'
   | 'KVK'
@@ -237,7 +237,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   BAG: {
     url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
   },
-  ERFPACHTv2: {
+  ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),

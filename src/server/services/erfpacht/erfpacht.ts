@@ -319,7 +319,7 @@ export function transformErfpachtDossierProperties<
     steps: [],
     id: dossierNummerUrlParam,
     link: {
-      to: generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {
+      to: generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
         dossierNummerUrlParam,
       }),
       title,
@@ -364,7 +364,7 @@ export async function fetchErfpachtV2(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const config = getApiConfig('ERFPACHTv2');
+  const config = getApiConfig('ERFPACHT');
 
   const erfpachterResponse = await requestData<Erfpachtv2ErpachterResponse>(
     {
@@ -407,7 +407,7 @@ export async function fetchErfpachtV2DossiersDetail(
   authProfileAndToken: AuthProfileAndToken,
   dossierNummerUrlParam: string
 ) {
-  const config = getApiConfig('ERFPACHTv2');
+  const config = getApiConfig('ERFPACHT');
   const dossierInfoResponse = await requestData<ErfpachtV2DossiersDetail>(
     {
       ...config,

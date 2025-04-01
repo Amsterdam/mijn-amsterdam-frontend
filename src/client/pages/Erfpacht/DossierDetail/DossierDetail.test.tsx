@@ -18,10 +18,10 @@ import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 describe('<Erfpacht/DossierDetail />', () => {
-  const routeEntry = generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {
+  const routeEntry = generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
     dossierNummerUrlParam: 'E.123.123',
   });
-  const routePath = AppRoutes['ERFPACHTv2/DOSSIERDETAIL'];
+  const routePath = AppRoutes['ERFPACHT/DOSSIERDETAIL'];
 
   const dossierDetailTransformed = transformErfpachtDossierProperties(
     ERFPACHTv2_DOSSIER_DETAIL as any
@@ -49,7 +49,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       .reply(200, { content: null, status: 'OK' });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: null,
       },
@@ -84,7 +84,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: transformDossierResponse(
           ERFPACHTv2_DOSSIERS as any,
@@ -203,7 +203,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: transformDossierResponse(ERFPACHTv2_DOSSIERS as any, '999999'),
       },
@@ -224,7 +224,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
   test('Renders Dossier Detailpage with error', async () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'ERROR',
         content: null,
       },

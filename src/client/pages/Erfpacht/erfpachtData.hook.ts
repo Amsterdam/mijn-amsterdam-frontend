@@ -13,8 +13,8 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useErfpachtV2Data() {
-  const { ERFPACHTv2 } = useAppStateGetter();
-  const erfpachtData = ERFPACHTv2.content as ErfpachtV2DossiersResponse | null;
+  const { ERFPACHT } = useAppStateGetter();
+  const erfpachtData = ERFPACHT.content as ErfpachtV2DossiersResponse | null;
 
   // Dossiers
   const dossiersBase = erfpachtData?.dossiers ?? null;
@@ -24,7 +24,7 @@ export function useErfpachtV2Data() {
     'voorkeursadres'
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.ERFPACHTv2);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.ERFPACHT);
 
   // Facturen
   const openFacturenBase = erfpachtData?.openstaandeFacturen ?? null;
@@ -32,13 +32,13 @@ export function useErfpachtV2Data() {
   const tableConfig = getTableConfig({ erfpachtData });
 
   return {
-    title: ThemaTitles.ERFPACHTv2,
+    title: ThemaTitles.ERFPACHT,
     erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
     openFacturen,
     dossiers,
-    isLoading: isLoading(ERFPACHTv2),
-    isError: isError(ERFPACHTv2),
+    isLoading: isLoading(ERFPACHT),
+    isError: isError(ERFPACHT),
     linkListItems,
     tableConfig,
     listPageParamKind,

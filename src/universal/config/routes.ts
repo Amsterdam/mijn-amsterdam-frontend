@@ -68,11 +68,11 @@ export const AppRoutes = {
   'BODEM/LOOD_METING': '/bodem/lood-meting/:id',
 
   // Erfpacht v2
-  ERFPACHTv2: '/erfpacht',
-  'ERFPACHTv2/DOSSIERS': '/erfpacht/dossiers/:page?',
-  'ERFPACHTv2/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
-  'ERFPACHTv2/OPEN_FACTUREN': '/erfpacht/lijst/open-facturen/:page?',
-  'ERFPACHTv2/ALLE_FACTUREN':
+  ERFPACHT: '/erfpacht',
+  'ERFPACHT/DOSSIERS': '/erfpacht/dossiers/:page?',
+  'ERFPACHT/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
+  'ERFPACHT/OPEN_FACTUREN': '/erfpacht/lijst/open-facturen/:page?',
+  'ERFPACHT/ALLE_FACTUREN':
     '/erfpacht/facturen/lijst/:dossierNummerUrlParam/:page?',
 
   'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten',

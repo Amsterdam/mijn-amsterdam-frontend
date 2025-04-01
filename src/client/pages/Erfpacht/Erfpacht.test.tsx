@@ -11,8 +11,8 @@ import { Erfpacht } from './Erfpacht';
 import { AppState } from '../../../universal/types/App.types';
 
 describe('<Erfpacht />', () => {
-  const routeEntry = generatePath(AppRoutes.ERFPACHTv2);
-  const routePath = AppRoutes.ERFPACHTv2;
+  const routeEntry = generatePath(AppRoutes.ERFPACHT);
+  const routePath = AppRoutes.ERFPACHT;
 
   function Component({
     initializeState,
@@ -31,7 +31,7 @@ describe('<Erfpacht />', () => {
 
   test('Renders Overviewpage no data', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: null,
       },
@@ -60,7 +60,7 @@ describe('<Erfpacht />', () => {
 
   test('Renders Overviewpage with error', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'ERROR',
         content: null,
       },
@@ -93,7 +93,7 @@ describe('<Erfpacht />', () => {
 
   test('Renders Overviewpage with data', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: transformDossierResponse(
           ERFPACHTv2_DOSSIERS as any,

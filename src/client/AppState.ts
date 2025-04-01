@@ -70,7 +70,7 @@ export const PRISTINE_APPSTATE: AppState = {
   WMO: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  ERFPACHTv2: apiPristineResult(null, {
+  ERFPACHT: apiPristineResult(null, {
     isActive: FeatureToggle.erfpachtV2Active,
     profileTypes: ['private', 'commercial'],
   }),

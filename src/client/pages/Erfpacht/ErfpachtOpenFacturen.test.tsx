@@ -14,8 +14,8 @@ import MockApp from '../MockApp';
 import { ErfpachtOpenFacturen } from './ErfpachtOpenFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
-  const routeEntry = generatePath(AppRoutes['ERFPACHTv2/OPEN_FACTUREN']);
-  const routePath = AppRoutes['ERFPACHTv2/OPEN_FACTUREN'];
+  const routeEntry = generatePath(AppRoutes['ERFPACHT/OPEN_FACTUREN']);
+  const routePath = AppRoutes['ERFPACHT/OPEN_FACTUREN'];
 
   const dossiersTransformed = transformDossierResponse(
     ERFPACHTv2_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
@@ -39,7 +39,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Open Facturen List Page no data', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: null,
       },
@@ -63,7 +63,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Open Facturen List Page with data', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: dossiersTransformed,
       },
@@ -103,7 +103,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Open Facturen List Page with data on a small screen device', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: dossiersTransformed,
       },
@@ -150,7 +150,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Open Facturen List Page with error', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'ERROR',
         content: null,
       },

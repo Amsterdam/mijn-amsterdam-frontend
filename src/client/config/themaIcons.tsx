@@ -44,7 +44,7 @@ export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   BRP: IconMijnGegevens,
   BURGERZAKEN: IconBurgerZaken,
   BUURT: IconWior,
-  ERFPACHTv2: IconErfpacht,
+  ERFPACHT: IconErfpacht,
   HLI: IconHLI,
   HORECA: IconHoreca,
   INKOMEN: IconInkomen,
