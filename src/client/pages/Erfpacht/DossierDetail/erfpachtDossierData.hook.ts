@@ -6,7 +6,7 @@ import { BFFApiUrls } from '../../../config/api';
 import { BagThemas } from '../../../config/thema';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
 import { getTableConfig } from '../Erfpacht-thema-config';
-import { useErfpachtV2Data } from '../erfpachtData.hook';
+import { useErfpachtThemaData } from '../erfpachtData.hook';
 
 export function useDossierDetaiLData() {
   const { dossierNummerUrlParam } = useParams<{
@@ -21,7 +21,7 @@ export function useDossierDetaiLData() {
     listPageParamKind,
     erfpachtData,
     breadcrumbs,
-  } = useErfpachtV2Data();
+  } = useErfpachtThemaData();
 
   const [dossierApiResponse] = useAppStateBagApi<ErfpachtDossiersDetail>({
     url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,

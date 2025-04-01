@@ -1,10 +1,10 @@
 import { listPageParamKind } from './Erfpacht-thema-config';
-import { useErfpachtV2Data } from './erfpachtData.hook';
+import { useErfpachtThemaData } from './erfpachtData.hook';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export function ErfpachtDossiers() {
   const { isLoading, isError, dossiers, tableConfig, breadcrumbs } =
-    useErfpachtV2Data();
+    useErfpachtThemaData();
 
   const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtRechten];
   const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};

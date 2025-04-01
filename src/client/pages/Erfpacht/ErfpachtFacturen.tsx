@@ -1,7 +1,7 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
-import { useErfpachtV2Data } from './erfpachtData.hook';
+import { useErfpachtThemaData } from './erfpachtData.hook';
 import { ErfpachtDossiersDetail } from '../../../server/services/erfpacht/erfpacht';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
@@ -11,7 +11,8 @@ import { BagThemas } from '../../config/thema';
 import { useAppStateBagApi } from '../../hooks/useAppState';
 
 export function ErfpachtFacturen() {
-  const { tableConfig, listPageParamKind, breadcrumbs } = useErfpachtV2Data();
+  const { tableConfig, listPageParamKind, breadcrumbs } =
+    useErfpachtThemaData();
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;

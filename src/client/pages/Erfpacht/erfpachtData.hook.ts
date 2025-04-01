@@ -12,7 +12,7 @@ import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
-export function useErfpachtV2Data() {
+export function useErfpachtThemaData() {
   const { ERFPACHT } = useAppStateGetter();
   const erfpachtData = ERFPACHT.content as ErfpachtDossiersResponse | null;
 

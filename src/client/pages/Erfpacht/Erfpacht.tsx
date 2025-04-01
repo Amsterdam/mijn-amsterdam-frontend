@@ -1,7 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { listPageParamKind } from './Erfpacht-thema-config';
-import { useErfpachtV2Data } from './erfpachtData.hook';
+import { useErfpachtThemaData } from './erfpachtData.hook';
 import {
   ErfpachtDossierFactuur,
   ErfpachtDossier,
@@ -20,7 +20,7 @@ export function Erfpacht() {
     tableConfig,
     dossiers,
     openFacturen,
-  } = useErfpachtV2Data();
+  } = useErfpachtThemaData();
 
   const pageContentTables = tableConfig
     ? entries(tableConfig)
