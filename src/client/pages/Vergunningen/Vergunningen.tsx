@@ -10,7 +10,7 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <PageContentCell spanWide={6}>
+  <PageContentCell spanWide={8}>
     <Paragraph>
       Hier ziet u een overzicht van uw aanvragen voor vergunningen en
       ontheffingen bij gemeente Amsterdam.

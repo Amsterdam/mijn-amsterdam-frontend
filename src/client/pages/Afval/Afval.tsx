@@ -232,7 +232,7 @@ export function AfvalInformation() {
     <DetailPageV2>
       <PageContentV2>
         <PageHeadingV2>{termReplace(ThemaTitles.AFVAL)}</PageHeadingV2>
-        <PageContentCell spanWide={6}>
+        <PageContentCell spanWide={8}>
           {profileType === 'private' && (
             <>
               <Paragraph className="ams-mb--sm">

@@ -8,7 +8,7 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <PageContentCell spanWide={6}>
+  <PageContentCell spanWide={8}>
     <Paragraph>Hieronder ziet u een overzicht van uw AVG verzoeken.</Paragraph>
   </PageContentCell>
 );

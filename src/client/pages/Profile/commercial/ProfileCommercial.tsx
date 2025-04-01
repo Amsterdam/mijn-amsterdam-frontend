@@ -83,7 +83,7 @@ function ProfileCommercialSectionPanels() {
             {...panelConfig.overigeFunctionarissen(KVK)}
           />
         )}
-      <PageContentCell spanWide={6}>
+      <PageContentCell spanWide={8}>
         <ParagaphSuppressed className="ams-mb--sm">
           Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
@@ -102,7 +102,7 @@ function ProfileCommercialSectionPanels() {
 }
 
 const pageContentTop = (
-  <PageContentCell spanWide={6}>
+  <PageContentCell spanWide={8}>
     <Paragraph>
       Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
       van de Kamer van Koophandel. In dat register staan onder meer uw

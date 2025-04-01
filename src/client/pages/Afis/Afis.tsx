@@ -24,7 +24,7 @@ function PageContentTop({
   urlNaarBelastingen: string;
 }) {
   return (
-    <PageContentCell spanWide={6}>
+    <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb--sm">
         Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
         heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}

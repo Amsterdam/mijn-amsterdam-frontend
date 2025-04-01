@@ -6,7 +6,7 @@ import { ExternalUrls } from '../../config/app';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 const pageContentTop = (
-  <PageContentCell spanWide={6}>
+  <PageContentCell spanWide={8}>
     <Paragraph className="ams-mb--sm">
       Hieronder ziet u de status van uw aanvraag voor een uitkering of lening
       van het Bbz. Ook als u een IOAZ uitkering heeft aangevraagd ziet u de

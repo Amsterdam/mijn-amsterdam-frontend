@@ -7,7 +7,7 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <PageContentCell spanWide={6}>
+  <PageContentCell spanWide={8}>
     <Paragraph>
       Op deze pagina vindt u informatie over uw uitkering en de ondersteuning
       die u krijgt omdat u weinig geld hebt.

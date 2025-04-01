@@ -6,7 +6,7 @@ import { ExternalUrls } from '../../config/app';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 const pageContentTop = (
-  <PageContentCell spanWide={6}>
+  <PageContentCell spanWide={8}>
     <Paragraph className="ams-mb--sm">
       Hieronder ziet u de status van uw aanvraag TONK. Als u meerdere aanvragen
       voor de TONK hebt gedaan, dan krijgt u 1 besluit als antwoord op al deze

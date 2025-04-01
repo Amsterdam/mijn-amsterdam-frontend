@@ -22,7 +22,7 @@ export function KrefiaThemaPagina() {
   } = useKrefiaThemaData();
 
   const pageContentTop = (
-    <PageContentCell spanWide={6}>
+    <PageContentCell spanWide={8}>
       {((hasFIBU && hasKredietbank) || !hasKrefia) && (
         <Paragraph>
           Een online plek waar u alle informatie over uw geldzaken kunt vinden

@@ -33,7 +33,7 @@ export function ErfpachtFacturen() {
     <ListPagePaginated
       pageContentTop={
         !!dossier && (
-          <PageContentCell spanWide={6}>
+          <PageContentCell spanWide={8}>
             <Heading level={3} size="level-2">
               {dossier.voorkeursadres}
             </Heading>

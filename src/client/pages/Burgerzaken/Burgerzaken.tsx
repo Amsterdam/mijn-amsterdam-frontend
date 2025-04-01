@@ -8,7 +8,7 @@ import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 const pageContentTop = (
-  <PageContentCell spanWide={6}>
+  <PageContentCell spanWide={8}>
     <Paragraph>
       Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.
     </Paragraph>

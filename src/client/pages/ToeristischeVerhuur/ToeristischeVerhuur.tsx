@@ -64,7 +64,7 @@ export function ToeristscheVerhuurThema() {
   );
 
   const pageContentTop = (
-    <PageContentCell spanWide={6}>
+    <PageContentCell spanWide={8}>
       <Paragraph>
         Hieronder vindt u een overzicht van uw vergunningen voor toeristische
         verhuur.
@@ -145,7 +145,7 @@ export function ToeristscheVerhuurThema() {
             </PageContentCell>
           )}
           {!hasVergunningBB && (
-            <PageContentCell spanWide={6}>
+            <PageContentCell spanWide={8}>
               <Paragraph>{BB_VERGUNNING_DISCLAIMER}</Paragraph>
             </PageContentCell>
           )}

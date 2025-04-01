@@ -32,7 +32,7 @@ export function ZorgThemaPagina() {
   } = useZorgThemaData();
 
   const pageContentTop = (
-    <PageContentCell spanWide={6}>
+    <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb--sm">
         Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke
         ondersteuning (Wmo).

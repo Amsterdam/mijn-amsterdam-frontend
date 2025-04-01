@@ -117,7 +117,7 @@ export function AfisBetaalVoorkeuren() {
   const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
 
   const pageContentTop = (
-    <PageContentCell spanWide={6}>
+    <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb--sm">
         Hieronder kunt u uw facturatiegegevens bekijken en een automatische
         incasso instellen per afdeling van de gemeente. Wil u uw

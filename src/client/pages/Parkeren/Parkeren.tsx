@@ -84,7 +84,7 @@ function determinePageContentTop(
       profileType === 'commercial' ? 'bedrijven' : 'bewoners';
 
     return (
-      <PageContentCell spanWide={6}>
+      <PageContentCell spanWide={8}>
         <Alert
           severity="info"
           heading={`Parkeervergunning voor ${profileTypeLabel}`}

@@ -9,7 +9,7 @@ export function InkomenDetailTozo() {
   const { isLoading, isError, zaak, breadcrumbs } =
     useInkomenDetailData('WPI_TOZO');
   const pageContentTop = (
-    <PageContentCell spanWide={6}>
+    <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb--sm">
         Hieronder ziet u de status van uw aanvraag voor de{' '}
         {zaak?.about || 'Tozo'}. Als u meerdere aanvragen voor de{' '}

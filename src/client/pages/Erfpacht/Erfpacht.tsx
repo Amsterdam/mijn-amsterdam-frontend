@@ -50,7 +50,7 @@ export function Erfpacht() {
       isError={isError}
       linkListItems={linkListItems}
       pageContentTop={
-        <PageContentCell spanWide={6}>
+        <PageContentCell spanWide={8}>
           <Paragraph>
             Hieronder ziet u de gegevens van uw erfpachtrechten.
           </Paragraph>

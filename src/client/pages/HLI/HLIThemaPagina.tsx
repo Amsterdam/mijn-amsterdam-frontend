@@ -101,7 +101,7 @@ export function HLIThemaPagina() {
   } = useHliThemaData();
 
   const pageContentTop = (
-    <PageContentCell spanWide={6}>
+    <PageContentCell spanWide={8}>
       <Paragraph>
         Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
         van een Stadspas ziet u ook de stadspasgegevens.
