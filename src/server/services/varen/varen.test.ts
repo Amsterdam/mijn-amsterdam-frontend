@@ -3,12 +3,12 @@ import { afterAll, describe, expect, it } from 'vitest';
 
 import { VarenVergunningExploitatieType } from './config-and-types';
 import { fetchVaren } from './varen';
+import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as decos from '../decos/decos-service';
 
 const zakenContent = [
@@ -56,11 +56,7 @@ const zakenContent = [
 ] as unknown as VarenVergunningExploitatieType[];
 
 describe('Varen service', () => {
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-    token: 'xxxxxx',
-    expiresAtMilliseconds: Number.MAX_SAFE_INTEGER,
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
 
   MockDate.set('2022-10-06');
 

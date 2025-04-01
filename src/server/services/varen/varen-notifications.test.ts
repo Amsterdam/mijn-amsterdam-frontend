@@ -6,11 +6,11 @@ import {
   VarenVergunningExploitatieType,
 } from './config-and-types';
 import { fetchVarenNotifications } from './varen-notifications';
+import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as decos from '../decos/decos-service';
 
 const exploitatieBase_ = {
@@ -31,11 +31,7 @@ const exploitatieBase =
   exploitatieBase_ as unknown as VarenVergunningExploitatieType;
 
 describe('Notifications', () => {
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-    token: 'xxxxxx',
-    expiresAtMilliseconds: Number.MAX_SAFE_INTEGER,
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
 
   MockDate.set('2025-01-20');
 
