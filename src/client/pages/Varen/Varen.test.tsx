@@ -244,9 +244,10 @@ describe('<Varen />', () => {
   it('Shows the reder data without a correspondence address', () => {
     const screen = render(
       <Component
-        state={getTestState([
-          { ...rederRegistratie, correspondenceAddress: null },
-        ])}
+        state={getTestState([], {
+          ...rederRegistratie,
+          correspondenceAddress: null,
+        })}
       />
     );
 
