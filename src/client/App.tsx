@@ -391,31 +391,31 @@ function AppAuthenticated() {
           {FeatureToggle.bodemActive && (
             <Route path={AppRoutes.BODEM} component={Bodem} />
           )}
-          {FeatureToggle.erfpachtV2Active && (
+          {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/DOSSIERS']}
               component={ErfpachtDossiers}
             />
           )}
-          {FeatureToggle.erfpachtV2Active && (
+          {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/ALLE_FACTUREN']}
               component={ErfpachtFacturen}
             />
           )}
-          {FeatureToggle.erfpachtV2Active && (
+          {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/OPEN_FACTUREN']}
               component={ErfpachtOpenFacturen}
             />
           )}
-          {FeatureToggle.erfpachtV2Active && (
+          {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/DOSSIERDETAIL']}
               component={ErfpachtDossierDetail}
             />
           )}
-          {FeatureToggle.erfpachtV2Active && (
+          {FeatureToggle.erfpachtActive && (
             <Route path={AppRoutes.ERFPACHT} component={Erfpacht} />
           )}
           <Route path={AppRoutes.SEARCH} component={SearchPage} />

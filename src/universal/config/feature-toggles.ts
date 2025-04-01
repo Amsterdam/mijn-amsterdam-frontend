@@ -35,7 +35,7 @@ export const FeatureToggle = {
   eherkenningActive: true,
 
   // ErfachtV2 VerNise
-  erfpachtV2Active: true,
+  erfpachtActive: true,
   erfpachtV2EndpointActive: true,
 
   // Afval api + Afval thema

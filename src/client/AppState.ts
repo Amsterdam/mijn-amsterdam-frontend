@@ -71,7 +71,7 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   ERFPACHT: apiPristineResult(null, {
-    isActive: FeatureToggle.erfpachtV2Active,
+    isActive: FeatureToggle.erfpachtActive,
     profileTypes: ['private', 'commercial'],
   }),
   SUBSIDIE: apiPristineResult(

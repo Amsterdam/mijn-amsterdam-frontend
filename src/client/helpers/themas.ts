@@ -132,7 +132,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
 
     case Themas.ERFPACHT:
       return (
-        FeatureToggle.erfpachtV2Active &&
+        FeatureToggle.erfpachtActive &&
         !isLoading(ERFPACHT) &&
         ERFPACHT.content !== null &&
         (('dossiers' in ERFPACHT.content &&
