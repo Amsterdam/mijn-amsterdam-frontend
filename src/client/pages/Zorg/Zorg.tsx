@@ -23,21 +23,26 @@ export function HistoricItemsMention() {
   );
 }
 
-export default function ThemaPaginaZorg() {
-  const { isError, isLoading, regelingen, title, routes, tableConfig } =
-    useZorgThemaData();
-
-  const pageContentTop = (
+export function ZorgPageContentTop(voorzieningText: string) {
+  return (
     <Paragraph>
-      Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke
-      ondersteuning (Wmo). Heeft u vragen of wilt u een wijziging doorgeven? Bel
-      dan gratis de Wmo Helpdesk:{' '}
+      Hieronder ziet u uw voorzieningen {voorzieningText}. Heeft u vragen of
+      wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk:{' '}
       <Link rel="noreferrer" href="tel:08000643" variant="inline">
         0800 0643
       </Link>{' '}
       (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het
       Sociaal Loket.
     </Paragraph>
+  );
+}
+
+export default function ThemaPaginaZorg() {
+  const { isError, isLoading, regelingen, title, routes, tableConfig } =
+    useZorgThemaData();
+
+  const pageContentTop = ZorgPageContentTop(
+    'vanuit de Wet maatschappelijke ondersteuning (Wmo)'
   );
 
   const linkListItems: LinkProps[] = [

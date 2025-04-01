@@ -7,27 +7,14 @@ import { LinkProps } from '../../../universal/types';
 import { ExternalUrls } from '../../config/external-urls';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
-import { HistoricItemsMention } from '../Zorg/Zorg';
+import { HistoricItemsMention, ZorgPageContentTop } from '../Zorg/Zorg';
 
 // eslint-disable-next-line import/no-default-export
 export default function JeugdThemaPagina() {
   const { isError, isLoading, regelingen, title, routes, tableConfig } =
     useJeugdThemaData();
 
-  // RP TODO: Page content top make generic? Zorg WMO, kinda same text?
-  // The call link and number definitely.
-  // The last paragraph has more but relevant text at Zorg WMO.
-  const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u uw voorzieningen Leerlingenvervoer. Heeft u vragen of
-      wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk: 0800 0643
-      (maandag tot en met vrijdag van 08.00 tot 18.00 uur)
-      <Link rel="noreferrer" href="tel:08000643" variant="inline">
-        0800 0643
-      </Link>{' '}
-      (maandag tot en met vrijdag van 08.00 tot 18.00 uur)
-    </Paragraph>
-  );
+  const pageContentTop = ZorgPageContentTop('Leerlingenvervoer');
 
   const linkListItems: LinkProps[] = [
     {
