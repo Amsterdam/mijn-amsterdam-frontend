@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { fetchErfpachtV2, fetchErfpachtDossiersDetail } from './erfpacht';
+import { fetchErfpacht, fetchErfpachtDossiersDetail } from './erfpacht';
 import ERFPACHT_DOSSIERINFO_DETAILS from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import ERFPACHT_ERFPACHTER from '../../../../mocks/fixtures/erfpacht-v2-erfpachter.json';
@@ -42,7 +42,7 @@ describe('simple-connect/erfpacht', () => {
     remoteApi.get('/erfpacht/vernise/api/erfpachter').reply(200, null as any);
     remoteApi.get('/erfpacht/vernise/api/dossierinfo').reply(200, null as any);
 
-    const responseContent = await fetchErfpachtV2(
+    const responseContent = await fetchErfpacht(
       REQUEST_ID,
       authProfileAndToken
     );
@@ -66,7 +66,7 @@ describe('simple-connect/erfpacht', () => {
       .get('/erfpacht/vernise/api/dossierinfo')
       .reply(200, ERFPACHT_DOSSIERS);
 
-    const responseContent = await fetchErfpachtV2(
+    const responseContent = await fetchErfpacht(
       REQUEST_ID,
       authProfileAndToken
     );
@@ -93,7 +93,7 @@ describe('simple-connect/erfpacht', () => {
 
     authProfileAndToken.profile.profileType = 'commercial';
 
-    const responseContent = await fetchErfpachtV2(
+    const responseContent = await fetchErfpacht(
       REQUEST_ID,
       authProfileAndToken
     );

@@ -360,7 +360,7 @@ export function transformDossierResponse(
   return responseData;
 }
 
-export async function fetchErfpachtV2(
+export async function fetchErfpacht(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {

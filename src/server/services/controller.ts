@@ -19,7 +19,7 @@ import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
-import { fetchErfpachtV2 } from './erfpacht/erfpacht';
+import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
 import { fetchAllKlachten } from './klachten/klachten';
@@ -124,7 +124,7 @@ const AVG = callAuthenticatedService(fetchAVG);
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 const BRP = callAuthenticatedService(fetchBRP);
-const ERFPACHT = callAuthenticatedService(fetchErfpachtV2);
+const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const HLI = callAuthenticatedService(fetchHLI);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
 const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
