@@ -506,6 +506,20 @@ export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerO
       text49: kentekens,
       text6: location,
     },
+    additionalSelectFields: [
+      'bol23',
+      'bol22',
+      'bol21',
+      'bol18',
+      'bol13',
+      'bol20',
+      'bol9',
+      'bol52',
+      'bol17',
+      'bol12',
+      'bol8',
+      'bol16',
+    ],
     async afterTransform(vergunning, zaakSource) {
       const wvosActiviteiten: Record<
         WVOSActiviteitType,

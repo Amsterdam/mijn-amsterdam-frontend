@@ -725,7 +725,10 @@ describe('decos-service', () => {
       const dienstenTransformer =
         decosCaseToZaakTransformers['Aanbieden van diensten'];
       const vobTransformer = decosCaseToZaakTransformers.VOB;
-      const transformers = [dienstenTransformer, vobTransformer];
+      const transformers = [
+        dienstenTransformer,
+        { ...vobTransformer, additionalSelectFields: ['text45', 'order66'] },
+      ];
 
       const responseData = await forTesting.getZakenByUserKey(
         reqID,

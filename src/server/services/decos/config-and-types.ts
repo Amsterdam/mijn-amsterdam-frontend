@@ -151,6 +151,7 @@ type CaseTypeLiteral<T extends DecosZaakBase> = unknown extends T['caseType']
     ? unknown
     : never
   : T['caseType'];
+
 export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   // The caseType (zaaktype) of the sourceData.
   caseType: CaseTypeLiteral<T>;
@@ -160,6 +161,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   // For example: date6 becomes dateStart. Additionally a function can be provided to perform some compute on the value assigned to the sourceField.
   // For example String operations like, trim, split, uppercase etc.
   transformFields: Partial<DecosFieldTransformerObject<T>>;
+  additionalSelectFields?: string[];
   // After transform is used to perform additional transformations after the initial transform.
   // Business logic is implemented at this point, also async calls to other services to enrich the data can be done here.
   afterTransform?: (
