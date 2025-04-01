@@ -107,6 +107,7 @@ const rederRegistratie = {
   company: 'Balonnenfabriek',
   bsnkvk: '012345678',
   address: 'Amstel 1, 1011 PN Amsterdam',
+  correspondenceAddress: 'Correspondence 1, 1011 PN Amsterdam',
   postalCode: null,
   city: null,
   phone: '0612345678',
@@ -207,6 +208,9 @@ describe('<Varen />', () => {
     it('Shows the reder data', () => {
       const screen = render(<Component state={getTestState([])} />);
 
+      const gegevensAanvragerTitle = screen.getByText('Gegevens Aanvrager');
+      expect(gegevensAanvragerTitle).toBeInTheDocument();
+
       const naamAanvrager = screen.getByText('Naam aanvrager');
       expect(naamAanvrager.nextElementSibling).toHaveTextContent(
         'Balonnenfabriek'
@@ -221,7 +225,7 @@ describe('<Varen />', () => {
 
       const adres = screen.getByText('Adres');
       expect(adres.nextElementSibling).toHaveTextContent(
-        'Amstel 1, 1011 PN Amsterdam'
+        'Correspondence 1, 1011 PN Amsterdam'
       );
 
       const email = screen.getByText('E-mailadres');
@@ -234,6 +238,21 @@ describe('<Varen />', () => {
         '06 november 2023'
       );
     });
+  });
+
+  it('Shows the reder data without a correspondence address', () => {
+    const screen = render(
+      <Component
+        state={getTestState([
+          { ...rederRegistratie, correspondenceAddress: null },
+        ])}
+      />
+    );
+
+    const adres = screen.getByText('Adres');
+    expect(adres.nextElementSibling).toHaveTextContent(
+      'Amstel 1, 1011 PN Amsterdam'
+    );
   });
 
   describe('Tables', () => {

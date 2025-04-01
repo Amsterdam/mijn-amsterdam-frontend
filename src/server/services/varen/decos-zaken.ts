@@ -76,6 +76,7 @@ export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederTy
       city: 'city',
       phone1: 'phone',
       email1: 'email',
+      text35: 'correspondenceAddress',
     },
     notificationLabels: {},
   };
