@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios';
-import { millisecondsToSeconds } from 'date-fns';
 import { Request, Response } from 'express';
 import nock from 'nock';
 import UID from 'uid-safe';
