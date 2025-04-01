@@ -25,9 +25,6 @@ describe('useTrackThemas', () => {
       VERGUNNINGEN: {
         isActive: true,
       },
-      VERGUNNINGEN: {
-        isActive: true,
-      },
       PARKEREN: {
         status: 'OK',
         content: {
