@@ -4,11 +4,13 @@ export const NotFoundRoutes = [
   {
     route: '*',
     Component: NotFound,
-    public: true,
+    public: false,
+    private: true,
   },
   {
     route: '*',
     Component: RedirectPrivateRoutesToLanding,
     public: true,
+    private: false,
   },
 ];
