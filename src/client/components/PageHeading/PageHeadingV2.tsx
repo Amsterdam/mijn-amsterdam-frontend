@@ -2,7 +2,7 @@ import { MouseEventHandler, ReactNode, useCallback } from 'react';
 
 import { Breadcrumb, Heading, Icon } from '@amsterdam/design-system-react';
 import { ChevronLeftIcon } from '@amsterdam/design-system-react-icons';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import styles from './PageHeadingV2.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -25,14 +25,15 @@ export function PageHeadingV2({
   showBacklink = false,
   label = 'Terug',
 }: PageHeadingProps) {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const goBack: MouseEventHandler<HTMLAnchorElement> = useCallback(
     (event) => {
       event.preventDefault();
-      history.goBack();
+      navigate(-1);
       return;
     },
-    [history]
+    [location.pathname, navigate]
   );
 
   return (
@@ -62,7 +63,7 @@ export function PageHeadingV2({
                 {title}
               </MaBreadcrumbLink>
             ))}
-            <MaBreadcrumbLink tabIndex={-1} href={history.location.pathname}>
+            <MaBreadcrumbLink tabIndex={-1} href={location.pathname}>
               <span className="ams-visually-hidden">{children}</span>
             </MaBreadcrumbLink>
           </Breadcrumb>

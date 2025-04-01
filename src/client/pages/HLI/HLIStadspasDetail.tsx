@@ -8,7 +8,7 @@ import {
   Link,
   Paragraph,
 } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';

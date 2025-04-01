@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { isVergunning } from './helper';
 import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
@@ -48,6 +48,7 @@ export const tableConfig: TableConfigByKind<
     filter: (vergunning: VarenVergunningFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
+      page: null,
     }),
     displayProps: {
       detailLinkComponent: 'Naam vaartuig',
@@ -62,6 +63,7 @@ export const tableConfig: TableConfigByKind<
     filter: isVergunning,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actief,
+      page: null,
     }),
     displayProps: {
       detailLinkComponent: 'Naam vaartuig',

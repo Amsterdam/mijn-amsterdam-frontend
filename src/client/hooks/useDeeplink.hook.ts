@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { removeLocalStorageKey, useLocalStorage } from './storage.hook';
 import { AppRoutes } from '../../universal/config/routes';

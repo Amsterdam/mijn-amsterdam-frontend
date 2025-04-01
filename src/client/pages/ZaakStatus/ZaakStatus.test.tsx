@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
@@ -9,7 +9,12 @@ import { AppState } from '../../../universal/types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 
-const pushMock = vi.fn();
+const mocks = vi.hoisted(() => {
+  return {
+    pushMock: vi.fn(),
+    location: { pathname: '/', search: '' },
+  };
+});
 
 const testState = {
   VERGUNNINGEN: {
@@ -30,18 +35,14 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateReadyAtom, true);
 }
 
-let historyReturnValue = {
-  location: { pathname: '/', search: '' },
-  push: pushMock,
-};
-
-vi.mock('react-router-dom', async (requireActual) => {
+vi.mock('react-router', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,
-    useHistory: () => {
-      return historyReturnValue;
+    useLocation: () => {
+      return mocks.location;
     },
+    useNavigate: mocks.pushMock,
   };
 });
 
@@ -62,18 +63,15 @@ describe('ZaakStatus', () => {
     }
     const { asFragment } = render(<Component />);
 
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(mocks.pushMock).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('should show error alert', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
-      },
-      push: pushMock,
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
     };
 
     function Component() {
@@ -97,12 +95,9 @@ describe('ZaakStatus', () => {
   });
 
   it('should show not found message', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000.c',
-      },
-      push: pushMock,
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000.c',
     };
 
     function Component() {
@@ -122,18 +117,15 @@ describe('ZaakStatus', () => {
       screen.getByText('Wij kunnen de status van uw aanvraag niet laten zien.')
     ).toBeInTheDocument();
 
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(mocks.pushMock).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('should show wachten op betaling', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
-      },
-      push: pushMock,
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
     };
 
     function Component() {
@@ -158,18 +150,15 @@ describe('ZaakStatus', () => {
       )
     ).toBeInTheDocument();
 
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(mocks.pushMock).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('should call history push when a route is found', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000001.c',
-      },
-      push: pushMock,
+  it('should call navigate when a route is found', () => {
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000001.c',
     };
 
     function Component() {
@@ -185,6 +174,6 @@ describe('ZaakStatus', () => {
 
     render(<Component />);
 
-    expect(pushMock).toHaveBeenCalled();
+    expect(mocks.pushMock).toHaveBeenCalled();
   });
 });

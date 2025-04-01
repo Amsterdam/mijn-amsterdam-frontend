@@ -1,5 +1,3 @@
-import { generatePath } from 'react-router-dom';
-
 import { TrackingConfig } from './routes';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { ThemaID, Themas } from '../../universal/config/thema';
@@ -385,7 +383,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.KLACHTEN,
     id: Themas.KLACHTEN,
-    to: generatePath(AppRoutes.KLACHTEN, { page: 1 }),
+    to: AppRoutes.KLACHTEN,
     profileTypes: ['private'],
   },
   {
@@ -397,7 +395,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   {
     title: ThemaTitles.AVG,
     id: Themas.AVG,
-    to: generatePath(AppRoutes.AVG, { page: 1 }),
+    to: AppRoutes.AVG,
     profileTypes: ['private'],
   },
   {

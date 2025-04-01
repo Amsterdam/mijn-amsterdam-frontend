@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import type { Klacht } from '../../../server/services/klachten/types';

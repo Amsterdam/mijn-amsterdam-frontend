@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { MaRouterLink } from '../MaLink/MaLink';

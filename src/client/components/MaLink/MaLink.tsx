@@ -8,7 +8,7 @@ import {
   LinkProps,
 } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import styles from './MaLink.module.scss';
 import { usePageTypeSettingValue } from '../../hooks/useThemaMenuItems';
@@ -52,7 +52,8 @@ export function MaLink({
 }
 
 export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const pageType = usePageTypeSettingValue();
   return (
     <MaLink
@@ -65,9 +66,11 @@ export function MaRouterLink({ href, onClick, ...rest }: MaLinkProps) {
           onClick(event);
         }
 
-        history.push(href as string, {
-          from: history.location.pathname,
-          pageType,
+        navigate(href as string, {
+          state: {
+            from: location.pathname,
+            pageType,
+          },
         });
       }}
     />
@@ -79,7 +82,7 @@ export function MaBreadcrumbLink({
   onClick,
   ...rest
 }: BreadcrumbLinkProps & React.RefAttributes<HTMLAnchorElement>) {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <Breadcrumb.Link
       {...rest}
@@ -91,7 +94,7 @@ export function MaBreadcrumbLink({
           onClick(event);
         }
 
-        history.push(href as string);
+        navigate(href as string);
       }}
     />
   );
@@ -139,7 +142,9 @@ export function MaButtonRouterLink({
   onClick,
   ...rest
 }: MaButtonLinkProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const pageType = usePageTypeSettingValue();
   return (
     <a
@@ -158,9 +163,11 @@ export function MaButtonRouterLink({
           onClick(event);
         }
 
-        history.push(href as string, {
-          from: history.location.pathname,
-          pageType,
+        navigate(href as string, {
+          state: {
+            from: location.pathname,
+            pageType,
+          },
         });
       }}
     >

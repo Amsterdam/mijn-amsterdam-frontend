@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
@@ -69,9 +69,9 @@ export function useThemaMenuItemByThemaID(themaID: ThemaID) {
 
 export function useThemaBreadcrumbs(themaID: ThemaID): LinkProps[] {
   const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
-  const history = useHistory();
-  const from = history.location?.state?.from;
-  const fromPageType = history.location?.state?.pageType;
+  const location = useLocation();
+  const from = location?.state?.from;
+  const fromPageType = location?.state?.pageType;
 
   return [
     themaPaginaBreadcrumb

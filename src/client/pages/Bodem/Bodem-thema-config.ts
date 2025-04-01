@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -52,6 +52,7 @@ export const tableConfig = {
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
+      page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
@@ -59,11 +60,11 @@ export const tableConfig = {
     ...tableConfigBase,
     title: 'Afgehandelde aanvragen',
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
-     listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.completed,
+      page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    
   },
 } as const;
 

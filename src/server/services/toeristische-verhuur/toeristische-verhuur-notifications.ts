@@ -1,5 +1,5 @@
 import { subMonths } from 'date-fns';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import {

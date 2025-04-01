@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import {
   PageContentCell,

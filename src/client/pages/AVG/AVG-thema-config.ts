@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -53,6 +53,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
+      page: null,
     }),
     ...tableConfigBase,
   },
@@ -62,6 +63,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.completed,
+      page: null,
     }),
     ...tableConfigBase,
   },

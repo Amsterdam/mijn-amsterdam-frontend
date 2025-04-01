@@ -1,5 +1,5 @@
 import { differenceInMonths, format } from 'date-fns';
-import { LinkProps, generatePath } from 'react-router-dom';
+import { LinkProps, generatePath } from 'react-router';
 
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
@@ -158,7 +158,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       link = {
         to: generatePath(AppRoutes['INKOMEN/TONK'], {
           id,
-          version: 1,
+          version: '1',
         }),
         title,
       };
@@ -188,7 +188,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       link = {
         to: generatePath(AppRoutes['INKOMEN/BBZ'], {
           id,
-          version: 1,
+          version: '1',
         }),
         title,
       };

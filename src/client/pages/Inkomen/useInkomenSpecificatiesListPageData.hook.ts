@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import { parseISO } from 'date-fns';
-import { useParams, useHistory, generatePath } from 'react-router-dom';
+import { useParams, generatePath, useNavigate } from 'react-router';
 
 import { tableConfigSpecificaties } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
@@ -27,7 +27,7 @@ export function useInkomenSpecificatiesListPageData() {
   const { kind = listPageParamKind.uitkering, page = '1' } = params;
 
   const isJaaropgaven = kind === listPageParamKind.jaaropgaven;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const items = isJaaropgaven ? jaaropgaven : specificaties;
 
@@ -90,14 +90,15 @@ export function useInkomenSpecificatiesListPageData() {
   const selectCategoryFilter = useCallback(
     (category: string) => {
       setSelectedCategory(category);
-      history.replace(
+      navigate(
         generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
           page: '1',
           kind,
-        })
+        }),
+        { replace: true }
       );
     },
-    [kind, history]
+    [kind, location.pathname, navigate]
   );
 
   function resetSearch() {

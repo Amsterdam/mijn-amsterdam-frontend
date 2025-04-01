@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { ListPageParamKind, routes } from './Bodem-thema-config';
 import { useBodemData } from './useBodemData.hook';

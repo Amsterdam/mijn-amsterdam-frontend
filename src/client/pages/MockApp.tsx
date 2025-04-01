@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
 import { AppState } from '../../universal/types/App.types';

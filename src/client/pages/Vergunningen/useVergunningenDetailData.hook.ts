@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { useVergunningDocumentList } from './detail-page-content/useVergunningDocumentsList.hook';
 import { DecosZaakBase } from '../../../server/services/decos/config-and-types';

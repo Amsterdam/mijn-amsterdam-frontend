@@ -1,6 +1,6 @@
 import * as jose from 'jose';
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
   Bezwaar,

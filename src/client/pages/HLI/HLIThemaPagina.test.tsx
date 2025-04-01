@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { componentCreator } from '../MockApp';

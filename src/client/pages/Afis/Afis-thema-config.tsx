@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
   AfisBusinessPartnerDetailsTransformed,
@@ -100,6 +100,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageLinkLabel: 'Alle openstaande facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'open',
+      page: null,
     }),
     className: 'FacturenTable--open',
   },
@@ -111,6 +112,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
       'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'overgedragen',
+      page: null,
     }),
     className: 'FacturenTable--afgehandeld',
   },
@@ -121,6 +123,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageLinkLabel: 'Alle afgehandelde facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'afgehandeld',
+      page: null,
     }),
     className: 'FacturenTable--overgedragen',
   },

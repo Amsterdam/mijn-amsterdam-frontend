@@ -1,5 +1,5 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { THEMA_DETAIL_TITLE_DEFAULT } from './toeristischeVerhuur-thema-config';
 import styles from './ToeristischeVerhuurDetail.module.scss';

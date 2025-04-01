@@ -80,5 +80,15 @@ export const AppRoutes = {
   ZAAK_STATUS: '/zaak-status',
 } as const;
 
+export const AppRoutesVergunningenThemas = [
+  AppRoutes['VERGUNNINGEN/DETAIL'],
+  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+  AppRoutes['VAREN/DETAIL'],
+  AppRoutes['PARKEREN/DETAIL'],
+  AppRoutes['HORECA/DETAIL'],
+] as const;
+
+export type AppRouteVergunningen = (typeof AppRoutesVergunningenThemas)[number];
+
 export type RouteKey = keyof typeof AppRoutes;
 export type AppRoute = (typeof AppRoutes)[RouteKey];

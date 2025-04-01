@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { useZorgThemaData } from './useZorgThemaData';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import classnames from 'classnames';
-import { useLocation, matchPath } from 'react-router-dom';
+import { useLocation, matchPath } from 'react-router';
 
 import styles from './MainHeaderHero.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -42,12 +42,7 @@ function useHeroSrc() {
   const location = useLocation();
   const profileType = useProfileTypeValue();
   const isCommercialHeader = profileType.includes('commercial');
-  const isThemaPath = (path: string) =>
-    !!matchPath(location.pathname, {
-      path,
-      exact: false,
-      strict: false,
-    });
+  const isThemaPath = (path: string) => !!matchPath(path, location.pathname);
 
   let imageName: string;
   let dir = '';

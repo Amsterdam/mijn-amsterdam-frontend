@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import styles from './Vergunningen.module.scss';
 import {
@@ -104,6 +104,7 @@ export const tableConfig = {
     displayProps: displayPropsLopendeAanvragen,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
+      page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.VergunningenTableThemaPagina,
@@ -124,6 +125,7 @@ export const tableConfig = {
     displayProps: displayPropsHuidigeVergunningen,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actual,
+      page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.VergunningenTableThemaPagina,
@@ -148,6 +150,7 @@ export const tableConfig = {
     displayProps: displayPropsEerdereVergunningen,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.historic,
+      page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     className: styles.VergunningenTableThemaPagina,

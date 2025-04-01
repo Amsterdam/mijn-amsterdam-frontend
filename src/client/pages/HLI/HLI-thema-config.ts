@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import styles from './HLIThemaPagina.module.scss';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
@@ -84,6 +84,7 @@ export const tableConfig = {
     className: styles.HuidigeRegelingen,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actual,
+      page: null,
     }),
   },
   [listPageParamKind.historic]: {
@@ -95,6 +96,7 @@ export const tableConfig = {
     className: styles.EerdereRegelingen,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.historic,
+      page: null,
     }),
   },
 } as const;

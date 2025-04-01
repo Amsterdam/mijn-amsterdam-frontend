@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { AfisDisclaimer, AfisDisclaimerOvergedragenFacturen } from './Afis';
 import styles from './Afis.module.scss';

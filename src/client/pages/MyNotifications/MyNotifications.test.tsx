@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { AppRoutes } from '../../../universal/config/routes';
@@ -58,14 +58,16 @@ describe('<MyNotifications />', () => {
   const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
   const routePath = AppRoutes.NOTIFICATIONS;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={MyNotifications}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={MyNotifications}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);

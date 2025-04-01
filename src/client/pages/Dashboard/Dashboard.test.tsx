@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Mockdate from 'mockdate';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, expect, it } from 'vitest';
 

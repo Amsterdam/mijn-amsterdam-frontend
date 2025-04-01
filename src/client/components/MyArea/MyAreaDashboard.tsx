@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
-import { generatePath, NavLink } from 'react-router-dom';
+import { generatePath, NavLink } from 'react-router';
 
 import styles from './MyAreaDashboard.module.scss';
 import { MyAreaLoader } from './MyAreaLoader';

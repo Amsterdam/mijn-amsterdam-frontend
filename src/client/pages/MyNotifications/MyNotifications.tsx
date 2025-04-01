@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import { OrderedList } from '@amsterdam/design-system-react';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { generatePath, useNavigate, useParams } from 'react-router';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -24,7 +24,7 @@ export function MyNotificationsPage() {
   const { NOTIFICATIONS } = useAppStateGetter();
   const { notifications, total } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const currentPage = useMemo(() => {
     if (!page) {
@@ -84,7 +84,9 @@ export function MyNotificationsPage() {
               totalCount={total}
               pageSize={PAGE_SIZE}
               onPageClick={(page) => {
-                history.push(generatePath(AppRoutes.NOTIFICATIONS, { page }));
+                navigate(
+                  generatePath(AppRoutes.NOTIFICATIONS, { page: `${page}` })
+                );
               }}
               currentPage={currentPage}
             />

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
@@ -85,6 +85,7 @@ function initializeState(snapshot: MutableSnapshot) {
 describe('<InkomenSpecificaties /> Uitkering', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
     kind: 'uitkering',
+    page: null,
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
@@ -144,6 +145,7 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
     kind: 'jaaropgaven',
+    page: null,
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 

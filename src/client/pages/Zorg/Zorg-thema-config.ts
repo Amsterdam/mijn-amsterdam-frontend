@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import styles from './Zorg.module.scss';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
@@ -63,6 +63,7 @@ export const tableConfig = {
     textNoContent: 'U heeft geen huidige voorzieningen.',
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actual,
+      page: null,
     }),
   },
   [listPageParamKind.historic]: {
@@ -75,6 +76,7 @@ export const tableConfig = {
       'U heeft geen eerdere en/of afgewezen voorzieningen. U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.',
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.historic,
+      page: null,
     }),
   },
 } as const;

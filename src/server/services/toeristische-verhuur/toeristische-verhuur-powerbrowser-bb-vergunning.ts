@@ -1,6 +1,6 @@
 import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
   BBVergunning,

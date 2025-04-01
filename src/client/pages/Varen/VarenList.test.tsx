@@ -1,6 +1,6 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -56,7 +56,7 @@ describe('<VarenList />', () => {
         routePath={AppRoutes['VAREN/LIST']}
         routeEntry={generatePath(AppRoutes['VAREN/LIST'], {
           kind: 'actieve-vergunningen',
-          page: 1,
+          page: '1',
         })}
         component={VarenList}
         initializeState={(snap) => initializeState(snap, state)}

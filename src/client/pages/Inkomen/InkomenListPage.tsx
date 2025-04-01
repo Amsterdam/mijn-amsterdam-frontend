@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { ListPageParamKind } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { ListPageParamKind, routes } from './AVG-thema-config';
 import { useAVGData } from './useAVGData.hook';

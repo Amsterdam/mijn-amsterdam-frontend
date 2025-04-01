@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { componentCreator } from '../MockApp';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
@@ -29,7 +29,9 @@ const pasBlockedState = createHLIState({
 const createHLIStadspasComponent = componentCreator({
   component: HLIStadspasDetail,
   routePath: AppRoutes['HLI/STADSPAS'],
-  routeEntry: generatePath(AppRoutes['HLI/STADSPAS'], { passNumber }),
+  routeEntry: generatePath(AppRoutes['HLI/STADSPAS'], {
+    passNumber: `${passNumber}`,
+  }),
 });
 
 describe('With basic request where data returned does not matter', () => {

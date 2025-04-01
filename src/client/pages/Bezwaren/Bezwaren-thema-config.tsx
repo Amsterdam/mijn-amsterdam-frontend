@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -56,6 +56,7 @@ export const tableConfig = {
       'U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.',
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.lopend,
+      page: null,
     }),
   },
   [listPageParamKind.afgehandeld]: {
@@ -66,6 +67,7 @@ export const tableConfig = {
     textNoContent: 'U heeft nog geen afgehandelde bezwaren.',
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.afgehandeld,
+      page: null,
     }),
   },
 } as const;

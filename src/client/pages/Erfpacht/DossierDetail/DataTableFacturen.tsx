@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { generatePath, useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router';
 
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
@@ -118,7 +118,8 @@ export function DataTableFacturen({
           <LinkToListPage
             count={dossier.facturen.facturen.length}
             route={generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
-              dossierNummerUrlParam,
+              dossierNummerUrlParam: dossierNummerUrlParam ?? null,
+              page: null,
             })}
           />
         )}

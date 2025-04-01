@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LatLngBoundsLiteral, LatLngLiteral, LeafletEvent } from 'leaflet';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import {
   atom,
   selector,
@@ -487,7 +487,7 @@ export function useMapLocations(
   centerMarker?: MapLocationMarker,
   zoom: number = HOOD_ZOOM
 ) {
-  const history = useHistory();
+  const location = useLocation();
 
   /**
    * Determine center location. The following options exist:
@@ -506,8 +506,8 @@ export function useMapLocations(
 
   // Params passed by query will override all other options
   const urlQueryConfig = useMemo(() => {
-    return new URLSearchParams(history.location?.search);
-  }, [history.location?.search]);
+    return new URLSearchParams(location?.search);
+  }, [location?.search]);
 
   zoom = parseInt(`${urlQueryConfig.get('zoom') || zoom}`, 10);
 
@@ -616,11 +616,11 @@ export function useSetMapCenterAtLocation(
   customLocationMarker: MapLocationMarker,
   homeLocationMarker: MapLocationMarker | null
 ) {
-  const history = useHistory();
+  const location = useLocation();
   const isAppStateReady = useAppStateReady();
 
   // Don't invoke setView if we have a center query parameter on load. The center param has to be processed first.
-  const isReady = !new URLSearchParams(history.location?.search).get('center');
+  const isReady = !new URLSearchParams(location?.search).get('center');
   const isReadyForSetViewUpdates = useRef(isReady);
 
   /**

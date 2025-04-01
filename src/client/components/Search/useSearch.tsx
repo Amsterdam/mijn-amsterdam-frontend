@@ -6,7 +6,7 @@ import {
 } from '@amsterdam/design-system-react-icons';
 import axios, { AxiosResponse } from 'axios';
 import Fuse from 'fuse.js';
-import { matchPath, useLocation } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router';
 import {
   Loadable,
   atom,
@@ -391,9 +391,7 @@ export function useSearchActive() {
 
 export function useDisplayLiveSearch() {
   const location = useLocation();
-  const isDisplayLiveSearch = !matchPath(location.pathname, {
-    path: AppRoutes.SEARCH,
-  });
+  const isDisplayLiveSearch = !matchPath(AppRoutes.SEARCH, location.pathname);
   return isDisplayLiveSearch;
 }
 

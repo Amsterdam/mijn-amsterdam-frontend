@@ -1,5 +1,5 @@
 import { Heading } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { useErfpachtThemaData } from './erfpachtData.hook';
 import { ErfpachtDossiersDetail } from '../../../server/services/erfpacht/erfpacht';

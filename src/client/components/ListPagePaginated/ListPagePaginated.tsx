@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { generatePath, useNavigate, useParams } from 'react-router';
 
 import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
@@ -51,7 +51,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
 }: ListPagePaginatedProps<T>) {
   usePageTypeSetting('listpage');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { page = '1' } = useParams<{
     page?: string;
@@ -115,7 +115,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
                       ...appRouteParams,
                       page,
                     });
-                    history.push(path);
+                    navigate(path);
                   }}
                 />
               )}

@@ -1,7 +1,7 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
@@ -37,7 +37,7 @@ import {
   isExcludedFromTransformation,
   toDateFormatted,
 } from './decos-helpers';
-import { AppRoute } from '../../../universal/config/routes';
+import { AppRouteVergunningen } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
   apiErrorResult,
@@ -766,7 +766,7 @@ export async function fetchDecosDocument(
 }
 
 export type DecosZaakFrontendTransformOptions = {
-  appRoute: AppRoute;
+  appRoute: AppRouteVergunningen;
   includeFetchDocumentsUrl?: boolean;
 };
 

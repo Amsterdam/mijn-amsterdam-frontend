@@ -3,7 +3,10 @@ import memoizee from 'memoizee';
 import { DecosVergunning, VergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getDisplayStatus, getStatusSteps } from './vergunningen-status-steps';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
+import {
+  AppRoutes,
+  AppRouteVergunningen,
+} from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
@@ -15,7 +18,7 @@ import {
 function transformVergunningFrontend(
   sessionID: SessionID,
   vergunning: DecosVergunning,
-  appRoute: AppRoute
+  appRoute: AppRouteVergunningen
 ) {
   const vergunningFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
@@ -35,7 +38,7 @@ function transformVergunningFrontend(
 async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  appRoute: AppRoute = AppRoutes['VERGUNNINGEN/DETAIL']
+  appRoute: AppRouteVergunningen = AppRoutes['VERGUNNINGEN/DETAIL']
 ): Promise<ApiResponse<VergunningFrontend<DecosVergunning>[]>> {
   const response = await fetchDecosZaken(
     requestID,

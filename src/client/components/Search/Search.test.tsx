@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import nock from 'nock';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 import { RecoilRoot } from 'recoil';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 

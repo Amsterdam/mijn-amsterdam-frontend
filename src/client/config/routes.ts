@@ -1,7 +1,7 @@
-import { generatePath, matchPath } from 'react-router-dom';
+import { PathMatch } from 'react-router';
+import { generatePath, matchPath } from 'react-router';
 
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
-import { Match } from '../../universal/types';
 
 export const AppRoutesRedirect = [
   {
@@ -24,24 +24,28 @@ export const AppRoutesRedirect = [
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
       kind: 'jaaropgave',
+      page: null,
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
       kind: 'jaaropgave',
+      page: null,
     }),
   },
   {
     from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
       kind: 'uitkering',
+      page: null,
     }),
   },
   {
     from: '/inkomen/uitkeringsspecificaties/',
     to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
       kind: 'uitkering',
+      page: null,
     }),
   },
   {
@@ -72,20 +76,23 @@ export interface TrackingConfig {
 }
 
 type CustomTrackingUrlMap = {
-  [key in AppRoute]+?: (match: Match, trackingConfig: TrackingConfig) => string;
+  [key in AppRoute]+?: (
+    match: PathMatch,
+    trackingConfig: TrackingConfig
+  ) => string;
 };
 
 export const CustomTrackingUrls: CustomTrackingUrlMap = {
-  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match: Match) => {
+  [AppRoutes['VERGUNNINGEN/DETAIL']]: (match: PathMatch) => {
     return `/vergunning/${match.params?.title}`;
   },
-  [AppRoutes['INKOMEN/BBZ']]: (match: Match) => {
+  [AppRoutes['INKOMEN/BBZ']]: (match: PathMatch) => {
     return `/inkomen/bbz`;
   },
-  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match: Match) => {
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: (match: PathMatch) => {
     return `/inkomen/bijstandsuitkering`;
   },
-  [AppRoutes['INKOMEN/TOZO']]: (match: Match) => {
+  [AppRoutes['INKOMEN/TOZO']]: (match: PathMatch) => {
     return `/inkomen/tozo/${match.params?.version}`;
   },
   [AppRoutes['INKOMEN/TONK']]: () => `/inkomen/tonk`,
@@ -104,18 +111,11 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
   [AppRoutes['ERFPACHT/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
   [AppRoutes.HOME]: (
-    match: Match,
+    match: PathMatch,
     { profileType, isAuthenticated }: TrackingConfig
   ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };
 
 export function isPrivateRoute(pathname: string) {
-  return PrivateRoutes.some(
-    (path) =>
-      !!matchPath(pathname, {
-        path,
-        exact: true,
-        strict: true,
-      })
-  );
+  return PrivateRoutes.some((path) => !!matchPath(path, pathname));
 }

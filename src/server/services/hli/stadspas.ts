@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
@@ -65,7 +65,7 @@ export async function fetchStadspas(
         blockPassURL,
         link: {
           to: generatePath(AppRoutes['HLI/STADSPAS'], {
-            passNumber: stadspas.passNumber,
+            passNumber: `${stadspas.passNumber}`,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,
         },

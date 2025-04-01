@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { renderHook } from '@testing-library/react';
-import * as rrd from 'react-router-dom';
+import * as rrd from 'react-router';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
 
 import { trackPageViewWithCustomDimension } from './analytics.hook';
@@ -18,7 +18,7 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('react-router-dom', async (requireActual) => {
+vi.mock('react-router', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,
@@ -28,9 +28,7 @@ vi.mock('react-router-dom', async (requireActual) => {
     useLocation: () => {
       return { pathname: mocks.pathname };
     },
-    useHistory: () => {
-      return { action: 'PUSH' };
-    },
+    useNavigate: vi.fn(),
   };
 });
 

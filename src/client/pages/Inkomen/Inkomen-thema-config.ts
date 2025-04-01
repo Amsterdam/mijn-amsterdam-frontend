@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
   WpiIncomeSpecificationTransformed,
@@ -32,10 +32,12 @@ export const listPageParamKind = {
 
 const inkomenSpecificaties = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
   kind: listPageParamKind.uitkering,
+  page: null,
 });
 
 const jaaropgaven = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
   kind: listPageParamKind.jaaropgaven,
+  page: null,
 });
 
 export const routes = {

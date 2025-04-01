@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { entries } from '../../../universal/helpers/utils';
@@ -32,6 +32,7 @@ export const tableConfig = Object.fromEntries(
         ...tableConfig,
         listPageRoute: generatePath(routes.listPage, {
           kind,
+          page: null,
         }),
       },
     ];

@@ -1,5 +1,5 @@
 import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import { AppRoutes } from '../../universal/config/routes';

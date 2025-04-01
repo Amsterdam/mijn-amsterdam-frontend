@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { Heading, OrderedList } from '@amsterdam/design-system-react';
-import { generatePath, useHistory } from 'react-router-dom';
+import { generatePath, useLocation, useNavigate } from 'react-router';
 
 import styles from './Dashboard.module.scss';
 import { WelcomeHeading } from './WelcomHeading';
@@ -26,7 +26,8 @@ const MAX_NOTIFICATIONS_VISIBLE = 6;
 
 export function Dashboard() {
   const appState = useAppStateGetter();
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { NOTIFICATIONS } = appState;
   const { notifications, total } = useAppStateNotifications(
     MAX_NOTIFICATIONS_VISIBLE
@@ -38,8 +39,8 @@ export function Dashboard() {
     useThemaMenuItems();
 
   useEffect(() => {
-    if (history.location.search) {
-      history.replace(history.location.pathname);
+    if (location.search) {
+      navigate(location.pathname, { replace: true });
     }
   }, []);
 

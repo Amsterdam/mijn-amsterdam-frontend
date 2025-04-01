@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import styles from './ZaakStatus.module.scss';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
@@ -73,7 +73,7 @@ const pageRouteResolvers: PageRouteResolvers = {
 };
 
 function useNavigateToPage(queryParams: URLSearchParams) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const appState = useAppStateGetter();
   const thema = queryParams.get('thema') as ThemaQueryParam;
   const id = queryParams.get('id');
@@ -90,7 +90,7 @@ function useNavigateToPage(queryParams: URLSearchParams) {
         setUnresolvedState(route);
       } else if (route) {
         // Will unmount component, no further action needed
-        history.push(route);
+        navigate(route);
       }
     }
   }, [appState, id, getRoute]);
@@ -103,8 +103,8 @@ function useNavigateToPage(queryParams: URLSearchParams) {
 
 export function ZaakStatus() {
   const appStateReady = useAppStateReady();
-  const history = useHistory();
-  const queryParams = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const pageRoute = useNavigateToPage(queryParams);
 
   let linkRoute: AppRoute = AppRoutes.HOME;

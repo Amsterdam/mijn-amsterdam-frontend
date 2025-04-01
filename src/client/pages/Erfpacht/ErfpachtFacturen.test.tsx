@@ -1,5 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
@@ -19,6 +19,7 @@ import { ErfpachtFacturen } from './ErfpachtFacturen';
 describe('<ErfpachtOpenFacturen />', () => {
   const routeEntry = generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
     dossierNummerUrlParam: 'E.123.123',
+    page: null,
   });
   const routePath = AppRoutes['ERFPACHT/ALLE_FACTUREN'];
   const dossierDetailTransformed = transformErfpachtDossierProperties(

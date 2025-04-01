@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { Paragraph, Screen, SkipLink } from '@amsterdam/design-system-react';
 import {
   BrowserRouter,
-  Redirect,
+  Navigate,
   Route,
-  Switch,
-  useHistory,
+  Routes,
   useLocation,
-} from 'react-router-dom';
+  useNavigate,
+} from 'react-router';
 import { RecoilRoot } from 'recoil';
 
 import styles from './App.module.scss';
@@ -102,6 +102,19 @@ import { ZorgThemaPagina } from './pages/Zorg/Zorg';
 import { ZorgDetail } from './pages/Zorg/ZorgDetail';
 import { ZorgRegelingen } from './pages/Zorg/ZorgRegelingen';
 
+function RedirectExisting() {
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  if (isPrivateRoute(pathname)) {
+    // Private routes are redirected to Home
+    return <Navigate to={AppRoutes.HOME} />;
+  }
+
+  // All other routes are presented with a 404 page
+  return <NotFound />;
+}
+
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
   usePageChange(false);
@@ -133,24 +146,32 @@ function AppNotAuthenticated() {
     <>
       <MainHeader isAuthenticated={false} />
       <Screen className={styles.App}>
-        <Switch>
+        <Routes>
           {AppRoutesRedirect.map(({ from, to }) => (
-            <Redirect key={from + to} from={from} to={to} />
+            <Route
+              key={from + to}
+              path={from}
+              element={<Navigate replace to={to} />}
+            />
           ))}
-          <Route exact path={AppRoutes.HOME} component={LandingPage} />
-          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-          <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
-          <Route
-            render={({ location: { pathname } }) => {
-              if (isPrivateRoute(pathname)) {
-                // Private routes are redirected to Home
-                return <Redirect to={AppRoutes.HOME} />;
-              }
-              // All other routes are presented with a 404 page
-              return <Route component={NotFound} />;
-            }}
-          />
-        </Switch>
+          {[
+            {
+              route: AppRoutes.HOME,
+              Component: LandingPage,
+              props: { index: true },
+            },
+            { route: AppRoutes.ACCESSIBILITY, Component: Accessibility },
+            { route: AppRoutes.BFF_500_ERROR, Component: BFF500Error },
+          ].map(({ route, Component, props }) => (
+            <Route
+              {...(props ? props : {})}
+              key={route}
+              path={route}
+              element={<Component />}
+            />
+          ))}
+          <Route element={<RedirectExisting />} />
+        </Routes>
       </Screen>
       <MainFooter />
     </>
@@ -162,7 +183,8 @@ function AppAuthenticated() {
   usePageChange(true);
   useTrackThemas();
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
 
@@ -171,11 +193,11 @@ function AppAuthenticated() {
   useEffect(() => {
     if (redirectAfterLogin && redirectAfterLogin !== '/') {
       clearDeeplinkEntry();
-      history.push(redirectAfterLogin);
+      navigate(redirectAfterLogin);
     }
-  }, [redirectAfterLogin, history]);
+  }, [redirectAfterLogin]);
 
-  const isHeroVisible = history.location.pathname === AppRoutes.HOME;
+  const isHeroVisible = location.pathname === AppRoutes.HOME;
   const isBuurt = location.pathname === AppRoutes.BUURT;
 
   return (
@@ -185,249 +207,312 @@ function AppAuthenticated() {
       <ErrorMessages />
       {isHeroVisible && <MainHeaderHero />}
       <Screen className={!isBuurt ? styles.App : ''}>
-        <Switch>
+        <Routes>
           {AppRoutesRedirect.map(({ from, to }) => (
-            <Redirect key={from + to} from={from} to={to} />
-          ))}
-          <Route path={AppRoutes.ZAAK_STATUS} component={ZaakStatus} />
-          <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
-          <Route exact path={AppRoutes.HOME} component={Dashboard} />
-          <Route
-            path={AppRoutes.NOTIFICATIONS}
-            component={MyNotificationsPage}
-          />
-          <Route path={AppRoutes.BRP} component={MijnGegevensThema} />
-          <Route path={AppRoutes.KVK} component={MijnBedrijfsGegevensThema} />
-          {FeatureToggle.hliThemaStadspasActive && (
             <Route
-              path={AppRoutes['HLI/STADSPAS']}
-              component={HLIStadspasDetail}
+              key={from + to}
+              path={from}
+              element={<Navigate replace to={to} />}
             />
-          )}
-          {FeatureToggle.hliThemaRegelingenActive && (
-            <Route path={AppRoutes['HLI/REGELING']} component={HLIRegeling} />
-          )}
+          ))}
+          {[
+            {
+              route: AppRoutes.HOME,
+              Component: Dashboard,
+              props: { index: true },
+            },
+            { route: AppRoutes.ZAAK_STATUS, Component: ZaakStatus },
+            { route: AppRoutes.BUURT, Component: MyAreaLoader },
+            { route: AppRoutes.BRP, Component: MijnGegevensThema },
+            { route: AppRoutes.KVK, Component: MijnBedrijfsGegevensThema },
+            { route: AppRoutes.NOTIFICATIONS, Component: MyNotificationsPage },
+            { route: AppRoutes.INKOMEN, Component: InkomenThemaPagina },
+            { route: AppRoutes.BURGERZAKEN, Component: Burgerzaken },
+            { route: AppRoutes.KLACHTEN, Component: KlachtenThemaPagina },
+            { route: AppRoutes.ACCESSIBILITY, Component: Accessibility },
+            { route: AppRoutes.GENERAL_INFO, Component: GeneralInfo },
+            { route: AppRoutes.SEARCH, Component: SearchPage },
+            { route: AppRoutes['PARKEREN/LIST'], Component: ParkerenList },
+            { route: AppRoutes.PARKEREN, Component: Parkeren },
+            { route: AppRoutes.BFF_500_ERROR, Component: BFF500Error },
+            {
+              route: AppRoutes['HLI/REGELING'],
+              Component: HLIRegeling,
+              isActive: FeatureToggle.hliThemaRegelingenActive,
+            },
+            {
+              route: AppRoutes['HLI/STADSPAS'],
+              Component: HLIStadspasDetail,
+              isActive: FeatureToggle.hliThemaStadspasActive,
+            },
+            {
+              route: AppRoutes.HLI,
+              Component: HLIThemaPagina,
+              isActive: FeatureToggle.hliThemaActive,
+            },
+            {
+              route: AppRoutes.ZORG,
+              Component: ZorgThemaPagina,
+              isActive: FeatureToggle.zorgv2ThemapaginaActive,
+            },
+            {
+              route: AppRoutes.AFVAL,
+              Component: AfvalInformation,
+              isActive: FeatureToggle.garbageInformationPage,
+            },
+            {
+              route: AppRoutes['VAREN/DETAIL'],
+              Component: VarenDetail,
+              isActive: FeatureToggle.varenActive,
+            },
+            {
+              route: AppRoutes['VAREN/LIST'],
+              Component: VarenList,
+              isActive: FeatureToggle.varenActive,
+            },
+            {
+              route: AppRoutes.VAREN,
+              Component: Varen,
+              isActive: FeatureToggle.varenActive,
+            },
+            {
+              route: AppRoutes.AFIS,
+              Component: AfisThemaPagina,
+              isActive: FeatureToggle.afisActive,
+            },
+            {
+              route: AppRoutes.KREFIA,
+              Component: KrefiaThemaPagina,
+              isActive: FeatureToggle.krefiaActive,
+            },
+            {
+              route: AppRoutes.HORECA,
+              Component: HorecaThemaPagina,
+              isActive: FeatureToggle.horecaActive,
+            },
+            {
+              route: AppRoutes['AVG/DETAIL'],
+              Component: AVGDetail,
+              isActive: FeatureToggle.avgActive,
+            },
+            {
+              route: AppRoutes['AVG/LIST'],
+              Component: AVGList,
+              isActive: FeatureToggle.avgActive,
+            },
+            {
+              route: AppRoutes.AVG,
+              Component: AVG,
+              isActive: FeatureToggle.avgActive,
+            },
+            {
+              route: AppRoutes['BODEM/LIST'],
+              Component: BodemList,
+              isActive: FeatureToggle.bodemActive,
+            },
+            {
+              route: AppRoutes.BODEM,
+              Component: Bodem,
+              isActive: FeatureToggle.bodemActive,
+            },
+            {
+              route: AppRoutes.ERFPACHT,
+              Component: Erfpacht,
+              isActive: FeatureToggle.erfpachtActive,
+            },
+          ].map(({ route, Component, props }) => (
+            <Route
+              {...(props ? props : {})}
+              key={route}
+              path={route}
+              element={<Component />}
+            />
+          ))}
+
           {FeatureToggle.hliThemaRegelingenActive && (
             <Route
               path={AppRoutes['HLI/REGELINGEN_LIST']}
-              component={HLIRegelingen}
+              element={<HLIRegelingen />}
             />
-          )}
-          {FeatureToggle.hliThemaActive && (
-            <Route path={AppRoutes.HLI} component={HLIThemaPagina} />
           )}
 
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
-            component={InkomenDetailUitkering}
+            element={<InkomenDetailUitkering />}
           />
           <Route
             path={AppRoutes['INKOMEN/SPECIFICATIES']}
-            component={InkomenSpecificaties}
+            element={<InkomenSpecificaties />}
           />
 
           <Route
             path={AppRoutes['INKOMEN/TOZO']}
-            component={InkomenDetailTozo}
+            element={<InkomenDetailTozo />}
           />
           <Route
             path={AppRoutes['INKOMEN/TONK']}
-            component={InkomenDetailTonk}
+            element={<InkomenDetailTonk />}
           />
           {FeatureToggle.inkomenBBZActive && (
             <Route
               path={AppRoutes['INKOMEN/BBZ']}
-              component={InkomenDetailBbz}
+              element={<InkomenDetailBbz />}
             />
           )}
           <Route
             path={AppRoutes['INKOMEN/LIST']}
-            component={InkomenLijstPagina}
+            element={<InkomenLijstPagina />}
           />
-          <Route path={AppRoutes.INKOMEN} component={InkomenThemaPagina} />
-          <Route path={AppRoutes['ZORG/VOORZIENING']} component={ZorgDetail} />
+
+          <Route
+            path={AppRoutes['ZORG/VOORZIENING']}
+            element={<ZorgDetail />}
+          />
           {FeatureToggle.zorgv2ThemapaginaActive && (
             <Route
               path={AppRoutes['ZORG/VOORZIENINGEN_LIST']}
-              component={ZorgRegelingen}
+              element={<ZorgRegelingen />}
             />
-          )}
-          {FeatureToggle.zorgv2ThemapaginaActive && (
-            <Route path={AppRoutes.ZORG} component={ZorgThemaPagina} />
           )}
 
           <Route
             path={AppRoutes['BURGERZAKEN/LIST']}
-            component={BurgerZakenList}
+            element={<BurgerZakenList />}
           />
           <Route
             path={AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']}
-            component={BurgerzakenIdentiteitsbewijs}
+            element={<BurgerzakenIdentiteitsbewijs />}
           />
-          <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
-          {FeatureToggle.garbageInformationPage && (
-            <Route path={AppRoutes.AFVAL} component={AfvalInformation} />
-          )}
-          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-          <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
+
           <Route
             path={AppRoutes['VERGUNNINGEN/LIST']}
-            component={VergunningenList}
+            element={<VergunningenList />}
           />
           <Route
             path={AppRoutes['VERGUNNINGEN/DETAIL']}
-            component={VergunningDetailPagina}
+            element={<VergunningDetailPagina />}
           />
           <Route
             path={AppRoutes.VERGUNNINGEN}
-            component={VergunningenThemaPagina}
+            element={<VergunningenThemaPagina />}
           />
           <Route
             path={AppRoutes['KLACHTEN/KLACHT']}
-            component={KlachtenDetailPagina}
+            element={<KlachtenDetailPagina />}
           />
           <Route
             path={AppRoutes['KLACHTEN/LIST']}
-            component={KlachtenLijstPagina}
+            element={<KlachtenLijstPagina />}
           />
-          <Route path={AppRoutes.KLACHTEN} component={KlachtenThemaPagina} />
+
           {FeatureToggle.bezwarenActive && (
             <Route
               path={AppRoutes['BEZWAREN/LIST']}
-              component={BezwarenLijstPagina}
+              element={<BezwarenLijstPagina />}
             />
           )}
           {FeatureToggle.bezwarenActive && (
             <Route
               path={AppRoutes['BEZWAREN/DETAIL']}
-              component={BezwarenDetailPagina}
+              element={<BezwarenDetailPagina />}
             />
           )}
           {FeatureToggle.bezwarenActive && (
-            <Route path={AppRoutes.BEZWAREN} component={BezwarenThemaPagina} />
+            <Route
+              path={AppRoutes.BEZWAREN}
+              element={<BezwarenThemaPagina />}
+            />
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']}
-              component={ToeristischeVerhuurVergunningen}
+              element={<ToeristischeVerhuurVergunningen />}
             />
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']}
-              component={ToeristischeVerhuurDetailPagina}
+              element={<ToeristischeVerhuurDetailPagina />}
             />
           )}
           {FeatureToggle.toeristischeVerhuurActive && (
             <Route
               path={AppRoutes.TOERISTISCHE_VERHUUR}
-              component={ToeristscheVerhuurThema}
+              element={<ToeristscheVerhuurThema />}
             />
           )}
-          {FeatureToggle.varenActive && (
-            <Route path={AppRoutes['VAREN/DETAIL']} component={VarenDetail} />
-          )}
-          {FeatureToggle.varenActive && (
-            <Route path={AppRoutes['VAREN/LIST']} component={VarenList} />
-          )}
-          {FeatureToggle.varenActive && (
-            <Route path={AppRoutes.VAREN} component={Varen} />
-          )}
+
           {FeatureToggle.afisActive && (
             <Route
               path={AppRoutes['AFIS/BETAALVOORKEUREN']}
-              component={AfisBetaalVoorkeuren}
+              element={<AfisBetaalVoorkeuren />}
             />
           )}
           {FeatureToggle.afisActive && (
-            <Route path={AppRoutes['AFIS/FACTUREN']} component={AfisFacturen} />
+            <Route
+              path={AppRoutes['AFIS/FACTUREN']}
+              element={<AfisFacturen />}
+            />
           )}
-          {FeatureToggle.afisActive && (
-            <Route path={AppRoutes.AFIS} component={AfisThemaPagina} />
-          )}
-          {FeatureToggle.krefiaActive && (
-            <Route path={AppRoutes.KREFIA} component={KrefiaThemaPagina} />
-          )}
+
           {FeatureToggle.horecaActive && (
             <Route
               path={AppRoutes['HORECA/LIST']}
-              component={HorecaLijstPagina}
+              element={<HorecaLijstPagina />}
             />
           )}
           {FeatureToggle.horecaActive && (
             <Route
               path={AppRoutes['HORECA/DETAIL']}
-              component={HorecaDetailPagina}
+              element={<HorecaDetailPagina />}
             />
-          )}
-          {FeatureToggle.horecaActive && (
-            <Route path={AppRoutes.HORECA} component={HorecaThemaPagina} />
-          )}
-          {FeatureToggle.avgActive && (
-            <Route path={AppRoutes['AVG/DETAIL']} component={AVGDetail} />
-          )}
-          {FeatureToggle.avgActive && (
-            <Route path={AppRoutes['AVG/LIST']} component={AVGList} />
-          )}
-          {FeatureToggle.avgActive && (
-            <Route path={AppRoutes.AVG} component={AVG} />
-          )}
-          {FeatureToggle.bodemActive && (
-            <Route path={AppRoutes['BODEM/LIST']} component={BodemList} />
           )}
 
           {FeatureToggle.bodemActive && (
             <Route
               path={AppRoutes['BODEM/LOOD_METING']}
-              component={LoodMeting}
+              element={<LoodMeting />}
             />
           )}
           {FeatureToggle.contactmomentenActive && (
             <Route
               path={AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']}
-              component={ContactmomentenListPage}
+              element={<ContactmomentenListPage />}
             />
           )}
-          {FeatureToggle.bodemActive && (
-            <Route path={AppRoutes.BODEM} component={Bodem} />
-          )}
+
           {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/DOSSIERS']}
-              component={ErfpachtDossiers}
+              element={<ErfpachtDossiers />}
             />
           )}
           {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/ALLE_FACTUREN']}
-              component={ErfpachtFacturen}
+              element={<ErfpachtFacturen />}
             />
           )}
           {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/OPEN_FACTUREN']}
-              component={ErfpachtOpenFacturen}
+              element={<ErfpachtOpenFacturen />}
             />
           )}
           {FeatureToggle.erfpachtActive && (
             <Route
               path={AppRoutes['ERFPACHT/DOSSIERDETAIL']}
-              component={ErfpachtDossierDetail}
+              element={<ErfpachtDossierDetail />}
             />
           )}
-          {FeatureToggle.erfpachtActive && (
-            <Route path={AppRoutes.ERFPACHT} component={Erfpacht} />
-          )}
-          <Route path={AppRoutes.SEARCH} component={SearchPage} />
-          <Route path={AppRoutes['PARKEREN/LIST']} component={ParkerenList} />
+
           <Route
             path={AppRoutes['PARKEREN/DETAIL']}
-            component={ParkerenDetailPagina}
+            element={<ParkerenDetailPagina />}
           />
-          <Route path={AppRoutes.PARKEREN} component={Parkeren} />
-          <Route path={AppRoutes.BFF_500_ERROR} component={BFF500Error} />
-          <Route component={NotFound} />
-        </Switch>
+
+          <Route element={<NotFound />} />
+        </Routes>
       </Screen>
       {/** Remove the footer on the Map view for better UX */}
       {!isBuurt && <MainFooter isAuthenticated />}

@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
   LVVRegistratie,
@@ -61,6 +61,7 @@ export const tableConfig = Object.fromEntries(
           tableConfig.filter(vergunning),
         listPageRoute: generatePath(routes.listPage, {
           kind,
+          page: null,
         }),
       },
     ];

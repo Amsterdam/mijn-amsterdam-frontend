@@ -1,7 +1,5 @@
 import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
 
-import { routes } from './toeristischeVerhuur-thema-config';
 import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
@@ -73,16 +71,17 @@ export function ToeristscheVerhuurThema() {
   );
 
   const vergunningenTables = entries(tableConfigVergunningen).map(
-    ([kind, { title, displayProps, filter, sort, maxItems, className }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, maxItems, className, listPageRoute },
+    ]) => {
       return (
         <ThemaPaginaTable<ToeristischeVerhuurVergunning>
           key={kind}
           title={title}
           className={className}
           zaken={vergunningen.filter(filter).sort(sort)}
-          listPageRoute={generatePath(routes.listPage, {
-            kind,
-          })}
+          listPageRoute={listPageRoute}
           displayProps={displayProps}
           maxItems={maxItems}
         />

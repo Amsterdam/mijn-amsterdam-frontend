@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -37,6 +37,7 @@ export const tableConfig = {
     sort: dateSort('datumAfloop', 'desc'),
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.identiteitsbewijzen,
+      page: null,
     }),
   },
 } as const;

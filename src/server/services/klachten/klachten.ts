@@ -1,5 +1,5 @@
 import FormData from 'form-data';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
 import { Themas } from '../../../universal/config/thema';

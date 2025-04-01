@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
@@ -78,6 +78,7 @@ describe('ParkerenList', () => {
 
   const routeEntry = generatePath(AppRoutes['PARKEREN/LIST'], {
     kind: listPageParamKind.inProgress,
+    page: null,
   });
 
   const routePath = AppRoutes['PARKEREN/LIST'];

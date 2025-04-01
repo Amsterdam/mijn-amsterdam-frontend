@@ -1,5 +1,5 @@
 // src/client/pages/Burgerzaken/useBurgerZakenDetailData.hook.tsx
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { useBurgerZakenData } from './useBurgerZakenData.hook';
 

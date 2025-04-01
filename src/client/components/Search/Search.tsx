@@ -8,7 +8,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { SearchEntry, displayPath } from './search-config';
@@ -166,10 +166,11 @@ export function Search({
     [setTerm_]
   );
 
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const profileType = useProfileTypeValue();
   const isPhoneScreen = usePhoneScreen();
-  const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
+  const searchCategory = location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
@@ -246,13 +247,10 @@ export function Search({
       if (result.url.startsWith('http')) {
         window.location.href = result.url;
         return;
-      } else if (replaceResultUrl?.(result)) {
-        history.replace(result.url);
-      } else {
-        history.push(result.url);
       }
+      navigate(result.url, { replace: !!replaceResultUrl?.(result) });
     },
-    [replaceResultUrl, history, setResultsVisible, onFinish, term]
+    [replaceResultUrl, setResultsVisible, onFinish, term]
   );
 
   useKeyDown(keyHandler);
@@ -313,7 +311,7 @@ export function Search({
           onSubmit={(e) => {
             e.preventDefault();
             if (term) {
-              history.push(
+              navigate(
                 `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
               );
               setResultsVisible(true);

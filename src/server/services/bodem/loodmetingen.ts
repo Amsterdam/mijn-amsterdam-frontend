@@ -1,5 +1,5 @@
 import FormData from 'form-data';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getBodemStatusSteps } from './loodmeting-status-line-items';
 import {

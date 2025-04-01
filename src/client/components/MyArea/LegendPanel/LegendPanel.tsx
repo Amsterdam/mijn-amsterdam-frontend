@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { useLandScape, useWidescreen } from '../../../hooks/media.hook';
 import {

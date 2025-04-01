@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import useSWR from 'swr';
 
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
