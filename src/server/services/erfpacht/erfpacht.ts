@@ -136,7 +136,7 @@ interface ErfpachtDossierDetailBijzondereBepaling {
   samengesteldeOppervlakteEenheid: string;
 }
 
-interface ErfpachtV2DossiersDetailSource {
+interface ErfpachtDossiersDetailSource {
   dossierNummer: string;
   titelDossierNummer: string;
   eersteUitgifte: string;
@@ -187,10 +187,10 @@ type ErfpachtDossierPropsFrontend = ZaakDetail & {
   title: string;
 };
 
-export type ErfpachtV2DossiersDetail = ErfpachtV2DossiersDetailSource &
+export type ErfpachtDossiersDetail = ErfpachtDossiersDetailSource &
   ErfpachtDossierPropsFrontend;
 
-interface ErfpachtV2DossierSource {
+interface ErfpachtDossierSource {
   dossierNummer: string;
   titelDossierNummer: string;
   voorkeursadres: string;
@@ -206,13 +206,13 @@ interface ErfpachtV2DossierSource {
   titelDossierHelpTekstRegel2: string;
 }
 
-interface ErfpachtV2DossiersResponseSource {
+interface ErfpachtDossiersResponseSource {
   titelStartPaginaKop: string;
   titelVerklarendeTekstStartPagina: string;
   titelLinkErfpachtrechten: string;
   titelDossiersKop: string;
   dossiers?: {
-    dossiers: ErfpachtV2DossierSource[];
+    dossiers: ErfpachtDossierSource[];
     titelDossiernummer: string;
     titelVoorkeursAdres: string;
     titelZaakNummer: string;
@@ -247,15 +247,15 @@ interface ErfpachtV2DossiersResponseSource {
   };
 }
 
-export type ErfpachtDossier = ErfpachtV2DossierSource &
+export type ErfpachtDossier = ErfpachtDossierSource &
   ErfpachtDossierPropsFrontend;
 
-export interface ErfpachtV2DossiersResponse
-  extends ErfpachtV2DossiersResponseSource {
-  dossiers: ErfpachtV2DossiersResponseSource['dossiers'] & {
+export interface ErfpachtDossiersResponse
+  extends ErfpachtDossiersResponseSource {
+  dossiers: ErfpachtDossiersResponseSource['dossiers'] & {
     dossiers?: ErfpachtDossier[];
   };
-  openstaandeFacturen: ErfpachtV2DossiersResponseSource['openstaandeFacturen'] & {
+  openstaandeFacturen: ErfpachtDossiersResponseSource['openstaandeFacturen'] & {
     dossiers: ErfpachtDossierFactuur[];
   };
   isKnown: boolean;
@@ -267,7 +267,7 @@ function getDossierNummerUrlParam(dossierNummer: string) {
 }
 
 export function transformErfpachtDossierProperties<
-  T extends ErfpachtV2DossierSource | ErfpachtV2DossiersDetailSource,
+  T extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
 >(dossierSource: T): T & ErfpachtDossierPropsFrontend {
   const dossier: T = jsonCopy(dossierSource);
   const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
@@ -330,10 +330,10 @@ export function transformErfpachtDossierProperties<
 }
 
 export function transformDossierResponse(
-  responseDataSource: ErfpachtV2DossiersResponse,
+  responseDataSource: ErfpachtDossiersResponse,
   relatieCode: Erfpachtv2ErpachterResponseSource['relationCode']
 ) {
-  const responseData: ErfpachtV2DossiersResponse = responseDataSource
+  const responseData: ErfpachtDossiersResponse = responseDataSource
     ? jsonCopy(responseDataSource)
     : {};
   const hasDossiers = !!responseData?.dossiers?.dossiers?.length;
@@ -384,7 +384,7 @@ export async function fetchErfpachtV2(
     !!erfpachterResponse.content?.isKnown &&
     authProfileAndToken.profile.profileType !== 'commercial' // Commerciële  gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
   ) {
-    return requestData<ErfpachtV2DossiersResponse>(
+    return requestData<ErfpachtDossiersResponse>(
       {
         ...config,
         url: `${config.url}/vernise/api/dossierinfo`,
@@ -408,7 +408,7 @@ export async function fetchErfpachtV2DossiersDetail(
   dossierNummerUrlParam: string
 ) {
   const config = getApiConfig('ERFPACHT');
-  const dossierInfoResponse = await requestData<ErfpachtV2DossiersDetail>(
+  const dossierInfoResponse = await requestData<ErfpachtDossiersDetail>(
     {
       ...config,
       url: new URL(

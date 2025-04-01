@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
-  ErfpachtV2DossiersResponse,
+  ErfpachtDossiersResponse,
   transformDossierResponse,
 } from '../../../server/services/erfpacht/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -18,7 +18,7 @@ describe('<ErfpachtOpenFacturen />', () => {
   const routePath = AppRoutes['ERFPACHT/OPEN_FACTUREN'];
 
   const dossiersTransformed = transformDossierResponse(
-    ERFPACHT_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
+    ERFPACHT_DOSSIERS as unknown as ErfpachtDossiersResponse,
     'xxx-relatie-code-xxx'
   );
 

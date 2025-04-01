@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
-  ErfpachtV2DossiersResponse,
+  ErfpachtDossiersResponse,
   transformDossierResponse,
   transformErfpachtDossierProperties,
 } from '../../../server/services/erfpacht/erfpacht';
@@ -79,7 +79,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       ERFPACHT: {
         status: 'OK',
         content: transformDossierResponse(
-          ERFPACHT_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
+          ERFPACHT_DOSSIERS as unknown as ErfpachtDossiersResponse,
           'xxx-relatie-code-xxx'
         ),
       },

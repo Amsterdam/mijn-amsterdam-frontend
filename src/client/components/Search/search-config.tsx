@@ -14,7 +14,7 @@ import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import {
   ErfpachtDossier,
-  ErfpachtV2DossiersResponse,
+  ErfpachtDossiersResponse,
 } from '../../../server/services/erfpacht/erfpacht';
 import {
   LVVRegistratie,
@@ -230,7 +230,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'ERFPACHT' as AppStateKey,
     getApiBaseItems: (
-      erfpachtV2DossiersResponse: ErfpachtV2DossiersResponse
+      erfpachtV2DossiersResponse: ErfpachtDossiersResponse
     ): ErfpachtDossier[] => {
       return erfpachtV2DossiersResponse?.dossiers?.dossiers ?? [];
     },

@@ -4,7 +4,7 @@ import {
   listPageParamKind,
   routes,
 } from './Erfpacht-thema-config';
-import { ErfpachtV2DossiersResponse } from '../../../server/services/erfpacht/erfpacht';
+import { ErfpachtDossiersResponse } from '../../../server/services/erfpacht/erfpacht';
 import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
@@ -14,7 +14,7 @@ import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useErfpachtV2Data() {
   const { ERFPACHT } = useAppStateGetter();
-  const erfpachtData = ERFPACHT.content as ErfpachtV2DossiersResponse | null;
+  const erfpachtData = ERFPACHT.content as ErfpachtDossiersResponse | null;
 
   // Dossiers
   const dossiersBase = erfpachtData?.dossiers ?? null;

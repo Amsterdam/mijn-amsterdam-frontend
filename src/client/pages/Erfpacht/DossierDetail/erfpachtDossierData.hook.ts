@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { ErfpachtV2DossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
+import { ErfpachtDossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { BFFApiUrls } from '../../../config/api';
 import { BagThemas } from '../../../config/thema';
@@ -23,7 +23,7 @@ export function useDossierDetaiLData() {
     breadcrumbs,
   } = useErfpachtV2Data();
 
-  const [dossierApiResponse] = useAppStateBagApi<ErfpachtV2DossiersDetail>({
+  const [dossierApiResponse] = useAppStateBagApi<ErfpachtDossiersDetail>({
     url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
     bagThema: BagThemas.ERFPACHT,
     key: dossierNummerUrlParam,

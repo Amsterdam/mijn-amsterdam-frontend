@@ -4,13 +4,13 @@ import { Button, OrderedList } from '@amsterdam/design-system-react';
 
 import styles from './ErfpachtDossierDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
-import { ErfpachtV2DossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
+import { ErfpachtDossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
 import { useMediumScreen } from '../../../hooks/media.hook';
 
 const MAX_ERFPACHTERS_VISIBLE_INITIALLY = 3;
 
 interface ErfpachtersListProps {
-  erfpachters?: ErfpachtV2DossiersDetail['relaties'];
+  erfpachters?: ErfpachtDossiersDetail['relaties'];
   debiteurNummer?: string;
   dossierNummer?: string;
   relatieCode?: string;

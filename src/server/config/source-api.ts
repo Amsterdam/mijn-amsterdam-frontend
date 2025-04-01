@@ -242,7 +242,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !FeatureToggle.erfpachtV2EndpointActive ||
+      !FeatureToggle.erfpachtEndpointActive ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',

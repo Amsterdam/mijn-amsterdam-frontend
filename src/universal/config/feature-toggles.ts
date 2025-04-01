@@ -36,7 +36,7 @@ export const FeatureToggle = {
 
   // ErfachtV2 VerNise
   erfpachtActive: true,
-  erfpachtV2EndpointActive: true,
+  erfpachtEndpointActive: true,
 
   // Afval api + Afval thema
   garbageInformationPage: true,

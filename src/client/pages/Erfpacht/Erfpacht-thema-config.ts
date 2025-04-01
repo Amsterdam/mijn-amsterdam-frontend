@@ -1,8 +1,8 @@
 import {
   ErfpachtDossierFactuur,
   ErfpachtDossier,
-  ErfpachtV2DossiersDetail,
-  ErfpachtV2DossiersResponse,
+  ErfpachtDossiersDetail,
+  ErfpachtDossiersResponse,
 } from '../../../server/services/erfpacht/erfpacht';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -71,8 +71,8 @@ export function getTableConfig({
   erfpachtData,
   dossier,
 }: {
-  erfpachtData: ErfpachtV2DossiersResponse | null;
-  dossier?: ErfpachtV2DossiersDetail;
+  erfpachtData: ErfpachtDossiersResponse | null;
+  dossier?: ErfpachtDossiersDetail;
 }) {
   const dossiersBase = erfpachtData?.dossiers;
   const openFacturenBase = erfpachtData?.openstaandeFacturen;

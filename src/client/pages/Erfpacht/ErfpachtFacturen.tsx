@@ -2,7 +2,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router-dom';
 
 import { useErfpachtV2Data } from './erfpachtData.hook';
-import { ErfpachtV2DossiersDetail } from '../../../server/services/erfpacht/erfpacht';
+import { ErfpachtDossiersDetail } from '../../../server/services/erfpacht/erfpacht';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../components/Page/Page';
@@ -17,13 +17,11 @@ export function ErfpachtFacturen() {
     dossierNummerUrlParam: string;
   }>();
 
-  const [dossierApiResponse, api] = useAppStateBagApi<ErfpachtV2DossiersDetail>(
-    {
-      url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-      bagThema: BagThemas.ERFPACHT,
-      key: dossierNummerUrlParam,
-    }
-  );
+  const [dossierApiResponse, api] = useAppStateBagApi<ErfpachtDossiersDetail>({
+    url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
+    bagThema: BagThemas.ERFPACHT,
+    key: dossierNummerUrlParam,
+  });
 
   const dossier = dossierApiResponse.content;
   const tableConfigFacturen = tableConfig?.[listPageParamKind.alleFacturen];
