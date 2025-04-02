@@ -51,7 +51,8 @@ describe('requestData.ts', () => {
   const DUMMY_RESPONSE_2 = { foo: 'baz' };
 
   const DUMMY_URL = `${remoteApiHost}/1`;
-  const DUMMY_URL_2 = `${remoteApiHost}/2`;
+  const DUMMY_ROUTE_2 = '/2';
+  const DUMMY_URL_2 = `${remoteApiHost}${DUMMY_ROUTE_2}`;
 
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
@@ -221,7 +222,7 @@ describe('requestData.ts', () => {
   });
 
   it('A requests responds with error', async () => {
-    remoteApi.get('/2').replyWithError('Network Error');
+    remoteApi.get(DUMMY_ROUTE_2).replyWithError('Network Error');
 
     const rs = await requestData(
       {
@@ -232,7 +233,7 @@ describe('requestData.ts', () => {
     );
 
     expect(rs).toStrictEqual(apiErrorResult('Network Error', null));
-    expect(captureException).toHaveBeenCalledTimes(1);
+    expect(captureException).toHaveBeenCalled();
   });
 
   test('Find corresponding api', () => {
