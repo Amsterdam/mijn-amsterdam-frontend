@@ -43,6 +43,7 @@ export function transformRequestProcess(
 
   return {
     ...requestProcess,
+    displayStatus: activeStep.status,
     dateStartFormatted: requestProcess.dateStart
       ? defaultDateFormat(requestProcess.dateStart)
       : null,

@@ -52,4 +52,9 @@ export const menuItems: ThemaMenuItem[] = [
   } as const,
 ];
 
+export const errorMessage = {
+  [themaId.KVK]: 'Mijn onderneming',
+  [themaId.BRP]: 'Persoonlijke gegevens, paspoort, ID-kaart',
+};
+
 // TODO: Integrate search config with the new thema config ?

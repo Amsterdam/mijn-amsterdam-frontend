@@ -52,7 +52,7 @@ const lopendeAanvragenDisplayPropsBase: DisplayProps<
 > = {
   detailLinkComponent: '',
   dateStartFormatted: 'Datum aanvraag',
-  statusId: 'Status',
+  displayStatus: 'Status',
 };
 
 const afgehandeldeAanvragenDisplayPropsBase: DisplayProps<

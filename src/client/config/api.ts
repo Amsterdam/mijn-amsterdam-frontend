@@ -3,6 +3,7 @@ import {
   FailedDependencies,
 } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types';
+import { errorMessage as profileErrorMessage } from '../pages/Profile/Profile-thema-config';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -39,6 +40,7 @@ export const ExcludePageViewTrackingUrls = [
 ];
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
+  ...profileErrorMessage,
   AFIS: 'Facturen en betalen',
   AFIS_facturenoverview: 'Facturen en betalen: Overzicht van facturen',
   AFIS_afgehandeld: 'Facturen en betalen: Afgehandelde facturen',
@@ -52,7 +54,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BELASTINGEN: 'Actuele updates over uw belastingen',
   BEZWAREN: 'Ingediende bezwaren',
   BODEM: 'Bodem: loodmetingen',
-  BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
+
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Erfpacht',
@@ -62,7 +64,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   KLACHTEN: 'Ingediende klachten',
   KLANT_CONTACT: 'Contactmomenten',
   KREFIA: 'Kredietbank & FIBU',
-  KVK: 'Mijn onderneming',
+
   MILIEUZONE: 'Milieuzone',
   MY_LOCATION: 'Uw locatie op de kaart',
   NOTIFICATIONS: 'Actuele updates',

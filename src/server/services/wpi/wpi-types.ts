@@ -45,6 +45,7 @@ export interface WpiRequestProcess extends ZaakDetail {
   datePublished: string; // Date of latest step
   steps: WpiRequestStatus[];
   statusId: WpiRequestStatus['id'];
+  displayStatus: string;
   decision: string | null;
 }
 
