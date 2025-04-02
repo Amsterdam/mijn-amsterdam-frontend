@@ -171,9 +171,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
     description: '',
     documents: [],
     isActive: isInBehandeling,
-    isChecked: hasWorkflowDateForStatusInBehandeling
-      ? isInBehandeling
-      : isAfgehandeld,
+    isChecked: isInBehandeling || isAfgehandeld,
   };
 
   const statusAfgehandeld: StatusLineItem = {

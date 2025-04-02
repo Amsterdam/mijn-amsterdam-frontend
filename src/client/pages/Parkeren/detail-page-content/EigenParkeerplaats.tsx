@@ -2,17 +2,18 @@ import { Link } from '@amsterdam/design-system-react';
 
 import type { EigenParkeerplaats } from '../../../../server/services/parkeren/config-and-types';
 import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { Datalist, Row } from '../../../components/Datalist/Datalist';
+import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
-import { getRows } from '../../Vergunningen/detail-page-content/fields-config';
+import {
+  dateRange,
+  getRows,
+} from '../../Vergunningen/detail-page-content/fields-config';
 
 export function EigenParkeerplaats({
   vergunning,
 }: {
   vergunning: VergunningFrontend<EigenParkeerplaats>;
 }) {
-  const isVerleend = vergunning.processed && vergunning.decision === 'Verleend';
-
   const rows = getRows(vergunning, [
     'identifier',
     {
@@ -34,10 +35,9 @@ export function EigenParkeerplaats({
     },
     {
       locations: (vergunning: VergunningFrontend<EigenParkeerplaats>) => {
-        const rows: Row[] = [];
-        vergunning.locations?.map((location, i) => {
+        const rows: RowSet[] = vergunning.locations?.map((location, i) => {
           return {
-            label: `Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`,
+            // label: `Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`,
             rows: [
               {
                 label: `Locatie`,
@@ -62,9 +62,7 @@ export function EigenParkeerplaats({
             ],
           };
         });
-        return {
-          rows,
-        };
+        return rows;
       },
     },
     'kentekens',
@@ -80,7 +78,13 @@ export function EigenParkeerplaats({
           : null;
       },
     },
-    'dateRange',
+    {
+      dateRange: (vergunning) => {
+        return vergunning.dateStart && vergunning.dateEnd
+          ? dateRange(vergunning)
+          : null;
+      },
+    },
     'decision',
   ]);
 

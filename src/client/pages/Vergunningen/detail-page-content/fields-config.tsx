@@ -15,7 +15,7 @@ type VergunningDataListRow<T extends VergunningFrontend = VergunningFrontend> =
   (
     vergunning: T,
     options?: DataListRowOptions
-  ) => Row | RowSet | WrappedRow | null;
+  ) => Row | RowSet | WrappedRow | Row[] | RowSet[] | WrappedRow[] | null;
 
 export type RowTransformer<T extends VergunningFrontend = VergunningFrontend> =
   Record<string, VergunningDataListRow<T>>;
@@ -238,7 +238,7 @@ type TransformerKey =
 export function getRowsByKey<T extends VergunningFrontend>(
   vergunning: T,
   keysOrTransformers: (TransformerKey | RowTransformer<T>)[]
-): Record<string, Row | RowSet> {
+): Record<string, Row | RowSet | Row[] | RowSet[]> {
   const rows = keysOrTransformers
     .map((keyOrTransformer) => {
       if (typeof keyOrTransformer === 'string') {
@@ -262,5 +262,5 @@ export function getRows<T extends VergunningFrontend>(
   keysOrTransformers: (TransformerKey | RowTransformer<T>)[]
 ): Array<Row | RowSet> {
   const rowsByKey = getRowsByKey(vergunning, keysOrTransformers);
-  return Object.values(rowsByKey);
+  return Object.values(rowsByKey).flat();
 }

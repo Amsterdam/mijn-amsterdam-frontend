@@ -1,7 +1,10 @@
 import memoizee from 'memoizee';
 
 import { DecosVergunning, VergunningFrontend } from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+import {
+  decosCaseToZaakTransformers,
+  decosZaakTransformers,
+} from './decos-zaken';
 import { getDisplayStatus, getStatusSteps } from './vergunningen-status-steps';
 import {
   AppRoutes,
@@ -10,6 +13,7 @@ import {
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { DecosZaakTransformer } from '../decos/config-and-types';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
@@ -17,21 +21,24 @@ import {
 
 function transformVergunningFrontend(
   sessionID: SessionID,
-  vergunning: DecosVergunning,
+  zaak: DecosVergunning,
   appRoute: AppRouteVergunningen
 ) {
-  const vergunningFrontend = transformDecosZaakFrontend<DecosVergunning>(
+  const zaakFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
-    vergunning,
+    zaak,
     { appRoute, includeFetchDocumentsUrl: true }
   );
+  // TODO: Fix this <any>. DecosZaakTransformer<GPP | GPK | ...> is not the same as DecosZaakTransformer<GPP> | DecosZaakTransformer<GPK> | DecosZaakTransformer<...>
+  const zaakTransformer: DecosZaakTransformer<any> =
+    decosCaseToZaakTransformers[zaak.caseType];
 
-  const steps = getStatusSteps(vergunningFrontend);
+  const steps = getStatusSteps(zaakFrontend, zaakTransformer);
 
   return {
-    ...vergunningFrontend,
+    ...zaakFrontend,
     steps,
-    displayStatus: getDisplayStatus(vergunningFrontend, steps),
+    displayStatus: getDisplayStatus(zaakFrontend, steps),
   };
 }
 

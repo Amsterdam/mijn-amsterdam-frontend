@@ -136,6 +136,24 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
     text13: kentekens,
     text14: { ...kentekens, name: 'vorigeKentekens' },
   },
+  additionalSelectFields: [
+    'text25',
+    'text17',
+    'tex25',
+    'num14',
+    'text18',
+    'text19',
+    'text20',
+    'text15',
+    'num15',
+    'text21',
+    'text22',
+    'bol9',
+    'bol8',
+    'bol10',
+    'bol11',
+    'bol7',
+  ],
   requirePayment: true,
   hasValidSourceData: (decosZaak) => {
     const dateNotBefore = new Date('2023-08-08');
@@ -148,23 +166,27 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
 
     const locations: (typeof vergunning)['locations'] = [];
 
+    function toStringOrEmptyString(inp: unknown) {
+      return inp ? String(inp) : '';
+    }
+
     if (zaakSource.fields.text25) {
       locations.push({
-        type: String(zaakSource.fields.text17),
-        street: String(zaakSource.fields.tex25),
-        houseNumber: `${zaakSource.fields.num14 ?? ''}`,
-        fiscalNumber: String(zaakSource.fields.text18),
-        url: String(zaakSource.fields.text19),
+        type: toStringOrEmptyString(zaakSource.fields.text17),
+        street: toStringOrEmptyString(zaakSource.fields.text25),
+        houseNumber: toStringOrEmptyString(zaakSource.fields.num14),
+        fiscalNumber: toStringOrEmptyString(zaakSource.fields.text18),
+        url: toStringOrEmptyString(zaakSource.fields.text19),
       });
     }
 
-    if (zaakSource.fields.streetLocation2) {
+    if (zaakSource.fields.text15) {
       locations.push({
-        type: String(zaakSource.fields.text20),
-        street: String(zaakSource.fields.text15),
-        houseNumber: `${zaakSource.fields.num15 ?? ''}`,
-        fiscalNumber: String(zaakSource.fields.text21),
-        url: String(zaakSource.fields.text22),
+        type: toStringOrEmptyString(zaakSource.fields.text20),
+        street: toStringOrEmptyString(zaakSource.fields.text15),
+        houseNumber: toStringOrEmptyString(zaakSource.fields.num15),
+        fiscalNumber: toStringOrEmptyString(zaakSource.fields.text21),
+        url: toStringOrEmptyString(zaakSource.fields.text22),
       });
     }
 
@@ -216,6 +238,7 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
       bol8: 'isCarsharingpermit',
       date8: 'dateEnd',
     },
+    additionalSelectFields: ['text25', 'num14', 'text17', 'tex19', 'tex18'],
     async afterTransform(vergunning, zaakSource) {
       vergunning.location = {
         street: String(zaakSource.fields.text25),

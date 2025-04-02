@@ -212,7 +212,7 @@ export function AddressDisplayAndModal({
       <span className={classNames(styles.Address, 'ams-mb--xs')}>
         {label ?? address}
       </span>
-      <LocationModal address={address} label={label} />
+      <LocationModal address={address} label={label ?? address} />
     </>
   );
 }
