@@ -1,6 +1,10 @@
 import { RVVSloterweg, VergunningFrontend } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
-import { DecosZaakBase } from '../decos/config-and-types';
+import {
+  DecosZaakBase,
+  DecosZaakFrontend,
+  DecosZaakTransformer,
+} from '../decos/config-and-types';
 import { getStatusDate } from '../decos/decos-helpers';
 
 function getStatusStepsRVVSloterweg(
@@ -127,21 +131,25 @@ function getStatusStepsRVVSloterweg(
 
 export function getStatusSteps<
   DZ extends DecosZaakBase,
-  V extends VergunningFrontend<DZ>,
->(vergunning: V) {
+  V extends DecosZaakFrontend<DZ>,
+>(vergunning: V, zaakTransformer?: DecosZaakTransformer<DZ>) {
   if (vergunning.caseType === 'RVV Sloterweg') {
     return getStatusStepsRVVSloterweg(
-      vergunning as unknown as VergunningFrontend<RVVSloterweg>
+      vergunning as unknown as DecosZaakFrontend<RVVSloterweg>
     );
   }
 
   const isAfgehandeld = vergunning.processed;
-  const dateInBehandeling = getStatusDate('In behandeling', vergunning);
-  const hasDateInBehandeling = !!dateInBehandeling;
-  const isInBehandeling = hasDateInBehandeling && !isAfgehandeld;
-  const isExpired = vergunning.isExpired === true;
+  const dateInBehandeling = getStatusDate('In behandeling', vergunning) || '';
+  const hasWorkflowDateForStatusInBehandeling =
+    !!zaakTransformer?.fetchWorkflowStatusDatesFor?.some(
+      ({ status }) => status === 'In behandeling'
+    );
+  const isInBehandeling = hasWorkflowDateForStatusInBehandeling
+    ? !!dateInBehandeling && !isAfgehandeld
+    : !isAfgehandeld;
+  const isVerlopen = vergunning.isExpired === true;
   const isIngetrokken = vergunning.decision?.includes('Ingetrokken');
-  const isVerlopen = vergunning.status === 'Verlopen' || isExpired;
   const isVerleend = vergunning.decision === 'Verleend';
 
   const statusOntvangen: StatusLineItem = {
@@ -157,11 +165,15 @@ export function getStatusSteps<
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
-    datePublished: dateInBehandeling || '',
+    datePublished: hasWorkflowDateForStatusInBehandeling
+      ? dateInBehandeling
+      : vergunning.dateRequest,
     description: '',
     documents: [],
     isActive: isInBehandeling,
-    isChecked: hasDateInBehandeling || isAfgehandeld,
+    isChecked: hasWorkflowDateForStatusInBehandeling
+      ? isInBehandeling
+      : isAfgehandeld,
   };
 
   const statusAfgehandeld: StatusLineItem = {
@@ -175,7 +187,7 @@ export function getStatusSteps<
         ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
         : '', // Complex decisions cannot be captured in a generic text. They should be handled in the specific case.
     documents: [],
-    isActive: !isExpired && !isIngetrokken && isAfgehandeld,
+    isActive: !isVerlopen && !isIngetrokken && isAfgehandeld,
     isChecked: isAfgehandeld,
   };
 

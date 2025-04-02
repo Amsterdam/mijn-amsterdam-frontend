@@ -1,5 +1,8 @@
 import { ParkeerVergunningFrontend } from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+import {
+  decosCaseToZaakTransformers,
+  decosZaakTransformers,
+} from './decos-zaken';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -23,10 +26,14 @@ export async function fetchDecosParkeerVergunningen(
   );
 
   if (response.status === 'OK') {
-    const decosVergunningen = response.content;
-    const vergunningenFrontend: ParkeerVergunningFrontend[] =
-      decosVergunningen.map((vergunning) => {
-        const vergunningTransformed = transformDecosZaakFrontend(
+    const decosZaken = response.content;
+
+    const zakenFrontend: ParkeerVergunningFrontend[] = decosZaken.map(
+      (vergunning) => {
+        const zaakTransformer =
+          decosCaseToZaakTransformers[vergunning.caseType];
+
+        const zaakTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           {
@@ -35,17 +42,18 @@ export async function fetchDecosParkeerVergunningen(
           }
         );
 
-        const steps = getStatusSteps(vergunningTransformed);
-        const displayStatus = getDisplayStatus(vergunningTransformed, steps);
+        const steps = getStatusSteps(zaakTransformed, zaakTransformer as any);
+        const displayStatus = getDisplayStatus(zaakTransformed, steps);
 
         return {
-          ...vergunningTransformed,
+          ...zaakTransformed,
           steps,
           displayStatus,
         };
-      });
+      }
+    );
 
-    return apiSuccessResult(vergunningenFrontend);
+    return apiSuccessResult(zakenFrontend);
   }
 
   return response;

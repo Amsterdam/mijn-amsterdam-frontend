@@ -811,7 +811,9 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     const zaakFrontendWithExpiry = zaakFrontend as unknown as DecosZaakFrontend<
       DecosZaakBase & WithDateRange
     >;
-    zaakFrontendWithExpiry.isExpired = isExpired(zaakFrontendWithExpiry);
+    zaakFrontendWithExpiry.isExpired = isExpired(
+      zaakFrontendWithExpiry.dateEnd
+    );
     zaakFrontendWithExpiry.dateStartFormatted = defaultDateFormat(
       zaak.dateStart
     );

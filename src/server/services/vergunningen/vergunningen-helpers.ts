@@ -1,6 +1,5 @@
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from './config-and-types';
 import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
-import { DecosZaakBase } from '../decos/config-and-types';
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
@@ -44,10 +43,10 @@ export function isNearEndDate(dateEnd?: string | null, dateNow?: Date) {
   );
 }
 
-export function isExpired(vergunning: DecosZaakBase, dateNow?: Date) {
-  if (!vergunning.dateEnd) {
+export function isExpired(dateExpiry: string | null, dateNow?: Date) {
+  if (!dateExpiry) {
     return false;
   }
 
-  return isDateInPast(vergunning.dateEnd, dateNow || new Date());
+  return isDateInPast(dateExpiry, dateNow || new Date());
 }
