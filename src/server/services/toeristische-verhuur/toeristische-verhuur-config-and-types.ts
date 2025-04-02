@@ -1,5 +1,3 @@
-import { parseISO } from 'date-fns';
-
 import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   DecosZaakTransformer,
@@ -100,16 +98,7 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
 
       // Vakantieverhuur vergunningen worden direct verleend (en dus voor Mijn Amsterdam afgehandeld)
       vergunning.status = 'Afgehandeld';
-
-      const monthIndex = 4;
-      // The validity of this case runs from april 1st until the next. set the end date to the next april the 1st
-      if ('dateEnd' in vergunning && vergunning.dateRequest) {
-        vergunning.dateEnd = new Date(
-          parseISO(vergunning.dateRequest).getFullYear() + 1,
-          monthIndex,
-          1
-        ).toISOString();
-      }
+      vergunning.processed = true;
 
       return vergunning;
     },
