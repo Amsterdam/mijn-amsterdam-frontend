@@ -2,12 +2,11 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import { ContactMomentFrontend } from './Contactmomenten.config';
 import { useContactmomenten } from './useContactmomenten.hook';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import ThemaPaginaTable from '../../ThemaPagina/ThemaPaginaTable';
 
 export function ContactMomenten() {
-  const { contactmomenten, displayProps, title } = useContactmomenten();
+  const { contactmomenten, displayProps, title, routes } = useContactmomenten();
 
   if (!contactmomenten.length) {
     return null;
@@ -33,7 +32,7 @@ export function ContactMomenten() {
         zaken={contactmomenten}
         displayProps={displayProps}
         listPageLinkTitle="Bekijk alle contactmomenten"
-        listPageRoute={AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']}
+        listPageRoute={routes.listPage}
       />
     </CollapsiblePanel>
   );

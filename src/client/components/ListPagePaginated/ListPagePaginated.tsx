@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { generatePath, useNavigate, useParams } from 'react-router';
+import { generatePath, Params, useNavigate, useParams } from 'react-router';
 
 import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
@@ -17,7 +17,7 @@ const DEFAULT_PAGE_SIZE = 20;
 interface ListPagePaginatedProps<T> {
   appRoute: string;
   breadcrumbs?: LinkProps[];
-  appRouteParams?: Record<string, string> | null;
+  appRouteParams?: Record<string, string> | Readonly<Params<string>> | null;
   pageContentTop?: ReactNode;
   pageContentBottom?: ReactNode;
   displayProps: DisplayProps<T>;

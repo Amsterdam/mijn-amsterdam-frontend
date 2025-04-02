@@ -6,6 +6,7 @@ import {
   EmailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
+import { useParams } from 'react-router';
 
 import {
   contactmomentenDisplayProps,
@@ -66,6 +67,7 @@ export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
   const breadcrumbs = useThemaBreadcrumbs(Themas.BRP);
+  const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =
     KLANT_CONTACT.content?.map((contactMomentItem) => {
@@ -87,5 +89,6 @@ export function useContactmomenten() {
     title: 'Contactmomenten',
     routes,
     breadcrumbs,
+    routeParams,
   };
 }
