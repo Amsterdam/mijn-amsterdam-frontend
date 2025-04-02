@@ -125,6 +125,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.lopend,
+      page: null,
     }),
   },
   [listPageParamKind.eerder]: {
@@ -138,6 +139,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.eerder,
+      page: null,
     }),
   },
 } as const;

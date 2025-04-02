@@ -9,9 +9,12 @@
     td:nth-child(3) {
       width: 30%;
     }
-    @include select(Table_DisplayPropTitle) {
-      &:nth-child(1) {
-        width: 50%;
+    @media screen and (max-width: $ams-breakpoint-medium) {
+      td:nth-child(1) {
+        width: 60%;
+      }
+      td:nth-child(2) {
+        width: 40%;
       }
     }
   }
