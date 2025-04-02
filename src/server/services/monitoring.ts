@@ -1,16 +1,18 @@
 import * as appInsights from 'applicationinsights';
 import {
   ExceptionTelemetry,
-  RemoteDependencyData,
-  RequestData,
   SeverityLevel,
   Telemetry,
   TraceTelemetry,
 } from 'applicationinsights/out/Declarations/Contracts';
 
+import {
+  shouldSendRemoteDependencyData,
+  shouldSendRequestData,
+  shouldSendExceptionData,
+} from './should-send-telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
-
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
@@ -28,45 +30,23 @@ const client: appInsights.TelemetryClient | undefined =
 // See also: https://www.npmjs.com/package/applicationinsights
 
 if (client) {
-  // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
-  const excludedRequests: string[] = JSON.parse(
-    process.env.MA_EXCLUDE_INCOMING_REQUESTS || '[]'
-  );
-
-  const excludedOutoingDependencies: Array<{
-    method: string;
-    routeSegment: string;
-    statusCode: string;
-  }> = JSON.parse(process.env.MA_EXCLUDE_OUTGOING_DEPENDENCIES || '[]');
+  // Reason: Type is known. It is the same type as the keyname.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const shouldSendTelemetry: Record<string, (data: any) => boolean> = {
+    RequestData: shouldSendRequestData,
+    RemoteDependencyData: shouldSendRemoteDependencyData,
+    ExceptionData: shouldSendExceptionData,
+  };
 
   client.addTelemetryProcessor((envelope) => {
     const SEND_TELEMETRY = true;
-    const DISCARD_TELEMETRY = false;
 
-    if (envelope?.data?.baseType === 'RequestData') {
-      const reqData = envelope.data.baseData as RequestData;
-
-      if (excludedRequests.includes(reqData.name)) {
-        return DISCARD_TELEMETRY;
-      }
+    if (!envelope.data.baseType) {
+      return SEND_TELEMETRY;
     }
 
-    if (envelope?.data?.baseType === 'RemoteDependencyData') {
-      const reqData = envelope.data.baseData as RemoteDependencyData;
-      const [method, route] = reqData.name.split(' ');
-
-      for (const excludeReqParts of excludedOutoingDependencies) {
-        if (
-          route.includes(excludeReqParts.routeSegment) &&
-          method === excludeReqParts.method &&
-          reqData.resultCode === excludeReqParts.statusCode
-        ) {
-          return DISCARD_TELEMETRY;
-        }
-      }
-    }
-
-    return SEND_TELEMETRY;
+    const shouldSend = shouldSendTelemetry[envelope.data.baseType];
+    return shouldSend ? shouldSend(envelope.data.baseData) : SEND_TELEMETRY;
   });
 
   try {
