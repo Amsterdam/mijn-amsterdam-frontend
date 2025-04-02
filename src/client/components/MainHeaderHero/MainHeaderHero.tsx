@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
 
 import classnames from 'classnames';
-import { useLocation, matchPath } from 'react-router';
 
 import styles from './MainHeaderHero.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
@@ -28,66 +26,17 @@ function imgUrl(
   width: number,
   orientation: 'landscape' | 'portrait' = 'landscape',
   pixelDensity: number = 1,
-  dir = '',
   ext = 'webp'
 ) {
   const ratio =
     orientation === 'portrait' ? PORTRAIT_SCREEN_RATIO : LANDSCAPE_SCREEN_RATIO;
-  return `/header${dir}/${Math.round(pixelDensity * width)}x${Math.round(
+  return `/header/${Math.round(pixelDensity * width)}x${Math.round(
     pixelDensity * (width * ratio)
   )}-${imageName}.${ext}`;
 }
 
 function useHeroSrc() {
-  const location = useLocation();
-  const profileType = useProfileTypeValue();
-  const isCommercialHeader = profileType.includes('commercial');
-  const isThemaPath = (path: string) => !!matchPath(path, location.pathname);
-
-  let imageName: string;
-  let dir = '';
-
-  // TODO: Make more dynamic. Maybe with image names based on profileType and Thema
-  switch (true) {
-    case isCommercialHeader:
-      dir = '/zakelijk';
-      imageName = 'algemeen';
-      switch (true) {
-        case isThemaPath(AppRoutes.INKOMEN):
-          imageName = 'inkomen';
-          break;
-        case isThemaPath(AppRoutes.VERGUNNINGEN):
-          imageName = 'vergunningen';
-          break;
-      }
-      break;
-    case isThemaPath(AppRoutes.BRP):
-      imageName = 'burgerzaken';
-      break;
-    case isThemaPath(AppRoutes.INKOMEN):
-      imageName = 'werk';
-      break;
-    case isThemaPath(AppRoutes.ZORG):
-      imageName = 'zorg';
-      break;
-    case isThemaPath(AppRoutes.AFVAL):
-      imageName = 'afval';
-      break;
-    case isThemaPath(AppRoutes.TOERISTISCHE_VERHUUR):
-      imageName = 'toerisme';
-      break;
-    case isThemaPath(AppRoutes.KREFIA):
-      imageName = 'krefia';
-      break;
-
-    case isThemaPath(AppRoutes.SEARCH):
-      imageName = '';
-      break;
-
-    default:
-      imageName = 'algemeen';
-      break;
-  }
+  const imageName = 'algemeen';
 
   // ------------------------------------------------------------
   // Produces the following image urls
@@ -108,54 +57,47 @@ function useHeroSrc() {
         imageName,
         IMAGE_SIZES.PORTRAIT_SMALL,
         'portrait',
-        PIXEL_DENSITIES.STANDARD,
-        dir
+        PIXEL_DENSITIES.STANDARD
       ),
       PORTRAIT_SMALL_2X: imgUrl(
         imageName,
         IMAGE_SIZES.PORTRAIT_SMALL,
         'portrait',
-        PIXEL_DENSITIES.RETINA,
-        dir
+        PIXEL_DENSITIES.RETINA
       ),
       PORTRAIT_SMALL_3X: imgUrl(
         imageName,
         IMAGE_SIZES.PORTRAIT_SMALL,
         'portrait',
-        PIXEL_DENSITIES.HIGH_DPI,
-        dir
+        PIXEL_DENSITIES.HIGH_DPI
       ),
       LANDSCAPE_SMALL: imgUrl(
         imageName,
         IMAGE_SIZES.LANDSCAPE_SMALL,
         'landscape',
-        PIXEL_DENSITIES.STANDARD,
-        dir
+        PIXEL_DENSITIES.STANDARD
       ),
       LANDSCAPE_MEDIUM: imgUrl(
         imageName,
         IMAGE_SIZES.LANDSCAPE_MEDIUM,
         'landscape',
-        PIXEL_DENSITIES.STANDARD,
-        dir
+        PIXEL_DENSITIES.STANDARD
       ),
       LANDSCAPE_LARGE: imgUrl(
         imageName,
         IMAGE_SIZES.LANDSCAPE_LARGE,
         'landscape',
-        PIXEL_DENSITIES.STANDARD,
-        dir
+        PIXEL_DENSITIES.STANDARD
       ),
       FALLBACK: imgUrl(
         imageName,
         IMAGE_SIZES.LANDSCAPE_LARGE,
         'landscape',
         PIXEL_DENSITIES.STANDARD,
-        dir,
         'jpg'
       ),
     };
-  }, [imageName, dir]);
+  }, [imageName]);
 }
 
 export function MainHeaderHero() {
