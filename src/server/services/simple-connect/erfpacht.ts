@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { generatePath } from 'react-router-dom';
 
 import { fetchService, fetchTipsAndNotifications } from './api-service';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import { Themas } from '../../../universal/config/thema';
 import { apiPostponeResult } from '../../../universal/helpers/api';
@@ -71,7 +72,7 @@ export async function fetchErfpacht(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!authProfileAndToken) {
+  if (!FeatureToggle.mijnErfpachtActive) {
     return Promise.resolve(apiPostponeResult(null));
   }
 
@@ -107,6 +108,9 @@ export async function fetchErfpachtNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
+  if (!FeatureToggle.mijnErfpachtActive) {
+    return Promise.resolve(apiPostponeResult(null));
+  }
   const response = await fetchTipsAndNotifications(
     requestID,
     getConfigNotifications(authProfileAndToken, requestID),
