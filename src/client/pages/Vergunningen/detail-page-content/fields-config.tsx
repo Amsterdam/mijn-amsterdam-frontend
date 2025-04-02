@@ -1,3 +1,4 @@
+import styles from './fields-config.module.scss';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import {
   defaultDateFormat,
@@ -161,13 +162,23 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
           content: vergunning.decision,
         }
       : null,
-  kentekens: (vergunning) =>
-    'kentekens' in vergunning && typeof vergunning.kentekens === 'string'
+  kentekens: (vergunning) => {
+    const hasMultipleKentekens = vergunning?.kentekens?.includes('|');
+    return 'kentekens' in vergunning && typeof vergunning.kentekens === 'string'
       ? {
-          label: `Kenteken${vergunning?.kentekens?.includes('|') ? 's' : ''}`,
-          content: vergunning.kentekens,
+          label: `Kenteken${hasMultipleKentekens ? 's' : ''}`,
+          content: hasMultipleKentekens ? (
+            <ul className={styles.Kentekens}>
+              {vergunning.kentekens.split('|').map((kenteken) => (
+                <li key={kenteken}>{kenteken.trim()}</li>
+              ))}
+            </ul>
+          ) : (
+            vergunning.kentekens
+          ),
         }
-      : null,
+      : null;
+  },
   dateStartedOn: (vergunning) => ({
     label: `Op`,
     content: vergunning.dateStartFormatted,
