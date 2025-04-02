@@ -12,6 +12,8 @@ import {
 } from '../../components/Table/TableV2';
 import { TrackingConfig } from '../../config/routes';
 
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
+
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   actief: 'actieve-vergunningen',
@@ -30,6 +32,7 @@ type TableConfig<T> = {
   sort: (a: T, b: T) => number;
   displayProps: DisplayProps<T>;
   listPageRoute: string;
+  maxItems: number;
 };
 
 export const routes = {
@@ -56,6 +59,7 @@ export const tableConfig: TableConfigByKind<
       dateRequestFormatted: 'Aangevraagd',
       status: 'Status',
     },
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     ...tableConfigSort,
   },
   [listPageParamKind.actief]: {
@@ -71,6 +75,7 @@ export const tableConfig: TableConfigByKind<
       dateDecisionFormatted: 'Datum besluit',
       decision: 'Resultaat',
     },
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     ...tableConfigSort,
   },
 } as const;

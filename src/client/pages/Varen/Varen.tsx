@@ -147,6 +147,7 @@ export function Varen() {
           className={styles.VarenTableThemaPagina}
           listPageRoute={config.listPageRoute}
           listPageLinkLabel={`Alle ${config.title.toLowerCase()}`}
+          maxItems={config.maxItems}
         />
       );
     }
