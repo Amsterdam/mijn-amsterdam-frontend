@@ -1,42 +1,13 @@
-// Within the team we call these Themes / Thema's
-export type ThemaID =
-  | 'AFIS'
-  | 'AFVAL'
-  | 'BELASTINGEN'
-  | 'BURGERZAKEN'
-  | 'BUURT'
-  | 'BEZWAREN'
-  | 'INKOMEN'
-  | 'HLI'
-  | 'BRP'
-  | 'MILIEUZONE'
-  | 'OVERTREDINGEN'
-  | 'NOTIFICATIONS'
-  | 'HOME'
-  | 'ERFPACHT'
-  | 'ZORG'
-  | 'VERGUNNINGEN'
-  | 'SVWI'
-  | 'KVK'
-  | 'TOERISTISCHE_VERHUUR'
-  | 'VAREN'
-  | 'SEARCH'
-  | 'SUBSIDIE'
-  | 'PARKEREN'
-  | 'KLACHTEN'
-  | 'HORECA'
-  | 'KREFIA'
-  | 'AVG'
-  | 'BODEM';
+import { themaId as profileThemaId } from '../../client/pages/Profile/Profile-thema-config';
 
-export const Themas: Record<ThemaID, ThemaID> = {
+export const Themas = {
+  ...profileThemaId,
   AFIS: 'AFIS',
   AFVAL: 'AFVAL',
   AVG: 'AVG',
   BELASTINGEN: 'BELASTINGEN',
   BEZWAREN: 'BEZWAREN',
   BODEM: 'BODEM',
-  BRP: 'BRP',
   BURGERZAKEN: 'BURGERZAKEN',
   BUURT: 'BUURT',
   ERFPACHT: 'ERFPACHT',
@@ -45,7 +16,6 @@ export const Themas: Record<ThemaID, ThemaID> = {
   INKOMEN: 'INKOMEN',
   KLACHTEN: 'KLACHTEN',
   KREFIA: 'KREFIA',
-  KVK: 'KVK',
   MILIEUZONE: 'MILIEUZONE',
   NOTIFICATIONS: 'NOTIFICATIONS',
   OVERTREDINGEN: 'OVERTREDINGEN',
@@ -59,3 +29,5 @@ export const Themas: Record<ThemaID, ThemaID> = {
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
 } as const;
+
+export type ThemaID = (typeof Themas)[keyof typeof Themas];

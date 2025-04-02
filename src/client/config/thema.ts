@@ -1,7 +1,7 @@
-import { TrackingConfig } from './routes';
-import { AppRoute, AppRoutes } from '../../universal/config/routes';
+import { DocumentTitlesConfig, ThemaMenuItem } from './thema-types';
+import { AppRoutes } from '../../universal/config/routes';
 import { ThemaID, Themas } from '../../universal/config/thema';
-import { AppState, BagThema, LinkProps } from '../../universal/types/App.types';
+import { AppState, BagThema } from '../../universal/types/App.types';
 import { getAfisListPageDocumentTitle } from '../pages/Afis/Afis-thema-config';
 import { getAVGListPageDocumentTitle } from '../pages/AVG/AVG-thema-config';
 import { getBezwarenListPageDocumentTitle } from '../pages/Bezwaren/Bezwaren-thema-config';
@@ -14,6 +14,10 @@ import {
   getInkomenListPageDocumentTitle,
   getInkomenSpecificatiesListPageDocumentTitle,
 } from '../pages/Inkomen/Inkomen-thema-config';
+import {
+  menuItems as profileMenuItems,
+  documentTitles as profileDocumentTitles,
+} from '../pages/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
@@ -34,7 +38,6 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   BELASTINGEN: 'Belastingen',
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
-  BRP: 'Mijn gegevens',
   BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
   ERFPACHT: `Erfpacht`,
@@ -43,7 +46,6 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   INKOMEN: 'Inkomen',
   KLACHTEN: 'Klachten',
   KREFIA: 'Kredietbank & FIBU',
-  KVK: 'Mijn onderneming',
   MILIEUZONE: 'Milieuzone',
   NOTIFICATIONS: 'Actueel',
   OVERTREDINGEN: 'Overtredingen voertuigen',
@@ -61,14 +63,6 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
 export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
-export type DocumentTitlesConfig = {
-  [key in AppRoute]:
-    | string
-    | (<T extends Record<string, string>>(
-        config: TrackingConfig,
-        params: T | null
-      ) => string);
-};
 
 // Used in <html><head><title>{PageTitle}</title></head>
 export const DocumentTitles: DocumentTitlesConfig = {
@@ -77,9 +71,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['AFIS/FACTUREN']]: getAfisListPageDocumentTitle(ThemaTitles.AFIS),
   [AppRoutes['AFIS/BETAALVOORKEUREN']]:
     `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
-  // Contactmomenten
-  [AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN']]:
-    `Alle contactmomenten | ${ThemaTitles.BRP}`,
 
   // Burgerzaken
   [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
@@ -118,9 +109,8 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
 
-  // Mijn gegevens
-  [AppRoutes.BRP]: `Mijn gegevens`,
-  [AppRoutes.KVK]: `Mijn onderneming`,
+  // Mijn gegevens + Contactmomenten
+  ...profileDocumentTitles,
 
   // Bezwaren
   [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
@@ -207,34 +197,8 @@ export const DocumentTitles: DocumentTitlesConfig = {
   },
 };
 
-export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
-  id: ThemaID;
-  profileTypes: ProfileType[];
-  isAlwaysVisible?: boolean;
-  hasAppStateValue?: boolean;
-  title: LinkProps['title'] | ((appState: AppState) => string);
-  to: LinkProps['to'] | ((appState: AppState) => string);
-}
-
-export interface ThemaMenuItemTransformed
-  extends Omit<ThemaMenuItem, 'title' | 'to'> {
-  title: string;
-  to: string;
-}
-
 export const myThemasMenuItems: ThemaMenuItem[] = [
-  {
-    title: ThemaTitles.BRP,
-    id: Themas.BRP,
-    to: AppRoutes.BRP,
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.KVK,
-    id: Themas.KVK,
-    to: AppRoutes.KVK,
-    profileTypes: ['commercial', 'private'],
-  },
+  ...profileMenuItems,
   {
     title: ThemaTitles.BELASTINGEN,
     id: Themas.BELASTINGEN,

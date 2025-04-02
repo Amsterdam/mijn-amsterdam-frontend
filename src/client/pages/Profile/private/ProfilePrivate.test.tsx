@@ -5,10 +5,10 @@ import { MutableSnapshot } from 'recoil';
 
 import { MijnGegevensThema } from './ProfilePrivate';
 import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { Adres, AppState, BRPData } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
+import { routes } from '../Profile-thema-config';
 
 const responseData = {
   adres: {
@@ -207,8 +207,8 @@ const panelHeadings = [
 ];
 
 describe('<Profile />', () => {
-  const routeEntry = generatePath(AppRoutes.BRP);
-  const routePath = AppRoutes.BRP;
+  const routeEntry = generatePath(routes.BRP);
+  const routePath = routes.BRP;
 
   beforeAll(() => {
     (window.matchMedia as unknown) = vi.fn(() => {

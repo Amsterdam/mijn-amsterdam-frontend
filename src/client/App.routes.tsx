@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, generatePath } from 'react-router';
+import { Routes, Route, Navigate, generatePath, matchPath } from 'react-router';
 
 import { MyAreaRoutes } from './components/MyArea/MyArea-routest';
 import { AccessibilityRoutes } from './pages/Accessibility/Accessibility-routes';
@@ -157,4 +157,11 @@ export function PrivateRoutes() {
 
 export function PublicRoutes() {
   return <ApplicationRoutes routes={publicRoutes} />;
+}
+
+export function isPrivateRoute(pathname: string) {
+  return privateRoutes.some(({ route }) => {
+    const isMatched = !!matchPath(route, pathname);
+    return isMatched;
+  });
 }

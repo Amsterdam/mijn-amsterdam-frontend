@@ -5,11 +5,14 @@ import classNames from 'classnames';
 
 import { getDisplayPropsForScreenSize } from './helpers';
 import styles from './TableV2.module.scss';
+import { TableV2Props } from './TableV2.types';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { LinkProps, Unshaped, ZaakDetail } from '../../../universal/types';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
+
+export type { DisplayProps } from './TableV2.types';
 
 interface ObjectWithOptionalLinkAttr extends Unshaped {
   link?: LinkProps;
@@ -56,21 +59,6 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
       ),
     };
   });
-}
-
-export type DisplayProps<T> = Readonly<
-  {
-    [Property in keyof T]+?: string | number | ReactNode;
-  } & { smallscreen?: Omit<DisplayProps<T>, 'smallscreen'> }
->;
-
-export interface TableV2Props<T> {
-  displayProps: DisplayProps<T>;
-  items: T[];
-  className?: string;
-  showTHead?: boolean;
-  caption?: string;
-  subTitle?: ReactNode;
 }
 
 export function TableV2<T extends object = ZaakDetail>({
@@ -120,7 +108,7 @@ export function TableV2<T extends object = ZaakDetail>({
                 {displayPropEntries.map(([key]) => {
                   return (
                     <Table.Cell key={`td-${key}`}>
-                      {item[key] as ReactNode}
+                      {item[key as keyof T] as ReactNode}
                     </Table.Cell>
                   );
                 })}

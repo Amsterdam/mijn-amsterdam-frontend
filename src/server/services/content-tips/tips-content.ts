@@ -26,6 +26,7 @@ import {
   hasBudget,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
+import { themaId as profileThemaId } from '../../../client/pages/Profile/Profile-thema-config';
 import { Themas } from '../../../universal/config/thema';
 
 const DAYS = 90;
@@ -65,28 +66,7 @@ export const tips: ContentTipSource[] = [
       to: 'https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/',
     },
   },
-  {
-    id: 'mijn-16',
-    owner: '',
-    dateActiveStart: null,
-    dateActiveEnd: null,
-    active: true,
-    datePublished: '2020-07-03',
-    title: 'Tip: Welkom in Amsterdam',
-    thema: Themas.BRP,
-    profileTypes: ['private'] as ProfileType[],
-    description:
-      'U woont in Amsterdam, welkom! Blijf op de hoogte van de producten en diensten die u heeft bij de gemeente Amsterdam.nl.',
-    predicates: [
-      isLivingInAmsterdamLessThanNumberOfDays(DAYS),
-      not(previouslyLivingInAmsterdam),
-    ],
-    reason: 'U ziet deze tip omdat u in Amsterdam woont.',
-    link: {
-      title: 'Lees meer in deze nieuwsbrief',
-      to: 'https://www.amsterdam.nl/nieuwsbrief/',
-    },
-  },
+
   {
     id: 'mijn-23',
     owner: '',
@@ -158,7 +138,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-10-16',
     title: 'Tip: Gratis ID-kaart om te stemmen',
-    thema: Themas.BRP,
+    thema: profileThemaId.BRP,
     profileTypes: ['private'] as ProfileType[],
     description:
       'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
@@ -173,6 +153,73 @@ export const tips: ContentTipSource[] = [
     link: {
       title: 'Bekijk de voorwaarden',
       to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
+    },
+  },
+  {
+    id: 'mijn-16',
+    owner: '',
+    dateActiveStart: null,
+    dateActiveEnd: null,
+    active: true,
+    datePublished: '2020-07-03',
+    title: 'Tip: Welkom in Amsterdam',
+    thema: profileThemaId.BRP,
+    profileTypes: ['private'] as ProfileType[],
+    description:
+      'U woont in Amsterdam, welkom! Blijf op de hoogte van de producten en diensten die u heeft bij de gemeente Amsterdam.nl.',
+    predicates: [
+      isLivingInAmsterdamLessThanNumberOfDays(DAYS),
+      not(previouslyLivingInAmsterdam),
+    ],
+    reason: 'U ziet deze tip omdat u in Amsterdam woont.',
+    link: {
+      title: 'Lees meer in deze nieuwsbrief',
+      to: 'https://www.amsterdam.nl/nieuwsbrief/',
+    },
+  },
+  {
+    id: 'mijn-43',
+    owner: '',
+    dateActiveStart: '2023-11-23',
+    dateActiveEnd: null,
+    active: true,
+    datePublished: '2023-11-23',
+    title: 'Vraag een gratis ID-kaart aan',
+    thema: profileThemaId.BRP,
+    profileTypes: ['private'] as ProfileType[],
+    description:
+      'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de Stadspas krijgt u gratis een nieuwe ID-kaart.',
+    predicates: [
+      not(hasValidId),
+      is18OrOlder,
+      hasStadspasGroeneStip,
+      hasDutchNationality,
+    ],
+    reason:
+      'U ziet deze tip omdat u een Stadspas hebt en geen geldige ID-kaart of paspoort',
+    link: {
+      title: 'Bekijk de voorwaarden',
+      to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
+    },
+  },
+  {
+    id: 'mijn-44',
+    owner: '',
+    dateActiveStart: '2024-01-01',
+    dateActiveEnd: '2024-12-31',
+    active: true,
+    datePublished: '2024-04-04',
+    title: 'Overgangsregeling: achternaam van kind kiezen',
+    thema: profileThemaId.BRP,
+    profileTypes: ['private'] as ProfileType[],
+    description:
+      'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
+    predicates: [hasOldestKidBornFrom2016, isMarriedOrLivingTogether],
+    reason:
+      'U ziet deze tip omdat uw oudste kind geboren is tussen 1 januari 2016 - 31 december 2023 en u gehuwd bent of een geregisterd partnerschap hebt.',
+    link: {
+      title: 'Hoe vraagt u het aan?',
+      to: 'https://www.amsterdam.nl/veelgevraagd/achternaam-van-kind-kiezen-2f07e',
     },
   },
   {
@@ -296,51 +343,7 @@ export const tips: ContentTipSource[] = [
       to: 'https://www.amsterdam.nl/nieuws/nieuwsoverzicht/gratis-ov-kinderen/',
     },
   },
-  {
-    id: 'mijn-43',
-    owner: '',
-    dateActiveStart: '2023-11-23',
-    dateActiveEnd: null,
-    active: true,
-    datePublished: '2023-11-23',
-    title: 'Vraag een gratis ID-kaart aan',
-    thema: Themas.BRP,
-    profileTypes: ['private'] as ProfileType[],
-    description:
-      'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de Stadspas krijgt u gratis een nieuwe ID-kaart.',
-    predicates: [
-      not(hasValidId),
-      is18OrOlder,
-      hasStadspasGroeneStip,
-      hasDutchNationality,
-    ],
-    reason:
-      'U ziet deze tip omdat u een Stadspas hebt en geen geldige ID-kaart of paspoort',
-    link: {
-      title: 'Bekijk de voorwaarden',
-      to: 'https://www.amsterdam.nl/veelgevraagd/gratis-identiteitskaart-aanvragen-d09a6-kp',
-    },
-  },
-  {
-    id: 'mijn-44',
-    owner: '',
-    dateActiveStart: '2024-01-01',
-    dateActiveEnd: '2024-12-31',
-    active: true,
-    datePublished: '2024-04-04',
-    title: 'Overgangsregeling: achternaam van kind kiezen',
-    thema: Themas.BRP,
-    profileTypes: ['private'] as ProfileType[],
-    description:
-      'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
-    predicates: [hasOldestKidBornFrom2016, isMarriedOrLivingTogether],
-    reason:
-      'U ziet deze tip omdat uw oudste kind geboren is tussen 1 januari 2016 - 31 december 2023 en u gehuwd bent of een geregisterd partnerschap hebt.',
-    link: {
-      title: 'Hoe vraagt u het aan?',
-      to: 'https://www.amsterdam.nl/veelgevraagd/achternaam-van-kind-kiezen-2f07e',
-    },
-  },
+
   {
     id: 'mijn-48',
     owner: '',

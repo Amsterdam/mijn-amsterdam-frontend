@@ -3,7 +3,7 @@ import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import { ThemaMenuItem } from '../config/thema';
+import { ThemaMenuItem } from '../config/thema-types';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -152,15 +152,8 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.BRP: {
-      return !isLoading(BRP) && !!BRP.content?.persoon;
-    }
-
     case Themas.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
-
-    case Themas.KVK:
-      return !isLoading(KVK) && !!KVK.content;
 
     case Themas.TOERISTISCHE_VERHUUR: {
       const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =

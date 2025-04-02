@@ -5,10 +5,10 @@ import { MutableSnapshot } from 'recoil';
 
 import { MijnBedrijfsGegevensThema } from './ProfileCommercial';
 import { KVKData } from '../../../../server/services/kvk';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { AppState } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
+import { routes } from '../Profile-thema-config';
 
 const responseData = {
   eigenaar: {
@@ -212,8 +212,8 @@ const panelHeadings = [
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
-  const routeEntry = generatePath(AppRoutes.KVK);
-  const routePath = AppRoutes.KVK;
+  const routeEntry = generatePath(routes.KVK);
+  const routePath = routes.KVK;
 
   function Component() {
     return (

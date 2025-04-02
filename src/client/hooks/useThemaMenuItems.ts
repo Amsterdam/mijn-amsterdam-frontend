@@ -8,7 +8,7 @@ import { useProfileTypeValue } from './useProfileType';
 import { ThemaID } from '../../universal/config/thema';
 import { LinkProps } from '../../universal/types';
 import { themasByProfileType } from '../config/menuItems';
-import { ThemaMenuItemTransformed } from '../config/thema';
+import { ThemaMenuItemTransformed } from '../config/thema-types';
 import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
 
 export interface ThemasState {
@@ -25,7 +25,9 @@ export function useThemaMenuItems(): ThemasState {
   const items = useMemo(() => {
     return themaItems.filter((item) => {
       // Check to see if Thema has been loaded or if it is directly available
-      return item.isAlwaysVisible || isThemaActive(item, appState);
+      return 'isActive' in item
+        ? item.isActive(appState)
+        : item.isAlwaysVisible || isThemaActive(item, appState);
     });
   }, [themaItems, appState]);
 

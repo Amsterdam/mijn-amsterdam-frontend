@@ -1,14 +1,18 @@
 import { ReactNode } from 'react';
 
-import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
+import type { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../../universal/config/routes';
-import { Themas, ThemaID } from '../../../../universal/config/thema';
-import { DisplayProps } from '../../../components/Table/TableV2';
+import { ThemaID } from '../../../../universal/config/thema';
+import type { DisplayProps } from '../../../components/Table/TableV2.types';
 
 export type ContactMomentFrontend = ContactMoment & {
   themaKanaalIcon: ReactNode;
   subjectLink: ReactNode;
+};
+
+export const featureToggle = {
+  themaActive: true,
 };
 
 export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
@@ -21,16 +25,16 @@ export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
 
 export const routes = {
   listPage: AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN'],
-  themaPage: AppRoutes.BRP,
 };
 
-const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? Themas.SVWI : Themas.INKOMEN;
+// TODO: Use all the individual thema ID's imported from the Thema Config files.
+const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? 'SVWI' : 'INKOMEN';
 
 export const mapperContactmomentToMenuItem: Record<string, ThemaID> = {
-  Parkeren: Themas.PARKEREN,
-  Zorg: Themas.ZORG,
+  Parkeren: 'PARKEREN',
+  Zorg: 'ZORG',
   'Werk en Inkomen': SVWIv1ORv2,
-  Belastingen: Themas.BELASTINGEN,
-  Geldzaken: Themas.KREFIA,
-  Financiën: Themas.AFIS,
+  Belastingen: 'BELASTINGEN',
+  Geldzaken: 'KREFIA',
+  Financiën: 'AFIS',
 };

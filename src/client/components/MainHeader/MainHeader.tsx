@@ -12,6 +12,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { routes as profileRoutes } from '../../pages/Profile/Profile-thema-config';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import {
@@ -38,7 +39,9 @@ export function MainHeaderSecondaryLinks({
       <Wrap>
         <MaRouterLink
           maVariant="noUnderline"
-          href={profileType === 'private' ? AppRoutes.BRP : AppRoutes.KVK}
+          href={
+            profileType === 'private' ? profileRoutes.BRP : profileRoutes.KVK
+          }
           className={linkClassName}
           title="Ga naar persoonlijke gegevens"
         >

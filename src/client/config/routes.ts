@@ -1,22 +1,6 @@
 import { PathMatch } from 'react-router';
-import { matchPath } from 'react-router';
 
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
-
-export const PublicRoutes: string[] = [
-  AppRoutes.API_LOGIN,
-  AppRoutes.API1_LOGIN,
-  AppRoutes.API2_LOGIN,
-  AppRoutes.ACCESSIBILITY,
-  AppRoutes.BFF_500_ERROR,
-  AppRoutes.ACCESSIBILITY,
-  AppRoutes.GENERAL_INFO,
-  AppRoutes.HOME,
-];
-
-export const PrivateRoutes = Object.values(AppRoutes).filter(
-  (path: string) => !PublicRoutes.includes(path)
-);
 
 export interface TrackingConfig {
   profileType: ProfileType;
@@ -63,10 +47,3 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
     { profileType, isAuthenticated }: TrackingConfig
   ) => `/${isAuthenticated ? 'dashboard' : 'landing'}`,
 };
-
-export function isPrivateRoute(pathname: string) {
-  return PrivateRoutes.some((path) => {
-    const isMatched = !!matchPath(path, pathname);
-    return isMatched;
-  });
-}

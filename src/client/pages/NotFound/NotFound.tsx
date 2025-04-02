@@ -4,13 +4,13 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
 import { AppRoutes } from '../../../universal/config/routes';
+import { isPrivateRoute } from '../../App.routes';
 import {
   PageContentCell,
   PageContentV2,
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { isPrivateRoute } from '../../config/routes';
 import { captureMessage } from '../../helpers/monitoring';
 
 export function NotFound() {

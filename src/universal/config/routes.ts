@@ -75,7 +75,7 @@ export const AppRoutes = {
   'ERFPACHT/ALLE_FACTUREN':
     '/erfpacht/facturen/lijst/:dossierNummerUrlParam/:page?',
 
-  'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten',
+  'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten/:page?',
 
   ZAAK_STATUS: '/zaak-status',
 } as const;

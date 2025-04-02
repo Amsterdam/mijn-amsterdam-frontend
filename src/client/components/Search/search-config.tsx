@@ -16,6 +16,7 @@ import {
   ErfpachtDossiersResponse,
 } from '../../../server/services/erfpacht/erfpacht';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
+import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
@@ -42,6 +43,7 @@ import {
   StatusLineItem,
 } from '../../../universal/types';
 import { ThemaTitles } from '../../config/thema';
+import { routes as profileRoutes } from '../../pages/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -377,14 +379,14 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         {
           title: name || 'Mijn naam',
           link: {
-            to: AppRoutes.BRP,
+            to: profileRoutes.BRP,
             title: `Mijn naam | ${name}`,
           },
         },
         {
           title: address || 'Mijn adres',
           link: {
-            to: AppRoutes.BRP,
+            to: profileRoutes.BRP,
             title: `Mijn adres | ${address}`,
           },
         },
@@ -450,7 +452,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: FeatureToggle.horecaActive,
     stateKey: 'HORECA' as AppStateKey,
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: HorecaVergunning) {
+    displayTitle(item: HorecaVergunningFrontend) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
     },
