@@ -18,7 +18,7 @@ export function useBezwarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.AVG);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.BEZWAREN);
 
   return {
     bezwaren,
