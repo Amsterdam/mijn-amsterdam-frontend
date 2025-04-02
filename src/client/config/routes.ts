@@ -1,59 +1,7 @@
 import { PathMatch } from 'react-router';
-import { generatePath, matchPath } from 'react-router';
+import { matchPath } from 'react-router';
 
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
-
-export const AppRoutesRedirect = [
-  {
-    from: '/burgerzaken/document/:id',
-    to: AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'],
-  },
-  {
-    from: '/stadspas',
-    to: AppRoutes.HLI,
-  },
-  {
-    from: '/stadspas/saldo/:pasnummer',
-    to: AppRoutes.HLI,
-  },
-  {
-    from: '/inkomen-en-stadspas/bijstandsuitkering/:id',
-    to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
-  },
-  {
-    from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'jaaropgave',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'jaaropgave',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'uitkering',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen/uitkeringsspecificaties/',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'uitkering',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen-en-stadspas/tozo/:version/:id',
-    to: AppRoutes['INKOMEN/TOZO'],
-  },
-  { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
-];
 
 export const PublicRoutes: string[] = [
   AppRoutes.API_LOGIN,
@@ -119,7 +67,6 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 export function isPrivateRoute(pathname: string) {
   return PrivateRoutes.some((path) => {
     const isMatched = !!matchPath(path, pathname);
-    console.log(pathname, path, isMatched);
     return isMatched;
   });
 }
