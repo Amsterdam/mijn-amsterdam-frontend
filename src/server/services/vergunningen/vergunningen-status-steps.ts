@@ -189,6 +189,7 @@ export function getStatusSteps<
     let datePublished = vergunning.dateDecision ?? '';
 
     // dateEnd is generic enough for most types of vergunningen.
+    // If it is not this status should be customized with a custom transformer for the statusteps.
     if (isVerlopen && 'dateEnd' in vergunning && vergunning.dateEnd) {
       datePublished = vergunning.dateEnd as string;
     }

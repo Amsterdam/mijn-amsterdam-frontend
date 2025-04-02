@@ -1,24 +1,24 @@
 import {
-  AanbiedenDiensten as AanbiedenDienstenType,
-  ERVV,
-  EvenementMelding as EvenementMeldingType,
-  EvenementVergunning as EvenementVergunningType,
-  Flyeren as FlyerenType,
-  Ligplaatsvergunning as LigplaatsvergunningType,
-  Nachtwerkontheffing as NachtwerkontheffingType,
-  Omzettingsvergunning as OmzettingsvergunningType,
-  OnttrekkingsvergunningSloop as OnttrekkingsvergunningSloopType,
-  Onttrekkingsvergunning as OnttrekkingsvergunningType,
-  RVVHeleStad as RVVHeleStadType,
-  RVVSloterweg as RVVSloterwegType,
-  Samenvoegingsvergunning as SamenvoegingsvergunningType,
-  Splitsingsvergunning as SplitsingsvergunningType,
-  TVMRVVObject as TVMRVVObjectType,
-  VormenVanWoonruimte as VormenVanWoonruimteType,
-  WVOSActiviteit as WVOSActiviteitType,
-  WerkzaamhedenEnVervoerOpStraat as WerkzaamhedenEnVervoerOpStraatType,
-  ZwaarVerkeer as ZwaarVerkeerType,
+  type AanbiedenDiensten,
+  type ERVV,
+  type EvenementMelding,
+  type EvenementVergunning,
+  type Flyeren,
+  type Omzettingsvergunning,
+  type OnttrekkingsvergunningSloop,
+  type Onttrekkingsvergunning,
+  type RVVHeleStad,
+  type RVVSloterweg,
+  type Samenvoegingsvergunning,
+  type Splitsingsvergunning,
+  type TVMRVVObject,
+  type VormenVanWoonruimte,
+  type ZwaarVerkeer,
   caseTypeVergunningen,
+  Nachtwerkontheffing,
+  Ligplaatsvergunning,
+  WerkzaamhedenEnVervoerOpStraat,
+  WVOSActiviteit,
 } from './config-and-types';
 import {
   caseNotificationLabelsDefault,
@@ -46,7 +46,7 @@ import {
   getStatusDate,
 } from '../decos/decos-helpers';
 
-export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
+const TVMRVVObject: DecosZaakTransformer<TVMRVVObject> = {
   isActive: true,
   caseType: caseTypeVergunningen.TVMRVVObject,
   title: 'Tijdelijke verkeersmaatregel (TVM-RVV-Object)',
@@ -84,7 +84,7 @@ export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
   notificationLabels: caseNotificationLabelsExpirables,
 };
 
-export const EvenementMelding: DecosZaakTransformer<EvenementMeldingType> = {
+const EvenementMelding: DecosZaakTransformer<EvenementMelding> = {
   isActive: true,
   caseType: caseTypeVergunningen.EvenementMelding,
   title: 'Evenement melding',
@@ -108,49 +108,47 @@ export const EvenementMelding: DecosZaakTransformer<EvenementMeldingType> = {
   notificationLabels: caseNotificationLabelsDefault,
 };
 
-export const EvenementVergunning: DecosZaakTransformer<EvenementVergunningType> =
-  {
-    isActive: true,
-    caseType: caseTypeVergunningen.EvenementVergunning,
-    title: caseTypeVergunningen.EvenementVergunning,
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      dfunction: transformDecision({
-        Verleend: ['Verleend (Bijzonder/Bewaren)', 'Verleend zonder borden'],
-        '': ['Nog niet bekend', 'Nog niet  bekend'],
-      }),
-      date6: dateStart,
-      date7: dateEnd,
-      text6: location,
-      text7: timeStart,
-      text8: timeEnd,
-    },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
+const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.EvenementVergunning,
+  title: caseTypeVergunningen.EvenementVergunning,
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Verleend: ['Verleend (Bijzonder/Bewaren)', 'Verleend zonder borden'],
+      '': ['Nog niet bekend', 'Nog niet  bekend'],
+    }),
+    date6: dateStart,
+    date7: dateEnd,
+    text6: location,
+    text7: timeStart,
+    text8: timeEnd,
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
 
-export const Omzettingsvergunning: DecosZaakTransformer<OmzettingsvergunningType> =
-  {
-    isActive: true,
-    caseType: caseTypeVergunningen.Omzettingsvergunning,
-    title: 'VergunningV2 voor kamerverhuur (omzettingsvergunning)',
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Omzettingsvergunning - Behandelen',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      dfunction: transformDecision({
-        Verleend: ['Verleend zonder borden'],
-        '': ['Nog niet bekend', 'Nog niet  bekend'],
-      }),
-      text6: location,
+const Omzettingsvergunning: DecosZaakTransformer<Omzettingsvergunning> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.Omzettingsvergunning,
+  title: 'VergunningV2 voor kamerverhuur (omzettingsvergunning)',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Omzettingsvergunning - Behandelen',
     },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Verleend: ['Verleend zonder borden'],
+      '': ['Nog niet bekend', 'Nog niet  bekend'],
+    }),
+    text6: location,
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
 
-export const ERVV_TVM: DecosZaakTransformer<ERVV> = {
+const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   isActive: true,
   caseType: caseTypeVergunningen.ERVV,
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
@@ -175,7 +173,7 @@ export const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   notificationLabels: caseNotificationLabelsExpirables,
 };
 
-export const Flyeren: DecosZaakTransformer<FlyerenType> = {
+const Flyeren: DecosZaakTransformer<Flyeren> = {
   isActive: true,
   caseType: caseTypeVergunningen.Flyeren,
   title: 'Verspreiden reclamemateriaal (sampling)',
@@ -191,7 +189,7 @@ export const Flyeren: DecosZaakTransformer<FlyerenType> = {
   notificationLabels: caseNotificationLabelsDefault,
 };
 
-export const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDienstenType> = {
+const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
   isActive: true,
   caseType: caseTypeVergunningen.AanbiedenDiensten,
   title: caseTypeVergunningen.AanbiedenDiensten,
@@ -204,34 +202,32 @@ export const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDienstenType> = {
   notificationLabels: caseNotificationLabelsDefault,
 };
 
-export const NachtwerkOntheffing: DecosZaakTransformer<NachtwerkontheffingType> =
-  {
-    isActive: true,
-    caseType: caseTypeVergunningen.NachtwerkOntheffing,
-    title:
-      'Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)',
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Nachtwerkontheffing - Behandelen',
-      },
-    ],
-    requirePayment: true,
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      dfunction: transformDecision({
-        Verleend: ['Verleend met borden', 'Verleend zonder borden'],
-      }),
-      date6: dateStart,
-      date7: dateEnd,
-      text6: location,
-      text7: timeStart,
-      text10: timeEnd,
+const NachtwerkOntheffing: DecosZaakTransformer<Nachtwerkontheffing> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.NachtwerkOntheffing,
+  title: 'Geluidsontheffing werken in de openbare ruimte (nachtwerkontheffing)',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Nachtwerkontheffing - Behandelen',
     },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
+  ],
+  requirePayment: true,
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    dfunction: transformDecision({
+      Verleend: ['Verleend met borden', 'Verleend zonder borden'],
+    }),
+    date6: dateStart,
+    date7: dateEnd,
+    text6: location,
+    text7: timeStart,
+    text10: timeEnd,
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
 
-export const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeerType> = {
+const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeer> = {
   isActive: true,
   caseType: caseTypeVergunningen.ZwaarVerkeer,
   title: 'Ontheffing zwaar verkeer',
@@ -296,44 +292,42 @@ export const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeerType> = {
   notificationLabels: caseNotificationLabelsDefault,
 };
 
-export const Samenvoegingsvergunning: DecosZaakTransformer<SamenvoegingsvergunningType> =
-  {
-    isActive: true,
-    caseType: caseTypeVergunningen.Samenvoegingsvergunning,
-    title: 'VergunningV2 voor samenvoegen van woonruimten',
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Samenvoegingsvergunning - Beoordelen en besluiten',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      text6: location,
+const Samenvoegingsvergunning: DecosZaakTransformer<Samenvoegingsvergunning> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.Samenvoegingsvergunning,
+  title: 'VergunningV2 voor samenvoegen van woonruimten',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Samenvoegingsvergunning - Beoordelen en besluiten',
     },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    text6: location,
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
 
-export const Onttrekkingsvergunning: DecosZaakTransformer<OnttrekkingsvergunningType> =
-  {
-    isActive: true,
-    caseType: caseTypeVergunningen.Onttrekkingsvergunning,
-    title: caseTypeVergunningen.Onttrekkingsvergunning,
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle:
-          'Onttrekkingsvergunning voor ander gebruik - Beoordelen en besluiten',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      text6: location,
+const Onttrekkingsvergunning: DecosZaakTransformer<Onttrekkingsvergunning> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.Onttrekkingsvergunning,
+  title: caseTypeVergunningen.Onttrekkingsvergunning,
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle:
+        'Onttrekkingsvergunning voor ander gebruik - Beoordelen en besluiten',
     },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    text6: location,
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
 
-export const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSloopType> =
+const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSloop> =
   {
     isActive: true,
     caseType: caseTypeVergunningen.OnttrekkingsvergunningSloop,
@@ -355,46 +349,44 @@ export const OnttrekkingsvergunningSloop: DecosZaakTransformer<Onttrekkingsvergu
     notificationLabels: caseNotificationLabelsDefault,
   };
 
-export const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimteType> =
-  {
-    isActive: true,
-    caseType: caseTypeVergunningen.VormenVanWoonruimte,
-    title: 'VergunningV2 voor woningvorming',
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Woningvormingsvergunning - Beoordelen en besluiten',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      text6: location,
+const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimte> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.VormenVanWoonruimte,
+  title: 'VergunningV2 voor woningvorming',
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Woningvormingsvergunning - Beoordelen en besluiten',
     },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    text6: location,
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
 
-export const Splitsingsvergunning: DecosZaakTransformer<SplitsingsvergunningType> =
-  {
-    isActive: true,
-    caseType: caseTypeVergunningen.Splitsingsvergunning,
-    title: caseTypeVergunningen.Splitsingsvergunning,
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Splitsingsvergunning - Behandelen',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      text6: location,
-      dfunction: transformDecision({
-        Ingetrokken: ['Ingetrokken aanvraag op eigen verzoek'],
-      }),
+const Splitsingsvergunning: DecosZaakTransformer<Splitsingsvergunning> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.Splitsingsvergunning,
+  title: caseTypeVergunningen.Splitsingsvergunning,
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Splitsingsvergunning - Behandelen',
     },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
+  ],
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    text6: location,
+    dfunction: transformDecision({
+      Ingetrokken: ['Ingetrokken aanvraag op eigen verzoek'],
+    }),
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
 
-export const VOBvergunning: DecosZaakTransformer<LigplaatsvergunningType> = {
+const VOBvergunning: DecosZaakTransformer<Ligplaatsvergunning> = {
   isActive: true,
   caseType: caseTypeVergunningen.VOB,
   title: 'Ligplaatsvergunning',
@@ -412,7 +404,7 @@ export const VOBvergunning: DecosZaakTransformer<LigplaatsvergunningType> = {
   notificationLabels: caseNotificationLabelsDefault,
 };
 
-export const RVVHeleStad: DecosZaakTransformer<RVVHeleStadType> = {
+const RVVHeleStad: DecosZaakTransformer<RVVHeleStad> = {
   isActive: !IS_PRODUCTION,
   caseType: caseTypeVergunningen.RVVHeleStad,
   title: 'RVV-verkeersontheffing',
@@ -436,7 +428,7 @@ export const RVVHeleStad: DecosZaakTransformer<RVVHeleStadType> = {
   notificationLabels: caseNotificationLabelsExpirables,
 };
 
-export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
+const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
   isActive: true,
   caseType: caseTypeVergunningen.RVVSloterweg,
   title: 'RVV ontheffing Sloterweg',
@@ -490,9 +482,9 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
   notificationLabels: caseNotificationLabelsRevoke,
 };
 
-export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraatType> =
+const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat> =
   {
-    isActive: !IS_PRODUCTION,
+    isActive: true,
     caseType: caseTypeVergunningen.WVOS,
     title: 'Werkzaamheden en vervoer op straat',
     fetchWorkflowStatusDatesFor: [
@@ -521,10 +513,7 @@ export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerO
       'bol16',
     ],
     async afterTransform(vergunning, zaakSource) {
-      const wvosActiviteiten: Record<
-        WVOSActiviteitType,
-        DecosFieldNameSource[]
-      > = {
+      const wvosActiviteiten: Record<WVOSActiviteit, DecosFieldNameSource[]> = {
         'Rijden of een voertuig neerzetten waar dat normaal niet mag': [
           'bol23',
           'bol22',
@@ -545,7 +534,7 @@ export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerO
         .filter(([, sourceAttr]) => {
           return sourceAttr.some((attr) => !!zaakSource.fields[attr]);
         })
-        .map(([activiteit]) => activiteit as WVOSActiviteitType);
+        .map(([activiteit]) => activiteit as WVOSActiviteit);
 
       if (vergunning.werkzaamheden.length > 1 && vergunning.processed) {
         vergunning.decision =
@@ -577,6 +566,8 @@ export const decosCaseToZaakTransformers = {
   [VormenVanWoonruimte.caseType]: VormenVanWoonruimte,
   [WerkEnVervoerOpStraat.caseType]: WerkEnVervoerOpStraat,
   [ZwaarVerkeer.caseType]: ZwaarVerkeer,
+  [ERVV_TVM.caseType]: ERVV_TVM,
+  [Omzettingsvergunning.caseType]: Omzettingsvergunning,
 } as const;
 
 export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);
