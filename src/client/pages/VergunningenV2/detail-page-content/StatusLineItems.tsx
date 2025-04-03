@@ -4,7 +4,7 @@ import { getEvenementVergunningLineItems } from './EvenementVergunning';
 import { getRVVSloterwegLineItems } from './RvvSloterweg';
 import { VergunningFrontendV2 } from '../../../../server/services/vergunningen-v2/config-and-types';
 import { GenericDocument, StatusLineItem } from '../../../../universal/types';
-import { CaseTypeV2 } from '../../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../../universal/types/decos-zaken';
 import StatusLine from '../../../components/StatusLine/StatusLine';
 
 function useVergunningStatusLineItems(vergunning?: VergunningFrontendV2) {

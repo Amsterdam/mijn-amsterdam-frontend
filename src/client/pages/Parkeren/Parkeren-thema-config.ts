@@ -1,7 +1,7 @@
 import {
   DecosCaseType,
   CaseTypeV2,
-} from '../../../universal/types/vergunningen';
+} from '../../../universal/types/decos-zaken';
 
 export const PARKEER_CASE_TYPES: Set<DecosCaseType> = new Set([
   CaseTypeV2.GPK,

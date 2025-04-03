@@ -13,11 +13,11 @@ import {
   isNearEndDate,
   isScheduledForRemoval,
   isWaitingForPaymentConfirmation,
+  toDateFormatted,
   transformBoolean,
   transformKenteken,
 } from './helpers';
-import { toDateFormatted } from '../../../universal/helpers/utils';
-import { CaseTypeV2 } from '../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import { TouringcarDagontheffing } from '../vergunningen-v2/config-and-types';
 import { decosCaseToZaakTransformers } from '../vergunningen-v2/decos-zaken';
 
