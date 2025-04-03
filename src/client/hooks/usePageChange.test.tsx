@@ -4,7 +4,6 @@ import { renderHook } from '@testing-library/react';
 import * as rrd from 'react-router';
 import { afterAll, afterEach, describe, expect, it, test, vi } from 'vitest';
 
-import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { usePageChange } from './usePageChange';
 import type { TrackingConfig } from '../config/routes';
 import { NOT_FOUND_TITLE } from '../config/thema';
@@ -15,6 +14,7 @@ const mocks = vi.hoisted(() => {
     testRoute: '/test/page/change',
     titleNotAuthenticated: 'test-title-NOT-authenticated',
     titleAuthenticated: 'TEST_TITLE_AUTHENTICATED',
+    trackPageViewWithCustomDimension: vi.fn(),
   };
 });
 
@@ -28,7 +28,7 @@ vi.mock('react-router', async (requireActual) => {
     useLocation: () => {
       return { pathname: mocks.pathname };
     },
-    useNavigate: vi.fn(),
+    useNavigate: () => vi.fn(),
   };
 });
 
@@ -71,7 +71,7 @@ vi.mock('./useProfileType', async (requireActual) => {
   };
 });
 
-vi.mock('../../client/config/thema', async (requireActual) => {
+vi.mock('../config/thema', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,
@@ -87,13 +87,13 @@ vi.mock('../../client/config/thema', async (requireActual) => {
   };
 });
 
-vi.mock('./analytics.hook', async (requireActual) => {
-  const origModule: object = await requireActual();
-  return {
-    ...origModule,
-    trackPageViewWithCustomDimension: vi.fn(),
-  };
-});
+// vi.mock('./analytics.hook', async (requireActual) => {
+//   const origModule: object = await requireActual();
+//   return {
+//     ...origModule,
+//     trackPageViewWithCustomDimension: vi.fn(),
+//   };
+// });
 
 describe('usePageChange', () => {
   // global.console.info = vi.fn(); // Hide info warnings from our own code.
@@ -111,7 +111,7 @@ describe('usePageChange', () => {
     rrd.__setPathname('/');
     renderHook(() => usePageChange(true));
 
-    expect(trackPageViewWithCustomDimension).toHaveBeenCalled();
+    expect(mocks.trackPageViewWithCustomDimension).toHaveBeenCalled();
   });
 
   it('should NOT track page view when path is unknown', () => {
@@ -119,7 +119,7 @@ describe('usePageChange', () => {
     rrd.__setPathname('/abcd');
     renderHook(() => usePageChange(true));
 
-    expect(trackPageViewWithCustomDimension).not.toHaveBeenCalled();
+    expect(mocks.trackPageViewWithCustomDimension).not.toHaveBeenCalled();
 
     expect(document.title).toBe(NOT_FOUND_TITLE);
   });
@@ -130,7 +130,7 @@ describe('usePageChange', () => {
 
     renderHook(() => usePageChange(true));
 
-    expect(trackPageViewWithCustomDimension).not.toHaveBeenCalled();
+    expect(mocks.trackPageViewWithCustomDimension).not.toHaveBeenCalled();
   });
 
   test('Should track Undefined page title for route', () => {
@@ -139,7 +139,7 @@ describe('usePageChange', () => {
 
     renderHook(() => usePageChange(true));
 
-    expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
+    expect(mocks.trackPageViewWithCustomDimension).toHaveBeenCalledWith(
       '[undefined] /no-title',
       '/no-title',
       'private-attributes',
@@ -166,7 +166,7 @@ describe('usePageChange', () => {
 
     renderHook(() => usePageChange(true));
 
-    expect(trackPageViewWithCustomDimension).toHaveBeenCalledWith(
+    expect(mocks.trackPageViewWithCustomDimension).toHaveBeenCalledWith(
       'Mijn buurt',
       '/buurt',
       'private-attributes',

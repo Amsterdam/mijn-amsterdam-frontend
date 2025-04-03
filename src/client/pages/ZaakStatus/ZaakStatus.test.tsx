@@ -11,7 +11,7 @@ import MockApp from '../MockApp';
 
 const mocks = vi.hoisted(() => {
   return {
-    pushMock: vi.fn(),
+    navigate: vi.fn(),
     location: { pathname: '/', search: '' },
   };
 });
@@ -42,7 +42,7 @@ vi.mock('react-router', async (requireActual) => {
     useLocation: () => {
       return mocks.location;
     },
-    useNavigate: mocks.pushMock,
+    useNavigate: () => mocks.navigate,
   };
 });
 
@@ -63,7 +63,7 @@ describe('ZaakStatus', () => {
     }
     const { asFragment } = render(<Component />);
 
-    expect(mocks.pushMock).not.toHaveBeenCalled();
+    expect(mocks.navigate).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -117,7 +117,7 @@ describe('ZaakStatus', () => {
       screen.getByText('Wij kunnen de status van uw aanvraag niet laten zien.')
     ).toBeInTheDocument();
 
-    expect(mocks.pushMock).not.toHaveBeenCalled();
+    expect(mocks.navigate).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -150,7 +150,7 @@ describe('ZaakStatus', () => {
       )
     ).toBeInTheDocument();
 
-    expect(mocks.pushMock).not.toHaveBeenCalled();
+    expect(mocks.navigate).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -174,6 +174,6 @@ describe('ZaakStatus', () => {
 
     render(<Component />);
 
-    expect(mocks.pushMock).toHaveBeenCalled();
+    expect(mocks.navigate).toHaveBeenCalled();
   });
 });

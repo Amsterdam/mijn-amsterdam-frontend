@@ -1,5 +1,75 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`ZaakStatus > No query params passed 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid"
+  >
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+    >
+      <div
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Status van uw aanvraag
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Status van uw aanvraag
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph"
+      >
+        <a
+          class="ams-link ams-link--standalone"
+          href="/"
+        >
+          Ga naar het dashboard
+        </a>
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`ZaakStatus > should show error alert 1`] = `
 <DocumentFragment>
   <div
@@ -102,6 +172,161 @@ exports[`ZaakStatus > should show error alert 1`] = `
           href="/"
         >
           Ga naar het dashboard
+        </a>
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ZaakStatus > should show not found message 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid"
+  >
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+    >
+      <div
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Status van uw aanvraag
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Status van uw aanvraag
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--xs"
+      >
+        Wij kunnen de status van uw aanvraag niet laten zien.
+      </p>
+      <p
+        class="ams-paragraph"
+      >
+        <a
+          class="ams-link ams-link--standalone"
+          href="/vergunningen"
+        >
+          Bekijk het overzicht
+        </a>
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ZaakStatus > should show wachten op betaling 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid"
+  >
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+    >
+      <div
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Status van uw aanvraag
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Status van uw aanvraag
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--xs"
+      >
+        Wij kunnen de status van uw aanvraag niet laten zien.
+      </p>
+      <p
+        class="ams-paragraph ams-mb--xs"
+      >
+        U heeft betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.
+      </p>
+      <p
+        class="ams-paragraph"
+      >
+        <a
+          class="ams-link ams-link--standalone"
+          href="/vergunningen"
+        >
+          Bekijk het overzicht
         </a>
       </p>
     </div>
