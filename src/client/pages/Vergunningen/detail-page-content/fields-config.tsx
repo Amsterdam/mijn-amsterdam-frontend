@@ -1,4 +1,5 @@
-import styles from './fields-config.module.scss';
+import { UnorderedList } from '@amsterdam/design-system-react';
+
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import {
   defaultDateFormat,
@@ -168,11 +169,13 @@ export const commonTransformers: RowTransformer<VergunningFrontend> = {
       ? {
           label: `Kenteken${hasMultipleKentekens ? 's' : ''}`,
           content: hasMultipleKentekens ? (
-            <ul className={styles.Kentekens}>
+            <UnorderedList>
               {vergunning.kentekens.split('|').map((kenteken) => (
-                <li key={kenteken}>{kenteken.trim()}</li>
+                <UnorderedList.Item key={kenteken}>
+                  {kenteken.trim()}
+                </UnorderedList.Item>
               ))}
-            </ul>
+            </UnorderedList>
           ) : (
             vergunning.kentekens
           ),
