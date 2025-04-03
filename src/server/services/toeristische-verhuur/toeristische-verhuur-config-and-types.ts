@@ -106,3 +106,7 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
   };
 
 export const decosZaakTransformers = [VakantieverhuurVergunningaanvraag];
+export const decosZaakTransformersByCaseType = {
+  [VakantieverhuurVergunningaanvraag.caseType]:
+    VakantieverhuurVergunningaanvraag,
+};

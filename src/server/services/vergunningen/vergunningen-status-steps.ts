@@ -129,10 +129,10 @@ function getStatusStepsRVVSloterweg(
   return steps;
 }
 
-export function getStatusSteps<
-  DZ extends DecosZaakBase,
-  V extends DecosZaakFrontend<DZ>,
->(vergunning: V, zaakTransformer?: DecosZaakTransformer<DZ>) {
+export function getStatusSteps<DZ extends DecosZaakBase>(
+  vergunning: VergunningFrontend<DZ>,
+  zaakTransformer?: DecosZaakTransformer<DZ>
+) {
   if (vergunning.caseType === 'RVV Sloterweg') {
     return getStatusStepsRVVSloterweg(
       vergunning as unknown as DecosZaakFrontend<RVVSloterweg>

@@ -6,6 +6,7 @@ import {
 import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DecosZaakTransformer } from '../decos/config-and-types';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
@@ -29,20 +30,21 @@ export async function fetchDecosParkeerVergunningen(
     const decosZaken = response.content;
 
     const zakenFrontend: ParkeerVergunningFrontend[] = decosZaken.map(
-      (vergunning) => {
-        const zaakTransformer =
-          decosCaseToZaakTransformers[vergunning.caseType];
+      (zaak) => {
+        // TODO: Fix this <any>. DecosZaakTransformer<GPP | GPK | ...> is not the same as DecosZaakTransformer<GPP> | DecosZaakTransformer<GPK> | DecosZaakTransformer<...>
+        const zaakTransformer: DecosZaakTransformer<any> =
+          decosCaseToZaakTransformers[zaak.caseType];
 
         const zaakTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
-          vergunning,
+          zaak,
           {
             appRoute: AppRoutes['PARKEREN/DETAIL'],
             includeFetchDocumentsUrl: true,
           }
         );
 
-        const steps = getStatusSteps(zaakTransformed, zaakTransformer as any);
+        const steps = getStatusSteps(zaakTransformed, zaakTransformer);
         const displayStatus = getDisplayStatus(zaakTransformed, steps);
 
         return {

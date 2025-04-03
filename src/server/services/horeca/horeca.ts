@@ -1,5 +1,6 @@
 import {
   decosZaakTransformers,
+  decosZaakTransformersByCaseType,
   HorecaVergunningFrontend,
 } from './config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -32,29 +33,30 @@ export async function fetchHorecaVergunningen(
   );
 
   if (response.status === 'OK') {
-    const decosVergunningen = response.content;
-    const vergunningenFrontend: HorecaVergunningFrontend[] =
-      decosVergunningen.map((vergunning) => {
-        const vergunningTransformed = transformDecosZaakFrontend(
-          authProfileAndToken.profile.sid,
-          vergunning,
-          {
-            appRoute: AppRoutes['HORECA/DETAIL'],
-            includeFetchDocumentsUrl: true,
-          }
-        );
+    const decosZaken = response.content;
+    const zakenFrontend: HorecaVergunningFrontend[] = decosZaken.map((zaak) => {
+      const zaakTransformer = decosZaakTransformersByCaseType[zaak.caseType];
 
-        const steps = getStatusSteps(vergunningTransformed);
-        const displayStatus = getDisplayStatus(vergunningTransformed, steps);
+      const zaakTransformed = transformDecosZaakFrontend(
+        authProfileAndToken.profile.sid,
+        zaak,
+        {
+          appRoute: AppRoutes['HORECA/DETAIL'],
+          includeFetchDocumentsUrl: true,
+        }
+      );
 
-        return {
-          ...vergunningTransformed,
-          steps,
-          displayStatus,
-        };
-      });
+      const steps = getStatusSteps(zaakTransformed, zaakTransformer);
+      const displayStatus = getDisplayStatus(zaakTransformed, steps);
 
-    return apiSuccessResult(vergunningenFrontend);
+      return {
+        ...zaakTransformed,
+        steps,
+        displayStatus,
+      };
+    });
+
+    return apiSuccessResult(zakenFrontend);
   }
 
   return response;

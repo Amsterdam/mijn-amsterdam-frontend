@@ -47,16 +47,16 @@ async function fetchVergunningen_(
   );
 
   if (response.status === 'OK') {
-    const decosVergunningen = response.content;
-    const vergunningenFrontend: VergunningFrontend<DecosVergunning>[] =
-      decosVergunningen.map((vergunning) =>
+    const decosZaken = response.content;
+    const zakenFrontend: VergunningFrontend<DecosVergunning>[] = decosZaken.map(
+      (vergunning) =>
         transformVergunningFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
           appRoute
         )
-      );
-    return apiSuccessResult(vergunningenFrontend);
+    );
+    return apiSuccessResult(zakenFrontend);
   }
 
   return response;

@@ -55,3 +55,6 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
   };
 
 export const decosZaakTransformers = [ExploitatieHorecabedrijf];
+export const decosZaakTransformersByCaseType = {
+  [ExploitatieHorecabedrijf.caseType]: ExploitatieHorecabedrijf,
+};

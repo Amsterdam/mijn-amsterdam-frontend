@@ -1,6 +1,7 @@
 import {
   VakantieverhuurVergunningFrontend,
   decosZaakTransformers,
+  decosZaakTransformersByCaseType,
 } from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
@@ -25,28 +26,31 @@ export async function fetchVakantieverhuurVergunningen(
   );
 
   if (response.status === 'OK') {
-    const decosVergunningen = response.content;
-    const vergunningenFrontend: VakantieverhuurVergunningFrontend[] =
-      decosVergunningen.map((vergunning) => {
-        const vergunningTransformed = transformDecosZaakFrontend(
+    const decosZaken = response.content;
+    const zakenFrontend: VakantieverhuurVergunningFrontend[] = decosZaken.map(
+      (zaak) => {
+        const zaakTransformer = decosZaakTransformersByCaseType[zaak.caseType];
+
+        const zaakTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
-          vergunning,
+          zaak,
           {
             appRoute: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
             includeFetchDocumentsUrl: true,
           }
         );
 
-        const steps = getStatusSteps(vergunningTransformed);
-        const displayStatus = getDisplayStatus(vergunningTransformed, steps);
+        const steps = getStatusSteps(zaakTransformed, zaakTransformer);
+        const displayStatus = getDisplayStatus(zaakTransformed, steps);
 
         return {
-          ...vergunningTransformed,
+          ...zaakTransformed,
           steps,
           displayStatus,
         };
-      });
-    return apiSuccessResult(vergunningenFrontend);
+      }
+    );
+    return apiSuccessResult(zakenFrontend);
   }
 
   return response;

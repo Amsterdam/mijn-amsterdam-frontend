@@ -37,9 +37,9 @@ describe('horeca', () => {
 
   describe('fetchHorecaVergunningen', () => {
     it('should return transformed vergunningen if fetchDecosZaken is successful', async () => {
-      const decosVergunningen = [{ id: '1' }, { id: '2' }];
+      const decosZaken = [{ id: '1' }, { id: '2' }];
       (fetchDecosZaken as unknown as Mock).mockResolvedValue(
-        apiSuccessResult(decosVergunningen)
+        apiSuccessResult(decosZaken)
       );
       (transformDecosZaakFrontend as Mock).mockImplementation(
         (_sid, vergunning) => ({
