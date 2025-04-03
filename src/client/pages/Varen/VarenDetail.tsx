@@ -5,7 +5,6 @@ import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploi
 import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
-import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
@@ -14,6 +13,7 @@ export function VarenDetail() {
 
   let noContentError = false;
   let pageContent = null;
+
   switch (vergunning?.caseType) {
     case 'Varen vergunning exploitatie':
       pageContent = (
