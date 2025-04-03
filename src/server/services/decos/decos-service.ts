@@ -19,6 +19,10 @@ import {
   DecosZaakSource,
   DecosZakenResponse,
   DecosWorkflowResponse,
+  DecosZaakFrontend,
+  DecosTermijnResponse,
+  DecosTermijn,
+  DecosTermijnType,
 } from './config-and-types';
 import {
   SELECT_FIELDS_META,

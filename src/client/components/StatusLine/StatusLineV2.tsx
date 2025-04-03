@@ -1,12 +1,16 @@
 import { ReactNode } from 'react';
 
 import {
+  ActionGroup,
   Grid,
   Heading,
   Icon,
   OrderedList,
 } from '@amsterdam/design-system-react';
-import { CheckmarkIcon } from '@amsterdam/design-system-react-icons';
+import {
+  CheckmarkIcon,
+  ExternalLinkIcon,
+} from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
 import styles from './StatusLineV2.module.scss';
@@ -14,6 +18,7 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, StatusLineItem } from '../../../universal/types';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import InnerHtml from '../InnerHtml/InnerHtml';
+import { MaButtonLink } from '../MaLink/MaLink';
 
 interface StatusStepDocumentsProps {
   documents?: GenericDocument[];
@@ -107,7 +112,27 @@ export function Steps({ steps, title }: StepsProps) {
               >
                 {defaultDateFormat(item.datePublished)}
               </time>
-              {item.description && <InnerHtml>{item.description}</InnerHtml>}
+              {item.description && (
+                <div>
+                  <InnerHtml
+                    className={
+                      item.actionButtonItems?.length ? 'ams-mb--xs' : ''
+                    }
+                  >
+                    {item.description}
+                  </InnerHtml>
+                  {!!item.actionButtonItems?.length && (
+                    <ActionGroup className={styles.PanelActionGroup}>
+                      {item.actionButtonItems.map(({ to, title }) => (
+                        <MaButtonLink key={to} href={to} variant="secondary">
+                          {title}
+                          <Icon svg={ExternalLinkIcon} size="level-5" />
+                        </MaButtonLink>
+                      ))}
+                    </ActionGroup>
+                  )}
+                </div>
+              )}
               {!!(item.altDocumentContent || item.documents?.length) && (
                 <StatusStepDocuments
                   documents={item.documents}
