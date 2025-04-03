@@ -35,8 +35,8 @@ function ExploitatieHorecaBedrijf({
 }
 
 export function HorecaDetailPagina() {
-  const { routes, vergunningen, isLoading, isError } = useHorecaThemaData();
-
+  const { vergunningen, isLoading, isError, themaPaginaBreadcrumb } =
+    useHorecaThemaData();
   const { vergunning, title, documents } =
     useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
 
@@ -72,7 +72,7 @@ export function HorecaDetailPagina() {
           </>
         )
       }
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

@@ -1,6 +1,5 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { AppRoutes } from '../../../universal/config/routes';
 import {
   PageContentCell,
   PageContentV2,
@@ -18,9 +17,7 @@ export function SearchPage() {
   return (
     <PageV2>
       <PageContentV2>
-        <PageHeadingV2 backLink={AppRoutes.HOME}>
-          {ThemaTitles.SEARCH}
-        </PageHeadingV2>
+        <PageHeadingV2>{ThemaTitles.SEARCH}</PageHeadingV2>
         <PageContentCell>
           {isReady ? (
             <Search

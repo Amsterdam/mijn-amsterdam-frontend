@@ -40,7 +40,8 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
 }
 
 export function HLIRegeling() {
-  const { regelingen, isError, isLoading, routes } = useHliThemaData();
+  const { regelingen, isError, isLoading, themaPaginaBreadcrumb } =
+    useHliThemaData();
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 
@@ -53,7 +54,7 @@ export function HLIRegeling() {
       pageContentMain={
         regelingDetail && <DetailPageContent hliRegeling={regelingDetail} />
       }
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

@@ -1,13 +1,9 @@
-import { useParams } from 'react-router-dom';
-
+import { useZorgDetailData } from './useZorgDetailData.hook';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
-import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 type WMODetailContentProps = {
@@ -31,7 +27,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
             <ErrorAlert
               className="ams-mb--sm"
               severity="warning"
-              title="Let op!"
+              title="Belangrijk om te weten"
             >
               {voorziening.disclaimer}
             </ErrorAlert>
@@ -50,21 +46,19 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
 }
 
 export function ZorgDetail() {
-  const appState = useAppStateGetter();
-  const { WMO } = appState;
-  const { id } = useParams<{ id: WMOVoorzieningFrontend['id'] }>();
-  const voorziening = WMO.content?.find((item) => item.id === id);
+  const { title, voorziening, themaPaginaBreadcrumb, isError, isLoading } =
+    useZorgDetailData();
 
   return (
     <ThemaDetailPagina<WMOVoorzieningFrontend>
-      title={voorziening?.title ?? 'Voorziening'}
+      title={title}
       zaak={voorziening}
-      isError={isError(WMO)}
-      isLoading={isLoading(WMO)}
+      isError={isError}
+      isLoading={isLoading}
       pageContentMain={
         !!voorziening && <WMODetailContent voorziening={voorziening} />
       }
-      backLink={AppRoutes.ZORG}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

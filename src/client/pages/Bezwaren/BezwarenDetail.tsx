@@ -101,15 +101,16 @@ function BezwaarDetailContent({
 export function BezwarenDetailPagina() {
   const {
     bezwaar,
+    dependencyErrors,
+    documentCategories,
+    documents,
     isError,
     isErrorThemaData,
     isLoading,
     isLoadingThemaData,
-    routes,
-    documentCategories,
-    documents,
+    themaPaginaBreadcrumb,
     statussen,
-    dependencyErrors,
+    title,
   } = useBezwarenDetailData();
 
   const pageContentErrorAlert = (
@@ -130,7 +131,7 @@ export function BezwarenDetailPagina() {
 
   return (
     <ThemaDetailPagina<Bezwaar>
-      title={bezwaar?.identificatie ?? 'Bezwaar'}
+      title={title}
       zaak={bezwaar}
       isError={isError || isErrorThemaData}
       isLoading={isLoading || isLoadingThemaData}
@@ -151,7 +152,7 @@ export function BezwarenDetailPagina() {
           )}
         </>
       }
-      backLink={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
     />
   );
 }

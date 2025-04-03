@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
+import { Thema } from '../../universal/config/thema';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema';
 import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
@@ -37,4 +38,27 @@ export function useThemaMenuItems(): ThemasState {
   );
 
   return themasState;
+}
+
+export function useThemaMenuItemsByThemaID() {
+  const { items } = useThemaMenuItems();
+
+  const themaById = useMemo(
+    () =>
+      items.reduce(
+        (acc, item) => {
+          acc[item.id] = item;
+          return acc;
+        },
+        {} as Record<Thema, ThemaMenuItemTransformed>
+      ),
+    [items]
+  );
+
+  return themaById;
+}
+
+export function useThemaMenuItemByThemaID(themaID: Thema) {
+  const itemsById = useThemaMenuItemsByThemaID();
+  return itemsById[themaID];
 }

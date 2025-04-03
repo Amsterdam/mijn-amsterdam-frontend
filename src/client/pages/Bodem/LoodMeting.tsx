@@ -1,8 +1,5 @@
-import { generatePath } from 'react-router-dom';
-
 import { useBodemDetailData } from './useBodemDetailData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
@@ -10,7 +7,8 @@ import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function LoodMeting() {
-  const { meting, isLoading, isError } = useBodemDetailData();
+  const { meting, isLoading, isError, themaPaginaBreadcrumb } =
+    useBodemDetailData();
 
   const BodemDetailRows = (meting: LoodMetingFrontend) => {
     return [
@@ -42,7 +40,7 @@ export function LoodMeting() {
     <ThemaDetailPagina
       title="Lood in bodem-check"
       zaak={meting}
-      backLink={generatePath(AppRoutes.BODEM)}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       isError={isError}
       isLoading={isLoading}
       pageContentMain={!!meting && <BodemDetailContent meting={meting} />}

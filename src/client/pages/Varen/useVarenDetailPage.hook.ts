@@ -4,9 +4,11 @@ import {
   exploitatieVergunningWijzigenLink,
   ligplaatsVergunningLink,
 } from './Varen-thema-config';
+import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ButtonLinkProps } from '../../../universal/types';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useVarenDetailPage() {
   const { VAREN } = useAppStateGetter();
@@ -43,10 +45,13 @@ export function useVarenDetailPage() {
     buttonItems.push(...buttons);
   }
 
+  const themaLink = useThemaMenuItemByThemaID(Themas.VAREN);
+
   return {
     vergunning,
     buttonItems,
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
+    themaPaginaBreadcrumb: themaLink,
   };
 }

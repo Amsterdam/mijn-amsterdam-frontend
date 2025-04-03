@@ -41,6 +41,7 @@ import {
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -146,7 +147,9 @@ export function HLIStadspasDetail() {
   return (
     <DetailPageV2>
       <PageContentV2>
-        <PageHeadingV2 backLink={AppRoutes.HLI}>
+        <PageHeadingV2
+          breadcrumbs={[{ to: AppRoutes.HLI, title: ThemaTitles.HLI }]}
+        >
           Overzicht stadspas{' '}
           {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
         </PageHeadingV2>
