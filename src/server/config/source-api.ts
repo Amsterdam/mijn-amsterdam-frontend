@@ -7,6 +7,7 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -126,7 +127,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': 'JZD',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'JZD' : undefined,
     },
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
@@ -136,7 +137,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': 'AV',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'AV' : undefined,
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
@@ -150,7 +151,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': 'LLV',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'LLV' : undefined,
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
