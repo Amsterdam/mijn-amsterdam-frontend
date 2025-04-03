@@ -163,8 +163,13 @@ export function toDateFormatted(
 export function getStatusDate(
   zaakStatus: ZaakStatus,
   zaak:
-    | { steps?: Array<{ status: ZaakStatus; datePublished: string }> }
-    | { statusDates?: Array<{ status: ZaakStatus; datePublished: string }> }
+    | { steps?: Array<{ status: ZaakStatus; datePublished: string | null }> }
+    | {
+        statusDates?: Array<{
+          status: ZaakStatus;
+          datePublished: string | null;
+        }>;
+      }
 ) {
   const steps = 'steps' in zaak ? zaak.steps : undefined;
   const statusDates = 'statusDates' in zaak ? zaak.statusDates : undefined;
