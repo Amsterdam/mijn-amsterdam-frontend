@@ -137,7 +137,7 @@ async function fetchZaakIds(
       return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
     },
     transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
-      return responseData.records.map((record) => record.id);
+      return responseData.records?.map((record) => record.id) ?? [];
     },
     data: [options.personOrMaatschapId],
   };
@@ -309,7 +309,7 @@ async function fetchZaakAdres(
       data: SearchRequestResponse<'ADRESSEN', PBRecordField<'FMT_CAPTION'>[]>
     ) {
       const address =
-        data.records[0]?.fields.find((field) => {
+        data.records?.[0]?.fields.find((field) => {
           return field.fieldName === 'FMT_CAPTION';
         })?.fieldValue ?? null;
 
@@ -405,6 +405,7 @@ async function fetchAndMergeZaakStatussen(
         : zaak.steps;
 
     zaak.status = getZaakStatus(zaak);
+    zaak.displayStatus = zaak.status;
 
     zakenWithstatussen.push(zaak);
   }
@@ -496,6 +497,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     // Added after initial transform
     location: null,
     status: 'Ontvangen',
+    displayStatus: 'Ontvangen',
     documents: [],
     steps: [],
     heeftOvergangsRecht: pbZaak.dateReceived
@@ -656,7 +658,7 @@ function transformPowerbrowserLinksResponse(
     [K in PBDocumentFields['fieldName']]: string;
   };
   return (
-    responseData.records.map((documentRecord) => {
+    responseData.records?.map((documentRecord) => {
       const document = Object.fromEntries(
         documentRecord.fields.map((field) => {
           return [field.fieldName, field.fieldValue];

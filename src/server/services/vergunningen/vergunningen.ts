@@ -2,7 +2,7 @@ import memoizee from 'memoizee';
 
 import { DecosVergunning, VergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
-import { getStatusSteps } from './vergunningen-status-steps';
+import { getDisplayStatus, getStatusSteps } from './vergunningen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -23,9 +23,12 @@ function transformVergunningFrontend(
     vergunning
   );
 
+  const steps = getStatusSteps(vergunningFrontend);
+
   return {
     ...vergunningFrontend,
-    steps: getStatusSteps(vergunningFrontend),
+    steps,
+    displayStatus: getDisplayStatus(vergunningFrontend, steps),
   };
 }
 

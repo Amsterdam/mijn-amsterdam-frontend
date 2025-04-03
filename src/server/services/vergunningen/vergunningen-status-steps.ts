@@ -202,3 +202,14 @@ export function getStatusSteps<V extends VergunningFrontend>(vergunning: V) {
 
   return steps;
 }
+
+export function getDisplayStatus(
+  vergunning: VergunningFrontend,
+  steps: StatusLineItem[]
+) {
+  if (vergunning.processed && !vergunning.isExpired && vergunning.decision) {
+    return vergunning.decision;
+  }
+
+  return steps[steps.length - 1]?.status ?? 'Onbekend';
+}
