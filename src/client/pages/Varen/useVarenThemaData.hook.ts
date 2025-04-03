@@ -4,10 +4,11 @@ import {
   varenMeerInformatieLink,
   routes,
 } from './Varen-thema-config';
-import { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
@@ -22,6 +23,8 @@ export function useVarenThemaData() {
     true
   );
 
+  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.VAREN);
+
   return {
     varenRederRegistratie,
     tableConfig,
@@ -31,5 +34,6 @@ export function useVarenThemaData() {
     linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
     routes,
+    themaPaginaBreadcrumb,
   };
 }

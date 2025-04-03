@@ -6,8 +6,14 @@ import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePa
 
 export function VergunningenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
-  const { vergunningen, isLoading, isError, tableConfig, routes } =
-    useVergunningenThemaData();
+  const {
+    vergunningen,
+    isLoading,
+    isError,
+    tableConfig,
+    routes,
+    themaPaginaBreadcrumb,
+  } = useVergunningenThemaData();
   const { title, displayProps, filter, sort } =
     tableConfig[params.kind] ?? null;
 
@@ -17,7 +23,7 @@ export function VergunningenList() {
       title={title}
       appRoute={routes.listPage}
       appRouteParams={params}
-      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}

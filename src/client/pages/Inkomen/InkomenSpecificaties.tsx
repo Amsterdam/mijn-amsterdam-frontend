@@ -31,7 +31,6 @@ export function InkomenSpecificaties() {
     noContentMessage,
     params,
     resetSearch,
-    routes,
     selectCategoryFilter,
     selectedCategory,
     selectedDates,
@@ -40,6 +39,7 @@ export function InkomenSpecificaties() {
     title,
     toggleSearchPanel,
     total,
+    themaPaginaBreadcrumb,
   } = useInkomenSpecificatiesListPageData();
 
   const pageContentMain = (
@@ -165,7 +165,7 @@ export function InkomenSpecificaties() {
       isError={isError}
       isLoading={isLoading}
       appRoute={`${tableConfig.listPageRoute}/:page?`}
-      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       appRouteParams={params}
       pageContentTop={pageContentMain}
       displayProps={tableConfig.displayProps}

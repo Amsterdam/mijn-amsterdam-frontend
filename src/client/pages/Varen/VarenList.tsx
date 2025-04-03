@@ -10,8 +10,14 @@ export function VarenList() {
     kind: ListPageParamKind;
     page: string;
   }>();
-  const { varenVergunningen, tableConfig, isLoading, isError, routes } =
-    useVarenThemaData();
+  const {
+    varenVergunningen,
+    tableConfig,
+    isLoading,
+    isError,
+    routes,
+    themaPaginaBreadcrumb,
+  } = useVarenThemaData();
   const { title, displayProps, filter, sort } = tableConfig[kind];
   const vergunningen = varenVergunningen.filter(filter).sort(sort);
 
@@ -22,7 +28,7 @@ export function VarenList() {
       isLoading={isLoading}
       isError={isError}
       appRoute={routes.listPage}
-      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       appRouteParams={{ kind, page }}
       displayProps={displayProps}
     />

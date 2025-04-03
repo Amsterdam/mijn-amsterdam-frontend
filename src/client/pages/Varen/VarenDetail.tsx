@@ -56,7 +56,7 @@ export function VarenDetail() {
   }
 
   return (
-    <ThemaDetailPagina<VarenZakenFrontend>
+    <ThemaDetailPagina
       statusLabel="Status van uw aanvraag"
       title={vergunning?.title ?? 'Varen vergunning'}
       zaak={vergunning}

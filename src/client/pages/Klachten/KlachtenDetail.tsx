@@ -49,7 +49,7 @@ export function KlachtenDetailPagina() {
   const klacht = klachten.find((klacht) => klacht.id === id);
 
   return (
-    <ThemaDetailPagina<Klacht>
+    <ThemaDetailPagina
       title={klacht?.onderwerp || 'Klacht'}
       zaak={klacht}
       isError={isError}

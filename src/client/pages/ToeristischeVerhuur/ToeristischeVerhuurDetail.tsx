@@ -147,7 +147,7 @@ export function ToeristischeVerhuurDetailPagina() {
   }
 
   return (
-    <ThemaDetailPagina<ToeristischeVerhuurVergunning>
+    <ThemaDetailPagina
       title={vergunning?.title ?? THEMA_DETAIL_TITLE_DEFAULT}
       zaak={vergunning}
       isError={isError}

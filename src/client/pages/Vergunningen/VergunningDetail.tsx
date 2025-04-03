@@ -89,7 +89,7 @@ export function VergunningDetailPagina() {
     useVergunningenDetailData(vergunningen);
 
   return (
-    <ThemaDetailPagina<VergunningFrontend<DecosVergunning>>
+    <ThemaDetailPagina
       title={title}
       zaak={vergunning}
       isError={isError}
