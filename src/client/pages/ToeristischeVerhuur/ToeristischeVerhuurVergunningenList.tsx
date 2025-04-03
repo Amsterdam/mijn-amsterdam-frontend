@@ -19,7 +19,7 @@ export function ToeristischeVerhuurVergunningen() {
       title={listPageTableConfig.title}
       appRoute={routes.listPage}
       appRouteParams={{ kind }}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={[{ to: routes.themaPage, title: routes.themaPage }]}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}

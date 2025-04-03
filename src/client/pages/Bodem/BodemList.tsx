@@ -1,25 +1,27 @@
-import { useParams } from 'react-router-dom';
-
-import { useBodemData } from './useBodemData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
+import { useBodemListPageData } from './useBodemListPageData.hook';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ListPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
 export function BodemList() {
-  const { items, isLoading, isError, tableConfig } = useBodemData();
-  const appRouteBack = AppRoutes.BODEM;
-  const params = useParams<{ kind: ListPageParamKind }>();
+  const {
+    items,
+    isLoading,
+    isError,
+    filter,
+    title,
+    displayProps,
+    params,
+    themaPaginaBreadcrumb,
+    routes,
+  } = useBodemListPageData();
 
   return (
     <ListPagePaginated
-      items={items
-        .filter(tableConfig[params.kind].filter)
-        .sort(tableConfig[params.kind].sort)}
-      title={tableConfig[params.kind].title}
-      appRoute={AppRoutes['BODEM/LIST']}
+      items={items.filter(filter)}
+      title={title}
+      appRoute={routes.listPage}
       appRouteParams={params}
-      appRouteBack={appRouteBack}
-      displayProps={tableConfig[params.kind].displayProps}
+      breadcrumbs={[themaPaginaBreadcrumb]}
+      displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}
     />

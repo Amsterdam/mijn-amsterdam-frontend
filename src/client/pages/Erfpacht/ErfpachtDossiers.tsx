@@ -3,7 +3,7 @@ import { useErfpachtV2Data } from './erfpachtData.hook';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export function ErfpachtDossiers() {
-  const { isLoading, isError, dossiers, tableConfig, routes } =
+  const { isLoading, isError, dossiers, tableConfig, themaPaginaBreadcrumb } =
     useErfpachtV2Data();
 
   const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtRechten];
@@ -14,7 +14,7 @@ export function ErfpachtDossiers() {
       items={dossiers}
       title={tableConfigDossiers?.title ?? 'Erfpachtrechten'}
       appRoute={tableConfigDossiers?.listPageRoute ?? ''}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={[themaPaginaBreadcrumb]}
       displayProps={displayPropsDossiers}
       isLoading={isLoading}
       isError={isError}

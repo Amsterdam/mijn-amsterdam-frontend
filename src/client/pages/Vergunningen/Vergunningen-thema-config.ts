@@ -90,7 +90,7 @@ function isVergunningExpirable(vergunning: { isExpired?: boolean }) {
 }
 
 export const routes = {
-  themePage: AppRoutes.VERGUNNINGEN,
+  themaPage: AppRoutes.VERGUNNINGEN,
   detailPage: AppRoutes['VERGUNNINGEN/DETAIL'],
   listPage: AppRoutes['VERGUNNINGEN/LIST'],
 } as const;

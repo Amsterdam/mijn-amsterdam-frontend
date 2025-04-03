@@ -158,6 +158,8 @@ export function useAfisListPageData(state: AfisFactuurState) {
     AFIS.content?.facturen ?? null
   );
 
+  const themaLink = useThemaMenuItemByThemaID(Themas.AFIS);
+
   return {
     facturenListResponse:
       (state === 'open'
@@ -172,6 +174,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
       state !== 'open' ? isLoading(facturenByStateApiResponse) : false,
     listPageTitle,
     routes,
+    themaPaginaBreadcrumb: themaLink,
   };
 }
 

@@ -11,6 +11,7 @@ import {
   contactmomentenDisplayProps,
   ContactMomentFrontend,
   mapperContactmomentToMenuItem,
+  routes,
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
 import { isLoading, isError } from '../../../../universal/helpers/api';
@@ -79,5 +80,6 @@ export function useContactmomenten() {
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
+    routes,
   };
 }

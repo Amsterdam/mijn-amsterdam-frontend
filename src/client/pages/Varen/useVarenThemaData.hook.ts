@@ -2,6 +2,7 @@ import {
   tableConfig,
   varenLegesTableLink,
   varenMeerInformatieLink,
+  routes,
 } from './Varen-thema-config';
 import { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
@@ -29,5 +30,6 @@ export function useVarenThemaData() {
     varenVergunningen,
     linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
+    routes,
   };
 }

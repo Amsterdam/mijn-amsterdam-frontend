@@ -35,6 +35,12 @@ const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
+export const routes = {
+  listPage: AppRoutes['AVG/LIST'],
+  themaPage: AppRoutes.AVG,
+  detailPage: AppRoutes['AVG/DETAIL'],
+};
+
 const tableConfigBase = {
   sort: dateSort('registratieDatum', 'desc'),
   displayProps: displayPropsAanvragen,
@@ -45,7 +51,7 @@ export const tableConfig = {
     title: 'Lopende aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(AppRoutes['AVG/LIST'], {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
     }),
     ...tableConfigBase,
@@ -54,7 +60,7 @@ export const tableConfig = {
     title: 'Afgehandelde aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(AppRoutes['AVG/LIST'], {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.completed,
     }),
     ...tableConfigBase,
