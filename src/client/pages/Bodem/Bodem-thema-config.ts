@@ -4,15 +4,27 @@ import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
+import {
+  DisplayProps,
+  WithDetailLinkComponent,
+} from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
-const displayPropsAanvragen = {
+const displayPropsAanvragenBase: DisplayProps<
+  WithDetailLinkComponent<LoodMetingFrontend>
+> = {
   detailLinkComponent: 'Adres',
   datumAanvraagFormatted: 'Aangevraagd',
   status: 'Status',
 };
+
+const displayPropsAanvragen = withOmitDisplayPropsForSmallScreens(
+  displayPropsAanvragenBase,
+  ['status', 'datumAanvraagFormatted']
+);
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',

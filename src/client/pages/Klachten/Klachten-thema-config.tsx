@@ -1,6 +1,7 @@
 import { Klacht } from '../../../server/services/klachten/types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
@@ -15,11 +16,15 @@ export const LinkListItems: LinkProps[] = [
   },
 ];
 
-const displayPropsKlachten: DisplayProps<WithDetailLinkComponent<Klacht>> = {
+const displayPropsDefault: DisplayProps<WithDetailLinkComponent<Klacht>> = {
   detailLinkComponent: 'Nummer van uw klacht',
   ontvangstDatumFormatted: 'Ontvangen op',
   onderwerp: 'Onderwerp',
 };
+
+const displayProps = withOmitDisplayPropsForSmallScreens(displayPropsDefault, [
+  'onderwerp',
+]);
 
 export const routes = {
   listPage: AppRoutes['KLACHTEN/LIST'],
@@ -29,7 +34,7 @@ export const routes = {
 
 export const klachtenTableConfig = {
   title: 'Ingediende klachten',
-  displayProps: displayPropsKlachten,
+  displayProps,
   maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   listPageRoute: routes.listPage,
 } as const;

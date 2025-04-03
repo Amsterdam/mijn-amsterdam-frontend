@@ -7,6 +7,7 @@ import {
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
@@ -105,13 +106,19 @@ export function getTableConfig({
     [listPageParamKind.openFacturen]: {
       title: titleOpenFacturen ?? 'Openstaande facturen',
       listPageRoute: routes.listPageOpenFacturen,
-      displayProps: displayPropsOpenFacturen,
+      displayProps: withOmitDisplayPropsForSmallScreens(
+        displayPropsOpenFacturen,
+        ['dossierAdres', 'status', 'formattedFactuurBedrag']
+      ),
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN,
     },
     [listPageParamKind.alleFacturen]: {
       title: dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'Facturen',
       listPageRoute: routes.listPageAlleFacturen,
-      displayProps: displayPropsAlleFacturen,
+      displayProps: withOmitDisplayPropsForSmallScreens(
+        displayPropsAlleFacturen,
+        ['formattedFactuurBedrag', 'vervalDatum']
+      ),
       maxItems: MAX_TABLE_ROWS_ON_DETAIL_PAGINA_FACTUREN,
     },
   } as const;

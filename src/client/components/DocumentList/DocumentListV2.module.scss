@@ -1,8 +1,24 @@
 .DocumentListV2 {
   width: 100%;
   text-align: left;
+  th,
+  td {
+    &:first-child {
+      width: 60%;
+    }
+    &:last-child {
+      width: 40%;
+    }
+  }
   thead th {
     font-family: var(--ams-heading-font-family);
     font-weight: var(--ams-text-font-weight-bold);
+  }
+
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    td + td,
+    th + th {
+      display: none;
+    }
   }
 }

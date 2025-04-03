@@ -19,7 +19,7 @@ interface ListPagePaginatedProps<T> {
   appRouteParams?: Record<string, string> | null;
   pageContentTop?: ReactNode;
   pageContentBottom?: ReactNode;
-  displayProps: DisplayProps<T> | null;
+  displayProps: DisplayProps<T>;
   errorText?: string;
   isError: boolean;
   isLoading: boolean;
