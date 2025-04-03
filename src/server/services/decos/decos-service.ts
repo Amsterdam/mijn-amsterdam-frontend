@@ -328,7 +328,9 @@ function getSelectFields(zaakTypeTransformers: DecosZaakTransformer<any>[]) {
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
     ...zaakTypeTransformers.flatMap((zaakTransformer) =>
-      Object.keys(zaakTransformer.transformFields)
+      Object.keys(zaakTransformer.transformFields).concat(
+        zaakTransformer.additionalSelectFields ?? []
+      )
     ),
   ]).join(',');
 
