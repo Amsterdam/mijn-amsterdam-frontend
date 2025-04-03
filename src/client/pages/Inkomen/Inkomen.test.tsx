@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Inkomen from './Inkomen';
+import { InkomenThemaPagina } from './Inkomen';
 
 const testState: any = {
   WPI_AANVRAGEN: {
@@ -170,7 +170,7 @@ describe('<Inkomen />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Inkomen}
+          component={InkomenThemaPagina}
           initializeState={initializeState}
         />
       );
@@ -202,7 +202,7 @@ describe('<Inkomen />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={Inkomen}
+          component={InkomenThemaPagina}
           initializeState={initializeState}
         />
       );

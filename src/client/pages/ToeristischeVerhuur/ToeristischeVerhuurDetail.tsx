@@ -176,10 +176,9 @@ export function ToeristischeVerhuurDetailPagina() {
                           <Paragraph>Documenten ophalen is mislukt.</Paragraph>
                         )}
                         {isLoadingDocuments && <LoadingContent />}
-                        {!isLoadingDocuments &&
-                          !isLoading &&
-                          !!vergunningDocuments.length && (
-                            <>
+                        {!isLoadingDocuments && !isLoading && (
+                          <>
+                            {!!vergunningDocuments.length && (
                               <DocumentListV2
                                 documents={vergunningDocuments}
                                 columns={['', '']}
@@ -190,12 +189,13 @@ export function ToeristischeVerhuurDetailPagina() {
                                     : ''
                                 }
                               />
-                              {vergunning.title ===
-                                'Vergunning bed & breakfast' && (
-                                <BnBDocumentInfo vergunning={vergunning} />
-                              )}
-                            </>
-                          )}
+                            )}
+                            {vergunning.title ===
+                              'Vergunning bed & breakfast' && (
+                              <BnBDocumentInfo vergunning={vergunning} />
+                            )}
+                          </>
+                        )}
                       </>
                     ),
                   },

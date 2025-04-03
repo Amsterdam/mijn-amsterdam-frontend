@@ -161,7 +161,7 @@ describe('<Varen />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    expect(screen.getAllByRole('heading', { level: 3 })[0]).toHaveTextContent(
       'Passagiers- en beroepsvaart'
     );
   });
@@ -359,11 +359,13 @@ describe('<Varen />', () => {
             exploitatieDecision,
             exploitatieDecision,
             exploitatieDecision,
+            exploitatieDecision,
+            exploitatieDecision,
           ].map((vergunning, index) => ({ ...vergunning, id: `${index}` }))
         )}
       />
     );
-    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(3);
+    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(5);
     expect(screen.getByText('Alle actieve vergunningen')).toBeInTheDocument();
   });
 });

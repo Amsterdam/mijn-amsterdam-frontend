@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
 import { AppState } from '../../universal/types/App.types';
@@ -19,10 +19,16 @@ export default function MockApp({
   initializeState,
   component,
 }: MockAppProps) {
+  if (!component) {
+    throw new Error('No component provided');
+  }
+  const Component = component as ComponentType;
   return (
     <RecoilRoot initializeState={initializeState}>
       <MemoryRouter initialEntries={[routeEntry]}>
-        <Route path={routePath} component={component} />
+        <Routes>
+          <Route path={routePath} element={<Component />} />
+        </Routes>
       </MemoryRouter>
     </RecoilRoot>
   );

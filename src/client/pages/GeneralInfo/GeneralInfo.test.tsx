@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import GeneralInfo from './GeneralInfo';
+import { GeneralInfo } from './GeneralInfo';
 
 const testState: any = {
   CMS_CONTENT: {

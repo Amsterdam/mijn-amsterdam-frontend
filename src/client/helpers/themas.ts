@@ -46,7 +46,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.INKOMEN: {
       const { jaaropgaven, uitkeringsspecificaties } =
         WPI_SPECIFICATIES?.content ?? {};
-      const hasAanvragen = WPI_AANVRAGEN?.content?.length;
+      const hasAanvragen = !!WPI_AANVRAGEN?.content?.length;
       const hasTozo = !!WPI_TOZO?.content?.length;
       const hasTonk = !!WPI_TONK?.content?.length;
       const hasBbz = !!WPI_BBZ?.content?.length;

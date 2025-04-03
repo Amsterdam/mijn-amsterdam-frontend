@@ -33,6 +33,16 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
             >
               <a
                 class="ams-breadcrumb__link"
+                href="/bezwaren"
+              >
+                Bezwaren
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
                 href="/bezwaren/abc"
                 tabindex="-1"
               >
@@ -125,6 +135,16 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
                 href="/"
               >
                 Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/bezwaren"
+              >
+                Bezwaren
               </a>
             </li>
             <li

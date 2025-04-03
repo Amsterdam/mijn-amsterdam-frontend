@@ -471,6 +471,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
     </div>
     <a
       class="_NavLink_f20b21"
+      data-discover="true"
       href="/buurt"
     >
       <span

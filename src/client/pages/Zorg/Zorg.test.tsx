@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ThemaPaginaZorg from './Zorg';
+import { ZorgThemaPagina } from './Zorg';
 import { AppState } from '../../../universal/types';
 
 const testState: Pick<AppState, 'WMO'> = {
@@ -67,7 +67,7 @@ describe('<Zorg />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ThemaPaginaZorg}
+        component={ZorgThemaPagina}
         initializeState={initializeState}
       />
     );
