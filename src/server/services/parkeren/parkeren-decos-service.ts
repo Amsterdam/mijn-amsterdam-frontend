@@ -29,7 +29,10 @@ export async function fetchDecosParkeerVergunningen(
         const vergunningTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           vergunning,
-          AppRoutes['PARKEREN/DETAIL']
+          {
+            appRoute: AppRoutes['PARKEREN/DETAIL'],
+            includeFetchDocumentsUrl: true,
+          }
         );
 
         const steps = getStatusSteps(vergunningTransformed);

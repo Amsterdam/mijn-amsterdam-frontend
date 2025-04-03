@@ -11,6 +11,8 @@ import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
+import { transformDecosZaakFrontend } from '../decos/decos-service';
+import { getDisplayStatus } from '../vergunningen/vergunningen-status-steps';
 
 function transformVarenZakenFrontend<T extends Varen>(
   appRoute: AppRoute,
@@ -78,9 +80,25 @@ async function fetchVaren_(
     const rederFrontend = transformVarenRederFrontend(reder);
     const zakenFrontend = decosZaken
       .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
-      .flatMap((vergunning) =>
-        transformVarenZakenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
-      );
+      .flatMap((vergunning) => {
+        const vergunningTransformed = transformDecosZaakFrontend(
+          authProfileAndToken.profile.sid,
+          vergunning,
+          {
+            appRoute: AppRoutes['VAREN/DETAIL'],
+            includeFetchDocumentsUrl: false,
+          }
+        );
+
+        const steps = getStatusSteps(vergunningTransformed);
+        const displayStatus = getDisplayStatus(vergunningTransformed, steps);
+
+        return {
+          ...vergunningTransformed,
+          steps,
+          displayStatus,
+        };
+      });
     return apiSuccessResult({
       reder: rederFrontend,
       zaken: zakenFrontend,
