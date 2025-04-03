@@ -31,7 +31,7 @@ export function VergunningenThemaPagina() {
   const tables = Object.entries(tableConfig).map(
     ([
       kind,
-      { title, displayProps, filter, sort, listPageRoute, className },
+      { title, displayProps, filter, sort, listPageRoute, className, maxItems },
     ]) => {
       return (
         <ThemaPaginaTable<VergunningFrontend<DecosVergunning>>
@@ -41,6 +41,7 @@ export function VergunningenThemaPagina() {
           listPageRoute={listPageRoute}
           displayProps={displayProps}
           className={className}
+          maxItems={maxItems}
         />
       );
     }
