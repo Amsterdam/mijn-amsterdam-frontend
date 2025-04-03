@@ -55,7 +55,6 @@ type VarenPageContentRederRegistratieProps = {
   registratie: VarenRegistratieRederFrontend;
 };
 
-const DEFAULT_GRID_SPAN: GridColumnNumber = 4;
 export function VarenPageContentRederRegistratie({
   registratie,
 }: VarenPageContentRederRegistratieProps) {
@@ -65,17 +64,14 @@ export function VarenPageContentRederRegistratie({
         {
           label: 'Naam aanvrager',
           content: registratie.company,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'Telefoonnummer',
           content: registratie.phone,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'KvK nummer',
           content: registratie.bsnkvk,
-          span: DEFAULT_GRID_SPAN,
         },
       ],
     },
@@ -86,17 +82,14 @@ export function VarenPageContentRederRegistratie({
           content:
             registratie.correspondenceAddress ||
             `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'E-mailadres',
           content: registratie.email,
-          span: DEFAULT_GRID_SPAN,
         },
         {
           label: 'Datum registratie',
           content: registratie.dateRequestFormatted,
-          span: DEFAULT_GRID_SPAN,
         },
       ],
     },
