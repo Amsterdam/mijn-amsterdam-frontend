@@ -150,7 +150,7 @@ export function HLIStadspasDetail() {
         <PageHeadingV2
           breadcrumbs={[{ to: AppRoutes.HLI, title: ThemaTitles.HLI }]}
         >
-          Overzicht stadspas{' '}
+          Overzicht Stadspas{' '}
           {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
         </PageHeadingV2>
 
