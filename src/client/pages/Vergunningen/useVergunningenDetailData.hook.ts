@@ -10,10 +10,13 @@ export function useVergunningenDetailData<T extends DecosZaakBase>(
   const { id } = useParams<{ id: VergunningFrontend['id'] }>();
   const vergunning = vergunningen.find((vergunning) => vergunning.id === id);
   const fetchDocumentsUrl = vergunning?.fetchDocumentsUrl;
-  const documents = useVergunningDocumentList(fetchDocumentsUrl);
+  const { documents, isError, isLoading } =
+    useVergunningDocumentList(fetchDocumentsUrl);
 
   return {
     vergunning,
+    isErrorDocuments: isError,
+    isLoadingDocuments: isLoading,
     documents,
     title: vergunning?.title ?? 'Vergunning',
   };

@@ -7,12 +7,12 @@ import { useParkerenData } from './useParkerenData.hook';
 import { DecosParkeerVergunning } from '../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../components/Datalist/Datalist';
-import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { Touringcar } from './detail-page-content/Touringcar';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
 import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats';
+import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
 
 interface DetailPageContentProps<V> {
   vergunning: V;
@@ -59,7 +59,7 @@ function DetailPageContent<
 
 export function ParkerenDetailPagina() {
   const { vergunningen, isLoading, isError, breadcrumbs } = useParkerenData();
-  const { vergunning, title, documents } =
+  const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
     useVergunningenDetailData(vergunningen);
 
   return (
@@ -72,23 +72,13 @@ export function ParkerenDetailPagina() {
         vergunning && (
           <>
             <DetailPageContent vergunning={vergunning} />
-            {!!documents.length && (
-              <PageContentCell spanWide={8}>
-                <Datalist
-                  rows={[
-                    {
-                      label: 'Documenten',
-                      content: (
-                        <DocumentListV2
-                          documents={documents}
-                          columns={['', '']}
-                        />
-                      ),
-                    },
-                  ]}
-                />
-              </PageContentCell>
-            )}
+            <PageContentCell spanWide={8}>
+              <VergunningDetailDocumentsList
+                isLoading={isLoadingDocuments}
+                isError={isErrorDocuments}
+                documents={documents}
+              />
+            </PageContentCell>
           </>
         )
       }

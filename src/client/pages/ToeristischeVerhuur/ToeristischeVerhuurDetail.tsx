@@ -8,6 +8,7 @@ import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristi
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
 import { PageContentCell } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -88,11 +89,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
     },
     {
       label: 'Adres',
-      content: (
-        <>
-          <AddressDisplayAndModal address={vergunning.location ?? ''} />
-        </>
-      ),
+      content: <AddressDisplayAndModal address={vergunning.location ?? ''} />,
       isVisible: !!vergunning.location,
     },
     {
@@ -140,10 +137,16 @@ export function ToeristischeVerhuurDetailPagina() {
     ? undefined
     : vergunning?.fetchDocumentsUrl;
 
-  let vergunningDocuments = useVergunningDocumentList(fetchDocumentsUrl);
+  let vergunningDocuments = isBnBVergunning ? vergunning.documents : [];
 
-  if (isBnBVergunning) {
-    vergunningDocuments = vergunning.documents;
+  const {
+    documents,
+    isLoading: isLoadingDocuments,
+    isError: isErrorDocuments,
+  } = useVergunningDocumentList(fetchDocumentsUrl);
+
+  if (!isBnBVergunning) {
+    vergunningDocuments = documents;
   }
 
   return (
@@ -163,18 +166,36 @@ export function ToeristischeVerhuurDetailPagina() {
                     label: 'Document',
                     content: (
                       <>
-                        <DocumentListV2
-                          documents={vergunningDocuments}
-                          columns={['', '']}
-                          className={
-                            vergunning.title === 'Vergunning bed & breakfast'
-                              ? 'ams-mb--sm'
-                              : ''
-                          }
-                        />
-                        {vergunning.title === 'Vergunning bed & breakfast' && (
-                          <BnBDocumentInfo vergunning={vergunning} />
+                        {!isBnBVergunning &&
+                          !isLoadingDocuments &&
+                          !isErrorDocuments &&
+                          !vergunningDocuments.length && (
+                            <Paragraph>Geen document beschikbaar.</Paragraph>
+                          )}
+                        {isErrorDocuments && (
+                          <Paragraph>Documenten ophalen is mislukt.</Paragraph>
                         )}
+                        {isLoadingDocuments && <LoadingContent />}
+                        {!isLoadingDocuments &&
+                          !isLoading &&
+                          !!vergunningDocuments.length && (
+                            <>
+                              <DocumentListV2
+                                documents={vergunningDocuments}
+                                columns={['', '']}
+                                className={
+                                  vergunning.title ===
+                                  'Vergunning bed & breakfast'
+                                    ? 'ams-mb--sm'
+                                    : ''
+                                }
+                              />
+                              {vergunning.title ===
+                                'Vergunning bed & breakfast' && (
+                                <BnBDocumentInfo vergunning={vergunning} />
+                              )}
+                            </>
+                          )}
                       </>
                     ),
                   },

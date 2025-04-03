@@ -5,10 +5,10 @@ import {
 } from '../../../server/services/horeca/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../components/Datalist/Datalist';
-import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { getRows } from '../Vergunningen/detail-page-content/fields-config';
+import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
 
 type ExploitatieHorecaBedrijfProps = {
@@ -37,7 +37,7 @@ function ExploitatieHorecaBedrijf({
 export function HorecaDetailPagina() {
   const { vergunningen, isLoading, isError, breadcrumbs } =
     useHorecaThemaData();
-  const { vergunning, title, documents } =
+  const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
     useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
 
   return (
@@ -52,23 +52,13 @@ export function HorecaDetailPagina() {
             <PageContentCell>
               <ExploitatieHorecaBedrijf vergunning={vergunning} />
             </PageContentCell>
-            {!!documents.length && (
-              <PageContentCell spanWide={8}>
-                <Datalist
-                  rows={[
-                    {
-                      label: 'Documenten',
-                      content: (
-                        <DocumentListV2
-                          documents={documents}
-                          columns={['', '']}
-                        />
-                      ),
-                    },
-                  ]}
-                />
-              </PageContentCell>
-            )}
+            <PageContentCell spanWide={8}>
+              <VergunningDetailDocumentsList
+                isLoading={isLoadingDocuments}
+                isError={isErrorDocuments}
+                documents={documents}
+              />
+            </PageContentCell>
           </>
         )
       }
