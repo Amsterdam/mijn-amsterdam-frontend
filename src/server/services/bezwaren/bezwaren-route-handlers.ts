@@ -29,7 +29,7 @@ export async function handleFetchBezwaarDetail(
       const response = await fetchBezwaarDetail(
         res.locals.requestID,
         authProfileAndToken,
-        req.query.id
+        decryptResult.content
       );
 
       return sendResponse(res, response);
