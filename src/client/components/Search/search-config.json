@@ -348,13 +348,14 @@
       "url": "/parkeren",
       "displayTitle": "Parkeren",
       "description": "Parkeren in de gemeente Amsterdam.",
-      "keywords": ["Parkeren", "private", "commercial"]
+      "keywords": ["Parkeren", "private", "commercial", "vergunningen"]
     },
     {
       "url": "/toeristische-verhuur",
       "displayTitle": "Toeristische verhuur",
       "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
       "keywords": [
+        "vergunningen",
         "Toeristische verhuur",
         "vergunning airbnb",
         "vergunning B&B",
@@ -883,6 +884,7 @@
       ],
       "keywords": [
         "verguning",
+        "vergunningen",
         "horecavergunning",
         "hotel",
         "restaurant",
