@@ -1,5 +1,4 @@
 import type {
-  CaseTypeVaren,
   DecosZaakVarensFieldsSource,
   VarenRegistratieRederType,
   VarenStatus,
@@ -11,12 +10,12 @@ import type {
   VarenVergunningLigplaatsType,
 } from './config-and-types';
 import { isDateInPast } from '../../../universal/helpers/date';
-import { transformFieldValuePairs } from '../decos/decos-service';
 import {
-  DecosZaakBase,
   DecosZaakTransformer,
+  DecosZaakBase,
   SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/decos-types';
+} from '../decos/config-and-types';
+import { transformFieldValuePairs } from '../decos/decos-service';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselLengths = {
