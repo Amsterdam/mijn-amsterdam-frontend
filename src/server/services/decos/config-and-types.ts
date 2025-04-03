@@ -139,6 +139,8 @@ export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
   'private-attributes': [],
 };
 
+export const DECOS_ZAKEN_FETCH_TOP = '200';
+
 export const MA_DECISION_DEFAULT = 'Zie besluit';
 
 export type DecosFieldTransformer<T extends DecosZaakBase> = {

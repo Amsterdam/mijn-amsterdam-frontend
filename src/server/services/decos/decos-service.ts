@@ -24,6 +24,7 @@ import {
   DecosTermijn,
   DecosTermijnType,
   WithDateRange,
+  DECOS_ZAKEN_FETCH_TOP,
 } from './config-and-types';
 import {
   SELECT_FIELDS_META,
@@ -356,7 +357,7 @@ async function getZakenByUserKey(
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
-    top: '50',
+    top: DECOS_ZAKEN_FETCH_TOP,
     ...(fields && { select: fields }),
     ...(caseTypes && { filter: caseTypes }),
   });
