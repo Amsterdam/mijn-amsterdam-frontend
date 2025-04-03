@@ -1,3 +1,193 @@
 {
-  "TODO": "Get correct mock data"
+  "_embedded": {
+    "aanvraag": [
+      {
+        "identificatie": "1700784",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2019-07-12"
+        },
+        "datumAanmelding": "2019-07-12",
+        "datumAanvraag": "2019-07-12",
+        "beschikking": {
+          "beschikkingNummer": 300545448,
+          "datumAfgifte": "2019-07-12",
+          "beschikteProducten": [
+            {
+              "identificatie": "569337",
+              "product": {
+                "identificatie": "LLVAVG",
+                "productsoortCode": "LLV",
+                "omschrijving": "aangepast groepsvervoer"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2019-08-26",
+                "datumEindeGeldigheid": "2020-07-03",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "2",
+                    "omschrijving": "Per week"
+                  },
+                  "omschrijving": "1 stuks (output) per week"
+                },
+                "leveringsvorm": "zin",
+                "leverancier": {
+                  "identificatie": "14UA00",
+                  "omschrijving": "Alphons Laudy (so)"
+                },
+                "toelichting": "pharetra ",
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "1783881",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-06-12",
+          "aanmeldwijze": {
+            "omschrijving": "Email"
+          },
+          "verwijzer": {
+            "soort": {
+              "identificatie": "3",
+              "omschrijving": "Cliënt"
+            }
+          }
+        },
+        "datumAanmelding": "2020-06-12",
+        "datumAanvraag": "2020-06-12",
+        "beschikking": {
+          "beschikkingNummer": 300617319,
+          "datumAfgifte": "2020-09-11",
+          "beschikteProducten": [
+            {
+              "identificatie": "630071",
+              "product": {
+                "identificatie": "LLVEV",
+                "productsoortCode": "LLV",
+                "omschrijving": "eigen vervoer"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2020-08-17",
+                "datumEindeGeldigheid": "2025-03-31",
+                "actueel": false,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "4",
+                    "omschrijving": "Per maand"
+                  },
+                  "omschrijving": "1 stuks (output) per maand"
+                },
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "identificatie": "3150556",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-02-14",
+          "aanmeldwijze": {
+            "omschrijving": "Email"
+          },
+          "verwijzer": {
+            "soort": {
+              "identificatie": "3",
+              "omschrijving": "Cliënt"
+            }
+          }
+        },
+        "datumAanmelding": "2025-02-14",
+        "datumAanvraag": "2025-02-14"
+      },
+      {
+        "identificatie": "3153638",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2020-06-12",
+          "aanmeldwijze": {
+            "omschrijving": "Email"
+          },
+          "verwijzer": {
+            "soort": {
+              "identificatie": "3",
+              "omschrijving": "Cliënt"
+            }
+          }
+        },
+        "datumAanmelding": "2020-06-12",
+        "datumAanvraag": "2025-02-20",
+        "beschikking": {
+          "beschikkingNummer": 301136844,
+          "datumAfgifte": "2025-02-20",
+          "beschikteProducten": [
+            {
+              "identificatie": "1509163",
+              "product": {
+                "identificatie": "LLVOVA",
+                "productsoortCode": "LLV",
+                "omschrijving": "openbaar vervoer abonnement"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-04-01",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": [
+                  "343007101"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
