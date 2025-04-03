@@ -44,6 +44,7 @@ export function WelcomeHeading() {
             <ProfileName
               fallbackName="Bezoeker"
               loaderBarConfig={[['400px', '40px', '0']]}
+              preferVoornaam
             />
           </span>
         </h2>

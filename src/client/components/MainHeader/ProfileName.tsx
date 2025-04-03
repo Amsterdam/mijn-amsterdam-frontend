@@ -7,11 +7,13 @@ import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 type ProfileNameProps = {
   fallbackName: string;
   loaderBarConfig?: BarConfig;
+  preferVoornaam?: boolean;
 };
 
 export function ProfileName({
   fallbackName,
   loaderBarConfig = [['300px', '20px', '0']],
+  preferVoornaam = false,
 }: ProfileNameProps) {
   const { BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
@@ -26,11 +28,14 @@ export function ProfileName({
     opgemaakteNaam = `${parts[0]}. ${parts[parts.length - 1]}`;
   }
 
-  const labelPrivate = opgemaakteNaam
-    ? opgemaakteNaam
-    : persoon?.voornamen
-      ? getFullName(persoon)
-      : fallbackName;
+  const labelPrivate =
+    preferVoornaam && persoon?.voornamen
+      ? persoon?.voornamen
+      : opgemaakteNaam
+        ? opgemaakteNaam
+        : persoon?.voornamen
+          ? getFullName(persoon)
+          : fallbackName;
   return (
     <>
       {profileType === 'private' && !isLoading(BRP) && labelPrivate}
