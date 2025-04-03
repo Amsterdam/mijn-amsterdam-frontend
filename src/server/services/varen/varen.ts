@@ -5,6 +5,7 @@ import slug from 'slugme';
 import {
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
+  VarenZakenFrontend,
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
@@ -49,6 +50,7 @@ async function fetchVaren_(
     const zakenFrontend = decosZaken
       .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
       .flatMap((zaak) => {
+        const steps = getStatusSteps(zaak);
         const zaakTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           zaak,
@@ -57,10 +59,8 @@ async function fetchVaren_(
             includeFetchDocumentsUrl: false,
           }
         );
-        const steps = getStatusSteps(zaakTransformed);
         const displayStatus = getDisplayStatus(zaakTransformed, steps);
-
-        const zaakFrontend = {
+        const zaakFrontend: VarenZakenFrontend = {
           ...zaakTransformed,
           steps,
           displayStatus,

@@ -19,6 +19,7 @@ import {
 } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { VergunningFrontend } from '../vergunningen/config-and-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
 export function isWaitingForPaymentConfirmation(
@@ -162,11 +163,12 @@ export function toDateFormatted(
 // Try to fetch and assign a specific date on which the zaak was $zaakStatus
 export function getStatusDate(
   zaakStatus: ZaakStatus,
-  decosZaak: DecosZaakBase
+  zaak: DecosZaakBase | VergunningFrontend
 ) {
+  const statusDates = 'steps' in zaak ? zaak.steps : zaak.statusDates;
   return (
-    decosZaak.statusDates?.find(({ status }) => status === zaakStatus)
-      ?.datePublished || null
+    statusDates.find(({ status }) => status === zaakStatus)?.datePublished ||
+    null
   );
 }
 

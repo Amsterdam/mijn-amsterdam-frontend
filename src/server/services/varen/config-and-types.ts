@@ -1,6 +1,5 @@
 import { OmitMapped } from '../../../universal/helpers/utils';
-import { ZaakDetail } from '../../../universal/types/App.types';
-import { DecosZaakBase } from '../decos/config-and-types';
+import { DecosZaakBase, DecosZaakFrontend } from '../decos/config-and-types';
 
 export type DecosZaakVarensFieldsSource = {
   mark: string;
@@ -122,10 +121,6 @@ export type Varen =
   | VarenVergunningExploitatieWijzigingVergunningshouderType
   | VarenVergunningExploitatieWijzigingVervangingType;
 
-export type VarenZakenFrontend<T extends Varen = Varen> = OmitMapped<
-  T,
-  'statusDates' | 'termijnDates' | 'vergunningen'
-> & {
-  dateRequestFormatted: string;
-  dateDecisionFormatted: string | null;
-} & ZaakDetail<T['status']>;
+export type VarenZakenFrontend<T extends Varen = Varen> = DecosZaakFrontend<
+  OmitMapped<T, 'vergunningen'>
+>;

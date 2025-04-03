@@ -50,7 +50,7 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
@@ -883,7 +883,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   options: DecosZaakFrontendTransformOptions
 ): DecosZaakFrontend<T> {
   const zaakFrontend: DecosZaakFrontend<T> = {
-    ...zaak,
+    ...omit(zaak, ['statusDates', 'termijnDates']),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
     dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
     steps: [], // NOTE: Assign Status steps later on
