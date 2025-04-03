@@ -42,11 +42,3 @@ export function isNearEndDate(dateEnd?: string | null, dateNow?: Date) {
     monthsTillEnd >= 0 // Only show the notification if we have a long-running permit validity
   );
 }
-
-export function isExpired(dateExpiry: string | null, dateNow?: Date) {
-  if (!dateExpiry) {
-    return false;
-  }
-
-  return isDateInPast(dateExpiry, dateNow || new Date());
-}

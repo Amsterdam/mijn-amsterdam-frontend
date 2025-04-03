@@ -13,7 +13,10 @@ import {
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
 } from './config-and-types';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  defaultDateFormat,
+  isDateInPast,
+} from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
@@ -165,4 +168,12 @@ export function getStatusDate(
     decosZaak.statusDates?.find(({ status }) => status === zaakStatus)
       ?.datePublished || null
   );
+}
+
+export function isExpired(dateExpiry: string | null, dateNow?: Date) {
+  if (!dateExpiry) {
+    return false;
+  }
+
+  return isDateInPast(dateExpiry, dateNow || new Date());
 }

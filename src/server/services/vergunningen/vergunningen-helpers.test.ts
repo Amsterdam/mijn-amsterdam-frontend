@@ -1,7 +1,5 @@
-import { VergunningFrontend } from './config-and-types';
 import {
   isNearEndDate,
-  isExpired,
   getCustomTitleForVergunningWithLicensePlates,
 } from './vergunningen-helpers';
 import { TouringcarDagontheffing } from '../parkeren/config-and-types';
@@ -30,41 +28,6 @@ describe('vergunningen/helpers', () => {
       d.getDate();
       d.setDate(d.getDate() - 120);
       expect(isNearEndDate(d.toISOString())).toBe(false);
-    });
-  });
-
-  describe('isExpired', () => {
-    test('Is expired', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() + 1);
-      expect(
-        isExpired(
-          { dateEnd: new Date().toISOString() } as VergunningFrontend,
-          d
-        )
-      ).toBe(true);
-    });
-
-    test('Is not expired', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() - 1);
-      expect(
-        isExpired(
-          { dateEnd: new Date().toISOString() } as VergunningFrontend,
-          d
-        )
-      ).toBe(false);
-    });
-
-    test('Is expired same date', () => {
-      expect(
-        isExpired(
-          { dateEnd: new Date().toISOString() } as VergunningFrontend,
-          new Date()
-        )
-      ).toBe(true);
     });
   });
 

@@ -12,6 +12,7 @@ import {
   getDecosZaakTypeFromSource,
   transformBoolean,
   toDateFormatted,
+  isExpired,
 } from './decos-helpers';
 import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken';
 
@@ -242,6 +243,26 @@ describe('decos/helpers', () => {
     });
     test('has no date', () => {
       expect(toDateFormatted(null)).toBe(null);
+    });
+  });
+
+  describe('isExpired', () => {
+    test('Is expired', () => {
+      const d = new Date();
+      d.getDate();
+      d.setDate(d.getDate() + 1);
+      expect(isExpired(new Date().toISOString(), d)).toBe(true);
+    });
+
+    test('Is not expired', () => {
+      const d = new Date();
+      d.getDate();
+      d.setDate(d.getDate() - 1);
+      expect(isExpired(new Date().toISOString(), d)).toBe(false);
+    });
+
+    test('Is expired same date', () => {
+      expect(isExpired(new Date().toISOString(), new Date())).toBe(true);
     });
   });
 });
