@@ -23,7 +23,9 @@ export function MainMenu() {
           <MegaMenu.ListCategory>
             {items.map((thema) => {
               const LinkComponent =
-                thema.rel === 'external' ? MaLink : MaRouterLink;
+                thema.rel === 'external' || thema.to.startsWith('http')
+                  ? MaLink
+                  : MaRouterLink;
               return (
                 <LinkComponent
                   key={thema.id}
