@@ -54,107 +54,18 @@ const sourceData: WpiIncomeSpecificationResponseData = {
       url: 'http://example.com/wpi/document?id=20021871&isBulk=false&isDms=false',
     },
   ],
-  uitkeringsspecificaties: [
-    {
-      datePublished: '2019-04-19T00:00:00+02:00',
-      id: '24267671',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Bijzondere Bijstand',
-      url: 'http://example.com/wpi/document?id=24267671&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2019-04-19T00:00:00+02:00',
-      id: '24267681',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Participatiewet',
-      url: 'http://example.com/wpi/document?id=24267681&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2019-03-23T00:00:00+01:00',
-      id: '24078481',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Participatiewet',
-      url: 'http://example.com/wpi/document?id=24078481&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2019-03-23T00:00:00+01:00',
-      id: '24078491',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Bijzondere Bijstand',
-      url: 'http://example.com/wpi/document?id=24078491&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2014-01-18T00:00:00+01:00',
-      id: '30032581',
-      title: 'Uitkeringsspecificatie',
-      variant: 'WWB',
-      url: 'http://example.com/wpi/document?id=30032581&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2019-05-18T00:00:00+02:00',
-      id: '31569261',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Participatiewet',
-      url: 'http://example.com/wpi/document?id=31569261&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2019-05-18T00:00:00+02:00',
-      id: '31569291',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Bijzondere Bijstand',
-      url: 'http://example.com/wpi/document?id=31569291&isBulk=false&isDms=false',
-    },
-
-    {
-      datePublished: '2012-04-19T00:00:00+02:00',
-      id: 'x24267671',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Bijzondere Bijstand',
-      url: 'http://example.com/wpi/document?id=24267671&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2012-04-19T00:00:00+02:00',
-      id: 'x24267681',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Participatiewet',
-      url: 'http://example.com/wpi/document?id=24267681&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2012-03-23T00:00:00+01:00',
-      id: 'x24078481',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Participatiewet',
-      url: 'http://example.com/wpi/document?id=24078481&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2012-03-23T00:00:00+01:00',
-      id: 'x24078491',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Bijzondere Bijstand',
-      url: 'http://example.com/wpi/document?id=24078491&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2012-01-18T00:00:00+01:00',
-      id: 'x30032581',
-      title: 'Uitkeringsspecificatie',
-      variant: 'WWB',
-      url: 'http://example.com/wpi/document?id=30032581&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2012-05-18T00:00:00+02:00',
-      id: 'x31569261',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Participatiewet',
-      url: 'http://example.com/wpi/document?id=31569261&isBulk=false&isDms=false',
-    },
-    {
-      datePublished: '2012-05-18T00:00:00+02:00',
-      id: 'x31569291',
-      title: 'Uitkeringsspecificatie',
-      variant: 'Bijzondere Bijstand',
-      url: 'http://example.com/wpi/document?id=31569291&isBulk=false&isDms=false',
-    },
-  ].sort(dateSort('datePublished', 'desc')),
+  uitkeringsspecificaties: Array.from({ length: 30 })
+    .map((_x, index) => {
+      const datePublished = `2019-04-${(index + 1).toString().padStart(2, '0')}T00:00:00+02:00`;
+      return {
+        datePublished,
+        id: `${index}`,
+        title: 'Uitkeringsspecificatie',
+        variant: 'Bijzondere Bijstand',
+        url: 'http://example.com/wpi/document?id=24267671&isBulk=false&isDms=false',
+      };
+    })
+    .sort(dateSort('datePublished', 'desc')),
 };
 
 const content = transformIncomSpecificationResponse('xxxxxxxxxxxxxxxxxxxxx', {
@@ -197,26 +108,22 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
     const user = userEvent.setup();
     const screen = render(<Component />);
 
-    expect(screen.getByText('18 januari 2014')).toBeInTheDocument();
+    expect(screen.getByText('29 april 2019')).toBeInTheDocument();
 
     await user.click(screen.getByText('Zoeken'));
 
     expect(screen.getByText('Datum van')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('2012-01-18')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('2019-04-01')).toBeInTheDocument();
 
     expect(screen.getByText('Datum t/m')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('2019-05-18')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('2019-04-30')).toBeInTheDocument();
 
-    expect(
-      screen.getByDisplayValue('Alle regelingen (14)')
-    ).toBeInTheDocument();
+    const input = screen.getByDisplayValue('2019-04-01');
+    await user.tripleClick(screen.getByDisplayValue('2019-04-01'));
+    await user.keyboard('2019-04-10');
 
-    const input = screen.getByDisplayValue('2012-01-18');
-    await user.tripleClick(screen.getByDisplayValue('2012-01-18'));
-    await user.keyboard('2019-03-23');
-
-    expect(input).toHaveValue('2019-03-23');
-    expect(screen.queryByText('18 januari 2014')).toBeNull();
+    expect(input).toHaveValue('2019-04-10');
+    expect(screen.queryByText('01 april 2019')).toBeNull();
   });
 
   it('Has pagination', async () => {
@@ -229,7 +136,7 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
     await user.click(screen.getByText('volgende'));
 
     expect(screen.getByText('Ga naar pagina 1')).toBeInTheDocument();
-    expect(screen.getByText('18 januari 2012')).toBeInTheDocument();
+    expect(screen.getByText('10 april 2019')).toBeInTheDocument();
     expect(screen.getByText('vorige')).toBeInTheDocument();
   });
 });

@@ -175,7 +175,9 @@ describe('<ToeristischVerhuurDetail />', () => {
       );
     }
     render(<Component />);
-    expect(screen.getByText('Vergunning vakantieverhuur')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Vergunning vakantieverhuur' })
+    ).toBeInTheDocument();
     expect(screen.getByText('Z/123/000007')).toBeInTheDocument();
     expect(screen.getByText('Vanaf')).toBeInTheDocument();
     expect(screen.getByText('Tot')).toBeInTheDocument();
@@ -208,7 +210,9 @@ describe('<ToeristischVerhuurDetail />', () => {
       );
     }
     const screen = render(<Component />);
-    expect(screen.getByText('Vergunning bed & breakfast')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Vergunning bed & breakfast' })
+    ).toBeInTheDocument();
     expect(screen.getByText('Z/23/2130506')).toBeInTheDocument();
     expect(screen.getByText('Vanaf')).toBeInTheDocument();
     expect(screen.getByText('Tot')).toBeInTheDocument();

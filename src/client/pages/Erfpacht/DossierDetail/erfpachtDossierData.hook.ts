@@ -37,6 +37,7 @@ export function useDossierDetaiLData() {
   const themaLink = useThemaMenuItemByThemaID(Themas.ERFPACHTv2);
 
   return {
+    title: dossier?.title ?? 'Erfpachtdossier',
     dossier,
     isLoading: isLoading(dossierApiResponse),
     isError: isError(dossierApiResponse),

@@ -66,34 +66,30 @@ export function getTableConfig({
   erfpachtData: ErfpachtV2DossiersResponse | null;
   dossier?: ErfpachtV2DossiersDetail;
 }) {
-  if (!erfpachtData) {
-    return null;
-  }
-
-  const dossiersBase = erfpachtData.dossiers;
-  const openFacturenBase = erfpachtData.openstaandeFacturen;
+  const dossiersBase = erfpachtData?.dossiers;
+  const openFacturenBase = erfpachtData?.openstaandeFacturen;
 
   const displayPropsDossiers: DisplayPropsDossiers = {
-    voorkeursadres: dossiersBase.titelVoorkeursAdres,
-    dossierNummer: dossiersBase.titelDossiernummer,
+    voorkeursadres: dossiersBase?.titelVoorkeursAdres,
+    dossierNummer: dossiersBase?.titelDossiernummer,
   };
 
   const titleDossiers = erfpachtData?.titelDossiersKop;
   const titleOpenFacturen = erfpachtData?.titelOpenFacturenKop;
 
   const displayPropsOpenFacturen: DisplayPropsFacturen = {
-    dossierAdres: openFacturenBase.titelFacturenDossierAdres,
-    factuurNummer: openFacturenBase.titelFacturenNummer,
-    formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
-    status: openFacturenBase.titelFacturenStatus,
-    vervalDatum: openFacturenBase.titelFacturenVervaldatum,
+    dossierAdres: openFacturenBase?.titelFacturenDossierAdres,
+    factuurNummer: openFacturenBase?.titelFacturenNummer,
+    formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
+    status: openFacturenBase?.titelFacturenStatus,
+    vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
   };
 
   const displayPropsAlleFacturen: DisplayPropsFacturen = {
-    factuurNummer: openFacturenBase.titelFacturenNummer,
-    formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
-    status: openFacturenBase.titelFacturenStatus,
-    vervalDatum: openFacturenBase.titelFacturenVervaldatum,
+    factuurNummer: openFacturenBase?.titelFacturenNummer,
+    formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
+    status: openFacturenBase?.titelFacturenStatus,
+    vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
   };
 
   const tableConfig = {

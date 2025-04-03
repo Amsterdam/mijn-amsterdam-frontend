@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router-dom';
 
 import { componentCreator } from '../MockApp';
-import HLIStadspasDetail from './HLIStadspasDetail';
+import { HLIStadspasDetail } from './HLIStadspasDetail';
 import { forTesting } from './HLIStadspasDetail';
 import { createHLIState } from './test-helpers';
 import { stadspasCreator } from './test-helpers';
@@ -106,7 +106,11 @@ describe('Displayed description of uw uitgaven text', () => {
       createStadspas(),
       false
     );
-    expect(result).toBe('U heeft nog geen uitgaven.');
+    expect(result).toMatchInlineSnapshot(`
+      <React.Fragment>
+        U heeft nog geen uitgaven.
+      </React.Fragment>
+    `);
   });
 
   test('With transactions', () => {
@@ -115,10 +119,11 @@ describe('Displayed description of uw uitgaven text', () => {
       true
     );
 
-    expect(result)
-      .toBe(`Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
-informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
-klopt altijd.`);
+    expect(result).toMatchInlineSnapshot(`
+      <React.Fragment>
+        Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
+      </React.Fragment>
+    `);
   });
 
   test('With budget, balance and transactions', () => {
@@ -138,9 +143,16 @@ klopt altijd.`);
       createStadspas({ budgets: [budget], balance: 5 }),
       false
     );
-
-    expect(result)
-      .toBe(`U heeft nog geen uitgaven. Deze informatie kan een dag achterlopen.
-Maar het saldo dat u nog over heeft klopt altijd.`);
+    // prettier-ignore
+    expect(result).toMatchInlineSnapshot(`
+      <React.Fragment>
+        <React.Fragment>
+          U heeft nog geen uitgaven.
+        </React.Fragment>
+        <React.Fragment>
+          Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft klopt altijd.
+        </React.Fragment>
+      </React.Fragment>
+    `);
   });
 });

@@ -25,7 +25,6 @@ export function useErfpachtV2Data() {
   // Facturen
   const openFacturenBase = erfpachtData?.openstaandeFacturen ?? null;
   const openFacturen = openFacturenBase?.facturen ?? [];
-
   const tableConfig = getTableConfig({ erfpachtData });
 
   return {
