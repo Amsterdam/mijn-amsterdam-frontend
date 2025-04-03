@@ -1,4 +1,5 @@
 import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import {
   VarenZakenFrontend,
@@ -46,7 +47,7 @@ function createVarenNotification(
     !zaak.processed || isVergunning(zaak)
       ? generatePath(AppRoutes['VAREN/DETAIL'], {
           id: zaak.id,
-          caseType: zaak.caseType,
+          caseType: slug(zaak.caseType, { lower: true }),
         })
       : AppRoutes.VAREN;
 

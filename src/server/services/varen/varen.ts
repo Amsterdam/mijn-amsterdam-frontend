@@ -11,7 +11,7 @@ import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { toDateFormatted } from '../../../universal/helpers/utils';
+import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
@@ -61,7 +61,7 @@ async function fetchVaren_(
         );
         const displayStatus = getDisplayStatus(zaakTransformed, steps);
         const zaakFrontend: VarenZakenFrontend = {
-          ...zaakTransformed,
+          ...omit(zaakTransformed, ['vergunningen']),
           steps,
           displayStatus,
         };
