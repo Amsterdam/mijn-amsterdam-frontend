@@ -2,11 +2,7 @@ import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 
 import { getAuth } from '../auth/auth-helpers';
-import {
-  fetchAantalBewoners,
-  fetchVergunningenDocument,
-  fetchVergunningenDocumentsList,
-} from '../services';
+import { fetchAantalBewoners } from '../services';
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
@@ -111,46 +107,6 @@ router.get(
       );
 
       return res.send(bewonersResponse);
-    }
-    return sendUnauthorized(res);
-  }
-);
-
-// Deprecated, will be removed in MIJN-8916
-router.get(
-  BffEndpoints.VERGUNNINGEN_LIST_DOCUMENTS,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
-
-    if (authProfileAndToken) {
-      const documentsListResponse = await fetchVergunningenDocumentsList(
-        res.locals.requestID,
-        authProfileAndToken,
-        req.params.id
-      );
-
-      return res.send(documentsListResponse);
-    }
-
-    return sendUnauthorized(res);
-  }
-);
-
-// Deprecated, will be removed in MIJN-8916
-router.get(
-  BffEndpoints.VERGUNNINGEN_DOCUMENT_DOWNLOAD,
-  async (req: Request, res: Response) => {
-    const authProfileAndToken = getAuth(req);
-    if (authProfileAndToken) {
-      const documentResponse = await fetchVergunningenDocument(
-        res.locals.requestID,
-        authProfileAndToken,
-        req.params.id
-      );
-
-      const contentType = documentResponse.headers['content-type'];
-      res.setHeader('content-type', contentType);
-      return documentResponse.data.pipe(res);
     }
     return sendUnauthorized(res);
   }

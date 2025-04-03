@@ -2,33 +2,31 @@ import { useMemo } from 'react';
 
 import { getEvenementVergunningLineItems } from './EvenementVergunning';
 import { getRVVSloterwegLineItems } from './RvvSloterweg';
-import styles from './VergunningDetail.module.scss';
-import type { Vergunning } from '../../../../server/services/vergunningen/vergunningen';
-import { hasWorkflow } from '../../../../universal/helpers/vergunningen';
+import { VergunningFrontendV2 } from '../../../../server/services/vergunningen-v2/config-and-types';
 import { GenericDocument, StatusLineItem } from '../../../../universal/types';
-import { CaseType } from '../../../../universal/types/vergunningen';
+import { CaseTypeV2 } from '../../../../universal/types/vergunningen';
 import StatusLine from '../../../components/StatusLine/StatusLine';
 
-function useVergunningStatusLineItems(vergunning?: Vergunning) {
+function useVergunningStatusLineItems(vergunning?: VergunningFrontendV2) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
     if (!vergunning) {
       return [];
     }
 
     switch (vergunning.caseType) {
-      case CaseType.EvenementVergunning:
+      case CaseTypeV2.EvenementVergunning:
         return getEvenementVergunningLineItems(vergunning);
-      case CaseType.RVVSloterweg:
+      case CaseTypeV2.RVVSloterweg:
         return getRVVSloterwegLineItems(vergunning);
     }
 
     const isDone = vergunning.processed;
-    const hasDateWorkflowActive = !!vergunning.dateWorkflowActive;
-    const inProgressActive = hasWorkflow(vergunning.caseType)
-      ? hasDateWorkflowActive && !isDone
-      : !isDone;
+    const hasDateWorkflowActive = !!(
+      'dateWorkflowActive' in vergunning && vergunning.dateWorkflowActive
+    );
+    const inProgressActive = hasDateWorkflowActive && !isDone;
 
-    const lineItems = [
+    const lineItems: StatusLineItem[] = [
       {
         id: 'item-1',
         status: 'Ontvangen',
@@ -41,7 +39,11 @@ function useVergunningStatusLineItems(vergunning?: Vergunning) {
       {
         id: 'item-2',
         status: 'In behandeling',
-        datePublished: vergunning.dateWorkflowActive || '',
+        datePublished:
+          hasDateWorkflowActive &&
+          typeof vergunning.dateWorkflowActive === 'string'
+            ? vergunning.dateWorkflowActive
+            : '',
         description: '',
         documents: [],
         isActive: inProgressActive,
@@ -68,7 +70,7 @@ export function StatusLineItems({
   vergunning,
   trackPath,
 }: {
-  vergunning: Vergunning;
+  vergunning: VergunningFrontendV2;
   trackPath?: (document: GenericDocument) => string;
 }) {
   const statusLineItems = useVergunningStatusLineItems(vergunning);
@@ -78,7 +80,6 @@ export function StatusLineItems({
   }
   return (
     <StatusLine
-      className={styles.VergunningStatus}
       trackCategory="Vergunningen detail / status"
       items={statusLineItems}
       id={`vergunning-detail-${vergunning.id}`}

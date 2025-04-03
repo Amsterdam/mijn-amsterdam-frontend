@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useParkerenData } from './useParkerenData.hook';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ListPageParamKind } from '../VergunningenV2/config';
+import { ListPageParamKind } from '../VergunningenV2/Vergunningen-thema-config';
 
 export function ParkerenList() {
   const params = useParams<{ kind: ListPageParamKind }>();

@@ -154,7 +154,7 @@ describe('Search hooks and helpers', () => {
       [
         {
           ...API_SEARCH_CONFIG_DEFAULT,
-          stateKey: 'VERGUNNINGEN',
+          stateKey: 'VERGUNNINGENv2',
           displayTitle: (vergunning: Vergunning) => (term: string) => {
             return displayPath(term, [vergunning.title, vergunning.identifier]);
           },
