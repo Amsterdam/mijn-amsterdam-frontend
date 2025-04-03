@@ -13,7 +13,6 @@ export type Thema =
   | 'OVERTREDINGEN'
   | 'NOTIFICATIONS'
   | 'HOME'
-  | 'ERFPACHT'
   | 'ERFPACHTv2'
   | 'ZORG'
   | 'VERGUNNINGEN'
@@ -40,7 +39,6 @@ export const Themas: Record<Thema, Thema> = {
   BRP: 'BRP',
   BURGERZAKEN: 'BURGERZAKEN',
   BUURT: 'BUURT',
-  ERFPACHT: 'ERFPACHT',
   ERFPACHTv2: 'ERFPACHTv2',
   HLI: 'HLI',
   HORECA: 'HORECA',

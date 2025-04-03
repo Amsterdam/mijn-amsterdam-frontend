@@ -9,7 +9,7 @@ import ERFPACHTv2_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossi
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
-} from '../../../../server/services/simple-connect/erfpacht';
+} from '../../../../server/services/erfpacht/erfpacht';
 import { bffApi } from '../../../../testing/utils';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { jsonCopy } from '../../../../universal/helpers/utils';

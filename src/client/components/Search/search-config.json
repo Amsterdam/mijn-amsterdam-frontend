@@ -400,14 +400,8 @@
       "keywords": ["Subsidie", "Subsidies"]
     },
     {
-      "url": "https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger",
-      "displayTitle": "Erfpacht",
-      "description": "Een overzicht van de erfpacht.",
-      "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen"]
-    },
-    {
       "url": "/erfpacht",
-      "displayTitle": "ErfpachtV2",
+      "displayTitle": "Erfpacht",
       "description": "Een overzicht van uw erfpachtrechten.",
       "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen", "Facturen"]
     },

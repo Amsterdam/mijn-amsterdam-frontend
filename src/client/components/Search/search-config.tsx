@@ -15,7 +15,7 @@ import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-typ
 import {
   ErfpachtV2Dossier,
   ErfpachtV2DossiersResponse,
-} from '../../../server/services/simple-connect/erfpacht';
+} from '../../../server/services/erfpacht/erfpacht';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,

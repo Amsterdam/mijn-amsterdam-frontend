@@ -5,7 +5,7 @@ import { useErfpachtV2Data } from './erfpachtData.hook';
 import {
   ErfpachtDossierFactuur,
   ErfpachtV2Dossier,
-} from '../../../server/services/simple-connect/erfpacht';
+} from '../../../server/services/erfpacht/erfpacht';
 import { entries } from '../../../universal/helpers/utils';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';

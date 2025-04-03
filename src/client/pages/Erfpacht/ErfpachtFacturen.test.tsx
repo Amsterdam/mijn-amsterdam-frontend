@@ -8,7 +8,7 @@ import {
   ErfpachtV2DossiersResponse,
   transformDossierResponse,
   transformErfpachtDossierProperties,
-} from '../../../server/services/simple-connect/erfpacht';
+} from '../../../server/services/erfpacht/erfpacht';
 import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';

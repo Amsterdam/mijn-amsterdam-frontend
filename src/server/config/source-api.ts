@@ -71,7 +71,6 @@ export type SourceApiKey =
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'DECOS_API'
   | 'ENABLEU_2_SMILE'
-  | 'ERFPACHT'
   | 'ERFPACHTv2'
   | 'GPASS'
   | 'KREFIA'
@@ -234,14 +233,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   BRP: {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
     passthroughOIDCToken: true,
-  },
-  ERFPACHT: {
-    url: `${getFromEnv('BFF_MIJN_ERFPACHT_API_URL')}`,
-    // NOTE: Temporarily disable https validation until we solve the cert verification error. See also: MIJN-9122
-    httpsAgent: new https.Agent({
-      rejectUnauthorized: false,
-    }),
-    postponeFetch: !FeatureToggle.mijnErfpachtActive,
   },
   BAG: {
     url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,

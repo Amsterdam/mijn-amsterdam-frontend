@@ -39,7 +39,6 @@ export const ThemaTitles: { [thema in Thema]: string } = {
   BRP: 'Mijn gegevens',
   BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
-  ERFPACHT: 'Erfpacht',
   ERFPACHTv2: `Erfpacht`,
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
@@ -280,13 +279,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private'],
   },
   {
-    title: ThemaTitles.ERFPACHT,
-    id: Themas.ERFPACHT,
-    to: import.meta.env.REACT_APP_SSO_URL_MIJNERFPACHT,
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
     title: ThemaTitles.ERFPACHTv2,
     id: Themas.ERFPACHTv2,
     to: AppRoutes.ERFPACHTv2,
@@ -298,13 +290,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: import.meta.env.REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK,
     profileTypes: ['commercial'],
     rel: 'external',
-  },
-  {
-    title: ThemaTitles.ERFPACHT,
-    id: Themas.ERFPACHT,
-    to: import.meta.env.REACT_APP_SSO_URL_MIJNERFPACHT_ZAKELIJK,
-    rel: 'external',
-    profileTypes: ['commercial'],
   },
   {
     title: ThemaTitles.SUBSIDIE,

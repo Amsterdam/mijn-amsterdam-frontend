@@ -1,4 +1,3 @@
-import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
   FailedDependencies,
@@ -56,8 +55,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
-  ERFPACHT: 'Mijn erfpacht',
-  ERFPACHTv2: `Erfpacht${IS_PRODUCTION ? '' : ' V2 (Vernise)'}`,
+  ERFPACHTv2: 'Erfpacht',
   HLI_regelingen: 'Regelingen bij laag inkomen',
   HLI_stadspas: 'Stadspas, saldo en transacties',
   HORECA: 'Horeca vergunningen',

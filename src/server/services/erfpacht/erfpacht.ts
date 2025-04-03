@@ -1,124 +1,12 @@
-import crypto from 'crypto';
-
 import { generatePath } from 'react-router-dom';
 
-import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
-import { apiPostponeResult } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
 import { LinkProps, ZaakDetail } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-
-function encryptPayload(payload: string) {
-  const encryptionKey = process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 + '';
-  const IV_LENGTH = 16;
-  const iv = crypto
-    .randomBytes(IV_LENGTH)
-    .toString('base64')
-    .slice(0, IV_LENGTH);
-  const ivBuffer = Buffer.from(iv, 'utf-8');
-  const cipher = crypto.createCipheriv('aes-128-cbc', encryptionKey, ivBuffer);
-  const encrypted = Buffer.concat([cipher.update(payload), cipher.final()]);
-
-  return [ivBuffer.toString(), encrypted.toString('base64url')] as const;
-}
-
-function encryptPayloadWithoutForwardSlashes(
-  payload: string
-): ReturnType<typeof encryptPayload> {
-  const encrypted = encryptPayload(payload);
-  if (encrypted[1] && encrypted[1].includes('/')) {
-    return encryptPayloadWithoutForwardSlashes(payload);
-  }
-  return encrypted;
-}
-
-type ErfpachtSourceResponse = boolean;
-
-function transformErfpachtResponse(isKnown: ErfpachtSourceResponse) {
-  return {
-    isKnown: isKnown ?? false,
-  };
-}
-
-export function getConfigMain(
-  authProfileAndToken: AuthProfileAndToken,
-  requestID: RequestID
-): DataRequestConfig {
-  const profile = authProfileAndToken.profile;
-  const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
-  const type = profile.profileType === 'commercial' ? 'company' : 'user';
-  const config = {
-    url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/check/groundlease/${type}/${payload}`,
-    cacheKey: `erfpacht-main-${requestID}`,
-    headers: {
-      'X-RANDOM-IV': iv,
-      'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
-    },
-    transformResponse: (response: ErfpachtSourceResponse) =>
-      transformErfpachtResponse(response),
-  };
-
-  return getApiConfig('ERFPACHT', config);
-}
-
-export async function fetchErfpacht(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  if (!FeatureToggle.mijnErfpachtActive) {
-    return Promise.resolve(apiPostponeResult(null));
-  }
-
-  return fetchService(
-    requestID,
-    getConfigMain(authProfileAndToken, requestID),
-    false
-  );
-}
-
-function getConfigNotifications(
-  authProfileAndToken: AuthProfileAndToken,
-  requestID: RequestID
-): DataRequestConfig {
-  const profile = authProfileAndToken.profile;
-  const [iv, payload] = encryptPayloadWithoutForwardSlashes(profile.id + '');
-  const type = profile.profileType === 'commercial' ? 'kvk' : 'bsn';
-
-  return getApiConfig('ERFPACHT', {
-    url: `${process.env.BFF_MIJN_ERFPACHT_API_URL}/api/v2/notifications/${type}/${payload}`,
-    cacheKey: `erfpacht-notifications-${requestID}`,
-    headers: {
-      'X-RANDOM-IV': iv,
-      'X-API-KEY': process.env.BFF_MIJN_ERFPACHT_API_KEY + '',
-    },
-    transformResponse: (response) => {
-      return { notifications: Array.isArray(response) ? response : [] };
-    },
-  });
-}
-
-export async function fetchErfpachtNotifications(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  if (!FeatureToggle.mijnErfpachtActive) {
-    return Promise.resolve(apiPostponeResult(null));
-  }
-  const response = await fetchTipsAndNotifications(
-    requestID,
-    getConfigNotifications(authProfileAndToken, requestID),
-    Themas.ERFPACHT
-  );
-
-  return response;
-}
 
 interface Erfpachtv2ErpachterResponseSource {
   erfpachter: boolean;
