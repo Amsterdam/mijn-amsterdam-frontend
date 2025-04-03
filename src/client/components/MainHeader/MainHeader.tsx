@@ -5,6 +5,7 @@ import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
 import styles from './MainHeader.module.scss';
+import { OtapLabel } from './OtapLabel';
 import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
@@ -159,12 +160,15 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
         logoLink="https://www.amsterdam.nl/"
         brandName={
           (
-            <MaRouterLink
-              className={styles.BrandNameLink}
-              href={AppRoutes.HOME}
-            >
-              Mijn Amsterdam
-            </MaRouterLink>
+            <>
+              <MaRouterLink
+                className={styles.BrandNameLink}
+                href={AppRoutes.HOME}
+              >
+                Mijn Amsterdam
+              </MaRouterLink>
+              <OtapLabel />
+            </>
           ) as unknown as string // Hack because brandName is not typed as ReactNode
         }
         menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
