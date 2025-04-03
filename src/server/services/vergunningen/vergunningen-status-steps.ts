@@ -1,7 +1,7 @@
 import { RVVSloterweg, VergunningFrontend } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types';
 import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
-import { getStatusDate } from '../decos/helpers';
+import { getStatusDate } from '../decos/decos-helpers';
 
 export function getStatusStepsRVVSloterweg(
   vergunning: VergunningFrontend<RVVSloterweg>

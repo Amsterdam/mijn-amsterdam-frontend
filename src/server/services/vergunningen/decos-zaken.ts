@@ -1,18 +1,9 @@
-import { parseISO } from 'date-fns';
-
 import {
   AanbiedenDiensten as AanbiedenDienstenType,
-  BZB as BZBType,
-  BZP as BZPType,
   ERVV,
-  EigenParkeerplaatsOpheffen as EigenParkeerplaatsOpheffenType,
-  EigenParkeerplaatsRequestType,
-  EigenParkeerplaats as EigenParkeerplaatsType,
   EvenementMelding as EvenementMeldingType,
   EvenementVergunning as EvenementVergunningType,
   Flyeren as FlyerenType,
-  GPK as GPKType,
-  GPP as GPPType,
   Ligplaatsvergunning as LigplaatsvergunningType,
   Nachtwerkontheffing as NachtwerkontheffingType,
   Omzettingsvergunning as OmzettingsvergunningType,
@@ -23,8 +14,6 @@ import {
   Samenvoegingsvergunning as SamenvoegingsvergunningType,
   Splitsingsvergunning as SplitsingsvergunningType,
   TVMRVVObject as TVMRVVObjectType,
-  TouringcarDagontheffing as TouringcarDagontheffingType,
-  TouringcarJaarontheffing as TouringcarJaarontheffingType,
   VormenVanWoonruimte as VormenVanWoonruimteType,
   WVOSActiviteit as WVOSActiviteitType,
   WerkzaamhedenEnVervoerOpStraat as WerkzaamhedenEnVervoerOpStraatType,
@@ -36,44 +25,27 @@ import {
   caseNotificationLabelsRevoke,
 } from './vergunningen-notification-labels';
 import { IS_PRODUCTION } from '../../../universal/config/env';
+import { CaseTypeV2 } from '../../../universal/types/decos-zaken';
 import {
-  CaseTypeV2,
-  DecosCaseType,
-} from '../../../universal/types/decos-zaken';
-import {
-  dateEnd,
-  dateStart,
-  DecosFieldNameSource,
-  DecosZaakBase,
   DecosZaakTransformer,
-  description,
-  destination,
-  location,
+  DecosFieldNameSource,
+} from '../decos/config-and-types';
+import {
   SELECT_FIELDS_TRANSFORM_BASE,
+  transformDecision,
+  description,
+  dateStart,
+  dateEnd,
   timeEnd,
   timeStart,
-  WithKentekens,
-} from '../decos/decos-types';
+  kentekens,
+  location,
+} from '../decos/decos-field-transformers';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
+  getDecosZaakTransformersByCaseType,
   getStatusDate,
-  transformBoolean,
-  transformKenteken,
-  translateValue,
-} from '../decos/helpers';
-
-// 1 or multiple kenteken(s)
-const kentekens = {
-  name: 'kentekens' as keyof WithKentekens, // TODO: Can this be typed stricter without casting?
-  transform: transformKenteken,
-};
-
-const transformDecision = (
-  translationMapping: Parameters<typeof translateValue>[0]
-) => ({
-  name: 'decision' as const,
-  transform: translateValue(translationMapping),
-});
+} from '../decos/decos-helpers';
 
 export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
   isActive: true,
@@ -109,57 +81,6 @@ export const TVMRVVObject: DecosZaakTransformer<TVMRVVObjectType> = {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
 
     return vergunning;
-  },
-  notificationLabels: caseNotificationLabelsExpirables,
-};
-
-export const GPP: DecosZaakTransformer<GPPType> = {
-  isActive: true,
-  caseType: CaseTypeV2.GPP,
-  title: 'Vaste parkeerplaats voor gehandicapten (GPP)',
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    dfunction: transformDecision({
-      Ingetrokken: ['Ingetrokken i.v.m. overlijden of verhuizing'],
-      '': ['Nog niet bekend'],
-    }),
-    text7: kentekens,
-    text8: location,
-  },
-  async afterTransform(vergunning) {
-    vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
-    return vergunning;
-  },
-  notificationLabels: caseNotificationLabelsDefault,
-};
-
-export const GPK: DecosZaakTransformer<GPKType> = {
-  isActive: true,
-  caseType: CaseTypeV2.GPK,
-  title: 'Europese gehandicaptenparkeerkaart (GPK)',
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    dfunction: transformDecision({
-      Ingetrokken: [
-        'Ingetrokken i.v.m. overlijden of verhuizing',
-        'Ingetrokken verleende GPK wegens overlijden',
-      ],
-      '': ['Nog niet bekend'],
-      'Verleend Bestuurder, niet verleend Passagier': [
-        'Verleend Bestuurder met GPP (niet verleend passagier)',
-        // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
-        'Verleend Bestuurder met GPP (niet verleend passagi',
-      ],
-      Verleend: ['Verleend met GPP', 'Verleend vervangend GPK'],
-      'Verleend Passagier, niet verleend Bestuurder': [
-        'Verleend Passagier met GPP (niet verleend Bestuurder)',
-        // Decos cuts of the field at 50 chars, we sadly have to anticipate on this
-        'Verleend Passagier met GPP (niet verleend Bestuurd',
-      ],
-    }),
-    date7: dateEnd,
-    num3: { name: 'cardNumber' },
-    text7: { name: 'cardType' },
   },
   notificationLabels: caseNotificationLabelsExpirables,
 };
@@ -253,38 +174,6 @@ export const ERVV_TVM: DecosZaakTransformer<ERVV> = {
     text13: timeEnd,
   },
   notificationLabels: caseNotificationLabelsExpirables,
-};
-
-export const BZP: DecosZaakTransformer<BZPType> = {
-  isActive: true,
-  caseType: CaseTypeV2.BZP,
-  title: CaseTypeV2.BZP,
-  requirePayment: true,
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    date6: dateStart,
-    date7: dateEnd,
-    text8: kentekens,
-  },
-  async afterTransform(vergunning, decosZaakSource) {
-    vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
-    return vergunning;
-  },
-  notificationLabels: caseNotificationLabelsExpirables,
-};
-
-export const BZB: DecosZaakTransformer<BZBType> = {
-  isActive: true,
-  caseType: CaseTypeV2.BZB,
-  title: CaseTypeV2.BZB,
-  transformFields: {
-    ...SELECT_FIELDS_TRANSFORM_BASE,
-    date6: dateStart,
-    date7: dateEnd,
-    company: { name: 'companyName' },
-    num6: { name: 'numberOfPermits' },
-  },
-  notificationLabels: caseNotificationLabelsDefault,
 };
 
 export const Flyeren: DecosZaakTransformer<FlyerenType> = {
@@ -596,171 +485,6 @@ export const RVVSloterweg: DecosZaakTransformer<RVVSloterwegType> = {
   notificationLabels: caseNotificationLabelsRevoke,
 };
 
-export const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaatsType> =
-  {
-    isActive: true,
-    caseType: CaseTypeV2.EigenParkeerplaats,
-    title: CaseTypeV2.EigenParkeerplaats,
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
-      },
-    ],
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      date6: dateStart,
-      date8: dateEnd,
-      text13: kentekens,
-      text14: { ...kentekens, name: 'vorigeKentekens' },
-    },
-    requirePayment: true,
-    hasValidSourceData: (decosZaak) => {
-      const dateNotBefore = new Date('2023-08-08');
-      const dateRequest = parseISO(decosZaak.fields.document_date);
-
-      return dateRequest >= dateNotBefore;
-    },
-    async afterTransform(vergunning, zaakSource) {
-      vergunning.title =
-        getCustomTitleForDecosZaakWithLicensePlates(vergunning);
-
-      const locations: (typeof vergunning)['locations'] = [];
-
-      if (zaakSource.fields.text25) {
-        locations.push({
-          type: String(zaakSource.fields.text17),
-          street: String(zaakSource.fields.tex25),
-          houseNumber: `${zaakSource.fields.num14 ?? ''}`,
-          fiscalNumber: String(zaakSource.fields.text18),
-          url: String(zaakSource.fields.text19),
-        });
-      }
-
-      if (zaakSource.fields.streetLocation2) {
-        locations.push({
-          type: String(zaakSource.fields.text20),
-          street: String(zaakSource.fields.text15),
-          houseNumber: `${zaakSource.fields.num15 ?? ''}`,
-          fiscalNumber: String(zaakSource.fields.text21),
-          url: String(zaakSource.fields.text22),
-        });
-      }
-
-      vergunning.locations = locations;
-
-      const requestTypes: Record<string, EigenParkeerplaatsRequestType> = {
-        bol9: 'Nieuwe aanvraag',
-        bol8: 'Autodeelbedrijf',
-        bol10: 'Kentekenwijziging',
-        bol11: 'Verhuizing',
-        bol7: 'Verlenging',
-      };
-
-      vergunning.requestTypes = Object.entries(requestTypes)
-        .map(([decosFieldNameSource, targetValue]) => {
-          return zaakSource.fields[decosFieldNameSource]
-            ? targetValue
-            : undefined;
-        })
-        .filter(
-          (
-            requestType: EigenParkeerplaatsRequestType | undefined
-          ): requestType is EigenParkeerplaatsRequestType =>
-            typeof requestType !== 'undefined'
-        );
-
-      return vergunning;
-    },
-    notificationLabels: caseNotificationLabelsExpirables,
-  };
-
-export const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffenType> =
-  {
-    isActive: true,
-    caseType: CaseTypeV2.EigenParkeerplaatsOpheffen,
-    title: CaseTypeV2.EigenParkeerplaatsOpheffen,
-    fetchWorkflowStatusDatesFor: [
-      {
-        status: 'In behandeling',
-        stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
-      },
-    ],
-    requirePayment: true,
-    hasValidSourceData: EigenParkeerplaats.hasValidSourceData,
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      bol8: 'isCarsharingpermit',
-      date8: 'dateEnd',
-    },
-    async afterTransform(vergunning, zaakSource) {
-      vergunning.location = {
-        street: String(zaakSource.fields.text25),
-        houseNumber: String(zaakSource.fields.num14),
-        type: String(zaakSource.fields.text17),
-        url: String(zaakSource.fields.tex19),
-        fiscalNumber: String(zaakSource.fields.tex18),
-      };
-      return vergunning;
-    },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
-
-export const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffingType> =
-  {
-    isActive: true,
-    caseType: CaseTypeV2.TouringcarDagontheffing,
-    title: CaseTypeV2.TouringcarDagontheffing,
-    fetchWorkflowStatusDatesFor: [
-      { status: 'In behandeling', stepTitle: 'Status naar in behandeling' },
-    ],
-    requirePayment: true,
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      date6: dateStart,
-      date7: dateEnd,
-      text14: timeStart,
-      text15: timeEnd,
-      text10: kentekens,
-      text7: destination,
-    },
-    async afterTransform(vergunning) {
-      vergunning.title =
-        getCustomTitleForDecosZaakWithLicensePlates(vergunning);
-      return vergunning;
-    },
-    notificationLabels: caseNotificationLabelsDefault,
-  };
-
-export const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffingType> =
-  {
-    isActive: true,
-    caseType: CaseTypeV2.TouringcarJaarontheffing,
-    title: CaseTypeV2.TouringcarJaarontheffing,
-    fetchWorkflowStatusDatesFor: [
-      { status: 'In behandeling', stepTitle: 'Status naar In Behandeling' },
-    ],
-    requirePayment: true,
-    transformFields: {
-      ...SELECT_FIELDS_TRANSFORM_BASE,
-      date6: dateStart,
-      date7: dateEnd,
-      text39: kentekens,
-      text7: destination,
-      bol8: { name: 'routetest', transform: transformBoolean },
-    },
-    async afterTransform(vergunning) {
-      if ('routetest' in vergunning && vergunning.routetest) {
-        vergunning.title = 'Touringcar jaarontheffing met routetoets';
-      } else {
-        vergunning.title =
-          getCustomTitleForDecosZaakWithLicensePlates(vergunning);
-      }
-      return vergunning;
-    },
-    notificationLabels: caseNotificationLabelsExpirables,
-  };
-
 export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraatType> =
   {
     isActive: !IS_PRODUCTION,
@@ -819,15 +543,9 @@ export const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerO
 
 export const decosZaakTransformers = [
   AanbiedenDiensten,
-  BZB,
-  BZP,
-  EigenParkeerplaats,
-  EigenParkeerplaatsOpheffen,
   EvenementMelding,
   EvenementVergunning,
   Flyeren,
-  GPK,
-  GPP,
   NachtwerkOntheffing,
   Onttrekkingsvergunning,
   OnttrekkingsvergunningSloop,
@@ -835,8 +553,6 @@ export const decosZaakTransformers = [
   RVVSloterweg,
   Samenvoegingsvergunning,
   Splitsingsvergunning,
-  TouringcarDagontheffing,
-  TouringcarJaarontheffing,
   TVMRVVObject,
   VOBvergunning,
   VormenVanWoonruimte,
@@ -844,10 +560,6 @@ export const decosZaakTransformers = [
   ZwaarVerkeer,
 ];
 
-export const decosCaseToZaakTransformers = decosZaakTransformers.reduce(
-  (acc, zaakTransformer) => ({
-    ...acc,
-    [zaakTransformer.caseType]: zaakTransformer,
-  }),
-  {} as Record<DecosCaseType, DecosZaakTransformer<DecosZaakBase>>
+export const decosCaseToZaakTransformers = getDecosZaakTransformersByCaseType(
+  decosZaakTransformers
 );

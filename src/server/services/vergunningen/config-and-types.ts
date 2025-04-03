@@ -1,5 +1,5 @@
 import { LinkProps, ZaakDetail } from '../../../universal/types';
-import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
+import { GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   WithDateRange,
   WithKentekens,
@@ -7,7 +7,7 @@ import {
   WithDateTimeRange,
   ZaakStatus,
   DecosZaakBase,
-} from '../decos/decos-types';
+} from '../decos/config-and-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
@@ -18,21 +18,6 @@ export type TVMRVVObject = DecosZaakBase &
   WithDateTimeRange & {
     caseType: GetCaseType<'TVMRVVObject'>;
   };
-
-export type GPK = DecosZaakBase &
-  WithLocation & {
-    caseType: GetCaseType<'GPK'>;
-    cardType: 'driver' | 'passenger';
-    cardNumber: number | null;
-    dateEnd: string | null;
-    requestReason: string | null;
-  };
-
-export type GPP = DecosZaakBase & {
-  location: string | null;
-  caseType: typeof CaseTypeV2.GPP;
-  kentekens: string | null;
-};
 
 export type EvenementMelding = DecosZaakBase &
   WithLocation &
@@ -56,24 +41,6 @@ export type ERVV = DecosZaakBase &
   WithLocation &
   WithDateTimeRange & {
     caseType: GetCaseType<'ERVV'>;
-  };
-
-// BZB is short for Parkeerontheffingen Blauwe zone bedrijven
-export type BZB = DecosZaakBase &
-  WithDateRange & {
-    caseType: GetCaseType<'BZB'>;
-    companyName: string | null;
-    numberOfPermits: string | null;
-    decision: string | null;
-  };
-
-// BZP is short for Parkeerontheffingen Blauwe zone particulieren
-export type BZP = DecosZaakBase &
-  WithDateRange &
-  WithKentekens & {
-    caseType: GetCaseType<'BZP'>;
-    kentekens: string | null;
-    decision: string | null;
   };
 
 export type Flyeren = DecosZaakBase &
@@ -120,21 +87,6 @@ export type RVVSloterweg = DecosZaakBase &
     status: ZaakStatus & 'Actief';
   };
 
-export type TouringcarDagontheffing = DecosZaakBase &
-  WithKentekens &
-  WithDateTimeRange & {
-    caseType: GetCaseType<'TouringcarDagontheffing'>;
-    destination: string | null;
-  };
-
-export type TouringcarJaarontheffing = DecosZaakBase &
-  WithKentekens &
-  WithDateRange & {
-    caseType: GetCaseType<'TouringcarJaarontheffing'>;
-    destination: string | null;
-    routetest: boolean;
-  };
-
 export type Samenvoegingsvergunning = DecosZaakBase &
   WithLocation & {
     caseType: GetCaseType<'Samenvoegingsvergunning'>;
@@ -169,37 +121,6 @@ export type Ligplaatsvergunning = DecosZaakBase &
     vesselName: string | null;
   };
 
-export type Parkeerplaats = {
-  fiscalNumber: string;
-  houseNumber: string;
-  street: string;
-  type: string;
-  url: string;
-};
-
-export type EigenParkeerplaatsRequestType =
-  | 'Nieuwe aanvraag'
-  | 'Autodeelbedrijf'
-  | 'Kentekenwijziging'
-  | 'Verhuizing'
-  | 'Verlenging';
-
-export type EigenParkeerplaats = DecosZaakBase &
-  WithKentekens &
-  WithDateRange & {
-    caseType: GetCaseType<'EigenParkeerplaats'>;
-    vorigeKentekens: string | null;
-    requestTypes: EigenParkeerplaatsRequestType[];
-    locations: Parkeerplaats[];
-  };
-
-export type EigenParkeerplaatsOpheffen = DecosZaakBase & {
-  caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
-  isCarsharingpermit: boolean;
-  dateEnd: string | null;
-  location: Parkeerplaats;
-};
-
 export type WVOSActiviteit =
   | 'Rijden of een voertuig neerzetten waar dat normaal niet mag'
   | 'Object(en) neerzetten'
@@ -220,14 +141,10 @@ export type WerkzaamhedenEnVervoerOpStraat = DecosZaakBase &
 
 export type DecosVergunning =
   | TVMRVVObject
-  | GPK
-  | GPP
   | EvenementMelding
   | EvenementVergunning
   | Omzettingsvergunning
   | ERVV
-  | BZB
-  | BZP
   | Flyeren
   | AanbiedenDiensten
   | Nachtwerkontheffing
@@ -240,10 +157,6 @@ export type DecosVergunning =
   | Ligplaatsvergunning
   | RVVHeleStad
   | RVVSloterweg
-  | EigenParkeerplaats
-  | EigenParkeerplaatsOpheffen
-  | TouringcarDagontheffing
-  | TouringcarJaarontheffing
   | WerkzaamhedenEnVervoerOpStraat;
 
 export type VergunningenDecos = {

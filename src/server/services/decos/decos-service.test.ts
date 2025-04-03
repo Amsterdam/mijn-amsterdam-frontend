@@ -1,6 +1,11 @@
 import uid from 'uid-safe';
 
 import {
+  DecosDocumentSource,
+  DecosZaakSource,
+  DecosZakenResponse,
+} from './config-and-types';
+import {
   fetchDecosDocumentList,
   fetchDecosZaken,
   fetchDecosWorkflowDates,
@@ -9,11 +14,6 @@ import {
   fetchDecosTermijnen,
   fetchDecosLinkedField,
 } from './decos-service';
-import {
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
-} from './decos-types';
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';

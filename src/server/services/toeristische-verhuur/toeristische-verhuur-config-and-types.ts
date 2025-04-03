@@ -4,12 +4,14 @@ import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-
 import { CaseTypeV2, GetCaseType } from '../../../universal/types/decos-zaken';
 import {
   DecosZaakTransformer,
-  SELECT_FIELDS_TRANSFORM_BASE,
-  location,
   DecosZaakBase,
   WithLocation,
   WithDateRange,
-} from '../decos/decos-types';
+} from '../decos/config-and-types';
+import {
+  SELECT_FIELDS_TRANSFORM_BASE,
+  location,
+} from '../decos/decos-field-transformers';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 

@@ -1,13 +1,11 @@
-import {
-  TouringcarDagontheffing,
-  VergunningFrontend,
-} from './config-and-types';
+import { VergunningFrontend } from './config-and-types';
 import {
   isNearEndDate,
   isExpired,
   hasOtherActualVergunningOfSameType,
   getCustomTitleForVergunningWithLicensePlates,
-} from './helpers';
+} from './vergunningen-helpers';
+import { TouringcarDagontheffing } from '../parkeren/config-and-types';
 
 describe('vergunningen/helpers', () => {
   vi.useFakeTimers();

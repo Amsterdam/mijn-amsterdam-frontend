@@ -1,11 +1,8 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
-import slug from 'slugme';
 
 import {
-  caseType,
   DecosZaakBase,
   DecosZaakTransformer,
   MA_DECISION_DEFAULT,
@@ -19,25 +16,21 @@ import {
   DecosDocumentSource,
   DecosZaakSource,
   DecosZakenResponse,
-  SELECT_FIELDS_META,
-  SELECT_FIELDS_TRANSFORM_BASE,
   DecosWorkflowResponse,
-  DecosZaakFrontend,
   DecosTermijnType,
   DecosTermijnResponse,
   DecosTermijn,
-  DecosLinkedFieldResponse,
-  DecosFieldTransformerObject,
-  DecosFieldsObject,
-} from './decos-types';
+} from './config-and-types';
+import {
+  SELECT_FIELDS_META,
+  SELECT_FIELDS_TRANSFORM_BASE,
+  caseType,
+} from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
-  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
-  isExpired,
-} from './helpers';
-import { AppRoute } from '../../../universal/config/routes';
+} from './decos-helpers';
 import {
   ApiErrorResponse,
   ApiResponse,
@@ -46,18 +39,14 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { toDateFormatted } from '../../../universal/helpers/utils';
 import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
   DEFAULT_API_CACHE_TTL_MS,
 } from '../../config/source-api';
-import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 /**
@@ -172,36 +161,34 @@ async function transformDecosZaakResponse<
     return null;
   }
 
-  const linkedItems = await (async () => {
-    if (!decosZaakTransformer.fetchLinkedItem) {
-      return [];
-    }
-    const fetchLinkedItem = async (decosLinkName: string) => {
-      const r = await fetchDecosLinkedField(
-        requestID,
-        decosZaakSource.key,
-        decosLinkName
-      );
-      if (r.status === 'OK') {
-        return r.content;
-      }
-      return null;
-    };
-    const decosLinkItems = await Promise.all(
-      decosZaakTransformer.fetchLinkedItem.map(fetchLinkedItem)
-    );
-    const fields = decosZaakTransformer.fetchLinkedItem.map(
-      (decosLinkName, index) => [decosLinkName, decosLinkItems[index]]
-    );
-
-    return Object.fromEntries(fields);
-  })();
-
   // Iterates over the desired data fields (key=>value pairs) and transforms values if necessary.
-  const transformedFields = transformFieldValuePairs(
-    decosZaakTransformer.transformFields,
-    { ...decosZaakSource.fields, ...linkedItems }
-  );
+  const transformedFieldEntries = Object.entries(
+    decosZaakTransformer.transformFields
+  ).map(([fieldNameSource, fieldTransformer]) => {
+    const fieldNameTransformed =
+      typeof fieldTransformer === 'object'
+        ? fieldTransformer.name
+        : fieldTransformer;
+
+    const value = decosZaakSource.fields[fieldNameSource] ?? null;
+
+    let nValue: DecosFieldValue = value;
+
+    try {
+      nValue =
+        typeof fieldTransformer === 'object' &&
+        typeof fieldTransformer.transform === 'function'
+          ? fieldTransformer.transform(value)
+          : value;
+    } catch (err) {
+      captureException(err);
+    }
+
+    return [fieldNameTransformed ?? fieldNameSource, nValue];
+  });
+
+  // Create an object from the transformed fieldNames and values
+  const transformedFields = Object.fromEntries(transformedFieldEntries);
 
   // Create the base data for the decosZaak. This object is not guaranteed to have all fields defined in the type for a specific decosZaak.
   // It depends on the query and resturned result to the decos api which field value ends up in the decosZaak.
@@ -276,38 +263,6 @@ async function transformDecosZaakResponse<
   return decosZaak;
 }
 
-export function transformFieldValuePairs<T extends DecosZaakBase>(
-  transformFields: Partial<DecosFieldTransformerObject<T>>,
-  fields: DecosFieldsObject
-) {
-  const transformedFieldEntries = Object.entries(transformFields).map(
-    ([fieldNameSource, fieldTransformer]) => {
-      const fieldNameTransformed =
-        typeof fieldTransformer === 'object'
-          ? fieldTransformer.name
-          : fieldTransformer;
-
-      const value = fields[fieldNameSource] ?? null;
-
-      let nValue: DecosFieldValue = value;
-
-      try {
-        nValue =
-          typeof fieldTransformer === 'object' &&
-          typeof fieldTransformer.transform === 'function'
-            ? fieldTransformer.transform(value)
-            : value;
-      } catch (err) {
-        captureException(err);
-      }
-
-      return [fieldNameTransformed ?? fieldNameSource, nValue];
-    }
-  );
-
-  return Object.fromEntries(transformedFieldEntries);
-}
-
 async function transformDecosZakenResponse<
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
@@ -363,9 +318,7 @@ function getSelectFields(
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
     ...zaakTypeTransformers.flatMap((zaakTransformer) =>
-      Object.keys(zaakTransformer.transformFields).filter(
-        (field) => !zaakTransformer.fetchLinkedItem?.includes(field)
-      )
+      Object.keys(zaakTransformer.transformFields)
     ),
   ]).join(',');
 
@@ -395,6 +348,7 @@ async function getZakenByUserKey(
     ...(fields && { select: fields }),
     ...(caseTypes && { filter: caseTypes }),
   });
+
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${userKey}/folders?${decosUrlParams}`;
@@ -574,9 +528,6 @@ export async function fetchDecosTermijnen(
   const transformDecosTermijnenResponse = (
     singleTermijnResponseData: DecosTermijnResponse
   ): DecosTermijn[] => {
-    if (!singleTermijnResponseData?.content?.length) {
-      return [];
-    }
     return singleTermijnResponseData.content.map(({ fields }) => ({
       type: fields.subject1,
       dateStart: fields.date4,
@@ -592,31 +543,6 @@ export async function fetchDecosTermijnen(
   });
 
   return requestData(apiConfigTermijnens, requestID);
-}
-
-export async function fetchDecosLinkedField(
-  requestID: RequestID,
-  zaakID: DecosZaakBase['key'],
-  field: string
-): Promise<ApiResponse<Record<string, unknown>>> {
-  const extractContentList = (singleResponseData: DecosLinkedFieldResponse) => {
-    if (!singleResponseData?.content?.length) {
-      return [];
-    }
-    return singleResponseData.content.map(({ key, fields }) => ({
-      key,
-      ...fields,
-    }));
-  };
-
-  const apiConfigLinkedField = getApiConfig('DECOS_API', {
-    formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/${field}`;
-    },
-    transformResponse: extractContentList,
-  });
-
-  return requestData(apiConfigLinkedField, requestID);
 }
 
 async function fetchIsPdfDocument(
