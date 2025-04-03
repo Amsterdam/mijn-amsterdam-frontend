@@ -11,7 +11,7 @@ import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useKlachtenThemaData() {
   const { KLACHTEN } = useAppStateGetter();
@@ -23,7 +23,7 @@ export function useKlachtenThemaData() {
     (klacht) => `Bekijk meer over klacht ${klacht.id}`
   );
 
-  const themaLink = useThemaMenuItemByThemaID(Themas.KLACHTEN);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.KLACHTEN);
 
   return {
     klachten,
@@ -33,6 +33,6 @@ export function useKlachtenThemaData() {
     routes,
     tableConfig: klachtenTableConfig,
     themaTitle: ThemaTitles.KLACHTEN,
-    themaPaginaBreadcrumb: themaLink,
+    breadcrumbs,
   };
 }

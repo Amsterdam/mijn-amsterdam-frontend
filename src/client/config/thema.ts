@@ -117,8 +117,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // Vergunningen
   [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
-  [AppRoutes['VERGUNNINGEN/LIST']]:
-    `Vergunningen | ${ThemaTitles.VERGUNNINGEN}`,
+  [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
 
@@ -158,7 +157,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // Klachten
   [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
-  [AppRoutes['KLACHTEN/LIST']]: `Klachten | ${ThemaTitles.KLACHTEN}`,
+  [AppRoutes['KLACHTEN/LIST']]: `Lijst | ${ThemaTitles.KLACHTEN}`,
   [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
 
   // Horeca

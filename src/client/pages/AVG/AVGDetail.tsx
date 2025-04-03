@@ -24,7 +24,7 @@ function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
 }
 
 function AVGDetail() {
-  const { verzoek, isLoading, isError, themaPaginaBreadcrumb, title } =
+  const { verzoek, isLoading, isError, breadcrumbs, title } =
     useAVGDetailPage();
   return (
     <ThemaDetailPagina
@@ -33,7 +33,7 @@ function AVGDetail() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
-      breadcrumbs={themaPaginaBreadcrumb ? [themaPaginaBreadcrumb] : []}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

@@ -18,7 +18,7 @@ export function ErfpachtDossierDetail() {
     isLoadingThemaData,
     relatieCode,
     displayPropsDossierFacturen,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
     title,
   } = useDossierDetailData();
 
@@ -68,7 +68,7 @@ export function ErfpachtDossierDetail() {
           )}
         </>
       }
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

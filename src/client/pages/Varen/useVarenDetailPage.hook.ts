@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 
+import { useVarenThemaData } from './useVarenThemaData.hook';
 import {
   exploitatieVergunningWijzigenLink,
   ligplaatsVergunningLink,
@@ -8,10 +9,15 @@ import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ButtonLinkProps } from '../../../universal/types';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
 
 export function useVarenDetailPage() {
-  const { VAREN } = useAppStateGetter();
+  const {
+    varenRederRegistratie,
+    varenVergunningen,
+    breadcrumbs,
+    isLoading,
+    isError,
+  } = useVarenThemaData();
   const { id } = useParams<{ id: string }>();
 
   const hasRegistratieReder = !!VAREN.content?.reder;
@@ -45,13 +51,11 @@ export function useVarenDetailPage() {
     buttonItems.push(...buttons);
   }
 
-  const themaLink = useThemaMenuItemByThemaID(Themas.VAREN);
-
   return {
     vergunning,
     buttonItems,
-    isLoading: isLoading(VAREN),
-    isError: isError(VAREN),
-    themaPaginaBreadcrumb: themaLink,
+    isLoading,
+    isError,
+    breadcrumbs,
   };
 }

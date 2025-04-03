@@ -7,11 +7,11 @@ import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useThemaMenuItemByThemaID } from '../../hooks/useThemaMenuItems';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useHorecaThemaData() {
   const { HORECA } = useAppStateGetter();
-  const themaLink = useThemaMenuItemByThemaID(Themas.HORECA);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.HORECA);
   const vergunningen = addLinkElementToProperty<HorecaVergunningFrontend>(
     HORECA.content ?? [],
     'identifier',
@@ -26,6 +26,6 @@ export function useHorecaThemaData() {
     routes,
     tableConfig,
     themaTitle: ThemaTitles.HORECA,
-    themaPaginaBreadcrumb: themaLink,
+    breadcrumbs,
   };
 }

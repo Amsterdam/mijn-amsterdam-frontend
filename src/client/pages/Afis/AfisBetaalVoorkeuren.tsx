@@ -76,12 +76,12 @@ export function AfisBetaalVoorkeuren() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     linkListItems,
+    breadcrumbs,
   } = useAfisThemaData();
 
   const {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
-    themaPaginaBreadcrumb,
     eMandates,
     eMandateTableConfig,
     hasBusinessPartnerDetailsError,
@@ -228,7 +228,7 @@ export function AfisBetaalVoorkeuren() {
       }
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       linkListItems={linkListItems}
       pageContentTop={pageContentTop}
       pageContentMain={pageContentMain}

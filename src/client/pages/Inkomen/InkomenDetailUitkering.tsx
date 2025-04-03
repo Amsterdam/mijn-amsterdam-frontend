@@ -25,7 +25,7 @@ const pageContentTop = (
 );
 
 export function InkomenDetailUitkering() {
-  const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
+  const { isLoading, isError, zaak, breadcrumbs } =
     useInkomenDetailData('WPI_AANVRAGEN');
 
   return (
@@ -35,7 +35,7 @@ export function InkomenDetailUitkering() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={pageContentTop}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

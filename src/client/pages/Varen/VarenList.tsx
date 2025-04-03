@@ -16,7 +16,7 @@ export function VarenList() {
     isLoading,
     isError,
     routes,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   } = useVarenThemaData();
   const { title, displayProps, filter, sort } = tableConfig[kind];
   const vergunningen = varenVergunningen.filter(filter).sort(sort);
@@ -28,7 +28,7 @@ export function VarenList() {
       isLoading={isLoading}
       isError={isError}
       appRoute={routes.listPage}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       appRouteParams={{ kind, page }}
       displayProps={displayProps}
     />

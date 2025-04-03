@@ -20,7 +20,7 @@ import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import {
-  useThemaMenuItemByThemaID,
+  useThemaBreadcrumbs,
   useThemaMenuItems,
 } from '../../../hooks/useThemaMenuItems';
 
@@ -65,7 +65,7 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
-  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(Themas.BRP);
+  const breadcrumbs = useThemaBreadcrumbs(Themas.BRP);
 
   const contactmomenten: ContactMomentFrontend[] =
     KLANT_CONTACT.content?.map((contactMomentItem) => {
@@ -86,6 +86,6 @@ export function useContactmomenten() {
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
     routes,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   };
 }

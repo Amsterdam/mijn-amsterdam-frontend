@@ -9,7 +9,7 @@ import type { VarenZakenFrontend } from '../../../server/services/varen/config-a
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
-  const { vergunning, buttonItems, isLoading, isError, themaPaginaBreadcrumb } =
+  const { vergunning, buttonItems, isLoading, isError, breadcrumbs } =
     useVarenDetailPage();
 
   let noContentError = false;
@@ -63,7 +63,7 @@ export function VarenDetail() {
       isError={isError || noContentError}
       isLoading={isLoading}
       pageContentMain={pageContent}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

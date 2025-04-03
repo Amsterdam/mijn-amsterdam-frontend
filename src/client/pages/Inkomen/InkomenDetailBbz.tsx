@@ -27,7 +27,7 @@ const pageContentTop = (
 );
 
 export function InkomenDetailBbz() {
-  const { isLoading, isError, zaak, themaPaginaBreadcrumb } =
+  const { isLoading, isError, zaak, breadcrumbs } =
     useInkomenDetailData('WPI_BBZ');
 
   return (
@@ -37,7 +37,7 @@ export function InkomenDetailBbz() {
       isError={isError}
       isLoading={isLoading}
       pageContentMain={pageContentTop}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

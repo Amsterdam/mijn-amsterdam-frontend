@@ -28,7 +28,7 @@ export function AfisFacturen() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     routes,
-    themaPaginaBreadcrumb,
+    breadcrumbs,
   } = useAfisListPageData(state);
 
   const listPageTableConfig = facturenTableConfig[state];
@@ -45,7 +45,7 @@ export function AfisFacturen() {
       title={listPageTableConfig.title}
       appRoute={routes.listPageFacturen}
       appRouteParams={{ state }}
-      breadcrumbs={[themaPaginaBreadcrumb]}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isThemaPaginaLoading || isListPageLoading}
       isError={isThemaPaginaError || isListPageError}
