@@ -1,7 +1,10 @@
 import MockDate from 'mockdate';
 import { afterAll, describe, expect, it } from 'vitest';
 
-import { VarenVergunningExploitatieType } from './config-and-types';
+import {
+  DecosVarenZaakVergunning,
+  VarenVergunningExploitatieType,
+} from './config-and-types';
 import { fetchVaren } from './varen';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
@@ -11,10 +14,30 @@ import {
 import { omit } from '../../../universal/helpers/utils';
 import * as decos from '../decos/decos-service';
 
+const vergunning1 = {
+  vesselLength: '2,31',
+  vesselWidth: '2,32',
+  segment: 'Onbemand',
+  eniNumber: '7654321',
+  id: 'Z-25-0000001-10001',
+  vesselName: 'Titanic',
+  identifier: 'Z/25/0000001',
+} as DecosVarenZaakVergunning;
+
+const vergunning2 = {
+  vesselLength: '2,31',
+  vesselWidth: '2,32',
+  segment: 'Onbemand',
+  eniNumber: '12345678',
+  id: 'Z-25-0000002-10002',
+  vesselName: 'Titanic 2',
+  identifier: 'Z/25/0000002',
+} as DecosVarenZaakVergunning;
+
 const zakenContent = [
   {
     id: 'Z-24-0000001',
-    identifier: 'Z/24/3421790',
+    identifier: 'Z/24/0000001',
     key: 'ABCDEF0123456789ABCDEF0123456789',
     caseType: 'Varen vergunning exploitatie',
     title: 'Varen vergunning exploitatie',
@@ -26,32 +49,11 @@ const zakenContent = [
     vesselLength: '2,31',
     vesselWidth: '2,32',
     segment: 'Onbemand',
-    eniNumber: '7654321',
-    vergunningKenmerk: '123456789',
     statusDates: [],
     termijnDates: [],
     dateRequest: '2025-01-01T00:00:00',
     dateDecision: '2025-01-03T00:00:00',
-    vergunningen: [
-      {
-        vesselLength: '2,31',
-        vesselWidth: '2,32',
-        segment: 'Onbemand',
-        eniNumber: '7654321',
-        id: 'Z-25-0000001-10001',
-        vesselName: 'Titanic',
-        vergunningKenmerk: 'Z/25/0000001',
-      },
-      {
-        vesselLength: '2,31',
-        vesselWidth: '2,32',
-        segment: 'Onbemand',
-        eniNumber: '12345678',
-        id: 'Z-25-0000002-10002',
-        vesselName: 'Titanic 2',
-        vergunningKenmerk: 'Z/25/0000002',
-      },
-    ],
+    vergunningen: [vergunning1, vergunning2],
   } satisfies Partial<VarenVergunningExploitatieType>,
 ] as unknown as VarenVergunningExploitatieType[];
 
@@ -111,9 +113,10 @@ describe('Varen service', () => {
         displayStatus: 'Verleend',
         ...{
           id: 'Z-24-0000001-Z-25-0000001-10001',
-          vergunningKenmerk: 'Z/25/0000001',
+          identifier: 'Z/24/0000001',
           dateRequestFormatted: '01 januari 2025',
           dateDecisionFormatted: '03 januari 2025',
+          vergunning: vergunning1,
           steps: [
             {
               datePublished: '2025-01-01T00:00:00',
@@ -147,9 +150,8 @@ describe('Varen service', () => {
       });
       expect(response.content?.zaken[1]).toMatchObject({
         id: 'Z-24-0000001-Z-25-0000002-10002',
-        vergunningKenmerk: 'Z/25/0000002',
-        eniNumber: '12345678',
-        vesselName: 'Titanic 2',
+        identifier: 'Z/24/0000001',
+        vergunning: vergunning2,
       });
     });
 
@@ -173,7 +175,7 @@ describe('Varen service', () => {
       expect(response.content?.zaken).toHaveLength(1);
       expect(response.content?.zaken[0]).toMatchObject({
         id: 'Z-24-0000001',
-        vergunningKenmerk: '123456789',
+        identifier: 'Z/24/0000001',
       });
     });
   });
