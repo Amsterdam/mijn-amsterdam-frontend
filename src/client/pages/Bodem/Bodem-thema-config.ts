@@ -24,7 +24,7 @@ export const routes = {
 };
 
 const tableConfigBase = {
-  sort: dateSort('dateRequest', 'desc'),
+  sort: dateSort('datumAanvraag', 'desc'),
 };
 
 export const tableConfig = {
