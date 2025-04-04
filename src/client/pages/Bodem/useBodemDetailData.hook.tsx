@@ -1,19 +1,17 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
-import { isError } from '../../../universal/helpers/api';
-import { isLoading } from '../../../universal/helpers/api';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useBodemData } from './useBodemData.hook';
 
 export function useBodemDetailData() {
-  const { BODEM } = useAppStateGetter();
+  const { items, isLoading, isError, breadcrumbs } = useBodemData();
   const { id } = useParams<{ id: string }>();
 
-  const meting =
-    BODEM.content?.metingen?.find((meting) => meting.kenmerk === id) ?? null;
+  const meting = items.find((meting) => meting.kenmerk === id) ?? null;
 
   return {
     meting,
-    isLoading: isLoading(BODEM),
-    isError: isError(BODEM),
+    isLoading,
+    isError,
+    breadcrumbs,
   };
 }

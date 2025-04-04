@@ -2,19 +2,18 @@ import React from 'react';
 
 import {
   Alert,
-  Button,
-  Grid,
   Heading,
   Link,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
-import { useHistory } from 'react-router-dom';
 
 import { AfisFactuurFrontend } from './Afis-thema-config';
 import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../universal/helpers/utils';
+import { MaButtonRouterLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -25,7 +24,7 @@ function PageContentTop({
   urlNaarBelastingen: string;
 }) {
   return (
-    <>
+    <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb--sm">
         Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
         heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}
@@ -43,14 +42,14 @@ function PageContentTop({
         </Link>
         .
       </Paragraph>
-    </>
+    </PageContentCell>
   );
 }
 
 export function AfisDisclaimer() {
   return (
-    <Alert severity="warning">
-      <UnorderedList>
+    <Alert severity="warning" heading="Belangrijk om te weten">
+      <UnorderedList markers={false}>
         <UnorderedList.Item>
           Het verwerken van uw betaling kan tot 4 werkdagen duren.
         </UnorderedList.Item>
@@ -70,7 +69,7 @@ export function AfisDisclaimer() {
 
 export function AfisDisclaimerOvergedragenFacturen() {
   return (
-    <Alert>
+    <Alert heading="Belangrijk om te weten" severity="warning">
       <Paragraph>
         Als u niet betaalt, wordt uw factuur door Financiën overgedragen naar de
         afdeling Incasso & Invordering van directie Belastingen. Deze afdeling
@@ -98,7 +97,6 @@ export function AfisDisclaimerOvergedragenFacturen() {
 }
 
 export function AfisThemaPagina() {
-  const history = useHistory();
   const {
     dependencyErrors,
     facturenByState,
@@ -116,16 +114,16 @@ export function AfisThemaPagina() {
   );
 
   const pageContentSecondary = (
-    <Grid.Cell span="all">
-      <Button
+    <PageContentCell>
+      <MaButtonRouterLink
         className="ams-mb--sm"
         variant="secondary"
-        onClick={() => history.push(routes.betaalVoorkeuren)}
+        href={routes.betaalVoorkeuren}
       >
         Betaalvoorkeuren
-      </Button>
+      </MaButtonRouterLink>
       <AfisDisclaimer />
-    </Grid.Cell>
+    </PageContentCell>
   );
 
   const pageContentErrorAlert = (

@@ -1,5 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import {
@@ -128,14 +128,16 @@ describe('<Afis />', () => {
   const routeEntry = generatePath(AppRoutes.AFIS);
   const routePath = AppRoutes.AFIS;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={AfisThemaPagina}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={AfisThemaPagina}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', async () => {
     const screen = render(<Component />);

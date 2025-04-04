@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';

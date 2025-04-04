@@ -27,9 +27,6 @@
       th,
       td {
         @media screen and (max-width: $ams-breakpoint-medium) {
-          &:first-of-type {
-            display: none;
-          }
           &:nth-child(2) {
             padding-inline-start: 0 !important;
           }

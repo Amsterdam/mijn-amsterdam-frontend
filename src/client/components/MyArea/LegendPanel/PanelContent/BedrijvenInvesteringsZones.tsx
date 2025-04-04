@@ -1,9 +1,10 @@
 import GenericBase from './GenericBase';
 import Url from './Url';
-import { InfoDetail } from '../../..';
+import { Unshaped } from '../../../../../universal/types/App.types';
+import { Datalist, Row } from '../../../Datalist/Datalist';
 
 interface MyArePanelContentBedrijvenInvesteringsZonesProps {
-  panelItem: any;
+  panelItem: Unshaped;
   datasetId: string;
 }
 
@@ -11,24 +12,32 @@ export default function MyArePanelContentBedrijvenInvesteringsZones({
   datasetId,
   panelItem,
 }: MyArePanelContentBedrijvenInvesteringsZonesProps) {
+  const rows: Row[] = [
+    {
+      label: 'Heffingsgrondslag',
+      content: panelItem.heffingsgrondslag,
+      isVisible: !!panelItem.heffingsgrondslag,
+    },
+    {
+      label: 'Heffingstarief',
+      content: panelItem.heffingstariefDisplay,
+      isVisible: !!panelItem.heffingstariefDisplay,
+    },
+    {
+      isVisible: !!panelItem.verordening,
+      label: 'Verordening',
+      content: <Url url={panelItem.verordening} />,
+    },
+    {
+      isVisible: !!panelItem.website,
+      label: 'Website',
+      content: <Url url={panelItem.website} />,
+    },
+  ];
+
   return (
     <GenericBase title={panelItem.naam} supTitle="Bedrijveninvesteringszones">
-      {!!panelItem.heffingsgrondslag && (
-        <InfoDetail
-          label="Heffingsgrondslag"
-          value={panelItem.heffingsgrondslag}
-        />
-      )}
-      {!!panelItem.heffingstariefDisplay && (
-        <InfoDetail
-          label="Heffingstarief"
-          value={panelItem.heffingstariefDisplay}
-        />
-      )}
-      {!!panelItem.verordening && (
-        <Url label="Verordening" url={panelItem.verordening} />
-      )}
-      {!!panelItem.website && <Url label="Website" url={panelItem.website} />}
+      <Datalist rows={rows} />
     </GenericBase>
   );
 }

@@ -46,8 +46,7 @@ export function getAuthProfileAndToken(
       sid: '0D8ugZyqnzPTyknBDwxsMPb7',
     },
     expiresAtMilliseconds,
-    token:
-      'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
+    token: 'tttttttttttttttttttttttttttttt',
   };
 
   if (profileType === 'commercial') {

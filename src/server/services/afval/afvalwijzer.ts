@@ -2,8 +2,8 @@ import { LatLngLiteral } from 'leaflet';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import {
-  GarbageFractionCode,
-  GarbageFractionInformationTransformed,
+  AfvalFractionCode,
+  AfvalFractionInformationTransformed,
   LinkProps,
 } from '../../../universal/types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -11,7 +11,7 @@ import { requestData } from '../../helpers/source-api-request';
 import { sanitizeCmsContent } from '../cms-content';
 import { labels } from './translations';
 
-export interface GarbageFractionData {
+export interface AfvalFractionData {
   straatnaam: string;
   huisnummer: number;
   huisletter: string | null;
@@ -26,7 +26,7 @@ export interface GarbageFractionData {
   afvalwijzerAfvalkalenderOpmerking: string | null;
   afvalwijzerAfvalkalenderFrequentie: string | null;
   afvalwijzerFractieNaam: string;
-  afvalwijzerFractieCode: GarbageFractionCode;
+  afvalwijzerFractieCode: AfvalFractionCode;
   afvalwijzerRoutetypeNaam: string | null;
   afvalwijzerOphaaldagen: string | null;
   afvalwijzerAfvalkalenderMelding: string | null;
@@ -46,21 +46,19 @@ export interface GarbageFractionData {
 
 export interface AFVALSourceData {
   _embedded: {
-    afvalwijzer: GarbageFractionData[];
+    afvalwijzer: AfvalFractionData[];
   };
 }
 
 function formatKalenderOpmerking(
-  fractionData: GarbageFractionData
+  fractionData: AfvalFractionData
 ): string | null {
   return fractionData.afvalwijzerAfvalkalenderOpmerking
     ? sanitizeCmsContent(fractionData.afvalwijzerAfvalkalenderOpmerking)
     : null;
 }
 
-function formatKalenderMelding(
-  fractionData: GarbageFractionData
-): string | null {
+function formatKalenderMelding(fractionData: AfvalFractionData): string | null {
   if (fractionData.afvalwijzerAfvalkalenderMelding) {
     const from = fractionData.afvalwijzerAfvalkalenderVan
       ? new Date(fractionData.afvalwijzerAfvalkalenderVan)
@@ -122,7 +120,7 @@ function getHtml(text: string | null, fallbackText?: string): string {
   return fallbackText ?? '';
 }
 
-function getBuurtLink(fractionData: GarbageFractionData): LinkProps {
+function getBuurtLink(fractionData: AfvalFractionData): LinkProps {
   return {
     to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"${fractionData.afvalwijzerFractieCode}"%3A1}}}}`,
     title: getText(fractionData.afvalwijzerWaar),
@@ -130,9 +128,9 @@ function getBuurtLink(fractionData: GarbageFractionData): LinkProps {
 }
 
 function transformFractionData(
-  fractionData: GarbageFractionData,
+  fractionData: AfvalFractionData,
   centroid: LatLngLiteral | null
-): GarbageFractionInformationTransformed {
+): AfvalFractionInformationTransformed {
   const afvalPuntKaartUrl = getAfvalPuntKaartUrl(centroid);
 
   const formsUrl = 'https://formulieren.amsterdam.nl/TriplEforms/';
@@ -225,10 +223,10 @@ function transformFractionData(
   };
 }
 
-export function transformGarbageDataResponse(
+export function transformAfvalDataResponse(
   afvalSourceData: AFVALSourceData,
   latlng: LatLngLiteral | null
-): GarbageFractionInformationTransformed[] {
+): AfvalFractionInformationTransformed[] {
   // NOTE: Plastic fractions are excluded. New sorting machines came into use and plastic separation is no longer needed.
   // NOTE: Black box business logic extracted from afvalwijzer source-code from amsterdam.nl/afvalwijzer
   const heeftThuisAfspraakRouteCodeInResultaten =
@@ -257,13 +255,11 @@ export async function fetchAfvalwijzer(
   const params = {
     bagNummeraanduidingId: bagID,
   };
-  const garbageData = await requestData<
-    GarbageFractionInformationTransformed[]
-  >(
+  const garbageData = await requestData<AfvalFractionInformationTransformed[]>(
     getApiConfig('AFVAL', {
       params,
       transformResponse: (afvalSourceData: AFVALSourceData) =>
-        transformGarbageDataResponse(afvalSourceData, latlng),
+        transformAfvalDataResponse(afvalSourceData, latlng),
     }),
     requestID
   );

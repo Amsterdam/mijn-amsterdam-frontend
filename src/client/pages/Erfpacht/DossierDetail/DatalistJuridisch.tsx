@@ -2,7 +2,7 @@ import { Link } from '@amsterdam/design-system-react';
 
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import { Datalist } from '../../../components/Datalist/Datalist';
-import { LINKS } from '../constants';
+import { LINKS } from '../Erfpacht-thema-config';
 
 export function DatalistJuridisch({ dossier }: ErfpachtDatalistProps) {
   if (dossier.juridisch) {

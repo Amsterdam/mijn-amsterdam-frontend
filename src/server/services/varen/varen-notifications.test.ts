@@ -147,7 +147,7 @@ describe('Notifications', () => {
             datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
@@ -160,7 +160,7 @@ describe('Notifications', () => {
             datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {

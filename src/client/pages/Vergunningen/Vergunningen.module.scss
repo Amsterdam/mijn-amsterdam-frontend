@@ -1,37 +1,15 @@
-.Vergunningen {
-  @include select(PageContent) {
-    padding-bottom: $page-content-bottom-space;
-  }
-}
-
-.Table {
-  tr td:nth-child(2) {
-    width: 40%;
-  }
-
-  tr td:nth-child(3) {
-    width: 20%;
-  }
-
-  @include select(Table_DisplayPropTitle) {
-    width: 20%;
-  }
-
-  @include mq-tablet() {
-    tr td:nth-child(2) {
-      width: 95%;
-      max-width: 100vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    @include select(Table_DisplayPropTitle) {
-      width: 100%;
+.VergunningenTableThemaPagina {
+  tr {
+    th,
+    td {
+      @media screen and (min-width: $ams-breakpoint-medium) {
+        &:nth-child(1) {
+          width: 20%;
+        }
+        &:nth-child(2) {
+          width: 40%;
+        }
+      }
     }
   }
-}
-
-.SuppressedParagraph {
-  color: $color-neutral-grey4;
-  text-align: center;
 }

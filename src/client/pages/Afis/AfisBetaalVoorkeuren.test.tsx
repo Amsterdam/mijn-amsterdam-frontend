@@ -1,6 +1,6 @@
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { AfisBusinessPartnerDetailsTransformed } from '../../../server/services/afis/afis-types';
@@ -56,14 +56,16 @@ describe('<AfisBetaalVoorkeuren />', () => {
   const routePath = AppRoutes['AFIS/BETAALVOORKEUREN'];
   const routeEntry = generatePath(routePath);
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={AfisBetaalVoorkeuren}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={AfisBetaalVoorkeuren}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Display business partner details', async () => {
     const user = userEvent.setup();

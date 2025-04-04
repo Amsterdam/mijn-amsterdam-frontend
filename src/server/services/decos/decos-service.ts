@@ -1,7 +1,7 @@
 import assert from 'assert';
 
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
@@ -26,28 +26,31 @@ import {
   DecosTermijnType,
   DecosTermijnResponse,
   DecosTermijn,
+  DECOS_ZAKEN_FETCH_TOP,
   DecosLinkedFieldResponse,
   DecosFieldTransformerObject,
   DecosFieldsObject,
-} from './decos-types';
+  WithDateRange,
+} from './config-and-types';
+import { CASE_TYP_FIELD_DECOS } from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
-  getStatusDate,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
   isExpired,
-} from './helpers';
-import { AppRoute } from '../../../universal/config/routes';
+  toDateFormatted,
+} from './decos-helpers';
+import { AppRouteVergunningen } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
+  apiErrorResult,
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { toDateFormatted } from '../../../universal/helpers/utils';
-import { sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
@@ -363,9 +366,9 @@ function getSelectFields(
   const fields = uniqueArray([
     ...SELECT_FIELDS_META,
     ...zaakTypeTransformers.flatMap((zaakTransformer) =>
-      Object.keys(zaakTransformer.transformFields).filter(
-        (field) => !zaakTransformer.fetchLinkedItem?.includes(field)
-      )
+      Object.keys(zaakTransformer.transformFields)
+        .filter((field) => !zaakTransformer.fetchLinkedItem?.includes(field))
+        .concat(zaakTransformer.additionalSelectFields ?? [])
     ),
   ]).join(',');
 
@@ -377,21 +380,21 @@ async function getZakenByUserKey(
   userKey: string,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
-  const caseTypeField = 'text45';
-
   assert(
-    SELECT_FIELDS_TRANSFORM_BASE[caseTypeField] == caseType,
-    `getZakenByUserKey expects field ${caseTypeField} to be the caseType`
+    SELECT_FIELDS_TRANSFORM_BASE[CASE_TYP_FIELD_DECOS] == caseType,
+    `getZakenByUserKey expects field ${CASE_TYP_FIELD_DECOS} to be the caseType`
   );
 
   const fields = getSelectFields(zaakTypeTransformers);
 
   const caseTypes = zaakTypeTransformers
-    .map((transformer) => `${caseTypeField} eq '${transformer.caseType}'`)
+    .map(
+      (transformer) => `${CASE_TYP_FIELD_DECOS} eq '${transformer.caseType}'`
+    )
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
-    top: '50',
+    top: DECOS_ZAKEN_FETCH_TOP,
     ...(fields && { select: fields }),
     ...(caseTypes && { filter: caseTypes }),
   });
@@ -413,6 +416,60 @@ async function getZakenByUserKey(
   );
 
   return responseSource;
+}
+
+export async function fetchDecosZakenFromSourceRaw(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken,
+  selectFields?: string,
+  filterCaseTypes?: string,
+  includeProperties: boolean = false,
+  top: string = DECOS_ZAKEN_FETCH_TOP
+) {
+  const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
+
+  const caseTypes = filterCaseTypes
+    ?.split(',')
+    .map((caseType) => `${CASE_TYP_FIELD_DECOS} eq '${caseType}'`)
+    .join(' or ');
+
+  const queryParams = new URLSearchParams({
+    top,
+    properties: includeProperties ? 'true' : 'false',
+    ...(selectFields && { select: selectFields }),
+    ...(filterCaseTypes && { filter: caseTypes }),
+  });
+
+  async function fetchZakenByUserKey(userKey: string) {
+    const apiConfig = getApiConfig('DECOS_API', {
+      formatUrl: (config) => {
+        return `${config.url}/items/${userKey}/folders?${queryParams}`;
+      },
+      transformResponse: (responseData: DecosZakenResponse) => {
+        if (!Array.isArray(responseData?.content)) {
+          return [];
+        }
+        return responseData.content;
+      },
+    });
+
+    return requestData<DecosZaakSource[]>(apiConfig, `${requestID}-${userKey}`);
+  }
+
+  if (userKeysResponse.status === 'ERROR') {
+    return apiErrorResult('Failed to fetch user keys', null);
+  }
+
+  const responseContent = [];
+
+  for (const userKey of userKeysResponse.content) {
+    const response = await fetchZakenByUserKey(userKey);
+    if (response.status === 'OK') {
+      responseContent.push(...response.content);
+    }
+  }
+
+  return apiSuccessResult(responseContent);
 }
 
 export async function fetchDecosZakenFromSource(
@@ -656,6 +713,7 @@ function filterValidDocument({
 
 async function transformDecosDocumentListResponse(
   requestID: RequestID,
+  sessionID: SessionID,
   decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource[]>
 ) {
   if (Array.isArray(decosDocumentsListResponse.content)) {
@@ -669,7 +727,14 @@ async function transformDecosDocumentListResponse(
             key: isPdfResponse.content.key,
             title: documentMetadata.text41,
             datePublished: documentMetadata.received_date,
-            url: '', // Url is constructed in vergunningen.ts
+            url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
+              {
+                id: encryptSessionIdWithRouteIdParam(
+                  sessionID,
+                  isPdfResponse.content.key
+                ),
+              },
+            ]),
           };
           return decosZaakDocument;
         }
@@ -688,6 +753,7 @@ async function transformDecosDocumentListResponse(
 
 export async function fetchDecosDocumentList(
   requestID: RequestID,
+  sessionID: SessionID,
   zaakID: DecosZaakBase['key']
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
@@ -703,6 +769,7 @@ export async function fetchDecosDocumentList(
   if (documentsSource.status === 'OK') {
     const documentsTransformed = await transformDecosDocumentListResponse(
       requestID,
+      sessionID,
       documentsSource.content
     );
     return apiSuccessResult(documentsTransformed);
@@ -732,56 +799,6 @@ export async function fetchDecosZaakFromSource(
 }
 
 type NestedType<T> = T extends DecosZaakTransformer<infer R> ? R : never;
-
-export async function fetchDecosZaak<
-  T extends DecosZaakTransformer<any>,
-  DZ extends DecosZaakBase = NestedType<T>,
->(
-  requestID: RequestID,
-  decosZaakTransformers: T[],
-  zaakID: DecosZaakBase['key']
-) {
-  const decosZaakSourceRequest = fetchDecosZaakFromSource(requestID, zaakID);
-  const decosZaakDocumentsRequest = fetchDecosDocumentList(requestID, zaakID);
-
-  const [zaakSourceResponseSettled, documentsResponseSettled] =
-    await Promise.allSettled([
-      decosZaakSourceRequest,
-      decosZaakDocumentsRequest,
-    ]);
-
-  const zaakSourceResponse = getSettledResult(zaakSourceResponseSettled);
-  const documentsResponse = getSettledResult(documentsResponseSettled);
-
-  let documents: DecosZaakDocument[] = [];
-  let decosZaak: DecosZaakBase | null = null;
-
-  if (zaakSourceResponse.status == 'OK') {
-    const decosZaakResponseData = zaakSourceResponse.content;
-    if (decosZaakResponseData) {
-      try {
-        decosZaak = await transformDecosZaakResponse(
-          requestID,
-          decosZaakTransformers,
-          decosZaakResponseData
-        );
-      } catch (error) {
-        captureException(error);
-      }
-    }
-
-    if (documentsResponse.status === 'OK' && decosZaak !== null) {
-      documents = documentsResponse.content;
-    }
-
-    return apiSuccessResult({
-      decosZaak: decosZaak as DZ,
-      documents,
-    });
-  }
-
-  return zaakSourceResponse;
-}
 
 export async function fetchDecosDocument(
   requestID: RequestID,
@@ -815,35 +832,39 @@ export async function fetchDecosDocument(
   );
 }
 
+export type DecosZaakFrontendTransformOptions = {
+  appRoute: AppRouteVergunningen;
+  includeFetchDocumentsUrl?: boolean;
+};
+
 export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
-  appRoute: AppRoute,
-  zaak: T
-) {
-  const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
+  zaak: T,
+  options: DecosZaakFrontendTransformOptions
+): DecosZaakFrontend<T> {
   const zaakFrontend: DecosZaakFrontend<T> = {
-    ...zaak,
+    ...omit(zaak, ['statusDates', 'termijnDates']),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
-    dateInBehandeling: getStatusDate('In behandeling', zaak),
-    dateInBehandelingFormatted: toDateFormatted(
-      getStatusDate('In behandeling', zaak)
-    ),
     dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
-    // Assign Status steps later on
-    steps: [],
-    // Adds an url with encrypted id to the BFF Detail page api for zaken.
-    fetchDocumentsUrl: generateFullApiUrlBFF(
-      BffEndpoints.DECOS_DOCUMENTS_LIST,
-      [{ id: idEncrypted }]
-    ),
+    steps: [], // NOTE: Assign Status steps later on
+    displayStatus: zaak.status, // NOTE: This is a placeholder, the actual status is assigned later on.
     link: {
-      to: generatePath(appRoute, {
+      to: generatePath(options.appRoute, {
         caseType: slug(zaak.caseType, { lower: true }),
         id: zaak.id,
       }),
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
   };
+
+  if (options.includeFetchDocumentsUrl) {
+    const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
+    // Adds an url with encrypted id to the BFF Detail page api for zaken.
+    zaakFrontend.fetchDocumentsUrl = generateFullApiUrlBFF(
+      BffEndpoints.DECOS_DOCUMENTS_LIST,
+      [{ id: idEncrypted }]
+    );
+  }
 
   // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
   if (
@@ -852,9 +873,16 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     zaak.dateStart &&
     zaak.dateEnd
   ) {
-    zaakFrontend.isExpired = isExpired(zaak);
-    zaakFrontend.dateStartFormatted = defaultDateFormat(zaak.dateStart);
-    zaakFrontend.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
+    const zaakFrontendWithExpiry = zaakFrontend as unknown as DecosZaakFrontend<
+      DecosZaakBase & WithDateRange
+    >;
+    zaakFrontendWithExpiry.isExpired = isExpired(
+      zaakFrontendWithExpiry.dateEnd
+    );
+    zaakFrontendWithExpiry.dateStartFormatted = defaultDateFormat(
+      zaak.dateStart
+    );
+    zaakFrontendWithExpiry.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
   }
 
   return zaakFrontend;

@@ -1,7 +1,8 @@
 import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 
+import { routes } from '../../client/pages/Profile/Profile-thema-config';
 import { AppRoutes } from '../../universal/config/routes';
 import { Themas } from '../../universal/config/thema';
 import {
@@ -158,7 +159,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
-        to: AppRoutes.BRP,
+        to: routes.BRP,
         title: 'Meer informatie',
       },
     });
@@ -173,7 +174,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
-        to: AppRoutes.BRP,
+        to: routes.BRP,
         title: 'Meer informatie',
       },
     });

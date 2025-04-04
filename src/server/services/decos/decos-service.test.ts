@@ -1,6 +1,11 @@
 import uid from 'uid-safe';
 
 import {
+  DecosDocumentSource,
+  DecosZaakSource,
+  DecosZakenResponse,
+} from './config-and-types';
+import {
   fetchDecosDocumentList,
   fetchDecosZaken,
   fetchDecosWorkflowDates,
@@ -9,20 +14,25 @@ import {
   fetchDecosTermijnen,
   fetchDecosLinkedField,
 } from './decos-service';
-import {
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
-} from './decos-types';
 import { remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { axiosRequest } from '../../helpers/source-api-request';
-import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen-v2/config-and-types';
+import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
 import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
-} from '../vergunningen-v2/decos-zaken';
+} from '../vergunningen/decos-zaken';
+
+vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
+  return {
+    ...((await requireActual()) as object),
+    encryptSessionIdWithRouteIdParam: () => {
+      return 'test-encrypted-id';
+    },
+    decrypt: () => 'session-id:e6ed38c3-a44a-4c16-97c1-89d7ebfca095',
+  };
+});
 
 const zakenSource = {
   count: 1,
@@ -408,7 +418,11 @@ describe('decos-service', () => {
     test('No content', async () => {
       remoteApi.get(/\/decos\/items\/zaak-id-2\/documents/).reply(200, []);
 
-      const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
+      const responseData = await fetchDecosDocumentList(
+        reqID,
+        'xx',
+        'zaak-id-2'
+      );
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [],
@@ -423,7 +437,11 @@ describe('decos-service', () => {
         .reply(200, documents);
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
 
-      const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
+      const responseData = await fetchDecosDocumentList(
+        reqID,
+        'xx',
+        'zaak-id-2'
+      );
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [
@@ -432,7 +450,7 @@ describe('decos-service', () => {
               "id": "D/4379600",
               "key": "blob-key",
               "title": "Systeem - Factuurregel Stadsloket automatisch",
-              "url": "",
+              "url": "http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id",
             },
           ],
           "status": "OK",
@@ -449,7 +467,11 @@ describe('decos-service', () => {
       blob2.content[0].fields.bol10 = false;
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob2);
 
-      const responseData = await fetchDecosDocumentList(reqID, 'zaak-id-2');
+      const responseData = await fetchDecosDocumentList(
+        reqID,
+        'xx',
+        'zaak-id-2'
+      );
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [],
@@ -692,7 +714,7 @@ describe('decos-service', () => {
         .query((queryObject) => {
           return (
             queryObject.filter ===
-            `text45 eq 'Aanbieden van diensten' or text45 eq 'GPK'`
+            `text45 eq 'Aanbieden van diensten' or text45 eq 'VOB'`
           );
         })
         .times(numberOfAddressBooksToSearch)
@@ -702,8 +724,11 @@ describe('decos-service', () => {
 
       const dienstenTransformer =
         decosCaseToZaakTransformers['Aanbieden van diensten'];
-      const gpkTransformer = decosCaseToZaakTransformers.GPK;
-      const transformers = [dienstenTransformer, gpkTransformer];
+      const vobTransformer = decosCaseToZaakTransformers.VOB;
+      const transformers = [
+        dienstenTransformer,
+        { ...vobTransformer, additionalSelectFields: ['text45', 'order66'] },
+      ];
 
       const responseData = await forTesting.getZakenByUserKey(
         reqID,
@@ -743,18 +768,20 @@ describe('decos-service', () => {
     test('Success', async () => {
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
       const documentsTransformed =
-        await forTesting.transformDecosDocumentListResponse(reqID, documents);
-      expect(documentsTransformed).toMatchInlineSnapshot(`
-        [
-          {
-            "datePublished": "2024-06-06",
-            "id": "D/4379600",
-            "key": "blob-key",
-            "title": "Systeem - Factuurregel Stadsloket automatisch",
-            "url": "",
-          },
-        ]
-      `);
+        await forTesting.transformDecosDocumentListResponse(
+          reqID,
+          'xx',
+          documents
+        );
+      expect(documentsTransformed).toEqual([
+        {
+          datePublished: '2024-06-06',
+          id: 'D/4379600',
+          key: 'blob-key',
+          title: 'Systeem - Factuurregel Stadsloket automatisch',
+          url: 'http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id',
+        },
+      ]);
     });
   });
 

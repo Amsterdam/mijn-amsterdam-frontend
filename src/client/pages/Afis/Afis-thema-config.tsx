@@ -1,16 +1,19 @@
 import { ReactNode } from 'react';
 
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
+  AfisBusinessPartnerDetailsTransformed,
   AfisFacturenResponse,
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import { DisplayProps } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { TrackingConfig } from '../../config/routes';
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
@@ -18,24 +21,40 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
-  afzender: 'Afzender',
+const displayPropsFacturenOpenBase: DisplayProps<AfisFactuurFrontend> = {
   factuurNummerEl: 'Factuurnummer',
+  afzender: 'Afzender',
   paymentDueDateFormatted: 'Vervaldatum',
   statusDescription: 'Status',
 };
 
-const displayPropsFacturenAfgehandeld: DisplayProps<AfisFactuurFrontend> = {
-  afzender: 'Afzender',
+const displayPropsFacturenOpen = withOmitDisplayPropsForSmallScreens(
+  displayPropsFacturenOpenBase,
+  ['statusDescription', 'paymentDueDateFormatted', 'afzender']
+);
+
+const displayPropsFacturenAfgehandeldBase: DisplayProps<AfisFactuurFrontend> = {
   factuurNummerEl: 'Factuurnummer',
+  afzender: 'Afzender',
   statusDescription: 'Status',
 };
 
-const displayPropsFacturenOvergedragen: DisplayProps<AfisFactuurFrontend> = {
-  afzender: 'Afzender',
-  factuurNummerEl: 'Factuurnummer',
-  statusDescription: 'Status',
-};
+const displayPropsFacturenAfgehandeld = withOmitDisplayPropsForSmallScreens(
+  displayPropsFacturenAfgehandeldBase,
+  ['statusDescription', 'afzender']
+);
+
+const displayPropsFacturenOvergedragenBase: DisplayProps<AfisFactuurFrontend> =
+  {
+    factuurNummerEl: 'Factuurnummer',
+    afzender: 'Afzender',
+    statusDescription: 'Status',
+  };
+
+const displayPropsFacturenOvergedragen = withOmitDisplayPropsForSmallScreens(
+  displayPropsFacturenOvergedragenBase,
+  ['statusDescription', 'afzender']
+);
 
 export const listPageTitle: Record<AfisFactuurState, string> = {
   open: 'Openstaande facturen',
@@ -81,6 +100,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageLinkLabel: 'Alle openstaande facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'open',
+      page: null,
     }),
     className: 'FacturenTable--open',
   },
@@ -92,6 +112,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
       'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'overgedragen',
+      page: null,
     }),
     className: 'FacturenTable--afgehandeld',
   },
@@ -102,6 +123,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     listPageLinkLabel: 'Alle afgehandelde facturen',
     listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
       state: 'afgehandeld',
+      page: null,
     }),
     className: 'FacturenTable--overgedragen',
   },
@@ -112,13 +134,14 @@ const displayPropsEmandates: DisplayProps<AfisEmandateStub> = {
   name: 'Naam',
 };
 
-export const businessPartnerDetailsLabels = {
-  fullName: 'Debiteurnaam',
-  businessPartnerId: 'Debiteurnummer',
-  email: 'E-mailadres factuur',
-  phone: 'Telefoonnummer',
-  address: 'Adres',
-};
+export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetailsTransformed> =
+  {
+    fullName: 'Debiteurnaam',
+    businessPartnerId: 'Debiteurnummer',
+    email: 'E-mailadres factuur',
+    phone: 'Telefoonnummer',
+    address: 'Adres',
+  };
 
 export const eMandateTableConfig = {
   active: {
@@ -145,3 +168,21 @@ export const linkListItems: LinkProps[] = [
     title: 'Meer over betalen aan de gemeente',
   },
 ];
+
+export function getAfisListPageDocumentTitle(themaTitle: string) {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    switch (params?.state) {
+      case 'open':
+        return `Open facturen | ${themaTitle}`;
+      case 'afgehandeld':
+        return `Afgehandelde facturen | ${themaTitle}`;
+      case 'overgedragen':
+        return `Overgedragen aan belastingen facturen | ${themaTitle}`;
+      default:
+        return `Facturen | ${themaTitle}`;
+    }
+  };
+}

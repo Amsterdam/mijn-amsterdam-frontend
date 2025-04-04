@@ -1,4 +1,8 @@
-import { LinkProps, StatusLineItem } from '../../../universal/types';
+import {
+  LinkProps,
+  StatusLineItem,
+  ZaakDetail,
+} from '../../../universal/types';
 
 export interface WpiRequestStatusDocument {
   id: string;
@@ -21,7 +25,7 @@ export interface WpiRequestStatusHerstelTermijn extends WpiRequestStatus {
   dateUserFeedbackExpected: string;
 }
 
-export interface WpiRequestProcess {
+export interface WpiRequestProcess extends ZaakDetail {
   id: string;
   title: string;
   about:
@@ -35,12 +39,14 @@ export interface WpiRequestProcess {
     | 'Bbz'
     | string;
   dateStart: string;
+  dateStartFormatted: string | null;
   dateEnd: string | null;
+  dateEndFormatted: string | null;
   datePublished: string; // Date of latest step
   steps: WpiRequestStatus[];
   statusId: WpiRequestStatus['id'];
+  displayStatus: string;
   decision: string | null;
-  link?: LinkProps;
 }
 
 export type WpiRequestProcessContent<T = string> = (
@@ -71,7 +77,7 @@ export interface WpiIncomeSpecification {
 
 export interface WpiIncomeSpecificationTransformed
   extends WpiIncomeSpecification {
-  displayDatePublished: string;
+  datePublishedFormatted: string;
   category: string;
   download: string;
 }

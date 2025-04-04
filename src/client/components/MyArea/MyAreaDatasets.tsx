@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { LeafletEvent, Map } from 'leaflet';
 import isEqual from 'lodash.isequal';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { toBoundLiteral } from './MyArea.helpers';
@@ -29,7 +29,7 @@ import {
   DatasetId,
 } from '../../../universal/config/myarea-datasets';
 import { AppRoutes } from '../../../universal/config/routes';
-import ErrorMessages from '../ErrorMessages/ErrorMessages';
+import { ErrorMessages } from '../ErrorMessages/ErrorMessages';
 
 interface MyAreaDatasetsProps {
   datasetIds?: DatasetId[];
@@ -37,7 +37,8 @@ interface MyAreaDatasetsProps {
 
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [polylineFeatures, setPolylineFeatures] = useState<MaPolylineFeature[]>(
     []
   );
@@ -59,7 +60,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     FEATURES_LOADING_DEBOUNCE_MS
   );
 
-  const search = history.location.search;
+  const search = location.search;
   const fetchFeatures = useFetchFeatures();
   const [activeDatasetIdsState, setActiveDatasetIds] = useActiveDatasetIds();
   const [activeFilters, setActiveFilterSelection] = useActiveDatasetFilters();
@@ -132,7 +133,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
     const url = `${AppRoutes.BUURT}?${params}`;
 
-    history.replace(url);
+    navigate(url);
   }, [search, activeDatasetIds, activeFilters, loadingFeature]);
 
   const fetch = useCallback(
@@ -183,10 +184,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         params.set('center', currentCenter);
 
         const url = `${AppRoutes.BUURT}?${params}`;
-        history.replace(url);
+        navigate(url);
       }
     },
-    [search, history]
+    [search, location.pathname, navigate]
   );
 
   // This callback runs whenever the map zooms / pans

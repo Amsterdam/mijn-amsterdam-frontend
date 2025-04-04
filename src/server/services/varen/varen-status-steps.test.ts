@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
-import { VarenVergunningExploitatieType } from './config-and-types';
+import { VarenVergunningExploitatie } from './config-and-types';
 import { getStatusSteps } from './varen-status-steps';
 
 const exploitatieBase = {
@@ -9,7 +9,7 @@ const exploitatieBase = {
   processed: false,
   statusDates: [],
   dateRequest: '2025-01-01T00:00:00',
-} as unknown as VarenVergunningExploitatieType;
+} as unknown as VarenVergunningExploitatie;
 
 describe('getStatusSteps', () => {
   const MOCK_CURRENT_DATE = '2025-01-20';
@@ -19,7 +19,7 @@ describe('getStatusSteps', () => {
     const exploitatieInProgress = {
       ...exploitatieBase,
       termijnDates: [],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningExploitatie;
 
     expect(getStatusSteps(exploitatieInProgress)).toStrictEqual([
       {
@@ -62,7 +62,7 @@ describe('getStatusSteps', () => {
     const exploitatieMeerInformatieWithin = {
       ...exploitatieBase,
       termijnDates: [termijn1, termijn2],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningExploitatie;
 
     expect(getStatusSteps(exploitatieMeerInformatieWithin)).toMatchObject([
       {
@@ -117,7 +117,7 @@ describe('getStatusSteps', () => {
     const exploitatieMeerInformatieAfter = {
       ...exploitatieBase,
       termijnDates: [termijn],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningExploitatie;
 
     expect(getStatusSteps(exploitatieMeerInformatieAfter)).toMatchObject([
       {},
@@ -158,7 +158,7 @@ describe('getStatusSteps', () => {
     const exploitatieMeerInformatieOverlap = {
       ...exploitatieBase,
       termijnDates: [termijn1, termijn2],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningExploitatie;
 
     expect(getStatusSteps(exploitatieMeerInformatieOverlap)).toMatchObject([
       {},
@@ -205,7 +205,7 @@ describe('getStatusSteps', () => {
       processed: true,
       dateDecision: `${MOCK_CURRENT_DATE}T00:00:00`,
       termijnDates: [termijn],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningExploitatie;
 
     expect(getStatusSteps(exploitatieMeerInformatieDecision)).toMatchObject([
       {},
@@ -232,7 +232,7 @@ describe('getStatusSteps', () => {
       processed: true,
       dateDecision: '2025-01-20T00:00:00',
       termijnDates: [],
-    } as unknown as VarenVergunningExploitatieType;
+    } as unknown as VarenVergunningExploitatie;
 
     expect(getStatusSteps(exploitatieDecision)).toMatchObject([
       {

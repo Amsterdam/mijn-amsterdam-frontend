@@ -37,26 +37,26 @@ describe('formatKvkProfileData', () => {
         "Einddatum onderneming": "01 januari 2022",
         "Handelsnaam": "Test Handelsnaam",
         "KVK nummer": "12345678",
-        "Overige activiteiten": <React.Fragment>
+        "Overige activiteiten": [
           <span>
             Consultancy
             <br />
-          </span>
+          </span>,
           <span>
             Onderhoud
             <br />
-          </span>
-        </React.Fragment>,
-        "Overige handelsnamen": <React.Fragment>
+          </span>,
+        ],
+        "Overige handelsnamen": [
           <span>
             Handelsnaam 1
             <br />
-          </span>
+          </span>,
           <span>
             Handelsnaam 2
             <br />
-          </span>
-        </React.Fragment>,
+          </span>,
+        ],
         "Rechtsvorm": "BV",
         "Startdatum onderneming": "01 januari 2021",
       }

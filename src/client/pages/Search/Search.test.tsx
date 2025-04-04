@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { cleanup, render, screen } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, it } from 'vitest';
 
-import Search from './Search';
+import { SearchPage } from './Search';
 import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
@@ -31,7 +31,7 @@ describe('<Search />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={Search}
+        component={SearchPage}
         initializeState={function initializeState(snapshot: MutableSnapshot) {
           snapshot.set(appStateAtom, testState);
           snapshot.set(appStateReadyAtom, isAppStateReady);

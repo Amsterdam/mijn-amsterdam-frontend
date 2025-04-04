@@ -1,10 +1,10 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
-import { Thema } from '../config/thema';
+import { ThemaID } from '../config/thema';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
 
-export type BagThema = `${Thema}_BAG`;
+export type BagThema = `${ThemaID}_BAG`;
 
 export type AppState = {
   [key in ServiceID]: ApiResponse_DEPRECATED<
@@ -44,40 +44,26 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
-export type ComponentChildren = ReactNode;
-
 export interface MyNotification {
-  thema: Thema;
+  thema: ThemaID;
   datePublished: string;
   description: string;
   hideDatePublished?: boolean;
   id: string;
   isAlert?: boolean;
-  isTip?: boolean;
-  tipReason?: string;
   link?: LinkProps;
-  moreInformation?: string;
   subject?: string;
   title: string;
+
+  // TIP notifications
+  tipReason?: string;
+  isTip?: true;
 
   // NOTE: Maybe move this to client?
   customLink?: {
     callback: () => void;
     title: string;
   };
-}
-
-export interface MyTip {
-  thema?: Thema | null;
-  datePublished: string;
-  description: string;
-  id: string;
-  imgUrl?: string;
-  link: LinkProps;
-  priority?: number;
-  profileTypes?: ProfileType[];
-  reason: string;
-  title: string;
 }
 
 export interface GenericDocument {

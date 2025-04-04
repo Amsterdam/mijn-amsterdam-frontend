@@ -1,11 +1,12 @@
 import { Themas } from '../../universal/config/thema';
-import { ThemaMenuItem, ThemaTitles } from '../config/thema';
+import { ThemaTitles } from '../config/thema';
+import { ThemaMenuItem } from '../config/thema-types';
 import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
 
 describe('useThemaMenuItems', () => {
   test('Parkeren is not active without an Appstate entry.', () => {
     const item: ThemaMenuItem = {
-      title: ThemaTitles.Parkeren,
+      title: ThemaTitles.PARKEREN,
       id: Themas.PARKEREN,
       to: 'http://test',
       rel: 'external',
@@ -23,7 +24,7 @@ describe('useThemaMenuItems', () => {
 
   test('isThemaActive', () => {
     const item: ThemaMenuItem = {
-      id: 'BRP',
+      id: 'INKOMEN',
       profileTypes: ['private'],
       to: 'http://test',
       title: 'Testje!',
@@ -31,7 +32,7 @@ describe('useThemaMenuItems', () => {
 
     {
       const isActive = isThemaActive(item, {
-        BRP: { content: { persoon: null } },
+        WPI_AANVRAGEN: { content: [] },
       } as any);
 
       expect(isActive).toBe(false);
@@ -39,7 +40,7 @@ describe('useThemaMenuItems', () => {
 
     {
       const isActive = isThemaActive(item, {
-        BRP: { content: { persoon: { naam: 'testje' } } },
+        WPI_AANVRAGEN: { content: ['x'] },
       } as any);
 
       expect(isActive).toBe(true);

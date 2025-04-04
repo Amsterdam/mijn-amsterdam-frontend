@@ -1,5 +1,5 @@
 import { differenceInMonths, format } from 'date-fns';
-import { LinkProps, generatePath } from 'react-router-dom';
+import { LinkProps, generatePath } from 'react-router';
 
 import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './config';
 import { requestProcess as bbzRequestProcessLabels } from './content/bbz';
@@ -11,13 +11,14 @@ import {
   WpiRequestStatus,
 } from './wpi-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Thema } from '../../../universal/config/thema';
+import { ThemaID } from '../../../universal/config/thema';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
-export function transformToStatusLine(
+export function transformRequestProcess(
   sessionID: SessionID,
   requestProcess: WpiRequestProcess,
   labels: WpiRequestProcessLabels
@@ -42,6 +43,13 @@ export function transformToStatusLine(
 
   return {
     ...requestProcess,
+    displayStatus: activeStep.status,
+    dateStartFormatted: requestProcess.dateStart
+      ? defaultDateFormat(requestProcess.dateStart)
+      : null,
+    dateEndFormatted: requestProcess.dateEnd
+      ? defaultDateFormat(requestProcess.dateEnd)
+      : null,
     steps,
   };
 }
@@ -81,7 +89,7 @@ export function createProcessNotification(
   requestProcess: WpiRequestProcess,
   statusStep: WpiRequestStatus,
   labels: WpiRequestProcessLabels,
-  thema: Thema
+  thema: ThemaID
 ): MyNotification {
   const notificationLabels = labels[statusStep.id].notification;
   const titleTransform = notificationLabels.title;
@@ -151,7 +159,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       link = {
         to: generatePath(AppRoutes['INKOMEN/TONK'], {
           id,
-          version: 1,
+          version: '1',
         }),
         title,
       };
@@ -181,7 +189,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       link = {
         to: generatePath(AppRoutes['INKOMEN/BBZ'], {
           id,
-          version: 1,
+          version: '1',
         }),
         title,
       };

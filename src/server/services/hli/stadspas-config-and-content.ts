@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { StadspasFrontend } from './stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';

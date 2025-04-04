@@ -1,45 +1,37 @@
-import styles from './Search.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import {
-  Page,
-  PageContent,
-  PageHeading,
-  Search as SearchBar,
-  ThemaIcon,
-} from '../../components';
+  PageContentCell,
+  PageContentV2,
+  PageV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { Search } from '../../components/Search/Search';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateReady } from '../../hooks/useAppState';
 
-export default function Search() {
+export function SearchPage() {
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';
   const isReady = useAppStateReady();
   return (
-    <Page className={styles.Search}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={false}
-        icon={<ThemaIcon />}
-        className={styles.SearchPageHeading}
-      >
-        {ThemaTitles.SEARCH}
-      </PageHeading>
-      <PageContent>
-        {isReady ? (
-          <SearchBar
-            autoFocus={true}
-            term={termParam}
-            extendedAMResults={true}
-            typeAhead={false}
-            maxResultCountDisplay={20}
-          />
-        ) : (
-          <p>Zoeken voorbereiden...</p>
-        )}
-      </PageContent>
-    </Page>
+    <PageV2>
+      <PageContentV2>
+        <PageHeadingV2>{ThemaTitles.SEARCH}</PageHeadingV2>
+        <PageContentCell>
+          {isReady ? (
+            <Search
+              autoFocus={true}
+              term={termParam}
+              extendedAMResults={true}
+              typeAhead={false}
+              maxResultCountDisplay={20}
+            />
+          ) : (
+            <Paragraph>Zoeken voorbereiden...</Paragraph>
+          )}
+        </PageContentCell>
+      </PageContentV2>
+    </PageV2>
   );
 }

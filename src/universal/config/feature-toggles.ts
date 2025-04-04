@@ -35,11 +35,8 @@ export const FeatureToggle = {
   eherkenningActive: true,
 
   // ErfachtV2 VerNise
-  erfpachtV2Active: true,
-  erfpachtV2EndpointActive: true,
-
-  // Legacy Mijn Erfpacht
-  mijnErfpachtActive: false,
+  erfpachtActive: true,
+  erfpachtEndpointActive: true,
 
   // Afval api + Afval thema
   garbageInformationPage: true,
@@ -113,11 +110,8 @@ export const FeatureToggle = {
   //Varen (komt uit Decos)
   varenActive: !IS_PRODUCTION,
 
-  // Vergunningen V1 (met koppel api)
   vergunningenActive: true,
-  // Vergunningen V2 met BFF integratie
-  vergunningenV2Active: false, // TODO: Enable when working on MIJN-8914
-  decosServiceActive: !IS_PRODUCTION, // TODO: Enable when working on MIJN-8914
+  decosServiceActive: true,
 
   // WIOR Kaar data
   wiorDatasetActive: true,

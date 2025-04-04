@@ -41,8 +41,8 @@
       "keywords": ["AVG", "AVG verzoek indienen"]
     },
     {
-      "url": "/burgerzaken",
-      "displayTitle": "Burgerzaken",
+      "url": "/paspoort-en-id-kaart",
+      "displayTitle": "Paspoort en ID-kaart",
       "description": "Informatie over uw officiële documenten, zoals uw paspoort of aktes. Als u gaat trouwen of een partnerschap aangaat, dan ziet u hier de aankondiging.",
       "keywords": [
         "Burgerzaken",
@@ -348,13 +348,14 @@
       "url": "/parkeren",
       "displayTitle": "Parkeren",
       "description": "Parkeren in de gemeente Amsterdam.",
-      "keywords": ["Parkeren", "private", "commercial"]
+      "keywords": ["Parkeren", "private", "commercial", "vergunningen"]
     },
     {
       "url": "/toeristische-verhuur",
       "displayTitle": "Toeristische verhuur",
       "description": "Hieronder vind u een overzicht van uw aanvragen voor toeristische verhuur.",
       "keywords": [
+        "vergunningen",
         "Toeristische verhuur",
         "vergunning airbnb",
         "vergunning B&B",
@@ -400,14 +401,8 @@
       "keywords": ["Subsidie", "Subsidies"]
     },
     {
-      "url": "https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger",
-      "displayTitle": "Erfpacht",
-      "description": "Een overzicht van de erfpacht.",
-      "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen"]
-    },
-    {
       "url": "/erfpacht",
-      "displayTitle": "ErfpachtV2",
+      "displayTitle": "Erfpacht",
       "description": "Een overzicht van uw erfpachtrechten.",
       "keywords": ["Erfpacht", "Canon", "Afkopen", "Betalen", "Facturen"]
     },
@@ -687,8 +682,8 @@
     },
     {
       "url": "/buurt?datasetIds=%5B%22sportaanbieder%22%5D&filters=%7B%22sportaanbieder%22%3A%7B%22indicatieStadspas%22%3A%7B%22values%22%3A%7B%22Ja%22%3A1%7D%7D%7D%7D",
-      "displayTitle": "Sporten met stadspas",
-      "description": "Sporten met stadspas",
+      "displayTitle": "Sporten met Stadspas",
+      "description": "Sporten met Stadspas",
       "keywords": ["Stadspas", "sporten", "pas", "sport"],
       "profileTypes": ["private", "commercial"]
     },
@@ -889,6 +884,7 @@
       ],
       "keywords": [
         "verguning",
+        "vergunningen",
         "horecavergunning",
         "hotel",
         "restaurant",

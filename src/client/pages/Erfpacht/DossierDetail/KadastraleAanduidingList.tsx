@@ -1,10 +1,10 @@
 import { OrderedList } from '@amsterdam/design-system-react';
 
 import styles from './ErfpachtDossierDetail.module.scss';
-import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
+import { ErfpachtDossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
 
 interface KadastraleAanduidingListListProps {
-  kadastraleaanduidingen?: ErfpachtV2DossiersDetail['kadastraleaanduidingen'];
+  kadastraleaanduidingen?: ErfpachtDossiersDetail['kadastraleaanduidingen'];
 }
 
 export function KadastraleAanduidingList({

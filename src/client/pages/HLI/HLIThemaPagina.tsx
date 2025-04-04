@@ -1,29 +1,31 @@
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
+import { ReactNode } from 'react';
+
+import { Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { LinkProps } from '../../../universal/types/App.types';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { PageContentCell } from '../../components/Page/Page';
+import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { DisplayProps } from '../../components/Table/TableV2';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function HistoricItemsMention() {
   return (
-    <Paragraph className={styles.HistoricItemsMention}>
+    <ParagaphSuppressed>
       U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier
       niet ziet, heeft u eerder per post ontvangen.
-    </Paragraph>
+    </ParagaphSuppressed>
   );
 }
 
 type StadspasDisplayProps = {
-  owner: JSX.Element;
-  actief: JSX.Element;
+  owner: ReactNode;
+  actief: ReactNode;
 };
 
 type StadspassenProps = {
@@ -59,9 +61,8 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   });
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <ThemaPaginaTable<StadspasDisplayProps>
-        title=""
         displayProps={displayProps}
         zaken={passen}
         className={styles.Stadspassen}
@@ -82,47 +83,31 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
           )}
         </Paragraph>
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 
-export default function HLIThemaPagina() {
+export function HLIThemaPagina() {
   const {
     hasKindtegoed,
     isError,
     isLoading,
     regelingen,
     title,
-    routes,
     tableConfig,
     dependencyError,
     stadspassen,
+    linkListItems,
   } = useHliThemaData();
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
-      van een Stadspas ziet u ook de stadspasgegevens.
-    </Paragraph>
+    <PageContentCell spanWide={8}>
+      <Paragraph>
+        Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn
+        van een Stadspas ziet u ook de stadspasgegevens.
+      </Paragraph>
+    </PageContentCell>
   );
-
-  const linkListItems: LinkProps[] = [
-    {
-      to: 'https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/',
-      title: 'Meer informatie over regelingen',
-    },
-    {
-      to: 'https://www.amsterdam.nl/stadspas',
-      title: 'Meer informatie over Stadspas',
-    },
-  ];
-
-  if (hasKindtegoed) {
-    linkListItems.push({
-      to: 'https://www.amsterdam.nl/stadspas/kindtegoed/kosten-terugvragen/',
-      title: 'Meer informatie over Kindtegoed declareren',
-    });
-  }
 
   const regelingenTables = FeatureToggle.hliThemaRegelingenActive
     ? Object.entries(tableConfig).map(
@@ -135,7 +120,7 @@ export default function HLIThemaPagina() {
             sort: regelingenListSort,
             maxItems,
             className,
-            textNoContent,
+            listPageRoute,
           },
         ]) => {
           return (
@@ -146,11 +131,8 @@ export default function HLIThemaPagina() {
               zaken={regelingen
                 .filter(regelingenListFilter)
                 .sort(regelingenListSort)}
-              listPageRoute={generatePath(routes.listPage, {
-                kind,
-              })}
+              listPageRoute={listPageRoute}
               displayProps={displayProps}
-              textNoContent={textNoContent}
               maxItems={maxItems}
             />
           );
@@ -168,6 +150,9 @@ export default function HLIThemaPagina() {
           <>
             {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
             {!!regelingen?.length && regelingenTables}
+            <PageContentCell startWide={3} spanWide={8}>
+              <HistoricItemsMention />
+            </PageContentCell>
           </>
         }
         isError={isError}
@@ -175,7 +160,6 @@ export default function HLIThemaPagina() {
         isPartialError={!!dependencyError}
         isLoading={isLoading}
       />
-      <HistoricItemsMention />
     </>
   );
 }

@@ -1,25 +1,20 @@
-import { Alert, Grid, Paragraph } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
+import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { routes } from './toeristischeVerhuur-thema-config';
 import {
   BB_VERGUNNING_DISCLAIMER,
   useToeristischeVerhuurThemaData,
 } from './useToeristischeVerhuur.hook';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   LVVRegistratie,
-  VakantieverhuurVergunning,
-} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+  ToeristischeVerhuurVergunning,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { entries } from '../../../universal/helpers/utils';
-import { LinkProps } from '../../../universal/types/App.types';
-import { LinkdInline } from '../../components';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function ToeristscheVerhuurThema() {
   const {
-    hasVergunningenVakantieVerhuur,
     hasBothVerleend,
     hasPermits,
     hasRegistrations,
@@ -34,6 +29,7 @@ export function ToeristscheVerhuurThema() {
     hasBBVergunningError,
     hasLVVRegistratiesError,
     hasVakantieVerhuurVergunningError,
+    linkListItems,
   } = useToeristischeVerhuurThemaData();
 
   const errorAlertContent = isError ? (
@@ -66,48 +62,26 @@ export function ToeristscheVerhuurThema() {
   );
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder vindt u een overzicht van uw vergunningen voor toeristische
-      verhuur.
-    </Paragraph>
+    <PageContentCell spanWide={8}>
+      <Paragraph>
+        Hieronder vindt u een overzicht van uw vergunningen voor toeristische
+        verhuur.
+      </Paragraph>
+    </PageContentCell>
   );
 
-  const linkListItems: LinkProps[] = [
-    {
-      title: 'Meer over toeristenbelasting',
-      to: 'https://www.amsterdam.nl/veelgevraagd/toeristenbelasting-2c7c2',
-    },
-    {
-      title: 'Vakantieverhuur melden of registratienummer aanvragen',
-      to: 'https://www.toeristischeverhuur.nl/portaal/login',
-    },
-  ];
-
-  if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over bed & breakfast',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/',
-    });
-  }
-
-  if (hasVergunningenVakantieVerhuur) {
-    linkListItems.unshift({
-      title: 'Meer informatie over particuliere vakantieverhuur',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/',
-    });
-  }
-
   const vergunningenTables = entries(tableConfigVergunningen).map(
-    ([kind, { title, displayProps, filter, sort, maxItems, className }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, maxItems, className, listPageRoute },
+    ]) => {
       return (
-        <ThemaPaginaTable<BBVergunning | VakantieverhuurVergunning>
+        <ThemaPaginaTable<ToeristischeVerhuurVergunning>
           key={kind}
           title={title}
           className={className}
           zaken={vergunningen.filter(filter).sort(sort)}
-          listPageRoute={generatePath(routes.listPage, {
-            kind,
-          })}
+          listPageRoute={listPageRoute}
           displayProps={displayProps}
           maxItems={maxItems}
         />
@@ -133,7 +107,7 @@ export function ToeristscheVerhuurThema() {
       pageContentMain={
         <>
           {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <Alert severity="info" title="Voorwaarden en regels">
                 {hasBothVerleend && (
                   <Paragraph className="ams-mb--sm">
@@ -141,12 +115,12 @@ export function ToeristscheVerhuurThema() {
                     &amp; breakfast. Het is niet toegestaan om op hetzelfde
                     adres zowel aan vakantieverhuur als bed &amp; breakfast te
                     doen. U moet daarom 1 van deze vergunningen opzeggen.{' '}
-                    <LinkdInline
-                      external={true}
+                    <Link
+                      rel="noopener noreferrer"
                       href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/vakantieverhuur/vergunning/"
                     >
                       Meer informatie over voorwaarden vakantieverhuur
-                    </LinkdInline>
+                    </Link>
                     .
                   </Paragraph>
                 )}
@@ -156,23 +130,23 @@ export function ToeristscheVerhuurThema() {
                     U heeft een vergunning voor vakantieverhuur of bed &amp;
                     breakfast. U moet daarom ook een landelijk registratienummer
                     voor toeristische verhuur aanvragen.{' '}
-                    <LinkdInline
-                      external={true}
+                    <Link
+                      rel="noopener noreferrer"
                       href="https://www.amsterdam.nl/wonen-leefomgeving/wonen/registratienummer-toeristische-verhuur/"
                     >
                       Meer informatie over het landelijk registratienummer
                       toeristische verhuur
-                    </LinkdInline>
+                    </Link>
                     .
                   </Paragraph>
                 )}
               </Alert>
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {!hasVergunningBB && (
-            <Grid.Cell span="all">
+            <PageContentCell spanWide={8}>
               <Paragraph>{BB_VERGUNNING_DISCLAIMER}</Paragraph>
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {vergunningenTables}
           {registratieTable}

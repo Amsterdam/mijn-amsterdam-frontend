@@ -1,6 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import type { Request, Response } from 'express';
-import { generatePath, matchPath } from 'react-router-dom';
+import { generatePath, matchPath } from 'react-router';
 
 import { PUBLIC_BFF_ENDPOINTS } from './bff-routes';
 import {
@@ -29,9 +29,7 @@ export function queryParams<T extends Record<string, any>>(req: Request) {
 
 export function isPublicEndpoint(pathRequested: string) {
   return PUBLIC_BFF_ENDPOINTS.some((pathPublic) => {
-    return !!matchPath(pathPublic, {
-      path: pathRequested,
-    });
+    return !!matchPath(pathPublic, pathRequested);
   });
 }
 

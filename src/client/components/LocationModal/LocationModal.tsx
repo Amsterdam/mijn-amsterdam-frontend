@@ -19,11 +19,11 @@ import {
   BAGQueryParams,
   BAGSourceData,
 } from '../../../universal/types/bag';
-import { Modal } from '../../components';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
-import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
+import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
 import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
+import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
 
 function transformBagSearchResultsResponse(
@@ -100,12 +100,9 @@ export function LocationModal({
     }
     if (isLocationModalOpen) {
       const querySearchAddress = extractAddressParts(address);
-      if (
-        !(
-          querySearchAddress.huisnummer &&
-          (querySearchAddress.openbareruimteNaam || querySearchAddress.postcode)
-        )
-      ) {
+      const { openbareruimteNaam, huisnummer, postcode } = querySearchAddress;
+
+      if (!(huisnummer && (openbareruimteNaam || postcode))) {
         return;
       }
 
@@ -164,6 +161,8 @@ export function LocationModal({
         </Button>
         <Modal
           isOpen={isLocationModalOpen}
+          pollingQuerySelector="#map-zoom"
+          giveUpOnReadyPollingAfterMs={5000}
           onClose={() => {
             setLocationModalOpen(false);
           }}
@@ -182,6 +181,8 @@ export function LocationModal({
                 datasetIds={[]}
                 activeBaseLayerType={BaseLayerType.Aerial}
                 centerMarker={centerMarker}
+                showHomeLocationMarker={false}
+                showSecondaryLocationMarkers={false}
               />
             )}
             {!bagApi.isLoading && !hasLocationDataAndCenterMarker && (
@@ -211,7 +212,7 @@ export function AddressDisplayAndModal({
       <span className={classNames(styles.Address, 'ams-mb--xs')}>
         {label ?? address}
       </span>
-      <LocationModal address={address} label={label} />
+      <LocationModal address={address} label={label ?? address} />
     </>
   );
 }

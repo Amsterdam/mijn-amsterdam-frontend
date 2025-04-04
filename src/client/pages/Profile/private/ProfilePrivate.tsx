@@ -1,8 +1,7 @@
-import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { AdresInOnderzoek } from './AdresInOnderzoek';
 import { ContactMomenten } from './ContactMomenten';
-import styles from './ProfilePrivate.module.scss';
 import { panelConfig } from './ProfilePrivate.transform';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
 import { useProfileData } from './useProfileData.hook';
@@ -12,6 +11,8 @@ import {
   hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../../universal/helpers/brp';
+import { PageContentCell } from '../../../components/Page/Page';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
 
 function ProfilePrivateSectionPanels() {
@@ -64,8 +65,8 @@ function ProfilePrivateSectionPanels() {
         />
       )}
       {isMokum(BRP.content) && (
-        <Grid.Cell span="all">
-          <p className={styles.SuppressedParagraph}>
+        <PageContentCell>
+          <ParagaphSuppressed className="ams-mb--sm">
             Het is helaas niet mogelijk om de gegevens van een levenloos geboren
             kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
             in{' '}
@@ -73,13 +74,13 @@ function ProfilePrivateSectionPanels() {
               MijnOverheid
             </Link>
             .
-          </p>
-          <p className={styles.SuppressedParagraph}>
+          </ParagaphSuppressed>
+          <ParagaphSuppressed>
             Op deze pagina laten wij uw gegevens zien uit de landelijke en
             Amsterdamse administratie. Gegevens die bij een andere gemeente zijn
             geregistreerd worden hier niet getoond.
-          </p>
-        </Grid.Cell>
+          </ParagaphSuppressed>
+        </PageContentCell>
       )}
     </>
   );
@@ -109,7 +110,7 @@ export function MijnGegevensThema() {
   const isThemaPaginaLoading = isLoadingBrp && isLoadingContactmomenten;
 
   const pageContentTop = (
-    <Grid.Cell span="all">
+    <PageContentCell spanWide={8}>
       <Paragraph className="ams-mb--sm">
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u
         vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw
@@ -130,7 +131,7 @@ export function MijnGegevensThema() {
           moment geen Nederlandse nationaliteit hebt.
         </Paragraph>
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 
   return (
@@ -145,19 +146,19 @@ export function MijnGegevensThema() {
       pageContentMain={
         <>
           {brpContent?.persoon.vertrokkenOnbekendWaarheen && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <VertrokkenOnbekendWaarheen brpContent={brpContent} />
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {brpContent?.persoon?.adresInOnderzoek && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <AdresInOnderzoek brpContent={brpContent} />
-            </Grid.Cell>
+            </PageContentCell>
           )}
           {hasContactMomenten && (
-            <Grid.Cell span="all">
+            <PageContentCell>
               <ContactMomenten />
-            </Grid.Cell>
+            </PageContentCell>
           )}
           <ProfilePrivateSectionPanels />
         </>

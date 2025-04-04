@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
-import { generatePath, NavLink } from 'react-router-dom';
+import { Heading, Paragraph } from '@amsterdam/design-system-react';
+import { generatePath, NavLink } from 'react-router';
 
 import styles from './MyAreaDashboard.module.scss';
-import MyAreaLoader from './MyAreaLoader';
+import { MyAreaLoader } from './MyAreaLoader';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isMokum } from '../../../universal/helpers/brp';
 import { ThemaTitles } from '../../config/thema';
@@ -12,7 +12,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 
-export default function MyAreaDashboard() {
+export function MyAreaDashboard() {
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const ref = useRef<HTMLDivElement | null>(null);
@@ -25,16 +25,16 @@ export default function MyAreaDashboard() {
       <MyAreaLoader isDashboard={true} />
       <NavLink className={styles.NavLink} to={generatePath(AppRoutes.BUURT)}>
         <span className={styles.NavLinkContentWrap}>
-          <Heading size="level-2" level={3}>
-            {termReplace(ThemaTitles.BUURT)}
-          </Heading>
+          <Heading level={3}>{termReplace(ThemaTitles.BUURT)}</Heading>
           {!mokum ? (
-            <p>Uw adres kan niet worden getoond in Mijn Amsterdam.</p>
+            <Paragraph>
+              Uw adres kan niet worden getoond in Mijn Amsterdam.
+            </Paragraph>
           ) : (
-            <p>
+            <Paragraph>
               Klik voor een overzicht van gemeentelijke informatie rond uw{' '}
               {termReplace('eigen woning')}.
-            </p>
+            </Paragraph>
           )}
         </span>
       </NavLink>

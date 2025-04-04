@@ -108,6 +108,7 @@ describe('Varen service', () => {
           'termijnDates',
           'vergunningen',
         ]),
+        displayStatus: 'Verleend',
         ...{
           id: 'Z-24-0000001-Z-25-0000001-10001',
           vergunningKenmerk: 'Z/25/0000001',

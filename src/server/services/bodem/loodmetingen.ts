@@ -1,5 +1,5 @@
 import FormData from 'form-data';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getBodemStatusSteps } from './loodmeting-status-line-items';
 import {
@@ -23,7 +23,6 @@ import {
 } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -178,13 +177,14 @@ export async function fetchLoodmetingen(
   const data = getDataForLood365(authProfileAndToken);
 
   const requestConfig = getApiConfig('LOOD_365', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/be_getrequestdetails`;
+    },
     headers: await getLoodApiHeaders(requestID),
     data,
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
   });
-
-  requestConfig.url = `${requestConfig.url}/be_getrequestdetails`;
 
   return requestData<LoodMetingen>(requestConfig, requestID);
 }
@@ -194,14 +194,14 @@ export async function fetchLoodMetingDocument(
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  const requestConfigBase = getApiConfig('LOOD_365');
-  const requestConfig: DataRequestConfig = {
-    ...requestConfigBase,
+  const requestConfig = getApiConfig('LOOD_365', {
     headers: await getLoodApiHeaders(requestID),
     data: {
       workorderid: documentId,
     },
-    url: `${requestConfigBase.url}/be_downloadleadreport`,
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/be_downloadleadreport`;
+    },
     transformResponse: (documentResponseData: LoodMetingDocument) => {
       const data = Buffer.from(documentResponseData.documentbody, 'base64');
       return {
@@ -211,7 +211,7 @@ export async function fetchLoodMetingDocument(
         data,
       };
     },
-  };
+  });
 
   return requestData<DocumentDownloadData>(requestConfig, requestID);
 }

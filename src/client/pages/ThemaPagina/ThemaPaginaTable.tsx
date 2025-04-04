@@ -1,13 +1,16 @@
 import { ReactNode } from 'react';
 
-import { Grid, Paragraph } from '@amsterdam/design-system-react';
+import { Paragraph } from '@amsterdam/design-system-react';
 
 import { ZaakDetail } from '../../../universal/types';
 import { LinkToListPage } from '../../components/LinkToListPage/LinkToListPage';
+import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps, TableV2 } from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
-const DISPLAY_PROPS_DEFAULT = { title: 'Titel' };
+const DISPLAY_PROPS_DEFAULT: DisplayProps<{ title: string }> = {
+  title: 'Titel',
+};
 const TEXT_NO_CONTENT_DEFAULT = 'Er zijn (nog) geen zaken gevonden.';
 
 interface ThemaPaginaTableProps<T> {
@@ -20,11 +23,12 @@ interface ThemaPaginaTableProps<T> {
   subTitle?: ReactNode;
   title?: string;
   listPageLinkLabel?: string;
+  listPageLinkTitle?: string;
   zaken: T[];
 }
 
 export default function ThemaPaginaTable<T extends object = ZaakDetail>({
-  title = 'Zaken',
+  title = '',
   subTitle = '',
   zaken,
   className,
@@ -34,6 +38,7 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   maxItems = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   totalItems,
   listPageLinkLabel = 'Toon meer',
+  listPageLinkTitle,
 }: ThemaPaginaTableProps<T>) {
   const textNoContentDefault = title
     ? `U heeft (nog) geen ${title.toLowerCase()}`
@@ -42,13 +47,13 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
   const hasListPage = !!listPageRoute && maxItems !== -1;
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <TableV2
         showTHead={!!zaken.length}
         caption={title}
         subTitle={subTitle}
         items={hasListPage ? zaken.slice(0, maxItems) : zaken}
-        displayProps={displayProps ?? null}
+        displayProps={displayProps}
         className={className}
       />
 
@@ -59,11 +64,12 @@ export default function ThemaPaginaTable<T extends object = ZaakDetail>({
       {hasListPage && (
         <LinkToListPage
           threshold={maxItems}
+          linkTitle={listPageLinkTitle ?? `Bekijk meer ${title.toLowerCase()}`}
           label={listPageLinkLabel}
           count={totalItems ?? zaken.length}
           route={listPageRoute}
         />
       )}
-    </Grid.Cell>
+    </PageContentCell>
   );
 }

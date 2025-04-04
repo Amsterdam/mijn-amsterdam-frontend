@@ -1,25 +1,31 @@
 .SearchBar {
-  z-index: 2;
   position: relative;
   max-width: 60rem;
+
   &.in-page {
     max-width: none;
   }
 }
 
+:global(.is-typeAheadActive) {
+  @include select(MainHeaderHero_MainHeaderHero) {
+    display: none;
+  }
+  @include select(App_App) {
+    display: none;
+  }
+  @include select('ams-footer') {
+    display: none;
+  }
+}
+
 .Results {
   position: absolute;
-  width: calc(100% - 4rem);
-  background-color: $color-white;
-  border: 0.1rem solid $color-neutral-grey4;
+  width: 100%;
+  background-color: var(--ams-color-primary-white);
   margin-top: 0;
   border-top: 0;
   // transform: translateX(-1rem);
-
-  @include mq-tablet() {
-    width: 100%;
-    border: 0;
-  }
 }
 
 .SearchBar.in-page .Results {
@@ -54,12 +60,7 @@
     }
   }
 }
-.ResultSetTitle {
-  border-bottom: 0.2rem solid $color-black;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-}
+
 .ResultsPending {
   @include select(Spinner_Spinner) {
     margin-right: 0.3rem;
@@ -77,13 +78,13 @@
   &:hover {
     text-decoration: underline;
     svg {
-      fill: $color-primary-red;
+      fill: var(--ams-color-primary-red);
     }
   }
 }
 .ResultUrl {
   font-size: 0.8em;
-  color: $color-neutral-grey4;
+  color: var(--ams-color-neutral-grey3);
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -93,14 +94,8 @@
     color: inherit;
   }
 }
-.ResultDescription {
-  margin: 0;
-}
 
 .DisplayPath {
-  width: calc(100% - 5rem);
-  display: inline-flex;
-
   em {
     font-style: normal;
     font-weight: bold;
@@ -111,7 +106,7 @@
   white-space: nowrap;
   margin-right: 0.5rem;
   &:not(:first-child) {
-    color: $color-neutral-grey4;
+    color: var(--ams-color-neutral-grey3);
     font-weight: normal;
     margin-left: 0.4rem;
     font-size: 0.9em;
@@ -139,37 +134,6 @@
 }
 
 .Input {
-  height: 3.6rem;
-  padding: 0.4rem 0.8rem;
-  appearance: none;
-  font-size: 1.6rem;
-  border: solid 0.1rem $color-neutral-grey4;
-  border-radius: 0;
-  box-sizing: border-box;
-  line-height: 1.4rem;
   width: 100%;
-}
-
-.SubmitButton {
-  background-color: $color-primary-red;
-  height: 3.6rem;
-  width: 3.6rem;
-  margin-left: 0.4rem;
-  padding: 0.8rem;
-  bottom: 0;
-  &:hover {
-    background-color: rgb(225, 0, 0);
-    svg path {
-      fill: $color-white;
-    }
-  }
-}
-
-.CloseButton {
-  height: 3.6rem;
-  min-width: 3.6rem;
-  width: 3.6rem;
-  margin-left: 0.4rem;
-  padding: 0.8rem;
-  bottom: 0;
+  padding: 0 var(--ams-space-md);
 }

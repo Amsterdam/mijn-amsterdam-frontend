@@ -1,9 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+
+import { useLocation } from 'react-router';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
+import { ThemaID } from '../../universal/config/thema';
+import { LinkProps } from '../../universal/types';
 import { themasByProfileType } from '../config/menuItems';
-import { ThemaMenuItemTransformed } from '../config/thema';
+import { ThemaMenuItemTransformed } from '../config/thema-types';
 import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
 
 export interface ThemasState {
@@ -20,7 +25,9 @@ export function useThemaMenuItems(): ThemasState {
   const items = useMemo(() => {
     return themaItems.filter((item) => {
       // Check to see if Thema has been loaded or if it is directly available
-      return item.isAlwaysVisible || isThemaActive(item, appState);
+      return 'isActive' in item
+        ? item.isActive(appState)
+        : item.isAlwaysVisible || isThemaActive(item, appState);
     });
   }, [themaItems, appState]);
 
@@ -37,4 +44,73 @@ export function useThemaMenuItems(): ThemasState {
   );
 
   return themasState;
+}
+
+export function useThemaMenuItemsByThemaID() {
+  const { items } = useThemaMenuItems();
+
+  const themaById = useMemo(
+    () =>
+      items.reduce(
+        (acc, item) => {
+          acc[item.id] = item;
+          return acc;
+        },
+        {} as Record<ThemaID, ThemaMenuItemTransformed>
+      ),
+    [items]
+  );
+
+  return themaById;
+}
+
+export function useThemaMenuItemByThemaID(themaID: ThemaID) {
+  const itemsById = useThemaMenuItemsByThemaID();
+  return itemsById[themaID];
+}
+
+export function useThemaBreadcrumbs(themaID: ThemaID): LinkProps[] {
+  const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
+  const location = useLocation();
+  const from = location?.state?.from;
+  const fromPageType = location?.state?.pageType;
+
+  return [
+    themaPaginaBreadcrumb
+      ? {
+          to: themaPaginaBreadcrumb?.to,
+          title: themaPaginaBreadcrumb?.title,
+        }
+      : null,
+    fromPageType === 'listpage'
+      ? {
+          to: from,
+          title: 'Lijst',
+        }
+      : null,
+  ].filter((link) => link !== null);
+}
+
+type PageTypeSetting = 'listpage' | 'none';
+
+const pageTypeSetting = atom<PageTypeSetting>({
+  default: 'none',
+  key: 'pageTypeSetting',
+});
+
+export function usePageTypeSetting(pageTypeRequested: PageTypeSetting) {
+  const [pageType, setPageType] = useRecoilState(pageTypeSetting);
+
+  useEffect(() => {
+    setPageType(pageTypeRequested);
+    return () => {
+      setPageType(() => 'none');
+    };
+  }, [pageTypeRequested]);
+
+  return pageType;
+}
+
+export function usePageTypeSettingValue() {
+  return useRecoilValue(pageTypeSetting);
 }

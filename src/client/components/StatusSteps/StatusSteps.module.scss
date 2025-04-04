@@ -1,0 +1,142 @@
+.Steps {
+  --ams-grid-row-gap-md: 0;
+}
+:global(.ams-ordered-list).StepsList {
+  gap: 0;
+  --status-circle-box-width: calc(var(--ams-grid-column-gap) * 2);
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    --status-circle-box-width: calc(var(--ams-grid-column-gap) * 1.6);
+  }
+
+  --status-circle-box-height: calc(var(--status-circle-box-width) / 2);
+  --status-circle-size: var(--ams-heading-level-5-font-size);
+  --status-circle-size-active: calc(var(--status-circle-size) * 1.8);
+  --status-circle-size-active-inner: calc(
+    var(--status-circle-size-active) * 0.8
+  );
+  --status-circle-color-dimmed: var(--ams-color-neutral-grey3);
+  --status-circle-color-checked: var(--ams-color-dark-green);
+  --status-circle-color-active: var(--status-circle-color-checked);
+
+  // padding-left: calc(
+  //   var(--status-circle-box-width) * 1.4
+  // ); // A space relative to the circle
+}
+
+.StatusHeading {
+  grid-column-end: span 12;
+}
+
+.Step {
+  position: relative;
+  padding-bottom: var(--ams-space-lg);
+
+  p {
+    margin: 0;
+    + p {
+      margin-top: var(--ams-margin-xs);
+    }
+  }
+
+  // The line connecting the circles
+  &:before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 100%;
+    top: calc(var(--status-circle-box-height) / 2);
+    background-color: var(--status-circle-color-dimmed);
+    position: absolute;
+    left: calc(calc(var(--status-circle-box-width) + 2px) * -1);
+  }
+
+  // Don't show the line on the last step
+  &:last-child:before {
+    display: none;
+  }
+
+  &--active:last-child:before,
+  &--checked:before {
+    background-color: var(--status-circle-color-active);
+  }
+}
+
+// The status display heading per step
+// The indication is within this element
+.StepStatus {
+  display: flex;
+  align-items: center;
+  margin-left: calc(var(--status-circle-box-width) * -1);
+  position: relative;
+
+  &:global(.ams-heading) {
+    line-height: 1;
+  }
+}
+
+// Circle (can be larger than it's container)
+.StepStatusIndication {
+  width: var(--status-circle-box-width);
+  height: var(--status-circle-box-height);
+  position: relative;
+  z-index: 0;
+
+  // Inner and outer circle
+  &:before,
+  &:after {
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: var(--status-circle-size);
+    height: var(--status-circle-size);
+    transform: translateY(-50%) translateX(-50%);
+    z-index: -1; // places the pseudo elements behind the checkmark
+  }
+
+  &:before,
+  &:after {
+    content: '';
+  }
+
+  &:before {
+    background-color: var(--status-circle-color-dimmed);
+  }
+
+  .Step--checked & {
+    &:before {
+      background-color: var(--status-circle-color-checked);
+    }
+  }
+
+  .Step--active & {
+    &:before {
+      background-color: var(--status-circle-color-checked);
+      --status-circle-size: var(--status-circle-size-active);
+    }
+    &:after {
+      --status-circle-size: var(--status-circle-size-active-inner);
+      border: 4px solid var(--ams-color-primary-white);
+    }
+  }
+}
+
+:global(.ams-icon).StatusIndicationCheckmark svg {
+  --ams-icon-size-6-font-size: 14px;
+  fill: white;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.StepStatusDate {
+  font-size: smaller;
+}
+
+.StepDocumentsList {
+  --ams-ordered-list-ordered-list-item-margin-inline-start: 0;
+  --ams-ordered-list-ordered-list-item-padding-inline-start: 0;
+  --ams-ordered-list-ordered-list-list-style-type: none;
+}

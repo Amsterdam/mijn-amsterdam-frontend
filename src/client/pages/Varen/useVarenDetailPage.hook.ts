@@ -1,32 +1,33 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
+import { useVarenThemaData } from './useVarenThemaData.hook';
 import {
   exploitatieVergunningWijzigenLink,
   ligplaatsVergunningLink,
 } from './Varen-thema-config';
-import { isError, isLoading } from '../../../universal/helpers/api';
 import { ButtonLinkProps } from '../../../universal/types';
-import { useAppStateGetter } from '../../hooks/useAppState';
 
 export function useVarenDetailPage() {
-  const { VAREN } = useAppStateGetter();
+  const {
+    varenRederRegistratie,
+    varenVergunningen,
+    breadcrumbs,
+    isLoading,
+    isError,
+  } = useVarenThemaData();
+
   const { id } = useParams<{ id: string }>();
-
-  const hasRegistratieReder = !!VAREN.content?.reder;
-
-  const vergunning =
-    VAREN.content?.zaken?.find((item) => item.id === id) ?? null;
-
-  const hasVergunningChangeInProgress = !!VAREN.content?.zaken?.find(
+  const hasRegistratieReder = !!varenRederRegistratie;
+  const vergunning = varenVergunningen?.find((item) => item.id === id) ?? null;
+  const hasVergunningChangeInProgress = !!varenVergunningen?.find(
     (zaak) =>
       zaak.vergunningKenmerk === vergunning?.vergunningKenmerk &&
       zaak.processed === false
   );
-
   const buttonItems: ButtonLinkProps[] = [];
-
   const showButtons =
     vergunning?.processed && vergunning.decision === 'Verleend';
+
   if (showButtons) {
     const EVWijzigenBtnText = hasVergunningChangeInProgress
       ? 'Wijziging in behandeling'
@@ -46,7 +47,8 @@ export function useVarenDetailPage() {
   return {
     vergunning,
     buttonItems,
-    isLoading: isLoading(VAREN),
-    isError: isError(VAREN),
+    isLoading,
+    isError,
+    breadcrumbs,
   };
 }

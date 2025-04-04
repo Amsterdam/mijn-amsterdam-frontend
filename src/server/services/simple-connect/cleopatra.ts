@@ -118,7 +118,8 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
         // Melding / Notification
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
-            let thema = Themas.MILIEUZONE;
+            let thema: typeof Themas.MILIEUZONE | typeof Themas.OVERTREDINGEN =
+              Themas.MILIEUZONE;
 
             if (
               FeatureToggle.overtredingenActive &&

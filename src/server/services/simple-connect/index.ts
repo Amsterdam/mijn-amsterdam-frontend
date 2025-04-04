@@ -6,4 +6,3 @@ export {
   fetchMilieuzone,
   fetchMilieuzoneNotifications,
 } from './cleopatra';
-export { fetchErfpacht, fetchErfpachtNotifications } from './erfpacht';

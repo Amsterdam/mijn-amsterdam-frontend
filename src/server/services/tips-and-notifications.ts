@@ -1,4 +1,3 @@
-import { marked } from 'marked';
 import memoize from 'memoizee';
 
 import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
@@ -8,7 +7,7 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
-import type { MyNotification, MyTip } from '../../universal/types';
+import type { MyNotification } from '../../universal/types';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { fetchAfisNotifications } from './afis/afis-notifications';
@@ -18,85 +17,104 @@ import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBrpNotifications } from './brp';
 import { sanitizeCmsContent } from './cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
-import { fetchHorecaNotifications } from './horeca';
+import { ServiceResults } from './content-tips/tip-types';
+import {
+  fetchContentTips,
+  prefixTipNotification,
+} from './content-tips/tips-service';
+import { fetchHorecaNotifications } from './horeca/horeca';
 import { fetchKlachtenNotifications } from './klachten/klachten';
 import { fetchKrefiaNotifications } from './krefia';
 import {
   fetchBelastingNotifications,
-  fetchErfpachtNotifications,
   fetchMilieuzoneNotifications,
   fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
 } from './simple-connect';
 import { fetchSVWINotifications } from './simple-connect/svwi';
-import {
-  convertTipToNotication,
-  prefixTipNotification,
-} from './tips/tips-service';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
 import { fetchVarenNotifications } from './varen/varen-notifications';
-import { fetchVergunningenNotifications } from './vergunningen/vergunningen';
-import { fetchVergunningenV2Notifications } from './vergunningen-v2/vergunningen-notifications';
+import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
+import { streamEndpointQueryParamKeys } from '../../universal/config/app';
+import { getFromEnv } from '../helpers/env';
+import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
 
+// Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;
 
-export function sortNotifications(
-  notifications: MyNotification[],
-  doRandomize: boolean = true
-) {
-  // sort the notifications with and without a tip
-  const sorted = notifications
-    .sort(dateSort('datePublished', 'desc'))
-    // Put the alerts on the top regardless of the publication date
-    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+const TIP_IDS_DISABLED = (getFromEnv('BFF_TIPS_DISABLED_IDS', false) ?? '')
+  .split(',')
+  .map((id) => id.trim());
 
-  const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
+type FetchNotificationFunction = (
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken
+) => Promise<ApiResponse_DEPRECATED<unknown>>;
 
-  let notificationsWithTips = sorted.filter((n) => n.isTip);
+type NotificationServices = Record<string, FetchNotificationFunction>;
 
-  if (doRandomize) {
-    // Simple randomization
-    notificationsWithTips = notificationsWithTips
-      .map((tip) => ({ tip, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ tip }) => tip);
-  }
+type NotificationServicesByProfileType = Record<
+  ProfileType,
+  NotificationServices
+>;
 
-  // Insert a tip after every 3 notifications
-  const notificationsWithTipsInserted = notificationsWithoutTips.reduce(
-    (acc, notification, index) => {
-      // Add tip before next notification
-      if (
-        index !== 0 &&
-        index % INSERT_TIP_AT_EVERY_NTH_INDEX === 0 &&
-        notificationsWithTips.length > 0
-      ) {
-        const tip = notificationsWithTips.shift();
-        if (tip) {
-          acc.push(tip);
-        }
-      }
-      acc.push(notification);
-      return acc;
-    },
-    [] as MyNotification[]
-  );
+const notificationServices: NotificationServicesByProfileType = {
+  commercial: {
+    afis: fetchAfisNotifications,
+    milieuzone: fetchMilieuzoneNotifications,
+    overtredingen: fetchOvertredingenNotifications,
+    vergunningen: fetchVergunningenNotifications,
+    horeca: fetchHorecaNotifications,
+    maintenanceNotifications: (requestID: RequestID) =>
+      fetchMaintenanceNotificationsDashboard(requestID),
+    subsidie: fetchSubsidieNotifications,
+    toeristischeVerhuur: (
+      requestID: RequestID,
+      authProfileAndToken: AuthProfileAndToken
+    ) =>
+      fetchToeristischeVerhuurNotifications(
+        requestID,
+        authProfileAndToken,
+        new Date()
+      ),
+    bodem: fetchLoodMetingNotifications,
+    bezwaren: fetchBezwarenNotifications,
+    parkeren: fetchParkeerVergunningenNotifications,
+    varen: fetchVarenNotifications,
+  },
+  'private-attributes': {},
+  private: {
+    adoptTrashContainer: fetchAdoptableTrashContainers,
+    afis: fetchAfisNotifications,
+    avg: fetchAVGNotifications,
+    belasting: fetchBelastingNotifications,
+    bezwaren: fetchBezwarenNotifications,
+    bodem: fetchLoodMetingNotifications,
+    brp: fetchBrpNotifications,
+    fetchKrefia: fetchKrefiaNotifications,
+    fetchSVWI: fetchSVWINotifications,
+    fetchWior: fetchWiorNotifications,
+    fetchWpi: fetchWpiNotifications,
+    horeca: fetchHorecaNotifications,
+    klachten: fetchKlachtenNotifications,
+    maintenance: (requestID: RequestID) =>
+      fetchMaintenanceNotificationsDashboard(requestID),
+    milieuzone: fetchMilieuzoneNotifications,
+    overtredingen: fetchOvertredingenNotifications,
+    subsidie: fetchSubsidieNotifications,
+    toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
+    vergunningen: fetchVergunningenNotifications,
+    parkeren: fetchParkeerVergunningenNotifications,
+  },
+};
 
-  // Add the remaining tips at the end.
-  if (notificationsWithTips.length) {
-    notificationsWithTipsInserted.push(...notificationsWithTips);
-  }
-
-  return notificationsWithTipsInserted;
-}
-
-export function getTipsAndNotificationsFromApiResults(
+function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse_DEPRECATED<unknown>>
 ): MyNotification[] {
   const notifications: MyNotification[] = [];
-  const tips: MyTip[] = [];
+  const tips: MyNotification[] = [];
 
   // Collect the success response data from the service results and send to the tips Api.
   for (const { content } of responses) {
@@ -122,98 +140,23 @@ export function getTipsAndNotificationsFromApiResults(
 
   const notificationsResult = notifications.map((notification) => {
     if (notification.description) {
-      notification.description = sanitizeCmsContent(
-        marked(notification.description)
-      );
-    }
-    if (notification.moreInformation) {
-      notification.moreInformation = sanitizeCmsContent(
-        marked(notification.moreInformation)
-      );
+      notification.description = sanitizeCmsContent(notification.description);
     }
     return notification;
   });
 
-  const tipsResult = tips
-    .map((notification) => {
-      if (notification.description) {
-        notification.description = sanitizeCmsContent(notification.description);
-      }
-      return notification;
-    })
-    .map(convertTipToNotication)
-    .map(prefixTipNotification);
+  const tipsResult = tips.map((tip) => {
+    if (tip.description) {
+      tip.description = sanitizeCmsContent(tip.description);
+    }
+    return tip;
+  });
 
   return [...notificationsResult, ...tipsResult];
 }
 
-type FetchNotificationFunction = (
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) => Promise<ApiResponse_DEPRECATED<unknown>>;
-
-type NotificationServices = Record<string, FetchNotificationFunction>;
-
-type NotificationServicesByProfileType = Record<
-  ProfileType,
-  NotificationServices
->;
-
-const notificationServices: NotificationServicesByProfileType = {
-  commercial: {
-    afis: fetchAfisNotifications,
-    milieuzone: fetchMilieuzoneNotifications,
-    overtredingen: fetchOvertredingenNotifications,
-    vergunningen: FeatureToggle.vergunningenV2Active
-      ? fetchVergunningenV2Notifications
-      : fetchVergunningenNotifications,
-    horeca: fetchHorecaNotifications,
-    erfpacht: fetchErfpachtNotifications,
-    maintenanceNotifications: (requestID: RequestID) =>
-      fetchMaintenanceNotificationsDashboard(requestID),
-    subsidie: fetchSubsidieNotifications,
-    toeristischeVerhuur: (
-      requestID: RequestID,
-      authProfileAndToken: AuthProfileAndToken
-    ) =>
-      fetchToeristischeVerhuurNotifications(
-        requestID,
-        authProfileAndToken,
-        new Date()
-      ),
-    bodem: fetchLoodMetingNotifications,
-    bezwaren: fetchBezwarenNotifications,
-    varen: fetchVarenNotifications,
-  },
-  'private-attributes': {},
-  private: {
-    adoptTrashContainer: fetchAdoptableTrashContainers,
-    afis: fetchAfisNotifications,
-    avg: fetchAVGNotifications,
-    belasting: fetchBelastingNotifications,
-    bezwaren: fetchBezwarenNotifications,
-    bodem: fetchLoodMetingNotifications,
-    brp: fetchBrpNotifications,
-    erfpacht: fetchErfpachtNotifications,
-    fetchKrefia: fetchKrefiaNotifications,
-    fetchSVWI: fetchSVWINotifications,
-    fetchWior: fetchWiorNotifications,
-    fetchWpi: fetchWpiNotifications,
-    horeca: fetchHorecaNotifications,
-    klachten: fetchKlachtenNotifications,
-    maintenance: (requestID: RequestID) =>
-      fetchMaintenanceNotificationsDashboard(requestID),
-    milieuzone: fetchMilieuzoneNotifications,
-    overtredingen: fetchOvertredingenNotifications,
-    subsidie: fetchSubsidieNotifications,
-    toeristischeVerhuur: fetchToeristischeVerhuurNotifications,
-    vergunningen: FeatureToggle.vergunningenV2Active
-      ? fetchVergunningenV2Notifications
-      : fetchVergunningenNotifications,
-  },
-};
-
-async function fetchServicesNotifications(
+// Services can return Source tips and Content tips.
+async function fetchNotificationsAndTipsFromServices_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<MyNotification[]> {
@@ -233,10 +176,117 @@ async function fetchServicesNotifications(
   return [];
 }
 
-export const fetchTipsAndNotifications = memoize(fetchServicesNotifications, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args) {
-    // args is arguments object as accessible in memoized function
-    return args[0] + JSON.stringify(args[1]);
-  },
-});
+export const fetchNotificationsAndTipsFromServices = memoize(
+  fetchNotificationsAndTipsFromServices_,
+  {
+    maxAge: DEFAULT_API_CACHE_TTL_MS,
+    normalizer: function (args) {
+      // args is arguments object as accessible in memoized function
+      return args[0] + JSON.stringify(args[1]);
+    },
+  }
+);
+
+export function sortNotificationsAndInsertTips(
+  notifications: MyNotification[],
+  doRandomize: boolean = true
+): MyNotification[] {
+  // sort the notifications with and without a tip
+  const sorted = notifications
+    .sort(dateSort('datePublished', 'desc'))
+    // Put the alerts on the top regardless of the publication date
+    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+
+  const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
+
+  let tips = sorted.filter((n) => n.isTip);
+
+  if (doRandomize) {
+    // Simple randomization
+    tips = tips
+      .map((tip) => ({ tip, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ tip }) => tip);
+  }
+
+  let notificationsWithTipsInserted: MyNotification[] = [];
+
+  // Insert a tip after every 3 notifications
+  notificationsWithTipsInserted = notificationsWithoutTips.reduce(
+    (acc, notification, index) => {
+      // Add tip before next notification
+      if (
+        index !== 0 &&
+        index % INSERT_TIP_AT_EVERY_NTH_INDEX === 0 &&
+        tips.length > 0
+      ) {
+        const tip = tips.shift();
+        if (tip) {
+          acc.push(tip);
+        }
+      }
+      acc.push(notification);
+      return acc;
+    },
+    notificationsWithTipsInserted
+  );
+
+  // Add the remaining tips at the end.
+  if (tips.length) {
+    notificationsWithTipsInserted.push(...tips);
+  }
+
+  return notificationsWithTipsInserted;
+}
+
+export async function fetchNotificationsWithTipsInserted(
+  requestID: RequestID,
+  serviceResults: ServiceResults | null,
+  authProfileAndToken: AuthProfileAndToken | null,
+  queryParams?: Record<string, string>
+) {
+  const compareDate =
+    FeatureToggle.passQueryParamsToStreamUrl &&
+    queryParams?.[streamEndpointQueryParamKeys.tipsCompareDate]
+      ? new Date(
+          queryParams[streamEndpointQueryParamKeys.tipsCompareDate] as string
+        )
+      : new Date();
+
+  const [contentTips, notificationsTipsAndServices] = await Promise.all([
+    serviceResults
+      ? fetchContentTips(
+          serviceResults,
+          compareDate,
+          authProfileAndToken?.profile.profileType
+        )
+      : [],
+    authProfileAndToken
+      ? fetchNotificationsAndTipsFromServices(requestID, authProfileAndToken)
+      : [],
+  ]);
+
+  const notifications: MyNotification[] = [
+    ...contentTips,
+    ...notificationsTipsAndServices,
+  ]
+    .map((notification) => {
+      if (notification.isTip) {
+        notification.hideDatePublished = true;
+        return prefixTipNotification(notification);
+      }
+      return notification;
+    })
+    // Filter out disabled tips
+    .filter((notification) => {
+      if (notification.isTip) {
+        return !TIP_IDS_DISABLED.includes(notification.id);
+      }
+      return true;
+    });
+
+  const notificationsWithTipsInserted =
+    sortNotificationsAndInsertTips(notifications);
+
+  return notificationsWithTipsInserted;
+}

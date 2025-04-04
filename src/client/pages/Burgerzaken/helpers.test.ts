@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { describe, it, expect } from 'vitest';
 
 import {

@@ -1,6 +1,5 @@
 import { OmitMapped } from '../../../universal/helpers/utils';
-import { ZaakDetail } from '../../../universal/types/App.types';
-import { DecosZaakBase } from '../decos/decos-types';
+import { DecosZaakBase, DecosZaakFrontend } from '../decos/config-and-types';
 
 export type DecosZaakVarensFieldsSource = {
   mark: string;
@@ -25,8 +24,10 @@ export const caseTypeVaren = {
     'Varen vergunning exploitatie Wijziging vaartuignaam',
   VarenVergunningLigplaats: 'Varen ligplaatsvergunning',
 } as const;
-export type CaseTypeVaren = keyof typeof caseTypeVaren;
-export type GetCaseType<T extends CaseTypeVaren> = (typeof caseTypeVaren)[T];
+
+type CaseTypeVarenKey = keyof typeof caseTypeVaren;
+export type GetCaseType<T extends CaseTypeVarenKey> = (typeof caseTypeVaren)[T];
+export type CaseTypeVaren = GetCaseType<CaseTypeVarenKey>;
 
 export type VarenStatus =
   | 'Ontvangen'
@@ -120,10 +121,6 @@ export type Varen =
   | VarenVergunningExploitatieWijzigingVergunningshouderType
   | VarenVergunningExploitatieWijzigingVervangingType;
 
-export type VarenZakenFrontend<T extends Varen = Varen> = OmitMapped<
-  T,
-  'statusDates' | 'termijnDates' | 'vergunningen'
-> & {
-  dateRequestFormatted: string;
-  dateDecisionFormatted: string | null;
-} & ZaakDetail<T['status']>;
+export type VarenZakenFrontend<T extends Varen = Varen> = DecosZaakFrontend<
+  OmitMapped<T, 'vergunningen'>
+>;

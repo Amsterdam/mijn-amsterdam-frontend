@@ -6,11 +6,11 @@ import styles from './ErfpachtDossierDetail.module.scss';
 import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
-} from '../../../../server/services/simple-connect/erfpacht';
+} from '../../../../server/services/erfpacht/erfpacht';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { Datalist, Row } from '../../../components/Datalist/Datalist';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { LINKS } from '../constants';
+import { LINKS } from '../Erfpacht-thema-config';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;

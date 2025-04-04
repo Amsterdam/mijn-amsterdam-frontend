@@ -38,7 +38,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 }
 
 /* eslint-disable no-magic-numbers */
-export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
+export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 /* eslint-enable no-magic-numbers */
 
@@ -72,7 +72,6 @@ export type SourceApiKey =
   | 'DECOS_API'
   | 'ENABLEU_2_SMILE'
   | 'ERFPACHT'
-  | 'ERFPACHTv2'
   | 'GPASS'
   | 'KREFIA'
   | 'KVK'
@@ -86,7 +85,6 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
-  | 'VERGUNNINGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
@@ -202,11 +200,6 @@ export const ApiConfig: ApiDataRequestConfig = {
       'Content-type': 'application/json; charset=utf-8',
     },
   },
-  VERGUNNINGEN: {
-    url: `${getFromEnv('BFF_VERGUNNINGEN_API_BASE_URL')}/decosjoin/getvergunningen`,
-    postponeFetch: !FeatureToggle.vergunningenActive,
-    passthroughOIDCToken: true,
-  },
   POWERBROWSER: {
     method: 'POST',
     url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
@@ -241,23 +234,15 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
     passthroughOIDCToken: true,
   },
-  ERFPACHT: {
-    url: `${getFromEnv('BFF_MIJN_ERFPACHT_API_URL')}`,
-    // NOTE: Temporarily disable https validation until we solve the cert verification error. See also: MIJN-9122
-    httpsAgent: new https.Agent({
-      rejectUnauthorized: false,
-    }),
-    postponeFetch: !FeatureToggle.mijnErfpachtActive,
-  },
   BAG: {
     url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
   },
-  ERFPACHTv2: {
+  ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !FeatureToggle.erfpachtV2EndpointActive ||
+      !FeatureToggle.erfpachtEndpointActive ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',

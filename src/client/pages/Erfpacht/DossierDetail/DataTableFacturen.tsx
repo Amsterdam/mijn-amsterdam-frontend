@@ -1,22 +1,28 @@
-import { Grid, Heading, Paragraph } from '@amsterdam/design-system-react';
+import { Heading, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
-import { generatePath, useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router';
 
+import { ErfpachtDatalistProps } from './DatalistGeneral';
+import styles from './ErfpachtDossierDetail.module.scss';
+import { WijzigenLink } from './WijzigenLink';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { LinkToListPage } from '../../../components/LinkToListPage/LinkToListPage';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { useErfpachtV2Data } from '../erfpachtData.hook';
-import { ErfpachtDatalistProps } from './DatalistGeneral';
-import styles from './ErfpachtDossierDetail.module.scss';
-import { WijzigenLink } from './WijzigenLink';
+import { DisplayPropsFacturen } from '../Erfpacht-thema-config';
+
+type DataTableFacturenProps = ErfpachtDatalistProps & {
+  displayProps: DisplayPropsFacturen;
+  isLoading: boolean;
+};
 
 export function DataTableFacturen({
   dossier,
   relatieCode,
-}: ErfpachtDatalistProps) {
-  const { displayPropsAlleFacturen, isLoading } = useErfpachtV2Data();
+  displayProps,
+  isLoading,
+}: DataTableFacturenProps) {
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;
   }>();
@@ -30,12 +36,10 @@ export function DataTableFacturen({
         {
           label: dossier.facturen.titelBetaler,
           content: dossier.facturen.betaler || '-',
-          className: styles.FacturenBetalerDebiteur_Col1,
         },
         {
           label: dossier.facturen.titelDebiteurNummer,
           content: dossier.facturen.debiteurNummer || '-',
-          className: styles.FacturenBetalerDebiteur_Col2,
         },
         {
           label: null,
@@ -49,83 +53,79 @@ export function DataTableFacturen({
           ) : (
             ''
           ),
-          className: styles.FacturenBetalerDebiteur_Col3,
         },
       ],
     },
   ];
 
   return (
-    <Grid className={styles.FacturenBetaler}>
-      <Grid.Cell span="all">
-        <Heading level={4} size="level-4">
-          Factuur naar nieuw adres
-        </Heading>
-        <Paragraph>
-          Wilt u uw facturen voor erfpacht en canon op een nieuw adres
-          ontvangen? Stuur een e-mail naar{' '}
-          <WijzigenLink
-            debiteurNummer={dossier.facturen?.debiteurNummer}
-            relatieCode={relatieCode}
-            dossierNummer={dossierNummer}
-            subject="Adreswijziging facturen erfpacht en canon"
-            email="erfpachtadministratie@amsterdam.nl"
-            label="erfpachtadministratie@amsterdam.nl"
-          />
-          . Zet in het onderwerp &apos;Adreswijziging&apos;. Vermeld in de mail
-          uw debiteurennummer of het E-dossiernummer en uw nieuwe adresgegevens.
-          U krijgt binnen 3 werkdagen een reactie.
-        </Paragraph>
-      </Grid.Cell>
-      <Grid.Cell span="all">
-        <Heading level={4} size="level-4">
-          Factuur via e-mail
-        </Heading>
-        <Paragraph>
-          U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw
-          e-mailadres en debiteurennummer naar{' '}
-          <WijzigenLink
-            debiteurNummer={dossier.facturen?.debiteurNummer}
-            relatieCode={relatieCode}
-            dossierNummer={dossierNummer}
-            subject="Facturen per e-mail ontvangen"
-            email="debiteurenadministratie@amsterdam.nl"
-            label="debiteurenadministratie@amsterdam.nl"
-          />
-          .
-        </Paragraph>
-      </Grid.Cell>
-      <Grid.Cell span="all">
-        <Datalist
-          className={styles.FacturenBetalerDebiteur}
-          rows={facturenBetalerDebiteurRows}
+    <>
+      <Heading level={4} size="level-4">
+        Factuur naar nieuw adres
+      </Heading>
+      <Paragraph className="ams-mb--sm">
+        Wilt u uw facturen voor erfpacht en canon op een nieuw adres ontvangen?
+        Stuur een e-mail naar{' '}
+        <WijzigenLink
+          debiteurNummer={dossier.facturen?.debiteurNummer}
+          relatieCode={relatieCode}
+          dossierNummer={dossierNummer}
+          subject="Adreswijziging facturen erfpacht en canon"
+          email="erfpachtadministratie@amsterdam.nl"
+          label="erfpachtadministratie@amsterdam.nl"
         />
-        {!!dossier.facturen?.facturen?.length && (
-          <TableV2
-            items={dossier.facturen.facturen.slice(
-              0,
-              MAX_TABLE_ROWS_ON_THEMA_PAGINA
-            )}
-            className={classNames(
-              styles.FacturenTable,
-              styles.DossierDetailFacturenTable
-            )}
-            displayProps={displayPropsAlleFacturen}
+        . Zet in het onderwerp &apos;Adreswijziging&apos;. Vermeld in de mail uw
+        debiteurennummer of het E-dossiernummer en uw nieuwe adresgegevens. U
+        krijgt binnen 3 werkdagen een reactie.
+      </Paragraph>
+
+      <Heading level={4} size="level-4">
+        Factuur via e-mail
+      </Heading>
+      <Paragraph className="ams-mb--md">
+        U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw e-mailadres
+        en debiteurennummer naar{' '}
+        <WijzigenLink
+          debiteurNummer={dossier.facturen?.debiteurNummer}
+          relatieCode={relatieCode}
+          dossierNummer={dossierNummer}
+          subject="Facturen per e-mail ontvangen"
+          email="debiteurenadministratie@amsterdam.nl"
+          label="debiteurenadministratie@amsterdam.nl"
+        />
+        .
+      </Paragraph>
+
+      <Datalist
+        className={styles.FacturenBetalerDebiteur}
+        rows={facturenBetalerDebiteurRows}
+      />
+      {!!dossier.facturen?.facturen?.length && (
+        <TableV2
+          items={dossier.facturen.facturen.slice(
+            0,
+            MAX_TABLE_ROWS_ON_THEMA_PAGINA
+          )}
+          className={classNames(
+            styles.FacturenTable,
+            styles.DossierDetailFacturenTable
+          )}
+          displayProps={displayProps}
+        />
+      )}
+      {!!dossier.facturen?.facturen?.length &&
+        dossier.facturen.facturen.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
+          <LinkToListPage
+            count={dossier.facturen.facturen.length}
+            route={generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
+              dossierNummerUrlParam: dossierNummerUrlParam ?? null,
+              page: null,
+            })}
           />
         )}
-        {!!dossier.facturen?.facturen?.length &&
-          dossier.facturen.facturen.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
-            <LinkToListPage
-              count={dossier.facturen.facturen.length}
-              route={generatePath(AppRoutes['ERFPACHTv2/ALLE_FACTUREN'], {
-                dossierNummerUrlParam,
-              })}
-            />
-          )}
-        {!isLoading && !dossier.facturen?.facturen?.length && (
-          <Paragraph>U heeft geen facturen.</Paragraph>
-        )}
-      </Grid.Cell>
-    </Grid>
+      {!isLoading && !dossier.facturen?.facturen?.length && (
+        <Paragraph>U heeft geen facturen.</Paragraph>
+      )}
+    </>
   );
 }
