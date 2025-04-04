@@ -49,7 +49,6 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
@@ -841,11 +840,11 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
   zaak: T,
   options: DecosZaakFrontendTransformOptions
-): DecosZaakFrontend<T> {
+): DecosZaakFrontend<T> | DecosZaakFrontend<T & WithDateRange> {
   const zaakFrontend: DecosZaakFrontend<T> = {
     ...omit(zaak, ['statusDates', 'termijnDates']),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
-    dateRequestFormatted: defaultDateFormat(zaak.dateRequest),
+    dateRequestFormatted: toDateFormatted(zaak.dateRequest),
     steps: [], // NOTE: Assign Status steps later on
     displayStatus: zaak.status, // NOTE: This is a placeholder, the actual status is assigned later on.
     link: {
@@ -873,16 +872,13 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
     zaak.dateStart &&
     zaak.dateEnd
   ) {
-    const zaakFrontendWithExpiry = zaakFrontend as unknown as DecosZaakFrontend<
-      DecosZaakBase & WithDateRange
-    >;
-    zaakFrontendWithExpiry.isExpired = isExpired(
-      zaakFrontendWithExpiry.dateEnd
-    );
-    zaakFrontendWithExpiry.dateStartFormatted = defaultDateFormat(
-      zaak.dateStart
-    );
-    zaakFrontendWithExpiry.dateEndFormatted = defaultDateFormat(zaak.dateEnd);
+    const zaakFrontendWithExpiry: DecosZaakFrontend<T> & WithDateRange = {
+      ...zaakFrontend,
+      isExpired: isExpired(zaak.dateEnd),
+      dateStartFormatted: toDateFormatted(zaak.dateStart),
+      dateEndFormatted: toDateFormatted(zaak.dateEnd),
+    };
+    return zaakFrontendWithExpiry;
   }
 
   return zaakFrontend;
