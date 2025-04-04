@@ -1,38 +1,25 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
+import { ListPageParamKind } from './Parkeren-thema-config';
 import { useParkerenData } from './useParkerenData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
-import { ListPageParamKind } from '../VergunningenV2/config';
 
 export function ParkerenList() {
   const params = useParams<{ kind: ListPageParamKind }>();
 
-  const {
-    parkeerVergunningenFromThemaVergunningen,
-    isLoading,
-    isError,
-    tableConfig,
-  } = useParkerenData();
-  const appRouteBack = AppRoutes.PARKEREN;
+  const { vergunningen, isLoading, isError, tableConfig, routes, breadcrumbs } =
+    useParkerenData();
 
-  const title = tableConfig[params.kind].title;
-  const displayProps = tableConfig[params.kind].displayProps;
+  const { displayProps, title, filter, sort } = tableConfig[params.kind];
 
   return (
     <ListPagePaginated
-      items={parkeerVergunningenFromThemaVergunningen
-        .filter(tableConfig[params.kind].filter)
-        .sort(tableConfig[params.kind].sort)}
-      backLinkTitle={ThemaTitles.PARKEREN}
-      title={title ?? ''}
-      appRoute={AppRoutes['PARKEREN/LIST']}
+      items={vergunningen.filter(filter).sort(sort)}
+      title={title}
+      appRoute={routes.listPage}
       appRouteParams={params}
-      appRouteBack={appRouteBack}
+      breadcrumbs={breadcrumbs}
       displayProps={displayProps}
-      thema={Themas.PARKEREN}
       isLoading={isLoading}
       isError={isError}
     />

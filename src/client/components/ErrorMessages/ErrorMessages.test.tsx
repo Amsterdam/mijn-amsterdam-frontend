@@ -1,24 +1,33 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { RecoilRoot } from 'recoil';
+import { MutableSnapshot } from 'recoil';
 import { describe, it, expect } from 'vitest';
 
-import ErrorMessages from './ErrorMessages';
+import { ErrorMessages } from './ErrorMessages';
+import { AppState } from '../../../universal/types';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../../pages/MockApp';
 
-const DUMMY_ERRORS = [
-  {
-    name: 'Een api naam',
-    error: 'De server reageert niet',
-    stateKey: 'API_NAAM',
-  },
-];
+function initializeState(testState: AppState) {
+  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
+}
 
 describe('<ErrorMessages />', () => {
-  const Component = () => (
-    <RecoilRoot>
-      <ErrorMessages errors={DUMMY_ERRORS} />
-    </RecoilRoot>
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry="/"
+        routePath="/"
+        component={ErrorMessages}
+        initializeState={initializeState({
+          BRP: {
+            status: 'ERROR',
+            content: null,
+          },
+        } as AppState)}
+      />
+    );
+  }
 
   it('Renders without crashing', () => {
     render(<Component />);
@@ -32,7 +41,11 @@ describe('<ErrorMessages />', () => {
 
     render(<Component />);
     await user.click(screen.getByText('Meer informatie'));
-    expect(screen.getByText(/Een api naam/)).toBeInTheDocument();
-    expect(screen.getByText(/De server reageert niet/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Persoonlijke gegevens, paspoort, ID-kaart/)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Communicatie met api mislukt./)
+    ).toBeInTheDocument();
   });
 });

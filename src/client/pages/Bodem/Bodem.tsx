@@ -1,5 +1,8 @@
+import { Paragraph } from '@amsterdam/design-system-react';
+
 import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -9,7 +12,10 @@ export function Bodem() {
     useBodemData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, listPageRoute }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, listPageRoute, maxItems },
+    ]) => {
       return (
         <ThemaPaginaTable<LoodMetingFrontend>
           key={kind}
@@ -18,6 +24,7 @@ export function Bodem() {
           listPageRoute={listPageRoute}
           displayProps={displayProps}
           textNoContent={`U heeft geen ${title.toLowerCase()}`}
+          maxItems={maxItems}
         />
       );
     }
@@ -28,10 +35,13 @@ export function Bodem() {
       isLoading={isLoading}
       isError={isError}
       pageContentTop={
-        <p>Op deze pagina vindt u informatie over uw lood in de bodem-check.</p>
+        <PageContentCell spanWide={8}>
+          <Paragraph>
+            Op deze pagina vindt u informatie over uw lood in de bodem-check.
+          </Paragraph>
+        </PageContentCell>
       }
       pageContentMain={tables}
-      isPartialError={false}
       linkListItems={linkListItems}
     />
   );

@@ -1,11 +1,11 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
-  VarenFrontend,
+  VarenZakenFrontend,
   VarenVergunningExploitatieType,
 } from '../../../server/services/varen/config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -15,7 +15,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { VarenList } from './VarenList';
 
-type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatieType>;
+type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieDecision: ExploitatieAanvraag = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
@@ -32,12 +32,15 @@ const exploitatieDecision: ExploitatieAanvraag = {
   },
 } as unknown as ExploitatieAanvraag;
 
-const varenContent: AppState['VAREN']['content'] = [exploitatieDecision];
+const varenZaken = [exploitatieDecision];
 
-const getTestState = (content: VarenFrontend[] = varenContent): AppState =>
+const getTestState = (content: VarenZakenFrontend[] = varenZaken): AppState =>
   jsonCopy({
     VAREN: {
-      content: content,
+      content: {
+        reder: {},
+        zaken: content,
+      },
       status: 'OK',
     },
   });
@@ -53,7 +56,7 @@ describe('<VarenList />', () => {
         routePath={AppRoutes['VAREN/LIST']}
         routeEntry={generatePath(AppRoutes['VAREN/LIST'], {
           kind: 'actieve-vergunningen',
-          page: 1,
+          page: '1',
         })}
         component={VarenList}
         initializeState={(snap) => initializeState(snap, state)}
@@ -71,7 +74,7 @@ describe('<VarenList />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(
       'Actieve vergunningen'
     );
   });

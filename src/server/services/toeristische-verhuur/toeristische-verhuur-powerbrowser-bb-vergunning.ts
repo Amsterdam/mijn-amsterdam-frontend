@@ -1,6 +1,6 @@
 import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
   BBVergunning,
@@ -64,8 +64,8 @@ function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
       apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
     },
   });
-  // Token is shared between all requests so we don't give a requestID here.
-  return requestData<PowerBrowserToken>(requestConfig, '');
+  // Token is shared between all requests so we give a fixed requestID here.
+  return requestData<PowerBrowserToken>(requestConfig, 'powerbrowser-token');
 }
 
 /** Fetch any data from Powerbrowser by extending a default `dataRequestConfig`. */
@@ -137,7 +137,7 @@ async function fetchZaakIds(
       return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
     },
     transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
-      return responseData.records.map((record) => record.id);
+      return responseData.records?.map((record) => record.id) ?? [];
     },
     data: [options.personOrMaatschapId],
   };
@@ -161,12 +161,12 @@ function getFieldValue(
 
 function getZaakStatus(
   zaak: BBVergunning
-): BBVergunning['status'] | BBVergunning['result'] {
+): BBVergunning['status'] | BBVergunning['decision'] {
   const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
     ?.status as BBVergunning['status'];
 
-  if (lastStepStatus !== 'Verlopen' && zaak.result) {
-    return zaak.result;
+  if (lastStepStatus !== 'Verlopen' && zaak.decision) {
+    return zaak.decision;
   }
 
   return lastStepStatus ?? 'Ontvangen';
@@ -177,7 +177,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
     return null;
   }
 
-  const resultaatTransformed: BBVergunning['result'] = resultaat;
+  const resultaatTransformed: BBVergunning['decision'] = resultaat;
 
   const resultatenVerleend = [
     'Verleend met overgangsrecht',
@@ -229,17 +229,17 @@ function transformZaakStatusResponse(
   const statusOntvangen: StatusLineItem = {
     id: 'step-1',
     status: 'Ontvangen',
-    datePublished: zaak.dateReceived ?? '',
+    datePublished: zaak.dateRequest ?? '',
     isActive: true,
     isChecked: true,
   };
 
   const isVerlopen =
-    zaak.result === 'Verleend' && zaak.dateEnd
+    zaak.decision === 'Verleend' && zaak.dateEnd
       ? isDateInPast(zaak.dateEnd, new Date())
       : false;
   const hasInBehandeling = !!datumInBehandeling;
-  const hasDecision = !!zaak.result && !!dateDecision;
+  const hasDecision = !!zaak.decision && !!dateDecision;
   const hasMeerInformatieNodig = !!datumMeerInformatie;
   const isMeerInformatieStepActive =
     hasMeerInformatieNodig && !hasDecision && !hasInBehandeling;
@@ -309,7 +309,7 @@ async function fetchZaakAdres(
       data: SearchRequestResponse<'ADRESSEN', PBRecordField<'FMT_CAPTION'>[]>
     ) {
       const address =
-        data.records[0]?.fields.find((field) => {
+        data.records?.[0]?.fields.find((field) => {
           return field.fieldName === 'FMT_CAPTION';
         })?.fieldValue ?? null;
 
@@ -405,6 +405,7 @@ async function fetchAndMergeZaakStatussen(
         : zaak.steps;
 
     zaak.status = getZaakStatus(zaak);
+    zaak.displayStatus = zaak.status;
 
     zakenWithstatussen.push(zaak);
   }
@@ -423,12 +424,12 @@ async function fetchAndMergeAdressen(
 
   for (let i = 0; i < zaken.length; i++) {
     const addressResponse = getSettledResult(addressResults[i]);
-    const adres =
+    const location =
       addressResponse.status === 'OK' && addressResponse.content !== null
         ? addressResponse.content
         : '';
 
-    const zaak: BBVergunning = { ...zaken[i], adres };
+    const zaak: BBVergunning = { ...zaken[i], location };
 
     zakenWithAddress.push(zaak);
   }
@@ -437,18 +438,18 @@ async function fetchAndMergeAdressen(
 }
 
 function isZaakActual({
-  result,
+  decision,
   dateEnd,
   compareDate,
 }: {
-  result: BBVergunningZaakResult;
+  decision: BBVergunningZaakResult;
   dateEnd: string | null;
   compareDate: string | Date | null;
-}): boolean {
-  if (!result) {
+}) {
+  if (!decision) {
     return true;
   }
-  if (result !== 'Verleend') {
+  if (decision !== 'Verleend') {
     return false;
   }
   return !!dateEnd && !!compareDate && !isDateInPast(dateEnd, compareDate);
@@ -462,23 +463,30 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
   ) as PBZaakCompacted;
 
   const title = 'Vergunning bed & breakfast';
-  const result = getZaakResultaat(pbZaak.result);
+  const decision = getZaakResultaat(pbZaak.result);
   // The permit is valid from the date we have a decision.
   const dateStart =
-    result === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
-  const dateEnd = result === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
+    decision === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
+  const dateEnd =
+    decision === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
 
   return {
-    dateReceived: pbZaak.dateReceived,
+    dateRequest: pbZaak.dateReceived,
+    dateRequestFormatted: pbZaak.dateReceived
+      ? defaultDateFormat(pbZaak.dateReceived)
+      : pbZaak.dateReceived,
     dateDecision: pbZaak.dateDecision,
+    dateDecisionFormatted: pbZaak.dateDecision
+      ? defaultDateFormat(pbZaak.dateDecision)
+      : '-',
     dateStart,
     dateStartFormatted: dateStart ? defaultDateFormat(dateStart) : '-',
     dateEnd,
     dateEndFormatted: dateEnd ? defaultDateFormat(dateEnd) : '-',
-    result,
+    decision,
     id,
-    zaaknummer: pbZaak.zaaknummer ?? zaak.id,
+    identifier: pbZaak.zaaknummer ?? zaak.id,
     link: {
       to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
         id,
@@ -487,11 +495,12 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
       title,
     },
     title,
-    isActual: isZaakActual({ dateEnd, result, compareDate: new Date() }),
+    processed: !!decision,
 
     // Added after initial transform
-    adres: null,
+    location: null,
     status: 'Ontvangen',
+    displayStatus: 'Ontvangen',
     documents: [],
     steps: [],
     heeftOvergangsRecht: pbZaak.dateReceived
@@ -652,7 +661,7 @@ function transformPowerbrowserLinksResponse(
     [K in PBDocumentFields['fieldName']]: string;
   };
   return (
-    responseData.records.map((documentRecord) => {
+    responseData.records?.map((documentRecord) => {
       const document = Object.fromEntries(
         documentRecord.fields.map((field) => {
           return [field.fieldName, field.fieldValue];

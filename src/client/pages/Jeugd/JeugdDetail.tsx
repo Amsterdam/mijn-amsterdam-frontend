@@ -1,10 +1,9 @@
 import { Grid } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { ThemaTitles } from '../../config/thema';
@@ -50,7 +49,6 @@ export function JeugdDetail() {
       zaak={voorziening}
       isError={isError}
       isLoading={isLoading}
-      icon={<ThemaIcon />}
       pageContentTop={
         !!voorziening && <JeugdDetailContent voorziening={voorziening} />
       }

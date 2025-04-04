@@ -130,7 +130,7 @@ process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN =
   'bookKeyA,BookKeyB,bookKeyC,bookKeyD';
 process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK = 'bookKey1';
 
-process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpachtv2`;
+process.env.BFF_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
 
 process.env.BFF_LVV_API_URL = `${remoteApiHost}/lvv`;
 process.env.BFF_SMILE_USERNAME = 'test2';

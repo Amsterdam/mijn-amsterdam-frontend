@@ -1,21 +1,20 @@
 import { Alert, Icon, Paragraph } from '@amsterdam/design-system-react';
 import { ExternalLinkIcon } from '@amsterdam/design-system-react-icons';
-import { generatePath } from 'react-router-dom';
 
 import { useParkerenData } from './useParkerenData.hook';
-import { Vergunning } from '../../../server/services';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
-import { ThemaTitles } from '../../config/thema';
+import { PageContentCell } from '../../components/Page/Page';
+import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
 export function Parkeren() {
   const {
+    title,
     tableConfig,
-    parkeerVergunningenFromThemaVergunningen,
+    vergunningen,
     hasMijnParkerenVergunningen,
     isLoading,
     isError,
@@ -24,19 +23,19 @@ export function Parkeren() {
   } = useParkerenData();
 
   const tables = Object.entries(tableConfig).map(
-    ([kind, { title, displayProps, filter, sort, className }]) => {
+    ([
+      kind,
+      { title, displayProps, filter, sort, listPageRoute, className, maxItems },
+    ]) => {
       return (
-        <ThemaPaginaTable<VergunningFrontendV2 | Vergunning>
+        <ThemaPaginaTable<VergunningFrontend>
           key={kind}
           title={title}
-          zaken={parkeerVergunningenFromThemaVergunningen
-            .filter(filter)
-            .sort(sort)}
-          className={className}
-          listPageRoute={generatePath(AppRoutes['PARKEREN/LIST'], {
-            kind,
-          })}
+          zaken={vergunningen.filter(filter).sort(sort)}
+          listPageRoute={listPageRoute}
           displayProps={displayProps}
+          className={className}
+          maxItems={maxItems}
         />
       );
     }
@@ -47,15 +46,30 @@ export function Parkeren() {
     parkerenUrlSSO
   );
 
+  const hasActualGPK = vergunningen.find(
+    (vergunning) => !vergunning.processed && vergunning.caseType === 'GPK'
+  );
+
+  const pageContentBottom = hasActualGPK && (
+    <PageContentCell startWide={3} spanWide={7}>
+      <ParagaphSuppressed>
+        Hebt u naast een Europese gehandicaptenparkeerkaart (GPK) ook een vaste
+        parkeerplaats voor gehandicapten (GPP) aangevraagd? Dan ziet u hier in
+        Mijn Amsterdam alleen de aanvraag voor een GPK staan. Zodra de GPK is
+        gegeven, ziet u ook uw aanvraag voor uw GPP in Mijn Amsterdam.
+      </ParagaphSuppressed>
+    </PageContentCell>
+  );
+
   return (
     <ThemaPagina
-      title={ThemaTitles.PARKEREN}
+      title={title}
       isError={isError}
-      isPartialError={false}
-      isLoading={!!isLoading}
+      isLoading={isLoading}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
       pageContentMain={tables}
+      pageContentBottom={pageContentBottom}
     />
   );
 }
@@ -71,7 +85,7 @@ function determinePageContentTop(
       profileType === 'commercial' ? 'bedrijven' : 'bewoners';
 
     return (
-      <>
+      <PageContentCell spanWide={8}>
         <Alert
           severity="info"
           heading={`Parkeervergunning voor ${profileTypeLabel}`}
@@ -87,7 +101,7 @@ function determinePageContentTop(
             </MaButtonLink>
           </Paragraph>
         </Alert>
-      </>
+      </PageContentCell>
     );
   }
   return (

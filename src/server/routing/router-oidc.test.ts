@@ -1,3 +1,5 @@
+import Mockdate from 'mockdate';
+
 import { forTesting } from './router-oidc';
 import { bffApiHost } from '../../testing/setup';
 import {
@@ -34,6 +36,14 @@ const mocks = vi.hoisted(() => {
 });
 
 describe('router-oids', () => {
+  beforeAll(() => {
+    Mockdate.set('2025-03-27');
+  });
+
+  afterAll(() => {
+    Mockdate.reset();
+  });
+
   describe('authCheckHandler', () => {
     test('authenticated digid', async () => {
       const authProfileAndToken = getAuthProfileAndToken();
@@ -45,9 +55,9 @@ describe('router-oids', () => {
       expect(resMock.send).toHaveBeenLastCalledWith({
         content: {
           authMethod: 'digid',
+          expiresAtMilliseconds: 1743034500000,
           isAuthenticated: true,
           profileType: 'private',
-          expiresAt: expect.any(Number),
         },
         status: 'OK',
       });
@@ -63,9 +73,9 @@ describe('router-oids', () => {
       expect(resMock.send).toHaveBeenLastCalledWith({
         content: {
           authMethod: 'eherkenning',
+          expiresAtMilliseconds: 1743034500000,
           isAuthenticated: true,
           profileType: 'commercial',
-          expiresAt: expect.any(Number),
         },
         status: 'OK',
       });

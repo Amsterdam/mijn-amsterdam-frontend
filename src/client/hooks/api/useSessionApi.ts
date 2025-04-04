@@ -14,16 +14,20 @@ import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { useProfileType } from '../useProfileType';
 import { ApiRequestOptions, useDataApi } from './useDataApi';
 
+export const ONE_SECOND_MS = 1000;
+
 export type SessionData = {
   isAuthenticated: boolean;
   profileType: ProfileType | null;
   authMethod: AuthProfile['authMethod'] | null;
+  expiresAtMilliseconds: number; // In milliseconds
 };
 
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   profileType: null,
   authMethod: null,
+  expiresAtMilliseconds: 0,
 };
 
 export interface SessionState extends SessionData {
@@ -57,8 +61,8 @@ const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
 };
 
-export function useSessionApi() {
-  const [sessionResponse, fetch] = useDataApi<SessionResponseData>(
+export function useSessionApi(): SessionState {
+  const [sessionResponse, fetch] = useDataApi<SessionResponseData | null>(
     requestOptions,
     apiSuccessResult(INITIAL_SESSION_CONTENT)
   );
@@ -69,18 +73,18 @@ export function useSessionApi() {
   const [, setProfileType] = useProfileType();
 
   useEffect(() => {
-    if (sessionData.profileType) {
+    if (sessionData?.profileType) {
       setProfileType(sessionData.profileType);
     }
-  }, [setProfileType, sessionData.profileType]);
+  }, [setProfileType, sessionData?.profileType]);
 
   const logoutSession = useCallback(() => {
     clearSessionStorage();
     clearDeeplinkEntry();
-    window.location.href = `${LOGOUT_URL}?authMethod=${sessionData.authMethod}`;
-  }, [sessionData.authMethod]);
+    window.location.href = `${LOGOUT_URL}?authMethod=${sessionData?.authMethod}`;
+  }, [sessionData?.authMethod]);
 
-  const isAuthenticated = sessionData.isAuthenticated;
+  const isAuthenticated = sessionData?.isAuthenticated;
 
   const checkAuthentication = useCallback(() => {
     fetch({
@@ -111,14 +115,16 @@ export function useSessionApi() {
   }, []);
 
   useEffect(() => {
-    setSession(() => ({
-      ...sessionData,
-      isLoading,
-      isDirty,
-      isPristine,
-      refetch: checkAuthentication,
-      logout: () => logoutSession(),
-    }));
+    if (sessionData) {
+      setSession(() => ({
+        ...sessionData,
+        isLoading,
+        isDirty,
+        isPristine,
+        refetch: checkAuthentication,
+        logout: () => logoutSession(),
+      }));
+    }
   }, [
     isAuthenticated,
     isLoading,

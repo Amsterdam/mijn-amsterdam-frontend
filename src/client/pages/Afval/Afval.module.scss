@@ -1,0 +1,75 @@
+.DistanceToHome {
+  font-size: 1.3rem;
+  color: var(--ams-color-neutral-grey3);
+  font-weight: normal;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.NoMargin {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.AfvalFractionPanel {
+  p a:not(:global(.ams-button)) {
+    color: var(--ams-link-color);
+    text-decoration-line: var(--ams-link-standalone-text-decoration-line);
+    text-decoration-thickness: var(
+      --ams-link-standalone-text-decoration-thickness
+    );
+    text-underline-offset: var(--ams-link-standalone-text-underline-offset);
+  }
+}
+
+.AfvalFractionPanel {
+  background-color: var(--ams-color-neutral-grey1);
+  margin-bottom: var(--ams-space-xl);
+  padding: var(--ams-space-xl);
+
+  dl {
+    display: flex;
+    flex-direction: row;
+  }
+
+  dt {
+    min-width: 22%;
+    font-weight: bold;
+  }
+
+  dd {
+    width: 80%;
+    p {
+      + p {
+        margin-top: 1rem;
+      }
+    }
+  }
+}
+
+.AfvalFractionPanelTitle {
+  margin: 0;
+  // border-bottom: 0.1rem solid var(--ams-color-neutral-grey3);
+  display: flex;
+}
+
+.AfvalFractionIcon {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.AfvalFractionPanelOpmerking {
+  border: 2px solid var(--ams-link-color);
+  padding: var(--ams-space-md);
+  margin-top: var(--ams-space-md) !important;
+}
+
+.AfvalFractionPanelHighlight {
+  border: 2px solid var(--ams-alert-warning-border-color);
+  padding: var(--ams-space-md);
+  margin-top: var(--ams-space-md) !important;
+}
+
+.UnstyledList {
+  @include reset-list-style();
+}

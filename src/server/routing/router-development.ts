@@ -1,8 +1,10 @@
+import { differenceInSeconds } from 'date-fns';
 import express, { CookieOptions, Request, Response } from 'express';
+import { AccessToken } from 'express-openid-connect';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
-import { sendUnauthorized } from './route-helpers';
+import { sendBadRequest, sendUnauthorized } from './route-helpers';
 import {
   testAccountsDigid,
   testAccountsEherkenning,
@@ -20,7 +22,7 @@ import {
 } from '../auth/auth-helpers';
 import { signDevelopmentToken } from '../auth/auth-helpers-development';
 import { authRoutes } from '../auth/auth-routes';
-import { AuthProfile } from '../auth/auth-types';
+import { AuthProfile, MaSession } from '../auth/auth-types';
 import { ONE_SECOND_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
@@ -28,12 +30,27 @@ import { countLoggedInVisit } from '../services/visitors';
 export const authRouterDevelopment = express.Router();
 authRouterDevelopment.BFF_ID = 'router-dev';
 
-export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
+export async function createOIDCStub(
+  req: Request,
+  authProfile: AuthProfile,
+  expiresInSeconds: number = OIDC_SESSION_MAX_AGE_SECONDS
+) {
   const idAttr = TOKEN_ID_ATTRIBUTE[authProfile.authMethod];
-  (req as any)[OIDC_SESSION_COOKIE_NAME] = {
+
+  // 15 minutes In seconds
+  const expiresAt = Date.now() + expiresInSeconds * ONE_SECOND_MS;
+
+  const maSession: MaSession = {
     ...authProfile,
     TMASessionID: 'xx-tma-sid-xx',
+    id_token: '',
+    access_token: '',
+    refresh_token: '',
+    token_type: '',
+    expires_at: '',
   };
+
+  (req as any)[OIDC_SESSION_COOKIE_NAME] = maSession;
 
   req.oidc = {
     isAuthenticated() {
@@ -46,11 +63,19 @@ export async function createOIDCStub(req: Request, authProfile: AuthProfile) {
       [idAttr]: authProfile.id,
       sid: authProfile.sid,
     },
-    idToken: await signDevelopmentToken(
-      authProfile.authMethod,
-      authProfile.id,
-      'xx-tma-sid-xx'
-    ),
+    accessToken: {
+      access_token: await signDevelopmentToken(
+        authProfile.authMethod,
+        authProfile.id,
+        'xx-tma-sid-xx'
+      ),
+      get expires_in() {
+        return differenceInSeconds(new Date(expiresAt), new Date());
+      },
+      isExpired() {
+        return this.expires_in <= 0;
+      },
+    } as AccessToken,
   };
 }
 
@@ -79,6 +104,14 @@ authRouterDevelopment.get(
     const authMethod = req.params.authMethod;
     const testAccounts =
       authMethod === 'digid' ? testAccountsDigid : testAccountsEherkenning;
+
+    if (!testAccounts) {
+      return sendBadRequest(
+        res,
+        'Test accounts not available. Check env settings.'
+      );
+    }
+
     const allUsernames = Object.keys(testAccounts);
     const userName =
       req.params.user && req.params.user in testAccounts
@@ -181,6 +214,7 @@ authRouterDevelopment.get(
             isAuthenticated: true,
             profileType: auth.profile.profileType,
             authMethod: auth.profile.authMethod,
+            expiresAtMilliseconds: auth.expiresAtMilliseconds,
           })
         );
       }

@@ -1,39 +1,32 @@
 import { render, screen } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
-import ZaakStatus from './ZaakStatus';
-import vergunningenData from '../../../../mocks/fixtures/vergunningen.json';
-import {
-  addLinks,
-  horecaVergunningTypes,
-  toeristischeVerhuurVergunningTypes,
-  transformVergunningenData,
-  VergunningenSourceData,
-} from '../../../server/services';
+import { ZaakStatus } from './ZaakStatus';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 
-const pushMock = vi.fn();
+const mocks = vi.hoisted(() => {
+  return {
+    navigate: vi.fn(),
+    location: { pathname: '/', search: '' },
+  };
+});
 
 const testState = {
   VERGUNNINGEN: {
     status: 'OK',
-    content: addLinks(
-      transformVergunningenData(
-        vergunningenData as VergunningenSourceData
-      ).filter(
-        (vergunning) =>
-          ![
-            ...toeristischeVerhuurVergunningTypes,
-            ...horecaVergunningTypes,
-          ].includes(vergunning.caseType)
-      ),
-      AppRoutes['VERGUNNINGEN/DETAIL']
-    ),
+    content: [
+      {
+        identifier: 'Z/000/000001.c',
+        link: {
+          to: '/vergunningen/vergunning/Z/000/000001.c',
+        },
+      },
+    ],
   },
 } as unknown as AppState;
 
@@ -42,18 +35,14 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateReadyAtom, true);
 }
 
-let historyReturnValue = {
-  location: { pathname: '/', search: '' },
-  push: pushMock,
-};
-
-vi.mock('react-router-dom', async (requireActual) => {
+vi.mock('react-router', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,
-    useHistory: () => {
-      return historyReturnValue;
+    useLocation: () => {
+      return mocks.location;
     },
+    useNavigate: () => mocks.navigate,
   };
 });
 
@@ -74,18 +63,15 @@ describe('ZaakStatus', () => {
     }
     const { asFragment } = render(<Component />);
 
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(mocks.navigate).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('should show error alert', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
-      },
-      push: pushMock,
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
     };
 
     function Component() {
@@ -109,12 +95,9 @@ describe('ZaakStatus', () => {
   });
 
   it('should show not found message', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000.c',
-      },
-      push: pushMock,
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000.c',
     };
 
     function Component() {
@@ -134,18 +117,15 @@ describe('ZaakStatus', () => {
       screen.getByText('Wij kunnen de status van uw aanvraag niet laten zien.')
     ).toBeInTheDocument();
 
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(mocks.navigate).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('should show wachten op betaling', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
-      },
-      push: pushMock,
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000.c&payment=true',
     };
 
     function Component() {
@@ -170,18 +150,15 @@ describe('ZaakStatus', () => {
       )
     ).toBeInTheDocument();
 
-    expect(pushMock).not.toHaveBeenCalled();
+    expect(mocks.navigate).not.toHaveBeenCalled();
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('should call history push when a route is found', () => {
-    historyReturnValue = {
-      location: {
-        pathname: '/',
-        search: 'thema=vergunningen&id=Z/000/000001.c',
-      },
-      push: pushMock,
+  it('should call navigate when a route is found', () => {
+    mocks.location = {
+      pathname: '/',
+      search: 'thema=vergunningen&id=Z/000/000001.c',
     };
 
     function Component() {
@@ -197,6 +174,6 @@ describe('ZaakStatus', () => {
 
     render(<Component />);
 
-    expect(pushMock).toHaveBeenCalled();
+    expect(mocks.navigate).toHaveBeenCalled();
   });
 });

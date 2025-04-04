@@ -1,63 +1,44 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
-import { ActionGroup, Paragraph } from '@amsterdam/design-system-react';
+import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
+import { differenceInMilliseconds } from 'date-fns';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 import 'react-circular-progressbar/dist/styles.css';
+
 import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
-import { ComponentChildren } from '../../../universal/types';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
   LOGOUT_URL,
 } from '../../config/api';
 import { Colors } from '../../config/app';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
+import { ONE_SECOND_MS, useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { MaButtonLink } from '../MaLink/MaLink';
 import { Modal } from '../Modal/Modal';
 
-/**
- * This component is essentially a dialog with a countdown timer presented to the user
- * after a certain time {`AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS`}.
- * If the dialog is shown the countdown timer starts to count down from {`AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS`}.
- * If the countdown is complete a request to the auth status endpoint is made and the response is put into the state.
- * Whether the Dialog and timer are reset or the User is automatically logged out is dependent on the response and how the app
- * interacts with that. In our case, if the `isAuthenticated` flag is `false`, the app will show the login screen. This logic can
- * be found in App.tsx.
- */
+const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;
-const AUTOLOGOUT_DIALOG_TIMEOUT_MINUTES = 12.5;
-const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = Math.round(
-  AUTOLOGOUT_DIALOG_TIMEOUT_MINUTES * ONE_MINUTE_SECONDS
-);
-const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
 
-const SESSION_RENEW_INTERVAL_SECONDS = 300;
-const TITLE = 'Wilt u doorgaan?';
-
-export interface AutoLogoutDialogSettings {
-  secondsBeforeDialogShow?: number;
-  secondsBeforeAutoLogout?: number;
-  secondsSessionRenewRequestInterval?: number;
-}
-
-export interface ComponentProps {
-  children?: ComponentChildren;
-  settings?: AutoLogoutDialogSettings;
+export interface AutoLogoutDialogProps {
+  children?: ReactNode;
+  expiresAtMilliseconds: number;
+  lastChanceBeforeAutoLogoutSeconds?: number;
+  asynRefreshEnabled?: boolean;
 }
 
 export interface CountDownTimerComponentProps {
-  maxCount?: number;
+  maxCount: number;
   onMaxCount?: CounterProps['onMaxCount'];
   onTick?: CounterProps['onTick'];
 }
 
 function CountDownTimer({
-  maxCount = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
+  maxCount,
   onMaxCount,
   onTick,
 }: CountDownTimerComponentProps) {
@@ -87,32 +68,101 @@ function CountDownTimer({
   );
 }
 
-export const DefaultAutologoutDialogSettings = {
-  secondsBeforeDialogShow: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
-  secondsBeforeAutoLogout: AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
-  secondsSessionRenewRequestInterval: SESSION_RENEW_INTERVAL_SECONDS,
-};
+const autoLogoutLoggingEnabled =
+  window.localStorage.getItem('AUTO_LOGOUT_TIMER_LOGGING') === 'true';
 
-export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
+function getExpiresInMilliseconds(expiresAtMilliseconds: number): number {
+  return differenceInMilliseconds(new Date(expiresAtMilliseconds), new Date());
+}
+
+function getExpiresInSeconds(expiresAtMilliseconds: number): number {
+  return Math.floor(
+    getExpiresInMilliseconds(expiresAtMilliseconds) / ONE_SECOND_MS
+  );
+}
+
+function getOpensDialogInMilliseconds(
+  expiresAtMilliseconds: number,
+  lastChanceBeforeAutoLogoutSeconds: number
+): number {
+  const lastChaceInMilliseconds =
+    lastChanceBeforeAutoLogoutSeconds * ONE_SECOND_MS;
+  const millisecondsBeforeAutoLogoutDialogOpens =
+    getExpiresInMilliseconds(expiresAtMilliseconds) - lastChaceInMilliseconds;
+
+  return millisecondsBeforeAutoLogoutDialogOpens;
+}
+
+export function AutoLogoutDialog({
+  asynRefreshEnabled = false,
+  expiresAtMilliseconds,
+  lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS, // 120 seconds
+}: AutoLogoutDialogProps) {
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
-  // Will open the dialog if maxCount is reached.
-  const nSettings = { ...DefaultAutologoutDialogSettings, ...settings };
 
-  const maxCount =
-    nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout; // Gives user T time to cancel the automatic logout
-
-  // Count before dialog will show
-  useCounter({
-    maxCount,
-    onMaxCount: () => {
-      setOpen(true);
-    },
-  });
+  // Will open the dialog if secondsBeforeAutoLogoutDialogOpens is reached.
+  const millisecondsBeforeAutoLogoutDialogOpens = getOpensDialogInMilliseconds(
+    expiresAtMilliseconds,
+    lastChanceBeforeAutoLogoutSeconds
+  );
 
   const [isOpen, setOpen] = useState(false);
-  const [originalTitle] = useState(document.title);
+  const [originalTitle, setOriginalDocumentTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
+
+  function logtime() {
+    // eslint-disable-next-line no-console
+    console.log(
+      'Dialog opens in %s seconds, expires in %s seconds at %s',
+      formattedTimeFromSeconds(
+        getExpiresInSeconds(expiresAtMilliseconds) -
+          lastChanceBeforeAutoLogoutSeconds
+      ),
+      formattedTimeFromSeconds(getExpiresInSeconds(expiresAtMilliseconds)),
+      new Date(expiresAtMilliseconds)
+    );
+  }
+
+  const intervalId = useRef<number | undefined>(undefined);
+  const timeoutId = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    clearInterval(intervalId.current);
+    clearTimeout(timeoutId.current);
+
+    if (millisecondsBeforeAutoLogoutDialogOpens > 0) {
+      setOpen(false);
+    }
+
+    if (autoLogoutLoggingEnabled) {
+      logtime();
+
+      intervalId.current = window.setInterval(() => {
+        logtime();
+      }, ONE_SECOND_MS);
+    }
+
+    // Open the dialog when the time is up.
+    timeoutId.current = window.setTimeout(
+      () => {
+        clearInterval(intervalId.current);
+        clearTimeout(timeoutId.current);
+        setOpen(true);
+      },
+      Math.max(millisecondsBeforeAutoLogoutDialogOpens, 0)
+    );
+
+    return () => {
+      clearInterval(intervalId.current);
+      clearTimeout(timeoutId.current);
+    };
+  }, [millisecondsBeforeAutoLogoutDialogOpens]);
+
+  const maxCountInSeconds = Math.min(
+    lastChanceBeforeAutoLogoutSeconds,
+    getExpiresInSeconds(expiresAtMilliseconds)
+  );
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
@@ -126,61 +176,79 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
+    if (isOpen) {
+      setOriginalDocumentTitle(document.title);
+    }
     return () => {
       document.title = originalTitle;
     };
-  }, []);
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;
   }
 
+  const continueLink =
+    profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING;
+  const logoutLink = LOGOUT_URL;
+  const logoutLabel = continueButtonIsVisible
+    ? 'Nu uitloggen'
+    : 'Bezig met controleren van uw sessie..';
+
   return (
     <Modal
       title={TITLE}
-      isOpen={isOpen}
+      isOpen
       showCloseButton={false}
+      closeOnEscape={false}
+      closeOnClickOutside={false}
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (
-            <MaButtonLink
-              variant="primary"
-              className="continue-button"
-              href={
-                profileType === 'private'
-                  ? LOGIN_URL_DIGID
-                  : LOGIN_URL_EHERKENNING
-              }
-            >
-              Doorgaan
-            </MaButtonLink>
+            <>
+              {asynRefreshEnabled ? (
+                <Button
+                  variant="primary"
+                  className="continue-button"
+                  disabled={session.isLoading}
+                  onClick={() => {
+                    session.refetch();
+                    return false;
+                  }}
+                >
+                  Doorgaan
+                </Button>
+              ) : (
+                <MaButtonLink
+                  variant="primary"
+                  className="continue-button"
+                  href={continueLink}
+                >
+                  Doorgaan
+                </MaButtonLink>
+              )}
+            </>
           )}
           <MaButtonLink
+            id="logout-button"
             variant="secondary"
             className={classnames('logout-button', styles.LogoutButton)}
-            href={LOGOUT_URL}
+            href={logoutLink}
           >
-            {continueButtonIsVisible
-              ? 'Nu uitloggen'
-              : 'Bezig met controleren van uw sessie..'}
+            {logoutLabel}
           </MaButtonLink>
         </ActionGroup>
       }
     >
       <div className={styles.AutoLogoutDialogChildren}>
-        <Paragraph className="ams-mb--sm">
-          U bent langer dan {Math.floor(maxCount / 60)} minuten niet actief
-          geweest op Mijn Amsterdam.
-        </Paragraph>
         <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
           <CountDownTimer
-            maxCount={nSettings.secondsBeforeAutoLogout}
+            maxCount={maxCountInSeconds}
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />
           Als u niets doet wordt u automatisch uitgelogd.
         </Paragraph>
-        <Paragraph>Wilt u doorgaan of uitloggen?</Paragraph>
       </div>
     </Modal>
   );

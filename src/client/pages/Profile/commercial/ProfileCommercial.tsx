@@ -1,10 +1,11 @@
-import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { panelConfig } from './ProfileCommercial.transform';
 import { useProfileData } from './useProfileData.hook';
-import { ProfileSectionPanel } from '../ProfileSectionPanel';
-import styles from './ProfileCommercial.module.scss';
+import { PageContentCell } from '../../../components/Page/Page';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../ThemaPagina/ThemaPagina';
+import { ProfileSectionPanel } from '../ProfileSectionPanel';
 
 function ProfileCommercialSectionPanels() {
   const { KVK, profileData } = useProfileData();
@@ -82,37 +83,37 @@ function ProfileCommercialSectionPanels() {
             {...panelConfig.overigeFunctionarissen(KVK)}
           />
         )}
-      <Grid.Cell span="all">
-        <p className={styles.SuppressedParagraph}>
+      <PageContentCell spanWide={8}>
+        <ParagaphSuppressed className="ams-mb--sm">
           Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
           zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
-        </p>
-        <p className={styles.SuppressedParagraph}>
+        </ParagaphSuppressed>
+        <ParagaphSuppressed>
           U kunt deze gegevens niet gebruiken als uittreksel. Een gewaarmerkt
           uittreksel vraagt u aan bij de de{' '}
           <Link href="https://kvk.nl" rel="noopener noreferrer">
             Kamer van Koophandel
           </Link>
           .
-        </p>
-      </Grid.Cell>
+        </ParagaphSuppressed>
+      </PageContentCell>
     </>
   );
 }
 
+const pageContentTop = (
+  <PageContentCell spanWide={8}>
+    <Paragraph>
+      Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
+      van de Kamer van Koophandel. In dat register staan onder meer uw
+      bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze
+      gegevens. Het is dus belangrijk dat uw gegevens kloppen.
+    </Paragraph>
+  </PageContentCell>
+);
+
 export function MijnBedrijfsGegevensThema() {
   const { isLoading, isError, linkListItems, title } = useProfileData();
-
-  const pageContentTop = (
-    <Grid.Cell span="all">
-      <Paragraph>
-        Hier ziet u hoe uw onderneming ingeschreven staat in het Handelsregister
-        van de Kamer van Koophandel. In dat register staan onder meer uw
-        bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente gebruikt deze
-        gegevens. Het is dus belangrijk dat uw gegevens kloppen.
-      </Paragraph>
-    </Grid.Cell>
-  );
 
   return (
     <ThemaPagina

@@ -25,7 +25,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 
 function FooterBlock({ id, title, links, description }: FooterBlockProps) {
   return (
-    <Grid.Cell key={title} span={4} className="page-footer-space-y">
+    <Grid.Cell key={title} span={4}>
       <Heading inverseColor level={4} className="ams-mb--xs">
         {title}
       </Heading>
@@ -75,7 +75,7 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
         return (
           <Paragraph
             inverseColor
-            className={classnames('ams-mb--xs', styles.Paragraph)}
+            className={classnames('ams-mb--md', styles.Paragraph)}
           >
             {children}
           </Paragraph>
@@ -95,8 +95,10 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
       case 'li':
         return (
           <UnorderedList.Item className={styles.Link}>
-            <Icon svg={ChevronRightIcon} size="level-5" />
-            {children}
+            <div className={styles.FakeFooterLink}>
+              <Icon svg={ChevronRightIcon} size="level-5" />
+              {children}
+            </div>
           </UnorderedList.Item>
         );
       case 'strong':
@@ -111,7 +113,7 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
   }
 }
 
-export default function MainFooter({
+export function MainFooter({
   isAuthenticated = false,
 }: {
   isAuthenticated?: boolean;
@@ -125,7 +127,7 @@ export default function MainFooter({
 
   return (
     <Footer>
-      <Footer.Top className={classnames('page-footer-top', styles.FooterTop)}>
+      <Footer.Top>
         <Grid gapVertical="large" paddingVertical="medium">
           {footer?.blocks.map((footerItem) => (
             <FooterBlock key={footerItem.id} {...footerItem} />

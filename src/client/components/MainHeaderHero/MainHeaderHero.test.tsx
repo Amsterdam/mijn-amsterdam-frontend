@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import MainHeaderHero from './MainHeaderHero';
+import { MainHeaderHero } from './MainHeaderHero';
 import { AppRoutes } from '../../../universal/config/routes';
 import MockApp from '../../pages/MockApp';
 
@@ -15,7 +15,7 @@ describe('<MainHeaderHero />', () => {
     );
     expect(container.querySelector('picture')).toBeInTheDocument();
     expect(container.querySelector('img')?.getAttribute('src')).toBe(
-      '/header/1600x400-werk.jpg'
+      '/header/1600x400-algemeen.jpg'
     );
   });
 });

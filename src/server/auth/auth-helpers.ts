@@ -1,4 +1,3 @@
-import { millisecondsToSeconds } from 'date-fns/millisecondsToSeconds';
 import type { Request, Response } from 'express';
 import * as jose from 'jose';
 import { ParsedQs } from 'qs';
@@ -15,16 +14,18 @@ import { authRoutes } from './auth-routes';
 import {
   AuthenticatedRequest,
   AuthProfile,
+  AuthProfileAndToken,
   MaSession,
   TokenData,
 } from './auth-types';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { AppRoutes } from '../../universal/config/routes';
 import { PROFILE_TYPES } from '../../universal/types/App.types';
+import { ONE_SECOND_MS } from '../config/app';
+import { logger } from '../logging';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
-import { logger } from '../logging';
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,
@@ -77,16 +78,23 @@ export function getAuthProfile(
   };
 }
 
-function getSessionData(req: Request) {
+function getSessionData(req: Request): MaSession | null {
   const reqWithSession = req as Request &
     Record<typeof OIDC_SESSION_COOKIE_NAME, MaSession>;
   return reqWithSession?.[OIDC_SESSION_COOKIE_NAME] ?? null;
 }
 
-export function getAuth(req: Request) {
+export function getAuth(req: Request): AuthProfileAndToken | null {
   const tokenData = (req.oidc?.user as TokenData | null) ?? null;
-  const oidcToken = req.oidc?.idToken ?? '';
+  const accessTokenData = req.oidc?.accessToken;
+  const accessToken = accessTokenData?.access_token ?? '';
   const maSession = getSessionData(req);
+  const accessTokenExpiresInSeconds = accessTokenData?.expires_in;
+
+  const expiresAtMilliseconds = accessTokenExpiresInSeconds
+    ? // Take Access token expiry time if available
+      Date.now() + accessTokenExpiresInSeconds * ONE_SECOND_MS
+    : 0;
 
   if (
     !maSession?.authMethod ||
@@ -99,9 +107,9 @@ export function getAuth(req: Request) {
   const profile = getAuthProfile(maSession, tokenData);
 
   return {
-    token: oidcToken,
+    token: accessToken,
     profile,
-    expiresAt: maSession.expires_at,
+    expiresAtMilliseconds,
   };
 }
 
@@ -139,10 +147,6 @@ export function decodeToken<T extends Record<string, string>>(
   return jose.decodeJwt(jwtToken) as unknown as T;
 }
 
-function isIDPSessionExpired(expiresAtInSeconds: number) {
-  return expiresAtInSeconds < millisecondsToSeconds(Date.now());
-}
-
 export function destroySession(req: AuthenticatedRequest, res: Response) {
   req[OIDC_SESSION_COOKIE_NAME] = undefined;
   res.clearCookie(OIDC_SESSION_COOKIE_NAME, {
@@ -158,12 +162,13 @@ export function createLogoutHandler(
   doIDPLogout: boolean = true
 ) {
   return async (req: AuthenticatedRequest, res: Response) => {
-    const auth = getAuth(req);
     const returnTo = getReturnToUrl(req.query, postLogoutRedirectUrl);
+    const auth = getAuth(req);
+
     if (
       doIDPLogout &&
-      auth?.expiresAt &&
-      !isIDPSessionExpired(auth.expiresAt)
+      auth?.token &&
+      req.oidc.accessToken?.isExpired?.() === false
     ) {
       return res.oidc.logout({
         returnTo,

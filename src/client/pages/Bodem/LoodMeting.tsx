@@ -1,18 +1,13 @@
-import { Grid } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
-
 import { useBodemDetailData } from './useBodemDetailData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
-import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
-import { ThemaTitles } from '../../config/thema';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function LoodMeting() {
-  const { meting, isLoading, isError } = useBodemDetailData();
+  const { meting, isLoading, isError, breadcrumbs } = useBodemDetailData();
 
   const BodemDetailRows = (meting: LoodMetingFrontend) => {
     return [
@@ -34,24 +29,20 @@ export function LoodMeting() {
 
   function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
     return (
-      <Grid.Cell span="all">
+      <PageContentCell>
         <Datalist rows={BodemDetailRows(meting)} />
-      </Grid.Cell>
+      </PageContentCell>
     );
   }
 
   return (
     <ThemaDetailPagina
       title="Lood in bodem-check"
-      icon={<ThemaIcon />}
       zaak={meting}
-      backLink={{
-        to: generatePath(AppRoutes.BODEM),
-        title: ThemaTitles.BODEM,
-      }}
+      breadcrumbs={breadcrumbs}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={!!meting && <BodemDetailContent meting={meting} />}
+      pageContentMain={!!meting && <BodemDetailContent meting={meting} />}
     />
   );
 }

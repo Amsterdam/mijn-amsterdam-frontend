@@ -1,30 +1,17 @@
-import { generatePath, useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
-import { AppRoutes } from '../../../universal/config/routes';
-import { isError } from '../../../universal/helpers/api';
-import { isLoading } from '../../../universal/helpers/api';
-import { LinkProps } from '../../../universal/types';
-import { ThemaTitles } from '../../config/thema';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAVGData } from './useAVGData.hook';
 
 export function useAVGDetailPage() {
-  const { AVG } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
-
-  const verzoek =
-    AVG.content?.verzoeken?.find((verzoek) => verzoek.id === id) ?? null;
-
-  const backLink: LinkProps = {
-    to: generatePath(AppRoutes.AVG, {
-      page: 1,
-    }),
-    title: ThemaTitles.AVG,
-  };
+  const { avgVerzoeken, isLoading, isError, breadcrumbs } = useAVGData();
+  const verzoek = avgVerzoeken.find((verzoek) => verzoek.id === id) ?? null;
 
   return {
     verzoek,
-    isLoading: isLoading(AVG),
-    isError: isError(AVG),
-    backLink,
+    title: 'AVG verzoek',
+    isLoading,
+    isError,
+    breadcrumbs,
   };
 }

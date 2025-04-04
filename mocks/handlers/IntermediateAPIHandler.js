@@ -1,5 +1,7 @@
 const formidable = require('formidable');
 
+const httpConstants = require('http2').constants;
+
 /** A middleware type handler to inspect a multipart form to determine what json body to send.
  *
  * To options you can pass an object with endpoints which er also objects.
@@ -7,7 +9,7 @@ const formidable = require('formidable');
  * Where an endpoint consists of:
  *  endpointname: {
  *   identifier: identifier string to look for in next property defined form field,
- *   getFieldWithIdentifier: function that retrieves a value in the form fields,
+ *   isMatch: function that retrieves a value in the form fields,
  *   body: json type body response
  *  }
  *
@@ -15,13 +17,11 @@ const formidable = require('formidable');
  *  ```javascript
  *  options: {
  *    klachten: {
- *      identifier: 'readKlacht',
- *      getFieldWithIdentifier: getSmileIdentifyingField,
+ *      isMatch: isIncomingFormFunction('readKlacht'),
  *      body: KLACHTEN_RESPONSE,
  *    },
  *    avg: {
- *      identifier: 'readAVGverzoek',
- *      getFieldWithIdentifier: getSmileIdentifyingField,
+ *      isMatch: isIncomingFormFunction('readAvg'),
  *      body: AVG_RESPONSE,
  *    },
  *   }
@@ -55,11 +55,12 @@ class IntermediateAPIHandler {
       }
 
       for (let endpoint of Object.values(this._options)) {
-        if (
-          endpoint.identifier ===
-          endpoint.getFieldWithIdentifier(fields, this._core)
-        ) {
-          res.status(200);
+        if (endpoint.isMatch(fields, this._core)) {
+          const status = endpoint.statusCode || httpConstants.HTTP_STATUS_OK;
+          res.status(status);
+          if (status !== httpConstants.HTTP_STATUS_OK) {
+            return res.end();
+          }
           res.send(endpoint.body);
           this._core.logger.debug(
             `Endpoint with ${endpoint.identifier} found and body sent`
@@ -69,7 +70,7 @@ class IntermediateAPIHandler {
       }
 
       this._core.logger.error('No matching identifier found');
-      res.status(404);
+      res.status(httpConstants.HTTP_STATUS_NOT_FOUND);
       next();
     });
   }

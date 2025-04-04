@@ -1,12 +1,11 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import MyNotifications from './MyNotifications';
-import { Themas } from '../../../universal/config/thema';
+import { MyNotificationsPage } from './MyNotifications';
 
 const testState: any = {
   NOTIFICATIONS: {
@@ -17,7 +16,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        thema: 'HOME',
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -28,7 +27,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        thema: Themas.BRP,
+        thema: 'BRP',
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -39,7 +38,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        thema: Themas.INKOMEN,
+        thema: 'INKOMEN',
         isAlert: true,
         link: {
           to: '/item-3',
@@ -58,14 +57,16 @@ describe('<MyNotifications />', () => {
   const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
   const routePath = AppRoutes.NOTIFICATIONS;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={MyNotifications}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={MyNotificationsPage}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);

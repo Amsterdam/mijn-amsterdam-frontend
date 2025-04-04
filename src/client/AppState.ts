@@ -8,10 +8,13 @@ export const PRISTINE_APPSTATE: AppState = {
   // Generated
   NOTIFICATIONS: apiPristineResult([]),
 
-  VAREN: apiPristineResult([], {
-    isActive: FeatureToggle.varenActive,
-    profileTypes: ['commercial'],
-  }),
+  VAREN: apiPristineResult(
+    { reder: null, zaken: [] },
+    {
+      isActive: FeatureToggle.varenActive,
+      profileTypes: ['commercial'],
+    }
+  ),
 
   AFIS: apiPristineResult(
     {
@@ -77,9 +80,8 @@ export const PRISTINE_APPSTATE: AppState = {
       profileTypes: ['private'],
     }
   ),
-  ERFPACHT: apiPristineResult({ isKnown: false }),
-  ERFPACHTv2: apiPristineResult(null, {
-    isActive: FeatureToggle.erfpachtV2Active,
+  ERFPACHT: apiPristineResult(null, {
+    isActive: FeatureToggle.erfpachtActive,
     profileTypes: ['private', 'commercial'],
   }),
   SUBSIDIE: apiPristineResult(
@@ -100,7 +102,7 @@ export const PRISTINE_APPSTATE: AppState = {
     { isActive: FeatureToggle.overtredingenActive }
   ),
   PARKEREN: apiPristineResult(
-    { isKnown: true, url: undefined },
+    { isKnown: true, url: undefined, vergunningen: [] },
     {
       isActive: FeatureToggle.parkerenActive,
       profileTypes: ['private', 'commercial'],
@@ -112,7 +114,6 @@ export const PRISTINE_APPSTATE: AppState = {
     bbVergunningen: [],
   }),
   VERGUNNINGEN: apiPristineResult([]),
-  VERGUNNINGENv2: apiPristineResult([]),
 
   // KVK / Handelsregister
   KVK: apiPristineResult(null),

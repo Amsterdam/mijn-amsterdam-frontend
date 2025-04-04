@@ -1,8 +1,6 @@
-import { Grid } from '@amsterdam/design-system-react';
-
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { ThemaIcon } from '../../components';
 import { Datalist } from '../../components/Datalist/Datalist';
+import { PageContentCell } from '../../components/Page/Page';
 import { useAVGDetailPage } from '../AVG/useAVGDetailPage.hook';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
@@ -19,23 +17,23 @@ function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
   const rows = getVerzoekRows(verzoek);
 
   return (
-    <Grid.Cell span="all">
+    <PageContentCell>
       <Datalist rows={rows} />
-    </Grid.Cell>
+    </PageContentCell>
   );
 }
 
 function AVGDetail() {
-  const { verzoek, isLoading, isError, backLink } = useAVGDetailPage();
+  const { verzoek, isLoading, isError, breadcrumbs, title } =
+    useAVGDetailPage();
   return (
-    <ThemaDetailPagina<AVGRequestFrontend>
-      title="AVG verzoek"
+    <ThemaDetailPagina
+      title={title}
       zaak={verzoek}
       isError={isError}
       isLoading={isLoading}
-      icon={<ThemaIcon />}
-      pageContentTop={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
-      backLink={backLink}
+      pageContentMain={!!verzoek && <AVGDetailContent verzoek={verzoek} />}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

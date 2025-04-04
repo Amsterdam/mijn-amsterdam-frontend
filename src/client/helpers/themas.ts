@@ -3,9 +3,7 @@ import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import { DecosCaseType } from '../../universal/types/vergunningen';
-import { ThemaMenuItem } from '../config/thema';
-import { PARKEER_CASE_TYPES } from '../pages/Parkeren/Parkeren.config';
+import { ThemaMenuItem } from '../config/thema-types';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -17,7 +15,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     BODEM,
     BRP,
     ERFPACHT,
-    ERFPACHTv2,
     HLI,
     HORECA,
     KLACHTEN,
@@ -32,7 +29,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,
-    VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
@@ -51,7 +47,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.INKOMEN: {
       const { jaaropgaven, uitkeringsspecificaties } =
         WPI_SPECIFICATIES?.content ?? {};
-      const hasAanvragen = WPI_AANVRAGEN?.content?.length;
+      const hasAanvragen = !!WPI_AANVRAGEN?.content?.length;
       const hasTozo = !!WPI_TOZO?.content?.length;
       const hasTonk = !!WPI_TONK?.content?.length;
       const hasBbz = !!WPI_BBZ?.content?.length;
@@ -143,16 +139,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
 
     case Themas.ERFPACHT:
-      return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
-
-    case Themas.ERFPACHTv2:
       return (
-        FeatureToggle.erfpachtV2Active &&
-        !isLoading(ERFPACHTv2) &&
-        ERFPACHTv2.content !== null &&
-        (('dossiers' in ERFPACHTv2.content &&
-          !!ERFPACHTv2.content.dossiers.dossiers?.length) ||
-          !!ERFPACHTv2.content?.isKnown)
+        FeatureToggle.erfpachtActive &&
+        !isLoading(ERFPACHT) &&
+        ERFPACHT.content !== null &&
+        (('dossiers' in ERFPACHT.content &&
+          !!ERFPACHT.content.dossiers.dossiers?.length) ||
+          !!ERFPACHT.content?.isKnown)
       );
 
     case Themas.SUBSIDIE:
@@ -167,18 +160,8 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.BRP: {
-      return !isLoading(BRP) && !!BRP.content?.persoon;
-    }
-
     case Themas.VERGUNNINGEN:
-      return (
-        (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length) ||
-        (!isLoading(VERGUNNINGENv2) && !!VERGUNNINGENv2.content?.length)
-      );
-
-    case Themas.KVK:
-      return !isLoading(KVK) && !!KVK.content;
+      return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 
     case Themas.TOERISTISCHE_VERHUUR: {
       const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
@@ -192,21 +175,16 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     }
 
     case Themas.KREFIA:
-      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
+      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks.length;
 
     case Themas.PARKEREN: {
-      const hasParkeerVergunningenFromThemaVergunningen = (
-        appState.VERGUNNINGEN?.content ?? []
-      ).some((vergunning) =>
-        PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
-      );
+      const hasDecosParkeerVergunningen =
+        !!appState.PARKEREN?.content?.vergunningen?.length;
 
       return (
         FeatureToggle.parkerenActive &&
         !isLoading(PARKEREN) &&
-        !isLoading(VERGUNNINGEN) &&
-        (!!PARKEREN?.content?.isKnown ||
-          hasParkeerVergunningenFromThemaVergunningen)
+        (!!PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
       );
     }
 
@@ -227,7 +205,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case Themas.VAREN:
       return (
         !isLoading(VAREN) &&
-        !!VAREN?.content?.length &&
+        (!!VAREN?.content?.reder || !!VAREN?.content?.zaken?.length) &&
         FeatureToggle.varenActive
       );
 

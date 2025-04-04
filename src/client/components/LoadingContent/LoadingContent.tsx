@@ -1,8 +1,8 @@
+import { ReactNode } from 'react';
 
 import classnames from 'classnames';
 
 import styles from './LoadingContent.module.scss';
-import { ComponentChildren } from '../../../universal/types';
 
 type width = string;
 type height = string;
@@ -11,7 +11,7 @@ type marginBottom = string;
 export type BarConfig = Array<[width, height, marginBottom]>;
 
 export interface ComponentProps {
-  children?: ComponentChildren;
+  children?: ReactNode;
   barConfig?: BarConfig;
   className?: string;
 }

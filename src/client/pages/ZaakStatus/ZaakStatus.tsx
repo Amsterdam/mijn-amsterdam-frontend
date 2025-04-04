@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import styles from './ZaakStatus.module.scss';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types/App.types';
-import {
-  ErrorAlert,
-  PageContent,
-  PageHeading,
-  TextPage,
-} from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import {
+  PageContentCell,
+  PageContentV2,
+  TextPageV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 
 const ITEM_NOT_FOUND = 'not-found';
@@ -61,7 +62,7 @@ const pageRouteResolvers: PageRouteResolvers = {
             appState.TOERISTISCHE_VERHUUR.content
               ?.vakantieverhuurVergunningen || []
           ).find((toeristischeVerhuur) => {
-            if (toeristischeVerhuur.zaaknummer === detailPageItemId) {
+            if (toeristischeVerhuur.identifier === detailPageItemId) {
               return toeristischeVerhuur;
             }
           })?.link.to ?? ITEM_NOT_FOUND
@@ -72,7 +73,7 @@ const pageRouteResolvers: PageRouteResolvers = {
 };
 
 function useNavigateToPage(queryParams: URLSearchParams) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const appState = useAppStateGetter();
   const thema = queryParams.get('thema') as ThemaQueryParam;
   const id = queryParams.get('id');
@@ -89,7 +90,7 @@ function useNavigateToPage(queryParams: URLSearchParams) {
         setUnresolvedState(route);
       } else if (route) {
         // Will unmount component, no further action needed
-        history.push(route);
+        navigate(route);
       }
     }
   }, [appState, id, getRoute]);
@@ -100,10 +101,10 @@ function useNavigateToPage(queryParams: URLSearchParams) {
   };
 }
 
-export default function ZaakStatus() {
+export function ZaakStatus() {
   const appStateReady = useAppStateReady();
-  const history = useHistory();
-  const queryParams = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const pageRoute = useNavigateToPage(queryParams);
 
   let linkRoute: AppRoute = AppRoutes.HOME;
@@ -119,45 +120,48 @@ export default function ZaakStatus() {
   }
 
   return (
-    <TextPage>
-      <PageHeading>Status van uw aanvraag</PageHeading>
-      <PageContent>
-        {/* If we have a state error, show only the error, no links to overview because that has a state error as well. */}
-        {pageRoute.unResolvedState === STATE_ERROR && (
-          <ErrorAlert className="ams-mb--xs">
-            Wij kunnen nu niet alle gegevens tonen, probeer het later nog eens.
-          </ErrorAlert>
-        )}
-        {pageRoute.unResolvedState === ITEM_NOT_FOUND && (
-          <>
-            <Paragraph className="ams-mb--xs">
-              Wij kunnen de status van uw aanvraag niet laten zien.
-            </Paragraph>
-            {queryParams.get('payment') && (
+    <TextPageV2>
+      <PageContentV2>
+        <PageHeadingV2>Status van uw aanvraag</PageHeadingV2>
+        <PageContentCell>
+          {/* If we have a state error, show only the error, no links to overview because that has a state error as well. */}
+          {pageRoute.unResolvedState === STATE_ERROR && (
+            <ErrorAlert className="ams-mb--xs">
+              Wij kunnen nu niet alle gegevens tonen, probeer het later nog
+              eens.
+            </ErrorAlert>
+          )}
+          {pageRoute.unResolvedState === ITEM_NOT_FOUND && (
+            <>
               <Paragraph className="ams-mb--xs">
-                U heeft betaald voor deze aanvraag. Het kan even duren voordat
-                uw aanvraag op Mijn Amsterdam te zien is.
+                Wij kunnen de status van uw aanvraag niet laten zien.
               </Paragraph>
-            )}
-          </>
-        )}
-        {/* As soon as we have a result (unResolvedState has a value) or if all state is loaded, show an alternative link. */}
-        {(appStateReady || pageRoute.unResolvedState) && (
-          <Paragraph>
-            <MaRouterLink href={linkRoute}>{linkText}</MaRouterLink>
-          </Paragraph>
-        )}
-        {/* Show the loader if we don't have result yet or when we are still loading. */}
-        {!appStateReady && !pageRoute.unResolvedState && (
-          <LoadingContent
-            className={styles.LoadingContent}
-            barConfig={[
-              ['auto', '2rem', '1rem'],
-              ['auto', '2rem', '0'],
-            ]}
-          />
-        )}
-      </PageContent>
-    </TextPage>
+              {queryParams.get('payment') && (
+                <Paragraph className="ams-mb--xs">
+                  U heeft betaald voor deze aanvraag. Het kan even duren voordat
+                  uw aanvraag op Mijn Amsterdam te zien is.
+                </Paragraph>
+              )}
+            </>
+          )}
+          {/* As soon as we have a result (unResolvedState has a value) or if all state is loaded, show an alternative link. */}
+          {(appStateReady || pageRoute.unResolvedState) && (
+            <Paragraph>
+              <MaRouterLink href={linkRoute}>{linkText}</MaRouterLink>
+            </Paragraph>
+          )}
+          {/* Show the loader if we don't have result yet or when we are still loading. */}
+          {!appStateReady && !pageRoute.unResolvedState && (
+            <LoadingContent
+              className={styles.LoadingContent}
+              barConfig={[
+                ['auto', '2rem', '1rem'],
+                ['auto', '2rem', '0'],
+              ]}
+            />
+          )}
+        </PageContentCell>
+      </PageContentV2>
+    </TextPageV2>
   );
 }

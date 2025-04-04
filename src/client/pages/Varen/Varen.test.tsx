@@ -1,11 +1,11 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import {
-  VarenFrontend,
+  VarenZakenFrontend,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
 } from '../../../server/services/varen/config-and-types';
@@ -16,7 +16,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { Varen } from './Varen';
 
-type ExploitatieAanvraag = VarenFrontend<VarenVergunningExploitatieType>;
+type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieInProgress = {
   id: 'Z-24-0000001',
   identifier: 'Z/24/0000001',
@@ -100,30 +100,34 @@ const exploitatieDecision: ExploitatieAanvraag = {
   },
 } as unknown as ExploitatieAanvraag;
 
-const rederRegistratie: VarenFrontend<VarenRegistratieRederType> = {
+const rederRegistratie = {
   id: '2801937838',
   title: 'Varen registratie reder',
   caseType: 'Varen registratie reder',
   company: 'Balonnenfabriek',
   bsnkvk: '012345678',
   address: 'Amstel 1, 1011 PN Amsterdam',
+  correspondenceAddress: 'Correspondence 1, 1011 PN Amsterdam',
   postalCode: null,
   city: null,
   phone: '0612345678',
   email: 'myemailadres@example.com',
+  dateRequest: '2023-11-06T00:00:00',
   dateRequestFormatted: '06 november 2023',
-} as unknown as VarenFrontend<VarenRegistratieRederType>;
+} as unknown as VarenRegistratieRederType;
 
-const varenContent: AppState['VAREN']['content'] = [
-  exploitatieInProgress,
-  exploitatieDecision,
-  rederRegistratie,
-];
+const varenContent = [exploitatieInProgress, exploitatieDecision];
 
-const getTestState = (content: VarenFrontend[] = varenContent): AppState =>
+const getTestState = (
+  zaken: VarenZakenFrontend[] = varenContent,
+  reder: VarenRegistratieRederType | null = rederRegistratie
+): AppState =>
   jsonCopy({
     VAREN: {
-      content: content,
+      content: {
+        reder,
+        zaken,
+      },
       status: 'OK',
     },
   });
@@ -157,7 +161,7 @@ describe('<Varen />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    expect(screen.getAllByRole('heading', { level: 3 })[0]).toHaveTextContent(
       'Passagiers- en beroepsvaart'
     );
   });
@@ -190,7 +194,7 @@ describe('<Varen />', () => {
       /Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart./;
 
     it('Shows an alert when the reder does not have a registration', () => {
-      const screen = render(<Component state={getTestState([])} />);
+      const screen = render(<Component state={getTestState([], null)} />);
       expect(
         screen.getByText(alertRegexNoRederRegistratie)
       ).toBeInTheDocument();
@@ -198,16 +202,15 @@ describe('<Varen />', () => {
     });
 
     it('Does not show an alert when the reder has a registration', () => {
-      const screen = render(
-        <Component state={getTestState([rederRegistratie])} />
-      );
+      const screen = render(<Component state={getTestState([])} />);
       expect(screen.queryByText(alertRegexNoRederRegistratie)).toBeNull();
     });
 
     it('Shows the reder data', () => {
-      const screen = render(
-        <Component state={getTestState([rederRegistratie])} />
-      );
+      const screen = render(<Component state={getTestState([])} />);
+
+      const gegevensAanvragerTitle = screen.getByText('Gegevens Aanvrager');
+      expect(gegevensAanvragerTitle).toBeInTheDocument();
 
       const naamAanvrager = screen.getByText('Naam aanvrager');
       expect(naamAanvrager.nextElementSibling).toHaveTextContent(
@@ -223,7 +226,7 @@ describe('<Varen />', () => {
 
       const adres = screen.getByText('Adres');
       expect(adres.nextElementSibling).toHaveTextContent(
-        'Amstel 1, 1011 PN Amsterdam'
+        'Correspondence 1, 1011 PN Amsterdam'
       );
 
       const email = screen.getByText('E-mailadres');
@@ -236,6 +239,22 @@ describe('<Varen />', () => {
         '06 november 2023'
       );
     });
+  });
+
+  it('Shows the reder data without a correspondence address', () => {
+    const screen = render(
+      <Component
+        state={getTestState([], {
+          ...rederRegistratie,
+          correspondenceAddress: null,
+        })}
+      />
+    );
+
+    const adres = screen.getByText('Adres');
+    expect(adres.nextElementSibling).toHaveTextContent(
+      'Amstel 1, 1011 PN Amsterdam'
+    );
   });
 
   describe('Tables', () => {
@@ -340,11 +359,13 @@ describe('<Varen />', () => {
             exploitatieDecision,
             exploitatieDecision,
             exploitatieDecision,
+            exploitatieDecision,
+            exploitatieDecision,
           ].map((vergunning, index) => ({ ...vergunning, id: `${index}` }))
         )}
       />
     );
-    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(3);
+    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(5);
     expect(screen.getByText('Alle actieve vergunningen')).toBeInTheDocument();
   });
 });

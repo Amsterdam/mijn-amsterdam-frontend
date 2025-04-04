@@ -1,12 +1,13 @@
-import { Button } from '@amsterdam/design-system-react';
-import { generatePath, useHistory } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import { MaRouterLink } from '../MaLink/MaLink';
 
 interface LinkToListPageProps {
   count: number;
   route: string;
   label?: string;
+  linkTitle?: string;
   params?: Record<string, any>;
   threshold?: number;
   translateX?: string;
@@ -14,26 +15,20 @@ interface LinkToListPageProps {
 
 export function LinkToListPage({
   label = 'Toon meer',
+  linkTitle,
   threshold = MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   count,
   route,
   params,
-  translateX = '-1.4rem',
 }: LinkToListPageProps) {
-  const history = useHistory();
   const routeGenerated = generatePath(route, params);
   return count > threshold ? (
-    <Button
-      variant="tertiary"
-      style={
-        translateX ? { transform: `translateX(${translateX})` } : undefined
-      }
-      onClick={(e) => {
-        e.preventDefault();
-        history.push(routeGenerated);
-      }}
+    <MaRouterLink
+      title={linkTitle}
+      maVariant="noDefaultUnderline"
+      href={routeGenerated}
     >
       {label}
-    </Button>
+    </MaRouterLink>
   ) : null;
 }

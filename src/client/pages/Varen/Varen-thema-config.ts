@@ -1,7 +1,7 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { isVergunning } from './helper';
-import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
+import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
@@ -10,11 +10,15 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2';
+import { TrackingConfig } from '../../config/routes';
+
+const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   actief: 'actieve-vergunningen',
 } as const;
+
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
@@ -28,17 +32,26 @@ type TableConfig<T> = {
   sort: (a: T, b: T) => number;
   displayProps: DisplayProps<T>;
   listPageRoute: string;
+  maxItems: number;
 };
 
+export const routes = {
+  listPage: AppRoutes['VAREN/LIST'],
+  themaPage: AppRoutes.VAREN,
+  detailPage: AppRoutes['VAREN/DETAIL'],
+} as const;
+
 type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
+
 export const tableConfig: TableConfigByKind<
-  WithDetailLinkComponent<VarenVergunningFrontend>
+  WithDetailLinkComponent<VarenZakenFrontend>
 > = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (vergunning: VarenVergunningFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
+      page: null,
     }),
     displayProps: {
       detailLinkComponent: 'Naam vaartuig',
@@ -46,13 +59,15 @@ export const tableConfig: TableConfigByKind<
       dateRequestFormatted: 'Aangevraagd',
       status: 'Status',
     },
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     ...tableConfigSort,
   },
   [listPageParamKind.actief]: {
     title: 'Actieve vergunningen',
     filter: isVergunning,
-    listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
+    listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.actief,
+      page: null,
     }),
     displayProps: {
       detailLinkComponent: 'Naam vaartuig',
@@ -60,6 +75,7 @@ export const tableConfig: TableConfigByKind<
       dateDecisionFormatted: 'Datum besluit',
       decision: 'Resultaat',
     },
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     ...tableConfigSort,
   },
 } as const;
@@ -97,3 +113,30 @@ export const rederRegistratieLink: LinkProps = {
   to: `${formulierenBaseUrl}/VARRegistratieReder.aspx`,
   title: 'Onderneming registreren',
 } as const;
+
+export function getVarenListPageDocumentTitle(themaTitle: string) {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    const kind = params?.kind as ListPageParamKind;
+    return kind in tableConfig
+      ? `${tableConfig[kind].title} | ${themaTitle}`
+      : themaTitle;
+  };
+}
+export function getVarenDetailPageDocumentTitle(themaTitle: string) {
+  return <T extends Record<string, string>>(
+    config: TrackingConfig,
+    params: T | null
+  ) => {
+    switch (params?.caseType) {
+      case 'ligplaatsvergunning':
+        return `Ligplaatsvergunning | ${themaTitle}`;
+      case 'exploitatievergunning':
+        return `Exploitatievergunning | ${themaTitle}`;
+      default:
+        return `Vergunning | ${themaTitle}`;
+    }
+  };
+}

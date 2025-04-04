@@ -2,6 +2,9 @@ import { documentDownloadName, productName } from '../helpers';
 import { WpiRequestStatusLabels } from '../wpi-types';
 import { requestProcess as tozoRequestProcess } from './tozo';
 
+export const LINK_MEER_INFO =
+  '<a rel="external noopener noreferrer" class="ams-link" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a>';
+
 const weigeringVerlengingLabels: WpiRequestStatusLabels = {
   notification: {
     title: (requestProcess, statusStep) =>
@@ -16,7 +19,7 @@ const weigeringVerlengingLabels: WpiRequestStatusLabels = {
   description: (requestProcess, statusStep) =>
     `<p>U heeft uw ${
       statusStep.about || requestProcess.about
-    } verlenging geweigerd. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    } verlenging geweigerd. Bekijk de brief voor meer details.</p><p>${LINK_MEER_INFO}</p>`,
 };
 
 const correctieMailLabels: WpiRequestStatusLabels = {
@@ -37,7 +40,7 @@ const correctieMailLabels: WpiRequestStatusLabels = {
     },
   },
   description: () =>
-    `<p>U heeft een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
+    `<p>U heeft een mail gekregen omdat u een verkeerde TONK-brief hebt ontvangen. Bekijk de mail voor meer details.</p><p>${LINK_MEER_INFO}</p>`,
 };
 
 const besluitLabels: WpiRequestStatusLabels = {
@@ -92,13 +95,13 @@ const besluitLabels: WpiRequestStatusLabels = {
           requestProcess,
           statusStep,
           false
-        )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+        )}. Bekijk de brief voor meer details.</p><p>${LINK_MEER_INFO}</p>`;
 
       case 'verlenging':
         return `<p>U heeft recht op verlenging van ${productName(
           requestProcess,
           statusStep
-        )}. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`;
+        )}. Bekijk de brief voor meer details.</p><p>${LINK_MEER_INFO}</p>`;
 
       default:
         return tozoRequestProcess.besluit.description(

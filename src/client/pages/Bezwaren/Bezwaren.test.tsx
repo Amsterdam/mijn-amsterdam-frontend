@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Bezwaren from './Bezwaren';
+import { BezwarenThemaPagina } from './Bezwaren';
 
 const testState = {
   BEZWAREN: {
@@ -83,17 +83,19 @@ function initializeState(testState: any) {
 }
 
 function setupTestComponent(testState: any) {
-  const routeEntry = generatePath(AppRoutes['BEZWAREN']);
-  const routePath = AppRoutes['BEZWAREN'];
+  const routeEntry = generatePath(AppRoutes.BEZWAREN);
+  const routePath = AppRoutes.BEZWAREN;
 
-  return () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Bezwaren}
-      initializeState={initializeState(testState)}
-    />
-  );
+  return function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={BezwarenThemaPagina}
+        initializeState={initializeState(testState)}
+      />
+    );
+  };
 }
 
 describe('Bezwaren thema pagina', () => {

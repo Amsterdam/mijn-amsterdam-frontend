@@ -1,18 +1,18 @@
 import { AxiosResponseTransformer } from 'axios';
 
-import { Thema } from '../../../universal/config/thema';
+import { ThemaID } from '../../../universal/config/thema';
 import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
-import { MyNotification, MyTip } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { requestData } from '../../helpers/source-api-request';
 
 export interface ApiPatternResponseA {
-  tips?: MyTip[];
+  tips?: MyNotification[];
   isKnown: boolean;
   notifications?: MyNotification[];
 }
@@ -67,7 +67,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
 
 export function transformNotificationsDefault(
   notifications: MyNotification[],
-  thema: Thema
+  thema: ThemaID
 ) {
   const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map((notification) => ({
@@ -87,7 +87,7 @@ export function transformNotificationsDefault(
 export async function fetchTipsAndNotifications(
   requestID: RequestID,
   apiConfig: DataRequestConfig = {},
-  thema: Thema,
+  thema: ThemaID,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<
   ApiResponse_DEPRECATED<Pick<

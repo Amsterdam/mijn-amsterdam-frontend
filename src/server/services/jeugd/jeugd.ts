@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items';
 import { AppRoutes } from '../../../universal/config/routes';

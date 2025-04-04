@@ -19,7 +19,7 @@ export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
 export const RETURNTO_MAMS_LANDING_EHERKENNING = 'mams-landing-eherkenning';
 
 // eslint-disable-next-line no-magic-numbers
-export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 16; // 16 minutes
+export const OIDC_SESSION_MAX_AGE_SECONDS = ONE_MINUTE_SECONDS * 15; // 15 minutes
 export const OIDC_SESSION_COOKIE_NAME = '__MA-appSession';
 export const OIDC_COOKIE_ENCRYPTION_KEY = `${getFromEnv('BFF_GENERAL_ENCRYPTION_KEY')}`;
 export const OIDC_ID_TOKEN_EXP = '1 hours'; // Arbitrary, MA wants a token to be valid for a maximum of 1 hours.
@@ -55,6 +55,7 @@ export const oidcConfigBase: ConfigParams = {
       getFromEnv('MA_APP_MODE') !== 'unittest'
         ? getSessionStore(openIdAuth as typeof expressSession, {
             tableName: OIDC_SESSIONS_TABLE_NAME,
+            maxAgeSeconds: OIDC_SESSION_MAX_AGE_SECONDS,
           })
         : undefined,
   },

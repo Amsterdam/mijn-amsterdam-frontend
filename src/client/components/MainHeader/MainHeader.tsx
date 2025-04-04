@@ -1,281 +1,186 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 
-import { Header, PageMenu } from '@amsterdam/design-system-react';
-import { CloseIcon, MenuIcon } from '@amsterdam/design-system-react-icons';
-import { animated, useSpring } from '@react-spring/web';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Header, Icon } from '@amsterdam/design-system-react';
+import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
+import classNames from 'classnames';
 
-import { isMenuItemVisible, mainMenuItems } from './MainHeader.constants';
 import styles from './MainHeader.module.scss';
 import { OtapLabel } from './OtapLabel';
-import { SecondaryLinks } from './SecondaryLinks';
+import { ProfileName } from './ProfileName';
+import { SearchBar } from './SearchBar';
+import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { AppRoutes } from '../../../universal/config/routes';
-import { IconSearch } from '../../assets/icons';
-import { ErrorMessages } from '../../components';
-import { getApiErrors } from '../../config/api';
-import { ThemaTitles } from '../../config/thema';
+import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
-import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
-import MegaMenu from '../MegaMenu/MegaMenu';
-import { Search } from '../Search/Search';
-import { SearchEntry } from '../Search/search-config';
-import { useSearchOnPage } from '../Search/useSearch';
+import { routes as profileRoutes } from '../../pages/Profile/Profile-thema-config';
+import { MainMenu } from '../MainMenu/MainMenu';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import {
+  useDisplayLiveSearch,
+  useSearchActive,
+  useSearchOnPage,
+} from '../Search/useSearch';
 
-export interface MainHeaderProps {
-  isAuthenticated?: boolean;
-  isHeroVisible?: boolean;
-}
+export const AmsMainMenuClassname = 'ma-main-header';
 
-const AmsMegaMenuClassname = 'ams-mega-menu';
-const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
+type MainHeaderSecondaryLinksProps = {
+  linkClassName: string;
+  wrapInListElement: boolean;
+};
 
-function isTargetWithinMenu(target: any) {
-  const LinkContainer = document.querySelector(`.${AmsMegaMenuClassname}`);
-  const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
-  return (
-    LinkContainer?.contains(target) || BurgerMenuToggleButton?.contains(target)
-  );
-}
-
-export default function MainHeader({
-  isAuthenticated = false,
-  isHeroVisible = true,
-}: MainHeaderProps) {
-  const appState = useAppStateGetter();
-  const errors = useMemo(() => getApiErrors(appState), [appState]);
-  const hasErrors = !!errors.length;
-  const termReplace = useTermReplacement();
-  const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
-    undefined
-  );
-  const { items: myThemasMenuItems } = useThemaMenuItems();
-  const location = useLocation();
+export function MainHeaderSecondaryLinks({
+  linkClassName,
+  wrapInListElement = false,
+}: MainHeaderSecondaryLinksProps) {
+  const Wrap = wrapInListElement ? 'li' : React.Fragment;
   const profileType = useProfileTypeValue();
-  const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
-    useSearchOnPage();
+  return (
+    <>
+      <Wrap>
+        <MaRouterLink
+          maVariant="noUnderline"
+          href={
+            profileType === 'private' ? profileRoutes.BRP : profileRoutes.KVK
+          }
+          className={linkClassName}
+          title="Ga naar persoonlijke gegevens"
+        >
+          <span className={styles.ProfileNameInner}>
+            <ProfileName fallbackName="Profiel" />
+          </span>
+        </MaRouterLink>
+      </Wrap>
+      <Wrap>
+        <MaLink
+          maVariant="noUnderline"
+          href={LOGOUT_URL}
+          className={linkClassName}
+          rel="noopener noreferrer"
+        >
+          Uitloggen
+        </MaLink>
+      </Wrap>
+    </>
+  );
+}
 
-  const fadeStyles = useSpring({
-    config: { duration: 100 },
-    from: { opacity: 0, display: 'none' },
-    to: {
-      opacity: isBurgerMenuVisible ? 1 : 0,
-      display: isBurgerMenuVisible ? 'block' : 'none',
-    },
-  });
+function MainHeaderLinks() {
+  const [isSearchActive, setSearchActive] = useSearchActive();
+  const isDisplayLiveSearch = useDisplayLiveSearch();
   const isPhoneScreen = usePhoneScreen();
-
-  // Bind click outside and tab navigation interaction
-  useEffect(() => {
-    const onTab = (event: KeyboardEvent) => {
-      const isMenuTarget = isTargetWithinMenu(event.target);
-      if (event.key === 'Tab') {
-        if (isBurgerMenuVisible === true && !isMenuTarget) {
-          toggleBurgerMenu(false);
-        } else if (isBurgerMenuVisible === false && isMenuTarget) {
-          toggleBurgerMenu(true);
-        }
-      }
-    };
-
-    const onClickOutsideBurgermenu = (event?: MouseEvent) => {
-      if (isBurgerMenuVisible === true && !isTargetWithinMenu(event?.target)) {
-        toggleBurgerMenu(false);
-      }
-    };
-
-    document.addEventListener('keyup', onTab);
-    document.addEventListener('click', onClickOutsideBurgermenu);
-    return () => {
-      document.removeEventListener('keyup', onTab);
-      document.removeEventListener('click', onClickOutsideBurgermenu);
-    };
-  }, [isBurgerMenuVisible]);
-
-  // Close menu on click escape key
-  useEffect(() => {
-    const onEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        const activeElement = document.activeElement as HTMLElement;
-        toggleBurgerMenu(false);
-        activeElement?.blur();
-        return;
-      }
-    };
-    if (!isBurgerMenuVisible) return;
-
-    document.addEventListener('keydown', onEscape);
-    return () => {
-      document.removeEventListener('keydown', onEscape);
-    };
-  }, [isBurgerMenuVisible]);
-
-  // Hides small screen menu on route change
-  useEffect(() => {
-    toggleBurgerMenu(false);
-  }, [location.pathname]);
-
-  const replaceResultUrl = useCallback((result: SearchEntry) => {
-    return result.url.startsWith(AppRoutes.BUURT);
-  }, []);
-
-  const menuItems = useMemo(() => {
-    return mainMenuItems
-      .filter((menuItem) => isMenuItemVisible(profileType, menuItem))
-      .map((item) => {
-        let menuItem = item;
-        if (menuItem.title === ThemaTitles.BUURT && profileType !== 'private') {
-          menuItem = {
-            ...menuItem,
-            title: termReplace(menuItem.title),
-          };
-        }
-
-        return menuItem;
-      });
-  }, [myThemasMenuItems, profileType, termReplace]);
-
-  const backdropRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const adjustOverlay = () => {
-      if (!menuRef.current) {
-        return;
-      }
-
-      // Add 10 pixels to the height to make sure the overlay is not visible when the menu is changing is size
-      const PADDING_HEIGHT = 10;
-      let menuHeight = menuRef.current?.offsetHeight + PADDING_HEIGHT;
-      const scrollTop = window.scrollY;
-
-      if (scrollTop >= menuHeight) {
-        menuHeight = 0;
-      }
-      if (backdropRef.current && isBurgerMenuVisible) {
-        backdropRef.current.style.top = `${menuHeight}px`;
-        backdropRef.current.style.height = `calc(100vh - ${menuHeight}px)`;
-      }
-    };
-
-    adjustOverlay();
-    window.addEventListener('resize', adjustOverlay);
-    window.addEventListener('scroll', adjustOverlay);
-    window.addEventListener('touchmove', adjustOverlay);
-
-    // Cleanup function to remove the event listener
-    return () => {
-      window.removeEventListener('resize', adjustOverlay);
-      window.removeEventListener('scroll', adjustOverlay);
-      window.removeEventListener('touchmove', adjustOverlay);
-    };
-  }, [isBurgerMenuVisible]);
-
-  const history = useHistory();
-
-  useEffect(() => {
-    const h1Element = document.querySelector('h1');
-    const goToHomepage = () => {
-      history.push(AppRoutes.HOME);
-    };
-    if (h1Element?.textContent === 'Mijn Amsterdam') {
-      h1Element.addEventListener('click', goToHomepage);
-    }
-    return () => {
-      h1Element?.removeEventListener('click', goToHomepage);
-    };
-  }, []);
 
   return (
     <>
-      <div className={styles.headerContainer}>
-        <Header
-          ref={menuRef}
-          className={styles.header}
-          appName="Mijn Amsterdam"
-          links={
-            isAuthenticated && (
-              <PageMenu alignEnd>
-                <SecondaryLinks />
-              </PageMenu>
-            )
-          }
-          menu={
-            isAuthenticated && (
-              <PageMenu alignEnd wrap={false} className={styles.PageMenu}>
-                {isDisplayLiveSearch && (
-                  <PageMenu.Link
-                    icon={IconSearch}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSearchActive(!isSearchActive);
-                    }}
-                  >
-                    <span className={styles.PageMenuLabel}>Zoeken</span>
-                  </PageMenu.Link>
-                )}
-
-                {isBurgerMenuVisible ? (
-                  <PageMenu.Link
-                    icon={CloseIcon}
-                    onClick={(e) => {
-                      toggleBurgerMenu(false);
-                    }}
-                  >
-                    <span className={styles.PageMenuLabel}>Menu</span>
-                  </PageMenu.Link>
-                ) : (
-                  <PageMenu.Link
-                    icon={MenuIcon}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleBurgerMenu(true);
-                    }}
-                  >
-                    <span className={styles.PageMenuLabel}>Menu</span>
-                  </PageMenu.Link>
-                )}
-              </PageMenu>
-            )
-          }
+      {isDisplayLiveSearch && (
+        <li>
+          <MaLink
+            maVariant="noUnderline"
+            className={classNames(
+              'ams-button',
+              isSearchActive && styles.SearchButtonActive
+            )}
+            onClick={(e) => {
+              e.preventDefault();
+              setSearchActive(!isSearchActive);
+            }}
+            href={AppRoutes.SEARCH}
+          >
+            {!isPhoneScreen ? 'Zoeken' : ''}
+            <Icon
+              svg={isSearchActive ? CloseIcon : SearchIcon}
+              size="level-5"
+            />
+          </MaLink>
+        </li>
+      )}
+      {!isPhoneScreen && (
+        <MainHeaderSecondaryLinks
+          wrapInListElement
+          linkClassName="ams-button"
         />
-        <OtapLabel />
-        {isDisplayLiveSearch && isSearchActive && isAuthenticated && (
-          <div className={styles.SearchBar}>
-            <div className={styles.SearchBarInner}>
-              <Search
-                onFinish={() => {
-                  setSearchActive(false);
-                }}
-                replaceResultUrl={replaceResultUrl}
-              />
-            </div>
-          </div>
-        )}
+      )}
+    </>
+  );
+}
 
-        {isBurgerMenuVisible && (
-          <MegaMenu
-            isPhoneScreen={isPhoneScreen}
-            themas={myThemasMenuItems}
-            menuItems={menuItems}
-          />
-        )}
+function MainHeaderSearch() {
+  const { isSearchActive, setSearchActive, isDisplayLiveSearch } =
+    useSearchOnPage();
 
-        {isAuthenticated && hasErrors && (
-          <ErrorMessages errors={errors} className={styles.ErrorMessages} />
-        )}
+  return (
+    isDisplayLiveSearch &&
+    isSearchActive && (
+      <div className={styles.SearchBarWrap}>
+        <SearchBar
+          onFinish={() => setSearchActive(false)}
+          className={styles.SearchBar}
+        />
       </div>
-      {isHeroVisible && <MainHeaderHero />}
+    )
+  );
+}
 
-      <animated.div
-        ref={backdropRef}
-        key="BurgerMenuBackDrop"
-        className={styles.Backdrop}
-        style={fadeStyles}
+type MainHeaderMenuOverlayProps = {
+  isMainMenuOpen: boolean;
+  headerHeight: number;
+  closeMenuAndSearch: () => void;
+};
+
+function MainHeaderMenuOverlay({
+  isMainMenuOpen,
+  headerHeight,
+  closeMenuAndSearch,
+}: MainHeaderMenuOverlayProps) {
+  return (
+    isMainMenuOpen &&
+    headerHeight !== 0 && (
+      <div
+        onClick={closeMenuAndSearch}
+        style={{ top: headerHeight }}
+        className={styles.MainMenuOverlay}
       />
+    )
+  );
+}
+
+export interface MainHeaderProps {
+  isAuthenticated?: boolean;
+}
+
+export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
+  const { ref, isMainMenuOpen, closeMenuAndSearch, headerHeight } =
+    useMainHeaderControl();
+
+  return (
+    <>
+      <Header
+        ref={ref}
+        className={classNames(styles.MainHeader, AmsMainMenuClassname)}
+        logoLink="https://www.amsterdam.nl/"
+        brandName={
+          (
+            <>
+              <MaRouterLink
+                className={styles.BrandNameLink}
+                href={AppRoutes.HOME}
+              >
+                Mijn Amsterdam
+              </MaRouterLink>
+              <OtapLabel />
+            </>
+          ) as unknown as string // Hack because brandName is not typed as ReactNode
+        }
+        menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
+      >
+        {isAuthenticated && <MainMenu />}
+      </Header>
+      <MainHeaderMenuOverlay
+        isMainMenuOpen={isMainMenuOpen}
+        closeMenuAndSearch={closeMenuAndSearch}
+        headerHeight={headerHeight}
+      />
+      {isAuthenticated && <MainHeaderSearch />}
     </>
   );
 }

@@ -2,16 +2,15 @@ import MockDate from 'mockdate';
 import { describe, expect, it } from 'vitest';
 
 import {
-  VarenFrontend,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
 } from './config-and-types';
 import { fetchVarenNotifications } from './varen-notifications';
+import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as decos from '../decos/decos-service';
 
 const exploitatieBase_ = {
@@ -22,20 +21,17 @@ const exploitatieBase_ = {
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
   status: 'In behandeling',
-  decision: 'Nog niet bekend',
+  decision: null,
   processed: false,
   dateRequest: '2025-01-01T00:00:00',
   statusDates: [],
   termijnDates: [],
-} satisfies Partial<VarenFrontend>;
+} satisfies Partial<VarenVergunningExploitatieType>;
 const exploitatieBase =
   exploitatieBase_ as unknown as VarenVergunningExploitatieType;
 
 describe('Notifications', () => {
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-    token: 'xxxxxx',
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
 
   MockDate.set('2025-01-20');
 
@@ -151,7 +147,7 @@ describe('Notifications', () => {
             datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
@@ -164,7 +160,7 @@ describe('Notifications', () => {
             datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {

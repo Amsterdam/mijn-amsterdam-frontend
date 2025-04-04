@@ -1,10 +1,10 @@
 import { ThemaTitles } from './thema';
-import { IS_PRODUCTION } from '../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
   FailedDependencies,
 } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types';
+import { errorMessage as profileErrorMessage } from '../pages/Profile/Profile-thema-config';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -17,8 +17,7 @@ export const BFFApiUrls = {
   SERVICES_CMS_URL: `${BFF_API_BASE_URL}/services/cms`,
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
-  ERFPACHTv2_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpachtv2/dossier`,
-  BEZWAREN_DETAIL: `${BFF_API_BASE_URL}/services/bezwaren`,
+  ERFPACHT_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpacht/dossier`,
   AFIS_BUSINESSPARTNER: `${BFF_API_BASE_URL}/services/afis/businesspartner`,
   AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen`,
 };
@@ -42,6 +41,7 @@ export const ExcludePageViewTrackingUrls = [
 ];
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
+  ...profileErrorMessage,
   AFIS: 'Facturen en betalen',
   AFIS_facturenoverview: 'Facturen en betalen: Overzicht van facturen',
   AFIS_afgehandeld: 'Facturen en betalen: Afgehandelde facturen',
@@ -55,23 +55,23 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BELASTINGEN: 'Actuele updates over uw belastingen',
   BEZWAREN: 'Ingediende bezwaren',
   BODEM: 'Bodem: loodmetingen',
-  BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
+
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
-  ERFPACHT: 'Mijn erfpacht',
-  ERFPACHTv2: `Erfpacht${IS_PRODUCTION ? '' : ' V2 (Vernise)'}`,
+  ERFPACHT: 'Erfpacht',
   HLI_regelingen: 'Regelingen bij laag inkomen',
   HLI_stadspas: 'Stadspas, saldo en transacties',
   HORECA: 'Horeca vergunningen',
   KLACHTEN: 'Ingediende klachten',
   KLANT_CONTACT: 'Contactmomenten',
   KREFIA: 'Kredietbank & FIBU',
-  KVK: 'Mijn onderneming',
+
   MILIEUZONE: 'Milieuzone',
   MY_LOCATION: 'Uw locatie op de kaart',
   NOTIFICATIONS: 'Actuele updates',
   OVERTREDINGEN: 'Overtredingen voertuigen',
   PARKEREN: 'Parkeren',
+  PARKEREN_vergunningen: 'Parkeervergunningen',
   SUBSIDIE: 'Subsidies',
   SVWI: 'Werk & Inkomen portaal',
   TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',

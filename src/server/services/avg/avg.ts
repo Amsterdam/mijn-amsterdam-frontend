@@ -1,5 +1,5 @@
 import FormData from 'form-data';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getAvgStatusLineItems } from './avg-status-line-items';
 import {
@@ -127,34 +127,34 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
     };
   }
   const verzoeken = data.List.map((verzoek) => {
-    const id = verzoek['avgverzoek_id']?.value || '';
+    const id = verzoek.avgverzoek_id?.value || '';
     const title = `AVG verzoek ${id}`;
     const ontvangstDatum = smileDateParser(
-      verzoek['avgverzoek_datumbinnenkomst'].value || ''
+      verzoek.avgverzoek_datumbinnenkomst.value || ''
     );
     const request: AVGRequestFrontend = {
       id,
       title,
-      status: verzoek['avgverzoek_statusavgverzoek_alias'].value || '',
+      status: verzoek.avgverzoek_statusavgverzoek_alias.value || '',
       registratieDatum: smileDateParser(
-        verzoek['avgverzoek_datuminbehandeling']?.value || ''
+        verzoek.avgverzoek_datuminbehandeling?.value || ''
       ),
-      type: verzoek['avgverzoek_typeverzoek'].value || '',
-      toelichting: verzoek['avgverzoek_omschrijvingvanonderwerp']?.value || '',
+      type: verzoek.avgverzoek_typeverzoek.value || '',
+      toelichting: verzoek.avgverzoek_omschrijvingvanonderwerp?.value || '',
       resultaat:
-        verzoek['avgverzoek_typeafhandelingvaststellen_resultaat']?.value || '',
+        verzoek.avgverzoek_typeafhandelingvaststellen_resultaat?.value || '',
       ontvangstDatum: ontvangstDatum,
       ontvangstDatumFormatted: ontvangstDatum
         ? defaultDateFormat(ontvangstDatum)
         : ontvangstDatum,
       opschortenGestartOp: smileDateParser(
-        verzoek['avgverzoek_opschortengestartop']?.value || ''
+        verzoek.avgverzoek_opschortengestartop?.value || ''
       ),
       datumInBehandeling: smileDateParser(
-        verzoek['avgverzoek_datuminbehandeling']?.value || ''
+        verzoek.avgverzoek_datuminbehandeling?.value || ''
       ),
       datumAfhandeling: smileDateParser(
-        verzoek['avgverzoek_werkelijkeeinddatum']?.value || ''
+        verzoek.avgverzoek_werkelijkeeinddatum?.value || ''
       ),
       // Is filled later on.
       themas: '',

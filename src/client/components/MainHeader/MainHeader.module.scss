@@ -1,176 +1,85 @@
-.header {
-  --ams-page-menu-item-font-size: 1.6rem;
-  --ams-link-standalone-font-size: 1.6rem;
-  --mams-font-size-body: 1rem;
-
-  &:first-child {
-    @include centered-max;
-  }
-
-  > a {
-    font-size: 1rem;
-  }
-
-  h1 {
-    font-size: var(--ams-text-level-1-font-size);
-  }
-}
-
-.headerContainer {
+.MainHeader {
   position: relative;
-  z-index: z-index(mega-menu);
+  z-index: z-index(main-header);
+  max-width: var(--ams-ma-max-screen-width-no-padding);
+  margin: 0 auto;
+  background-color: var(--ams-color-primary-white);
+}
 
-  :global(.ams-header) {
-    @include centered-block;
+@media screen and (max-width: $ams-breakpoint-medium) {
+  :global(.ams-header > .ams-header__branding > .ams-header__logo-link) {
+    width: 14px;
+    overflow: hidden;
   }
 
-  :global(.ams-header__title-heading) {
-    cursor: pointer;
+  :global(
+    .ams-header
+      .ams-header__navigation
+      .ams-header__menu
+      .ams-header__mega-menu-button
+      .ams-header__mega-menu-button-label
+  ) {
+    display: none;
+  }
+  :global(
+    .ams-header
+      .ams-header__navigation
+      .ams-header__menu
+      .ams-header__mega-menu-button
+      .ams-header__mega-menu-button-hidden-label
+  ) {
+    display: none;
   }
 
-  :global(.ams-mega-menu) {
+  :global(.ams-header .ams-header__navigation .ams-header__menu) {
     position: absolute;
-    width: 100%;
-    z-index: z-index(mega-menu);
-    background: #ffffff;
+    right: var(--ams-space-lg);
+    top: 4px;
+    column-gap: 0;
   }
 }
 
-.ErrorMessages {
-  position: absolute;
-  bottom: -1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: $main-boxed-width;
-  width: 100%;
-  z-index: z-index(header-error-messages);
-
-  @include mq-tablet() {
-    width: calc(100% - 4rem);
-  }
-
-  @include mq-phone() {
-    transform: none;
-    left: auto;
-    width: 100%;
-  }
+.ProfileNameInner {
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.DirectSkipLinks {
+:global(.ams-link).SearchButtonActive {
+  font-weight: var(--ams-header-mega-menu-button-label-open-font-weight);
+}
+
+.SearchBarWrap {
   position: absolute;
-  top: 5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-
-  @include mq-tablet() {
-    top: 1rem;
-  }
-
-  > a {
-    position: absolute;
-    margin: 0 auto;
-    z-index: 1;
-    opacity: 0;
-    white-space: nowrap;
-    margin-left: -500rem;
-
-    &:focus {
-      margin-left: 0;
-      z-index: 2;
-      opacity: 1;
-      position: static;
-    }
-  }
+  z-index: z-index(main-header-searchbar);
+  left: 0;
+  right: 0;
+  background-color: var(--ams-color-primary-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .SearchBar {
-  padding: 2.6rem;
-  background-color: $color-neutral-grey1;
-
-  @include mq-tablet() {
-    padding: 0;
-    background-color: $color-white;
-
-    @include select('Search_SearchBar') {
-      form {
-        padding: 1rem;
-      }
-    }
-  }
-}
-
-.SearchBarInner {
-  max-width: 60rem;
-  margin: 0 auto;
-}
-
-.Backdrop {
-  position: fixed;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: z-index(burger-menu-backdrop);
+  padding: var(--ams-space-lg) 0;
 }
 
-.baseMenuLink {
-  background-color: transparent;
-  background-position: center right;
-  background-repeat: no-repeat;
-  background-size: 19px 19px;
-  border: 0;
-  color: var(--ams-page-menu-item-color);
-  font-family: var(--ams-page-menu-item-font-family);
-  font-size: var(--ams-page-menu-item-font-size);
-  font-weight: var(--ams-page-menu-item-font-weight);
-  line-height: var(--ams-page-menu-item-line-height);
-  margin-block: 0;
-  padding-inline: 0 30px;
-  text-align: center;
-  touch-action: manipulation;
+:global(.ams-link).BrandNameLink {
+  color: var(--ams-heading-color);
+  font-weight: var(--ams-heading-font-weight);
+  font-size: var(--ams-heading-level-4-font-size);
+  line-height: 1.35;
+  text-decoration: none;
 }
 
-.menuLinkClose {
-  @extend .baseMenuLink;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='16' viewBox='0 0 17 16' fill='%23004699'%3E%3Cpath fill='%23004699' fill-rule='evenodd' clip-rule='evenodd' d='M16.1996 1.83949L14.5593 0.199219L8.39961 6.35313L2.23988 0.199219L0.599609 1.83949L6.75352 7.99922L0.599609 14.159L2.23988 15.7992L8.39961 9.6453L14.5593 15.7992L16.1996 14.159L10.0457 7.99922L16.1996 1.83949Z'/%3E%3C/svg%3E");
-}
-
-.menuLinkSearch {
-  @extend .baseMenuLink;
-  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='%23004699' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M19.7996 17.8697L13.9049 11.975C16.1123 8.86891 15.5717 4.58951 12.6612 2.12992C9.75073 -0.32967 5.44111 -0.149054 2.74661 2.54544C0.0521181 5.23994 -0.128498 9.54956 2.33109 12.4601C4.79068 15.3706 9.07008 15.9112 12.1762 13.7037L18.0709 19.5984L19.7996 17.8697ZM7.93687 12.6225C5.23796 12.6225 3.05005 10.4346 3.05005 7.7357C3.05005 5.03678 5.23796 2.84888 7.93687 2.84888C10.6358 2.84888 12.8237 5.03678 12.8237 7.7357C12.8237 9.03176 12.3088 10.2747 11.3924 11.1912C10.4759 12.1077 9.23293 12.6225 7.93687 12.6225Z'/%3E%3C/svg%3E");
-}
-
-.PageMenu {
-  :global(.ams-page-menu__link) {
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      text-decoration-thickness: var(
-        --ams-link-standalone-hover-text-decoration-thickness
-      );
-      text-underline-offset: var(
-        --ams-link-standalone-hover-text-underline-offset
-      );
-    }
-  }
-
-  span > svg {
-    height: var(--ams-icon-size-3-font-size);
-    width: var(--ams-icon-size-3-font-size);
-  }
-
-  @media screen and (min-width: $ams-breakpoint-wide) {
-    span > svg {
-      height: var(--ams-icon-size-4-font-size);
-      width: var(--ams-icon-size-4-font-size);
-    }
-  }
-}
-
-.PageMenuLabel {
-  @include mq-phone {
-    display: none;
-  }
+.MainMenuOverlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 402;
+  background-color: rgba(0, 0, 0, 0.5);
 }

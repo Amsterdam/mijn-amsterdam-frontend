@@ -1,9 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { ListPageParamKind } from './Varen-thema-config';
-import type { VarenVergunningFrontend } from '../../../server/services/varen/config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
+import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
 export function VarenList() {
@@ -11,19 +10,25 @@ export function VarenList() {
     kind: ListPageParamKind;
     page: string;
   }>();
-  const { varenVergunningen, tableConfig, isLoading, isError } =
-    useVarenThemaData();
+  const {
+    varenVergunningen,
+    tableConfig,
+    isLoading,
+    isError,
+    routes,
+    breadcrumbs,
+  } = useVarenThemaData();
   const { title, displayProps, filter, sort } = tableConfig[kind];
   const vergunningen = varenVergunningen.filter(filter).sort(sort);
 
   return (
-    <ListPagePaginated<VarenVergunningFrontend>
+    <ListPagePaginated<VarenZakenFrontend>
       items={vergunningen}
       title={title}
       isLoading={isLoading}
       isError={isError}
-      appRoute={AppRoutes['VAREN/LIST']}
-      appRouteBack={AppRoutes.VAREN}
+      appRoute={routes.listPage}
+      breadcrumbs={breadcrumbs}
       appRouteParams={{ kind, page }}
       displayProps={displayProps}
     />

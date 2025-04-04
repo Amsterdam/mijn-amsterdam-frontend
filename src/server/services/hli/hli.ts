@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';

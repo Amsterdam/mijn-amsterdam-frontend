@@ -1,9 +1,9 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import {
-  VarenFrontend,
+  VarenZakenFrontend,
   VarenRegistratieRederType,
-  VarenVergunningFrontend,
 } from './config-and-types';
 import { fetchVaren } from './varen';
 import { isVergunning } from '../../../client/pages/Varen/helper';
@@ -19,7 +19,7 @@ import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 function createVarenRederRegisteredNotification(
-  zaak: VarenFrontend<VarenRegistratieRederType>
+  zaak: VarenRegistratieRederType
 ): MyNotification {
   return {
     id: `varen-${zaak.id}-reder-notification`,
@@ -35,7 +35,7 @@ function createVarenRederRegisteredNotification(
 }
 
 function createVarenNotification(
-  zaak: VarenVergunningFrontend
+  zaak: VarenZakenFrontend
 ): MyNotification | null {
   const currentStep = zaak.steps.find((step) => step.isActive);
   if (!currentStep) {
@@ -47,7 +47,7 @@ function createVarenNotification(
     !zaak.processed || isVergunning(zaak)
       ? generatePath(AppRoutes['VAREN/DETAIL'], {
           id: zaak.id,
-          caseType: zaak.caseType,
+          caseType: slug(zaak.caseType, { lower: true }),
         })
       : AppRoutes.VAREN;
 
@@ -90,6 +90,7 @@ function createVarenNotification(
         description: `Wij hebben uw aanvraag afgehandeld.`,
       };
   }
+  return null;
 }
 
 export async function fetchVarenNotifications(
@@ -107,18 +108,14 @@ export async function fetchVarenNotifications(
   }
   const notifications = [];
 
-  const rederRegistration = varenResponse.content.find(
-    (zaak) => zaak.caseType === 'Varen registratie reder'
-  );
+  const rederRegistration = varenResponse.content.reder;
   if (rederRegistration) {
     notifications.push(
       createVarenRederRegisteredNotification(rederRegistration)
     );
   }
 
-  const zaken = varenResponse.content.filter(
-    (zaak) => zaak.caseType !== 'Varen registratie reder'
-  );
+  const zaken = varenResponse.content.zaken;
   notifications.push(...zaken.map(createVarenNotification).filter((n) => !!n));
 
   const recentNotifications = notifications.filter(

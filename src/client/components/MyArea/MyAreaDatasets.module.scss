@@ -1,14 +1,11 @@
 .MarkerClusterIcon {
+  // Circle around marker cluster icon (count)
   &:before {
     content: '';
-    background-color: $color-support-blue;
+    background-color: var(--ams-color-primary-blue);
     border-radius: 50%;
-    color: $color-white;
-    font-weight: bold;
     display: flex;
     height: 100%;
-    align-items: center;
-    justify-content: center;
   }
 }
 
@@ -21,12 +18,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  font-size: 1.4rem;
-  color: $color-white;
+  font-size: 1.2rem;
+  color: var(--ams-color-primary-white);
 }
 
 .MarkerIcon {
   display: block;
+  position: relative;
   &.Feature--selected {
     color: inherit;
   }
@@ -40,11 +38,11 @@
   text-align: center;
   top: 1rem;
   background-color: rgba(255, 255, 255, 0.8);
-  color: $color-support-blue;
+  color: var(--ams-color-primary-blue);
   padding: 0.2rem 1rem;
   font-weight: 500;
   box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid $color-support-blue;
+  border: 1px solid var(--ams-color-primary-blue);
   white-space: nowrap;
 }
 
@@ -54,15 +52,12 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: z-index(my-area-error-messages);
-  max-width: $main-boxed-width;
-  @include mq-phone {
-    max-width: calc(100% - 2rem);
-  }
+  max-width: 60rem;
   width: 100%;
   min-height: 4rem;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
   > p {
-    background-color: $color-white;
+    background-color: var(--ams-color-primary-white);
   }
 }
 
@@ -75,7 +70,7 @@
       height: 120%;
       position: absolute;
       display: block;
-      background-color: $color-support-focus;
+      background-color: var(--ams-color-yellow);
       // opacity: .8;
       z-index: -1;
       border-radius: 50%;
@@ -95,7 +90,7 @@
       height: 120%;
       position: absolute;
       display: block;
-      background-color: $color-support-warning;
+      background-color: var(--ams-color-primary-red);
       // opacity: .8;
       z-index: -1;
       border-radius: 50%;

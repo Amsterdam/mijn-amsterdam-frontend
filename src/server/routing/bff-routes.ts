@@ -31,14 +31,10 @@ export const BffEndpoints = {
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
 
-  // Decos
+  // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
-
-  // Vergunningen / Koppel api
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD:
-    '/services/vergunningen/documents/download/:id',
-  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
+  DECOS_ZAKEN_BY_USERIDS_RAW: '/services/decos/zaken-raw',
 
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
@@ -57,12 +53,12 @@ export const BffEndpoints = {
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
 
   // Bezwaren
-  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document/:id',
-  BEZWAREN_DETAIL: '/services/bezwaren/:id',
+  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document',
+  BEZWAREN_DETAIL: '/services/bezwaren',
 
   // ErfpachtV2
-  ERFPACHTv2_DOSSIER_DETAILS:
-    '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
+  ERFPACHT_DOSSIER_DETAILS:
+    '/services/erfpacht/dossier/:dossierNummerUrlParam?',
 
   // Toeristische verhuur / Bed & Breakfast
   TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:

@@ -1,5 +1,15 @@
-import { ZaakDetail } from '../../../universal/types/App.types';
-import { DecosZaakBase } from '../decos/decos-types';
+import { OmitMapped } from '../../../universal/helpers/utils';
+import { DecosZaakBase, DecosZaakFrontend } from '../decos/config-and-types';
+
+export type DecosZaakVarensFieldsSource = {
+  mark: string;
+  subject2: string | null;
+  text10: string | null;
+  text11: string | null;
+  text21: string | null;
+  text22: string | null;
+  text36: string | null;
+};
 
 export const caseTypeVaren = {
   VarenRederRegistratie: 'Varen registratie reder',
@@ -14,8 +24,10 @@ export const caseTypeVaren = {
     'Varen vergunning exploitatie Wijziging vaartuignaam',
   VarenVergunningLigplaats: 'Varen ligplaatsvergunning',
 } as const;
-export type CaseTypeVaren = keyof typeof caseTypeVaren;
-export type GetCaseType<T extends CaseTypeVaren> = (typeof caseTypeVaren)[T];
+
+type CaseTypeVarenKey = keyof typeof caseTypeVaren;
+export type GetCaseType<T extends CaseTypeVarenKey> = (typeof caseTypeVaren)[T];
+export type CaseTypeVaren = GetCaseType<CaseTypeVarenKey>;
 
 export type VarenStatus =
   | 'Ontvangen'
@@ -23,35 +35,9 @@ export type VarenStatus =
   | 'Meer informatie nodig'
   | 'Afgehandeld';
 
-type DecosVarenZaakBase = DecosZaakBase & {
-  linkDataRequest: string | null;
-  status: VarenStatus;
-};
-
-export type VarenRegistratieRederType = DecosVarenZaakBase & {
-  caseType: GetCaseType<'VarenRederRegistratie'>;
-  title: 'Varen registratie reder';
-  decision: 'Verleend' | 'Ingetrokken';
-  company: string | null;
-  bsnkvk: string | null;
-  address: string | null;
-  postalCode: string | null;
-  city: string | null;
-  phone: string | null;
-  email: string | null;
-};
-
-export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
-  caseType: GetCaseType<'VarenVergunningExploitatie'>;
-  decision:
-    | 'Nog niet bekend'
-    | 'Afgewezen'
-    | 'Afgewezen door loting'
-    | 'Buiten behandeling'
-    | 'Ingetrokken door aanvrager'
-    | 'Verleend';
-  // eslint-disable-next-line no-magic-numbers
-  formAppearance: 1 | 2 | 3;
+type DecosVarenZaakVergunning = {
+  id: string;
+  vergunningKenmerk: string | null;
   segment:
     | 'Beeldbepalend groot'
     | 'Beeldbepalend klein en middelgroot'
@@ -61,20 +47,28 @@ export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
     | 'Klein en middelgroot'
     | 'Onbemand';
   eniNumber: string | null;
-  permitReference: string | null;
-  numberOfSeats: number | null; // 001 seats
-  vesselHeight: string | null; // 0.01 meters
-  vesselDepth: string | null; // 0.01 meters
+  vesselName: string | null;
   vesselWidth: string | null; // 0.01 meters
   vesselLength: string | null; // 0.01 meters
-  vesselName: string | null;
+};
+export type DecosVarenZaakBase = DecosZaakBase &
+  DecosVarenZaakVergunning & {
+    linkDataRequest: string | null;
+    status: VarenStatus;
+    decision: 'Verleend' | null;
+    vergunningKenmerk: string | null;
+    vergunningen: DecosVarenZaakVergunning[];
+  };
+
+export type VarenVergunningExploitatieType = DecosVarenZaakBase & {
+  caseType: GetCaseType<'VarenVergunningExploitatie'>;
 };
 
 export type VarenVergunningExploitatieWijzigingVaartuigNaamType =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVaartuignaam'>;
-    vesselNameOld: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'vesselName' | 'permitReference'>;
+    vesselNameNew: string | null;
+  };
 
 export type VarenVergunningExploitatieWijzigingVergunningshouderType =
   DecosVarenZaakBase & {
@@ -82,62 +76,51 @@ export type VarenVergunningExploitatieWijzigingVergunningshouderType =
     statutoryName: string | null;
     businessAddress: string | null;
     correspondenceAddress: string | null;
-  } & Pick<VarenVergunningExploitatieType, 'segment' | 'permitReference'>;
+  };
 
 export type VarenVergunningExploitatieWijzigingVerbouwingType =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVerbouwing'>;
-  } & Pick<
-      VarenVergunningExploitatieType,
-      | 'vesselName'
-      | 'segment'
-      | 'formAppearance'
-      | 'numberOfSeats'
-      | 'vesselDepth'
-      | 'vesselHeight'
-      | 'vesselLength'
-      | 'vesselWidth'
-      | 'permitReference'
-    >;
+  };
 
 export type VarenVergunningExploitatieWijzigingVervangingType =
   DecosVarenZaakBase & {
     caseType: GetCaseType<'VarenVergunningExploitatieWijzigingVervanging'>;
-    vesselNameOld: string | null;
-  } & Pick<
-      VarenVergunningExploitatieType,
-      | 'vesselName'
-      | 'segment'
-      | 'formAppearance'
-      | 'numberOfSeats'
-      | 'vesselDepth'
-      | 'vesselHeight'
-      | 'vesselLength'
-      | 'vesselWidth'
-      | 'eniNumber'
-      | 'permitReference'
-    >;
+    vesselNameNew: string | null;
+  };
 
 export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {
   caseType: GetCaseType<'VarenVergunningLigplaats'>;
   location: string | null;
-} & Pick<VarenVergunningExploitatieType, 'vesselName' | 'decision'>;
+};
+
+export type VarenRegistratieRederType = DecosZaakBase & {
+  linkDataRequest: string | null;
+  caseType: GetCaseType<'VarenRederRegistratie'>;
+  title: 'Varen registratie reder';
+  decision: 'Verleend' | 'Ingetrokken';
+  company: string | null;
+  bsnkvk: string | null;
+  address: string | null;
+  postalCode: string | null;
+  correspondenceAddress: string | null;
+  city: string | null;
+  phone: string | null;
+  email: string | null;
+};
+
+export type VarenRegistratieRederFrontend = VarenRegistratieRederType & {
+  dateRequestFormatted: string;
+};
 
 export type Varen =
-  | VarenRegistratieRederType
-  | VarenVergunningExploitatieType
   | VarenVergunningLigplaatsType
+  | VarenVergunningExploitatieType
   | VarenVergunningExploitatieWijzigingVaartuigNaamType
   | VarenVergunningExploitatieWijzigingVerbouwingType
   | VarenVergunningExploitatieWijzigingVergunningshouderType
   | VarenVergunningExploitatieWijzigingVervangingType;
 
-export type VarenFrontend<T extends DecosVarenZaakBase = Varen> = T & {
-  dateRequestFormatted: string;
-  dateDecisionFormatted?: string | null;
-} & ZaakDetail<T['status']>;
-
-export type VarenVergunningFrontend = Exclude<
-  VarenFrontend,
-  VarenRegistratieRederType
+export type VarenZakenFrontend<T extends Varen = Varen> = DecosZaakFrontend<
+  OmitMapped<T, 'vergunningen'>
 >;

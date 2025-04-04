@@ -3,7 +3,6 @@ import { Session, SessionStore } from 'express-openid-connect';
 import expressSession from 'express-session';
 import createMemorystore from 'memorystore';
 
-import { OIDC_SESSION_MAX_AGE_SECONDS } from './auth-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { logger } from '../logging';
 import { IS_DB_ENABLED } from '../services/db/config';
@@ -11,6 +10,7 @@ import { getPool } from '../services/db/postgres';
 
 type SessionStoreOptions = {
   tableName: string;
+  maxAgeSeconds: number;
 };
 
 export function getSessionStore<T extends typeof expressSession>(
@@ -31,6 +31,6 @@ export function getSessionStore<T extends typeof expressSession>(
   const MemoryStore = createMemorystore(auth);
   logger.info('Using sessions MemoryStore');
   return new MemoryStore({
-    max: OIDC_SESSION_MAX_AGE_SECONDS,
+    max: options.maxAgeSeconds,
   }) as unknown as SessionStore<Session>;
 }

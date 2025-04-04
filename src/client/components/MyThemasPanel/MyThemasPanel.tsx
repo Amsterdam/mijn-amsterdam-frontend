@@ -1,68 +1,71 @@
-import { Heading } from '@amsterdam/design-system-react';
+import { Icon, UnorderedList } from '@amsterdam/design-system-react';
+import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
-import { IconInfo } from '../../assets/icons';
-import { ThemaMenuItem } from '../../config/thema';
+import { ThemaMenuItemTransformed } from '../../config/thema';
 import { ThemaIcons } from '../../config/themaIcons';
-import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
-import Panel from '../Panel/Panel';
+import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
-export interface MyThemasPanelProps {
-  title: string;
-  items: ThemaMenuItem[];
-  isLoading: boolean;
-  trackCategory: string;
-  className?: string;
+type ThemaLinkLoaderProps = {
+  width: number;
+};
+
+function ThemaLinkLoader({ width }: ThemaLinkLoaderProps) {
+  const ICON_SIZE = '2rem';
+  const MARGIN_BOTTOM = '0';
+  const LINK_HEIGHT = '1.6rem';
+  return (
+    <LoadingContent
+      className={styles.LoadingPlaceholder}
+      barConfig={[
+        [ICON_SIZE, ICON_SIZE, MARGIN_BOTTOM],
+        [`${width}rem`, LINK_HEIGHT, MARGIN_BOTTOM],
+      ]}
+    />
+  );
 }
 
-export default function MyThemasPanel({
-  title,
+export interface MyThemasPanelProps {
+  items: ThemaMenuItemTransformed[];
+  isLoading: boolean;
+}
+
+export function MyThemasPanel({
   items = [],
   isLoading = true,
 }: MyThemasPanelProps) {
   return (
-    <Panel className={styles.MyThemasPanel}>
-      <div className={styles.Header}>
-        <Heading size="level-1" level={3} className={styles.Title}>
-          {title}
-        </Heading>
-        <Linkd
-          className={styles.GeneralInfoLink}
-          href={AppRoutes.GENERAL_INFO}
-          variant="plain"
-          icon={IconInfo}
-          lean={true}
-          aria-label="Dit ziet u in Mijn Amsterdam"
-        />
-      </div>
-      <div className={styles.Links}>
+    <>
+      <UnorderedList
+        markers={false}
+        className={classNames('ams-mb--sm', styles.LinkList)}
+      >
         {items.map(({ id, to, title, rel }) => {
+          const ThemaIcon = ThemaIcons[id];
+          const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
           return (
-            <MainNavSubmenuLink
-              data-thema-id={id}
-              key={id}
-              to={to}
-              rel={rel}
-              title={title}
-              Icon={ThemaIcons[id]}
-            />
+            <UnorderedList.Item key={id}>
+              <LinkComponent maVariant="fatNoUnderline" href={to}>
+                <span className={styles.ThemaLink}>
+                  <Icon svg={ThemaIcon} size="level-4" square /> {title}
+                </span>
+              </LinkComponent>
+            </UnorderedList.Item>
           );
         })}
-      </div>
-      {isLoading && (
-        <LoadingContent
-          className={styles.LoadingPlaceholder}
-          barConfig={[
-            ['3.4rem', '3.4rem', '0'],
-            ['auto', '1.6rem', '0'],
-            ['3.4rem', '3.4rem', '0'],
-            ['auto', '1.6rem', '0'],
-          ]}
-        />
-      )}
-    </Panel>
+        {isLoading && (
+          <>
+            <ThemaLinkLoader width={20} />
+            <ThemaLinkLoader width={15} />
+            <ThemaLinkLoader width={18} />
+          </>
+        )}
+      </UnorderedList>
+      <MaRouterLink href={AppRoutes.GENERAL_INFO}>
+        Dit ziet u in Mijn Amsterdam
+      </MaRouterLink>
+    </>
   );
 }

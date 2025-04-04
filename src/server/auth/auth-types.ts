@@ -1,8 +1,6 @@
 import { Request } from 'express';
 import { Session } from 'express-openid-connect';
 
-import { OIDC_SESSION_COOKIE_NAME } from './auth-config';
-
 export interface AuthProfile {
   authMethod: 'eherkenning' | 'digid';
   profileType: ProfileType;
@@ -10,17 +8,17 @@ export interface AuthProfile {
   sid: SessionID;
 }
 
-export interface MaSession extends Omit<Session, 'expires_at'> {
+export interface MaSession extends Session {
   sid: SessionID;
   TMASessionID: string; // TMA Session ID
   profileType: ProfileType;
   authMethod: AuthMethod;
-  expires_at: number;
 }
 
 export interface AuthProfileAndToken {
   token: string;
   profile: AuthProfile;
+  expiresAtMilliseconds: number;
 }
 
 export interface TokenData {
@@ -32,5 +30,6 @@ export interface TokenData {
 }
 
 export interface AuthenticatedRequest extends Request {
-  [OIDC_SESSION_COOKIE_NAME]?: MaSession;
+  // [OIDC_SESSION_COOKIE_NAME]?: MaSession;
+  '__MA-appSession'?: MaSession;
 }

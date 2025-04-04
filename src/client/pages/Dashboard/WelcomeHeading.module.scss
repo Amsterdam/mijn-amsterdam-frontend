@@ -1,0 +1,68 @@
+.WelcomeHeadingWrap {
+  background-color: white;
+  position: relative;
+
+  // Hack to add white background to the left of the screen.
+  &:before {
+    content: '';
+    position: absolute;
+    background-color: white;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    display: block;
+  }
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    margin-top: -166px;
+  }
+}
+
+.WelcomeHeadingSizer {
+  position: relative;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    height: 166px;
+  }
+}
+
+@media screen and (min-width: $ams-breakpoint-medium) {
+  .WelcomeHeading {
+    // Align bottom of text with rest of page.
+    position: relative;
+    top: 100%;
+    transform: translateY(calc(-100% + 16px));
+    line-height: 0;
+    margin: 0;
+  }
+}
+
+.ProfileNameHello {
+  display: block;
+  line-height: 1.5;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    font-size: 58px;
+  }
+}
+
+.ProfileNameWrap {
+  font-size: 40px;
+  line-height: 1;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    white-space: nowrap;
+    line-height: 1;
+    font-size: 62px;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+  }
+}
+
+:global(.ams-link--standalone) {
+  &.BackLink {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+  }
+}

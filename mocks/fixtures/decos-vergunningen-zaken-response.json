@@ -17,6 +17,44 @@
       "links": []
     },
     {
+      "key": "HEXSTRING17b",
+      "fields": {
+        "text45": "Vakantieverhuur vergunningsaanvraag",
+        "mark": "Z/21/7865356778",
+        "document_date": "2021-05-19T00:00:00",
+        "date5": "2021-05-19T00:00:00",
+        "text6": "Amstel 1 1012AA Amsterdam",
+        "title": "Ontvangen",
+        "dfunction": null,
+        "processed": false
+      },
+      "links": [
+        {
+          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/HEXSTRING17b",
+          "rel": "self"
+        }
+      ]
+    },
+    {
+      "key": "HEXSTRING17c",
+      "fields": {
+        "text45": "Vakantieverhuur vergunningsaanvraag",
+        "mark": "Z/21/123123123",
+        "document_date": "2020-05-20T00:00:00",
+        "date5": "2020-05-20T00:00:00",
+        "text6": "Amstel 1 1012AA Amsterdam",
+        "title": "Afgehandeld",
+        "dfunction": "Ingetrokken",
+        "processed": true
+      },
+      "links": [
+        {
+          "href": "https://decosdvl.acc.amsterdam.nl/decosweb/aspx/api/v1/items/HEXSTRING17c",
+          "rel": "self"
+        }
+      ]
+    },
+    {
       "key": "0B6841B845634067AB7262643AC0B8F4",
       "fields": {
         "title": "In behandeling",
@@ -816,6 +854,7 @@
         "date5": "2024-05-08T00:00:00",
         "processed": true,
         "company": "Balonnenfabriek",
+        "text35": "Correspondence 1, 1011 PN Amsterdam",
         "num2": "KVK",
         "mailaddress": "Amstel 1, 1011 PN Amsterdam",
         "zipcode city": "1234 ZG Amsterdam",

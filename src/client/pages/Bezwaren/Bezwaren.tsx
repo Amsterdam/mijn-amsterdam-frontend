@@ -1,99 +1,54 @@
-import styles from './Bezwaren.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
-import { isError, isLoading } from '../../../universal/helpers/api';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import {
-  ErrorAlert,
-  Linkd,
-  OverviewPage,
-  PageContent,
-  PageHeading,
-  SectionCollapsible,
-  Table,
-  ThemaIcon,
-  addTitleLinkComponent,
-} from '../../components';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { Paragraph } from '@amsterdam/design-system-react';
 
-const DISPLAY_PROPS_BEZWAREN = {
-  identificatie: 'Zaaknummer',
-  ontvangstdatum: 'Ontvangen op',
-  omschrijving: 'Onderwerp',
-};
+import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
+import { Bezwaar } from '../../../server/services/bezwaren/types';
+import { PageContentCell } from '../../components/Page/Page';
+import ThemaPagina from '../ThemaPagina/ThemaPagina';
+import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
-export default function BEZWAREN() {
-  const { BEZWAREN } = useAppStateGetter();
+const pageContentTop = (
+  <PageContentCell spanWide={8}>
+    <Paragraph>Hier ziet u een overzicht van uw ingediende bezwaren.</Paragraph>
+  </PageContentCell>
+);
 
-  const items = addTitleLinkComponent(
-    BEZWAREN.content ?? [],
-    'identificatie'
-  ).map((bezwaar) => ({
-    ...bezwaar,
-    ontvangstdatum: defaultDateFormat(bezwaar.ontvangstdatum),
-  }));
+export function BezwarenThemaPagina() {
+  const {
+    themaTitle,
+    tableConfig,
+    bezwaren,
+    isLoading,
+    isError,
+    linkListItems,
+  } = useBezwarenThemaData();
 
-  const ingediendeBezwaren =
-    items.filter((bezwaar) => bezwaar.status !== 'Afgehandeld') ?? [];
-  const afgehandeldeBezwaren =
-    items.filter((bezwaar) => bezwaar.status === 'Afgehandeld') ?? [];
+  const tables = Object.entries(tableConfig).map(
+    ([
+      kind,
+      { title, displayProps, filter, textNoContent, listPageRoute, maxItems },
+    ]) => {
+      return (
+        <ThemaPaginaTable<Bezwaar>
+          key={kind}
+          title={title}
+          listPageRoute={listPageRoute}
+          zaken={bezwaren.filter(filter)}
+          displayProps={displayProps}
+          textNoContent={textNoContent}
+          maxItems={maxItems}
+        />
+      );
+    }
+  );
 
   return (
-    <OverviewPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        isLoading={isLoading(BEZWAREN)}
-        icon={<ThemaIcon />}
-      >
-        Bezwaren
-      </PageHeading>
-      <PageContent>
-        <p>Hier ziet u een overzicht van uw ingediende bezwaren.</p>
-        <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/bezwaar-maken-tegen-een-besluit-van-de-gemeente-amsterdam-e5898"
-          >
-            Meer informatie over Bezwaar maken
-          </Linkd>
-        </p>
-        {isError(BEZWAREN) && (
-          <ErrorAlert>We kunnen op dit moment geen bezwaren tonen.</ErrorAlert>
-        )}
-      </PageContent>
-      <SectionCollapsible
-        id="SectionCollapsible-complaints"
-        title="Lopende bezwaren"
-        noItemsMessage="U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd."
-        startCollapsed={false}
-        hasItems={!!ingediendeBezwaren?.length}
-        isLoading={isLoading(BEZWAREN)}
-        className={styles.SectionCollapsibleFirst}
-      >
-        <Table
-          className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN}
-          items={ingediendeBezwaren}
-        />
-      </SectionCollapsible>
-
-      <SectionCollapsible
-        id="SectionCollapsible-complaints"
-        title="Afgehandelde bezwaren"
-        noItemsMessage="U heeft nog geen afgehandelde bezwaren."
-        startCollapsed={false}
-        hasItems={!!afgehandeldeBezwaren?.length}
-        isLoading={isLoading(BEZWAREN)}
-        className={styles.SectionCollapsibleFirst}
-      >
-        <Table
-          className={styles.DocumentsTable}
-          displayProps={DISPLAY_PROPS_BEZWAREN}
-          items={afgehandeldeBezwaren}
-        />
-      </SectionCollapsible>
-    </OverviewPage>
+    <ThemaPagina
+      title={themaTitle}
+      isError={isError}
+      isLoading={isLoading}
+      pageContentTop={pageContentTop}
+      pageContentMain={tables}
+      linkListItems={linkListItems}
+    />
   );
 }

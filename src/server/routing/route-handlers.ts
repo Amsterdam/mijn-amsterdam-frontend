@@ -42,14 +42,16 @@ export function verifyAuthenticated(
   return async (req: AuthenticatedRequest, res: Response) => {
     if (await isRequestAuthenticated(req, authMethod)) {
       const auth = getAuth(req);
-      return res.send(
-        apiSuccessResult({
-          isAuthenticated: true,
-          profileType,
-          authMethod,
-          expiresAt: auth?.expiresAt,
-        })
-      );
+      if (auth) {
+        return res.send(
+          apiSuccessResult({
+            isAuthenticated: true,
+            profileType,
+            authMethod,
+            expiresAtMilliseconds: auth.expiresAtMilliseconds,
+          })
+        );
+      }
     }
     destroySession(req, res);
     return sendUnauthorized(res);
