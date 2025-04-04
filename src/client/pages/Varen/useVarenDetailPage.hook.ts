@@ -14,26 +14,24 @@ export function useVarenDetailPage() {
 
   const hasRegistratieReder = !!VAREN.content?.reder;
 
-  const vergunning =
-    VAREN.content?.zaken?.find((item) => item.id === id) ?? null;
+  const zaak = VAREN.content?.zaken?.find((item) => item.id === id) ?? null;
 
   const hasVergunningChangeInProgress = !!VAREN.content?.zaken?.find(
-    (zaak) =>
-      zaak.vergunningKenmerk === vergunning?.vergunningKenmerk &&
-      zaak.processed === false
+    (otherZaak) =>
+      zaak?.vergunning?.identifier === otherZaak.vergunning?.identifier &&
+      otherZaak?.processed === false
   );
 
   const buttonItems: ButtonLinkProps[] = [];
 
-  const showButtons =
-    vergunning?.processed && vergunning.decision === 'Verleend';
+  const showButtons = zaak?.processed && zaak.decision === 'Verleend';
   if (showButtons) {
     const EVWijzigenBtnText = hasVergunningChangeInProgress
       ? 'Wijziging in behandeling'
       : 'Wijzigen';
 
     const buttons = [
-      exploitatieVergunningWijzigenLink(vergunning.key, EVWijzigenBtnText),
+      exploitatieVergunningWijzigenLink(zaak.key, EVWijzigenBtnText),
       ligplaatsVergunningLink,
     ].map((button) => ({
       ...button,
@@ -44,7 +42,7 @@ export function useVarenDetailPage() {
   }
 
   return {
-    vergunning,
+    vergunning: zaak,
     buttonItems,
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),

@@ -34,9 +34,9 @@ export type VarenStatus =
   | 'Meer informatie nodig'
   | 'Afgehandeld';
 
-type DecosVarenZaakVergunning = {
+export type DecosVarenZaakVergunning = {
   id: string;
-  vergunningKenmerk: string | null;
+  identifier: string;
   segment:
     | 'Beeldbepalend groot'
     | 'Beeldbepalend klein en middelgroot'
@@ -55,7 +55,6 @@ export type DecosVarenZaakBase = DecosZaakBase &
     linkDataRequest: string | null;
     status: VarenStatus;
     decision: 'Verleend' | null;
-    vergunningKenmerk: string | null;
     vergunningen: DecosVarenZaakVergunning[];
   };
 
@@ -124,6 +123,7 @@ export type VarenZakenFrontend<T extends Varen = Varen> = OmitMapped<
   T,
   'statusDates' | 'termijnDates' | 'vergunningen'
 > & {
+  vergunning: DecosVarenZaakVergunning | null;
   dateRequestFormatted: string;
   dateDecisionFormatted: string | null;
 } & ZaakDetail<T['status']>;

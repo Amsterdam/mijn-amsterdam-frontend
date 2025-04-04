@@ -11,10 +11,9 @@ export function VarenList() {
     kind: ListPageParamKind;
     page: string;
   }>();
-  const { varenVergunningen, tableConfig, isLoading, isError } =
-    useVarenThemaData();
+  const { varenZaken, tableConfig, isLoading, isError } = useVarenThemaData();
   const { title, displayProps, filter, sort } = tableConfig[kind];
-  const vergunningen = varenVergunningen.filter(filter).sort(sort);
+  const vergunningen = varenZaken.filter(filter).sort(sort);
 
   return (
     <ListPagePaginated<VarenZakenFrontend>

@@ -2,7 +2,11 @@ import memoize from 'memoizee';
 import { generatePath } from 'react-router-dom';
 import slug from 'slugme';
 
-import { Varen, VarenRegistratieRederType } from './config-and-types';
+import {
+  Varen,
+  VarenRegistratieRederType,
+  VarenZakenFrontend,
+} from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
@@ -26,6 +30,7 @@ function transformVarenZakenFrontend<T extends Varen>(
   const zaakFrontend = {
     ...omit(zaak, ['statusDates', 'termijnDates', 'vergunningen']),
     steps: getStatusSteps(zaak),
+    vergunning: null,
     dateRequestFormatted: toDateFormatted(zaak.dateRequest),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
     link: createLink(zaak.id),
@@ -35,17 +40,15 @@ function transformVarenZakenFrontend<T extends Varen>(
     return [zaakFrontend];
   }
 
-  const zakenFrontend = zaak.vergunningen.map((vergunning) => {
+  return zaak.vergunningen.map((vergunning) => {
     const combinedIdZaakVergunning = `${zaak.id}-${vergunning.id}`;
     return {
       ...zaakFrontend,
-      ...vergunning,
+      vergunning,
       id: combinedIdZaakVergunning,
       link: createLink(combinedIdZaakVergunning),
-    };
+    } as VarenZakenFrontend;
   });
-
-  return zakenFrontend;
 }
 
 function transformVarenRederFrontend(
@@ -78,8 +81,8 @@ async function fetchVaren_(
     const rederFrontend = transformVarenRederFrontend(reder);
     const zakenFrontend = decosZaken
       .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
-      .flatMap((vergunning) =>
-        transformVarenZakenFrontend(AppRoutes['VAREN/DETAIL'], vergunning)
+      .flatMap((zaak) =>
+        transformVarenZakenFrontend(AppRoutes['VAREN/DETAIL'], zaak)
       );
     return apiSuccessResult({
       reder: rederFrontend,

@@ -13,10 +13,10 @@ export function useVarenThemaData() {
 
   const varenRederRegistratie = VAREN.content?.reder;
 
-  const vergunningen = VAREN.content?.zaken ?? [];
+  const zaken = VAREN.content?.zaken ?? [];
 
-  const varenVergunningen = addLinkElementToProperty<VarenZakenFrontend>(
-    vergunningen,
+  const varenZaken = addLinkElementToProperty<VarenZakenFrontend>(
+    zaken,
     'vesselName',
     true
   );
@@ -26,7 +26,7 @@ export function useVarenThemaData() {
     tableConfig,
     isLoading: isLoading(VAREN),
     isError: isError(VAREN),
-    varenVergunningen,
+    varenZaken,
     linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
   };

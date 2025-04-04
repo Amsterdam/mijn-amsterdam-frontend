@@ -112,7 +112,7 @@ export function VarenPageContentRederRegistratie({
 export function Varen() {
   const {
     varenRederRegistratie,
-    varenVergunningen,
+    varenZaken,
     tableConfig,
     isLoading,
     isError,
@@ -139,7 +139,7 @@ export function Varen() {
 
   const vergunningenTables = Object.entries(tableConfig).map(
     ([kind, config]) => {
-      const zaken = varenVergunningen.filter(config.filter).sort(config.sort);
+      const zaken = varenZaken.filter(config.filter).sort(config.sort);
       return (
         <ThemaPaginaTable<VarenZakenFrontend>
           key={kind}
