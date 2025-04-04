@@ -59,9 +59,9 @@ export const tableConfig = {
       {
         detailLinkComponent: 'Adres',
         datumAfgehandeldFormatted: 'Afgehandeld op',
-        status: 'Resultaat',
+        decision: 'Resultaat',
       },
-      ['status', 'datumAfgehandeldFormatted']
+      ['decision', 'datumAfgehandeldFormatted']
     ),
   },
 } as const;

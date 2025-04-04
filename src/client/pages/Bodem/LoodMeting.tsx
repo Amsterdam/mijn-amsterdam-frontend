@@ -24,6 +24,10 @@ export function LoodMeting() {
           <DocumentLink document={meting.document} />
         ),
       },
+      {
+        label: 'Resultaat',
+        content: meting.decision,
+      },
     ].filter((row) => !!row.content);
   };
 

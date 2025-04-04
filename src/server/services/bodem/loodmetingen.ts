@@ -98,15 +98,13 @@ function transformLood365Response(
           lowercaseStatus
         );
 
-        const decision = ((status: LoodMetingStatusLowerCase) => {
-          if (status === 'afgehandeld') {
-            return 'Verleend';
-          }
-          if (status === 'afgewezen') {
-            return 'Afgewezen';
-          }
-          return '-';
-        })(lowercaseStatus);
+        const statusToDecisionMapping = {
+          ontvangen: null,
+          'in behandeling': null,
+          afgehandeld: 'Verleend' as const,
+          afgewezen: 'Afgewezen' as const,
+        };
+        const decision = statusToDecisionMapping[lowercaseStatus];
 
         const datumAfgehandeld = location?.Reportsenton ?? location?.ReviewedOn;
         const loodMeting: LoodMetingFrontend = {
@@ -124,6 +122,7 @@ function transformLood365Response(
           datumAfgehandeldFormatted: datumAfgehandeld
             ? defaultDateFormat(datumAfgehandeld)
             : '',
+          decision: decision,
           status: location.Friendlystatus,
           processed: isProcessed,
           kenmerk: location.Reference,

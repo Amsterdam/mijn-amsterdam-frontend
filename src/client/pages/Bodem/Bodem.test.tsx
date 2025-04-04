@@ -11,6 +11,7 @@ const metingen = [
     adres: 'Schipluidenlaan 12A',
     datumAanvraag: '2022-12-01T09:53:11Z',
     datumAanvraagFormatted: '01 december 2022',
+    decision: null,
     status: 'Ontvangen',
     processed: false,
     kenmerk: 'OL-001478',
@@ -50,6 +51,7 @@ const metingen = [
     adres: 'Schipluidenlaan 12A',
     datumAanvraag: '2022-12-01T09:53:11Z',
     datumAanvraagFormatted: '01 december 2022',
+    decision: null,
     status: 'In behandeling',
     processed: false,
     kenmerk: 'OL-001478',
@@ -92,6 +94,7 @@ const metingen = [
     datumInbehandeling: '2022-11-29T09:54:44Z',
     datumAfgehandeld: '2022-12-15T08:52:00Z',
     datumAfgehandeldFormatted: '15 december 2022',
+    decision: 'Afgewezen',
     status: 'Afgewezen',
     processed: true,
     kenmerk: 'OL-001475',
@@ -135,6 +138,7 @@ const metingen = [
     datumInbehandeling: '2022-11-28T12:24:20Z',
     datumAfgehandeld: '2022-11-28T13:53:42Z',
     datumAfgehandeldFormatted: '28 november 2022',
+    decision: 'Verleend',
     status: 'Afgehandeld',
     processed: true,
     kenmerk: 'OL-001471',
@@ -250,7 +254,10 @@ describe('Bodem', () => {
       const statusPatterns = {
         ontvangen: /Ontvangen/,
         inBehandeling: /In behandeling/,
-        afgehandeld: /Afgehandeld/,
+      };
+
+      const decisionPatterns = {
+        afgehandeld: /Verleend/,
         afgewezen: /Afgewezen/,
       };
 
@@ -267,11 +274,11 @@ describe('Bodem', () => {
         });
 
         within(afgehandeldeAanvraagTable).getByRole('cell', {
-          name: statusPatterns.afgehandeld,
+          name: decisionPatterns.afgehandeld,
         });
 
         within(afgehandeldeAanvraagTable).getByRole('cell', {
-          name: statusPatterns.afgewezen,
+          name: decisionPatterns.afgewezen,
         });
       }
 
@@ -285,7 +292,7 @@ describe('Bodem', () => {
       const afgehandeldeAanvraagRows = within(
         lopendeAanvraagTable
       ).queryAllByRole('cell', {
-        name: `(${statusPatterns.afgehandeld})|${statusPatterns.afgewezen}`,
+        name: `(${decisionPatterns.afgehandeld})|${decisionPatterns.afgewezen}`,
       });
       expect(afgehandeldeAanvraagRows.length).toBe(0);
     });
