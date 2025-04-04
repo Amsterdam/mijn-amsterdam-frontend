@@ -63,6 +63,7 @@ async function fetchVaren_(
         const zaakFrontend: VarenZakenFrontend = {
           ...omit(zaakTransformed, ['vergunningen']),
           steps,
+          vergunning: null,
           displayStatus,
         };
 
@@ -82,7 +83,7 @@ async function fetchVaren_(
           const combinedIdZaakVergunning = `${zaak.id}-${vergunning.id}`;
           return {
             ...zaakFrontend,
-            ...vergunning,
+            vergunning,
             id: combinedIdZaakVergunning,
             link: createLink(combinedIdZaakVergunning),
           };
