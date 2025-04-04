@@ -10,6 +10,7 @@ export const AppRoutes = {
   'ZORG/VOORZIENINGEN_LIST': '/zorg-en-ondersteuning/:kind/:page?',
 
   JEUGD: '/jeugd',
+  'JEUGD/VOORZIENING': '/jeugd/voorziening/:id',
 
   HLI: '/regelingen-bij-laag-inkomen',
   'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:passNumber',

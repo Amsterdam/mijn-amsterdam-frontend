@@ -86,6 +86,8 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
+  [AppRoutes.JEUGD]: `${ThemaTitles.JEUGD} | overzicht`,
+  [AppRoutes['JEUGD/VOORZIENING']]: `Voorziening | ${ThemaTitles.JEUGD}`,
   [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
     `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,

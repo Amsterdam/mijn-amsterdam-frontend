@@ -68,7 +68,8 @@ import InkomenDetailTonk from './pages/InkomenDetail/InkomenDetailTonk';
 import InkomenDetailTozo from './pages/InkomenDetail/InkomenDetailTozo';
 import InkomenDetailUitkering from './pages/InkomenDetail/InkomenDetailUitkering';
 import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificaties';
-import JeugdThemaPagina from './pages/Jeugd/Jeugd';
+import { JeugdDetail } from './pages/Jeugd/JeugdDetail';
+import { JeugdThemaPagina } from './pages/Jeugd/JeugdThema';
 import Klachten from './pages/Klachten/Klachten';
 import KlachtenDetail from './pages/KlachtenDetail/KlachtenDetail';
 import Krefia from './pages/Krefia/Krefia';
@@ -239,7 +240,15 @@ function AppAuthenticated() {
           {FeatureToggle.zorgv2ThemapaginaActive && (
             <Route path={AppRoutes.ZORG} component={ZorgThemaPagina} />
           )}
-          <Route path={AppRoutes.JEUGD} component={JeugdThemaPagina} />
+          {FeatureToggle.zorgnedLeerlingenvervoerActive && (
+            <Route path={AppRoutes.JEUGD} component={JeugdThemaPagina} />
+          )}
+          {FeatureToggle.zorgnedLeerlingenvervoerActive && (
+            <Route
+              path={AppRoutes['JEUGD/VOORZIENING']}
+              component={JeugdDetail}
+            />
+          )}
           <Route
             path={AppRoutes['BURGERZAKEN/LIST']}
             component={BurgerZakenList}

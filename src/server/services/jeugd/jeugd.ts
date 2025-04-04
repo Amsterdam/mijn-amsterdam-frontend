@@ -1,28 +1,32 @@
+import { generatePath } from 'react-router-dom';
+
+import { jeugdStatusLineItemsConfig } from './status-line-items';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getLatestStatus, getLatestStatusDate } from '../../statusline';
+import { hasDecision } from '../wmo/status-line-items/wmo-generic';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
-import { ProductSoortCode } from '../zorgned/zorgned-types';
-
-// RP TODO: Check this type with actual data, maybe we can reuse the WMOVoorzieningFrontend?
-export interface LeerlingenvervoerVoorzieningFrontend extends ZaakDetail {
-  dateDecision: string;
-  dateDecisionFormatted: string;
-  decision: string;
-  documents: GenericDocument[];
-  isActual: boolean; // Indicates if this item is designated Current or Previous
-  itemTypeCode: ProductSoortCode;
-  status: string;
-  statusDate: string;
-  statusDateFormatted: string;
-  supplier: string | null; // Leverancier
-  disclaimer?: string;
-}
+import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
+import {
+  ProductSoortCode,
+  ZorgnedAanvraagTransformed,
+} from '../zorgned/zorgned-types';
 
 export async function fetchJeugd(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<ApiResponse<{ isKnown: boolean }>> {
+): Promise<
+  ApiResponse<{
+    isKnown: boolean;
+    voorzieningen: LeerlingenvervoerVoorzieningFrontend[];
+  }>
+> {
+  // RP TODO: This only works if we fetch for a CHILD.
+  // How should a parent view their childs requests? Collect children first?
   const aanvragenResponse = await fetchAanvragen(
     requestID,
     authProfileAndToken,
@@ -30,13 +34,96 @@ export async function fetchJeugd(
       zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
     }
   );
-
   if (aanvragenResponse.status !== 'OK') {
-    return apiSuccessResult({
-      isKnown: false,
-      voorzieningen: aanvragenResponse,
-    });
+    return aanvragenResponse;
   }
 
-  return apiSuccessResult({ isKnown: true, voorzieningen: aanvragenResponse });
+  return apiSuccessResult({
+    isKnown: true,
+    voorzieningen: transformVoorzieningenForFrontend(
+      authProfileAndToken.profile.sid,
+      aanvragenResponse.content,
+      new Date()
+    ),
+  });
+}
+
+export interface LeerlingenvervoerVoorzieningFrontend extends ZaakDetail {
+  dateDecision: string;
+  dateDecisionFormatted: string;
+  decision: string;
+  documents: GenericDocument[];
+  isActual: boolean;
+  itemTypeCode: ProductSoortCode;
+  status:
+    | 'Ontvangen'
+    | 'In behandeling'
+    | 'Meer informatie nodig'
+    | 'Besluit genomen'
+    | 'Einde recht';
+  statusDate: string;
+  statusDateFormatted: string;
+}
+
+function transformVoorzieningenForFrontend(
+  sessionID: SessionID,
+  aanvragen: ZorgnedAanvraagTransformed[],
+  now: Date
+): LeerlingenvervoerVoorzieningFrontend[] {
+  const voorzieningenFrontend: LeerlingenvervoerVoorzieningFrontend[] = [];
+
+  for (const aanvraag of aanvragen) {
+    const lineItems = getStatusLineItems(
+      'LLV',
+      jeugdStatusLineItemsConfig,
+      aanvraag,
+      aanvragen,
+      now
+    );
+
+    if (lineItems?.length) {
+      // RP TODO: Check
+      const dateDecision =
+        lineItems.find((step) => step.status === 'Besluit genomen')
+          ?.datePublished ?? '';
+      const id = aanvraag.id;
+      const statusDate = getLatestStatusDate(lineItems);
+
+      const voorzieningFrontend: LeerlingenvervoerVoorzieningFrontend = {
+        id,
+        title: capitalizeFirstLetter(aanvraag.titel),
+        isActual: aanvraag.isActueel,
+        link: {
+          title: 'Meer informatie',
+          to: generatePath(AppRoutes['JEUGD/VOORZIENING'], {
+            id,
+          }),
+        },
+        steps: lineItems,
+        // RP TODO: Is this also true here?
+        // NOTE: Keep! This field is added specifically for the Tips api.
+        itemTypeCode: aanvraag.productsoortCode,
+        decision:
+          hasDecision(aanvraag) && aanvraag.resultaat
+            ? capitalizeFirstLetter(aanvraag.resultaat)
+            : '',
+        dateDecision,
+        dateDecisionFormatted: dateDecision
+          ? defaultDateFormat(dateDecision)
+          : '',
+        documents: [],
+        status: getLatestStatus(
+          lineItems
+        ) as LeerlingenvervoerVoorzieningFrontend['status'],
+        statusDate,
+        statusDateFormatted: defaultDateFormat(statusDate),
+      };
+
+      voorzieningenFrontend.push(voorzieningFrontend);
+    }
+  }
+
+  voorzieningenFrontend.sort(dateSort('statusDate', 'desc'));
+
+  return voorzieningenFrontend;
 }

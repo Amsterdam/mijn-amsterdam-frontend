@@ -55,6 +55,74 @@
         }
       },
       {
+        "identificatie": "3157531",
+        "regeling": {
+          "identificatie": "LLV",
+          "omschrijving": "Leerlingenvervoer"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-03-27",
+          "aanmeldwijze": {
+            "omschrijving": "Digitaal/Online"
+          },
+          "verwijzer": {
+            "soort": {
+              "identificatie": "4",
+              "omschrijving": "Familielid"
+            },
+            "naam": "Test",
+            "voorletters": "R.",
+            "email": "a@a.nl",
+            "telefoon": "0201234567"
+          }
+        },
+        "datumAanmelding": "2025-03-27",
+        "datumAanvraag": "2025-03-27",
+        "beschikking": {
+          "beschikkingNummer": 301139733,
+          "datumAfgifte": "2025-03-27",
+          "beschikteProducten": [
+            {
+              "identificatie": "1512129",
+              "product": {
+                "identificatie": "LLVAVG",
+                "productsoortCode": "LLV",
+                "omschrijving": "aangepast groepsvervoer"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-04-01",
+                "datumEindeGeldigheid": "2026-04-01",
+                "actueel": true,
+                "omvang": {
+                  "volume": 8,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "2",
+                    "omschrijving": "Per week"
+                  },
+                  "omschrijving": "8 stuks (output) per week"
+                },
+                "leverancier": {
+                  "identificatie": "85960830",
+                  "agbcode": "85960830",
+                  "kvk": "97431922",
+                  "omschrijving": "Munckhof"
+                },
+                "toewijzingen": [],
+                "betrokkenen": [
+                  "999990779"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
         "identificatie": "1783881",
         "regeling": {
           "identificatie": "LLV",

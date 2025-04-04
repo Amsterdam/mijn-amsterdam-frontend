@@ -1,14 +1,15 @@
-import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
+import { routes, tableConfig } from './thema-config';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { tableConfig } from './thema-config';
+import { listPageParamKind, listPageTitle } from '../Zorg/Zorg-thema-config';
 
 export function useJeugdThemaData() {
   const { JEUGD } = useAppStateGetter();
 
-  const voorzieningen = addLinkElementToProperty<WMOVoorzieningFrontend>(
-    JEUGD.content.voorzieningen ?? [],
+  const voorzieningen = addLinkElementToProperty(
+    JEUGD.content?.voorzieningen ?? [],
     'title',
     true
   );
@@ -16,7 +17,7 @@ export function useJeugdThemaData() {
   const title = ThemaTitles.JEUGD;
 
   return {
-    regelingen: voorzieningen,
+    voorzieningen,
     title,
     isLoading: isLoading(JEUGD),
     isError: isError(JEUGD),
