@@ -90,7 +90,8 @@ const metingen = [
     datumAanvraag: '2022-11-29T09:54:22Z',
     datumAanvraagFormatted: '29 november 2022',
     datumInbehandeling: '2022-11-29T09:54:44Z',
-    datumBeoordeling: '2022-12-15T08:52:00Z',
+    datumAfgehandeld: '2022-12-15T08:52:00Z',
+    datumAfgehandeldFormatted: '15 december 2022',
     status: 'Afgewezen',
     processed: true,
     kenmerk: 'OL-001475',
@@ -133,7 +134,7 @@ const metingen = [
     datumAanvraagFormatted: '28 november 2022',
     datumInbehandeling: '2022-11-28T12:24:20Z',
     datumAfgehandeld: '2022-11-28T13:53:42Z',
-    datumBeoordeling: '2022-11-28T12:24:19Z',
+    datumAfgehandeldFormatted: '28 november 2022',
     status: 'Afgehandeld',
     processed: true,
     kenmerk: 'OL-001471',
@@ -211,21 +212,22 @@ describe('Bodem', () => {
       const lopendeAanvraagTableHeader = screen.getByRole('heading', {
         name: 'Lopende aanvragen',
       });
-
-      const columnHeaders = ['Adres', 'Aangevraagd', 'Status'];
-
-      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement!;
-      const lopendeAanvraagColumnHeaders =
-        within(lopendeAanvraagTable).getAllByRole('columnheader');
+      const lopendeAanvraagColumnHeaders = within(
+        lopendeAanvraagTableHeader.parentElement!
+      ).getAllByRole('columnheader');
       expect(
         lopendeAanvraagColumnHeaders.map((header) => header.textContent)
-      ).toStrictEqual(columnHeaders);
+      ).toStrictEqual(['Adres', 'Aangevraagd op', 'Status']);
 
-      const afgehandeldeAanvraagColumnHeaders =
-        within(lopendeAanvraagTable).getAllByRole('columnheader');
+      const afgehandeldeAanvraagTableHeader = screen.getByRole('heading', {
+        name: 'Afgehandelde aanvragen',
+      });
+      const afgehandeldeAanvraagColumnHeaders = within(
+        afgehandeldeAanvraagTableHeader.parentElement!
+      ).getAllByRole('columnheader');
       expect(
         afgehandeldeAanvraagColumnHeaders.map((header) => header.textContent)
-      ).toStrictEqual(columnHeaders);
+      ).toStrictEqual(['Adres', 'Afgehandeld op', 'Resultaat']);
     });
 
     test('Items are sorted correctly', () => {
@@ -256,33 +258,33 @@ describe('Bodem', () => {
       // If we don't do this, we can run into the situation that these -
       // fail and that the tests afterwards always succeed while the pattern is incorrect.
       {
-        within(lopendeAanvraagTable).getByRole('row', {
+        within(lopendeAanvraagTable).getByRole('cell', {
           name: statusPatterns.ontvangen,
         });
 
-        within(lopendeAanvraagTable).getByRole('row', {
+        within(lopendeAanvraagTable).getByRole('cell', {
           name: statusPatterns.inBehandeling,
         });
 
-        within(afgehandeldeAanvraagTable).getByRole('row', {
+        within(afgehandeldeAanvraagTable).getByRole('cell', {
           name: statusPatterns.afgehandeld,
         });
 
-        within(afgehandeldeAanvraagTable).getByRole('row', {
+        within(afgehandeldeAanvraagTable).getByRole('cell', {
           name: statusPatterns.afgewezen,
         });
       }
 
       const lopendeAanvraagRows = within(
         afgehandeldeAanvraagTable
-      ).queryAllByRole('row', {
+      ).queryAllByRole('cell', {
         name: `(${statusPatterns.inBehandeling})|${statusPatterns.ontvangen}`,
       });
       expect(lopendeAanvraagRows.length).toBe(0);
 
       const afgehandeldeAanvraagRows = within(
         lopendeAanvraagTable
-      ).queryAllByRole('row', {
+      ).queryAllByRole('cell', {
         name: `(${statusPatterns.afgehandeld})|${statusPatterns.afgewezen}`,
       });
       expect(afgehandeldeAanvraagRows.length).toBe(0);

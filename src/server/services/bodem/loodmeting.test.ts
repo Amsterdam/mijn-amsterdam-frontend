@@ -7,7 +7,7 @@ import {
 } from './loodmetingen';
 import document from '../../../../mocks/fixtures/loodmeting-rapport.json';
 import metingen from '../../../../mocks/fixtures/loodmetingen.json';
-import { remoteApi } from '../../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
@@ -20,15 +20,7 @@ vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
 describe('Loodmeting', () => {
   const requestId = '456';
 
-  const profileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: '123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: '',
-    },
-    token: 'abc123',
-  };
+  const profileAndToken: AuthProfileAndToken = getAuthProfileAndToken();
 
   afterAll(() => {
     MockDate.reset();
@@ -63,9 +55,9 @@ describe('Loodmeting', () => {
       const mostCompleteMeting = res.content?.metingen.find(
         (meting) =>
           meting.datumAanvraag &&
+          meting.datumInbehandeling &&
           meting.datumAfgehandeld &&
-          meting.datumBeoordeling &&
-          meting.datumInbehandeling
+          meting.aanvraagNummer === 'AV-001480'
       );
 
       expect(mostCompleteMeting).toStrictEqual({
@@ -74,7 +66,7 @@ describe('Loodmeting', () => {
         datumAanvraag: '2023-07-12T12:39:15Z',
         datumAanvraagFormatted: '12 juli 2023',
         datumAfgehandeld: '2023-07-19T12:14:20Z',
-        datumBeoordeling: '2023-07-13T11:18:41Z',
+        datumAfgehandeldFormatted: '19 juli 2023',
         datumInbehandeling: '2023-07-13T11:18:42Z',
         document: {
           datePublished: '2023-07-19T12:14:20Z',
