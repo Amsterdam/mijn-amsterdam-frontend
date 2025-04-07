@@ -28,6 +28,10 @@ export function LoodMeting() {
         label: 'Resultaat',
         content: meting.decision,
       },
+      {
+        label: 'Reden afwijzing',
+        content: meting.decision === 'Afgewezen' && meting.redenAfwijzing,
+      },
     ].filter((row) => !!row.content);
   };
 

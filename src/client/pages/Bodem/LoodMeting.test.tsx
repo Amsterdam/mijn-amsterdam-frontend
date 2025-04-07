@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import { generatePath } from 'react-router';
 
 import { LoodMeting } from './LoodMeting';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
@@ -14,33 +15,33 @@ const metingen: LoodMetingFrontend[] = [
     datumAanvraagFormatted: '2022-12-01T09:53:11Z',
     decision: null,
     status: 'Ontvangen',
-    kenmerk: 'OL-001478',
+    kenmerk: 'OL-000001',
     aanvraagNummer: 'AV-001447',
     rapportBeschikbaar: false,
     redenAfwijzing: '',
     link: {
-      to: '/lood-meting/OL-001478',
+      to: '/lood-meting/OL-000001',
       title: 'Bekijk loodmeting',
     },
     document: null,
     steps: [
       {
         status: 'Ontvangen',
-        id: '',
+        id: '1',
         datePublished: '2022-12-01T09:53:11Z',
         isActive: true,
         isChecked: true,
       },
       {
         status: 'In behandeling',
-        id: '',
+        id: '2',
         datePublished: '',
         isActive: false,
         isChecked: false,
       },
       {
         status: 'Afgehandeld',
-        id: '',
+        id: '3',
         datePublished: '',
         isActive: false,
         isChecked: false,
@@ -50,8 +51,8 @@ const metingen: LoodMetingFrontend[] = [
     datumAfgehandeld: null,
     datumAfgehandeldFormatted: null,
     rapportId: null,
-    id: 'OL-001478',
-    title: 'OL-001478',
+    id: 'OL-000001',
+    title: 'OL-000001',
   },
   {
     processed: true,
@@ -63,41 +64,41 @@ const metingen: LoodMetingFrontend[] = [
     datumAfgehandeldFormatted: '15 december 2022',
     decision: 'Afgewezen',
     status: 'Afgewezen',
-    kenmerk: 'OL-001475',
+    kenmerk: 'OL-000001',
     aanvraagNummer: 'AV-001446',
     rapportBeschikbaar: false,
     rapportId: '6ec7efd6-cb6f-ed11-9561-0022489fda17',
-    redenAfwijzing: '',
+    redenAfwijzing: 'Tuin bij een bedrijfsobject',
     link: {
-      to: '/lood-meting/OL-001475',
+      to: '/lood-meting/OL-000001',
       title: 'Bekijk loodmeting',
     },
     document: null,
     steps: [
       {
         status: 'Ontvangen',
-        id: '',
+        id: '1',
         datePublished: '2022-11-29T09:53:11Z',
         isActive: false,
         isChecked: true,
       },
       {
         status: 'In behandeling',
-        id: '',
+        id: '2',
         datePublished: '2022-11-29T09:54:44Z',
         isActive: false,
         isChecked: true,
       },
       {
-        status: 'Afgewezen',
-        id: '',
+        status: 'Afgehandeld',
+        id: '3',
         datePublished: '2022-12-15',
         isActive: true,
         isChecked: true,
       },
     ],
-    id: 'OL-001475',
-    title: 'OL-001475',
+    id: 'OL-000001',
+    title: 'OL-000001',
   },
   {
     processed: true,
@@ -109,13 +110,13 @@ const metingen: LoodMetingFrontend[] = [
     datumAfgehandeldFormatted: '28 november 2022',
     decision: 'Verleend',
     status: 'Afgehandeld',
-    kenmerk: 'OL-001471',
+    kenmerk: 'OL-000001',
     aanvraagNummer: 'AV-001444',
     rapportBeschikbaar: true,
     rapportId: '87464b90-176f-ed11-9561-0022489fdff7',
     redenAfwijzing: '',
     link: {
-      to: '/lood-meting/OL-001471',
+      to: '/lood-meting/OL-000001',
       title: 'Bekijk loodmeting',
     },
     document: {
@@ -127,98 +128,131 @@ const metingen: LoodMetingFrontend[] = [
     steps: [
       {
         status: 'Ontvangen',
-        id: '',
+        id: '1',
         datePublished: '2022-11-28T12:14:55Z',
         isActive: false,
         isChecked: true,
       },
       {
         status: 'In behandeling',
-        id: '',
+        id: '2',
         datePublished: '2022-11-28T09:54:44Z',
         isActive: false,
         isChecked: true,
       },
       {
         status: 'Afgehandeld',
-        id: '',
+        id: '3',
         datePublished: '2022-11-28T13:53:42Z',
         isActive: true,
         isChecked: true,
       },
     ],
-    id: 'OL-001471',
-    title: 'OL-001471',
+    id: 'OL-000001',
+    title: 'OL-000001',
   },
 ];
 
-const [meting1, meting2, meting3] = metingen;
+const [metingOntvangen, metingAfgewezen, metingVerleend] = metingen;
+
+const createLoodMeting = componentCreator({
+  component: LoodMeting,
+  routeEntry: generatePath(AppRoutes['BODEM/LOOD_METING'], {
+    id: 'OL-000001',
+  }),
+  routePath: AppRoutes['BODEM/LOOD_METING'],
+});
+const createComponentMetingen = (metingen: LoodMetingFrontend[]) =>
+  createLoodMeting({
+    BODEM: {
+      content: {
+        metingen,
+      },
+      status: 'OK',
+    },
+  } as unknown as AppState);
 
 describe('LoodMeting', () => {
-  const createLoodMeting = componentCreator({
-    component: LoodMeting,
-    routeEntry: AppRoutes['BODEM/LOOD_METING'],
-    routePath: AppRoutes['BODEM/LOOD_METING'],
-  });
-
   describe('with results', () => {
-    it('should show the correct detailpage for status in behandeling', async () => {
-      const Component = createLoodMeting({
-        BODEM: {
-          content: {
-            metingen: [meting1],
-          },
-          status: 'OK',
-        },
-      } as AppState);
-      const { asFragment } = render(<Component />);
+    it('should show the correct detailpage for status in Ontvangen', async () => {
+      const Component = createComponentMetingen([metingOntvangen]);
+      const screen = render(<Component />);
 
-      expect(asFragment()).toMatchSnapshot();
+      const locatie = screen.getByText('Locatie');
+      expect(locatie).toBeInTheDocument();
+      expect(locatie.nextElementSibling).toHaveTextContent(
+        metingOntvangen.adres
+      );
+
+      const statusOntvangen = screen.getByText('Ontvangen');
+      expect(statusOntvangen).toBeInTheDocument();
+      expect(statusOntvangen.firstElementChild).toHaveAttribute(
+        'aria-label',
+        'Huidige status'
+      );
+
+      const resultaat = screen.queryByText('Resultaat');
+      expect(resultaat).not.toBeInTheDocument();
     });
 
     it('should show the correct detailpage for status afgewezen', async () => {
-      const Component = createLoodMeting({
-        BODEM: {
-          content: {
-            metingen: [meting2],
-          },
-          status: 'OK',
-        },
-      } as AppState);
-      const { asFragment } = render(<Component />);
+      const Component = createComponentMetingen([metingAfgewezen]);
+      const screen = render(<Component />);
 
-      expect(asFragment()).toMatchSnapshot();
+      const locatie = screen.getByText('Locatie');
+      expect(locatie).toBeInTheDocument();
+      expect(locatie.nextElementSibling).toHaveTextContent(
+        metingAfgewezen.adres
+      );
+
+      const statusAfgehandeld = screen.getByText('Afgehandeld');
+      expect(statusAfgehandeld).toBeInTheDocument();
+      expect(statusAfgehandeld.firstElementChild).toHaveAttribute(
+        'aria-label',
+        'Huidige status'
+      );
+
+      const redenAfwijzing = screen.getByText('Reden afwijzing');
+      expect(redenAfwijzing).toBeInTheDocument();
+      expect(redenAfwijzing.nextElementSibling).toHaveTextContent(
+        'Tuin bij een bedrijfsobject'
+      );
     });
 
     it('should show the correct detailpage for status afgehandeld', async () => {
-      const Component = createLoodMeting({
-        BODEM: {
-          content: {
-            metingen: [meting3],
-          },
-          status: 'OK',
-        },
-      } as AppState);
-      const { asFragment } = render(<Component />);
+      const Component = createComponentMetingen([metingVerleend]);
+      const screen = render(<Component />);
 
-      expect(asFragment()).toMatchSnapshot();
+      const locatie = screen.getByText('Locatie');
+      expect(locatie).toBeInTheDocument();
+      expect(locatie.nextElementSibling).toHaveTextContent(
+        metingVerleend.adres
+      );
+
+      const resultaat = screen.queryByText('Resultaat');
+      expect(resultaat).toBeInTheDocument();
+      expect(resultaat?.nextElementSibling).toHaveTextContent('Verleend');
+
+      const statusAfgehandeld = screen.getByText('Afgehandeld');
+      expect(statusAfgehandeld).toBeInTheDocument();
+      expect(statusAfgehandeld.firstElementChild).toHaveAttribute(
+        'aria-label',
+        'Huidige status'
+      );
     });
   });
 
   describe('without results', () => {
-    const Component = createLoodMeting({
-      BODEM: {
-        content: {
-          metingen: [],
-        },
-        status: 'OK',
-      },
-    } as unknown as AppState);
+    const Component = createComponentMetingen([]);
 
-    it('should show the correct detailpage', async () => {
-      const { asFragment } = render(<Component />);
+    it('should show the error message', async () => {
+      const screen = render(<Component />);
 
-      expect(asFragment()).toMatchSnapshot();
+      const errorMessage = screen.getByRole('heading', {
+        level: 2,
+        name: 'Foutmelding',
+      });
+      expect(errorMessage).toBeInTheDocument();
     });
   });
 });
