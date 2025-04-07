@@ -6,6 +6,7 @@ import { LinkProps } from '../../../universal/types';
 import { ExternalUrls } from '../../config/external-urls';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import { PageContentCell } from '../../components/Page/Page';
 
 export function JeugdThemaPagina() {
   const {
@@ -17,14 +18,18 @@ export function JeugdThemaPagina() {
   } = useJeugdThemaData();
 
   const pageContentTop = (
-    <Paragraph>
-      Hieronder ziet u uw voorzieningen Leerlingenvervoer. Heeft u vragen of
-      wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk:{' '}
-      <Link rel="noreferrer" href="tel:08000643" variant="inline">
-        0800 0643
-      </Link>{' '}
-      (maandag tot en met vrijdag van 08.00 tot 18.00 uur)
-    </Paragraph>
+    <PageContentCell spanWide={8}>
+      <Paragraph className="ams-mb--sm">
+        Hieronder ziet u uw voorzieningen Leerlingenvervoer. Heeft u vragen of
+        wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk:{' '}
+      </Paragraph>
+      <Paragraph>
+        <Link rel="noreferrer" href="tel:08000643" variant="inline">
+          0800 0643
+        </Link>{' '}
+        (maandag tot en met vrijdag van 08.00 tot 18.00 uur)
+      </Paragraph>
+    </PageContentCell>
   );
 
   const linkListItems: LinkProps[] = [
