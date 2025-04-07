@@ -26,8 +26,6 @@ export async function fetchJeugd(
     voorzieningen: LeerlingenvervoerVoorzieningFrontend[];
   }>
 > {
-  // RP TODO: This only works if we fetch for a CHILD.
-  // How should a parent view their childs requests? Collect children first?
   const aanvragenResponse = await fetchAanvragen(
     requestID,
     authProfileAndToken,
@@ -39,13 +37,14 @@ export async function fetchJeugd(
     return aanvragenResponse;
   }
 
+  const voorzieningen = transformVoorzieningenForFrontend(
+    authProfileAndToken.profile.sid,
+    aanvragenResponse.content,
+    new Date()
+  );
   return apiSuccessResult({
-    isKnown: true,
-    voorzieningen: transformVoorzieningenForFrontend(
-      authProfileAndToken.profile.sid,
-      aanvragenResponse.content,
-      new Date()
-    ),
+    isKnown: !!voorzieningen.length,
+    voorzieningen,
   });
 }
 
