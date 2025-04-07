@@ -11,7 +11,7 @@ export function useJeugdThemaData() {
   const { JEUGD } = useAppStateGetter();
 
   const voorzieningen = addLinkElementToProperty(
-    JEUGD.content?.voorzieningen ?? [],
+    JEUGD.content ?? [],
     'title',
     true
   );

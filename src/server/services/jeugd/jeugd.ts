@@ -20,12 +20,7 @@ import {
 export async function fetchJeugd(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-): Promise<
-  ApiResponse<{
-    isKnown: boolean;
-    voorzieningen: LeerlingenvervoerVoorzieningFrontend[];
-  }>
-> {
+): Promise<ApiResponse<LeerlingenvervoerVoorzieningFrontend[]>> {
   const aanvragenResponse = await fetchAanvragen(
     requestID,
     authProfileAndToken,
@@ -42,10 +37,7 @@ export async function fetchJeugd(
     aanvragenResponse.content,
     new Date()
   );
-  return apiSuccessResult({
-    isKnown: !!voorzieningen.length,
-    voorzieningen,
-  });
+  return apiSuccessResult(voorzieningen);
 }
 
 export interface LeerlingenvervoerVoorzieningFrontend extends ZaakDetail {

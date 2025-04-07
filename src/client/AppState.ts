@@ -70,16 +70,10 @@ export const PRISTINE_APPSTATE: AppState = {
   WMO: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  JEUGD: apiPristineResult(
-    {
-      isKnown: true,
-      voorzieningen: [],
-    },
-    {
-      isActive: FeatureToggle.zorgnedLeerlingenvervoerActive,
-      profileTypes: ['private'],
-    }
-  ),
+  JEUGD: apiPristineResult([], {
+    isActive: FeatureToggle.zorgnedLeerlingenvervoerActive,
+    profileTypes: ['private'],
+  }),
   ERFPACHT: apiPristineResult(null, {
     isActive: FeatureToggle.erfpachtActive,
     profileTypes: ['private', 'commercial'],

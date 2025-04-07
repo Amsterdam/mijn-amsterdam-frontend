@@ -104,7 +104,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return (
         FeatureToggle.zorgnedLeerlingenvervoerActive &&
         !isLoading(JEUGD) &&
-        !!JEUGD.content?.isKnown
+        !!JEUGD.content?.length
       );
 
     case Themas.BELASTINGEN: {
