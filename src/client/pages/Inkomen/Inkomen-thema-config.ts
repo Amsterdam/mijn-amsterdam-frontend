@@ -4,7 +4,6 @@ import {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
 } from '../../../server/services/wpi/wpi-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
@@ -30,21 +29,15 @@ export const listPageParamKind = {
   jaaropgaven: 'jaaropgaven',
 } as const;
 
-const inkomenSpecificaties = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-  kind: listPageParamKind.uitkering,
-  page: null,
-});
-
-const jaaropgaven = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-  kind: listPageParamKind.jaaropgaven,
-  page: null,
-});
-
 export const routes = {
-  themaPage: AppRoutes.INKOMEN,
-  listPage: AppRoutes['INKOMEN/LIST'],
-  listPageSpecificaties: inkomenSpecificaties,
-  listPageJaaropgaven: jaaropgaven,
+  listPageSpecificaties: '/inkomen/lijst/specificaties/uitkering/:page?',
+  listPageJaaropgaven: '/inkomen/lijst/specificaties/jaaropgave/:page?',
+  detailPageUitkering: '/inkomen/bijstandsuitkering/:id',
+  detailPageTozo: '/inkomen/tozo/:version/:id',
+  detailPageTonk: '/inkomen/tonk/:version/:id',
+  detailPageBbz: '/inkomen/bbz/:version/:id',
+  listPage: '/inkomen/lijst/:kind/:page?',
+  themaPage: '/inkomen',
 } as const;
 
 const lopendeAanvragenDisplayPropsBase: DisplayProps<

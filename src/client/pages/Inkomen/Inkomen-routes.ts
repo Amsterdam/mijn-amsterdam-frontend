@@ -1,4 +1,5 @@
 import { InkomenThemaPagina } from './Inkomen';
+import { routes } from './Inkomen-thema-config';
 import { InkomenDetailBbz } from './InkomenDetailBbz';
 import { InkomenDetailTonk } from './InkomenDetailTonk';
 import { InkomenDetailTozo } from './InkomenDetailTozo';
@@ -8,21 +9,21 @@ import { InkomenSpecificaties } from './InkomenSpecificaties';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 
 export const InkomenRoutes = [
-  { route: '/inkomen/tozo/:version/:id', Component: InkomenDetailTozo },
-  { route: '/inkomen/tonk/:version/:id', Component: InkomenDetailTonk },
+  { route: routes.detailPageTozo, Component: InkomenDetailTozo },
+  { route: routes.detailPageTonk, Component: InkomenDetailTonk },
   {
-    route: '/inkomen/specificaties/lijst/:kind/:page?',
+    route: [routes.listPageSpecificaties, routes.listPageJaaropgaven],
     Component: InkomenSpecificaties,
   },
   {
-    route: '/inkomen/bijstandsuitkering/:id',
+    route: routes.detailPageUitkering,
     Component: InkomenDetailUitkering,
   },
   {
-    route: '/inkomen/bbz/:version/:id',
+    route: routes.detailPageBbz,
     Component: InkomenDetailBbz,
     isActive: FeatureToggle.inkomenBBZActive,
   },
-  { route: '/inkomen/:kind/:page?', Component: InkomenLijstPagina },
-  { route: '/inkomen', Component: InkomenThemaPagina },
+  { route: routes.listPage, Component: InkomenLijstPagina },
+  { route: routes.themaPage, Component: InkomenThemaPagina },
 ];
