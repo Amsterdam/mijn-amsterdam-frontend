@@ -12,7 +12,11 @@ export const InkomenRoutes = [
   { route: routes.detailPageTozo, Component: InkomenDetailTozo },
   { route: routes.detailPageTonk, Component: InkomenDetailTonk },
   {
-    route: [routes.listPageSpecificaties, routes.listPageJaaropgaven],
+    route: routes.listPageSpecificaties,
+    Component: InkomenSpecificaties,
+  },
+  {
+    route: routes.listPageJaaropgaven,
     Component: InkomenSpecificaties,
   },
   {
