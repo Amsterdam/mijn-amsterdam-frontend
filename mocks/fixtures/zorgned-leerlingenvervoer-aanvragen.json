@@ -120,7 +120,16 @@
               }
             }
           ]
-        }
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3392456",
+            "omschrijving": "NV, Toekenning Aangepast vervoer",
+            "omschrijvingclientportaal": "Besluit: toekenning Leerlingenvervoer (AV)",
+            "datumDefinitief": "2025-04-07T09:44:48.697",
+            "bestandsnaam": "BR3392456.pdf"
+          }
+        ]
       },
       {
         "identificatie": "1783881",
