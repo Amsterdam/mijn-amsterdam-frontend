@@ -9,6 +9,7 @@ import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getLatestStatus, getLatestStatusDate } from '../../statusline';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic';
+import { getDocuments } from '../wmo/wmo';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import {
@@ -82,7 +83,6 @@ function transformVoorzieningenForFrontend(
     );
 
     if (lineItems?.length) {
-      // RP TODO: Check
       const dateDecision =
         lineItems.find((step) => step.status === 'Besluit genomen')
           ?.datePublished ?? '';
@@ -100,7 +100,6 @@ function transformVoorzieningenForFrontend(
           }),
         },
         steps: lineItems,
-        // RP TODO: Is this also true here?
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
         decision:
@@ -111,7 +110,7 @@ function transformVoorzieningenForFrontend(
         dateDecisionFormatted: dateDecision
           ? defaultDateFormat(dateDecision)
           : '',
-        documents: [],
+        documents: getDocuments(sessionID, aanvraag),
         status: getLatestStatus(
           lineItems
         ) as LeerlingenvervoerVoorzieningFrontend['status'],

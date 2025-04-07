@@ -6,7 +6,6 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -22,7 +21,7 @@ import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
 import { getLatestStatus, getLatestStatusDate } from '../../statusline';
 
-function getDocuments(
+export function getDocuments(
   sessionID: SessionID,
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
