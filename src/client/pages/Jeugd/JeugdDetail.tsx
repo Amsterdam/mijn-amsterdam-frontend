@@ -3,10 +3,9 @@ import { useParams } from 'react-router';
 
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
-import { AppRoutes } from '../../../universal/config/routes';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
-import { ThemaTitles } from '../../config/thema';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 type ContentProps = {
@@ -21,23 +20,26 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
   return (
     <>
       {!!rows.length && (
-        <Grid.Cell span="all">
-          <Datalist rows={rows} />
-          {voorziening?.documents.length > 0 && (
-            <DocumentListV2
-              documents={voorziening.documents}
-              columns={['Brieven', 'Verzenddatum']}
-              className="ams-mb--lg"
-            />
-          )}
-        </Grid.Cell>
+        <PageContentCell>
+          <Grid.Cell span="all">
+            <Datalist rows={rows} />
+            {voorziening?.documents.length > 0 && (
+              <DocumentListV2
+                documents={voorziening.documents}
+                columns={['Brieven', 'Verzenddatum']}
+                className="ams-mb--lg"
+              />
+            )}
+          </Grid.Cell>
+        </PageContentCell>
       )}
     </>
   );
 }
 
 export function JeugdDetail() {
-  const { voorzieningen, isError, isLoading } = useJeugdThemaData();
+  const { voorzieningen, isError, isLoading, breadcrumbs } =
+    useJeugdThemaData();
   const { id } = useParams<{
     id: LeerlingenvervoerVoorzieningFrontend['id'];
   }>();
@@ -49,13 +51,10 @@ export function JeugdDetail() {
       zaak={voorziening}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
+      pageContentMain={
         !!voorziening && <JeugdDetailContent voorziening={voorziening} />
       }
-      backLink={{
-        title: ThemaTitles.JEUGD,
-        to: AppRoutes.JEUGD,
-      }}
+      breadcrumbs={breadcrumbs}
     />
   );
 }
