@@ -112,7 +112,7 @@ const VarenBaseExploitatieVergunning = {
           )
           .map((vergunning) => ({
             id:
-              vergunning.identifier?.replace(/\//g, '-') ??
+              vergunning.identifier?.replaceAll('/', '-') ??
               'unknown-decoszaak-id',
             ...vergunning,
           })),

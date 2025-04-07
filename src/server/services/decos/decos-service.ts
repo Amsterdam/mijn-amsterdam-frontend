@@ -210,7 +210,7 @@ async function transformDecosZaakResponse<
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
   let decosZaak: DZ = {
     id:
-      transformedFields.identifier?.replace(/\//g, '-') ??
+      transformedFields.identifier?.replaceAll('/', '-') ??
       'unknown-decoszaak-id',
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
