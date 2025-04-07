@@ -3,6 +3,7 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
+  Varen,
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
   VarenZakenFrontend,
@@ -30,6 +31,53 @@ function transformVarenRederFrontend(
   };
 }
 
+function transformVarenZakenFrontend(
+  authProfileAndToken: AuthProfileAndToken,
+  zaak: Varen
+): VarenZakenFrontend[] {
+  const appRoute = AppRoutes['VAREN/DETAIL'];
+  const steps = getStatusSteps(zaak);
+  const zaakTransformed = transformDecosZaakFrontend(
+    authProfileAndToken.profile.sid,
+    zaak,
+    {
+      appRoute,
+      includeFetchDocumentsUrl: false,
+    }
+  );
+  const displayStatus = getDisplayStatus(zaakTransformed, steps);
+  const zaakFrontend: VarenZakenFrontend = {
+    ...omit(zaakTransformed, ['vergunningen']),
+    steps,
+    vergunning: null,
+    displayStatus,
+  };
+
+  if (!zaak.vergunningen || zaak.vergunningen.length === 0) {
+    return [zaakFrontend];
+  }
+
+  const createLink = (id: string) => ({
+    to: generatePath(appRoute, {
+      caseType: slug(zaak.caseType, { lower: true }),
+      id: id,
+    }),
+    title: `Bekijk hoe het met uw aanvraag staat`,
+  });
+
+  const zakenFrontend = zaak.vergunningen.map((vergunning) => {
+    const combinedIdZaakVergunning = `${zaak.id}-${vergunning.id}`;
+    return {
+      ...zaakFrontend,
+      vergunning,
+      id: combinedIdZaakVergunning,
+      link: createLink(combinedIdZaakVergunning),
+    };
+  });
+
+  return zakenFrontend;
+}
+
 async function fetchVaren_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
@@ -46,51 +94,12 @@ async function fetchVaren_(
       (zaak) => zaak.caseType === 'Varen registratie reder'
     );
     const rederFrontend = transformVarenRederFrontend(reder);
-    const appRoute = AppRoutes['VAREN/DETAIL'];
+
     const zakenFrontend = decosZaken
       .filter((zaak) => zaak.caseType !== 'Varen registratie reder')
-      .flatMap((zaak) => {
-        const steps = getStatusSteps(zaak);
-        const zaakTransformed = transformDecosZaakFrontend(
-          authProfileAndToken.profile.sid,
-          zaak,
-          {
-            appRoute,
-            includeFetchDocumentsUrl: false,
-          }
-        );
-        const displayStatus = getDisplayStatus(zaakTransformed, steps);
-        const zaakFrontend: VarenZakenFrontend = {
-          ...omit(zaakTransformed, ['vergunningen']),
-          steps,
-          vergunning: null,
-          displayStatus,
-        };
-
-        if (!zaak.vergunningen || zaak.vergunningen.length === 0) {
-          return [zaakFrontend];
-        }
-
-        const createLink = (id: string) => ({
-          to: generatePath(appRoute, {
-            caseType: slug(zaak.caseType, { lower: true }),
-            id: id,
-          }),
-          title: `Bekijk hoe het met uw aanvraag staat`,
-        });
-
-        const zakenFrontend = zaak.vergunningen.map((vergunning) => {
-          const combinedIdZaakVergunning = `${zaak.id}-${vergunning.id}`;
-          return {
-            ...zaakFrontend,
-            vergunning,
-            id: combinedIdZaakVergunning,
-            link: createLink(combinedIdZaakVergunning),
-          };
-        });
-
-        return zakenFrontend;
-      });
+      .flatMap((zaak) =>
+        transformVarenZakenFrontend(authProfileAndToken, zaak)
+      );
     return apiSuccessResult({
       reder: rederFrontend,
       zaken: zakenFrontend,
