@@ -7,6 +7,10 @@ import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/external-urls';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import {
+  WMO_HELPDESK_HREF_TEL_LINK,
+  WMO_HELPDESK_PHONENUMBER,
+} from '../Zorg/Zorg';
 
 export function JeugdThemaPagina() {
   const {
@@ -24,8 +28,12 @@ export function JeugdThemaPagina() {
         wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk:{' '}
       </Paragraph>
       <Paragraph>
-        <Link rel="noreferrer" href="tel:08000643" variant="inline">
-          0800 0643
+        <Link
+          rel="noreferrer"
+          href={WMO_HELPDESK_HREF_TEL_LINK}
+          variant="inline"
+        >
+          {WMO_HELPDESK_PHONENUMBER}
         </Link>{' '}
         (maandag tot en met vrijdag van 08.00 tot 18.00 uur)
       </Paragraph>
