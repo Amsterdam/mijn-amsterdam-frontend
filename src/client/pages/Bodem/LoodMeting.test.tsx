@@ -108,7 +108,7 @@ const metingen: LoodMetingFrontend[] = [
     datumInbehandeling: '2022-11-28T12:24:20Z',
     datumAfgehandeld: '2022-11-28T13:53:42Z',
     datumAfgehandeldFormatted: '28 november 2022',
-    decision: 'Verleend',
+    decision: 'Toegewezen',
     status: 'Afgehandeld',
     kenmerk: 'OL-000001',
     aanvraagNummer: 'AV-001444',
@@ -153,7 +153,7 @@ const metingen: LoodMetingFrontend[] = [
   },
 ];
 
-const [metingOntvangen, metingAfgewezen, metingVerleend] = metingen;
+const [metingOntvangen, metingAfgewezen, metingToegewezen] = metingen;
 
 const createLoodMeting = componentCreator({
   component: LoodMeting,
@@ -220,18 +220,18 @@ describe('LoodMeting', () => {
     });
 
     it('should show the correct detailpage for status afgehandeld', async () => {
-      const Component = createComponentMetingen([metingVerleend]);
+      const Component = createComponentMetingen([metingToegewezen]);
       const screen = render(<Component />);
 
       const locatie = screen.getByText('Locatie');
       expect(locatie).toBeInTheDocument();
       expect(locatie.nextElementSibling).toHaveTextContent(
-        metingVerleend.adres
+        metingToegewezen.adres
       );
 
       const resultaat = screen.queryByText('Resultaat');
       expect(resultaat).toBeInTheDocument();
-      expect(resultaat?.nextElementSibling).toHaveTextContent('Verleend');
+      expect(resultaat?.nextElementSibling).toHaveTextContent('Toegewezen');
 
       const statusAfgehandeld = screen.getByText('Afgehandeld');
       expect(statusAfgehandeld).toBeInTheDocument();
