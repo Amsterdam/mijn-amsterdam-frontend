@@ -5,6 +5,7 @@ import { componentCreator } from '../MockApp';
 import { Bodem } from './Bodem';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppState } from '../../../universal/types';
+import { expectTableHeaders } from '../../helpers/test-utils';
 
 const metingen = [
   {
@@ -208,24 +209,14 @@ describe('Bodem', () => {
       const MockBodem = createComponent(testState);
       const screen = render(<MockBodem />);
 
-      const lopendeAanvraagTableHeader = screen.getByRole('heading', {
-        name: 'Lopende aanvragen',
-      });
+      const expectedColumnHeaders = ['Adres', 'Aangevraagd', 'Status'];
 
-      const columnHeaders = ['Adres', 'Aangevraagd', 'Status'];
-
-      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement!;
-      const lopendeAanvraagColumnHeaders =
-        within(lopendeAanvraagTable).getAllByRole('columnheader');
-      expect(
-        lopendeAanvraagColumnHeaders.map((header) => header.textContent)
-      ).toStrictEqual(columnHeaders);
-
-      const afgehandeldeAanvraagColumnHeaders =
-        within(lopendeAanvraagTable).getAllByRole('columnheader');
-      expect(
-        afgehandeldeAanvraagColumnHeaders.map((header) => header.textContent)
-      ).toStrictEqual(columnHeaders);
+      expectTableHeaders(screen, 'Lopende aanvragen', expectedColumnHeaders);
+      expectTableHeaders(
+        screen,
+        'Afgehandelde aanvragen',
+        expectedColumnHeaders
+      );
     });
 
     test('Items are sorted correctly', () => {

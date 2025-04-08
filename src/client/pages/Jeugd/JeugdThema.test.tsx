@@ -1,10 +1,11 @@
-import { render, RenderResult, within } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
 import { componentCreator } from '../MockApp';
 import { JeugdThemaPagina } from './JeugdThema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
+import { expectTableHeaders } from '../../helpers/test-utils';
 
 const jeugdState: AppState['JEUGD'] = {
   content: [
@@ -261,20 +262,6 @@ const createComponent = componentCreator({
   routePath: AppRoutes.JEUGD,
 });
 
-function checkTableHeaders(
-  screen: RenderResult,
-  inTableWithName: string,
-  matchHeaders: string[]
-) {
-  const tableHeaders = screen.getByRole('heading', {
-    name: inTableWithName,
-  });
-  const table = within(within(tableHeaders.parentElement!).getByRole('table'));
-
-  const columnHeaders = table.getAllByRole('columnheader');
-  expect(columnHeaders.map((h) => h.textContent)).toMatchObject(matchHeaders);
-}
-
 test('Static elements', async () => {
   const Component = createComponent(basicAppState);
   const screen = render(<Component />);
@@ -286,8 +273,8 @@ test('Static elements', async () => {
 
   const mustHaveHeaders = ['Voorziening', 'Status', 'Datum'];
 
-  checkTableHeaders(screen, 'Huidige voorzieningen', mustHaveHeaders);
-  checkTableHeaders(
+  expectTableHeaders(screen, 'Huidige voorzieningen', mustHaveHeaders);
+  expectTableHeaders(
     screen,
     'Eerdere en afgewezen voorzieningen',
     mustHaveHeaders
