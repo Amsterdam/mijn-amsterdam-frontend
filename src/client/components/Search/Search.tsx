@@ -15,10 +15,6 @@ import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 import { AppRoutes } from '../../../universal/config/routes';
-import {
-  trackSearch,
-  trackSearchResultClick,
-} from '../../hooks/analytics.hook';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppState';
 import { useKeyDown } from '../../hooks/useKey';
@@ -184,16 +180,6 @@ export function Search({
 
   useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
-  const SEARCH_INPUT_DELAY_MS = 2000;
-  const trackSearchDebounced = useDebouncedCallback(
-    (term: string, count: number) => {
-      if (term) {
-        trackSearch(term, count, searchCategory, profileType);
-      }
-    },
-    SEARCH_INPUT_DELAY_MS
-  );
-
   const SET_TERM_DELAY_MS = 300;
   const setTermDebounced = useDebouncedCallback((term: string) => {
     setTerm(term);
@@ -220,27 +206,7 @@ export function Search({
   );
 
   const onClickResult = useCallback(
-    (
-      result: SearchEntry,
-      resultNumber: number,
-      amountOfResults: number,
-      amountOfResultsShown: number
-    ) => {
-      trackSearchResultClick({
-        keyword: term,
-        searchResult: {
-          position: resultNumber,
-          title:
-            typeof result.displayTitle !== 'string'
-              ? result.description
-              : result.displayTitle,
-          type: '',
-          url: result.url,
-        },
-        amountOfResults,
-        amountOfResultsShown,
-        type: 'autocomplete',
-      });
+    (result: SearchEntry) => {
       setResultsVisible(false);
       onFinish('Click result');
 
@@ -315,7 +281,6 @@ export function Search({
                 `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
               );
               setResultsVisible(true);
-              trackSearch(term, 0, searchCategory, profileType);
             }
           }}
         >
@@ -339,7 +304,6 @@ export function Search({
               setResultsVisible(true);
               const term = e.target.value;
               setTermDebounced(term);
-              trackSearchDebounced(term, 0);
             }}
           />
 
