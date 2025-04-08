@@ -12,8 +12,7 @@ export function getBodemStatusSteps(
   const status: LoodMetingStatusLowerCase = lowercaseStatus;
 
   const isInProgress = status === 'in behandeling';
-  const isDeclined = status === 'afgewezen';
-  const isDone = status === 'afgehandeld' || status === 'afgewezen';
+  const isDone = request.processed;
 
   return [
     {
@@ -29,8 +28,8 @@ export function getBodemStatusSteps(
       id: 'second-item',
       status: 'In behandeling',
       datePublished:
-        // Sometimes requests are immediately declined and don't have a datumInBehandeling date. We then show datumBeoordeling (which should be there if a request is declined).
-        request.datumInbehandeling || request.datumBeoordeling || '',
+        // Sometimes requests are immediately declined and don't have a datumInBehandeling date. We then show datumAfgehandeld.
+        request.datumInbehandeling || request.datumAfgehandeld || '',
       description: '',
       documents: [],
       isActive: isInProgress,
@@ -39,9 +38,7 @@ export function getBodemStatusSteps(
     {
       id: 'third-item',
       status: 'Afgehandeld',
-      datePublished:
-        (isDeclined ? request.datumBeoordeling : request.datumAfgehandeld) ??
-        '',
+      datePublished: request.datumAfgehandeld || '',
       description: '',
       documents: [],
       isActive: isDone,

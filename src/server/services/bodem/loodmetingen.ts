@@ -94,7 +94,19 @@ function transformLood365Response(
 
         const lowercaseStatus =
           location.Friendlystatus.toLowerCase() as LoodMetingStatusLowerCase;
+        const isProcessed = ['afgewezen', 'afgehandeld'].includes(
+          lowercaseStatus
+        );
 
+        const statusToDecisionMapping = {
+          ontvangen: null,
+          'in behandeling': null,
+          afgehandeld: 'Toegewezen' as const,
+          afgewezen: 'Afgewezen' as const,
+        };
+        const decision = statusToDecisionMapping[lowercaseStatus];
+
+        const datumAfgehandeld = location?.Reportsenton ?? location?.ReviewedOn;
         const loodMeting: LoodMetingFrontend = {
           id: location.Reference,
           title: 'Lood in de bodem-check',
@@ -106,10 +118,13 @@ function transformLood365Response(
             ? defaultDateFormat(request.RequestedOn)
             : '',
           datumInbehandeling: location?.Workordercreatedon,
-          datumAfgehandeld: location?.Reportsenton,
-          datumBeoordeling: location?.ReviewedOn,
+          datumAfgehandeld: datumAfgehandeld,
+          datumAfgehandeldFormatted: datumAfgehandeld
+            ? defaultDateFormat(datumAfgehandeld)
+            : '',
+          decision: decision,
           status: location.Friendlystatus,
-          processed: ['afgewezen', 'afgehandeld'].includes(lowercaseStatus),
+          processed: isProcessed,
           kenmerk: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,
@@ -276,7 +291,7 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
         ...baseNotification,
         title: 'Aanvraag lood in de bodem-check afgewezen',
         description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`,
-        datePublished: meting.datumBeoordeling!,
+        datePublished: meting.datumAfgehandeld!,
       };
     }
     default: {
