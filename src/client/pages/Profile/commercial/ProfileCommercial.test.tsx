@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { MijnBedrijfsGegevensThema } from './ProfileCommercial';
@@ -212,14 +211,13 @@ const panelHeadings = [
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
-  const routeEntry = generatePath(routes.KVK);
-  const routePath = routes.KVK;
+  const routeEntry = routes.themaPageKVK;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routePath}
+        routePath={routeEntry}
         component={MijnBedrijfsGegevensThema}
         initializeState={initializeState}
       />

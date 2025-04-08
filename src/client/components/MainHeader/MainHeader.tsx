@@ -41,7 +41,9 @@ export function MainHeaderSecondaryLinks({
         <MaRouterLink
           maVariant="noUnderline"
           href={
-            profileType === 'private' ? profileRoutes.BRP : profileRoutes.KVK
+            profileType === 'private'
+              ? profileRoutes.themaPageBRP
+              : profileRoutes.themaPageKVK
           }
           className={linkClassName}
           title="Ga naar persoonlijke gegevens"
