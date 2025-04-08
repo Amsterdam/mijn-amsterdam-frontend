@@ -8,44 +8,42 @@ import {
 import { ButtonLinkProps } from '../../../universal/types';
 
 export function useVarenDetailPage() {
-  const {
-    varenRederRegistratie,
-    varenVergunningen,
-    breadcrumbs,
-    isLoading,
-    isError,
-  } = useVarenThemaData();
+  const { varenRederRegistratie, varenZaken, breadcrumbs, isLoading, isError } =
+    useVarenThemaData();
 
   const { id } = useParams<{ id: string }>();
-  const hasRegistratieReder = !!varenRederRegistratie;
-  const vergunning = varenVergunningen?.find((item) => item.id === id) ?? null;
-  const hasVergunningChangeInProgress = !!varenVergunningen?.find(
-    (zaak) =>
-      zaak.vergunningKenmerk === vergunning?.vergunningKenmerk &&
-      zaak.processed === false
-  );
-  const buttonItems: ButtonLinkProps[] = [];
-  const showButtons =
-    vergunning?.processed && vergunning.decision === 'Verleend';
 
+  const hasRegistratieReder = !!varenRederRegistratie;
+
+  const zaak = varenZaken.find((item) => item.id === id) ?? null;
+
+  const hasLinkedVergunningChangeInProgress = !!varenZaken.find(
+    (otherZaak) =>
+      otherZaak.id !== zaak?.id &&
+      otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
+      otherZaak.processed === false
+  );
+
+  const buttonItems: ButtonLinkProps[] = [];
+  const showButtons = zaak?.processed && zaak.decision === 'Verleend';
   if (showButtons) {
-    const EVWijzigenBtnText = hasVergunningChangeInProgress
+    const EVWijzigenBtnText = hasLinkedVergunningChangeInProgress
       ? 'Wijziging in behandeling'
       : 'Wijzigen';
 
     const buttons = [
-      exploitatieVergunningWijzigenLink(vergunning.key, EVWijzigenBtnText),
+      exploitatieVergunningWijzigenLink(zaak.key, EVWijzigenBtnText),
       ligplaatsVergunningLink,
     ].map((button) => ({
       ...button,
-      isDisabled: !hasRegistratieReder || hasVergunningChangeInProgress,
+      isDisabled: !hasRegistratieReder || hasLinkedVergunningChangeInProgress,
     }));
 
     buttonItems.push(...buttons);
   }
 
   return {
-    vergunning,
+    zaak,
     buttonItems,
     isLoading,
     isError,

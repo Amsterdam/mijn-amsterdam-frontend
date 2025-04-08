@@ -97,22 +97,25 @@ const VarenBaseExploitatieVergunning = {
     varens: {
       name: 'vergunningen',
       transform: (vergunningen: DecosZaakVarensFieldsSource[] | null) =>
-        (vergunningen || []).map((vergunning) =>
-          transformFieldValuePairs<VarenVergunningExploitatieType>(
-            {
-              ...vesselLengths,
-              ...vesselSegment,
-              ...vesselEniNumber,
-              mark: {
-                name: 'id',
-                transform: (input: string) => input.replace(/\//g, '-'),
+        (vergunningen || [])
+          .map((vergunning) =>
+            transformFieldValuePairs<VarenVergunningExploitatieType>(
+              {
+                ...vesselLengths,
+                ...vesselSegment,
+                ...vesselEniNumber,
+                mark: 'identifier',
+                subject2: 'vesselName' as const,
               },
-              subject2: 'vesselName' as const,
-              text11: 'vergunningKenmerk' as const,
-            },
-            vergunning
+              vergunning
+            )
           )
-        ),
+          .map((vergunning) => ({
+            id:
+              vergunning.identifier?.replaceAll('/', '-') ??
+              'unknown-decoszaak-id',
+            ...vergunning,
+          })),
     },
   },
   afterTransform: setStatusIfActiveTermijn,
