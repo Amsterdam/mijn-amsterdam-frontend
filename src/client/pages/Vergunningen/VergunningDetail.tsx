@@ -118,3 +118,7 @@ export function VergunningDetailPagina() {
     />
   );
 }
+
+export const forTesting = {
+  DetailPageContent,
+};
