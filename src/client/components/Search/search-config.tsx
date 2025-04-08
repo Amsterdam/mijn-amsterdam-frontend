@@ -22,7 +22,10 @@ import {
   VakantieverhuurVergunningFrontend,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { VarenFrontend } from '../../../server/services/varen/config-and-types';
+import {
+  VarenRegistratieRederType,
+  VarenZakenFrontend,
+} from '../../../server/services/varen/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
