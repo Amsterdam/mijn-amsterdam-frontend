@@ -16,13 +16,13 @@ import { Datalist, RowSet } from '../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
 
 type VarenDetailPageContentProps = {
-  vergunning: VarenZakenFrontend<VarenVergunningLigplaatsType>;
+  zaak: VarenZakenFrontend<VarenVergunningLigplaatsType>;
   buttonItems: ButtonLinkProps[];
 };
 
 const DEFAULT_GRID_SPAN: GridColumnNumber = 4;
 export function VarenDetailPageContentLigplaats({
-  vergunning,
+  zaak,
   buttonItems,
 }: VarenDetailPageContentProps) {
   const rows: RowSet[] = [
@@ -30,7 +30,7 @@ export function VarenDetailPageContentLigplaats({
       rows: [
         {
           label: 'Zaaknummer',
-          content: vergunning.identifier,
+          content: zaak.identifier,
           span: DEFAULT_GRID_SPAN,
         },
       ],
@@ -39,7 +39,7 @@ export function VarenDetailPageContentLigplaats({
       rows: [
         {
           label: 'Locatie ligplaats',
-          content: vergunning.location,
+          content: zaak.location,
           span: DEFAULT_GRID_SPAN,
         },
       ],

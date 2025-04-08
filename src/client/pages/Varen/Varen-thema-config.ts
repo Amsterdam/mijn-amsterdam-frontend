@@ -48,7 +48,7 @@ export const tableConfig: TableConfigByKind<
 > = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: (vergunning: VarenVergunningFrontend) => !vergunning.processed,
+    filter: (vergunning: VarenZakenFrontend) => !vergunning.processed,
     listPageRoute: generatePath(AppRoutes['VAREN/LIST'], {
       kind: listPageParamKind.inProgress,
       page: null,
