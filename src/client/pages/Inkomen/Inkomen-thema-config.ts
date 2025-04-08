@@ -40,51 +40,43 @@ export const listPageParamKind = {
   jaaropgaven: 'jaaropgaven',
 } as const;
 
-const routeConfig: ThemaRoutesConfig = {
+const routeConfig = {
   detailPageUitkering: {
     path: '/inkomen/bijstandsuitkering/:id',
     trackingUrl: '/inkomen/bijstandsuitkering',
-    documentTitle: 'Bijstandsuitkering | Inkomen',
+    documentTitle: `Bijstandsuitkering | ${themaTitle}`,
   },
   detailPageTozo: {
     path: '/inkomen/tozo/:version/:id',
     trackingUrl: (match: PathMatch) => {
       return `/inkomen/tozo/${match.params?.version}`;
     },
-    documentTitle: `Tozo | Inkomen`,
+    documentTitle: `Tozo | ${themaTitle}`,
   },
   detailPageTonk: {
     path: '/inkomen/tonk/:version/:id',
-    documentTitle: `TONK | Inkomen`,
+    documentTitle: `TONK | ${themaTitle}`,
   },
   detailPageBbz: {
     path: '/inkomen/bbz/:version/:id',
     trackingUrl: `/inkomen/bbz`,
-    documentTitle: `Bbz | Inkomen`,
+    documentTitle: `Bbz | ${themaTitle}`,
   },
   listPageSpecificaties: {
-    path: '/inkomen/lijst/specificaties/uitkering/:page?',
-    documentTitle: getInkomenSpecificatiesListPageDocumentTitle(
-      themaTitle,
-      listPageParamKind.uitkering
-    ),
-  },
-  listPageJaaropgaven: {
-    path: '/inkomen/lijst/specificaties/jaaropgave/:page?',
-    documentTitle: getInkomenSpecificatiesListPageDocumentTitle(
-      themaTitle,
-      listPageParamKind.jaaropgaven
-    ),
+    path: '/inkomen/lijst/specificaties/:kind/:page?',
+    documentTitle: (_, params) =>
+      `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${themaTitle}`,
   },
   listPage: {
     path: '/inkomen/lijst/:kind/:page?',
-    documentTitle: getInkomenListPageDocumentTitle(themaTitle),
+    documentTitle: (_, params) =>
+      `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${themaTitle}`,
   },
   themaPage: {
     path: '/inkomen',
-    documentTitle: `Inkomen | overzicht`,
+    documentTitle: `${themaTitle} | overzicht`,
   },
-} as const;
+} as const satisfies ThemaRoutesConfig;
 
 export const routes = toRoutes(routeConfig);
 export const documentTitles = toDocumentTitles(routeConfig);
@@ -168,7 +160,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.lopend,
-      page: null,
+      page: ':page?',
     }),
   },
   [listPageParamKind.eerder]: {
@@ -182,7 +174,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.eerder,
-      page: null,
+      page: ':page?',
     }),
   },
 } as const;
@@ -192,19 +184,25 @@ export const tableConfigSpecificaties = {
     title: 'Uitkeringsspecificaties',
     displayProps: specificatiesTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: routes.listPageSpecificaties,
+    listPageRoute: generatePath(routes.listPageSpecificaties, {
+      kind: listPageParamKind.uitkering,
+      page: ':page?',
+    }),
   },
   [listPageParamKind.jaaropgaven]: {
     title: 'Jaaropgaven',
     displayProps: jaaropgavenTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: routes.listPageJaaropgaven,
+    listPageRoute: generatePath(routes.listPageSpecificaties, {
+      kind: listPageParamKind.jaaropgaven,
+      page: ':page?',
+    }),
   },
 } as const;
 
 export function getInkomenListPageDocumentTitle(themaTitle: string) {
   return <T extends Record<string, string>>(
-    config: TrackingConfig,
+    _config: TrackingConfig,
     params: T | null
   ) => {
     const kind = params?.kind as Exclude<
@@ -216,11 +214,15 @@ export function getInkomenListPageDocumentTitle(themaTitle: string) {
       : themaTitle;
   };
 }
+
 export function getInkomenSpecificatiesListPageDocumentTitle(
   themaTitle: string,
   kind: Exclude<ListPageParamKind, 'lopende-aanvragen' | 'eerdere-aanvragen'>
 ) {
-  return () => {
+  return <T extends Record<string, string>>(
+    _config: TrackingConfig,
+    _params: T | null
+  ) => {
     return kind in tableConfigSpecificaties
       ? `${tableConfigSpecificaties[kind].title} | ${themaTitle}`
       : themaTitle;

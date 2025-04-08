@@ -19,10 +19,6 @@ export const InkomenRoutes = [
     Component: InkomenSpecificaties,
   },
   {
-    route: routes.listPageJaaropgaven,
-    Component: InkomenSpecificaties,
-  },
-  {
     route: routes.detailPageUitkering,
     Component: InkomenDetailUitkering,
   },

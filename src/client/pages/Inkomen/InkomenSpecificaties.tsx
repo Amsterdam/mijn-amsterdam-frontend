@@ -69,7 +69,7 @@ export function InkomenSpecificaties() {
                   <Link
                     className={styles.ResetFilterButton}
                     onClick={() => selectCategoryFilter('')}
-                    href={routes.themaPagina}
+                    href={routes.themaPage}
                   >
                     resetten
                   </Link>
@@ -164,7 +164,7 @@ export function InkomenSpecificaties() {
       title={title}
       isError={isError}
       isLoading={isLoading}
-      appRoute={`${tableConfig.listPageRoute}/:page?`}
+      appRoute={tableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       appRouteParams={params}
       pageContentTop={pageContentMain}

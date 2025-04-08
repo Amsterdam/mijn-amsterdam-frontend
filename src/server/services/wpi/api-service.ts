@@ -1,4 +1,3 @@
-import { themaId } from '../../../client/pages/Inkomen/Inkomen-thema-config';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
@@ -277,12 +276,7 @@ export async function fetchWpiNotifications(
 
             if (labels) {
               const notifications = requestProcess.steps.map((step) =>
-                createProcessNotification(
-                  requestProcess,
-                  step,
-                  labels,
-                  themaId.INKOMEN
-                )
+                createProcessNotification(requestProcess, step, labels)
               );
               return notifications;
             }

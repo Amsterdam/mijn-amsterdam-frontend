@@ -1,3 +1,4 @@
+import { ThemaRoutesConfig } from '../../config/thema-types';
 import { toDocumentTitles, toRoutes } from '../../helpers/themas';
 
 export const themaId = { BRP: 'BRP', KVK: 'KVK' } as const;
@@ -30,7 +31,7 @@ const routeConfig = {
     path: '/contactmomenten/:page?',
     documentTitle: `Alle contactmomenten | ${themaTitle.BRP}`,
   },
-} as const;
+} as const satisfies ThemaRoutesConfig;
 
 export const routes = toRoutes(routeConfig);
 export const documentTitles = toDocumentTitles(routeConfig);

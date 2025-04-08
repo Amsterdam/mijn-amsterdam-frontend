@@ -22,7 +22,6 @@ function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
   const appState = useAppStateGetter();
   const term =
     typeof item.title === 'function' ? item.title(appState) : item.title;
-  console.log(item);
   return {
     ...item,
     title: term ? termReplace(profileType, term) : term,

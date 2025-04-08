@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
@@ -10,7 +11,7 @@ import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import { InkomenSpecificaties } from '../Inkomen/InkomenSpecificaties';
 import MockApp from '../MockApp';
-import { routes } from './Inkomen-thema-config';
+import { listPageParamKind, routes } from './Inkomen-thema-config';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -82,13 +83,16 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
-  const routeEntry = routes.listPageSpecificaties;
+  const routeEntry = generatePath(routes.listPageSpecificaties, {
+    kind: listPageParamKind.uitkering,
+  });
+  const routePath = routes.listPageSpecificaties;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routeEntry}
+        routePath={routePath}
         component={InkomenSpecificaties}
         initializeState={initializeState}
       />
@@ -138,13 +142,16 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 });
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
-  const routeEntry = routes.listPageJaaropgaven;
+  const routeEntry = generatePath(routes.listPageSpecificaties, {
+    kind: listPageParamKind.jaaropgaven,
+  });
+  const routePath = routes.listPageSpecificaties;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routeEntry}
+        routePath={routePath}
         component={InkomenSpecificaties}
         initializeState={initializeState}
       />

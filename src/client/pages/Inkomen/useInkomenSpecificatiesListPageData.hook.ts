@@ -90,14 +90,10 @@ export function useInkomenSpecificatiesListPageData() {
     (category: string) => {
       setSelectedCategory(category);
       navigate(
-        generatePath(
-          kind === 'jaaropgaven'
-            ? routes.listPageJaaropgaven
-            : routes.listPageSpecificaties,
-          {
-            page: '1',
-          }
-        ),
+        generatePath(routes.listPageSpecificaties, {
+          page: '1',
+          kind,
+        }),
         { replace: true }
       );
     },

@@ -156,12 +156,12 @@ const testState: any = {
 };
 
 describe('<Inkomen />', () => {
+  const routeEntry = routes.themaPage;
+
   describe('with items from BBZ, TONK, TOZO', () => {
     function initializeState(snapshot: MutableSnapshot) {
       snapshot.set(appStateAtom, testState);
     }
-
-    const routeEntry = routes.themaPagina;
 
     function Component() {
       return (
@@ -191,8 +191,6 @@ describe('<Inkomen />', () => {
         WPI_BBZ: {},
       } as any);
     }
-
-    const routeEntry = routes.themaPagina;
 
     function Component() {
       return (
