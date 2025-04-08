@@ -7,13 +7,17 @@ import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/Paragra
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 
+export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;
+export const WMO_HELPDESK_HREF_TEL_LINK =
+  `tel:${WMO_HELPDESK_PHONENUMBER.replace(' ', '')}` as const;
+
 export function HistoricItemsMention() {
   return (
     <ParagaphSuppressed>
       U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van
       daarvoor? Bel dan de Wmo Helpdesk:{' '}
-      <Link href="tel:08000643" rel="noreferrer">
-        0800 0643
+      <Link href={WMO_HELPDESK_HREF_TEL_LINK} rel="noreferrer">
+        {WMO_HELPDESK_PHONENUMBER}
       </Link>
       . U ziet ook geen begeleid thuis en beschermd verblijf (vroeger
       maatschappelijke opvang en beschermd wonen). Hier zijn we nog mee bezig.
@@ -40,8 +44,12 @@ export function ZorgThemaPagina() {
       <Paragraph>
         Heeft u vragen of wilt u een wijziging doorgeven? <br />
         Bel dan gratis de Wmo Helpdesk:{' '}
-        <Link rel="noreferrer" href="tel:08000643" variant="inline">
-          0800 0643
+        <Link
+          rel="noreferrer"
+          href={WMO_HELPDESK_HREF_TEL_LINK}
+          variant="inline"
+        >
+          {WMO_HELPDESK_PHONENUMBER}
         </Link>{' '}
         (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het
         Sociaal Loket.

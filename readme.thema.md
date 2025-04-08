@@ -22,7 +22,7 @@ Roughly follow the following steps to integrate a new thema into the application
 - generact -> AlphaPage/AlphaComponent -> $Thema This will copy a component and save as a new one. You can also just create new file by hand. Whatevery you like
 - open `universal/config/routes.ts` add $Thema -> /$thema
 - open App.tsx add <Route path={AppRoutes.$THEMA} component={$Thema} />
-- open src/client/config/menuItems.ts and add a Menu Item entry
-- open `src/client/hooks/useThemas.ts` add your loading conditions in the `isThemaActive()` function.
+- open src/client/config/thema.ts and add a Menu Item entry
+- open `src/client/helpers/themas.ts` add your loading conditions in the `isThemaActive()` function.
 - open src/client/config/themaIcons.tsx and add a an Icon (after adding the svg icon to the src/client/assets/icons/index.tsx file)
 - open src/client/config/api.ts and add $THEMA to the ErrorNames export

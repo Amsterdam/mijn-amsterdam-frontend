@@ -188,6 +188,9 @@ export interface ZorgnedPerson {
 }
 
 export interface ZorgnedAanvragenServiceOptions {
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV';
+  zorgnedApiConfigKey:
+    | 'ZORGNED_JZD'
+    | 'ZORGNED_AV'
+    | 'ZORGNED_LEERLINGENVERVOER';
   requestBodyParams?: Record<string, string>;
 }

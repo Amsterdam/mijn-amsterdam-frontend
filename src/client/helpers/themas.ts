@@ -35,6 +35,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     WPI_SPECIFICATIES,
     WPI_TONK,
     WPI_TOZO,
+    JEUGD,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -97,6 +98,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         FeatureToggle.zorgv2ThemapaginaActive &&
         !isLoading(WMO) &&
         !!WMO.content?.length
+      );
+
+    case Themas.JEUGD:
+      return (
+        FeatureToggle.zorgnedLeerlingenvervoerActive &&
+        !isLoading(JEUGD) &&
+        !!JEUGD.content?.length
       );
 
     case Themas.BELASTINGEN: {

@@ -29,6 +29,7 @@ import { VergunningenRoutes } from './pages/Vergunningen/Vergunningen-routes';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatusRoutes';
 import { ZorgRoutes } from './pages/Zorg/Zorg-routes';
 import { AppRoutes } from '../universal/config/routes';
+import { JeugdRoutes } from './pages/Jeugd/routes';
 
 export const AppRoutesRedirect = [
   {
@@ -121,6 +122,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   VergunningenRoutes,
   ZaakStatusRoutes,
   ZorgRoutes,
+  JeugdRoutes,
 ].flat();
 
 const privateRoutes = routeComponents.filter(

@@ -6,7 +6,6 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -20,8 +19,9 @@ import {
 import { WMOVoorzieningFrontend } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
+import { getLatestStatus, getLatestStatusDate } from '../../statusline';
 
-function getDocuments(
+export function getDocuments(
   sessionID: SessionID,
   aanvraagTransformed: ZorgnedAanvraagTransformed
 ) {
@@ -48,33 +48,6 @@ function getDocuments(
   }
 
   return [];
-}
-
-function getLatestStatusStep(steps: StatusLineItem[]): StatusLineItem | null {
-  const active = steps.findLast((step) => step.isActive);
-  if (active) {
-    return active;
-  }
-  const checked = steps.findLast((step) => step.isChecked);
-  if (checked) {
-    return checked;
-  }
-  return null;
-}
-
-function getLatestStatus(steps: StatusLineItem[]) {
-  return getLatestStatusStep(steps)?.status ?? 'Onbekend';
-}
-
-function getLatestStatusDate(
-  steps: StatusLineItem[],
-  doTransformDate: boolean = false
-) {
-  const date = getLatestStatusStep(steps)?.datePublished;
-  if (date && doTransformDate) {
-    return defaultDateFormat(date);
-  }
-  return date || '-';
 }
 
 function transformVoorzieningenForFrontend(

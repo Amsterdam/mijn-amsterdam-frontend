@@ -19,6 +19,7 @@ import {
   IconHoreca,
   IconInkomen,
   IconInkomenSVWI,
+  IconJeugd,
   IconKlachten,
   IconKrefia,
   IconMijnGegevens,
@@ -62,4 +63,5 @@ export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   TOERISTISCHE_VERHUUR: IconToeristischeVerhuur,
   VERGUNNINGEN: IconVergunningen,
   ZORG: IconZorg,
+  JEUGD: IconJeugd,
 };

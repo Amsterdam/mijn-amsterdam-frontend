@@ -28,6 +28,7 @@ export const Themas = {
   VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
+  JEUGD: 'JEUGD',
 } as const;
 
 export type ThemaID = (typeof Themas)[keyof typeof Themas];

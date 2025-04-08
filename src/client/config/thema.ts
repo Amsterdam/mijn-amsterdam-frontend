@@ -58,6 +58,7 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
+  JEUGD: 'Onderwijs en Jeugd',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
@@ -271,6 +272,12 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.ZORG,
     id: Themas.ZORG,
     to: AppRoutes.ZORG,
+    profileTypes: ['private'],
+  },
+  {
+    title: ThemaTitles.JEUGD,
+    id: Themas.JEUGD,
+    to: AppRoutes.JEUGD,
     profileTypes: ['private'],
   },
   {
