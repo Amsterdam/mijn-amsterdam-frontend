@@ -1,5 +1,6 @@
 import { InkomenThemaPagina } from './Inkomen';
-import { routes } from './Inkomen-thema-config';
+import { isInkomenThemaActive } from './Inkomen-helpers';
+import { routes, themaId, themaTitle } from './Inkomen-thema-config';
 import { InkomenDetailBbz } from './InkomenDetailBbz';
 import { InkomenDetailTonk } from './InkomenDetailTonk';
 import { InkomenDetailTozo } from './InkomenDetailTozo';
@@ -7,6 +8,8 @@ import { InkomenDetailUitkering } from './InkomenDetailUitkering';
 import { InkomenLijstPagina } from './InkomenListPage';
 import { InkomenSpecificaties } from './InkomenSpecificaties';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { IconInkomen } from '../../assets/icons';
+import { ThemaMenuItem } from '../../config/thema-types';
 
 export const InkomenRoutes = [
   { route: routes.detailPageTozo, Component: InkomenDetailTozo },
@@ -31,3 +34,12 @@ export const InkomenRoutes = [
   { route: routes.listPage, Component: InkomenLijstPagina },
   { route: routes.themaPage, Component: InkomenThemaPagina },
 ];
+
+export const menuItem: ThemaMenuItem = {
+  title: themaTitle,
+  id: themaId.INKOMEN,
+  to: routes.themaPage,
+  profileTypes: ['private'],
+  isActive: isInkomenThemaActive,
+  IconSVG: IconInkomen,
+};

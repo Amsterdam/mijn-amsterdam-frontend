@@ -1,17 +1,16 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { transformIncomSpecificationResponse } from '../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../server/services/wpi/wpi-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { AppState } from '../../../universal/types';
 import { appStateAtom } from '../../hooks/useAppState';
 import { InkomenSpecificaties } from '../Inkomen/InkomenSpecificaties';
 import MockApp from '../MockApp';
+import { routes } from './Inkomen-thema-config';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -83,17 +82,13 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
-  const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    kind: 'uitkering',
-    page: null,
-  });
-  const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
+  const routeEntry = routes.listPageSpecificaties;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routePath}
+        routePath={routeEntry}
         component={InkomenSpecificaties}
         initializeState={initializeState}
       />
@@ -143,17 +138,13 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 });
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
-  const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    kind: 'jaaropgaven',
-    page: null,
-  });
-  const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
+  const routeEntry = routes.listPageJaaropgaven;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routePath}
+        routePath={routeEntry}
         component={InkomenSpecificaties}
         initializeState={initializeState}
       />

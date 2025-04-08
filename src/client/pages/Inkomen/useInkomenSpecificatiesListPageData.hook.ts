@@ -5,7 +5,6 @@ import { useParams, generatePath, useNavigate } from 'react-router';
 
 import { tableConfigSpecificaties } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
 
 export function useInkomenSpecificatiesListPageData() {
   const {
@@ -91,10 +90,14 @@ export function useInkomenSpecificatiesListPageData() {
     (category: string) => {
       setSelectedCategory(category);
       navigate(
-        generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-          page: '1',
-          kind,
-        }),
+        generatePath(
+          kind === 'jaaropgaven'
+            ? routes.listPageJaaropgaven
+            : routes.listPageSpecificaties,
+          {
+            page: '1',
+          }
+        ),
         { replace: true }
       );
     },

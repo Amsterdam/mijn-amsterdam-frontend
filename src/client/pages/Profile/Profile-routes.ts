@@ -1,19 +1,47 @@
+import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
+
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial';
-import { routes as routesContactmomenten } from './private/Contactmomenten.config';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage';
 import { MijnGegevensThema } from './private/ProfilePrivate';
-import { routes } from './Profile-thema-config';
+import { routes, themaId, themaTitle } from './Profile-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { isLoading } from '../../../universal/helpers/api';
+import { AppState } from '../../../universal/types';
+import { IconMijnGegevens } from '../../assets/icons';
+import { ThemaMenuItem } from '../../config/thema-types';
 
 export const ProfileRoutes = [
-  { route: routes.BRP, Component: MijnGegevensThema },
+  { route: routes.themaPageBRP, Component: MijnGegevensThema },
   {
-    route: routes.KVK,
+    route: routes.themaPageKVK,
     Component: MijnBedrijfsGegevensThema,
   },
   {
-    route: routesContactmomenten.listPage,
+    route: routes.listPageContactmomenten,
     Component: ContactmomentenListPage,
     isActive: FeatureToggle.contactmomentenActive,
   },
+];
+
+export const menuItems: ThemaMenuItem[] = [
+  {
+    title: themaTitle.BRP,
+    id: themaId.BRP,
+    to: routes.themaPageBRP,
+    profileTypes: ['private'],
+    isActive(appState: AppState) {
+      return !isLoading(appState.BRP) && !!appState.BRP.content?.persoon;
+    },
+    IconSVG: IconMijnGegevens,
+  } as const,
+  {
+    title: themaTitle.KVK,
+    id: themaId.KVK,
+    to: routes.themaPageKVK,
+    profileTypes: ['commercial', 'private'],
+    isActive(appState: AppState) {
+      return !isLoading(appState.KVK) && !!appState.KVK.content;
+    },
+    IconSVG: BuildingsIcon,
+  } as const,
 ];

@@ -1,4 +1,4 @@
-import { Themas } from '../../../../universal/config/thema';
+import { themaId } from '../../../../client/pages/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
@@ -168,7 +168,7 @@ export function getNotifications(
           aanvraag,
           step,
           requestProcess,
-          Themas.INKOMEN
+          themaId.INKOMEN
         )
       )
     );

@@ -1,4 +1,4 @@
-import { Themas } from '../../../universal/config/thema';
+import { themaId } from '../../../client/pages/Inkomen/Inkomen-thema-config';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
@@ -281,7 +281,7 @@ export async function fetchWpiNotifications(
                   requestProcess,
                   step,
                   labels,
-                  Themas.INKOMEN
+                  themaId.INKOMEN
                 )
               );
               return notifications;

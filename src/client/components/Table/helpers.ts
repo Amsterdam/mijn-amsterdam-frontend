@@ -1,4 +1,4 @@
-import { DisplayProps } from './TableV2';
+import { DisplayProps } from './TableV2.types';
 import { omit } from '../../../universal/helpers/utils';
 
 export function withOmitDisplayPropsForSmallScreens<

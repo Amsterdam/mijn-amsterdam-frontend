@@ -1,9 +1,9 @@
 import { Button, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
+import { routes } from './Inkomen-thema-config';
 import styles from './InkomenSpecificaties.module.scss';
 import { useInkomenSpecificatiesListPageData } from './useInkomenSpecificatiesListPageData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
 import DateInput, {
   isNativeDatePickerInputSupported,
 } from '../../components/DateInput/DateInput';
@@ -69,7 +69,7 @@ export function InkomenSpecificaties() {
                   <Link
                     className={styles.ResetFilterButton}
                     onClick={() => selectCategoryFilter('')}
-                    href={AppRoutes.INKOMEN}
+                    href={routes.themaPagina}
                   >
                     resetten
                   </Link>

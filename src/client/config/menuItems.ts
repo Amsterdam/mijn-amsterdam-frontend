@@ -1,8 +1,5 @@
-import {
-  ThemaMenuItem,
-  ThemaMenuItemTransformed,
-  myThemasMenuItems,
-} from './thema';
+import { myThemasMenuItems } from './thema';
+import { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types';
 import { useAppStateGetter } from '../hooks/useAppState';
 import { termReplace } from '../hooks/useTermReplacement';
 
@@ -23,12 +20,12 @@ export const themasByProfileType: (
 
 function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
   const appState = useAppStateGetter();
+  const term =
+    typeof item.title === 'function' ? item.title(appState) : item.title;
+  console.log(item);
   return {
     ...item,
-    title: termReplace(
-      profileType,
-      typeof item.title === 'function' ? item.title(appState) : item.title
-    ),
+    title: term ? termReplace(profileType, term) : term,
     to: typeof item.to === 'function' ? item.to(appState) : item.to,
   };
 }
