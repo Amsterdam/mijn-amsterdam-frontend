@@ -15,10 +15,11 @@ import {
   type VormenVanWoonruimte,
   type ZwaarVerkeer,
   caseTypeVergunningen,
-  Nachtwerkontheffing,
-  Ligplaatsvergunning,
-  WerkzaamhedenEnVervoerOpStraat,
-  WVOSActiviteit,
+  type Nachtwerkontheffing,
+  type Ligplaatsvergunning,
+  type WerkzaamhedenEnVervoerOpStraat,
+  type WVOSActiviteit,
+  type Straatartiesten,
 } from './config-and-types';
 import {
   caseNotificationLabelsDefault,
@@ -193,6 +194,19 @@ const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
   isActive: true,
   caseType: caseTypeVergunningen.AanbiedenDiensten,
   title: caseTypeVergunningen.AanbiedenDiensten,
+  transformFields: {
+    ...SELECT_FIELDS_TRANSFORM_BASE,
+    date6: dateStart,
+    date7: dateEnd,
+    text6: location,
+  },
+  notificationLabels: caseNotificationLabelsDefault,
+};
+
+const Straatartiesten: DecosZaakTransformer<Straatartiesten> = {
+  isActive: true,
+  caseType: caseTypeVergunningen.Straatartiesten,
+  title: caseTypeVergunningen.Straatartiesten,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     date6: dateStart,
@@ -561,6 +575,7 @@ export const decosCaseToZaakTransformers = {
   [RVVSloterweg.caseType]: RVVSloterweg,
   [Samenvoegingsvergunning.caseType]: Samenvoegingsvergunning,
   [Splitsingsvergunning.caseType]: Splitsingsvergunning,
+  [Straatartiesten.caseType]: Straatartiesten,
   [TVMRVVObject.caseType]: TVMRVVObject,
   [VOBvergunning.caseType]: VOBvergunning,
   [VormenVanWoonruimte.caseType]: VormenVanWoonruimte,
