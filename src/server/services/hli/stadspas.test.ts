@@ -1,10 +1,13 @@
+import { HttpStatusCode } from 'axios';
 import Mockdate from 'mockdate';
+import { Mock } from 'vitest';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspasBudgetTransactions } from './stadspas';
+import { blockStadspas, fetchStadspasBudgetTransactions } from './stadspas';
 import {
   fetchGpassDiscountTransactions,
   fetchStadspassen_,
+  mutateGpassBlockPass,
 } from './stadspas-gpass-service';
 import {
   Stadspas,
@@ -16,6 +19,10 @@ import {
   StadspasPasHouderResponse,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
+import {
+  apiErrorResult,
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
@@ -33,6 +40,11 @@ const authProfileAndToken: AuthProfileAndToken = {
   },
   token: '',
 };
+
+vi.mock('./stadspas-gpass-service.ts', async (importOriginal) => ({
+  ...(await importOriginal()),
+  mutateGpassBlockPass: vi.fn(),
+}));
 
 function createStadspasHouderResponse(): StadspasPasHouderResponse {
   const stadspasHouderResponse = {
@@ -585,6 +597,47 @@ describe('stadspas services', () => {
       expect(response).toStrictEqual({
         content: expectedResponse,
         status: 'OK',
+      });
+    });
+  });
+
+  describe('blockStadspas', async () => {
+    test('Happy path', async () => {
+      const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
+        `another-session-id:0363000123-123:123123123`
+      );
+      (mutateGpassBlockPass as Mock).mockReturnValueOnce(
+        apiSuccessResult({ '6012345678901': false })
+      );
+      const response = await blockStadspas('12345', transactionsKeyEncrypted);
+      expect(response).toMatchInlineSnapshot({
+        content: {
+          '6012345678901': false,
+        },
+        status: 'OK',
+      }, `
+        {
+          "content": {
+            "6012345678901": false,
+          },
+          "status": "OK",
+        }
+      `);
+    });
+
+    test('Translates forbidden error message from dependency', async () => {
+      const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
+        `another-session-id:0363000123-123:123123123`
+      );
+      (mutateGpassBlockPass as Mock).mockReturnValueOnce(
+        apiErrorResult('Forbidden', null, HttpStatusCode.Forbidden)
+      );
+      const response = await blockStadspas('12345', transactionsKeyEncrypted);
+      expect(response).toStrictEqual({
+        code: 403,
+        content: null,
+        message: 'Cannot block an already blocked citypass',
+        status: 'ERROR',
       });
     });
   });

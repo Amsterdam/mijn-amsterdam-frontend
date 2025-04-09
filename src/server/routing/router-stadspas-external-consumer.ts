@@ -350,4 +350,5 @@ export const forTesting = {
   sendStadspassenResponse,
   sendDiscountTransactionsResponse,
   sendBudgetTransactionsResponse,
+  sendStadspasBlockRequest,
 };

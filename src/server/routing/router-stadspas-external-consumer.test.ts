@@ -3,7 +3,6 @@ import { remoteApi, RequestMock, ResponseMock } from '../../testing/utils';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { AuthProfile } from '../auth/auth-types';
 import * as stadspas from '../services/hli/stadspas';
-import { StadspasDiscountTransaction } from '../services/hli/stadspas-types';
 
 vi.mock('../helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -261,16 +260,10 @@ describe('hli/router-external-consumer', async () => {
   });
 
   describe('Aanbieding transactions endpoint', async () => {
-    function buildStadspasAanbiedingTransactionResponse(): StadspasDiscountTransaction[] {
-      return [];
-    }
-
     test('Happy path', async () => {
       const fetchStadspasDiscountTransactionsSpy = vi
         .spyOn(stadspas, 'fetchStadspasDiscountTransactions')
-        .mockResolvedValueOnce(
-          apiSuccessResult(buildStadspasAanbiedingTransactionResponse())
-        );
+        .mockResolvedValueOnce(apiSuccessResult([]));
 
       const params = {
         transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
@@ -287,6 +280,29 @@ describe('hli/router-external-consumer', async () => {
       );
 
       expect(resMock.send).toHaveBeenCalledWith({ content: [], status: 'OK' });
+    });
+  });
+
+  describe('sendStadspasBlockRequest', async () => {
+    const TRANSACTIONS_KEY_ENCRYPTED = 'test-encrypted-id';
+
+    test('Passes response from sendStadspasBlockRequest through as is.', async () => {
+      const params = {
+        transactionsKeyEncrypted: TRANSACTIONS_KEY_ENCRYPTED,
+      };
+      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
+      const resMock = ResponseMock.new();
+
+      vi.spyOn(stadspas, 'blockStadspas').mockResolvedValueOnce(
+        apiSuccessResult({ status: 'blocked' })
+      );
+
+      await forTesting.sendStadspasBlockRequest(reqMock, resMock);
+
+      expect(resMock.send).toHaveBeenCalledWith({
+        status: 'OK',
+        content: { status: 'blocked' },
+      });
     });
   });
 });
