@@ -5,26 +5,9 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { dateSort } from '../../../universal/helpers/date';
 import { LinkProps } from '../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
-
-const displayPropsAanvragenBase: DisplayProps<
-  WithDetailLinkComponent<LoodMetingFrontend>
-> = {
-  detailLinkComponent: 'Adres',
-  datumAanvraagFormatted: 'Aangevraagd',
-  status: 'Status',
-};
-
-const displayPropsAanvragen = withOmitDisplayPropsForSmallScreens(
-  displayPropsAanvragenBase,
-  ['status', 'datumAanvraagFormatted']
-);
 
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
@@ -41,8 +24,7 @@ export const routes = {
 };
 
 const tableConfigBase = {
-  sort: dateSort('dateRequest', 'desc'),
-  displayProps: displayPropsAanvragen,
+  sort: dateSort('datumAanvraag', 'desc'),
 };
 
 export const tableConfig = {
@@ -54,6 +36,14 @@ export const tableConfig = {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
+    displayProps: withOmitDisplayPropsForSmallScreens(
+      {
+        detailLinkComponent: 'Adres',
+        datumAanvraagFormatted: 'Aangevraagd op',
+        status: 'Status',
+      },
+      ['status', 'datumAanvraagFormatted']
+    ),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
   [listPageParamKind.completed]: {
@@ -65,6 +55,14 @@ export const tableConfig = {
       page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    displayProps: withOmitDisplayPropsForSmallScreens(
+      {
+        detailLinkComponent: 'Adres',
+        datumAfgehandeldFormatted: 'Afgehandeld op',
+        decision: 'Resultaat',
+      },
+      ['decision', 'datumAfgehandeldFormatted']
+    ),
   },
 } as const;
 
