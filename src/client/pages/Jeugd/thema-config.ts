@@ -1,20 +1,32 @@
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
 import { AppRoutes } from '../../../universal/config/routes';
+import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
+import { WithDetailLinkComponent } from '../../components/Table/TableV2';
+import { DisplayProps } from '../../components/Table/TableV2.types';
 import { listPageParamKind, listPageTitle } from '../Zorg/Zorg-thema-config';
 import styles from '../Zorg/Zorg.module.scss';
 
-const displayProps = {
+type DisplayPropsLeerlingenVervoer = DisplayProps<
+  WithDetailLinkComponent<LeerlingenvervoerVoorzieningFrontend>
+>;
+
+const displayProps: DisplayPropsLeerlingenVervoer = {
   detailLinkComponent: 'Voorziening',
   status: 'Status',
   statusDateFormatted: 'Datum',
 };
+
+const responsiveDisplayProps = withOmitDisplayPropsForSmallScreens(
+  displayProps,
+  ['statusDateFormatted']
+);
 
 export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       regeling.isActual,
-    displayProps,
+    displayProps: responsiveDisplayProps,
     maxItems: 5,
     className: styles.HuidigeRegelingen,
     textNoContent: 'U heeft geen huidige voorzieningen.',
@@ -23,7 +35,7 @@ export const tableConfig = {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       !regeling.isActual,
-    displayProps,
+    displayProps: responsiveDisplayProps,
     maxItems: 5,
     className: styles.EerdereRegelingen,
     textNoContent: 'U heeft geen eerdere en/of afgewezen voorzieningen.',

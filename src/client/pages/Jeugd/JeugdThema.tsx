@@ -13,13 +13,8 @@ import {
 } from '../Zorg/Zorg';
 
 export function JeugdThemaPagina() {
-  const {
-    isError,
-    isLoading,
-    voorzieningen,
-    title,
-    tableConfig: tableConfigs,
-  } = useJeugdThemaData();
+  const { isError, isLoading, voorzieningen, title, tableConfig } =
+    useJeugdThemaData();
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -47,7 +42,7 @@ export function JeugdThemaPagina() {
     },
   ];
 
-  const tables = Object.entries(tableConfigs).map(([kind, config]) => {
+  const tables = Object.entries(tableConfig).map(([kind, config]) => {
     return (
       <ThemaPaginaTable<LeerlingenvervoerVoorzieningFrontend>
         key={kind}
