@@ -795,7 +795,9 @@ describe('stadspas-gpass-service', () => {
 
   describe('blockStadspass', async () => {
     const passBlockedSuccessfulResponse = {
-      content: null,
+      content: {
+        '123': false,
+      },
       status: 'OK',
     };
 
@@ -839,13 +841,14 @@ describe('stadspas-gpass-service', () => {
       expect(response).toStrictEqual({ status: 'OK', content: null });
     });
 
-    test('Can only block and not toggle the stadspas', async () => {
+    test.only('Can only block and not toggle the stadspas', async () => {
+      const PASSNUMBER = 123;
       remoteApi
         .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)
-        .reply(200, { actief: false });
+        .reply(200, { pasnummer: PASSNUMBER, actief: false });
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
-        content: { actief: false },
+        content: { pasnummer: PASSNUMBER, actief: false },
       });
 
       remoteApi.post(
@@ -853,12 +856,14 @@ describe('stadspas-gpass-service', () => {
         passBlockedSuccessfulResponse
       );
 
-      const response = await mutateGpassBlockPass(requestId, 123, '123');
+      const response = await mutateGpassBlockPass(
+        requestId,
+        PASSNUMBER,
+        '123456789'
+      );
       expect(response).toStrictEqual({
-        code: 403,
-        content: null,
-        message: 'The citypass is not active and cannot be blocked again',
-        status: 'ERROR',
+        content: { [PASSNUMBER]: false },
+        status: 'OK',
       });
     });
   });

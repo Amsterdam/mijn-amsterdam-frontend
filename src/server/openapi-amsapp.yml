@@ -202,7 +202,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Blocking stadspas was successful
+          description: Blocking stadspas was successful or an attempt was made to block a pass that is not active.
           content:
             'application/json':
               schema:
@@ -219,18 +219,6 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorUnauthorized'
-        '403':
-          description: Forbidden action, the citypass is already blocked
-          type: object
-          properties:
-            content:
-              type: object
-              properties:
-                message:
-                  type: string
-                  description: |
-                    The pass is already blocked and we cannot block it again.
-                  example: Cannot block an already blocked citypass
         status:
           type: string
           enum:

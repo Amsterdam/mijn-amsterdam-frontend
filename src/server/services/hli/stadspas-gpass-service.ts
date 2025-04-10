@@ -377,15 +377,18 @@ export async function mutateGpassTogglePass(
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
     postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
-    transformResponse: (pas: StadspasDetailSource) => ({
-      [pas.pasnummer]: pas.actief,
-    }),
+    transformResponse: transformTogglePassResponse,
   });
 
   return requestData<PasblokkadeByPasnummer>(config, requestID);
 }
 
-// RP TODO: Finish services, maybe instead of forbidden codes just return the current active status like in a success?
+function transformTogglePassResponse(
+  pas: StadspasDetailSource
+): PasblokkadeByPasnummer {
+  return { [pas.pasnummer]: pas.actief };
+}
+
 export async function mutateGpassUnblockPass(
   requestID: RequestID,
   passNumber: number,
@@ -404,11 +407,7 @@ export async function mutateGpassUnblockPass(
     typeof passResponse.content?.actief !== 'boolean' ||
     passResponse.content.actief
   ) {
-    return apiErrorResult(
-      'The citypass is active and cannot be unblocked again.',
-      null,
-      HttpStatusCode.Forbidden
-    );
+    return apiSuccessResult(transformTogglePassResponse(passResponse.content));
   }
 
   return mutateGpassTogglePass(requestID, passNumber, administratienummer);
@@ -432,11 +431,7 @@ export async function mutateGpassBlockPass(
     typeof passResponse.content?.actief !== 'boolean' ||
     !passResponse.content.actief
   ) {
-    return apiErrorResult(
-      'The citypass is not active and cannot be blocked again',
-      null,
-      HttpStatusCode.Forbidden
-    );
+    return apiSuccessResult(transformTogglePassResponse(passResponse.content));
   }
 
   return mutateGpassTogglePass(requestID, passNumber, administratienummer);
