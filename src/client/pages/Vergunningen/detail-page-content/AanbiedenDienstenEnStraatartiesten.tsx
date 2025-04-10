@@ -13,6 +13,13 @@ export function AanbiedenDienstenEnStraatartiestenContent({
 }) {
   const rows = getRows(vergunning, ['identifier', 'decision']);
 
+  if (vergunning.caseType == 'Straatartiesten') {
+    rows.push({
+      label: 'Waarvoor',
+      content: vergunning.category,
+    });
+  }
+
   if (
     vergunning.decision === 'Verleend' &&
     (vergunning.dateEnd == null || vergunning.dateStart === vergunning.dateEnd)
