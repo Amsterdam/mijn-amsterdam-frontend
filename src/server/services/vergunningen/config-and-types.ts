@@ -90,6 +90,7 @@ export type Straatartiesten = DecosZaakBase &
   WithLocation &
   WithDateRange & {
     caseType: GetCaseType<'Straatartiesten'>;
+    category: string | null;
   };
 
 export type Nachtwerkontheffing = DecosZaakBase &
