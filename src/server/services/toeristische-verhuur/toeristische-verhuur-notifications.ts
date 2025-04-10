@@ -7,7 +7,7 @@ import {
   ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
@@ -116,7 +116,7 @@ export function createToeristischeVerhuurNotification(
   return {
     id: `vergunning-${vergunning.id}-notification`,
     datePublished,
-    thema: Themas.TOERISTISCHE_VERHUUR,
+    thema: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description: description,
     link: {
@@ -140,7 +140,7 @@ function createRegistratieNotification(
   return {
     id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
     datePublished,
-    thema: Themas.TOERISTISCHE_VERHUUR,
+    thema: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description,
     link: {

@@ -1,5 +1,5 @@
 import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
@@ -47,7 +47,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
         case 'M1':
           notifications.push({
             id: `belasting-${message.nummer}`,
-            thema: Themas.BELASTINGEN,
+            thema: ThemaIDs.BELASTINGEN,
             title: message.titel,
             datePublished: message.datum,
             description: message.omschrijving,
@@ -66,7 +66,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             description: message.omschrijving,
             tipReason: message.informatie,
             isTip: true,
-            thema: Themas.BELASTINGEN,
+            thema: ThemaIDs.BELASTINGEN,
             link: {
               title: message.url_naam,
               to: message.url,
@@ -108,7 +108,7 @@ export async function fetchBelastingNotifications(
   const r = await fetchTipsAndNotifications(
     requestID,
     getConfig(authProfileAndToken.profile.id),
-    Themas.BELASTINGEN
+    ThemaIDs.BELASTINGEN
   );
 
   return r;

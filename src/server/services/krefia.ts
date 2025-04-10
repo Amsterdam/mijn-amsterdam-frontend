@@ -1,6 +1,6 @@
 import memoize from 'memoizee';
 
-import { Themas } from '../../universal/config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
 import {
   apiDependencyError,
   ApiResponse,
@@ -61,7 +61,7 @@ function createNotification(
     title: isFibu
       ? 'Bericht Budgetbeheer (FIBU)'
       : `Bericht Kredietbank Amsterdam`,
-    thema: Themas.KREFIA,
+    thema: ThemaIDs.KREFIA,
     description: isFibu
       ? 'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)'
       : 'Er staan ongelezen berichten voor u klaar van Kredietbank Amsterdam',

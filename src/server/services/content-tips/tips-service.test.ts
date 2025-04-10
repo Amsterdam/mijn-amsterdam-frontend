@@ -11,7 +11,7 @@ import {
 import { fetchContentTips, prefixTipNotification } from './tips-service';
 import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
-import { ThemaID } from '../../../universal/config/thema';
+import { type ThemaID } from '../../../universal/config/thema';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { WpiRequestProcess } from '../wpi/wpi-types';

@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 
 import { fetchSubsidieNotifications } from './subsidie';
 import { remoteApi } from '../../../testing/utils';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 describe('Subsidie', () => {
@@ -39,7 +39,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          thema: Themas.SUBSIDIE,
+          thema: ThemaIDs.SUBSIDIE,
           link: {
             to: 'http://localhost/to/subsidies?authMethod=digid',
             title: 'More about this',
@@ -64,7 +64,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          thema: Themas.SUBSIDIE,
+          thema: ThemaIDs.SUBSIDIE,
           link: {
             to: 'http://localhost/to/subsidies?authMethod=eherkenning',
             title: 'More about this',
