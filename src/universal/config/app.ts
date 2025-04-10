@@ -9,3 +9,8 @@ export const DEFAULT_PROFILE_TYPE = 'private';
 const ONE_MINUTE_MS = 60000;
 // eslint-disable-next-line no-magic-numbers
 export const FIFTEEN_MINUTES_MS = 15 * ONE_MINUTE_MS;
+
+/**
+ * The default number of months to keep notifications after a zaak is processed / afgehandeld.
+ */
+export const MONTHS_TO_KEEP_NOTIFICATIONS = 3;

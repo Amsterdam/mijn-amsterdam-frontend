@@ -4,6 +4,7 @@ import { Mock, vi } from 'vitest';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur-notifications';
 import { getAuthProfileAndToken } from '../../../testing/utils';
+import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/config/app';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 
 vi.mock('./toeristische-verhuur', () => ({
@@ -146,7 +147,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
     expect(result.content.notifications).toHaveLength(0);
   });
 
-  it('should return Afgehandelde notifications less than x month old', async () => {
+  it(`should only return Afgehandelde notifications less than ${MONTHS_TO_KEEP_NOTIFICATIONS} month old`, async () => {
     (fetchToeristischeVerhuur as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         vakantieverhuurVergunningen: [
@@ -164,7 +165,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             title: 'Vakantie',
             identifier: '12345',
             decision: 'Verleend',
-            dateDecision: '2024-02-10',
+            dateDecision: '2024-11-30', // More than 3 months old
             processed: true,
             steps: [],
           },
@@ -184,7 +185,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             title: 'Bed & breakfast',
             identifier: '67890',
             decision: 'Verleend',
-            dateDecision: '2024-02-10',
+            dateDecision: '2024-11-30', // More than 3 months old
             processed: true,
             steps: [],
           },
@@ -196,7 +197,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           },
           {
             registrationNumber: 'REG123b',
-            agreementDate: '2024-02-10',
+            agreementDate: '2024-11-30', // More than 3 months old
           },
         ],
       })
@@ -209,6 +210,8 @@ describe('fetchToeristischeVerhuurNotifications', () => {
 
     expect(result.content.notifications).toHaveLength(3);
     expect(result.content.notifications.map((n) => n.id)).toStrictEqual([
+      // NOTE: These are the transformed notification ID's related to the mocked response from fetchToeristischeVerhuur.
+      // The ID's are generated in the createToeristischeVerhuurNotification and createRegistratieNotification functions.
       'vergunning-1-notification',
       'vergunning-2-notification',
       'toeristiche-verhuur-registratie-REG123-notification',
