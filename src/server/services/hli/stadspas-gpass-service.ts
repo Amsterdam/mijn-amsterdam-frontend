@@ -364,11 +364,61 @@ export async function fetchGpassDiscountTransactions(
   );
 }
 
+type PasblokkadeResponse =
+  ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>;
+
+export async function mutateGpassTogglePass(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<PasblokkadeResponse> {
+  const config = getApiConfig('GPASS', {
+    method: 'POST',
+    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
+    headers: getHeaders(administratienummer),
+    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
+    transformResponse: (pas: StadspasDetailSource) => ({
+      [pas.pasnummer]: pas.actief,
+    }),
+  });
+
+  return requestData<PasblokkadeByPasnummer>(config, requestID);
+}
+
+// RP TODO: Finish services, maybe instead of forbidden codes just return the current active status like in a success?
+export async function mutateGpassUnblockPass(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<PasblokkadeResponse> {
+  const passResponse = await fetchStadspasSource(
+    requestID,
+    passNumber,
+    administratienummer
+  );
+  if (passResponse.status !== 'OK') {
+    return passResponse;
+  }
+  // This may not give unexpected results so we do extra typechecking on the source input.
+  if (
+    typeof passResponse.content?.actief !== 'boolean' ||
+    passResponse.content.actief
+  ) {
+    return apiErrorResult(
+      'The citypass is active and cannot be unblocked again.',
+      null,
+      HttpStatusCode.Forbidden
+    );
+  }
+
+  return mutateGpassTogglePass(requestID, passNumber, administratienummer);
+}
+
 export async function mutateGpassBlockPass(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string
-): Promise<ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>> {
+): Promise<PasblokkadeResponse> {
   const passResponse = await fetchStadspasSource(
     requestID,
     passNumber,
@@ -383,26 +433,13 @@ export async function mutateGpassBlockPass(
     !passResponse.content.actief
   ) {
     return apiErrorResult(
-      'The citypass is not active. We cannot unblock an active pass.',
+      'The citypass is not active and cannot be blocked again',
       null,
       HttpStatusCode.Forbidden
     );
   }
 
-  const config = getApiConfig('GPASS', {
-    method: 'POST',
-    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
-    headers: getHeaders(administratienummer),
-    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
-    transformResponse: (pas: StadspasDetailSource) => {
-      if (pas.actief) {
-        throw Error('City pass is still active after trying to block it.');
-      }
-      return { [pas.pasnummer]: pas.actief };
-    },
-  });
-
-  return requestData<PasblokkadeByPasnummer>(config, requestID);
+  return mutateGpassTogglePass(requestID, passNumber, administratienummer);
 }
 
 export const forTesting = {

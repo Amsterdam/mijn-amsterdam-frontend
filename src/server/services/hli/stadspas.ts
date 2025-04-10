@@ -183,20 +183,13 @@ export async function blockStadspas(
   transactionsKeyEncrypted: string,
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
-  const response = await stadspasDecryptAndFetch(
+  return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) => {
       return mutateGpassBlockPass(requestID, pasnummer, administratienummer);
     },
     transactionsKeyEncrypted,
     verifySessionId
   );
-  if (
-    response.status === 'ERROR' &&
-    response.code === HttpStatusCode.Forbidden
-  ) {
-    response.message = 'Cannot block an already blocked citypass';
-  }
-  return response;
 }
 
 export async function fetchStadspasNotifications(

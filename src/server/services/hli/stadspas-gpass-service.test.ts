@@ -857,8 +857,7 @@ describe('stadspas-gpass-service', () => {
       expect(response).toStrictEqual({
         code: 403,
         content: null,
-        message:
-          'The citypass is not active. We cannot unblock an active pass.',
+        message: 'The citypass is not active and cannot be blocked again',
         status: 'ERROR',
       });
     });

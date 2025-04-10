@@ -610,35 +610,22 @@ describe('stadspas services', () => {
         apiSuccessResult({ '6012345678901': false })
       );
       const response = await blockStadspas('12345', transactionsKeyEncrypted);
-      expect(response).toMatchInlineSnapshot({
-        content: {
-          '6012345678901': false,
+      expect(response).toMatchInlineSnapshot(
+        {
+          content: {
+            '6012345678901': false,
+          },
+          status: 'OK',
         },
-        status: 'OK',
-      }, `
+        `
         {
           "content": {
             "6012345678901": false,
           },
           "status": "OK",
         }
-      `);
-    });
-
-    test('Translates forbidden error message from dependency', async () => {
-      const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
-        `another-session-id:0363000123-123:123123123`
+      `
       );
-      (mutateGpassBlockPass as Mock).mockReturnValueOnce(
-        apiErrorResult('Forbidden', null, HttpStatusCode.Forbidden)
-      );
-      const response = await blockStadspas('12345', transactionsKeyEncrypted);
-      expect(response).toStrictEqual({
-        code: 403,
-        content: null,
-        message: 'Cannot block an already blocked citypass',
-        status: 'ERROR',
-      });
     });
   });
 });
