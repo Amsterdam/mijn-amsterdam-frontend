@@ -4,6 +4,9 @@ import { ServiceID, ServicesType } from '../../server/services/controller';
 import { ThemaID } from '../config/thema';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
 
+/**
+ * @deprecated Functionality related to BagThema is deprecated and will be removed in the future.
+ */
 export type BagThema = `${ThemaID}_BAG`;
 
 export type AppState = {
@@ -45,7 +48,7 @@ export type SVGComponent = FunctionComponent<
 >;
 
 export interface MyNotification {
-  thema: ThemaID;
+  thema: string;
   datePublished: string;
   description: string;
   hideDatePublished?: boolean;

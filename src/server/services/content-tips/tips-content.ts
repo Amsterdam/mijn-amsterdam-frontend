@@ -75,7 +75,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-11-25',
     title: 'Tip: Download de 020werkt-app',
-    thema: Themas.INKOMEN,
+    thema: 'INKOMEN',
     profileTypes: ['private', 'commercial'] as ProfileType[],
     description:
       'Via de 020werkt-app krijgt u informatie  over werk, inkomen en meedoen in de wijk. De app is gratis, anoniem en makkelijk in gebruik.',
@@ -117,7 +117,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-12-20',
     title: 'Tip: Hulp bij geldproblemen',
-    thema: Themas.INKOMEN,
+    thema: 'INKOMEN',
     profileTypes: ['private', 'commercial'] as ProfileType[],
     description:
       'Is uw inkomen te laag om alle rekeningen te betalen of hebt u schulden? Meld u aan voor gratis hulp',
@@ -230,7 +230,7 @@ export const tips: ContentTipSource[] = [
     active: false,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',
-    thema: Themas.INKOMEN,
+    thema: 'INKOMEN',
     profileTypes: ['private'] as ProfileType[],
     description:
       'Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.',
@@ -311,7 +311,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-08-01',
     title: 'Tip: Sportvergoeding voor kinderen',
-    thema: Themas.INKOMEN,
+    thema: 'INKOMEN',
     profileTypes: ['private'] as ProfileType[],
     description:
       'Hebt u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
@@ -333,7 +333,7 @@ export const tips: ContentTipSource[] = [
     predicates: [hasKidsBetweenAges4And11, isMokum],
     profileTypes: ['private'] as ProfileType[],
     isNotification: true,
-    thema: Themas.INKOMEN,
+    thema: 'INKOMEN',
     description:
       'Kinderen van 4 tot en met 11 jaar kunnen van 22 juli tot en met 30 november gratis reizen met het openbaar vervoer in Amsterdam. Elk kind heeft een ov-chipkaart nodig.',
     reason:
@@ -352,7 +352,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    thema: Themas.INKOMEN,
+    thema: 'INKOMEN',
     profileTypes: ['private'] as ProfileType[],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
@@ -372,7 +372,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    thema: Themas.INKOMEN,
+    thema: 'INKOMEN',
     profileTypes: ['private'] as ProfileType[],
     description:
       'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',

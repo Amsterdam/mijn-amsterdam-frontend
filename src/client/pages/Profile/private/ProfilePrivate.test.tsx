@@ -1,6 +1,5 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { MijnGegevensThema } from './ProfilePrivate';
@@ -207,8 +206,7 @@ const panelHeadings = [
 ];
 
 describe('<Profile />', () => {
-  const routeEntry = generatePath(routes.BRP);
-  const routePath = routes.BRP;
+  const routeEntry = routes.themaPageBRP;
 
   beforeAll(() => {
     (window.matchMedia as unknown) = vi.fn(() => {
@@ -224,7 +222,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(testState())}
         />
@@ -274,7 +272,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -316,7 +314,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -348,7 +346,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -375,7 +373,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -400,7 +398,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -439,7 +437,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -466,7 +464,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -498,7 +496,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState(responseData, [
@@ -551,7 +549,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -594,7 +592,7 @@ describe('<Profile />', () => {
         return (
           <MockApp
             routeEntry={routeEntry}
-            routePath={routePath}
+            routePath={routeEntry}
             component={MijnGegevensThema}
             initializeState={initializeState(
               testState({

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, generatePath, matchPath } from 'react-router';
+import { Routes, Route, matchPath } from 'react-router';
 
 import { MyAreaRoutes } from './components/MyArea/MyArea-routest';
 import { AccessibilityRoutes } from './pages/Accessibility/Accessibility-routes';
@@ -28,59 +28,6 @@ import { VarenRoutes } from './pages/Varen/Varen-routes';
 import { VergunningenRoutes } from './pages/Vergunningen/Vergunningen-routes';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatusRoutes';
 import { ZorgRoutes } from './pages/Zorg/Zorg-routes';
-import { AppRoutes } from '../universal/config/routes';
-
-export const AppRoutesRedirect = [
-  {
-    from: '/burgerzaken/document/:id',
-    to: AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'],
-  },
-  {
-    from: '/stadspas',
-    to: AppRoutes.HLI,
-  },
-  {
-    from: '/stadspas/saldo/:pasnummer',
-    to: AppRoutes.HLI,
-  },
-  {
-    from: '/inkomen-en-stadspas/bijstandsuitkering/:id',
-    to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
-  },
-  {
-    from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'jaaropgave',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'jaaropgave',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'uitkering',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen/uitkeringsspecificaties/',
-    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-      kind: 'uitkering',
-      page: null,
-    }),
-  },
-  {
-    from: '/inkomen-en-stadspas/tozo/:version/:id',
-    to: AppRoutes['INKOMEN/TOZO'],
-  },
-  { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
-];
 
 export type ApplicationRouteConfig = {
   route: string;
@@ -132,13 +79,6 @@ const publicRoutes = routeComponents.filter((config) => config.public === true);
 function ApplicationRoutes({ routes }: { routes: ApplicationRouteConfig[] }) {
   return (
     <Routes>
-      {AppRoutesRedirect.map(({ from, to }) => (
-        <Route
-          key={from + to}
-          path={from}
-          element={<Navigate replace to={to} />}
-        />
-      ))}
       {routes.map(({ route, Component, props }) => (
         <Route
           {...(props ? props : {})}

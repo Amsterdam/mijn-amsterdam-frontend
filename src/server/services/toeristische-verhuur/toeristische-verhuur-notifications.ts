@@ -150,6 +150,17 @@ function createRegistratieNotification(
   };
 }
 
+function hasNotification(
+  vergunning: ToeristischeVerhuurVergunning,
+  compareToDate: Date
+) {
+  return (
+    !vergunning.processed ||
+    (!!vergunning.dateDecision &&
+      isRecentNotification(vergunning.dateDecision, compareToDate))
+  );
+}
+
 export async function fetchToeristischeVerhuurNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
@@ -164,19 +175,22 @@ export async function fetchToeristischeVerhuurNotifications(
 
   const vakantieverhuurVergunningen =
     TOERISTISCHE_VERHUUR.content.vakantieverhuurVergunningen ?? [];
-  const vakantieverhuurVergunningNotifications =
-    vakantieverhuurVergunningen.map((vergunning) =>
-      createToeristischeVerhuurNotification(vergunning)
-    );
+  const vakantieverhuurVergunningNotifications = vakantieverhuurVergunningen
+    .filter((vergunning) => hasNotification(vergunning, compareToDate))
+    .map((vergunning) => createToeristischeVerhuurNotification(vergunning));
   const bbVergunningen = TOERISTISCHE_VERHUUR.content.bbVergunningen ?? [];
-  const vergunningNotifications = bbVergunningen.map((vergunning) =>
-    createToeristischeVerhuurNotification(vergunning)
-  );
+  const vergunningNotifications = bbVergunningen
+    .filter((vergunning) => hasNotification(vergunning, compareToDate))
+    .map((vergunning) => createToeristischeVerhuurNotification(vergunning));
 
   const registrationsNotifications =
-    TOERISTISCHE_VERHUUR.content.lvvRegistraties?.map(
-      createRegistratieNotification
-    ) ?? [];
+    TOERISTISCHE_VERHUUR.content.lvvRegistraties
+      ?.filter(
+        (registratie) =>
+          !!registratie.agreementDate &&
+          isRecentNotification(registratie.agreementDate, compareToDate)
+      )
+      ?.map(createRegistratieNotification) ?? [];
 
   const notifications = [
     ...vakantieverhuurVergunningNotifications,
@@ -184,13 +198,7 @@ export async function fetchToeristischeVerhuurNotifications(
     ...registrationsNotifications,
   ];
 
-  const actualNotifications = notifications.filter(
-    (notification) =>
-      !!notification.datePublished &&
-      isRecentNotification(notification.datePublished, compareToDate)
-  );
-
   return apiSuccessResult({
-    notifications: actualNotifications,
+    notifications,
   });
 }

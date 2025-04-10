@@ -1,20 +1,30 @@
-import { generatePath } from 'react-router';
+import { generatePath, PathMatch } from 'react-router';
 
 import {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
 } from '../../../server/services/wpi/wpi-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../components/Table/TableV2';
+} from '../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { TrackingConfig } from '../../config/routes';
+import { ThemaRoutesConfig } from '../../config/thema-types';
+import {
+  toRoutes,
+  toDocumentTitles,
+  toCustomTrackingUrls,
+} from '../../helpers/themas';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
+
+export const themaId = { INKOMEN: 'INKOMEN' } as const;
+export type ProfileThemaID = (typeof themaId)[keyof typeof themaId];
+
+export const themaTitle = 'Inkomen';
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
   'besluit',
@@ -30,22 +40,47 @@ export const listPageParamKind = {
   jaaropgaven: 'jaaropgaven',
 } as const;
 
-const inkomenSpecificaties = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-  kind: listPageParamKind.uitkering,
-  page: null,
-});
+const routeConfig = {
+  detailPageUitkering: {
+    path: '/inkomen/bijstandsuitkering/:id',
+    trackingUrl: '/inkomen/bijstandsuitkering',
+    documentTitle: `Bijstandsuitkering | ${themaTitle}`,
+  },
+  detailPageTozo: {
+    path: '/inkomen/tozo/:version/:id',
+    trackingUrl: (match: PathMatch) => {
+      return `/inkomen/tozo/${match.params?.version}`;
+    },
+    documentTitle: `Tozo | ${themaTitle}`,
+  },
+  detailPageTonk: {
+    path: '/inkomen/tonk/:version/:id',
+    documentTitle: `TONK | ${themaTitle}`,
+  },
+  detailPageBbz: {
+    path: '/inkomen/bbz/:version/:id',
+    trackingUrl: `/inkomen/bbz`,
+    documentTitle: `Bbz | ${themaTitle}`,
+  },
+  listPageSpecificaties: {
+    path: '/inkomen/lijst/specificaties/:kind/:page?',
+    documentTitle: (_, params) =>
+      `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/inkomen/lijst/:kind/:page?',
+    documentTitle: (_, params) =>
+      `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${themaTitle}`,
+  },
+  themaPage: {
+    path: '/inkomen',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
-const jaaropgaven = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-  kind: listPageParamKind.jaaropgaven,
-  page: null,
-});
-
-export const routes = {
-  themaPage: AppRoutes.INKOMEN,
-  listPage: AppRoutes['INKOMEN/LIST'],
-  listPageSpecificaties: inkomenSpecificaties,
-  listPageJaaropgaven: jaaropgaven,
-} as const;
+export const routes = toRoutes(routeConfig);
+export const documentTitles = toDocumentTitles(routeConfig);
+export const customTrackingUrls = toCustomTrackingUrls(routeConfig);
 
 const lopendeAanvragenDisplayPropsBase: DisplayProps<
   WithDetailLinkComponent<WpiRequestProcess>
@@ -125,7 +160,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.lopend,
-      page: null,
+      page: ':page?',
     }),
   },
   [listPageParamKind.eerder]: {
@@ -139,7 +174,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.eerder,
-      page: null,
+      page: ':page?',
     }),
   },
 } as const;
@@ -149,19 +184,25 @@ export const tableConfigSpecificaties = {
     title: 'Uitkeringsspecificaties',
     displayProps: specificatiesTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: routes.listPageSpecificaties,
+    listPageRoute: generatePath(routes.listPageSpecificaties, {
+      kind: listPageParamKind.uitkering,
+      page: ':page?',
+    }),
   },
   [listPageParamKind.jaaropgaven]: {
     title: 'Jaaropgaven',
     displayProps: jaaropgavenTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: routes.listPageJaaropgaven,
+    listPageRoute: generatePath(routes.listPageSpecificaties, {
+      kind: listPageParamKind.jaaropgaven,
+      page: ':page?',
+    }),
   },
 } as const;
 
 export function getInkomenListPageDocumentTitle(themaTitle: string) {
   return <T extends Record<string, string>>(
-    config: TrackingConfig,
+    _config: TrackingConfig,
     params: T | null
   ) => {
     const kind = params?.kind as Exclude<
@@ -173,17 +214,15 @@ export function getInkomenListPageDocumentTitle(themaTitle: string) {
       : themaTitle;
   };
 }
+
 export function getInkomenSpecificatiesListPageDocumentTitle(
-  themaTitle: string
+  themaTitle: string,
+  kind: Exclude<ListPageParamKind, 'lopende-aanvragen' | 'eerdere-aanvragen'>
 ) {
   return <T extends Record<string, string>>(
-    config: TrackingConfig,
-    params: T | null
+    _config: TrackingConfig,
+    _params: T | null
   ) => {
-    const kind = params?.kind as Exclude<
-      ListPageParamKind,
-      'lopende-aanvragen' | 'eerdere-aanvragen'
-    >;
     return kind in tableConfigSpecificaties
       ? `${tableConfigSpecificaties[kind].title} | ${themaTitle}`
       : themaTitle;

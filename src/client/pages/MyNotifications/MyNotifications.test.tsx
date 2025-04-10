@@ -55,13 +55,12 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<MyNotifications />', () => {
   const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
-  const routePath = AppRoutes.NOTIFICATIONS;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routePath}
+        routePath={routeEntry}
         component={MyNotificationsPage}
         initializeState={initializeState}
       />

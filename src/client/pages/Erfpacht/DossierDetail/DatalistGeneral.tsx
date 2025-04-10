@@ -23,7 +23,7 @@ export function DatalistGeneral({
       content: <AddressDisplayAndModal address={dossier.voorkeursadres} />,
     },
     {
-      label: dossier.titelKadastraleaanduiding,
+      label: dossier.titelKadastraleAanduiding,
       content: (
         <KadastraleAanduidingList
           kadastraleaanduidingen={dossier.kadastraleaanduidingen}

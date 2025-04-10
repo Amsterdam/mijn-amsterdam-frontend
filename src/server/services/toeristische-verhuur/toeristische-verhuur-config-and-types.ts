@@ -88,17 +88,16 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
        * Vakantieverhuur vergunningen worden na betaling direct verleend en per mail toegekend zonder dat de juiste status in Decos wordt gezet.
        * Later, na controle, wordt mogelijk de vergunning weer ingetrokken.
        */
-      if (vergunning.decision) {
-        vergunning.decision = vergunning.decision
-          .toLowerCase()
-          .includes('ingetrokken')
-          ? 'Ingetrokken'
-          : 'Verleend';
-      }
-
-      // Vakantieverhuur vergunningen worden direct verleend (en dus voor Mijn Amsterdam afgehandeld)
       vergunning.status = 'Afgehandeld';
       vergunning.processed = true;
+      vergunning.decision = 'Verleend';
+      vergunning.dateDecision = !vergunning.dateDecision
+        ? vergunning.dateRequest
+        : vergunning.dateDecision;
+
+      if (vergunning.decision.toLowerCase().includes('ingetrokken')) {
+        vergunning.decision = 'Ingetrokken';
+      }
 
       return vergunning;
     },
