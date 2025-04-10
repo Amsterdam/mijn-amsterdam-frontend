@@ -209,6 +209,7 @@ const Straatartiesten: DecosZaakTransformer<Straatartiesten> = {
   title: caseTypeVergunningen.Straatartiesten,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    subject1: 'category',
     date6: dateStart,
     date7: dateEnd,
     text6: location,
