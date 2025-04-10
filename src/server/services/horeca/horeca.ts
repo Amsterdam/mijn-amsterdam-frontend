@@ -5,7 +5,7 @@ import {
 } from './config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -81,7 +81,7 @@ export async function fetchHorecaNotifications(
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content ?? [],
       decosZaakTransformers,
-      Themas.HORECA
+      ThemaIDs.HORECA
     );
 
     return apiSuccessResult({

@@ -8,7 +8,7 @@ import {
 import { fetchVaren } from './varen';
 import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiErrorResult,
   ApiResponse,
@@ -24,7 +24,7 @@ function createVarenRederRegisteredNotification(
   return {
     id: `varen-${zaak.id}-reder-notification`,
     datePublished: zaak.dateRequest,
-    thema: Themas.VAREN,
+    thema: ThemaIDs.VAREN,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
     link: {
@@ -53,7 +53,7 @@ function createVarenNotification(
 
   const baseNotification = {
     datePublished: currentStep.datePublished,
-    thema: Themas.VAREN,
+    thema: ThemaIDs.VAREN,
     link: {
       to: ctaLinkToThemaOrDetail,
       title: 'Bekijk details',

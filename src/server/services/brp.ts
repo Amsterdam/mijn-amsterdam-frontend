@@ -7,7 +7,7 @@ import {
   themaId,
 } from '../../client/pages/Profile/Profile-thema-config';
 import { AppRoutes } from '../../universal/config/routes';
-import { Themas } from '../../universal/config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
@@ -90,7 +90,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: Themas.BURGERZAKEN,
+        thema: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         hideDatePublished: true,
         isAlert: true,
@@ -112,7 +112,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: Themas.BURGERZAKEN,
+        thema: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         id: `${document.documentType}-datum-afloop-binnenkort`,
@@ -133,7 +133,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: Themas.BURGERZAKEN,
+        thema: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         hideDatePublished: true,

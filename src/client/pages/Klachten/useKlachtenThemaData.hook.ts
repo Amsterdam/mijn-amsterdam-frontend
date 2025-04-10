@@ -6,7 +6,7 @@ import {
   routes,
 } from './Klachten-thema-config';
 import type { Klacht } from '../../../server/services/klachten/types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
@@ -23,7 +23,7 @@ export function useKlachtenThemaData() {
     (klacht) => `Bekijk meer over klacht ${klacht.id}`
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.KLACHTEN);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.KLACHTEN);
 
   return {
     klachten,

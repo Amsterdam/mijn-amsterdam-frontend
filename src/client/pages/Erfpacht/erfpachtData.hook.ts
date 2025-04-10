@@ -5,7 +5,7 @@ import {
   routes,
 } from './Erfpacht-thema-config';
 import { ErfpachtDossiersResponse } from '../../../server/services/erfpacht/erfpacht';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
@@ -24,7 +24,7 @@ export function useErfpachtThemaData() {
     'voorkeursadres'
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.ERFPACHT);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.ERFPACHT);
 
   // Facturen
   const openFacturenBase = erfpachtData?.openstaandeFacturen ?? null;

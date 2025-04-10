@@ -1,6 +1,6 @@
 import { AxiosResponseTransformer } from 'axios';
 
-import { ThemaID } from '../../../universal/config/thema';
+import { type ThemaID } from '../../../universal/config/thema';
 import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,

@@ -5,7 +5,7 @@ import {
   tableConfig,
 } from './toeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -92,7 +92,7 @@ export function useToeristischeVerhuurThemaData() {
     });
   }
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.TOERISTISCHE_VERHUUR);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.TOERISTISCHE_VERHUUR);
 
   return {
     vergunningen,

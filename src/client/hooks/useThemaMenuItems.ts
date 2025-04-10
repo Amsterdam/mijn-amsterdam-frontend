@@ -5,7 +5,7 @@ import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-import { ThemaID } from '../../universal/config/thema';
+import { type ThemaID } from '../../universal/config/thema';
 import { LinkProps } from '../../universal/types';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema-types';
