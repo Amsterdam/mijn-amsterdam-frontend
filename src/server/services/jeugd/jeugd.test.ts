@@ -1,6 +1,6 @@
 import { Mock } from 'vitest';
 
-import { fetchJeugd } from './jeugd';
+import { fetchLeerlingenvervoer } from './jeugd';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
@@ -113,7 +113,10 @@ test('Succes Response is formatted correctly', async () => {
     status: 'OK',
   });
 
-  const response = await fetchJeugd(REQUEST_ID, AUTH_PROFILE_AND_TOKEN);
+  const response = await fetchLeerlingenvervoer(
+    REQUEST_ID,
+    AUTH_PROFILE_AND_TOKEN
+  );
   const first = response.content![0];
 
   const expected = {
@@ -196,7 +199,10 @@ test('Succes Response is formatted correctly', async () => {
 
 test('Returns error response "as is" from fetchAanvragen', async () => {
   (fetchAanvragen as Mock).mockResolvedValueOnce(apiErrorResult('', null, 404));
-  const response = await fetchJeugd(REQUEST_ID, AUTH_PROFILE_AND_TOKEN);
+  const response = await fetchLeerlingenvervoer(
+    REQUEST_ID,
+    AUTH_PROFILE_AND_TOKEN
+  );
   expect(response).toStrictEqual({
     code: 404,
     content: null,

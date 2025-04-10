@@ -17,12 +17,12 @@ import {
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types';
 
-export async function fetchJeugd(
+export async function fetchLeerlingenvervoer(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<LeerlingenvervoerVoorzieningFrontend[]>> {
   const aanvragenResponse = await fetchAanvragen(
-    requestID,
+    `LLV-${requestID}`,
     authProfileAndToken,
     {
       zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',

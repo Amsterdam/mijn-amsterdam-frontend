@@ -49,7 +49,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchJeugd } from './jeugd/jeugd';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -138,7 +138,7 @@ const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
 const VAREN = callAuthenticatedService(fetchVaren);
 const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
 const WMO = callAuthenticatedService(fetchWmo);
-const JEUGD = callAuthenticatedService(fetchJeugd);
+const JEUGD = callAuthenticatedService(fetchLeerlingenvervoer);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);
 const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
