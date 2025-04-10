@@ -11,43 +11,49 @@ export function AanbiedenDienstenEnStraatartiestenContent({
 }: {
   vergunning: VergunningFrontend<AanbiedenDiensten | Straatartiesten>;
 }) {
-  const rows = getRows(vergunning, ['identifier', 'decision']);
+  const waarvoor = () =>
+    vergunning.caseType == 'Straatartiesten' && vergunning.category
+      ? {
+          label: 'Waarvoor',
+          content: vergunning.category,
+        }
+      : null;
 
-  if (vergunning.caseType == 'Straatartiesten') {
-    rows.push({
-      label: 'Waarvoor',
-      content: vergunning.category,
-    });
-  }
-
-  if (
+  const op = () =>
     vergunning.decision === 'Verleend' &&
     (vergunning.dateEnd == null || vergunning.dateStart === vergunning.dateEnd)
-  ) {
-    rows.push({
-      label: 'Op',
-      content: vergunning.dateStartFormatted,
-    });
-  }
+      ? {
+          label: 'Op',
+          content: vergunning.dateStartFormatted,
+        }
+      : null;
 
-  if (
+  const vanTot = () =>
     vergunning.decision === 'Verleend' &&
     vergunning.dateEnd !== null &&
     vergunning.dateStart !== vergunning.dateEnd
-  ) {
-    rows.push({
-      rows: [
-        {
-          label: 'Van',
-          content: vergunning.dateStartFormatted,
-        },
-        {
-          label: 'Tot',
-          content: vergunning.dateEndFormatted,
-        },
-      ],
-    });
-  }
+      ? {
+          rows: [
+            {
+              label: 'Van',
+              content: vergunning.dateStartFormatted,
+            },
+            {
+              label: 'Tot',
+              content: vergunning.dateEndFormatted,
+            },
+          ],
+        }
+      : null;
+
+  const rows = getRows(vergunning, [
+    'identifier',
+    { waarvoor },
+    'location',
+    { op },
+    { vanTot },
+    'decision',
+  ]);
 
   return <Datalist rows={rows} />;
 }
