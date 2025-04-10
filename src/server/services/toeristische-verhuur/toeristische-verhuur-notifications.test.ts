@@ -32,6 +32,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             identifier: '12345',
             decision: 'Verleend',
             dateEnd: '2025-12-31',
+            dateRequest: '2025-01-01',
             processed: false,
             steps: [],
           },
@@ -43,6 +44,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
             identifier: '67890',
             decision: 'Verleend',
             dateEnd: '2025-12-31',
+            dateRequest: '2025-01-01',
             processed: false,
             steps: [],
           },
@@ -64,7 +66,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
     expect(result.content.notifications).toHaveLength(3);
     expect(result.content.notifications).toStrictEqual([
       {
-        datePublished: '',
+        datePublished: '2025-01-01',
         description:
           'Wij hebben uw aanvraag voor een vakantie met gemeentelijk zaaknummer 12345 in behandeling.',
         id: 'vergunning-1-notification',
@@ -76,7 +78,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
         title: 'Aanvraag vakantie in behandeling',
       },
       {
-        datePublished: '',
+        datePublished: '2025-01-01',
         description:
           'Wij hebben uw aanvraag voor een bed & breakfast met gemeentelijk zaaknummer 67890 in behandeling.',
         id: 'vergunning-2-notification',
