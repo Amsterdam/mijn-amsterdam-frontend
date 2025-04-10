@@ -1,13 +1,14 @@
 import { PathMatch } from 'react-router';
 
 import { TrackingConfig } from './routes';
+import { ThemaID } from '../../universal/config/thema';
 import { SomeOtherString } from '../../universal/helpers/types';
 import { AppState, LinkProps, SVGComponent } from '../../universal/types';
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
 export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
-  id: string;
+  id: ThemaID;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
