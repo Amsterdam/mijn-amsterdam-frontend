@@ -40,6 +40,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { isExpired } from '../decos/decos-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
@@ -234,10 +235,7 @@ function transformZaakStatusResponse(
     isChecked: true,
   };
 
-  const isVerlopen =
-    zaak.decision === 'Verleend' && zaak.dateEnd
-      ? isDateInPast(zaak.dateEnd, new Date())
-      : false;
+  const isVerlopen = zaak.isExpired;
   const hasInBehandeling = !!datumInBehandeling;
   const hasDecision = !!zaak.decision && !!dateDecision;
   const hasMeerInformatieNodig = !!datumMeerInformatie;
@@ -496,6 +494,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     },
     title,
     processed: !!decision,
+    isExpired: isExpired(pbZaak.dateEnd),
 
     // Added after initial transform
     location: null,
