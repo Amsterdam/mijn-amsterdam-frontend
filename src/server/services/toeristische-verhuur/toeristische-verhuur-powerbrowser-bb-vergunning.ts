@@ -162,9 +162,9 @@ function getFieldValue(
 
 function getZaakStatus(
   zaak: BBVergunning
-): BBVergunning['status'] | BBVergunning['decision'] {
+): BBVergunning['displayStatus'] | BBVergunning['decision'] {
   const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
-    ?.status as BBVergunning['status'];
+    ?.status as BBVergunning['displayStatus'];
 
   if (lastStepStatus !== 'Verlopen' && zaak.decision) {
     return zaak.decision;
@@ -402,8 +402,7 @@ async function fetchAndMergeZaakStatussen(
         ? statussenResponse.content
         : zaak.steps;
 
-    zaak.status = getZaakStatus(zaak);
-    zaak.displayStatus = zaak.status;
+    zaak.displayStatus = getZaakStatus(zaak);
 
     zakenWithstatussen.push(zaak);
   }
@@ -498,7 +497,6 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
 
     // Added after initial transform
     location: null,
-    status: 'Ontvangen',
     displayStatus: 'Ontvangen',
     documents: [],
     steps: [],
