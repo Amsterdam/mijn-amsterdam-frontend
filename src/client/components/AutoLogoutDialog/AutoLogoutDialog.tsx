@@ -188,8 +188,7 @@ export function AutoLogoutDialog({
     return null;
   }
 
-  const continueLink =
-    profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING;
+  const continueLink = `${profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING}?returnTo=mams-frontend-route&route=${window.location.pathname}`;
   const logoutLink = LOGOUT_URL;
   const logoutLabel = continueButtonIsVisible
     ? 'Nu uitloggen'
