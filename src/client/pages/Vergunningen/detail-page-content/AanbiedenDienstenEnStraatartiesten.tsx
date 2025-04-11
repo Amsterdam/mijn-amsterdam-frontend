@@ -21,7 +21,8 @@ export function AanbiedenDienstenEnStraatartiestenContent({
 
   const op = () =>
     vergunning.decision === 'Verleend' &&
-    (vergunning.dateEnd == null || vergunning.dateStart === vergunning.dateEnd)
+    vergunning.dateStart &&
+    (!vergunning.dateEnd || vergunning.dateStart === vergunning.dateEnd)
       ? {
           label: 'Op',
           content: vergunning.dateStartFormatted,
@@ -49,6 +50,14 @@ export function AanbiedenDienstenEnStraatartiestenContent({
   const rows = getRows(vergunning, [
     'identifier',
     { waarvoor },
+    {
+      stadsdeel: (vergunning) => {
+        return {
+          label: 'Stadsdeel',
+          content: vergunning.stadsdeel,
+        };
+      },
+    },
     {
       location: (vergunning) => {
         const location = commonTransformers.location(vergunning);
