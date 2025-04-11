@@ -60,13 +60,16 @@ export function getReturnToUrl(
       return defaultReturnTo;
   }
 }
-
-export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
-  const searchParams =
+export function getZaakStatusQueryParams(queryParams?: ParsedQs) {
+  const params =
     queryParams?.id && queryParams?.thema
-      ? `?id=${queryParams.id}&thema=${queryParams.thema}`
+      ? `?id=${queryParams.id}&thema=${queryParams.thema}${queryParams.payment ? '&payment=true' : ''}`
       : '';
-  const redirectUrl = `${process.env.MA_FRONTEND_URL}${AppRoutes.ZAAK_STATUS}${searchParams}`;
+  return params;
+}
+export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
+  const params = getZaakStatusQueryParams(queryParams);
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}${AppRoutes.ZAAK_STATUS}${params}`;
   return redirectUrl;
 }
 
