@@ -313,14 +313,14 @@ const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
   };
 
 export const decosCaseToZaakTransformers = {
-  [caseTypeParkeren.GPP]: GPP,
-  [caseTypeParkeren.GPK]: GPK,
-  [caseTypeParkeren.BZP]: BZP,
-  [caseTypeParkeren.BZB]: BZB,
-  [caseTypeParkeren.EigenParkeerplaats]: EigenParkeerplaats,
-  [caseTypeParkeren.EigenParkeerplaatsOpheffen]: EigenParkeerplaatsOpheffen,
-  [caseTypeParkeren.TouringcarDagontheffing]: TouringcarDagontheffing,
-  [caseTypeParkeren.TouringcarJaarontheffing]: TouringcarJaarontheffing,
+  [GPP.caseType]: GPP,
+  [GPK.caseType]: GPK,
+  [BZP.caseType]: BZP,
+  [BZB.caseType]: BZB,
+  [EigenParkeerplaats.caseType]: EigenParkeerplaats,
+  [EigenParkeerplaatsOpheffen.caseType]: EigenParkeerplaatsOpheffen,
+  [TouringcarDagontheffing.caseType]: TouringcarDagontheffing,
+  [TouringcarJaarontheffing.caseType]: TouringcarJaarontheffing,
 } as const;
 
 export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);
