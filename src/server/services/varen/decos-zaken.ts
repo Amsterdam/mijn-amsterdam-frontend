@@ -138,6 +138,7 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
     ...VarenBaseExploitatieVergunning,
     transformFields: {
       ...VarenBaseExploitatieVergunning.transformFields,
+      text33: 'vesselName',
       text18: 'vesselNameNew',
     },
   };
@@ -169,6 +170,7 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
     ...VarenBaseExploitatieVergunning,
     transformFields: {
       ...VarenBaseExploitatieVergunning.transformFields,
+      text33: 'vesselName',
       text18: 'vesselNameNew',
     },
   };
