@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import {
   AanbiedenDiensten,
   Straatartiesten,
@@ -49,7 +49,15 @@ export function AanbiedenDienstenEnStraatartiestenContent({
   const rows = getRows(vergunning, [
     'identifier',
     { waarvoor },
-    'location',
+    {
+      location: (vergunning) => {
+        const location = commonTransformers.location(vergunning);
+        return {
+          content: location && 'content' in location ? location.content : '-',
+          label: 'Locatie',
+        };
+      },
+    },
     { op },
     { vanTot },
     'decision',
