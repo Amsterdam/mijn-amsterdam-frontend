@@ -84,6 +84,8 @@ export type AanbiedenDiensten = DecosZaakBase &
   WithLocation &
   WithDateRange & {
     caseType: GetCaseType<'AanbiedenDiensten'>;
+    category: string | null;
+    stadsdeel: string | null;
   };
 
 export type Straatartiesten = DecosZaakBase &
@@ -91,6 +93,7 @@ export type Straatartiesten = DecosZaakBase &
   WithDateRange & {
     caseType: GetCaseType<'Straatartiesten'>;
     category: string | null;
+    stadsdeel: string | null;
   };
 
 export type Nachtwerkontheffing = DecosZaakBase &

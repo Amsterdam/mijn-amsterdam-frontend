@@ -196,6 +196,8 @@ const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
   title: caseTypeVergunningen.AanbiedenDiensten,
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    subject1: 'category',
+    firstname: 'stadsdeel',
     date6: dateStart,
     date7: dateEnd,
     text6: location,
@@ -210,6 +212,7 @@ const Straatartiesten: DecosZaakTransformer<Straatartiesten> = {
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     subject1: 'category',
+    firstname: 'stadsdeel',
     date6: dateStart,
     date7: dateEnd,
     text6: location,
