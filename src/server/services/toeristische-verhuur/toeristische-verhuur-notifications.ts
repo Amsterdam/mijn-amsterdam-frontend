@@ -83,7 +83,7 @@ export function createToeristischeVerhuurNotification(
         datePublished = vergunning.dateEnd;
         break;
       // B&B only
-      case vergunning.status === 'Ontvangen':
+      case vergunning.displayStatus === 'Ontvangen':
         title = `Aanvraag ${vergunningTitleLower} ontvangen`;
         description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} ontvangen.`;
         cta = 'Bekijk uw aanvraag';
@@ -91,7 +91,7 @@ export function createToeristischeVerhuurNotification(
         datePublished = vergunning.dateRequest ?? '';
         break;
       // B&B only
-      case vergunning.status === 'Meer informatie nodig':
+      case vergunning.displayStatus === 'Meer informatie nodig':
         title = `Aanvraag ${vergunningTitleLower}: meer informatie nodig`;
         description = `Wij hebben meer informatie en tijd nodig om uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} te behandelen.`;
         cta = 'Bekijk uw aanvraag';
