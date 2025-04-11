@@ -44,7 +44,8 @@ function getDebugResponseData(conf: AxiosRequestConfig) {
   };
 }
 
-const debugResponseDataTerms = process.env.DEBUG_RESPONSE_DATA?.split(',');
+const debugResponseDataTerms =
+  process.env.DEBUG_RESPONSE_DATA?.split(',') ?? [];
 
 export const cache = new memoryCache.Cache<string, any>();
 
@@ -105,14 +106,11 @@ export async function requestData<T>(
 
   // Log/Debug the untransformed response data
   if (
-    debugResponseDataTerms?.some((term) => {
-      if (!term) {
-        return false;
-      }
-      const hasTermInRequestUrl = requestConfig.url?.includes(term.trim());
+    debugResponseDataTerms.filter(Boolean).some((term) => {
+      const hasTermInRequestUrl = !!requestConfig.url?.includes(term.trim());
       const hasTermInRequestParams = requestConfig.params
         ? JSON.stringify(requestConfig.params).includes(term.trim())
-        : [];
+        : false;
 
       return hasTermInRequestUrl || hasTermInRequestParams;
     }) &&
