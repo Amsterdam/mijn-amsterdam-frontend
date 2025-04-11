@@ -1,15 +1,9 @@
-import { Entries } from 'type-fest';
-
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { Themas } from '../../universal/config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import {
-  ThemaMenuItem,
-  ThemaRouteConfig,
-  ThemaRoutesConfig,
-} from '../config/thema-types';
+import { ThemaMenuItem } from '../config/thema-types';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -41,18 +35,18 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
   switch (item.id) {
-    case Themas.AFIS: {
+    case ThemaIDs.AFIS: {
       return FeatureToggle.afisActive && AFIS?.content?.isKnown;
     }
 
-    case Themas.SVWI:
+    case ThemaIDs.SVWI:
       return (
         isAmsterdam &&
         FeatureToggle.svwiLinkActive &&
         SVWI?.content?.isKnown === true
       );
 
-    case Themas.HLI: {
+    case ThemaIDs.HLI: {
       const hasStadspas =
         !!HLI?.content?.stadspas?.length &&
         FeatureToggle.hliThemaStadspasActive;
@@ -67,14 +61,14 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.ZORG:
+    case ThemaIDs.ZORG:
       return (
         FeatureToggle.zorgv2ThemapaginaActive &&
         !isLoading(WMO) &&
         !!WMO.content?.length
       );
 
-    case Themas.BELASTINGEN: {
+    case ThemaIDs.BELASTINGEN: {
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =
         FeatureToggle.belastingApiActive && BELASTINGEN?.status === 'OK'
@@ -83,13 +77,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(BELASTINGEN) && belastingenActive;
     }
 
-    case Themas.MILIEUZONE:
+    case ThemaIDs.MILIEUZONE:
       return (
         !isLoading(MILIEUZONE) &&
         (FeatureToggle.cleopatraApiActive ? MILIEUZONE.content?.isKnown : false)
       );
 
-    case Themas.OVERTREDINGEN:
+    case ThemaIDs.OVERTREDINGEN:
       return (
         !isLoading(OVERTREDINGEN) &&
         (FeatureToggle.cleopatraApiActive && FeatureToggle.overtredingenActive
@@ -97,7 +91,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
           : false)
       );
 
-    case Themas.AFVAL:
+    case ThemaIDs.AFVAL:
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
@@ -105,7 +99,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         isAmsterdam
       );
 
-    case Themas.ERFPACHT:
+    case ThemaIDs.ERFPACHT:
       return (
         FeatureToggle.erfpachtActive &&
         !isLoading(ERFPACHT) &&
@@ -115,10 +109,10 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
           !!ERFPACHT.content?.isKnown)
       );
 
-    case Themas.SUBSIDIE:
+    case ThemaIDs.SUBSIDIE:
       return !isLoading(SUBSIDIE) && SUBSIDIE.content?.isKnown === true;
 
-    case Themas.BURGERZAKEN: {
+    case ThemaIDs.BURGERZAKEN: {
       const hasIdentiteitsbewijs = !!BRP?.content?.identiteitsbewijzen?.length;
       return (
         FeatureToggle.identiteitsbewijzenActive &&
@@ -127,10 +121,10 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.VERGUNNINGEN:
+    case ThemaIDs.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 
-    case Themas.TOERISTISCHE_VERHUUR: {
+    case ThemaIDs.TOERISTISCHE_VERHUUR: {
       const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
         TOERISTISCHE_VERHUUR?.content ?? {};
       const hasRegistraties = !!lvvRegistraties?.length;
@@ -141,10 +135,10 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.KREFIA:
+    case ThemaIDs.KREFIA:
       return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks.length;
 
-    case Themas.PARKEREN: {
+    case ThemaIDs.PARKEREN: {
       const hasDecosParkeerVergunningen =
         !!appState.PARKEREN?.content?.vergunningen?.length;
 
@@ -155,42 +149,42 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.KLACHTEN:
+    case ThemaIDs.KLACHTEN:
       return (
         !isLoading(KLACHTEN) &&
         !!KLACHTEN?.content?.klachten.length &&
         FeatureToggle.klachtenActive
       );
 
-    case Themas.BEZWAREN:
+    case ThemaIDs.BEZWAREN:
       return (
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
       );
 
-    case Themas.VAREN:
+    case ThemaIDs.VAREN:
       return (
         !isLoading(VAREN) &&
         (!!VAREN?.content?.reder || !!VAREN?.content?.zaken?.length) &&
         FeatureToggle.varenActive
       );
 
-    case Themas.HORECA:
+    case ThemaIDs.HORECA:
       return (
         !isLoading(HORECA) &&
         !!HORECA?.content?.length &&
         FeatureToggle.horecaActive
       );
 
-    case Themas.AVG:
+    case ThemaIDs.AVG:
       return (
         !isLoading(AVG) &&
         !!AVG?.content?.verzoeken?.length &&
         FeatureToggle.avgActive
       );
 
-    case Themas.BODEM:
+    case ThemaIDs.BODEM:
       return (
         !isLoading(BODEM) &&
         !!BODEM?.content?.metingen?.length &&
@@ -212,51 +206,4 @@ export function getThemaMenuItemsAppState(
     )
     .map(({ id }) => appState[id as AppStateKey])
     .filter((apiState) => !!apiState);
-}
-
-export function toMapped<
-  T extends ThemaRoutesConfig,
-  K extends keyof ThemaRouteConfig,
->(routeConfig: T, configKey: K) {
-  const routeEntries = Object.entries(routeConfig) as Entries<
-    typeof routeConfig
-  >;
-  type RC = typeof routeConfig;
-  type RCK = keyof RC;
-
-  return Object.fromEntries(
-    routeEntries.map(([routeKey, config]) => {
-      const routeConfigValue = config[configKey];
-      return [routeKey, routeConfigValue];
-    })
-  ) as Record<RCK, ThemaRouteConfig[K]>;
-}
-
-export function toMappedByPath<
-  T extends ThemaRoutesConfig,
-  K extends keyof ThemaRouteConfig,
->(routeConfig: T, configKey: K) {
-  const routeEntries = Object.entries(routeConfig) as Entries<
-    typeof routeConfig
-  >;
-  return Object.fromEntries(
-    routeEntries.map(([_routeKey, config]) => {
-      const routeConfigValue = config[configKey];
-      return [config.path, routeConfigValue];
-    })
-  );
-}
-
-export function toRoutes<T extends ThemaRoutesConfig>(routeConfig: T) {
-  return toMapped(routeConfig, 'path');
-}
-
-export function toDocumentTitles<T extends ThemaRoutesConfig>(routeConfig: T) {
-  return toMappedByPath(routeConfig, 'documentTitle');
-}
-
-export function toCustomTrackingUrls<T extends ThemaRoutesConfig>(
-  routeConfig: T
-) {
-  return toMappedByPath(routeConfig, 'trackingUrl');
 }

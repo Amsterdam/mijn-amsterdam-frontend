@@ -10,7 +10,7 @@ import { decosZaakTransformers } from './decos-zaken';
 import { fetchVergunningen } from './vergunningen';
 import { isNearEndDate } from './vergunningen-helpers';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaID, Themas } from '../../../universal/config/thema';
+import { ThemaID, ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -152,7 +152,7 @@ export async function fetchVergunningenNotifications(
     const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
       decosZaakTransformers,
-      Themas.VERGUNNINGEN
+      ThemaIDs.VERGUNNINGEN
     );
 
     return apiSuccessResult({

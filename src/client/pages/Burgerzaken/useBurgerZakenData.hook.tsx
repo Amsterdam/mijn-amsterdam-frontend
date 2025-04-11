@@ -1,5 +1,5 @@
 import { tableConfig, linkListItems, routes } from './BurgerZaken-thema-config';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -14,7 +14,7 @@ export function useBurgerZakenData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.BURGERZAKEN);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.BURGERZAKEN);
 
   return {
     tableConfig,

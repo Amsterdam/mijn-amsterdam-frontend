@@ -1,9 +1,7 @@
-import { SomeOtherString } from '../helpers/types';
+import { themaId as inkomenThemaId } from '../../client/pages/Inkomen/Inkomen-thema-config';
+import { themaId as profileThemaId } from '../../client/pages/Profile/Profile-thema-config';
 
-/**
- * @deprecated Use the thema ID's  specified in the Thema-config files instead.
- */
-export const Themas = {
+export const ThemaIDs = {
   AFIS: 'AFIS',
   AFVAL: 'AFVAL',
   AVG: 'AVG',
@@ -29,9 +27,8 @@ export const Themas = {
   VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
+  ...inkomenThemaId,
+  ...profileThemaId,
 } as const;
 
-/**
- * @deprecated Use the thema ID's  specified in the Thema-config files instead.
- */
-export type ThemaID = (typeof Themas)[keyof typeof Themas] | SomeOtherString;
+export type ThemaID = (typeof ThemaIDs)[keyof typeof ThemaIDs];

@@ -10,7 +10,7 @@ import {
   fetchVergunningenNotifications,
 } from './vergunningen-notifications';
 import { getAuthProfileAndToken } from '../../../testing/utils';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiSuccessResult,
   apiErrorResult,
@@ -26,7 +26,8 @@ vi.mock('./vergunningen-helpers', () => ({
   isNearEndDate: vi.fn(),
 }));
 
-vi.mock('../../../universal/helpers/utils', () => ({
+vi.mock('../../../universal/helpers/utils', async (importOriginal) => ({
+  ...(await importOriginal()),
   isRecentNotification: vi.fn(),
 }));
 
@@ -148,7 +149,7 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        Themas.VERGUNNINGEN
+        ThemaIDs.VERGUNNINGEN
       );
       expect(notification).toHaveProperty('title', 'Test Title');
       expect(notification).toHaveProperty('description', 'Test Description');
@@ -174,7 +175,7 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        Themas.VERGUNNINGEN
+        ThemaIDs.VERGUNNINGEN
       );
       expect(notification).toBeNull();
     });
@@ -236,7 +237,7 @@ describe('vergunningen-notifications', () => {
       const notifications = getVergunningNotifications(
         vergunningen,
         decosZaakTransformers,
-        Themas.VERGUNNINGEN
+        ThemaIDs.VERGUNNINGEN
       );
       expect(notifications).toHaveLength(3);
       expect(notifications[0]).toHaveProperty('title', 'Aanvraag');
@@ -254,7 +255,7 @@ describe('vergunningen-notifications', () => {
       const notifications = getVergunningNotifications(
         vergunningen,
         decosZaakTransformers,
-        Themas.VERGUNNINGEN
+        ThemaIDs.VERGUNNINGEN
       );
       expect(notifications).toHaveLength(0);
     });

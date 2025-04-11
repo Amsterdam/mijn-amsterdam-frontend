@@ -2,7 +2,7 @@ import { isError } from 'lodash';
 
 import { tableConfig, LinkListItems, routes } from './Horeca-thema-config';
 import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
@@ -11,7 +11,7 @@ import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useHorecaThemaData() {
   const { HORECA } = useAppStateGetter();
-  const breadcrumbs = useThemaBreadcrumbs(Themas.HORECA);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.HORECA);
   const vergunningen = addLinkElementToProperty<HorecaVergunningFrontend>(
     HORECA.content ?? [],
     'identifier',
