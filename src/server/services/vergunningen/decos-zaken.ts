@@ -131,7 +131,7 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
 const Omzettingsvergunning: DecosZaakTransformer<Omzettingsvergunning> = {
   isActive: true,
   caseType: caseTypeVergunningen.Omzettingsvergunning,
-  title: 'VergunningV2 voor kamerverhuur (omzettingsvergunning)',
+  title: 'Vergunning voor kamerverhuur (omzettingsvergunning)',
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
@@ -310,7 +310,7 @@ const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeer> = {
 const Samenvoegingsvergunning: DecosZaakTransformer<Samenvoegingsvergunning> = {
   isActive: true,
   caseType: caseTypeVergunningen.Samenvoegingsvergunning,
-  title: 'VergunningV2 voor samenvoegen van woonruimten',
+  title: 'Vergunning voor samenvoegen van woonruimten',
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
@@ -367,7 +367,7 @@ const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSl
 const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimte> = {
   isActive: true,
   caseType: caseTypeVergunningen.VormenVanWoonruimte,
-  title: 'VergunningV2 voor woningvorming',
+  title: 'Vergunning voor woningvorming',
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
