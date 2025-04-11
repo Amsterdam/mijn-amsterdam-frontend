@@ -106,7 +106,15 @@ export async function requestData<T>(
   // Log/Debug the untransformed response data
   if (
     debugResponseDataTerms?.some((term) => {
-      return !!term && requestConfig.url?.includes(term.trim());
+      if (!term) {
+        return false;
+      }
+      const hasTermInRequestUrl = requestConfig.url?.includes(term.trim());
+      const hasTermInRequestParams = requestConfig.params
+        ? JSON.stringify(requestConfig.params).includes(term.trim())
+        : [];
+
+      return hasTermInRequestUrl || hasTermInRequestParams;
     }) &&
     !requestConfig.transformResponse?.includes(debugResponseData)
   ) {
