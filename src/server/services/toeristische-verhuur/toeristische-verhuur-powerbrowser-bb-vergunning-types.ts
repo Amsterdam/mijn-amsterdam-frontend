@@ -91,7 +91,6 @@ export type BBVergunning = ZaakDetail & {
   identifier: string;
   processed: boolean;
   isExpired: boolean;
-  status: BBVergunningZaakStatus | BBVergunningZaakResult;
   displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
   title: 'Vergunning bed & breakfast';
 };
