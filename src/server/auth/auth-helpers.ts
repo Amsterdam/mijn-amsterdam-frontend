@@ -7,6 +7,7 @@ import {
   OIDC_TOKEN_ID_ATTRIBUTE,
   RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER,
   RETURNTO_AMSAPP_STADSPAS_APP_LANDING,
+  RETURNTO_MAMS_FRONTEND_ROUTE,
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
 } from './auth-config';
@@ -32,6 +33,11 @@ export function getReturnToUrl(
   defaultReturnTo: string = authRoutes.AUTH_LOGIN_DIGID_LANDING
 ) {
   switch (queryParams?.returnTo) {
+    case RETURNTO_MAMS_FRONTEND_ROUTE: {
+      const route = queryParams.route as string;
+      const redirectUrl = `${process.env.MA_FRONTEND_URL}${route}`;
+      return redirectUrl;
+    }
     case RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER:
       return generateFullApiUrlBFF(
         ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
