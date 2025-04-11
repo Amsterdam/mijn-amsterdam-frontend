@@ -56,7 +56,7 @@ const displayPropsLopendeAanvragenBase: VergunningFrontendDisplayProps = {
 const displayPropsEerdereVergunningenBase: VergunningFrontendDisplayProps = {
   detailLinkComponent: 'Kenmerk',
   title: 'Omschrijving',
-  decision: 'Resultaat',
+  displayStatus: 'Status',
 };
 
 export const displayPropsHuidigeVergunningen =
