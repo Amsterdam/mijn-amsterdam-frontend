@@ -70,6 +70,7 @@ function transformVarenZakenFrontend(
     return {
       ...zaakFrontend,
       vergunning,
+      vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
       id: combinedIdZaakVergunning,
       link: createLink(combinedIdZaakVergunning),
     };

@@ -27,10 +27,6 @@ export const routes = {
   detailPage: AppRoutes['BODEM/LOOD_METING'],
 };
 
-const tableConfigBase = {
-  sort: dateSort('datumAanvraag', 'desc'),
-};
-
 const displayPropsLopend = withOmitDisplayPropsForSmallScreens<
   DisplayProps<WithDetailLinkComponent<LoodMetingFrontend>>
 >(
@@ -55,8 +51,8 @@ const displayPropsEerder = withOmitDisplayPropsForSmallScreens<
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
-    ...tableConfigBase,
     title: 'Lopende aanvragen',
+    sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
@@ -66,8 +62,8 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
   [listPageParamKind.completed]: {
-    ...tableConfigBase,
     title: 'Afgehandelde aanvragen',
+    sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.completed,
