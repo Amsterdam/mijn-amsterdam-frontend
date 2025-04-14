@@ -84,7 +84,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   WMO: 'Zorg en ondersteuning',
-  Jeugd: ThemaTitles.JEUGD,
+  JEUGD: ThemaTitles.JEUGD,
   WPI_AANVRAGEN: 'Uitkeringaanvragen',
   WPI_BBZ: 'Aanvraag Bbz',
   WPI_SPECIFICATIES: 'Uitkeringsspecificaties en jaaropgaven',
