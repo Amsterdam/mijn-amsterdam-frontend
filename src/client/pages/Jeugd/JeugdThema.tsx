@@ -1,10 +1,10 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
+import { LEERLINGENVERVOER_LEES_MEER } from './thema-config';
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
 import { LinkProps } from '../../../universal/types';
 import { PageContentCell } from '../../components/Page/Page';
-import { ExternalUrls } from '../../config/external-urls';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
 import {
@@ -37,7 +37,7 @@ export function JeugdThemaPagina() {
 
   const linkListItems: LinkProps[] = [
     {
-      to: ExternalUrls.LEERLINGENVERVOER_LEES_MEER,
+      to: LEERLINGENVERVOER_LEES_MEER,
       title: 'Lees hier meer over Leerlingenvervoer',
     },
   ];

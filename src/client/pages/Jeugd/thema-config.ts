@@ -6,6 +6,9 @@ import { DisplayProps } from '../../components/Table/TableV2.types';
 import { listPageParamKind, listPageTitle } from '../Zorg/Zorg-thema-config';
 import styles from '../Zorg/Zorg.module.scss';
 
+export const LEERLINGENVERVOER_LEES_MEER =
+  'https://www.amsterdam.nl/onderwijs-jeugd/leerlingenvervoer/?vkurl=leerlingenvervoer';
+
 type DisplayPropsLeerlingenVervoer = DisplayProps<
   WithDetailLinkComponent<LeerlingenvervoerVoorzieningFrontend>
 >;
