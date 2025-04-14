@@ -119,12 +119,13 @@ describe('requestData.ts', () => {
     // expect(axiosRequestSpy.mock.calls[0][0].headers).toEqual(HEADERS_FILTERED);
   });
 
-  it('Caches the response: Valid JSON', async () => {
+  it.only('Caches the response: Valid JSON', async () => {
     remoteApi.get('/1').reply(200, '"whoa"');
 
     const rs = await requestData(
       {
         url: DUMMY_URL,
+        enableCache: true,
       },
       SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN

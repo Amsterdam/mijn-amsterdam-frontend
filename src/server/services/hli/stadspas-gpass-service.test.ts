@@ -841,7 +841,7 @@ describe('stadspas-gpass-service', () => {
       expect(response).toStrictEqual({ status: 'OK', content: null });
     });
 
-    test.only('Can only block and not toggle the stadspas', async () => {
+    test('Can only block and not toggle the stadspas', async () => {
       const PASSNUMBER = 123;
       remoteApi
         .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)

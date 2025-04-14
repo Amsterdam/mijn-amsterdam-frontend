@@ -11,12 +11,17 @@ import {
 import { useParams } from 'react-router';
 
 import styles from './HLIStadspasDetail.module.scss';
-import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
+import {
+  useBlockStadspas,
+  useStadspassen,
+  useUnblockStadspas,
+} from './useStadspassen.hook';
 import {
   StadspasBudget,
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../server/services/hli/stadspas-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -166,6 +171,12 @@ export function HLIStadspasDetail() {
             {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
             {FeatureToggle.hliThemaStadspasBlokkerenActive && (
               <BlockStadspas stadspas={stadspas} />
+            )}
+            {FeatureToggle.hliThemaStadspasDeblokkerenActive && (
+              <>
+                <p></p>
+                <UnblockStadspas stadspas={stadspas} />
+              </>
             )}
           </PageContentCell>
         ) : (
@@ -401,6 +412,90 @@ function PassBlockedAlert() {
         ook weer op de nieuwe pas.
       </Paragraph>
     </Alert>
+  );
+}
+
+function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const {
+    error,
+    isMutating,
+    trigger: deblokkeerStadspas,
+  } = useUnblockStadspas();
+
+  useEffect(() => {
+    if (error && !isMutating && !showError) {
+      setShowError(true);
+    }
+  }, [error, showError, isMutating]);
+
+  return (
+    <>
+      {showError && (
+        <Alert
+          className="ams-mb--sm"
+          heading="Fout bij het deblokkeren van de pas"
+          severity="error"
+        >
+          Probeer het nog eens.
+        </Alert>
+      )}
+      {isMutating ? (
+        <Alert severity="warning">
+          <Paragraph>
+            <Spinner /> <span>Bezig met deblokkeren...</span>
+          </Paragraph>
+        </Alert>
+      ) : (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          Deblokkeer
+        </Button>
+      )}
+
+      <Modal
+        title="Weet u zeker dat u uw Stadspas wilt deblokkeren?"
+        className={styles.BlokkeerDialog}
+        isOpen={isModalOpen}
+        showCloseButton
+        closeOnEscape
+        onClose={() => setIsModalOpen(false)}
+        pollingQuerySelector="#deblokkeer-pas"
+        actions={
+          <ActionGroup>
+            <Button
+              id="deblokkeer-pas"
+              type="submit"
+              variant="primary"
+              onClick={() => {
+                setShowError(false);
+                setIsModalOpen(false);
+                if (stadspas.unblockPassURL) {
+                  deblokkeerStadspas(stadspas.unblockPassURL);
+                }
+              }}
+            >
+              Deblokkeer
+            </Button>
+            <Button
+              variant="tertiary"
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
+            >
+              Doe niks
+            </Button>
+          </ActionGroup>
+        }
+      >
+        (Feature voor buiten productie)
+      </Modal>
+    </>
   );
 }
 

@@ -376,6 +376,7 @@ export async function mutateGpassTogglePass(
     method: 'POST',
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
+    enableCache: false,
     postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
     transformResponse: transformTogglePassResponse,
   });

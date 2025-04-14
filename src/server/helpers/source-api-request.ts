@@ -15,7 +15,6 @@ import {
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { BFF_REQUEST_CACHE_ENABLED } from '../config/app';
 import {
   ApiUrlEntries,
   DEFAULT_REQUEST_CONFIG,
@@ -141,7 +140,7 @@ export async function requestData<T>(
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
 
-  if (BFF_REQUEST_CACHE_ENABLED && cacheEntry !== null) {
+  if (config.enableCache && cacheEntry !== null) {
     return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;
@@ -149,7 +148,7 @@ export async function requestData<T>(
 
   // Set the cache Deferred
   if (
-    BFF_REQUEST_CACHE_ENABLED &&
+    config.enableCache &&
     cacheKey &&
     !!requestConfig.cacheTimeout &&
     requestConfig.cacheTimeout > 0
@@ -183,7 +182,7 @@ export async function requestData<T>(
     const responseData = apiSuccessResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
-    if (BFF_REQUEST_CACHE_ENABLED && cache.get(cacheKey)) {
+    if (config.enableCache && cache.get(cacheKey)) {
       cache.get(cacheKey).resolve(responseData);
     }
 

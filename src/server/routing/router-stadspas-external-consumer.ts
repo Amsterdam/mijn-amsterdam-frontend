@@ -25,6 +25,7 @@ import {
   blockStadspas,
   fetchStadspasBudgetTransactions,
   fetchStadspasDiscountTransactions,
+  unblockStadspas,
 } from '../services/hli/stadspas';
 import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service';
 import {
