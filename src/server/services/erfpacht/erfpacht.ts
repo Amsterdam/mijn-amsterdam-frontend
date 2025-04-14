@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 import { AppRoutes } from '../../../universal/config/routes';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
-import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -183,8 +183,6 @@ interface ErfpachtDossiersDetailSource {
 
 type ErfpachtDossierPropsFrontend = ZaakDetail & {
   dossierNummerUrlParam: string;
-  link: LinkProps;
-  title: string;
 };
 
 export type ErfpachtDossiersDetail = ErfpachtDossiersDetailSource &
@@ -317,6 +315,7 @@ export function transformErfpachtDossierProperties<
     dossierNummerUrlParam,
     title,
     steps: [],
+    displayStatus: '',
     id: dossierNummerUrlParam,
     link: {
       to: generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {

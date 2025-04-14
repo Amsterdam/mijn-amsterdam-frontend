@@ -102,6 +102,7 @@ export function transformKlachtenResponse(
         }),
         title: `Klacht ${id}`,
       },
+      displayStatus: 'Ontvangen',
       steps: [],
     };
 
