@@ -90,7 +90,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: ThemaIDs.BURGERZAKEN,
+        themaID: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         hideDatePublished: true,
         isAlert: true,
@@ -112,7 +112,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: ThemaIDs.BURGERZAKEN,
+        themaID: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         id: `${document.documentType}-datum-afloop-binnenkort`,
@@ -133,7 +133,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: ThemaIDs.BURGERZAKEN,
+        themaID: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         hideDatePublished: true,
@@ -152,7 +152,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (adresInOnderzoek) {
     notifications.push({
-      thema: themaId.BRP,
+      themaID: themaId.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
@@ -170,7 +170,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      thema: themaId.BRP,
+      themaID: themaId.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',

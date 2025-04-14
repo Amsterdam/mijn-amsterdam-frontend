@@ -22,7 +22,7 @@ export type ContentTipSource = {
   predicates?: TipsPredicateFN[];
   profileTypes: ProfileType[];
   reason?: string;
-  thema: ThemaID;
+  themaID: ThemaID;
   title: string;
 };
 

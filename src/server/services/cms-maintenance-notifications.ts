@@ -81,7 +81,7 @@ function transformCMSEventResponse(
       'storingsmeldingen/alle-meldingen-mijn-amsterdam',
       ''
     ),
-    thema: ThemaIDs.NOTIFICATIONS,
+    themaID: ThemaIDs.NOTIFICATIONS,
     isAlert: true,
     datePublished: new Date().toISOString(),
   } as CMSMaintenanceNotification;
@@ -242,7 +242,7 @@ export async function fetchMaintenanceNotificationsDashboard(
 
   const item: MyNotification = {
     id: `maintenance-${notification.title}`,
-    thema: ThemaIDs.NOTIFICATIONS,
+    themaID: ThemaIDs.NOTIFICATIONS,
     isAlert: true,
     datePublished: notification.datePublished,
     hideDatePublished: true,

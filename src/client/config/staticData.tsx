@@ -7,7 +7,7 @@ const day = 20;
 const month = 0;
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
-  thema: ThemaIDs.NOTIFICATIONS,
+  themaID: ThemaIDs.NOTIFICATIONS,
   datePublished: new Date(year, month, day).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: true,

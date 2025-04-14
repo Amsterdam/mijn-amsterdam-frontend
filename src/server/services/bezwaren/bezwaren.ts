@@ -399,7 +399,7 @@ export async function fetchBezwaren(
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
   const notification: MyNotification = {
-    thema: ThemaIDs.BEZWAREN,
+    themaID: ThemaIDs.BEZWAREN,
     id: bezwaar.identificatie,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,

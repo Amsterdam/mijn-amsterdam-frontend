@@ -47,7 +47,7 @@ export function createAfisFacturenNotification(
   return {
     id: `facturen-open-notification`,
     datePublished,
-    thema: ThemaIDs.AFIS,
+    themaID: ThemaIDs.AFIS,
     title,
     description,
     link: {

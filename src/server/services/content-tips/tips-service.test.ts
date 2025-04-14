@@ -122,7 +122,7 @@ describe('createTipsFromServiceResults', () => {
       id: 'test',
       title: 'test',
       description: 'test',
-      thema: 'test' as ThemaID,
+      themaID: 'test' as ThemaID,
       datePublished: 'test',
       isTip: true,
       isAlert: false,

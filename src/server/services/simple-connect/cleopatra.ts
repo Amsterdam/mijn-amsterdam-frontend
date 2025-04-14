@@ -131,7 +131,7 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
 
             notifications.push({
               id: `${thema}-${message.categorie}`,
-              thema,
+              themaID: thema,
               title: message.titel,
               datePublished: message.datum,
               description: message.omschrijving,
@@ -220,7 +220,7 @@ export async function fetchMilieuzoneNotifications(
     return apiSuccessResult({
       notifications:
         response.content?.notifications?.filter(
-          (notifiction) => notifiction.thema === ThemaIDs.MILIEUZONE
+          (notifiction) => notifiction.themaID === ThemaIDs.MILIEUZONE
         ) ?? [],
     });
   }
@@ -238,7 +238,7 @@ export async function fetchOvertredingenNotifications(
     return apiSuccessResult({
       notifications:
         response.content?.notifications?.filter(
-          (notifiction) => notifiction.thema === ThemaIDs.OVERTREDINGEN
+          (notifiction) => notifiction.themaID === ThemaIDs.OVERTREDINGEN
         ) ?? [],
     });
   }

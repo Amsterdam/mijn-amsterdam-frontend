@@ -61,7 +61,7 @@ function createNotification(
     title: isFibu
       ? 'Bericht Budgetbeheer (FIBU)'
       : `Bericht Kredietbank Amsterdam`,
-    thema: ThemaIDs.KREFIA,
+    themaID: ThemaIDs.KREFIA,
     description: isFibu
       ? 'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)'
       : 'Er staan ongelezen berichten voor u klaar van Kredietbank Amsterdam',

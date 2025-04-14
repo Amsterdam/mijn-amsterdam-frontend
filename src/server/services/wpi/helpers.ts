@@ -98,7 +98,7 @@ export function createProcessNotification(
   return {
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
-    thema: ThemaIDs.INKOMEN,
+    themaID: ThemaIDs.INKOMEN,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,

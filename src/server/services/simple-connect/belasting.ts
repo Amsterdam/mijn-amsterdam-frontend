@@ -47,7 +47,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
         case 'M1':
           notifications.push({
             id: `belasting-${message.nummer}`,
-            thema: ThemaIDs.BELASTINGEN,
+            themaID: ThemaIDs.BELASTINGEN,
             title: message.titel,
             datePublished: message.datum,
             description: message.omschrijving,
@@ -66,7 +66,7 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             description: message.omschrijving,
             tipReason: message.informatie,
             isTip: true,
-            thema: ThemaIDs.BELASTINGEN,
+            themaID: ThemaIDs.BELASTINGEN,
             link: {
               title: message.url_naam,
               to: message.url,

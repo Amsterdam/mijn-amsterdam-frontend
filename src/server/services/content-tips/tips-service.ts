@@ -74,7 +74,7 @@ export function fetchContentTips(
       title: t.title,
       description: t.description,
       link: t.link,
-      thema: t.thema,
+      themaID: t.themaID,
       tipReason: t.reason,
       isTip: true,
     };

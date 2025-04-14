@@ -116,7 +116,7 @@ export function createToeristischeVerhuurNotification(
   return {
     id: `vergunning-${vergunning.id}-notification`,
     datePublished,
-    thema: ThemaIDs.TOERISTISCHE_VERHUUR,
+    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description: description,
     link: {
@@ -140,7 +140,7 @@ function createRegistratieNotification(
   return {
     id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
     datePublished,
-    thema: ThemaIDs.TOERISTISCHE_VERHUUR,
+    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description,
     link: {

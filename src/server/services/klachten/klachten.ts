@@ -116,7 +116,7 @@ export function transformKlachtenResponse(
 
 function createKlachtNotification(klacht: Klacht): MyNotification {
   const notification: MyNotification = {
-    thema: ThemaIDs.KLACHTEN,
+    themaID: ThemaIDs.KLACHTEN,
     id: `klacht-${klacht.id}-notification`,
     title: 'Klacht ontvangen',
     description: 'Uw klacht is ontvangen.',

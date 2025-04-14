@@ -24,7 +24,7 @@ function createVarenRederRegisteredNotification(
   return {
     id: `varen-${zaak.id}-reder-notification`,
     datePublished: zaak.dateRequest,
-    thema: ThemaIDs.VAREN,
+    themaID: ThemaIDs.VAREN,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
     link: {
