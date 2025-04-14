@@ -2,7 +2,6 @@ import { ThemaRoutesConfig } from '../../config/thema-types';
 import { toDocumentTitles, toRoutes } from '../../helpers/thema-config';
 
 export const themaId = { BRP: 'BRP', KVK: 'KVK' } as const;
-export type ProfileThemaID = (typeof themaId)[keyof typeof themaId];
 
 export const featureToggle = {
   [themaId.BRP]: {
