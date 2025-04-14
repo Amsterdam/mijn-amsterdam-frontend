@@ -2,9 +2,8 @@ import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
 import KrefiaData from '../../../mocks/fixtures/krefia.json';
-import { remoteApi } from '../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../testing/utils';
 import { omit } from '../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../auth/auth-types';
 import { axiosRequest } from '../helpers/source-api-request';
 
 describe('Kredietbank & FIBU service', () => {
@@ -47,10 +46,7 @@ describe('Kredietbank & FIBU service', () => {
     status: 'OK',
   };
 
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', sid: '', id: '' },
-    token: 'xxxxxx',
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
 
   let axiosRequestSpy: any;
 
@@ -98,7 +94,7 @@ describe('Kredietbank & FIBU service', () => {
             id: 'krefia-fibu-notification',
             datePublished: '2021-07-14T12:34:17',
             title: 'Bericht Budgetbeheer (FIBU)',
-            thema: 'KREFIA',
+            themaID: 'KREFIA',
             description:
               'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)',
             link: {

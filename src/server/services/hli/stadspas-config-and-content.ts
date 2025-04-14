@@ -27,10 +27,10 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   const createNotificationBudget = (
     description: string,
     stadspasPassNumber?: string
-  ) => ({
+  ): MyNotification => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
-    thema: ThemaIDs.HLI,
+    themaID: ThemaIDs.HLI,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
     )}!`,

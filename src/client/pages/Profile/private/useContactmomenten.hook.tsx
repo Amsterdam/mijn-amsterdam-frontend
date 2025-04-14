@@ -22,7 +22,7 @@ import {
   useThemaBreadcrumbs,
   useThemaMenuItems,
 } from '../../../hooks/useThemaMenuItems';
-import { routes, themaId } from '../Profile-thema-config';
+import { routes, themaIdBRP } from '../Profile-thema-config';
 
 function getLinkToThemaPage(
   onderwerp: string,
@@ -65,7 +65,7 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
-  const breadcrumbs = useThemaBreadcrumbs(themaId.BRP);
+  const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =

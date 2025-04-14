@@ -260,8 +260,11 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const baseNotification = {
-    thema: ThemaIDs.BODEM,
+  const baseNotification: Omit<
+    MyNotification,
+    'title' | 'description' | 'datePublished'
+  > = {
+    themaID: ThemaIDs.BODEM,
     id: meting.kenmerk,
     link: {
       to: meting.link.to,

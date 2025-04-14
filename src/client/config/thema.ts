@@ -10,17 +10,17 @@ import {
   getThemaUrlBurgerzakenWithAppState,
 } from '../pages/Burgerzaken/helpers';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
-import { menuItem as menuItemInkomen } from '../pages/Inkomen/Inkomen-routes';
+import { menuItem as menuItemInkomen } from '../pages/Inkomen/Inkomen-render-config';
 import {
   documentTitles as documentTitlesInkomen,
-  themaId as inkomenThemaId,
   themaTitle as inkomenThemaTitle,
 } from '../pages/Inkomen/Inkomen-thema-config';
-import { menuItems as profileMenuItems } from '../pages/Profile/Profile-routes';
+import { menuItems as profileMenuItems } from '../pages/Profile/Profile-render-config';
 import {
   documentTitles as documentTitlesProfile,
-  themaId as profileThemaId,
   themaTitle as profileThemaTitle,
+  themaIdBRP,
+  themaIdKVK,
 } from '../pages/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
@@ -41,7 +41,9 @@ export const BagThemas = Object.fromEntries(
  * @deprecated Use the titles exported from the Thema-config files instead.
  */
 type ThemaTitles = { [thema in ThemaID]: string };
-
+/**
+ * @deprecated Use the titles exported from the Thema-config files instead.
+ */
 export const ThemaTitles = {
   AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
@@ -70,11 +72,13 @@ export const ThemaTitles = {
   ZORG: 'Zorg en ondersteuning',
 
   // New thema config references
-  [inkomenThemaId.INKOMEN]: inkomenThemaTitle,
-  [profileThemaId.BRP]: profileThemaTitle.BRP,
-  [profileThemaId.KVK]: profileThemaTitle.KVK,
+  [inkomenThemaTitle]: inkomenThemaTitle,
+  [themaIdBRP]: profileThemaTitle.BRP,
+  [themaIdKVK]: profileThemaTitle.KVK,
 } as const;
-
+/**
+ * @deprecated Use the titles exported from the Thema-config files instead.
+ */
 export type ThemaTitle = (typeof ThemaTitles)[keyof typeof ThemaTitles];
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
@@ -82,6 +86,9 @@ export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
 
 // Used in <html><head><title>{PageTitle}</title></head>
+/**
+ * @deprecated Use the documentTitles exported from the Thema-config files instead.
+ */
 export const DocumentTitles: DocumentTitlesConfig = {
   // Afis
   [AppRoutes.AFIS]: `${ThemaTitles.AFIS} | overzicht`,

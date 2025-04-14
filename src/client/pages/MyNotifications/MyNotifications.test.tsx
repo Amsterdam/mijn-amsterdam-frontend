@@ -17,7 +17,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        thema: ThemaIDs.HOME,
+        themaID: ThemaIDs.HOME,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -28,7 +28,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        thema: ThemaIDs.BRP,
+        themaID: ThemaIDs.BRP,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -39,7 +39,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        thema: ThemaIDs.INKOMEN,
+        themaID: ThemaIDs.INKOMEN,
         isAlert: true,
         link: {
           to: '/item-3',

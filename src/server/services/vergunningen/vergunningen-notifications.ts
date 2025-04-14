@@ -67,10 +67,10 @@ export function getNotificationLabels(
 
 function getNotificationBase(
   vergunning: VergunningFrontend,
-  thema: ThemaID
-): Pick<MyNotification, 'thema' | 'id' | 'link'> {
+  themaID: ThemaID
+): Pick<MyNotification, 'themaID' | 'id' | 'link'> {
   const notificationBaseProperties = {
-    thema: thema,
+    themaID: themaID,
     id: `vergunning-${vergunning.id}-notification`,
     link: {
       to: vergunning.link.to,
@@ -81,7 +81,7 @@ function getNotificationBase(
 }
 
 function mergeNotificationProperties(
-  notificationBase: Pick<MyNotification, 'thema' | 'id' | 'link'>,
+  notificationBase: Pick<MyNotification, 'themaID' | 'id' | 'link'>,
   content: NotificationLabels,
   vergunning: VergunningFrontend
 ): MyNotification {
@@ -98,12 +98,12 @@ function mergeNotificationProperties(
 export function createVergunningNotification<DZ extends DecosZaakBase>(
   vergunning: VergunningFrontend<DZ>,
   zaakTypeTransformer: DecosZaakTransformer<DZ>,
-  thema: ThemaID
+  themaID: ThemaID
 ): MyNotification | null {
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
-    const notificationBase = getNotificationBase(vergunning, thema);
+    const notificationBase = getNotificationBase(vergunning, themaID);
     const notificationLabels = getNotificationLabels(labels, vergunning);
     if (notificationLabels !== null) {
       return mergeNotificationProperties(
@@ -120,7 +120,7 @@ export function createVergunningNotification<DZ extends DecosZaakBase>(
 export function getVergunningNotifications<DZ extends DecosZaakBase>(
   vergunningen: VergunningFrontend<DZ>[],
   decosZaakTransformers: DecosZaakTransformer<DZ>[],
-  thema: ThemaID
+  themaID: ThemaID
 ) {
   return vergunningen
     .map((vergunning) => {
@@ -130,7 +130,7 @@ export function getVergunningNotifications<DZ extends DecosZaakBase>(
       if (!zaakTransformer) {
         return null;
       }
-      return createVergunningNotification(vergunning, zaakTransformer, thema);
+      return createVergunningNotification(vergunning, zaakTransformer, themaID);
     })
     .filter(
       (notification: MyNotification | null): notification is MyNotification =>

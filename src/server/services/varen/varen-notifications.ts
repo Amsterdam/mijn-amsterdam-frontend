@@ -51,14 +51,15 @@ function createVarenNotification(
         })
       : AppRoutes.VAREN;
 
-  const baseNotification = {
-    datePublished: currentStep.datePublished,
-    thema: ThemaIDs.VAREN,
-    link: {
-      to: ctaLinkToThemaOrDetail,
-      title: 'Bekijk details',
-    },
-  };
+  const baseNotification: Omit<MyNotification, 'id' | 'description' | 'title'> =
+    {
+      datePublished: currentStep.datePublished,
+      themaID: ThemaIDs.VAREN,
+      link: {
+        to: ctaLinkToThemaOrDetail,
+        title: 'Bekijk details',
+      },
+    };
 
   switch (currentStep.status) {
     case 'Ontvangen':

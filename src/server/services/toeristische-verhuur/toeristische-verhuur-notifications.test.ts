@@ -76,7 +76,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
         },
-        thema: ThemaIDs.TOERISTISCHE_VERHUUR,
+        themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
         title: 'Aanvraag vakantie in behandeling',
       },
       {
@@ -88,7 +88,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
         },
-        thema: ThemaIDs.TOERISTISCHE_VERHUUR,
+        themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
         title: 'Aanvraag bed & breakfast in behandeling',
       },
       {
@@ -100,7 +100,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw overzicht toeristische verhuur',
           to: '/toeristische-verhuur',
         },
-        thema: ThemaIDs.TOERISTISCHE_VERHUUR,
+        themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
         title: 'Aanvraag landelijk registratienummer toeristische verhuur',
       },
     ]);

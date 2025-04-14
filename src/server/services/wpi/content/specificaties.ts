@@ -39,7 +39,7 @@ function transformIncomeSpecificationNotification(
     return {
       id: 'nieuwe-jaaropgave',
       datePublished: item.datePublished,
-      themaID: themaId.INKOMEN,
+      themaID: themaId,
       title: 'Nieuwe jaaropgave',
       description: `Uw ${item.title} staat voor u klaar.`,
       link: {
@@ -52,7 +52,7 @@ function transformIncomeSpecificationNotification(
   return {
     id: 'nieuwe-uitkeringsspecificatie',
     datePublished: item.datePublished,
-    themaID: themaId.INKOMEN,
+    themaID: themaId,
     title: 'Nieuwe uitkeringsspecificatie',
     description: `Uw uitkeringsspecificatie van ${dateFormat(
       item.datePublished,

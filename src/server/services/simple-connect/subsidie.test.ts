@@ -39,7 +39,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          thema: ThemaIDs.SUBSIDIE,
+          themaID: ThemaIDs.SUBSIDIE,
           link: {
             to: 'http://localhost/to/subsidies?authMethod=digid',
             title: 'More about this',
@@ -64,7 +64,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          thema: ThemaIDs.SUBSIDIE,
+          themaID: ThemaIDs.SUBSIDIE,
           link: {
             to: 'http://localhost/to/subsidies?authMethod=eherkenning',
             title: 'More about this',

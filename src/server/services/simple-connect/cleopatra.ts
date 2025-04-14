@@ -118,7 +118,7 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
         // Melding / Notification
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
-            let thema:
+            let themaID:
               | typeof ThemaIDs.MILIEUZONE
               | typeof ThemaIDs.OVERTREDINGEN = ThemaIDs.MILIEUZONE;
 
@@ -126,12 +126,12 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
               FeatureToggle.overtredingenActive &&
               message.thema === 'Overtredingen'
             ) {
-              thema = ThemaIDs.OVERTREDINGEN;
+              themaID = ThemaIDs.OVERTREDINGEN;
             }
 
             notifications.push({
-              id: `${thema}-${message.categorie}`,
-              themaID: thema,
+              id: `${themaID}-${message.categorie}`,
+              themaID: themaID,
               title: message.titel,
               datePublished: message.datum,
               description: message.omschrijving,

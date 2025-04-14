@@ -23,7 +23,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
     datePublished: new Date().toISOString(),
-    thema: ThemaIDs.BUURT,
+    themaID: ThemaIDs.BUURT,
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
     link: {

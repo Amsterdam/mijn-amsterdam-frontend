@@ -1,5 +1,8 @@
 import { themaId as inkomenThemaId } from '../../client/pages/Inkomen/Inkomen-thema-config';
-import { themaId as profileThemaId } from '../../client/pages/Profile/Profile-thema-config';
+import {
+  themaIdBRP,
+  themaIdKVK,
+} from '../../client/pages/Profile/Profile-thema-config';
 
 export const ThemaIDs = {
   AFIS: 'AFIS',
@@ -27,8 +30,9 @@ export const ThemaIDs = {
   VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
-  ...inkomenThemaId,
-  ...profileThemaId,
+  [inkomenThemaId]: inkomenThemaId,
+  [themaIdBRP]: themaIdBRP,
+  [themaIdKVK]: themaIdKVK,
 } as const;
 
 export type ThemaID = (typeof ThemaIDs)[keyof typeof ThemaIDs];
