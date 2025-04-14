@@ -28,6 +28,9 @@ import {
 } from '../pages/Varen/Varen-thema-config';
 import { getListPageDocumentTitle } from '../pages/Vergunningen/Vergunningen-thema-config';
 
+/**
+ * @deprecated We will remove this in the future in favor of the SWR implementations.
+ */
 export const BagThemas = Object.fromEntries(
   Object.entries(ThemaIDs).map(([key, key2]) => {
     return [key, `${key2}_BAG`];
