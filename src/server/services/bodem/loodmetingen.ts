@@ -101,7 +101,7 @@ function transformLood365Response(
         const statusToDecisionMapping = {
           ontvangen: null,
           'in behandeling': null,
-          afgehandeld: 'Toegewezen' as const,
+          afgehandeld: 'Afgehandeld' as const,
           afgewezen: 'Afgewezen' as const,
         };
         const decision = statusToDecisionMapping[lowercaseStatus];
