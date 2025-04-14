@@ -309,7 +309,8 @@ function transformBezwarenResults(
           toelichting: bezwaarBron.toelichting,
 
           // Laatste status van het bezwaar
-          status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
+          displayStatus:
+            getKenmerkValue(bezwaarBron.kenmerken, 'statustekst') ?? 'Onbekend',
           statusdatum: getKenmerkValue(bezwaarBron.kenmerken, 'statusdatum'),
 
           // Placeholder voor alle (historische) statussen van het bezwaar
@@ -410,7 +411,7 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
     },
   };
 
-  switch (bezwaar.status) {
+  switch (bezwaar.displayStatus) {
     case 'Beoordeling bezwaarschrift':
       notification.title = 'Beoordeling in behandeling nemen bezwaar';
       notification.description = `Wij kijken of we uw bezwaar ${bezwaar.identificatie} inhoudelijk in behandeling kunnen nemen.`;
