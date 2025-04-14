@@ -7,7 +7,6 @@ import {
   WithDateRange,
   ZaakStatus,
   DecosZaakFrontend,
-  ZakenFilter,
 } from '../decos/config-and-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
@@ -208,19 +207,7 @@ export type DecosVergunning =
   | RVVSloterweg
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type VergunningenDecos = {
-  content?: DecosVergunning[];
-  status: 'OK' | 'ERROR';
-};
-
-export type DecosZaakExpirable = DecosVergunning & { dateEnd?: string | null };
-
-export type VergunningOptions = {
-  filter?: ZakenFilter;
-  appRoute: string | ((vergunning: DecosVergunning) => string);
-};
-
-export type VergunningFrontend<T extends DecosZaakBase = DecosZaakBase> =
+export type VergunningFrontend<T extends DecosVergunning = DecosVergunning> =
   DecosZaakFrontend<T>;
 
 export type NotificationProperty =

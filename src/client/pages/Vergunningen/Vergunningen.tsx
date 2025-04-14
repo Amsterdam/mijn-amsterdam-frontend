@@ -1,10 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import {
-  DecosVergunning,
-  VergunningFrontend,
-} from '../../../server/services/vergunningen/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -34,7 +31,7 @@ export function VergunningenThemaPagina() {
       { title, displayProps, filter, sort, listPageRoute, className, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<VergunningFrontend<DecosVergunning>>
+        <ThemaPaginaTable<VergunningFrontend>
           key={kind}
           title={title}
           zaken={vergunningen.filter(filter).sort(sort)}
