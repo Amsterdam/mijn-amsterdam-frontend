@@ -409,6 +409,7 @@ describe('B&B Vergunningen service', () => {
         dateDecision: '2023-02-01',
         dateEnd: '2023-12-31',
         decision: 'Verleend',
+        isExpired: true,
         documents: [
           {
             title: 'Verzoek aanvullende gegevens',
@@ -770,6 +771,9 @@ describe('B&B Vergunningen service', () => {
     beforeEach(() => {
       Mockdate.set('2023-01-01');
     });
+    afterEach(() => {
+      Mockdate.reset();
+    });
 
     test('should transform zaak successfully', () => {
       const zaak: PBZaakRecord = {
@@ -828,7 +832,7 @@ describe('B&B Vergunningen service', () => {
         },
         location: null,
         processed: true,
-        status: 'Ontvangen',
+        isExpired: false,
         steps: [],
         title: 'Vergunning bed & breakfast',
       });
