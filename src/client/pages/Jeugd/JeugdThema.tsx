@@ -49,7 +49,6 @@ export function JeugdThemaPagina() {
   });
 
   return (
-    <>
       <ThemaPagina
         title={title}
         pageContentTop={pageContentTop}
@@ -58,6 +57,5 @@ export function JeugdThemaPagina() {
         isError={isError}
         isLoading={isLoading}
       />
-    </>
   );
 }
