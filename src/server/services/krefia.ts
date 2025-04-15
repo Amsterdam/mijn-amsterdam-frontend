@@ -19,7 +19,7 @@ interface NotificationTrigger {
 }
 
 export interface KrefiaDeepLink {
-  status: string;
+  displayStatus: string;
   link: LinkProps;
   type: 'budgetbeheer' | 'lening' | 'schuldhulp';
 }
@@ -93,7 +93,7 @@ function transformKrefiaResponse(responseData: KrefiaSourceResponse): Krefia {
         const deepLinkType = key as KrefiaDeepLink['type'];
         const title = getLinkText(deepLinkType);
         const krefiaDeepLink: KrefiaDeepLink = {
-          status: deepLink.title,
+          displayStatus: deepLink.title,
           link: {
             to: deepLink.url,
             title,
