@@ -90,7 +90,7 @@ export type BBVergunning = ZaakDetail & {
   heeftOvergangsRecht: boolean;
   identifier: string;
   processed: boolean;
-  status: BBVergunningZaakStatus | BBVergunningZaakResult;
+  isExpired: boolean;
   displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
   title: 'Vergunning bed & breakfast';
 };

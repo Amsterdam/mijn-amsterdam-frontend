@@ -19,7 +19,7 @@ interface NotificationTrigger {
 }
 
 export interface KrefiaDeepLink {
-  status: string;
+  displayStatus: string;
   link: LinkProps;
   type: 'budgetbeheer' | 'lening' | 'schuldhulp';
 }
@@ -87,12 +87,13 @@ function getLinkText(deepLinkType: KrefiaDeepLink['type']) {
 
 function transformKrefiaResponse(responseData: KrefiaSourceResponse): Krefia {
   return {
-    deepLinks: Object.entries(responseData.content?.deepLinks ?? {}).map(
-      ([key, deepLink]) => {
+    deepLinks: Object.entries(responseData.content?.deepLinks ?? {})
+      .filter(([_key, deepLink]) => !!deepLink)
+      .map(([key, deepLink]) => {
         const deepLinkType = key as KrefiaDeepLink['type'];
         const title = getLinkText(deepLinkType);
         const krefiaDeepLink: KrefiaDeepLink = {
-          status: deepLink.title,
+          displayStatus: deepLink.title,
           link: {
             to: deepLink.url,
             title,
@@ -100,8 +101,7 @@ function transformKrefiaResponse(responseData: KrefiaSourceResponse): Krefia {
           type: deepLinkType,
         };
         return krefiaDeepLink;
-      }
-    ),
+      }),
     notificationTriggers: responseData.content?.notificationTriggers ?? null,
   };
 }

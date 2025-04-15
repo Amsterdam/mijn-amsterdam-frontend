@@ -139,7 +139,6 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
   additionalSelectFields: [
     'text25',
     'text17',
-    'tex25',
     'num14',
     'text18',
     'text19',
@@ -238,7 +237,7 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
       bol8: 'isCarsharingpermit',
       date8: 'dateEnd',
     },
-    additionalSelectFields: ['text25', 'num14', 'text17', 'tex19', 'tex18'],
+    additionalSelectFields: ['text25', 'num14', 'text17', 'text19', 'text18'],
     async afterTransform(vergunning, zaakSource) {
       vergunning.location = {
         street: String(zaakSource.fields.text25),
@@ -313,14 +312,14 @@ const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
   };
 
 export const decosCaseToZaakTransformers = {
-  [caseTypeParkeren.GPP]: GPP,
-  [caseTypeParkeren.GPK]: GPK,
-  [caseTypeParkeren.BZP]: BZP,
-  [caseTypeParkeren.BZB]: BZB,
-  [caseTypeParkeren.EigenParkeerplaats]: EigenParkeerplaats,
-  [caseTypeParkeren.EigenParkeerplaatsOpheffen]: EigenParkeerplaatsOpheffen,
-  [caseTypeParkeren.TouringcarDagontheffing]: TouringcarDagontheffing,
-  [caseTypeParkeren.TouringcarJaarontheffing]: TouringcarJaarontheffing,
+  [GPP.caseType]: GPP,
+  [GPK.caseType]: GPK,
+  [BZP.caseType]: BZP,
+  [BZB.caseType]: BZB,
+  [EigenParkeerplaats.caseType]: EigenParkeerplaats,
+  [EigenParkeerplaatsOpheffen.caseType]: EigenParkeerplaatsOpheffen,
+  [TouringcarDagontheffing.caseType]: TouringcarDagontheffing,
+  [TouringcarJaarontheffing.caseType]: TouringcarJaarontheffing,
 } as const;
 
 export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);

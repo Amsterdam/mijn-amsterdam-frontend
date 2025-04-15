@@ -58,6 +58,7 @@ export async function fetchZakenByUserIDs(
     filterCaseTypes?: string;
     includeProperties?: '1';
     top?: string;
+    username?: string;
   }>,
   res: Response
 ) {
@@ -79,10 +80,20 @@ export async function fetchZakenByUserIDs(
   const userIDsFromEnv =
     req.query.profileType === 'private'
       ? testAccountsDigid
-        ? Object.values(testAccountsDigid)
+        ? Object.entries(testAccountsDigid)
+            .filter(
+              ([username]) =>
+                !req.query.username || req.query.username === username
+            )
+            .map(([_username, userID]) => userID)
         : []
       : testAccountsEherkenning
-        ? Object.values(testAccountsEherkenning)
+        ? Object.entries(testAccountsEherkenning)
+            .filter(
+              ([username]) =>
+                !req.query.username || req.query.username === username
+            )
+            .map(([_username, userID]) => userID)
         : [];
 
   // Only allow fetching zaken for test accounts in non-production environments

@@ -6,6 +6,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumResultaat": null,
       "datumResultaatFormatted": null,
+      "displayStatus": "Onbekend",
       "documenten": [],
       "einddatum": null,
       "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
@@ -23,7 +24,6 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "primairbesluitdatumFormatted": null,
       "resultaat": null,
       "startdatum": "2022-11-04",
-      "status": null,
       "statusdatum": "2021-05-01",
       "steps": [],
       "title": "Bezwaar OJ.24.000115.001",
@@ -33,6 +33,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumResultaat": "2023-09-08",
       "datumResultaatFormatted": "08 september 2023",
+      "displayStatus": "Onbekend",
       "documenten": [],
       "einddatum": null,
       "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
@@ -50,7 +51,6 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "primairbesluitdatumFormatted": "01 mei 2021",
       "resultaat": "Niet-ontvankelijk",
       "startdatum": "2023-04-25",
-      "status": null,
       "statusdatum": "2021-05-01",
       "steps": [],
       "title": "Bezwaar BI.24.000093.001",
@@ -60,6 +60,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumResultaat": null,
       "datumResultaatFormatted": null,
+      "displayStatus": "In behandeling",
       "documenten": [],
       "einddatum": null,
       "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
@@ -77,7 +78,6 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "primairbesluitdatumFormatted": "03 maart 2021",
       "resultaat": "Gegrond",
       "startdatum": "2023-04-03",
-      "status": "In behandeling",
       "statusdatum": "2021-05-01",
       "steps": [],
       "title": "Bezwaar DJ.23.000268.001",
@@ -87,6 +87,7 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
     {
       "datumResultaat": null,
       "datumResultaatFormatted": null,
+      "displayStatus": "Afgehandeld",
       "documenten": [],
       "einddatum": "2023-01-04",
       "fetchUrl": "http://bff-api-host/api/v1/services/bezwaren?id=test-encrypted-id",
@@ -104,7 +105,6 @@ exports[`Bezwaren > fetch bezwaren > should return data in expected format 1`] =
       "primairbesluitdatumFormatted": "03 januari 2023",
       "resultaat": null,
       "startdatum": "2022-11-04",
-      "status": "Afgehandeld",
       "statusdatum": "2023-08-23",
       "steps": [],
       "title": "Bezwaar JB.22.000443.002",

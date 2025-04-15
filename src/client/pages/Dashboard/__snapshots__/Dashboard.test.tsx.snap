@@ -6,7 +6,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _WelcomeHeadingWrap_9aa5da"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _WelcomeHeadingWrap_9aa5da"
     >
       <div
         class="_WelcomeHeadingSizer_9aa5da"
@@ -29,7 +29,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
       </div>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h2
         class="ams-heading ams-heading--level-3 ams-mb--sm"
@@ -300,7 +300,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
       </ol>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-5-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-8-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-5-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-8-wide"
     >
       <h2
         class="ams-heading ams-heading--level-3 ams-mb--sm"

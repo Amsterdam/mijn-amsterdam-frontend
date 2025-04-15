@@ -6,8 +6,8 @@
   height: 100%;
   height: 100vh;
   height: var(--map-container-height);
-  max-width: var(--ams-ma-max-screen-width);
-  margin: 0 auto;
+  max-width: 100%;
+  width: 100%;
 }
 
 .MapContainer {

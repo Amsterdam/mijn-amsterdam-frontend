@@ -14,7 +14,11 @@ import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { getAuth, getReturnToUrlZaakStatus } from '../auth/auth-helpers';
+import {
+  getAuth,
+  getReturnToUrlZaakStatus,
+  getZaakStatusQueryParams,
+} from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
 import { getFromEnv } from '../helpers/env';
@@ -200,9 +204,7 @@ export async function zaakStatusHandler(
   const authType =
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
   const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
-
-  const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}&id=${params.id}&thema=${params.thema}`;
-
+  const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}${getZaakStatusQueryParams(params)}`;
   return res.redirect(loginRouteWithReturnTo);
 }
 
