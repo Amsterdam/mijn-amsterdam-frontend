@@ -1,4 +1,4 @@
-import { parseISO } from 'date-fns';
+import { isAfter, parseISO } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
@@ -88,7 +88,12 @@ function transformRegelingTitle(
       const startDate = aanvraag.datumIngangGeldigheid
         ? parseISO(aanvraag.datumIngangGeldigheid)
         : null;
-      const fromIndication = `(vanaf ${toDateFormatted(startDate)})`;
+      const fromIndication =
+        startDate &&
+        isAfter(startDate, new Date()) &&
+        aanvraag.resultaat === 'toegewezen'
+          ? ` (vanaf ${toDateFormatted(startDate)})`
+          : '';
       return `Stadspas${startDate ? ` ${startDate.getFullYear()}-${startDate.getFullYear() + 1}${fromIndication}` : ''}`;
     }
     default:
@@ -232,4 +237,5 @@ export const forTesting = {
   getDocumentsFrontend,
   transformRegelingenForFrontend,
   transformRegelingForFrontend,
+  transformRegelingTitle,
 };
