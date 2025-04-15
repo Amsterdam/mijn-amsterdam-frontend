@@ -1,0 +1,241 @@
+{
+  "blocks": [
+    {
+      "id": "1596231333",
+      "title": "Contact",
+      "description": [
+        {
+          "type": "tag",
+          "name": "p",
+          "voidElement": false,
+          "attrs": {},
+          "children": [
+            {
+              "type": "text",
+              "content": "Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op."
+            }
+          ]
+        },
+        {
+          "type": "tag",
+          "name": "ul",
+          "voidElement": false,
+          "attrs": {},
+          "children": [
+            {
+              "type": "tag",
+              "name": "li",
+              "voidElement": false,
+              "attrs": {},
+              "children": [
+                {
+                  "type": "tag",
+                  "name": "a",
+                  "voidElement": false,
+                  "attrs": {
+                    "href": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/contactformulier.aspx/"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Contactformulier"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "tag",
+              "name": "li",
+              "voidElement": false,
+              "attrs": {},
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Bel "
+                },
+                {
+                  "type": "tag",
+                  "name": "strong",
+                  "voidElement": false,
+                  "attrs": {},
+                  "children": [
+                    {
+                      "type": "tag",
+                      "name": "a",
+                      "voidElement": false,
+                      "attrs": {
+                        "href": "tel:14020"
+                      },
+                      "children": [
+                        {
+                          "type": "text",
+                          "content": "14 020"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": "maandag tot en met vrijdag van 08.00 tot 18.00 uur"
+                }
+              ]
+            },
+            {
+              "type": "tag",
+              "name": "li",
+              "voidElement": false,
+              "attrs": {},
+              "children": [
+                {
+                  "type": "tag",
+                  "name": "a",
+                  "voidElement": false,
+                  "attrs": {
+                    "href": "https://www.amsterdam.nl/contact/"
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "content": "Adressen en openingstijden"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "481454086",
+      "title": "Volg de gemeente",
+      "description": null,
+      "links": [
+        {
+          "to": "https://twitter.com/AmsterdamNL",
+          "title": "X (Twitter)"
+        },
+        {
+          "to": "https://www.facebook.com/gemeenteamsterdam",
+          "title": "Facebook"
+        },
+        {
+          "to": "https://www.instagram.com/gemeenteamsterdam/",
+          "title": "Instagram"
+        },
+        {
+          "to": "https://www.linkedin.com/company/gemeente-amsterdam",
+          "title": "LinkedIn"
+        },
+        {
+          "to": "https://social.amsterdam.nl/@gemeenteamsterdam",
+          "title": "Mastodon"
+        },
+        {
+          "to": "https://www.youtube.com/channel/UCEiYFPFR5jGhFakHhbswlig",
+          "title": "YouTube"
+        },
+        {
+          "to": "https://werkenbij.amsterdam.nl/",
+          "title": "Werkenbij"
+        },
+        {
+          "to": "https://www.amsterdam.nl/nieuws/volg-de-gemeente/nieuwsbrief-amsterdam/",
+          "title": "Nieuwsbrief Amsterdam"
+        }
+      ]
+    },
+    {
+      "id": "2861488379",
+      "title": "Kalender",
+      "description": [
+        {
+          "type": "tag",
+          "name": "p",
+          "voidElement": false,
+          "attrs": {},
+          "children": [
+            {
+              "type": "text",
+              "content": "Van buurtactiviteiten tot inspraakavonden. Wat organiseert de gemeente voor u? Kijk op "
+            },
+            {
+              "type": "tag",
+              "name": "a",
+              "voidElement": false,
+              "attrs": {
+                "href": "https://activiteiten.amsterdam.nl/"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Kalender Amsterdam"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tag",
+          "name": "h3",
+          "voidElement": false,
+          "attrs": {},
+          "children": [
+            {
+              "type": "text",
+              "content": "Uit in Amsterdam"
+            }
+          ]
+        },
+        {
+          "type": "tag",
+          "name": "p",
+          "voidElement": false,
+          "attrs": {},
+          "children": [
+            {
+              "type": "text",
+              "content": "Benieuwd wat er allemaal te doen is in de stad? Op "
+            },
+            {
+              "type": "tag",
+              "name": "a",
+              "voidElement": false,
+              "attrs": {
+                "href": "https://www.iamsterdam.com"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "content": "Iamsterdam.com"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": " vindt u de beste tips op het gebied van cultuur, uitgaan en evenementen."
+            }
+          ]
+        }
+      ],
+      "links": []
+    }
+  ],
+  "sub": [
+    {
+      "to": "https://www.amsterdam.nl/overdezesite/",
+      "title": "Over deze site"
+    },
+    {
+      "to": "https://www.amsterdam.nl/privacy/",
+      "title": "Privacy"
+    },
+    {
+      "to": "https://amsterdam.archiefweb.eu/",
+      "title": "Webarchief"
+    }
+  ]
+}
