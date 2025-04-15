@@ -1,7 +1,11 @@
-import { routeConfig, themaId, themaTitle } from './Jeugd-thema-config';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+  zorgnedLeerlingenvervoerActive,
+} from './Jeugd-thema-config';
 import { JeugdDetail } from './JeugdDetail';
 import { JeugdThemaPagina } from './JeugdThema';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { isLoading } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types';
 import { IconJeugd } from '../../assets/icons';
@@ -11,12 +15,12 @@ export const JeugdRoutes = [
   {
     route: routeConfig.themaPage.path,
     Component: JeugdThemaPagina,
-    isActive: FeatureToggle.zorgnedLeerlingenvervoerActive,
+    isActive: zorgnedLeerlingenvervoerActive,
   },
   {
     route: routeConfig.detailPage.path,
     Component: JeugdDetail,
-    isActive: FeatureToggle.zorgnedLeerlingenvervoerActive,
+    isActive: zorgnedLeerlingenvervoerActive,
   },
 ];
 
@@ -26,7 +30,7 @@ export const menuItem: ThemaMenuItem = {
   profileTypes: ['private'],
   isActive(appState: AppState) {
     return (
-      FeatureToggle.zorgnedLeerlingenvervoerActive &&
+      zorgnedLeerlingenvervoerActive &&
       !isLoading(appState.JEUGD) &&
       !!appState.JEUGD.content?.length
     );

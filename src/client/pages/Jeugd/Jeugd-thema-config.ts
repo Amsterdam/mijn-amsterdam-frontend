@@ -1,10 +1,13 @@
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { LinkProps } from '../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import { WithDetailLinkComponent } from '../../components/Table/TableV2.types';
 import { DisplayProps } from '../../components/Table/TableV2.types';
 import { ThemaRoutesConfig } from '../../config/thema-types';
 import { toDocumentTitles, toRoutes } from '../../helpers/thema-config';
+
+export const zorgnedLeerlingenvervoerActive = !IS_PRODUCTION;
 
 export const themaTitle = 'Onderwijs en Jeugd';
 export const themaId = 'JEUGD';

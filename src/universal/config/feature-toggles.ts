@@ -124,5 +124,4 @@ export const FeatureToggle = {
   zorgnedDocumentDecisionDateActive: true,
   // Zorg thema actief
   zorgv2ThemapaginaActive: true,
-  zorgnedLeerlingenvervoerActive: !IS_PRODUCTION,
 };
