@@ -10,7 +10,7 @@ import { BffErrorRoutes } from './pages/BffError/BffError-routes';
 import { BodemRoutes } from './pages/Bodem/Bodem-routes';
 import { BurgerzakenRoutes } from './pages/Burgerzaken/Burgerzaken-routes';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes';
-import { ErfpachtRoutes } from './pages/Erfpacht/Eerfpacht-routes';
+import { ErfpachtRoutes } from './pages/Erfpacht/Erfpacht-routes';
 import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes';
 import { HLIRoutes } from './pages/HLI/HLI-routes';
 import { HorecaRoutes } from './pages/Horeca/Horeca-routes';
