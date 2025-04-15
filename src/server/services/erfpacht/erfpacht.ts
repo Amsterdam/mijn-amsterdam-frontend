@@ -181,7 +181,10 @@ interface ErfpachtDossiersDetailSource {
   };
 }
 
-type ErfpachtDossierPropsFrontend = ZaakDetail & {
+type ErfpachtDossierPropsFrontend = Omit<
+  ZaakDetail,
+  'displayStatus' | 'steps'
+> & {
   dossierNummerUrlParam: string;
 };
 
@@ -314,8 +317,6 @@ export function transformErfpachtDossierProperties<
   const zaak: T & ErfpachtDossierPropsFrontend = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
-    steps: [],
-    displayStatus: '',
     id: dossierNummerUrlParam,
     link: {
       to: generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
