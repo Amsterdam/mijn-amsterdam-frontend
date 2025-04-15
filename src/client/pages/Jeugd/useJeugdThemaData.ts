@@ -32,7 +32,7 @@ export function useJeugdThemaData() {
   return {
     voorzieningen,
     title: themaTitle,
-    breadcrumbs: useThemaBreadcrumbs(themaId.JEUGD),
+    breadcrumbs: useThemaBreadcrumbs(themaId),
     isLoading: isLoading(JEUGD),
     isError: isError(JEUGD),
     routes,
