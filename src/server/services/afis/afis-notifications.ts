@@ -1,7 +1,7 @@
 import { fetchIsKnownInAFIS } from './afis';
 import { AfisFactuur, AfisFactuurStatus } from './afis-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -47,7 +47,7 @@ export function createAfisFacturenNotification(
   return {
     id: `facturen-open-notification`,
     datePublished,
-    thema: Themas.AFIS,
+    themaID: ThemaIDs.AFIS,
     title,
     description,
     link: {

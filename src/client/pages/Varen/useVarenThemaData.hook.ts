@@ -5,7 +5,7 @@ import {
   routes,
 } from './Varen-thema-config';
 import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -24,7 +24,7 @@ export function useVarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.VAREN);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.VAREN);
 
   return {
     varenRederRegistratie,

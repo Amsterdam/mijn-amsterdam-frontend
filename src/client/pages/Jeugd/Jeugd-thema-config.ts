@@ -3,10 +3,10 @@ import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/help
 import { WithDetailLinkComponent } from '../../components/Table/TableV2.types';
 import { DisplayProps } from '../../components/Table/TableV2.types';
 import { ThemaRoutesConfig } from '../../config/thema-types';
-import { toDocumentTitles, toRoutes } from '../../helpers/themas';
+import { toDocumentTitles, toRoutes } from '../../helpers/thema-config';
 
 export const themaTitle = 'Onderwijs en Jeugd';
-export const themaId = { JEUGD: 'JEUGD' };
+export const themaId = 'JEUGD';
 
 const detailRouteBase = '/jeugd/voorziening';
 
@@ -27,7 +27,7 @@ export const routes = toRoutes(routeConfig);
 export const documentTitles = toDocumentTitles(routeConfig);
 
 export const errorMessage = {
-  [themaId.JEUGD]: themaTitle,
+  [themaId]: themaTitle,
 };
 
 export const LEERLINGENVERVOER_LEES_MEER =

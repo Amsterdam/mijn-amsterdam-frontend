@@ -11,7 +11,7 @@ import {
   LoodMetingen,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -260,8 +260,11 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const baseNotification = {
-    thema: Themas.BODEM,
+  const baseNotification: Omit<
+    MyNotification,
+    'title' | 'description' | 'datePublished'
+  > = {
+    themaID: ThemaIDs.BODEM,
     id: meting.kenmerk,
     link: {
       to: meting.link.to,

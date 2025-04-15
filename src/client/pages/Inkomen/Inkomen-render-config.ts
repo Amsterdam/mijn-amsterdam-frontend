@@ -33,7 +33,7 @@ export const InkomenRoutes = [
 
 export const menuItem: ThemaMenuItem = {
   title: themaTitle,
-  id: themaId.INKOMEN,
+  id: themaId,
   to: routes.themaPage,
   profileTypes: ['private'],
   isActive: isInkomenThemaActive,

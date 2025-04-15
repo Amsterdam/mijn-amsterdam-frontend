@@ -1,6 +1,6 @@
 import { decosZaakTransformers } from './decos-zaken';
 import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -21,7 +21,7 @@ export async function fetchParkeerVergunningenNotifications(
     const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
       decosZaakTransformers,
-      Themas.PARKEREN
+      ThemaIDs.PARKEREN
     );
 
     return apiSuccessResult({

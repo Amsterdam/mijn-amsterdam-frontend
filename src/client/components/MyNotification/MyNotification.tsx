@@ -64,7 +64,7 @@ export function MyNotification({
         )}
         <div className={styles.MetaInfoSecondary}>
           <em className={styles.ThemaIndication}>
-            {ThemaTitles[notification.thema] ?? notification.thema}
+            {ThemaTitles[notification.themaID] ?? notification.themaID}
           </em>{' '}
           {!notification.hideDatePublished && (
             <time

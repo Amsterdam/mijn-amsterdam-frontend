@@ -3,7 +3,12 @@ import { BuildingsIcon } from '@amsterdam/design-system-react-icons';
 import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage';
 import { MijnGegevensThema } from './private/ProfilePrivate';
-import { routes, themaId, themaTitle } from './Profile-thema-config';
+import {
+  routes,
+  themaTitle,
+  themaIdBRP,
+  themaIdKVK,
+} from './Profile-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { isLoading } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types';
@@ -26,7 +31,7 @@ export const ProfileRoutes = [
 export const menuItems: ThemaMenuItem[] = [
   {
     title: themaTitle.BRP,
-    id: themaId.BRP,
+    id: themaIdBRP,
     to: routes.themaPageBRP,
     profileTypes: ['private'],
     isActive(appState: AppState) {
@@ -36,7 +41,7 @@ export const menuItems: ThemaMenuItem[] = [
   } as const,
   {
     title: themaTitle.KVK,
-    id: themaId.KVK,
+    id: themaIdKVK,
     to: routes.themaPageKVK,
     profileTypes: ['commercial', 'private'],
     isActive(appState: AppState) {

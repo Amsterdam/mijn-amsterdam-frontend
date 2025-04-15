@@ -17,13 +17,11 @@ import {
   toRoutes,
   toDocumentTitles,
   toCustomTrackingUrls,
-} from '../../helpers/themas';
+} from '../../helpers/thema-config';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
-export const themaId = { INKOMEN: 'INKOMEN' } as const;
-export type ProfileThemaID = (typeof themaId)[keyof typeof themaId];
-
+export const themaId = 'INKOMEN' as const;
 export const themaTitle = 'Inkomen';
 
 export const REQUEST_PROCESS_COMPLETED_STATUS_IDS = [
