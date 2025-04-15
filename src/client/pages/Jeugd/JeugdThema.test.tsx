@@ -6,6 +6,7 @@ import { JeugdThemaPagina } from './JeugdThema';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { expectTableHeaders } from '../../helpers/test-utils';
+import { routeConfig } from './Jeugd-thema-config';
 
 const jeugdState: AppState['JEUGD'] = {
   content: [
@@ -197,8 +198,8 @@ const basicAppState = {
 
 const createComponent = componentCreator({
   component: JeugdThemaPagina,
-  routeEntry: generatePath(AppRoutes.JEUGD),
-  routePath: AppRoutes.JEUGD,
+  routeEntry: generatePath(routeConfig.themaPage.path),
+  routePath: generatePath(routeConfig.themaPage.path),
 });
 
 test('Static elements', async () => {

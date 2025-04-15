@@ -13,19 +13,6 @@ import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
-const displayPropsAanvragenBase: DisplayProps<
-  WithDetailLinkComponent<LoodMetingFrontend>
-> = {
-  detailLinkComponent: 'Adres',
-  datumAanvraagFormatted: 'Aangevraagd',
-  status: 'Status',
-};
-
-const displayPropsAanvragen = withOmitDisplayPropsForSmallScreens(
-  displayPropsAanvragenBase,
-  ['status', 'datumAanvraagFormatted']
-);
-
 const listPageParamKind = {
   inProgress: 'lopende-aanvragen',
   completed: 'afgehandelde-aanvragen',
@@ -40,31 +27,50 @@ export const routes = {
   detailPage: AppRoutes['BODEM/LOOD_METING'],
 };
 
-const tableConfigBase = {
-  sort: dateSort('dateRequest', 'desc'),
-  displayProps: displayPropsAanvragen,
-};
+const displayPropsLopend = withOmitDisplayPropsForSmallScreens<
+  DisplayProps<WithDetailLinkComponent<LoodMetingFrontend>>
+>(
+  {
+    detailLinkComponent: 'Adres',
+    datumAanvraagFormatted: 'Aangevraagd op',
+    status: 'Status',
+  },
+  ['status', 'datumAanvraagFormatted']
+);
+
+const displayPropsEerder = withOmitDisplayPropsForSmallScreens<
+  DisplayProps<WithDetailLinkComponent<LoodMetingFrontend>>
+>(
+  {
+    detailLinkComponent: 'Adres',
+    datumAfgehandeldFormatted: 'Afgehandeld op',
+    decision: 'Resultaat',
+  },
+  ['decision', 'datumAfgehandeldFormatted']
+);
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
-    ...tableConfigBase,
     title: 'Lopende aanvragen',
+    sort: dateSort<LoodMetingFrontend>('datumAanvraag', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => !bodemAanvraag.processed,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
+    displayProps: displayPropsLopend,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
   },
   [listPageParamKind.completed]: {
-    ...tableConfigBase,
     title: 'Afgehandelde aanvragen',
+    sort: dateSort<LoodMetingFrontend>('datumAfgehandeld', 'desc'),
     filter: (bodemAanvraag: LoodMetingFrontend) => bodemAanvraag.processed,
     listPageRoute: generatePath(routes.listPage, {
       kind: listPageParamKind.completed,
       page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    displayProps: displayPropsEerder,
   },
 } as const;
 

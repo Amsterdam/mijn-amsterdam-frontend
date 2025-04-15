@@ -25,7 +25,7 @@ export function useThemaMenuItems(): ThemasState {
   const items = useMemo(() => {
     return themaItems.filter((item) => {
       // Check to see if Thema has been loaded or if it is directly available
-      return 'isActive' in item
+      return item.isActive
         ? item.isActive(appState)
         : item.isAlwaysVisible || isThemaActive(item, appState);
     });
@@ -56,7 +56,7 @@ export function useThemaMenuItemsByThemaID() {
           acc[item.id] = item;
           return acc;
         },
-        {} as Record<ThemaID, ThemaMenuItemTransformed>
+        {} as Record<string, ThemaMenuItemTransformed>
       ),
     [items]
   );

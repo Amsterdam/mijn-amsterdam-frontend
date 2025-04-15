@@ -1,8 +1,4 @@
-import {
-  BellIcon,
-  BuildingsIcon,
-  SearchIcon,
-} from '@amsterdam/design-system-react-icons';
+import { BellIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 
 import { ThemaID } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
@@ -17,12 +13,10 @@ import {
   IconAfval,
   IconHLI,
   IconHoreca,
-  IconInkomen,
   IconInkomenSVWI,
   IconJeugd,
   IconKlachten,
   IconKrefia,
-  IconMijnGegevens,
   IconMilieuzone,
   IconOvertredingen,
   IconParkeren,
@@ -42,16 +36,13 @@ export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   BELASTINGEN: IconBelastingen,
   BEZWAREN: IconBezwaren,
   BODEM: IconBodem,
-  BRP: IconMijnGegevens,
   BURGERZAKEN: IconBurgerZaken,
   BUURT: IconWior,
   ERFPACHT: IconErfpacht,
   HLI: IconHLI,
   HORECA: IconHoreca,
-  INKOMEN: IconInkomen,
   KLACHTEN: IconKlachten,
   KREFIA: IconKrefia,
-  KVK: BuildingsIcon,
   MILIEUZONE: IconMilieuzone,
   NOTIFICATIONS: BellIcon,
   OVERTREDINGEN: IconOvertredingen,

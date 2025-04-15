@@ -10,8 +10,10 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaID } from '../../../universal/config/thema';
+import {
+  routes,
+  themaTitle,
+} from '../../../client/pages/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
@@ -88,8 +90,7 @@ export function addApiBasePathToDocumentUrls(
 export function createProcessNotification(
   requestProcess: WpiRequestProcess,
   statusStep: WpiRequestStatus,
-  labels: WpiRequestProcessLabels,
-  thema: ThemaID
+  labels: WpiRequestProcessLabels
 ): MyNotification {
   const notificationLabels = labels[statusStep.id].notification;
   const titleTransform = notificationLabels.title;
@@ -99,7 +100,7 @@ export function createProcessNotification(
   return {
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
-    thema,
+    thema: themaTitle,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,
@@ -157,7 +158,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
   switch (requestProcess.about) {
     case 'TONK':
       link = {
-        to: generatePath(AppRoutes['INKOMEN/TONK'], {
+        to: generatePath(routes.detailPageTonk, {
           id,
           version: '1',
         }),
@@ -170,7 +171,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
     case 'Tozo 4':
     case 'Tozo 5':
       link = {
-        to: generatePath(AppRoutes['INKOMEN/TOZO'], {
+        to: generatePath(routes.detailPageTozo, {
           id,
           version: requestProcess.about.replace('Tozo ', ''),
         }),
@@ -179,7 +180,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bijstandsuitkering':
       link = {
-        to: generatePath(AppRoutes['INKOMEN/BIJSTANDSUITKERING'], {
+        to: generatePath(routes.detailPageUitkering, {
           id,
         }),
         title,
@@ -187,7 +188,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bbz':
       link = {
-        to: generatePath(AppRoutes['INKOMEN/BBZ'], {
+        to: generatePath(routes.detailPageBbz, {
           id,
           version: '1',
         }),

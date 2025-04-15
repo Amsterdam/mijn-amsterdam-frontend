@@ -126,7 +126,9 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               >
                 <em
                   class="_ThemaIndication_e4b76a"
-                />
+                >
+                  BRP
+                </em>
                  
                 <time
                   class="_Datum_e4b76a"
@@ -176,7 +178,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 <em
                   class="_ThemaIndication_e4b76a"
                 >
-                  Inkomen
+                  INKOMEN
                 </em>
                  
                 <time

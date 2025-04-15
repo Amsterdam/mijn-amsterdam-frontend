@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import { MainHeaderHero } from './MainHeaderHero';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routes } from '../../pages/Inkomen/Inkomen-thema-config';
 import MockApp from '../../pages/MockApp';
 
 describe('<MainHeaderHero />', () => {
@@ -9,8 +9,8 @@ describe('<MainHeaderHero />', () => {
     const { container } = render(
       <MockApp
         component={MainHeaderHero}
-        routeEntry={AppRoutes.INKOMEN}
-        routePath={AppRoutes.INKOMEN}
+        routeEntry={routes.themaPage}
+        routePath={routes.themaPage}
       />
     );
     expect(container.querySelector('picture')).toBeInTheDocument();

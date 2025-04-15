@@ -10,28 +10,34 @@ import {
   getThemaUrlBurgerzakenWithAppState,
 } from '../pages/Burgerzaken/helpers';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
+import { menuItem as menuItemInkomen } from '../pages/Inkomen/Inkomen-routes';
+import { documentTitles as documentTitlesInkomen } from '../pages/Inkomen/Inkomen-thema-config';
+import { menuItem as menuItemJeugd } from '../pages/Jeugd/Jeugd-render-config';
 import {
-  getInkomenListPageDocumentTitle,
-  getInkomenSpecificatiesListPageDocumentTitle,
-} from '../pages/Inkomen/Inkomen-thema-config';
-import {
-  menuItems as profileMenuItems,
-  documentTitles as profileDocumentTitles,
-} from '../pages/Profile/Profile-thema-config';
+  documentTitles as documentTitlesJeugd,
+  themaTitle as themaTitleJeugd,
+} from '../pages/Jeugd/Jeugd-thema-config';
+import { menuItems as profileMenuItems } from '../pages/Profile/Profile-routes';
+import { documentTitles as documentTitlesProfile } from '../pages/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
 } from '../pages/Varen/Varen-thema-config';
 import { getListPageDocumentTitle } from '../pages/Vergunningen/Vergunningen-thema-config';
 
-export const BagThemas: Record<ThemaID, BagThema> = Object.fromEntries(
+export const BagThemas = Object.fromEntries(
   Object.entries(Themas).map(([key, key2]) => {
     return [key, `${key2}_BAG`];
   })
-);
+) as Record<ThemaID, BagThema>;
+
+/**
+ * @deprecated Use the titles exported from the Thema-config files instead.
+ */
+type ThemaTitles = { [thema in ThemaID]: string };
 
 // These are used for PageHeadings and link title props for example.
-export const ThemaTitles: { [thema in ThemaID]: string } = {
+export const ThemaTitles: ThemaTitles = {
   AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   AVG: 'AVG persoonsgegevens',
@@ -42,8 +48,8 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   BUURT: 'Mijn buurt',
   ERFPACHT: `Erfpacht`,
   HLI: 'Stadspas en regelingen bij laag inkomen',
+  JEUGD: themaTitleJeugd,
   HORECA: 'Horeca',
-  INKOMEN: 'Inkomen',
   KLACHTEN: 'Klachten',
   KREFIA: 'Kredietbank & FIBU',
   MILIEUZONE: 'Milieuzone',
@@ -58,7 +64,6 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
-  JEUGD: 'Onderwijs en Jeugd',
 };
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
@@ -85,18 +90,12 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
 
+  ...documentTitlesJeugd,
+
   // Inkomen
-  [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
-  [AppRoutes['INKOMEN/SPECIFICATIES']]:
-    getInkomenSpecificatiesListPageDocumentTitle(ThemaTitles.INKOMEN),
-  [AppRoutes['INKOMEN/LIST']]: getInkomenListPageDocumentTitle(
-    ThemaTitles.INKOMEN
-  ),
-  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
-    `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/BBZ']]: `Bbz | ${ThemaTitles.INKOMEN}`,
+  ...documentTitlesInkomen,
+  // Mijn gegevens + Contactmomenten
+  ...documentTitlesProfile,
 
   // HLI
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
@@ -109,9 +108,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-
-  // Mijn gegevens + Contactmomenten
-  ...profileDocumentTitles,
 
   // Bezwaren
   [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
@@ -200,6 +196,8 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
   ...profileMenuItems,
+  menuItemInkomen,
+  menuItemJeugd,
   {
     title: ThemaTitles.BELASTINGEN,
     id: Themas.BELASTINGEN,
@@ -272,18 +270,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.ZORG,
     id: Themas.ZORG,
     to: AppRoutes.ZORG,
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.JEUGD,
-    id: Themas.JEUGD,
-    to: AppRoutes.JEUGD,
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.INKOMEN,
-    id: Themas.INKOMEN,
-    to: AppRoutes.INKOMEN,
     profileTypes: ['private'],
   },
   {

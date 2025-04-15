@@ -22,31 +22,6 @@ describe('useThemaMenuItems', () => {
     expect(isActive).toBe(false);
   });
 
-  test('isThemaActive', () => {
-    const item: ThemaMenuItem = {
-      id: 'INKOMEN',
-      profileTypes: ['private'],
-      to: 'http://test',
-      title: 'Testje!',
-    };
-
-    {
-      const isActive = isThemaActive(item, {
-        WPI_AANVRAGEN: { content: [] },
-      } as any);
-
-      expect(isActive).toBe(false);
-    }
-
-    {
-      const isActive = isThemaActive(item, {
-        WPI_AANVRAGEN: { content: ['x'] },
-      } as any);
-
-      expect(isActive).toBe(true);
-    }
-  });
-
   test('getThemaMenuItemsAppState', () => {
     const appState = {
       TEST: { content: 'foo', status: 'OK' },

@@ -1,14 +1,15 @@
 import { getRows } from './fields-config';
 import {
   AanbiedenDiensten,
+  Straatartiesten,
   VergunningFrontend,
 } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 
-export function AanbiedenDienstenContent({
+export function AanbiedenDienstenEnStraatartiestenContent({
   vergunning,
 }: {
-  vergunning: VergunningFrontend<AanbiedenDiensten>;
+  vergunning: VergunningFrontend<AanbiedenDiensten | Straatartiesten>;
 }) {
   const rows = getRows(vergunning, ['identifier', 'decision']);
 

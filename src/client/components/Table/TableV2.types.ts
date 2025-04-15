@@ -1,5 +1,9 @@
 import { ReactNode } from 'react';
 
+import { LinkProps } from 'react-router';
+
+import { Unshaped } from '../../../universal/types';
+
 export type DisplayProps<T> = Readonly<
   {
     [Property in keyof T]+?: string | number | ReactNode;
@@ -14,3 +18,11 @@ export interface TableV2Props<T> {
   caption?: string;
   subTitle?: ReactNode;
 }
+
+export interface ObjectWithOptionalLinkAttr extends Unshaped {
+  link?: LinkProps;
+}
+
+export type WithDetailLinkComponent<T> = T & {
+  detailLinkComponent?: ReactNode;
+};

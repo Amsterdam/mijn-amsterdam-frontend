@@ -150,7 +150,7 @@ interface ErfpachtDossiersDetailSource {
   titelKopFinancieel: string;
   titelKopFacturen: string;
   kadastraleaanduidingen?: ErfpachtDossierDetailKadastraleAanduiding[];
-  titelKadastraleaanduiding: string;
+  titelKadastraleAanduiding: string;
   relaties?: ErfpachtDossierDetailRelatie[];
   titelBetaler: string;
   juridisch?: ErfpachtDossierDetailJuridisch;

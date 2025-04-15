@@ -280,7 +280,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
       </div>
       <a
         class="ams-link ams-link--standalone _MaRouterLink__no-default-underline_aa758a"
-        href="/inkomen/eerdere-aanvragen"
+        href="/inkomen/lijst/eerdere-aanvragen"
         title="Bekijk meer eerdere aanvragen"
       >
         Toon meer

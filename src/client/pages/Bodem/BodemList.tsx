@@ -7,6 +7,7 @@ export function BodemList() {
     isLoading,
     isError,
     filter,
+    sort,
     title,
     displayProps,
     params,
@@ -16,7 +17,7 @@ export function BodemList() {
 
   return (
     <ListPagePaginated
-      items={items.filter(filter)}
+      items={items.filter(filter).sort(sort)}
       title={title}
       appRoute={routes.listPage}
       appRouteParams={params}

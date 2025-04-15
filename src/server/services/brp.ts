@@ -2,7 +2,10 @@ import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { routes } from '../../client/pages/Profile/Profile-thema-config';
+import {
+  routes,
+  themaId,
+} from '../../client/pages/Profile/Profile-thema-config';
 import { AppRoutes } from '../../universal/config/routes';
 import { Themas } from '../../universal/config/thema';
 import {
@@ -149,7 +152,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (adresInOnderzoek) {
     notifications.push({
-      thema: Themas.BRP,
+      thema: themaId.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
@@ -159,7 +162,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
-        to: routes.BRP,
+        to: routes.themaPageBRP,
         title: 'Meer informatie',
       },
     });
@@ -167,14 +170,14 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      thema: Themas.BRP,
+      thema: themaId.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
-        to: routes.BRP,
+        to: routes.themaPageBRP,
         title: 'Meer informatie',
       },
     });

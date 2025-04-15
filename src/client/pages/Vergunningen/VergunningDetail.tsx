@@ -1,4 +1,4 @@
-import { AanbiedenDienstenContent } from './detail-page-content/AanbiedenDiensten';
+import { AanbiedenDienstenEnStraatartiestenContent } from './detail-page-content/AanbiedenDienstenEnStraatartiesten';
 import { ERVV } from './detail-page-content/ERVV';
 import { EvenementMelding } from './detail-page-content/EvenementMelding';
 import { EvenementVergunning } from './detail-page-content/EvenementVergunning';
@@ -47,8 +47,13 @@ function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
             return <ERVV vergunning={vergunning} />;
           case 'Flyeren-Sampling':
             return <Flyeren vergunning={vergunning} />;
+          case 'Straatartiesten':
           case 'Aanbieden van diensten':
-            return <AanbiedenDienstenContent vergunning={vergunning} />;
+            return (
+              <AanbiedenDienstenEnStraatartiestenContent
+                vergunning={vergunning}
+              />
+            );
           case 'Nachtwerkontheffing':
             return <Nachtwerkontheffing vergunning={vergunning} />;
           case 'Zwaar verkeer':
@@ -113,3 +118,7 @@ export function VergunningDetailPagina() {
     />
   );
 }
+
+export const forTesting = {
+  DetailPageContent,
+};

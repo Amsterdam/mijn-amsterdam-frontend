@@ -1,7 +1,5 @@
-import { routes as contactmomentenRoutes } from './private/Contactmomenten.config';
-import { isLoading } from '../../../universal/helpers/api';
-import { AppState } from '../../../universal/types/App.types';
-import { ThemaMenuItem } from '../../config/thema-types';
+import { ThemaRoutesConfig } from '../../config/thema-types';
+import { toDocumentTitles, toRoutes } from '../../helpers/themas';
 
 export const themaId = { BRP: 'BRP', KVK: 'KVK' } as const;
 export type ProfileThemaID = (typeof themaId)[keyof typeof themaId];
@@ -20,37 +18,23 @@ export const themaTitle = {
   [themaId.KVK]: 'Mijn onderneming',
 } as const;
 
-export const routes = {
-  [themaId.BRP]: '/persoonlijke-gegevens',
-  [themaId.KVK]: '/gegevens-handelsregister',
-} as const;
+const routeConfig = {
+  themaPageBRP: {
+    path: '/persoonlijke-gegevens',
+    documentTitle: 'Mijn gegevens',
+  },
+  themaPageKVK: {
+    path: '/gegevens-handelsregister',
+    documentTitle: 'Mijn onderneming',
+  },
+  listPageContactmomenten: {
+    path: '/contactmomenten/:page?',
+    documentTitle: `Alle contactmomenten | ${themaTitle.BRP}`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
-export const documentTitles = {
-  [routes.BRP]: `Mijn gegevens`,
-  [routes.KVK]: `Mijn onderneming`,
-  [contactmomentenRoutes.listPage]: `Alle contactmomenten | ${themaTitle.BRP}`,
-} as const;
-
-export const menuItems: ThemaMenuItem[] = [
-  {
-    title: themaTitle.BRP,
-    id: themaId.BRP,
-    to: routes.BRP,
-    profileTypes: ['private'],
-    isActive(appState: AppState) {
-      return !isLoading(appState.BRP) && !!appState.BRP.content?.persoon;
-    },
-  } as const,
-  {
-    title: themaTitle.KVK,
-    id: themaId.KVK,
-    to: routes.KVK,
-    profileTypes: ['commercial', 'private'],
-    isActive(appState: AppState) {
-      return !isLoading(appState.KVK) && !!appState.KVK.content;
-    },
-  } as const,
-];
+export const routes = toRoutes(routeConfig);
+export const documentTitles = toDocumentTitles(routeConfig);
 
 export const errorMessage = {
   [themaId.KVK]: 'Mijn onderneming',

@@ -1,9 +1,15 @@
+import { Entries } from 'type-fest';
+
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { Themas } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import { ThemaMenuItem } from '../config/thema-types';
+import {
+  ThemaMenuItem,
+  ThemaRouteConfig,
+  ThemaRoutesConfig,
+} from '../config/thema-types';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -30,12 +36,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     VAREN,
     VERGUNNINGEN,
     WMO,
-    WPI_AANVRAGEN,
-    WPI_BBZ,
-    WPI_SPECIFICATIES,
-    WPI_TONK,
-    WPI_TOZO,
-    JEUGD,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -43,32 +43,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   switch (item.id) {
     case Themas.AFIS: {
       return FeatureToggle.afisActive && AFIS?.content?.isKnown;
-    }
-    case Themas.INKOMEN: {
-      const { jaaropgaven, uitkeringsspecificaties } =
-        WPI_SPECIFICATIES?.content ?? {};
-      const hasAanvragen = !!WPI_AANVRAGEN?.content?.length;
-      const hasTozo = !!WPI_TOZO?.content?.length;
-      const hasTonk = !!WPI_TONK?.content?.length;
-      const hasBbz = !!WPI_BBZ?.content?.length;
-      const hasJaaropgaven = !!jaaropgaven?.length;
-      const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
-
-      return (
-        !(
-          isLoading(WPI_AANVRAGEN) &&
-          isLoading(WPI_SPECIFICATIES) &&
-          isLoading(WPI_TOZO) &&
-          isLoading(WPI_TONK) &&
-          isLoading(WPI_BBZ)
-        ) &&
-        (hasAanvragen ||
-          hasTozo ||
-          hasTonk ||
-          hasJaaropgaven ||
-          hasBbz ||
-          hasUitkeringsspecificaties)
-      );
     }
 
     case Themas.SVWI:
@@ -98,13 +72,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         FeatureToggle.zorgv2ThemapaginaActive &&
         !isLoading(WMO) &&
         !!WMO.content?.length
-      );
-
-    case Themas.JEUGD:
-      return (
-        FeatureToggle.zorgnedLeerlingenvervoerActive &&
-        !isLoading(JEUGD) &&
-        !!JEUGD.content?.length
       );
 
     case Themas.BELASTINGEN: {
@@ -245,4 +212,51 @@ export function getThemaMenuItemsAppState(
     )
     .map(({ id }) => appState[id as AppStateKey])
     .filter((apiState) => !!apiState);
+}
+
+export function toMapped<
+  T extends ThemaRoutesConfig,
+  K extends keyof ThemaRouteConfig,
+>(routeConfig: T, configKey: K) {
+  const routeEntries = Object.entries(routeConfig) as Entries<
+    typeof routeConfig
+  >;
+  type RC = typeof routeConfig;
+  type RCK = keyof RC;
+
+  return Object.fromEntries(
+    routeEntries.map(([routeKey, config]) => {
+      const routeConfigValue = config[configKey];
+      return [routeKey, routeConfigValue];
+    })
+  ) as Record<RCK, ThemaRouteConfig[K]>;
+}
+
+export function toMappedByPath<
+  T extends ThemaRoutesConfig,
+  K extends keyof ThemaRouteConfig,
+>(routeConfig: T, configKey: K) {
+  const routeEntries = Object.entries(routeConfig) as Entries<
+    typeof routeConfig
+  >;
+  return Object.fromEntries(
+    routeEntries.map(([_routeKey, config]) => {
+      const routeConfigValue = config[configKey];
+      return [config.path, routeConfigValue];
+    })
+  );
+}
+
+export function toRoutes<T extends ThemaRoutesConfig>(routeConfig: T) {
+  return toMapped(routeConfig, 'path');
+}
+
+export function toDocumentTitles<T extends ThemaRoutesConfig>(routeConfig: T) {
+  return toMappedByPath(routeConfig, 'documentTitle');
+}
+
+export function toCustomTrackingUrls<T extends ThemaRoutesConfig>(
+  routeConfig: T
+) {
+  return toMappedByPath(routeConfig, 'trackingUrl');
 }

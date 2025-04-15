@@ -1,6 +1,6 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { LEERLINGENVERVOER_LEES_MEER } from './thema-config';
+import { LEERLINGENVERVOER_LEES_MEER } from './Jeugd-thema-config';
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
 import { LinkProps } from '../../../universal/types';

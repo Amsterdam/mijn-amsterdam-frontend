@@ -12,18 +12,18 @@ import {
   contactmomentenDisplayProps,
   ContactMomentFrontend,
   mapperContactmomentToMenuItem,
-  routes,
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
 import { Themas } from '../../../../universal/config/thema';
 import { isLoading, isError } from '../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { ThemaMenuItemTransformed } from '../../../config/thema';
+import { ThemaMenuItemTransformed } from '../../../config/thema-types';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import {
   useThemaBreadcrumbs,
   useThemaMenuItems,
 } from '../../../hooks/useThemaMenuItems';
+import { routes } from '../Profile-thema-config';
 
 function getLinkToThemaPage(
   onderwerp: string,
@@ -87,7 +87,9 @@ export function useContactmomenten() {
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
-    routes,
+    routes: {
+      listPage: routes.listPageContactmomenten,
+    },
     breadcrumbs,
     routeParams,
   };

@@ -1,6 +1,7 @@
 import { differenceInMonths } from 'date-fns';
 
 import { defaultDateFormat } from './date';
+import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../config/app';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
@@ -132,8 +133,6 @@ export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
 export function uniqueArray(arr: any[]) {
   return Array.from(new Set(arr));
 }
-
-const MONTHS_TO_KEEP_NOTIFICATIONS = 3;
 
 export function isRecentNotification(
   datePublished: string,

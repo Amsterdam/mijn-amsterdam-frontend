@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
@@ -16,6 +15,7 @@ import {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types';
+import { routeConfig } from '../../../client/pages/Jeugd/Jeugd-thema-config';
 
 export async function fetchLeerlingenvervoer(
   requestID: RequestID,
@@ -86,7 +86,7 @@ function transformVoorzieningenForFrontend(
         isActual: aanvraag.isActueel,
         link: {
           title: 'Meer informatie',
-          to: generatePath(AppRoutes['JEUGD/VOORZIENING'], {
+          to: generatePath(routeConfig.detailPage.path, {
             id,
           }),
         },

@@ -1,4 +1,3 @@
-import { Themas } from '../../../universal/config/thema';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
@@ -277,12 +276,7 @@ export async function fetchWpiNotifications(
 
             if (labels) {
               const notifications = requestProcess.steps.map((step) =>
-                createProcessNotification(
-                  requestProcess,
-                  step,
-                  labels,
-                  Themas.INKOMEN
-                )
+                createProcessNotification(requestProcess, step, labels)
               );
               return notifications;
             }

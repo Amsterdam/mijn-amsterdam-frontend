@@ -9,21 +9,11 @@ export const AppRoutes = {
   'ZORG/VOORZIENING': '/zorg-en-ondersteuning/voorziening/:id',
   'ZORG/VOORZIENINGEN_LIST': '/zorg-en-ondersteuning/lijst/:kind/:page?',
 
-  JEUGD: '/jeugd',
-  'JEUGD/VOORZIENING': '/jeugd/voorziening/:id',
-
   HLI: '/regelingen-bij-laag-inkomen',
   'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
   'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
   'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
 
-  'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
-  'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
-  'INKOMEN/BBZ': '/inkomen/bbz/:version/:id',
-  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/lijst/:kind/:page?',
-  'INKOMEN/LIST': '/inkomen/:kind/:page?',
-  INKOMEN: '/inkomen',
   AFIS: '/facturen-en-betalen',
   'AFIS/BETAALVOORKEUREN': '/facturen-en-betalen/betaalvoorkeuren',
   'AFIS/FACTUREN': '/facturen-en-betalen/facturen/lijst/:state/:page?',

@@ -5,22 +5,21 @@ import classNames from 'classnames';
 
 import { getDisplayPropsForScreenSize } from './helpers';
 import styles from './TableV2.module.scss';
-import { TableV2Props } from './TableV2.types';
+import {
+  ObjectWithOptionalLinkAttr,
+  TableV2Props,
+  WithDetailLinkComponent,
+} from './TableV2.types';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
-import { LinkProps, Unshaped, ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
 
-export type { DisplayProps } from './TableV2.types';
-
-interface ObjectWithOptionalLinkAttr extends Unshaped {
-  link?: LinkProps;
-}
-
-export type WithDetailLinkComponent<T> = T & {
-  detailLinkComponent?: ReactNode;
-};
+/**
+ * @deprecated These exports should be removed in the future and replaced with import from the types file.
+ */
+export type { DisplayProps, WithDetailLinkComponent } from './TableV2.types';
 
 export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   items: T[],

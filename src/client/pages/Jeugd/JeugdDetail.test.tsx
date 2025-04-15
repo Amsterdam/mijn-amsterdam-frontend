@@ -1,9 +1,9 @@
 import { render, within } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { componentCreator } from '../MockApp';
+import { routeConfig } from './Jeugd-thema-config';
 import { JeugdDetail } from './JeugdDetail';
 
 const id = '1610585298';
@@ -88,8 +88,8 @@ const basicAppState = {
 
 const createComponent = componentCreator({
   component: JeugdDetail,
-  routeEntry: generatePath(AppRoutes['JEUGD/VOORZIENING'], { id }),
-  routePath: AppRoutes['JEUGD/VOORZIENING'],
+  routeEntry: generatePath(routeConfig.detailPage.path, { id }),
+  routePath: routeConfig.detailPage.path,
 });
 
 test('Static elements', async () => {
