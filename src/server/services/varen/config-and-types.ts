@@ -54,7 +54,6 @@ export type DecosVarenZaakVergunning = {
 export type DecosVarenZaakBase = DecosZaakBase &
   DecosVarenZaakVergunning & {
     linkDataRequest: string | null;
-    status: VarenStatus;
     decision: 'Verleend' | null;
     vergunningen: DecosVarenZaakVergunning[];
   };
