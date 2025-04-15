@@ -15,7 +15,7 @@ describe('Kredietbank & FIBU service', () => {
             title: 'Ga naar budgetbeheer',
             to: 'http://host/bbr/2064866/3',
           },
-          status: 'Lopend',
+          displayStatus: 'Lopend',
           type: 'budgetbeheer',
         },
         {
@@ -23,7 +23,8 @@ describe('Kredietbank & FIBU service', () => {
             title: 'Bekijk uw lening',
             to: 'http://host/pl/2442531/1',
           },
-          status: 'Kredietsom €1.689,12 met openstaand termijnbedrag €79,66',
+          displayStatus:
+            'Kredietsom €1.689,12 met openstaand termijnbedrag €79,66',
           type: 'lening',
         },
         {
@@ -31,7 +32,7 @@ describe('Kredietbank & FIBU service', () => {
             title: 'Bekijk uw schuldregeling',
             to: 'http://host/srv/2442531/2',
           },
-          status: 'Afkoopvoorstellen zijn verstuurd',
+          displayStatus: 'Afkoopvoorstellen zijn verstuurd',
           type: 'schuldhulp',
         },
       ],
