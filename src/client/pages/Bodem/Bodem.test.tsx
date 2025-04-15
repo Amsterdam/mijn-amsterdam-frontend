@@ -139,7 +139,7 @@ const metingen = [
     datumInbehandeling: '2022-11-28T12:24:20Z',
     datumAfgehandeld: '2022-11-28T13:53:42Z',
     datumAfgehandeldFormatted: '28 november 2022',
-    decision: 'Toegewezen',
+    decision: 'Afgehandeld',
     status: 'Afgehandeld',
     processed: true,
     kenmerk: 'OL-001471',
@@ -249,7 +249,7 @@ describe('Bodem', () => {
       };
 
       const decisionPatterns = {
-        afgehandeld: /Toegewezen/,
+        afgehandeld: /Afgehandeld/,
         afgewezen: /Afgewezen/,
       };
 
