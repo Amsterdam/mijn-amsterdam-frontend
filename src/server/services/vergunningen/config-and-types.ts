@@ -207,7 +207,7 @@ export type DecosVergunning =
   | RVVSloterweg
   | WerkzaamhedenEnVervoerOpStraat;
 
-export type VergunningFrontend<T extends DecosVergunning = DecosVergunning> =
+export type VergunningFrontend<T extends DecosZaakBase = DecosZaakBase> =
   DecosZaakFrontend<T>;
 
 export type NotificationProperty =
