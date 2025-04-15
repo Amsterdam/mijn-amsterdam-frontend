@@ -8,7 +8,7 @@ import {
 const displayPropsDeeplink: DisplayProps<
   WithDetailLinkComponent<KrefiaDeepLink>
 > = {
-  status: 'Status',
+  displayStatus: 'Status',
   detailLinkComponent: 'Bekijk op Krefia',
 };
 
