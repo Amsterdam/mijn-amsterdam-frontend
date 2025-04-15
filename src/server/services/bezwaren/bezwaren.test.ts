@@ -12,9 +12,8 @@ import bezwarenDocumenten from '../../../../mocks/fixtures/bezwaren-documents.js
 import bezwarenStatus from '../../../../mocks/fixtures/bezwaren-status.json';
 import bezwarenApiResponse from '../../../../mocks/fixtures/bezwaren.json';
 import { remoteApiHost } from '../../../testing/setup';
-import { remoteApi } from '../../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { range } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 
 const endpointBase = '/bezwaren/zgw/v1/zaken';
 
@@ -33,15 +32,7 @@ describe('Bezwaren', () => {
   const documentId = 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095';
   const documentIdEncrypted = 'test-encrypted-id';
 
-  const profileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: '123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: 'session-id',
-    },
-    token: 'abc123',
-  };
+  const profileAndToken = getAuthProfileAndToken();
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -74,26 +65,25 @@ describe('Bezwaren', () => {
     it('should return the right recent notifications', async () => {
       const res = await fetchBezwarenNotifications(requestId, profileAndToken);
 
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "content": {
-            "notifications": [
-              {
-                "datePublished": "2023-08-23",
-                "description": "Wij hebben uw bezwaar JB.22.000443.002 afgehandeld.",
-                "id": "JB.22.000443.002",
-                "link": {
-                  "title": "Bekijk uw bezwaar",
-                  "to": "/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0",
-                },
-                "thema": "BEZWAREN",
-                "title": "Bezwaar afgehandeld",
+      expect(res).toStrictEqual({
+        content: {
+          notifications: [
+            {
+              datePublished: '2023-08-23',
+              description:
+                'Wij hebben uw bezwaar JB.22.000443.002 afgehandeld.',
+              id: 'JB.22.000443.002',
+              link: {
+                title: 'Bekijk uw bezwaar',
+                to: '/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0',
               },
-            ],
-          },
-          "status": "OK",
-        }
-      `);
+              themaID: 'BEZWAREN',
+              title: 'Bezwaar afgehandeld',
+            },
+          ],
+        },
+        status: 'OK',
+      });
     });
 
     it('should be possible to download a document', async () => {

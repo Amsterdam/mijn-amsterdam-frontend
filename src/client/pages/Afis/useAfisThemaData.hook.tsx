@@ -16,7 +16,7 @@ import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -158,7 +158,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
     AFIS.content?.facturen ?? null
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.AFIS);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.AFIS);
 
   return {
     facturenListResponse:
@@ -196,7 +196,7 @@ export function useAfisThemaData() {
     to: urlNaarBelastingen,
   };
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.AFIS);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.AFIS);
 
   return {
     belastingenLinkListItem,

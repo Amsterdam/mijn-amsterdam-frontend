@@ -14,7 +14,7 @@ import {
   kenmerkKey,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -399,7 +399,7 @@ export async function fetchBezwaren(
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
   const notification: MyNotification = {
-    thema: Themas.BEZWAREN,
+    themaID: ThemaIDs.BEZWAREN,
     id: bezwaar.identificatie,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,

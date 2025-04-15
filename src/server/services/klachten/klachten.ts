@@ -2,7 +2,7 @@ import FormData from 'form-data';
 import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -116,7 +116,7 @@ export function transformKlachtenResponse(
 
 function createKlachtNotification(klacht: Klacht): MyNotification {
   const notification: MyNotification = {
-    thema: Themas.KLACHTEN,
+    themaID: ThemaIDs.KLACHTEN,
     id: `klacht-${klacht.id}-notification`,
     title: 'Klacht ontvangen',
     description: 'Uw klacht is ontvangen.',

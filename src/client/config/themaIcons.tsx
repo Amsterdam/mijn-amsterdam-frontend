@@ -1,6 +1,6 @@
 import { BellIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 
-import { ThemaID } from '../../universal/config/thema';
+import { type ThemaID } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
   IconAFIS,

@@ -6,7 +6,7 @@ import {
   tableConfig,
 } from './Zorg-thema-config';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
@@ -21,7 +21,7 @@ export function useZorgThemaData() {
     'title',
     true
   );
-  const breadcrumbs = useThemaBreadcrumbs(Themas.ZORG);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.ZORG);
   const title = ThemaTitles.ZORG;
 
   return {

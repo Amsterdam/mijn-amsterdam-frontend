@@ -67,7 +67,7 @@ export function Dashboard() {
               notifications.map((notification, index) => {
                 return (
                   <OrderedList.Item
-                    key={`${notification.thema}-${notification.id}-${index}`}
+                    key={`${notification.themaID}-${notification.id}-${index}`}
                     className="ams-mb--sm"
                   >
                     <MyNotification

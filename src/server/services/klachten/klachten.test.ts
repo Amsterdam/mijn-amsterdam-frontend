@@ -72,70 +72,68 @@ describe('Klachten', () => {
 
     const res = await fetchKlachtenNotifications(requestId, profileAndToken);
 
-    expect(res).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "notifications": [
-            {
-              "datePublished": "2022-04-05T00:00:00.000Z",
-              "description": "Uw klacht is ontvangen.",
-              "id": "klacht-230541-notification",
-              "link": {
-                "title": "Bekijk details",
-                "to": "/klachten/klacht/230541",
-              },
-              "thema": "KLACHTEN",
-              "title": "Klacht ontvangen",
+    expect(res).toStrictEqual({
+      content: {
+        notifications: [
+          {
+            datePublished: '2022-04-05T00:00:00.000Z',
+            description: 'Uw klacht is ontvangen.',
+            id: 'klacht-230541-notification',
+            link: {
+              title: 'Bekijk details',
+              to: '/klachten/klacht/230541',
             },
-            {
-              "datePublished": "2022-05-05T00:00:00.000Z",
-              "description": "Uw klacht is ontvangen.",
-              "id": "klacht-2505661-notification",
-              "link": {
-                "title": "Bekijk details",
-                "to": "/klachten/klacht/2505661",
-              },
-              "thema": "KLACHTEN",
-              "title": "Klacht ontvangen",
+            themaID: 'KLACHTEN',
+            title: 'Klacht ontvangen',
+          },
+          {
+            datePublished: '2022-05-05T00:00:00.000Z',
+            description: 'Uw klacht is ontvangen.',
+            id: 'klacht-2505661-notification',
+            link: {
+              title: 'Bekijk details',
+              to: '/klachten/klacht/2505661',
             },
-            {
-              "datePublished": "2022-06-13T00:00:00.000Z",
-              "description": "Uw klacht is ontvangen.",
-              "id": "klacht-280321-notification",
-              "link": {
-                "title": "Bekijk details",
-                "to": "/klachten/klacht/280321",
-              },
-              "thema": "KLACHTEN",
-              "title": "Klacht ontvangen",
+            themaID: 'KLACHTEN',
+            title: 'Klacht ontvangen',
+          },
+          {
+            datePublished: '2022-06-13T00:00:00.000Z',
+            description: 'Uw klacht is ontvangen.',
+            id: 'klacht-280321-notification',
+            link: {
+              title: 'Bekijk details',
+              to: '/klachten/klacht/280321',
             },
-            {
-              "datePublished": "2022-02-13T00:00:00.000Z",
-              "description": "Uw klacht is ontvangen.",
-              "id": "klacht-237821-notification",
-              "link": {
-                "title": "Bekijk details",
-                "to": "/klachten/klacht/237821",
-              },
-              "thema": "KLACHTEN",
-              "title": "Klacht ontvangen",
+            themaID: 'KLACHTEN',
+            title: 'Klacht ontvangen',
+          },
+          {
+            datePublished: '2022-02-13T00:00:00.000Z',
+            description: 'Uw klacht is ontvangen.',
+            id: 'klacht-237821-notification',
+            link: {
+              title: 'Bekijk details',
+              to: '/klachten/klacht/237821',
             },
-            {
-              "datePublished": "2022-01-12T00:00:00.000Z",
-              "description": "Uw klacht is ontvangen.",
-              "id": "klacht-438001-notification",
-              "link": {
-                "title": "Bekijk details",
-                "to": "/klachten/klacht/438001",
-              },
-              "thema": "KLACHTEN",
-              "title": "Klacht ontvangen",
+            themaID: 'KLACHTEN',
+            title: 'Klacht ontvangen',
+          },
+          {
+            datePublished: '2022-01-12T00:00:00.000Z',
+            description: 'Uw klacht is ontvangen.',
+            id: 'klacht-438001-notification',
+            link: {
+              title: 'Bekijk details',
+              to: '/klachten/klacht/438001',
             },
-          ],
-        },
-        "status": "OK",
-      }
-    `);
+            themaID: 'KLACHTEN',
+            title: 'Klacht ontvangen',
+          },
+        ],
+      },
+      status: 'OK',
+    });
   });
 
   it('should transform the data correctly', () => {
