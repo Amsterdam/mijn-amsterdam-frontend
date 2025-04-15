@@ -1,12 +1,11 @@
 import { HttpStatusCode } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
 
-import { getAuth } from '../auth/auth-helpers';
-import { fetchAantalBewoners } from '../services';
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
+import { getAuth } from '../auth/auth-helpers';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   handleFetchAfisBusinessPartner,
@@ -15,6 +14,7 @@ import {
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
+import { fetchAantalBewoners } from '../services/brp';
 import {
   NOTIFICATIONS,
   loadServicesAll,
