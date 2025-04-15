@@ -22,12 +22,15 @@ export const JeugdRoutes = [
 
 export const menuItem: ThemaMenuItem = {
   title: themaTitle,
-  id: themaId.JEUGD,
+  id: themaId,
   profileTypes: ['private'],
-  isActive: (appState: AppState) =>
-    FeatureToggle.zorgnedLeerlingenvervoerActive &&
-    !isLoading(appState.JEUGD) &&
-    !!appState.JEUGD.content?.length,
+  isActive(appState: AppState) {
+    return (
+      FeatureToggle.zorgnedLeerlingenvervoerActive &&
+      !isLoading(appState.JEUGD) &&
+      !!appState.JEUGD.content?.length
+    );
+  },
   to: routeConfig.themaPage.path,
   IconSVG: IconJeugd,
 };
