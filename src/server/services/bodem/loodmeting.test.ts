@@ -85,7 +85,7 @@ describe('Loodmeting', () => {
         rapportId: '690d8303-6f21-ee11-9966-0022489fda17',
         redenAfwijzing: '',
         decision: 'Afgehandeld',
-        status: 'Afgehandeld',
+        displayStatus: 'Afgehandeld',
         steps: [
           {
             datePublished: '2023-07-12T12:39:15Z',
@@ -126,22 +126,22 @@ describe('Loodmeting', () => {
       assert(metingen, 'Test data has metingen');
 
       const inBehandelingMeting = metingen.find(
-        (meting) => meting.status === 'In behandeling'
+        (meting) => meting.displayStatus === 'In behandeling'
       )!;
       expect(inBehandelingMeting.processed).toBe(false);
 
       const afgewezenMeting = metingen.find(
-        (meting) => meting.status === 'Afgewezen'
+        (meting) => meting.displayStatus === 'Afgewezen'
       )!;
       expect(afgewezenMeting.processed).toBe(true);
 
       const afgehandeldMeting = metingen.find(
-        (meting) => meting.status === 'Afgehandeld'
+        (meting) => meting.displayStatus === 'Afgehandeld'
       )!;
       expect(afgehandeldMeting.processed).toBe(true);
 
       const ontvangenMeting = metingen.find(
-        (meting) => meting.status === 'Ontvangen'
+        (meting) => meting.displayStatus === 'Ontvangen'
       )!;
       expect(ontvangenMeting.processed).toBe(false);
     });
