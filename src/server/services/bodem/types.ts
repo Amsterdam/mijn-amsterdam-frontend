@@ -49,7 +49,7 @@ export type LoodMetingStatus =
   | 'Afgewezen'
   | 'Afgehandeld';
 
-export type LoodMetingDecision = 'Afgewezen' | 'Toegewezen';
+export type LoodMetingDecision = 'Afgewezen' | 'Afgehandeld';
 
 export type LoodMetingen = {
   metingen: LoodMetingFrontend[];

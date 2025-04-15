@@ -84,7 +84,7 @@ describe('Loodmeting', () => {
         rapportBeschikbaar: true,
         rapportId: '690d8303-6f21-ee11-9966-0022489fda17',
         redenAfwijzing: '',
-        decision: 'Toegewezen',
+        decision: 'Afgehandeld',
         status: 'Afgehandeld',
         steps: [
           {
