@@ -468,6 +468,8 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     decision === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
 
+  const isZaakExpired = isExpired(pbZaak.dateEnd, new Date());
+
   return {
     dateRequest: pbZaak.dateReceived,
     dateRequestFormatted: pbZaak.dateReceived
@@ -493,7 +495,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     },
     title,
     processed: !!decision,
-    isExpired: isExpired(pbZaak.dateEnd),
+    isExpired: isZaakExpired,
 
     // Added after initial transform
     location: null,
