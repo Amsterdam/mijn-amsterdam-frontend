@@ -24,10 +24,10 @@ export const jeugdStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       {
         ...MEER_INFORMATIE,
         description: `
-<p>Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan door het op te sturen naar ons gratis antwoordnummer:
-Gemeente Amsterdam
-Services & Data
-Antwoordnummer 9087
+<p>Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan door het op te sturen naar ons gratis antwoordnummer:</p>
+<p>Gemeente Amsterdam<br />
+Services & Data<br />
+Antwoordnummer 9087<br />
 1000 VV Amsterdam</p>`,
       },
       getTransformerConfigBesluit(isDecisionStatusActive, false),
