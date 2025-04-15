@@ -1,3 +1,4 @@
+import { parseISO } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
@@ -28,6 +29,7 @@ import {
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { toDateFormatted } from '../../../universal/helpers/utils';
 
 function getDisplayStatus(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -78,6 +80,22 @@ function getDocumentsFrontend(
   });
 }
 
+function transformRegelingTitle(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+): string {
+  switch (true) {
+    case aanvraag.titel.toLowerCase().includes('stadspas'): {
+      const startDate = aanvraag.datumIngangGeldigheid
+        ? parseISO(aanvraag.datumIngangGeldigheid)
+        : null;
+      const fromIndication = `(vanaf ${toDateFormatted(startDate)})`;
+      return `Stadspas${startDate ? ` ${startDate.getFullYear()}-${startDate.getFullYear() + 1}${fromIndication}` : ''}`;
+    }
+    default:
+      return capitalizeFirstLetter(aanvraag.titel);
+  }
+}
+
 async function transformRegelingForFrontend(
   sessionID: SessionID,
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -101,7 +119,7 @@ async function transformRegelingForFrontend(
 
   const regelingFrontend: HLIRegeling = {
     id,
-    title: capitalizeFirstLetter(aanvraag.titel),
+    title: transformRegelingTitle(aanvraag),
     isActual,
     link: {
       title: 'Meer informatie',
