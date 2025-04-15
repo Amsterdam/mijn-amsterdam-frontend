@@ -237,32 +237,3 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
   ],
 }
 `;
-
-exports[`BRP data api + transformation > should transform the source data into notifications 1`] = `
-[
-  {
-    "datePublished": "2020-04-22T22:00:00.000Z",
-    "description": "Op dit moment onderzoeken wij op welk adres u nu woont.",
-    "id": "brpAdresInOnderzoek",
-    "isAlert": true,
-    "link": {
-      "title": "Meer informatie",
-      "to": "/persoonlijke-gegevens",
-    },
-    "thema": "BRP",
-    "title": "Adres in onderzoek",
-  },
-  {
-    "datePublished": "2020-04-22T22:00:00.000Z",
-    "description": "U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.",
-    "id": "brpVertrokkenOnbekendWaarheen",
-    "isAlert": true,
-    "link": {
-      "title": "Meer informatie",
-      "to": "/persoonlijke-gegevens",
-    },
-    "thema": "BRP",
-    "title": "Vertrokken Onbekend Waarheen (VOW)",
-  },
-]
-`;

@@ -7,8 +7,7 @@ import {
   fetchOvertredingenNotifications,
   getJSONRequestPayload,
 } from './cleopatra';
-import { remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -27,10 +26,7 @@ vi.mock('../../../universal/config/env', async (importOriginal) => {
 });
 
 const REQUEST_ID = 'test-x-123';
-const authProfileAndToken: AuthProfileAndToken = {
-  profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-  token: 'xxxxxx',
-};
+const authProfileAndToken = getAuthProfileAndToken();
 
 describe('simple-connect/cleopatra', () => {
   beforeEach(() => {
@@ -131,51 +127,49 @@ describe('simple-connect/cleopatra', () => {
       authProfileAndToken
     );
 
-    expect(responseContent).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "isKnown": true,
-        },
-        "status": "OK",
-      }
-    `);
+    expect(responseContent).toStrictEqual({
+      content: {
+        isKnown: true,
+      },
+      status: 'OK',
+    });
 
     const notificationsResponse = await fetchMilieuzoneNotifications(
       REQUEST_ID,
       authProfileAndToken
     );
 
-    expect(notificationsResponse).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "notifications": [
-            {
-              "datePublished": "2019-03-13",
-              "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
-              "id": "MILIEUZONE-M1",
-              "link": {
-                "title": "Betaal direct",
-                "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1",
-              },
-              "thema": "MILIEUZONE",
-              "title": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
+    expect(notificationsResponse).toStrictEqual({
+      content: {
+        notifications: [
+          {
+            datePublished: '2019-03-13',
+            description:
+              'U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen',
+            id: 'MILIEUZONE-M1',
+            link: {
+              title: 'Betaal direct',
+              to: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1',
             },
-            {
-              "datePublished": "2019-03-13",
-              "description": "U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen",
-              "id": "MILIEUZONE-M1",
-              "link": {
-                "title": "Betaal direct",
-                "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/2",
-              },
-              "thema": "MILIEUZONE",
-              "title": "Uw aanvraag ontheffing milieuzone Brom- en snorfietsen",
+            themaID: 'MILIEUZONE',
+            title: 'Uw aanvraag ontheffing milieuzone Brom- en snorfietsen',
+          },
+          {
+            datePublished: '2019-03-13',
+            description:
+              'U moet uw aanvraag voor ontheffing milieuzone Brom- en snorfietsen nog betalen',
+            id: 'MILIEUZONE-M1',
+            link: {
+              title: 'Betaal direct',
+              to: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/2',
             },
-          ],
-        },
-        "status": "OK",
-      }
-    `);
+            themaID: 'MILIEUZONE',
+            title: 'Uw aanvraag ontheffing milieuzone Brom- en snorfietsen',
+          },
+        ],
+      },
+      status: 'OK',
+    });
   });
 
   test('fetchOvertredingen content', async () => {
@@ -220,25 +214,23 @@ describe('simple-connect/cleopatra', () => {
       authProfileAndToken
     );
 
-    expect(notificationsResponse).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "notifications": [
-            {
-              "datePublished": "2019-03-13",
-              "description": "Uw moet uw overtreding nog betalen",
-              "id": "OVERTREDINGEN-M1",
-              "link": {
-                "title": "Betaal direct",
-                "to": "https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1",
-              },
-              "thema": "OVERTREDINGEN",
-              "title": "Overtreding betalen",
+    expect(notificationsResponse).toStrictEqual({
+      content: {
+        notifications: [
+          {
+            datePublished: '2019-03-13',
+            description: 'Uw moet uw overtreding nog betalen',
+            id: 'OVERTREDINGEN-M1',
+            link: {
+              title: 'Betaal direct',
+              to: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1',
             },
-          ],
-        },
-        "status": "OK",
-      }
-    `);
+            themaID: 'OVERTREDINGEN',
+            title: 'Overtreding betalen',
+          },
+        ],
+      },
+      status: 'OK',
+    });
   });
 });

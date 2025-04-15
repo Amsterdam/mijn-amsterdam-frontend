@@ -14,7 +14,6 @@ import {
   mapperContactmomentToMenuItem,
 } from './Contactmomenten.config';
 import styles from './ProfilePrivate.module.scss';
-import { Themas } from '../../../../universal/config/thema';
 import { isLoading, isError } from '../../../../universal/helpers/api';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { ThemaMenuItemTransformed } from '../../../config/thema-types';
@@ -23,7 +22,7 @@ import {
   useThemaBreadcrumbs,
   useThemaMenuItems,
 } from '../../../hooks/useThemaMenuItems';
-import { routes } from '../Profile-thema-config';
+import { routes, themaIdBRP } from '../Profile-thema-config';
 
 function getLinkToThemaPage(
   onderwerp: string,
@@ -66,7 +65,7 @@ function addIcon(type: string) {
 export function useContactmomenten() {
   const { KLANT_CONTACT } = useAppStateGetter();
   const { items: myThemasMenuItems } = useThemaMenuItems();
-  const breadcrumbs = useThemaBreadcrumbs(Themas.BRP);
+  const breadcrumbs = useThemaBreadcrumbs(themaIdBRP);
   const routeParams = useParams();
 
   const contactmomenten: ContactMomentFrontend[] =

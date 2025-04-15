@@ -1,7 +1,7 @@
 import { LatLngBoundsLiteral } from 'leaflet';
 
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { Themas } from '../../universal/config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -23,7 +23,7 @@ function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
     datePublished: new Date().toISOString(),
-    thema: Themas.BUURT,
+    themaID: ThemaIDs.BUURT,
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
     link: {

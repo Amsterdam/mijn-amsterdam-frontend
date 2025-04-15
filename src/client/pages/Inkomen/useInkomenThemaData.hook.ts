@@ -32,7 +32,7 @@ export function useInkomenThemaData() {
     WPI_SPECIFICATIES.content?.jaaropgaven ?? []
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(themaId.INKOMEN);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   const zaken = useMemo(() => {
     if ((!aanvragen.length && !tozo.length) || !tonk.length) {

@@ -9,7 +9,7 @@ import {
 } from './HLI-thema-config';
 import { useStadspassen } from './useStadspassen.hook';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -28,7 +28,7 @@ export function useHliThemaData() {
     'title',
     true
   );
-  const breadcrumbs = useThemaBreadcrumbs(Themas.HLI);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.HLI);
   const hasRegelingen = !!regelingen.length;
   const title = getThemaTitle(hasStadspas, hasRegelingen);
   const hasKindtegoed = stadspassen?.some((stadspas) =>

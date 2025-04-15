@@ -11,10 +11,9 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatusLabels,
 } from './wpi-types';
-import { remoteApi } from '../../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { ApiErrorResponse } from '../../../universal/helpers/api';
 import { jsonCopy } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 
 function fakeStepLabels(): WpiRequestStatusLabels {
   return {
@@ -36,10 +35,7 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 
 describe('wpi/app-service', () => {
   const requestID = 'xxxxxxx';
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-    token: 'xxxxx',
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
 
   const FakeRequestProcessLabels: WpiRequestProcessLabels = {
     begin: fakeStepLabels(),
@@ -84,6 +80,13 @@ describe('wpi/app-service', () => {
           isChecked: true,
         },
       ],
+      dateStartFormatted: null,
+      dateEndFormatted: null,
+      displayStatus: '',
+      link: {
+        to: '/inkomen/bijstandsuitkering/xxxxxxxfxaxkxex1xx',
+        title: 'Bekijk uw aanvraag',
+      },
     },
   ];
 
@@ -189,10 +192,10 @@ describe('wpi/app-service', () => {
       content: [contentBijstandsuitkering, { about: 'FooBar' }, null],
     });
 
-    const response = await fetchBijstandsuitkering(requestID, {
-      profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-      token: 'xxxxx',
-    });
+    const response = await fetchBijstandsuitkering(
+      requestID,
+      getAuthProfileAndToken()
+    );
 
     expect(response.status).toBe('OK');
     expect(response.content?.length).toBe(1);
