@@ -190,6 +190,7 @@ COPY --from=build-app-bff /build-space/node_modules /app/node_modules
 COPY --from=build-app-bff /build-space/package.json /app/package.json
 COPY --from=build-app-bff /build-space/vendor /app/vendor
 COPY src/server/views /app/build-bff/server/views
+COPY src/server/services/cms/cms-footer.json /app/build-bff/server/services/cms/cms-footer.json
 
 # Run the app
 CMD /usr/local/bin/docker-entrypoint-bff.sh
