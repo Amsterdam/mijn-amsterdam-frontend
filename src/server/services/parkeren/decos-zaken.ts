@@ -237,7 +237,7 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
       bol8: 'isCarsharingpermit',
       date8: 'dateEnd',
     },
-    additionalSelectFields: ['text25', 'num14', 'text17', 'tex19', 'tex18'],
+    additionalSelectFields: ['text25', 'num14', 'text17', 'text19', 'text18'],
     async afterTransform(vergunning, zaakSource) {
       vergunning.location = {
         street: String(zaakSource.fields.text25),
