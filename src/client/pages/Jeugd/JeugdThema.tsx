@@ -1,9 +1,8 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 
-import { LEERLINGENVERVOER_LEES_MEER } from './Jeugd-thema-config';
+import { linkListItems } from './Jeugd-thema-config';
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
-import { LinkProps } from '../../../universal/types';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';
 import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
@@ -34,13 +33,6 @@ export function JeugdThemaPagina() {
       </Paragraph>
     </PageContentCell>
   );
-
-  const linkListItems: LinkProps[] = [
-    {
-      to: LEERLINGENVERVOER_LEES_MEER,
-      title: 'Lees hier meer over Leerlingenvervoer',
-    },
-  ];
 
   const tables = Object.entries(tableConfig).map(([kind, config]) => {
     return (

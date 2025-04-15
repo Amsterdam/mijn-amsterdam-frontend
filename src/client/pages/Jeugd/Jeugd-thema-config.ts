@@ -1,4 +1,5 @@
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
+import { LinkProps } from '../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
 import { WithDetailLinkComponent } from '../../components/Table/TableV2.types';
 import { DisplayProps } from '../../components/Table/TableV2.types';
@@ -30,8 +31,12 @@ export const errorMessage = {
   [themaId]: themaTitle,
 };
 
-export const LEERLINGENVERVOER_LEES_MEER =
-  'https://www.amsterdam.nl/onderwijs-jeugd/leerlingenvervoer/?vkurl=leerlingenvervoer';
+export const linkListItems: LinkProps[] = [
+  {
+    to: 'https://www.amsterdam.nl/onderwijs-jeugd/leerlingenvervoer/?vkurl=leerlingenvervoer',
+    title: 'Lees hier meer over Leerlingenvervoer',
+  },
+];
 
 type DisplayPropsLeerlingenVervoer = DisplayProps<
   WithDetailLinkComponent<LeerlingenvervoerVoorzieningFrontend>
