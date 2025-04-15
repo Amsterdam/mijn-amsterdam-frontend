@@ -15,14 +15,14 @@ export function getLatestStatusStep(
   return null;
 }
 
-export function getLatestStatus(steps: StatusLineItem[]) {
+export function getLatestStatus(steps: StatusLineItem[]): string {
   return getLatestStatusStep(steps)?.status ?? 'Onbekend';
 }
 
 export function getLatestStatusDate(
   steps: StatusLineItem[],
   doTransformDate: boolean = false
-) {
+): string {
   const date = getLatestStatusStep(steps)?.datePublished;
   if (date && doTransformDate) {
     return defaultDateFormat(date);
