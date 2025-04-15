@@ -1,6 +1,6 @@
 import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
 
-export interface ErfpachtErpachterResponseSource {
+export type ErfpachtErpachterResponseSource = {
   erfpachter: boolean;
   relationID: string;
   relationCode: string;
@@ -10,15 +10,15 @@ export interface ErfpachtErpachterResponseSource {
   aantalRechten: 0;
   laatsteMutatieDatum: string;
   businessType: string;
-}
+};
 
-export interface ErfpachtErpachterResponse {
+export type ErfpachtErpachterResponse = {
   isKnown: boolean;
   relatieCode: ErfpachtErpachterResponseSource['relationCode'];
   profileType: ProfileType;
-}
+};
 
-export interface ErfpachtDossierFactuur {
+export type ErfpachtDossierFactuur = {
   dossierAdres: string;
   titelFacturenDossierAdres: string;
   status: string;
@@ -38,9 +38,9 @@ export interface ErfpachtDossierFactuur {
 
   // Added
   dossierNummerUrlParam: string;
-}
+};
 
-export interface ErfpachtDossierDetailToekomstigePeriode {
+export type ErfpachtDossierDetailToekomstigePeriode = {
   periodeVan: string;
   titelFinancieelToekomstigePeriodeVan: string;
   periodeTm: string;
@@ -55,16 +55,16 @@ export interface ErfpachtDossierDetailToekomstigePeriode {
   titelBetalenVanaf: string;
   canons?: ErfpachtCanon[];
   titelFinancieelToekomstigeCanon: string;
-}
+};
 
-export interface ErfpachtCanon {
+export type ErfpachtCanon = {
   canonBedrag: string;
   formattedCanonBedrag: string;
   canonBeginJaar: string;
   samengesteld: string;
-}
+};
 
-export interface ErfpachtDossierDetailHuidigePeriode {
+export type ErfpachtDossierDetailHuidigePeriode = {
   periodeVan: string;
   titelFinancieelPeriodeVan: string;
   periodeTm: string;
@@ -78,9 +78,9 @@ export interface ErfpachtDossierDetailHuidigePeriode {
   titelGeenCanon: string;
   canons?: ErfpachtCanon[];
   titelFinancieelCanon: 'Canon';
-}
+};
 
-interface ErfpachtDossierDetailKadastraleAanduiding {
+export type ErfpachtDossierDetailKadastraleAanduiding = {
   gemeenteCode: string;
   gemeenteNaam: string;
   sectie: string;
@@ -88,16 +88,16 @@ interface ErfpachtDossierDetailKadastraleAanduiding {
   letter: string;
   volgnummer: 0;
   samengesteld: string;
-}
+};
 
-interface ErfpachtDossierDetailRelatie {
+export type ErfpachtDossierDetailRelatie = {
   relatieNaam: string;
   betaler: boolean;
   indicatieGeheim: boolean;
   relatieCode: string;
-}
+};
 
-interface ErfpachtDossierDetailJuridisch {
+export type ErfpachtDossierDetailJuridisch = {
   ingangsdatum: string;
   titelIngangsdatum: string;
   algemeneBepaling: string;
@@ -105,9 +105,9 @@ interface ErfpachtDossierDetailJuridisch {
   soortErfpacht: string;
   uitgeschrevenSoortErfpacht: string;
   titelSoortErfpacht: string;
-}
+};
 
-interface ErfpachtDossierDetailBijzondereBepaling {
+export type ErfpachtDossierDetailBijzondereBepaling = {
   omschrijving: string;
   titelBestemmingOmschrijving: string;
   categorie: string;
@@ -115,9 +115,9 @@ interface ErfpachtDossierDetailBijzondereBepaling {
   titelOppervlakte: string;
   eenheid: string;
   samengesteldeOppervlakteEenheid: string;
-}
+};
 
-export interface ErfpachtDossiersDetailSource {
+export type ErfpachtDossiersDetailSource = {
   dossierNummer: string;
   titelDossierNummer: string;
   eersteUitgifte: string;
@@ -160,7 +160,7 @@ export interface ErfpachtDossiersDetailSource {
     titelFactuurHelpTekstRegel1: string;
     facturen?: ErfpachtDossierFactuur[];
   };
-}
+};
 
 export type ErfpachtDossierPropsFrontend = ZaakDetail & {
   dossierNummerUrlParam: string;
@@ -171,7 +171,7 @@ export type ErfpachtDossierPropsFrontend = ZaakDetail & {
 export type ErfpachtDossiersDetail = ErfpachtDossiersDetailSource &
   ErfpachtDossierPropsFrontend;
 
-export interface ErfpachtDossierSource {
+export type ErfpachtDossierSource = {
   dossierNummer: string;
   titelDossierNummer: string;
   voorkeursadres: string;
@@ -185,9 +185,9 @@ export interface ErfpachtDossierSource {
   titelDossierZoekveld: string;
   titelDossierHelpTekstRegel1: string;
   titelDossierHelpTekstRegel2: string;
-}
+};
 
-export interface ErfpachtDossiersResponseSource {
+export type ErfpachtDossiersResponseSource = {
   titelStartPaginaKop: string;
   titelVerklarendeTekstStartPagina: string;
   titelLinkErfpachtrechten: string;
@@ -226,13 +226,12 @@ export interface ErfpachtDossiersResponseSource {
     titelFactuurHelpTekstRegel1: string;
     facturen?: ErfpachtDossierFactuur[];
   };
-}
+};
 
 export type ErfpachtDossier = ErfpachtDossierSource &
   ErfpachtDossierPropsFrontend;
 
-export interface ErfpachtDossiersResponse
-  extends ErfpachtDossiersResponseSource {
+export type ErfpachtDossiersResponse = ErfpachtDossiersResponseSource & {
   dossiers: ErfpachtDossiersResponseSource['dossiers'] & {
     dossiers?: ErfpachtDossier[];
   };
@@ -241,4 +240,4 @@ export interface ErfpachtDossiersResponse
   };
   isKnown: boolean;
   relatieCode: string;
-}
+};
