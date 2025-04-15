@@ -55,7 +55,6 @@ describe('requestData.ts', () => {
 
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
-  const TOKEN = 'xxxxx';
   const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
@@ -283,7 +282,7 @@ describe('requestData.ts', () => {
 
     expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(true);
     expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
-      Authorization: `Bearer ${TOKEN}`,
+      Authorization: `Bearer ${AUTH_PROFILE_AND_TOKEN.token}`,
     });
   });
 
