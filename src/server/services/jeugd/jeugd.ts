@@ -1,6 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items';
+import { routeConfig } from '../../../client/pages/Jeugd/Jeugd-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
@@ -15,7 +16,7 @@ import {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types';
-import { routeConfig } from '../../../client/pages/Jeugd/Jeugd-thema-config';
+import { BffEndpoints } from '../../routing/bff-routes';
 
 export async function fetchLeerlingenvervoer(
   requestID: RequestID,
@@ -101,7 +102,11 @@ function transformVoorzieningenForFrontend(
         dateDecisionFormatted: dateDecision
           ? defaultDateFormat(dateDecision)
           : '',
-        documents: getDocuments(sessionID, aanvraag),
+        documents: getDocuments(
+          sessionID,
+          aanvraag,
+          BffEndpoints.LLV_DOCUMENT_DOWNLOAD
+        ),
         status: getLatestStatus(
           lineItems
         ) as LeerlingenvervoerVoorzieningFrontend['status'],

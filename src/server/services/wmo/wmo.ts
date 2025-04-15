@@ -23,7 +23,8 @@ import { getLatestStatus, getLatestStatusDate } from '../../statusline';
 
 export function getDocuments(
   sessionID: SessionID,
-  aanvraagTransformed: ZorgnedAanvraagTransformed
+  aanvraagTransformed: ZorgnedAanvraagTransformed,
+  withDownloadBFFEndpoint: string
 ) {
   if (
     FeatureToggle.zorgnedDocumentAttachmentsActive &&
@@ -40,7 +41,7 @@ export function getDocuments(
         );
         return {
           ...document,
-          url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
+          url: generateFullApiUrlBFF(withDownloadBFFEndpoint, {
             id: idEncrypted,
           }),
         };
@@ -88,7 +89,11 @@ function transformVoorzieningenForFrontend(
           title: 'Meer informatie',
           to: route,
         },
-        documents: getDocuments(sessionID, aanvraag),
+        documents: getDocuments(
+          sessionID,
+          aanvraag,
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
+        ),
         steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,

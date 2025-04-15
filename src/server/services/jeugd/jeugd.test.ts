@@ -128,7 +128,7 @@ test('Succes Response is formatted correctly', async () => {
         datePublished: '2025-04-07T09:44:48.697',
         id: 'B3392456',
         title: 'Besluit: toekenning Leerlingenvervoer (AV)',
-        url: 'http://bff-api-host/api/v1/services/wmo/document/encrypted-value',
+        url: 'http://bff-api-host/api/v1/services/llv/document/encrypted-value',
       },
     ],
     id: '1610585298',
