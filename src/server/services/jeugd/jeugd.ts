@@ -8,6 +8,7 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
+import { BffEndpoints } from '../../routing/bff-routes';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic';
 import { getDocuments } from '../wmo/wmo';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
@@ -16,7 +17,6 @@ import {
   ProductSoortCode,
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types';
-import { BffEndpoints } from '../../routing/bff-routes';
 
 export async function fetchLeerlingenvervoer(
   requestID: RequestID,
@@ -48,7 +48,7 @@ export interface LeerlingenvervoerVoorzieningFrontend extends ZaakDetail {
   documents: GenericDocument[];
   isActual: boolean;
   itemTypeCode: ProductSoortCode;
-  status:
+  displayStatus:
     | 'Ontvangen'
     | 'In behandeling'
     | 'Meer informatie nodig'
@@ -107,9 +107,9 @@ function transformVoorzieningenForFrontend(
           aanvraag,
           BffEndpoints.LLV_DOCUMENT_DOWNLOAD
         ),
-        status: getLatestStatus(
+        displayStatus: getLatestStatus(
           lineItems
-        ) as LeerlingenvervoerVoorzieningFrontend['status'],
+        ) as LeerlingenvervoerVoorzieningFrontend['displayStatus'],
         statusDate,
         statusDateFormatted: defaultDateFormat(statusDate),
       };
