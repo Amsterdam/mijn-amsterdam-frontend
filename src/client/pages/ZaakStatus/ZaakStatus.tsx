@@ -6,7 +6,8 @@ import { useLocation, useNavigate } from 'react-router';
 import styles from './ZaakStatus.module.scss';
 import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { AppState } from '../../../universal/types/App.types';
+import { SomeOtherString } from '../../../universal/helpers/types';
+import { AppState, AppStateBase } from '../../../universal/types/App.types';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
@@ -21,10 +22,14 @@ import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
 
-type ThemaQueryParam = 'vergunningen' | 'toeristischeVerhuur';
+type ThemaQueryParam =
+  | 'vergunningen'
+  | 'toeristischeVerhuur'
+  | 'horeca'
+  | 'parkeren';
 
 type PageRouteResolver = {
-  baseRoute: AppRoute;
+  baseRoute: AppRoute | SomeOtherString;
   getRoute: (
     detailPageItemId: string,
     appState: AppState
@@ -33,22 +38,44 @@ type PageRouteResolver = {
 
 type PageRouteResolvers = Record<ThemaQueryParam, PageRouteResolver>;
 
-const pageRouteResolvers: PageRouteResolvers = {
-  vergunningen: {
-    baseRoute: AppRoutes.VERGUNNINGEN,
-    getRoute: (detailPageItemId, appState) => {
-      if (isError(appState.VERGUNNINGEN)) {
+/**
+ * Generates a route resolver for Zaken that have an identifier and a link,
+ * and are provided as an array in the ApiResponse['content'].
+ * @param baseRoute - The base route for the resolver.
+ * @param appStateKey - The key in the AppState to access the relevant data.
+ * @returns A PageRouteResolver object.
+ */
+function baseThemaConfig(
+  baseRoute: string,
+  appStateKey: keyof AppStateBase
+): PageRouteResolver {
+  return {
+    baseRoute,
+    getRoute(zaakID, appState) {
+      const stateSlice = appState[appStateKey];
+      if (!stateSlice || !Array.isArray(stateSlice.content)) {
+        return ITEM_NOT_FOUND;
+      }
+      if (isError(stateSlice)) {
         return STATE_ERROR;
       }
-      if (!isLoading(appState.VERGUNNINGEN)) {
-        return (
-          (appState.VERGUNNINGEN.content || []).find(
-            (vergunning) => vergunning.identifier === detailPageItemId
-          )?.link.to ?? ITEM_NOT_FOUND
+      if (!isLoading(stateSlice)) {
+        const zaak = (stateSlice.content || []).find(
+          (zaak) => 'identifier' in zaak && zaak.identifier === zaakID
         );
+        if (zaak && 'link' in zaak && zaak.link?.to) {
+          return zaak.link.to;
+        }
+        return ITEM_NOT_FOUND;
       }
     },
-  },
+  };
+}
+
+const pageRouteResolvers: PageRouteResolvers = {
+  vergunningen: baseThemaConfig(AppRoutes.VERGUNNINGEN, 'VERGUNNINGEN'),
+  horeca: baseThemaConfig(AppRoutes.HORECA, 'HORECA'),
+  parkeren: baseThemaConfig(AppRoutes.PARKEREN, 'PARKEREN'),
   toeristischeVerhuur: {
     baseRoute: AppRoutes.TOERISTISCHE_VERHUUR,
     getRoute: (detailPageItemId, appState) => {
@@ -107,7 +134,7 @@ export function ZaakStatus() {
   const queryParams = new URLSearchParams(location.search);
   const pageRoute = useNavigateToPage(queryParams);
 
-  let linkRoute: AppRoute = AppRoutes.HOME;
+  let linkRoute: PageRouteResolver['baseRoute'] = AppRoutes.HOME;
   let linkText = 'Ga naar het dashboard';
 
   // Only needed if zaak with the is ID not found.
