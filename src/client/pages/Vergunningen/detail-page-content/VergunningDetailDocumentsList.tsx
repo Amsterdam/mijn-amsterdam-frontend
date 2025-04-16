@@ -3,6 +3,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { GenericDocument } from '../../../../universal/types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
+import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 
 type VergunningDetailDocumentsListProps = {
   documents: GenericDocument[];
@@ -24,6 +25,9 @@ export function VergunningDetailDocumentsList({
           label,
           content: (
             <>
+              {isLoading && (
+                <LoadingContent barConfig={[['300px', '30px', '20px']]} />
+              )}
               {!isLoading && !isError && !documents.length && (
                 <Paragraph>Geen document beschikbaar.</Paragraph>
               )}

@@ -62,7 +62,7 @@ export interface LoodMetingFrontend extends ZaakDetail<LoodMetingStatus> {
   datumInbehandeling: string | null; // Workordercreatedon
   datumAfgehandeld: string | null; // Reportsenton | ReviewedOn
   datumAfgehandeldFormatted: string | null;
-  status: LoodMetingStatus;
+  displayStatus: LoodMetingStatus;
   decision: LoodMetingDecision | null;
   processed: boolean;
   kenmerk: string;

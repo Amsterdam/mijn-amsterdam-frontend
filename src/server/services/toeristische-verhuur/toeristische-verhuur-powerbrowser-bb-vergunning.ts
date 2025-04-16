@@ -40,6 +40,7 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
+import { isExpired } from '../decos/decos-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 // See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
@@ -161,9 +162,9 @@ function getFieldValue(
 
 function getZaakStatus(
   zaak: BBVergunning
-): BBVergunning['status'] | BBVergunning['decision'] {
+): BBVergunning['displayStatus'] | BBVergunning['decision'] {
   const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
-    ?.status as BBVergunning['status'];
+    ?.status as BBVergunning['displayStatus'];
 
   if (lastStepStatus !== 'Verlopen' && zaak.decision) {
     return zaak.decision;
@@ -234,10 +235,7 @@ function transformZaakStatusResponse(
     isChecked: true,
   };
 
-  const isVerlopen =
-    zaak.decision === 'Verleend' && zaak.dateEnd
-      ? isDateInPast(zaak.dateEnd, new Date())
-      : false;
+  const isVerlopen = zaak.isExpired;
   const hasInBehandeling = !!datumInBehandeling;
   const hasDecision = !!zaak.decision && !!dateDecision;
   const hasMeerInformatieNodig = !!datumMeerInformatie;
@@ -404,8 +402,7 @@ async function fetchAndMergeZaakStatussen(
         ? statussenResponse.content
         : zaak.steps;
 
-    zaak.status = getZaakStatus(zaak);
-    zaak.displayStatus = zaak.status;
+    zaak.displayStatus = getZaakStatus(zaak) ?? 'Onbekend';
 
     zakenWithstatussen.push(zaak);
   }
@@ -471,6 +468,8 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     decision === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
 
+  const isZaakExpired = isExpired(pbZaak.dateEnd, new Date());
+
   return {
     dateRequest: pbZaak.dateReceived,
     dateRequestFormatted: pbZaak.dateReceived
@@ -496,10 +495,10 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     },
     title,
     processed: !!decision,
+    isExpired: isZaakExpired,
 
     // Added after initial transform
     location: null,
-    status: 'Ontvangen',
     displayStatus: 'Ontvangen',
     documents: [],
     steps: [],

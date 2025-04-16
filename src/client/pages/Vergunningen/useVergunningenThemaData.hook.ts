@@ -5,10 +5,7 @@ import {
   routes,
   tableConfig,
 } from './Vergunningen-thema-config';
-import {
-  DecosVergunning,
-  VergunningFrontend,
-} from '../../../server/services/vergunningen/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { ThemaIDs } from '../../../universal/config/thema';
 import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
@@ -18,9 +15,11 @@ import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useVergunningenThemaData() {
   const { VERGUNNINGEN } = useAppStateGetter();
-  const vergunningen = addLinkElementToProperty<
-    VergunningFrontend<DecosVergunning>
-  >(VERGUNNINGEN.content ?? [], 'identifier', true);
+  const vergunningen = addLinkElementToProperty<VergunningFrontend>(
+    VERGUNNINGEN.content ?? [],
+    'identifier',
+    true
+  );
   const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.VERGUNNINGEN);
 
   return {

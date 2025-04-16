@@ -14,10 +14,7 @@ import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import {
-  DecosVergunning,
-  VergunningFrontend,
-} from '../../../server/services/vergunningen/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../components/Datalist/Datalist';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 import { WVOSContent } from './detail-page-content/WVOS';
@@ -28,7 +25,7 @@ interface DetailPageContentProps<V> {
 }
 
 // TODO: Implement detailpages per case
-function DetailPageContent<V extends VergunningFrontend<DecosVergunning>>({
+function DetailPageContent<V extends VergunningFrontend>({
   vergunning,
 }: DetailPageContentProps<V>) {
   return (

@@ -57,7 +57,7 @@ export const tableConfig: TableConfigByKind<
       detailLinkComponent: 'Naam vaartuig',
       title: 'Omschrijving',
       dateRequestFormatted: 'Aangevraagd',
-      status: 'Status',
+      displayStatus: 'Status',
     },
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     ...tableConfigSort,

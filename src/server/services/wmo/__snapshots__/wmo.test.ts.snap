@@ -8,6 +8,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "In behandeling",
       "documents": [],
       "id": "1448787772",
       "isActual": true,
@@ -16,7 +17,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1448787772",
       },
-      "status": "In behandeling",
       "statusDate": "2024-09-30",
       "statusDateFormatted": "30 september 2024",
       "steps": [
@@ -80,6 +80,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "02 september 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-09-02T16:20:24.343",
@@ -95,7 +96,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2574743477",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-09-02T16:20:24.343",
       "statusDateFormatted": "02 september 2024",
       "steps": [
@@ -171,6 +171,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "29 augustus 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-08-29T16:48:11.997",
@@ -186,7 +187,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3271828893",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-08-29T16:48:11.997",
       "statusDateFormatted": "29 augustus 2024",
       "steps": [
@@ -247,6 +247,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "29 augustus 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-08-29T16:48:11.997",
@@ -262,7 +263,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2545320919",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-08-29T16:48:11.997",
       "statusDateFormatted": "29 augustus 2024",
       "steps": [
@@ -323,6 +323,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "29 augustus 2024",
       "decision": "Toegewezen1",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-08-29T16:48:11.997",
@@ -338,7 +339,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/759557662",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-08-29T16:48:11.997",
       "statusDateFormatted": "29 augustus 2024",
       "steps": [
@@ -399,6 +399,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "26 augustus 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-08-26T11:40:46.087",
@@ -414,7 +415,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3453673529",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-08-26T11:40:46.087",
       "statusDateFormatted": "26 augustus 2024",
       "steps": [
@@ -490,6 +490,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "09 juli 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-08-20T16:02:09.277",
@@ -517,7 +518,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2438738167",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-07-09T16:43:58.217",
       "statusDateFormatted": "09 juli 2024",
       "steps": [
@@ -593,6 +593,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "08 juli 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-07-08T16:07:42.397",
@@ -608,7 +609,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2298964018",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-07-08T16:07:42.397",
       "statusDateFormatted": "08 juli 2024",
       "steps": [
@@ -669,6 +669,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "08 juli 2024",
       "decision": "Afgewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-07-08T16:03:07.623",
@@ -684,7 +685,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2777689266",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-07-08T16:03:07.623",
       "statusDateFormatted": "08 juli 2024",
       "steps": [
@@ -729,6 +729,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "30 april 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-04-30T17:00:09.63",
@@ -744,7 +745,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1620966995",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-04-30T17:00:09.63",
       "statusDateFormatted": "30 april 2024",
       "steps": [
@@ -820,6 +820,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "30 april 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-04-30T14:56:51.363",
@@ -835,7 +836,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3637518353",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-04-30T14:56:51.363",
       "statusDateFormatted": "30 april 2024",
       "steps": [
@@ -891,6 +891,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "22 april 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-04-22T13:55:05.28",
@@ -906,7 +907,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2300980952",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-04-22T13:55:05.28",
       "statusDateFormatted": "22 april 2024",
       "steps": [
@@ -982,6 +982,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "27 maart 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-04-10T14:27:29.267",
@@ -1003,7 +1004,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1185022933",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-03-27T14:59:54.633",
       "statusDateFormatted": "27 maart 2024",
       "steps": [
@@ -1079,6 +1079,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "27 maart 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-04-10T14:27:29.267",
@@ -1100,7 +1101,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1185022932",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-03-27T14:59:54.633",
       "statusDateFormatted": "27 maart 2024",
       "steps": [
@@ -1176,6 +1176,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "26 maart 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-03-26T14:38:54.703",
@@ -1191,7 +1192,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3088327486",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-03-26T14:38:54.703",
       "statusDateFormatted": "26 maart 2024",
       "steps": [
@@ -1267,6 +1267,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "25 januari 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2024-01-25T17:08:09.837",
@@ -1282,7 +1283,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3720544791",
       },
-      "status": "Besluit genomen",
       "statusDate": "2024-01-25T17:08:09.837",
       "statusDateFormatted": "25 januari 2024",
       "steps": [
@@ -1358,6 +1358,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "1947071120",
       "isActual": true,
@@ -1366,7 +1367,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1947071120",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2023-06-14",
       "statusDateFormatted": "14 juni 2023",
       "steps": [
@@ -1430,6 +1430,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "29 januari 2024",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [
         {
           "datePublished": "2024-01-29T19:40:04.393",
@@ -1445,7 +1446,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1499967281",
       },
-      "status": "Einde recht",
       "statusDate": "2023-05-31",
       "statusDateFormatted": "31 mei 2023",
       "steps": [
@@ -1521,6 +1521,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "",
       "decision": "",
       "disclaimer": undefined,
+      "displayStatus": "In behandeling",
       "documents": [],
       "id": "1277436901",
       "isActual": true,
@@ -1529,7 +1530,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1277436901",
       },
-      "status": "In behandeling",
       "statusDate": "2023-05-17",
       "statusDateFormatted": "17 mei 2023",
       "steps": [
@@ -1572,6 +1572,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "",
       "decision": "",
       "disclaimer": undefined,
+      "displayStatus": "Meer informatie nodig",
       "documents": [
         {
           "datePublished": "2023-05-17T00:00:00",
@@ -1587,7 +1588,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2262252933",
       },
-      "status": "Meer informatie nodig",
       "statusDate": "2023-05-17T00:00:00",
       "statusDateFormatted": "17 mei 2023",
       "steps": [
@@ -1645,6 +1645,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "02 maart 2023",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Product geleverd",
       "documents": [
         {
           "datePublished": "2023-03-02T11:17:08.293",
@@ -1660,7 +1661,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/890306301",
       },
-      "status": "Product geleverd",
       "statusDate": "2023-05-15",
       "statusDateFormatted": "15 mei 2023",
       "steps": [
@@ -1736,6 +1736,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "16 maart 2023",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Levering gestart",
       "documents": [
         {
           "datePublished": "2023-03-16T15:56:11.41",
@@ -1751,7 +1752,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1986585525",
       },
-      "status": "Levering gestart",
       "statusDate": "2023-03-12",
       "statusDateFormatted": "12 maart 2023",
       "steps": [
@@ -1827,6 +1827,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "14 maart 2022",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [
         {
           "datePublished": "2022-03-14T16:12:12",
@@ -1842,7 +1843,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/955409908",
       },
-      "status": "Einde recht",
       "statusDate": "2023-03-11",
       "statusDateFormatted": "11 maart 2023",
       "steps": [
@@ -1918,6 +1918,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "14 maart 2022",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [
         {
           "datePublished": "2022-03-14T16:11:29",
@@ -1933,7 +1934,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1811284656",
       },
-      "status": "Einde recht",
       "statusDate": "2023-03-11",
       "statusDateFormatted": "11 maart 2023",
       "steps": [
@@ -2009,6 +2009,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "3042411901",
       "isActual": true,
@@ -2017,7 +2018,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3042411901",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2023-01-06",
       "statusDateFormatted": "06 januari 2023",
       "steps": [
@@ -2081,6 +2081,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "09 september 2014",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "2067143485",
       "isActual": false,
@@ -2089,7 +2090,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2067143485",
       },
-      "status": "Einde recht",
       "statusDate": "2022-12-20",
       "statusDateFormatted": "20 december 2022",
       "steps": [
@@ -2165,6 +2165,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "19 oktober 2022",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2022-10-19T14:27:42.643",
@@ -2180,7 +2181,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2941866748",
       },
-      "status": "Besluit genomen",
       "statusDate": "2022-10-19T14:27:42.643",
       "statusDateFormatted": "19 oktober 2022",
       "steps": [
@@ -2236,6 +2236,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "1293703646",
       "isActual": false,
@@ -2244,7 +2245,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1293703646",
       },
-      "status": "Einde recht",
       "statusDate": "2022-10-18",
       "statusDateFormatted": "18 oktober 2022",
       "steps": [
@@ -2288,6 +2288,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "16 augustus 2022",
       "decision": "Afgewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2022-08-16T09:30:39.58",
@@ -2303,7 +2304,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3500914591",
       },
-      "status": "Besluit genomen",
       "statusDate": "2022-08-16T09:30:39.58",
       "statusDateFormatted": "16 augustus 2022",
       "steps": [
@@ -2348,6 +2348,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "12 augustus 2022",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [
         {
           "datePublished": "2022-08-12T10:26:54.133",
@@ -2363,7 +2364,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1264203838",
       },
-      "status": "Besluit genomen",
       "statusDate": "2022-08-12T10:26:54.133",
       "statusDateFormatted": "12 augustus 2022",
       "steps": [
@@ -2419,6 +2419,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "19 april 2022",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [
         {
           "datePublished": "2022-04-19T13:16:44",
@@ -2434,7 +2435,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3476086687",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2022-06-07",
       "statusDateFormatted": "07 juni 2022",
       "steps": [
@@ -2510,6 +2510,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "11 maart 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "3608314454",
       "isActual": false,
@@ -2518,7 +2519,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3608314454",
       },
-      "status": "Einde recht",
       "statusDate": "2022-03-10",
       "statusDateFormatted": "10 maart 2022",
       "steps": [
@@ -2594,6 +2594,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "11 maart 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "2624361688",
       "isActual": false,
@@ -2602,7 +2603,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2624361688",
       },
-      "status": "Einde recht",
       "statusDate": "2022-03-10",
       "statusDateFormatted": "10 maart 2022",
       "steps": [
@@ -2678,6 +2678,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "11 maart 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "2758572638",
       "isActual": false,
@@ -2686,7 +2687,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2758572638",
       },
-      "status": "Einde recht",
       "statusDate": "2022-03-10",
       "statusDateFormatted": "10 maart 2022",
       "steps": [
@@ -2762,6 +2762,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "06 december 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "2248022546",
       "isActual": false,
@@ -2770,7 +2771,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2248022546",
       },
-      "status": "Einde recht",
       "statusDate": "2022-02-06",
       "statusDateFormatted": "06 februari 2022",
       "steps": [
@@ -2846,6 +2846,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "08 december 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "1035945789",
       "isActual": true,
@@ -2854,7 +2855,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1035945789",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2021-12-20",
       "statusDateFormatted": "20 december 2021",
       "steps": [
@@ -2930,6 +2930,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "08 december 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Opdracht gegeven",
       "documents": [],
       "id": "1035945788",
       "isActual": true,
@@ -2938,7 +2939,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1035945788",
       },
-      "status": "Opdracht gegeven",
       "statusDate": "2021-12-08T10:54:18",
       "statusDateFormatted": "08 december 2021",
       "steps": [
@@ -3014,6 +3014,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "26 augustus 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Product geleverd",
       "documents": [],
       "id": "3074395293",
       "isActual": true,
@@ -3022,7 +3023,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3074395293",
       },
-      "status": "Product geleverd",
       "statusDate": "2021-11-19",
       "statusDateFormatted": "19 november 2021",
       "steps": [
@@ -3098,6 +3098,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "22 oktober 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "3645917971",
       "isActual": true,
@@ -3106,7 +3107,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3645917971",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2021-10-13",
       "statusDateFormatted": "13 oktober 2021",
       "steps": [
@@ -3182,6 +3182,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "16 februari 2015",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "307583671",
       "isActual": false,
@@ -3190,7 +3191,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/307583671",
       },
-      "status": "Einde recht",
       "statusDate": "2021-08-23",
       "statusDateFormatted": "23 augustus 2021",
       "steps": [
@@ -3266,6 +3266,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "17 juni 2013",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "819420661",
       "isActual": false,
@@ -3274,7 +3275,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/819420661",
       },
-      "status": "Einde recht",
       "statusDate": "2021-08-23",
       "statusDateFormatted": "23 augustus 2021",
       "steps": [
@@ -3350,6 +3350,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "09 januari 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "226616664",
       "isActual": false,
@@ -3358,7 +3359,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/226616664",
       },
-      "status": "Einde recht",
       "statusDate": "2021-03-09",
       "statusDateFormatted": "09 maart 2021",
       "steps": [
@@ -3434,6 +3434,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "09 januari 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "1855927508",
       "isActual": false,
@@ -3442,7 +3443,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1855927508",
       },
-      "status": "Einde recht",
       "statusDate": "2021-03-09",
       "statusDateFormatted": "09 maart 2021",
       "steps": [
@@ -3518,6 +3518,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "09 januari 2021",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "1499176916",
       "isActual": false,
@@ -3526,7 +3527,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1499176916",
       },
-      "status": "Einde recht",
       "statusDate": "2021-03-09",
       "statusDateFormatted": "09 maart 2021",
       "steps": [
@@ -3602,6 +3602,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "04 december 2020",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "4005950334",
       "isActual": true,
@@ -3610,7 +3611,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/4005950334",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2021-01-13",
       "statusDateFormatted": "13 januari 2021",
       "steps": [
@@ -3686,6 +3686,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "16 juni 2020",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "3303327448",
       "isActual": false,
@@ -3694,7 +3695,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3303327448",
       },
-      "status": "Einde recht",
       "statusDate": "2020-12-31",
       "statusDateFormatted": "31 december 2020",
       "steps": [
@@ -3770,6 +3770,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "12 maart 2020",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "636127578",
       "isActual": false,
@@ -3778,7 +3779,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/636127578",
       },
-      "status": "Einde recht",
       "statusDate": "2020-12-31",
       "statusDateFormatted": "31 december 2020",
       "steps": [
@@ -3854,6 +3854,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "12 maart 2020",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "1926069212",
       "isActual": false,
@@ -3862,7 +3863,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1926069212",
       },
-      "status": "Einde recht",
       "statusDate": "2020-12-31",
       "statusDateFormatted": "31 december 2020",
       "steps": [
@@ -3938,6 +3938,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "18 juni 2020",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Product geleverd",
       "documents": [],
       "id": "134062321",
       "isActual": true,
@@ -3946,7 +3947,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/134062321",
       },
-      "status": "Product geleverd",
       "statusDate": "2020-09-10",
       "statusDateFormatted": "10 september 2020",
       "steps": [
@@ -4022,6 +4022,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "05 juni 2020",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "1809360062",
       "isActual": false,
@@ -4030,7 +4031,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1809360062",
       },
-      "status": "Einde recht",
       "statusDate": "2020-08-05",
       "statusDateFormatted": "05 augustus 2020",
       "steps": [
@@ -4096,6 +4096,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "12 maart 2020",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "3441632088",
       "isActual": false,
@@ -4104,7 +4105,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3441632088",
       },
-      "status": "Einde recht",
       "statusDate": "2020-06-14",
       "statusDateFormatted": "14 juni 2020",
       "steps": [
@@ -4180,6 +4180,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "05 oktober 2012",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "1703298224",
       "isActual": false,
@@ -4188,7 +4189,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1703298224",
       },
-      "status": "Einde recht",
       "statusDate": "2020-06-09",
       "statusDateFormatted": "09 juni 2020",
       "steps": [
@@ -4264,6 +4264,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "15 april 2019",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "446200219",
       "isActual": false,
@@ -4272,7 +4273,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/446200219",
       },
-      "status": "Einde recht",
       "statusDate": "2020-03-08",
       "statusDateFormatted": "08 maart 2020",
       "steps": [
@@ -4348,6 +4348,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "11 maart 2019",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "938485502",
       "isActual": false,
@@ -4356,7 +4357,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/938485502",
       },
-      "status": "Einde recht",
       "statusDate": "2020-03-08",
       "statusDateFormatted": "08 maart 2020",
       "steps": [
@@ -4432,6 +4432,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "11 maart 2019",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "1175100182",
       "isActual": false,
@@ -4440,7 +4441,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1175100182",
       },
-      "status": "Einde recht",
       "statusDate": "2020-03-08",
       "statusDateFormatted": "08 maart 2020",
       "steps": [
@@ -4516,6 +4516,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "09 oktober 2019",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "954761814",
       "isActual": false,
@@ -4524,7 +4525,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/954761814",
       },
-      "status": "Einde recht",
       "statusDate": "2019-12-09",
       "statusDateFormatted": "09 december 2019",
       "steps": [
@@ -4600,6 +4600,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "25 april 2018",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "4058168346",
       "isActual": false,
@@ -4608,7 +4609,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/4058168346",
       },
-      "status": "Einde recht",
       "statusDate": "2019-04-13",
       "statusDateFormatted": "13 april 2019",
       "steps": [
@@ -4684,6 +4684,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "27 december 2018",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "2889701237",
       "isActual": true,
@@ -4692,7 +4693,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2889701237",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2019-03-25",
       "statusDateFormatted": "25 maart 2019",
       "steps": [
@@ -4768,6 +4768,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "29 november 2018",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "300203506",
       "isActual": false,
@@ -4776,7 +4777,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/300203506",
       },
-      "status": "Einde recht",
       "statusDate": "2019-03-08",
       "statusDateFormatted": "08 maart 2019",
       "steps": [
@@ -4852,6 +4852,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "19 april 2018",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "2707273693",
       "isActual": false,
@@ -4860,7 +4861,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2707273693",
       },
-      "status": "Einde recht",
       "statusDate": "2019-03-08",
       "statusDateFormatted": "08 maart 2019",
       "steps": [
@@ -4936,6 +4936,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "24 november 2017",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "3209335922",
       "isActual": false,
@@ -4944,7 +4945,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3209335922",
       },
-      "status": "Einde recht",
       "statusDate": "2018-11-23",
       "statusDateFormatted": "23 november 2018",
       "steps": [
@@ -5020,6 +5020,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "25 april 2018",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "830963519",
       "isActual": true,
@@ -5028,7 +5029,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/830963519",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2018-05-09",
       "statusDateFormatted": "09 mei 2018",
       "steps": [
@@ -5104,6 +5104,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "01 juni 2017",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "3783046999",
       "isActual": false,
@@ -5112,7 +5113,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/3783046999",
       },
-      "status": "Einde recht",
       "statusDate": "2018-04-13",
       "statusDateFormatted": "13 april 2018",
       "steps": [
@@ -5188,6 +5188,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "01 juni 2017",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Einde recht",
       "documents": [],
       "id": "477515900",
       "isActual": false,
@@ -5196,7 +5197,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/477515900",
       },
-      "status": "Einde recht",
       "statusDate": "2018-03-08",
       "statusDateFormatted": "08 maart 2018",
       "steps": [
@@ -5272,6 +5272,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "30 november 2012",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Product geleverd",
       "documents": [],
       "id": "1702166716",
       "isActual": true,
@@ -5280,7 +5281,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1702166716",
       },
-      "status": "Product geleverd",
       "statusDate": "2017-06-01",
       "statusDateFormatted": "01 juni 2017",
       "steps": [
@@ -5356,6 +5356,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "11 september 2014",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [],
       "id": "4216491004",
       "isActual": true,
@@ -5364,7 +5365,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/4216491004",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2014-11-07",
       "statusDateFormatted": "07 november 2014",
       "steps": [
@@ -5440,6 +5440,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "09 december 2013",
       "decision": "Afgewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [],
       "id": "2730893522",
       "isActual": false,
@@ -5448,7 +5449,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/2730893522",
       },
-      "status": "Besluit genomen",
       "statusDate": "2013-12-09",
       "statusDateFormatted": "09 december 2013",
       "steps": [
@@ -5493,6 +5493,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "17 mei 2023",
       "decision": "Toegewezen",
       "disclaimer": undefined,
+      "displayStatus": "Aanpassing uitgevoerd",
       "documents": [
         {
           "datePublished": "2023-05-17T00:00:00",
@@ -5514,7 +5515,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/1692040411",
       },
-      "status": "Aanpassing uitgevoerd",
       "statusDate": "2013-06-17",
       "statusDateFormatted": "17 juni 2013",
       "steps": [
@@ -5605,6 +5605,7 @@ exports[`Transform api items > fetchWmo 1`] = `
       "dateDecisionFormatted": "07 augustus 2012",
       "decision": "Afgewezen",
       "disclaimer": undefined,
+      "displayStatus": "Besluit genomen",
       "documents": [],
       "id": "4046397887",
       "isActual": false,
@@ -5613,7 +5614,6 @@ exports[`Transform api items > fetchWmo 1`] = `
         "title": "Meer informatie",
         "to": "/zorg-en-ondersteuning/voorziening/4046397887",
       },
-      "status": "Besluit genomen",
       "statusDate": "2012-08-07",
       "statusDateFormatted": "07 augustus 2012",
       "steps": [

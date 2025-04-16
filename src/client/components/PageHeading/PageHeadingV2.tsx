@@ -39,7 +39,7 @@ export function PageHeadingV2({
   return (
     <PageContentCell
       startWide={1}
-      spanWide={7}
+      spanWide={12}
       className={styles.PageHeadingWrap}
     >
       <div className={styles.PageHeadingInner} id="skip-to-id-AppContent">

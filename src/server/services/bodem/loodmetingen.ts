@@ -123,7 +123,7 @@ function transformLood365Response(
             ? defaultDateFormat(datumAfgehandeld)
             : '',
           decision: decision,
-          status: location.Friendlystatus,
+          displayStatus: location.Friendlystatus,
           processed: isProcessed,
           kenmerk: location.Reference,
           aanvraagNummer: request.Reference,
@@ -272,7 +272,7 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
     },
   };
 
-  switch (meting.status.toLowerCase() as LoodMetingStatusLowerCase) {
+  switch (meting.displayStatus.toLowerCase() as LoodMetingStatusLowerCase) {
     case 'in behandeling': {
       return {
         ...baseNotification,

@@ -20,13 +20,12 @@ import {
   requestData,
 } from './source-api-request';
 import { remoteApiHost } from '../../testing/setup';
-import { remoteApi } from '../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../testing/utils';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { AuthProfileAndToken } from '../auth/auth-types';
 import { ApiUrlEntries } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 const mocks = vi.hoisted(() => {
@@ -56,16 +55,7 @@ describe('requestData.ts', () => {
 
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
-  const TOKEN = 'xxxxx';
-  const AUTH_PROFILE_AND_TOKEN: AuthProfileAndToken = {
-    profile: {
-      authMethod: 'digid',
-      profileType: 'private',
-      id: 'bsnxxxx',
-      sid: '',
-    },
-    token: TOKEN,
-  };
+  const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
   const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
@@ -292,7 +282,7 @@ describe('requestData.ts', () => {
 
     expect(axiosRequestSpy.mock.calls[0][0].passthroughOIDCToken).toEqual(true);
     expect(axiosRequestSpy.mock.calls[0][0].headers).toStrictEqual({
-      Authorization: `Bearer ${TOKEN}`,
+      Authorization: `Bearer ${AUTH_PROFILE_AND_TOKEN.token}`,
     });
   });
 
