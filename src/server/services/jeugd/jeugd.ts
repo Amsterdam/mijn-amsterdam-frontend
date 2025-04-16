@@ -7,7 +7,7 @@ import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { GenericDocument, ZaakDetail } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getLatestStatus, getLatestStatusDate } from '../../statusline';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
 import { hasDecision } from '../wmo/status-line-items/wmo-generic';
 import { getDocuments } from '../wmo/wmo';
 import { fetchAanvragen } from '../zorgned/zorgned-service';

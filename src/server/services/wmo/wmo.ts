@@ -19,7 +19,7 @@ import {
 import { WMOVoorzieningFrontend } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
-import { getLatestStatus, getLatestStatusDate } from '../../statusline';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
 
 export function getDocuments(
   sessionID: SessionID,
