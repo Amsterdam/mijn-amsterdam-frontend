@@ -204,7 +204,7 @@ export async function zaakStatusHandler(
   const authType =
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
   const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
-  const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}${getZaakStatusQueryParams(params)}`;
+  const loginRouteWithReturnTo = `${loginRoute}${getZaakStatusQueryParams(params)}&returnTo=${AppRoutes.ZAAK_STATUS}`;
   return res.redirect(loginRouteWithReturnTo);
 }
 
