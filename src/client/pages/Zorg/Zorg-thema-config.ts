@@ -8,7 +8,7 @@ import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/help
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../components/Table/TableV2';
+} from '../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;

@@ -1,4 +1,5 @@
 import { themaId as inkomenThemaId } from '../../client/pages/Inkomen/Inkomen-thema-config';
+import { themaId as jeugdThemaId } from '../../client/pages/Jeugd/Jeugd-thema-config';
 import {
   themaIdBRP,
   themaIdKVK,
@@ -31,6 +32,7 @@ export const ThemaIDs = {
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
   [inkomenThemaId]: inkomenThemaId,
+  [jeugdThemaId]: jeugdThemaId,
   [themaIdBRP]: themaIdBRP,
   [themaIdKVK]: themaIdKVK,
 } as const;
