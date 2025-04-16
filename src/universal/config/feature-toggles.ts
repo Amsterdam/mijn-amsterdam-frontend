@@ -1,5 +1,9 @@
 import { IS_AP, IS_OT, IS_PRODUCTION } from './env';
 
+/**
+ * @deprecated
+ * Use the new thema config in the client instead.
+ */
 export const FeatureToggle = {
   // AFIS
   afisActive: true,
