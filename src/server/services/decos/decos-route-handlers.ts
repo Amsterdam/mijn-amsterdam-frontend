@@ -51,6 +51,17 @@ export async function fetchDecosDocumentsList(
   return sendUnauthorized(res);
 }
 
+function getUserIdsByUsernames(
+  accounts: Record<string, string> | null,
+  username?: string
+) {
+  return accounts
+    ? Object.entries(accounts)
+        .filter(([username_]) => !username || username_ === username)
+        .map(([_username, userID]) => userID)
+    : [];
+}
+
 export async function fetchZakenByUserIDs(
   req: RequestWithQueryParams<{
     profileType: ProfileType;
@@ -79,22 +90,8 @@ export async function fetchZakenByUserIDs(
 
   const userIDsFromEnv =
     req.query.profileType === 'private'
-      ? testAccountsDigid
-        ? Object.entries(testAccountsDigid)
-            .filter(
-              ([username]) =>
-                !req.query.username || req.query.username === username
-            )
-            .map(([_username, userID]) => userID)
-        : []
-      : testAccountsEherkenning
-        ? Object.entries(testAccountsEherkenning)
-            .filter(
-              ([username]) =>
-                !req.query.username || req.query.username === username
-            )
-            .map(([_username, userID]) => userID)
-        : [];
+      ? getUserIdsByUsernames(testAccountsDigid, req.query.username)
+      : getUserIdsByUsernames(testAccountsEherkenning, req.query.username);
 
   // Only allow fetching zaken for test accounts in non-production environments
   const userIDs =
