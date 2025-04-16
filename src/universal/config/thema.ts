@@ -28,5 +28,8 @@ export const ThemaIDs = {
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
 } as const;
-
+/**
+ * @deprecated
+ * Use the new thema config in the client instead.
+ */
 export type ThemaID = (typeof ThemaIDs)[keyof typeof ThemaIDs];
