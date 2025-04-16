@@ -33,3 +33,4 @@ export { default as IconVaren } from './varen.svg?react';
 export { default as IconVergunningen } from './vergunningen.svg?react';
 export { default as IconWior } from './wior.svg?react';
 export { default as IconZorg } from './zorg.svg?react';
+export { default as IconJeugd } from './jeugd.svg?react';

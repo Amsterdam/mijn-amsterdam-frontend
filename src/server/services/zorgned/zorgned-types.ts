@@ -187,7 +187,12 @@ export interface ZorgnedPerson {
   dateOfBirthFormatted: string | null;
 }
 
+export type ZorgnedApiConfigKey =
+  | 'ZORGNED_JZD'
+  | 'ZORGNED_AV'
+  | 'ZORGNED_LEERLINGENVERVOER';
+
 export interface ZorgnedAanvragenServiceOptions {
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV';
+  zorgnedApiConfigKey: ZorgnedApiConfigKey;
   requestBodyParams?: Record<string, string>;
 }

@@ -54,7 +54,7 @@ function getStatusLineItemTransformers<T extends ZorgnedAanvraagTransformed>(
 }
 
 export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
-  serviceName: 'WMO' | 'HLI',
+  serviceName: 'WMO' | 'HLI' | 'LLV',
   statusLineItemsConfig: ZorgnedStatusLineItemsConfig<T>[],
   aanvraagTransformed: T,
   allAanvragenTransformed: T[],

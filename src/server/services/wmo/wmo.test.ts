@@ -6,6 +6,7 @@ import { remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import { BffEndpoints } from '../../routing/bff-routes';
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => ({
   ...((await importOriginal()) as object),
@@ -55,8 +56,13 @@ describe('Transform api items', () => {
     } as ZorgnedAanvraagTransformed;
 
     test('Assign documents after MINIMUM_REQUEST_DATE_FOR_DOCUMENTS', () => {
-      expect(forTesting.getDocuments('xxx-222', jsonCopy(aanvraag)))
-        .toMatchInlineSnapshot(`
+      expect(
+        forTesting.getDocuments(
+          'xxx-222',
+          jsonCopy(aanvraag),
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
+        )
+      ).toMatchInlineSnapshot(`
           [
             {
               "datePublished": "2024-06-24",
@@ -72,7 +78,8 @@ describe('Transform api items', () => {
       expect(
         forTesting.getDocuments(
           'xxx-222',
-          jsonCopy({ ...aanvraag, datumAanvraag: '2017-04-12' })
+          jsonCopy({ ...aanvraag, datumAanvraag: '2017-04-12' }),
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
         )
       ).toMatchInlineSnapshot(`[]`);
     });
@@ -84,8 +91,13 @@ describe('Transform api items', () => {
 
       expect(aanvraag2.documenten.length).toBe(2);
 
-      expect(forTesting.getDocuments('xxx-222', aanvraag2))
-        .toMatchInlineSnapshot(`
+      expect(
+        forTesting.getDocuments(
+          'xxx-222',
+          aanvraag2,
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
+        )
+      ).toMatchInlineSnapshot(`
         [
           {
             "datePublished": "2024-06-24",
