@@ -3,9 +3,9 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { listPageParamKind } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './erfpachtData.hook';
 import {
-  ErfpachtDossierFactuur,
   ErfpachtDossier,
-} from '../../../server/services/erfpacht/erfpacht';
+  ErfpachtDossierFactuur,
+} from '../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../universal/helpers/utils';
 import { PageContentCell } from '../../components/Page/Page';
 import ThemaPagina from '../ThemaPagina/ThemaPagina';

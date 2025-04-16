@@ -5,7 +5,6 @@ import { MutableSnapshot } from 'recoil';
 import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
-  ErfpachtDossiersResponse,
   transformDossierResponse,
   transformErfpachtDossierProperties,
 } from '../../../server/services/erfpacht/erfpacht';
@@ -15,6 +14,7 @@ import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { ErfpachtFacturen } from './ErfpachtFacturen';
+import { ErfpachtDossiersResponse } from '../../../server/services/erfpacht/erfpacht-types';
 
 describe('<ErfpachtOpenFacturen />', () => {
   const routeEntry = generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
