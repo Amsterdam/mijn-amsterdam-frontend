@@ -135,7 +135,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
     const request: AVGRequestFrontend = {
       id,
       title,
-      status: verzoek.avgverzoek_statusavgverzoek_alias.value || '',
+      displayStatus: verzoek.avgverzoek_statusavgverzoek_alias.value || '',
       registratieDatum: smileDateParser(
         verzoek.avgverzoek_datuminbehandeling?.value || ''
       ),
