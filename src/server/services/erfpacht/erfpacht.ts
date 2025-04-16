@@ -82,6 +82,7 @@ export function transformErfpachtDossierProperties<
     dossierNummerUrlParam,
     title,
     steps: [],
+    displayStatus: '',
     id: dossierNummerUrlParam,
     link: {
       to: generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
