@@ -8,6 +8,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedAanvragenServiceOptions,
+  ZorgnedApiConfigKey,
   ZorgnedDocument,
   ZorgnedDocumentResponseSource,
   ZorgnedPerson,
@@ -244,7 +245,7 @@ export async function fetchAndMergeRelatedPersons(
 export async function fetchDocument(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV',
+  zorgnedApiConfigKey: ZorgnedApiConfigKey,
   documentId: ZorgnedDocument['documentidentificatie']
 ) {
   const postBody = {

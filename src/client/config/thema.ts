@@ -15,6 +15,8 @@ import {
   documentTitles as documentTitlesInkomen,
   themaTitle as inkomenThemaTitle,
 } from '../pages/Inkomen/Inkomen-thema-config';
+import { menuItem as menuItemJeugd } from '../pages/Jeugd/Jeugd-render-config';
+import { documentTitles as documentTitlesJeugd } from '../pages/Jeugd/Jeugd-thema-config';
 import { menuItems as profileMenuItems } from '../pages/Profile/Profile-render-config';
 import {
   documentTitles as documentTitlesProfile,
@@ -107,6 +109,8 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
+
+  ...documentTitlesJeugd,
 
   // Inkomen
   ...documentTitlesInkomen,
@@ -213,6 +217,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
 export const myThemasMenuItems: ThemaMenuItem[] = [
   ...profileMenuItems,
   menuItemInkomen,
+  menuItemJeugd,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,

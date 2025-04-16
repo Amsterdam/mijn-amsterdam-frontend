@@ -35,6 +35,7 @@ import { attachDocumentDownloadRoute } from '../services/shared/document-downloa
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
+import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 
 export const router = express.Router();
 
@@ -94,6 +95,13 @@ attachDocumentDownloadRoute(
   router,
   BffEndpoints.WMO_DOCUMENT_DOWNLOAD,
   fetchZorgnedJZDDocument
+);
+
+// LLV Zorgned Doc download
+attachDocumentDownloadRoute(
+  router,
+  BffEndpoints.LLV_DOCUMENT_DOWNLOAD,
+  fetchZorgnedLLVDocument
 );
 
 router.get(

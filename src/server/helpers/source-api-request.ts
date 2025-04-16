@@ -1,5 +1,4 @@
 import axios, {
-  AxiosError,
   AxiosRequestConfig,
   AxiosResponse,
   AxiosResponseHeaders,
@@ -184,6 +183,10 @@ export async function requestData<T>(
 
     // Use the cache Deferred for resolving the response
     if (BFF_REQUEST_CACHE_ENABLED && cache.get(cacheKey)) {
+      logger.trace(
+        { url: config.url, queryParams: config.params },
+        `Cache hit for '${config.url}'`
+      );
       cache.get(cacheKey).resolve(responseData);
     }
 
