@@ -11,7 +11,7 @@ export function useInkomenDetailData(
   const appState = useAppStateGetter();
   const STATE = appState[stateKey];
   const zaken = Array.isArray(STATE.content) ? STATE.content : [];
-  const breadcrumbs = useThemaBreadcrumbs(themaId.INKOMEN);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
   const { id } = useParams<{ id: string }>();
   const zaak = zaken.find((item) => item.id === id);
 
