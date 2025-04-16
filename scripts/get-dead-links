@@ -1,0 +1,31 @@
+#! /bin/bash
+
+# This script makes outgoing request to all our external page links and -
+# checks if these are still in use.
+# Then it prints out all dead links found.
+
+set -e
+
+EXTERNAL_URLS=$(grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
+  '(?<=")(http.+?)(?=")' ./src/* 2> /dev/null \
+  | sed '/.*w3\.org.*/d' \
+  | sed '/http:\/\/localhost*/d')
+
+echo_invalid_url() {
+  local status_code=$(curl \
+    --globoff --location --output /dev/null --silent \
+    --write-out "%{http_code}\n" \
+    $1)
+
+  if [ "$status_code" -gt 399 ] && [ "$status_code" -lt 501 ]; then
+    echo "$url"
+  fi
+}
+
+for url in $EXTERNAL_URLS
+do
+  echo_invalid_url "$url" &
+done
+
+wait
+
