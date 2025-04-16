@@ -9,7 +9,8 @@ set -e
 EXTERNAL_URLS=$(grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
   '(?<=")(http.+?)(?=")' ./src/* 2> /dev/null \
   | sed '/.*w3\.org.*/d' \
-  | sed '/http:\/\/localhost*/d')
+  | sed '/http:\/\/localhost*/d' \
+  | sort --unique)
 
 echo_invalid_url() {
   local status_code=$(curl \
@@ -17,7 +18,7 @@ echo_invalid_url() {
     --write-out "%{http_code}\n" \
     $1)
 
-  if [ "$status_code" -gt 399 ] && [ "$status_code" -lt 501 ]; then
+  if [ "$status_code" -gt 399 ] && [ "$status_code" -lt 600 ]; then
     echo "$url"
   fi
 }
