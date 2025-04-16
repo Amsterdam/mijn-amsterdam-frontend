@@ -18,12 +18,12 @@ const displayPropsBase: DisplayProps<
   WithDetailLinkComponent<WMOVoorzieningFrontend>
 > = {
   detailLinkComponent: 'Naam',
-  status: 'Status',
+  displayStatus: 'Status',
   statusDateFormatted: 'Datum',
 };
 
 const displayProps = withOmitDisplayPropsForSmallScreens(displayPropsBase, [
-  'status',
+  'displayStatus',
   'statusDateFormatted',
 ]);
 

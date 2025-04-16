@@ -9,11 +9,13 @@ import { ApiResponse_DEPRECATED } from '../helpers/api';
  */
 export type BagThema = `${ThemaID}_BAG`;
 
-export type AppState = {
+export type AppStateBase = {
   [key in ServiceID]: ApiResponse_DEPRECATED<
     ReturnTypeAsync<ServicesType[key]>['content']
   >;
-} & {
+};
+
+export type AppState = AppStateBase & {
   // A place to store additional data not loaded initially but needs to be stored persistently in the app.
   [key in BagThema]?: Record<string, any>;
 };
@@ -100,6 +102,7 @@ export interface ZaakDetail<T extends string = string> {
   steps: StatusLineItem<T>[];
   link: LinkProps;
   about?: string;
+  displayStatus: string;
 }
 
 export type StatusLine = ZaakDetail;

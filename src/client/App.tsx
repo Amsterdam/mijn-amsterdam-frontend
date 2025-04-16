@@ -93,7 +93,7 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated />
       <ErrorMessages />
       {isHeroVisible && <MainHeaderHero />}
-      <Screen className={!isBuurt ? styles.App : ''}>
+      <Screen className={!isBuurt ? styles.App : styles.AppWide}>
         <PrivateRoutes />
       </Screen>
       {/** Remove the footer on the Map view for better UX */}

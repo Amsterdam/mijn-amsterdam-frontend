@@ -105,7 +105,7 @@ function transformVoorzieningenForFrontend(
         dateDecisionFormatted: dateDecision
           ? defaultDateFormat(dateDecision)
           : '',
-        status: getLatestStatus(lineItems),
+        displayStatus: getLatestStatus(lineItems),
         statusDate: getLatestStatusDate(lineItems),
         statusDateFormatted: getLatestStatusDate(lineItems, true),
         disclaimer,

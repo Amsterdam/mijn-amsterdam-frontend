@@ -60,7 +60,7 @@ export function PageContentCell({
   children,
   className,
   start = { narrow: 1, medium: 1, wide: 1 },
-  span = { narrow: 4, medium: 6, wide: 12 },
+  span = { narrow: 4, medium: 8, wide: 12 },
   spanWide,
   startWide,
 }: PageContentCellProps) {

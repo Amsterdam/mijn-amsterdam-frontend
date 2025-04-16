@@ -184,7 +184,7 @@ describe('fetchIsKnownInAFIS ', () => {
     });
 
     it('Handles a bad request by returning an AxiosError', async () => {
-      remoteApi.post(ROUTES.businesspartnerBSN).reply(400);
+      remoteApi.post(ROUTES.businesspartnerBSN).reply(400, {});
 
       const response = await fetchIsKnownInAFIS(
         REQUEST_ID,

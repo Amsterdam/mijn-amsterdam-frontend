@@ -6,7 +6,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
         class="_PageHeadingInner_c5a3f1"
@@ -63,7 +63,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
       </div>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <button
         aria-expanded="false"
@@ -83,7 +83,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
       </button>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <div
         class="ams-table"
@@ -290,7 +290,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
         class="_PageHeadingInner_c5a3f1"
@@ -347,7 +347,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
       </div>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <button
         aria-expanded="false"
@@ -367,7 +367,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
       </button>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <div
         class="ams-table"

@@ -20,7 +20,7 @@ describe('router-public', () => {
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        '/api/v1/auth/digid/login?returnTo=/zaak-status&id=Z%2F000%2F000001&thema=vergunningen'
+        '/api/v1/auth/digid/login?id=Z%2F000%2F000001&thema=vergunningen&returnTo=/zaak-status'
       );
     });
 
@@ -40,7 +40,7 @@ describe('router-public', () => {
       await zaakStatusHandler(reqMock, resMock, nextMock);
 
       expect(resMock.redirect).toHaveBeenCalledWith(
-        '/api/v1/auth/eherkenning/login?returnTo=/zaak-status&id=Z%2F000%2F000001&thema=vergunningen'
+        '/api/v1/auth/eherkenning/login?id=Z%2F000%2F000001&thema=vergunningen&returnTo=/zaak-status'
       );
     });
   });

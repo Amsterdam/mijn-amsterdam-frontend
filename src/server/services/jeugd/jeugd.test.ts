@@ -138,7 +138,7 @@ test('Succes Response is formatted correctly', async () => {
       title: 'Meer informatie',
       to: '/jeugd/voorziening/1610585298',
     },
-    status: 'Besluit genomen',
+    displayStatus: 'Besluit genomen',
     statusDate: '2025-04-07T09:44:48.697',
     statusDateFormatted: '07 april 2025',
     steps: [
