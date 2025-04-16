@@ -536,6 +536,9 @@ export async function fetchDecosZaken_<
 
 export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
+  normalizer: function (args) {
+    return args[0] + JSON.stringify(args[1]) + JSON.stringify(args[2]);
+  },
 });
 
 function transformDecosWorkflowKeysResponse(workflowsResponseData: {

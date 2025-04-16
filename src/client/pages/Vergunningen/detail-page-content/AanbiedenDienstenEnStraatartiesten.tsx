@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import {
   AanbiedenDiensten,
   Straatartiesten,
@@ -11,36 +11,66 @@ export function AanbiedenDienstenEnStraatartiestenContent({
 }: {
   vergunning: VergunningFrontend<AanbiedenDiensten | Straatartiesten>;
 }) {
-  const rows = getRows(vergunning, ['identifier', 'decision']);
+  const waarvoor = () =>
+    vergunning.caseType == 'Straatartiesten' && vergunning.category
+      ? {
+          label: 'Waarvoor',
+          content: vergunning.category,
+        }
+      : null;
 
-  if (
+  const op = () =>
     vergunning.decision === 'Verleend' &&
-    (vergunning.dateEnd == null || vergunning.dateStart === vergunning.dateEnd)
-  ) {
-    rows.push({
-      label: 'Op',
-      content: vergunning.dateStartFormatted,
-    });
-  }
+    vergunning.dateStart &&
+    (!vergunning.dateEnd || vergunning.dateStart === vergunning.dateEnd)
+      ? {
+          label: 'Op',
+          content: vergunning.dateStartFormatted,
+        }
+      : null;
 
-  if (
+  const vanTot = () =>
     vergunning.decision === 'Verleend' &&
     vergunning.dateEnd !== null &&
     vergunning.dateStart !== vergunning.dateEnd
-  ) {
-    rows.push({
-      rows: [
-        {
-          label: 'Van',
-          content: vergunning.dateStartFormatted,
-        },
-        {
-          label: 'Tot',
-          content: vergunning.dateEndFormatted,
-        },
-      ],
-    });
-  }
+      ? {
+          rows: [
+            {
+              label: 'Van',
+              content: vergunning.dateStartFormatted,
+            },
+            {
+              label: 'Tot',
+              content: vergunning.dateEndFormatted,
+            },
+          ],
+        }
+      : null;
+
+  const rows = getRows(vergunning, [
+    'identifier',
+    { waarvoor },
+    {
+      stadsdeel: (vergunning) => {
+        return {
+          label: 'Stadsdeel',
+          content: vergunning.stadsdeel,
+        };
+      },
+    },
+    {
+      location: (vergunning) => {
+        const location = commonTransformers.location(vergunning);
+        return {
+          content: location && 'content' in location ? location.content : '-',
+          label: 'Locatie',
+        };
+      },
+    },
+    { op },
+    { vanTot },
+    'decision',
+  ]);
 
   return <Datalist rows={rows} />;
 }

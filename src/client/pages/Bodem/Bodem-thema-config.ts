@@ -33,9 +33,9 @@ const displayPropsLopend = withOmitDisplayPropsForSmallScreens<
   {
     detailLinkComponent: 'Adres',
     datumAanvraagFormatted: 'Aangevraagd op',
-    status: 'Status',
+    displayStatus: 'Status',
   },
-  ['status', 'datumAanvraagFormatted']
+  ['displayStatus', 'datumAanvraagFormatted']
 );
 
 const displayPropsEerder = withOmitDisplayPropsForSmallScreens<

@@ -102,6 +102,7 @@ export interface ZaakDetail<T extends string = string> {
   steps: StatusLineItem<T>[];
   link: LinkProps;
   about?: string;
+  displayStatus: string;
 }
 
 export type StatusLine = ZaakDetail;
