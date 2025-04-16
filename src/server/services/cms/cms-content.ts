@@ -282,7 +282,7 @@ async function getFooter(
     return apiErrorResult('Could not fetch Footer data', null);
   }
 
-if (FeatureToggle.useCMSFooterBackupActive) {
+  if (FeatureToggle.useCMSFooterStaticDataBackup) {
     return new Promise((resolve) => {
       fs.readFile(path.join(__dirname, './cms-footer.json'), (err, content) => {
         if (err) {

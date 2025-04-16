@@ -224,7 +224,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
-    postponeFetch: !FeatureToggle.cmsFooterActive,
+    postponeFetch: !FeatureToggle.useCMSFooterStaticDataBackup,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
