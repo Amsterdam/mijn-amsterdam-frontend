@@ -117,6 +117,7 @@ describe('Varen service', () => {
           dateRequestFormatted: '01 januari 2025',
           dateDecisionFormatted: '03 januari 2025',
           vergunning: vergunning1,
+          vesselName: vergunning1.vesselName,
           steps: [
             {
               datePublished: '2025-01-01T00:00:00',
@@ -152,6 +153,7 @@ describe('Varen service', () => {
         id: 'Z-24-0000001-Z-25-0000002-10002',
         identifier: 'Z/24/0000001',
         vergunning: vergunning2,
+        vesselName: vergunning2.vesselName,
       });
     });
 

@@ -2,8 +2,7 @@ import { ReactNode } from 'react';
 
 import type { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../../universal/config/routes';
-import { ThemaID } from '../../../../universal/config/thema';
+import { ThemaID, ThemaIDs } from '../../../../universal/config/thema';
 import type { DisplayProps } from '../../../components/Table/TableV2.types';
 
 export type ContactMomentFrontend = ContactMoment & {
@@ -23,18 +22,16 @@ export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
     referenceNumber: 'Referentienummer',
   };
 
-export const routes = {
-  listPage: AppRoutes['KLANT_CONTACT/CONTACTMOMENTEN'],
-};
-
 // TODO: Use all the individual thema ID's imported from the Thema Config files.
-const SVWIv1ORv2 = FeatureToggle.svwiLinkActive ? 'SVWI' : 'INKOMEN';
+const SVWIv1ORv2 = FeatureToggle.svwiLinkActive
+  ? ThemaIDs.SVWI
+  : ThemaIDs.INKOMEN;
 
 export const mapperContactmomentToMenuItem: Record<string, ThemaID> = {
-  Parkeren: 'PARKEREN',
-  Zorg: 'ZORG',
+  Parkeren: ThemaIDs.PARKEREN,
+  Zorg: ThemaIDs.ZORG,
   'Werk en Inkomen': SVWIv1ORv2,
-  Belastingen: 'BELASTINGEN',
-  Geldzaken: 'KREFIA',
-  Financiën: 'AFIS',
+  Belastingen: ThemaIDs.BELASTINGEN,
+  Geldzaken: ThemaIDs.KREFIA,
+  Financiën: ThemaIDs.AFIS,
 };

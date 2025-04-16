@@ -1,5 +1,4 @@
 import axios, {
-  AxiosError,
   AxiosRequestConfig,
   AxiosResponse,
   AxiosResponseHeaders,
@@ -183,6 +182,10 @@ export async function requestData<T>(
 
     // Use the cache Deferred for resolving the response
     if (config.enableCache && cache.get(cacheKey)) {
+      logger.trace(
+        { url: config.url, queryParams: config.params },
+        `Cache hit for '${config.url}'`
+      );
       cache.get(cacheKey).resolve(responseData);
     }
 

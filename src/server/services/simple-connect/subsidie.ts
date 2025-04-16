@@ -3,7 +3,7 @@ import { URL, URLSearchParams } from 'url';
 import * as jose from 'jose';
 
 import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
@@ -89,7 +89,7 @@ export async function fetchSubsidieNotifications(
   const response = await fetchTipsAndNotifications(
     requestID,
     await getConfig(authProfileAndToken, requestID),
-    Themas.SUBSIDIE
+    ThemaIDs.SUBSIDIE
   );
 
   if (response.status === 'OK' && response.content?.notifications) {

@@ -1,6 +1,6 @@
 import { DocumentTitlesConfig, ThemaMenuItem } from './thema-types';
 import { AppRoutes } from '../../universal/config/routes';
-import { ThemaID, Themas } from '../../universal/config/thema';
+import { ThemaID, ThemaIDs } from '../../universal/config/thema';
 import { AppState, BagThema } from '../../universal/types/App.types';
 import { getAfisListPageDocumentTitle } from '../pages/Afis/Afis-thema-config';
 import { getAVGListPageDocumentTitle } from '../pages/AVG/AVG-thema-config';
@@ -10,13 +10,19 @@ import {
   getThemaUrlBurgerzakenWithAppState,
 } from '../pages/Burgerzaken/helpers';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
+import { menuItem as menuItemInkomen } from '../pages/Inkomen/Inkomen-render-config';
 import {
-  getInkomenListPageDocumentTitle,
-  getInkomenSpecificatiesListPageDocumentTitle,
+  documentTitles as documentTitlesInkomen,
+  themaTitle as inkomenThemaTitle,
 } from '../pages/Inkomen/Inkomen-thema-config';
+import { menuItem as menuItemJeugd } from '../pages/Jeugd/Jeugd-render-config';
+import { documentTitles as documentTitlesJeugd } from '../pages/Jeugd/Jeugd-thema-config';
+import { menuItems as profileMenuItems } from '../pages/Profile/Profile-render-config';
 import {
-  menuItems as profileMenuItems,
-  documentTitles as profileDocumentTitles,
+  documentTitles as documentTitlesProfile,
+  themaTitle as profileThemaTitle,
+  themaIdBRP,
+  themaIdKVK,
 } from '../pages/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
@@ -24,14 +30,23 @@ import {
 } from '../pages/Varen/Varen-thema-config';
 import { getListPageDocumentTitle } from '../pages/Vergunningen/Vergunningen-thema-config';
 
-export const BagThemas: Record<ThemaID, BagThema> = Object.fromEntries(
-  Object.entries(Themas).map(([key, key2]) => {
+/**
+ * @deprecated We will remove this in the future in favor of the SWR implementations.
+ */
+export const BagThemas = Object.fromEntries(
+  Object.entries(ThemaIDs).map(([key, key2]) => {
     return [key, `${key2}_BAG`];
   })
-);
+) as Record<ThemaID, BagThema>;
 
-// These are used for PageHeadings and link title props for example.
-export const ThemaTitles: { [thema in ThemaID]: string } = {
+/**
+ * @deprecated Use the titles exported from the Thema-config files instead.
+ */
+type ThemaTitles = { [thema in ThemaID]: string };
+/**
+ * @deprecated Use the titles exported from the Thema-config files instead.
+ */
+export const ThemaTitles = {
   AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   AVG: 'AVG persoonsgegevens',
@@ -40,10 +55,9 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   BODEM: 'Bodem',
   BURGERZAKEN: 'Paspoort en ID-kaart',
   BUURT: 'Mijn buurt',
-  ERFPACHT: `Erfpacht`,
+  ERFPACHT: 'Erfpacht',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
-  INKOMEN: 'Inkomen',
   KLACHTEN: 'Klachten',
   KREFIA: 'Kredietbank & FIBU',
   MILIEUZONE: 'Milieuzone',
@@ -58,13 +72,25 @@ export const ThemaTitles: { [thema in ThemaID]: string } = {
   VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
-};
+
+  // New thema config references
+  [inkomenThemaTitle]: inkomenThemaTitle,
+  [themaIdBRP]: profileThemaTitle.BRP,
+  [themaIdKVK]: profileThemaTitle.KVK,
+} as const;
+/**
+ * @deprecated Use the titles exported from the Thema-config files instead.
+ */
+export type ThemaTitle = (typeof ThemaTitles)[keyof typeof ThemaTitles];
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
 export const DocumentTitleMain = 'Mijn Amsterdam';
 export const PageTitleMain = 'Mijn Amsterdam';
 
 // Used in <html><head><title>{PageTitle}</title></head>
+/**
+ * @deprecated Use the documentTitles exported from the Thema-config files instead.
+ */
 export const DocumentTitles: DocumentTitlesConfig = {
   // Afis
   [AppRoutes.AFIS]: `${ThemaTitles.AFIS} | overzicht`,
@@ -84,18 +110,12 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
 
+  ...documentTitlesJeugd,
+
   // Inkomen
-  [AppRoutes.INKOMEN]: `${ThemaTitles.INKOMEN} | overzicht`,
-  [AppRoutes['INKOMEN/SPECIFICATIES']]:
-    getInkomenSpecificatiesListPageDocumentTitle(ThemaTitles.INKOMEN),
-  [AppRoutes['INKOMEN/LIST']]: getInkomenListPageDocumentTitle(
-    ThemaTitles.INKOMEN
-  ),
-  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]:
-    `Bijstandsuitkering | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TONK']]: `TONK | ${ThemaTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/BBZ']]: `Bbz | ${ThemaTitles.INKOMEN}`,
+  ...documentTitlesInkomen,
+  // Mijn gegevens + Contactmomenten
+  ...documentTitlesProfile,
 
   // HLI
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
@@ -108,9 +128,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-
-  // Mijn gegevens + Contactmomenten
-  ...profileDocumentTitles,
 
   // Bezwaren
   [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
@@ -199,34 +216,36 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
   ...profileMenuItems,
+  menuItemInkomen,
+  menuItemJeugd,
   {
     title: ThemaTitles.BELASTINGEN,
-    id: Themas.BELASTINGEN,
+    id: ThemaIDs.BELASTINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.AFIS,
-    id: Themas.AFIS,
+    id: ThemaIDs.AFIS,
     to: AppRoutes.AFIS,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.VAREN,
-    id: Themas.VAREN,
+    id: ThemaIDs.VAREN,
     to: AppRoutes.VAREN,
     profileTypes: ['commercial'],
   },
   {
     title: ThemaTitles.BEZWAREN,
-    id: Themas.BEZWAREN,
+    id: ThemaIDs.BEZWAREN,
     to: AppRoutes.BEZWAREN,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.BELASTINGEN,
-    id: Themas.BELASTINGEN,
+    id: ThemaIDs.BELASTINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK,
     rel: 'external',
     profileTypes: ['commercial'],
@@ -236,52 +255,46 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: (appState: AppState) => {
       return getThemaTitleBurgerzakenWithAppState(appState);
     },
-    id: Themas.BURGERZAKEN,
+    id: ThemaIDs.BURGERZAKEN,
     to: (appState) => getThemaUrlBurgerzakenWithAppState(appState),
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.ERFPACHT,
-    id: Themas.ERFPACHT,
+    id: ThemaIDs.ERFPACHT,
     to: AppRoutes.ERFPACHT,
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.ERFPACHT,
-    id: Themas.ERFPACHT,
+    id: ThemaIDs.ERFPACHT,
     to: import.meta.env.REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK,
     profileTypes: ['commercial'],
     rel: 'external',
   },
   {
     title: ThemaTitles.SUBSIDIE,
-    id: Themas.SUBSIDIE,
+    id: ThemaIDs.SUBSIDIE,
     to: `${import.meta.env.REACT_APP_SSO_URL_SUBSIDIES}?authMethod=digid`,
     rel: 'external',
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.SUBSIDIE,
-    id: Themas.SUBSIDIE,
+    id: ThemaIDs.SUBSIDIE,
     to: `${import.meta.env.REACT_APP_SSO_URL_SUBSIDIES}?authMethod=eherkenning`,
     rel: 'external',
     profileTypes: ['commercial'],
   },
   {
     title: ThemaTitles.ZORG,
-    id: Themas.ZORG,
+    id: ThemaIDs.ZORG,
     to: AppRoutes.ZORG,
     profileTypes: ['private'],
   },
   {
-    title: ThemaTitles.INKOMEN,
-    id: Themas.INKOMEN,
-    to: AppRoutes.INKOMEN,
-    profileTypes: ['private'],
-  },
-  {
     title: ThemaTitles.SVWI,
-    id: Themas.SVWI,
+    id: ThemaIDs.SVWI,
     to: import.meta.env.REACT_APP_SSO_URL_SVWI,
     rel: 'external',
     profileTypes: ['private'],
@@ -290,32 +303,32 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: (appState: AppState) => {
       return getThemaTitleWithAppState(appState);
     },
-    id: Themas.HLI,
+    id: ThemaIDs.HLI,
     to: AppRoutes.HLI,
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.AFVAL,
-    id: Themas.AFVAL,
+    id: ThemaIDs.AFVAL,
     to: AppRoutes.AFVAL,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.VERGUNNINGEN,
-    id: Themas.VERGUNNINGEN,
+    id: ThemaIDs.VERGUNNINGEN,
     to: AppRoutes.VERGUNNINGEN,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.MILIEUZONE,
-    id: Themas.MILIEUZONE,
+    id: ThemaIDs.MILIEUZONE,
     to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.PARKEREN,
-    id: Themas.PARKEREN,
+    id: ThemaIDs.PARKEREN,
     to: (appState: AppState) => {
       const hasDecosParkeerVergunningen =
         !!appState.PARKEREN?.content?.vergunningen?.length;
@@ -326,45 +339,45 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   },
   {
     title: ThemaTitles.OVERTREDINGEN,
-    id: Themas.OVERTREDINGEN,
+    id: ThemaIDs.OVERTREDINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
     rel: 'external',
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.TOERISTISCHE_VERHUUR,
-    id: Themas.TOERISTISCHE_VERHUUR,
+    id: ThemaIDs.TOERISTISCHE_VERHUUR,
     to: AppRoutes.TOERISTISCHE_VERHUUR,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.KREFIA,
-    id: Themas.KREFIA,
+    id: ThemaIDs.KREFIA,
     to: AppRoutes.KREFIA,
     profileTypes: ['private'],
   },
 
   {
     title: ThemaTitles.KLACHTEN,
-    id: Themas.KLACHTEN,
+    id: ThemaIDs.KLACHTEN,
     to: AppRoutes.KLACHTEN,
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.HORECA,
-    id: Themas.HORECA,
+    id: ThemaIDs.HORECA,
     to: AppRoutes.HORECA,
     profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.AVG,
-    id: Themas.AVG,
+    id: ThemaIDs.AVG,
     to: AppRoutes.AVG,
     profileTypes: ['private'],
   },
   {
     title: ThemaTitles.BODEM,
-    id: Themas.BODEM,
+    id: ThemaIDs.BODEM,
     to: AppRoutes.BODEM,
     profileTypes: ['private', 'commercial'],
   },

@@ -1,4 +1,3 @@
-import { Themas } from '../../../../universal/config/thema';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
@@ -164,12 +163,7 @@ export function getNotifications(
     })
     .flatMap((aanvraag) =>
       aanvraag.steps.map((step) =>
-        createProcessNotification(
-          aanvraag,
-          step,
-          requestProcess,
-          Themas.INKOMEN
-        )
+        createProcessNotification(aanvraag, step, requestProcess)
       )
     );
 

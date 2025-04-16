@@ -84,7 +84,7 @@ describe('Loodmeting', () => {
         rapportBeschikbaar: true,
         rapportId: '690d8303-6f21-ee11-9966-0022489fda17',
         redenAfwijzing: '',
-        decision: 'Toegewezen',
+        decision: 'Afgehandeld',
         status: 'Afgehandeld',
         steps: [
           {
@@ -164,7 +164,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001521',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -176,7 +176,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001520',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -188,7 +188,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001518',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgehandeld',
             },
             {
@@ -200,7 +200,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001525',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -212,7 +212,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001529',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -224,7 +224,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001522',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
             {
@@ -236,7 +236,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001527',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -248,7 +248,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001519',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -260,7 +260,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001532',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
             {
@@ -272,7 +272,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001528',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -284,7 +284,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001526',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgehandeld',
             },
             {
@@ -296,7 +296,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001534',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
           ],

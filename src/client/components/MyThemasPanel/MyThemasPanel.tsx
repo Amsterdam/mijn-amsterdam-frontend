@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaMenuItemTransformed } from '../../config/thema';
+import { ThemaMenuItemTransformed } from '../../config/thema-types';
 import { ThemaIcons } from '../../config/themaIcons';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
@@ -42,15 +42,17 @@ export function MyThemasPanel({
         markers={false}
         className={classNames('ams-mb--sm', styles.LinkList)}
       >
-        {items.map(({ id, to, title, rel }) => {
-          const ThemaIcon = ThemaIcons[id];
+        {items.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
+          const IconSVG_ = IconSVG || ThemaIcons[id];
           return (
             <UnorderedList.Item key={id}>
               <LinkComponent maVariant="fatNoUnderline" href={to}>
-                <span className={styles.ThemaLink}>
-                  <Icon svg={ThemaIcon} size="level-4" square /> {title}
-                </span>
+                {IconSVG_ && (
+                  <span className={styles.ThemaLink}>
+                    <Icon svg={IconSVG_} size="level-4" square /> {title}
+                  </span>
+                )}
               </LinkComponent>
             </UnorderedList.Item>
           );

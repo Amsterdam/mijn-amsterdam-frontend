@@ -1,17 +1,17 @@
 import { isFuture, isPast, parseISO } from 'date-fns';
 
 import { sanitizeCmsContent } from './cms-content';
-import { IS_TAP } from '../../universal/config/env';
-import { Themas } from '../../universal/config/thema';
+import { IS_TAP } from '../../../universal/config/env';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import { LinkProps, MyNotification } from '../../universal/types/App.types';
-import FileCache from '../helpers/file-cache';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
+} from '../../../universal/helpers/api';
+import { LinkProps, MyNotification } from '../../../universal/types';
+import FileCache from '../../helpers/file-cache';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
@@ -81,7 +81,7 @@ function transformCMSEventResponse(
       'storingsmeldingen/alle-meldingen-mijn-amsterdam',
       ''
     ),
-    thema: Themas.NOTIFICATIONS,
+    themaID: ThemaIDs.NOTIFICATIONS,
     isAlert: true,
     datePublished: new Date().toISOString(),
   } as CMSMaintenanceNotification;
@@ -242,7 +242,7 @@ export async function fetchMaintenanceNotificationsDashboard(
 
   const item: MyNotification = {
     id: `maintenance-${notification.title}`,
-    thema: Themas.NOTIFICATIONS,
+    themaID: ThemaIDs.NOTIFICATIONS,
     isAlert: true,
     datePublished: notification.datePublished,
     hideDatePublished: true,

@@ -169,14 +169,14 @@
       "profileTypes": ["private"]
     },
     {
-      "url": "/inkomen/specificaties/uitkering",
+      "url": "/inkomen/lijst/specificaties/uitkering",
       "displayTitle": "Uikeringsspecificaties",
       "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
       "keywords": ["Uikeringsspecificaties", "Specificaties", "Uitkering"],
       "profileTypes": ["private"]
     },
     {
-      "url": "/inkomen/specificaties/jaaropgave",
+      "url": "/inkomen/lijst/specificaties/jaaropgaven",
       "displayTitle": "Jaaropgaves",
       "description": "Informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.",
       "keywords": [

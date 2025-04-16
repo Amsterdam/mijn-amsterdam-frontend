@@ -1,7 +1,11 @@
-import { themaId as profileThemaId } from '../../client/pages/Profile/Profile-thema-config';
+import { themaId as inkomenThemaId } from '../../client/pages/Inkomen/Inkomen-thema-config';
+import { themaId as jeugdThemaId } from '../../client/pages/Jeugd/Jeugd-thema-config';
+import {
+  themaIdBRP,
+  themaIdKVK,
+} from '../../client/pages/Profile/Profile-thema-config';
 
-export const Themas = {
-  ...profileThemaId,
+export const ThemaIDs = {
   AFIS: 'AFIS',
   AFVAL: 'AFVAL',
   AVG: 'AVG',
@@ -13,7 +17,6 @@ export const Themas = {
   ERFPACHT: 'ERFPACHT',
   HLI: 'HLI',
   HORECA: 'HORECA',
-  INKOMEN: 'INKOMEN',
   KLACHTEN: 'KLACHTEN',
   KREFIA: 'KREFIA',
   MILIEUZONE: 'MILIEUZONE',
@@ -28,6 +31,10 @@ export const Themas = {
   VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
+  [inkomenThemaId]: inkomenThemaId,
+  [jeugdThemaId]: jeugdThemaId,
+  [themaIdBRP]: themaIdBRP,
+  [themaIdKVK]: themaIdKVK,
 } as const;
 
-export type ThemaID = (typeof Themas)[keyof typeof Themas];
+export type ThemaID = (typeof ThemaIDs)[keyof typeof ThemaIDs];

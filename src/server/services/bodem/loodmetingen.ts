@@ -11,7 +11,7 @@ import {
   LoodMetingen,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -101,7 +101,7 @@ function transformLood365Response(
         const statusToDecisionMapping = {
           ontvangen: null,
           'in behandeling': null,
-          afgehandeld: 'Toegewezen' as const,
+          afgehandeld: 'Afgehandeld' as const,
           afgewezen: 'Afgewezen' as const,
         };
         const decision = statusToDecisionMapping[lowercaseStatus];
@@ -260,8 +260,11 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const baseNotification = {
-    thema: Themas.BODEM,
+  const baseNotification: Omit<
+    MyNotification,
+    'title' | 'description' | 'datePublished'
+  > = {
+    themaID: ThemaIDs.BODEM,
     id: meting.kenmerk,
     link: {
       to: meting.link.to,

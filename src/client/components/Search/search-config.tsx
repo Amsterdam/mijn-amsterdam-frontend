@@ -382,14 +382,14 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         {
           title: name || 'Mijn naam',
           link: {
-            to: profileRoutes.BRP,
+            to: profileRoutes.themaPageBRP,
             title: `Mijn naam | ${name}`,
           },
         },
         {
           title: address || 'Mijn adres',
           link: {
-            to: profileRoutes.BRP,
+            to: profileRoutes.themaPageBRP,
             title: `Mijn adres | ${address}`,
           },
         },

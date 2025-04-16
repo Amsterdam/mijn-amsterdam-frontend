@@ -1,14 +1,18 @@
 import { useMemo } from 'react';
 
-import { listPageParamKind, routes, tableConfig } from './Inkomen-thema-config';
+import {
+  listPageParamKind,
+  routes,
+  tableConfig,
+  themaId,
+  themaTitle,
+} from './Inkomen-thema-config';
 import { linkListItems } from './Inkomen-thema-config';
 import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 import { WpiRequestProcess } from '../../../server/services/wpi/wpi-types';
-import { Themas } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { defaultDateFormat, dateSort } from '../../../universal/helpers/date';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
-import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
@@ -28,7 +32,7 @@ export function useInkomenThemaData() {
     WPI_SPECIFICATIES.content?.jaaropgaven ?? []
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.INKOMEN);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   const zaken = useMemo(() => {
     if ((!aanvragen.length && !tozo.length) || !tonk.length) {
@@ -85,7 +89,7 @@ export function useInkomenThemaData() {
     zaken,
     specificaties,
     jaaropgaven,
-    title: ThemaTitles.INKOMEN,
+    title: themaTitle,
     linkListItems,
     isLoadingWpi,
     isErrorWpi,

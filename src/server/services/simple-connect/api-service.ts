@@ -1,6 +1,6 @@
 import { AxiosResponseTransformer } from 'axios';
 
-import { ThemaID } from '../../../universal/config/thema';
+import { type ThemaID } from '../../../universal/config/thema';
 import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
@@ -67,12 +67,12 @@ export async function fetchService<T extends ApiPatternResponseA>(
 
 export function transformNotificationsDefault(
   notifications: MyNotification[],
-  thema: ThemaID
+  themaID: ThemaID
 ) {
   const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map((notification) => ({
         ...notification,
-        thema,
+        themaID,
         link: {
           title:
             notification.link?.title || 'Meer informatie over deze melding',
@@ -87,7 +87,7 @@ export function transformNotificationsDefault(
 export async function fetchTipsAndNotifications(
   requestID: RequestID,
   apiConfig: DataRequestConfig = {},
-  thema: ThemaID,
+  themaID: ThemaID,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<
   ApiResponse_DEPRECATED<Pick<
@@ -109,7 +109,7 @@ export async function fetchTipsAndNotifications(
     if (response.content?.notifications) {
       responseData.notifications = transformNotificationsDefault(
         response.content.notifications,
-        thema
+        themaID
       );
     }
 

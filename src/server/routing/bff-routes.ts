@@ -49,6 +49,9 @@ export const BffEndpoints = {
   // AV / Zorgned
   HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
 
+  // LLV / Zorgned
+  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document/:id`,
+
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',

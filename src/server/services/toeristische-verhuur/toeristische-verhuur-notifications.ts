@@ -7,7 +7,7 @@ import {
   ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
@@ -116,7 +116,7 @@ export function createToeristischeVerhuurNotification(
   return {
     id: `vergunning-${vergunning.id}-notification`,
     datePublished,
-    thema: Themas.TOERISTISCHE_VERHUUR,
+    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description: description,
     link: {
@@ -140,7 +140,7 @@ function createRegistratieNotification(
   return {
     id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
     datePublished,
-    thema: Themas.TOERISTISCHE_VERHUUR,
+    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description,
     link: {
@@ -148,6 +148,17 @@ function createRegistratieNotification(
       title: cta,
     },
   };
+}
+
+function hasNotification(
+  vergunning: ToeristischeVerhuurVergunning,
+  compareToDate: Date
+) {
+  return (
+    !vergunning.processed ||
+    (!!vergunning.dateDecision &&
+      isRecentNotification(vergunning.dateDecision, compareToDate))
+  );
 }
 
 export async function fetchToeristischeVerhuurNotifications(
@@ -164,19 +175,22 @@ export async function fetchToeristischeVerhuurNotifications(
 
   const vakantieverhuurVergunningen =
     TOERISTISCHE_VERHUUR.content.vakantieverhuurVergunningen ?? [];
-  const vakantieverhuurVergunningNotifications =
-    vakantieverhuurVergunningen.map((vergunning) =>
-      createToeristischeVerhuurNotification(vergunning)
-    );
+  const vakantieverhuurVergunningNotifications = vakantieverhuurVergunningen
+    .filter((vergunning) => hasNotification(vergunning, compareToDate))
+    .map((vergunning) => createToeristischeVerhuurNotification(vergunning));
   const bbVergunningen = TOERISTISCHE_VERHUUR.content.bbVergunningen ?? [];
-  const vergunningNotifications = bbVergunningen.map((vergunning) =>
-    createToeristischeVerhuurNotification(vergunning)
-  );
+  const vergunningNotifications = bbVergunningen
+    .filter((vergunning) => hasNotification(vergunning, compareToDate))
+    .map((vergunning) => createToeristischeVerhuurNotification(vergunning));
 
   const registrationsNotifications =
-    TOERISTISCHE_VERHUUR.content.lvvRegistraties?.map(
-      createRegistratieNotification
-    ) ?? [];
+    TOERISTISCHE_VERHUUR.content.lvvRegistraties
+      ?.filter(
+        (registratie) =>
+          !!registratie.agreementDate &&
+          isRecentNotification(registratie.agreementDate, compareToDate)
+      )
+      ?.map(createRegistratieNotification) ?? [];
 
   const notifications = [
     ...vakantieverhuurVergunningNotifications,
@@ -184,13 +198,7 @@ export async function fetchToeristischeVerhuurNotifications(
     ...registrationsNotifications,
   ];
 
-  const actualNotifications = notifications.filter(
-    (notification) =>
-      !!notification.datePublished &&
-      isRecentNotification(notification.datePublished, compareToDate)
-  );
-
   return apiSuccessResult({
-    notifications: actualNotifications,
+    notifications,
   });
 }

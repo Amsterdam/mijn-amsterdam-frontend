@@ -21,6 +21,7 @@ export const caseTypeVergunningen = {
   ERVV: 'E-RVV - TVM',
   Flyeren: 'Flyeren-Sampling',
   AanbiedenDiensten: 'Aanbieden van diensten',
+  Straatartiesten: 'Straatartiesten',
   NachtwerkOntheffing: 'Nachtwerkontheffing',
   ZwaarVerkeer: 'Zwaar verkeer',
   Samenvoegingsvergunning: 'Samenvoegingsvergunning',
@@ -83,6 +84,12 @@ export type AanbiedenDiensten = DecosZaakBase &
   WithLocation &
   WithDateRange & {
     caseType: GetCaseType<'AanbiedenDiensten'>;
+  };
+
+export type Straatartiesten = DecosZaakBase &
+  WithLocation &
+  WithDateRange & {
+    caseType: GetCaseType<'Straatartiesten'>;
   };
 
 export type Nachtwerkontheffing = DecosZaakBase &
@@ -184,6 +191,7 @@ export type DecosVergunning =
   | ERVV
   | Flyeren
   | AanbiedenDiensten
+  | Straatartiesten
   | Nachtwerkontheffing
   | ZwaarVerkeer
   | Samenvoegingsvergunning

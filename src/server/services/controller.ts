@@ -17,8 +17,8 @@ import { fetchAVG } from './avg/avg';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
-import { fetchCMSCONTENT } from './cms-content';
-import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
+import { fetchCMSCONTENT } from './cms/cms-content';
+import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
@@ -49,6 +49,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -137,6 +138,7 @@ const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
 const VAREN = callAuthenticatedService(fetchVaren);
 const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
 const WMO = callAuthenticatedService(fetchWmo);
+const JEUGD = callAuthenticatedService(fetchLeerlingenvervoer);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);
 const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
@@ -200,6 +202,7 @@ const SERVICES_INDEX = {
   VAREN,
   VERGUNNINGEN,
   WMO,
+  JEUGD,
   WPI_AANVRAGEN,
   WPI_BBZ,
   WPI_SPECIFICATIES,
@@ -281,6 +284,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     WPI_SPECIFICATIES,
     WPI_TONK,
     WPI_TOZO,
+    JEUGD,
   },
   'private-attributes': {
     CMS_CONTENT,

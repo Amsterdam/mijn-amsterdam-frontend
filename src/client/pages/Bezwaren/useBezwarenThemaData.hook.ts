@@ -2,7 +2,7 @@ import { isError } from 'lodash';
 
 import { tableConfig, LinkListItems, routes } from './Bezwaren-thema-config';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { ThemaTitles } from '../../config/thema';
@@ -18,7 +18,7 @@ export function useBezwarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(Themas.BEZWAREN);
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.BEZWAREN);
 
   return {
     bezwaren,

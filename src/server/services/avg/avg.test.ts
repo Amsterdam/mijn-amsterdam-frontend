@@ -436,7 +436,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/1',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek meer informatie nodig',
             },
             {
@@ -447,7 +447,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/2',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek in behandeling',
             },
             {
@@ -459,7 +459,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/223',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek afgehandeld',
             },
             {
@@ -471,7 +471,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/425',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek afgehandeld',
             },
             {
@@ -483,7 +483,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/561',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek meer informatie nodig',
             },
             {
@@ -494,7 +494,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/156',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek ontvangen',
             },
           ],

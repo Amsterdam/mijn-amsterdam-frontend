@@ -5,7 +5,7 @@ import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
@@ -32,7 +32,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        thema: Themas.HOME,
+        themaID: ThemaIDs.HOME,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -43,7 +43,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        thema: Themas.HOME,
+        themaID: ThemaIDs.HOME,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -54,7 +54,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        thema: Themas.HOME,
+        themaID: ThemaIDs.HOME,
         isAlert: true,
         link: {
           to: '/item-3',

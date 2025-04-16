@@ -12,6 +12,8 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
+import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Jeugd/Jeugd-thema-config';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -96,7 +98,8 @@ export type SourceApiKey =
   | 'WPI_E_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
   | 'ZORGNED_AV'
-  | 'ZORGNED_JZD';
+  | 'ZORGNED_JZD'
+  | 'ZORGNED_LEERLINGENVERVOER';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -130,7 +133,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': 'JZD',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'JZD' : undefined,
     },
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
@@ -140,13 +143,27 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': 'AV',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'AV' : undefined,
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
     postponeFetch: !FeatureToggle.hliThemaActive,
+  },
+  ZORGNED_LEERLINGENVERVOER: {
+    method: 'post',
+    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
+    headers: {
+      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
+      'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'LLV' : undefined,
+    },
+    httpsAgent: new https.Agent({
+      cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
+      key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
+    }),
+    postponeFetch: !zorgnedLeerlingenvervoerActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
@@ -231,7 +248,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
-    postponeFetch: !FeatureToggle.cmsFooterActive,
+    postponeFetch: !FeatureToggle.useCMSFooterStaticDataBackup,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,

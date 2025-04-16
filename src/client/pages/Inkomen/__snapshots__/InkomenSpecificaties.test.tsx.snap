@@ -43,7 +43,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/inkomen/specificaties/lijst/jaaropgaven"
+                href="/inkomen/lijst/specificaties/jaaropgaven"
                 tabindex="-1"
               >
                 <span
@@ -327,7 +327,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/inkomen/specificaties/lijst/uitkering"
+                href="/inkomen/lijst/specificaties/uitkering"
                 tabindex="-1"
               >
                 <span

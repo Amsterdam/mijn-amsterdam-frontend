@@ -1,6 +1,6 @@
 import { useBodemDetailData } from './useBodemDetailData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import { Datalist } from '../../components/Datalist/Datalist';
+import { Datalist, Row } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
 import { PageContentCell } from '../../components/Page/Page';
@@ -10,29 +10,38 @@ export function LoodMeting() {
   const { meting, isLoading, isError, breadcrumbs } = useBodemDetailData();
 
   const BodemDetailRows = (meting: LoodMetingFrontend) => {
-    return [
-      { label: 'Kenmerk', content: meting.kenmerk },
-      {
+    const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
+
+    if (meting.adres) {
+      rows.push({
         label: 'Locatie',
-        content: !!meting.adres && (
-          <AddressDisplayAndModal address={meting.adres} />
-        ),
-      },
-      {
+        content: <AddressDisplayAndModal address={meting.adres} />,
+      });
+    }
+
+    if (meting.document) {
+      rows.push({
         label: 'Document',
-        content: !!meting.document && (
-          <DocumentLink document={meting.document} />
-        ),
-      },
-      {
-        label: 'Resultaat',
-        content: meting.decision,
-      },
-      {
-        label: 'Reden afwijzing',
-        content: meting.decision === 'Afgewezen' && meting.redenAfwijzing,
-      },
-    ].filter((row) => !!row.content);
+        content: <DocumentLink document={meting.document} />,
+      });
+    }
+
+    if (meting.decision === 'Afgewezen') {
+      rows.push(
+        ...[
+          {
+            label: 'Resultaat',
+            content: meting.decision,
+          },
+          {
+            label: 'Reden afwijzing',
+            content: meting.redenAfwijzing,
+          },
+        ]
+      );
+    }
+
+    return rows.filter((row) => !!row.content);
   };
 
   function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {

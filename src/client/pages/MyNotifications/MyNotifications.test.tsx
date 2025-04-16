@@ -6,6 +6,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { MyNotificationsPage } from './MyNotifications';
+import { ThemaIDs } from '../../../universal/config/thema';
 
 const testState: any = {
   NOTIFICATIONS: {
@@ -16,7 +17,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        thema: 'HOME',
+        themaID: ThemaIDs.HOME,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -27,7 +28,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        thema: 'BRP',
+        themaID: ThemaIDs.BRP,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -38,7 +39,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        thema: 'INKOMEN',
+        themaID: ThemaIDs.INKOMEN,
         isAlert: true,
         link: {
           to: '/item-3',
@@ -55,13 +56,12 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<MyNotifications />', () => {
   const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
-  const routePath = AppRoutes.NOTIFICATIONS;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routePath}
+        routePath={routeEntry}
         component={MyNotificationsPage}
         initializeState={initializeState}
       />
