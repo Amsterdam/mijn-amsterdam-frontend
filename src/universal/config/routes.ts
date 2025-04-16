@@ -20,8 +20,7 @@ export const AppRoutes = {
   AFIS: '/facturen-en-betalen',
   'AFIS/BETAALVOORKEUREN': '/facturen-en-betalen/betaalvoorkeuren',
   'AFIS/FACTUREN': '/facturen-en-betalen/facturen/lijst/:state/:page?',
-  BRP: '/persoonlijke-gegevens',
-  KVK: '/gegevens-handelsregister',
+
   BEZWAREN: '/bezwaren',
   'BEZWAREN/DETAIL': '/bezwaren/:uuid',
   'BEZWAREN/LIST': '/bezwaren/lijst/:kind/:page?',
