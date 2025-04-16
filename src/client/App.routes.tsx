@@ -15,6 +15,7 @@ import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes';
 import { HLIRoutes } from './pages/HLI/HLI-routes';
 import { HorecaRoutes } from './pages/Horeca/Horeca-routes';
 import { InkomenRoutes } from './pages/Inkomen/Inkomen-render-config';
+import { JeugdRoutes } from './pages/Jeugd/Jeugd-render-config';
 import { KlachtenRoutes } from './pages/Klachten/Klachten-routes';
 import { KrefiaRoutes } from './pages/Krefia/Krefia-routes';
 import { LandingRoutes } from './pages/Landing/Landing-routes';
@@ -52,6 +53,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   ErfpachtRoutes,
   GeneralInfoRoutes,
   HLIRoutes,
+  JeugdRoutes,
   HorecaRoutes,
   InkomenRoutes,
   KlachtenRoutes,
