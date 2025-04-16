@@ -15,8 +15,8 @@ import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
 import { fetchBrpNotifications } from './brp';
-import { sanitizeCmsContent } from './cms-content';
-import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
+import { sanitizeCmsContent } from './cms/cms-content';
+import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications';
 import { ServiceResults } from './content-tips/tip-types';
 import {
   fetchContentTips,

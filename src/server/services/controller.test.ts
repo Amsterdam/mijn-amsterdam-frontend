@@ -9,7 +9,7 @@ import {
   vi,
 } from 'vitest';
 
-import { fetchCMSCONTENT } from './cms-content';
+import { fetchCMSCONTENT } from './cms/cms-content';
 import {
   addServiceResultHandler,
   forTesting,
@@ -39,7 +39,7 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('./cms-content', () => {
+vi.mock('./cms/cms-content', () => {
   return {
     fetchCMSCONTENT: vi.fn(),
   };
