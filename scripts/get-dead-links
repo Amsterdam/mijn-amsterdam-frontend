@@ -10,6 +10,7 @@ EXTERNAL_URLS=$(grep --no-filename -r -P -o --exclude-dir="__snapshots__" --excl
   '(?<=")(http.+?)(?=")' ./src/* 2> /dev/null \
   | sed '/.*w3\.org.*/d' \
   | sed '/http:\/\/localhost*/d' \
+  | sed '/http.*\/\/sap:.*/d' \
   | sort --unique)
 
 echo_invalid_url() {
