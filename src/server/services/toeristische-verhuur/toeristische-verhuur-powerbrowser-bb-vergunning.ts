@@ -402,7 +402,7 @@ async function fetchAndMergeZaakStatussen(
         ? statussenResponse.content
         : zaak.steps;
 
-    zaak.displayStatus = getZaakStatus(zaak);
+    zaak.displayStatus = getZaakStatus(zaak) ?? 'Onbekend';
 
     zakenWithstatussen.push(zaak);
   }
