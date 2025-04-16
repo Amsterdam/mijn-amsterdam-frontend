@@ -49,6 +49,13 @@ function getZakenFromContentArray<T extends AppStateBase[keyof AppStateBase]>(
     : null;
 }
 
+type GetZakenFn = <T extends AppStateBase[keyof AppStateBase]>(
+  appStateSlice: T
+) => Array<{
+  identifier: string;
+  link: LinkProps;
+}> | null;
+
 /**
  * Generates a route resolver for Zaken that have an identifier and a link,
  * and are provided as an array in the ApiResponse['content'].
@@ -61,13 +68,10 @@ function getZakenFromContentArray<T extends AppStateBase[keyof AppStateBase]>(
  *                   If the app state slice is not an array, it should return null.
  * @returns A PageRouteResolver object.
  */
-function baseThemaConfig<T extends AppStateBase[keyof AppStateBase]>(
+function baseThemaConfig(
   baseRoute: string,
   appStateKey: keyof AppStateBase,
-  getZaken: (appStateSlice: T) => Array<{
-    identifier: string;
-    link: LinkProps;
-  }> | null = getZakenFromContentArray<T>
+  getZaken: GetZakenFn = getZakenFromContentArray
 ): PageRouteResolver {
   return {
     baseRoute,
@@ -84,7 +88,7 @@ function baseThemaConfig<T extends AppStateBase[keyof AppStateBase]>(
 
       if (stateSlice.status === 'OK') {
         // TODO: Discuss with the team how to remove the `as any`
-        const zaken = stateSlice !== null ? getZaken(stateSlice as any) : null;
+        const zaken = stateSlice !== null ? getZaken(stateSlice) : null;
         if (!Array.isArray(zaken)) {
           return ITEM_NOT_FOUND;
         }
@@ -101,21 +105,17 @@ function baseThemaConfig<T extends AppStateBase[keyof AppStateBase]>(
 const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: baseThemaConfig(AppRoutes.VERGUNNINGEN, 'VERGUNNINGEN'),
   horeca: baseThemaConfig(AppRoutes.HORECA, 'HORECA'),
-  parkeren: baseThemaConfig(
-    AppRoutes.PARKEREN,
-    'PARKEREN',
-    (stateSlice: AppStateBase['PARKEREN']) => {
-      const zaken =
-        stateSlice && stateSlice.content && 'vergunningen' in stateSlice.content
-          ? stateSlice.content.vergunningen
-          : null;
-      return zaken;
-    }
-  ),
+  parkeren: baseThemaConfig(AppRoutes.PARKEREN, 'PARKEREN', (stateSlice) => {
+    const zaken =
+      stateSlice && stateSlice.content && 'vergunningen' in stateSlice.content
+        ? stateSlice.content.vergunningen
+        : null;
+    return zaken;
+  }),
   toeristischeVerhuur: baseThemaConfig(
     AppRoutes.TOERISTISCHE_VERHUUR,
     'TOERISTISCHE_VERHUUR',
-    (stateSlice: AppStateBase['TOERISTISCHE_VERHUUR']) => {
+    (stateSlice) => {
       const zaken =
         stateSlice &&
         stateSlice.content &&
