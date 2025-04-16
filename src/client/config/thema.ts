@@ -54,7 +54,6 @@ export const ThemaTitles = {
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
   BURGERZAKEN: 'Paspoort en ID-kaart',
-  BUURT: 'Mijn buurt',
   ERFPACHT: 'Erfpacht',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
@@ -189,7 +188,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
-  [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',

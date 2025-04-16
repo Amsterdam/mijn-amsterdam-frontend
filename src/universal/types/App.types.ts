@@ -49,8 +49,8 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
-export interface MyNotification {
-  themaID: ThemaID;
+export interface MyNotification<ID extends string = string> {
+  themaID: ID;
   datePublished: string;
   description: string;
   hideDatePublished?: boolean;

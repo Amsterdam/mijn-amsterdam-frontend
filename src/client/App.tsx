@@ -26,6 +26,7 @@ import { useProfileTypeValue } from './hooks/useProfileType';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
 import { AppRoutes } from '../universal/config/routes';
+import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -85,7 +86,7 @@ function AppAuthenticated() {
   }, [redirectAfterLogin]);
 
   const isHeroVisible = location.pathname === AppRoutes.HOME;
-  const isBuurt = location.pathname === AppRoutes.BUURT;
+  const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 
   return (
     <>

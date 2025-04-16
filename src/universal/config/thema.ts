@@ -1,10 +1,7 @@
-import { themaId as inkomenThemaId } from '../../client/pages/Inkomen/Inkomen-thema-config';
-import { themaId as jeugdThemaId } from '../../client/pages/Jeugd/Jeugd-thema-config';
-import {
-  themaIdBRP,
-  themaIdKVK,
-} from '../../client/pages/Profile/Profile-thema-config';
-
+/**
+ * @deprecated
+ * Use the new thema config in the client instead.
+ */
 export const ThemaIDs = {
   AFIS: 'AFIS',
   AFVAL: 'AFVAL',
@@ -13,7 +10,6 @@ export const ThemaIDs = {
   BEZWAREN: 'BEZWAREN',
   BODEM: 'BODEM',
   BURGERZAKEN: 'BURGERZAKEN',
-  BUURT: 'BUURT',
   ERFPACHT: 'ERFPACHT',
   HLI: 'HLI',
   HORECA: 'HORECA',
@@ -31,10 +27,6 @@ export const ThemaIDs = {
   VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
-  [inkomenThemaId]: inkomenThemaId,
-  [jeugdThemaId]: jeugdThemaId,
-  [themaIdBRP]: themaIdBRP,
-  [themaIdKVK]: themaIdKVK,
 } as const;
 
 export type ThemaID = (typeof ThemaIDs)[keyof typeof ThemaIDs];

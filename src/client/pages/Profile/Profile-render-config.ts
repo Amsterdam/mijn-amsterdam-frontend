@@ -28,25 +28,26 @@ export const ProfileRoutes = [
   },
 ];
 
-export const menuItems: ThemaMenuItem[] = [
-  {
-    title: themaTitle.BRP,
-    id: themaIdBRP,
-    to: routes.themaPageBRP,
-    profileTypes: ['private'],
-    isActive(appState: AppState) {
-      return !isLoading(appState.BRP) && !!appState.BRP.content?.persoon;
-    },
-    IconSVG: IconMijnGegevens,
-  } as const,
-  {
-    title: themaTitle.KVK,
-    id: themaIdKVK,
-    to: routes.themaPageKVK,
-    profileTypes: ['commercial', 'private'],
-    isActive(appState: AppState) {
-      return !isLoading(appState.KVK) && !!appState.KVK.content;
-    },
-    IconSVG: BuildingsIcon,
-  } as const,
-];
+export const menuItems: ThemaMenuItem<typeof themaIdBRP | typeof themaIdKVK>[] =
+  [
+    {
+      title: themaTitle.BRP,
+      id: themaIdBRP,
+      to: routes.themaPageBRP,
+      profileTypes: ['private'],
+      isActive(appState: AppState) {
+        return !isLoading(appState.BRP) && !!appState.BRP.content?.persoon;
+      },
+      IconSVG: IconMijnGegevens,
+    } as const,
+    {
+      title: themaTitle.KVK,
+      id: themaIdKVK,
+      to: routes.themaPageKVK,
+      profileTypes: ['commercial', 'private'],
+      isActive(appState: AppState) {
+        return !isLoading(appState.KVK) && !!appState.KVK.content;
+      },
+      IconSVG: BuildingsIcon,
+    } as const,
+  ];
