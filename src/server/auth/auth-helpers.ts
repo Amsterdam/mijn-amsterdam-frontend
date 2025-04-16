@@ -60,7 +60,9 @@ export function getReturnToUrl(
       return defaultReturnTo;
   }
 }
-export function getZaakStatusQueryParams(queryParams?: ParsedQs) {
+export function getZaakStatusQueryParams(
+  queryParams?: ParsedQs
+): `?${string}` | string {
   const params =
     queryParams?.id && queryParams?.thema
       ? `?id=${queryParams.id}&thema=${queryParams.thema}${queryParams.payment ? '&payment=true' : ''}`
