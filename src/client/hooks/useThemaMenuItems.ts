@@ -5,7 +5,6 @@ import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-import { type ThemaID } from '../../universal/config/thema';
 import { LinkProps } from '../../universal/types';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema-types';
@@ -64,12 +63,16 @@ export function useThemaMenuItemsByThemaID() {
   return themaById;
 }
 
-export function useThemaMenuItemByThemaID(themaID: ThemaID) {
+export function useThemaMenuItemByThemaID<ID extends string = string>(
+  themaID: ID
+) {
   const itemsById = useThemaMenuItemsByThemaID();
   return itemsById[themaID];
 }
 
-export function useThemaBreadcrumbs(themaID: ThemaID): LinkProps[] {
+export function useThemaBreadcrumbs<ID extends string = string>(
+  themaID: ID
+): LinkProps[] {
   const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
   const location = useLocation();
   const from = location?.state?.from;
