@@ -13,7 +13,7 @@ EXTERNAL_URLS=$(grep --no-filename -r -P -o --exclude-dir="__snapshots__" --excl
   | sed '/http.*\/\/sap:.*/d' \
   | sort --unique)
 
-echo_invalid_url() {
+echo_dead_link() {
   local status_code=$(curl \
     --globoff --location --output /dev/null --silent \
     --write-out "%{http_code}\n" \
@@ -26,7 +26,7 @@ echo_invalid_url() {
 
 for url in $EXTERNAL_URLS
 do
-  echo_invalid_url "$url" &
+  echo_dead_link "$url" &
 done
 
 wait
