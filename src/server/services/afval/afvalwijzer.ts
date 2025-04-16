@@ -1,5 +1,6 @@
 import { LatLngLiteral } from 'leaflet';
 
+import { labels } from './translations';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
   AfvalFractionCode,
@@ -8,8 +9,7 @@ import {
 } from '../../../universal/types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { sanitizeCmsContent } from '../cms-content';
-import { labels } from './translations';
+import { sanitizeCmsContent } from '../cms/cms-content';
 
 export interface AfvalFractionData {
   straatnaam: string;

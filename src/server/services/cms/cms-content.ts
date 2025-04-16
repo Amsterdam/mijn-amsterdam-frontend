@@ -3,22 +3,23 @@ import path from 'path';
 
 import { parse } from 'html-to-ast';
 import { Attr } from 'html-to-ast/dist/types';
+import { LinkProps } from 'react-router';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
 
-import { IS_TAP } from '../../universal/config/env';
+import { IS_TAP } from '../../../universal/config/env';
+import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
-  apiErrorResult,
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
-  apiSuccessResult,
+  apiErrorResult,
   getSettledResult,
-} from '../../universal/helpers/api';
-import { hash } from '../../universal/helpers/utils';
-import { LinkProps } from '../../universal/types/App.types';
-import { isValidProfileType } from '../auth/auth-helpers';
-import FileCache from '../helpers/file-cache';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
+  apiSuccessResult,
+} from '../../../universal/helpers/api';
+import { hash } from '../../../universal/helpers/utils';
+import { isValidProfileType } from '../../auth/auth-helpers';
+import FileCache from '../../helpers/file-cache';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 
 const TAGS_ALLOWED = [
   'a',
@@ -260,25 +261,48 @@ async function getFooter(
     transformResponse: transformFooterResponse,
   });
 
-  return requestData<CMSFooterContent>(requestConfig, requestID).then(
-    (apiData) => {
-      if (apiData.content?.blocks.length) {
-        fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
-        fileCache.save();
-        return apiData;
-      }
-      // Try to get stale cache instead.
-      const staleApiData =
-        fileCache.getKeyStale<ApiResponse_DEPRECATED<CMSFooterContent>>(
-          'CMS_CONTENT_FOOTER'
-        );
-
-      if (staleApiData) {
-        return staleApiData;
-      }
-
-      return apiErrorResult('Could not fet Footer data', null);
+  async function saveCacheAndSend(
+    apiData: any
+  ): Promise<ApiResponse_DEPRECATED<CMSFooterContent | null>> {
+    if (apiData.content?.blocks.length) {
+      fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
+      fileCache.save();
+      return apiData;
     }
+    // Try to get stale cache instead.
+    const staleApiData =
+      fileCache.getKeyStale<ApiResponse_DEPRECATED<CMSFooterContent>>(
+        'CMS_CONTENT_FOOTER'
+      );
+
+    if (staleApiData) {
+      return staleApiData;
+    }
+
+    return apiErrorResult('Could not fetch Footer data', null);
+  }
+
+  if (FeatureToggle.useCMSFooterStaticDataBackup) {
+    return new Promise((resolve) => {
+      fs.readFile(path.join(__dirname, './cms-footer.json'), (err, content) => {
+        if (err) {
+          resolve(
+            apiErrorResult('could not read static footer data from file.', null)
+          );
+        }
+        resolve(
+          saveCacheAndSend(
+            apiSuccessResult(
+              transformFooterResponse(JSON.parse(content.toString()))
+            )
+          )
+        );
+      });
+    });
+  }
+
+  return requestData<CMSFooterContent>(requestConfig, requestID).then(
+    saveCacheAndSend
   );
 }
 
