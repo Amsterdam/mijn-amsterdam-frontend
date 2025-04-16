@@ -18,7 +18,7 @@ echo_invalid_url() {
     --write-out "%{http_code}\n" \
     $1)
 
-  if [ "$status_code" -gt 399 ] && [ "$status_code" -lt 600 ]; then
+  if [ "$status_code" -eq 000 ] || [ "$status_code" -gt 399 ] && [ "$status_code" -lt 600 ]; then
     echo "$url"
   fi
 }
