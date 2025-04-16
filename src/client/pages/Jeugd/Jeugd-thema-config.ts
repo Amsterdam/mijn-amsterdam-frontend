@@ -47,7 +47,7 @@ type DisplayPropsLeerlingenVervoer = DisplayProps<
 
 const displayProps: DisplayPropsLeerlingenVervoer = {
   detailLinkComponent: 'Voorziening',
-  status: 'Status',
+  displayStatus: 'Status',
   statusDateFormatted: 'Datum',
 };
 
