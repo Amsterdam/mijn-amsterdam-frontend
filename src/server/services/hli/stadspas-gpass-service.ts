@@ -25,7 +25,6 @@ import {
 } from './stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
-  apiErrorResult,
   ApiResponse_DEPRECATED,
   ApiResponse,
   ApiSuccessResponse,

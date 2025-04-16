@@ -11,17 +11,12 @@ import {
 import { useParams } from 'react-router';
 
 import styles from './HLIStadspasDetail.module.scss';
-import {
-  useBlockStadspas,
-  useStadspassen,
-  useUnblockStadspas,
-} from './useStadspassen.hook';
+import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
   StadspasBudget,
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../server/services/hli/stadspas-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
 import {
@@ -160,25 +155,24 @@ export function HLIStadspasDetail() {
         </PageHeadingV2>
 
         {stadspas ? (
-          <PageContentCell>
-            <Datalist rows={[NAME]} />
-            <Paragraph className={styles.StadspasNummerInfo}>
-              Hieronder staat het Stadspasnummer van uw{' '}
-              {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
-              <br /> Dit pasnummer staat ook op de achterkant van uw pas.
-            </Paragraph>
-            <Datalist rows={[NUMBER]} />
-            {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-            {FeatureToggle.hliThemaStadspasBlokkerenActive && (
-              <BlockStadspas stadspas={stadspas} />
-            )}
+          <>
+            <PageContentCell>
+              <Datalist rows={[NAME]} />
+              <Paragraph className={styles.StadspasNummerInfo}>
+                Hieronder staat het Stadspasnummer van uw{' '}
+                {stadspas.actief ? 'actieve' : 'geblokkeerde'} pas.
+                <br /> Dit pasnummer staat ook op de achterkant van uw pas.
+              </Paragraph>
+              <Datalist rows={[NUMBER]} />
+              {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
+              {FeatureToggle.hliThemaStadspasBlokkerenActive && (
+                <BlockStadspas stadspas={stadspas} />
+              )}
+            </PageContentCell>
             {FeatureToggle.hliThemaStadspasDeblokkerenActive && (
-              <>
-                <p></p>
-                <UnblockStadspas stadspas={stadspas} />
-              </>
+              <UnblockStadspas stadspas={stadspas} />
             )}
-          </PageContentCell>
+          </>
         ) : (
           <PageContentCell>
             {isLoadingStadspas && (
@@ -280,19 +274,19 @@ function determineUwUitgavenDescription(
 }
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
-  if (!stadspas.actief) {
-    return <PassBlockedAlert />;
-  }
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { error, isMutating, trigger: blokkeerStadspas } = useBlockStadspas();
+  const { error, isMutating, trigger: blockStadspas } = useBlockStadspas();
 
   useEffect(() => {
     if (error && !isMutating && !showError) {
       setShowError(true);
     }
   }, [error, showError, isMutating]);
+
+  if (!stadspas.actief) {
+    return <PassBlockedAlert />;
+  }
 
   return (
     <>
@@ -343,7 +337,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
                 setShowError(false);
                 setIsModalOpen(false);
                 if (stadspas.blockPassURL) {
-                  blokkeerStadspas(stadspas.blockPassURL);
+                  blockStadspas(stadspas.blockPassURL);
                 }
               }}
             >
@@ -418,11 +412,7 @@ function PassBlockedAlert() {
 function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-  const {
-    error,
-    isMutating,
-    trigger: deblokkeerStadspas,
-  } = useUnblockStadspas();
+  const { error, isMutating, trigger: deblokkeerStadspas } = useBlockStadspas();
 
   useEffect(() => {
     if (error && !isMutating && !showError) {
@@ -430,8 +420,12 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
     }
   }, [error, showError, isMutating]);
 
+  if (stadspas.actief) {
+    return;
+  }
+
   return (
-    <>
+    <PageContentCell>
       {showError && (
         <Alert
           className="ams-mb--sm"
@@ -493,9 +487,9 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           </ActionGroup>
         }
       >
-        (Feature voor buiten productie)
+        Deblokkeren die pas!
       </Modal>
-    </>
+    </PageContentCell>
   );
 }
 

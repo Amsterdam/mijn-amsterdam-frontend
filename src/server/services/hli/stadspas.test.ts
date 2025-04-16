@@ -1,4 +1,3 @@
-import { HttpStatusCode } from 'axios';
 import Mockdate from 'mockdate';
 import { Mock } from 'vitest';
 
@@ -19,10 +18,7 @@ import {
   StadspasPasHouderResponse,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
-import {
-  apiErrorResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
@@ -39,6 +35,7 @@ const authProfileAndToken: AuthProfileAndToken = {
     sid: 'my-unique-session-id',
   },
   token: '',
+  expiresAtMilliseconds: 0,
 };
 
 vi.mock('./stadspas-gpass-service.ts', async (importOriginal) => ({
