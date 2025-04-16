@@ -19,20 +19,22 @@ import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import {
-  QueryParamsCMSFooter,
-  fetchCMSCONTENT,
-  fetchCmsFooter,
   fetchDataset,
-  fetchSearchConfig,
-  loadClusterDatasets,
   loadFeatureDetail,
   loadPolylineFeatures,
-} from '../services';
+} from '../services/buurt/buurt';
 import { getDatasetEndpointConfig } from '../services/buurt/helpers';
+import { loadClusterDatasets } from '../services/buurt/supercluster';
 import {
-  QueryParamsMaintenanceNotifications,
+  fetchCMSCONTENT,
+  QueryParamsCMSFooter,
+  fetchCmsFooter,
+  fetchSearchConfig,
+} from '../services/cms/cms-content';
+import {
   fetchMaintenanceNotificationsActual,
-} from '../services/cms-maintenance-notifications';
+  QueryParamsMaintenanceNotifications,
+} from '../services/cms/cms-maintenance-notifications';
 
 export const router = express.Router();
 
