@@ -11,7 +11,6 @@ import {
   transformKenteken,
   getDecosZaakTypeFromSource,
   transformBoolean,
-  toDateFormatted,
   isExpired,
 } from './decos-helpers';
 import { decosCaseToZaakTransformers } from '../vergunningen/decos-zaken';
@@ -235,15 +234,6 @@ describe('decos/helpers', () => {
     expect(transformBoolean('yes')).toBe(true);
     expect(transformBoolean('')).toBe(false);
     expect(transformBoolean(' ')).toBe(true);
-  });
-
-  describe('toDateFormatted', () => {
-    test('has date', () => {
-      expect(toDateFormatted('2024-05-04')).toBe('04 mei 2024');
-    });
-    test('has no date', () => {
-      expect(toDateFormatted(null)).toBe(null);
-    });
   });
 
   describe('isExpired', () => {

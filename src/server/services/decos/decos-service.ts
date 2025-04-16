@@ -38,7 +38,6 @@ import {
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
   isExpired,
-  toDateFormatted,
 } from './decos-helpers';
 import { AppRouteVergunningen } from '../../../universal/config/routes';
 import {
@@ -49,7 +48,12 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import { omit, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
+import {
+  omit,
+  sortAlpha,
+  toDateFormatted,
+  uniqueArray,
+} from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,

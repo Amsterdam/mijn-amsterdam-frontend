@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
-import { ZaakStatus } from './ZaakStatus';
+import { forTesting, ZaakStatus } from './ZaakStatus';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
@@ -175,5 +175,116 @@ describe('ZaakStatus', () => {
     render(<Component />);
 
     expect(mocks.navigate).toHaveBeenCalled();
+  });
+
+  describe('baseThemaConfig', () => {
+    const { baseThemaConfig } = forTesting;
+
+    it('should return NOT_ABLE_TO_DETERMINE_ROUTE when state is loading', () => {
+      const getRoute = baseThemaConfig(
+        AppRoutes.VERGUNNINGEN,
+        'VERGUNNINGEN'
+      ).getRoute;
+
+      const result = getRoute('Z/000/000001.c', {
+        VERGUNNINGEN: { status: 'PRISTINE', content: null },
+      } as unknown as AppState);
+
+      expect(result).toBeUndefined();
+    });
+
+    it('should return STATE_ERROR when state is error', () => {
+      const getRoute = baseThemaConfig(
+        AppRoutes.VERGUNNINGEN,
+        'VERGUNNINGEN'
+      ).getRoute;
+
+      const result = getRoute('Z/000/000001.c', {
+        VERGUNNINGEN: { status: 'ERROR', content: null },
+      } as unknown as AppState);
+
+      expect(result).toBe('state-error');
+    });
+
+    it('should return ITEM_NOT_FOUND when zaken array is not found', () => {
+      const getRoute = baseThemaConfig(
+        AppRoutes.VERGUNNINGEN,
+        'VERGUNNINGEN'
+      ).getRoute;
+
+      const result = getRoute('Z/000/000001.c', {
+        VERGUNNINGEN: { status: 'OK', content: null },
+      } as unknown as AppState);
+
+      expect(result).toBe('not-found');
+    });
+
+    it('should return the correct route when zaken array contains the identifier', () => {
+      const getRoute = baseThemaConfig(
+        AppRoutes.VERGUNNINGEN,
+        'VERGUNNINGEN'
+      ).getRoute;
+
+      const result = getRoute('Z/000/000001.c', {
+        VERGUNNINGEN: {
+          status: 'OK',
+          content: [
+            {
+              identifier: 'Z/000/000001.c',
+              link: { to: '/vergunningen/vergunning/Z-000-000001.c' },
+            },
+          ],
+        },
+      } as unknown as AppState);
+
+      expect(result).toBe('/vergunningen/vergunning/Z-000-000001.c');
+    });
+
+    it('should return ITEM_NOT_FOUND when zaken array does not contain the identifier', () => {
+      const getRoute = baseThemaConfig(
+        AppRoutes.VERGUNNINGEN,
+        'VERGUNNINGEN'
+      ).getRoute;
+
+      const result = getRoute('Z/000/000002.c', {
+        VERGUNNINGEN: {
+          status: 'OK',
+          content: [
+            {
+              identifier: 'Z/000/000001.c',
+              link: { to: '/vergunningen/vergunning/Z-000-000001.c' },
+            },
+          ],
+        },
+      } as unknown as AppState);
+
+      expect(result).toBe('not-found');
+    });
+
+    it('should use a custom getZaken function', () => {
+      const customGetZaken = (stateSlice: any) => {
+        return stateSlice?.customZaken || null;
+      };
+
+      const getRoute = baseThemaConfig(
+        AppRoutes.VERGUNNINGEN,
+        'VERGUNNINGEN',
+        customGetZaken
+      ).getRoute;
+
+      const result = getRoute('Z/000/000003.c', {
+        VERGUNNINGEN: {
+          status: 'OK',
+          customZaken: [
+            {
+              identifier: 'Z/000/000003.c',
+              link: { to: '/custom/route/Z-000-000003.c' },
+            },
+          ],
+        },
+      } as unknown as AppState);
+
+      expect(result).toBe('/custom/route/Z-000-000003.c');
+    });
   });
 });

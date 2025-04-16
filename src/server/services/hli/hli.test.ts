@@ -1,3 +1,4 @@
+import MockDate from 'mockdate';
 import { Mock } from 'vitest';
 
 import { forTesting } from './hli';
@@ -268,6 +269,96 @@ describe('HLI', () => {
         today
       );
       expect(result).toHaveLength(0);
+    });
+  });
+
+  describe('transformRegelingTitle', () => {
+    beforeAll(() => {
+      MockDate.set('2025-01-01');
+    });
+
+    afterAll(() => {
+      MockDate.reset();
+    });
+
+    it('should return the title with "Stadspas" and the year range if the title contains "stadspas" and a valid start date', () => {
+      const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+        titel: 'stadspas regeling',
+        datumIngangGeldigheid: '2025-08-01',
+        datumEindeGeldigheid: '2026-07-31',
+        betrokkenPersonen: [],
+        documenten: [],
+        resultaat: 'toegewezen',
+        isActueel: true,
+        id: '1',
+      };
+
+      const result = forTesting.transformRegelingTitle(aanvraag);
+      expect(result).toBe('Stadspas 2025-2026 (vanaf 01 augustus 2025)');
+    });
+
+    it('should return the title with "Stadspas" and the year range without "vanaf" if the start date is in the past', () => {
+      const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+        titel: 'stadspas regeling',
+        datumIngangGeldigheid: '2023-01-01',
+        datumEindeGeldigheid: '2024-01-01',
+        betrokkenPersonen: [],
+        documenten: [],
+        resultaat: 'toegewezen',
+        isActueel: true,
+        id: '2',
+      };
+
+      const result = forTesting.transformRegelingTitle(aanvraag);
+      expect(result).toBe('Stadspas 2023-2024');
+    });
+
+    it('should capitalize the first letter of the title if it does not contain "stadspas"', () => {
+      const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+        titel: 'regeling zonder de pas',
+        datumIngangGeldigheid: null,
+        datumEindeGeldigheid: null,
+        betrokkenPersonen: [],
+        documenten: [],
+        resultaat: 'toegewezen',
+        isActueel: true,
+        id: '3',
+      };
+
+      const result = forTesting.transformRegelingTitle(aanvraag);
+      expect(result).toBe('Regeling zonder de pas');
+    });
+
+    it('should return the title with "Stadspas" and no year range if no start date is provided', () => {
+      const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+        titel: 'stadspas regeling',
+        datumIngangGeldigheid: null,
+        datumEindeGeldigheid: null,
+        betrokkenPersonen: [],
+        documenten: [],
+        resultaat: 'toegewezen',
+        isActueel: true,
+        id: '4',
+      };
+
+      const result = forTesting.transformRegelingTitle(aanvraag);
+      expect(result).toBe('Stadspas');
+    });
+
+    it('should return the title with "Stadspas" and no year range if start date is provided but result is afgewezen', () => {
+      const aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed = {
+        titel: 'stadspas regeling',
+        datumIngangGeldigheid: '2023-01-01',
+        datumEindeGeldigheid: '2024-01-01',
+        betrokkenPersonen: [],
+        documenten: [],
+        resultaat: 'afgewezen',
+        isActueel: true,
+        id: '4',
+      };
+
+      const result = forTesting.transformRegelingTitle(aanvraag);
+      expect(result).toBe('Stadspas 2023-2024');
     });
   });
 });

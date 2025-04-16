@@ -13,10 +13,7 @@ import {
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
 } from './config-and-types';
-import {
-  defaultDateFormat,
-  isDateInPast,
-} from '../../../universal/helpers/date';
+import { isDateInPast } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
@@ -143,20 +140,6 @@ export function getUserKeysSearchQuery(
     },
   };
   return searchQuery;
-}
-
-export function toDateFormatted(input: string | Date | number): string;
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null;
-// This is not a duplicate, this is the required implementation signature
-export function toDateFormatted(
-  input: string | Date | number | null | undefined
-): string | null {
-  if (input == null) {
-    return null;
-  }
-  return defaultDateFormat(input);
 }
 
 // Try to fetch and assign a specific date on which the zaak was $zaakStatus

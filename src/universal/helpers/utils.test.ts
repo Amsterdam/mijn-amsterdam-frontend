@@ -4,6 +4,7 @@ import {
   sortAlpha,
   range,
   isRecentNotification,
+  toDateFormatted,
 } from './utils';
 describe('Utils.ts', () => {
   it('deepOmitKeys: Should omit keys recursively', () => {
@@ -65,5 +66,14 @@ describe('Utils.ts', () => {
 
     expect(isRecentNotification('2022-12-06')).toBe(true);
     expect(isRecentNotification('2023-01-07')).toBe(false);
+  });
+
+  describe('toDateFormatted', () => {
+    test('has date', () => {
+      expect(toDateFormatted('2024-05-04')).toBe('04 mei 2024');
+    });
+    test('has no date', () => {
+      expect(toDateFormatted(null)).toBe(null);
+    });
   });
 });
