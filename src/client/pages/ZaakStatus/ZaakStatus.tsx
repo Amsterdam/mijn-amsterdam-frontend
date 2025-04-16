@@ -220,3 +220,8 @@ export function ZaakStatus() {
     </TextPageV2>
   );
 }
+
+export const forTesting = {
+  baseThemaConfig,
+  getZakenFromContentArray,
+};
