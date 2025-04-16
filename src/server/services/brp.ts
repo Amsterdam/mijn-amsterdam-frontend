@@ -1,4 +1,8 @@
-import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
+import {
+  differenceInCalendarDays,
+  differenceInMonths,
+  isAfter,
+} from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
@@ -208,6 +212,10 @@ function transformIdentiteitsBewijzen(
         to: route,
         title: document.documentType,
       },
+      displayStatus:
+        document.datumAfloop && isAfter(document.datumAfloop, new Date())
+          ? 'Verlopen'
+          : '',
       steps: [], // Placeholder for status steps. Not used in this project.
     });
   });

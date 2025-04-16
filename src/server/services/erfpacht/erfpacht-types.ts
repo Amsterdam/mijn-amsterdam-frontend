@@ -1,4 +1,4 @@
-import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
+import { ZaakDetail } from '../../../universal/types/App.types';
 
 export type ErfpachtErpachterResponseSource = {
   erfpachter: boolean;
@@ -162,14 +162,15 @@ export type ErfpachtDossiersDetailSource = {
   };
 };
 
-export type ErfpachtDossierPropsFrontend = ZaakDetail & {
-  dossierNummerUrlParam: string;
-  link: LinkProps;
-  title: string;
-};
+export type ErfpachtDossierPropsFrontend<
+  T extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
+> = T &
+  Omit<ZaakDetail, 'displayStatus' | 'steps'> & {
+    dossierNummerUrlParam: string;
+  };
 
-export type ErfpachtDossiersDetail = ErfpachtDossiersDetailSource &
-  ErfpachtDossierPropsFrontend;
+export type ErfpachtDossiersDetail =
+  ErfpachtDossierPropsFrontend<ErfpachtDossiersDetailSource>;
 
 export type ErfpachtDossierSource = {
   dossierNummer: string;
@@ -228,8 +229,8 @@ export type ErfpachtDossiersResponseSource = {
   };
 };
 
-export type ErfpachtDossier = ErfpachtDossierSource &
-  ErfpachtDossierPropsFrontend;
+export type ErfpachtDossier =
+  ErfpachtDossierPropsFrontend<ErfpachtDossierSource>;
 
 export type ErfpachtDossiersResponse = ErfpachtDossiersResponseSource & {
   dossiers: ErfpachtDossiersResponseSource['dossiers'] & {

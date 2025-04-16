@@ -49,7 +49,7 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: 'Lopende bezwaren',
-    filter: (bezwaar: Bezwaar) => bezwaar.status !== 'Afgehandeld',
+    filter: (bezwaar: Bezwaar) => bezwaar.displayStatus !== 'Afgehandeld',
     displayProps: displayPropsBezwaren,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     textNoContent:
@@ -61,7 +61,7 @@ export const tableConfig = {
   },
   [listPageParamKind.afgehandeld]: {
     title: 'Afgehandelde bezwaren',
-    filter: (bezwaar: Bezwaar) => bezwaar.status === 'Afgehandeld',
+    filter: (bezwaar: Bezwaar) => bezwaar.displayStatus === 'Afgehandeld',
     displayProps: displayPropsBezwaren,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     textNoContent: 'U heeft nog geen afgehandelde bezwaren.',

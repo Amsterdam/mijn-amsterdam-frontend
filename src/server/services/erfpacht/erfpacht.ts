@@ -33,8 +33,8 @@ function getDossierNummerUrlParam(dossierNummer: string) {
 
 export function transformErfpachtDossierProperties<
   T extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
->(dossierSource: T): T & ErfpachtDossierPropsFrontend {
-  const dossier: T = jsonCopy(dossierSource);
+>(dossierSource: T): ErfpachtDossierPropsFrontend<T> {
+  const dossier: T = structuredClone(dossierSource);
   const dossierNummerUrlParam = getDossierNummerUrlParam(dossier.dossierNummer);
   const title = `${dossier.dossierNummer}: ${dossier.voorkeursadres}`;
 
@@ -78,10 +78,9 @@ export function transformErfpachtDossierProperties<
       return factuur;
     });
   }
-  const zaak: T & ErfpachtDossierPropsFrontend = Object.assign(dossier, {
+  const zaak: ErfpachtDossierPropsFrontend<T> = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
-    steps: [],
     id: dossierNummerUrlParam,
     link: {
       to: generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {

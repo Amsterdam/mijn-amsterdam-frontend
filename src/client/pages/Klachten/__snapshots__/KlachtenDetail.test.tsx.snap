@@ -6,7 +6,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
         class="_PageHeadingInner_c5a3f1"
@@ -63,7 +63,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
       </div>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
         class="_Datalist_08bf39"
@@ -100,7 +100,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
         class="_PageHeadingInner_c5a3f1"
@@ -157,7 +157,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
       </div>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
         class="_Datalist_08bf39"
@@ -214,7 +214,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
         class="_PageHeadingInner_c5a3f1"
@@ -271,7 +271,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
       </div>
     </div>
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-6-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
         class="_Datalist_08bf39"
