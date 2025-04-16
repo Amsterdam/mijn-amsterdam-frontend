@@ -2,7 +2,7 @@ import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
 import { useErfpachtThemaData } from './erfpachtData.hook';
-import { ErfpachtDossiersDetail } from '../../../server/services/erfpacht/erfpacht';
+import { ErfpachtDossiersDetail } from '../../../server/services/erfpacht/erfpacht-types';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../components/Page/Page';
@@ -21,7 +21,7 @@ export function ErfpachtFacturen() {
   const [dossierApiResponse, api] = useAppStateBagApi<ErfpachtDossiersDetail>({
     url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
     bagThema: BagThemas.ERFPACHT,
-    key: dossierNummerUrlParam,
+    key: dossierNummerUrlParam ?? 'erfpacht-dossier',
   });
 
   const dossier = dossierApiResponse.content;

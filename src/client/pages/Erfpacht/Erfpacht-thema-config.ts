@@ -1,9 +1,9 @@
 import {
-  ErfpachtDossierFactuur,
   ErfpachtDossier,
-  ErfpachtDossiersDetail,
+  ErfpachtDossierFactuur,
   ErfpachtDossiersResponse,
-} from '../../../server/services/erfpacht/erfpacht';
+  ErfpachtDossiersDetail,
+} from '../../../server/services/erfpacht/erfpacht-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';
