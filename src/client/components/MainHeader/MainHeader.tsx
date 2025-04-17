@@ -13,7 +13,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { routes as profileRoutes } from '../../pages/Profile/Profile-thema-config';
+import { routes as profileRoutes } from '../../pages/Thema/Profile/Profile-thema-config';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import {

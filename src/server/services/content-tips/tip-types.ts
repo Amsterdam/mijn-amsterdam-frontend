@@ -1,4 +1,3 @@
-import { type ThemaID } from '../../../universal/config/thema';
 import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
 import { AppState, LinkProps } from '../../../universal/types';
 
@@ -6,7 +5,7 @@ export type ServiceResults = {
   [serviceId: string]: ApiResponse_DEPRECATED<any>;
 };
 
-export type ContentTipSource = {
+export type ContentTipSource<ID extends string = string> = {
   active: boolean;
   alwaysVisible?: boolean;
   dateActiveEnd: string | null;
@@ -22,7 +21,7 @@ export type ContentTipSource = {
   predicates?: TipsPredicateFN[];
   profileTypes: ProfileType[];
   reason?: string;
-  themaID: ThemaID;
+  themaID: ID;
   title: string;
 };
 

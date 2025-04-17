@@ -1,4 +1,4 @@
-import { FeatureToggle } from './feature-toggles';
+import { featureToggle } from '../../client/components/MyArea/MyArea-thema-config';
 
 // Amsterdam center
 export const DEFAULT_LAT: number = 52.3676842478192;
@@ -75,7 +75,7 @@ export const laadpaalValueConfig: Record<string, string> = {
 
 export const DATASETS: DatasetCategories = {
   laadpalen: {
-    isDisabled: !FeatureToggle.laadpalenActive,
+    isDisabled: !featureToggle.laadpalenActive,
     title: 'Laadpalen',
     datasets: {
       laadpalen: {
@@ -167,7 +167,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   bekendmakingen: {
-    isDisabled: !FeatureToggle.bekendmakingenDatasetActive,
+    isDisabled: !featureToggle.bekendmakingenDatasetActive,
     title: 'Vergunningen en ontheffingen',
     datasets: {
       bekendmakingen: {
@@ -186,12 +186,12 @@ export const DATASETS: DatasetCategories = {
     },
   },
   evenementen: {
-    isDisabled: !FeatureToggle.evenementenDatasetActive,
+    isDisabled: !featureToggle.evenementenDatasetActive,
     title: 'Evenementen',
     datasets: { evenementen: { title: 'Evenementen' } },
   },
   sport: {
-    isDisabled: !FeatureToggle.sportDatasetsActive,
+    isDisabled: !featureToggle.sportDatasetsActive,
     title: 'Sport',
     datasets: {
       sportaanbieder: {
@@ -322,7 +322,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   wior: {
-    isDisabled: !FeatureToggle.wiorDatasetActive,
+    isDisabled: !featureToggle.wiorDatasetActive,
     title: 'Werk in de openbare ruimte (WIOR)',
     datasets: {
       wior: {
@@ -347,7 +347,7 @@ export const DATASETS: DatasetCategories = {
     },
   },
   meldingenBuurt: {
-    isDisabled: !FeatureToggle.meldingenBuurtActive,
+    isDisabled: !featureToggle.meldingenBuurtActive,
     title: 'Meldingen',
     datasets: {
       meldingenBuurt: {

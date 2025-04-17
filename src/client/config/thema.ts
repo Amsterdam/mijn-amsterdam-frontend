@@ -2,33 +2,25 @@ import { DocumentTitlesConfig, ThemaMenuItem } from './thema-types';
 import { AppRoutes } from '../../universal/config/routes';
 import { ThemaID, ThemaIDs } from '../../universal/config/thema';
 import { AppState, BagThema } from '../../universal/types/App.types';
-import { getAfisListPageDocumentTitle } from '../pages/Afis/Afis-thema-config';
-import { getAVGListPageDocumentTitle } from '../pages/AVG/AVG-thema-config';
-import { getBezwarenListPageDocumentTitle } from '../pages/Bezwaren/Bezwaren-thema-config';
+import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
+import { getAVGListPageDocumentTitle } from '../pages/Thema/AVG/AVG-thema-config';
+import { getBezwarenListPageDocumentTitle } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
-} from '../pages/Burgerzaken/helpers';
-import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
-import { menuItem as menuItemInkomen } from '../pages/Inkomen/Inkomen-render-config';
-import {
-  documentTitles as documentTitlesInkomen,
-  themaTitle as inkomenThemaTitle,
-} from '../pages/Inkomen/Inkomen-thema-config';
-import { menuItem as menuItemJeugd } from '../pages/Jeugd/Jeugd-render-config';
-import { documentTitles as documentTitlesJeugd } from '../pages/Jeugd/Jeugd-thema-config';
-import { menuItems as profileMenuItems } from '../pages/Profile/Profile-render-config';
-import {
-  documentTitles as documentTitlesProfile,
-  themaTitle as profileThemaTitle,
-  themaIdBRP,
-  themaIdKVK,
-} from '../pages/Profile/Profile-thema-config';
+} from '../pages/Thema/Burgerzaken/helpers';
+import { getThemaTitleWithAppState } from '../pages/Thema/HLI/helpers';
+import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
+import { documentTitles as documentTitlesInkomen } from '../pages/Thema/Inkomen/Inkomen-thema-config';
+import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
+import { documentTitles as documentTitlesJeugd } from '../pages/Thema/Jeugd/Jeugd-thema-config';
+import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
+import { documentTitles as documentTitlesProfile } from '../pages/Thema/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
-} from '../pages/Varen/Varen-thema-config';
-import { getListPageDocumentTitle } from '../pages/Vergunningen/Vergunningen-thema-config';
+} from '../pages/Thema/Varen/Varen-thema-config';
+import { getListPageDocumentTitle } from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
 
 /**
  * @deprecated We will remove this in the future in favor of the SWR implementations.
@@ -47,14 +39,12 @@ type ThemaTitles = { [thema in ThemaID]: string };
  * @deprecated Use the titles exported from the Thema-config files instead.
  */
 export const ThemaTitles = {
-  AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   AVG: 'AVG persoonsgegevens',
   BELASTINGEN: 'Belastingen',
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
   BURGERZAKEN: 'Paspoort en ID-kaart',
-  BUURT: 'Mijn buurt',
   ERFPACHT: 'Erfpacht',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
@@ -72,11 +62,6 @@ export const ThemaTitles = {
   VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
-
-  // New thema config references
-  [inkomenThemaTitle]: inkomenThemaTitle,
-  [themaIdBRP]: profileThemaTitle.BRP,
-  [themaIdKVK]: profileThemaTitle.KVK,
 } as const;
 /**
  * @deprecated Use the titles exported from the Thema-config files instead.
@@ -92,12 +77,6 @@ export const PageTitleMain = 'Mijn Amsterdam';
  * @deprecated Use the documentTitles exported from the Thema-config files instead.
  */
 export const DocumentTitles: DocumentTitlesConfig = {
-  // Afis
-  [AppRoutes.AFIS]: `${ThemaTitles.AFIS} | overzicht`,
-  [AppRoutes['AFIS/FACTUREN']]: getAfisListPageDocumentTitle(ThemaTitles.AFIS),
-  [AppRoutes['AFIS/BETAALVOORKEUREN']]:
-    `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
-
   // Burgerzaken
   [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
   [AppRoutes['BURGERZAKEN/LIST']]:
@@ -189,7 +168,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
-  [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
@@ -218,18 +196,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   ...profileMenuItems,
   menuItemInkomen,
   menuItemJeugd,
+  menuItemAfis,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.AFIS,
-    id: ThemaIDs.AFIS,
-    to: AppRoutes.AFIS,
-    profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.VAREN,

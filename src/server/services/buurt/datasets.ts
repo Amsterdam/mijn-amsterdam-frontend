@@ -12,9 +12,9 @@ import {
   WFSApiResponse,
   WFSFeatureSource,
 } from './dso-helpers';
+import { featureToggle } from '../../../client/components/MyArea/MyArea-thema-config';
 import { Colors } from '../../../universal/config/colors';
 import { IS_PRODUCTION } from '../../../universal/config/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   DATASETS,
   DatasetCategoryId,
@@ -183,7 +183,7 @@ export const datasetEndpoints: Record<
         'X-Api-Key': process.env.BFF_DATA_AMSTERDAM_API_KEY,
       },
     },
-    disabled: !FeatureToggle.evenementenDatasetActive,
+    disabled: !featureToggle.evenementenDatasetActive,
   },
   bekendmakingen: {
     listUrl: `https://api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326`,
@@ -202,7 +202,7 @@ export const datasetEndpoints: Record<
       },
     },
     // NOTE: Zie https://gemeente-amsterdam.atlassian.net/browse/MIJN-7467
-    disabled: !FeatureToggle.bekendmakingenDatasetActive,
+    disabled: !featureToggle.bekendmakingenDatasetActive,
   },
   parkeerzones: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
@@ -447,7 +447,7 @@ export const datasetEndpoints: Record<
       request: fetchAndTransformLaadpalen,
       cancelTimeout: 30000,
     },
-    disabled: !FeatureToggle.laadpalenActive,
+    disabled: !featureToggle.laadpalenActive,
   },
 };
 

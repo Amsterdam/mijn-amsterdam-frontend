@@ -1,7 +1,7 @@
 import { PathMatch } from 'react-router';
 
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
-import { customTrackingUrls as customTrackingUrlsInkomen } from '../pages/Inkomen/Inkomen-thema-config';
+import { customTrackingUrls as customTrackingUrlsInkomen } from '../pages/Thema/Inkomen/Inkomen-thema-config';
 
 export interface TrackingConfig {
   profileType: ProfileType;

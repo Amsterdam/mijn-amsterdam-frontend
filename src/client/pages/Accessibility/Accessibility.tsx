@@ -11,7 +11,6 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { ThemaTitles } from '../../config/thema';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 export function Accessibility() {
@@ -62,9 +61,9 @@ export function Accessibility() {
               Pdf-bestanden zijn nog niet altijd toegankelijk.
             </UnorderedList.Item>
             <UnorderedList.Item>
-              De persoonlijke plattegrond ‘{termReplace(ThemaTitles.BUURT)}’ is
-              nog niet helemaal toegankelijk. We werken eraan om de plattegrond
-              zo volledig toegankelijk te maken.
+              De persoonlijke plattegrond ‘Mijn buurt’ is nog niet helemaal
+              toegankelijk. We werken eraan om de plattegrond zo volledig
+              toegankelijk te maken.
             </UnorderedList.Item>
           </UnorderedList>
           <Heading level={3} size="level-4">

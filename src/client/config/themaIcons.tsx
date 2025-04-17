@@ -3,7 +3,6 @@ import { BellIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import { type ThemaID } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
-  IconAFIS,
   IconAVG,
   IconBelastingen,
   IconBezwaren,
@@ -23,12 +22,10 @@ import {
   IconToeristischeVerhuur,
   IconVaren,
   IconVergunningen,
-  IconWior,
   IconZorg,
 } from '../assets/icons';
 
 export const ThemaIcons: Record<ThemaID, SVGComponent> = {
-  AFIS: IconAFIS,
   VAREN: IconVaren,
   AFVAL: IconAfval,
   AVG: IconAVG,
@@ -36,7 +33,6 @@ export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   BEZWAREN: IconBezwaren,
   BODEM: IconBodem,
   BURGERZAKEN: IconBurgerZaken,
-  BUURT: IconWior,
   ERFPACHT: IconErfpacht,
   HLI: IconHLI,
   HORECA: IconHoreca,

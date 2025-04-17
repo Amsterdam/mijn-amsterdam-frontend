@@ -14,7 +14,7 @@ import {
   getBboxFromFeatures,
 } from './buurt/helpers';
 import { fetchMyLocation } from './my-locations';
-import { AppRoutes } from '../../universal/config/routes';
+import { routeConfig as buurtRouteConfig } from '../../client/components/MyArea/MyArea-thema-config';
 import { ThemaIDs } from '../../universal/config/thema';
 import {
   apiDependencyError,
@@ -135,7 +135,7 @@ function buildNotification(
       'U ziet deze tip omdat er bij u in de buurt een afvalcontainer is die u kunt adopteren.',
     description: determineDescriptionText(age),
     link: {
-      to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&filters=${filterQueryParam}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
+      to: `${buurtRouteConfig.themaPage.path}?datasetIds=["afvalcontainers"]&filters=${filterQueryParam}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
       title: 'Bekijk de containers op de kaart',
     },
   };

@@ -16,7 +16,7 @@ interface ComponentProps {
   title?: string;
 }
 
-function ErrorMessagesContent({
+export function ErrorMessagesContent({
   className,
   errors,
   title = 'U ziet misschien niet al uw gegevens.',

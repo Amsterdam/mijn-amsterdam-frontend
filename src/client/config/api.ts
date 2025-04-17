@@ -3,8 +3,6 @@ import {
   FailedDependencies,
 } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types';
-import { errorMessage as jeugdErrorMessage } from '../pages/Jeugd/Jeugd-thema-config';
-import { errorMessage as profileErrorMessage } from '../pages/Profile/Profile-thema-config';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -40,9 +38,13 @@ export const ExcludePageViewTrackingUrls = [
   LOGIN_URL_EHERKENNING,
 ];
 
+/**
+ * @deprecated
+ */
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  ...profileErrorMessage,
-  ...jeugdErrorMessage,
+  BRP: 'Mijn gegevens',
+  KVK: 'Mijn onderneming',
+  JEUGD: 'Jeugd: aanvragen en voorzieningen',
   AFIS: 'Facturen en betalen',
   AFIS_facturenoverview: 'Facturen en betalen: Overzicht van facturen',
   AFIS_afgehandeld: 'Facturen en betalen: Afgehandelde facturen',
@@ -57,7 +59,6 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BEZWAREN: 'Ingediende bezwaren',
   BODEM: 'Bodem: loodmetingen',
 
-  BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Erfpacht',
   HLI_regelingen: 'Regelingen bij laag inkomen',

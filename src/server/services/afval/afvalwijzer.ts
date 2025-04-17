@@ -1,7 +1,7 @@
 import { LatLngLiteral } from 'leaflet';
 
 import { labels } from './translations';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config';
 import {
   AfvalFractionCode,
   AfvalFractionInformationTransformed,
@@ -122,7 +122,7 @@ function getHtml(text: string | null, fallbackText?: string): string {
 
 function getBuurtLink(fractionData: AfvalFractionData): LinkProps {
   return {
-    to: `${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"${fractionData.afvalwijzerFractieCode}"%3A1}}}}`,
+    to: `${buurtRouteConfig.themaPage.path}?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"${fractionData.afvalwijzerFractieCode}"%3A1}}}}`,
     title: getText(fractionData.afvalwijzerWaar),
   };
 }

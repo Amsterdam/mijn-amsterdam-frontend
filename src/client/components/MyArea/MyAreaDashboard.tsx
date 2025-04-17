@@ -1,14 +1,13 @@
 import { useRef } from 'react';
 
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
-import { generatePath, NavLink } from 'react-router';
+import { NavLink } from 'react-router';
 
+import { routeConfig, themaTitle } from './MyArea-thema-config';
 import styles from './MyAreaDashboard.module.scss';
 import { MyAreaLoader } from './MyAreaLoader';
-import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
 import { isMokum } from '../../../universal/helpers/brp';
-import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
@@ -26,9 +25,9 @@ export function MyAreaDashboard() {
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
       <MyAreaLoader isDashboard={true} />
-      <NavLink className={styles.NavLink} to={generatePath(AppRoutes.BUURT)}>
+      <NavLink className={styles.NavLink} to={routeConfig.themaPage.path}>
         <span className={styles.NavLinkContentWrap}>
-          <Heading level={3}>{termReplace(ThemaTitles.BUURT)}</Heading>
+          <Heading level={3}>{termReplace(themaTitle)}</Heading>
           {isLoadingBrpKvk && (
             <LoadingContent barConfig={[['200px', '30px', '20px']]} />
           )}

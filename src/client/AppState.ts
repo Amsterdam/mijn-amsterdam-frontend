@@ -3,7 +3,7 @@ import { createContext } from 'react';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { apiPristineResult } from '../universal/helpers/api';
 import { AppState } from '../universal/types/App.types';
-import { zorgnedLeerlingenvervoerActive } from './pages/Jeugd/Jeugd-thema-config';
+import { zorgnedLeerlingenvervoerActive } from './pages/Thema/Jeugd/Jeugd-thema-config';
 
 export const PRISTINE_APPSTATE: AppState = {
   // Generated

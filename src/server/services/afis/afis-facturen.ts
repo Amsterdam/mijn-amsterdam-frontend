@@ -3,6 +3,7 @@ import { parseISO } from 'date-fns/parseISO';
 import Decimal from 'decimal.js';
 import { firstBy } from 'thenby';
 
+import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
@@ -38,7 +39,6 @@ import {
   AfisInvoicesSource,
   XmlNullable,
 } from './afis-types';
-import { AppRoutes } from '../../../universal/config/routes';
 import { entries } from '../../../universal/helpers/utils';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
@@ -261,7 +261,7 @@ function transformFactuur(
     paylink: invoice.Paylink ? invoice.Paylink : null,
     documentDownloadLink,
     link: {
-      to: documentDownloadLink ?? AppRoutes.AFIS,
+      to: documentDownloadLink ?? routeConfig.themaPage.path,
       title: `Factuur ${factuurNummer}`,
     },
   };

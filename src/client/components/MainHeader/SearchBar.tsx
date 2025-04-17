@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
 import { Search } from '../Search/Search';
 import { SearchEntry } from '../Search/search-config';
 
@@ -11,7 +11,7 @@ type SearchBarProps = {
 
 export function SearchBar({ onFinish, className }: SearchBarProps) {
   const replaceResultUrl = useCallback((result: SearchEntry) => {
-    return result.url.startsWith(AppRoutes.BUURT);
+    return result.url.startsWith(buurtRouteConfig.themaPage.path);
   }, []);
 
   return (

@@ -40,6 +40,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
+import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
 
 export function generateSearchIndexPageEntry(
   item: ApiBaseItem,
@@ -284,7 +285,7 @@ export function useSearchIndex() {
         ...(staticSearchEntries || []),
         ...(dynamicSearchEntries || []),
       ].map((searchEntry) => {
-        if (searchEntry.url.startsWith(AppRoutes.BUURT)) {
+        if (searchEntry.url.startsWith(buurtRouteConfig.themaPage.path)) {
           return Object.assign({}, searchEntry, {
             trailingIcon: (
               <LocationIcon

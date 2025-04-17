@@ -6,7 +6,6 @@ import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
 import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryCommercial.svg';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { ThemaTitles } from '../../config/thema';
 import { useWidescreen } from '../../hooks/media.hook';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
@@ -26,6 +25,7 @@ import BaseLayerToggle, {
 import Map from './Map/Map';
 import ViewerContainer from './Map/ViewerContainer';
 import Zoom from './Map/Zoom';
+import { themaTitle } from './MyArea-thema-config';
 import {
   MapLocationMarker,
   useMapLocations,
@@ -147,7 +147,7 @@ export default function MyArea({
     return;
   }, [isWideScreen, showPanels, detailState, filterState]);
 
-  const ariaLabel = `Kaart van ${termReplace(ThemaTitles.BUURT).toLowerCase()}`;
+  const ariaLabel = `Kaart van ${termReplace(themaTitle).toLowerCase()}`;
 
   useEffect(() => {
     window.addEventListener('resize', updateViewportHeight);

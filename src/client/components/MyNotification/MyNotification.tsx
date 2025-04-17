@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { Heading, Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './MyNotification.module.scss';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import type { MyNotification } from '../../../universal/types/App.types';
-import { ThemaTitles } from '../../config/thema';
 import { trackEvent } from '../../helpers/monitoring';
 import { isInteralUrl } from '../../helpers/utils';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -18,6 +19,12 @@ type MyNotificationProps = {
   trackCategory?: string;
   smallVariant?: true;
 };
+
+function someWhatReadableThemaTitleFromID(themaID?: string) {
+  return capitalizeFirstLetter(
+    (themaID ?? 'Mijn Amsterdam').toLowerCase().replace(/_/g, ' ')
+  );
+}
 
 export function MyNotification({
   notification,
@@ -64,7 +71,10 @@ export function MyNotification({
         )}
         <div className={styles.MetaInfoSecondary}>
           <em className={styles.ThemaIndication}>
-            {ThemaTitles[notification.themaID] ?? notification.themaID}
+            {notification.themaTitle ??
+              (!IS_PRODUCTION
+                ? `${someWhatReadableThemaTitleFromID(notification.themaID)}`
+                : 'Mijn Amsterdam')}
           </em>{' '}
           {!notification.hideDatePublished && (
             <time
