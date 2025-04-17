@@ -7,7 +7,6 @@ import { ThemaMenuItem } from '../config/thema-types';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
-    AVG,
     BELASTINGEN,
     BEZWAREN,
     BODEM,
@@ -160,13 +159,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(HORECA) &&
         !!HORECA?.content?.length &&
         FeatureToggle.horecaActive
-      );
-
-    case ThemaIDs.AVG:
-      return (
-        !isLoading(AVG) &&
-        !!AVG?.content?.verzoeken?.length &&
-        FeatureToggle.avgActive
       );
 
     case ThemaIDs.BODEM:

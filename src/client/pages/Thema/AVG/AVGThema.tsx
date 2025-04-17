@@ -3,7 +3,6 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useAVGData } from './useAVGData.hook';
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ThemaTitles } from '../../../config/thema';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
@@ -13,9 +12,15 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-function AVG() {
-  const { tableConfig, avgVerzoeken, isLoading, isError, linkListItems } =
-    useAVGData();
+export function AVGThema() {
+  const {
+    tableConfig,
+    avgVerzoeken,
+    isLoading,
+    isError,
+    linkListItems,
+    title,
+  } = useAVGData();
 
   const tables = Object.entries(tableConfig).map(
     ([
@@ -37,7 +42,7 @@ function AVG() {
 
   return (
     <ThemaPagina
-      title={ThemaTitles.AVG}
+      title={title}
       isError={isError}
       isLoading={isLoading}
       pageContentTop={pageContentTop}
@@ -46,5 +51,3 @@ function AVG() {
     />
   );
 }
-
-export { AVG };

@@ -12,7 +12,7 @@ import { NotFoundRoutes } from './pages/NotFound/NotFound-routes';
 import { SearchRoutes } from './pages/Search/Search-routes';
 import { AfisRoutes } from './pages/Thema/Afis/Afis-render-config';
 import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config';
-import { AVGRoutes } from './pages/Thema/AVG/AVG-routes';
+import { AvgRoutes } from './pages/Thema/AVG/Avg-render-config';
 import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-routes';
 import { BodemRoutes } from './pages/Thema/Bodem/Bodem-routes';
 import { BurgerzakenRoutes } from './pages/Thema/Burgerzaken/Burgerzaken-routes';
@@ -43,7 +43,7 @@ const routeComponents: ApplicationRouteConfig[] = [
   AccessibilityRoutes,
   AfisRoutes,
   AfvalRoutes,
-  AVGRoutes,
+  AvgRoutes,
   BezwarenRoutes,
   BffErrorRoutes,
   BodemRoutes,
