@@ -1,7 +1,7 @@
+import { useAVGDetailPage } from './useAVGDetailPage.hook';
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
-import { useAVGDetailPage } from './useAVGDetailPage.hook';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 function getVerzoekRows(verzoek: AVGRequestFrontend) {
@@ -23,7 +23,7 @@ function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
   );
 }
 
-function AVGDetail() {
+export function AVGDetail() {
   const { verzoek, isLoading, isError, breadcrumbs, title } =
     useAVGDetailPage();
   return (
@@ -37,5 +37,3 @@ function AVGDetail() {
     />
   );
 }
-
-export { AVGDetail };

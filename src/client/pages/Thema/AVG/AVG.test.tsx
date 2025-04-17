@@ -2,28 +2,27 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../../universal/config/routes';
-import { appStateAtom } from '../../../hooks/useAppState';
-import MockApp from '../../MockApp';
-import { AVG } from './AVG';
+import { routeConfig } from './AVG-thema-config';
 import { testState } from './AVGDetail.test';
+import { AVGThema } from './AVGThema';
 import { AVGResponse } from '../../../../server/services/avg/types';
 import { AppState } from '../../../../universal/types';
+import { appStateAtom } from '../../../hooks/useAppState';
+import MockApp from '../../MockApp';
 
 function initializeState(testState: AppState) {
   return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
 }
 
 function setupTestComponent(testState: AppState) {
-  const routeEntry = generatePath(AppRoutes.AVG);
-  const routePath = AppRoutes.AVG;
+  const routeEntry = generatePath(routeConfig.themaPage.path);
 
   return function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routePath}
-        component={AVG}
+        routePath={routeEntry}
+        component={AVGThema}
         initializeState={initializeState(testState)}
       />
     );
