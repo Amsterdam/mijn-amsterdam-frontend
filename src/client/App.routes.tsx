@@ -1,6 +1,7 @@
 import { Routes, Route, matchPath } from 'react-router';
 
 import { MyAreaRoutes } from './components/MyArea/MyArea-routest';
+import type { ThemaRenderRouteConfig } from './config/thema-types';
 import { AccessibilityRoutes } from './pages/Accessibility/Accessibility-routes';
 import { AfisRoutes } from './pages/Afis/Afis-routes';
 import { AfvalRoutes } from './pages/Afval/Afval-routes';
@@ -30,9 +31,7 @@ import { VergunningenRoutes } from './pages/Vergunningen/Vergunningen-routes';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatusRoutes';
 import { ZorgRoutes } from './pages/Zorg/Zorg-routes';
 
-export type ApplicationRouteConfig = {
-  route: string;
-  Component: React.ComponentType;
+export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
   props?: {
     index?: boolean;
   };
@@ -81,14 +80,16 @@ const publicRoutes = routeComponents.filter((config) => config.public === true);
 function ApplicationRoutes({ routes }: { routes: ApplicationRouteConfig[] }) {
   return (
     <Routes>
-      {routes.map(({ route, Component, props }) => (
-        <Route
-          {...(props ? props : {})}
-          key={route}
-          path={route}
-          element={<Component />}
-        />
-      ))}
+      {routes
+        .filter(({ isActive }) => isActive !== false)
+        .map(({ route, Component, props }) => (
+          <Route
+            {...(props ? props : {})}
+            key={route}
+            path={route}
+            element={<Component />}
+          />
+        ))}
     </Routes>
   );
 }

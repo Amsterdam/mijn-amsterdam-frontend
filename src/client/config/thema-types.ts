@@ -55,6 +55,12 @@ export type ThemaRoutesConfig = {
   [themaPageType in ThemaPageType]: ThemaRouteConfig;
 };
 
+export type ThemaRenderRouteConfig = {
+  route: string;
+  Component: React.ElementType;
+  isActive?: boolean;
+};
+
 /**
  * @deprecated Use `ThemaRoutesConfig` instead.
  */
