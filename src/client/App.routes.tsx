@@ -11,7 +11,7 @@ import { MyNotificationsRoutes } from './pages/MyNotifications/MyNotifications-r
 import { NotFoundRoutes } from './pages/NotFound/NotFound-routes';
 import { SearchRoutes } from './pages/Search/Search-routes';
 import { AfisRoutes } from './pages/Thema/Afis/Afis-render-config';
-import { AfvalRoutes } from './pages/Thema/Afval/Afval-routes';
+import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config';
 import { AVGRoutes } from './pages/Thema/AVG/AVG-routes';
 import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-routes';
 import { BodemRoutes } from './pages/Thema/Bodem/Bodem-routes';

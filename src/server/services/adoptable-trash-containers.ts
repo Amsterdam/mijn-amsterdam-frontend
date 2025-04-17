@@ -15,7 +15,10 @@ import {
 } from './buurt/helpers';
 import { fetchMyLocation } from './my-locations';
 import { routeConfig as buurtRouteConfig } from '../../client/components/MyArea/MyArea-thema-config';
-import { ThemaIDs } from '../../universal/config/thema';
+import {
+  themaId,
+  themaTitle,
+} from '../../client/pages/Thema/Afval/Afval-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -128,7 +131,8 @@ function buildNotification(
   return {
     id: 'adoptable-trash-container-notification',
     datePublished: new Date().toISOString(),
-    themaID: ThemaIDs.AFVAL,
+    themaID: themaId,
+    themaTitle: themaTitle,
     title: 'Adopteer een afvalcontainer',
     isTip: true,
     tipReason:

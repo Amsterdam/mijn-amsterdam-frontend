@@ -24,7 +24,6 @@ export const AppRoutes = {
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',
   NOTIFICATIONS: '/overzicht-updates/:page?',
-  AFVAL: '/afval',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
   VERGUNNINGEN: '/vergunningen',

@@ -22,6 +22,7 @@ export type ContentTipSource<ID extends string = string> = {
   profileTypes: ProfileType[];
   reason?: string;
   themaID: ID;
+  themaTitle?: string;
   title: string;
 };
 

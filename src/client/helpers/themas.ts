@@ -7,7 +7,6 @@ import { ThemaMenuItem } from '../config/thema-types';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
-    AFVAL,
     AVG,
     BELASTINGEN,
     BEZWAREN,
@@ -20,7 +19,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     KREFIA,
     KVK,
     MILIEUZONE,
-    MY_LOCATION,
     OVERTREDINGEN,
     PARKEREN,
     SUBSIDIE,
@@ -84,14 +82,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         (FeatureToggle.cleopatraApiActive && FeatureToggle.overtredingenActive
           ? OVERTREDINGEN.content?.isKnown
           : false)
-      );
-
-    case ThemaIDs.AFVAL:
-      return (
-        FeatureToggle.garbageInformationPage &&
-        !isLoading(AFVAL) &&
-        !isLoading(MY_LOCATION) &&
-        isAmsterdam
       );
 
     case ThemaIDs.ERFPACHT:
