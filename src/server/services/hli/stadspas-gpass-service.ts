@@ -430,7 +430,7 @@ async function mutateGpassTogglePassChecked(
     return apiErrorResult(
       "Could not determine 'actief' state of pass because of an invalid response",
       null,
-      HttpStatusCode.BadGateway
+      HttpStatusCode.InternalServerError
     );
   }
 

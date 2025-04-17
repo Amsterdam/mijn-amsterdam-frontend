@@ -228,13 +228,6 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApplicationError'
-        '502':
-          description: |
-            Returns Bad gateway
-          content:
-            'application/json':
-              schema:
-               $ref: '#/components/schemas/ErrorBadGateway'
 
 components:
   securitySchemes:
@@ -510,20 +503,3 @@ components:
             - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
             - 'Bad request: ApiError 000 - Onbekende fout'
             - 'Bad request: Bad request: Failed to decrypt transactions key'
-    ErrorBadGateway:
-      type: object
-      properties:
-        content:
-          nullable: true
-        code:
-          type: number
-          enum:
-            - 502
-        status:
-          type: string
-          enum:
-            - 'ERROR'
-        message:
-          type: string
-          enum:
-            - "Could not determine 'actief' state of pass because of an invalid response"
