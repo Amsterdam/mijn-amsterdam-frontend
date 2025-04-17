@@ -8,12 +8,35 @@ import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../../server/services/afis/afis-types';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { LinkProps, ZaakDetail } from '../../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import { DisplayProps } from '../../../components/Table/TableV2';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { TrackingConfig } from '../../../config/routes';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
+
+export const featureToggle = {
+  AfisActive: !IS_PRODUCTION,
+};
+
+export const themaId = 'AFIS' as const;
+export const themaTitle = 'Facturen en betalen';
+
+export const routeConfig = {
+  detailPage: {
+    path: '/facturen-en-betalen/betaalvoorkeuren',
+    documentTitle: `Betaalvoorkeuren | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
+    documentTitle: getAfisListPageDocumentTitle(themaTitle),
+  },
+  themaPage: {
+    path: '/facturen-en-betalen',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
 // Themapagina
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN = 5;
@@ -98,7 +121,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     displayProps: displayPropsFacturenOpen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_OPEN,
     listPageLinkLabel: 'Alle openstaande facturen',
-    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       state: 'open',
       page: null,
     }),
@@ -110,7 +133,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
     listPageLinkLabel:
       'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
-    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       state: 'overgedragen',
       page: null,
     }),
@@ -121,7 +144,7 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
     displayProps: displayPropsFacturenAfgehandeld,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
-    listPageRoute: generatePath(AppRoutes['AFIS/FACTUREN'], {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       state: 'afgehandeld',
       page: null,
     }),
@@ -154,12 +177,6 @@ export const eMandateTableConfig = {
     filter: (emandate: AfisEmandateStub) => !emandate.isActive,
     displayProps: displayPropsEmandates,
   },
-} as const;
-
-export const routes = {
-  listPageFacturen: AppRoutes['AFIS/FACTUREN'],
-  betaalVoorkeuren: AppRoutes['AFIS/BETAALVOORKEUREN'],
-  themaPage: AppRoutes.AFIS,
 } as const;
 
 export const linkListItems: LinkProps[] = [

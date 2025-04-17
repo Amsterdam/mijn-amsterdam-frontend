@@ -17,10 +17,6 @@ export const AppRoutes = {
   'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
   'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
 
-  AFIS: '/facturen-en-betalen',
-  'AFIS/BETAALVOORKEUREN': '/facturen-en-betalen/betaalvoorkeuren',
-  'AFIS/FACTUREN': '/facturen-en-betalen/facturen/lijst/:state/:page?',
-
   BEZWAREN: '/bezwaren',
   'BEZWAREN/DETAIL': '/bezwaren/:uuid',
   'BEZWAREN/LIST': '/bezwaren/lijst/:kind/:page?',

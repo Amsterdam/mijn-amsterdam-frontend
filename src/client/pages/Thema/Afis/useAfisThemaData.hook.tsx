@@ -6,8 +6,10 @@ import {
   eMandateTableConfig,
   facturenTableConfig,
   listPageTitle,
-  routes,
   linkListItems,
+  themaTitle,
+  themaId,
+  routeConfig,
 } from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
@@ -16,7 +18,6 @@ import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../../server/services/afis/afis-types';
-import { ThemaIDs } from '../../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -28,7 +29,6 @@ import { LinkProps } from '../../../../universal/types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../../config/api';
-import { BagThemas } from '../../../config/thema';
 import { usePhoneScreen } from '../../../hooks/media.hook';
 import {
   useAppStateBagApi,
@@ -120,7 +120,7 @@ function useAfisFacturenApi(
 ) {
   const [facturenByStateApiResponse, fetchFacturen, isApiDataCached] =
     useAppStateBagApi<AfisThemaResponse['facturen']>({
-      bagThema: BagThemas.AFIS,
+      bagThema: `${themaId}_BAG`,
       key: `afis-facturen-${state}`,
     });
 
@@ -161,7 +161,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
     AFIS.content?.facturen ?? null
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.AFIS);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
     facturenListResponse:
@@ -176,7 +176,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
     isListPageLoading:
       state !== 'open' ? isLoading(facturenByStateApiResponse) : false,
     listPageTitle,
-    routes,
+    routeConfig,
     breadcrumbs,
   };
 }
@@ -199,9 +199,10 @@ export function useAfisThemaData() {
     to: urlNaarBelastingen,
   };
 
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.AFIS);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    title: themaTitle,
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
     facturenByState,
@@ -210,7 +211,7 @@ export function useAfisThemaData() {
     isThemaPaginaLoading: isLoading(AFIS),
     listPageTitle,
     linkListItems: [...linkListItems, belastingenLinkListItem],
-    routes,
+    routeConfig,
     breadcrumbs,
     dependencyErrors: {
       open: hasFailedDependency(AFIS, 'open'),
@@ -230,7 +231,7 @@ export function useAfisBetaalVoorkeurenData(
     fetchBusinessPartnerDetails,
     isApiDataCached,
   ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
-    bagThema: BagThemas.AFIS,
+    bagThema: `${themaId}_BAG`,
     key: `afis-betaalvoorkeuren`,
   });
 
@@ -247,6 +248,7 @@ export function useAfisBetaalVoorkeurenData(
   ]);
 
   return {
+    title: 'Betaalvoorkeuren',
     businesspartnerDetails: businesspartnerDetailsApiResponse.content,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails: isLoading(

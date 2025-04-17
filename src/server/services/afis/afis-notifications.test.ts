@@ -7,6 +7,7 @@ import {
   fetchAfisNotifications,
 } from './afis-notifications';
 import { AfisFactuur, AfisFactuurStatus } from './afis-types';
+import { themaId } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import {
   apiDependencyError,
@@ -108,7 +109,7 @@ describe('fetchAfisNotifications', () => {
           {
             id: 'facturen-open-notification',
             datePublished: '2023-01-01T00:00:00.000Z',
-            themaID: 'AFIS',
+            themaID: themaId,
             title: 'Betaal tijdig om extra kosten te voorkomen',
             description: `U heeft 1 openstaande facturen.`,
             link: {

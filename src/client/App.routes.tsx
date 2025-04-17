@@ -10,7 +10,7 @@ import { LandingRoutes } from './pages/Landing/Landing-routes';
 import { MyNotificationsRoutes } from './pages/MyNotifications/MyNotifications-routes';
 import { NotFoundRoutes } from './pages/NotFound/NotFound-routes';
 import { SearchRoutes } from './pages/Search/Search-routes';
-import { AfisRoutes } from './pages/Thema/Afis/Afis-routes';
+import { AfisRoutes } from './pages/Thema/Afis/Afis-render-config';
 import { AfvalRoutes } from './pages/Thema/Afval/Afval-routes';
 import { AVGRoutes } from './pages/Thema/AVG/AVG-routes';
 import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-routes';

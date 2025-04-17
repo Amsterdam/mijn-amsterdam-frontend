@@ -2,16 +2,16 @@ import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
+import { AfisThemaPagina } from './Afis';
+import { routeConfig } from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisFacturenByStateResponse,
 } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { AppState } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { AfisThemaPagina } from './Afis';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 
@@ -37,9 +37,11 @@ const mockFacturen: AfisFacturenByStateResponse = {
         documentDownloadLink: 'https://download.example.com/F001',
         factuurDocumentId: '1',
         link: {
-          to: AppRoutes.AFIS,
+          to: routeConfig.themaPage.path,
           title: 'Bekijk uw openstaande facturen',
         },
+        amountPayed: '',
+        amountPayedFormatted: '',
       },
       {
         id: '2',
@@ -59,9 +61,11 @@ const mockFacturen: AfisFacturenByStateResponse = {
         documentDownloadLink: 'https://download.example.com/F003',
         factuurDocumentId: '2',
         link: {
-          to: AppRoutes.AFIS,
+          to: routeConfig.themaPage.path,
           title: 'Bekijk uw openstaande facturen',
         },
+        amountPayed: '',
+        amountPayedFormatted: '',
       },
     ],
   },
@@ -86,9 +90,11 @@ const mockFacturen: AfisFacturenByStateResponse = {
         documentDownloadLink: 'https://download.example.com/F002',
         factuurDocumentId: '3',
         link: {
-          to: AppRoutes.AFIS,
+          to: routeConfig.themaPage.path,
           title: 'Bekijk uw afgehandelde facturen',
         },
+        amountPayed: '',
+        amountPayedFormatted: '',
       },
     ],
   },
@@ -125,8 +131,8 @@ describe('<Afis />', () => {
       status: 'OK',
     });
 
-  const routeEntry = generatePath(AppRoutes.AFIS);
-  const routePath = AppRoutes.AFIS;
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
 
   function Component() {
     return (
