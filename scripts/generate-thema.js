@@ -69,9 +69,7 @@ const featureToggleName = `${titleName}Active`;
 const themaCoreImportsTemplate = `
 import { listPageParamKind } from './${titleName}-thema-config';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';
-
-`;
+import type { ThemaRoutesConfig } from '../../../config/thema-types';`;
 
 const themaCoreTemplate = `
 ${hasCoreConfig ? themaCoreImportsTemplate : ''}
@@ -212,15 +210,15 @@ import {
   featureToggle,
 } from './${titleName}-thema-config';
 import { ${detailPageComponentName} } from './${detailPageComponentName}';
-import { ${iconComponentName} } from './${iconComponentName}';
+import { default as ${iconComponentName} } from './${iconComponentName}.svg?react';
 import { ${listPageComponentName} } from './${listPageComponentName}';
 import { ${themaPageComponentName} } from './${themaPageComponentName}';
-import { isLoading } from '../../../universal/helpers/api';
-import { type AppState } from '../../../universal/types/App.types';
+import { isLoading } from '../../../../universal/helpers/api';
+import { type AppState } from '../../../../universal/types/App.types';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
-} from '../../config/thema-types';
+} from '../../../config/thema-types';
 
 export const ${titleName}Routes = [
   {
@@ -259,7 +257,8 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
 
 const fileNameCoreConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-core-config.ts`;
 const fileNameThemaConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-config.ts`;
-const fileNameRenderConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-render-config.ts`;
+const fileNameRenderConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-render-config.tsx`;
+const svgFileName = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}Icon.svg`;
 
 if (hasRenderConfig || hasThemaConfig || hasCoreConfig) {
   fs.mkdirSync(path.dirname(fileNameThemaConfig), { recursive: true });
@@ -281,6 +280,17 @@ if (hasRenderConfig) {
   fs.writeFileSync(fileNameRenderConfig, renderConfigTemplate, {
     encoding: 'utf-8',
   });
+  fs.writeFileSync(
+    svgFileName,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+  <path
+    d="M18.593 17.812a.94.94 0 0 1 0 1.326l-2.217 2.216 2.12 2.12L16.975 25H9.126l-5 5L2 27.879l4.99-4.99V15.01l1.521-1.521 2.12 2.12 2.217-2.217a.937.937 0 1 1 1.325 1.326l-2.216 2.217 3.093 3.093 2.217-2.216a.94.94 0 0 1 1.326 0M30 4.121 27.879 2l-4.907 4.907-.9-.9h-6l-3.1 3 10 10 3.1-3v-6l-.982-.982z"
+    data-name="plat klein"></path>
+</svg>`,
+    {
+      encoding: 'utf-8',
+    }
+  );
 }
 
 hasCoreConfig && console.log(`Core config generated at ${fileNameCoreConfig}`);
