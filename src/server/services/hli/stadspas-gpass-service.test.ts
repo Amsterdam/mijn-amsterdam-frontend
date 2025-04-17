@@ -803,7 +803,6 @@ describe('stadspas-gpass-service', () => {
 
     const requestId = '123';
     const transactionKeysEncrypted = '123';
-    const passNumber = 123;
 
     test('Uses decrypt and fetcher', async () => {
       remoteApi.post(
@@ -820,18 +819,10 @@ describe('stadspas-gpass-service', () => {
     });
 
     test('Will block a pass that is active', async () => {
-      remoteApi
-        .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)
-        .reply(200, { actief: false });
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
         content: { actief: true },
       });
-
-      remoteApi.post(
-        BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
-      );
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
         content: null,
@@ -843,18 +834,10 @@ describe('stadspas-gpass-service', () => {
 
     test('Can only block and not toggle the stadspas', async () => {
       const PASSNUMBER = 123;
-      remoteApi
-        .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)
-        .reply(200, { pasnummer: PASSNUMBER, actief: false });
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
         content: { pasnummer: PASSNUMBER, actief: false },
       });
-
-      remoteApi.post(
-        BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
-      );
 
       const response = await mutateGpassBlockPass(
         requestId,
@@ -864,6 +847,27 @@ describe('stadspas-gpass-service', () => {
       expect(response).toStrictEqual({
         content: { [PASSNUMBER]: false },
         status: 'OK',
+      });
+    });
+
+    test('Returns error status if invalid response from source API', async () => {
+      const PASSNUMBER = 123;
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { pasnummer: PASSNUMBER, actief: 'INVALID' },
+      });
+
+      const response = await mutateGpassBlockPass(
+        requestId,
+        PASSNUMBER,
+        '123456789'
+      );
+      expect(response).toStrictEqual({
+        code: 502,
+        content: null,
+        message:
+          "Could not determine 'actief' state of pass because of an invalid response",
+        status: 'ERROR',
       });
     });
   });
