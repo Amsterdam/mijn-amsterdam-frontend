@@ -80,6 +80,7 @@ export function AfisBetaalVoorkeuren() {
   } = useAfisThemaData();
 
   const {
+    title,
     businesspartnerDetails,
     businessPartnerDetailsLabels,
     eMandates,
@@ -214,7 +215,7 @@ export function AfisBetaalVoorkeuren() {
 
   return (
     <ThemaPagina
-      title="Betaalvoorkeuren"
+      title={title}
       isError={
         isThemaPaginaError ||
         (hasBusinessPartnerDetailsError && hasEmandatesError)

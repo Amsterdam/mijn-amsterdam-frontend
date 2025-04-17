@@ -2,7 +2,7 @@ import { DocumentTitlesConfig, ThemaMenuItem } from './thema-types';
 import { AppRoutes } from '../../universal/config/routes';
 import { ThemaID, ThemaIDs } from '../../universal/config/thema';
 import { AppState, BagThema } from '../../universal/types/App.types';
-import { getAfisListPageDocumentTitle } from '../pages/Thema/Afis/Afis-thema-config';
+import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { getAVGListPageDocumentTitle } from '../pages/Thema/AVG/AVG-thema-config';
 import { getBezwarenListPageDocumentTitle } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
@@ -39,7 +39,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
  * @deprecated Use the titles exported from the Thema-config files instead.
  */
 export const ThemaTitles = {
-  AFIS: 'Facturen en betalen',
   AFVAL: 'Afval',
   AVG: 'AVG persoonsgegevens',
   BELASTINGEN: 'Belastingen',
@@ -78,12 +77,6 @@ export const PageTitleMain = 'Mijn Amsterdam';
  * @deprecated Use the documentTitles exported from the Thema-config files instead.
  */
 export const DocumentTitles: DocumentTitlesConfig = {
-  // Afis
-  [AppRoutes.AFIS]: `${ThemaTitles.AFIS} | overzicht`,
-  [AppRoutes['AFIS/FACTUREN']]: getAfisListPageDocumentTitle(ThemaTitles.AFIS),
-  [AppRoutes['AFIS/BETAALVOORKEUREN']]:
-    `Betaalvoorkeuren | ${ThemaTitles.AFIS}`,
-
   // Burgerzaken
   [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
   [AppRoutes['BURGERZAKEN/LIST']]:
@@ -203,18 +196,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   ...profileMenuItems,
   menuItemInkomen,
   menuItemJeugd,
+  menuItemAfis,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.AFIS,
-    id: ThemaIDs.AFIS,
-    to: AppRoutes.AFIS,
-    profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.VAREN,

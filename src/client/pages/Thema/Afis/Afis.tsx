@@ -14,7 +14,6 @@ import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ThemaTitles } from '../../../config/thema';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
@@ -104,9 +103,10 @@ export function AfisThemaPagina() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     listPageTitle,
-    routes,
+    routeConfig,
     linkListItems,
     belastingenLinkListItem,
+    title,
   } = useAfisThemaData();
 
   const isPartialError = entries(dependencyErrors).some(
@@ -118,7 +118,7 @@ export function AfisThemaPagina() {
       <MaButtonRouterLink
         className="ams-mb--sm"
         variant="secondary"
-        href={routes.betaalVoorkeuren}
+        href={routeConfig.detailPage.path}
       >
         Betaalvoorkeuren
       </MaButtonRouterLink>
@@ -175,7 +175,7 @@ export function AfisThemaPagina() {
 
   return (
     <ThemaPagina
-      title={ThemaTitles.AFIS}
+      title={title}
       isError={isThemaPaginaError}
       isPartialError={isPartialError}
       errorAlertContent={pageContentErrorAlert}
