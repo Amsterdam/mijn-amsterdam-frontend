@@ -1,10 +1,12 @@
 import Mockdate from 'mockdate';
+import { Mock } from 'vitest';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { fetchStadspasBudgetTransactions } from './stadspas';
+import { blockStadspas, fetchStadspasBudgetTransactions } from './stadspas';
 import {
   fetchGpassDiscountTransactions,
   fetchStadspassen_,
+  mutateGpassBlockPass,
 } from './stadspas-gpass-service';
 import {
   Stadspas,
@@ -16,6 +18,7 @@ import {
   StadspasPasHouderResponse,
 } from './stadspas-types';
 import { remoteApi } from '../../../testing/utils';
+import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
@@ -32,7 +35,13 @@ const authProfileAndToken: AuthProfileAndToken = {
     sid: 'my-unique-session-id',
   },
   token: '',
+  expiresAtMilliseconds: 0,
 };
+
+vi.mock('./stadspas-gpass-service.ts', async (importOriginal) => ({
+  ...(await importOriginal()),
+  mutateGpassBlockPass: vi.fn(),
+}));
 
 function createStadspasHouderResponse(): StadspasPasHouderResponse {
   const stadspasHouderResponse = {
@@ -586,6 +595,34 @@ describe('stadspas services', () => {
         content: expectedResponse,
         status: 'OK',
       });
+    });
+  });
+
+  describe('blockStadspas', async () => {
+    test('Happy path', async () => {
+      const [transactionsKeyEncrypted] = encryptDecrypt.encrypt(
+        `another-session-id:0363000123-123:123123123`
+      );
+      (mutateGpassBlockPass as Mock).mockReturnValueOnce(
+        apiSuccessResult({ '6012345678901': false })
+      );
+      const response = await blockStadspas('12345', transactionsKeyEncrypted);
+      expect(response).toMatchInlineSnapshot(
+        {
+          content: {
+            '6012345678901': false,
+          },
+          status: 'OK',
+        },
+        `
+        {
+          "content": {
+            "6012345678901": false,
+          },
+          "status": "OK",
+        }
+      `
+      );
     });
   });
 });

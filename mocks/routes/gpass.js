@@ -96,8 +96,8 @@ module.exports = [
             const pasnummer = req.params.pasnummer;
             const pas = allPasses.find((pas) => pas.pasnummer == pasnummer);
 
-            // The pas is now blocked.
-            pas.actief = false;
+            // Mutate pas in memory to simulate a stateful API.
+            pas.actief = !pas.actief;
             // Blocking a pass sets it `expiry_date` to now.
             pas.expiry_date = new Date().toString();
 
@@ -105,7 +105,7 @@ module.exports = [
               ...RESPONSES.STADSPAS,
               pasnummer,
               expiry_date: pas.expiry_date,
-              actief: false,
+              actief: pas.actief,
             });
           },
         },

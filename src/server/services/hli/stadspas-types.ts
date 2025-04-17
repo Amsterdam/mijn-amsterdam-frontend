@@ -183,6 +183,7 @@ export interface StadspasFrontend extends Stadspas {
   urlTransactions: string;
   transactionsKeyEncrypted: string;
   blockPassURL: string | null;
+  unblockPassURL: string | null;
   link?: LinkProps;
 }
 

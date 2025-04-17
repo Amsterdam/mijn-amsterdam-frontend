@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 
-import { blockStadspas, fetchStadspasBudgetTransactions } from './stadspas';
+import {
+  blockStadspas,
+  fetchStadspasBudgetTransactions,
+  unblockStadspas,
+} from './stadspas';
 import { StadspasBudget, StadspasFrontend } from './stadspas-types';
 import { getAuth } from '../../auth/auth-helpers';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -54,6 +58,25 @@ export async function handleBlockStadspas(
   }
 
   const response = await blockStadspas(
+    res.locals.requestID,
+    req.params.transactionsKeyEncrypted,
+    authProfileAndToken.profile.sid
+  );
+
+  return sendResponse(res, response);
+}
+
+export async function handleUnblockStadspas(
+  req: TransactionKeysEncryptedRequest,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const response = await unblockStadspas(
     res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     authProfileAndToken.profile.sid
