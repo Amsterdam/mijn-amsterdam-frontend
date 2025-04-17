@@ -30,6 +30,7 @@ import {
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
+  apiErrorResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
@@ -366,7 +367,33 @@ export async function fetchGpassDiscountTransactions(
 type PasblokkadeResponse =
   ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>;
 
-export async function mutateGpassTogglePass(
+export async function mutateGpassBlockPass(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<PasblokkadeResponse> {
+  return mutateGpassTogglePassChecked(
+    requestID,
+    passNumber,
+    administratienummer,
+    (pass) => !pass.actief
+  );
+}
+
+export async function mutateGpassUnblockPass(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<PasblokkadeResponse> {
+  return mutateGpassTogglePassChecked(
+    requestID,
+    passNumber,
+    administratienummer,
+    (pas) => pas.actief
+  );
+}
+
+async function mutateGpassTogglePass(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string
@@ -383,58 +410,41 @@ export async function mutateGpassTogglePass(
   return requestData<PasblokkadeByPasnummer>(config, requestID);
 }
 
+async function mutateGpassTogglePassChecked(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string,
+  sendMutatingRequestPredicate: (pas: StadspasDetailSource) => boolean
+): Promise<PasblokkadeResponse> {
+  const passResponse = await fetchStadspasSource(
+    requestID,
+    passNumber,
+    administratienummer
+  );
+  if (passResponse.status !== 'OK') {
+    return passResponse;
+  }
+
+  // This may not give unexpected results so we do extra typechecking on the source input.
+  if (typeof passResponse.content?.actief !== 'boolean') {
+    return apiErrorResult(
+      "Could not determine 'actief' state of pass because of an invalid response",
+      null,
+      HttpStatusCode.BadGateway
+    );
+  }
+
+  if (sendMutatingRequestPredicate(passResponse.content)) {
+    return apiSuccessResult(transformTogglePassResponse(passResponse.content));
+  }
+
+  return mutateGpassTogglePass(requestID, passNumber, administratienummer);
+}
+
 function transformTogglePassResponse(
   pas: StadspasDetailSource
 ): PasblokkadeByPasnummer {
   return { [pas.pasnummer]: pas.actief };
-}
-
-export async function mutateGpassUnblockPass(
-  requestID: RequestID,
-  passNumber: number,
-  administratienummer: string
-): Promise<PasblokkadeResponse> {
-  const passResponse = await fetchStadspasSource(
-    requestID,
-    passNumber,
-    administratienummer
-  );
-  if (passResponse.status !== 'OK') {
-    return passResponse;
-  }
-  // This may not give unexpected results so we do extra typechecking on the source input.
-  if (
-    typeof passResponse.content?.actief !== 'boolean' ||
-    passResponse.content.actief
-  ) {
-    return apiSuccessResult(transformTogglePassResponse(passResponse.content));
-  }
-
-  return mutateGpassTogglePass(requestID, passNumber, administratienummer);
-}
-
-export async function mutateGpassBlockPass(
-  requestID: RequestID,
-  passNumber: number,
-  administratienummer: string
-): Promise<PasblokkadeResponse> {
-  const passResponse = await fetchStadspasSource(
-    requestID,
-    passNumber,
-    administratienummer
-  );
-  if (passResponse.status !== 'OK') {
-    return passResponse;
-  }
-  // This may not give unexpected results so we do extra typechecking on the source input.
-  if (
-    typeof passResponse.content?.actief !== 'boolean' ||
-    !passResponse.content.actief
-  ) {
-    return apiSuccessResult(transformTogglePassResponse(passResponse.content));
-  }
-
-  return mutateGpassTogglePass(requestID, passNumber, administratienummer);
 }
 
 export const forTesting = {
