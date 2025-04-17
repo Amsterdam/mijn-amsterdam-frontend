@@ -11,19 +11,11 @@ import {
 } from '../pages/Burgerzaken/helpers';
 import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
 import { menuItem as menuItemInkomen } from '../pages/Inkomen/Inkomen-render-config';
-import {
-  documentTitles as documentTitlesInkomen,
-  themaTitle as inkomenThemaTitle,
-} from '../pages/Inkomen/Inkomen-thema-config';
+import { documentTitles as documentTitlesInkomen } from '../pages/Inkomen/Inkomen-thema-config';
 import { menuItem as menuItemJeugd } from '../pages/Jeugd/Jeugd-render-config';
 import { documentTitles as documentTitlesJeugd } from '../pages/Jeugd/Jeugd-thema-config';
 import { menuItems as profileMenuItems } from '../pages/Profile/Profile-render-config';
-import {
-  documentTitles as documentTitlesProfile,
-  themaTitle as profileThemaTitle,
-  themaIdBRP,
-  themaIdKVK,
-} from '../pages/Profile/Profile-thema-config';
+import { documentTitles as documentTitlesProfile } from '../pages/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
@@ -54,7 +46,6 @@ export const ThemaTitles = {
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
   BURGERZAKEN: 'Paspoort en ID-kaart',
-  BUURT: 'Mijn buurt',
   ERFPACHT: 'Erfpacht',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
@@ -72,11 +63,6 @@ export const ThemaTitles = {
   VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
-
-  // New thema config references
-  [inkomenThemaTitle]: inkomenThemaTitle,
-  [themaIdBRP]: profileThemaTitle.BRP,
-  [themaIdKVK]: profileThemaTitle.KVK,
 } as const;
 /**
  * @deprecated Use the titles exported from the Thema-config files instead.
@@ -189,7 +175,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
 
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
-  [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',

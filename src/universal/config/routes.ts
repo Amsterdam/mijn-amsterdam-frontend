@@ -1,3 +1,6 @@
+/**
+ * @deprecated This file is deprecated. Use the new routes file instead.
+ */
 export const AppRoutes = {
   ROOT: '/',
   HOME: '/',
@@ -17,9 +20,7 @@ export const AppRoutes = {
   AFIS: '/facturen-en-betalen',
   'AFIS/BETAALVOORKEUREN': '/facturen-en-betalen/betaalvoorkeuren',
   'AFIS/FACTUREN': '/facturen-en-betalen/facturen/lijst/:state/:page?',
-  BRP: '/persoonlijke-gegevens',
-  KVK: '/gegevens-handelsregister',
-  BUURT: '/buurt',
+
   BEZWAREN: '/bezwaren',
   'BEZWAREN/DETAIL': '/bezwaren/:uuid',
   'BEZWAREN/LIST': '/bezwaren/lijst/:kind/:page?',

@@ -81,17 +81,6 @@ export const FeatureToggle = {
   // Mijn Gegegvens -> aantal bewoners op adres.
   residentCountActive: true,
 
-  // Sport dataset op de kaart
-  sportDatasetsActive: true,
-  // Bekendmakingen dataset op de kaart
-  bekendmakingenDatasetActive: false,
-  // Evenementen dataset op de kaart
-  evenementenDatasetActive: false,
-  // Laadpalen dataset op de kaart
-  laadpalenActive: !IS_PRODUCTION,
-  // Meldingen dataset op de kaart
-  meldingenBuurtActive: true,
-
   // Subsidie patroon C
   subsidieActive: true,
 
@@ -114,15 +103,10 @@ export const FeatureToggle = {
   vergunningenActive: true,
   decosServiceActive: true,
 
-  // WIOR Kaar data
-  wiorDatasetActive: true,
-  // WIOR Meldingen aan de hand van de kaartdata.
-  wiorMeldingen: true,
-
   // Zorgned WMO documenten
   zorgnedDocumentAttachmentsActive: true,
   // Zorgned besluit obv bijgevoegd document
   zorgnedDocumentDecisionDateActive: true,
   // Zorg thema actief
   zorgv2ThemapaginaActive: true,
-};
+} as const;

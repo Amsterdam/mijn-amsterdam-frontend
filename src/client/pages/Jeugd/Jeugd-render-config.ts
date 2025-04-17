@@ -24,7 +24,7 @@ export const JeugdRoutes = [
   },
 ];
 
-export const menuItem: ThemaMenuItem = {
+export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
   profileTypes: ['private'],

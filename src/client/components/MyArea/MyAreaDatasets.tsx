@@ -6,6 +6,7 @@ import isEqual from 'lodash.isequal';
 import { useLocation, useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
+import { routeConfig, themaId } from './MyArea-thema-config';
 import { toBoundLiteral } from './MyArea.helpers';
 import {
   getQueryConfig,
@@ -28,8 +29,7 @@ import {
   DatasetFilterSelection,
   DatasetId,
 } from '../../../universal/config/myarea-datasets';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ErrorMessages } from '../ErrorMessages/ErrorMessages';
+import { ErrorMessagesContent } from '../ErrorMessages/ErrorMessages';
 
 interface MyAreaDatasetsProps {
   datasetIds?: DatasetId[];
@@ -131,7 +131,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       return;
     }
 
-    const url = `${AppRoutes.BUURT}?${params}`;
+    const url = `${routeConfig.themaPage.path}?${params}`;
 
     navigate(url);
   }, [search, activeDatasetIds, activeFilters, loadingFeature]);
@@ -183,7 +183,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         params.set('zoom', currentZoom);
         params.set('center', currentCenter);
 
-        const url = `${AppRoutes.BUURT}?${params}`;
+        const url = `${routeConfig.themaPage.path}?${params}`;
         navigate(url);
       }
     },
@@ -257,12 +257,12 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         </div>
       )}
       {!!errorResults.length && (
-        <ErrorMessages
+        <ErrorMessagesContent
           key="DatasetErrorMessages"
           title="Wij kunnen de informatie over de locatie nu niet tonen."
           errors={errorResults.map((result) => {
             return {
-              stateKey: result?.id || 'BUURT',
+              stateKey: result?.id || themaId,
               name: result?.id || 'dataset',
               error: result?.message,
             };

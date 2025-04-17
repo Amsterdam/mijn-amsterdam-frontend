@@ -20,9 +20,9 @@ import {
 } from './useSearch';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { bffApi } from '../../../testing/utils';
-import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
+import { routeConfig } from '../MyArea/MyArea-thema-config';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {
@@ -42,7 +42,7 @@ const vergunningenData = [
     status: 'Ontvangen',
     description: 'Amstel 1 GPK aanvraag',
     link: {
-      to: AppRoutes.BUURT + '/vergunningen/detail/1726584505',
+      to: routeConfig.themaPage.path + '/vergunningen/detail/1726584505',
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
   },

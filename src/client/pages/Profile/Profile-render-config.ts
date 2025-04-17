@@ -28,7 +28,10 @@ export const ProfileRoutes = [
   },
 ];
 
-export const menuItems: ThemaMenuItem[] = [
+export const menuItems: [
+  ThemaMenuItem<typeof themaIdBRP>,
+  ThemaMenuItem<typeof themaIdKVK>,
+] = [
   {
     title: themaTitle.BRP,
     id: themaIdBRP,

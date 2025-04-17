@@ -7,6 +7,8 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { MyNotificationsPage } from './MyNotifications';
 import { ThemaIDs } from '../../../universal/config/thema';
+import { themaId as themaIdInkomen } from '../Inkomen/Inkomen-thema-config';
+import { themaIdBRP } from '../Profile/Profile-thema-config';
 
 const testState: any = {
   NOTIFICATIONS: {
@@ -18,6 +20,7 @@ const testState: any = {
         description: 'Notificatie1',
         datePublished: '2020-07-24',
         themaID: ThemaIDs.HOME,
+        themaTitle: 'Home',
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -28,7 +31,8 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        themaID: ThemaIDs.BRP,
+        themaID: themaIdBRP,
+        themaTitle: 'Mijn gegevens',
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -39,7 +43,8 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        themaID: ThemaIDs.INKOMEN,
+        themaID: themaIdInkomen,
+        themaTitle: 'Inkomen',
         isAlert: true,
         link: {
           to: '/item-3',

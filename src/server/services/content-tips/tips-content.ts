@@ -26,6 +26,8 @@ import {
   hasBudget,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
+import { themaId as themaIdInkomen } from '../../../client/pages/Inkomen/Inkomen-thema-config';
+import { themaIdBRP } from '../../../client/pages/Profile/Profile-thema-config';
 import { ThemaIDs } from '../../../universal/config/thema';
 
 const DAYS = 90;
@@ -38,7 +40,7 @@ export const tips: ContentTipSource[] = [
     dateActiveEnd: null,
     datePublished: '2019-08-18',
     title: 'Tip: Bekijk de afvalpunten in de buurt',
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     themaID: ThemaIDs.AFVAL,
     description: 'Kijk waar het dichtstbijzijnde Afvalpunt is.',
     predicates: [isLivingInAmsterdamLessThanNumberOfDays(DAYS)],
@@ -55,7 +57,7 @@ export const tips: ContentTipSource[] = [
     dateActiveEnd: null,
     datePublished: '2019-10-22',
     title: 'Tip: Op stap met uw Stadspas',
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     themaID: ThemaIDs.HLI,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een Stadspas hebt aangevraagd.',
@@ -74,8 +76,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-11-25',
     title: 'Tip: Download de 020werkt-app',
-    themaID: ThemaIDs.INKOMEN,
-    profileTypes: ['private', 'commercial'] as ProfileType[],
+    themaID: themaIdInkomen,
+    profileTypes: ['private', 'commercial'],
     description:
       'Via de 020werkt-app krijgt u informatie  over werk, inkomen en meedoen in de wijk. De app is gratis, anoniem en makkelijk in gebruik.',
     predicates: [
@@ -96,7 +98,7 @@ export const tips: ContentTipSource[] = [
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
     themaID: ThemaIDs.HLI,
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
     predicates: [hasValidRecentStadspasRequest, hasKidsBetweenAges2And18],
@@ -116,8 +118,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-12-20',
     title: 'Tip: Hulp bij geldproblemen',
-    themaID: ThemaIDs.INKOMEN,
-    profileTypes: ['private', 'commercial'] as ProfileType[],
+    themaID: themaIdInkomen,
+    profileTypes: ['private', 'commercial'],
     description:
       'Is uw inkomen te laag om alle rekeningen te betalen of hebt u schulden? Meld u aan voor gratis hulp',
     predicates: [
@@ -137,8 +139,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-10-16',
     title: 'Tip: Gratis ID-kaart om te stemmen',
-    themaID: ThemaIDs.BRP,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
     description:
       'U heeft een geldige ID-kaart of geldig paspoort nodig om te stemmen. Hebt u een Stadspas met groene stip? Dan kunt u gratis een nieuwe ID-kaart krijgen.',
     predicates: [
@@ -162,8 +164,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-07-03',
     title: 'Tip: Welkom in Amsterdam',
-    themaID: ThemaIDs.BRP,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
     description:
       'U woont in Amsterdam, welkom! Blijf op de hoogte van de producten en diensten die u heeft bij de gemeente Amsterdam.nl.',
     predicates: [
@@ -184,8 +186,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-11-23',
     title: 'Vraag een gratis ID-kaart aan',
-    themaID: ThemaIDs.BRP,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
     description:
       'Uw ID-kaart en/of paspoort zijn niet meer geldig. Met de Stadspas krijgt u gratis een nieuwe ID-kaart.',
     predicates: [
@@ -209,8 +211,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-04-04',
     title: 'Overgangsregeling: achternaam van kind kiezen',
-    themaID: ThemaIDs.BRP,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
     description:
       'Op 1 januari 2024 is de wet Gecombineerde achternaam ingegaan. In 2024 is hiervoor een overgangsregeling. Dit betekent dat u als ouders de achternaam van uw kinderen kunt wijzigen naar een combinatie van allebei uw achternamen.',
     predicates: [hasOldestKidBornFrom2016, isMarriedOrLivingTogether],
@@ -229,8 +231,8 @@ export const tips: ContentTipSource[] = [
     active: false,
     datePublished: '2021-02-02',
     title: 'Tip: Breng je basis op orde',
-    themaID: ThemaIDs.INKOMEN,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdInkomen,
+    profileTypes: ['private'],
     description:
       'Met Ping Ping weet je precies wat je moet regelen als je 18 wordt, gaat werken, gaat studeren of op jezelf gaat wonen.',
     predicates: [isBetween17and18],
@@ -250,7 +252,7 @@ export const tips: ContentTipSource[] = [
     datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
     themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
     predicates: [
@@ -272,7 +274,7 @@ export const tips: ContentTipSource[] = [
     datePublished: '2021-06-15',
     title: 'Tip: Overgangsrecht bij Bed and breakfast',
     themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     description:
       'Hebt u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
     predicates: [hasBnBTransitionRight],
@@ -292,7 +294,7 @@ export const tips: ContentTipSource[] = [
     datePublished: '2021-06-15',
     title: 'Tip: Bed & breakfast',
     themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
     predicates: [hasBnBVergunning, not(hasVerhuurRegistrations), isMokum],
@@ -310,8 +312,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-08-01',
     title: 'Tip: Sportvergoeding voor kinderen',
-    themaID: ThemaIDs.INKOMEN,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdInkomen,
+    profileTypes: ['private'],
     description:
       'Hebt u moeite om sportactiviteiten voor uw kind te betalen? Regel de vergoeding via Stichting SINA (Samen is niet alleen).',
     predicates: [not(hasStadspasGroeneStip), isReceivingSubsidy],
@@ -330,9 +332,9 @@ export const tips: ContentTipSource[] = [
     datePublished: '2023-07-28',
     title: 'Tip: Gratis openbaar vervoer voor kinderen',
     predicates: [hasKidsBetweenAges4And11, isMokum],
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     isNotification: true,
-    themaID: ThemaIDs.INKOMEN,
+    themaID: themaIdInkomen,
     description:
       'Kinderen van 4 tot en met 11 jaar kunnen van 22 juli tot en met 30 november gratis reizen met het openbaar vervoer in Amsterdam. Elk kind heeft een ov-chipkaart nodig.',
     reason:
@@ -351,8 +353,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    themaID: ThemaIDs.INKOMEN,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdInkomen,
+    profileTypes: ['private'],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
     predicates: [hasKidsBetweenAges4And11, isMokum],
@@ -371,8 +373,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2024-07-01',
     title: 'Gratis openbaar vervoer voor kinderen',
-    themaID: ThemaIDs.INKOMEN,
-    profileTypes: ['private'] as ProfileType[],
+    themaID: themaIdInkomen,
+    profileTypes: ['private'],
     description:
       'Je kunt van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. Hiervoor heb je een ov-chipkaart nodig. Gratis reizen kun je vanaf 1 juli 2024 aanvragen.',
     predicates: [isBetween4and12, isMokum],
@@ -392,7 +394,7 @@ export const tips: ContentTipSource[] = [
     datePublished: '2025-01-16',
     title: '€300 korting op witgoed',
     themaID: ThemaIDs.HLI,
-    profileTypes: ['private'] as ProfileType[],
+    profileTypes: ['private'],
     description:
       'Met je Stadspas krijg je € 300,- korting op een nieuwe energiezuinige wasmachine of koelkast. Dit helpt je om geld te besparen op je energierekening.',
     predicates: [is18OrOlder, hasStadspasGroeneStip, hasBudget('witgoed')],
