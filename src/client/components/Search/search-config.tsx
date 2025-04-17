@@ -9,7 +9,7 @@ import {
   AfisFactuur,
 } from '../../../server/services/afis/afis-types';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { Bezwaar } from '../../../server/services/bezwaren/types';
+import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import {
   ErfpachtDossier,
@@ -428,7 +428,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: FeatureToggle.bezwarenActive,
     stateKey: 'BEZWAREN' as AppStateKey,
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: Bezwaar) {
+    displayTitle(item: BezwaarFrontend) {
       return (term: string) =>
         displayPath(term, [`Bezwaar ${item.identificatie}`]);
     },

@@ -1,7 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
-import { Bezwaar } from '../../../../server/services/bezwaren/types';
+import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
@@ -28,7 +28,7 @@ export function BezwarenThemaPagina() {
       { title, displayProps, filter, textNoContent, listPageRoute, maxItems },
     ]) => {
       return (
-        <ThemaPaginaTable<Bezwaar>
+        <ThemaPaginaTable<BezwaarFrontend>
           key={kind}
           title={title}
           listPageRoute={listPageRoute}

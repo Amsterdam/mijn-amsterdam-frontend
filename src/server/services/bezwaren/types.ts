@@ -38,7 +38,7 @@ export interface BezwaarSourceData {
   kenmerken: Kenmerk[];
 }
 
-export type Bezwaar = {
+export type BezwaarFrontend = {
   identificatie: string;
   uuid: string;
   fetchUrl: string | null;

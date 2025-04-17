@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './BezwarenDetail.module.scss';
 import { useBezwarenDetailData } from './useBezwarenDetailData.hook';
-import { Bezwaar } from '../../../../server/services/bezwaren/types';
+import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { entries } from '../../../../universal/helpers/utils';
 import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
@@ -12,9 +12,9 @@ import { TextClamp } from '../../../components/TextClamp/TextClamp';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 type BezwaarDetailContentProps = {
-  bezwaar: Bezwaar;
+  bezwaar: BezwaarFrontend;
   documentCategories: string[];
-  documents: Bezwaar['documenten'];
+  documents: BezwaarFrontend['documenten'];
 };
 
 function BezwaarDetailContent({
