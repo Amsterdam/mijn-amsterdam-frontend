@@ -1,4 +1,4 @@
-LIST="Krefia,Horeca,Afis,AVG,Parkeren,Bodem,Bezwaren,Zorg,Vergunningen,Varen,Afval,HLI,Burgerzaken,ToeristischeVerhuur,Erfpacht,Klachten"
+LIST="Krefia,Horeca,AVG,Parkeren,Bodem,Bezwaren,Zorg,Vergunningen,Varen,Afval,HLI,Burgerzaken,ToeristischeVerhuur,Erfpacht,Klachten"
 
 IFS=',' read -r -a ITEMS <<< "$LIST"
 
