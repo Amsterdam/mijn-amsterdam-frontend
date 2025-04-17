@@ -4,16 +4,16 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
+import { listPageParamKind, routes } from './Inkomen-thema-config';
+import { InkomenSpecificaties } from './InkomenSpecificaties';
 import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { AppState } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
-import { InkomenSpecificaties } from './InkomenSpecificaties';
 import MockApp from '../../MockApp';
-import { listPageParamKind, routes } from './Inkomen-thema-config';
 
-vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
+vi.mock('../../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {
     ...((await requireActual()) as object),
     encryptSessionIdWithRouteIdParam: () => {

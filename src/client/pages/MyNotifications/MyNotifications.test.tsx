@@ -7,8 +7,8 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { MyNotificationsPage } from './MyNotifications';
 import { ThemaIDs } from '../../../universal/config/thema';
-import { themaId as themaIdInkomen } from '../Inkomen/Inkomen-thema-config';
-import { themaIdBRP } from '../Profile/Profile-thema-config';
+import { themaId as themaIdInkomen } from '../Thema/Inkomen/Inkomen-thema-config';
+import { themaIdBRP } from '../Thema/Profile/Profile-thema-config';
 
 const testState: any = {
   NOTIFICATIONS: {
