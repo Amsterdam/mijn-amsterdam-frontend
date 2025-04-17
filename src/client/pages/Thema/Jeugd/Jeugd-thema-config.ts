@@ -10,7 +10,7 @@ import { toDocumentTitles, toRoutes } from '../../../helpers/thema-config';
 export const zorgnedLeerlingenvervoerActive = !IS_PRODUCTION;
 
 export const themaTitle = 'Onderwijs en Jeugd';
-export const themaId = 'JEUGD';
+export const themaId = 'JEUGD' as const;
 
 const detailRouteBase = '/jeugd/voorziening';
 
@@ -29,10 +29,6 @@ export const routeConfig: ThemaRoutesConfig = {
 
 export const routes = toRoutes(routeConfig);
 export const documentTitles = toDocumentTitles(routeConfig);
-
-export const errorMessage = {
-  [themaId]: themaTitle,
-};
 
 export const linkListItems: LinkProps[] = [
   {

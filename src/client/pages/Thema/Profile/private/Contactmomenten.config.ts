@@ -5,6 +5,7 @@ import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import { ThemaID, ThemaIDs } from '../../../../../universal/config/thema';
 import { SomeOtherString } from '../../../../../universal/helpers/types';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types';
+import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config';
 import { themaId as themaIdInkomen } from '../../Inkomen/Inkomen-thema-config';
 
 export type ContactMomentFrontend = ContactMoment & {
@@ -38,5 +39,5 @@ export const mapperContactmomentToMenuItem: Record<
   'Werk en Inkomen': SVWIv1ORv2,
   Belastingen: ThemaIDs.BELASTINGEN,
   Geldzaken: ThemaIDs.KREFIA,
-  Financiën: ThemaIDs.AFIS,
+  Financiën: themaIdAfis,
 };

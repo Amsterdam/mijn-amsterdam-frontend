@@ -3,13 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
+import { routeConfig } from './Afis-thema-config';
+import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
 import { AfisBusinessPartnerDetailsTransformed } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { AppState } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
 
 const businessPartnerIdEncrypted = 'xxx-123-xxx';
 
@@ -53,7 +53,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
       status: 'OK',
     });
 
-  const routePath = AppRoutes['AFIS/BETAALVOORKEUREN'];
+  const routePath = routeConfig.detailPage.path;
   const routeEntry = generatePath(routePath);
 
   function Component() {

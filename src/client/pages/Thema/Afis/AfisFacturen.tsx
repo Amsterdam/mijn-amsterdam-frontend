@@ -19,7 +19,7 @@ function AfisListPageBody({ state }: { state: AfisFactuurState }) {
 }
 
 export function AfisFacturen() {
-  const { state } = useParams<{ state: AfisFactuurState }>();
+  const { state = 'open' } = useParams<{ state: AfisFactuurState }>();
   const {
     facturenListResponse,
     isListPageError,
@@ -27,7 +27,7 @@ export function AfisFacturen() {
     facturenTableConfig,
     isThemaPaginaError,
     isThemaPaginaLoading,
-    routes,
+    routeConfig,
     breadcrumbs,
   } = useAfisListPageData(state);
 
@@ -43,7 +43,7 @@ export function AfisFacturen() {
         </PageContentCell>
       }
       title={listPageTableConfig.title}
-      appRoute={routes.listPageFacturen}
+      appRoute={routeConfig.listPage.path}
       appRouteParams={{ state }}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
