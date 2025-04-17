@@ -35,6 +35,7 @@ describe('BRP data api + transformation', () => {
           to: '/persoonlijke-gegevens',
         },
         themaID: 'BRP',
+        themaTitle: 'Mijn gegevens',
         title: 'Adres in onderzoek',
       },
       {
@@ -48,6 +49,7 @@ describe('BRP data api + transformation', () => {
           to: '/persoonlijke-gegevens',
         },
         themaID: 'BRP',
+        themaTitle: 'Mijn gegevens',
         title: 'Vertrokken Onbekend Waarheen (VOW)',
       },
     ]);

@@ -2,6 +2,7 @@ import { ThemaIDs } from '../../universal/config/thema';
 import { ThemaTitles } from '../config/thema';
 import { ThemaMenuItem } from '../config/thema-types';
 import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
+import { themaIdBRP } from '../pages/Profile/Profile-thema-config';
 
 describe('useThemaMenuItems', () => {
   test('Parkeren is not active without an Appstate entry.', () => {
@@ -30,7 +31,7 @@ describe('useThemaMenuItems', () => {
 
     const items: ThemaMenuItem[] = [
       {
-        id: ThemaIDs.BRP,
+        id: themaIdBRP,
         profileTypes: ['private'],
         to: 'http://test',
         title: 'Testje!',

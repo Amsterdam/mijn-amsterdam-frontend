@@ -31,7 +31,7 @@ export const InkomenRoutes = [
   { route: routes.themaPage, Component: InkomenThemaPagina },
 ];
 
-export const menuItem: ThemaMenuItem = {
+export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
   to: routes.themaPage,

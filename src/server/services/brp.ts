@@ -9,6 +9,7 @@ import slug from 'slugme';
 import {
   routes,
   themaIdBRP,
+  themaTitle,
 } from '../../client/pages/Profile/Profile-thema-config';
 import { AppRoutes } from '../../universal/config/routes';
 import { ThemaIDs } from '../../universal/config/thema';
@@ -157,6 +158,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   if (adresInOnderzoek) {
     notifications.push({
       themaID: themaIdBRP,
+      themaTitle: themaTitle.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
@@ -175,6 +177,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   if (isOnbekendWaarheen) {
     notifications.push({
       themaID: themaIdBRP,
+      themaTitle: themaTitle.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',

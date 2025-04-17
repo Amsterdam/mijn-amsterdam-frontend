@@ -40,6 +40,9 @@ export const ExcludePageViewTrackingUrls = [
   LOGIN_URL_EHERKENNING,
 ];
 
+/**
+ * @deprecated
+ */
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   ...profileErrorMessage,
   ...jeugdErrorMessage,
@@ -57,7 +60,6 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BEZWAREN: 'Ingediende bezwaren',
   BODEM: 'Bodem: loodmetingen',
 
-  BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   ERFPACHT: 'Erfpacht',
   HLI_regelingen: 'Regelingen bij laag inkomen',
