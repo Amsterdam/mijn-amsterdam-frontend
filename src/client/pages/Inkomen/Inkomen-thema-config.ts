@@ -10,7 +10,10 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../components/Table/TableV2.types';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
+import {
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+} from '../../config/app';
 import { TrackingConfig } from '../../config/routes';
 import { ThemaRoutesConfig } from '../../config/thema-types';
 import {
@@ -18,8 +21,6 @@ import {
   toDocumentTitles,
   toCustomTrackingUrls,
 } from '../../helpers/thema-config';
-
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
 
 export const themaId = 'INKOMEN' as const;
 export const themaTitle = 'Inkomen';
