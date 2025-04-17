@@ -110,6 +110,7 @@ describe('fetchAfisNotifications', () => {
             id: 'facturen-open-notification',
             datePublished: '2023-01-01T00:00:00.000Z',
             themaID: themaId,
+            themaTitle: 'Facturen en betalen',
             title: 'Betaal tijdig om extra kosten te voorkomen',
             description: `U heeft 1 openstaande facturen.`,
             link: {
