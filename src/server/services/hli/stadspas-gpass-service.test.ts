@@ -872,7 +872,7 @@ describe('stadspas-gpass-service', () => {
         '123456789'
       );
       expect(response).toStrictEqual({
-        code: 502,
+        code: 500,
         content: null,
         message:
           "Could not determine 'actief' state of pass because of an invalid response",
