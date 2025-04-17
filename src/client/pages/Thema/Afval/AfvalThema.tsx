@@ -5,6 +5,7 @@ import {
   Paragraph,
 } from '@amsterdam/design-system-react';
 
+import { links, themaTitle } from './Afval-thema-config';
 import styles from './Afval.module.scss';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { getFullAddress } from '../../../../universal/helpers/brp';
@@ -33,11 +34,8 @@ import {
   PageContentV2,
 } from '../../../components/Page/Page';
 import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
-import { ExternalUrls } from '../../../config/app';
-import { ThemaTitles } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
-import { useTermReplacement } from '../../../hooks/useTermReplacement';
 
 interface InstructionCTAProps {
   fraction: AfvalFractionInformationTransformed;
@@ -207,10 +205,9 @@ function AfvalFractionPanels({ fractions }: AfvalFractionPanelsProps) {
   );
 }
 
-export function AfvalInformation() {
+export function AfvalThemaPagina() {
   const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();
-  const termReplace = useTermReplacement();
 
   const isApiReady = !isLoading(MY_LOCATION) && !isLoading(AFVAL);
 
@@ -231,7 +228,7 @@ export function AfvalInformation() {
   return (
     <DetailPageV2>
       <PageContentV2>
-        <PageHeadingV2>{termReplace(ThemaTitles.AFVAL)}</PageHeadingV2>
+        <PageHeadingV2>{themaTitle}</PageHeadingV2>
         <PageContentCell spanWide={8}>
           {profileType === 'private' && (
             <>
@@ -247,24 +244,18 @@ export function AfvalInformation() {
                   Let op deze regels gaan over uw woonadres.
                   <br />
                   Lees hier{' '}
-                  <Link
-                    href={ExternalUrls.AFVAL_COMMERCIAL}
-                    rel="noopener noreferrer"
-                  >
+                  <Link href={links.AFVAL_COMMERCIAL} rel="noopener noreferrer">
                     regels over bedrijfsafval in Amsterdam
                   </Link>
                   .
                 </ErrorAlert>
               )}
               <LinkList>
-                <LinkList.Link
-                  href={ExternalUrls.AFVAL}
-                  rel="noopener noreferrer"
-                >
+                <LinkList.Link href={links.AFVAL} rel="noopener noreferrer">
                   Meer informatie over regels voor afval en hergebruik
                 </LinkList.Link>
                 <LinkList.Link
-                  href={ExternalUrls.AFVAL_MELDING}
+                  href={links.AFVAL_MELDING}
                   rel="noopener noreferrer"
                 >
                   Doe een melding als afval is blijven liggen
@@ -297,13 +288,13 @@ export function AfvalInformation() {
               </Paragraph>
               <LinkList>
                 <LinkList.Link
-                  href={ExternalUrls.AFVAL_COMMERCIAL}
+                  href={links.AFVAL_COMMERCIAL}
                   rel="noopener noreferrer"
                 >
                   Regels bedrijfsafval in Amsterdam
                 </LinkList.Link>
                 <LinkList.Link
-                  href={ExternalUrls.AFVAL_MELDING}
+                  href={links.AFVAL_MELDING}
                   rel="noopener noreferrer"
                 >
                   Doe een melding als afval is blijven liggen
@@ -365,7 +356,7 @@ export function AfvalInformation() {
               <Paragraph className="ams-mb--xl">
                 <MaButtonLink
                   className={styles.ContactLink}
-                  href={ExternalUrls.AFVAL_MELDING_FORMULIER}
+                  href={links.AFVAL_MELDING_FORMULIER}
                 >
                   Klopt de informatie niet? Geef het door
                 </MaButtonLink>
