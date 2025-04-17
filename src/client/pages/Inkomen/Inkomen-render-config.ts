@@ -9,11 +9,20 @@ import { InkomenLijstPagina } from './InkomenListPage';
 import { InkomenSpecificaties } from './InkomenSpecificaties';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { IconInkomen } from '../../assets/icons';
-import { ThemaMenuItem } from '../../config/thema-types';
+import {
+  type ThemaMenuItem,
+  type ThemaRenderRouteConfig,
+} from '../../config/thema-types';
 
 export const InkomenRoutes = [
-  { route: routes.detailPageTozo, Component: InkomenDetailTozo },
-  { route: routes.detailPageTonk, Component: InkomenDetailTonk },
+  {
+    route: routes.detailPageTozo,
+    Component: InkomenDetailTozo,
+  },
+  {
+    route: routes.detailPageTonk,
+    Component: InkomenDetailTonk,
+  },
   {
     route: routes.listPageSpecificaties,
     Component: InkomenSpecificaties,
@@ -29,7 +38,7 @@ export const InkomenRoutes = [
   },
   { route: routes.listPage, Component: InkomenLijstPagina },
   { route: routes.themaPage, Component: InkomenThemaPagina },
-];
+] as const satisfies readonly ThemaRenderRouteConfig[];
 
 export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
