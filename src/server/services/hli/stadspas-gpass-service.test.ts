@@ -7,6 +7,7 @@ import {
   fetchGpassDiscountTransactions,
   forTesting,
   mutateGpassBlockPass,
+  mutateGpassUnblockPass,
 } from './stadspas-gpass-service';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import {
@@ -819,17 +820,25 @@ describe('stadspas-gpass-service', () => {
     });
 
     test('Will block a pass that is active', async () => {
+      const PASSNUMBER = 123;
+
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
-        content: { actief: true },
+        content: { pasnummer: PASSNUMBER, actief: true },
       });
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
-        content: null,
+        content: { pasnummer: PASSNUMBER, actief: false },
       });
 
       const response = await mutateGpassBlockPass(requestId, 123, '123');
-      expect(response).toStrictEqual({ status: 'OK', content: null });
+      expect(response).toStrictEqual({
+        content: {
+          actief: false,
+          pasnummer: 123,
+        },
+        status: 'OK',
+      });
     });
 
     test('Can only block and not toggle the stadspas', async () => {
@@ -868,6 +877,31 @@ describe('stadspas-gpass-service', () => {
         message:
           "Could not determine 'actief' state of pass because of an invalid response",
         status: 'ERROR',
+      });
+    });
+
+    test('Unblock Stadspas unblocks', async () => {
+      const PASSNUMBER = 123;
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { pasnummer: PASSNUMBER, actief: false },
+      });
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { [PASSNUMBER]: true },
+      });
+
+      const response = await mutateGpassUnblockPass(
+        requestId,
+        PASSNUMBER,
+        '123456789'
+      );
+
+      expect(response).toStrictEqual({
+        content: {
+          '123': true,
+        },
+        status: 'OK',
       });
     });
   });
