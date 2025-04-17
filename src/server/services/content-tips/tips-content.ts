@@ -26,8 +26,8 @@ import {
   hasBudget,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
-import { themaId as themaIdInkomen } from '../../../client/pages/Inkomen/Inkomen-thema-config';
-import { themaIdBRP } from '../../../client/pages/Profile/Profile-thema-config';
+import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
+import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { ThemaIDs } from '../../../universal/config/thema';
 
 const DAYS = 90;

@@ -2,25 +2,25 @@ import { DocumentTitlesConfig, ThemaMenuItem } from './thema-types';
 import { AppRoutes } from '../../universal/config/routes';
 import { ThemaID, ThemaIDs } from '../../universal/config/thema';
 import { AppState, BagThema } from '../../universal/types/App.types';
-import { getAfisListPageDocumentTitle } from '../pages/Afis/Afis-thema-config';
-import { getAVGListPageDocumentTitle } from '../pages/AVG/AVG-thema-config';
-import { getBezwarenListPageDocumentTitle } from '../pages/Bezwaren/Bezwaren-thema-config';
+import { getAfisListPageDocumentTitle } from '../pages/Thema/Afis/Afis-thema-config';
+import { getAVGListPageDocumentTitle } from '../pages/Thema/AVG/AVG-thema-config';
+import { getBezwarenListPageDocumentTitle } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
-} from '../pages/Burgerzaken/helpers';
-import { getThemaTitleWithAppState } from '../pages/HLI/helpers';
-import { menuItem as menuItemInkomen } from '../pages/Inkomen/Inkomen-render-config';
-import { documentTitles as documentTitlesInkomen } from '../pages/Inkomen/Inkomen-thema-config';
-import { menuItem as menuItemJeugd } from '../pages/Jeugd/Jeugd-render-config';
-import { documentTitles as documentTitlesJeugd } from '../pages/Jeugd/Jeugd-thema-config';
-import { menuItems as profileMenuItems } from '../pages/Profile/Profile-render-config';
-import { documentTitles as documentTitlesProfile } from '../pages/Profile/Profile-thema-config';
+} from '../pages/Thema/Burgerzaken/helpers';
+import { getThemaTitleWithAppState } from '../pages/Thema/HLI/helpers';
+import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
+import { documentTitles as documentTitlesInkomen } from '../pages/Thema/Inkomen/Inkomen-thema-config';
+import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
+import { documentTitles as documentTitlesJeugd } from '../pages/Thema/Jeugd/Jeugd-thema-config';
+import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
+import { documentTitles as documentTitlesProfile } from '../pages/Thema/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
-} from '../pages/Varen/Varen-thema-config';
-import { getListPageDocumentTitle } from '../pages/Vergunningen/Vergunningen-thema-config';
+} from '../pages/Thema/Varen/Varen-thema-config';
+import { getListPageDocumentTitle } from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
 
 /**
  * @deprecated We will remove this in the future in favor of the SWR implementations.
