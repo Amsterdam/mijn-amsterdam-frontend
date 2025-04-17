@@ -2141,3 +2141,2133 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`<AfvalThemaPagina /> > Does not show warning concercing bedrijfsafval 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid"
+  >
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+    >
+      <div
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/afval"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                />
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        />
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--sm"
+      >
+        Dit zijn de afvalregels voor uw adres.
+      </p>
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/afval/"
+            rel="noopener noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over regels voor afval en hergebruik
+          </a>
+        </li>
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
+            rel="noopener noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Doe een melding als afval is blijven liggen
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <dl
+        class="_Datalist_08bf39"
+      >
+        <dt
+          class="_Datalist__title_08bf39"
+        >
+          Uw adres
+        </dt>
+        <dd
+          class="_Datalist__description_08bf39"
+        >
+          <p
+            class="ams-paragraph ams-mb--sm"
+          >
+            Amstel 1
+          </p>
+          <p
+            class="ams-paragraph ams-mb--sm"
+          >
+            <strong>
+              Dit is geen woonadres.
+            </strong>
+             Klopt dit niet? 
+            <a
+              class="ams-link ams-link--standalone"
+              href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+              rel="noopener noreferrer"
+            >
+              Geef het door
+            </a>
+            .
+          </p>
+        </dd>
+      </dl>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Rest Afval
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#787878"
+                r="12"
+              />
+              <g
+                transform="translate(6.000000, 4.000000)"
+              >
+                <polygon
+                  fill="#FFFFFF"
+                  points="6.88249659 2.26 7.65249659 0.66 4.02249659 -2.22044605e-16 4.76249659 2.26"
+                />
+                <path
+                  d="M11.8324966,12.12 L10.9524966,11.17 L9.26249659,11.68 L9.12249659,11.2 L10.8624966,10.68 L11.3324966,10.17 C11.5124966,10.05 11.5924966,9.83 11.5224966,9.62 L10.6924966,7.53 L7.74249659,6.69 L7.88249659,6.21 L10.5924966,6.98 L10.6724966,6.39 C10.6824966,6.29 10.6624966,6.19 10.6224966,6.1 L10.5024966,5.87 C9.98249659,4.91 9.24249659,4.1 8.33249659,3.5 L7.15249659,2.72 L7.15249659,2.76 L6.23249659,2.76 L7.00249659,4.39 L6.54249659,4.61 L5.81249659,3.05 L4.43249659,5.5 L3.99249659,5.26 L5.40249659,2.76 L4.47249659,2.76 L1.83249659,4.52 C1.73249659,4.59 1.66249659,4.69 1.63249659,4.8 L0.632496592,8.85 C0.612496592,8.92 0.612496592,9 0.632496592,9.07 L0.792496592,9.72 L3.55249659,8.14 L3.80249659,8.57 L0.662496592,10.37 L0.652496592,10.36 C0.462496592,10.74 0.192496592,11.32 0.0824965916,11.71 C-0.167503408,12.55 0.162496592,13.47 0.912496592,13.91 C1.11249659,14.03 1.32249659,14.11 1.52249659,14.11 L10.1024966,14.11 C10.8124966,14.11 11.4624966,14.03 11.8024966,13.4 C11.9824966,13.08 12.1724966,12.62 11.8324966,12.12 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Restafval
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In vuilniszak
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Ophaaldag
+          </dt>
+          <dd>
+            Maandag en donderdag
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Buitenzetten
+          </dt>
+          <dd>
+            Tussen 06.00 en 07.30 uur
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            Aan de rand van de stoep of op de vaste plek
+          </dd>
+        </dl>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Grof Afval
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#000000"
+                r="12"
+              />
+              <g
+                fill="#FFFFFF"
+              >
+                <g
+                  transform="translate(4.500000, 4.000000)"
+                >
+                  <path
+                    d="M14.66,6.77 C14.66,5.87 13.94,5.19 12.98,5.19 C12.09,5.19 11.25,6.04 11.25,6.95 L11.25,10.02 L11.25,10.02 L11.25,10.52 L7.33,10.5 L3.41,10.51 L3.41,10.01 L3.41,10.01 L3.41,6.94 C3.41,6.04 2.57,5.18 1.68,5.18 C0.72,5.18 0,5.86 0,6.76 C0,7.65 0.56,8.35 1.34,8.43 L1.33,13.19 C1.33,14.03 2.01,14.7 2.84,14.7 L11.88,14.7 C12.68,14.7 13.33,14.05 13.33,13.25 L13.32,8.43 C14.1,8.35 14.66,7.65 14.66,6.77 Z"
+                  />
+                  <path
+                    d="M3.91,6.94 L3.91,10 L7.33,10 L7.33,10 L7.33,10 L8.65,10 C8.7,9.9 8.75,9.81 8.78,9.73 C8.82,9.64 8.84,9.57 8.89,9.52 C8.88,9.52 9.23,8.82 9.02,8.16 C8.94,7.89 8.8,7.68 8.63,7.53 C8.39,8.19 7.77,8.8 7.04,9.07 C6.53,9.26 6.18,9.18 5.98,9.08 C5.77,8.98 5.61,8.8 5.53,8.6 C5.41,8.27 5.43,7.93 5.58,7.64 C5.77,7.27 6.16,6.98 6.71,6.82 C7.19,6.67 7.73,6.64 8.21,6.77 C8.21,6.24 8.12,5.45 7.76,4.92 C7.72,4.87 7.68,4.81 7.63,4.77 C7.34,5.47 6.7,6.05 6,6.2 C5.55,6.3 5.22,6.27 4.97,6.12 C4.8,6.01 4.69,5.83 4.64,5.61 C4.55,5.23 4.68,4.8 4.97,4.47 C5.26,4.14 5.86,3.78 6.97,3.91 C7.09,3.92 7.2,3.95 7.31,3.98 C7.32,3.63 7.2,3.22 6.71,2.91 C6.47,2.76 6.24,2.66 6.01,2.61 L6.11,2.12 C6.4,2.18 6.69,2.3 6.98,2.48 C7.61,2.87 7.9,3.51 7.8,4.23 C7.94,4.35 8.07,4.49 8.19,4.67 C8.66,5.38 8.74,6.39 8.72,6.98 C9.07,7.19 9.36,7.53 9.51,8.02 C9.78,8.9 9.33,9.76 9.31,9.8 C9.28,9.85 9.27,9.89 9.25,9.93 C9.24,9.95 9.22,9.99 9.21,10.01 L10.75,10.01 L10.75,6.94 C10.75,5.99 11.45,5.11 12.33,4.81 L12.33,1 C12.33,0.45 11.88,0 11.33,0 L3.33,0 C2.78,0 2.33,0.45 2.33,1 L2.33,4.81 C3.21,5.12 3.91,5.99 3.91,6.94 Z"
+                  />
+                  <path
+                    d="M6.53,4.39 C5.87,4.39 5.52,4.61 5.34,4.81 C5.12,5.05 5.09,5.33 5.12,5.5 C5.14,5.6 5.18,5.66 5.24,5.7 C5.36,5.78 5.59,5.78 5.89,5.72 C6.46,5.59 6.99,5.08 7.21,4.48 C7.12,4.44 7.02,4.42 6.91,4.41 C6.78,4.39 6.65,4.39 6.53,4.39 Z"
+                  />
+                  <path
+                    d="M6.03,7.86 C5.94,8.04 5.94,8.23 6.01,8.44 C6.04,8.52 6.11,8.59 6.2,8.63 C6.31,8.69 6.53,8.73 6.87,8.6 C7.49,8.37 8.03,7.83 8.19,7.28 C8,7.21 7.8,7.18 7.59,7.18 C7.35,7.18 7.1,7.22 6.87,7.29 C6.44,7.42 6.16,7.62 6.03,7.86 Z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </span>
+          Grof afval
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                Laat uw grof afval ophalen door een erkend bedrijf
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <p
+          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+        >
+          <span>
+            Of breng het naar 
+            <a
+              href="https://kaart.amsterdam.nl/afvalpunten"
+            >
+              een Afvalpunt
+            </a>
+          </span>
+        </p>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Papier en karton
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#034ea2"
+                r="12"
+              />
+              <g
+                transform="translate(7.000000, 5.000000)"
+              >
+                <polygon
+                  fill="#FFFFFF"
+                  points="0.05 1.51 0.79 2.8 5.03 0.93 5.28 1.36 6.14 0.86 5.64 4.4408921e-16"
+                />
+                <path
+                  d="M6.14,0.86 L-8.8817842e-16,4.42 L5.5,13.95 L11.65,10.4 L6.14,0.86 Z M7.47,5.8 L6.33,6.46 L5.83,5.59 L6.98,4.93 L7.47,5.8 Z M5.97,3.2 L6.47,4.07 L5.33,4.73 L4.83,3.87 L5.97,3.2 Z M2.23,5.37 L3.96,4.37 L5.46,6.97 L3.73,7.97 L2.23,5.37 Z M4.23,8.83 L7.98,6.67 L8.48,7.54 L4.73,9.7 L4.23,8.83 Z M5.23,10.56 L8.98,8.4 L9.48,9.27 L5.73,11.43 L5.23,10.56 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Papier en karton
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor papier
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-1 ams-grid__cell--span-1-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-7-wide"
+    >
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Groente-, fruit-, etensresten en tuinafval (gfe/t)
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#00a03c"
+                r="12"
+              />
+              <g
+                transform="translate(7.000000, 4.000000)"
+              >
+                <path
+                  d="M9.2,13.9814092 C8.59,13.5414092 7.58,12.6014092 7.49,11.9314092 C7.37,11.0114092 7.73,10.1314092 8.05,9.56140916 L8.19,9.31140916 L8.01,9.08140916 C7.53,8.47140916 7.26,7.87140916 7.19,7.31140916 C7.12,6.71140916 7.75,5.63140916 8.16,5.09140916 L8.47,4.69140916 L8.03,4.45140916 C7.34,4.06140916 6.6,3.91140916 5.88,4.00140916 C5.51,4.05140916 5.16,4.16140916 4.82,4.34140916 C4.97,3.85140916 4.97,3.34140916 4.81,2.85140916 C7.64,3.11140916 7.59,0.0914091551 7.59,0.0914091551 L7.59,0.0914091551 L7.57,0.0814091551 C7.57,0.0814091551 4.3,-0.728590845 4.24,2.76140916 C4.25,2.76140916 4.25,2.76140916 4.26,2.76140916 C4.47,3.23140916 4.49,3.75140916 4.33,4.23140916 C4.07,4.12140916 3.8,4.04140916 3.53,4.00140916 C2.8,3.91140916 2.06,4.06140916 1.37,4.44140916 L0.93,4.69140916 L1.24,5.09140916 C1.51,5.45140916 2.28,6.63140916 2.21,7.31140916 C2.14,7.87140916 1.87,8.47140916 1.4,9.08140916 L1.22,9.31140916 L1.36,9.56140916 C1.68,10.1314092 2.03,11.0114092 1.91,11.9314092 C1.81,12.6914092 0.8,13.6814092 0.42,14.0014092 L0,14.3514092 L0.43,14.6814092 C0.93,15.0614092 1.55,15.3314092 2.15,15.4114092 C2.29,15.4314092 2.43,15.4414092 2.57,15.4414092 C3.35,15.4414092 4.12,15.1614092 4.82,14.6314092 C5.65,15.2614092 6.58,15.5314092 7.49,15.4114092 C8.09,15.3314092 8.71,15.0714092 9.21,14.6814092 L9.67,14.3214092 L9.2,13.9814092 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Groente-, fruit-, etensresten en tuinafval (gfe/t)
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                Bij het restafval
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <p
+          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+        >
+          <span>
+            Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
+          </span>
+        </p>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Glas
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#ffe600"
+                r="12"
+              />
+              <g
+                transform="translate(9.000000, 4.000000)"
+              >
+                <rect
+                  height="4.38"
+                  id="Rectangle"
+                  width="2.25"
+                  x="-8.8817842e-16"
+                  y="7.86"
+                />
+                <path
+                  d="M4.14,4.09 L4.14,0 L1.45,0 L1.45,4.09 C0.57,4.54 0,5.47 0,6.51 L0,7.36 L2.75,7.36 L2.75,12.74 L0,12.74 L0,14.45 C0,14.95 0.41,15.36 0.91,15.36 L4.67,15.36 C5.17,15.36 5.58,14.95 5.58,14.45 L5.58,6.51 C5.58,5.47 5.01,4.54 4.14,4.09 Z"
+                />
+              </g>
+            </svg>
+          </span>
+          Glas
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor glas
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Textiel
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#e50082"
+                r="12"
+              />
+              <g
+                transform="translate(4.000000, 4.000000)"
+              >
+                <path
+                  d="M15.31,2.56 L12.21,0.4 L12.19,0.38 L12.17,0.36 C11.78,0.12 11.34,0 10.89,0 L10.75,0 C10.74,0 10.74,0 10.73,0 L5.28,0 C5.27,0 5.27,0 5.26,0 L5.12,0 C4.67,0 4.23,0.13 3.84,0.36 L3.82,0.38 L3.8,0.4 L0.7,2.56 L0,3.05 L0.38,3.8 L1.49,5.98 L1.8,6.58 L2.48,6.5 L3.35,6.39 L3.74,13.58 L3.79,14.5 L4.71,14.5 L11.29,14.5 L12.21,14.5 L12.26,13.58 L12.65,6.39 L13.52,6.5 L14.2,6.58 L14.51,5.97 L15.62,3.79 L16,3.05 L15.31,2.56 Z M8,3.34 C6.64,3.34 5.54,2.3 5.42,0.97 L10.59,0.97 C10.46,2.3 9.36,3.34 8,3.34 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Textiel
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor textiel
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--xl"
+      >
+        <a
+          aria-disabled="false"
+          class="_MaButtonLink_aa758a ams-button ams-button--primary _ContactLink_cc0d6a"
+          href="https://formulier.amsterdam.nl/mail/afval/afvalwijzer/"
+        >
+          Klopt de informatie niet? Geef het door
+        </a>
+      </p>
+      <h3
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
+      >
+        Afvalcontainers in de buurt
+      </h3>
+      <ul
+        class="ams-link-list ams-mb--sm"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Kaart met containers in de buurt
+          </a>
+        </li>
+      </ul>
+      <h3
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
+      >
+        Adressen recyclepunten
+      </h3>
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="http://example.org/afvalpunt"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            De afvalpuntenweg
+            <span
+              class="_DistanceToHome_cc0d6a"
+            >
+              +/-34KM
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`<AfvalThemaPagina /> > Does not show warning concercing woonfunctie 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid"
+  >
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+    >
+      <div
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/afval"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                />
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        />
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--sm"
+      >
+        Dit zijn de afvalregels voor uw adres.
+      </p>
+      <section
+        class="ams-alert ams-alert--info ams-mb--sm"
+      >
+        <div
+          class="ams-alert__icon"
+        >
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 28 28"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Bedrijfsafval informatie
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            Let op deze regels gaan over uw woonadres.
+            <br />
+            Lees hier 
+            <a
+              class="ams-link ams-link--standalone"
+              href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
+              rel="noopener noreferrer"
+            >
+              regels over bedrijfsafval in Amsterdam
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/afval/"
+            rel="noopener noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over regels voor afval en hergebruik
+          </a>
+        </li>
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
+            rel="noopener noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Doe een melding als afval is blijven liggen
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <dl
+        class="_Datalist_08bf39"
+      >
+        <dt
+          class="_Datalist__title_08bf39"
+        >
+          Uw adres
+        </dt>
+        <dd
+          class="_Datalist__description_08bf39"
+        >
+          <p
+            class="ams-paragraph ams-mb--sm"
+          >
+            Amstel 1
+          </p>
+        </dd>
+      </dl>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Rest Afval
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#787878"
+                r="12"
+              />
+              <g
+                transform="translate(6.000000, 4.000000)"
+              >
+                <polygon
+                  fill="#FFFFFF"
+                  points="6.88249659 2.26 7.65249659 0.66 4.02249659 -2.22044605e-16 4.76249659 2.26"
+                />
+                <path
+                  d="M11.8324966,12.12 L10.9524966,11.17 L9.26249659,11.68 L9.12249659,11.2 L10.8624966,10.68 L11.3324966,10.17 C11.5124966,10.05 11.5924966,9.83 11.5224966,9.62 L10.6924966,7.53 L7.74249659,6.69 L7.88249659,6.21 L10.5924966,6.98 L10.6724966,6.39 C10.6824966,6.29 10.6624966,6.19 10.6224966,6.1 L10.5024966,5.87 C9.98249659,4.91 9.24249659,4.1 8.33249659,3.5 L7.15249659,2.72 L7.15249659,2.76 L6.23249659,2.76 L7.00249659,4.39 L6.54249659,4.61 L5.81249659,3.05 L4.43249659,5.5 L3.99249659,5.26 L5.40249659,2.76 L4.47249659,2.76 L1.83249659,4.52 C1.73249659,4.59 1.66249659,4.69 1.63249659,4.8 L0.632496592,8.85 C0.612496592,8.92 0.612496592,9 0.632496592,9.07 L0.792496592,9.72 L3.55249659,8.14 L3.80249659,8.57 L0.662496592,10.37 L0.652496592,10.36 C0.462496592,10.74 0.192496592,11.32 0.0824965916,11.71 C-0.167503408,12.55 0.162496592,13.47 0.912496592,13.91 C1.11249659,14.03 1.32249659,14.11 1.52249659,14.11 L10.1024966,14.11 C10.8124966,14.11 11.4624966,14.03 11.8024966,13.4 C11.9824966,13.08 12.1724966,12.62 11.8324966,12.12 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Restafval
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In vuilniszak
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Ophaaldag
+          </dt>
+          <dd>
+            Maandag en donderdag
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Buitenzetten
+          </dt>
+          <dd>
+            Tussen 06.00 en 07.30 uur
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            Aan de rand van de stoep of op de vaste plek
+          </dd>
+        </dl>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Grof Afval
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#000000"
+                r="12"
+              />
+              <g
+                fill="#FFFFFF"
+              >
+                <g
+                  transform="translate(4.500000, 4.000000)"
+                >
+                  <path
+                    d="M14.66,6.77 C14.66,5.87 13.94,5.19 12.98,5.19 C12.09,5.19 11.25,6.04 11.25,6.95 L11.25,10.02 L11.25,10.02 L11.25,10.52 L7.33,10.5 L3.41,10.51 L3.41,10.01 L3.41,10.01 L3.41,6.94 C3.41,6.04 2.57,5.18 1.68,5.18 C0.72,5.18 0,5.86 0,6.76 C0,7.65 0.56,8.35 1.34,8.43 L1.33,13.19 C1.33,14.03 2.01,14.7 2.84,14.7 L11.88,14.7 C12.68,14.7 13.33,14.05 13.33,13.25 L13.32,8.43 C14.1,8.35 14.66,7.65 14.66,6.77 Z"
+                  />
+                  <path
+                    d="M3.91,6.94 L3.91,10 L7.33,10 L7.33,10 L7.33,10 L8.65,10 C8.7,9.9 8.75,9.81 8.78,9.73 C8.82,9.64 8.84,9.57 8.89,9.52 C8.88,9.52 9.23,8.82 9.02,8.16 C8.94,7.89 8.8,7.68 8.63,7.53 C8.39,8.19 7.77,8.8 7.04,9.07 C6.53,9.26 6.18,9.18 5.98,9.08 C5.77,8.98 5.61,8.8 5.53,8.6 C5.41,8.27 5.43,7.93 5.58,7.64 C5.77,7.27 6.16,6.98 6.71,6.82 C7.19,6.67 7.73,6.64 8.21,6.77 C8.21,6.24 8.12,5.45 7.76,4.92 C7.72,4.87 7.68,4.81 7.63,4.77 C7.34,5.47 6.7,6.05 6,6.2 C5.55,6.3 5.22,6.27 4.97,6.12 C4.8,6.01 4.69,5.83 4.64,5.61 C4.55,5.23 4.68,4.8 4.97,4.47 C5.26,4.14 5.86,3.78 6.97,3.91 C7.09,3.92 7.2,3.95 7.31,3.98 C7.32,3.63 7.2,3.22 6.71,2.91 C6.47,2.76 6.24,2.66 6.01,2.61 L6.11,2.12 C6.4,2.18 6.69,2.3 6.98,2.48 C7.61,2.87 7.9,3.51 7.8,4.23 C7.94,4.35 8.07,4.49 8.19,4.67 C8.66,5.38 8.74,6.39 8.72,6.98 C9.07,7.19 9.36,7.53 9.51,8.02 C9.78,8.9 9.33,9.76 9.31,9.8 C9.28,9.85 9.27,9.89 9.25,9.93 C9.24,9.95 9.22,9.99 9.21,10.01 L10.75,10.01 L10.75,6.94 C10.75,5.99 11.45,5.11 12.33,4.81 L12.33,1 C12.33,0.45 11.88,0 11.33,0 L3.33,0 C2.78,0 2.33,0.45 2.33,1 L2.33,4.81 C3.21,5.12 3.91,5.99 3.91,6.94 Z"
+                  />
+                  <path
+                    d="M6.53,4.39 C5.87,4.39 5.52,4.61 5.34,4.81 C5.12,5.05 5.09,5.33 5.12,5.5 C5.14,5.6 5.18,5.66 5.24,5.7 C5.36,5.78 5.59,5.78 5.89,5.72 C6.46,5.59 6.99,5.08 7.21,4.48 C7.12,4.44 7.02,4.42 6.91,4.41 C6.78,4.39 6.65,4.39 6.53,4.39 Z"
+                  />
+                  <path
+                    d="M6.03,7.86 C5.94,8.04 5.94,8.23 6.01,8.44 C6.04,8.52 6.11,8.59 6.2,8.63 C6.31,8.69 6.53,8.73 6.87,8.6 C7.49,8.37 8.03,7.83 8.19,7.28 C8,7.21 7.8,7.18 7.59,7.18 C7.35,7.18 7.1,7.22 6.87,7.29 C6.44,7.42 6.16,7.62 6.03,7.86 Z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </span>
+          Grof afval
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                Laat uw grof afval ophalen door een erkend bedrijf
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <p
+          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+        >
+          <span>
+            Of breng het naar 
+            <a
+              href="https://kaart.amsterdam.nl/afvalpunten"
+            >
+              een Afvalpunt
+            </a>
+          </span>
+        </p>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Papier en karton
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#034ea2"
+                r="12"
+              />
+              <g
+                transform="translate(7.000000, 5.000000)"
+              >
+                <polygon
+                  fill="#FFFFFF"
+                  points="0.05 1.51 0.79 2.8 5.03 0.93 5.28 1.36 6.14 0.86 5.64 4.4408921e-16"
+                />
+                <path
+                  d="M6.14,0.86 L-8.8817842e-16,4.42 L5.5,13.95 L11.65,10.4 L6.14,0.86 Z M7.47,5.8 L6.33,6.46 L5.83,5.59 L6.98,4.93 L7.47,5.8 Z M5.97,3.2 L6.47,4.07 L5.33,4.73 L4.83,3.87 L5.97,3.2 Z M2.23,5.37 L3.96,4.37 L5.46,6.97 L3.73,7.97 L2.23,5.37 Z M4.23,8.83 L7.98,6.67 L8.48,7.54 L4.73,9.7 L4.23,8.83 Z M5.23,10.56 L8.98,8.4 L9.48,9.27 L5.73,11.43 L5.23,10.56 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Papier en karton
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor papier
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-1 ams-grid__cell--span-1-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-7-wide"
+    >
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Groente-, fruit-, etensresten en tuinafval (gfe/t)
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#00a03c"
+                r="12"
+              />
+              <g
+                transform="translate(7.000000, 4.000000)"
+              >
+                <path
+                  d="M9.2,13.9814092 C8.59,13.5414092 7.58,12.6014092 7.49,11.9314092 C7.37,11.0114092 7.73,10.1314092 8.05,9.56140916 L8.19,9.31140916 L8.01,9.08140916 C7.53,8.47140916 7.26,7.87140916 7.19,7.31140916 C7.12,6.71140916 7.75,5.63140916 8.16,5.09140916 L8.47,4.69140916 L8.03,4.45140916 C7.34,4.06140916 6.6,3.91140916 5.88,4.00140916 C5.51,4.05140916 5.16,4.16140916 4.82,4.34140916 C4.97,3.85140916 4.97,3.34140916 4.81,2.85140916 C7.64,3.11140916 7.59,0.0914091551 7.59,0.0914091551 L7.59,0.0914091551 L7.57,0.0814091551 C7.57,0.0814091551 4.3,-0.728590845 4.24,2.76140916 C4.25,2.76140916 4.25,2.76140916 4.26,2.76140916 C4.47,3.23140916 4.49,3.75140916 4.33,4.23140916 C4.07,4.12140916 3.8,4.04140916 3.53,4.00140916 C2.8,3.91140916 2.06,4.06140916 1.37,4.44140916 L0.93,4.69140916 L1.24,5.09140916 C1.51,5.45140916 2.28,6.63140916 2.21,7.31140916 C2.14,7.87140916 1.87,8.47140916 1.4,9.08140916 L1.22,9.31140916 L1.36,9.56140916 C1.68,10.1314092 2.03,11.0114092 1.91,11.9314092 C1.81,12.6914092 0.8,13.6814092 0.42,14.0014092 L0,14.3514092 L0.43,14.6814092 C0.93,15.0614092 1.55,15.3314092 2.15,15.4114092 C2.29,15.4314092 2.43,15.4414092 2.57,15.4414092 C3.35,15.4414092 4.12,15.1614092 4.82,14.6314092 C5.65,15.2614092 6.58,15.5314092 7.49,15.4114092 C8.09,15.3314092 8.71,15.0714092 9.21,14.6814092 L9.67,14.3214092 L9.2,13.9814092 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Groente-, fruit-, etensresten en tuinafval (gfe/t)
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                Bij het restafval
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <p
+          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+        >
+          <span>
+            Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
+          </span>
+        </p>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Glas
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#ffe600"
+                r="12"
+              />
+              <g
+                transform="translate(9.000000, 4.000000)"
+              >
+                <rect
+                  height="4.38"
+                  id="Rectangle"
+                  width="2.25"
+                  x="-8.8817842e-16"
+                  y="7.86"
+                />
+                <path
+                  d="M4.14,4.09 L4.14,0 L1.45,0 L1.45,4.09 C0.57,4.54 0,5.47 0,6.51 L0,7.36 L2.75,7.36 L2.75,12.74 L0,12.74 L0,14.45 C0,14.95 0.41,15.36 0.91,15.36 L4.67,15.36 C5.17,15.36 5.58,14.95 5.58,14.45 L5.58,6.51 C5.58,5.47 5.01,4.54 4.14,4.09 Z"
+                />
+              </g>
+            </svg>
+          </span>
+          Glas
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor glas
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Textiel
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#e50082"
+                r="12"
+              />
+              <g
+                transform="translate(4.000000, 4.000000)"
+              >
+                <path
+                  d="M15.31,2.56 L12.21,0.4 L12.19,0.38 L12.17,0.36 C11.78,0.12 11.34,0 10.89,0 L10.75,0 C10.74,0 10.74,0 10.73,0 L5.28,0 C5.27,0 5.27,0 5.26,0 L5.12,0 C4.67,0 4.23,0.13 3.84,0.36 L3.82,0.38 L3.8,0.4 L0.7,2.56 L0,3.05 L0.38,3.8 L1.49,5.98 L1.8,6.58 L2.48,6.5 L3.35,6.39 L3.74,13.58 L3.79,14.5 L4.71,14.5 L11.29,14.5 L12.21,14.5 L12.26,13.58 L12.65,6.39 L13.52,6.5 L14.2,6.58 L14.51,5.97 L15.62,3.79 L16,3.05 L15.31,2.56 Z M8,3.34 C6.64,3.34 5.54,2.3 5.42,0.97 L10.59,0.97 C10.46,2.3 9.36,3.34 8,3.34 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Textiel
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor textiel
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--xl"
+      >
+        <a
+          aria-disabled="false"
+          class="_MaButtonLink_aa758a ams-button ams-button--primary _ContactLink_cc0d6a"
+          href="https://formulier.amsterdam.nl/mail/afval/afvalwijzer/"
+        >
+          Klopt de informatie niet? Geef het door
+        </a>
+      </p>
+      <h3
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
+      >
+        Afvalcontainers in de buurt
+      </h3>
+      <ul
+        class="ams-link-list ams-mb--sm"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Kaart met containers in de buurt
+          </a>
+        </li>
+      </ul>
+      <h3
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
+      >
+        Adressen recyclepunten
+      </h3>
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="http://example.org/afvalpunt"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            De afvalpuntenweg
+            <span
+              class="_DistanceToHome_cc0d6a"
+            >
+              +/-34KM
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid"
+  >
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+    >
+      <div
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/afval"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                />
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        />
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--sm"
+      >
+        Dit zijn de afvalregels voor uw adres.
+      </p>
+      <section
+        class="ams-alert ams-alert--info ams-mb--sm"
+      >
+        <div
+          class="ams-alert__icon"
+        >
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 28 28"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Bedrijfsafval informatie
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            Let op deze regels gaan over uw woonadres.
+            <br />
+            Lees hier 
+            <a
+              class="ams-link ams-link--standalone"
+              href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
+              rel="noopener noreferrer"
+            >
+              regels over bedrijfsafval in Amsterdam
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/afval/"
+            rel="noopener noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over regels voor afval en hergebruik
+          </a>
+        </li>
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609"
+            rel="noopener noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Doe een melding als afval is blijven liggen
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <dl
+        class="_Datalist_08bf39"
+      >
+        <dt
+          class="_Datalist__title_08bf39"
+        >
+          Uw adres
+        </dt>
+        <dd
+          class="_Datalist__description_08bf39"
+        >
+          <p
+            class="ams-paragraph ams-mb--sm"
+          >
+            Amstel 1
+          </p>
+          <p
+            class="ams-paragraph ams-mb--sm"
+          >
+            <strong>
+              Dit is geen woonadres.
+            </strong>
+             Klopt dit niet? 
+            <a
+              class="ams-link ams-link--standalone"
+              href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
+              rel="noopener noreferrer"
+            >
+              Geef het door
+            </a>
+            .
+          </p>
+        </dd>
+      </dl>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Rest Afval
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#787878"
+                r="12"
+              />
+              <g
+                transform="translate(6.000000, 4.000000)"
+              >
+                <polygon
+                  fill="#FFFFFF"
+                  points="6.88249659 2.26 7.65249659 0.66 4.02249659 -2.22044605e-16 4.76249659 2.26"
+                />
+                <path
+                  d="M11.8324966,12.12 L10.9524966,11.17 L9.26249659,11.68 L9.12249659,11.2 L10.8624966,10.68 L11.3324966,10.17 C11.5124966,10.05 11.5924966,9.83 11.5224966,9.62 L10.6924966,7.53 L7.74249659,6.69 L7.88249659,6.21 L10.5924966,6.98 L10.6724966,6.39 C10.6824966,6.29 10.6624966,6.19 10.6224966,6.1 L10.5024966,5.87 C9.98249659,4.91 9.24249659,4.1 8.33249659,3.5 L7.15249659,2.72 L7.15249659,2.76 L6.23249659,2.76 L7.00249659,4.39 L6.54249659,4.61 L5.81249659,3.05 L4.43249659,5.5 L3.99249659,5.26 L5.40249659,2.76 L4.47249659,2.76 L1.83249659,4.52 C1.73249659,4.59 1.66249659,4.69 1.63249659,4.8 L0.632496592,8.85 C0.612496592,8.92 0.612496592,9 0.632496592,9.07 L0.792496592,9.72 L3.55249659,8.14 L3.80249659,8.57 L0.662496592,10.37 L0.652496592,10.36 C0.462496592,10.74 0.192496592,11.32 0.0824965916,11.71 C-0.167503408,12.55 0.162496592,13.47 0.912496592,13.91 C1.11249659,14.03 1.32249659,14.11 1.52249659,14.11 L10.1024966,14.11 C10.8124966,14.11 11.4624966,14.03 11.8024966,13.4 C11.9824966,13.08 12.1724966,12.62 11.8324966,12.12 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Restafval
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In vuilniszak
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Ophaaldag
+          </dt>
+          <dd>
+            Maandag en donderdag
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Buitenzetten
+          </dt>
+          <dd>
+            Tussen 06.00 en 07.30 uur
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            Aan de rand van de stoep of op de vaste plek
+          </dd>
+        </dl>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Grof Afval
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#000000"
+                r="12"
+              />
+              <g
+                fill="#FFFFFF"
+              >
+                <g
+                  transform="translate(4.500000, 4.000000)"
+                >
+                  <path
+                    d="M14.66,6.77 C14.66,5.87 13.94,5.19 12.98,5.19 C12.09,5.19 11.25,6.04 11.25,6.95 L11.25,10.02 L11.25,10.02 L11.25,10.52 L7.33,10.5 L3.41,10.51 L3.41,10.01 L3.41,10.01 L3.41,6.94 C3.41,6.04 2.57,5.18 1.68,5.18 C0.72,5.18 0,5.86 0,6.76 C0,7.65 0.56,8.35 1.34,8.43 L1.33,13.19 C1.33,14.03 2.01,14.7 2.84,14.7 L11.88,14.7 C12.68,14.7 13.33,14.05 13.33,13.25 L13.32,8.43 C14.1,8.35 14.66,7.65 14.66,6.77 Z"
+                  />
+                  <path
+                    d="M3.91,6.94 L3.91,10 L7.33,10 L7.33,10 L7.33,10 L8.65,10 C8.7,9.9 8.75,9.81 8.78,9.73 C8.82,9.64 8.84,9.57 8.89,9.52 C8.88,9.52 9.23,8.82 9.02,8.16 C8.94,7.89 8.8,7.68 8.63,7.53 C8.39,8.19 7.77,8.8 7.04,9.07 C6.53,9.26 6.18,9.18 5.98,9.08 C5.77,8.98 5.61,8.8 5.53,8.6 C5.41,8.27 5.43,7.93 5.58,7.64 C5.77,7.27 6.16,6.98 6.71,6.82 C7.19,6.67 7.73,6.64 8.21,6.77 C8.21,6.24 8.12,5.45 7.76,4.92 C7.72,4.87 7.68,4.81 7.63,4.77 C7.34,5.47 6.7,6.05 6,6.2 C5.55,6.3 5.22,6.27 4.97,6.12 C4.8,6.01 4.69,5.83 4.64,5.61 C4.55,5.23 4.68,4.8 4.97,4.47 C5.26,4.14 5.86,3.78 6.97,3.91 C7.09,3.92 7.2,3.95 7.31,3.98 C7.32,3.63 7.2,3.22 6.71,2.91 C6.47,2.76 6.24,2.66 6.01,2.61 L6.11,2.12 C6.4,2.18 6.69,2.3 6.98,2.48 C7.61,2.87 7.9,3.51 7.8,4.23 C7.94,4.35 8.07,4.49 8.19,4.67 C8.66,5.38 8.74,6.39 8.72,6.98 C9.07,7.19 9.36,7.53 9.51,8.02 C9.78,8.9 9.33,9.76 9.31,9.8 C9.28,9.85 9.27,9.89 9.25,9.93 C9.24,9.95 9.22,9.99 9.21,10.01 L10.75,10.01 L10.75,6.94 C10.75,5.99 11.45,5.11 12.33,4.81 L12.33,1 C12.33,0.45 11.88,0 11.33,0 L3.33,0 C2.78,0 2.33,0.45 2.33,1 L2.33,4.81 C3.21,5.12 3.91,5.99 3.91,6.94 Z"
+                  />
+                  <path
+                    d="M6.53,4.39 C5.87,4.39 5.52,4.61 5.34,4.81 C5.12,5.05 5.09,5.33 5.12,5.5 C5.14,5.6 5.18,5.66 5.24,5.7 C5.36,5.78 5.59,5.78 5.89,5.72 C6.46,5.59 6.99,5.08 7.21,4.48 C7.12,4.44 7.02,4.42 6.91,4.41 C6.78,4.39 6.65,4.39 6.53,4.39 Z"
+                  />
+                  <path
+                    d="M6.03,7.86 C5.94,8.04 5.94,8.23 6.01,8.44 C6.04,8.52 6.11,8.59 6.2,8.63 C6.31,8.69 6.53,8.73 6.87,8.6 C7.49,8.37 8.03,7.83 8.19,7.28 C8,7.21 7.8,7.18 7.59,7.18 C7.35,7.18 7.1,7.22 6.87,7.29 C6.44,7.42 6.16,7.62 6.03,7.86 Z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </span>
+          Grof afval
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                Laat uw grof afval ophalen door een erkend bedrijf
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <p
+          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+        >
+          <span>
+            Of breng het naar 
+            <a
+              href="https://kaart.amsterdam.nl/afvalpunten"
+            >
+              een Afvalpunt
+            </a>
+          </span>
+        </p>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Papier en karton
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#034ea2"
+                r="12"
+              />
+              <g
+                transform="translate(7.000000, 5.000000)"
+              >
+                <polygon
+                  fill="#FFFFFF"
+                  points="0.05 1.51 0.79 2.8 5.03 0.93 5.28 1.36 6.14 0.86 5.64 4.4408921e-16"
+                />
+                <path
+                  d="M6.14,0.86 L-8.8817842e-16,4.42 L5.5,13.95 L11.65,10.4 L6.14,0.86 Z M7.47,5.8 L6.33,6.46 L5.83,5.59 L6.98,4.93 L7.47,5.8 Z M5.97,3.2 L6.47,4.07 L5.33,4.73 L4.83,3.87 L5.97,3.2 Z M2.23,5.37 L3.96,4.37 L5.46,6.97 L3.73,7.97 L2.23,5.37 Z M4.23,8.83 L7.98,6.67 L8.48,7.54 L4.73,9.7 L4.23,8.83 Z M5.23,10.56 L8.98,8.4 L9.48,9.27 L5.73,11.43 L5.23,10.56 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Papier en karton
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor papier
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-1 ams-grid__cell--span-1-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-7-wide"
+    >
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Groente-, fruit-, etensresten en tuinafval (gfe/t)
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#00a03c"
+                r="12"
+              />
+              <g
+                transform="translate(7.000000, 4.000000)"
+              >
+                <path
+                  d="M9.2,13.9814092 C8.59,13.5414092 7.58,12.6014092 7.49,11.9314092 C7.37,11.0114092 7.73,10.1314092 8.05,9.56140916 L8.19,9.31140916 L8.01,9.08140916 C7.53,8.47140916 7.26,7.87140916 7.19,7.31140916 C7.12,6.71140916 7.75,5.63140916 8.16,5.09140916 L8.47,4.69140916 L8.03,4.45140916 C7.34,4.06140916 6.6,3.91140916 5.88,4.00140916 C5.51,4.05140916 5.16,4.16140916 4.82,4.34140916 C4.97,3.85140916 4.97,3.34140916 4.81,2.85140916 C7.64,3.11140916 7.59,0.0914091551 7.59,0.0914091551 L7.59,0.0914091551 L7.57,0.0814091551 C7.57,0.0814091551 4.3,-0.728590845 4.24,2.76140916 C4.25,2.76140916 4.25,2.76140916 4.26,2.76140916 C4.47,3.23140916 4.49,3.75140916 4.33,4.23140916 C4.07,4.12140916 3.8,4.04140916 3.53,4.00140916 C2.8,3.91140916 2.06,4.06140916 1.37,4.44140916 L0.93,4.69140916 L1.24,5.09140916 C1.51,5.45140916 2.28,6.63140916 2.21,7.31140916 C2.14,7.87140916 1.87,8.47140916 1.4,9.08140916 L1.22,9.31140916 L1.36,9.56140916 C1.68,10.1314092 2.03,11.0114092 1.91,11.9314092 C1.81,12.6914092 0.8,13.6814092 0.42,14.0014092 L0,14.3514092 L0.43,14.6814092 C0.93,15.0614092 1.55,15.3314092 2.15,15.4114092 C2.29,15.4314092 2.43,15.4414092 2.57,15.4414092 C3.35,15.4414092 4.12,15.1614092 4.82,14.6314092 C5.65,15.2614092 6.58,15.5314092 7.49,15.4114092 C8.09,15.3314092 8.71,15.0714092 9.21,14.6814092 L9.67,14.3214092 L9.2,13.9814092 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Groente-, fruit-, etensresten en tuinafval (gfe/t)
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                Bij het restafval
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <p
+          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+        >
+          <span>
+            Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
+          </span>
+        </p>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Glas
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#ffe600"
+                r="12"
+              />
+              <g
+                transform="translate(9.000000, 4.000000)"
+              >
+                <rect
+                  height="4.38"
+                  id="Rectangle"
+                  width="2.25"
+                  x="-8.8817842e-16"
+                  y="7.86"
+                />
+                <path
+                  d="M4.14,4.09 L4.14,0 L1.45,0 L1.45,4.09 C0.57,4.54 0,5.47 0,6.51 L0,7.36 L2.75,7.36 L2.75,12.74 L0,12.74 L0,14.45 C0,14.95 0.41,15.36 0.91,15.36 L4.67,15.36 C5.17,15.36 5.58,14.95 5.58,14.45 L5.58,6.51 C5.58,5.47 5.01,4.54 4.14,4.09 Z"
+                />
+              </g>
+            </svg>
+          </span>
+          Glas
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor glas
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+      <article
+        class="_AfvalFractionPanel_cc0d6a"
+      >
+        <h3
+          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+        >
+          <span
+            class="_AfvalFractionIcon_cc0d6a"
+          >
+            <svg
+              height="28"
+              viewBox="0 0 24 24"
+              width="28"
+              x="0px"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              y="0px"
+            >
+              <title>
+                Textiel
+              </title>
+              <circle
+                cx="12"
+                cy="12"
+                fill="#e50082"
+                r="12"
+              />
+              <g
+                transform="translate(4.000000, 4.000000)"
+              >
+                <path
+                  d="M15.31,2.56 L12.21,0.4 L12.19,0.38 L12.17,0.36 C11.78,0.12 11.34,0 10.89,0 L10.75,0 C10.74,0 10.74,0 10.73,0 L5.28,0 C5.27,0 5.27,0 5.26,0 L5.12,0 C4.67,0 4.23,0.13 3.84,0.36 L3.82,0.38 L3.8,0.4 L0.7,2.56 L0,3.05 L0.38,3.8 L1.49,5.98 L1.8,6.58 L2.48,6.5 L3.35,6.39 L3.74,13.58 L3.79,14.5 L4.71,14.5 L11.29,14.5 L12.21,14.5 L12.26,13.58 L12.65,6.39 L13.52,6.5 L14.2,6.58 L14.51,5.97 L15.62,3.79 L16,3.05 L15.31,2.56 Z M8,3.34 C6.64,3.34 5.54,2.3 5.42,0.97 L10.59,0.97 C10.46,2.3 9.36,3.34 8,3.34 Z"
+                  fill="#FFFFFF"
+                />
+              </g>
+            </svg>
+          </span>
+          Textiel
+        </h3>
+        <dl>
+          <dt>
+            Hoe
+          </dt>
+          <dd>
+            <p
+              class="ams-paragraph"
+            >
+              <span>
+                In de container voor textiel
+              </span>
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            Waar
+          </dt>
+          <dd>
+            <a
+              class="ams-link ams-link--standalone"
+              href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
+              rel="noopener noreferrer"
+            >
+              Kaart met containers in de buurt
+            </a>
+          </dd>
+        </dl>
+      </article>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--xl"
+      >
+        <a
+          aria-disabled="false"
+          class="_MaButtonLink_aa758a ams-button ams-button--primary _ContactLink_cc0d6a"
+          href="https://formulier.amsterdam.nl/mail/afval/afvalwijzer/"
+        >
+          Klopt de informatie niet? Geef het door
+        </a>
+      </p>
+      <h3
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
+      >
+        Afvalcontainers in de buurt
+      </h3>
+      <ul
+        class="ams-link-list ams-mb--sm"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Kaart met containers in de buurt
+          </a>
+        </li>
+      </ul>
+      <h3
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
+      >
+        Adressen recyclepunten
+      </h3>
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="http://example.org/afvalpunt"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            De afvalpuntenweg
+            <span
+              class="_DistanceToHome_cc0d6a"
+            >
+              +/-34KM
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;
