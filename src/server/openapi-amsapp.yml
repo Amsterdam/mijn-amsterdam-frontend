@@ -202,7 +202,9 @@ paths:
             type: string
       responses:
         '200':
-          description: Blocking stadspas was successful or an attempt was made to block a pass that is not active.
+          description: |
+             Blocking stadspas was successful or an attempt was made to block a pass that is not active.
+             This returns the state of the pass after this request.
           content:
             'application/json':
               schema:
@@ -219,11 +221,6 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorUnauthorized'
-        status:
-          type: string
-          enum:
-            - 'SUCCESS'
-          example: "OK"
         '500':
           description: |
             Returns Application error, any error in code or from failed requests.
@@ -231,6 +228,13 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApplicationError'
+        '502':
+          description: |
+            Returns Bad gateway
+          content:
+            'application/json':
+              schema:
+               $ref: '#/components/schemas/ErrorBadGateway'
 
 components:
   securitySchemes:
@@ -506,3 +510,20 @@ components:
             - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
             - 'Bad request: ApiError 000 - Onbekende fout'
             - 'Bad request: Bad request: Failed to decrypt transactions key'
+    ErrorBadGateway:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 502
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - "Could not determine 'actief' state of pass because of an invalid response"
