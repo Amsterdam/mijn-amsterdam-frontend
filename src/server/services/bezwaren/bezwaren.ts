@@ -3,7 +3,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 
 import {
-  Bezwaar,
+  BezwaarFrontend,
   BezwaarDocument,
   BezwaarSourceData,
   BezwaarSourceDocument,
@@ -88,7 +88,7 @@ function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
     : 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
 }
 
-function getZaakUrl(zaakId: Bezwaar['uuid']) {
+function getZaakUrl(zaakId: BezwaarFrontend['uuid']) {
   return `${process.env.BFF_BEZWAREN_API}/zaken/${zaakId}`;
 }
 
@@ -165,7 +165,7 @@ function transformBezwaarStatus(
 async function fetchBezwaarStatus(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: Bezwaar['uuid']
+  zaakId: BezwaarFrontend['uuid']
 ) {
   const params = {
     zaak: getZaakUrl(zaakId),
@@ -224,7 +224,7 @@ function transformBezwarenDocumentsResults(
 export async function fetchBezwarenDocuments(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: Bezwaar['uuid']
+  zaakId: BezwaarFrontend['uuid']
 ) {
   const params = {
     page: 1,
@@ -263,7 +263,7 @@ function getKenmerkValue(kenmerken: Kenmerk[], kenmerk: kenmerkKey) {
 function transformBezwarenResults(
   sessionID: SessionID,
   response: BezwarenSourceResponse<BezwaarSourceData>
-): OctopusApiResponse<Bezwaar> {
+): OctopusApiResponse<BezwaarFrontend> {
   const results = response.results;
 
   if (Array.isArray(results)) {
@@ -285,7 +285,7 @@ function transformBezwarenResults(
           'besluitdatum'
         );
 
-        const bezwaar: Bezwaar = {
+        const bezwaar: BezwaarFrontend = {
           identificatie: bezwaarBron.identificatie,
           id: bezwaarBron.uuid,
           uuid: bezwaarBron.uuid,
@@ -355,7 +355,10 @@ function transformBezwarenResults(
   };
 }
 
-function sortByBezwaarIdentificatie(item1: Bezwaar, item2: Bezwaar) {
+function sortByBezwaarIdentificatie(
+  item1: BezwaarFrontend,
+  item2: BezwaarFrontend
+) {
   // strip all non-numeric characters from the string and parse as integer so we can do a proper number sort
   const identificatie1 = parseInt(item1.identificatie.replace(/\D/g, ''), 10);
   const identificatie2 = parseInt(item2.identificatie.replace(/\D/g, ''), 10);
@@ -382,7 +385,7 @@ export async function fetchBezwaren(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const bezwarenResponse = await fetchMultiple<Bezwaar>(
+  const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(
     requestID,
     requestConfig
   );
@@ -398,7 +401,7 @@ export async function fetchBezwaren(
   return bezwarenResponse;
 }
 
-function createBezwaarNotification(bezwaar: Bezwaar) {
+function createBezwaarNotification(bezwaar: BezwaarFrontend) {
   const notification: MyNotification = {
     themaID: ThemaIDs.BEZWAREN,
     id: bezwaar.identificatie,
@@ -460,7 +463,7 @@ export type BezwaarDetail = {
 export async function fetchBezwaarDetail(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: Bezwaar['uuid']
+  zaakId: BezwaarFrontend['uuid']
 ) {
   const bezwaarStatusRequest = fetchBezwaarStatus(
     requestID,

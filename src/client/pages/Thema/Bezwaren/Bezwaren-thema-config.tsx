@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router';
 
-import { Bezwaar } from '../../../../server/services/bezwaren/types';
+import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
@@ -20,12 +20,13 @@ export const LinkListItems: LinkProps[] = [
   },
 ];
 
-const displayPropsBezwarenBase: DisplayProps<WithDetailLinkComponent<Bezwaar>> =
-  {
-    detailLinkComponent: 'Zaaknummer',
-    ontvangstdatumFormatted: 'Ontvangen op',
-    omschrijving: 'Onderwerp',
-  };
+const displayPropsBezwarenBase: DisplayProps<
+  WithDetailLinkComponent<BezwaarFrontend>
+> = {
+  detailLinkComponent: 'Zaaknummer',
+  ontvangstdatumFormatted: 'Ontvangen op',
+  omschrijving: 'Onderwerp',
+};
 
 const displayPropsBezwaren = withOmitDisplayPropsForSmallScreens(
   displayPropsBezwarenBase,
@@ -49,7 +50,8 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: 'Lopende bezwaren',
-    filter: (bezwaar: Bezwaar) => bezwaar.displayStatus !== 'Afgehandeld',
+    filter: (bezwaar: BezwaarFrontend) =>
+      bezwaar.displayStatus !== 'Afgehandeld',
     displayProps: displayPropsBezwaren,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     textNoContent:
@@ -61,7 +63,8 @@ export const tableConfig = {
   },
   [listPageParamKind.afgehandeld]: {
     title: 'Afgehandelde bezwaren',
-    filter: (bezwaar: Bezwaar) => bezwaar.displayStatus === 'Afgehandeld',
+    filter: (bezwaar: BezwaarFrontend) =>
+      bezwaar.displayStatus === 'Afgehandeld',
     displayProps: displayPropsBezwaren,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     textNoContent: 'U heeft nog geen afgehandelde bezwaren.',

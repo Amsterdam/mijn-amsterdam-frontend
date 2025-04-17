@@ -1,7 +1,7 @@
 import { isError } from 'lodash';
 
 import { tableConfig, LinkListItems, routes } from './Bezwaren-thema-config';
-import { Bezwaar } from '../../../../server/services/bezwaren/types';
+import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { ThemaIDs } from '../../../../universal/config/thema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -12,7 +12,7 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 export function useBezwarenThemaData() {
   const { BEZWAREN } = useAppStateGetter();
 
-  const bezwaren = addLinkElementToProperty<Bezwaar>(
+  const bezwaren = addLinkElementToProperty<BezwaarFrontend>(
     BEZWAREN.content ?? [],
     'identificatie',
     true
