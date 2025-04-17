@@ -9,7 +9,7 @@ import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
 import { Steps } from '../../components/StatusSteps/StatusSteps';
 import { TextClamp } from '../../components/TextClamp/TextClamp';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 type BezwaarDetailContentProps = {
   bezwaar: Bezwaar;

@@ -3,16 +3,10 @@ import { ReactNode } from 'react';
 import { LinkList } from '@amsterdam/design-system-react';
 
 import { LinkProps } from '../../../universal/types';
-import ErrorAlert from '../../components/Alert/Alert';
-import LoadingContent, {
-  BarConfig,
-} from '../../components/LoadingContent/LoadingContent';
-import {
-  OverviewPageV2,
-  PageContentCell,
-  PageContentV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import ErrorAlert from '../Alert/Alert';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
+import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
+import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['20rem', '4rem', '4rem'],

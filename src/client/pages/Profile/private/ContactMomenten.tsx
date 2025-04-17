@@ -3,7 +3,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { ContactMomentFrontend } from './Contactmomenten.config';
 import { useContactmomenten } from './useContactmomenten.hook';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
-import ThemaPaginaTable from '../../ThemaPagina/ThemaPaginaTable';
+import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
 export function ContactMomenten() {
   const { contactmomenten, displayProps, title, routes } = useContactmomenten();

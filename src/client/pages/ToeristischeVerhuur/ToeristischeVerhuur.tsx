@@ -10,8 +10,8 @@ import {
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { entries } from '../../../universal/helpers/utils';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 export function ToeristscheVerhuurThema() {
   const {

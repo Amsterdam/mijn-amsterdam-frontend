@@ -15,8 +15,8 @@ import { entries } from '../../../universal/helpers/utils';
 import { MaButtonRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 function PageContentTop({
   urlNaarBelastingen,

@@ -4,7 +4,7 @@ import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import type { Klacht } from '../../../server/services/klachten/types';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 type KlachtenDetailContentProps = {
   klacht: Klacht;

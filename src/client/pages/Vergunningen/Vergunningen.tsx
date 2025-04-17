@@ -3,8 +3,8 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

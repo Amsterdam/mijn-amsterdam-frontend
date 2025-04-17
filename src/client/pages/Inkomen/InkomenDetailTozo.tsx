@@ -3,7 +3,7 @@ import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { PageContentCell } from '../../components/Page/Page';
 import { ExternalUrls } from '../../config/app';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 export function InkomenDetailTozo() {
   const { isLoading, isError, zaak, breadcrumbs } =

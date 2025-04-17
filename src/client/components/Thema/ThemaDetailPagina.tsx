@@ -1,17 +1,11 @@
 import { ReactNode } from 'react';
 
 import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
-import ErrorAlert from '../../components/Alert/Alert';
-import LoadingContent, {
-  BarConfig,
-} from '../../components/LoadingContent/LoadingContent';
-import {
-  DetailPageV2,
-  PageContentCell,
-  PageContentV2,
-} from '../../components/Page/Page';
-import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { Steps } from '../../components/StatusSteps/StatusSteps';
+import ErrorAlert from '../Alert/Alert';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
+import { DetailPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
+import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
+import { Steps } from '../StatusSteps/StatusSteps';
 
 const LOADING_BAR_CONFIG_DEFAULT: BarConfig = [
   ['30rem', '4rem', '2rem'],

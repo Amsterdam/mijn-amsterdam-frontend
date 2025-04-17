@@ -4,7 +4,7 @@ import ErrorAlert from '../../components/Alert/Alert';
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 type WMODetailContentProps = {
   voorziening: WMOVoorzieningFrontend;

@@ -3,8 +3,8 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
 import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
