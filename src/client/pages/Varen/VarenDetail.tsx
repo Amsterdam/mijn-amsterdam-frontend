@@ -5,7 +5,7 @@ import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploi
 import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 export function VarenDetail() {
   const { zaak, buttonItems, isLoading, isError, breadcrumbs } =

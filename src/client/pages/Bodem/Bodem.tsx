@@ -4,8 +4,8 @@ import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 export function Bodem() {
   const { items, tableConfig, isLoading, isError, linkListItems } =

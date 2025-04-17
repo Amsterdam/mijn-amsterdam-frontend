@@ -7,8 +7,8 @@ import { MaButtonLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
 import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 export function Parkeren() {
   const {

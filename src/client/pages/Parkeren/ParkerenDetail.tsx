@@ -8,7 +8,7 @@ import { DecosParkeerVergunning } from '../../../server/services/parkeren/config
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 import { Touringcar } from './detail-page-content/Touringcar';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
 import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats';

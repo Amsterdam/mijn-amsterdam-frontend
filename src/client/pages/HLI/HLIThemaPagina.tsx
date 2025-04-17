@@ -11,8 +11,8 @@ import { MaRouterLink } from '../../components/MaLink/MaLink';
 import { PageContentCell } from '../../components/Page/Page';
 import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
 import { DisplayProps } from '../../components/Table/TableV2';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 export function HistoricItemsMention() {
   return (

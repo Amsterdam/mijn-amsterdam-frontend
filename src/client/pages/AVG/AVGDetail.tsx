@@ -2,7 +2,7 @@ import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { Datalist } from '../../components/Datalist/Datalist';
 import { PageContentCell } from '../../components/Page/Page';
 import { useAVGDetailPage } from '../AVG/useAVGDetailPage.hook';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 function getVerzoekRows(verzoek: AVGRequestFrontend) {
   return [

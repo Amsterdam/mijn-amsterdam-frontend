@@ -4,8 +4,8 @@ import { useZorgThemaData } from './useZorgThemaData';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ParagaphSuppressed } from '../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 export const WMO_HELPDESK_PHONENUMBER = '0800 0643' as const;
 export const WMO_HELPDESK_HREF_TEL_LINK =
