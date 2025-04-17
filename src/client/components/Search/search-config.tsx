@@ -47,6 +47,10 @@ import {
 } from '../../../universal/types';
 import { ThemaTitles } from '../../config/thema';
 import { themaId as themaIdAfis } from '../../pages/Thema/Afis/Afis-thema-config';
+import {
+  featureToggle as featureToggleAVG,
+  themaId as themaIdAVG,
+} from '../../pages/Thema/AVG/AVG-thema-config';
 import { routes as profileRoutes } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
@@ -445,8 +449,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.avgActive,
-    stateKey: 'AVG' as AppStateKey,
+    isEnabled: featureToggleAVG.AvgActive,
+    stateKey: themaIdAVG,
     profileTypes: ['private', 'commercial'],
     displayTitle(item: AVGRequestFrontend) {
       return (term: string) => displayPath(term, [item.title]);

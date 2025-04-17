@@ -3,6 +3,7 @@ import { createContext } from 'react';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { apiPristineResult } from '../universal/helpers/api';
 import { AppState } from '../universal/types/App.types';
+import { featureToggle as featureToggleAVG } from './pages/Thema/AVG/AVG-thema-config';
 import { zorgnedLeerlingenvervoerActive } from './pages/Thema/Jeugd/Jeugd-thema-config';
 
 export const PRISTINE_APPSTATE: AppState = {
@@ -146,7 +147,7 @@ export const PRISTINE_APPSTATE: AppState = {
   HORECA: apiPristineResult([]),
 
   AVG: apiPristineResult(null, {
-    isActive: FeatureToggle.avgActive,
+    isActive: featureToggleAVG.AvgActive,
     profileTypes: ['private'],
   }),
 

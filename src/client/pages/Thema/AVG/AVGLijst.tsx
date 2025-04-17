@@ -1,7 +1,7 @@
 import { useAVGListPageData } from './useAVGListPage.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
-export function AVGList() {
+export function AVGLijst() {
   const {
     avgVerzoeken,
     isLoading,
