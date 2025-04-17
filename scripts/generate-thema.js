@@ -32,6 +32,10 @@ const options = {
   commercial: {
     type: 'boolean',
   },
+  basePath: {
+    type: 'string',
+    default: 'src/client/pages/Thema',
+  },
 };
 
 const { values } = parseArgs({
@@ -39,6 +43,8 @@ const { values } = parseArgs({
   options,
   allowPositionals: true,
 });
+
+const basePath = values.basePath;
 
 const hasRenderConfig = values.config.includes('render');
 const hasCoreConfig = values.config.includes('core');
@@ -62,8 +68,8 @@ const featureToggleName = `${titleName}Active`;
 
 const themaCoreImportsTemplate = `
 import { listPageParamKind } from './${titleName}-thema-config';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import type { ThemaRoutesConfig } from '../../config/thema-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 `;
 
@@ -98,21 +104,21 @@ export const routeConfig = {
 const themaConfigTemplate = `
 import { generatePath } from 'react-router';
 
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { LinkProps } from '../../../universal/types';
-import type { ZaakDetail } from '../../../universal/types';
-import { withOmitDisplayPropsForSmallScreens } from '../../components/Table/helpers';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+import { LinkProps } from '../../../../universal/types';
+import type { ZaakDetail } from '../../../../universal/types';
+import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../components/Table/TableV2.types';
+} from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-} from '../../config/app';
-import { ThemaRoutesConfig } from '../../config/thema-types';
+} from '../../../config/app';
+import { ThemaRoutesConfig } from '../../../config/thema-types';
 
-// import type { ${typeName} } from '../../../server/services/${titleSlug}/config-and-types';
+// import type { ${typeName} } from '../../../../server/services/${titleSlug}/config-and-types';
 type ${typeName} = ZaakDetail & {
   processed: boolean;
   dateRequest: string;
@@ -251,9 +257,9 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
 
 `;
 
-const fileNameCoreConfig = `./src/client/pages/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-core-config.ts`;
-const fileNameThemaConfig = `./src/client/pages/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-config.ts`;
-const fileNameRenderConfig = `./src/client/pages/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-render-config.ts`;
+const fileNameCoreConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-core-config.ts`;
+const fileNameThemaConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-config.ts`;
+const fileNameRenderConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-render-config.ts`;
 
 if (hasRenderConfig || hasThemaConfig || hasCoreConfig) {
   fs.mkdirSync(path.dirname(fileNameThemaConfig), { recursive: true });
