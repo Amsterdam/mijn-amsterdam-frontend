@@ -55,6 +55,7 @@ export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a req
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
   method: 'get',
+  enableCache: BFF_REQUEST_CACHE_ENABLED,
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   enableCache: BFF_REQUEST_CACHE_ENABLED,
   postponeFetch: false,
