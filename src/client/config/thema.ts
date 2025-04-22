@@ -7,10 +7,7 @@ import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-con
 import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
 import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
 import { menuItem as menuItemBodem } from '../pages/Thema/Bodem/Bodem-render-config';
-import {
-  getThemaTitleBurgerzakenWithAppState,
-  getThemaUrlBurgerzakenWithAppState,
-} from '../pages/Thema/Burgerzaken/helpers';
+import { menuItem as menuItemBurgerzaken } from '../pages/Thema/Burgerzaken/Burgerzaken-render-config';
 import { getThemaTitleWithAppState } from '../pages/Thema/HLI/helpers';
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
 import { documentTitles as documentTitlesInkomen } from '../pages/Thema/Inkomen/Inkomen-thema-config';
@@ -43,7 +40,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
   BODEM: 'Bodem',
-  BURGERZAKEN: 'Paspoort en ID-kaart',
   ERFPACHT: 'Erfpacht',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
@@ -76,13 +72,6 @@ export const PageTitleMain = 'Mijn Amsterdam';
  * @deprecated Use the documentTitles exported from the Thema-config files instead.
  */
 export const DocumentTitles: DocumentTitlesConfig = {
-  // Burgerzaken
-  [AppRoutes.BURGERZAKEN]: `${ThemaTitles.BURGERZAKEN} | overzicht`,
-  [AppRoutes['BURGERZAKEN/LIST']]:
-    `Paspoort en ID-kaart | ${ThemaTitles.BURGERZAKEN}`,
-  [AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']]: (_config, params) =>
-    `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${ThemaTitles.BURGERZAKEN}`,
-
   // Zorg
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
@@ -181,6 +170,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemAVG,
   menuItemBezwaren,
   menuItemBodem,
+  menuItemBurgerzaken,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -202,14 +192,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['commercial'],
     isAlwaysVisible: true,
   },
-  {
-    title: (appState: AppState) => {
-      return getThemaTitleBurgerzakenWithAppState(appState);
-    },
-    id: ThemaIDs.BURGERZAKEN,
-    to: (appState) => getThemaUrlBurgerzakenWithAppState(appState),
-    profileTypes: ['private'],
-  },
+
   {
     title: ThemaTitles.ERFPACHT,
     id: ThemaIDs.ERFPACHT,

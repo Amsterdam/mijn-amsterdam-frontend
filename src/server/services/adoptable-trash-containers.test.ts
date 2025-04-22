@@ -2,7 +2,7 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 
 import { forTesting } from './adoptable-trash-containers';
 import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
-import { fetchBRP } from './brp';
+import { fetchBRP } from './brp/brp';
 import { fetchDataset } from './buurt/buurt';
 import { fetchMyLocation } from './my-locations';
 import { getAuthProfileAndToken } from '../../testing/utils';
@@ -12,7 +12,7 @@ import {
 } from '../../universal/config/myarea-datasets';
 import { apiSuccessResult, apiErrorResult } from '../../universal/helpers/api';
 
-vi.mock('./brp', () => ({
+vi.mock('./brp/brp', () => ({
   fetchBRP: vi.fn(),
 }));
 

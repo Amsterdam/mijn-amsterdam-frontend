@@ -14,7 +14,7 @@ import {
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
-import { fetchAantalBewoners } from '../services/brp';
+import { fetchAantalBewoners } from '../services/brp/brp';
 import {
   NOTIFICATIONS,
   loadServicesAll,

@@ -5,16 +5,15 @@ import {
   getThemaTitleBurgerzaken,
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
-} from './helpers';
-import { AppRoutes } from '../../../../universal/config/routes';
+} from './Burgerzaken-helpers';
+import { routeConfig, themaTitle } from './Burgerzaken-thema-config';
 import { AppState } from '../../../../universal/types/App.types';
-import { ThemaTitles } from '../../../config/thema';
 
 describe('helpers', () => {
   describe('getThemaTitleBurgerzaken', () => {
     it('should return BURGERZAKEN when both hasIDKaart and hasPaspoort are true', () => {
       const result = getThemaTitleBurgerzaken(true, true);
-      expect(result).toBe(ThemaTitles.BURGERZAKEN);
+      expect(result).toBe(themaTitle);
     });
 
     it('should return ID-kaart when only hasIDKaart is true', () => {
@@ -29,7 +28,7 @@ describe('helpers', () => {
 
     it('should return Paspoort when both hasIDKaart and hasPaspoort are false', () => {
       const result = getThemaTitleBurgerzaken(false, false);
-      expect(result).toBe(ThemaTitles.BURGERZAKEN);
+      expect(result).toBe(themaTitle);
     });
   });
 
@@ -46,7 +45,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaTitleBurgerzakenWithAppState(appState);
-      expect(result).toBe(ThemaTitles.BURGERZAKEN);
+      expect(result).toBe(themaTitle);
     });
 
     it('should return ID-kaart when appState has only ID-kaart', () => {
@@ -84,7 +83,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaTitleBurgerzakenWithAppState(appState);
-      expect(result).toBe(ThemaTitles.BURGERZAKEN);
+      expect(result).toBe(themaTitle);
     });
   });
 
@@ -101,7 +100,7 @@ describe('helpers', () => {
       } as unknown as AppState;
       const result = getThemaUrlBurgerzakenWithAppState(appState);
       expect(result).toBe(
-        generatePath(AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'], {
+        generatePath(routeConfig.detailPage.path, {
           documentType: 'europese identiteitskaart',
           id: '1',
         })
@@ -120,7 +119,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaUrlBurgerzakenWithAppState(appState);
-      expect(result).toBe(AppRoutes.BURGERZAKEN);
+      expect(result).toBe(routeConfig.themaPage.path);
     });
 
     it('should return the BURGERZAKEN route when there are no identiteitsbewijzen', () => {
@@ -132,7 +131,7 @@ describe('helpers', () => {
         },
       } as unknown as AppState;
       const result = getThemaUrlBurgerzakenWithAppState(appState);
-      expect(result).toBe(AppRoutes.BURGERZAKEN);
+      expect(result).toBe(routeConfig.themaPage.path);
     });
   });
 });

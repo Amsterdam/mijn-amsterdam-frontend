@@ -1,25 +1,22 @@
 import { ReactNode } from 'react';
 
-import { LinkProps, ZaakDetail } from './App.types';
+import { ZaakDetail } from '../../../universal/types/App.types';
 
-export interface IdentiteitsbewijsFromSource {
+export type IdentiteitsbewijsFromSource = {
   id: string;
   documentNummer: string;
   documentType: 'europese identiteitskaart' | 'paspoort';
   datumUitgifte: string;
   datumAfloop: string;
-}
+};
 
-export interface IdentiteitsbewijsFrontend
-  extends ZaakDetail,
-    IdentiteitsbewijsFromSource {
-  datumUitgifteFormatted: string;
-  datumAfloopFormatted: string;
-  title: string;
-  link: LinkProps;
-}
+export type IdentiteitsbewijsFrontend = ZaakDetail &
+  IdentiteitsbewijsFromSource & {
+    datumUitgifteFormatted: string;
+    datumAfloopFormatted: string;
+  };
 
-export interface Adres {
+export type Adres = {
   straatnaam: string | null;
   postcode: string | null;
   woonplaatsNaam: string | null;
@@ -34,9 +31,9 @@ export interface Adres {
   wozWaarde?: ReactNode | null;
   _adresSleutel?: string;
   mokum?: boolean;
-}
+};
 
-export interface Persoon {
+export type Persoon = {
   aanduidingNaamgebruikOmschrijving: string | null;
   bsn: string | null;
   geboortedatum: string | null;
@@ -58,9 +55,9 @@ export interface Persoon {
   datumVertrekUitNederland: string;
   indicatieGeheim: boolean;
   adresInOnderzoek: '080000' | '089999' | null;
-}
+};
 
-export interface Verbintenis {
+export type Verbintenis = {
   datumOntbinding: string | null;
   datumSluiting: string;
   landnaamSluiting: string;
@@ -68,13 +65,13 @@ export interface Verbintenis {
   soortVerbintenis: string;
   soortVerbintenisOmschrijving: string;
   persoon: Partial<Persoon>;
-}
+};
 
-export interface VerbintenisHistorisch extends Verbintenis {
+export type VerbintenisHistorisch = Verbintenis & {
   redenOntbindingOmschrijving?: string | null;
-}
+};
 
-export interface Kind {
+export type Kind = {
   bsn: string | null;
   geboortedatum: string | null;
   geslachtsaanduiding: string | null;
@@ -82,9 +79,9 @@ export interface Kind {
   overlijdensdatum: string | null;
   voornamen: string | null;
   voorvoegselGeslachtsnaam: string | null;
-}
+};
 
-export interface BRPDataFromSource {
+export type BRPDataFromSource = {
   kvkNummer: string;
   persoon: Persoon;
   verbintenis?: Verbintenis;
@@ -95,8 +92,8 @@ export interface BRPDataFromSource {
   adresHistorisch?: Adres[];
   identiteitsbewijzen?: IdentiteitsbewijsFromSource[];
   fetchUrlAantalBewoners: string;
-}
+};
 
-export interface BRPData extends BRPDataFromSource {
+export type BRPData = BRPDataFromSource & {
   identiteitsbewijzen?: IdentiteitsbewijsFrontend[];
-}
+};

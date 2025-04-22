@@ -1,8 +1,8 @@
 import { transformBRPData, transformBRPNotifications } from './brp';
-import brpData from '../../../mocks/fixtures/brp.json';
-import { ApiSuccessResponse } from '../../universal/helpers/api';
-import { getFullAddress } from '../../universal/helpers/brp';
-import { BRPDataFromSource } from '../../universal/types/brp';
+import { BRPDataFromSource } from './brp.types';
+import brpData from '../../../../mocks/fixtures/brp.json';
+import { ApiSuccessResponse } from '../../../universal/helpers/api';
+import { getFullAddress } from '../../../universal/helpers/brp';
 
 const brpDataTyped = brpData as ApiSuccessResponse<BRPDataFromSource>;
 const {

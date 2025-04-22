@@ -94,15 +94,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     case ThemaIDs.SUBSIDIE:
       return !isLoading(SUBSIDIE) && SUBSIDIE.content?.isKnown === true;
 
-    case ThemaIDs.BURGERZAKEN: {
-      const hasIdentiteitsbewijs = !!BRP?.content?.identiteitsbewijzen?.length;
-      return (
-        FeatureToggle.identiteitsbewijzenActive &&
-        !isLoading(BRP) &&
-        hasIdentiteitsbewijs
-      );
-    }
-
     case ThemaIDs.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 

@@ -3,7 +3,6 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useBurgerZakenData } from './useBurgerZakenData.hook';
 import { IdentiteitsbewijsFrontend } from '../../../../universal/types';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ThemaTitles } from '../../../config/thema';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
@@ -15,8 +14,8 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-export function Burgerzaken() {
-  const { tableConfig, documents, isLoading, isError, linkListItems } =
+export function BurgerzakenThema() {
+  const { tableConfig, documents, isLoading, isError, linkListItems, title } =
     useBurgerZakenData();
 
   const tables = Object.entries(tableConfig).map(
@@ -35,7 +34,7 @@ export function Burgerzaken() {
 
   return (
     <ThemaPagina
-      title={ThemaTitles.BURGERZAKEN}
+      title={title}
       isError={isError}
       isPartialError={false}
       isLoading={isLoading}

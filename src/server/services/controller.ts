@@ -16,7 +16,7 @@ import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBRP } from './brp';
+import { fetchBRP } from './brp/brp';
 import { fetchCMSCONTENT } from './cms/cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';

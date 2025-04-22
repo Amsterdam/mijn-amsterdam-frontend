@@ -4,7 +4,6 @@
  */
 export const ThemaIDs = {
   BELASTINGEN: 'BELASTINGEN',
-  BURGERZAKEN: 'BURGERZAKEN',
   ERFPACHT: 'ERFPACHT',
   HLI: 'HLI',
   HORECA: 'HORECA',

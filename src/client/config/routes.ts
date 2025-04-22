@@ -21,9 +21,6 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
     return `/vergunning/${match.params?.title}`;
   },
 
-  [AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS']]: () =>
-    '/burgerzaken/identiteitsbewijs',
-
   [AppRoutes['ZORG/VOORZIENING']]: () => '/zorg-en-ondersteuning/voorziening',
 
   [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: (match) => {

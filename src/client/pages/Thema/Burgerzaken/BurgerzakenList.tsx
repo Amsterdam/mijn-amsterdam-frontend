@@ -1,21 +1,30 @@
 import { useParams } from 'react-router';
 
+import {
+  listPageParamKind,
+  type ListPageParamKind,
+} from './Burgerzaken-thema-config';
 import { useBurgerZakenData } from './useBurgerZakenData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
-import { ListPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
-export function BurgerZakenList() {
-  const { documents, isLoading, isError, tableConfig, routes, breadcrumbs } =
-    useBurgerZakenData();
+export function BurgerzakenList() {
+  const {
+    documents,
+    isLoading,
+    isError,
+    tableConfig,
+    breadcrumbs,
+    listPageRoute,
+  } = useBurgerZakenData();
   const params = useParams<{ kind: ListPageParamKind }>();
-
-  const { sort, title, displayProps } = tableConfig[params.kind];
+  const { kind = listPageParamKind.identiteitsbewijzen } = params;
+  const { sort, title, displayProps } = tableConfig[kind];
 
   return (
     <ListPagePaginated
       items={documents.sort(sort)}
       title={title}
-      appRoute={routes.listPage}
+      appRoute={listPageRoute}
       appRouteParams={params}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}

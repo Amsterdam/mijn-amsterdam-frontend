@@ -1,8 +1,7 @@
 import { generatePath } from 'react-router';
 
-import { AppRoutes } from '../../../../universal/config/routes';
+import { routeConfig, themaTitle } from './Burgerzaken-thema-config';
 import { AppState } from '../../../../universal/types/App.types';
-import { ThemaTitles } from '../../../config/thema';
 
 export function getThemaTitleBurgerzaken(
   hasIDKaart: boolean,
@@ -11,7 +10,7 @@ export function getThemaTitleBurgerzaken(
   switch (true) {
     default:
     case hasIDKaart && hasPaspoort:
-      return ThemaTitles.BURGERZAKEN;
+      return themaTitle;
     case hasIDKaart:
       return 'ID-kaart';
     case hasPaspoort:
@@ -35,9 +34,9 @@ export function getThemaUrlBurgerzakenWithAppState(appState: AppState) {
   const identiteitsbewijs = identiteitsbewijzen[0];
 
   return identiteitsbewijzen.length === 1 && identiteitsbewijs
-    ? generatePath(AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'], {
+    ? generatePath(routeConfig.detailPage.path, {
         documentType: identiteitsbewijs.documentType,
         id: identiteitsbewijs.id,
       })
-    : AppRoutes.BURGERZAKEN;
+    : routeConfig.themaPage.path;
 }

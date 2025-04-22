@@ -31,7 +31,7 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
-import { transformBRPData } from '../brp';
+import { transformBRPData } from '../brp/brp';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
 const TONK = {

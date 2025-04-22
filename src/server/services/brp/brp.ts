@@ -7,31 +7,34 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
+  routeConfig,
+  themaId as themaIdBurgerzaken,
+  themaTitle as themaTitleBurgerzaken,
+} from '../../../client/pages/Thema/Burgerzaken/Burgerzaken-thema-config';
+import {
   routes,
   themaIdBRP,
   themaTitle,
-} from '../../client/pages/Thema/Profile/Profile-thema-config';
-import { AppRoutes } from '../../universal/config/routes';
-import { ThemaIDs } from '../../universal/config/thema';
+} from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import { defaultDateFormat } from '../../universal/helpers/date';
+} from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   BRPData,
   BRPDataFromSource,
   IdentiteitsbewijsFromSource,
   IdentiteitsbewijsFrontend,
   MyNotification,
-} from '../../universal/types';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
-import { BffEndpoints } from '../routing/bff-routes';
-import { generateFullApiUrlBFF } from '../routing/route-helpers';
+} from '../../../universal/types';
+import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import { BffEndpoints } from '../../routing/bff-routes';
+import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
@@ -95,7 +98,8 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        themaID: ThemaIDs.BURGERZAKEN,
+        themaID: themaIdBurgerzaken,
+        themaTitle: themaTitleBurgerzaken,
         datePublished: compareDate.toISOString(),
         hideDatePublished: true,
         isAlert: true,
@@ -117,7 +121,8 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        themaID: ThemaIDs.BURGERZAKEN,
+        themaID: themaIdBurgerzaken,
+        themaTitle: themaTitleBurgerzaken,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         id: `${document.documentType}-datum-afloop-binnenkort`,
@@ -138,7 +143,8 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        themaID: ThemaIDs.BURGERZAKEN,
+        themaID: themaIdBurgerzaken,
+        themaTitle: themaTitleBurgerzaken,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         hideDatePublished: true,
@@ -197,7 +203,7 @@ function transformIdentiteitsBewijzen(
   identiteitsbewijzen: IdentiteitsbewijsFromSource[]
 ): IdentiteitsbewijsFrontend[] {
   return identiteitsbewijzen.map((document) => {
-    const route = generatePath(AppRoutes['BURGERZAKEN/IDENTITEITSBEWIJS'], {
+    const route = generatePath(routeConfig.detailPage.path, {
       id: document.id,
       documentType: slug(document.documentType),
     });
@@ -215,11 +221,11 @@ function transformIdentiteitsBewijzen(
         to: route,
         title: document.documentType,
       },
+      steps: [],
       displayStatus:
         document.datumAfloop && isAfter(document.datumAfloop, new Date())
           ? 'Verlopen'
           : '',
-      steps: [], // Placeholder for status steps. Not used in this project.
     });
   });
 }

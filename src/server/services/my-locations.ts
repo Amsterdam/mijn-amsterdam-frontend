@@ -1,5 +1,5 @@
 import { BAGData, fetchBAG } from './bag';
-import { fetchBRP } from './brp';
+import { fetchBRP } from './brp/brp';
 import { fetchKVK, getKvkAddresses } from './kvk';
 import {
   DEFAULT_LAT,

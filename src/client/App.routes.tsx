@@ -15,7 +15,7 @@ import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config';
 import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config';
 import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-render-config';
 import { BodemRoutes } from './pages/Thema/Bodem/Bodem-render-config';
-import { BurgerzakenRoutes } from './pages/Thema/Burgerzaken/Burgerzaken-routes';
+import { BurgerzakenRoutes } from './pages/Thema/Burgerzaken/Burgerzaken-render-config';
 import { ErfpachtRoutes } from './pages/Thema/Erfpacht/Erfpacht-routes';
 import { HLIRoutes } from './pages/Thema/HLI/HLI-routes';
 import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-routes';

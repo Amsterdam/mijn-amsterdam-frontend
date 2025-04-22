@@ -39,6 +39,9 @@ export const listPageParamKind = {
   jaaropgaven: 'jaaropgaven',
 } as const;
 
+export type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+
 const routeConfig = {
   detailPageUitkering: {
     path: '/inkomen/bijstandsuitkering/:id',
@@ -143,9 +146,6 @@ export const linkListItems: LinkProps[] = [
     title: 'Contact Werk en Inkomen',
   },
 ];
-
-export type ListPageParamKey = keyof typeof listPageParamKind;
-export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
 export const tableConfig = {
   [listPageParamKind.lopend]: {

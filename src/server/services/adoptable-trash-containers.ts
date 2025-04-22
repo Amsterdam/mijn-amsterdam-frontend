@@ -1,7 +1,7 @@
 import { differenceInYears } from 'date-fns';
 import { LatLngBoundsLiteral } from 'leaflet';
 
-import { fetchBRP } from './brp';
+import { fetchBRP } from './brp/brp';
 import { fetchDataset } from './buurt/buurt';
 import {
   datasetEndpoints,

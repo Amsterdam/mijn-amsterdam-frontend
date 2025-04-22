@@ -4,7 +4,6 @@ export {
   SpinnerIcon as IconSpinner,
 } from '@amsterdam/design-system-react-icons';
 export { default as IconBelastingen } from './belastingen.svg?react';
-export { default as IconBurgerZaken } from './burgerzaken.svg?react';
 export { default as IconCheckmark } from './Checkmark.svg?react'; // TODO: Use design system icon
 export { default as IconConnectorTypeCCS } from './map/connector-type-ccs.svg?react';
 export { default as IconConnectorTypeChademo } from './map/connector-type-chademo.svg?react';

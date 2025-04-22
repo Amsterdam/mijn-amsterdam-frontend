@@ -4,7 +4,6 @@ import { type ThemaID } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
   IconBelastingen,
-  IconBurgerZaken,
   IconErfpacht,
   IconHLI,
   IconHoreca,
@@ -24,7 +23,6 @@ import {
 export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   VAREN: IconVaren,
   BELASTINGEN: IconBelastingen,
-  BURGERZAKEN: IconBurgerZaken,
   ERFPACHT: IconErfpacht,
   HLI: IconHLI,
   HORECA: IconHoreca,
@@ -34,7 +32,7 @@ export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   NOTIFICATIONS: BellIcon,
   OVERTREDINGEN: IconOvertredingen,
   PARKEREN: IconParkeren,
-  HOME: IconBurgerZaken,
+  HOME: BellIcon,
   SEARCH: SearchIcon,
   SUBSIDIE: IconSubsidie,
   SVWI: IconInkomenSVWI,
