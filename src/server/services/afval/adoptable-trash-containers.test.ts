@@ -12,18 +12,18 @@ import {
   apiErrorResult,
 } from '../../../universal/helpers/api';
 import { fetchMyLocation } from '../bag/my-locations';
-import { fetchBRP } from '../profile/brp';
 import { fetchDataset } from '../buurt/buurt';
+import { fetchBRP } from '../profile/brp';
 
-vi.mock('./brp/brp', () => ({
+vi.mock('../profile/brp', () => ({
   fetchBRP: vi.fn(),
 }));
 
-vi.mock('./my-locations', () => ({
+vi.mock('../bag/my-locations', () => ({
   fetchMyLocation: vi.fn(),
 }));
 
-vi.mock('./buurt/buurt', () => ({
+vi.mock('../buurt/buurt', () => ({
   fetchDataset: vi.fn(),
 }));
 

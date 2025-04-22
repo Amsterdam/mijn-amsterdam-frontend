@@ -3,15 +3,15 @@ import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
 
 import { MijnGegevensThema } from './ProfilePrivate';
-import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
-import {
-  Adres,
-  AppState,
+import type {
   BRPData,
-} from '../../../../../universal/types/App.types';
+  Adres,
+} from '../../../../../server/services/profile/brp.types';
+import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
+import { AppState } from '../../../../../universal/types/App.types';
 import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
-import { routes } from '../Profile-thema-config';
+import { routeConfig } from '../Profile-thema-config';
 
 const responseData = {
   adres: {
@@ -210,7 +210,7 @@ const panelHeadings = [
 ];
 
 describe('<Profile />', () => {
-  const routeEntry = routes.themaPageBRP;
+  const routeEntry = routeConfig.themaPageBRP.path;
 
   beforeAll(() => {
     (window.matchMedia as unknown) = vi.fn(() => {

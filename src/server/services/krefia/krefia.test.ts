@@ -1,10 +1,10 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
-import KrefiaData from '../../../mocks/fixtures/krefia.json';
-import { getAuthProfileAndToken, remoteApi } from '../../testing/utils';
-import { omit } from '../../universal/helpers/utils';
-import { axiosRequest } from '../helpers/source-api-request';
+import KrefiaData from '../../../../mocks/fixtures/krefia.json';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { omit } from '../../../universal/helpers/utils';
+import { axiosRequest } from '../../helpers/source-api-request';
 
 describe('Kredietbank & FIBU service', () => {
   const KREFIA_DUMMY_RESPONSE = {
