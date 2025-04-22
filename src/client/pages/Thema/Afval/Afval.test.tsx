@@ -1,10 +1,9 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AfvalInformation } from './Afval';
+import { routeConfig } from './Afval-thema-config';
+import { AfvalThemaPagina } from './AfvalThema';
 import { AfvalFractionData } from '../../../../server/services/afval/afvalwijzer';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
@@ -154,16 +153,15 @@ function initializeState(snapshot: MutableSnapshot, state: any = testState) {
   snapshot.set(appStateAtom, state);
 }
 
-describe('<AfvalInformation />', () => {
-  const routeEntry = generatePath(AppRoutes.AFVAL);
-  const routePath = AppRoutes.AFVAL;
+describe('<AfvalThemaPagina />', () => {
+  const routePath = routeConfig.themaPage.path;
 
   function Component() {
     return (
       <MockApp
-        routeEntry={routeEntry}
+        routeEntry={routePath}
         routePath={routePath}
-        component={AfvalInformation}
+        component={AfvalThemaPagina}
         initializeState={(snapshot) => initializeState(snapshot)}
       />
     );
@@ -182,9 +180,9 @@ describe('<AfvalInformation />', () => {
     function Component() {
       return (
         <MockApp
-          routeEntry={routeEntry}
+          routeEntry={routePath}
           routePath={routePath}
-          component={AfvalInformation}
+          component={AfvalThemaPagina}
           initializeState={(snapshot) => initializeState(snapshot, testState2)}
         />
       );
@@ -206,9 +204,9 @@ describe('<AfvalInformation />', () => {
     function Component() {
       return (
         <MockApp
-          routeEntry={routeEntry}
+          routeEntry={routePath}
           routePath={routePath}
-          component={AfvalInformation}
+          component={AfvalThemaPagina}
           initializeState={(snapshot) => initializeState(snapshot, testState2)}
         />
       );
