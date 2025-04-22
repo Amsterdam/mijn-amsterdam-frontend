@@ -13,7 +13,7 @@ import {
 import {
   routes,
   themaId as themaIdInkomen,
-} from '../../../client/pages/Inkomen/Inkomen-thema-config';
+} from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';

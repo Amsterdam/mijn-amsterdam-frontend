@@ -3,8 +3,8 @@ import {
   FailedDependencies,
 } from '../../universal/helpers/api';
 import { ApiError, AppState } from '../../universal/types';
-import { errorMessage as jeugdErrorMessage } from '../pages/Jeugd/Jeugd-thema-config';
-import { errorMessage as profileErrorMessage } from '../pages/Profile/Profile-thema-config';
+import { errorMessage as jeugdErrorMessage } from '../pages/Thema/Jeugd/Jeugd-thema-config';
+import { errorMessage as profileErrorMessage } from '../pages/Thema/Profile/Profile-thema-config';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
