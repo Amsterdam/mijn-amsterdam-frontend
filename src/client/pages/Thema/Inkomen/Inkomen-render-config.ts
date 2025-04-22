@@ -1,6 +1,6 @@
 import { InkomenThemaPagina } from './Inkomen';
 import { isInkomenThemaActive } from './Inkomen-helpers';
-import { routes, themaId, themaTitle } from './Inkomen-thema-config';
+import { routeConfig, themaId, themaTitle } from './Inkomen-thema-config';
 import { InkomenDetailBbz } from './InkomenDetailBbz';
 import { InkomenDetailTonk } from './InkomenDetailTonk';
 import { InkomenDetailTozo } from './InkomenDetailTozo';
@@ -16,34 +16,34 @@ import {
 
 export const InkomenRoutes = [
   {
-    route: routes.detailPageTozo,
+    route: routeConfig.detailPageTozo.path,
     Component: InkomenDetailTozo,
   },
   {
-    route: routes.detailPageTonk,
+    route: routeConfig.detailPageTonk.path,
     Component: InkomenDetailTonk,
   },
   {
-    route: routes.listPageSpecificaties,
+    route: routeConfig.listPageSpecificaties.path,
     Component: InkomenSpecificaties,
   },
   {
-    route: routes.detailPageUitkering,
+    route: routeConfig.detailPageUitkering.path,
     Component: InkomenDetailUitkering,
   },
   {
-    route: routes.detailPageBbz,
+    route: routeConfig.detailPageBbz.path,
     Component: InkomenDetailBbz,
     isActive: FeatureToggle.inkomenBBZActive,
   },
-  { route: routes.listPage, Component: InkomenLijstPagina },
-  { route: routes.themaPage, Component: InkomenThemaPagina },
+  { route: routeConfig.listPage.path, Component: InkomenLijstPagina },
+  { route: routeConfig.themaPage.path, Component: InkomenThemaPagina },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
 export const menuItem: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
-  to: routes.themaPage,
+  to: routeConfig.themaPage.path,
   profileTypes: ['private'],
   isActive: isInkomenThemaActive,
   IconSVG: InkomenIcon,

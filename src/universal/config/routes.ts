@@ -44,14 +44,6 @@ export const AppRoutes = {
   'HORECA/DETAIL': '/horeca/:caseType/:id',
   BFF_500_ERROR: '/server-error-500',
 
-  // Erfpacht v2
-  ERFPACHT: '/erfpacht',
-  'ERFPACHT/DOSSIERS': '/erfpacht/dossiers/:page?',
-  'ERFPACHT/DOSSIERDETAIL': '/erfpacht/dossier/:dossierNummerUrlParam',
-  'ERFPACHT/OPEN_FACTUREN': '/erfpacht/lijst/open-facturen/:page?',
-  'ERFPACHT/ALLE_FACTUREN':
-    '/erfpacht/facturen/lijst/:dossierNummerUrlParam/:page?',
-
   'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten/:page?',
 
   ZAAK_STATUS: '/zaak-status',

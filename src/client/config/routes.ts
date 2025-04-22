@@ -1,7 +1,6 @@
 import { PathMatch } from 'react-router';
 
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
-import { customTrackingUrls as customTrackingUrlsInkomen } from '../pages/Thema/Inkomen/Inkomen-thema-config';
 
 export interface TrackingConfig {
   profileType: ProfileType;
@@ -16,7 +15,6 @@ type CustomTrackingUrlMap = {
 };
 
 export const CustomTrackingUrls: CustomTrackingUrlMap = {
-  ...customTrackingUrlsInkomen,
   [AppRoutes['VERGUNNINGEN/DETAIL']]: (match: PathMatch) => {
     return `/vergunning/${match.params?.title}`;
   },
@@ -28,8 +26,6 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
   },
 
   [AppRoutes['KLACHTEN/KLACHT']]: () => '/klachten/klacht',
-
-  [AppRoutes['ERFPACHT/DOSSIERDETAIL']]: () => '/erfpacht/dossier',
 
   [AppRoutes.HOME]: (
     match: PathMatch,

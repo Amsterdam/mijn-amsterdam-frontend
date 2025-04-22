@@ -11,16 +11,19 @@ import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import type {
-  BRPData,
-  IdentiteitsbewijsFrontend,
-} from '../../../server/services/profile/brp.types';
-import type {
   ErfpachtDossiersResponse,
-  ErfpachtDossier,
+  ErfpachtDossierFrontend,
 } from '../../../server/services/erfpacht/erfpacht-types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
-import type { Krefia, KrefiaDeepLink } from '../../../server/services/krefia';
+import type {
+  Krefia,
+  KrefiaDeepLink,
+} from '../../../server/services/krefia/krefia.types';
+import type {
+  BRPData,
+  IdentiteitsbewijsFrontend,
+} from '../../../server/services/profile/brp.types';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
@@ -61,7 +64,8 @@ import {
   featureToggle as featureToggleBodem,
   themaId as themaIdBodem,
 } from '../../pages/Thema/Bodem/Bodem-thema-config';
-import { routes as profileRoutes } from '../../pages/Thema/Profile/Profile-thema-config';
+import { themaId as themaIdErfpacht } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -248,13 +252,13 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'ERFPACHT' as AppStateKey,
+    stateKey: themaIdErfpacht,
     getApiBaseItems: (
       erfpachtDossiersResponse: ErfpachtDossiersResponse
-    ): ErfpachtDossier[] => {
+    ): ErfpachtDossierFrontend[] => {
       return erfpachtDossiersResponse?.dossiers?.dossiers ?? [];
     },
-    displayTitle: (dossier: ErfpachtDossier) => (term: string) => {
+    displayTitle: (dossier: ErfpachtDossierFrontend) => (term: string) => {
       return displayPath(term, [dossier.title]);
     },
   },
@@ -397,14 +401,14 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         {
           title: name || 'Mijn naam',
           link: {
-            to: profileRoutes.themaPageBRP,
+            to: routeConfigProfile.themaPageBRP.path,
             title: `Mijn naam | ${name}`,
           },
         },
         {
           title: address || 'Mijn adres',
           link: {
-            to: profileRoutes.themaPageBRP,
+            to: routeConfigProfile.themaPageBRP.path,
             title: `Mijn adres | ${address}`,
           },
         },

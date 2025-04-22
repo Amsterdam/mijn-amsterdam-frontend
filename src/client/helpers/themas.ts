@@ -9,7 +9,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
     BRP,
-    ERFPACHT,
     HLI,
     HORECA,
     KLACHTEN,
@@ -79,16 +78,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         (FeatureToggle.cleopatraApiActive && FeatureToggle.overtredingenActive
           ? OVERTREDINGEN.content?.isKnown
           : false)
-      );
-
-    case ThemaIDs.ERFPACHT:
-      return (
-        FeatureToggle.erfpachtActive &&
-        !isLoading(ERFPACHT) &&
-        ERFPACHT.content !== null &&
-        (('dossiers' in ERFPACHT.content &&
-          !!ERFPACHT.content.dossiers.dossiers?.length) ||
-          !!ERFPACHT.content?.isKnown)
       );
 
     case ThemaIDs.SUBSIDIE:

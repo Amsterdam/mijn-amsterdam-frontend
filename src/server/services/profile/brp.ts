@@ -13,14 +13,14 @@ import type {
   BRPDataFromSource,
 } from './brp.types';
 import {
-  routeConfig,
+  routeConfig as routeConfigBurgerzaken,
   themaId as themaIdBurgerzaken,
   themaTitle as themaTitleBurgerzaken,
 } from '../../../client/pages/Thema/Burgerzaken/Burgerzaken-thema-config';
 import {
-  routes,
   themaIdBRP,
   themaTitle,
+  routeConfig as routeConfigBrp,
 } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import {
   ApiResponse_DEPRECATED,
@@ -174,7 +174,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
-        to: routes.themaPageBRP,
+        to: routeConfigBrp.themaPageBRP.path,
         title: 'Meer informatie',
       },
     });
@@ -190,7 +190,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
-        to: routes.themaPageBRP,
+        to: routeConfigBrp.themaPageBRP.path,
         title: 'Meer informatie',
       },
     });
@@ -203,7 +203,7 @@ function transformIdentiteitsBewijzen(
   identiteitsbewijzen: IdentiteitsbewijsFromSource[]
 ): IdentiteitsbewijsFrontend[] {
   return identiteitsbewijzen.map((document) => {
-    const route = generatePath(routeConfig.detailPage.path, {
+    const route = generatePath(routeConfigBurgerzaken.detailPage.path, {
       id: document.id,
       documentType: slug(document.documentType),
     });

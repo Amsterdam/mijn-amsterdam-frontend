@@ -5,12 +5,11 @@ import { generatePath, useParams } from 'react-router';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
 import styles from './ErfpachtDossierDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
-import { AppRoutes } from '../../../../../universal/config/routes';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import { LinkToListPage } from '../../../../components/LinkToListPage/LinkToListPage';
 import { TableV2 } from '../../../../components/Table/TableV2';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app';
-import { DisplayPropsFacturen } from '../Erfpacht-thema-config';
+import { DisplayPropsFacturen, routeConfig } from '../Erfpacht-thema-config';
 
 type DataTableFacturenProps = ErfpachtDatalistProps & {
   displayProps: DisplayPropsFacturen;
@@ -117,7 +116,7 @@ export function DataTableFacturen({
         dossier.facturen.facturen.length > MAX_TABLE_ROWS_ON_THEMA_PAGINA && (
           <LinkToListPage
             count={dossier.facturen.facturen.length}
-            route={generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
+            route={generatePath(routeConfig.listPageAlleFacturen.path, {
               dossierNummerUrlParam: dossierNummerUrlParam ?? null,
               page: null,
             })}

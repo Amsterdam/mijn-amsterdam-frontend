@@ -8,8 +8,10 @@ import {
   ErfpachtDossiersDetailSource,
   ErfpachtDossierSource,
   ErfpachtDossierPropsFrontend,
+  type ErfpachtDossierFactuurFrontend,
+  type ErfpachtDossiersResponseSource,
 } from './erfpacht-types';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -70,20 +72,27 @@ export function transformErfpachtDossierProperties<
   }
 
   if ('facturen' in dossier && 'facturen' in dossier.facturen) {
-    dossier.facturen.facturen = dossier.facturen.facturen?.map((factuur) => {
-      factuur.vervalDatum = defaultDateFormat(factuur.vervalDatum);
-      factuur.dossierNummerUrlParam = getDossierNummerUrlParam(
-        dossier.dossierNummer
-      );
-      return factuur;
-    });
+    const facturen: ErfpachtDossierFactuurFrontend[] =
+      dossier.facturen.facturen?.map((factuur) => {
+        const updatedFactuur: ErfpachtDossierFactuurFrontend = {
+          ...factuur,
+          vervalDatum: defaultDateFormat(factuur.vervalDatum),
+          dossierNummerUrlParam: getDossierNummerUrlParam(
+            dossier.dossierNummer
+          ),
+        };
+
+        return updatedFactuur;
+      }) ?? [];
+
+    dossier.facturen.facturen = facturen;
   }
   const zaak: ErfpachtDossierPropsFrontend<T> = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
     id: dossierNummerUrlParam,
     link: {
-      to: generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
+      to: generatePath(routeConfig.detailPage.path, {
         dossierNummerUrlParam,
       }),
       title,
@@ -94,9 +103,9 @@ export function transformErfpachtDossierProperties<
 }
 
 export function transformDossierResponse(
-  responseDataSource: ErfpachtDossiersResponse,
+  responseDataSource: ErfpachtDossiersResponseSource,
   relatieCode: ErfpachtErpachterResponseSource['relationCode']
-) {
+): ErfpachtDossiersResponse {
   const responseData: ErfpachtDossiersResponse = responseDataSource
     ? jsonCopy(responseDataSource)
     : {};

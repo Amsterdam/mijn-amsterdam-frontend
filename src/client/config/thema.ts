@@ -8,13 +8,14 @@ import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
 import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
 import { menuItem as menuItemBodem } from '../pages/Thema/Bodem/Bodem-render-config';
 import { menuItem as menuItemBurgerzaken } from '../pages/Thema/Burgerzaken/Burgerzaken-render-config';
+import {
+  menuItem as menuItemErfpacht,
+  menuItemZakelijk as menuItemErfpachtZakelijk,
+} from '../pages/Thema/Erfpacht/Erfpacht-render-config';
 import { getThemaTitleWithAppState } from '../pages/Thema/HLI/helpers';
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
-import { documentTitles as documentTitlesInkomen } from '../pages/Thema/Inkomen/Inkomen-thema-config';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
-import { documentTitles as documentTitlesJeugd } from '../pages/Thema/Jeugd/Jeugd-thema-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
-import { documentTitles as documentTitlesProfile } from '../pages/Thema/Profile/Profile-thema-config';
 import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
@@ -40,7 +41,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
   BODEM: 'Bodem',
-  ERFPACHT: 'Erfpacht',
   HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
   KLACHTEN: 'Klachten',
@@ -76,13 +76,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
-
-  ...documentTitlesJeugd,
-
-  // Inkomen
-  ...documentTitlesInkomen,
-  // Mijn gegevens + Contactmomenten
-  ...documentTitlesProfile,
 
   // HLI
   [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
@@ -129,13 +122,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['HORECA/LIST']]: getListPageDocumentTitle(ThemaTitles.HORECA),
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
 
-  // Erfpacht
-  [AppRoutes.ERFPACHT]: 'Erfpacht | overzicht',
-  [AppRoutes['ERFPACHT/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
-  [AppRoutes['ERFPACHT/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
-  [AppRoutes['ERFPACHT/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
-  [AppRoutes['ERFPACHT/DOSSIERDETAIL']]: 'Erfpacht | dossier',
-
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
@@ -171,6 +157,8 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemBezwaren,
   menuItemBodem,
   menuItemBurgerzaken,
+  menuItemErfpacht,
+  menuItemErfpachtZakelijk,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -191,20 +179,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     rel: 'external',
     profileTypes: ['commercial'],
     isAlwaysVisible: true,
-  },
-
-  {
-    title: ThemaTitles.ERFPACHT,
-    id: ThemaIDs.ERFPACHT,
-    to: AppRoutes.ERFPACHT,
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.ERFPACHT,
-    id: ThemaIDs.ERFPACHT,
-    to: import.meta.env.REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK,
-    profileTypes: ['commercial'],
-    rel: 'external',
   },
   {
     title: ThemaTitles.SUBSIDIE,

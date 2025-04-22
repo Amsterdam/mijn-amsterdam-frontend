@@ -6,8 +6,10 @@ import { ListPageParamKind } from './Zorg-thema-config';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
 
-export function ZorgRegelingen() {
-  const { kind } = useParams<{ kind: ListPageParamKind }>();
+export function ZorgList() {
+  const { kind = 'huidige-voorzieningen' } = useParams<{
+    kind: ListPageParamKind;
+  }>();
   const {
     voorzieningen,
     tableConfig,

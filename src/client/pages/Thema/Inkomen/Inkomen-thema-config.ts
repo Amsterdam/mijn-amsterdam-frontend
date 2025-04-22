@@ -16,11 +16,6 @@ import {
 } from '../../../config/app';
 import { TrackingConfig } from '../../../config/routes';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
-import {
-  toRoutes,
-  toDocumentTitles,
-  toCustomTrackingUrls,
-} from '../../../helpers/thema-config';
 
 export const themaId = 'INKOMEN' as const;
 export const themaTitle = 'Inkomen';
@@ -42,7 +37,7 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-const routeConfig = {
+export const routeConfig = {
   detailPageUitkering: {
     path: '/inkomen/bijstandsuitkering/:id',
     trackingUrl: '/inkomen/bijstandsuitkering',
@@ -79,10 +74,6 @@ const routeConfig = {
     documentTitle: `${themaTitle} | overzicht`,
   },
 } as const satisfies ThemaRoutesConfig;
-
-export const routes = toRoutes(routeConfig);
-export const documentTitles = toDocumentTitles(routeConfig);
-export const customTrackingUrls = toCustomTrackingUrls(routeConfig);
 
 const lopendeAanvragenDisplayPropsBase: DisplayProps<
   WithDetailLinkComponent<WpiRequestProcess>
@@ -157,7 +148,7 @@ export const tableConfig = {
     },
     displayProps: lopendeAanvragenDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.lopend,
       page: ':page?',
     }),
@@ -171,7 +162,7 @@ export const tableConfig = {
     },
     displayProps: afgehandeldeAanvragenDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.eerder,
       page: ':page?',
     }),
@@ -183,7 +174,7 @@ export const tableConfigSpecificaties = {
     title: 'Uitkeringsspecificaties',
     displayProps: specificatiesTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routes.listPageSpecificaties, {
+    listPageRoute: generatePath(routeConfig.listPageSpecificaties.path, {
       kind: listPageParamKind.uitkering,
       page: ':page?',
     }),
@@ -192,7 +183,7 @@ export const tableConfigSpecificaties = {
     title: 'Jaaropgaven',
     displayProps: jaaropgavenTableDisplayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routes.listPageSpecificaties, {
+    listPageRoute: generatePath(routeConfig.listPageSpecificaties.path, {
       kind: listPageParamKind.jaaropgaven,
       page: ':page?',
     }),

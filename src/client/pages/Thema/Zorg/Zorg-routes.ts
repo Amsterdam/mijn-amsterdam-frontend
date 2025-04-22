@@ -1,13 +1,13 @@
 import { ZorgThemaPagina } from './Zorg';
 import { ZorgDetail } from './ZorgDetail';
-import { ZorgRegelingen } from './ZorgRegelingen';
+import { ZorgList } from './ZorgList';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 
 export const ZorgRoutes = [
   { route: '/zorg-en-ondersteuning/voorziening/:id', Component: ZorgDetail },
   {
     route: '/zorg-en-ondersteuning/lijst/:kind/:page?',
-    Component: ZorgRegelingen,
+    Component: ZorgList,
     isActive: FeatureToggle.zorgv2ThemapaginaActive,
   },
   {

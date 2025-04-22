@@ -6,7 +6,8 @@ import { AppState } from '../universal/types/App.types';
 import { featureToggle as featureToggleAVG } from './pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from './pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { featureToggle as featureToggleBodem } from './pages/Thema/Bodem/Bodem-thema-config';
-import { zorgnedLeerlingenvervoerActive } from './pages/Thema/Jeugd/Jeugd-thema-config';
+import { featureToggle as featureToggleErfpacht } from './pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { featureToggle as featureToggleJeugd } from './pages/Thema/Jeugd/Jeugd-thema-config';
 
 export const PRISTINE_APPSTATE: AppState = {
   // Generated
@@ -75,11 +76,11 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
   JEUGD: apiPristineResult([], {
-    isActive: zorgnedLeerlingenvervoerActive,
+    isActive: featureToggleJeugd.leerlingenvervoerActive,
     profileTypes: ['private'],
   }),
   ERFPACHT: apiPristineResult(null, {
-    isActive: FeatureToggle.erfpachtActive,
+    isActive: featureToggleErfpacht.erfpachtActive,
     profileTypes: ['private', 'commercial'],
   }),
   SUBSIDIE: apiPristineResult(

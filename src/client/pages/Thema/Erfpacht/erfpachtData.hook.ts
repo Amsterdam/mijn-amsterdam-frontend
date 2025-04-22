@@ -2,13 +2,12 @@ import {
   getTableConfig,
   linkListItems,
   listPageParamKind,
-  routes,
+  themaId,
+  themaTitle,
 } from './Erfpacht-thema-config';
 import { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
-import { ThemaIDs } from '../../../../universal/config/thema';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { ThemaTitles } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -24,7 +23,7 @@ export function useErfpachtThemaData() {
     'voorkeursadres'
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.ERFPACHT);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   // Facturen
   const openFacturenBase = erfpachtData?.openstaandeFacturen ?? null;
@@ -32,7 +31,7 @@ export function useErfpachtThemaData() {
   const tableConfig = getTableConfig({ erfpachtData });
 
   return {
-    title: ThemaTitles.ERFPACHT,
+    title: themaTitle,
     erfpachtData,
     relatieCode: erfpachtData?.relatieCode,
     openFacturen,
@@ -42,7 +41,6 @@ export function useErfpachtThemaData() {
     linkListItems,
     tableConfig,
     listPageParamKind,
-    routes,
     breadcrumbs,
   };
 }
