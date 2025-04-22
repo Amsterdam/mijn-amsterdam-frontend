@@ -65,6 +65,7 @@ import {
   themaId as themaIdBodem,
 } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { themaId as themaIdErfpacht } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { themaId as themaIdHLI } from '../../pages/Thema/HLI/HLI-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
@@ -332,7 +333,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'HLI' as AppStateKey,
+    stateKey: themaIdHLI,
     getApiBaseItems: (apiContent: HLIresponseData) => {
       const stadspassen =
         apiContent?.stadspas?.map((stadspas) => {

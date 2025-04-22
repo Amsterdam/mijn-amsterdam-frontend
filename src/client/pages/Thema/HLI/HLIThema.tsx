@@ -2,11 +2,12 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import styles from './HLIThemaPagina.module.scss';
+import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
+import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
@@ -87,9 +88,8 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
   );
 }
 
-export function HLIThemaPagina() {
+export function HLIThema() {
   const {
-    hasKindtegoed,
     isError,
     isLoading,
     regelingen,
@@ -110,7 +110,7 @@ export function HLIThemaPagina() {
   );
 
   const regelingenTables = FeatureToggle.hliThemaRegelingenActive
-    ? Object.entries(tableConfig).map(
+    ? entries(tableConfig).map(
         ([
           kind,
           {
@@ -119,8 +119,8 @@ export function HLIThemaPagina() {
             filter: regelingenListFilter,
             sort: regelingenListSort,
             maxItems,
-            className,
             listPageRoute,
+            className,
           },
         ]) => {
           return (

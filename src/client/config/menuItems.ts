@@ -16,7 +16,7 @@ export const themasByProfileType: (
     commercial: myThemasMenuItems
       .filter((item) => item.profileTypes.includes('commercial'))
       .map((item) => buildThemaMenuItem(item, 'commercial')),
-  })[profileType];
+  })[profileType || 'private'];
 
 function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
   const appState = useAppStateGetter();

@@ -4,17 +4,19 @@ import {
   linkListItems,
   listPageParamKind,
   listPageTitle,
-  routes,
   tableConfig,
+  themaId,
+  type ListPageParamKind,
 } from './HLI-thema-config';
+import styles from './HLIThema.module.scss';
 import { useStadspassen } from './useStadspassen.hook';
-import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import { ThemaIDs } from '../../../../universal/config/thema';
+import type { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import {
   hasFailedDependency,
   isError,
   isLoading,
 } from '../../../../universal/helpers/api';
+import { entries } from '../../../../universal/helpers/utils';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -28,7 +30,7 @@ export function useHliThemaData() {
     'title',
     true
   );
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.HLI);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
   const hasRegelingen = !!regelingen.length;
   const title = getThemaTitle(hasStadspas, hasRegelingen);
   const hasKindtegoed = stadspassen?.some((stadspas) =>
@@ -49,6 +51,21 @@ export function useHliThemaData() {
     dependencyError = 'Wij kunnen nu geen informatie tonen over de regelingen';
   }
 
+  const tableStyles = {
+    [listPageParamKind.actual]: styles.HuidigeRegelingen,
+    [listPageParamKind.historic]: styles.EerdereRegelingen,
+  } as const satisfies Record<ListPageParamKind, string>;
+
+  const tableConfigWithStyles = Object.fromEntries(
+    entries(tableConfig).map(([kind, config]) => [
+      kind,
+      {
+        ...config,
+        className: tableStyles[kind],
+      },
+    ])
+  );
+
   return {
     stadspassen,
     regelingen,
@@ -57,8 +74,7 @@ export function useHliThemaData() {
     isLoading: isLoading(HLI),
     isError: isError(HLI, false),
     dependencyError,
-    routes,
-    tableConfig,
+    tableConfig: tableConfigWithStyles,
     listPageTitle,
     listPageParamKind,
     linkListItems: hasKindtegoed

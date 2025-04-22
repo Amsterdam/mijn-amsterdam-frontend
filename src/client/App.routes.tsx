@@ -17,7 +17,7 @@ import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-render-config';
 import { BodemRoutes } from './pages/Thema/Bodem/Bodem-render-config';
 import { BurgerzakenRoutes } from './pages/Thema/Burgerzaken/Burgerzaken-render-config';
 import { ErfpachtRoutes } from './pages/Thema/Erfpacht/Erfpacht-render-config';
-import { HLIRoutes } from './pages/Thema/HLI/HLI-routes';
+import { HLIRoutes } from './pages/Thema/HLI/HLI-render-config';
 import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-routes';
 import { InkomenRoutes } from './pages/Thema/Inkomen/Inkomen-render-config';
 import { JeugdRoutes } from './pages/Thema/Jeugd/Jeugd-render-config';

@@ -9,11 +9,6 @@ export const AppRoutes = {
   'ZORG/VOORZIENING': '/zorg-en-ondersteuning/voorziening/:id',
   'ZORG/VOORZIENINGEN_LIST': '/zorg-en-ondersteuning/lijst/:kind/:page?',
 
-  HLI: '/regelingen-bij-laag-inkomen',
-  'HLI/STADSPAS': '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
-  'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-  'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
-
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',

@@ -10,7 +10,7 @@ import {
   filterCombineRtmData,
   heeftDeel2VanDeRegelingNietVoltooid,
 } from './status-line-items/regeling-rtm';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
@@ -111,7 +111,7 @@ async function transformRegelingForFrontend(
 ) {
   const id = aanvraag.id;
 
-  const route = generatePath(AppRoutes['HLI/REGELING'], {
+  const route = generatePath(routeConfig.detailPage.path, {
     id,
     regeling: slug(aanvraag.titel),
   });

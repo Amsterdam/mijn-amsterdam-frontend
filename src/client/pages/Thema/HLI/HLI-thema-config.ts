@@ -1,18 +1,16 @@
-import { generatePath } from 'react-router';
+import { generatePath, type PathMatch } from 'react-router';
 
-import styles from './HLIThemaPagina.module.scss';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../../components/Table/TableV2';
+} from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeRegelingenBase: DisplayProps<
@@ -47,15 +45,42 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
+export const featureToggle = {
+  hliActive: true,
+  hliStadspasActive: true,
+};
+
+export const themaId = 'HLI' as const;
+export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
+
+export const routeConfig = {
+  detailPage: {
+    path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
+    trackingUrl: (match: PathMatch) =>
+      generatePath('/regelingen-bij-laag-inkomen/regeling/:regeling', {
+        regeling: match.params?.regeling ?? '',
+      }),
+    documentTitle: `Regeling | ${themaTitle}`,
+  },
+  detailPageStadspas: {
+    path: '/regelingen-bij-laag-inkomen/stadspas/:passNumber',
+    trackingUrl: '/regelingen-bij-laag-inkomen/stadspas',
+    documentTitle: `Stadspas | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
+    documentTitle: (_, params) =>
+      `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
+  },
+  themaPage: {
+    path: '/regelingen-bij-laag-inkomen',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
+
 export const listPageTitle = {
   [listPageParamKind.actual]: 'Huidige regelingen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
-} as const;
-
-export const routes = {
-  listPage: AppRoutes['HLI/REGELINGEN_LIST'],
-  detailPage: AppRoutes['HLI/REGELING'],
-  themaPage: AppRoutes.HLI,
 } as const;
 
 export const linkListItems: LinkProps[] = [
@@ -80,9 +105,8 @@ export const tableConfig = {
     filter: (regeling: HLIRegelingFrontend) => regeling.isActual,
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
-    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    className: styles.HuidigeRegelingen,
-    listPageRoute: generatePath(routes.listPage, {
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -93,8 +117,7 @@ export const tableConfig = {
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    className: styles.EerdereRegelingen,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),

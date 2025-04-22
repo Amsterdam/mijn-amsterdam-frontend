@@ -9,7 +9,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
     BRP,
-    HLI,
     HORECA,
     KLACHTEN,
     KREFIA,
@@ -34,21 +33,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         FeatureToggle.svwiLinkActive &&
         SVWI?.content?.isKnown === true
       );
-
-    case ThemaIDs.HLI: {
-      const hasStadspas =
-        !!HLI?.content?.stadspas?.length &&
-        FeatureToggle.hliThemaStadspasActive;
-      const hasRegelingen =
-        !!HLI?.content?.regelingen?.length &&
-        FeatureToggle.hliThemaRegelingenActive;
-      const isLoadingHLI = isLoading(HLI);
-      return (
-        FeatureToggle.hliThemaActive &&
-        !isLoadingHLI &&
-        (hasStadspas || hasRegelingen)
-      );
-    }
 
     case ThemaIDs.ZORG:
       return (

@@ -12,7 +12,7 @@ import {
   menuItem as menuItemErfpacht,
   menuItemZakelijk as menuItemErfpachtZakelijk,
 } from '../pages/Thema/Erfpacht/Erfpacht-render-config';
-import { getThemaTitleWithAppState } from '../pages/Thema/HLI/helpers';
+import { menuItem as menuItemHLI } from '../pages/Thema/HLI/HLI-render-config';
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
@@ -41,7 +41,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
   BODEM: 'Bodem',
-  HLI: 'Stadspas en regelingen bij laag inkomen',
   HORECA: 'Horeca',
   KLACHTEN: 'Klachten',
   KREFIA: 'Kredietbank & FIBU',
@@ -76,12 +75,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
-
-  // HLI
-  [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
-  [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
-  [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
-  [AppRoutes['HLI/REGELINGEN_LIST']]: `Regelingen | ${ThemaTitles.HLI}`,
 
   // Vergunningen
   [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
@@ -159,6 +152,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemBurgerzaken,
   menuItemErfpacht,
   menuItemErfpachtZakelijk,
+  menuItemHLI,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -205,14 +199,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.SVWI,
     to: import.meta.env.REACT_APP_SSO_URL_SVWI,
     rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: (appState: AppState) => {
-      return getThemaTitleWithAppState(appState);
-    },
-    id: ThemaIDs.HLI,
-    to: AppRoutes.HLI,
     profileTypes: ['private'],
   },
   {
