@@ -6,21 +6,31 @@
 
 set -e
 
-EXTERNAL_URLS=$(grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
-  '(?<=")(http.+?)(?=")' ./src/* 2> /dev/null \
-  | sed '/.*w3\.org.*/d' \
-  | sed '/http:\/\/localhost*/d' \
-  | sed '/http.*\/\/sap:.*/d' \
-  | sort --unique)
+EXTERNAL_URLS=$(
+  grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
+    "([\`\"'])((https?:|www\.).*?)[^\\\]\1" ./src/* 2> /dev/null \
+    | sed -E "s/([\`\"'])(.+)\1/\2/" \
+    | sort --unique \
+    | sed '/.*w3\.org.*/d' \
+    | sed '/http:\/\/localhost*/d' \
+    | sed '/http.*\/\/sap:.*/d'
+)
+
+# 'https://data.amsterdam.nl/api/v1/dataset-name <- k re\'turns all features'
 
 echo_dead_link() {
-  local status_code=$(curl \
-    --globoff --location --output /dev/null --silent \
-    --write-out "%{http_code}\n" \
-    $1)
+  local url=${1:0:300}
 
-  if [ "$status_code" -eq 000 ] || [ "$status_code" -gt 399 ] && [ "$status_code" -lt 600 ]; then
-    echo "$url"
+  local status_code=$(curl \
+    --globoff --output /dev/null --silent \
+    --write-out "%{http_code}\n" \
+    "$url")
+
+  # There are also 000 codes, which can be caused by wrong certs or just an invalid URL.
+  # I choose to leave these out since I did not see any problems with these URLS when manually checking.
+  if [ "$status_code" -gt 399 ] && [ "$status_code" -lt 600 ]; then
+    echo "Status: $status_code - $url"
+    # echo "$url"
   fi
 }
 
@@ -30,4 +40,3 @@ do
 done
 
 wait
-
