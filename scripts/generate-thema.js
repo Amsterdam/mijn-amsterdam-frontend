@@ -203,7 +203,7 @@ export const tableConfig = {
 
 const themaPageComponentName = `${titleName}Thema`;
 const detailPageComponentName = `${titleName}Detail`;
-const listPageComponentName = `${titleName}Lijst`;
+const listPageComponentName = `${titleName}List`;
 const iconComponentName = `${titleName}Icon`;
 
 const renderConfigTemplate = `
@@ -227,17 +227,17 @@ import {
 export const ${titleName}Routes = [
   {
     route: routeConfig.detailPage.path,
-    Component: ${titleName}Detail,
+    Component: ${detailPageComponentName},
     isActive: featureToggle.${featureToggleName},
   },
   {
     route: routeConfig.listPage.path,
-    Component: ${titleName}Lijst,
+    Component: ${listPageComponentName},
     isActive: featureToggle.${featureToggleName},
   },
   {
     route: routeConfig.themaPage.path,
-    Component: ${titleName}Thema,
+    Component: ${themaPageComponentName},
     isActive: featureToggle.${featureToggleName},
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
