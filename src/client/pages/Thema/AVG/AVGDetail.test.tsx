@@ -2,12 +2,12 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
+import { routeConfig } from './AVG-thema-config';
+import { AVGDetail } from './AVGDetail';
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { AppState, StatusLineItem } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { AVGDetail } from './AVGDetail';
-import { AppState, StatusLineItem } from '../../../../universal/types';
 
 const steps: StatusLineItem[] = [
   {
@@ -53,7 +53,7 @@ const verzoeken: AVGRequestFrontend[] = [
   {
     id: '1',
     title: 'AVG verzoek 1',
-    status: 'Open',
+    displayStatus: 'Open',
     registratieDatum: '',
     type: 'Inzage',
     themas: 'Parkeren, Foo, Bar',
@@ -73,7 +73,7 @@ const verzoeken: AVGRequestFrontend[] = [
   {
     id: '223',
     title: 'AVG verzoek 223',
-    status: 'Afgehandeld',
+    displayStatus: 'Afgehandeld',
     registratieDatum: '16-03-2023 14:37',
     type: 'Verwijderen gegevens',
     themas: 'Vergunningen, Enzo',
@@ -107,10 +107,10 @@ function initializeState(testState: AppState) {
 }
 
 function setupTestComponent(id: string) {
-  const routeEntry = generatePath(AppRoutes['AVG/DETAIL'], {
+  const routeEntry = generatePath(routeConfig.detailPage.path, {
     id,
   });
-  const routePath = AppRoutes['AVG/DETAIL'];
+  const routePath = routeConfig.detailPage.path;
 
   return function Component() {
     return (

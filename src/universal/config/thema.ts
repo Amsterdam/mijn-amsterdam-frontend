@@ -3,7 +3,6 @@
  * Use the new thema config in the client instead.
  */
 export const ThemaIDs = {
-  AVG: 'AVG',
   BELASTINGEN: 'BELASTINGEN',
   BEZWAREN: 'BEZWAREN',
   BODEM: 'BODEM',

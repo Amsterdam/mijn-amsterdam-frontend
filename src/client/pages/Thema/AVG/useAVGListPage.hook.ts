@@ -1,15 +1,17 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind, routes } from './AVG-thema-config';
+import { ListPageParamKind, routeConfig } from './AVG-thema-config';
 import { useAVGData } from './useAVGData.hook';
 
 export function useAVGListPageData() {
   const { avgVerzoeken, isLoading, isError, tableConfig, breadcrumbs } =
     useAVGData();
-  const params = useParams<{ kind: ListPageParamKind }>();
+  const params = useParams<{
+    kind: ListPageParamKind;
+  }>();
+  const { kind = 'lopende-aanvragen' } = params;
 
-  const { filter, sort, title, displayProps } =
-    tableConfig[params.kind] ?? null;
+  const { filter, sort, title, displayProps } = tableConfig[kind] ?? null;
 
   return {
     avgVerzoeken,
@@ -21,6 +23,6 @@ export function useAVGListPageData() {
     isError,
     breadcrumbs,
     params,
-    listPageRoute: routes.listPage,
+    listPageRoute: routeConfig.listPage.path,
   };
 }

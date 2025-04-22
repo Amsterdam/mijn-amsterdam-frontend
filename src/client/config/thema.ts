@@ -4,7 +4,7 @@ import { ThemaID, ThemaIDs } from '../../universal/config/thema';
 import { AppState, BagThema } from '../../universal/types/App.types';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
-import { getAVGListPageDocumentTitle } from '../pages/Thema/AVG/AVG-thema-config';
+import { menuItem as menuItemAVG } from '../pages/Thema/AVG/Avg-render-config';
 import { getBezwarenListPageDocumentTitle } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   getThemaTitleBurgerzakenWithAppState,
@@ -40,7 +40,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
  * @deprecated Use the titles exported from the Thema-config files instead.
  */
 export const ThemaTitles = {
-  AVG: 'AVG persoonsgegevens',
   BELASTINGEN: 'Belastingen',
   BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
@@ -148,11 +147,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['HORECA/LIST']]: getListPageDocumentTitle(ThemaTitles.HORECA),
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
 
-  // AVG
-  [AppRoutes.AVG]: `${ThemaTitles.AVG} | verzoeken`,
-  [AppRoutes['AVG/LIST']]: getAVGListPageDocumentTitle(ThemaTitles.AVG),
-  [AppRoutes['AVG/DETAIL']]: `AVG verzoek | ${ThemaTitles.AVG}`,
-
   // Bodem
   [AppRoutes.BODEM]: `${ThemaTitles.BODEM} | overzicht`,
   [AppRoutes['BODEM/LIST']]: `Lood in de bodem-checks | ${ThemaTitles.BODEM}`,
@@ -197,6 +191,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemJeugd,
   menuItemAfis,
   menuItemAfval,
+  menuItemAVG,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -335,12 +330,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.HORECA,
     to: AppRoutes.HORECA,
     profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.AVG,
-    id: ThemaIDs.AVG,
-    to: AppRoutes.AVG,
-    profileTypes: ['private'],
   },
   {
     title: ThemaTitles.BODEM,

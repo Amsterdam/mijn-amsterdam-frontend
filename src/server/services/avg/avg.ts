@@ -9,9 +9,11 @@ import {
   SmileAvgResponse,
   SmileAvgThemesResponse,
 } from './types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  featureToggle,
+  routeConfig,
+  themaId,
+} from '../../../client/pages/Thema/AVG/AVG-thema-config';
 import {
   ApiSuccessResponse,
   apiDependencyError,
@@ -160,7 +162,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       themas: '',
       steps: [],
       link: {
-        to: generatePath(AppRoutes['AVG/DETAIL'], {
+        to: generatePath(routeConfig.detailPage.path, {
           id,
         }),
         title,
@@ -191,7 +193,7 @@ export async function fetchAVG(
       data,
       headers: data.getHeaders(),
       cacheKey: `avg-${requestID}`,
-      postponeFetch: !FeatureToggle.avgActive,
+      postponeFetch: !featureToggle.AvgActive,
     }),
     requestID
   );
@@ -234,7 +236,7 @@ export async function fetchAVGRequestThemes(
       data,
       headers: data.getHeaders(),
       cacheKey: `avg-themes-${cacheKey}`,
-      postponeFetch: !FeatureToggle.avgActive,
+      postponeFetch: !featureToggle.AvgActive,
     }),
     requestID
   );
@@ -268,7 +270,7 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
   const inProgressActive = !!verzoek.datumInBehandeling;
 
   const notification: MyNotification = {
-    themaID: ThemaIDs.AVG,
+    themaID: themaId,
     id: `avg-${verzoek.id}-notification`,
     title: 'AVG verzoek ontvangen',
     description: 'Uw AVG verzoek is ontvangen.',
