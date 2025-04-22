@@ -8,6 +8,10 @@ function capitalizeFirstLetter(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+function lowercaseFirstLetter(text) {
+  return text.charAt(0).toLowerCase() + text.slice(1);
+}
+
 // --id <string> --title <string> --zaakType <string> --private --commercial
 // user@computer mijn-amsterdam-frontend % node scripts/generate-thema.js --id BELASTINGEN --title Belastingen --zaakType CombinatieAanslag --private --commercial --config thema,render
 
@@ -64,7 +68,7 @@ const zaakTypeSlug = slug(
 );
 const PATH_DETAIL = `/${zaakTypeSlug}`;
 
-const featureToggleName = `${titleName}Active`;
+const featureToggleName = `${lowercaseFirstLetter(titleName)}Active`;
 
 const themaCoreImportsTemplate = `
 import { listPageParamKind } from './${titleName}-thema-config';
