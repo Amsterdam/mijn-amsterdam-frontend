@@ -12,7 +12,7 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-export function BezwarenThemaPagina() {
+export function BezwarenThema() {
   const {
     themaTitle,
     tableConfig,
