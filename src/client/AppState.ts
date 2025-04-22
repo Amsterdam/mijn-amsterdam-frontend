@@ -5,6 +5,7 @@ import { apiPristineResult } from '../universal/helpers/api';
 import { AppState } from '../universal/types/App.types';
 import { featureToggle as featureToggleAVG } from './pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from './pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { featureToggle as featureToggleBodem } from './pages/Thema/Bodem/Bodem-thema-config';
 import { zorgnedLeerlingenvervoerActive } from './pages/Thema/Jeugd/Jeugd-thema-config';
 
 export const PRISTINE_APPSTATE: AppState = {
@@ -152,7 +153,7 @@ export const PRISTINE_APPSTATE: AppState = {
     profileTypes: ['private'],
   }),
 
-  BODEM: apiPristineResult(null, { isActive: FeatureToggle.bodemActive }),
+  BODEM: apiPristineResult(null, { isActive: featureToggleBodem.BodemActive }),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

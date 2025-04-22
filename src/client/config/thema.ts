@@ -4,8 +4,9 @@ import { ThemaID, ThemaIDs } from '../../universal/config/thema';
 import { AppState, BagThema } from '../../universal/types/App.types';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
-import { menuItem as menuItemAVG } from '../pages/Thema/AVG/Avg-render-config';
+import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
 import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
+import { menuItem as menuItemBodem } from '../pages/Thema/Bodem/Bodem-render-config';
 import {
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
@@ -139,12 +140,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['HORECA/LIST']]: getListPageDocumentTitle(ThemaTitles.HORECA),
   [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
 
-  // Bodem
-  [AppRoutes.BODEM]: `${ThemaTitles.BODEM} | overzicht`,
-  [AppRoutes['BODEM/LIST']]: `Lood in de bodem-checks | ${ThemaTitles.BODEM}`,
-  [AppRoutes['BODEM/LOOD_METING']]:
-    `Lood in de bodem-check | ${ThemaTitles.BODEM}`,
-
   // Erfpacht
   [AppRoutes.ERFPACHT]: 'Erfpacht | overzicht',
   [AppRoutes['ERFPACHT/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
@@ -185,6 +180,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemAfval,
   menuItemAVG,
   menuItemBezwaren,
+  menuItemBodem,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -316,12 +312,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.HORECA,
     id: ThemaIDs.HORECA,
     to: AppRoutes.HORECA,
-    profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.BODEM,
-    id: ThemaIDs.BODEM,
-    to: AppRoutes.BODEM,
     profileTypes: ['private', 'commercial'],
   },
 ];

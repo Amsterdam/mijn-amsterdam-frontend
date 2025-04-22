@@ -10,8 +10,11 @@ import {
   LoodMetingStatusLowerCase,
   LoodMetingen,
 } from './types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Bodem/Bodem-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -55,7 +58,7 @@ function transformLood365Response(
   let metingen: LoodMetingFrontend[] = [];
 
   if (!response.responsedata) {
-    return { metingen };
+    return metingen;
   }
 
   try {
@@ -131,7 +134,7 @@ function transformLood365Response(
           rapportId: location?.Workorderid,
           redenAfwijzing: location?.Rejectionreason,
           link: {
-            to: generatePath(AppRoutes['BODEM/LOOD_METING'], {
+            to: generatePath(routeConfig.detailPage.path, {
               id: location.Reference,
             }),
             title: 'Bekijk loodmeting',
@@ -150,7 +153,7 @@ function transformLood365Response(
   }
   metingen.sort(sortAlpha('adres', 'asc', 'lower'));
 
-  return { metingen };
+  return metingen;
 }
 
 export async function getLoodApiHeaders(requestID: RequestID) {
@@ -242,9 +245,9 @@ export async function fetchLoodMetingNotifications(
 
   if (metingenResponse.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(
-      metingenResponse.content.metingen
+      metingenResponse.content
     )
-      ? metingenResponse.content.metingen
+      ? metingenResponse.content
           .map(createLoodNotification)
           .filter((notification) =>
             isRecentNotification(notification.datePublished)
@@ -264,7 +267,8 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
     MyNotification,
     'title' | 'description' | 'datePublished'
   > = {
-    themaID: ThemaIDs.BODEM,
+    themaID: themaId,
+    themaTitle: themaTitle,
     id: meting.kenmerk,
     link: {
       to: meting.link.to,

@@ -5,10 +5,10 @@ import { InkomenDetailBbz } from './InkomenDetailBbz';
 import { InkomenDetailTonk } from './InkomenDetailTonk';
 import { InkomenDetailTozo } from './InkomenDetailTozo';
 import { InkomenDetailUitkering } from './InkomenDetailUitkering';
+import { default as InkomenIcon } from './InkomenIcon.svg?react';
 import { InkomenLijstPagina } from './InkomenListPage';
 import { InkomenSpecificaties } from './InkomenSpecificaties';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
-import { IconInkomen } from '../../../assets/icons';
 import {
   type ThemaMenuItem,
   type ThemaRenderRouteConfig,
@@ -46,5 +46,5 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   to: routes.themaPage,
   profileTypes: ['private'],
   isActive: isInkomenThemaActive,
-  IconSVG: IconInkomen,
+  IconSVG: InkomenIcon,
 };

@@ -3,12 +3,13 @@ import https from 'https';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
+import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
+import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -319,12 +320,12 @@ export const ApiConfig: ApiDataRequestConfig = {
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
-    postponeFetch: !FeatureToggle.bodemActive,
+    postponeFetch: !featureToggleBodem.BodemActive,
   },
   LOOD_365_OAUTH: {
     url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
-    postponeFetch: !FeatureToggle.bodemActive,
+    postponeFetch: !featureToggleBodem.BodemActive,
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 59 * ONE_MINUTE_MS,
   },

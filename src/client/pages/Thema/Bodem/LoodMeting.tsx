@@ -7,7 +7,8 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 export function LoodMeting() {
-  const { meting, isLoading, isError, breadcrumbs } = useBodemDetailData();
+  const { meting, isLoading, isError, breadcrumbs, title } =
+    useBodemDetailData();
 
   const BodemDetailRows = (meting: LoodMetingFrontend) => {
     const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
@@ -54,7 +55,7 @@ export function LoodMeting() {
 
   return (
     <ThemaDetailPagina
-      title="Lood in bodem-check"
+      title={title}
       zaak={meting}
       breadcrumbs={breadcrumbs}
       isError={isError}

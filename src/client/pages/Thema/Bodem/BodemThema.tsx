@@ -3,12 +3,11 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useBodemData } from './useBodemData.hook';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ThemaTitles } from '../../../config/thema';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
-export function Bodem() {
-  const { items, tableConfig, isLoading, isError, linkListItems } =
+export function BodemThema() {
+  const { items, tableConfig, isLoading, isError, linkListItems, title } =
     useBodemData();
 
   const tables = Object.entries(tableConfig).map(
@@ -31,7 +30,7 @@ export function Bodem() {
   );
   return (
     <ThemaPagina
-      title={ThemaTitles.BODEM}
+      title={title}
       isLoading={isLoading}
       isError={isError}
       pageContentTop={

@@ -9,10 +9,10 @@ import {
   themaIdBRP,
   themaIdKVK,
 } from './Profile-thema-config';
+import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { isLoading } from '../../../../universal/helpers/api';
 import { AppState } from '../../../../universal/types';
-import { IconMijnGegevens } from '../../../assets/icons';
 import { ThemaMenuItem } from '../../../config/thema-types';
 
 export const ProfileRoutes = [
@@ -40,7 +40,7 @@ export const menuItems: [
     isActive(appState: AppState) {
       return !isLoading(appState.BRP) && !!appState.BRP.content?.persoon;
     },
-    IconSVG: IconMijnGegevens,
+    IconSVG: ProfilePrivateIcon,
   } as const,
   {
     title: themaTitle.KVK,

@@ -4,7 +4,6 @@ import { type ThemaID } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
   IconBelastingen,
-  IconBodem,
   IconBurgerZaken,
   IconErfpacht,
   IconHLI,
@@ -25,7 +24,6 @@ import {
 export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   VAREN: IconVaren,
   BELASTINGEN: IconBelastingen,
-  BODEM: IconBodem,
   BURGERZAKEN: IconBurgerZaken,
   ERFPACHT: IconErfpacht,
   HLI: IconHLI,
