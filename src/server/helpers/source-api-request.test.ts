@@ -28,15 +28,16 @@ import {
 } from '../../universal/helpers/api';
 import { ApiUrlEntries } from '../config/source-api';
 import { captureException } from '../services/monitoring';
+
 const mocks = vi.hoisted(() => {
   return {
     cacheEnabled: true,
   };
 });
 
-vi.mock('../config/app', async (importOrigModule) => {
+vi.mock('../config/app.ts', async (importOrigModule) => {
   return {
-    ...((await importOrigModule()) as object),
+    ...(await importOrigModule()),
     get BFF_REQUEST_CACHE_ENABLED() {
       return mocks.cacheEnabled;
     },
@@ -131,7 +132,7 @@ describe('requestData.ts', () => {
   it('Does not cache the response: BAD JSON', async () => {
     remoteApi.get('/1').reply(200, 'whoa');
 
-    const rs = await requestData(
+    await requestData(
       {
         url: DUMMY_URL,
       },
@@ -147,7 +148,7 @@ describe('requestData.ts', () => {
 
     remoteApi.get('/1').reply(200, 'whoa');
 
-    const rs = await requestData(
+    await requestData(
       {
         url: DUMMY_URL,
       },
@@ -304,10 +305,6 @@ describe('requestData.ts', () => {
       Authorization: `Bearer ababababab`,
     });
   });
-
-  // test('BFF_REQUEST_CACHE_ENABLED', async () => {
-  //   mocks.cacheEnabled = true;
-  // });
 
   test('getRequestConfigCacheKey', () => {
     expect(
