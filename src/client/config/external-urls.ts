@@ -29,12 +29,7 @@ export const ExternalUrls = {
   WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   WPI_BBZ: 'https://www.amsterdam.nl/bbz/',
-  AFVAL: 'https://www.amsterdam.nl/afval/',
-  AFVAL_COMMERCIAL: 'https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/',
-  AFVAL_MELDING_FORMULIER:
-    'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
-  AFVAL_MELDING:
-    'https://www.amsterdam.nl/veelgevraagd/melding-openbare-ruimte-en-overlast-cd609',
+
   STADSBANK_VAN_LENING: 'https://www.amsterdam.nl/sbl/',
   DIGID_AANVRAGEN:
     'https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen',
