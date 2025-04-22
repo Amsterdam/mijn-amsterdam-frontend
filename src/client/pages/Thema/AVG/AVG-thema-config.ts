@@ -4,7 +4,7 @@ import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { LinkProps } from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
   type DisplayProps,

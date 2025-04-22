@@ -6,7 +6,7 @@ import { AppRoutes } from '../../../../universal/config/routes';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 import { KlachtenDetailPagina } from './KlachtenDetail';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 
 const testState = {
   KLACHTEN: {

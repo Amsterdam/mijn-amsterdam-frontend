@@ -5,7 +5,7 @@ import type { VarenZakenFrontend } from '../../../../server/services/varen/confi
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import {
   DisplayProps,
   WithDetailLinkComponent,

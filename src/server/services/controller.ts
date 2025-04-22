@@ -14,9 +14,9 @@ import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
+import { fetchMyLocation } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBRP } from './brp/brp';
 import { fetchCMSCONTENT } from './cms/cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
@@ -24,20 +24,20 @@ import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
 import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 import { fetchAllKlachten } from './klachten/klachten';
-import { fetchKrefia } from './krefia';
-import { fetchKVK } from './kvk';
+import { fetchKrefia } from './krefia/krefia';
 import { captureException } from './monitoring';
-import { fetchMyLocation } from './my-locations';
 import { fetchParkeren } from './parkeren/parkeren';
-import { fetchProfile } from './profile';
-import { fetchContactmomenten } from './salesforce/contactmomenten';
 import {
   fetchBelasting,
   fetchMilieuzone,
   fetchOvertredingen,
   fetchSubsidie,
-} from './simple-connect';
-import { fetchSVWI } from './simple-connect/svwi';
+} from './patroon-c';
+import { fetchSVWI } from './patroon-c/svwi';
+import { fetchBRP } from './profile/brp';
+import { fetchKVK } from './profile/kvk';
+import { fetchProfile } from './profile/profile';
+import { fetchContactmomenten } from './salesforce/contactmomenten';
 import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVaren } from './varen/varen';

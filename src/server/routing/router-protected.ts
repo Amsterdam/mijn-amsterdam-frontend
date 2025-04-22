@@ -14,7 +14,6 @@ import {
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
-import { fetchAantalBewoners } from '../services/brp/brp';
 import {
   NOTIFICATIONS,
   loadServicesAll,
@@ -31,11 +30,12 @@ import {
   handleBlockStadspas,
   handleFetchTransactionsRequest,
 } from '../services/hli/hli-route-handlers';
+import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
+import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
-import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
 
 export const router = express.Router();
 

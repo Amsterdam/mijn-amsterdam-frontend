@@ -3,7 +3,7 @@ import type {
   EvenementVergunning,
   VergunningFrontend,
 } from '../../../../../server/services/vergunningen/config-and-types';
-import { StatusLineItem } from '../../../../../universal/types';
+import { StatusLineItem } from '../../../../../universal/types/App.types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function getEvenementVergunningLineItems(

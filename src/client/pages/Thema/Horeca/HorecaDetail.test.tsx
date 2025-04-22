@@ -9,7 +9,7 @@ import { AppRoutes } from '../../../../universal/config/routes';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 import { vergunning } from './Horeca.test';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 
 const vergunning2: HorecaVergunningFrontend = {
   ...structuredClone(vergunning),

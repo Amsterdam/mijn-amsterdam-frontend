@@ -31,7 +31,7 @@ import {
   isDateInPast,
 } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';

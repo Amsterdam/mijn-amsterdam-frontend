@@ -6,6 +6,12 @@ import {
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
+import type {
+  BRPData,
+  IdentiteitsbewijsFromSource,
+  IdentiteitsbewijsFrontend,
+  BRPDataFromSource,
+} from './brp.types';
 import {
   routeConfig,
   themaId as themaIdBurgerzaken,
@@ -23,13 +29,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import {
-  BRPData,
-  BRPDataFromSource,
-  IdentiteitsbewijsFromSource,
-  IdentiteitsbewijsFrontend,
-  MyNotification,
-} from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';

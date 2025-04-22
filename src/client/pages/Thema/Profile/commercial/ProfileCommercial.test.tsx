@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { MutableSnapshot } from 'recoil';
 
 import { MijnBedrijfsGegevensThema } from './ProfileCommercial';
-import { KVKData } from '../../../../../server/services/kvk';
-import { AppState } from '../../../../../universal/types';
+import { KVKData } from '../../../../../server/services/profile/kvk';
+import { AppState } from '../../../../../universal/types/App.types';
 import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
 import { routes } from '../Profile-thema-config';

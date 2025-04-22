@@ -5,7 +5,10 @@ import { MutableSnapshot } from 'recoil';
 import { routeConfig } from './AVG-thema-config';
 import { AVGDetail } from './AVGDetail';
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
-import { AppState, StatusLineItem } from '../../../../universal/types';
+import {
+  AppState,
+  StatusLineItem,
+} from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 

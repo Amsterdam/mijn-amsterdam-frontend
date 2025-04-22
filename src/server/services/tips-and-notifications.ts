@@ -1,20 +1,19 @@
 import memoize from 'memoizee';
 
-import { fetchAdoptableTrashContainers } from './adoptable-trash-containers';
+import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   ApiResponse_DEPRECATED,
   getSettledResult,
 } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
-import type { MyNotification } from '../../universal/types';
+import type { MyNotification } from '../../universal/types/App.types';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { fetchAfisNotifications } from './afis/afis-notifications';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
-import { fetchBrpNotifications } from './brp/brp';
 import { sanitizeCmsContent } from './cms/cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications';
 import { ServiceResults } from './content-tips/tip-types';
@@ -24,14 +23,16 @@ import {
 } from './content-tips/tips-service';
 import { fetchHorecaNotifications } from './horeca/horeca';
 import { fetchKlachtenNotifications } from './klachten/klachten';
-import { fetchKrefiaNotifications } from './krefia';
+import { fetchKrefiaNotifications } from './krefia/krefia';
+import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
 import {
   fetchBelastingNotifications,
   fetchMilieuzoneNotifications,
   fetchOvertredingenNotifications,
   fetchSubsidieNotifications,
-} from './simple-connect';
-import { fetchSVWINotifications } from './simple-connect/svwi';
+} from './patroon-c';
+import { fetchSVWINotifications } from './patroon-c/svwi';
+import { fetchBrpNotifications } from './profile/brp';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur/toeristische-verhuur-notifications';
 import { fetchVarenNotifications } from './varen/varen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
@@ -39,7 +40,6 @@ import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { getFromEnv } from '../helpers/env';
-import { fetchParkeerVergunningenNotifications } from './parkeren/parkeren-notifications';
 
 // Every 3rd notification will be a tip if one is available.
 const INSERT_TIP_AT_EVERY_NTH_INDEX = 3;

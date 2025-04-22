@@ -4,9 +4,9 @@ import type { Mock } from 'vitest';
 
 import { routeConfig } from './Afval-thema-config';
 import { AfvalThemaPagina } from './AfvalThema';
-import { AfvalFractionData } from '../../../../server/services/afval/afvalwijzer';
+import { AfvalFractionData } from '../../../../server/services/afval/afval.types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import MockApp from '../../MockApp';

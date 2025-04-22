@@ -8,7 +8,7 @@ import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../../server/services/afis/afis-types';
-import { LinkProps, ZaakDetail } from '../../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';

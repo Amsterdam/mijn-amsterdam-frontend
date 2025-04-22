@@ -6,7 +6,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { requestData } from '../../helpers/source-api-request';

@@ -1,6 +1,6 @@
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 import { ThemaIDs } from '../../../universal/config/thema';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';

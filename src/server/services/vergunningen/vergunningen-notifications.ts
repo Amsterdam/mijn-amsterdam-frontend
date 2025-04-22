@@ -16,7 +16,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
 

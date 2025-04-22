@@ -3,7 +3,7 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
 
 import { apiErrorResult } from '../../../universal/helpers/api';
-import { Action } from '../../../universal/types';
+import { Action } from '../../../universal/types/App.types';
 import { captureException } from '../../helpers/monitoring';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {

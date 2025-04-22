@@ -3,7 +3,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
 } from './zorgned-types';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 import { logger } from '../../logging';
 
 // If a config property for the leveringsVorm, productSoortCodes or productIdentificatie is not found,

@@ -5,7 +5,7 @@ import { describe, expect, vi } from 'vitest';
 
 import { forTesting, ZaakStatus } from './ZaakStatus';
 import { AppRoutes } from '../../../universal/config/routes';
-import { AppState } from '../../../universal/types';
+import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 

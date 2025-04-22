@@ -3,12 +3,12 @@ import { LatLngLiteral } from 'leaflet';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
-} from '../../universal/helpers/api';
-import { getLatLngCoordinates } from '../../universal/helpers/bag';
-import { Adres } from '../../universal/types';
-import { BAGQueryParams } from '../../universal/types/bag';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
+} from '../../../universal/helpers/api';
+import { getLatLngCoordinates } from '../../../universal/helpers/bag';
+import { BAGQueryParams } from './bag.types';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
+import type { Adres } from '../profile/brp.types';
 
 export interface BAGData {
   latlng: LatLngLiteral | null;

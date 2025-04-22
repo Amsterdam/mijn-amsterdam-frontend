@@ -1,6 +1,6 @@
 import GenericBase from './GenericBase';
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
-import { Unshaped } from '../../../../../universal/types';
+import { Unshaped } from '../../../../../universal/types/App.types';
 import { Datalist, Row, RowSet } from '../../../Datalist/Datalist';
 
 interface MyArePanelContentWIORProps {

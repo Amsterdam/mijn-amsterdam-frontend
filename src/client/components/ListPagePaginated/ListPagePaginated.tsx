@@ -3,7 +3,7 @@ import { ReactNode, useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, Params, useNavigate, useParams } from 'react-router';
 
-import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent from '../LoadingContent/LoadingContent';

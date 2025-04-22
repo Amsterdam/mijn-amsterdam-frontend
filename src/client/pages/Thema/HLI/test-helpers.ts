@@ -3,7 +3,7 @@ import {
   StadspasOwner,
 } from '../../../../server/services/hli/stadspas-types';
 import { bffApiHost } from '../../../../testing/setup';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 
 export function createHLIState(withData: {
   status?: string;

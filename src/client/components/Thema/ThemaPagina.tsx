@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { LinkList } from '@amsterdam/design-system-react';
 
-import { LinkProps } from '../../../universal/types';
+import { LinkProps } from '../../../universal/types/App.types';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';

@@ -5,7 +5,7 @@ import * as jose from 'jose';
 import { fetchService, fetchTipsAndNotifications } from './api-service';
 import { ThemaIDs } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';

@@ -30,8 +30,12 @@ import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
-import { AppState, BRPData, BRPDataFromSource } from '../../../universal/types';
-import { transformBRPData } from '../brp/brp';
+import {
+  AppState,
+  BRPData,
+  BRPDataFromSource,
+} from '../../../universal/types/App.types';
+import { transformBRPData } from '../profile/brp';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
 const TONK = {

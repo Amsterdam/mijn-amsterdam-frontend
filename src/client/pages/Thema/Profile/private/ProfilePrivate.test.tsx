@@ -4,7 +4,11 @@ import { MutableSnapshot } from 'recoil';
 
 import { MijnGegevensThema } from './ProfilePrivate';
 import { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
-import { Adres, AppState, BRPData } from '../../../../../universal/types';
+import {
+  Adres,
+  AppState,
+  BRPData,
+} from '../../../../../universal/types/App.types';
 import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
 import { routes } from '../Profile-thema-config';

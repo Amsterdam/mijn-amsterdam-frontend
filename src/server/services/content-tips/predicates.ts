@@ -5,7 +5,7 @@ import {
 } from 'date-fns';
 
 import type { TipsPredicateFN } from './tip-types';
-import type { IdentiteitsbewijsFrontend, Kind } from '../../../universal/types';
+import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { HLIRegeling } from '../hli/hli-regelingen-types';
 import { BBVergunning } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';

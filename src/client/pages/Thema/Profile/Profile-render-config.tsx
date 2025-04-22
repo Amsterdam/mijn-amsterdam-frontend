@@ -12,7 +12,7 @@ import {
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { isLoading } from '../../../../universal/helpers/api';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { ThemaMenuItem } from '../../../config/thema-types';
 
 export const ProfileRoutes = [

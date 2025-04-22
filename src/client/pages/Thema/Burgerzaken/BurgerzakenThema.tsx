@@ -1,7 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useBurgerZakenData } from './useBurgerZakenData.hook';
-import { IdentiteitsbewijsFrontend } from '../../../../universal/types';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
@@ -21,7 +20,7 @@ export function BurgerzakenThema() {
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, sort, listPageRoute }]) => {
       return (
-        <ThemaPaginaTable<IdentiteitsbewijsFrontend>
+        <ThemaPaginaTable
           key={kind}
           title={title}
           zaken={documents.sort(sort)}

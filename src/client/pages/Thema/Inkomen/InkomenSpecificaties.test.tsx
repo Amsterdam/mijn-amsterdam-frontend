@@ -9,7 +9,7 @@ import { InkomenSpecificaties } from './InkomenSpecificaties';
 import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
 import { dateSort } from '../../../../universal/helpers/date';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 

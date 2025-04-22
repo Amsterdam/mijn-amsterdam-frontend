@@ -11,7 +11,7 @@ import { ThemaIDs } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen/config-and-types';
 import { isNearEndDate } from '../vergunningen/vergunningen-helpers';

@@ -8,7 +8,7 @@ import { beforeAll, describe, it } from 'vitest';
 import { SearchPage } from './Search';
 import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
-import { AppState } from '../../../universal/types';
+import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 

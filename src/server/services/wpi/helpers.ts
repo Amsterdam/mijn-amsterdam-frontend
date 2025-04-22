@@ -15,7 +15,10 @@ import {
   themaId as themaIdInkomen,
 } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { GenericDocument, MyNotification } from '../../../universal/types';
+import {
+  GenericDocument,
+  MyNotification,
+} from '../../../universal/types/App.types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';

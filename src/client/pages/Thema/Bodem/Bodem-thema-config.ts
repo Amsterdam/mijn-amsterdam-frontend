@@ -2,7 +2,7 @@ import { generatePath } from 'react-router';
 
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { dateSort } from '../../../../universal/helpers/date';
-import { LinkProps } from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
   DisplayProps,

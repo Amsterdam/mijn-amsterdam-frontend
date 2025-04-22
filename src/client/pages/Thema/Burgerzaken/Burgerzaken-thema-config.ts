@@ -1,10 +1,8 @@
 import { generatePath } from 'react-router';
 
+import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
 import { dateSort } from '../../../../universal/helpers/date';
-import {
-  IdentiteitsbewijsFrontend,
-  LinkProps,
-} from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
   DisplayProps,

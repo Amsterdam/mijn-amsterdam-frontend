@@ -2,7 +2,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './Krefia.module.scss';
 import { useKrefiaThemaData } from './useKrefiaThemaData.hook';
-import type { KrefiaDeepLink } from '../../../server/services';
+import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { entries } from '../../../../universal/helpers/utils';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';

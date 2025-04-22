@@ -1,6 +1,9 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { OmitMapped } from '../../../universal/helpers/utils';
-import { GenericDocument, ZaakDetail } from '../../../universal/types';
+import {
+  GenericDocument,
+  ZaakDetail,
+} from '../../../universal/types/App.types';
 import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {

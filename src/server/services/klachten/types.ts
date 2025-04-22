@@ -1,4 +1,4 @@
-import { ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types/App.types';
 import { SmileFieldValue, SmileSourceResponse } from '../smile/smile-types';
 
 export type Klacht = {

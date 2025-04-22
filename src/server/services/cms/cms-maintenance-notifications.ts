@@ -8,7 +8,7 @@ import {
   ApiSuccessResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { LinkProps, MyNotification } from '../../../universal/types';
+import { LinkProps, MyNotification } from '../../../universal/types/App.types';
 import FileCache from '../../helpers/file-cache';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';

@@ -8,7 +8,7 @@ import {
   apiErrorResult,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getCert } from '../../helpers/cert';
 import { getApiConfig } from '../../helpers/source-api-helpers';

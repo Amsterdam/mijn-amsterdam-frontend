@@ -1,6 +1,6 @@
 import { ExternalUrls } from './app';
 import { ThemaIDs } from '../../universal/config/thema';
-import { MyNotification } from '../../universal/types';
+import { MyNotification } from '../../universal/types/App.types';
 
 const year = 2022;
 const day = 20;

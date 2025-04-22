@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 
 import { AppRoutes } from '../../../../universal/config/routes';
 import { entries } from '../../../../universal/helpers/utils';
-import { LinkProps } from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,

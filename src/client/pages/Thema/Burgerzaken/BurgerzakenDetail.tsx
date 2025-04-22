@@ -1,6 +1,6 @@
 import { useBurgerZakenDetailData } from './useBurgerZakenDetailData.hook';
+import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
-import { IdentiteitsbewijsFrontend } from '../../../../universal/types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';

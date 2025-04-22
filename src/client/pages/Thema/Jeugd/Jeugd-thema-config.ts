@@ -1,6 +1,6 @@
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { LinkProps } from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import { WithDetailLinkComponent } from '../../../components/Table/TableV2.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';

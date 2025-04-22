@@ -17,7 +17,10 @@ import {
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { GenericDocument, StatusLineItem } from '../../../universal/types';
+import {
+  GenericDocument,
+  StatusLineItem,
+} from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';

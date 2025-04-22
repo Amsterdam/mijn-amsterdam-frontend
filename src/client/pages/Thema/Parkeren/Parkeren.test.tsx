@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AppRoutes } from '../../../../universal/config/routes';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { ThemaTitles } from '../../../config/thema';
 import MockApp from '../../MockApp';
 import { Parkeren } from './Parkeren';

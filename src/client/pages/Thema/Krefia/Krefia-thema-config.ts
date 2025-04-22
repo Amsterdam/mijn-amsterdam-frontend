@@ -1,4 +1,4 @@
-import { KrefiaDeepLink } from '../../../server/services';
+import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { AppRoutes } from '../../../../universal/config/routes';
 import {
   DisplayProps,

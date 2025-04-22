@@ -1,5 +1,5 @@
 import { krefiaTableConfig } from './Krefia-thema-config';
-import { KrefiaDeepLink } from '../../../server/services';
+import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';

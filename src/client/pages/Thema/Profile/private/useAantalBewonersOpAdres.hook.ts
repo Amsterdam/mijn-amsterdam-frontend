@@ -5,7 +5,7 @@ import {
   apiPristineResult,
   ApiResponse_DEPRECATED,
 } from '../../../../../universal/helpers/api';
-import { AppState } from '../../../../../universal/types';
+import { AppState } from '../../../../../universal/types/App.types';
 import { useDataApi } from '../../../../hooks/api/useDataApi';
 
 export function useAantalBewonersOpAdres(

@@ -3,10 +3,8 @@ import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Burgerzaken-thema-config';
 import { BurgerzakenThema } from './BurgerzakenThema';
-import {
-  AppState,
-  IdentiteitsbewijsFrontend,
-} from '../../../../universal/types';
+import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 

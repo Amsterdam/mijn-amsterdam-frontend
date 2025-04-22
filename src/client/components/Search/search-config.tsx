@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import escapeRegex from 'lodash.escaperegexp';
 
 import styles from './Search.module.scss';
-import type { Krefia, KrefiaDeepLink } from '../../../server/services';
 import {
   AfisThemaResponse,
   AfisFactuur,
@@ -11,12 +10,17 @@ import {
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import {
-  ErfpachtDossier,
+import type {
+  BRPData,
+  IdentiteitsbewijsFrontend,
+} from '../../../server/services/profile/brp.types';
+import type {
   ErfpachtDossiersResponse,
-} from '../../../server/services/erfpacht/erfpacht';
+  ErfpachtDossier,
+} from '../../../server/services/erfpacht/erfpacht-types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
+import type { Krefia, KrefiaDeepLink } from '../../../server/services/krefia';
 import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
@@ -40,11 +44,9 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { uniqueArray } from '../../../universal/helpers/utils';
 import {
   AppStateKey,
-  BRPData,
-  IdentiteitsbewijsFrontend,
   LinkProps,
   StatusLineItem,
-} from '../../../universal/types';
+} from '../../../universal/types/App.types';
 import { ThemaTitles } from '../../config/thema';
 import { themaId as themaIdAfis } from '../../pages/Thema/Afis/Afis-thema-config';
 import {

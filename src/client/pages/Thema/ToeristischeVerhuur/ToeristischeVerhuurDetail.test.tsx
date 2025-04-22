@@ -10,7 +10,7 @@ import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 import { ToeristischeVerhuurDetailPagina } from './ToeristischeVerhuurDetail';
 import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 
 const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
   {

@@ -1,54 +1,23 @@
 import memoize from 'memoizee';
 
-import { ThemaIDs } from '../../universal/config/thema';
+import type {
+  NotificationTrigger,
+  KrefiaDeepLink,
+  KrefiaSourceResponse,
+  Krefia,
+} from './krefia.types';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
-  apiDependencyError,
-  ApiResponse,
+  type ApiResponse,
   apiSuccessResult,
-} from '../../universal/helpers/api';
-import { omit } from '../../universal/helpers/utils';
-import { LinkProps, MyNotification } from '../../universal/types';
-import { AuthProfileAndToken } from '../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
-import { getApiConfig } from '../helpers/source-api-helpers';
-import { requestData } from '../helpers/source-api-request';
-
-interface NotificationTrigger {
-  datePublished: string;
-  url: string;
-}
-
-export interface KrefiaDeepLink {
-  displayStatus: string;
-  link: LinkProps;
-  type: 'budgetbeheer' | 'lening' | 'schuldhulp';
-}
-
-interface NotificationTriggers {
-  fibu: NotificationTrigger | null;
-  krediet: NotificationTrigger | null;
-}
-
-type KrefiaDeepLinkSource = {
-  title: string;
-  url: string;
-};
-
-export interface KrefiaDeepLinksSource {
-  budgetbeheer: KrefiaDeepLinkSource | null;
-  lening: KrefiaDeepLinkSource | null;
-  schuldhulp: KrefiaDeepLinkSource | null;
-}
-
-export type KrefiaSourceResponse = ApiResponse<{
-  notificationTriggers: NotificationTriggers | null;
-  deepLinks: KrefiaDeepLinksSource;
-}>;
-
-export interface Krefia {
-  notificationTriggers: NotificationTriggers | null;
-  deepLinks: KrefiaDeepLink[];
-}
+  apiDependencyError,
+} from '../../../universal/helpers/api';
+import { omit } from '../../../universal/helpers/utils';
+import type { MyNotification } from '../../../universal/types/App.types';
+import type { AuthProfileAndToken } from '../../auth/auth-types';
+import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
+import { getApiConfig } from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 
 function createNotification(
   message: NotificationTrigger,

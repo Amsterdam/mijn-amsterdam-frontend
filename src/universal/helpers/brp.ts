@@ -1,5 +1,5 @@
-import { Persoon } from '../types';
 import { defaultDateFormat, formatMonthAndYear, formatYear } from './date';
+import type { Persoon } from '../../server/services/profile/brp.types';
 
 export function getFullName(
   persoon: Pick<

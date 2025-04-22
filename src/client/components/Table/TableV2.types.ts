@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 
-import { LinkProps } from 'react-router';
-
-import { Unshaped } from '../../../universal/types';
+import { Unshaped, type LinkProps } from '../../../universal/types/App.types';
 
 export type DisplayProps<T> = Readonly<
   {

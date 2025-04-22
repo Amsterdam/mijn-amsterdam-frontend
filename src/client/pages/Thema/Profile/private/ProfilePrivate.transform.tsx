@@ -15,7 +15,7 @@ import {
   BRPData,
   Persoon,
   VerbintenisHistorisch,
-} from '../../../../../universal/types';
+} from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
 import { ExternalUrls } from '../../../../config/external-urls';
 import {

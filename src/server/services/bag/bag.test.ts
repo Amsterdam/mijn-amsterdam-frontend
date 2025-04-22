@@ -1,7 +1,7 @@
 import nock from 'nock';
 
 import { fetchBAG } from './bag';
-import { Adres } from '../../universal/types';
+import { Adres } from '../../../universal/types/App.types';
 
 const REQUEST_ID = 'x';
 const ADDRESS = {

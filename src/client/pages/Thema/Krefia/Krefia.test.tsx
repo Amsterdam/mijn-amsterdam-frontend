@@ -4,12 +4,10 @@ import { MutableSnapshot } from 'recoil';
 
 import { KrefiaThemaPagina } from './Krefia';
 import KrefiaData from '../../../../../mocks/fixtures/krefia.json';
-import {
-  forTesting,
-  KrefiaSourceResponse,
-} from '../../../../server/services/krefia';
+import { forTesting } from '../../../../server/services/krefia/krefia';
+import type { KrefiaSourceResponse } from '../../../../server/services/krefia/krefia.types';
 import { AppRoutes } from '../../../../universal/config/routes';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 

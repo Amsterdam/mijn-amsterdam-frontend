@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types/App.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../config/app';
 import { LinkToListPage } from '../LinkToListPage/LinkToListPage';
 import { PageContentCell } from '../Page/Page';

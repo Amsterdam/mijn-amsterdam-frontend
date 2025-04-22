@@ -1,6 +1,9 @@
 import { LatLngLiteral, LatLngTuple } from 'leaflet';
 
-import { BAGQueryParams, BAGAdreseerbaarObject } from '../types/bag';
+import {
+  BAGQueryParams,
+  BAGAdreseerbaarObject,
+} from '../../server/services/bag/bag.types';
 
 type ExtractUtils = {
   pattern: RegExp;

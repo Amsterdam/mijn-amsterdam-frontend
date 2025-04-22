@@ -3,7 +3,10 @@ import {
   getLatLonByAddress,
   isLocatedInWeesp,
 } from './bag';
-import { BAGQueryParams, BAGSourceData } from '../types/bag';
+import {
+  BAGQueryParams,
+  BAGSourceData,
+} from '../../server/services/bag/bag.types';
 
 describe('getLatLonByAddress', () => {
   const weesp: BAGQueryParams = {

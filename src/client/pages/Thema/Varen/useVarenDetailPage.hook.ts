@@ -5,7 +5,7 @@ import {
   exploitatieVergunningWijzigenLink,
   ligplaatsVergunningLink,
 } from './Varen-thema-config';
-import { ButtonLinkProps } from '../../../../universal/types';
+import { ButtonLinkProps } from '../../../../universal/types/App.types';
 
 export function useVarenDetailPage() {
   const { varenRederRegistratie, varenZaken, breadcrumbs, isLoading, isError } =

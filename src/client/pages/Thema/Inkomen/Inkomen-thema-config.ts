@@ -4,7 +4,7 @@ import {
   WpiIncomeSpecificationTransformed,
   WpiRequestProcess,
 } from '../../../../server/services/wpi/wpi-types';
-import { LinkProps } from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
   DisplayProps,
