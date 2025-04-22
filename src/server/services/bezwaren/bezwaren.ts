@@ -13,8 +13,11 @@ import {
   OctopusApiResponse,
   kenmerkKey,
 } from './types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -333,7 +336,7 @@ function transformBezwarenResults(
           documenten: [],
           link: {
             title: 'Bekijk details',
-            to: generatePath(AppRoutes['BEZWAREN/DETAIL'], {
+            to: generatePath(routeConfig.detailPage.path, {
               uuid: bezwaarBron.uuid,
             }),
           },
@@ -403,7 +406,8 @@ export async function fetchBezwaren(
 
 function createBezwaarNotification(bezwaar: BezwaarFrontend) {
   const notification: MyNotification = {
-    themaID: ThemaIDs.BEZWAREN,
+    themaID: themaId,
+    themaTitle: themaTitle,
     id: bezwaar.identificatie,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,

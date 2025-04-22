@@ -98,7 +98,7 @@ function BezwaarDetailContent({
   );
 }
 
-export function BezwarenDetailPagina() {
+export function BezwarenDetail() {
   const {
     bezwaar,
     dependencyErrors,

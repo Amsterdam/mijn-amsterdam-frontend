@@ -1,17 +1,41 @@
 import { generatePath } from 'react-router';
 
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
+import type {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../../components/Table/TableV2';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { TrackingConfig } from '../../../config/routes';
+} from '../../../components/Table/TableV2.types';
+import {
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+} from '../../../config/app';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
+export const featureToggle = {
+  BezwarenActive: true,
+};
+
+export const themaId = 'BEZWAREN' as const;
+export const themaTitle = 'Bezwaren';
+
+export const routeConfig = {
+  detailPage: {
+    path: '/bezwaren/:uuid',
+    trackingUrl: '/bezwaren/bezwaarfrontend',
+    documentTitle: `Bezwaar | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/bezwaren/lijst/:kind/:page?',
+    documentTitle: (_, params) =>
+      `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${themaTitle}`,
+  },
+  themaPage: {
+    path: '/bezwaren',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
 export const LinkListItems: LinkProps[] = [
   {
@@ -33,12 +57,6 @@ const displayPropsBezwaren = withOmitDisplayPropsForSmallScreens(
   ['omschrijving', 'ontvangstdatumFormatted']
 );
 
-export const routes = {
-  listPage: AppRoutes['BEZWAREN/LIST'],
-  detailPageVergunning: AppRoutes['BEZWAREN/DETAIL'],
-  themaPage: AppRoutes.BEZWAREN,
-} as const;
-
 export const listPageParamKind = {
   lopend: 'lopende-bezwaren',
   afgehandeld: 'afgehandelde-bezwaren',
@@ -56,7 +74,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     textNoContent:
       'U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.',
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.lopend,
       page: null,
     }),
@@ -68,21 +86,9 @@ export const tableConfig = {
     displayProps: displayPropsBezwaren,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     textNoContent: 'U heeft nog geen afgehandelde bezwaren.',
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.afgehandeld,
       page: null,
     }),
   },
 } as const;
-
-export function getBezwarenListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(
-    config: TrackingConfig,
-    params: T | null
-  ) => {
-    const kind = params?.kind as ListPageParamKind;
-    return kind in tableConfig
-      ? `${tableConfig[kind].title} | ${themaTitle}`
-      : themaTitle;
-  };
-}

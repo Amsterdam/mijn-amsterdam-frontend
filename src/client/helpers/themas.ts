@@ -8,7 +8,6 @@ import { ThemaMenuItem } from '../config/thema-types';
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
-    BEZWAREN,
     BODEM,
     BRP,
     ERFPACHT,
@@ -138,13 +137,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(KLACHTEN) &&
         !!KLACHTEN?.content?.klachten.length &&
         FeatureToggle.klachtenActive
-      );
-
-    case ThemaIDs.BEZWAREN:
-      return (
-        !isLoading(BEZWAREN) &&
-        !!BEZWAREN?.content?.length &&
-        FeatureToggle.bezwarenActive
       );
 
     case ThemaIDs.VAREN:
