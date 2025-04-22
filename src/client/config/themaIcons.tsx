@@ -3,7 +3,6 @@ import { BellIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import { type ThemaID } from '../../universal/config/thema';
 import { SVGComponent } from '../../universal/types';
 import {
-  IconAVG,
   IconBelastingen,
   IconBezwaren,
   IconBodem,
@@ -26,7 +25,6 @@ import {
 
 export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   VAREN: IconVaren,
-  AVG: IconAVG,
   BELASTINGEN: IconBelastingen,
   BEZWAREN: IconBezwaren,
   BODEM: IconBodem,

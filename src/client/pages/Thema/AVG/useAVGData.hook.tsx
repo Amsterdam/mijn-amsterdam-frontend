@@ -1,5 +1,9 @@
-import { tableConfig, linkListItems } from './AVG-thema-config';
-import { ThemaIDs } from '../../../../universal/config/thema';
+import {
+  tableConfig,
+  linkListItems,
+  themaTitle,
+  themaId,
+} from './AVG-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
@@ -15,9 +19,10 @@ export function useAVGData() {
     (avg) => `Bekijk meer over avg verzoek met nummer ${avg.id}`
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.AVG);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
+    title: themaTitle,
     tableConfig,
     isLoading: isLoading(AVG),
     isError: isError(AVG),

@@ -1,18 +1,51 @@
 import { generatePath } from 'react-router';
 
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { LinkProps } from '../../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2';
-import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { TrackingConfig } from '../../../config/routes';
+  type DisplayProps,
+  type WithDetailLinkComponent,
+} from '../../../components/Table/TableV2.types';
+import {
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+  MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
+} from '../../../config/app';
+import { type ThemaRoutesConfig } from '../../../config/thema-types';
 
-const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;
+const listPageParamKind = {
+  inProgress: 'lopende-aanvragen',
+  completed: 'afgehandelde-aanvragen',
+} as const;
+
+export const featureToggle = {
+  AvgActive: !IS_PRODUCTION,
+};
+
+export const themaId = 'AVG' as const;
+export const themaTitle = 'AVG persoonsgegevens';
+
+export const routeConfig = {
+  detailPage: {
+    path: '/avg/verzoek/:id',
+    trackingUrl: '/avg/verzoek',
+    documentTitle: `Avg verzoek | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/avg/lijst/:kind/:page?',
+    documentTitle(_config, params) {
+      const kind = params?.kind as ListPageParamKind;
+      return `${capitalizeFirstLetter(kind === 'lopende-aanvragen' ? 'Lopende' : 'Afgehanelde')} ${themaTitle} verzoeken | overzicht`;
+    },
+  },
+  themaPage: {
+    path: '/avg',
+    documentTitle: `${themaTitle} verzoeken | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
 const displayPropsAanvragenBase: DisplayProps<
   WithDetailLinkComponent<AVGRequestFrontend>
@@ -27,19 +60,8 @@ const displayPropsAanvragen = withOmitDisplayPropsForSmallScreens(
   ['themas']
 );
 
-const listPageParamKind = {
-  inProgress: 'lopende-aanvragen',
-  completed: 'afgehandelde-aanvragen',
-} as const;
-
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
-export const routes = {
-  listPage: AppRoutes['AVG/LIST'],
-  themaPage: AppRoutes.AVG,
-  detailPage: AppRoutes['AVG/DETAIL'],
-};
 
 const tableConfigBase = {
   sort: dateSort('registratieDatum', 'desc'),
@@ -51,7 +73,7 @@ export const tableConfig = {
     title: 'Lopende aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => !avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -61,7 +83,7 @@ export const tableConfig = {
     title: 'Afgehandelde aanvragen',
     filter: (avgVerzoek: AVGRequestFrontend) => avgVerzoek.datumAfhandeling,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.completed,
       page: null,
     }),
@@ -75,15 +97,3 @@ export const linkListItems: LinkProps[] = [
     title: 'Loket persoonsgegevens gemeente Amsterdam',
   },
 ] as const;
-
-export function getAVGListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(
-    config: TrackingConfig,
-    params: T | null
-  ) => {
-    const kind = params?.kind as ListPageParamKind;
-    return kind in tableConfig
-      ? `${tableConfig[kind].title} | ${themaTitle}`
-      : themaTitle;
-  };
-}
