@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<AfvalInformation /> > Does not show warning concercing bedrijfsafval 1`] = `
+exports[`<AfvalThemaPagina /> > Does not show warning concercing bedrijfsafval 1`] = `
 <DocumentFragment>
   <div
     class="ams-grid"
@@ -39,7 +39,7 @@ exports[`<AfvalInformation /> > Does not show warning concercing bedrijfsafval 1
                 <span
                   class="ams-visually-hidden"
                 >
-                  Afval
+                  Afval rond uw adres
                 </span>
               </a>
             </li>
@@ -48,7 +48,7 @@ exports[`<AfvalInformation /> > Does not show warning concercing bedrijfsafval 1
         <h3
           class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          Afval
+          Afval rond uw adres
         </h3>
       </div>
     </div>
@@ -688,7 +688,7 @@ exports[`<AfvalInformation /> > Does not show warning concercing bedrijfsafval 1
 </DocumentFragment>
 `;
 
-exports[`<AfvalInformation /> > Does not show warning concercing woonfunctie 1`] = `
+exports[`<AfvalThemaPagina /> > Does not show warning concercing woonfunctie 1`] = `
 <DocumentFragment>
   <div
     class="ams-grid"
@@ -727,7 +727,7 @@ exports[`<AfvalInformation /> > Does not show warning concercing woonfunctie 1`]
                 <span
                   class="ams-visually-hidden"
                 >
-                  Afval
+                  Afval rond uw adres
                 </span>
               </a>
             </li>
@@ -736,7 +736,7 @@ exports[`<AfvalInformation /> > Does not show warning concercing woonfunctie 1`]
         <h3
           class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          Afval
+          Afval rond uw adres
         </h3>
       </div>
     </div>
@@ -1407,7 +1407,7 @@ exports[`<AfvalInformation /> > Does not show warning concercing woonfunctie 1`]
 </DocumentFragment>
 `;
 
-exports[`<AfvalInformation /> > Matches the Full Page snapshot 1`] = `
+exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <div
     class="ams-grid"
@@ -1446,7 +1446,7 @@ exports[`<AfvalInformation /> > Matches the Full Page snapshot 1`] = `
                 <span
                   class="ams-visually-hidden"
                 >
-                  Afval
+                  Afval rond uw adres
                 </span>
               </a>
             </li>
@@ -1455,7 +1455,7 @@ exports[`<AfvalInformation /> > Matches the Full Page snapshot 1`] = `
         <h3
           class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          Afval
+          Afval rond uw adres
         </h3>
       </div>
     </div>

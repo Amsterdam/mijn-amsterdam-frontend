@@ -8,7 +8,6 @@ import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../../server/services/afis/afis-types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { LinkProps, ZaakDetail } from '../../../../universal/types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
@@ -17,7 +16,7 @@ import { TrackingConfig } from '../../../config/routes';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
-  AfisActive: !IS_PRODUCTION,
+  AfisActive: true,
 };
 
 export const themaId = 'AFIS' as const;

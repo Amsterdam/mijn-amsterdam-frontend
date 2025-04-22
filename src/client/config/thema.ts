@@ -3,6 +3,7 @@ import { AppRoutes } from '../../universal/config/routes';
 import { ThemaID, ThemaIDs } from '../../universal/config/thema';
 import { AppState, BagThema } from '../../universal/types/App.types';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
+import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
 import { getAVGListPageDocumentTitle } from '../pages/Thema/AVG/AVG-thema-config';
 import { getBezwarenListPageDocumentTitle } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import {
@@ -39,7 +40,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
  * @deprecated Use the titles exported from the Thema-config files instead.
  */
 export const ThemaTitles = {
-  AFVAL: 'Afval',
   AVG: 'AVG persoonsgegevens',
   BELASTINGEN: 'Belastingen',
   BEZWAREN: 'Bezwaren',
@@ -169,7 +169,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
-  [AppRoutes.AFVAL]: `${ThemaTitles.AFVAL} rond uw adres`,
   [AppRoutes.BFF_500_ERROR]: '500 Server Error | Mijn Amsterdam',
   [AppRoutes.API_LOGIN]: 'Inloggen | Mijn Amsterdam',
   [AppRoutes.API1_LOGIN]: 'Inloggen | Mijn Amsterdam',
@@ -197,6 +196,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemInkomen,
   menuItemJeugd,
   menuItemAfis,
+  menuItemAfval,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -279,12 +279,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.HLI,
     to: AppRoutes.HLI,
     profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.AFVAL,
-    id: ThemaIDs.AFVAL,
-    to: AppRoutes.AFVAL,
-    profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.VERGUNNINGEN,
