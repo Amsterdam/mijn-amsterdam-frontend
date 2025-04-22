@@ -1,4 +1,4 @@
-import { HLIRegeling } from './HLIRegeling';
+import { HLIRegelingFrontend } from './HLIRegeling';
 import { HLIRegelingen } from './HLIRegelingen';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
 import { HLIThemaPagina } from './HLIThemaPagina';

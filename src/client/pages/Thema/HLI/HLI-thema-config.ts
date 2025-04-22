@@ -1,7 +1,7 @@
 import { generatePath } from 'react-router';
 
 import styles from './HLIThemaPagina.module.scss';
-import { HLIRegeling } from '../../../../server/services/hli/hli-regelingen-types';
+import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -16,7 +16,7 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeRegelingenBase: DisplayProps<
-  WithDetailLinkComponent<HLIRegeling>
+  WithDetailLinkComponent<HLIRegelingFrontend>
 > = {
   detailLinkComponent: 'Regeling',
   receiver: 'Naam ontvanger',
@@ -28,7 +28,7 @@ const displayPropsHuidigeRegelingen = withOmitDisplayPropsForSmallScreens(
 );
 
 const displayPropsEerdereRegelingenBase: DisplayProps<
-  WithDetailLinkComponent<HLIRegeling>
+  WithDetailLinkComponent<HLIRegelingFrontend>
 > = {
   detailLinkComponent: displayPropsHuidigeRegelingen.detailLinkComponent,
   displayStatus: 'Status',
@@ -77,7 +77,7 @@ export const kindTegoedLinkListItem: LinkProps = {
 export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (regeling: HLIRegeling) => regeling.isActual,
+    filter: (regeling: HLIRegelingFrontend) => regeling.isActual,
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
@@ -89,7 +89,7 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
-    filter: (regeling: HLIRegeling) => !regeling.isActual,
+    filter: (regeling: HLIRegelingFrontend) => !regeling.isActual,
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,

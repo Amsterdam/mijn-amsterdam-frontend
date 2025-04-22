@@ -4,7 +4,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 
 import styles from './HLIThemaPagina.module.scss';
 import { useHliThemaData } from './useHliThemaData';
-import { HLIRegeling } from '../../../../server/services/hli/hli-regelingen-types';
+import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
@@ -124,7 +124,7 @@ export function HLIThemaPagina() {
           },
         ]) => {
           return (
-            <ThemaPaginaTable<HLIRegeling>
+            <ThemaPaginaTable<HLIRegelingFrontend>
               key={kind}
               title={title}
               className={className}

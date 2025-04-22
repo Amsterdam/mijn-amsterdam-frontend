@@ -8,7 +8,7 @@ import {
   tableConfig,
 } from './HLI-thema-config';
 import { useStadspassen } from './useStadspassen.hook';
-import { HLIRegeling } from '../../../../server/services/hli/hli-regelingen-types';
+import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { ThemaIDs } from '../../../../universal/config/thema';
 import {
   hasFailedDependency,
@@ -23,7 +23,7 @@ export function useHliThemaData() {
   const { HLI } = useAppStateGetter();
   const stadspassen = useStadspassen();
   const hasStadspas = !!HLI.content?.stadspas?.length;
-  const regelingen = addLinkElementToProperty<HLIRegeling>(
+  const regelingen = addLinkElementToProperty<HLIRegelingFrontend>(
     HLI.content?.regelingen ?? [],
     'title',
     true
