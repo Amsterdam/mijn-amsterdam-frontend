@@ -8,7 +8,7 @@ set -e
 
 EXTERNAL_URLS=$(
   grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
-    "([\`\"'])((https?:|www\.).*?)[^\\\]\1" ./src/* 2> /dev/null \
+    "(\\\?[\`\"'])((https?:|www\.).*?)[^\\\]\1" ./src/* 2> /dev/null \
     | sed -E "s/([\`\"'])(.+)\1/\2/" \
     | sort --unique \
     | sed '/.*w3\.org.*/d' \
