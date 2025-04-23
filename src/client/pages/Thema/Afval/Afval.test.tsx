@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
+import type { Mock } from 'vitest';
 
 import { routeConfig } from './Afval-thema-config';
 import { AfvalThemaPagina } from './AfvalThema';
@@ -7,6 +8,7 @@ import { AfvalFractionData } from '../../../../server/services/afval/afvalwijzer
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types';
 import { appStateAtom } from '../../../hooks/useAppState';
+import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import MockApp from '../../MockApp';
 
 //const { BRP, AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
@@ -149,6 +151,8 @@ const testState = {
   },
 };
 
+vi.mock('../../../hooks/useProfileType');
+
 function initializeState(snapshot: MutableSnapshot, state: any = testState) {
   snapshot.set(appStateAtom, state);
 }
@@ -168,11 +172,26 @@ describe('<AfvalThemaPagina />', () => {
   }
 
   it('Matches the Full Page snapshot', () => {
+    (useProfileTypeValue as Mock).mockReturnValueOnce('private');
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
   });
 
+  it('Renders commercial profile', () => {
+    (useProfileTypeValue as Mock).mockReturnValueOnce('commercial');
+
+    render(<Component />);
+
+    expect(
+      screen.getByText(
+        /De afvalregels hieronder gelden alleen als u maximaal 9 vuilniszakken afval per week heeft/
+      )
+    ).toBeInTheDocument();
+  });
+
   it('Does not show warning concercing bedrijfsafval', () => {
+    (useProfileTypeValue as Mock).mockReturnValueOnce('private');
+
     const testState2 = jsonCopy(testState);
     testState2.MY_LOCATION.content[1].bagNummeraanduidingId =
       testState2.MY_LOCATION.content[0].bagNummeraanduidingId;
@@ -188,11 +207,19 @@ describe('<AfvalThemaPagina />', () => {
       );
     }
 
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
+    render(<Component />);
+
+    expect(screen.getByText(/Dit is geen woonadres./)).toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        /De afvalregels hieronder gelden alleen als u maximaal 9 vuilniszakken afval per week heeft/
+      )
+    ).not.toBeInTheDocument();
   });
 
   it('Does not show warning concercing woonfunctie', () => {
+    (useProfileTypeValue as Mock).mockReturnValueOnce('private');
+
     const testState2 = jsonCopy(testState);
     testState2.AFVAL.content = testState2.AFVAL.content.map(
       (fractie: AfvalFractionData) => ({
@@ -212,7 +239,9 @@ describe('<AfvalThemaPagina />', () => {
       );
     }
 
-    const { asFragment } = render(<Component />);
-    expect(asFragment()).toMatchSnapshot();
+    render(<Component />);
+    expect(
+      screen.queryByText(/Dit is geen woonadres./)
+    ).not.toBeInTheDocument();
   });
 });

@@ -78,6 +78,7 @@ describe('Bezwaren', () => {
                 to: '/bezwaren/956541b6-7a25-4132-9592-0a509bc7ace0',
               },
               themaID: 'BEZWAREN',
+              themaTitle: 'Bezwaren',
               title: 'Bezwaar afgehandeld',
             },
           ],

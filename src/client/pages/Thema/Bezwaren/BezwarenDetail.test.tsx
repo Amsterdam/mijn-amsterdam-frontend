@@ -2,10 +2,10 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../../universal/config/routes';
+import { routeConfig } from './Bezwaren-thema-config';
+import { BezwarenDetail } from './BezwarenDetail';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { BezwarenDetailPagina } from './BezwarenDetail';
 
 const testState = {
   BEZWAREN: {
@@ -100,17 +100,17 @@ function initializeState(testState: any) {
 }
 
 function setupTestComponent(id: string) {
-  const routeEntry = generatePath(AppRoutes['BEZWAREN/DETAIL'], {
+  const routeEntry = generatePath(routeConfig.detailPage.path, {
     uuid: id,
   });
-  const routePath = AppRoutes['BEZWAREN/DETAIL'];
+  const routePath = routeConfig.detailPage.path;
 
   return function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={BezwarenDetailPagina}
+        component={BezwarenDetail}
         initializeState={initializeState(testState)}
       />
     );
