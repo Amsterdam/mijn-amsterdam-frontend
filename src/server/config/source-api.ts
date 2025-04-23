@@ -2,13 +2,18 @@ import https from 'https';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
+import {
+  BFF_REQUEST_CACHE_ENABLED,
+  ONE_HOUR_MS,
+  ONE_MINUTE_MS,
+  ONE_SECOND_MS,
+} from './app';
+import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Jeugd/Jeugd-thema-config';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Jeugd/Jeugd-thema-config';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -25,6 +30,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * In this case we can use a cacheKey. !!!!!Be sure this key is unique to the visitor.!!!!!! The for example the requestID parameter can be used.
    */
   cacheKey?: string;
+  enableCache?: boolean;
   /**
    * If true the token passed via `authProfileAndToken` will be sent via { Authorization: `Bearer ${authProfileAndToken.token}` } with the request.
    * If this flag _and_ a custom Authorization header is configured for a request, the custom Header takes presedence.
@@ -48,6 +54,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
   method: 'get',
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
+  enableCache: BFF_REQUEST_CACHE_ENABLED,
   postponeFetch: false,
   passthroughOIDCToken: false,
   responseType: 'json',

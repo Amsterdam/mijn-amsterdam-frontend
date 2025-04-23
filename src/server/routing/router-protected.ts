@@ -30,6 +30,7 @@ import {
   fetchZorgnedAVDocument,
   handleBlockStadspas,
   handleFetchTransactionsRequest,
+  handleUnblockStadspas,
 } from '../services/hli/hli-route-handlers';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
@@ -190,6 +191,7 @@ attachDocumentDownloadRoute(
 // HLI Stadspas transacties
 router.get(BffEndpoints.STADSPAS_TRANSACTIONS, handleFetchTransactionsRequest);
 router.get(BffEndpoints.STADSPAS_BLOCK_PASS, handleBlockStadspas);
+router.get(BffEndpoints.STADSPAS_UNBLOCK_PASS, handleUnblockStadspas);
 
 // HLI Regelingen / doc download
 attachDocumentDownloadRoute(
