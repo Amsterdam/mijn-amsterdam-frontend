@@ -22,9 +22,6 @@ EXTERNAL_URLS=$(
 )
 
 echo_dead_link() {
-  # Slice the URL for incredibly long matches spanning more then 10 lines.
-  local url=${1:0:300}
-
   local status_code=$(curl \
     --globoff --output /dev/null --silent \
     --write-out "%{http_code}\n" \
