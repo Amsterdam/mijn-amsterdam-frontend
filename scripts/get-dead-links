@@ -6,6 +6,11 @@
 
 set -e
 
+WITH_STATUS_CODE=false
+if [ "$1" = '--with-status' ] || [ "$1" = '-s' ]; then
+  WITH_STATUS_CODE=true
+fi
+
 EXTERNAL_URLS=$(
   grep --no-filename -r -P -o --exclude-dir="__snapshots__" --exclude="*test*" \
     "(\\\?[\`\"'])((https?:|www\.).*?)[^\\\]\1" ./src/* 2> /dev/null \
@@ -28,8 +33,11 @@ echo_dead_link() {
   # There are also 000 codes, which can be caused by wrong certs or just an invalid URL.
   # I choose to leave these out since I did not see any problems with these URLS when manually checking in the browser.
   if [ "$status_code" -gt 399 ] && [ "$status_code" -lt 600 ]; then
-    echo "Status: $status_code - $url"
-    # echo "$url"
+    if [ $WITH_STATUS_CODE = true ]; then
+      echo "Status: $status_code - $url"
+    else
+      echo "$url"
+    fi
   fi
 }
 
