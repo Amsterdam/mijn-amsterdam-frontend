@@ -7,6 +7,7 @@ import {
   fetchGpassDiscountTransactions,
   forTesting,
   mutateGpassBlockPass,
+  mutateGpassUnblockPass,
 } from './stadspas-gpass-service';
 import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
 import {
@@ -795,13 +796,14 @@ describe('stadspas-gpass-service', () => {
 
   describe('blockStadspass', async () => {
     const passBlockedSuccessfulResponse = {
-      content: null,
+      content: {
+        '123': false,
+      },
       status: 'OK',
     };
 
     const requestId = '123';
     const transactionKeysEncrypted = '123';
-    const passNumber = 123;
 
     test('Uses decrypt and fetcher', async () => {
       remoteApi.post(
@@ -818,48 +820,88 @@ describe('stadspas-gpass-service', () => {
     });
 
     test('Will block a pass that is active', async () => {
-      remoteApi
-        .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)
-        .reply(200, { actief: false });
+      const PASSNUMBER = 123;
+
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
-        content: { actief: true },
+        content: { pasnummer: PASSNUMBER, actief: true },
       });
-
-      remoteApi.post(
-        BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
-      );
       (requestData as Mock).mockResolvedValueOnce({
         status: 'OK',
-        content: null,
+        content: { pasnummer: PASSNUMBER, actief: false },
       });
-
-      const response = await mutateGpassBlockPass(requestId, 123, '123');
-      expect(response).toStrictEqual({ status: 'OK', content: null });
-    });
-
-    test('Can only block and not toggle the stadspas', async () => {
-      remoteApi
-        .get(`/stadspas/rest/sales/v1/pas/${passNumber}?include_balance=true`)
-        .reply(200, { actief: false });
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: { actief: false },
-      });
-
-      remoteApi.post(
-        BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
-      );
 
       const response = await mutateGpassBlockPass(requestId, 123, '123');
       expect(response).toStrictEqual({
-        code: 403,
+        content: {
+          actief: false,
+          pasnummer: 123,
+        },
+        status: 'OK',
+      });
+    });
+
+    test('Can only block and not toggle the stadspas', async () => {
+      const PASSNUMBER = 123;
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { pasnummer: PASSNUMBER, actief: false },
+      });
+
+      const response = await mutateGpassBlockPass(
+        requestId,
+        PASSNUMBER,
+        '123456789'
+      );
+      expect(response).toStrictEqual({
+        content: { [PASSNUMBER]: false },
+        status: 'OK',
+      });
+    });
+
+    test('Returns error status if invalid response from source API', async () => {
+      const PASSNUMBER = 123;
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { pasnummer: PASSNUMBER, actief: 'INVALID' },
+      });
+
+      const response = await mutateGpassBlockPass(
+        requestId,
+        PASSNUMBER,
+        '123456789'
+      );
+      expect(response).toStrictEqual({
+        code: 500,
         content: null,
         message:
-          'The citypass is not active. We cannot unblock an active pass.',
+          "Could not determine 'actief' state of pass because of an invalid response",
         status: 'ERROR',
+      });
+    });
+
+    test('Unblock Stadspas unblocks', async () => {
+      const PASSNUMBER = 123;
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { pasnummer: PASSNUMBER, actief: false },
+      });
+      (requestData as Mock).mockResolvedValueOnce({
+        status: 'OK',
+        content: { [PASSNUMBER]: true },
+      });
+
+      const response = await mutateGpassUnblockPass(
+        requestId,
+        PASSNUMBER,
+        '123456789'
+      );
+
+      expect(response).toStrictEqual({
+        content: {
+          '123': true,
+        },
+        status: 'OK',
       });
     });
   });

@@ -14,7 +14,6 @@ import {
   apiSuccessResult,
 } from '../../universal/helpers/api';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { BFF_REQUEST_CACHE_ENABLED } from '../config/app';
 import {
   ApiUrlEntries,
   DEFAULT_REQUEST_CONFIG,
@@ -85,50 +84,50 @@ export async function requestData<T>(
 ) {
   const source = axios.CancelToken.source();
 
-  const requestConfig: DataRequestConfig = {
+  config = {
     ...DEFAULT_REQUEST_CONFIG,
     ...config,
     cancelToken: source.token,
   };
 
-  if (requestConfig.postponeFetch) {
+  if (config.postponeFetch) {
     return apiPostponeResult(null);
   }
 
-  if (requestConfig.transformResponse) {
-    requestConfig.transformResponse = [].concat(
+  if (config.transformResponse) {
+    config.transformResponse = [].concat(
       axios.defaults.transformResponse as any,
-      requestConfig.transformResponse as any
+      config.transformResponse as any
     );
   }
 
-  const debugResponseData = getDebugResponseData(requestConfig);
+  const debugResponseData = getDebugResponseData(config);
   // Log/Debug the untransformed response data
   if (
     debugResponseDataTerms.filter(Boolean).some((term) => {
-      const hasTermInRequestUrl = !!requestConfig.url?.includes(term.trim());
-      const hasTermInRequestParams = requestConfig.params
-        ? JSON.stringify(requestConfig.params).includes(term.trim())
+      const hasTermInRequestUrl = !!config.url?.includes(term.trim());
+      const hasTermInRequestParams = config.params
+        ? JSON.stringify(config.params).includes(term.trim())
         : false;
 
       return hasTermInRequestUrl || hasTermInRequestParams;
     }) &&
-    !requestConfig.transformResponse?.includes(debugResponseData)
+    !config.transformResponse?.includes(debugResponseData)
   ) {
     // Add default transformer if no transformers are defined
-    if (!requestConfig.transformResponse) {
-      requestConfig.transformResponse = [].concat(
+    if (!config.transformResponse) {
+      config.transformResponse = [].concat(
         axios.defaults.transformResponse as any
       );
     }
     // Add the debug transformer as 2nd
-    const defaultTransformerIndex = requestConfig.transformResponse.findIndex(
+    const defaultTransformerIndex = config.transformResponse.findIndex(
       (transformer) => transformer === axios.defaults.transformResponse
     );
     // Insert the debug transformer after the default transformer
     // This is important to ensure that the response is parsed before we log it
     if (defaultTransformerIndex > -1) {
-      requestConfig.transformResponse.splice(
+      config.transformResponse.splice(
         defaultTransformerIndex + 1,
         0,
         debugResponseData
@@ -138,9 +137,9 @@ export async function requestData<T>(
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
   // A configured Authorization header passed via { ... headers: { Authorization: 'xxx' }, ... } takes presedence.
-  if (requestConfig.passthroughOIDCToken && authProfileAndToken?.token) {
-    const headers = requestConfig?.headers ?? {};
-    requestConfig.headers = Object.assign(
+  if (config.passthroughOIDCToken && authProfileAndToken?.token) {
+    const headers = config?.headers ?? {};
+    config.headers = Object.assign(
       {
         Authorization: `Bearer ${authProfileAndToken.token}`,
       },
@@ -150,13 +149,12 @@ export async function requestData<T>(
 
   // Construct a cache key based on unique properties of a request
   const cacheKey =
-    requestConfig.cacheKey ||
-    getRequestConfigCacheKey(requestID, requestConfig);
+    config.cacheKey || getRequestConfigCacheKey(requestID, config);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
 
-  if (BFF_REQUEST_CACHE_ENABLED && cacheEntry !== null) {
+  if (config.enableCache && cacheEntry !== null) {
     return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;
@@ -164,15 +162,15 @@ export async function requestData<T>(
 
   // Set the cache Deferred
   if (
-    BFF_REQUEST_CACHE_ENABLED &&
+    config.enableCache &&
     cacheKey &&
-    !!requestConfig.cacheTimeout &&
-    requestConfig.cacheTimeout > 0
+    !!config.cacheTimeout &&
+    config.cacheTimeout > 0
   ) {
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),
-      requestConfig.cacheTimeout
+      config.cacheTimeout
     );
   }
 
@@ -182,14 +180,14 @@ export async function requestData<T>(
     // Request is cancelled after x ms
     cancelTimeout = setTimeout(() => {
       source.cancel('Request to source api timeout.');
-    }, requestConfig.cancelTimeout!);
+    }, config.cancelTimeout!);
 
     let response: AxiosResponse<T>;
 
-    if (requestConfig.request) {
-      response = await requestConfig.request<T>(requestConfig);
+    if (config.request) {
+      response = await config.request<T>(config);
     } else {
-      response = await axiosRequest.request<T>(requestConfig);
+      response = await axiosRequest.request<T>(config);
     }
 
     // Clears the timeout after the above request promise is settled
@@ -198,7 +196,7 @@ export async function requestData<T>(
     const responseData = apiSuccessResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
-    if (BFF_REQUEST_CACHE_ENABLED && cache.get(cacheKey)) {
+    if (config.enableCache && cache.get(cacheKey)) {
       logger.trace(
         { url: config.url, queryParams: config.params },
         `Cache hit for '${config.url}'`

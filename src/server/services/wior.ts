@@ -1,7 +1,5 @@
 import { LatLngBoundsLiteral } from 'leaflet';
 
-import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { ThemaIDs } from '../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -15,7 +13,11 @@ import {
   getBboxFromFeatures,
 } from './buurt/helpers';
 import { fetchMyLocation } from './my-locations';
-import { AppRoutes } from '../../universal/config/routes';
+import {
+  featureToggle,
+  routeConfig,
+  themaId,
+} from '../../client/components/MyArea/MyArea-thema-config';
 
 const WITHIN_RADIUS_KM = 1;
 
@@ -23,11 +25,11 @@ function getNotification(bbox: LatLngBoundsLiteral) {
   return {
     id: `wior-meldingen-notification`,
     datePublished: new Date().toISOString(),
-    themaID: ThemaIDs.BUURT,
+    themaID: themaId,
     title: `Werkzaamheden gepland`,
     description: `Bij u in de buurt zijn binnen enkele maanden meerdaagsewerkzaamheden gepland`,
     link: {
-      to: `${AppRoutes.BUURT}?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Binnen enkele maanden":1}},"duur":{"values":{"Meerdaags":1}}}}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
+      to: `${routeConfig.themaPage.path}?datasetIds=["wior"]&filters={"wior":{"datumStartUitvoering":{"values":{"Binnen enkele maanden":1}},"duur":{"values":{"Meerdaags":1}}}}&bbox=[[${bbox[0]}],[${bbox[1]}]]`,
       title: 'Bekijk de werkzaamheden op kaart',
     },
   };
@@ -88,7 +90,7 @@ export async function fetchWiorNotifications(
 
     return apiSuccessResult({
       notifications:
-        FeatureToggle.wiorMeldingen && filteredFeatures.length >= 2
+        featureToggle.wiorMeldingen && filteredFeatures.length >= 2
           ? [notification]
           : [],
     });

@@ -1,33 +1,19 @@
-import { LinkProps, generatePath } from 'react-router';
+import { generatePath } from 'react-router';
 
 import { AppRoutes } from '../../../universal/config/routes';
-import { type ThemaID } from '../../../universal/config/thema';
 import { ThemaTitles } from '../../config/thema';
-import { ThemaMenuItem } from '../../config/thema-types';
+import { menuCategoryItem as buurtMenuItem } from '../MyArea/MyArea-routes';
 
-type MainMenuId = ThemaID | 'MIJN_THEMAS';
-
-export interface MenuItem extends LinkProps {
-  id: MainMenuId;
-  submenuItems?: ThemaMenuItem[];
-  profileTypes?: ProfileType[];
-}
-
-export const categoryMenuItems: MenuItem[] = [
+export const categoryMenuItems = [
   {
     title: ThemaTitles.HOME,
     id: 'HOME',
     to: AppRoutes.HOME,
   },
-  {
-    title: ThemaTitles.BUURT,
-    id: 'BUURT',
-    to: generatePath(AppRoutes.BUURT),
-    profileTypes: ['private', 'commercial'],
-  },
+  buurtMenuItem,
   {
     title: ThemaTitles.NOTIFICATIONS,
     id: 'NOTIFICATIONS',
     to: generatePath(AppRoutes.NOTIFICATIONS),
   },
-];
+] as const;

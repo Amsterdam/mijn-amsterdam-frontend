@@ -10,8 +10,10 @@ import {
   WpiRequestProcessLabels,
   WpiRequestStatus,
 } from './wpi-types';
-import { routes } from '../../../client/pages/Inkomen/Inkomen-thema-config';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routes,
+  themaId as themaIdInkomen,
+} from '../../../client/pages/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { GenericDocument, MyNotification } from '../../../universal/types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
@@ -98,7 +100,7 @@ export function createProcessNotification(
   return {
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
-    themaID: ThemaIDs.INKOMEN,
+    themaID: themaIdInkomen,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,

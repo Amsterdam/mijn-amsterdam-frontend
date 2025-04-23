@@ -1,14 +1,14 @@
 import { PathMatch } from 'react-router';
 
 import { TrackingConfig } from './routes';
-import { ThemaID } from '../../universal/config/thema';
 import { SomeOtherString } from '../../universal/helpers/types';
 import { AppState, LinkProps, SVGComponent } from '../../universal/types';
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
-export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
-  id: ThemaID;
+export interface ThemaMenuItem<ID extends string = string>
+  extends Omit<LinkProps, 'title' | 'to'> {
+  id: ID;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
@@ -17,6 +17,12 @@ export interface ThemaMenuItem extends Omit<LinkProps, 'title' | 'to'> {
   // TODO: Make non optional if all thema menu items are migrated to the thema configs.
   isActive?: IsThemaVisibleFN;
   IconSVG?: SVGComponent;
+}
+
+export interface CategoryMenuItem<ID extends string> extends LinkProps {
+  id: ID;
+  submenuItems?: ThemaMenuItem[];
+  profileTypes?: ProfileType[];
 }
 
 export interface ThemaMenuItemTransformed
@@ -40,6 +46,7 @@ type TrackinUrlFN = (match: PathMatch) => string;
 
 export type ThemaRouteConfig = {
   path: string;
+  // Only needed for routes with variable path segments
   trackingUrl?: string | TrackinUrlFN;
   documentTitle: string | DocumenttitleFN;
 };

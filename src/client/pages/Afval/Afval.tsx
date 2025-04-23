@@ -6,7 +6,6 @@ import {
 } from '@amsterdam/design-system-react';
 
 import styles from './Afval.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import {
@@ -27,6 +26,7 @@ import InnerHtml from '../../components/InnerHtml/InnerHtml';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaintenanceNotifications } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import { MaButtonLink } from '../../components/MaLink/MaLink';
+import { routeConfig as buurtRouteConfig } from '../../components/MyArea/MyArea-thema-config';
 import {
   DetailPageV2,
   PageContentCell,
@@ -375,7 +375,7 @@ export function AfvalInformation() {
               </Heading>
               <LinkList className="ams-mb--sm">
                 <LinkList.Link
-                  href={`${AppRoutes.BUURT}?datasetIds=["afvalcontainers"]&zoom=14`}
+                  href={`${buurtRouteConfig.themaPage.path}?datasetIds=["afvalcontainers"]&zoom=14`}
                 >
                   Kaart met containers in de buurt
                 </LinkList.Link>
