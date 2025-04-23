@@ -34,7 +34,7 @@ function ExploitatieHorecaBedrijf({
   return <Datalist rows={rows} />;
 }
 
-export function HorecaDetailPagina() {
+export function HorecaDetail() {
   const { vergunningen, isLoading, isError, breadcrumbs } =
     useHorecaThemaData();
   const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =

@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, Mock } from 'vitest';
 
 import { fetchHorecaVergunningen, fetchHorecaNotifications } from './horeca';
+import { featureToggle } from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiSuccessResult,
   apiErrorResult,
@@ -79,7 +79,7 @@ describe('horeca', () => {
 
   describe('fetchHorecaNotifications', () => {
     it('should return empty notifications if feature toggle is off', async () => {
-      FeatureToggle.horecaActive = false;
+      featureToggle.horecaActive = false;
 
       const result = await fetchHorecaNotifications(
         requestID,
@@ -90,7 +90,7 @@ describe('horeca', () => {
     });
 
     it('should return notifications if fetchHorecaVergunningen is successful', async () => {
-      FeatureToggle.horecaActive = true;
+      featureToggle.horecaActive = true;
       (fetchDecosZaken as unknown as Mock).mockResolvedValue(
         apiSuccessResult([])
       );
@@ -108,7 +108,7 @@ describe('horeca', () => {
     });
 
     it('should return an error if fetchHorecaVergunningen fails', async () => {
-      FeatureToggle.horecaActive = true;
+      featureToggle.horecaActive = true;
       (fetchDecosZaken as unknown as Mock).mockResolvedValue(
         apiErrorResult('failed to fetch vergunningen', null)
       );

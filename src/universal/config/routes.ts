@@ -34,25 +34,13 @@ export const AppRoutes = {
   'KLACHTEN/LIST': '/klachten/lijst/:page?',
   'KLACHTEN/KLACHT': '/klachten/klacht/:id',
   KLACHTEN: '/klachten',
-  HORECA: '/horeca/',
-  'HORECA/LIST': '/horeca/lijst/:kind/:page?',
-  'HORECA/DETAIL': '/horeca/:caseType/:id',
+
   BFF_500_ERROR: '/server-error-500',
 
   'KLANT_CONTACT/CONTACTMOMENTEN': '/contactmomenten/:page?',
 
   ZAAK_STATUS: '/zaak-status',
 } as const;
-
-export const AppRoutesVergunningenThemas = [
-  AppRoutes['VERGUNNINGEN/DETAIL'],
-  AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-  AppRoutes['VAREN/DETAIL'],
-  AppRoutes['PARKEREN/DETAIL'],
-  AppRoutes['HORECA/DETAIL'],
-] as const;
-
-export type AppRouteVergunningen = (typeof AppRoutesVergunningenThemas)[number];
 
 export type RouteKey = keyof typeof AppRoutes;
 export type AppRoute = (typeof AppRoutes)[RouteKey];

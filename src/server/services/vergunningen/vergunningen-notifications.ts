@@ -10,7 +10,7 @@ import { decosZaakTransformers } from './decos-zaken';
 import { fetchVergunningen } from './vergunningen';
 import { isNearEndDate } from './vergunningen-helpers';
 import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaID, ThemaIDs } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -65,9 +65,9 @@ export function getNotificationLabels(
   return null;
 }
 
-function getNotificationBase(
+function getNotificationBase<ID extends string>(
   vergunning: VergunningFrontend,
-  themaID: ThemaID
+  themaID: ID
 ): Pick<MyNotification, 'themaID' | 'id' | 'link'> {
   const notificationBaseProperties = {
     themaID: themaID,
@@ -95,10 +95,13 @@ function mergeNotificationProperties(
   return { ...notificationBase, ...notificationLabels };
 }
 
-export function createVergunningNotification<DZ extends DecosZaakBase>(
+export function createVergunningNotification<
+  DZ extends DecosZaakBase,
+  ID extends string = string,
+>(
   vergunning: VergunningFrontend<DZ>,
   zaakTypeTransformer: DecosZaakTransformer<DZ>,
-  themaID: ThemaID
+  themaID: ID
 ): MyNotification | null {
   const labels = zaakTypeTransformer.notificationLabels;
 
@@ -117,10 +120,13 @@ export function createVergunningNotification<DZ extends DecosZaakBase>(
   return null;
 }
 
-export function getVergunningNotifications<DZ extends DecosZaakBase>(
+export function getVergunningNotifications<
+  DZ extends DecosZaakBase,
+  ID extends string = string,
+>(
   vergunningen: VergunningFrontend<DZ>[],
   decosZaakTransformers: DecosZaakTransformer<DZ>[],
-  themaID: ThemaID
+  themaID: ID
 ) {
   return vergunningen
     .map((vergunning) => {

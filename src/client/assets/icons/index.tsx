@@ -9,7 +9,6 @@ export { default as IconConnectorTypeCCS } from './map/connector-type-ccs.svg?re
 export { default as IconConnectorTypeChademo } from './map/connector-type-chademo.svg?react';
 export { default as IconConnectorTypeMennekes } from './map/connector-type-mennekes.svg?react';
 export { default as IconErfpacht } from './erfpacht.svg?react';
-export { default as IconHoreca } from './iconHoreca.svg?react';
 export { default as IconIndeterminate } from './min.svg?react';
 export { default as IconInkomenSVWI } from './inkomen-svwi.svg?react';
 export { default as IconKlachten } from './IconKlachten.svg?react';

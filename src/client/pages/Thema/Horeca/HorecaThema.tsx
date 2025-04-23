@@ -15,7 +15,7 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-export function HorecaThemaPagina() {
+export function HorecaThema() {
   const {
     themaTitle,
     tableConfig,

@@ -18,6 +18,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import { routeConfig as routeConfigHoreca } from '../Thema/Horeca/Horeca-thema-config';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
@@ -103,7 +104,7 @@ function baseThemaConfig<K extends keyof AppStateBase>(
 
 const pageRouteResolvers: PageRouteResolvers = {
   vergunningen: baseThemaConfig(AppRoutes.VERGUNNINGEN, 'VERGUNNINGEN'),
-  horeca: baseThemaConfig(AppRoutes.HORECA, 'HORECA'),
+  horeca: baseThemaConfig(routeConfigHoreca.themaPage.path, 'HORECA'),
   parkeren: baseThemaConfig(AppRoutes.PARKEREN, 'PARKEREN', (stateSlice) => {
     return stateSlice.content?.vergunningen ?? null;
   }),

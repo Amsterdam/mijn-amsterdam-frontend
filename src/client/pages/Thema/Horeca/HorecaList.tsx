@@ -4,17 +4,25 @@ import { ListPageParamKind } from './Horeca-thema-config';
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
-export function HorecaLijstPagina() {
-  const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const { vergunningen, tableConfig, routes, isLoading, isError, breadcrumbs } =
-    useHorecaThemaData();
+export function HorecaList() {
+  const { kind = 'lopende-aanvragen' } = useParams<{
+    kind: ListPageParamKind;
+  }>();
+  const {
+    vergunningen,
+    tableConfig,
+    listPageRoute,
+    isLoading,
+    isError,
+    breadcrumbs,
+  } = useHorecaThemaData();
   const listPageTableConfig = tableConfig[kind];
 
   return (
     <ListPagePaginated
       items={vergunningen.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
-      appRoute={routes.listPage}
+      appRoute={listPageRoute}
       appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}

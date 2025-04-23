@@ -9,7 +9,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
     BRP,
-    HORECA,
     KLACHTEN,
     KREFIA,
     KVK,
@@ -107,13 +106,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(VAREN) &&
         (!!VAREN?.content?.reder || !!VAREN?.content?.zaken?.length) &&
         FeatureToggle.varenActive
-      );
-
-    case ThemaIDs.HORECA:
-      return (
-        !isLoading(HORECA) &&
-        !!HORECA?.content?.length &&
-        FeatureToggle.horecaActive
       );
   }
 

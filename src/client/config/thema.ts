@@ -13,6 +13,7 @@ import {
   menuItemZakelijk as menuItemErfpachtZakelijk,
 } from '../pages/Thema/Erfpacht/Erfpacht-render-config';
 import { menuItem as menuItemHLI } from '../pages/Thema/HLI/HLI-render-config';
+import { menuItem as menuItemHoreca } from '../pages/Thema/Horeca/Horeca-render-config';
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
@@ -41,7 +42,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
   BODEM: 'Bodem',
-  HORECA: 'Horeca',
   KLACHTEN: 'Klachten',
   KREFIA: 'Kredietbank & FIBU',
   MILIEUZONE: 'Milieuzone',
@@ -110,11 +110,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['KLACHTEN/LIST']]: `Lijst | ${ThemaTitles.KLACHTEN}`,
   [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
 
-  // Horeca
-  [AppRoutes.HORECA]: 'Horeca | overzicht',
-  [AppRoutes['HORECA/LIST']]: getListPageDocumentTitle(ThemaTitles.HORECA),
-  [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
-
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
@@ -153,6 +148,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemErfpacht,
   menuItemErfpachtZakelijk,
   menuItemHLI,
+  menuItemHoreca,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -250,11 +246,5 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.KLACHTEN,
     to: AppRoutes.KLACHTEN,
     profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.HORECA,
-    id: ThemaIDs.HORECA,
-    to: AppRoutes.HORECA,
-    profileTypes: ['private', 'commercial'],
   },
 ];

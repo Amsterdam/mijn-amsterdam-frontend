@@ -66,6 +66,10 @@ import {
 } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { themaId as themaIdErfpacht } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { themaId as themaIdHLI } from '../../pages/Thema/HLI/HLI-thema-config';
+import {
+  featureToggle as featureToggleHoreca,
+  themaId as themaIdHoreca,
+} from '../../pages/Thema/Horeca/Horeca-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
@@ -472,8 +476,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.horecaActive,
-    stateKey: 'HORECA' as AppStateKey,
+    isEnabled: featureToggleHoreca.horecaActive,
+    stateKey: themaIdHoreca,
     profileTypes: ['private', 'commercial'],
     displayTitle(item: HorecaVergunningFrontend) {
       return (term: string) =>

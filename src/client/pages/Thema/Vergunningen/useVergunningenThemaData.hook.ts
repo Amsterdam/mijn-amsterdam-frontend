@@ -2,12 +2,16 @@ import { isError } from 'lodash';
 
 import {
   linkListItems,
+  listPageParamKind,
   routes,
   tableConfig,
+  type ListPageParamKind,
 } from './Vergunningen-thema-config';
+import styles from './Vergunningen.module.scss';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { ThemaIDs } from '../../../../universal/config/thema';
 import { isLoading } from '../../../../universal/helpers/api';
+import { entries } from '../../../../universal/helpers/utils';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { ThemaTitles } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
@@ -22,12 +26,28 @@ export function useVergunningenThemaData() {
   );
   const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.VERGUNNINGEN);
 
+  const tableStyles = {
+    [listPageParamKind.actual]: styles.VergunningenTableThemaPagina,
+    [listPageParamKind.historic]: styles.VergunningenTableThemaPagina,
+    [listPageParamKind.inProgress]: styles.VergunningenTableThemaPagina,
+  } as const satisfies Record<ListPageParamKind, string>;
+
+  const tableConfigWithStyles = Object.fromEntries(
+    entries(tableConfig).map(([kind, config]) => [
+      kind,
+      {
+        ...config,
+        className: tableStyles[kind],
+      },
+    ])
+  );
+
   return {
     title: ThemaTitles.VERGUNNINGEN,
     vergunningen,
     isLoading: isLoading(VERGUNNINGEN),
     isError: isError(VERGUNNINGEN),
-    tableConfig,
+    tableConfig: tableConfigWithStyles,
     linkListItems,
     routes,
     breadcrumbs,
