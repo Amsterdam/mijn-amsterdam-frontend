@@ -17,9 +17,6 @@ export const AppRoutes = {
   'HLI/REGELING': '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
   'HLI/REGELINGEN_LIST': '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
 
-  BEZWAREN: '/bezwaren',
-  'BEZWAREN/DETAIL': '/bezwaren/:uuid',
-  'BEZWAREN/LIST': '/bezwaren/lijst/:kind/:page?',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',

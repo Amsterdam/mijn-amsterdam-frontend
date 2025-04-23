@@ -5,7 +5,7 @@ import { AppState, BagThema } from '../../universal/types/App.types';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
 import { menuItem as menuItemAVG } from '../pages/Thema/AVG/Avg-render-config';
-import { getBezwarenListPageDocumentTitle } from '../pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
 import {
   getThemaTitleBurgerzakenWithAppState,
   getThemaUrlBurgerzakenWithAppState,
@@ -41,7 +41,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
  */
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
-  BEZWAREN: 'Bezwaren',
   BODEM: 'Bodem',
   BURGERZAKEN: 'Paspoort en ID-kaart',
   ERFPACHT: 'Erfpacht',
@@ -106,13 +105,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-
-  // Bezwaren
-  [AppRoutes.BEZWAREN]: `${ThemaTitles.BEZWAREN} | overzicht`,
-  [AppRoutes['BEZWAREN/LIST']]: getBezwarenListPageDocumentTitle(
-    ThemaTitles.BEZWAREN
-  ),
-  [AppRoutes['BEZWAREN/DETAIL']]: `${ThemaTitles.BEZWAREN} | bezwaar`,
 
   // Toeristische verhuur
   [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
@@ -192,6 +184,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemAfis,
   menuItemAfval,
   menuItemAVG,
+  menuItemBezwaren,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -204,12 +197,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.VAREN,
     to: AppRoutes.VAREN,
     profileTypes: ['commercial'],
-  },
-  {
-    title: ThemaTitles.BEZWAREN,
-    id: ThemaIDs.BEZWAREN,
-    to: AppRoutes.BEZWAREN,
-    profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.BELASTINGEN,

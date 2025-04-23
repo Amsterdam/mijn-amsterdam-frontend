@@ -9,7 +9,7 @@ import {
   AfisFactuur,
 } from '../../../server/services/afis/afis-types';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
-import { Bezwaar } from '../../../server/services/bezwaren/types';
+import { BezwaarFrontend } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import {
   ErfpachtDossier,
@@ -51,6 +51,10 @@ import {
   featureToggle as featureToggleAVG,
   themaId as themaIdAVG,
 } from '../../pages/Thema/AVG/AVG-thema-config';
+import {
+  featureToggle as featureToggleBezwaren,
+  themaId as themaIdBezwaren,
+} from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { routes as profileRoutes } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
@@ -425,10 +429,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.bezwarenActive,
-    stateKey: 'BEZWAREN' as AppStateKey,
+    isEnabled: featureToggleBezwaren.BezwarenActive,
+    stateKey: themaIdBezwaren,
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: Bezwaar) {
+    displayTitle(item: BezwaarFrontend) {
       return (term: string) =>
         displayPath(term, [`Bezwaar ${item.identificatie}`]);
     },
