@@ -16,8 +16,6 @@ EXTERNAL_URLS=$(
     | sed '/http.*\/\/sap:.*/d'
 )
 
-# 'https://data.amsterdam.nl/api/v1/dataset-name <- k re\'turns all features'
-
 echo_dead_link() {
   local url=${1:0:300}
 
@@ -27,7 +25,7 @@ echo_dead_link() {
     "$url")
 
   # There are also 000 codes, which can be caused by wrong certs or just an invalid URL.
-  # I choose to leave these out since I did not see any problems with these URLS when manually checking.
+  # I choose to leave these out since I did not see any problems with these URLS when manually checking in the browser.
   if [ "$status_code" -gt 399 ] && [ "$status_code" -lt 600 ]; then
     echo "Status: $status_code - $url"
     # echo "$url"
