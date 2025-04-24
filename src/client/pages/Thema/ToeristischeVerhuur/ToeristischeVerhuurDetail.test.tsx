@@ -3,14 +3,14 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect } from 'vitest';
 
+import { routeConfig } from './ToeristischeVerhuur-thema-config';
+import { ToeristischeVerhuurDetail } from './ToeristischeVerhuurDetail';
+import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { BBVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { bffApi } from '../../../../testing/utils';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { ToeristischeVerhuurDetailPagina } from './ToeristischeVerhuurDetail';
-import { VakantieverhuurVergunningFrontend } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { AppState } from '../../../../universal/types/App.types';
 
 const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
   {
@@ -65,7 +65,6 @@ const vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[] = [
       to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
-    status: 'Afgehandeld',
     displayStatus: 'Verleend',
     processed: true,
     location: 'Amstel 1',
@@ -107,7 +106,6 @@ const bbVergunningen: BBVergunning[] = [
         isChecked: true,
       },
     ],
-    status: 'Afgehandeld',
     displayStatus: 'Verleend',
     location: 'Amstel 1',
     processed: true,
@@ -156,20 +154,17 @@ describe('<ToeristischVerhuurDetail />', () => {
         content: [],
       });
     const vergunning = vakantieverhuurVergunningen[0];
-    const routeEntry = generatePath(
-      AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-      {
-        id: vergunning.id,
-        caseType: 'vakantieverhuur',
-      }
-    );
-    const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
+    const routeEntry = generatePath(routeConfig.detailPage.path, {
+      id: vergunning.id,
+      caseType: 'vakantieverhuur',
+    });
+    const routePath = routeConfig.detailPage.path;
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={ToeristischeVerhuurDetailPagina}
+          component={ToeristischeVerhuurDetail}
           initializeState={state(testState)}
         />
       );
@@ -191,20 +186,17 @@ describe('<ToeristischVerhuurDetail />', () => {
 
   test('Bed & Breakfast vergunning', () => {
     const vergunning = bbVergunningen[0];
-    const routeEntry = generatePath(
-      AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-      {
-        id: vergunning.id,
-        caseType: 'bed-and-breakfast',
-      }
-    );
-    const routePath = AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'];
+    const routeEntry = generatePath(routeConfig.detailPage.path, {
+      id: vergunning.id,
+      caseType: 'bed-and-breakfast',
+    });
+    const routePath = routeConfig.detailPage.path;
     function Component() {
       return (
         <MockApp
           routeEntry={routeEntry}
           routePath={routePath}
-          component={ToeristischeVerhuurDetailPagina}
+          component={ToeristischeVerhuurDetail}
           initializeState={state(testState)}
         />
       );

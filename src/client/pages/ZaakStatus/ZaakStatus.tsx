@@ -20,6 +20,7 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import * as HORECA from '../Thema/Horeca/Horeca-thema-config';
 import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config';
+import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
@@ -114,8 +115,8 @@ const pageRouteResolvers: PageRouteResolvers = {
     }
   ),
   toeristischeVerhuur: baseThemaConfig(
-    AppRoutes.TOERISTISCHE_VERHUUR,
-    'TOERISTISCHE_VERHUUR',
+    TOERISTISCHE_VERHUUR.routeConfig.themaPage.path,
+    TOERISTISCHE_VERHUUR.themaId,
     (stateSlice) => {
       return stateSlice.content?.vakantieverhuurVergunningen ?? null;
     }

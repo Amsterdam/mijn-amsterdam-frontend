@@ -23,7 +23,6 @@ import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
 } from '../pages/Thema/Varen/Varen-thema-config';
-import { getListPageDocumentTitle } from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
 
 /**
  * @deprecated We will remove this in the future in favor of the SWR implementations.
@@ -50,7 +49,6 @@ export const ThemaTitles = {
   SEARCH: 'Zoeken',
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
   VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
@@ -79,14 +77,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-
-  // Toeristische verhuur
-  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]:
-    `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]: getListPageDocumentTitle(
-    ThemaTitles.TOERISTISCHE_VERHUUR
-  ),
 
   // Varen
   [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
@@ -202,12 +192,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.OVERTREDINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
     rel: 'external',
-    profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.TOERISTISCHE_VERHUUR,
-    id: ThemaIDs.TOERISTISCHE_VERHUUR,
-    to: AppRoutes.TOERISTISCHE_VERHUUR,
     profileTypes: ['private', 'commercial'],
   },
 ];

@@ -14,7 +14,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     OVERTREDINGEN,
     SUBSIDIE,
     SVWI,
-    TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,
     WMO,
@@ -65,17 +64,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
 
     case ThemaIDs.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
-
-    case ThemaIDs.TOERISTISCHE_VERHUUR: {
-      const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
-        TOERISTISCHE_VERHUUR?.content ?? {};
-      const hasRegistraties = !!lvvRegistraties?.length;
-      const hasVergunningen =
-        !!vakantieverhuurVergunningen?.length || !!bbVergunningen?.length;
-      return (
-        !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
-      );
-    }
 
     case ThemaIDs.VAREN:
       return (

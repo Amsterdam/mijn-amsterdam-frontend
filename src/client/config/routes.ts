@@ -21,10 +21,6 @@ export const CustomTrackingUrls: CustomTrackingUrlMap = {
 
   [AppRoutes['ZORG/VOORZIENING']]: () => '/zorg-en-ondersteuning/voorziening',
 
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]: (match) => {
-    return `/toeristische-verhuur/vergunning/${match.params.caseType ?? ''}`;
-  },
-
   [AppRoutes.HOME]: (
     match: PathMatch,
     { profileType, isAuthenticated }: TrackingConfig

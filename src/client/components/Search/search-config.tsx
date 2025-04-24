@@ -75,6 +75,10 @@ import {
   themaId as themaIdKrefia,
 } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
+import {
+  routeConfig,
+  themaId as themaIdToeristischeVerhuur,
+} from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -272,7 +276,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
+    stateKey: themaIdToeristischeVerhuur,
     profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
@@ -285,7 +289,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             title: 'Landelijk registratienummer',
             identifier: registratie.registrationNumber,
             link: {
-              to: AppRoutes.TOERISTISCHE_VERHUUR,
+              to: routeConfig.themaPage.path,
               title: 'Landelijk registratienummer',
             },
           };

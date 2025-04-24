@@ -25,7 +25,7 @@ import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-render-config';
 import { KrefiaRoutes } from './pages/Thema/Krefia/Krefia-render-config';
 import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-render-config';
 import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config';
-import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-routes';
+import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
 import { VarenRoutes } from './pages/Thema/Varen/Varen-routes';
 import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-routes';
 import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-routes';
@@ -52,15 +52,15 @@ const routeComponents: ApplicationRouteConfig[] = [
   ErfpachtRoutes,
   GeneralInfoRoutes,
   HLIRoutes,
-  JeugdRoutes,
   HorecaRoutes,
   InkomenRoutes,
+  JeugdRoutes,
   KlachtenRoutes,
   KrefiaRoutes,
   LandingRoutes,
   MyAreaRoutes,
-  NotFoundRoutes,
   MyNotificationsRoutes,
+  NotFoundRoutes,
   ParkerenRoutes,
   ProfileRoutes,
   SearchRoutes,

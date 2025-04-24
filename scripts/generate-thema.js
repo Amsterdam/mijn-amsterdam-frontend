@@ -56,7 +56,13 @@ const hasThemaConfig = values.config.includes('thema');
 
 const ID = values.id.toUpperCase();
 const TITLE = capitalizeFirstLetter(values.title);
-const titleName = capitalizeFirstLetter(values.id.toLowerCase());
+const titleName = capitalizeFirstLetter(
+  values.id
+    .toLowerCase()
+    .split('_')
+    .map((term) => capitalizeFirstLetter(term))
+    .join('')
+);
 const PATH = `/${slug(TITLE.toLowerCase())}`;
 const ZAAKTYPE = values.zaakType.toUpperCase().replace(/[^a-zA-Z]+/, '');
 const typeName = `${capitalizeFirstLetter(ZAAKTYPE.toLowerCase())}Frontend`;

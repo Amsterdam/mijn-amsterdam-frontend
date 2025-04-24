@@ -13,7 +13,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
-export function ToeristscheVerhuurThema() {
+export function ToeristischeVerhuurThema() {
   const {
     hasBothVerleend,
     hasPermits,
@@ -73,13 +73,12 @@ export function ToeristscheVerhuurThema() {
   const vergunningenTables = entries(tableConfigVergunningen).map(
     ([
       kind,
-      { title, displayProps, filter, sort, maxItems, className, listPageRoute },
+      { title, displayProps, filter, sort, maxItems, listPageRoute },
     ]) => {
       return (
         <ThemaPaginaTable<ToeristischeVerhuurVergunning>
           key={kind}
           title={title}
-          className={className}
           zaken={vergunningen.filter(filter).sort(sort)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}

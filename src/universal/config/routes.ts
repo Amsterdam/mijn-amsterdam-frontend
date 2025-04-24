@@ -18,11 +18,7 @@ export const AppRoutes = {
   VERGUNNINGEN: '/vergunningen',
   'VERGUNNINGEN/LIST': '/vergunningen/lijst/:kind/:page?',
   'VERGUNNINGEN/DETAIL': '/vergunningen/:caseType/:id',
-  TOERISTISCHE_VERHUUR: '/toeristische-verhuur',
-  'TOERISTISCHE_VERHUUR/VERGUNNING/LIST':
-    '/toeristische-verhuur/vergunning/lijst/:kind/:page?',
-  'TOERISTISCHE_VERHUUR/VERGUNNING':
-    '/toeristische-verhuur/vergunning/:caseType/:id',
+
   'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/lijst/:kind/:page?',
   'VAREN/DETAIL': '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
   VAREN: '/passagiers-en-beroepsvaart',
