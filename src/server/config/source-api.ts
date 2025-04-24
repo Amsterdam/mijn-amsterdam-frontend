@@ -57,7 +57,6 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   method: 'get',
   enableCache: BFF_REQUEST_CACHE_ENABLED,
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
-  enableCache: BFF_REQUEST_CACHE_ENABLED,
   postponeFetch: false,
   passthroughOIDCToken: false,
   responseType: 'json',
@@ -136,7 +135,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': IS_DEVELOPMENT ? 'JZD' : undefined,
+      'x-cache-key-supplement': 'JZD',
     },
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
@@ -146,7 +145,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': IS_DEVELOPMENT ? 'AV' : undefined,
+      'x-cache-key-supplement': 'AV',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
@@ -160,7 +159,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': IS_DEVELOPMENT ? 'LLV' : undefined,
+      'x-cache-key-supplement': 'LLV',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),

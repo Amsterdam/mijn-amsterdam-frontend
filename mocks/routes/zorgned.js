@@ -17,13 +17,13 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res, _next, core) => {
-            if (!('x-mams-api-user' in req.headers)) {
+            if (!('x-cache-key-supplement' in req.headers)) {
               return res
                 .status(HttpStatusCode.BadRequest)
                 .send('x-mams-api-user key not found in request headers.');
             }
 
-            const apiUser = req.headers['x-mams-api-user'];
+            const apiUser = req.headers['x-cache-key-supplement'];
             switch (apiUser) {
               case 'AV': {
                 return res.send(ZORGNED_AV_AANVRAGEN_RESPONSE);

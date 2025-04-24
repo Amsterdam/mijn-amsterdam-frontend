@@ -1,7 +1,6 @@
 import Mockdate from 'mockdate';
 
 import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
-import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 import { remoteApiHost } from '../../../testing/setup';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -134,7 +133,7 @@ describe('wmo-zorgned-service', () => {
         headers: {
           Token: process.env.BFF_ZORGNED_API_TOKEN,
           'Content-type': 'application/json; charset=utf-8',
-          'X-Mams-Api-User': 'JZD',
+          'x-cache-key-supplement': 'JZD',
         },
         httpsAgent: expect.any(Object),
       },

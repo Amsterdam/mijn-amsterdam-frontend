@@ -138,7 +138,7 @@ describe('zorgned-service', () => {
         headers: {
           Token: process.env.BFF_ZORGNED_API_TOKEN,
           'Content-type': 'application/json; charset=utf-8',
-          'X-Mams-Api-User': 'JZD',
+          'x-cache-key-supplement': 'JZD',
         },
         httpsAgent: expect.any(Object),
       },
@@ -210,7 +210,7 @@ describe('zorgned-service', () => {
         headers: {
           Token: process.env.BFF_ZORGNED_API_TOKEN,
           'Content-type': 'application/json; charset=utf-8',
-          'X-Mams-Api-User': 'JZD',
+          'x-cache-key-supplement': 'JZD',
         },
       },
       mocks.mockRequestID
