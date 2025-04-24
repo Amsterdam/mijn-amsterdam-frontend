@@ -12,6 +12,7 @@ export function VarenDetail() {
   const {
     zaak,
     linkedWijzigingZaak,
+    hasRegistratieReder,
     buttonItems,
     isLoading,
     isError,
@@ -26,6 +27,7 @@ export function VarenDetail() {
         <VarenDetailPageContentExploitatie
           zaak={zaak}
           linkedWijzigingZaak={linkedWijzigingZaak}
+          hasRegistratieReder={hasRegistratieReder}
           buttonItems={buttonItems}
         />
       );

@@ -33,13 +33,13 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-const VarenDisclaimerRederNotRegistered = (
+export const VarenDisclaimerRederNotRegistered = (
   <Grid.Cell span="all">
-    <Alert severity="info">
+    <Alert severity="info" heading="Registreer uw onderneming">
       <Paragraph>
         Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart.
         U kunt hierdoor geen exploitatievergunningen wijzigen of een nieuwe
-        aanvragen. Registreer uw onderneming via onderstaande link.
+        aanvragen.
       </Paragraph>
       <Paragraph>
         <Link rel="noreferrer" href={rederRegistratieLink.to}>

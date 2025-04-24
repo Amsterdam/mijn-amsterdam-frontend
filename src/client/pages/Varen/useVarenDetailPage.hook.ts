@@ -21,9 +21,13 @@ export function useVarenDetailPage() {
         otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
         otherZaak.processed === false
     ) || null;
+  const hasLinkedWijzigingZaak = !!linkedWijzigingZaak;
 
   const showButtons =
-    zaak && isVergunning(zaak) && hasRegistratieReder && !linkedWijzigingZaak;
+    zaak &&
+    isVergunning(zaak) &&
+    hasRegistratieReder &&
+    !hasLinkedWijzigingZaak;
 
   const buttonItems: ButtonLinkProps[] = [];
   if (showButtons) {
@@ -33,6 +37,7 @@ export function useVarenDetailPage() {
   return {
     zaak,
     linkedWijzigingZaak,
+    hasRegistratieReder,
     buttonItems,
     isLoading,
     isError,
