@@ -19,6 +19,7 @@ import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-con
 import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-render-config';
 import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
+import { menuItem as menuItemToeristischeVerhuur } from '../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
 import {
   getVarenDetailPageDocumentTitle,
   getVarenListPageDocumentTitle,
@@ -126,6 +127,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemHoreca,
   menuItemKlachten,
   menuItemParkeren,
+  menuItemToeristischeVerhuur,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
