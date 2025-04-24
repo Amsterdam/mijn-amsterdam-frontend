@@ -14,7 +14,7 @@ import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
 
-  const varenRederRegistratie = VAREN.content?.reder;
+  const varenRederRegistratie = VAREN.content?.reder || null;
 
   const zaken = VAREN.content?.zaken ?? [];
 

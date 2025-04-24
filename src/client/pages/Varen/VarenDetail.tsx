@@ -1,3 +1,4 @@
+import { isVergunning } from './helper';
 import { useVarenDetailPage } from './useVarenDetailPage.hook';
 import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
 import { VarenDetailPageContentExploitatieHernoemen } from './VarenDetailExploitatieHernoemen';
@@ -8,8 +9,14 @@ import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
-  const { zaak, buttonItems, isLoading, isError, breadcrumbs } =
-    useVarenDetailPage();
+  const {
+    zaak,
+    linkedWijzigingZaak,
+    buttonItems,
+    isLoading,
+    isError,
+    breadcrumbs,
+  } = useVarenDetailPage();
 
   let noContentError = false;
   let pageContent = null;
@@ -18,6 +25,7 @@ export function VarenDetail() {
       pageContent = (
         <VarenDetailPageContentExploitatie
           zaak={zaak}
+          linkedWijzigingZaak={linkedWijzigingZaak}
           buttonItems={buttonItems}
         />
       );
@@ -55,6 +63,7 @@ export function VarenDetail() {
       isLoading={isLoading}
       pageContentMain={pageContent}
       breadcrumbs={breadcrumbs}
+      showStatusSteps={!isVergunning(zaak)}
     />
   );
 }

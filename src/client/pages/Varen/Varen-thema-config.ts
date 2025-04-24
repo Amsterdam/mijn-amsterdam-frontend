@@ -98,7 +98,7 @@ export const exploitatieVergunningAanvragen: LinkProps = {
 
 export const exploitatieVergunningWijzigenLink: (
   key: string,
-  title: string
+  title?: string
 ) => LinkProps = (key, title = 'Wijzigen') => ({
   to: `${formulierenBaseUrl}/VARExploitatievergunningWijzigen.aspx?guid=${key}`,
   title,

@@ -2,7 +2,8 @@ import { VarenZakenFrontend } from '../../../server/services/varen/config-and-ty
 
 export const CONTENT_EMPTY = '-';
 
-export const isVergunning = (vergunning: VarenZakenFrontend) =>
+export const isVergunning = (vergunning: VarenZakenFrontend | null) =>
+  !!vergunning &&
   vergunning.processed &&
   vergunning.decision === 'Verleend' &&
   (vergunning.caseType === 'Varen vergunning exploitatie' ||

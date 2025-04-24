@@ -1,10 +1,8 @@
 import { useParams } from 'react-router';
 
+import { isVergunning } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
-import {
-  exploitatieVergunningWijzigenLink,
-  ligplaatsVergunningLink,
-} from './Varen-thema-config';
+import { exploitatieVergunningWijzigenLink } from './Varen-thema-config';
 import { ButtonLinkProps } from '../../../universal/types';
 
 export function useVarenDetailPage() {
@@ -13,37 +11,28 @@ export function useVarenDetailPage() {
 
   const { id } = useParams<{ id: string }>();
 
-  const hasRegistratieReder = !!varenRederRegistratie;
-
   const zaak = varenZaken.find((item) => item.id === id) ?? null;
 
-  const hasLinkedVergunningChangeInProgress = !!varenZaken.find(
-    (otherZaak) =>
-      otherZaak.id !== zaak?.id &&
-      otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
-      otherZaak.processed === false
-  );
+  const hasRegistratieReder = !!varenRederRegistratie;
+  const linkedWijzigingZaak =
+    varenZaken.find(
+      (otherZaak) =>
+        otherZaak.id !== zaak?.id &&
+        otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
+        otherZaak.processed === false
+    ) || null;
+
+  const showButtons =
+    zaak && isVergunning(zaak) && hasRegistratieReder && !linkedWijzigingZaak;
 
   const buttonItems: ButtonLinkProps[] = [];
-  const showButtons = zaak?.processed && zaak.decision === 'Verleend';
   if (showButtons) {
-    const EVWijzigenBtnText = hasLinkedVergunningChangeInProgress
-      ? 'Wijziging in behandeling'
-      : 'Wijzigen';
-
-    const buttons = [
-      exploitatieVergunningWijzigenLink(zaak.key, EVWijzigenBtnText),
-      ligplaatsVergunningLink,
-    ].map((button) => ({
-      ...button,
-      isDisabled: !hasRegistratieReder || hasLinkedVergunningChangeInProgress,
-    }));
-
-    buttonItems.push(...buttons);
+    buttonItems.push(exploitatieVergunningWijzigenLink(zaak.key));
   }
 
   return {
     zaak,
+    linkedWijzigingZaak,
     buttonItems,
     isLoading,
     isError,
