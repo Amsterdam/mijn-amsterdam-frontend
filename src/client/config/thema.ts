@@ -97,9 +97,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
     ThemaTitles.VAREN
   ),
 
-  // Krefia
-  [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
-
   // Parkeren
   [AppRoutes.PARKEREN]: `${ThemaTitles.PARKEREN} | overzicht`,
   [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
@@ -229,11 +226,5 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.TOERISTISCHE_VERHUUR,
     to: AppRoutes.TOERISTISCHE_VERHUUR,
     profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.KREFIA,
-    id: ThemaIDs.KREFIA,
-    to: AppRoutes.KREFIA,
-    profileTypes: ['private'],
   },
 ];

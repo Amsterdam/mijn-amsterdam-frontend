@@ -7,6 +7,7 @@ import { SomeOtherString } from '../../../../../universal/helpers/types';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types';
 import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config';
 import { themaId as themaIdInkomen } from '../../Inkomen/Inkomen-thema-config';
+import { themaId as themaIdKrefia } from '../../Krefia/Krefia-thema-config';
 
 export type ContactMomentFrontend = ContactMoment & {
   themaKanaalIcon: ReactNode;
@@ -38,6 +39,6 @@ export const mapperContactmomentToMenuItem: Record<
   Zorg: ThemaIDs.ZORG,
   'Werk en Inkomen': SVWIv1ORv2,
   Belastingen: ThemaIDs.BELASTINGEN,
-  Geldzaken: ThemaIDs.KREFIA,
+  Geldzaken: themaIdKrefia,
   Financiën: themaIdAfis,
 };

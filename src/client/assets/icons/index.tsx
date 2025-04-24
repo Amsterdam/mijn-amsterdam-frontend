@@ -10,7 +10,6 @@ export { default as IconConnectorTypeChademo } from './map/connector-type-chadem
 export { default as IconConnectorTypeMennekes } from './map/connector-type-mennekes.svg?react';
 export { default as IconIndeterminate } from './min.svg?react';
 export { default as IconInkomenSVWI } from './inkomen-svwi.svg?react';
-export { default as IconKrefia } from './krefia.svg?react';
 export { default as IconMilieuzone } from './milieuzone.svg?react';
 export { default as IconOvertredingen } from './Overtredingen.svg?react';
 export { default as IconParkeren } from './Car.svg?react';

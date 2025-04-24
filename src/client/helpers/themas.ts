@@ -9,7 +9,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
     BRP,
-    KREFIA,
     KVK,
     MILIEUZONE,
     OVERTREDINGEN,
@@ -78,9 +77,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
       );
     }
-
-    case ThemaIDs.KREFIA:
-      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks.length;
 
     case ThemaIDs.PARKEREN: {
       const hasDecosParkeerVergunningen =

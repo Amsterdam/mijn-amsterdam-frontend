@@ -70,6 +70,10 @@ import {
   featureToggle as featureToggleHoreca,
   themaId as themaIdHoreca,
 } from '../../pages/Thema/Horeca/Horeca-thema-config';
+import {
+  featureToggle,
+  themaId as themaIdKrefia,
+} from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
@@ -426,8 +430,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.krefiaActive,
-    stateKey: 'KREFIA' as AppStateKey,
+    isEnabled: featureToggle.krefiaActive,
+    stateKey: themaIdKrefia,
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&

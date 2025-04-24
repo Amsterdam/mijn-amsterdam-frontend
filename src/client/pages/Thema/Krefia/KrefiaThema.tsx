@@ -8,7 +8,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
-export function KrefiaThemaPagina() {
+export function KrefiaThema() {
   const {
     title,
     deepLinks,

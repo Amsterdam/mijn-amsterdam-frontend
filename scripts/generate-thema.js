@@ -56,10 +56,7 @@ const hasThemaConfig = values.config.includes('thema');
 
 const ID = values.id.toUpperCase();
 const TITLE = capitalizeFirstLetter(values.title);
-const titleSlug = slug(values.title.toLowerCase());
-const titleName = capitalizeFirstLetter(
-  values.title.toLowerCase().replace(/[^a-zA-Z]+/g, '')
-);
+const titleName = capitalizeFirstLetter(values.id.toLowerCase());
 const PATH = `/${slug(TITLE.toLowerCase())}`;
 const ZAAKTYPE = values.zaakType.toUpperCase().replace(/[^a-zA-Z]+/, '');
 const typeName = `${capitalizeFirstLetter(ZAAKTYPE.toLowerCase())}Frontend`;
@@ -120,7 +117,7 @@ import {
 } from '../../../config/app';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
-// import type { ${typeName} } from '../../../../server/services/${titleSlug}/config-and-types';
+// import type { ${typeName} } from '../../../../server/services/${titleName.toLowerCase()}/config-and-types';
 type ${typeName} = ZaakDetail & {
   processed: boolean;
   dateRequest: string;
@@ -259,10 +256,10 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
 
 `;
 
-const fileNameCoreConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-core-config.ts`;
-const fileNameThemaConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-config.ts`;
-const fileNameRenderConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-render-config.tsx`;
-const svgFileName = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}Icon.svg`;
+const fileNameCoreConfig = `${basePath}/${titleName}/${titleName}-thema-core-config.ts`;
+const fileNameThemaConfig = `${basePath}/${titleName}/${titleName}-thema-config.ts`;
+const fileNameRenderConfig = `${basePath}/${titleName}/${titleName}-render-config.tsx`;
+const svgFileName = `${basePath}/${titleName}/${titleName}Icon.svg`;
 
 if (hasRenderConfig || hasThemaConfig || hasCoreConfig) {
   fs.mkdirSync(path.dirname(fileNameThemaConfig), { recursive: true });
