@@ -28,8 +28,8 @@ export const wmoStatusLineItemsConfig: ZorgnedStatusLineItemsConfig[] = [
       'RWD',
       'RWT',
       'SCO',
+      'ORO',
       // TODO: Uncomment when the following productsoortCodes are available
-      // 'ORO',
       // 'ORW',
     ],
     lineItemTransformers: hulpmiddelen,
