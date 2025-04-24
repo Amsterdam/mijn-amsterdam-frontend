@@ -104,11 +104,6 @@ export const exploitatieVergunningWijzigenLink: (
   title,
 });
 
-export const ligplaatsVergunningLink: LinkProps = {
-  to: `${formulierenBaseUrl}/Ligplaatsbedrijfsvaartuig.aspx`,
-  title: 'Ligplaatsvergunning aanvragen',
-} as const;
-
 export const rederRegistratieLink: LinkProps = {
   to: `${formulierenBaseUrl}/VARRegistratieReder.aspx`,
   title: 'Onderneming registreren',
@@ -131,8 +126,6 @@ export function getVarenDetailPageDocumentTitle(themaTitle: string) {
     params: T | null
   ) => {
     switch (params?.caseType) {
-      case 'ligplaatsvergunning':
-        return `Ligplaatsvergunning | ${themaTitle}`;
       case 'exploitatievergunning':
         return `Exploitatievergunning | ${themaTitle}`;
       default:

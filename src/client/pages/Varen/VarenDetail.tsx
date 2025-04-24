@@ -5,7 +5,6 @@ import { VarenDetailPageContentExploitatieHernoemen } from './VarenDetailExploit
 import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploitatieOverdragen';
 import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
-import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
@@ -28,14 +27,6 @@ export function VarenDetail() {
           zaak={zaak}
           linkedWijzigingZaak={linkedWijzigingZaak}
           hasRegistratieReder={hasRegistratieReder}
-          buttonItems={buttonItems}
-        />
-      );
-      break;
-    case 'Varen ligplaatsvergunning':
-      pageContent = (
-        <VarenDetailPageContentLigplaats
-          zaak={zaak}
           buttonItems={buttonItems}
         />
       );
