@@ -142,10 +142,7 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
 
-  KLACHTEN: apiPristineResult(
-    { aantal: 0, klachten: [] },
-    { profileTypes: ['private'] }
-  ),
+  KLACHTEN: apiPristineResult([], { profileTypes: ['private'] }),
 
   HORECA: apiPristineResult([]),
 

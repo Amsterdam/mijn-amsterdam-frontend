@@ -9,7 +9,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
     BRP,
-    KLACHTEN,
     KREFIA,
     KVK,
     MILIEUZONE,
@@ -93,13 +92,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         (!!PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
       );
     }
-
-    case ThemaIDs.KLACHTEN:
-      return (
-        !isLoading(KLACHTEN) &&
-        !!KLACHTEN?.content?.klachten.length &&
-        FeatureToggle.klachtenActive
-      );
 
     case ThemaIDs.VAREN:
       return (

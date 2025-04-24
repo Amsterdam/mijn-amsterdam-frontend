@@ -5,7 +5,6 @@ import { SVGComponent } from '../../universal/types/App.types';
 import {
   IconBelastingen,
   IconInkomenSVWI,
-  IconKlachten,
   IconKrefia,
   IconMilieuzone,
   IconOvertredingen,
@@ -20,7 +19,6 @@ import {
 export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   VAREN: IconVaren,
   BELASTINGEN: IconBelastingen,
-  KLACHTEN: IconKlachten,
   KREFIA: IconKrefia,
   MILIEUZONE: IconMilieuzone,
   NOTIFICATIONS: BellIcon,

@@ -21,7 +21,7 @@ import { HLIRoutes } from './pages/Thema/HLI/HLI-render-config';
 import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-render-config';
 import { InkomenRoutes } from './pages/Thema/Inkomen/Inkomen-render-config';
 import { JeugdRoutes } from './pages/Thema/Jeugd/Jeugd-render-config';
-import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-routes';
+import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-render-config';
 import { KrefiaRoutes } from './pages/Thema/Krefia/Krefia-routes';
 import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-routes';
 import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config';

@@ -31,9 +31,6 @@ export const AppRoutes = {
   'PARKEREN/DETAIL': '/parkeren/:caseType/:id',
   'PARKEREN/LIST': '/parkeren/lijst/:kind/:page?',
   PARKEREN: '/parkeren',
-  'KLACHTEN/LIST': '/klachten/lijst/:page?',
-  'KLACHTEN/KLACHT': '/klachten/klacht/:id',
-  KLACHTEN: '/klachten',
 
   BFF_500_ERROR: '/server-error-500',
 

@@ -16,6 +16,7 @@ import { menuItem as menuItemHLI } from '../pages/Thema/HLI/HLI-render-config';
 import { menuItem as menuItemHoreca } from '../pages/Thema/Horeca/Horeca-render-config';
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
+import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
 import {
   getVarenDetailPageDocumentTitle,
@@ -42,7 +43,6 @@ type ThemaTitles = { [thema in ThemaID]: string };
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
   BODEM: 'Bodem',
-  KLACHTEN: 'Klachten',
   KREFIA: 'Kredietbank & FIBU',
   MILIEUZONE: 'Milieuzone',
   NOTIFICATIONS: 'Actueel',
@@ -105,11 +105,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
   [AppRoutes['PARKEREN/LIST']]: getListPageDocumentTitle(ThemaTitles.PARKEREN),
 
-  // Klachten
-  [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
-  [AppRoutes['KLACHTEN/LIST']]: `Lijst | ${ThemaTitles.KLACHTEN}`,
-  [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
-
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
@@ -149,6 +144,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemErfpachtZakelijk,
   menuItemHLI,
   menuItemHoreca,
+  menuItemKlachten,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -238,13 +234,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     title: ThemaTitles.KREFIA,
     id: ThemaIDs.KREFIA,
     to: AppRoutes.KREFIA,
-    profileTypes: ['private'],
-  },
-
-  {
-    title: ThemaTitles.KLACHTEN,
-    id: ThemaIDs.KLACHTEN,
-    to: AppRoutes.KLACHTEN,
     profileTypes: ['private'],
   },
 ];
