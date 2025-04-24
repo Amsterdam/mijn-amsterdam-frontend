@@ -20,10 +20,7 @@ import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-r
 import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
 import { menuItem as menuItemToeristischeVerhuur } from '../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
-import {
-  getVarenDetailPageDocumentTitle,
-  getVarenListPageDocumentTitle,
-} from '../pages/Thema/Varen/Varen-thema-config';
+import { menuItem as menuItemVaren } from '../pages/Thema/Varen/Varen-render-config';
 
 /**
  * @deprecated We will remove this in the future in favor of the SWR implementations.
@@ -50,7 +47,6 @@ export const ThemaTitles = {
   SEARCH: 'Zoeken',
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
-  VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
 } as const;
@@ -78,13 +74,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-
-  // Varen
-  [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
-  [AppRoutes['VAREN/LIST']]: getVarenListPageDocumentTitle(ThemaTitles.VAREN),
-  [AppRoutes['VAREN/DETAIL']]: getVarenDetailPageDocumentTitle(
-    ThemaTitles.VAREN
-  ),
 
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
@@ -128,18 +117,13 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemKlachten,
   menuItemParkeren,
   menuItemToeristischeVerhuur,
+  menuItemVaren,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
     rel: 'external',
     profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.VAREN,
-    id: ThemaIDs.VAREN,
-    to: AppRoutes.VAREN,
-    profileTypes: ['commercial'],
   },
   {
     title: ThemaTitles.BELASTINGEN,

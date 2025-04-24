@@ -211,6 +211,7 @@ export async function searchAmsterdamNL(
       transformSearchAmsterdamNLresponse
     ),
   });
+
   return response.data;
 }
 

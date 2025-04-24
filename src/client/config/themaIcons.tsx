@@ -8,13 +8,11 @@ import {
   IconMilieuzone,
   IconOvertredingen,
   IconSubsidie,
-  IconVaren,
   IconVergunningen,
   IconZorg,
 } from '../assets/icons';
 
 export const ThemaIcons: Record<ThemaID, SVGComponent> = {
-  VAREN: IconVaren,
   BELASTINGEN: IconBelastingen,
   MILIEUZONE: IconMilieuzone,
   NOTIFICATIONS: BellIcon,

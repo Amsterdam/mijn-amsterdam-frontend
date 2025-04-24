@@ -7,8 +7,11 @@ import {
 } from './config-and-types';
 import { fetchVaren } from './varen';
 import { isVergunning } from '../../../client/pages/Thema/Varen/helper';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import {
   apiErrorResult,
   ApiResponse,
@@ -24,11 +27,12 @@ function createVarenRederRegisteredNotification(
   return {
     id: `varen-${zaak.id}-reder-notification`,
     datePublished: zaak.dateRequest,
-    themaID: ThemaIDs.VAREN,
+    themaID: themaId,
+    themaTitle: themaTitle,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
     link: {
-      to: AppRoutes.VAREN,
+      to: routeConfig.themaPage.path,
       title: 'Bekijk details',
     },
   };
@@ -45,16 +49,16 @@ function createVarenNotification(
   // We do not link to or show processed aanvragen, only vergunningen
   const ctaLinkToThemaOrDetail =
     !zaak.processed || isVergunning(zaak)
-      ? generatePath(AppRoutes['VAREN/DETAIL'], {
+      ? generatePath(routeConfig.detailPage.path, {
           id: zaak.id,
           caseType: slug(zaak.caseType, { lower: true }),
         })
-      : AppRoutes.VAREN;
+      : routeConfig.themaPage.path;
 
   const baseNotification: Omit<MyNotification, 'id' | 'description' | 'title'> =
     {
       datePublished: currentStep.datePublished,
-      themaID: ThemaIDs.VAREN,
+      themaID: themaId,
       link: {
         to: ctaLinkToThemaOrDetail,
         title: 'Bekijk details',

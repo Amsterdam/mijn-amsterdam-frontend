@@ -94,6 +94,7 @@ describe('Notifications', () => {
         notifications: [
           {
             themaID: 'VAREN',
+            themaTitle: 'Passagiers- en beroepsvaart',
             id: 'varen-Z-25-0000001-reder-notification',
             datePublished: rederRegistratie.dateRequest,
             title: 'Reder geregistreerd',
@@ -141,6 +142,7 @@ describe('Notifications', () => {
         notifications: [
           {
             themaID: 'VAREN',
+            themaTitle: 'Passagiers- en beroepsvaart',
             id: 'varen-Z-25-0000001-inbehandeling-notification',
             title: 'Aanvraag Varen vergunning exploitatie in behandeling',
             description: 'Wij hebben uw aanvraag in behandeling genomen.',
@@ -152,6 +154,7 @@ describe('Notifications', () => {
           },
           {
             themaID: 'VAREN',
+            themaTitle: 'Passagiers- en beroepsvaart',
             id: 'varen-Z-25-0000001-meerinformatienodig-notification',
             title:
               'Meer informatie nodig omtrent uw Varen vergunning exploitatie aanvraag',
@@ -165,6 +168,7 @@ describe('Notifications', () => {
           },
           {
             themaID: 'VAREN',
+            themaTitle: 'Passagiers- en beroepsvaart',
             id: 'varen-Z-25-0000001-afgehandeld-notification',
             title: 'Aanvraag Varen vergunning exploitatie afgehandeld',
             description: 'Wij hebben uw aanvraag afgehandeld.',

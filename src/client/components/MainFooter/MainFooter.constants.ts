@@ -1,29 +1,28 @@
 import { LinkProps } from '../../../universal/types/App.types';
-import { ExternalUrls } from '../../config/app';
 
 export const LinkList: LinkProps[] = [
   {
-    to: ExternalUrls.AMSTERDAM_NEWSLETTER,
+    to: 'https://www.amsterdam.nl/nieuwsbrieven/actueel/nieuwsbrief/nieuwsbrief/',
     title: 'Nieuwsbrief Amsterdam.nl',
   },
   {
-    to: ExternalUrls.AMSTERDAM_TWITTER,
+    to: 'https://twitter.com/AmsterdamNL',
     title: 'Twitter',
   },
   {
-    to: ExternalUrls.AMSTERDAM_FACEBOOK,
+    to: 'https://www.facebook.com/gemeenteamsterdam',
     title: 'Facebook',
   },
   {
-    to: ExternalUrls.AMSTERDAM_INSTAGRAM,
+    to: 'https://www.instagram.com/gemeenteamsterdam/',
     title: 'Instagram',
   },
   {
-    to: ExternalUrls.AMSTERDAM_LINKEDIN,
+    to: 'https://www.linkedin.com/company/gemeente-amsterdam',
     title: 'LinkedIn',
   },
   {
-    to: ExternalUrls.AMSTERDAM_VACATURES,
+    to: 'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
     title: 'Vacatures',
   },
 ];

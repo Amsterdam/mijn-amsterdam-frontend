@@ -35,8 +35,6 @@ import {
 } from '../../../server/services/varen/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import {
@@ -50,7 +48,6 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import { ThemaTitles } from '../../config/thema';
 import { themaId as themaIdAfis } from '../../pages/Thema/Afis/Afis-thema-config';
 import {
   featureToggle as featureToggleAVG,
@@ -76,9 +73,14 @@ import {
 } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import {
-  routeConfig,
+  routeConfig as routeConfigToeristischeVerhuur,
   themaId as themaIdToeristischeVerhuur,
 } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import {
+  themaId as themaIdVaren,
+  routeConfig as routeConfigVaren,
+  themaTitle as themaTitleVaren,
+} from '../../pages/Thema/Varen/Varen-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -289,7 +291,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             title: 'Landelijk registratienummer',
             identifier: registratie.registrationNumber,
             link: {
-              to: routeConfig.themaPage.path,
+              to: routeConfigToeristischeVerhuur.themaPage.path,
               title: 'Landelijk registratienummer',
             },
           };
@@ -476,7 +478,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleAVG.AvgActive,
+    isEnabled: featureToggleAVG.avgActive,
     stateKey: themaIdAVG,
     profileTypes: ['private', 'commercial'],
     displayTitle(item: AVGRequestFrontend) {
@@ -493,8 +495,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.varenActive,
-    stateKey: 'VAREN' as AppStateKey,
+    isEnabled: featureToggle,
+    stateKey: themaIdVaren,
     profileTypes: ['commercial'],
     getApiBaseItems: (apiContent: {
       reder: VarenRegistratieRederType;
@@ -510,8 +512,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       const reder = {
         ...apiContent.reder,
         link: {
-          to: AppRoutes.VAREN,
-          title: ThemaTitles.VAREN,
+          to: routeConfigVaren.themaPage.path,
+          title: themaTitleVaren,
         },
       };
       return [reder, ...zaken];

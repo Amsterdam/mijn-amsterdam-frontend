@@ -11,7 +11,6 @@ export const ThemaIDs = {
   SEARCH: 'SEARCH',
   SUBSIDIE: 'SUBSIDIE',
   SVWI: 'SVWI',
-  VAREN: 'VAREN',
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
 } as const;

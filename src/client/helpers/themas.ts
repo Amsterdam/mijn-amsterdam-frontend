@@ -14,7 +14,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     OVERTREDINGEN,
     SUBSIDIE,
     SVWI,
-    VAREN,
     VERGUNNINGEN,
     WMO,
   }: AppState = appState;
@@ -64,13 +63,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
 
     case ThemaIDs.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
-
-    case ThemaIDs.VAREN:
-      return (
-        !isLoading(VAREN) &&
-        (!!VAREN?.content?.reder || !!VAREN?.content?.zaken?.length) &&
-        FeatureToggle.varenActive
-      );
   }
 
   return false;

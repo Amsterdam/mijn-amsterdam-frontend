@@ -19,9 +19,6 @@ export const AppRoutes = {
   'VERGUNNINGEN/LIST': '/vergunningen/lijst/:kind/:page?',
   'VERGUNNINGEN/DETAIL': '/vergunningen/:caseType/:id',
 
-  'VAREN/LIST': '/passagiers-en-beroepsvaart/vergunningen/lijst/:kind/:page?',
-  'VAREN/DETAIL': '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
-  VAREN: '/passagiers-en-beroepsvaart',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
 
