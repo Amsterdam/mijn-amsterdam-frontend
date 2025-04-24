@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 
-import { isVergunning } from './helper';
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { exploitatieVergunningWijzigenLink } from './Varen-thema-config';
 import { ButtonLinkProps } from '../../../universal/types';
@@ -21,18 +20,10 @@ export function useVarenDetailPage() {
         otherZaak.vergunning?.identifier === zaak?.vergunning?.identifier &&
         otherZaak.processed === false
     ) || null;
-  const hasLinkedWijzigingZaak = !!linkedWijzigingZaak;
 
-  const showButtons =
-    zaak &&
-    isVergunning(zaak) &&
-    hasRegistratieReder &&
-    !hasLinkedWijzigingZaak;
-
-  const buttonItems: ButtonLinkProps[] = [];
-  if (showButtons) {
-    buttonItems.push(exploitatieVergunningWijzigenLink(zaak.key));
-  }
+  const buttonItems: ButtonLinkProps[] = zaak
+    ? [exploitatieVergunningWijzigenLink(zaak.key)]
+    : [];
 
   return {
     zaak,
