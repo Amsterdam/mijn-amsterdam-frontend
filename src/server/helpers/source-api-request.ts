@@ -61,12 +61,8 @@ export function clearSessionCache(requestID: RequestID) {
   }
 }
 
-export function getRequestConfigCacheKey(
-  requestID: string,
-  requestConfig: DataRequestConfig
-) {
+export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
   return [
-    requestID,
     requestConfig.method,
     requestConfig.url,
     requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
@@ -148,8 +144,7 @@ export async function requestData<T>(
   }
 
   // Construct a cache key based on unique properties of a request
-  const cacheKey =
-    config.cacheKey || getRequestConfigCacheKey(requestID, config);
+  const cacheKey = config.cacheKey || getRequestConfigCacheKey(config);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
