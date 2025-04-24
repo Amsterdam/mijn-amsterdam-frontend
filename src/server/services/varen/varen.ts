@@ -10,6 +10,7 @@ import {
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
+import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { omit, toDateFormatted } from '../../../universal/helpers/utils';
@@ -66,13 +67,13 @@ function transformVarenZakenFrontend(
   });
 
   const zakenFrontend = zaak.vergunningen.map((vergunning) => {
-    const combinedIdZaakVergunning = `${zaak.id}-${vergunning.id}`;
+    const zaakVergunningId = isVergunning(zaak) ? vergunning.id : zaak.id;
     return {
       ...zaakFrontend,
       vergunning,
       vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
-      id: combinedIdZaakVergunning,
-      link: createLink(combinedIdZaakVergunning),
+      id: zaakVergunningId,
+      link: createLink(zaakVergunningId),
     };
   });
 

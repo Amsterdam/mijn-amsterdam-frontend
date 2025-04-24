@@ -112,7 +112,7 @@ describe('Varen service', () => {
         ]),
         displayStatus: 'Verleend',
         ...{
-          id: 'Z-24-0000001-Z-25-0000001-10001',
+          id: 'Z-25-0000001-10001',
           identifier: 'Z/24/0000001',
           dateRequestFormatted: '01 januari 2025',
           dateDecisionFormatted: '03 januari 2025',
@@ -145,12 +145,12 @@ describe('Varen service', () => {
           ],
           link: {
             title: 'Bekijk hoe het met uw aanvraag staat',
-            to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-24-0000001-Z-25-0000001-10001',
+            to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001-10001',
           },
         },
       });
       expect(response.content?.zaken[1]).toMatchObject({
-        id: 'Z-24-0000001-Z-25-0000002-10002',
+        id: 'Z-25-0000002-10002',
         identifier: 'Z/24/0000001',
         vergunning: vergunning2,
         vesselName: vergunning2.vesselName,
