@@ -9,7 +9,7 @@ import { LinkProps } from '../../../../universal/types/App.types';
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../../components/Table/TableV2';
+} from '../../../components/Table/TableV2.types';
 import { TrackingConfig } from '../../../config/routes';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;

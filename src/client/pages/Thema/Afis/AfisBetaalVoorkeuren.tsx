@@ -13,7 +13,7 @@ import { CollapsiblePanel } from '../../../components/CollapsiblePanel/Collapsib
 import { Datalist } from '../../../components/Datalist/Datalist';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { PageContentCell } from '../../../components/Page/Page';
-import { DisplayProps } from '../../../components/Table/TableV2';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 

@@ -9,7 +9,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../../components/Table/TableV2';
+} from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
