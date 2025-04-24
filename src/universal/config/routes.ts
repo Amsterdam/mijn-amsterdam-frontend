@@ -28,9 +28,6 @@ export const AppRoutes = {
   VAREN: '/passagiers-en-beroepsvaart',
   SEARCH: '/zoeken',
   KREFIA: '/kredietbank-fibu',
-  'PARKEREN/DETAIL': '/parkeren/:caseType/:id',
-  'PARKEREN/LIST': '/parkeren/lijst/:kind/:page?',
-  PARKEREN: '/parkeren',
 
   BFF_500_ERROR: '/server-error-500',
 

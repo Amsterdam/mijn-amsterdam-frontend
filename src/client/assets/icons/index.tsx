@@ -12,7 +12,6 @@ export { default as IconIndeterminate } from './min.svg?react';
 export { default as IconInkomenSVWI } from './inkomen-svwi.svg?react';
 export { default as IconMilieuzone } from './milieuzone.svg?react';
 export { default as IconOvertredingen } from './Overtredingen.svg?react';
-export { default as IconParkeren } from './Car.svg?react';
 export { default as IconSubsidie } from './subsidie.svg?react';
 export { default as IconToeristischeVerhuur } from './toeristische-verhuur.svg?react';
 export { default as IconVaren } from './varen.svg?react';

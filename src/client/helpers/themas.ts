@@ -12,7 +12,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     KVK,
     MILIEUZONE,
     OVERTREDINGEN,
-    PARKEREN,
     SUBSIDIE,
     SVWI,
     TOERISTISCHE_VERHUUR,
@@ -75,17 +74,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !!vakantieverhuurVergunningen?.length || !!bbVergunningen?.length;
       return (
         !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
-      );
-    }
-
-    case ThemaIDs.PARKEREN: {
-      const hasDecosParkeerVergunningen =
-        !!appState.PARKEREN?.content?.vergunningen?.length;
-
-      return (
-        FeatureToggle.parkerenActive &&
-        !isLoading(PARKEREN) &&
-        (!!PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
       );
     }
 

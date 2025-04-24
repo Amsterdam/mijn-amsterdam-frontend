@@ -1,7 +1,7 @@
 import { DocumentTitlesConfig, ThemaMenuItem } from './thema-types';
 import { AppRoutes } from '../../universal/config/routes';
 import { ThemaID, ThemaIDs } from '../../universal/config/thema';
-import { AppState, BagThema } from '../../universal/types/App.types';
+import { BagThema } from '../../universal/types/App.types';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
 import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
@@ -17,6 +17,7 @@ import { menuItem as menuItemHoreca } from '../pages/Thema/Horeca/Horeca-render-
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
 import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-render-config';
+import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
 import {
   getVarenDetailPageDocumentTitle,
@@ -42,12 +43,9 @@ type ThemaTitles = { [thema in ThemaID]: string };
  */
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
-  BODEM: 'Bodem',
-  KREFIA: 'Kredietbank & FIBU',
   MILIEUZONE: 'Milieuzone',
   NOTIFICATIONS: 'Actueel',
   OVERTREDINGEN: 'Overtredingen voertuigen',
-  PARKEREN: 'Parkeren',
   HOME: 'Home',
   SEARCH: 'Zoeken',
   SUBSIDIE: 'Subsidies',
@@ -97,11 +95,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
     ThemaTitles.VAREN
   ),
 
-  // Parkeren
-  [AppRoutes.PARKEREN]: `${ThemaTitles.PARKEREN} | overzicht`,
-  [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
-  [AppRoutes['PARKEREN/LIST']]: getListPageDocumentTitle(ThemaTitles.PARKEREN),
-
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
@@ -142,6 +135,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemHLI,
   menuItemHoreca,
   menuItemKlachten,
+  menuItemParkeren,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -201,17 +195,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     id: ThemaIDs.MILIEUZONE,
     to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
     rel: 'external',
-    profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.PARKEREN,
-    id: ThemaIDs.PARKEREN,
-    to: (appState: AppState) => {
-      const hasDecosParkeerVergunningen =
-        !!appState.PARKEREN?.content?.vergunningen?.length;
-      const urlExternal = appState.PARKEREN?.content?.url ?? '/';
-      return hasDecosParkeerVergunningen ? AppRoutes.PARKEREN : urlExternal;
-    },
     profileTypes: ['private', 'commercial'],
   },
   {

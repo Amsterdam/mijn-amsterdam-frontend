@@ -7,7 +7,6 @@ export const ThemaIDs = {
   MILIEUZONE: 'MILIEUZONE',
   NOTIFICATIONS: 'NOTIFICATIONS',
   OVERTREDINGEN: 'OVERTREDINGEN',
-  PARKEREN: 'PARKEREN',
   HOME: 'HOME', // Not really a theme, but used as a fallback
   SEARCH: 'SEARCH',
   SUBSIDIE: 'SUBSIDIE',

@@ -23,7 +23,7 @@ import { InkomenRoutes } from './pages/Thema/Inkomen/Inkomen-render-config';
 import { JeugdRoutes } from './pages/Thema/Jeugd/Jeugd-render-config';
 import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-render-config';
 import { KrefiaRoutes } from './pages/Thema/Krefia/Krefia-render-config';
-import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-routes';
+import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-render-config';
 import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config';
 import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-routes';
 import { VarenRoutes } from './pages/Thema/Varen/Varen-routes';

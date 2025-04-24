@@ -6,11 +6,11 @@ import { VergunningFrontend } from '../../../../server/services/vergunningen/con
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useProfileTypeValue } from '../../../hooks/useProfileType';
 
-export function Parkeren() {
+export function ParkerenThema() {
   const {
     title,
     tableConfig,
@@ -25,7 +25,7 @@ export function Parkeren() {
   const tables = Object.entries(tableConfig).map(
     ([
       kind,
-      { title, displayProps, filter, sort, listPageRoute, className, maxItems },
+      { title, displayProps, filter, sort, listPageRoute, maxItems },
     ]) => {
       return (
         <ThemaPaginaTable<VergunningFrontend>
@@ -34,7 +34,6 @@ export function Parkeren() {
           zaken={vergunningen.filter(filter).sort(sort)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}
-          className={className}
           maxItems={maxItems}
         />
       );
