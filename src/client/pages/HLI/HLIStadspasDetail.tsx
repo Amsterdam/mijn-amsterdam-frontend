@@ -314,7 +314,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Button>
       )}
       <Modal
-        title="Weet u zeker dat u uw Stadspas wilt blokkeren?"
+        title="Uw pas is gestolen of u bent deze kwijt."
         className={styles.BlokkeerDialog}
         isOpen={isModalOpen}
         showCloseButton
@@ -351,20 +351,18 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         }
       >
         <Paragraph className="ams-mb--sm">
-          Is uw Stadspas gestolen of bent u deze kwijt? Blokkeer dan hier uw
-          Stadspas. Zo zorgt u ervoor dat niemand de Stadspas en eventueel
-          tegoed uitgeeft.
+          Blokkeer hier uw Stadspas. Dan kan niemand uw Stadspas gebruiken. Of
+          het tegoed uitgeven dat erop staat.
         </Paragraph>
         <Paragraph className="ams-mb--sm">
-          Wilt u een nieuwe pas aanvragen of wilt u liever telefonisch
-          blokkeren?
-          <br />
-          Bel dan meteen naar {PHONENUMBERS.WerkEnInkomen}. De nieuwe pas wordt
-          dan binnen drie weken thuisgestuurd en is dan gelijk te gebruiken.
-        </Paragraph>
-        <Paragraph>
           Let op: het blokkeren kan alleen worden teruggedraaid door te bellen
           met <br /> {PHONENUMBERS.WerkEnInkomen}.
+        </Paragraph>
+        <Paragraph>
+          Om een nieuwe pas aan te vragen, belt u naar{' '}
+          {PHONENUMBERS.WerkEnInkomen}. De nieuwe pas wordt binnen 3 weken
+          thuisgestuurd. Binnen 5 dagen staat de nieuwe pas digitaal in de
+          Amsterdam App.
         </Paragraph>
       </Modal>
     </>
