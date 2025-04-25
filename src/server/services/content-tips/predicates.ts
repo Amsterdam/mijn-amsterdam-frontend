@@ -7,7 +7,7 @@ import {
 import type { TipsPredicateFN } from './tip-types';
 import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
 import { isAmsterdamAddress } from '../buurt/helpers';
-import { HLIRegeling } from '../hli/hli-regelingen-types';
+import { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
 import { BBVergunning } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
@@ -81,12 +81,14 @@ export const hasValidRecentStadspasRequest: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   if (appState.HLI?.status === 'OK') {
-    return !!appState.HLI?.content?.regelingen.some((aanvraag: HLIRegeling) => {
-      return aanvraag.dateDecision
-        ? differenceInYears(today, parseISO(aanvraag.dateDecision)) <= 1 &&
-            aanvraag.decision === 'toegewezen'
-        : false;
-    });
+    return !!appState.HLI?.content?.regelingen.some(
+      (aanvraag: HLIRegelingFrontend) => {
+        return aanvraag.dateDecision
+          ? differenceInYears(today, parseISO(aanvraag.dateDecision)) <= 1 &&
+              aanvraag.decision === 'toegewezen'
+          : false;
+      }
+    );
   }
   return false;
 };

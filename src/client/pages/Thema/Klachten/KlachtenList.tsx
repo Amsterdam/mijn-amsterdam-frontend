@@ -1,7 +1,7 @@
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
-export function KlachtenLijstPagina() {
+export function KlachtenList() {
   const { klachten, tableConfig, breadcrumbs, isLoading, isError } =
     useKlachtenThemaData();
 

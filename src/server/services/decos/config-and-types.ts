@@ -326,8 +326,8 @@ export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
 
 export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
   OmitMapped<T, 'statusDates' | 'termijnDates'> & {
-    dateDecisionFormatted?: string | null;
     dateRequestFormatted: string;
+    dateDecisionFormatted?: string | null;
     isExpired?: boolean;
     // Url to fetch documents for a specific Zaak.
     fetchDocumentsUrl?: string;

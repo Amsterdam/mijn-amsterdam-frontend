@@ -31,3 +31,12 @@ export const routeConfig = {
     documentTitle: `Alle contactmomenten | ${themaTitle.BRP}`,
   },
 } as const satisfies ThemaRoutesConfig;
+
+export const profileLinks = {
+  CHANGE_PERSONAL_DATA:
+    'https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85',
+  CHANGE_RESIDENT_COUNT:
+    'https://www.amsterdam.nl/veelgevraagd/onjuiste-inschrijving-melden-ef918',
+  REPORT_RELOCATION:
+    'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
+};

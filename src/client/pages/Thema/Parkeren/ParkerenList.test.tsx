@@ -3,11 +3,11 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { AppRoutes } from '../../../../universal/config/routes';
-import { AppState } from '../../../../universal/types/App.types';
-import MockApp from '../../MockApp';
+import { routeConfig } from './Parkeren-thema-config';
 import { ParkerenList } from './ParkerenList';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
+import MockApp from '../../MockApp';
 import { listPageParamKind } from '../Vergunningen/Vergunningen-thema-config';
 
 const testState = {
@@ -76,12 +76,12 @@ describe('ParkerenList', () => {
     window.scrollTo = vi.fn();
   });
 
-  const routeEntry = generatePath(AppRoutes['PARKEREN/LIST'], {
+  const routeEntry = generatePath(routeConfig.listPage.path, {
     kind: listPageParamKind.inProgress,
     page: null,
   });
 
-  const routePath = AppRoutes['PARKEREN/LIST'];
+  const routePath = routeConfig.listPage.path;
 
   function Component() {
     return (

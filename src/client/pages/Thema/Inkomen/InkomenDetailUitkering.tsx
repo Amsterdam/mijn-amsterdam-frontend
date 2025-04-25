@@ -1,8 +1,8 @@
 import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
+import { wpiLinks } from './Inkomen-thema-config';
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ExternalUrls } from '../../../config/app';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 const pageContentTop = (
@@ -14,10 +14,7 @@ const pageContentTop = (
     </Paragraph>
 
     <LinkList>
-      <LinkList.Link
-        rel="noreferrer"
-        href={ExternalUrls.WPI_BIJSTANDSUITKERING}
-      >
+      <LinkList.Link rel="noreferrer" href={wpiLinks.BIJSTANDSUITKERING}>
         Meer informatie over de bijstandsuitkering
       </LinkList.Link>
     </LinkList>

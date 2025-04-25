@@ -6,10 +6,7 @@ import {
   decosZaakTransformers,
 } from './decos-zaken';
 import { getDisplayStatus, getStatusSteps } from './vergunningen-status-steps';
-import {
-  AppRoutes,
-  AppRouteVergunningen,
-} from '../../../universal/config/routes';
+import { AppRoutes } from '../../../universal/config/routes';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
@@ -22,7 +19,7 @@ import {
 function transformVergunningFrontend(
   sessionID: SessionID,
   zaak: DecosVergunning,
-  appRoute: AppRouteVergunningen
+  appRoute: string
 ) {
   const zaakFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
@@ -45,7 +42,7 @@ function transformVergunningFrontend(
 async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  appRoute: AppRouteVergunningen = AppRoutes['VERGUNNINGEN/DETAIL']
+  appRoute: string = AppRoutes['VERGUNNINGEN/DETAIL']
 ): Promise<ApiResponse<VergunningFrontend[]>> {
   const response = await fetchDecosZaken(
     requestID,

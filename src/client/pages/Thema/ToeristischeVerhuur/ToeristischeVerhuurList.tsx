@@ -1,32 +1,31 @@
 import { useParams } from 'react-router';
 
-import { ListPageParamKind } from './toeristischeVerhuur-thema-config';
+import { ListPageParamKind } from './ToeristischeVerhuur-thema-config';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
-export function ToeristischeVerhuurVergunningen() {
-  const { kind } = useParams<{ kind: ListPageParamKind }>();
+export function ToeristischeVerhuurList() {
+  const { kind = 'lopende-aanvragen' } = useParams<{
+    kind: ListPageParamKind;
+  }>();
   const {
     vergunningen,
     tableConfigVergunningen,
-    routes,
     isLoading,
     isError,
     breadcrumbs,
   } = useToeristischeVerhuurThemaData();
   const listPageTableConfig = tableConfigVergunningen[kind];
-
+  const { title, filter, sort, listPageRoute, displayProps } =
+    listPageTableConfig;
   return (
     <ListPagePaginated
-      items={vergunningen
-        .filter(listPageTableConfig.filter)
-        .sort(listPageTableConfig.sort)}
-      tableClassName={listPageTableConfig.className}
-      title={listPageTableConfig.title}
-      appRoute={routes.listPage}
+      items={vergunningen.filter(filter).sort(sort)}
+      title={title}
+      appRoute={listPageRoute}
       appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
-      displayProps={listPageTableConfig.displayProps}
+      displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}
     />

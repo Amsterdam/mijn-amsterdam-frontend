@@ -1,23 +1,23 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { AppRoutes } from '../../../../universal/config/routes';
-import { componentCreator } from '../../MockApp';
-import { HLIThemaPagina } from './HLIThemaPagina';
+import { routeConfig } from './HLI-thema-config';
+import { HLIThema } from './HLIThema';
 import { stadspasCreator } from './test-helpers';
 import { createHLIState } from './test-helpers';
+import { componentCreator } from '../../MockApp';
 
 const createStadspas = stadspasCreator();
 
 const createHLIComponent = componentCreator({
-  component: HLIThemaPagina,
-  routeEntry: generatePath(AppRoutes.HLI),
-  routePath: AppRoutes.HLI,
+  component: HLIThema,
+  routeEntry: generatePath(routeConfig.themaPage.path),
+  routePath: routeConfig.themaPage.path,
 });
 
 describe('<HLI />', () => {
   test('Matches the Full Page snapshot with an active and a blocked pas', () => {
-    const stadspassen = [
+    const stadspas = [
       createStadspas(
         { actief: true, balance: 5, balanceFormatted: '€5,00' },
         { firstname: 'Kerub' }
@@ -66,7 +66,7 @@ describe('<HLI />', () => {
       },
     ];
     const Component = createHLIComponent(
-      createHLIState({ stadspassen, regelingen })
+      createHLIState({ stadspas, regelingen })
     );
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
@@ -74,15 +74,15 @@ describe('<HLI />', () => {
 
   test('Unlimited amount of citypasses are visible', () => {
     // 20 is Arbitrary but it exceeds usual limit and might be a huge family.
-    const stadspassen = Array.from({ length: 20 }, () => createStadspas());
+    const stadspas = Array.from({ length: 20 }, () => createStadspas());
 
-    const state = createHLIState({ stadspassen });
+    const state = createHLIState({ stadspas });
 
     const Component = createHLIComponent(state);
     const screen = render(<Component />);
 
     const passes = screen.getAllByRole('row', { name: /Stadspas van/ });
 
-    expect(passes.length).toBe(stadspassen.length);
+    expect(passes.length).toBe(stadspas.length);
   });
 });

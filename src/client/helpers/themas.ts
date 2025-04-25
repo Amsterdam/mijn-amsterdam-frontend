@@ -9,18 +9,11 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
     BRP,
-    HLI,
-    HORECA,
-    KLACHTEN,
-    KREFIA,
     KVK,
     MILIEUZONE,
     OVERTREDINGEN,
-    PARKEREN,
     SUBSIDIE,
     SVWI,
-    TOERISTISCHE_VERHUUR,
-    VAREN,
     VERGUNNINGEN,
     WMO,
   }: AppState = appState;
@@ -34,21 +27,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         FeatureToggle.svwiLinkActive &&
         SVWI?.content?.isKnown === true
       );
-
-    case ThemaIDs.HLI: {
-      const hasStadspas =
-        !!HLI?.content?.stadspas?.length &&
-        FeatureToggle.hliThemaStadspasActive;
-      const hasRegelingen =
-        !!HLI?.content?.regelingen?.length &&
-        FeatureToggle.hliThemaRegelingenActive;
-      const isLoadingHLI = isLoading(HLI);
-      return (
-        FeatureToggle.hliThemaActive &&
-        !isLoadingHLI &&
-        (hasStadspas || hasRegelingen)
-      );
-    }
 
     case ThemaIDs.ZORG:
       return (
@@ -85,52 +63,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
 
     case ThemaIDs.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
-
-    case ThemaIDs.TOERISTISCHE_VERHUUR: {
-      const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
-        TOERISTISCHE_VERHUUR?.content ?? {};
-      const hasRegistraties = !!lvvRegistraties?.length;
-      const hasVergunningen =
-        !!vakantieverhuurVergunningen?.length || !!bbVergunningen?.length;
-      return (
-        !isLoading(TOERISTISCHE_VERHUUR) && (hasRegistraties || hasVergunningen)
-      );
-    }
-
-    case ThemaIDs.KREFIA:
-      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks.length;
-
-    case ThemaIDs.PARKEREN: {
-      const hasDecosParkeerVergunningen =
-        !!appState.PARKEREN?.content?.vergunningen?.length;
-
-      return (
-        FeatureToggle.parkerenActive &&
-        !isLoading(PARKEREN) &&
-        (!!PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
-      );
-    }
-
-    case ThemaIDs.KLACHTEN:
-      return (
-        !isLoading(KLACHTEN) &&
-        !!KLACHTEN?.content?.klachten.length &&
-        FeatureToggle.klachtenActive
-      );
-
-    case ThemaIDs.VAREN:
-      return (
-        !isLoading(VAREN) &&
-        (!!VAREN?.content?.reder || !!VAREN?.content?.zaken?.length) &&
-        FeatureToggle.varenActive
-      );
-
-    case ThemaIDs.HORECA:
-      return (
-        !isLoading(HORECA) &&
-        !!HORECA?.content?.length &&
-        FeatureToggle.horecaActive
-      );
   }
 
   return false;

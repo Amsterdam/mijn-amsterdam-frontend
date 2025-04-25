@@ -1,8 +1,8 @@
 import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
+import { wpiLinks } from './Inkomen-thema-config';
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ExternalUrls } from '../../../config/app';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 const pageContentTop = (
@@ -19,7 +19,7 @@ const pageContentTop = (
       Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u opgenomen.
     </Paragraph>
     <LinkList>
-      <LinkList.Link rel="noreferrer" href={ExternalUrls.WPI_BBZ}>
+      <LinkList.Link rel="noreferrer" href={wpiLinks.BBZ}>
         Meer informatie over het Bbz
       </LinkList.Link>
     </LinkList>

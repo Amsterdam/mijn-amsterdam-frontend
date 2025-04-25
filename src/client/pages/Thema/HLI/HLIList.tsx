@@ -1,24 +1,27 @@
 import { useParams } from 'react-router';
 
 import { ListPageParamKind } from './HLI-thema-config';
-import { HistoricItemsMention } from './HLIThemaPagina';
+import { HistoricItemsMention } from './HLIThema';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
 
-export function HLIRegelingen() {
-  const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const { regelingen, tableConfig, routes, isLoading, isError, breadcrumbs } =
+export function HLIList() {
+  const { kind = 'huidige-regelingen' } = useParams<{
+    kind: ListPageParamKind;
+  }>();
+  const { regelingen, tableConfig, isLoading, isError, breadcrumbs } =
     useHliThemaData();
 
-  const { filter, sort, title, displayProps, className } = tableConfig[kind];
+  const { filter, sort, title, displayProps, listPageRoute, className } =
+    tableConfig[kind];
 
   return (
     <>
       <ListPagePaginated
         items={regelingen.filter(filter).sort(sort)}
         title={title}
-        appRoute={routes.listPage}
+        appRoute={listPageRoute}
         appRouteParams={{ kind }}
         breadcrumbs={breadcrumbs}
         displayProps={displayProps}

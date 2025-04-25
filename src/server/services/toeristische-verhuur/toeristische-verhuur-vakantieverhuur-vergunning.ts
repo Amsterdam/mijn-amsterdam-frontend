@@ -3,7 +3,7 @@ import {
   decosZaakTransformers,
   decosZaakTransformersByCaseType,
 } from './toeristische-verhuur-config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
@@ -35,7 +35,7 @@ export async function fetchVakantieverhuurVergunningen(
           authProfileAndToken.profile.sid,
           zaak,
           {
-            appRoute: AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
+            appRoute: routeConfig.detailPage.path,
             includeFetchDocumentsUrl: true,
           }
         );

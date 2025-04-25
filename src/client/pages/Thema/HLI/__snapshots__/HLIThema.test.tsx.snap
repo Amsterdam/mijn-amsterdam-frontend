@@ -1,0 +1,318 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked pas 1`] = `
+<DocumentFragment>
+  <div
+    class="ams-grid"
+  >
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+    >
+      <div
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
+      >
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/regelingen-bij-laag-inkomen"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Stadspas en regelingen bij laag inkomen
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Stadspas en regelingen bij laag inkomen
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph"
+      >
+        Hieronder ziet u al uw regelingen. Indien u of uw kinderen in bezit zijn van een Stadspas ziet u ook de stadspasgegevens.
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/werk-inkomen/hulp-bij-laag-inkomen/"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over regelingen
+          </a>
+        </li>
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/stadspas"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over Stadspas
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <div
+        class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+      >
+        <div
+          class="ams-table"
+        >
+          <table
+            class="ams-table__table _TableV2_4c6825 _Stadspassen_c69c76"
+          >
+            <thead
+              class="ams-table__header"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                />
+                <th
+                  class="ams-table__header-cell"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="ams-table__body"
+            >
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  >
+                    <span
+                      class="_Stadspas_owner_c69c76"
+                    >
+                      Stadspas van Kerub
+                    </span>
+                    <span
+                      class="_Stadspas_balance_c69c76"
+                    >
+                      Saldo €5,00
+                    </span>
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  <span
+                    class="_StatusValue_c69c76"
+                  >
+                    Actief
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="ams-table__row"
+              >
+                <td
+                  class="ams-table__cell"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  >
+                    <span
+                      class="_Stadspas_owner_c69c76"
+                    >
+                      Stadspas van Lou
+                    </span>
+                    <span
+                      class="_Stadspas_balance_c69c76"
+                    >
+                      Saldo €4,00
+                    </span>
+                  </a>
+                </td>
+                <td
+                  class="ams-table__cell"
+                >
+                  <span
+                    class="_StatusValue_c69c76"
+                  >
+                    Geblokkeerd
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p
+        class="ams-paragraph ams-paragraph--small"
+      >
+        Voor alle stadspassen geldt de einddatum van 31 juli 2025
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Huidige regelingen
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_c69c76"
+        >
+          <thead
+            class="ams-table__header"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <th
+                class="ams-table__header-cell"
+              >
+                Regeling
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Naam ontvanger
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="ams-table__body"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="http://example.org/ding"
+                  title="Bekijk meer over hli item 1"
+                >
+                  Hli item 1
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                Naam Persoon 1, Naam Persoon 2
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Eerdere en afgewezen regelingen
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_c69c76"
+        >
+          <tbody
+            class="ams-table__body"
+          />
+        </table>
+      </div>
+      <p
+        class="ams-paragraph"
+      >
+        U heeft (nog) geen eerdere en afgewezen regelingen
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-3-wide"
+    >
+      <p
+        class="ams-paragraph _SuppressedParagraph_2fb90c"
+      >
+        U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -13,7 +13,7 @@ import {
   StadspasBudget,
   StadspasFrontend,
 } from './stadspas-types';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -64,7 +64,7 @@ export async function fetchStadspas(
         transactionsKeyEncrypted,
         blockPassURL,
         link: {
-          to: generatePath(AppRoutes['HLI/STADSPAS'], {
+          to: generatePath(routeConfig.detailPageStadspas.path, {
             passNumber: `${stadspas.passNumber}`,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,

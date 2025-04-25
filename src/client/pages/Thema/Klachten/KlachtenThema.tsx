@@ -1,7 +1,7 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
-import { Klacht } from '../../../../server/services/klachten/types';
+import { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
@@ -15,7 +15,7 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-export function KlachtenThemaPagina() {
+export function KlachtenThema() {
   const {
     themaTitle,
     tableConfig,
@@ -32,7 +32,7 @@ export function KlachtenThemaPagina() {
       isLoading={isLoading}
       pageContentTop={pageContentTop}
       pageContentMain={
-        <ThemaPaginaTable<Klacht>
+        <ThemaPaginaTable<KlachtFrontend>
           title={tableConfig.title}
           listPageRoute={tableConfig.listPageRoute}
           zaken={klachten}

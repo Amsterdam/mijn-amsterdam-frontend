@@ -19,7 +19,6 @@ import type {
 import { Datalist, RowSet } from '../../../components/Datalist/Datalist';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ThemaTitles } from '../../../config/thema';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
@@ -104,7 +103,7 @@ export function VarenPageContentRederRegistratie({
   );
 }
 
-export function Varen() {
+export function VarenThema() {
   const {
     varenRederRegistratie,
     varenZaken,
@@ -113,6 +112,7 @@ export function Varen() {
     isError,
     linkListItems,
     buttonItems,
+    title,
   } = useVarenThemaData();
 
   const actionButtons =
@@ -160,7 +160,7 @@ export function Varen() {
 
   return (
     <ThemaPagina
-      title={ThemaTitles.VAREN}
+      title={title}
       isLoading={isLoading}
       isError={isError}
       pageContentTop={pageContentTop}

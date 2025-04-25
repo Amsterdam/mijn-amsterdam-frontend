@@ -1,8 +1,8 @@
 import { LinkList, Paragraph } from '@amsterdam/design-system-react';
 
+import { wpiLinks } from './Inkomen-thema-config';
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
-import { ExternalUrls } from '../../../config/app';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 const pageContentTop = (
@@ -14,7 +14,7 @@ const pageContentTop = (
       TONK in Mijn Amsterdam staan.
     </Paragraph>
     <LinkList>
-      <LinkList.Link rel="noreferrer" href={ExternalUrls.WPI_TONK}>
+      <LinkList.Link rel="noreferrer" href={wpiLinks.TONK}>
         Meer informatie over de TONK
       </LinkList.Link>
     </LinkList>
