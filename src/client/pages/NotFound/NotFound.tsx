@@ -11,9 +11,12 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { captureMessage } from '../../helpers/monitoring';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { LandingRoute } from '../Landing/Landing-routes';
 
 export function NotFound() {
+  useHTMLDocumentTitle('404 - Pagina niet gevonden | Mijn Amsterdam');
+
   const location = useLocation();
 
   useEffect(() => {

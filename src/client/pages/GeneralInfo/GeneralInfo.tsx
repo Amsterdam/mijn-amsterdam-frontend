@@ -1,3 +1,4 @@
+import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
 import InnerHtml from '../../components/InnerHtml/InnerHtml';
@@ -9,8 +10,11 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function GeneralInfo() {
+  useHTMLDocumentTitle(GENERAL_INFO_PAGE_DOCUMENT_TITLE);
+
   const { CMS_CONTENT } = useAppStateGetter();
   const generalInfo = CMS_CONTENT.content?.generalInfo;
 

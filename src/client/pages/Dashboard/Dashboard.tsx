@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Heading, OrderedList } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
+import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config';
 import styles from './Dashboard.module.scss';
 import { WelcomeHeading } from './WelcomHeading';
 import { isLoading } from '../../../universal/helpers/api';
@@ -18,6 +19,7 @@ import {
 } from '../../components/Page/Page';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes';
@@ -25,6 +27,8 @@ import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-rout
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
 export function Dashboard() {
+  useHTMLDocumentTitle(DASHBOARD_PAGE_DOCUMENT_TITLE);
+
   const appState = useAppStateGetter();
   const location = useLocation();
   const navigate = useNavigate();

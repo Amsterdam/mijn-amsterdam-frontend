@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
+import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes';
 import styles from './ZaakStatus.module.scss';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { AppStateBase, LinkProps } from '../../../universal/types/App.types';
@@ -16,6 +17,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { DashboardRoute } from '../Dashboard/Dashboard-routes';
 import * as HORECA from '../Thema/Horeca/Horeca-thema-config';
 import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config';
@@ -156,6 +158,8 @@ function useNavigateToPage(queryParams: URLSearchParams) {
 }
 
 export function ZaakStatus() {
+  useHTMLDocumentTitle(ZAAK_STATUS_PAGE_DOCUMENT_TITLE);
+
   const appStateReady = useAppStateReady();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);

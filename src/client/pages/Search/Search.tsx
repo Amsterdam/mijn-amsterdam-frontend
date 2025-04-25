@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { SEARCH_PAGE_DOCUMENT_TITLE } from './Search-routes';
 import {
   PageContentCell,
   PageContentV2,
@@ -8,8 +9,11 @@ import {
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Search } from '../../components/Search/Search';
 import { useAppStateReady } from '../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function SearchPage() {
+  useHTMLDocumentTitle(SEARCH_PAGE_DOCUMENT_TITLE);
+
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';
   const isReady = useAppStateReady();

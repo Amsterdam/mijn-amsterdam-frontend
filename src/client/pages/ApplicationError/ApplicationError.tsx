@@ -17,9 +17,11 @@ import {
   PageContentV2,
   TextPageV2,
 } from '../../components/Page/Page';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useUsabilla } from '../../hooks/useUsabilla';
 
 function ApplicationErrorContent({ error }: { error?: Error }) {
+  useHTMLDocumentTitle('Kritieke applicatie fout - Mijn Amsterdam');
   return (
     <>
       <PageContentCell startWide={1} spanWide={12}>

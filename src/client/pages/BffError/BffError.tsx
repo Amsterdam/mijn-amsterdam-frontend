@@ -1,5 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { BFF500_PAGE_DOCUMENT_TITLE } from './BffError-routes';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
 import {
@@ -8,8 +9,11 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function BFF500Error() {
+  useHTMLDocumentTitle(BFF500_PAGE_DOCUMENT_TITLE);
+
   const queryParams = new URL(location.href).searchParams;
   let stack = '';
   try {
