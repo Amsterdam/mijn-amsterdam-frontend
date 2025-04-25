@@ -434,7 +434,7 @@ exports[`simple-connect/erfpacht > fetchErfpacht: dossier detail 1`] = `
     "titelBetaler": "Betaler",
     "titelDossierNummer": "Erfpachtdossier",
     "titelEersteUitgifte": "Datum eerste uitgifte",
-    "titelKadastraleaanduiding": "Kadastrale aanduiding",
+    "titelKadastraleAanduiding": "Kadastrale aanduiding",
     "titelKopBijzondereBepalingen": "Bijzondere Bepalingen",
     "titelKopErfpachter": "Erfpachters",
     "titelKopFacturen": "Facturen",

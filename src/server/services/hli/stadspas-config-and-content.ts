@@ -1,8 +1,11 @@
 import { generatePath } from 'react-router';
 
 import { StadspasFrontend } from './stadspas-types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
 
@@ -30,17 +33,18 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   ): MyNotification => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
-    themaID: ThemaIDs.HLI,
+    themaID: themaId,
+    themaTitle: themaTitle,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
     )}!`,
     description,
     link: {
       to: stadspasPassNumber
-        ? generatePath(AppRoutes['HLI/STADSPAS'], {
+        ? generatePath(routeConfig.detailPageStadspas.path, {
             passNumber: stadspasPassNumber,
           })
-        : AppRoutes.HLI,
+        : routeConfig.themaPage.path,
       title: 'Check het saldo',
     },
   });

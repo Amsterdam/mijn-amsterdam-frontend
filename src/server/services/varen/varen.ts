@@ -10,7 +10,7 @@ import {
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
@@ -35,7 +35,7 @@ function transformVarenZakenFrontend(
   authProfileAndToken: AuthProfileAndToken,
   zaak: Varen
 ): VarenZakenFrontend[] {
-  const appRoute = AppRoutes['VAREN/DETAIL'];
+  const appRoute = routeConfig.detailPage.path;
   const steps = getStatusSteps(zaak);
   const zaakTransformed = transformDecosZaakFrontend(
     authProfileAndToken.profile.sid,

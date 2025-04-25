@@ -11,7 +11,7 @@ import {
   WpiRequestStatus,
 } from './wpi-types';
 import {
-  routes,
+  routeConfig,
   themaId as themaIdInkomen,
 } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -161,7 +161,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
   switch (requestProcess.about) {
     case 'TONK':
       link = {
-        to: generatePath(routes.detailPageTonk, {
+        to: generatePath(routeConfig.detailPageTonk.path, {
           id,
           version: '1',
         }),
@@ -174,7 +174,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
     case 'Tozo 4':
     case 'Tozo 5':
       link = {
-        to: generatePath(routes.detailPageTozo, {
+        to: generatePath(routeConfig.detailPageTozo.path, {
           id,
           version: requestProcess.about.replace('Tozo ', ''),
         }),
@@ -183,7 +183,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bijstandsuitkering':
       link = {
-        to: generatePath(routes.detailPageUitkering, {
+        to: generatePath(routeConfig.detailPageUitkering.path, {
           id,
         }),
         title,
@@ -191,7 +191,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bbz':
       link = {
-        to: generatePath(routes.detailPageBbz, {
+        to: generatePath(routeConfig.detailPageBbz.path, {
           id,
           version: '1',
         }),

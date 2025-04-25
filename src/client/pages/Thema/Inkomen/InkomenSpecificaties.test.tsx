@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
-import { listPageParamKind, routes } from './Inkomen-thema-config';
+import { listPageParamKind, routeConfig } from './Inkomen-thema-config';
 import { InkomenSpecificaties } from './InkomenSpecificaties';
 import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
@@ -83,10 +83,11 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<InkomenSpecificaties /> Uitkering', () => {
-  const routeEntry = generatePath(routes.listPageSpecificaties, {
+  const routeEntry = generatePath(routeConfig.listPageSpecificaties.path, {
     kind: listPageParamKind.uitkering,
+    page: null,
   });
-  const routePath = routes.listPageSpecificaties;
+  const routePath = routeConfig.listPageSpecificaties.path;
 
   function Component() {
     return (
@@ -142,10 +143,11 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
 });
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {
-  const routeEntry = generatePath(routes.listPageSpecificaties, {
+  const routeEntry = generatePath(routeConfig.listPageSpecificaties.path, {
     kind: listPageParamKind.jaaropgaven,
+    page: null,
   });
-  const routePath = routes.listPageSpecificaties;
+  const routePath = routeConfig.listPageSpecificaties.path;
 
   function Component() {
     return (

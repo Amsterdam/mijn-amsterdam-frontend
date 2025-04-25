@@ -1,9 +1,23 @@
 import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../../components/Table/TableV2';
+} from '../../../components/Table/TableV2.types';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
+
+export const featureToggle = {
+  krefiaActive: true,
+};
+
+export const themaId = 'KREFIA' as const;
+export const themaTitle = 'Kredietbank & FIBU';
+
+export const routeConfig = {
+  themaPage: {
+    path: '/kredietbank-fibu',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
 const displayPropsDeeplink: DisplayProps<
   WithDetailLinkComponent<KrefiaDeepLink>
@@ -11,10 +25,6 @@ const displayPropsDeeplink: DisplayProps<
   displayStatus: 'Status',
   detailLinkComponent: 'Bekijk op Krefia',
 };
-
-export const routes = {
-  themaPage: AppRoutes.KREFIA,
-} as const;
 
 export const krefiaTableConfig = {
   schuldhulp: {

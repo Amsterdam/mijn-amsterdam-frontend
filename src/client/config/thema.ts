@@ -1,25 +1,26 @@
 import { DocumentTitlesConfig, ThemaMenuItem } from './thema-types';
 import { AppRoutes } from '../../universal/config/routes';
 import { ThemaID, ThemaIDs } from '../../universal/config/thema';
-import { AppState, BagThema } from '../../universal/types/App.types';
+import { BagThema } from '../../universal/types/App.types';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
 import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
 import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
 import { menuItem as menuItemBodem } from '../pages/Thema/Bodem/Bodem-render-config';
 import { menuItem as menuItemBurgerzaken } from '../pages/Thema/Burgerzaken/Burgerzaken-render-config';
-import { getThemaTitleWithAppState } from '../pages/Thema/HLI/helpers';
-import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
-import { documentTitles as documentTitlesInkomen } from '../pages/Thema/Inkomen/Inkomen-thema-config';
-import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
-import { documentTitles as documentTitlesJeugd } from '../pages/Thema/Jeugd/Jeugd-thema-config';
-import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
-import { documentTitles as documentTitlesProfile } from '../pages/Thema/Profile/Profile-thema-config';
 import {
-  getVarenDetailPageDocumentTitle,
-  getVarenListPageDocumentTitle,
-} from '../pages/Thema/Varen/Varen-thema-config';
-import { getListPageDocumentTitle } from '../pages/Thema/Vergunningen/Vergunningen-thema-config';
+  menuItem as menuItemErfpacht,
+  menuItemZakelijk as menuItemErfpachtZakelijk,
+} from '../pages/Thema/Erfpacht/Erfpacht-render-config';
+import { menuItem as menuItemHLI } from '../pages/Thema/HLI/HLI-render-config';
+import { menuItem as menuItemHoreca } from '../pages/Thema/Horeca/Horeca-render-config';
+import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
+import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
+import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-render-config';
+import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-render-config';
+import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
+import { menuItem as menuItemToeristischeVerhuur } from '../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
+import { menuItem as menuItemVaren } from '../pages/Thema/Varen/Varen-render-config';
 
 /**
  * @deprecated We will remove this in the future in favor of the SWR implementations.
@@ -39,22 +40,13 @@ type ThemaTitles = { [thema in ThemaID]: string };
  */
 export const ThemaTitles = {
   BELASTINGEN: 'Belastingen',
-  BODEM: 'Bodem',
-  ERFPACHT: 'Erfpacht',
-  HLI: 'Stadspas en regelingen bij laag inkomen',
-  HORECA: 'Horeca',
-  KLACHTEN: 'Klachten',
-  KREFIA: 'Kredietbank & FIBU',
   MILIEUZONE: 'Milieuzone',
   NOTIFICATIONS: 'Actueel',
   OVERTREDINGEN: 'Overtredingen voertuigen',
-  PARKEREN: 'Parkeren',
   HOME: 'Home',
   SEARCH: 'Zoeken',
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
-  TOERISTISCHE_VERHUUR: 'Toeristische verhuur',
-  VAREN: 'Passagiers- en beroepsvaart',
   VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
 } as const;
@@ -77,64 +69,11 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
 
-  ...documentTitlesJeugd,
-
-  // Inkomen
-  ...documentTitlesInkomen,
-  // Mijn gegevens + Contactmomenten
-  ...documentTitlesProfile,
-
-  // HLI
-  [AppRoutes.HLI]: `Regelingen bij laag inkomen | overzicht`,
-  [AppRoutes['HLI/STADSPAS']]: `Stadspas | ${ThemaTitles.HLI}`,
-  [AppRoutes['HLI/REGELING']]: `Regeling | ${ThemaTitles.HLI}`,
-  [AppRoutes['HLI/REGELINGEN_LIST']]: `Regelingen | ${ThemaTitles.HLI}`,
-
   // Vergunningen
   [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
   [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
   [AppRoutes['VERGUNNINGEN/DETAIL']]:
     `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-
-  // Toeristische verhuur
-  [AppRoutes.TOERISTISCHE_VERHUUR]: `${ThemaTitles.TOERISTISCHE_VERHUUR} | overzicht`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING']]:
-    `Vergunning | ${ThemaTitles.TOERISTISCHE_VERHUUR}`,
-  [AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING/LIST']]: getListPageDocumentTitle(
-    ThemaTitles.TOERISTISCHE_VERHUUR
-  ),
-
-  // Varen
-  [AppRoutes.VAREN]: `${ThemaTitles.VAREN} | overzicht`,
-  [AppRoutes['VAREN/LIST']]: getVarenListPageDocumentTitle(ThemaTitles.VAREN),
-  [AppRoutes['VAREN/DETAIL']]: getVarenDetailPageDocumentTitle(
-    ThemaTitles.VAREN
-  ),
-
-  // Krefia
-  [AppRoutes.KREFIA]: `${ThemaTitles.KREFIA}`,
-
-  // Parkeren
-  [AppRoutes.PARKEREN]: `${ThemaTitles.PARKEREN} | overzicht`,
-  [AppRoutes['PARKEREN/DETAIL']]: `Parkeervergunning | ${ThemaTitles.PARKEREN}`,
-  [AppRoutes['PARKEREN/LIST']]: getListPageDocumentTitle(ThemaTitles.PARKEREN),
-
-  // Klachten
-  [AppRoutes.KLACHTEN]: `${ThemaTitles.KLACHTEN} | overzicht`,
-  [AppRoutes['KLACHTEN/LIST']]: `Lijst | ${ThemaTitles.KLACHTEN}`,
-  [AppRoutes['KLACHTEN/KLACHT']]: `${ThemaTitles.KLACHTEN} | klacht`,
-
-  // Horeca
-  [AppRoutes.HORECA]: 'Horeca | overzicht',
-  [AppRoutes['HORECA/LIST']]: getListPageDocumentTitle(ThemaTitles.HORECA),
-  [AppRoutes['HORECA/DETAIL']]: 'Vergunning | Horeca',
-
-  // Erfpacht
-  [AppRoutes.ERFPACHT]: 'Erfpacht | overzicht',
-  [AppRoutes['ERFPACHT/DOSSIERS']]: 'Erfpacht | Lijst met dossiers',
-  [AppRoutes['ERFPACHT/OPEN_FACTUREN']]: 'Erfpacht | Lijst met open facturen',
-  [AppRoutes['ERFPACHT/ALLE_FACTUREN']]: 'Erfpacht | Lijst met facturen',
-  [AppRoutes['ERFPACHT/DOSSIERDETAIL']]: 'Erfpacht | dossier',
 
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
@@ -171,6 +110,14 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemBezwaren,
   menuItemBodem,
   menuItemBurgerzaken,
+  menuItemErfpacht,
+  menuItemErfpachtZakelijk,
+  menuItemHLI,
+  menuItemHoreca,
+  menuItemKlachten,
+  menuItemParkeren,
+  menuItemToeristischeVerhuur,
+  menuItemVaren,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -179,32 +126,12 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private'],
   },
   {
-    title: ThemaTitles.VAREN,
-    id: ThemaIDs.VAREN,
-    to: AppRoutes.VAREN,
-    profileTypes: ['commercial'],
-  },
-  {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK,
     rel: 'external',
     profileTypes: ['commercial'],
     isAlwaysVisible: true,
-  },
-
-  {
-    title: ThemaTitles.ERFPACHT,
-    id: ThemaIDs.ERFPACHT,
-    to: AppRoutes.ERFPACHT,
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.ERFPACHT,
-    id: ThemaIDs.ERFPACHT,
-    to: import.meta.env.REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK,
-    profileTypes: ['commercial'],
-    rel: 'external',
   },
   {
     title: ThemaTitles.SUBSIDIE,
@@ -234,14 +161,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private'],
   },
   {
-    title: (appState: AppState) => {
-      return getThemaTitleWithAppState(appState);
-    },
-    id: ThemaIDs.HLI,
-    to: AppRoutes.HLI,
-    profileTypes: ['private'],
-  },
-  {
     title: ThemaTitles.VERGUNNINGEN,
     id: ThemaIDs.VERGUNNINGEN,
     to: AppRoutes.VERGUNNINGEN,
@@ -255,46 +174,10 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     profileTypes: ['private', 'commercial'],
   },
   {
-    title: ThemaTitles.PARKEREN,
-    id: ThemaIDs.PARKEREN,
-    to: (appState: AppState) => {
-      const hasDecosParkeerVergunningen =
-        !!appState.PARKEREN?.content?.vergunningen?.length;
-      const urlExternal = appState.PARKEREN?.content?.url ?? '/';
-      return hasDecosParkeerVergunningen ? AppRoutes.PARKEREN : urlExternal;
-    },
-    profileTypes: ['private', 'commercial'],
-  },
-  {
     title: ThemaTitles.OVERTREDINGEN,
     id: ThemaIDs.OVERTREDINGEN,
     to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
     rel: 'external',
-    profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.TOERISTISCHE_VERHUUR,
-    id: ThemaIDs.TOERISTISCHE_VERHUUR,
-    to: AppRoutes.TOERISTISCHE_VERHUUR,
-    profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.KREFIA,
-    id: ThemaIDs.KREFIA,
-    to: AppRoutes.KREFIA,
-    profileTypes: ['private'],
-  },
-
-  {
-    title: ThemaTitles.KLACHTEN,
-    id: ThemaIDs.KLACHTEN,
-    to: AppRoutes.KLACHTEN,
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.HORECA,
-    id: ThemaIDs.HORECA,
-    to: AppRoutes.HORECA,
     profileTypes: ['private', 'commercial'],
   },
 ];

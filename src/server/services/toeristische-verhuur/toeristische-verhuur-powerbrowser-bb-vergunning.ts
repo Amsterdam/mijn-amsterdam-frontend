@@ -17,7 +17,7 @@ import {
   PowerBrowserStatusResponse,
   SearchRequestResponse,
 } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
   apiErrorResult,
   ApiResponse,
@@ -487,7 +487,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunning {
     id,
     identifier: pbZaak.zaaknummer ?? zaak.id,
     link: {
-      to: generatePath(AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'], {
+      to: generatePath(routeConfig.detailPage.path, {
         id,
         caseType: 'bed-and-breakfast',
       }),

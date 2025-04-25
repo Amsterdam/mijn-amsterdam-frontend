@@ -6,8 +6,11 @@ import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
 } from './toeristische-verhuur-config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
@@ -30,22 +33,19 @@ export function createToeristischeVerhuurNotification(
     vergunning.dateRequest ??
     '';
   let cta = 'Bekijk uw aanvraag';
-  let linkTo: string = AppRoutes.TOERISTISCHE_VERHUUR;
+  let linkTo: string = routeConfig.themaPage.path;
 
   if (
     vergunning.title === 'Vergunning bed & breakfast' ||
     vergunning.title === 'Vergunning vakantieverhuur'
   ) {
-    const ctaLinkToDetail = generatePath(
-      AppRoutes['TOERISTISCHE_VERHUUR/VERGUNNING'],
-      {
-        id: vergunning.id,
-        caseType:
-          vergunning.title === 'Vergunning vakantieverhuur'
-            ? 'vakantieverhuur'
-            : 'bed-and-breakfast',
-      }
-    );
+    const ctaLinkToDetail = generatePath(routeConfig.detailPage.path, {
+      id: vergunning.id,
+      caseType:
+        vergunning.title === 'Vergunning vakantieverhuur'
+          ? 'vakantieverhuur'
+          : 'bed-and-breakfast',
+    });
     const ctaLinkToAanvragen =
       vergunning.title === 'Vergunning bed & breakfast'
         ? 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/vergunning/'
@@ -116,7 +116,8 @@ export function createToeristischeVerhuurNotification(
   return {
     id: `vergunning-${vergunning.id}-notification`,
     datePublished,
-    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+    themaID: themaId,
+    themaTitle: themaTitle,
     title,
     description: description,
     link: {
@@ -135,12 +136,13 @@ function createRegistratieNotification(
     ? vergunning.agreementDate
     : '';
   const cta = 'Bekijk uw overzicht toeristische verhuur';
-  const linkTo = AppRoutes.TOERISTISCHE_VERHUUR;
+  const linkTo = routeConfig.themaPage.path;
 
   return {
     id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
     datePublished,
-    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+    themaID: themaId,
+    themaTitle: themaTitle,
     title,
     description,
     link: {

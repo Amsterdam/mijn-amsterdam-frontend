@@ -1,11 +1,11 @@
 import {
   listPageTitle,
-  routes,
   tableConfigLVVRegistraties,
   tableConfig,
-} from './toeristischeVerhuur-thema-config';
+  themaId,
+  themaTitle,
+} from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { ThemaIDs } from '../../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -13,7 +13,6 @@ import {
 } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { ThemaTitles } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -92,18 +91,17 @@ export function useToeristischeVerhuurThemaData() {
     });
   }
 
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.TOERISTISCHE_VERHUUR);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
     vergunningen,
     lvvRegistraties,
-    title: ThemaTitles.TOERISTISCHE_VERHUUR,
+    title: themaTitle,
     isLoading: isLoading(TOERISTISCHE_VERHUUR),
     isError: isError(TOERISTISCHE_VERHUUR, false),
     hasLVVRegistratiesError,
     hasBBVergunningError,
     hasVakantieVerhuurVergunningError,
-    routes,
     tableConfigVergunningen: tableConfig,
     tableConfigLVVRegistraties,
     listPageTitle,

@@ -1,7 +1,7 @@
 import { Link, Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { THEMA_DETAIL_TITLE_DEFAULT } from './toeristischeVerhuur-thema-config';
+import { THEMA_DETAIL_TITLE_DEFAULT } from './ToeristischeVerhuur-thema-config';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
 import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
@@ -11,8 +11,8 @@ import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 import { PageContentCell } from '../../../components/Page/Page';
-import { useAppStateGetter } from '../../../hooks/useAppState';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook';
 
 function getMailBody(
@@ -127,7 +127,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
   );
 }
 
-export function ToeristischeVerhuurDetailPagina() {
+export function ToeristischeVerhuurDetail() {
   const { vergunningen, isError, isLoading, breadcrumbs } =
     useToeristischeVerhuurThemaData();
   const { id } = useParams<{ id: string }>();

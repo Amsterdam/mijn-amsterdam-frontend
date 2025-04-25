@@ -1,13 +1,13 @@
 import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
+import { themaId } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './erfpachtData.hook';
 import { ErfpachtDossiersDetail } from '../../../../server/services/erfpacht/erfpacht-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
 import { BFFApiUrls } from '../../../config/api';
-import { BagThemas } from '../../../config/thema';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
 
 export function ErfpachtFacturen() {
@@ -20,7 +20,7 @@ export function ErfpachtFacturen() {
 
   const [dossierApiResponse, api] = useAppStateBagApi<ErfpachtDossiersDetail>({
     url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagThema: BagThemas.ERFPACHT,
+    bagThema: `${themaId}_BAG`,
     key: dossierNummerUrlParam ?? 'erfpacht-dossier',
   });
 

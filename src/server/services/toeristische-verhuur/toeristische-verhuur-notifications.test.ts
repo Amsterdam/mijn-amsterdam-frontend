@@ -3,14 +3,12 @@ import { Mock, vi } from 'vitest';
 
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { fetchToeristischeVerhuurNotifications } from './toeristische-verhuur-notifications';
+import { themaId } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
 import { MONTHS_TO_KEEP_NOTIFICATIONS } from '../../../universal/config/app';
-import { ThemaIDs } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 
-vi.mock('./toeristische-verhuur', () => ({
-  fetchToeristischeVerhuur: vi.fn(),
-}));
+vi.mock('./toeristische-verhuur');
 
 describe('fetchToeristischeVerhuurNotifications', () => {
   const mockRequestID = 'test-request-id';
@@ -25,7 +23,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
   });
 
   it('should return (default) notifications for toeristische verhuur', async () => {
-    (fetchToeristischeVerhuur as Mock).mockResolvedValueOnce(
+    (fetchToeristischeVerhuur as unknown as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         vakantieverhuurVergunningen: [
           {
@@ -76,7 +74,8 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
         },
-        themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+        themaID: themaId,
+        themaTitle: 'Toeristische verhuur',
         title: 'Aanvraag vakantie in behandeling',
       },
       {
@@ -88,7 +87,8 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw aanvraag',
           to: '/toeristische-verhuur',
         },
-        themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+        themaID: themaId,
+        themaTitle: 'Toeristische verhuur',
         title: 'Aanvraag bed & breakfast in behandeling',
       },
       {
@@ -100,14 +100,15 @@ describe('fetchToeristischeVerhuurNotifications', () => {
           title: 'Bekijk uw overzicht toeristische verhuur',
           to: '/toeristische-verhuur',
         },
-        themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+        themaID: themaId,
+        themaTitle: 'Toeristische verhuur',
         title: 'Aanvraag landelijk registratienummer toeristische verhuur',
       },
     ]);
   });
 
   it('should not return expired notifications', async () => {
-    (fetchToeristischeVerhuur as Mock).mockResolvedValueOnce(
+    (fetchToeristischeVerhuur as unknown as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         vakantieverhuurVergunningen: [
           {
@@ -149,7 +150,7 @@ describe('fetchToeristischeVerhuurNotifications', () => {
   });
 
   it(`should only return Afgehandelde notifications less than ${MONTHS_TO_KEEP_NOTIFICATIONS} month old`, async () => {
-    (fetchToeristischeVerhuur as Mock).mockResolvedValueOnce(
+    (fetchToeristischeVerhuur as unknown as Mock).mockResolvedValueOnce(
       apiSuccessResult({
         vakantieverhuurVergunningen: [
           {

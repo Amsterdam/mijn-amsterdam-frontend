@@ -7,7 +7,7 @@ import { KVKData } from '../../../../../server/services/profile/kvk';
 import { AppState } from '../../../../../universal/types/App.types';
 import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
-import { routes } from '../Profile-thema-config';
+import { routeConfig } from '../Profile-thema-config';
 
 const responseData = {
   eigenaar: {
@@ -211,7 +211,7 @@ const panelHeadings = [
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
-  const routeEntry = routes.themaPageKVK;
+  const routeEntry = routeConfig.themaPageKVK.path;
 
   function Component() {
     return (

@@ -5,18 +5,24 @@ import { useInkomenThemaData } from './useInkomenThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
 export function InkomenLijstPagina() {
-  const { kind } = useParams<{
+  const { kind = 'lopende-aanvragen' } = useParams<{
     kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'uitkering'>;
   }>();
-  const { zaken, tableConfig, routes, isLoadingWpi, isErrorWpi, breadcrumbs } =
-    useInkomenThemaData();
+  const {
+    zaken,
+    tableConfig,
+    listPageRoute,
+    isLoadingWpi,
+    isErrorWpi,
+    breadcrumbs,
+  } = useInkomenThemaData();
   const listPageTableConfig = tableConfig[kind];
 
   return (
     <ListPagePaginated
       items={zaken.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
-      appRoute={routes.listPage}
+      appRoute={listPageRoute}
       appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}

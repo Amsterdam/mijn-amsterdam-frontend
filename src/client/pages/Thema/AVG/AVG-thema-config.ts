@@ -1,7 +1,6 @@
 import { generatePath } from 'react-router';
 
 import { AVGRequestFrontend } from '../../../../server/services/avg/types';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -22,7 +21,7 @@ const listPageParamKind = {
 } as const;
 
 export const featureToggle = {
-  AvgActive: !IS_PRODUCTION,
+  avgActive: true,
 };
 
 export const themaId = 'AVG' as const;

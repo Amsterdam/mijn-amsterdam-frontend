@@ -7,7 +7,7 @@ import { AppState } from '../../../../universal/types/App.types';
 
 export function createHLIState(withData: {
   status?: string;
-  stadspassen?: StadspasFrontend[];
+  stadspas?: StadspasFrontend[];
   regelingen?: object[];
 }): AppState {
   const state = {
@@ -15,7 +15,7 @@ export function createHLIState(withData: {
       status: withData.status || 'OK',
       content: {
         regelingen: withData.regelingen || [],
-        stadspas: withData.stadspassen || [],
+        stadspas: withData.stadspas || [],
       },
     },
   } as unknown as AppState;

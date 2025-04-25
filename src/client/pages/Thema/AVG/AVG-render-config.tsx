@@ -19,17 +19,17 @@ export const AvgRoutes = [
   {
     route: routeConfig.detailPage.path,
     Component: AVGDetail,
-    isActive: featureToggle.AvgActive,
+    isActive: featureToggle.avgActive,
   },
   {
     route: routeConfig.listPage.path,
     Component: AVGLijst,
-    isActive: featureToggle.AvgActive,
+    isActive: featureToggle.avgActive,
   },
   {
     route: routeConfig.themaPage.path,
     Component: AVGThema,
-    isActive: featureToggle.AvgActive,
+    isActive: featureToggle.avgActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
@@ -40,7 +40,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   profileTypes: ['private', 'commercial'],
   isActive(appState: AppState) {
     return (
-      featureToggle.AvgActive &&
+      featureToggle.avgActive &&
       !isLoading(appState.AVG) &&
       !!appState.AVG?.content?.verzoeken?.length
     );

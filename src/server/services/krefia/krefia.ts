@@ -6,7 +6,10 @@ import type {
   KrefiaSourceResponse,
   Krefia,
 } from './krefia.types';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Krefia/Krefia-thema-config';
 import {
   type ApiResponse,
   apiSuccessResult,
@@ -30,7 +33,8 @@ function createNotification(
     title: isFibu
       ? 'Bericht Budgetbeheer (FIBU)'
       : `Bericht Kredietbank Amsterdam`,
-    themaID: ThemaIDs.KREFIA,
+    themaID: themaId,
+    themaTitle: themaTitle,
     description: isFibu
       ? 'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)'
       : 'Er staan ongelezen berichten voor u klaar van Kredietbank Amsterdam',

@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router';
+
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -5,9 +7,10 @@ import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/h
 import { WithDetailLinkComponent } from '../../../components/Table/TableV2.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
-import { toDocumentTitles, toRoutes } from '../../../helpers/thema-config';
 
-export const zorgnedLeerlingenvervoerActive = !IS_PRODUCTION;
+export const featureToggle = {
+  leerlingenvervoerActive: !IS_PRODUCTION,
+};
 
 export const themaTitle = 'Onderwijs en Jeugd';
 export const themaId = 'JEUGD' as const;
@@ -18,7 +21,10 @@ export const routeConfig: ThemaRoutesConfig = {
   themaPage: {
     path: '/jeugd',
     documentTitle: themaTitle,
-    trackingUrl: '/jeugd',
+  },
+  listPage: {
+    path: '/jeugd/lijst/:kind/:page?',
+    documentTitle: themaTitle,
   },
   detailPage: {
     path: `${detailRouteBase}/:id`,
@@ -26,9 +32,6 @@ export const routeConfig: ThemaRoutesConfig = {
     trackingUrl: detailRouteBase,
   },
 } as const;
-
-export const routes = toRoutes(routeConfig);
-export const documentTitles = toDocumentTitles(routeConfig);
 
 export const linkListItems: LinkProps[] = [
   {
@@ -57,6 +60,9 @@ export const listPageParamKind = {
   historic: 'eerdere-en-afgewezen-voorzieningen',
 } as const;
 
+type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+
 export const listPageTitle = {
   [listPageParamKind.actual]: 'Huidige voorzieningen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
@@ -68,6 +74,10 @@ export const tableConfig = {
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       regeling.isActual,
     displayProps: responsiveDisplayProps,
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind: listPageParamKind.actual,
+      page: null,
+    }),
     maxItems: 5,
     textNoContent: 'U heeft geen huidige voorzieningen.',
   },
@@ -75,6 +85,10 @@ export const tableConfig = {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       !regeling.isActual,
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind: listPageParamKind.historic,
+      page: null,
+    }),
     displayProps: responsiveDisplayProps,
     maxItems: 5,
     textNoContent: 'U heeft geen eerdere en/of afgewezen voorzieningen.',

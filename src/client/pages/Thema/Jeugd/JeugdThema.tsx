@@ -41,6 +41,7 @@ export function JeugdThemaPagina() {
         title={config.title}
         className={config.className}
         zaken={voorzieningen.filter(config.filter)}
+        listPageRoute={config.listPageRoute}
         displayProps={config.displayProps}
         textNoContent={config.textNoContent}
         maxItems={config.maxItems}

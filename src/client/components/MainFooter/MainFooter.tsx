@@ -19,7 +19,7 @@ import type {
   AstNode,
   CMSFooterContent,
   FooterBlock as FooterBlockProps,
-} from '../../../server/services';
+} from '../../../server/services/cms/cms-content';
 import { useCMSApi } from '../../hooks/api/useCmsApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
