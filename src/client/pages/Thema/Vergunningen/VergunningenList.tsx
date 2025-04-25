@@ -11,13 +11,14 @@ export function VergunningenList() {
   const { vergunningen, isLoading, isError, tableConfig, routes, breadcrumbs } =
     useVergunningenThemaData();
 
-  const { title, displayProps, filter, sort } = tableConfig[kind] ?? null;
+  const { title, displayProps, filter, sort, listPageRoute } =
+    tableConfig[kind] ?? null;
 
   return (
     <ListPagePaginated
       items={vergunningen.filter(filter).sort(sort)}
       title={title}
-      appRoute={routes.listPage}
+      appRoute={listPageRoute}
       appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}

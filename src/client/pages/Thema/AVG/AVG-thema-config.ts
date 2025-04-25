@@ -35,7 +35,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '/avg/lijst/:kind/:page?',
-    documentTitle(_config, params) {
+    documentTitle(params) {
       const kind = params?.kind as ListPageParamKind;
       return `${capitalizeFirstLetter(kind === 'lopende-aanvragen' ? 'Lopende' : 'Afgehanelde')} ${themaTitle} verzoeken | overzicht`;
     },
