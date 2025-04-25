@@ -15,12 +15,8 @@ export const AppRoutes = {
   NOTIFICATIONS: '/overzicht-updates/:page?',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
-  VERGUNNINGEN: '/vergunningen',
-  'VERGUNNINGEN/LIST': '/vergunningen/lijst/:kind/:page?',
-  'VERGUNNINGEN/DETAIL': '/vergunningen/:caseType/:id',
 
   SEARCH: '/zoeken',
-  KREFIA: '/kredietbank-fibu',
 
   BFF_500_ERROR: '/server-error-500',
 

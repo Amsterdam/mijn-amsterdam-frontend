@@ -27,7 +27,7 @@ import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-render-config';
 import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config';
 import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
 import { VarenRoutes } from './pages/Thema/Varen/Varen-render-config';
-import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-routes';
+import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-render-config';
 import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-routes';
 import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatusRoutes';
 

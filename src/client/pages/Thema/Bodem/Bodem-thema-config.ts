@@ -35,7 +35,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '/bodem/lijst/lood-meting/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       `${params?.kind === listPageParamKind.completed ? 'Afgehandelde' : 'Lopende'} aanvragen | ${themaTitle}`,
   },
   themaPage: {

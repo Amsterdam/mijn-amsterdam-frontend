@@ -12,7 +12,6 @@ import { LinkProps, ZaakDetail } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { TrackingConfig } from '../../../config/routes';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
@@ -186,10 +185,7 @@ export const linkListItems: LinkProps[] = [
 ];
 
 export function getAfisListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(
-    config: TrackingConfig,
-    params: T | null
-  ) => {
+  return <T extends Record<string, string>>(params: T | null) => {
     switch (params?.state) {
       case 'open':
         return `Open facturen | ${themaTitle}`;

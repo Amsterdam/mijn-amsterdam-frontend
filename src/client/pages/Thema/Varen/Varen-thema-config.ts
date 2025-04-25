@@ -9,7 +9,6 @@ import {
   DisplayProps,
   WithDetailLinkComponent,
 } from '../../../components/Table/TableV2.types';
-import { TrackingConfig } from '../../../config/routes';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
@@ -129,10 +128,7 @@ export const rederRegistratieLink: LinkProps = {
 } as const;
 
 export function getVarenListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(
-    config: TrackingConfig,
-    params: T | null
-  ) => {
+  return <T extends Record<string, string>>(params: T | null) => {
     const kind = params?.kind as ListPageParamKind;
     return kind in tableConfig
       ? `${tableConfig[kind].title} | ${themaTitle}`
@@ -141,10 +137,7 @@ export function getVarenListPageDocumentTitle(themaTitle: string) {
 }
 
 export function getVarenDetailPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(
-    config: TrackingConfig,
-    params: T | null
-  ) => {
+  return <T extends Record<string, string>>(params: T | null) => {
     switch (params?.caseType) {
       case 'exploitatievergunning':
         return `Exploitatievergunning | ${themaTitle}`;

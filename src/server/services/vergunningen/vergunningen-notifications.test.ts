@@ -9,8 +9,8 @@ import {
   getVergunningNotifications,
   fetchVergunningenNotifications,
 } from './vergunningen-notifications';
+import { themaId } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
-import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiSuccessResult,
   apiErrorResult,
@@ -149,7 +149,7 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        ThemaIDs.VERGUNNINGEN
+        themaId
       );
       expect(notification).toHaveProperty('title', 'Test Title');
       expect(notification).toHaveProperty('description', 'Test Description');
@@ -175,7 +175,7 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        ThemaIDs.VERGUNNINGEN
+        themaId
       );
       expect(notification).toBeNull();
     });
@@ -237,7 +237,7 @@ describe('vergunningen-notifications', () => {
       const notifications = getVergunningNotifications(
         vergunningen,
         decosZaakTransformers,
-        ThemaIDs.VERGUNNINGEN
+        themaId
       );
       expect(notifications).toHaveLength(3);
       expect(notifications[0]).toHaveProperty('title', 'Aanvraag');
@@ -255,7 +255,7 @@ describe('vergunningen-notifications', () => {
       const notifications = getVergunningNotifications(
         vergunningen,
         decosZaakTransformers,
-        ThemaIDs.VERGUNNINGEN
+        themaId
       );
       expect(notifications).toHaveLength(0);
     });

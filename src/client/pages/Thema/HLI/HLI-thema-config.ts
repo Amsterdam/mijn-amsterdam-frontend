@@ -69,7 +69,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       `${params?.kind === listPageParamKind.historic ? 'Eerdere' : 'Huidige'} regelingen | ${themaTitle}`,
   },
   themaPage: {

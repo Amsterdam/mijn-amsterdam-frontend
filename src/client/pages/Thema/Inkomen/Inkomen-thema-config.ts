@@ -14,7 +14,6 @@ import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
 } from '../../../config/app';
-import { TrackingConfig } from '../../../config/routes';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const themaId = 'INKOMEN' as const;
@@ -61,12 +60,12 @@ export const routeConfig = {
   },
   listPageSpecificaties: {
     path: '/inkomen/lijst/specificaties/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       `${params?.kind === listPageParamKind.jaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties'} | ${themaTitle}`,
   },
   listPage: {
     path: '/inkomen/lijst/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       `${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | ${themaTitle}`,
   },
   themaPage: {
@@ -199,10 +198,7 @@ export const tableConfigSpecificaties = {
 } as const;
 
 export function getInkomenListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(
-    _config: TrackingConfig,
-    params: T | null
-  ) => {
+  return <T extends Record<string, string>>(params: T | null) => {
     const kind = params?.kind as Exclude<
       ListPageParamKind,
       'uitkering' | 'jaaropgaven'
@@ -217,10 +213,7 @@ export function getInkomenSpecificatiesListPageDocumentTitle(
   themaTitle: string,
   kind: Exclude<ListPageParamKind, 'lopende-aanvragen' | 'eerdere-aanvragen'>
 ) {
-  return <T extends Record<string, string>>(
-    _config: TrackingConfig,
-    _params: T | null
-  ) => {
+  return <T extends Record<string, string>>(_params: T | null) => {
     return kind in tableConfigSpecificaties
       ? `${tableConfigSpecificaties[kind].title} | ${themaTitle}`
       : themaTitle;

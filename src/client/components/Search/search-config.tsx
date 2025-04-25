@@ -81,6 +81,7 @@ import {
   routeConfig as routeConfigVaren,
   themaTitle as themaTitleVaren,
 } from '../../pages/Thema/Varen/Varen-thema-config';
+import { themaId as themaIdVergunningen } from '../../pages/Thema/Vergunningen/Vergunningen-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -261,7 +262,7 @@ interface ToeristischRegistratieItem {
 
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
-    stateKey: 'VERGUNNINGEN' as AppStateKey,
+    stateKey: themaIdVergunningen,
     displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },

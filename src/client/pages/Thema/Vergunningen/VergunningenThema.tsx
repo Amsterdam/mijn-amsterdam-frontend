@@ -15,7 +15,7 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-export function VergunningenThemaPagina() {
+export function VergunningenThema() {
   const {
     vergunningen,
     isLoading,

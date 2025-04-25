@@ -5,15 +5,15 @@ import {
   listPageParamKind,
   routes,
   tableConfig,
+  themaId,
+  themaTitle,
   type ListPageParamKind,
 } from './Vergunningen-thema-config';
 import styles from './Vergunningen.module.scss';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { ThemaIDs } from '../../../../universal/config/thema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { entries } from '../../../../universal/helpers/utils';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { ThemaTitles } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
@@ -24,7 +24,7 @@ export function useVergunningenThemaData() {
     'identifier',
     true
   );
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.VERGUNNINGEN);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   const tableStyles = {
     [listPageParamKind.actual]: styles.VergunningenTableThemaPagina,
@@ -43,7 +43,7 @@ export function useVergunningenThemaData() {
   );
 
   return {
-    title: ThemaTitles.VERGUNNINGEN,
+    title: themaTitle,
     vergunningen,
     isLoading: isLoading(VERGUNNINGEN),
     isError: isError(VERGUNNINGEN),

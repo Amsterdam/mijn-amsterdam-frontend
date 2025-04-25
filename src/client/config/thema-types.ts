@@ -1,6 +1,5 @@
 import { PathMatch } from 'react-router';
 
-import { TrackingConfig } from './routes';
 import { SomeOtherString } from '../../universal/helpers/types';
 import {
   AppState,
@@ -42,7 +41,6 @@ type ThemaPageType =
   | SomeOtherString;
 
 type DocumenttitleFN = <T extends Record<string, string>>(
-  config: TrackingConfig,
   params: T | null
 ) => string;
 

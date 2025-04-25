@@ -6,7 +6,7 @@ import {
   decosZaakTransformers,
 } from './decos-zaken';
 import { getDisplayStatus, getStatusSteps } from './vergunningen-status-steps';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
@@ -42,7 +42,7 @@ function transformVergunningFrontend(
 async function fetchVergunningen_(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  appRoute: string = AppRoutes['VERGUNNINGEN/DETAIL']
+  appRouteDetailPage: string = routeConfig.detailPage.path
 ): Promise<ApiResponse<VergunningFrontend[]>> {
   const response = await fetchDecosZaken(
     requestID,
@@ -56,7 +56,7 @@ async function fetchVergunningen_(
       transformVergunningFrontend(
         authProfileAndToken.profile.sid,
         vergunning,
-        appRoute
+        appRouteDetailPage
       )
     );
     return apiSuccessResult(zakenFrontend);

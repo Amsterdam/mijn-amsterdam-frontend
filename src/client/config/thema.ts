@@ -21,6 +21,7 @@ import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-r
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
 import { menuItem as menuItemToeristischeVerhuur } from '../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
 import { menuItem as menuItemVaren } from '../pages/Thema/Varen/Varen-render-config';
+import { menuItem as menuItemVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-render-config';
 
 /**
  * @deprecated We will remove this in the future in favor of the SWR implementations.
@@ -47,7 +48,6 @@ export const ThemaTitles = {
   SEARCH: 'Zoeken',
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
-  VERGUNNINGEN: 'Vergunningen en ontheffingen',
   ZORG: 'Zorg en ondersteuning',
 } as const;
 /**
@@ -69,12 +69,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
   [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
 
-  // Vergunningen
-  [AppRoutes.VERGUNNINGEN]: `${ThemaTitles.VERGUNNINGEN} | overzicht`,
-  [AppRoutes['VERGUNNINGEN/LIST']]: `Lijst | ${ThemaTitles.VERGUNNINGEN}`,
-  [AppRoutes['VERGUNNINGEN/DETAIL']]:
-    `Vergunning | ${ThemaTitles.VERGUNNINGEN}`,
-
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
@@ -86,18 +80,7 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
 
-  [AppRoutes.HOME]: (config) => {
-    switch (true) {
-      case config.profileType === 'private-attributes' &&
-        config.isAuthenticated:
-        return 'Home | Meldingen overzicht';
-      case config.profileType !== 'private-attributes' &&
-        config.isAuthenticated:
-        return 'Home | Dashboard';
-      default:
-        return 'Inloggen | Mijn Amsterdam';
-    }
-  },
+  [AppRoutes.HOME]: 'Home | Mijn Amsterdam',
 };
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
@@ -118,6 +101,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemParkeren,
   menuItemToeristischeVerhuur,
   menuItemVaren,
+  menuItemVergunningen,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -159,12 +143,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: import.meta.env.REACT_APP_SSO_URL_SVWI,
     rel: 'external',
     profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.VERGUNNINGEN,
-    id: ThemaIDs.VERGUNNINGEN,
-    to: AppRoutes.VERGUNNINGEN,
-    profileTypes: ['private', 'commercial'],
   },
   {
     title: ThemaTitles.MILIEUZONE,

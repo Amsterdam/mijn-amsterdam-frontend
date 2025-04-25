@@ -3,7 +3,7 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { VergunningDetailPagina, forTesting } from './VergunningDetail';
+import { VergunningenDetail, forTesting } from './VergunningenDetail';
 import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken';
 import { componentCreator } from '../../MockApp';
 
@@ -73,7 +73,7 @@ describe('VergunningDetailPagina', () => {
   it('should render the correct component based on caseType', () => {
     const mockVergunning = { caseType: 'TVM - RVV - Object' };
     const createVergunning = componentCreator({
-      component: VergunningDetailPagina,
+      component: VergunningenDetail,
       routeEntry: `/vergunningen/tvm-rvv-object/1`,
       routePath: '/vergunningen/:caseType/:id',
     });
@@ -101,7 +101,7 @@ describe('VergunningDetailPagina', () => {
   it('should render the default Datalist for unknown caseType', () => {
     const mockVergunning = { caseType: 'Unknown Case', key: 'value' };
     const createVergunning = componentCreator({
-      component: VergunningDetailPagina,
+      component: VergunningenDetail,
       routeEntry: `/vergunningen/tvm-rvv-object/1`,
       routePath: '/vergunningen/:caseType/:id',
     });

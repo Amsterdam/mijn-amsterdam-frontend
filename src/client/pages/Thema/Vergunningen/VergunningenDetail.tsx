@@ -11,14 +11,14 @@ import { TVMRVVObject } from './detail-page-content/TVMRVVObject';
 import { VergunningDetailDocumentsList } from './detail-page-content/VergunningDetailDocumentsList';
 import { VOB } from './detail-page-content/VOB';
 import { Woonvergunningen } from './detail-page-content/Woonvergunningen';
+import { WVOSContent } from './detail-page-content/WVOS';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
-import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { WVOSContent } from './detail-page-content/WVOS';
 import { PageContentCell } from '../../../components/Page/Page';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 interface DetailPageContentProps<V> {
   vergunning: V;
@@ -85,7 +85,7 @@ function DetailPageContent<V extends VergunningFrontend>({
   );
 }
 
-export function VergunningDetailPagina() {
+export function VergunningenDetail() {
   const { vergunningen, isLoading, isError, breadcrumbs } =
     useVergunningenThemaData();
   const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =

@@ -24,7 +24,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '/parkeren/lijst/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
   },
   themaPage: {

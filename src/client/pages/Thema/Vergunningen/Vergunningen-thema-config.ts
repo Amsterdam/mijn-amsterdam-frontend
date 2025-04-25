@@ -5,7 +5,6 @@ import {
   WithDateRange,
 } from '../../../../server/services/decos/config-and-types';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
@@ -14,7 +13,7 @@ import {
   WithDetailLinkComponent,
 } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
-import { TrackingConfig } from '../../../config/routes';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 type VergunningFrontendDisplayProps = DisplayProps<
   WithDetailLinkComponent<VergunningFrontend>
@@ -83,16 +82,35 @@ export const listPageParamKind = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
+export const featureToggle = {
+  vergunningenActive: true,
+};
+
+export const themaId = 'VERGUNNINGEN' as const;
+export const themaTitle = 'Vergunningen';
+
+export const routeConfig = {
+  detailPage: {
+    path: '/vergunningen/:caseType/:id',
+    trackingUrl(match) {
+      return `/vergunningen/${match.params.caseType}`;
+    },
+    documentTitle: `Vergunningen | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/vergunningen/lijst/:kind/:page?',
+    documentTitle: getListPageDocumentTitle(themaTitle),
+  },
+  themaPage: {
+    path: '/vergunningen',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
+
 function isVergunningExpirable(vergunning: { isExpired?: boolean }) {
   // isExpired is only present on vergunningen that have an end date.
   return 'isExpired' in vergunning;
 }
-
-export const routes = {
-  themaPage: AppRoutes.VERGUNNINGEN,
-  detailPage: AppRoutes['VERGUNNINGEN/DETAIL'],
-  listPage: AppRoutes['VERGUNNINGEN/LIST'],
-} as const;
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
@@ -101,7 +119,7 @@ export const tableConfig = {
       !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.inProgress,
       page: null,
     }),
@@ -121,7 +139,7 @@ export const tableConfig = {
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -145,7 +163,7 @@ export const tableConfig = {
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),
@@ -161,10 +179,7 @@ export const linkListItems: LinkProps[] = [
 ];
 
 export function getListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(
-    config: TrackingConfig,
-    params: T | null
-  ) => {
+  return <T extends Record<string, string>>(params: T | null): string => {
     const kind = params?.kind as ListPageParamKind;
     return kind in tableConfig
       ? `${tableConfig[kind].title} | ${themaTitle}`

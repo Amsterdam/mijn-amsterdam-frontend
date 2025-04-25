@@ -5,19 +5,20 @@ import { ListPageParamKind } from './Vergunningen-thema-config';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
 export function VergunningenList() {
-  const params = useParams<{ kind: ListPageParamKind }>();
+  const { kind = 'lopende-aanvragen' } = useParams<{
+    kind: ListPageParamKind;
+  }>();
   const { vergunningen, isLoading, isError, tableConfig, routes, breadcrumbs } =
     useVergunningenThemaData();
 
-  const { title, displayProps, filter, sort } =
-    tableConfig[params.kind] ?? null;
+  const { title, displayProps, filter, sort } = tableConfig[kind] ?? null;
 
   return (
     <ListPagePaginated
       items={vergunningen.filter(filter).sort(sort)}
       title={title}
       appRoute={routes.listPage}
-      appRouteParams={params}
+      appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}

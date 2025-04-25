@@ -9,8 +9,10 @@ import {
 import { decosZaakTransformers } from './decos-zaken';
 import { fetchVergunningen } from './vergunningen';
 import { isNearEndDate } from './vergunningen-helpers';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -151,14 +153,14 @@ export async function fetchVergunningenNotifications(
   const VERGUNNINGEN = await fetchVergunningen(
     requestID,
     authProfileAndToken,
-    AppRoutes['VERGUNNINGEN/DETAIL']
+    routeConfig.detailPage.path
   );
 
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
       decosZaakTransformers,
-      ThemaIDs.VERGUNNINGEN
+      themaId
     );
 
     return apiSuccessResult({

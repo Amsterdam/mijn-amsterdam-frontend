@@ -8,7 +8,6 @@ import { useTermReplacement } from './useTermReplacement';
 import { useUserCity } from './useUserCity';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { ExcludePageViewTrackingUrls } from '../config/api';
-import { CustomTrackingUrls, TrackingConfig } from '../config/routes';
 import {
   DocumentTitles,
   NOT_FOUND_TITLE,
@@ -51,17 +50,12 @@ export function usePageChange(isAuthenticated: boolean) {
     });
 
     const hasPageTitleAssigned = index !== -1;
-    const tackingConfig: TrackingConfig = {
-      profileType,
-      isAuthenticated,
-    };
     const route = sortedPageTitleRoutes[index];
 
     let assignedDocumentTitle = DocumentTitles[route];
 
     if (typeof assignedDocumentTitle === 'function') {
       assignedDocumentTitle = assignedDocumentTitle(
-        tackingConfig,
         matchPath(route, location.pathname)?.params ?? null
       );
     }
@@ -102,8 +96,7 @@ export function usePageChange(isAuthenticated: boolean) {
 
       if (documentTitle !== NOT_FOUND_TITLE) {
         const url =
-          getCustomTrackingUrl(location.pathname, tackingConfig) +
-          (location.search ?? '');
+          getCustomTrackingUrl(location.pathname) + (location.search ?? '');
         trackPageViewWithCustomDimension(
           termReplace(trackingTitle),
           url,
@@ -122,10 +115,10 @@ export function usePageChange(isAuthenticated: boolean) {
   ]);
 }
 
-export function getCustomTrackingUrl(
-  pathname: string,
-  trackingConfig: TrackingConfig
-) {
+// TODO: Implement, integratie with thema route configs
+const CustomTrackingUrls: Record<string, any> = {};
+
+export function getCustomTrackingUrl(pathname: string) {
   const customTrackingUrlKeys = Object.keys(CustomTrackingUrls) as AppRoute[];
   const route = customTrackingUrlKeys.find((r) => {
     return matchPath(pathname, r);
@@ -139,7 +132,7 @@ export function getCustomTrackingUrl(
       return pathname;
     }
 
-    return trackingUrlFn(matchResult, trackingConfig);
+    return trackingUrlFn(matchResult);
   }
 
   return pathname;

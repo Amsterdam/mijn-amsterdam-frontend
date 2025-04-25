@@ -28,7 +28,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '/bezwaren/lijst/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       `${params?.kind === listPageParamKind.afgehandeld ? 'Afgehandelde' : 'Lopende'} bezwaren | ${themaTitle}`,
   },
   themaPage: {

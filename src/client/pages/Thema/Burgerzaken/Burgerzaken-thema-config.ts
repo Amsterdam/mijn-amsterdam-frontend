@@ -39,7 +39,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '/paspoort-en-id-kaart/lijst/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       `${params?.documentType === 'paspoort' ? 'Paspoort' : 'ID-kaart'} | ${themaTitle}`,
   },
   themaPage: {
