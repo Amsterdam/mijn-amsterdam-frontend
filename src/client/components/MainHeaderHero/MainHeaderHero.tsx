@@ -22,6 +22,7 @@ const PIXEL_DENSITIES = {
 };
 
 function imgUrl(
+  profileType: ProfileType,
   imageName: string,
   width: number,
   orientation: 'landscape' | 'portrait' = 'landscape',
@@ -30,23 +31,21 @@ function imgUrl(
 ) {
   const ratio =
     orientation === 'portrait' ? PORTRAIT_SCREEN_RATIO : LANDSCAPE_SCREEN_RATIO;
-  return `/header/${Math.round(pixelDensity * width)}x${Math.round(
+  return `/header${profileType === 'commercial' ? '/zakelijk' : ''}/${Math.round(pixelDensity * width)}x${Math.round(
     pixelDensity * (width * ratio)
   )}-${imageName}.${ext}`;
 }
 
-function useHeroSrc() {
+function useHeroSrc(profileType: ProfileType) {
   const imageName = 'algemeen';
 
   // ------------------------------------------------------------
   // Produces the following image urls
   // ------------------------------------------------------------
-  // PORTRAIT_SMALL: '/header/1600x400-$imageName.jpg';
+  // PORTRAIT_SMALL: '/header/1080x432-$imageName.jpg';
   // PORTRAIT_SMALL_2X: '/header/1366x342-$imageName.jpg';
   // PORTRAIT_SMALL_3X: '/header/1024x256-$imageName.jpg';
-  // LANDSCAPE_SMALL: '/header/360x144-$imageName.jpg';
-  // LANDSCAPE_MEDIUM: '/header/720x288-$imageName.jpg';
-  // LANDSCAPE_LARGE: '/header/1080x432-$imageName.jpg';
+  // LANDSCAPE_LARGE: '/header/1600x400-$imageName.jpg';
 
   return useMemo(() => {
     if (!imageName) {
@@ -54,42 +53,35 @@ function useHeroSrc() {
     }
     return {
       PORTRAIT_SMALL: imgUrl(
+        profileType,
         imageName,
         IMAGE_SIZES.PORTRAIT_SMALL,
         'portrait',
         PIXEL_DENSITIES.STANDARD
       ),
       PORTRAIT_SMALL_2X: imgUrl(
+        profileType,
         imageName,
         IMAGE_SIZES.PORTRAIT_SMALL,
         'portrait',
         PIXEL_DENSITIES.RETINA
       ),
       PORTRAIT_SMALL_3X: imgUrl(
+        profileType,
         imageName,
         IMAGE_SIZES.PORTRAIT_SMALL,
         'portrait',
         PIXEL_DENSITIES.HIGH_DPI
       ),
-      LANDSCAPE_SMALL: imgUrl(
-        imageName,
-        IMAGE_SIZES.LANDSCAPE_SMALL,
-        'landscape',
-        PIXEL_DENSITIES.STANDARD
-      ),
-      LANDSCAPE_MEDIUM: imgUrl(
-        imageName,
-        IMAGE_SIZES.LANDSCAPE_MEDIUM,
-        'landscape',
-        PIXEL_DENSITIES.STANDARD
-      ),
       LANDSCAPE_LARGE: imgUrl(
+        profileType,
         imageName,
         IMAGE_SIZES.LANDSCAPE_LARGE,
         'landscape',
         PIXEL_DENSITIES.STANDARD
       ),
       FALLBACK: imgUrl(
+        profileType,
         imageName,
         IMAGE_SIZES.LANDSCAPE_LARGE,
         'landscape',
@@ -101,8 +93,8 @@ function useHeroSrc() {
 }
 
 export function MainHeaderHero() {
-  const srcSet = useHeroSrc();
   const profileType = useProfileTypeValue();
+  const srcSet = useHeroSrc(profileType);
 
   if (srcSet === null) {
     return null;
@@ -117,21 +109,27 @@ export function MainHeaderHero() {
     >
       <picture>
         <source
-          media="(orientation: portrait) and (max-width: 320px)"
-          srcSet={srcSet.PORTRAIT_SMALL}
+          media="(min-width: 575px)"
+          srcSet={imgUrl(
+            profileType,
+            'algemeen',
+            IMAGE_SIZES.LANDSCAPE_LARGE,
+            'landscape',
+            PIXEL_DENSITIES.STANDARD
+          )}
         />
-        <source
-          media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 320px)"
-          srcSet={srcSet.PORTRAIT_SMALL_2X}
+        <img
+          src={imgUrl(
+            profileType,
+            'algemeen',
+            IMAGE_SIZES.LANDSCAPE_LARGE,
+            'landscape',
+            PIXEL_DENSITIES.STANDARD,
+            'jpg'
+          )}
+          className={styles.Image}
+          alt=""
         />
-        <source
-          media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) and (min-width: 320px)"
-          srcSet={srcSet.PORTRAIT_SMALL_3X}
-        />
-        <source media="(max-width: 1024px)" srcSet={srcSet.LANDSCAPE_SMALL} />
-        <source media="(min-width: 1024px)" srcSet={srcSet.LANDSCAPE_MEDIUM} />
-        <source media="(min-width: 1440px)" srcSet={srcSet.LANDSCAPE_LARGE} />
-        <img src={srcSet.FALLBACK} className={styles.Image} alt="" />
       </picture>
     </div>
   );
