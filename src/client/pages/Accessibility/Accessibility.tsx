@@ -11,10 +11,8 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 export function Accessibility() {
-  const termReplace = useTermReplacement();
   return (
     <TextPageV2>
       <PageContentV2>

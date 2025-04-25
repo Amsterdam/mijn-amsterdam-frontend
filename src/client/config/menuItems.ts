@@ -1,7 +1,6 @@
 import { myThemasMenuItems } from './thema';
 import { ThemaMenuItemTransformed, ThemaMenuItem } from './thema-types';
 import { useAppStateGetter } from '../hooks/useAppState';
-import { termReplace } from '../hooks/useTermReplacement';
 
 export const themasByProfileType: (
   profileType: ProfileType
@@ -20,13 +19,13 @@ export const themasByProfileType: (
 
 function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
   const appState = useAppStateGetter();
-  const term =
+  const title =
     typeof item.title === 'function'
       ? item.title(appState, profileType)
       : item.title;
   return {
     ...item,
-    title: term ? termReplace(profileType, term) : term,
+    title,
     to:
       typeof item.to === 'function' ? item.to(appState, profileType) : item.to,
   };

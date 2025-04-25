@@ -4,7 +4,6 @@ import { matchPath, useLocation } from 'react-router';
 
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
-import { useTermReplacement } from './useTermReplacement';
 import { useUserCity } from './useUserCity';
 import { AppRoute, AppRoutes } from '../../universal/config/routes';
 import { ExcludePageViewTrackingUrls } from '../config/api';
@@ -24,7 +23,6 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
 
 export function usePageChange(isAuthenticated: boolean) {
   const location = useLocation();
-  const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const userCity = useUserCity();
   const prevPathRef = useRef(location.pathname);
@@ -77,7 +75,7 @@ export function usePageChange(isAuthenticated: boolean) {
       documentTitle = NOT_FOUND_TITLE;
     }
 
-    document.title = termReplace(documentTitle);
+    document.title = documentTitle;
 
     const isExcludedFromPageTracking = ExcludePageViewTrackingUrls.includes(
       location.pathname
@@ -98,7 +96,7 @@ export function usePageChange(isAuthenticated: boolean) {
         const url =
           getCustomTrackingUrl(location.pathname) + (location.search ?? '');
         trackPageViewWithCustomDimension(
-          termReplace(trackingTitle),
+          trackingTitle,
           url,
           profileType,
           userCity

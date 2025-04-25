@@ -8,7 +8,6 @@ import iconUrlCommercialSecondary from '../../assets/icons/map/homeSecondaryComm
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useWidescreen } from '../../hooks/media.hook';
 import { getElementSize } from '../../hooks/useComponentSize';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { MaintenanceNotifications } from '../MaintenanceNotifications/MaintenanceNotifications';
 import { LegendPanel } from './LegendPanel/LegendPanel';
 import {
@@ -25,7 +24,6 @@ import BaseLayerToggle, {
 import Map from './Map/Map';
 import ViewerContainer from './Map/ViewerContainer';
 import Zoom from './Map/Zoom';
-import { themaTitle } from './MyArea-thema-config';
 import {
   MapLocationMarker,
   useMapLocations,
@@ -96,7 +94,6 @@ export default function MyArea({
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
-  const termReplace = useTermReplacement();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const panelComponentAvailableHeight = getElementSize(
     mapContainerRef.current
@@ -147,7 +144,7 @@ export default function MyArea({
     return;
   }, [isWideScreen, showPanels, detailState, filterState]);
 
-  const ariaLabel = `Kaart van ${termReplace(themaTitle).toLowerCase()}`;
+  const ariaLabel = `Kaart van de buurt`;
 
   useEffect(() => {
     window.addEventListener('resize', updateViewportHeight);
