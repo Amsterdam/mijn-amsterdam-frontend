@@ -1,16 +1,18 @@
 import jose from 'node-jose';
 
 import { ApiPatternResponseA, fetchService } from './api-service';
+import * as MILIEUZONE from '../../../client/pages/Thema/Milieuzone/Milieuzone-thema-config';
+import * as OVERTREDINGEN from '../../../client/pages/Thema/Overtredingen/Overtredingen-thema-config';
 import { IS_TAP } from '../../../universal/config/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiErrorResult,
   apiSuccessResult,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getCert } from '../../helpers/cert';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { logger } from '../../logging';
 
@@ -101,7 +103,9 @@ type CleoPatraPatternResponse = ApiPatternResponseA & {
   isKnownOvertredingen: boolean;
 };
 
-function transformCleopatraResponse(response: CleopatraMessage[]) {
+function transformCleopatraResponse(
+  response: CleopatraMessage[]
+): CleoPatraPatternResponse {
   const notifications: MyNotification[] = [];
   let isKnownMilieuzone: boolean = false;
   let isKnownOvertredingen: boolean = false;
@@ -119,19 +123,24 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
             let themaID:
-              | typeof ThemaIDs.MILIEUZONE
-              | typeof ThemaIDs.OVERTREDINGEN = ThemaIDs.MILIEUZONE;
+              | typeof MILIEUZONE.themaId
+              | typeof OVERTREDINGEN.themaId = MILIEUZONE.themaId;
+            let themaTitle:
+              | typeof MILIEUZONE.themaTitle
+              | typeof OVERTREDINGEN.themaTitle = MILIEUZONE.themaTitle;
 
             if (
-              FeatureToggle.overtredingenActive &&
+              OVERTREDINGEN.featureToggle.overtredingenActive &&
               message.thema === 'Overtredingen'
             ) {
-              themaID = ThemaIDs.OVERTREDINGEN;
+              themaID = OVERTREDINGEN.themaId;
+              themaTitle = OVERTREDINGEN.themaTitle;
             }
 
             notifications.push({
               id: `${themaID}-${message.categorie}`,
-              themaID: themaID,
+              themaID,
+              themaTitle,
               title: message.titel,
               datePublished: message.datum,
               description: message.omschrijving,
@@ -150,6 +159,8 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
     isKnownOvertredingen,
     isKnownMilieuzone,
     notifications,
+    isKnown: isKnownOvertredingen || isKnownMilieuzone,
+    url: '',
   };
 }
 
@@ -183,12 +194,15 @@ async function fetchCleopatra(
 export async function fetchMilieuzone(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<ApiPatternResponseA>> {
   const response = await fetchCleopatra(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
     return apiSuccessResult({
       isKnown: response.content?.isKnownMilieuzone ?? false,
+      url:
+        getFromEnv('BFF_SSO_URL_MILIEUZONE') ??
+        MILIEUZONE.MILIEUZONE_ROUTE_DEFAULT,
     });
   }
 
@@ -198,12 +212,34 @@ export async function fetchMilieuzone(
 export async function fetchOvertredingen(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<ApiResponse<ApiPatternResponseA>> {
   const response = await fetchCleopatra(requestID, authProfileAndToken);
 
   if (response.status === 'OK') {
     return apiSuccessResult({
       isKnown: response.content?.isKnownOvertredingen ?? false,
+      url:
+        getFromEnv('BFF_SSO_URL_OVERTREDINGEN') ??
+        OVERTREDINGEN.OVERTREDINGEN_ROUTE_DEFAULT,
+    });
+  }
+
+  return response;
+}
+
+async function fetchNotifications<ID extends string = string>(
+  requestID: RequestID,
+  authProfileAndToken: AuthProfileAndToken,
+  themaID: ID
+) {
+  const response = await fetchCleopatra(requestID, authProfileAndToken);
+
+  if (response.status === 'OK') {
+    return apiSuccessResult({
+      notifications:
+        response.content?.notifications?.filter(
+          (notifiction) => notifiction.themaID === themaID
+        ) ?? [],
     });
   }
 
@@ -214,34 +250,16 @@ export async function fetchMilieuzoneNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchCleopatra(requestID, authProfileAndToken);
-
-  if (response.status === 'OK') {
-    return apiSuccessResult({
-      notifications:
-        response.content?.notifications?.filter(
-          (notifiction) => notifiction.themaID === ThemaIDs.MILIEUZONE
-        ) ?? [],
-    });
-  }
-
-  return response;
+  return fetchNotifications(requestID, authProfileAndToken, MILIEUZONE.themaId);
 }
 
 export async function fetchOvertredingenNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchCleopatra(requestID, authProfileAndToken);
-
-  if (response.status === 'OK') {
-    return apiSuccessResult({
-      notifications:
-        response.content?.notifications?.filter(
-          (notifiction) => notifiction.themaID === ThemaIDs.OVERTREDINGEN
-        ) ?? [],
-    });
-  }
-
-  return response;
+  return fetchNotifications(
+    requestID,
+    authProfileAndToken,
+    OVERTREDINGEN.themaId
+  );
 }

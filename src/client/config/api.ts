@@ -74,7 +74,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   OVERTREDINGEN: 'Overtredingen voertuigen',
   PARKEREN: 'Parkeren',
   PARKEREN_vergunningen: 'Parkeervergunningen',
-  SUBSIDIE: 'Subsidies',
+  SUBSIDIES: 'Subsidies',
   SVWI: 'Werk & Inkomen portaal',
   TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',
   TOERISTISCHE_VERHUUR_lvvRegistraties:

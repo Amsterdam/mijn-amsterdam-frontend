@@ -1,15 +1,10 @@
 import { describe, expect, test } from 'vitest';
 
 import { fetchSubsidieNotifications } from './subsidie';
-import { remoteApi } from '../../../testing/utils';
-import { ThemaIDs } from '../../../universal/config/thema';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 describe('Subsidie', () => {
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-    token: 'xxxxxx',
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
 
   const content = {
     isKnown: true,
@@ -39,7 +34,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          themaID: ThemaIDs.SUBSIDIE,
+          themaID: 'SUBSIDIES',
           link: {
             to: 'http://localhost/to/subsidies?authMethod=digid',
             title: 'More about this',
@@ -64,7 +59,7 @@ describe('Subsidie', () => {
       notifications: [
         {
           title: 'Test title',
-          themaID: ThemaIDs.SUBSIDIE,
+          themaID: 'SUBSIDIES',
           link: {
             to: 'http://localhost/to/subsidies?authMethod=eherkenning',
             title: 'More about this',

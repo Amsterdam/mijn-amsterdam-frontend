@@ -76,6 +76,7 @@ describe('simple-connect/erfpacht', () => {
           "isKnown": true,
           "profileType": "commercial",
           "relatieCode": "123-abc",
+          "url": "http://localhost:3100/mocks-api/sso/portaal/erfpachtzakelijk",
         },
         "status": "OK",
       }

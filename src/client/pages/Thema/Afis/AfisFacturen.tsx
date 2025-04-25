@@ -1,7 +1,6 @@
 import { useParams } from 'react-router';
 
 import { AfisDisclaimer, AfisDisclaimerOvergedragenFacturen } from './Afis';
-import styles from './Afis.module.scss';
 import { useAfisListPageData } from './useAfisThemaData.hook';
 import { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
@@ -49,7 +48,6 @@ export function AfisFacturen() {
       displayProps={listPageTableConfig.displayProps}
       isLoading={isThemaPaginaLoading || isListPageLoading}
       isError={isThemaPaginaError || isListPageError}
-      tableClassName={styles[listPageTableConfig.className]}
     />
   );
 }

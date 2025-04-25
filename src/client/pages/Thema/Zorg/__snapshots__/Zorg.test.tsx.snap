@@ -120,7 +120,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_61d283"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -164,7 +164,9 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
               </td>
               <td
                 class="ams-table__cell"
-              />
+              >
+                Levering gestart
+              </td>
               <td
                 class="ams-table__cell"
               >
@@ -187,7 +189,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_61d283"
+          class="ams-table__table _TableV2_4c6825"
         >
           <tbody
             class="ams-table__body"

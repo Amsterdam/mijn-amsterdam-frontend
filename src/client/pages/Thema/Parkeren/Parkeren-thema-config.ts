@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -11,6 +12,7 @@ import {
 
 export const featureToggle = {
   parkerenActive: true,
+  parkerenCheckForProductAndPermitsActive: !IS_PRODUCTION,
 };
 
 export const themaId = 'PARKEREN' as const;

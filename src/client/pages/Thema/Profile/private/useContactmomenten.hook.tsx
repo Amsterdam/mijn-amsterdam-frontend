@@ -29,7 +29,11 @@ function getLinkToThemaPage(
   myThemasMenuItems: ThemaMenuItemTransformed[]
 ) {
   const menuItem = myThemasMenuItems.find(
-    (item) => item.id === mapperContactmomentToMenuItem[onderwerp]
+    (item) =>
+      item.id ===
+      mapperContactmomentToMenuItem[
+        onderwerp as keyof typeof mapperContactmomentToMenuItem
+      ]
   );
 
   if (!menuItem) {

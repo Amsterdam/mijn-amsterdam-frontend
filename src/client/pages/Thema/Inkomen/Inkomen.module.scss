@@ -1,25 +1,3 @@
-.Table {
-  tr {
-    td:nth-child(1) {
-      width: 20%;
-    }
-    td:nth-child(2) {
-      width: 30%;
-    }
-    td:nth-child(3) {
-      width: 30%;
-    }
-    @media screen and (max-width: $ams-breakpoint-medium) {
-      td:nth-child(1) {
-        width: 60%;
-      }
-      td:nth-child(2) {
-        width: 40%;
-      }
-    }
-  }
-}
-
 .SectionCollapsibleFirst {
   border-top: 0.1rem solid var(--ams-color-neutral-grey1);
   padding-top: 1.7rem;

@@ -13,7 +13,7 @@ export function HLIList() {
   const { regelingen, tableConfig, isLoading, isError, breadcrumbs } =
     useHliThemaData();
 
-  const { filter, sort, title, displayProps, listPageRoute, className } =
+  const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];
 
   return (
@@ -27,7 +27,6 @@ export function HLIList() {
         displayProps={displayProps}
         isLoading={isLoading}
         isError={isError}
-        tableClassName={className}
         pageContentBottom={
           <PageContentCell startWide={3} spanWide={8}>
             {kind === 'eerdere-en-afgewezen-regelingen' && (

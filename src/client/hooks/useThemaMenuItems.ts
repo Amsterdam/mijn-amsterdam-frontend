@@ -9,7 +9,6 @@ import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema-types';
-import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
 
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];
@@ -25,25 +24,14 @@ export function useThemaMenuItems(): ThemasState {
   const items = useMemo(() => {
     return themaItems.filter((item) => {
       // Check to see if Thema has been loaded or if it is directly available
-      return item.isActive
-        ? item.isActive(appState)
-        : item.isAlwaysVisible || isThemaActive(item, appState);
+      return item.isActive ? item.isActive(appState) : item.isAlwaysVisible;
     });
   }, [themaItems, appState]);
 
-  const themaItemsWithAppState = useMemo(() => {
-    return getThemaMenuItemsAppState(appState, themaItems);
-  }, [appState, themaItems]);
-
-  const themasState = useMemo(
-    () => ({
-      items,
-      isLoading: !isAppStateReady,
-    }),
-    [items, appState, themaItemsWithAppState, isAppStateReady]
-  );
-
-  return themasState;
+  return {
+    items,
+    isLoading: !isAppStateReady,
+  };
 }
 
 export function useThemaMenuItemsByThemaID() {
@@ -66,9 +54,11 @@ export function useThemaMenuItemsByThemaID() {
 
 export function useThemaMenuItemByThemaID<ID extends string = string>(
   themaID: ID
-) {
+): ThemaMenuItemTransformed<ID> | null {
   const itemsById = useThemaMenuItemsByThemaID();
-  return itemsById[themaID];
+  return itemsById[themaID]
+    ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
+    : null;
 }
 
 export function useThemaBreadcrumbs<ID extends string = string>(
@@ -86,7 +76,7 @@ export function useThemaBreadcrumbs<ID extends string = string>(
           title: themaPaginaBreadcrumb?.title,
         }
       : null,
-    fromPageType === 'listpage'
+    themaPaginaBreadcrumb && fromPageType === 'listpage'
       ? {
           to: from,
           title: 'Lijst',

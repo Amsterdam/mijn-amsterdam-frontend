@@ -15,6 +15,7 @@ import { routeConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -22,11 +23,17 @@ function transformIsErfpachterResponseSource(
   responseData: ErfpachtErpachterResponseSource,
   profileType: ProfileType
 ): ErfpachtErpachterResponse {
-  return {
+  const response: ErfpachtErpachterResponse = {
     isKnown: !!responseData?.erfpachter,
     relatieCode: responseData?.relationCode,
     profileType,
   };
+
+  if (response.profileType === 'commercial') {
+    response.url = getFromEnv('BFF_SSO_URL_ERFPACHT_ZAKELIJK') ?? '';
+  }
+
+  return response;
 }
 
 function getDossierNummerUrlParam(dossierNummer: string) {
@@ -153,10 +160,11 @@ export async function fetchErfpacht(
     authProfileAndToken
   );
 
-  if (
-    !!erfpachterResponse.content?.isKnown &&
-    authProfileAndToken.profile.profileType !== 'commercial' // Commerciële  gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
-  ) {
+  // Commerciële gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
+  const isNotCommercial =
+    authProfileAndToken.profile.profileType !== 'commercial';
+
+  if (!!erfpachterResponse.content?.isKnown && isNotCommercial) {
     return requestData<ErfpachtDossiersResponse>(
       {
         ...config,

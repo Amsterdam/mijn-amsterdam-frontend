@@ -20,8 +20,7 @@ export function ZorgList() {
     breadcrumbs,
   } = useZorgThemaData();
 
-  const { filter, title, displayProps, className, listPageRoute } =
-    tableConfig[kind];
+  const { filter, title, displayProps, listPageRoute } = tableConfig[kind];
 
   return (
     <ListPagePaginated
@@ -33,7 +32,6 @@ export function ZorgList() {
       displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}
-      tableClassName={className}
       pageContentBottom={
         <PageContentCell spanWide={8} startWide={3}>
           {kind === listPageParamKind.historic && <HistoricItemsMention />}

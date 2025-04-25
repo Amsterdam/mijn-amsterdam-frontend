@@ -73,7 +73,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
         <a
           class="ams-link ams-link--standalone"
-          href="http://remote-api-host/sso/portaal/belastingen"
+          href="https://belastingbalie.amsterdam.nl"
           rel="noreferrer"
         >
           Mijn Belastingen
@@ -114,7 +114,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         <li>
           <a
             class="ams-link-list__link"
-            href="http://remote-api-host/sso/portaal/belastingen"
+            href="https://belastingbalie.amsterdam.nl"
             rel="noreferrer"
           >
             <span
@@ -212,7 +212,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _FacturenTable--open_5b054d"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -377,7 +377,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _FacturenTable--afgehandeld_5b054d"
+          class="ams-table__table _TableV2_4c6825"
         >
           <tbody
             class="ams-table__body"
@@ -402,7 +402,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _FacturenTable--overgedragen_5b054d"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"

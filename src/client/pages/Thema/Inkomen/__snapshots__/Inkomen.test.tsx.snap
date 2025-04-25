@@ -129,7 +129,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -210,7 +210,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -298,7 +298,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -386,7 +386,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -587,7 +587,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <tbody
             class="ams-table__body"
@@ -612,7 +612,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <tbody
             class="ams-table__body"
@@ -637,7 +637,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -725,7 +725,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _Table_1af4ec"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"

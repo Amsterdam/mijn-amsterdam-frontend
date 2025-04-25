@@ -172,9 +172,6 @@ process.env.BFF_LOOD_PWD = 'pwd';
 process.env.BFF_LOOD_TENANT = 'tenantid';
 process.env.BFF_BELASTINGEN_ENDPOINT = `${remoteApiHost}/belastingen`;
 
-process.env.REACT_APP_SSO_URL_BELASTINGEN = `${remoteApiHost}/sso/portaal/belastingen`;
-process.env.REACT_APP_SSO_URL_MILIEUZONE = `${remoteApiHost}/sso/portaal/milieuzone`;
-
 process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT = `${remoteApiHost}/amsapp/session/credentials`;
 process.env.BFF_AMSAPP_NONCE = '123456789123456789123456';
 process.env.DEBUG_RESPONSE_DATA = '';

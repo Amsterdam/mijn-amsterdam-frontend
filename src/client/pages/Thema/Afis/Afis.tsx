@@ -9,7 +9,6 @@ import {
 } from '@amsterdam/design-system-react';
 
 import { AfisFactuurFrontend } from './Afis-thema-config';
-import styles from './Afis.module.scss';
 import { useAfisThemaData } from './useAfisThemaData.hook';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
@@ -149,7 +148,6 @@ export function AfisThemaPagina() {
         maxItems,
         listPageLinkLabel,
         listPageRoute,
-        className,
       },
     ]) => {
       const subTitleNode =
@@ -167,7 +165,6 @@ export function AfisThemaPagina() {
           totalItems={facturenByState?.[state]?.count}
           listPageLinkLabel={listPageLinkLabel}
           listPageRoute={listPageRoute}
-          className={styles[className]}
         />
       );
     }

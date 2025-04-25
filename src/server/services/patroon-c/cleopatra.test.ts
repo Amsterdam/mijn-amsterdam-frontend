@@ -82,6 +82,7 @@ describe('simple-connect/cleopatra', () => {
       {
         "content": {
           "isKnown": false,
+          "url": "http://localhost:3100/mocks-api/sso/portaal/milieuzone",
         },
         "status": "OK",
       }
@@ -130,6 +131,7 @@ describe('simple-connect/cleopatra', () => {
     expect(responseContent).toStrictEqual({
       content: {
         isKnown: true,
+        url: 'http://localhost:3100/mocks-api/sso/portaal/milieuzone',
       },
       status: 'OK',
     });
@@ -152,6 +154,7 @@ describe('simple-connect/cleopatra', () => {
               to: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1',
             },
             themaID: 'MILIEUZONE',
+            themaTitle: 'Milieuzone',
             title: 'Uw aanvraag ontheffing milieuzone Brom- en snorfietsen',
           },
           {
@@ -164,6 +167,7 @@ describe('simple-connect/cleopatra', () => {
               to: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/2',
             },
             themaID: 'MILIEUZONE',
+            themaTitle: 'Milieuzone',
             title: 'Uw aanvraag ontheffing milieuzone Brom- en snorfietsen',
           },
         ],
@@ -204,6 +208,7 @@ describe('simple-connect/cleopatra', () => {
       {
         "content": {
           "isKnown": true,
+          "url": "http://localhost:3100/mocks-api/sso/portaal/overtredingen",
         },
         "status": "OK",
       }
@@ -226,6 +231,7 @@ describe('simple-connect/cleopatra', () => {
               to: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvraag/1',
             },
             themaID: 'OVERTREDINGEN',
+            themaTitle: 'Overtredingen voertuigen',
             title: 'Overtreding betalen',
           },
         ],

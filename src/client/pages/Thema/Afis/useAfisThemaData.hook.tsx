@@ -34,8 +34,14 @@ import {
   useAppStateBagApi,
   useAppStateGetter,
 } from '../../../hooks/useAppState';
-import { useProfileTypeValue } from '../../../hooks/useProfileType';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+import {
+  useThemaBreadcrumbs,
+  useThemaMenuItemByThemaID,
+} from '../../../hooks/useThemaMenuItems';
+import {
+  BELASTINGEN_ROUTE_DEFAULT,
+  themaId as themaIdBelastingen,
+} from '../Belastingen/Belastingen-thema-config';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
@@ -183,20 +189,16 @@ export function useAfisListPageData(state: AfisFactuurState) {
 
 export function useAfisThemaData() {
   const { AFIS } = useAppStateGetter();
-  const profileType = useProfileTypeValue();
   const businessPartnerIdEncrypted =
     AFIS.content?.businessPartnerIdEncrypted ?? null;
 
   const facturenByState = useTransformFacturen(AFIS.content?.facturen ?? null);
-
-  const urlNaarBelastingen =
-    profileType === 'private'
-      ? import.meta.env.REACT_APP_SSO_URL_BELASTINGEN
-      : import.meta.env.REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK;
+  const menuItem = useThemaMenuItemByThemaID(themaIdBelastingen);
+  const urlNaarBelastingen = menuItem?.to;
 
   const belastingenLinkListItem: LinkProps = {
     title: 'Belastingen op Mijn Amsterdam',
-    to: urlNaarBelastingen,
+    to: urlNaarBelastingen || BELASTINGEN_ROUTE_DEFAULT,
   };
 
   const breadcrumbs = useThemaBreadcrumbs(themaId);

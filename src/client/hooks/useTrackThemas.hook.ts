@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useSessionStorage } from './storage.hook';
 import { useThemaMenuItems } from './useThemaMenuItems';
-import { ThemaMenuItemTransformed } from '../config/thema';
+import type { ThemaMenuItemTransformed } from '../config/thema-types';
 import { trackEvent } from '../helpers/monitoring';
 
 type ThemaTitleAndId = Pick<ThemaMenuItemTransformed, 'title' | 'id'>;

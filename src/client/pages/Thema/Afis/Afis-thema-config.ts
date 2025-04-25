@@ -105,7 +105,6 @@ type AfisFacturenTableConfig = {
   maxItems: number;
   listPageLinkLabel: string;
   listPageRoute: string;
-  className: string;
 };
 
 type AfisFacturenTableConfigByState = Record<
@@ -123,7 +122,6 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
       state: 'open',
       page: null,
     }),
-    className: 'FacturenTable--open',
   },
   overgedragen: {
     title: listPageTitle.overgedragen,
@@ -135,7 +133,6 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
       state: 'overgedragen',
       page: null,
     }),
-    className: 'FacturenTable--afgehandeld',
   },
   afgehandeld: {
     title: listPageTitle.afgehandeld,
@@ -146,7 +143,6 @@ export const facturenTableConfig: AfisFacturenTableConfigByState = {
       state: 'afgehandeld',
       page: null,
     }),
-    className: 'FacturenTable--overgedragen',
   },
 } as const;
 

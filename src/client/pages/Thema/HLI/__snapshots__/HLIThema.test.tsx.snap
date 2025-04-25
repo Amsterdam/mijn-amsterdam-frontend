@@ -232,7 +232,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_c69c76"
+          class="ams-table__table _TableV2_4c6825"
         >
           <thead
             class="ams-table__header"
@@ -291,7 +291,7 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_c69c76"
+          class="ams-table__table _TableV2_4c6825"
         >
           <tbody
             class="ams-table__body"

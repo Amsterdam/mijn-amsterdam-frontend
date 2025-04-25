@@ -1,9 +1,8 @@
 import { AxiosResponseTransformer } from 'axios';
 
-import { type ThemaID } from '../../../universal/config/thema';
 import {
-  ApiResponse_DEPRECATED,
   apiSuccessResult,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { omit } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
@@ -14,11 +13,12 @@ import { requestData } from '../../helpers/source-api-request';
 export interface ApiPatternResponseA {
   tips?: MyNotification[];
   isKnown: boolean;
+  url: string;
   notifications?: MyNotification[];
 }
 
 const transformApiResponseDefault: AxiosResponseTransformer = (
-  response: ApiResponse_DEPRECATED<ApiPatternResponseA> | ApiPatternResponseA
+  response: ApiResponse<ApiPatternResponseA> | ApiPatternResponseA
 ) => {
   if (
     response !== null &&
@@ -36,7 +36,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false,
   authProfileAndToken?: AuthProfileAndToken
-): Promise<ApiResponse_DEPRECATED<T | null>> {
+): Promise<ApiResponse<T>> {
   const transformResponse = [transformApiResponseDefault].concat(
     apiConfig.transformResponse ?? []
   );
@@ -65,9 +65,9 @@ export async function fetchService<T extends ApiPatternResponseA>(
   return response;
 }
 
-export function transformNotificationsDefault(
+export function transformNotificationsDefault<ID extends string = string>(
   notifications: MyNotification[],
-  themaID: ThemaID
+  themaID: ID
 ) {
   const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map((notification) => ({
@@ -84,16 +84,13 @@ export function transformNotificationsDefault(
   return notificationsTransformed;
 }
 
-export async function fetchTipsAndNotifications(
+export async function fetchTipsAndNotifications<ID extends string = string>(
   requestID: RequestID,
   apiConfig: DataRequestConfig = {},
-  themaID: ThemaID,
+  themaID: ID,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<
-  ApiResponse_DEPRECATED<Pick<
-    ApiPatternResponseA,
-    'notifications' | 'tips'
-  > | null>
+  ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
 > {
   const response = await fetchService(
     requestID,

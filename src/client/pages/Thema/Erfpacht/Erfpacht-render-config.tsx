@@ -1,6 +1,7 @@
 import { ErfpachtDossierDetail } from './DossierDetail/ErfpachtDossierDetail';
 import { Erfpacht } from './Erfpacht';
 import {
+  ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   featureToggle,
   routeConfig,
   themaId,
@@ -51,13 +52,13 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   to: routeConfig.themaPage.path,
   profileTypes: ['private'],
   isActive(appState: AppState) {
+    const content = appState.ERFPACHT?.content;
     return (
       featureToggle.erfpachtActive &&
       !isLoading(appState.ERFPACHT) &&
-      appState.ERFPACHT.content !== null &&
-      (('dossiers' in appState.ERFPACHT.content &&
-        !!appState.ERFPACHT.content.dossiers.dossiers?.length) ||
-        !!appState.ERFPACHT.content?.isKnown)
+      content !== null &&
+      (('dossiers' in content && !!content.dossiers.dossiers?.length) ||
+        !!content?.isKnown)
     );
   },
   IconSVG: ErfpachtIcon,
@@ -66,9 +67,13 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
 export const menuItemZakelijk: ThemaMenuItem<typeof themaId> = {
   title: themaTitle,
   id: themaId,
-  to: import.meta.env.REACT_APP_SSO_URL_ERFPACHT_ZAKELIJK,
+  to: (appState: AppState) => {
+    const content = appState.ERFPACHT?.content;
+    return content && 'url' in content && content.url
+      ? content.url
+      : ERFPACHT_ZAKELIJK_ROUTE_DEFAULT;
+  },
   profileTypes: ['commercial'],
-  rel: 'external',
   isActive: menuItem.isActive,
   IconSVG: ErfpachtIcon,
 };

@@ -60,21 +60,12 @@ export function ZorgThema() {
   const tables = Object.entries(tableConfig).map(
     ([
       kind,
-      {
-        title,
-        displayProps,
-        textNoContent,
-        filter,
-        maxItems,
-        className,
-        listPageRoute,
-      },
+      { title, displayProps, textNoContent, filter, maxItems, listPageRoute },
     ]) => {
       return (
         <ThemaPaginaTable<WMOVoorzieningFrontend>
           key={kind}
           title={title}
-          className={className}
           zaken={voorzieningen.filter(filter)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}

@@ -252,7 +252,7 @@ components:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         ERFPACHT:
           $ref: '#/components/schemas/ApiSearchConfigResult'
-        SUBSIDIE:
+        SUBSIDIES:
           $ref: '#/components/schemas/ApiSearchConfigResult'
         NOTIFICATIONS:
           $ref: '#/components/schemas/ApiSearchConfigResult'
@@ -310,7 +310,7 @@ components:
           type: object
         TOERISTISCHE_VERHUUR:
           type: object
-        SUBSIDIE:
+        SUBSIDIES:
           type: object
         VERGUNNINGEN:
           type: object

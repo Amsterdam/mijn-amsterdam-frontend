@@ -70,7 +70,7 @@ export const PRISTINE_APPSTATE: AppState = {
   ERFPACHT: apiPristineResult(null, {
     profileTypes: ['private', 'commercial'],
   }),
-  SUBSIDIE: apiPristineResult({ isKnown: false, notifications: [] }),
+  SUBSIDIES: apiPristineResult({ isKnown: false, notifications: [] }),
   BELASTINGEN: apiPristineResult(
     { isKnown: true },
     { profileTypes: ['private'] }

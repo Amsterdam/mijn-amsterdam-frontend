@@ -149,7 +149,7 @@ const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
-const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
+const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
 
 // Location, address, based services
@@ -195,7 +195,7 @@ const SERVICES_INDEX = {
   OVERTREDINGEN,
   PARKEREN,
   PROFILE,
-  SUBSIDIE,
+  SUBSIDIES,
   SVWI,
   KLANT_CONTACT,
   TOERISTISCHE_VERHUUR,
@@ -238,7 +238,7 @@ type CommercialServices = Pick<
   | 'NOTIFICATIONS'
   | 'OVERTREDINGEN'
   | 'PARKEREN'
-  | 'SUBSIDIE'
+  | 'SUBSIDIES'
   | 'TOERISTISCHE_VERHUUR'
   | 'VAREN'
   | 'VERGUNNINGEN'
@@ -274,7 +274,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     OVERTREDINGEN,
     PARKEREN,
     KLANT_CONTACT,
-    SUBSIDIE,
+    SUBSIDIES,
     SVWI,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
@@ -308,7 +308,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     NOTIFICATIONS,
     OVERTREDINGEN,
     PARKEREN,
-    SUBSIDIE,
+    SUBSIDIES,
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,

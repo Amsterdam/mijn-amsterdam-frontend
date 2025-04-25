@@ -3,13 +3,9 @@
  * Use the new thema config in the client instead.
  */
 export const ThemaIDs = {
-  BELASTINGEN: 'BELASTINGEN',
-  MILIEUZONE: 'MILIEUZONE',
   NOTIFICATIONS: 'NOTIFICATIONS',
-  OVERTREDINGEN: 'OVERTREDINGEN',
   HOME: 'HOME', // Not really a theme, but used as a fallback
   SEARCH: 'SEARCH',
-  SUBSIDIE: 'SUBSIDIE',
   SVWI: 'SVWI',
 } as const;
 /**

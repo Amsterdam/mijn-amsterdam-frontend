@@ -59,6 +59,9 @@ export const featureToggle = {
 export const themaId = 'ERFPACHT' as const;
 export const themaTitle = 'Erfpacht';
 
+export const ERFPACHT_ZAKELIJK_ROUTE_DEFAULT =
+  'https://erfpachtzakelijk.amsterdam.nl';
+
 export const routeConfig = {
   detailPage: {
     path: '/erfpacht/dossier/:dossierNummerUrlParam',

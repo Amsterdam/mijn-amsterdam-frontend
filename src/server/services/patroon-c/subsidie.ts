@@ -2,12 +2,20 @@ import { URL, URLSearchParams } from 'url';
 
 import * as jose from 'jose';
 
-import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  fetchService,
+  fetchTipsAndNotifications,
+  type ApiPatternResponseA,
+} from './api-service';
+import {
+  SUBSIDIES_ROUTE_DEFAULT,
+  themaId,
+} from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 
 async function getJWT() {
@@ -62,11 +70,19 @@ async function getConfig(
   const url = apiEndpointUrl + ivAndPayload;
   const jwt = await getJWT();
 
-  return getApiConfig('SUBSIDIE', {
+  return getApiConfig('SUBSIDIES', {
     url,
     cacheKey: apiEndpointUrl + requestID,
     headers: {
       Authorization: `Bearer ${jwt}`,
+    },
+    transformResponse(
+      response: Omit<ApiPatternResponseA, 'url'>
+    ): ApiPatternResponseA {
+      return {
+        ...response,
+        url: getFromEnv('BFF_SSO_URL_SUBSIDIES') ?? SUBSIDIES_ROUTE_DEFAULT,
+      };
     },
   });
 }
@@ -89,7 +105,7 @@ export async function fetchSubsidieNotifications(
   const response = await fetchTipsAndNotifications(
     requestID,
     await getConfig(authProfileAndToken, requestID),
-    ThemaIDs.SUBSIDIE
+    themaId
   );
 
   if (response.status === 'OK' && response.content?.notifications) {

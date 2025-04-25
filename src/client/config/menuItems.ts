@@ -21,10 +21,13 @@ export const themasByProfileType: (
 function buildThemaMenuItem(item: ThemaMenuItem, profileType: ProfileType) {
   const appState = useAppStateGetter();
   const term =
-    typeof item.title === 'function' ? item.title(appState) : item.title;
+    typeof item.title === 'function'
+      ? item.title(appState, profileType)
+      : item.title;
   return {
     ...item,
     title: term ? termReplace(profileType, term) : term,
-    to: typeof item.to === 'function' ? item.to(appState) : item.to,
+    to:
+      typeof item.to === 'function' ? item.to(appState, profileType) : item.to,
   };
 }

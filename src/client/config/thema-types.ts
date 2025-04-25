@@ -10,13 +10,17 @@ import {
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 
 export interface ThemaMenuItem<ID extends string = string>
-  extends Omit<LinkProps, 'title' | 'to'> {
+  extends Omit<LinkProps, 'title' | 'to' | 'rel'> {
   id: ID;
   profileTypes: ProfileType[];
   isAlwaysVisible?: boolean;
   hasAppStateValue?: boolean;
-  title: LinkProps['title'] | ((appState: AppState) => string);
-  to: LinkProps['to'] | ((appState: AppState) => string);
+  title:
+    | LinkProps['title']
+    | ((appState: AppState, profileType?: ProfileType) => string);
+  to:
+    | LinkProps['to']
+    | ((appState: AppState, profileType?: ProfileType) => string);
   // TODO: Make non optional if all thema menu items are migrated to the thema configs.
   isActive?: IsThemaVisibleFN;
   IconSVG?: SVGComponent;
@@ -28,8 +32,8 @@ export interface CategoryMenuItem<ID extends string> extends LinkProps {
   profileTypes?: ProfileType[];
 }
 
-export interface ThemaMenuItemTransformed
-  extends Omit<ThemaMenuItem, 'title' | 'to'> {
+export interface ThemaMenuItemTransformed<ID extends string = string>
+  extends Omit<ThemaMenuItem<ID>, 'title' | 'to'> {
   title: string;
   to: string;
 }
@@ -55,6 +59,10 @@ export type ThemaRouteConfig = {
 
 export type ThemaRoutesConfig = {
   [themaPageType in ThemaPageType]: ThemaRouteConfig;
+};
+
+export type PatroonCRoutesConfig = {
+  [profileType in ProfileType]: string;
 };
 
 export type ThemaRenderRouteConfig = {

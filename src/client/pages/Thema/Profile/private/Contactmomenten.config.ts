@@ -1,14 +1,16 @@
 import { ReactNode } from 'react';
 
 import type { ContactMoment } from '../../../../../server/services/salesforce/contactmomenten.types';
-import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
-import { ThemaID, ThemaIDs } from '../../../../../universal/config/thema';
-import { SomeOtherString } from '../../../../../universal/helpers/types';
 import type { DisplayProps } from '../../../../components/Table/TableV2.types';
 import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config';
+import { themaId as themaIdBelastingen } from '../../Belastingen/Belastingen-thema-config';
 import { themaId as themaIdInkomen } from '../../Inkomen/Inkomen-thema-config';
 import { themaId as themaIdKrefia } from '../../Krefia/Krefia-thema-config';
 import { themaId as themaIdParkeren } from '../../Parkeren/Parkeren-thema-config';
+import {
+  featureToggle as featureToggleSvwi,
+  themaId as themaIdSvwi,
+} from '../../Svwi/Svwi-thema-config';
 import { themaId as themaIdZorg } from '../../Zorg/Zorg-thema-config';
 
 export type ContactMomentFrontend = ContactMoment & {
@@ -17,7 +19,7 @@ export type ContactMomentFrontend = ContactMoment & {
 };
 
 export const featureToggle = {
-  themaActive: true,
+  contactmomentenThemaActive: true,
 };
 
 export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
@@ -29,18 +31,13 @@ export const contactmomentenDisplayProps: DisplayProps<ContactMomentFrontend> =
   };
 
 // TODO: Use all the individual thema ID's imported from the Thema Config files.
-const SVWIv1ORv2 = FeatureToggle.svwiLinkActive
-  ? ThemaIDs.SVWI
-  : themaIdInkomen;
+const SVWIv1ORv2 = featureToggleSvwi.svwiActive ? themaIdSvwi : themaIdInkomen;
 
-export const mapperContactmomentToMenuItem: Record<
-  string,
-  ThemaID | SomeOtherString
-> = {
+export const mapperContactmomentToMenuItem = {
   Parkeren: themaIdParkeren,
   Zorg: themaIdZorg,
   'Werk en Inkomen': SVWIv1ORv2,
-  Belastingen: ThemaIDs.BELASTINGEN,
+  Belastingen: themaIdBelastingen,
   Geldzaken: themaIdKrefia,
   Financiën: themaIdAfis,
-};
+} as const;

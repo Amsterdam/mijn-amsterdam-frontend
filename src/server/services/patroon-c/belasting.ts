@@ -1,8 +1,17 @@
-import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  fetchService,
+  fetchTipsAndNotifications,
+  type ApiPatternResponseA,
+} from './api-service';
+import {
+  BELASTINGEN_ROUTE_DEFAULT,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Belastingen/Belastingen-thema-config';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 
 const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
@@ -31,7 +40,10 @@ function getBsnTranslation(bsnOrKvk: string): string {
   return translationsJson?.[bsnOrKvk] ?? bsnOrKvk;
 }
 
-function transformBelastingResponse(response: BelastingenSourceContent) {
+function transformBelastingResponse(
+  response: BelastingenSourceContent,
+  profileType: ProfileType
+): ApiPatternResponseA {
   const isKnown: boolean =
     !!response?.status && response.status !== 'BSN unknown';
   const notifications: MyNotification[] = [];
@@ -47,7 +59,8 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
         case 'M1':
           notifications.push({
             id: `belasting-${message.nummer}`,
-            themaID: ThemaIDs.BELASTINGEN,
+            themaID: themaId,
+            themaTitle: themaTitle,
             title: message.titel,
             datePublished: message.datum,
             description: message.omschrijving,
@@ -66,7 +79,8 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
             description: message.omschrijving,
             tipReason: message.informatie,
             isTip: true,
-            themaID: ThemaIDs.BELASTINGEN,
+            themaID: themaId,
+            themaTitle: themaTitle,
             link: {
               title: message.url_naam,
               to: message.url,
@@ -81,16 +95,28 @@ function transformBelastingResponse(response: BelastingenSourceContent) {
     isKnown,
     notifications,
     tips,
+    url:
+      (profileType === 'commercial'
+        ? getFromEnv('BFF_SSO_URL_BELASTINGEN_EHERKENNING')
+        : getFromEnv('BFF_SSO_URL_BELASTINGEN_DIGID')) ??
+      BELASTINGEN_ROUTE_DEFAULT,
   };
 }
 
-function getConfig(bsnOrKvk: string = ''): DataRequestConfig {
+function getConfig(
+  authProfileAndToken: AuthProfileAndToken
+): DataRequestConfig {
   return getApiConfig('BELASTINGEN', {
     headers: {
       Authorization: `Bearer ${process.env.BFF_BELASTINGEN_BEARER_TOKEN}`,
-      subjid: getBsnTranslation(bsnOrKvk),
+      subjid: getBsnTranslation(authProfileAndToken.profile.id),
     },
-    transformResponse: transformBelastingResponse,
+    transformResponse(response: BelastingenSourceContent) {
+      return transformBelastingResponse(
+        response,
+        authProfileAndToken.profile.profileType
+      );
+    },
   });
 }
 
@@ -98,7 +124,7 @@ export function fetchBelasting(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(requestID, getConfig(authProfileAndToken.profile.id));
+  return fetchService(requestID, getConfig(authProfileAndToken));
 }
 
 export async function fetchBelastingNotifications(
@@ -107,8 +133,8 @@ export async function fetchBelastingNotifications(
 ) {
   const r = await fetchTipsAndNotifications(
     requestID,
-    getConfig(authProfileAndToken.profile.id),
-    ThemaIDs.BELASTINGEN
+    getConfig(authProfileAndToken),
+    themaId
   );
 
   return r;

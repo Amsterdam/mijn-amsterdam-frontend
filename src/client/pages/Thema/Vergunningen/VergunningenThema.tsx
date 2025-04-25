@@ -28,7 +28,7 @@ export function VergunningenThema() {
   const tables = Object.entries(tableConfig).map(
     ([
       kind,
-      { title, displayProps, filter, sort, listPageRoute, className, maxItems },
+      { title, displayProps, filter, sort, listPageRoute, maxItems },
     ]) => {
       return (
         <ThemaPaginaTable<VergunningFrontend>
@@ -37,7 +37,6 @@ export function VergunningenThema() {
           zaken={vergunningen.filter(filter).sort(sort)}
           listPageRoute={listPageRoute}
           displayProps={displayProps}
-          className={className}
           maxItems={maxItems}
         />
       );

@@ -16,6 +16,7 @@ export type ErfpachtErpachterResponse = {
   isKnown: boolean;
   relatieCode: ErfpachtErpachterResponseSource['relationCode'];
   profileType: ProfileType;
+  url?: string;
 };
 
 export type ErfpachtDossierFactuur = {

@@ -1,26 +1,3 @@
-.SpecificationsTable {
-  tr td:first-child {
-    font-weight: 500;
-    color: var(--ams-color-primary-black);
-  }
-  tr td:nth-child(2) {
-    width: 30%;
-  }
-
-  @include select(Table_DisplayPropTitle) {
-    width: 30%;
-  }
-}
-
-.SpecificationsTable--annualStatements {
-  @include select(Table_DisplayPropTitle) {
-    width: 60%;
-  }
-  tr td:nth-child(2) {
-    width: calc(30% - 1em);
-  }
-}
-
 .SearchButton {
   &:not(&Active) {
     --ams-margin-sm: 0;

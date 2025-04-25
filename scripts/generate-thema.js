@@ -36,6 +36,13 @@ const options = {
   commercial: {
     type: 'boolean',
   },
+  patroonC: {
+    type: 'boolean',
+    default: false,
+  },
+  portaalUrl: {
+    type: 'string',
+  },
   basePath: {
     type: 'string',
     default: 'src/client/pages/Thema',
@@ -51,8 +58,8 @@ const { values } = parseArgs({
 const basePath = values.basePath;
 
 const hasRenderConfig = values.config.includes('render');
-const hasCoreConfig = values.config.includes('core');
 const hasThemaConfig = values.config.includes('thema');
+const isPatroonC = !!values.patroonC;
 
 const ID = values.id.toUpperCase();
 const TITLE = capitalizeFirstLetter(values.title);
@@ -64,47 +71,76 @@ const titleName = capitalizeFirstLetter(
     .join('')
 );
 const PATH = `/${slug(TITLE.toLowerCase())}`;
-const ZAAKTYPE = values.zaakType.toUpperCase().replace(/[^a-zA-Z]+/, '');
-const typeName = `${capitalizeFirstLetter(ZAAKTYPE.toLowerCase())}Frontend`;
-const zaakTypeSlug = slug(
-  values.zaakType.toLowerCase().replace(/[^a-zA-Z]+/g, '')
-);
+const ZAAKTYPE = values.zaakType?.toUpperCase().replace(/[^a-zA-Z]+/, '');
+const typeName = ZAAKTYPE
+  ? `${capitalizeFirstLetter(ZAAKTYPE.toLowerCase())}Frontend`
+  : 'ZaakDetail';
+const zaakTypeSlug = values.zaakType
+  ? slug(values.zaakType.toLowerCase().replace(/[^a-zA-Z]+/g, ''))
+  : 'zaak-detail';
 const PATH_DETAIL = `/${zaakTypeSlug}`;
 
 const featureToggleName = `${lowercaseFirstLetter(titleName)}Active`;
 
-const themaCoreImportsTemplate = `
-import { listPageParamKind } from './${titleName}-thema-config';
-import { IS_PRODUCTION } from '../../../../universal/config/env';
-import type { ThemaRoutesConfig } from '../../../config/thema-types';`;
+const themaPageComponentName = `${titleName}Thema`;
+const detailPageComponentName = `${titleName}Detail`;
+const listPageComponentName = `${titleName}List`;
+const iconComponentName = `${titleName}Icon`;
 
-const themaCoreTemplate = `
-${hasCoreConfig ? themaCoreImportsTemplate : ''}
+const themaConfigImports = `
+import {
+  ${!isPatroonC ? 'routeConfig' : `${ID}_ROUTE_DEFAULT`},
+  themaId,
+  themaTitle,
+  featureToggle,
+} from './${titleName}-thema-config';
+import { default as ${iconComponentName} } from './${iconComponentName}.svg?react';
+import { isLoading } from '../../../../universal/helpers/api';
+import { type AppState } from '../../../../universal/types/App.types';
+import {
+  type ThemaMenuItem,${!isPatroonC ? `\ntype ThemaRenderRouteConfig` : ''}
+} from '../../../config/thema-types';
+ `;
 
+const coreTemplate = `
 export const featureToggle = {
   ${featureToggleName}: !IS_PRODUCTION,
 };
 
 export const themaId = '${ID}' as const;
 export const themaTitle = '${TITLE}';
+`;
 
-export const routeConfig = {
-  detailPage: {
-    path: '${PATH}${PATH_DETAIL}/:id',
-    trackingUrl: '${PATH}${PATH_DETAIL}',
-    documentTitle: \`${TITLE} | \${themaTitle}\`,
+const menuItemTemplate = `
+export const menuItem: ThemaMenuItem<typeof themaId> = {
+  title: themaTitle,
+  id: themaId,
+  to: ${!isPatroonC ? 'routeConfig.themaPage.path' : `(appState: AppState) => { return appState.${ID}?.content?.url || ${ID}_ROUTE_DEFAULT; }`},
+  profileTypes: [${values.private ? `'private'` : ''}${values.private && values.commercial ? ',' : ''}${values.commercial ? `'commercial'` : ''}],
+  isActive(appState: AppState) {
+    return (
+      featureToggle.${featureToggleName} &&
+      !isLoading(appState.${ID}) &&
+      ${!isPatroonC ? `!!appState.${ID}.content?.length` : `!!appState.${ID}.content?.isKnown`}
+
+    );
   },
-  listPage: {
-    path: '${PATH}/lijst/:kind/:page?',
-    documentTitle: (params) =>
-      \`\${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | \${themaTitle}\`,
-  },
-  themaPage: {
-    path: '${PATH}',
-    documentTitle: \`\${themaTitle} | overzicht\`,
-  },
-} as const satisfies ThemaRoutesConfig;
- `;
+  IconSVG: ${iconComponentName},
+};
+`;
+
+const patroonCTemplate = `
+import { IS_PRODUCTION } from '../../../../universal/config/env';
+
+export const ${ID}_ROUTE_DEFAULT = '${values.portaalUrl || `https://${ID.toLowerCase()}.amsterdam.nl`}';
+
+${coreTemplate}
+`;
+
+const patroonCRouteConfigTemplate = `
+${themaConfigImports}
+${menuItemTemplate}
+`;
 
 const themaConfigTemplate = `
 import { generatePath } from 'react-router';
@@ -137,7 +173,24 @@ export const listPageParamKind = {
   eerder: 'eerdere-aanvragen',
 } as const;
 
-${themaCoreTemplate}
+${coreTemplate}
+
+export const routeConfig = {
+  detailPage: {
+    path: '${PATH}${PATH_DETAIL}/:id',
+    trackingUrl: '${PATH}${PATH_DETAIL}',
+    documentTitle: \`${TITLE} | \${themaTitle}\`,
+  },
+  listPage: {
+    path: '${PATH}/lijst/:kind/:page?',
+    documentTitle: (params) =>
+      \`\${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | \${themaTitle}\`,
+  },
+  themaPage: {
+    path: '${PATH}',
+    documentTitle: \`\${themaTitle} | overzicht\`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
 const lopendeAanvragenDisplayPropsBase: DisplayProps<
   WithDetailLinkComponent<${typeName}>
@@ -204,28 +257,15 @@ export const tableConfig = {
 } as const;
 `;
 
-const themaPageComponentName = `${titleName}Thema`;
-const detailPageComponentName = `${titleName}Detail`;
-const listPageComponentName = `${titleName}List`;
-const iconComponentName = `${titleName}Icon`;
-
-const renderConfigTemplate = `
-import {
-  routeConfig,
-  themaId,
-  themaTitle,
-  featureToggle,
-} from './${titleName}-thema-config';
+const componentImports = `
 import { ${detailPageComponentName} } from './${detailPageComponentName}';
-import { default as ${iconComponentName} } from './${iconComponentName}.svg?react';
 import { ${listPageComponentName} } from './${listPageComponentName}';
 import { ${themaPageComponentName} } from './${themaPageComponentName}';
-import { isLoading } from '../../../../universal/helpers/api';
-import { type AppState } from '../../../../universal/types/App.types';
-import {
-  type ThemaMenuItem,
-  type ThemaRenderRouteConfig,
-} from '../../../config/thema-types';
+`;
+
+const renderConfigTemplate = `
+${themaConfigImports}
+${componentImports}
 
 export const ${titleName}Routes = [
   {
@@ -245,24 +285,10 @@ export const ${titleName}Routes = [
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
-export const menuItem: ThemaMenuItem<typeof themaId> = {
-  title: themaTitle,
-  id: themaId,
-  to: routeConfig.themaPage.path,
-  profileTypes: [${values.private ? `'private'` : ''}${values.private && values.commercial ? ',' : ''}${values.commercial ? `'commercial'` : ''}],
-  isActive(appState: AppState) {
-    return (
-      featureToggle.${featureToggleName} &&
-      !isLoading(appState.${ID}) &&
-      !!appState.${ID}.content?.length
-    );
-  },
-  IconSVG: ${iconComponentName},
-};
+${menuItemTemplate}
 
 `;
 
-const fileNameCoreConfig = `${basePath}/${titleName}/${titleName}-thema-core-config.ts`;
 const fileNameThemaConfig = `${basePath}/${titleName}/${titleName}-thema-config.ts`;
 const fileNameRenderConfig = `${basePath}/${titleName}/${titleName}-render-config.tsx`;
 const svgFileName = `${basePath}/${titleName}/${titleName}Icon.svg`;
@@ -271,22 +297,24 @@ if (hasRenderConfig || hasThemaConfig || hasCoreConfig) {
   fs.mkdirSync(path.dirname(fileNameThemaConfig), { recursive: true });
 }
 
-if (hasCoreConfig) {
-  fs.writeFileSync(fileNameCoreConfig, themaCoreTemplate, {
-    encoding: 'utf-8',
-  });
-}
-
 if (hasThemaConfig) {
-  fs.writeFileSync(fileNameThemaConfig, themaConfigTemplate, {
-    encoding: 'utf-8',
-  });
+  fs.writeFileSync(
+    fileNameThemaConfig,
+    isPatroonC ? patroonCTemplate : themaConfigTemplate,
+    {
+      encoding: 'utf-8',
+    }
+  );
 }
 
 if (hasRenderConfig) {
-  fs.writeFileSync(fileNameRenderConfig, renderConfigTemplate, {
-    encoding: 'utf-8',
-  });
+  fs.writeFileSync(
+    fileNameRenderConfig,
+    isPatroonC ? patroonCRouteConfigTemplate : renderConfigTemplate,
+    {
+      encoding: 'utf-8',
+    }
+  );
   fs.writeFileSync(
     svgFileName,
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
@@ -300,10 +328,11 @@ if (hasRenderConfig) {
   );
 }
 
-hasCoreConfig && console.log(`Core config generated at ${fileNameCoreConfig}`);
-hasThemaConfig &&
+if (hasThemaConfig) {
   console.log(`Thema config generated at ${fileNameThemaConfig}`);
-hasRenderConfig &&
+}
+if (hasRenderConfig) {
   console.log(`Render config generated at ${fileNameRenderConfig}`);
+}
 console.log('Done!');
 console.log('Please check the generated files and adjust them as needed.');

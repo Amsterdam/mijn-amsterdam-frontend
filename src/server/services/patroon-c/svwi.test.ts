@@ -2,32 +2,27 @@ import { describe, expect, test } from 'vitest';
 
 import { fetchSVWI } from './svwi';
 import SVWI from '../../../../mocks/fixtures/svwi.json';
-import { remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
-vi.mock('../../../universal/config/app', async (importOriginal) => {
-  const module = (await importOriginal()) as any;
+vi.mock(
+  '../../../client/pages/Thema/Svwi-thema-config',
+  async (importOriginal) => {
+    const module: { featureToggle: object; [key: string]: unknown } =
+      await importOriginal();
 
-  return {
-    ...module,
-    FeatureToggle: {
-      ...module.FeatureToggle,
-      svwiLinkActive: true,
-    },
-  };
-});
+    return {
+      ...module,
+      featureToggle: {
+        ...module.featureToggle,
+        svwiActive: true,
+      },
+    };
+  }
+);
 
 describe('simple-connect/svwi', () => {
   const REQUEST_ID = 'test-x-789';
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: {
-      authMethod: 'digid',
-      profileType: 'private',
-      id: 'TEST-DIGID-BSN',
-      sid: '',
-    },
-    token: 'xxxxxx',
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
 
   test('fetchSvwi should give isknow equals true', async () => {
     remoteApi
@@ -39,13 +34,14 @@ describe('simple-connect/svwi', () => {
     const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
 
     expect(responseContent).toMatchInlineSnapshot(`
-  {
-    "content": {
-      "isKnown": true,
-    },
-    "status": "OK",
-  }
-  `);
+      {
+        "content": {
+          "isKnown": true,
+          "url": "http://localhost:3100/mocks-api/sso/portaal/svwi",
+        },
+        "status": "OK",
+      }
+    `);
   });
 
   test('fetchSvwi should give isKnown equals false', async () => {
@@ -60,12 +56,13 @@ describe('simple-connect/svwi', () => {
     const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
 
     expect(responseContent).toMatchInlineSnapshot(`
-  {
-    "content": {
-      "isKnown": false,
-    },
-    "status": "OK",
-  }
-  `);
+      {
+        "content": {
+          "isKnown": false,
+          "url": "http://localhost:3100/mocks-api/sso/portaal/svwi",
+        },
+        "status": "OK",
+      }
+    `);
   });
 });

@@ -315,7 +315,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         >
           <a
             class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-            href="http://remote-api-host/sso/portaal/belastingen"
+            href="https://belastingbalie.amsterdam.nl"
           >
             <span
               class="_ThemaLink_db9f57"
@@ -391,7 +391,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         >
           <a
             class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-            href="http://remote-api-host/sso/portaal/milieuzone"
+            href="https://ontheffingen.amsterdam.nl/publiek/aanvragen"
           >
             <span
               class="_ThemaLink_db9f57"

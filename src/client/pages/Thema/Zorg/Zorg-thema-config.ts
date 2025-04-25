@@ -1,6 +1,5 @@
 import { generatePath } from 'react-router';
 
-import styles from './Zorg.module.scss';
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
@@ -77,7 +76,6 @@ export const tableConfig = {
     filter: (regeling: WMOVoorzieningFrontend) => regeling.isActual,
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    className: styles.HuidigeRegelingen,
     textNoContent: 'U heeft geen huidige voorzieningen.',
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actual,
@@ -89,7 +87,6 @@ export const tableConfig = {
     filter: (regeling: WMOVoorzieningFrontend) => !regeling.isActual,
     displayProps: displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    className: styles.EerdereRegelingen,
     textNoContent:
       'U heeft geen eerdere en/of afgewezen voorzieningen. U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.',
     listPageRoute: generatePath(routeConfig.listPage.path, {

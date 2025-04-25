@@ -1,14 +1,10 @@
 import { describe, expect, test } from 'vitest';
 
 import { fetchBelasting, fetchBelastingNotifications } from './belasting';
-import { remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 const REQUEST_ID = 'test-x-999';
-const authProfileAndToken: AuthProfileAndToken = {
-  profile: { authMethod: 'digid', profileType: 'private', id: '', sid: '' },
-  token: 'xxxxxx',
-};
+const authProfileAndToken = getAuthProfileAndToken();
 
 describe('simple-connect/belasting', () => {
   test('fetchBelasting: no content', async () => {
@@ -16,13 +12,14 @@ describe('simple-connect/belasting', () => {
 
     expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
       .toMatchInlineSnapshot(`
-      {
-        "content": {
-          "isKnown": false,
-        },
-        "status": "OK",
-      }
-    `);
+        {
+          "content": {
+            "isKnown": false,
+            "url": "http://localhost:3100/mocks-api/sso/portaal/belastingen",
+          },
+          "status": "OK",
+        }
+      `);
   });
 
   test('fetchBelasting: bsn known', async () => {
@@ -32,13 +29,14 @@ describe('simple-connect/belasting', () => {
 
     expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
       .toMatchInlineSnapshot(`
-      {
-        "content": {
-          "isKnown": true,
-        },
-        "status": "OK",
-      }
-    `);
+        {
+          "content": {
+            "isKnown": true,
+            "url": "http://localhost:3100/mocks-api/sso/portaal/belastingen",
+          },
+          "status": "OK",
+        }
+      `);
   });
 
   test('fetchBelasting: bsn known + tips + notifications', async () => {
@@ -80,13 +78,14 @@ describe('simple-connect/belasting', () => {
 
     expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
       .toMatchInlineSnapshot(`
-      {
-        "content": {
-          "isKnown": true,
-        },
-        "status": "OK",
-      }
-    `);
+        {
+          "content": {
+            "isKnown": true,
+            "url": "http://localhost:3100/mocks-api/sso/portaal/belastingen",
+          },
+          "status": "OK",
+        }
+      `);
 
     expect(
       await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken)
@@ -103,6 +102,7 @@ describe('simple-connect/belasting', () => {
               to: 'https://belastingbalie-acc.amsterdam.nl/aanslagen.php',
             },
             themaID: 'BELASTINGEN',
+            themaTitle: 'Belastingen',
             title: 'Betaal uw aanslagen',
           },
         ],
@@ -118,6 +118,7 @@ describe('simple-connect/belasting', () => {
               to: 'https://belastingbalie-acc.amsterdam.nl/subject.gegevens.php',
             },
             themaID: 'BELASTINGEN',
+            themaTitle: 'Belastingen',
             tipReason:
               'U krijgt deze tip omdat u nog niet via automatische incasso betaalt',
             title: 'Automatische incasso',

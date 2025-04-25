@@ -16,8 +16,6 @@ import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
-import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -95,7 +93,7 @@ export type SourceApiKey =
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'CONTACTMOMENTEN'
-  | 'SUBSIDIE'
+  | 'SUBSIDIES'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
   | 'WPI_AANVRAGEN'
@@ -313,7 +311,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.krefiaActive,
     passthroughOIDCToken: true,
   },
-  SUBSIDIE: {
+  SUBSIDIES: {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.subsidieActive,
   },

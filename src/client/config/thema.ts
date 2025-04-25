@@ -5,6 +5,7 @@ import { BagThema } from '../../universal/types/App.types';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
 import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
+import { menuItem as menuItemBelastingen } from '../pages/Thema/Belastingen/Belastingen-render-config';
 import { menuItem as menuItemBezwaren } from '../pages/Thema/Bezwaren/Bezwaren-render-config';
 import { menuItem as menuItemBodem } from '../pages/Thema/Bodem/Bodem-render-config';
 import { menuItem as menuItemBurgerzaken } from '../pages/Thema/Burgerzaken/Burgerzaken-render-config';
@@ -17,8 +18,11 @@ import { menuItem as menuItemHoreca } from '../pages/Thema/Horeca/Horeca-render-
 import { menuItem as menuItemInkomen } from '../pages/Thema/Inkomen/Inkomen-render-config';
 import { menuItem as menuItemJeugd } from '../pages/Thema/Jeugd/Jeugd-render-config';
 import { menuItem as menuItemKlachten } from '../pages/Thema/Klachten/Klachten-render-config';
+import { menuItem as menuItemMilieuzone } from '../pages/Thema/Milieuzone/Milieuzone-render-config';
+import { menuItem as menuItemOvertredingen } from '../pages/Thema/Overtredingen/Overtredingen-render-config';
 import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
+import { menuItem as menuItemSubsidies } from '../pages/Thema/Subsidies/Subsidies-render-config';
 import { menuItem as menuItemToeristischeVerhuur } from '../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
 import { menuItem as menuItemVaren } from '../pages/Thema/Varen/Varen-render-config';
 import { menuItem as menuItemVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-render-config';
@@ -41,14 +45,9 @@ type ThemaTitles = { [thema in ThemaID]: string };
  * @deprecated Use the titles exported from the Thema-config files instead.
  */
 export const ThemaTitles = {
-  BELASTINGEN: 'Belastingen',
-  MILIEUZONE: 'Milieuzone',
   NOTIFICATIONS: 'Actueel',
-  OVERTREDINGEN: 'Overtredingen voertuigen',
   HOME: 'Home',
   SEARCH: 'Zoeken',
-  SUBSIDIE: 'Subsidies',
-  SVWI: 'SVWI',
 } as const;
 /**
  * @deprecated Use the titles exported from the Thema-config files instead.
@@ -74,7 +73,6 @@ export const DocumentTitles: DocumentTitlesConfig = {
   [AppRoutes.ZAAK_STATUS]: 'Status van uw Zaak | Mijn Amsterdam',
   [AppRoutes.ACCESSIBILITY]: `Toegankelijkheidsverklaring`,
   [AppRoutes.GENERAL_INFO]: `Dit ziet u in Mijn Amsterdam`,
-
   [AppRoutes.HOME]: 'Home | Mijn Amsterdam',
 };
 
@@ -98,54 +96,8 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemVaren,
   menuItemVergunningen,
   menuItemZorg,
-  {
-    title: ThemaTitles.BELASTINGEN,
-    id: ThemaIDs.BELASTINGEN,
-    to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN,
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.BELASTINGEN,
-    id: ThemaIDs.BELASTINGEN,
-    to: import.meta.env.REACT_APP_SSO_URL_BELASTINGEN_ZAKELIJK,
-    rel: 'external',
-    profileTypes: ['commercial'],
-    isAlwaysVisible: true,
-  },
-  {
-    title: ThemaTitles.SUBSIDIE,
-    id: ThemaIDs.SUBSIDIE,
-    to: `${import.meta.env.REACT_APP_SSO_URL_SUBSIDIES}?authMethod=digid`,
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.SUBSIDIE,
-    id: ThemaIDs.SUBSIDIE,
-    to: `${import.meta.env.REACT_APP_SSO_URL_SUBSIDIES}?authMethod=eherkenning`,
-    rel: 'external',
-    profileTypes: ['commercial'],
-  },
-  {
-    title: ThemaTitles.SVWI,
-    id: ThemaIDs.SVWI,
-    to: import.meta.env.REACT_APP_SSO_URL_SVWI,
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: ThemaTitles.MILIEUZONE,
-    id: ThemaIDs.MILIEUZONE,
-    to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
-    rel: 'external',
-    profileTypes: ['private', 'commercial'],
-  },
-  {
-    title: ThemaTitles.OVERTREDINGEN,
-    id: ThemaIDs.OVERTREDINGEN,
-    to: import.meta.env.REACT_APP_SSO_URL_MILIEUZONE,
-    rel: 'external',
-    profileTypes: ['private', 'commercial'],
-  },
+  menuItemBelastingen,
+  menuItemSubsidies,
+  menuItemOvertredingen,
+  menuItemMilieuzone,
 ];

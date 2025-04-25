@@ -113,24 +113,13 @@ export function HLIThema() {
     ? entries(tableConfig).map(
         ([
           kind,
-          {
-            title,
-            displayProps,
-            filter: regelingenListFilter,
-            sort: regelingenListSort,
-            maxItems,
-            listPageRoute,
-            className,
-          },
+          { title, displayProps, filter, sort, maxItems, listPageRoute },
         ]) => {
           return (
             <ThemaPaginaTable<HLIRegelingFrontend>
               key={kind}
               title={title}
-              className={className}
-              zaken={regelingen
-                .filter(regelingenListFilter)
-                .sort(regelingenListSort)}
+              zaken={regelingen.filter(filter).sort(sort)}
               listPageRoute={listPageRoute}
               displayProps={displayProps}
               maxItems={maxItems}

@@ -110,6 +110,13 @@ const testState = {
       facturen: mockFacturen,
     },
   },
+  BELASTINGEN: {
+    status: 'OK',
+    content: {
+      isKnown: true,
+      url: 'https://belastingbalie.amsterdam.nl',
+    },
+  },
 } as AppState;
 
 function initializeState(snapshot: MutableSnapshot) {
