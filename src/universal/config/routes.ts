@@ -5,10 +5,6 @@ export const AppRoutes = {
   ROOT: '/',
   HOME: '/',
 
-  ZORG: '/zorg-en-ondersteuning',
-  'ZORG/VOORZIENING': '/zorg-en-ondersteuning/voorziening/:id',
-  'ZORG/VOORZIENINGEN_LIST': '/zorg-en-ondersteuning/lijst/:kind/:page?',
-
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   API2_LOGIN: '/api2/login',

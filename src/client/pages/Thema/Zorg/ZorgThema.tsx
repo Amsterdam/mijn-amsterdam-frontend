@@ -25,7 +25,7 @@ export function HistoricItemsMention() {
   );
 }
 
-export function ZorgThemaPagina() {
+export function ZorgThema() {
   const {
     isError,
     isLoading,

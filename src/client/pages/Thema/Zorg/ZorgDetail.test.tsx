@@ -2,10 +2,10 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../../universal/config/routes';
+import { routeConfig } from './Zorg-thema-config';
+import { ZorgDetail } from './ZorgDetail';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { ZorgDetail } from './ZorgDetail';
 
 const testState: any = {
   WMO: {
@@ -257,10 +257,10 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 function testDetailPage(id: string, title: string) {
-  const routeEntry = generatePath(AppRoutes['ZORG/VOORZIENING'], {
+  const routeEntry = generatePath(routeConfig.detailPage.path, {
     id,
   });
-  const routePath = AppRoutes['ZORG/VOORZIENING'];
+  const routePath = routeConfig.detailPage.path;
 
   function Component() {
     return (

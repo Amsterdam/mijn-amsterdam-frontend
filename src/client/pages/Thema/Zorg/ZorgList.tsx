@@ -1,8 +1,8 @@
 import { useParams } from 'react-router';
 
 import { useZorgThemaData } from './useZorgThemaData';
-import { HistoricItemsMention } from './Zorg';
 import { ListPageParamKind } from './Zorg-thema-config';
+import { HistoricItemsMention } from './ZorgThema';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
 
@@ -10,28 +10,30 @@ export function ZorgList() {
   const { kind = 'huidige-voorzieningen' } = useParams<{
     kind: ListPageParamKind;
   }>();
+
   const {
     voorzieningen,
     tableConfig,
-    routes,
     isLoading,
     isError,
     listPageParamKind,
     breadcrumbs,
   } = useZorgThemaData();
-  const listPageTableConfig = tableConfig[kind];
+
+  const { filter, title, displayProps, className, listPageRoute } =
+    tableConfig[kind];
 
   return (
     <ListPagePaginated
-      items={voorzieningen.filter(listPageTableConfig.filter)}
-      title={listPageTableConfig.title}
-      appRoute={routes.listPage}
+      items={voorzieningen.filter(filter)}
+      title={title}
+      appRoute={listPageRoute}
       appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
-      displayProps={listPageTableConfig.displayProps}
+      displayProps={displayProps}
       isLoading={isLoading}
       isError={isError}
-      tableClassName={listPageTableConfig.className}
+      tableClassName={className}
       pageContentBottom={
         <PageContentCell spanWide={8} startWide={3}>
           {kind === listPageParamKind.historic && <HistoricItemsMention />}

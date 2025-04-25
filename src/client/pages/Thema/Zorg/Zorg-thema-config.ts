@@ -2,7 +2,6 @@ import { generatePath } from 'react-router';
 
 import styles from './Zorg.module.scss';
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import {
@@ -10,9 +9,49 @@ import {
   WithDetailLinkComponent,
 } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
+
+export const listPageParamKind = {
+  actual: 'huidige-voorzieningen',
+  historic: 'eerdere-en-afgewezen-voorzieningen',
+} as const;
+
+type ListPageParamKey = keyof typeof listPageParamKind;
+export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
+
+export const featureToggle = {
+  zorgActive: true,
+};
+
+export const themaId = 'ZORG' as const;
+export const themaTitle = 'Zorg en ondersteuning';
+
+export const routeConfig = {
+  detailPage: {
+    path: '/zorg-en-ondersteuning/voorziening/:id',
+    trackingUrl: '/zorg-en-ondersteuning/voorziening',
+    documentTitle: `Voorziening | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/zorg-en-ondersteuning/lijst/:kind/:page?',
+    documentTitle: (params) =>
+      `${params?.kind === listPageParamKind.actual ? 'Huidige' : 'Eerdere en afgewezen'} voorzieningen | ${themaTitle}`,
+  },
+  themaPage: {
+    path: '/zorg-en-ondersteuning',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
+
+export const linkListItems: LinkProps[] = [
+  {
+    to: 'https://www.amsterdam.nl/zorg-ondersteuning/',
+    title: 'Lees hier meer over zorg en ondersteuning',
+  },
+];
 
 const displayPropsBase: DisplayProps<
   WithDetailLinkComponent<WMOVoorzieningFrontend>
@@ -27,27 +66,6 @@ const displayProps = withOmitDisplayPropsForSmallScreens(displayPropsBase, [
   'statusDateFormatted',
 ]);
 
-export const routes = {
-  listPage: AppRoutes['ZORG/VOORZIENINGEN_LIST'],
-  detailPage: AppRoutes['ZORG/VOORZIENING'],
-  themaPage: AppRoutes.ZORG,
-} as const;
-
-export const linkListItems: LinkProps[] = [
-  {
-    to: 'https://www.amsterdam.nl/zorg-ondersteuning/',
-    title: 'Lees hier meer over zorg en ondersteuning',
-  },
-];
-
-export const listPageParamKind = {
-  actual: 'huidige-voorzieningen',
-  historic: 'eerdere-en-afgewezen-voorzieningen',
-} as const;
-
-type ListPageParamKey = keyof typeof listPageParamKind;
-export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
-
 export const listPageTitle = {
   [listPageParamKind.actual]: 'Huidige voorzieningen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen voorzieningen',
@@ -61,7 +79,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     className: styles.HuidigeRegelingen,
     textNoContent: 'U heeft geen huidige voorzieningen.',
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actual,
       page: null,
     }),
@@ -74,7 +92,7 @@ export const tableConfig = {
     className: styles.EerdereRegelingen,
     textNoContent:
       'U heeft geen eerdere en/of afgewezen voorzieningen. U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.',
-    listPageRoute: generatePath(routes.listPage, {
+    listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.historic,
       page: null,
     }),

@@ -96,7 +96,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '${PATH}/lijst/:kind/:page?',
-    documentTitle: (_, params) =>
+    documentTitle: (params) =>
       \`\${params?.kind === listPageParamKind.eerder ? 'Eerdere' : 'Lopende'} aanvragen | \${themaTitle}\`,
   },
   themaPage: {

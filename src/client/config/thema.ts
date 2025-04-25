@@ -22,6 +22,7 @@ import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-re
 import { menuItem as menuItemToeristischeVerhuur } from '../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
 import { menuItem as menuItemVaren } from '../pages/Thema/Varen/Varen-render-config';
 import { menuItem as menuItemVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-render-config';
+import { menuItem as menuItemZorg } from '../pages/Thema/Zorg/Zorg-render-config';
 
 /**
  * @deprecated We will remove this in the future in favor of the SWR implementations.
@@ -48,7 +49,6 @@ export const ThemaTitles = {
   SEARCH: 'Zoeken',
   SUBSIDIE: 'Subsidies',
   SVWI: 'SVWI',
-  ZORG: 'Zorg en ondersteuning',
 } as const;
 /**
  * @deprecated Use the titles exported from the Thema-config files instead.
@@ -64,11 +64,6 @@ export const PageTitleMain = 'Mijn Amsterdam';
  * @deprecated Use the documentTitles exported from the Thema-config files instead.
  */
 export const DocumentTitles: DocumentTitlesConfig = {
-  // Zorg
-  [AppRoutes.ZORG]: `${ThemaTitles.ZORG} | overzicht`,
-  [AppRoutes['ZORG/VOORZIENING']]: `Voorziening | ${ThemaTitles.ZORG}`,
-  [AppRoutes['ZORG/VOORZIENINGEN_LIST']]: `Voorzieningen | ${ThemaTitles.ZORG}`,
-
   // Generic
   [AppRoutes.SEARCH]: `Zoeken`,
   [AppRoutes.NOTIFICATIONS]: `${ThemaTitles.NOTIFICATIONS} | overzicht`,
@@ -102,6 +97,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemToeristischeVerhuur,
   menuItemVaren,
   menuItemVergunningen,
+  menuItemZorg,
   {
     title: ThemaTitles.BELASTINGEN,
     id: ThemaIDs.BELASTINGEN,
@@ -130,12 +126,6 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
     to: `${import.meta.env.REACT_APP_SSO_URL_SUBSIDIES}?authMethod=eherkenning`,
     rel: 'external',
     profileTypes: ['commercial'],
-  },
-  {
-    title: ThemaTitles.ZORG,
-    id: ThemaIDs.ZORG,
-    to: AppRoutes.ZORG,
-    profileTypes: ['private'],
   },
   {
     title: ThemaTitles.SVWI,

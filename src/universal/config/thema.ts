@@ -11,7 +11,6 @@ export const ThemaIDs = {
   SEARCH: 'SEARCH',
   SUBSIDIE: 'SUBSIDIE',
   SVWI: 'SVWI',
-  ZORG: 'ZORG',
 } as const;
 /**
  * @deprecated

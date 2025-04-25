@@ -2,11 +2,11 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../../universal/config/routes';
+import { routeConfig } from './Zorg-thema-config';
+import { ZorgThemaPagina } from './ZorgThema';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { ZorgThemaPagina } from './Zorg';
-import { AppState } from '../../../../universal/types/App.types';
 
 const testState: Pick<AppState, 'WMO'> = {
   WMO: {
@@ -59,8 +59,8 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<Zorg />', () => {
-  const routeEntry = generatePath(AppRoutes.ZORG);
-  const routePath = AppRoutes.ZORG;
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
 
   function Component() {
     return (

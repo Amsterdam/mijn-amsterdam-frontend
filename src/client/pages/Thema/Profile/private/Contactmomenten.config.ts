@@ -9,6 +9,7 @@ import { themaId as themaIdAfis } from '../../Afis/Afis-thema-config';
 import { themaId as themaIdInkomen } from '../../Inkomen/Inkomen-thema-config';
 import { themaId as themaIdKrefia } from '../../Krefia/Krefia-thema-config';
 import { themaId as themaIdParkeren } from '../../Parkeren/Parkeren-thema-config';
+import { themaId as themaIdZorg } from '../../Zorg/Zorg-thema-config';
 
 export type ContactMomentFrontend = ContactMoment & {
   themaKanaalIcon: ReactNode;
@@ -37,7 +38,7 @@ export const mapperContactmomentToMenuItem: Record<
   ThemaID | SomeOtherString
 > = {
   Parkeren: themaIdParkeren,
-  Zorg: ThemaIDs.ZORG,
+  Zorg: themaIdZorg,
   'Werk en Inkomen': SVWIv1ORv2,
   Belastingen: ThemaIDs.BELASTINGEN,
   Geldzaken: themaIdKrefia,

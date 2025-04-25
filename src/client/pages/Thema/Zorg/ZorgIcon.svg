@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg focusable="false" width="32px" height="32px" viewBox="0 0 32 32" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  aria-label="zorg-en-ondersteuning-icoon">
+  <polygon id="Path"
+    points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"></polygon>
+  <path
+    d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
+    id="Shape"></path>
+</svg>

@@ -14,8 +14,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     OVERTREDINGEN,
     SUBSIDIE,
     SVWI,
-    VERGUNNINGEN,
-    WMO,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
@@ -26,13 +24,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         isAmsterdam &&
         FeatureToggle.svwiLinkActive &&
         SVWI?.content?.isKnown === true
-      );
-
-    case ThemaIDs.ZORG:
-      return (
-        FeatureToggle.zorgv2ThemapaginaActive &&
-        !isLoading(WMO) &&
-        !!WMO.content?.length
       );
 
     case ThemaIDs.BELASTINGEN: {

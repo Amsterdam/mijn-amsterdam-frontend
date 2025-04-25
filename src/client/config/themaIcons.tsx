@@ -8,7 +8,6 @@ import {
   IconMilieuzone,
   IconOvertredingen,
   IconSubsidie,
-  IconZorg,
 } from '../assets/icons';
 
 export const ThemaIcons: Record<ThemaID, SVGComponent> = {
@@ -20,5 +19,4 @@ export const ThemaIcons: Record<ThemaID, SVGComponent> = {
   SEARCH: SearchIcon,
   SUBSIDIE: IconSubsidie,
   SVWI: IconInkomenSVWI,
-  ZORG: IconZorg,
 };

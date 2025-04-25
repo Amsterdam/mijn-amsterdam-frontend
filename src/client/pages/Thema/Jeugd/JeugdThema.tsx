@@ -9,7 +9,7 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import {
   WMO_HELPDESK_HREF_TEL_LINK,
   WMO_HELPDESK_PHONENUMBER,
-} from '../Zorg/Zorg';
+} from '../Zorg/ZorgThema';
 
 export function JeugdThemaPagina() {
   const { isError, isLoading, voorzieningen, title, tableConfig } =
