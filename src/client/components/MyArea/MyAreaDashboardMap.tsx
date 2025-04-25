@@ -7,7 +7,7 @@ import { themaTitle } from './MyArea-thema-config';
 import styles from './MyAreaDashboard.module.scss';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import { BAGData } from '../../../server/services/bag';
+import { BAGData } from '../../../server/services/bag/bag';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
 import { isLoading } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';

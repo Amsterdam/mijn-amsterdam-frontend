@@ -11,17 +11,17 @@ import {
   transformErfpachtDossierProperties,
 } from '../../../../../server/services/erfpacht/erfpacht';
 import { bffApi } from '../../../../../testing/utils';
-import { AppRoutes } from '../../../../../universal/config/routes';
 import { jsonCopy } from '../../../../../universal/helpers/utils';
 import { AppState } from '../../../../../universal/types/App.types';
 import { appStateAtom } from '../../../../hooks/useAppState';
 import MockApp from '../../../MockApp';
+import { routeConfig } from '../Erfpacht-thema-config';
 
 describe('<Erfpacht/DossierDetail />', () => {
-  const routeEntry = generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
+  const routeEntry = generatePath(routeConfig.detailPage.path, {
     dossierNummerUrlParam: 'E.123.123',
   });
-  const routePath = AppRoutes['ERFPACHT/DOSSIERDETAIL'];
+  const routePath = routeConfig.detailPage.path;
 
   const dossierDetailTransformed = transformErfpachtDossierProperties(
     ERFPACHT_DOSSIER_DETAIL as any

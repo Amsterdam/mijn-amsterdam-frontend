@@ -1,5 +1,4 @@
 import { ThemaRoutesConfig } from '../../../config/thema-types';
-import { toDocumentTitles, toRoutes } from '../../../helpers/thema-config';
 
 export const themaIdKVK = 'KVK' as const;
 export const themaIdBRP = 'BRP' as const;
@@ -18,7 +17,7 @@ export const themaTitle = {
   [themaIdKVK]: 'Mijn onderneming',
 } as const;
 
-const routeConfig = {
+export const routeConfig = {
   themaPageBRP: {
     path: '/persoonlijke-gegevens',
     documentTitle: 'Mijn gegevens',
@@ -33,12 +32,11 @@ const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-export const routes = toRoutes(routeConfig);
-export const documentTitles = toDocumentTitles(routeConfig);
-
-export const errorMessage = {
-  [themaIdKVK]: 'Mijn onderneming',
-  [themaIdBRP]: 'Persoonlijke gegevens, paspoort, ID-kaart',
+export const profileLinks = {
+  CHANGE_PERSONAL_DATA:
+    'https://www.amsterdam.nl/veelgevraagd/persoonlijke-gegevens-inzien-of-een-correctie-doorgeven-2bf85',
+  CHANGE_RESIDENT_COUNT:
+    'https://www.amsterdam.nl/veelgevraagd/onjuiste-inschrijving-melden-ef918',
+  REPORT_RELOCATION:
+    'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
 };
-
-// TODO: Integrate search config with the new thema config ?

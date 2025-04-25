@@ -56,9 +56,12 @@ const hasThemaConfig = values.config.includes('thema');
 
 const ID = values.id.toUpperCase();
 const TITLE = capitalizeFirstLetter(values.title);
-const titleSlug = slug(values.title.toLowerCase());
 const titleName = capitalizeFirstLetter(
-  values.title.toLowerCase().replace(/[^a-zA-Z]+/g, '')
+  values.id
+    .toLowerCase()
+    .split('_')
+    .map((term) => capitalizeFirstLetter(term))
+    .join('')
 );
 const PATH = `/${slug(TITLE.toLowerCase())}`;
 const ZAAKTYPE = values.zaakType.toUpperCase().replace(/[^a-zA-Z]+/, '');
@@ -120,7 +123,7 @@ import {
 } from '../../../config/app';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
-// import type { ${typeName} } from '../../../../server/services/${titleSlug}/config-and-types';
+// import type { ${typeName} } from '../../../../server/services/${titleName.toLowerCase()}/config-and-types';
 type ${typeName} = ZaakDetail & {
   processed: boolean;
   dateRequest: string;
@@ -203,7 +206,7 @@ export const tableConfig = {
 
 const themaPageComponentName = `${titleName}Thema`;
 const detailPageComponentName = `${titleName}Detail`;
-const listPageComponentName = `${titleName}Lijst`;
+const listPageComponentName = `${titleName}List`;
 const iconComponentName = `${titleName}Icon`;
 
 const renderConfigTemplate = `
@@ -227,17 +230,17 @@ import {
 export const ${titleName}Routes = [
   {
     route: routeConfig.detailPage.path,
-    Component: ${titleName}Detail,
+    Component: ${detailPageComponentName},
     isActive: featureToggle.${featureToggleName},
   },
   {
     route: routeConfig.listPage.path,
-    Component: ${titleName}Lijst,
+    Component: ${listPageComponentName},
     isActive: featureToggle.${featureToggleName},
   },
   {
     route: routeConfig.themaPage.path,
-    Component: ${titleName}Thema,
+    Component: ${themaPageComponentName},
     isActive: featureToggle.${featureToggleName},
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
@@ -259,10 +262,10 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
 
 `;
 
-const fileNameCoreConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-core-config.ts`;
-const fileNameThemaConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-thema-config.ts`;
-const fileNameRenderConfig = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}-render-config.tsx`;
-const svgFileName = `${basePath}/${capitalizeFirstLetter(titleSlug)}/${capitalizeFirstLetter(titleSlug)}Icon.svg`;
+const fileNameCoreConfig = `${basePath}/${titleName}/${titleName}-thema-core-config.ts`;
+const fileNameThemaConfig = `${basePath}/${titleName}/${titleName}-thema-config.ts`;
+const fileNameRenderConfig = `${basePath}/${titleName}/${titleName}-render-config.tsx`;
+const svgFileName = `${basePath}/${titleName}/${titleName}Icon.svg`;
 
 if (hasRenderConfig || hasThemaConfig || hasCoreConfig) {
   fs.mkdirSync(path.dirname(fileNameThemaConfig), { recursive: true });

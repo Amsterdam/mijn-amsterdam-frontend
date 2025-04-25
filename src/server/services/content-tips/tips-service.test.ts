@@ -13,7 +13,7 @@ import BRP from '../../../../mocks/fixtures/brp.json';
 import WPI_E from '../../../../mocks/fixtures/wpi-e-aanvragen.json';
 import { type ThemaID } from '../../../universal/config/thema';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { WpiRequestProcess } from '../wpi/wpi-types';
 
 const tozoContent = WPI_E.content.filter(

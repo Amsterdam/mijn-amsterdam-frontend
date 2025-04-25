@@ -3,7 +3,7 @@ import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
 } from './decos-zaken';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DecosZaakTransformer } from '../decos/config-and-types';
@@ -39,7 +39,7 @@ export async function fetchDecosParkeerVergunningen(
           authProfileAndToken.profile.sid,
           zaak,
           {
-            appRoute: AppRoutes['PARKEREN/DETAIL'],
+            appRoute: routeConfig.detailPage.path,
             includeFetchDocumentsUrl: true,
           }
         );

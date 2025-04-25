@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import { parseISO } from 'date-fns';
 import { useParams, generatePath, useNavigate } from 'react-router';
 
-import { tableConfigSpecificaties } from './Inkomen-thema-config';
+import { routeConfig, tableConfigSpecificaties } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
 
 export function useInkomenSpecificatiesListPageData() {
@@ -13,7 +13,6 @@ export function useInkomenSpecificatiesListPageData() {
     isErrorWpiSpecificaties,
     isLoadingWpiSpecificaties,
     listPageParamKind,
-    routes,
     breadcrumbs,
   } = useInkomenThemaData();
 
@@ -90,7 +89,7 @@ export function useInkomenSpecificatiesListPageData() {
     (category: string) => {
       setSelectedCategory(category);
       navigate(
-        generatePath(routes.listPageSpecificaties, {
+        generatePath(routeConfig.listPageSpecificaties.path, {
           page: '1',
           kind,
         }),
@@ -133,7 +132,6 @@ export function useInkomenSpecificatiesListPageData() {
     },
     resetSearch,
     title: isJaaropgaven ? 'Jaaropgaven' : 'Uitkeringsspecificaties',
-    routes,
     selectCategoryFilter,
     selectedCategory,
     selectedDates,
@@ -142,5 +140,6 @@ export function useInkomenSpecificatiesListPageData() {
     toggleSearchPanel,
     total,
     breadcrumbs,
+    themaPageRoute: routeConfig.themaPage.path,
   };
 }

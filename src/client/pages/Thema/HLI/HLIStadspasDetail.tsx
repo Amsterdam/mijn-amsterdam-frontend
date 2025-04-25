@@ -10,6 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
+import { routeConfig, themaId } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -18,12 +19,11 @@ import {
   StadspasFrontend,
 } from '../../../../server/services/hli/stadspas-types';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../../universal/config/routes';
 import {
-  ApiResponse_DEPRECATED,
   apiPristineResult,
   isError,
   isLoading,
+  type ApiResponse_DEPRECATED,
 } from '../../../../universal/helpers/api';
 import { dateSort } from '../../../../universal/helpers/date';
 import ErrorAlert from '../../../components/Alert/Alert';
@@ -41,10 +41,10 @@ import {
 import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
-import { ThemaTitles } from '../../../config/thema';
 import { useDataApi } from '../../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 const loadingContentBarConfigDetails: BarConfig = [
   ['10rem', '2rem', '.5rem'],
@@ -144,12 +144,12 @@ export function HLIStadspasDetail() {
   const showMultiBudgetTransactions =
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
+
   return (
     <DetailPageV2>
       <PageContentV2>
-        <PageHeadingV2
-          breadcrumbs={[{ to: AppRoutes.HLI, title: ThemaTitles.HLI }]}
-        >
+        <PageHeadingV2 breadcrumbs={breadcrumbs}>
           Overzicht Stadspas{' '}
           {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
         </PageHeadingV2>
@@ -181,7 +181,7 @@ export function HLIStadspasDetail() {
             {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
               <ErrorAlert>
                 We kunnen op dit moment geen gegevens tonen.{' '}
-                <MaRouterLink href={AppRoutes.HLI}>
+                <MaRouterLink href={routeConfig.themaPage.path}>
                   Naar het overzicht
                 </MaRouterLink>
               </ErrorAlert>

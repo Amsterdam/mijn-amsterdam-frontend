@@ -271,7 +271,9 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
               </td>
               <td
                 class="ams-table__cell"
-              />
+              >
+                05 mei 2022
+              </td>
               <td
                 class="ams-table__cell"
               >
@@ -294,7 +296,9 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
               </td>
               <td
                 class="ams-table__cell"
-              />
+              >
+                05 mei 2022
+              </td>
               <td
                 class="ams-table__cell"
               />

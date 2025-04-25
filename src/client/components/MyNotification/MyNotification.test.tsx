@@ -8,7 +8,7 @@ import { type ThemaID } from '../../../universal/config/thema';
 import type {
   AppState,
   MyNotification as MyNotificationType,
-} from '../../../universal/types';
+} from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 

@@ -25,7 +25,7 @@ import {
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { hash } from '../../../universal/helpers/utils';
-import { GenericDocument } from '../../../universal/types';
+import { GenericDocument } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';

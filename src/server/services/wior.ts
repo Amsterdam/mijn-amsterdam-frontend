@@ -12,7 +12,7 @@ import {
   filterFeaturesinRadius,
   getBboxFromFeatures,
 } from './buurt/helpers';
-import { fetchMyLocation } from './my-locations';
+import { fetchMyLocation } from './bag/my-locations';
 import {
   featureToggle,
   routeConfig,

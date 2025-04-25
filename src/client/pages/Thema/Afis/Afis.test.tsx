@@ -9,7 +9,7 @@ import {
   AfisFacturenByStateResponse,
 } from '../../../../server/services/afis/afis-types';
 import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 

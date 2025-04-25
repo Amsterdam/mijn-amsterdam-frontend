@@ -2,10 +2,10 @@ import {
   tableConfig,
   varenLegesTableLink,
   varenMeerInformatieLink,
-  routes,
+  themaTitle,
+  themaId,
 } from './Varen-thema-config';
 import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
-import { ThemaIDs } from '../../../../universal/config/thema';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
@@ -15,7 +15,6 @@ export function useVarenThemaData() {
   const { VAREN } = useAppStateGetter();
 
   const varenRederRegistratie = VAREN.content?.reder;
-
   const zaken = VAREN.content?.zaken ?? [];
 
   const varenZaken = addLinkElementToProperty<VarenZakenFrontend>(
@@ -24,7 +23,7 @@ export function useVarenThemaData() {
     true
   );
 
-  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.VAREN);
+  const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
     varenRederRegistratie,
@@ -34,7 +33,7 @@ export function useVarenThemaData() {
     varenZaken,
     linkListItems: [varenMeerInformatieLink, varenLegesTableLink],
     buttonItems: [],
-    routes,
     breadcrumbs,
+    title: themaTitle,
   };
 }

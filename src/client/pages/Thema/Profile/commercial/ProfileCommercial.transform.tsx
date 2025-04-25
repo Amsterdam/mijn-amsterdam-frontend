@@ -11,14 +11,14 @@ import type {
   OverigeFunctionaris,
   Rechtspersoon,
   Vestiging,
-} from '../../../../../server/services/kvk';
+} from '../../../../../server/services/profile/kvk';
 import { getFullAddress } from '../../../../../universal/helpers/brp';
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import {
   capitalizeFirstLetter,
   splitCapitals,
 } from '../../../../../universal/helpers/text';
-import { Adres, AppState } from '../../../../../universal/types';
+import { Adres, AppState } from '../../../../../universal/types/App.types';
 import {
   ProfileLabels,
   formatProfileSectionData,

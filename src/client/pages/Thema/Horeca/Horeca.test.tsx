@@ -2,10 +2,10 @@ import { screen, render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { HorecaThemaPagina } from './Horeca';
+import { routeConfig } from './Horeca-thema-config';
+import { HorecaThema } from './HorecaThema';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/config-and-types';
-import { AppRoutes } from '../../../../universal/config/routes';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
@@ -13,12 +13,7 @@ export const vergunning: HorecaVergunningFrontend = {
   id: 'Z-24-2238078',
   key: '5E6F10EA670D4D4FA0E637B453D32DAB',
   title: 'Horeca vergunning exploitatie Horecabedrijf',
-  statusDates: [
-    {
-      status: 'In behandeling',
-      datePublished: '2024-05-02T22:00:00.000Z',
-    },
-  ],
+
   status: 'Ontvangen',
   caseType: 'Horeca vergunning exploitatie Horecabedrijf',
   decision: null,
@@ -27,7 +22,9 @@ export const vergunning: HorecaVergunningFrontend = {
   dateDecision: null,
   dateRequest: '2024-12-02T00:00:00',
   dateStart: null,
+  dateStartFormatted: null,
   dateEnd: '2025-01-27T00:00:00',
+  dateEndFormatted: '27 januari 2025',
   location: 'Amstel 1 A 1011PN',
   dateDecisionFormatted: null,
   dateRequestFormatted: '02 december 2024',
@@ -81,14 +78,14 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<Horeca />', () => {
-  const routeEntry = generatePath(AppRoutes.HORECA);
-  const routePath = AppRoutes.HORECA;
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={HorecaThemaPagina}
+        component={HorecaThema}
         initializeState={initializeState}
       />
     );

@@ -18,7 +18,7 @@ import {
   BAGAdreseerbaarObject,
   BAGQueryParams,
   BAGSourceData,
-} from '../../../universal/types/bag';
+} from '../../../server/services/bag/bag.types';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
 import { trackPageView } from '../../hooks/analytics.hook';

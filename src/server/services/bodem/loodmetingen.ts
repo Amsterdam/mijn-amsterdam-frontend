@@ -24,7 +24,7 @@ import {
   isRecentNotification,
   sortAlpha,
 } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';

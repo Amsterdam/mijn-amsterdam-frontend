@@ -4,7 +4,7 @@ import { generatePath } from 'react-router';
 import { routeConfig } from './Bodem-thema-config';
 import { LoodMeting } from './LoodMeting';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { componentCreator } from '../../MockApp';
 
 const metingen: LoodMetingFrontend[] = [

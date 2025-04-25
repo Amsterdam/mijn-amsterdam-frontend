@@ -5,7 +5,7 @@ import {
 } from '../../../universal/types/App.types';
 import { BeschikkingsResultaat } from '../zorgned/zorgned-types';
 
-export interface HLIRegeling extends ZaakDetail {
+export interface HLIRegelingFrontend extends ZaakDetail {
   dateDecision: string;
   dateEnd: string | null;
   dateStart: string | null;
@@ -16,6 +16,6 @@ export interface HLIRegeling extends ZaakDetail {
 }
 
 export interface HLIresponseData {
-  regelingen: HLIRegeling[];
+  regelingen: HLIRegelingFrontend[];
   stadspas: StadspasFrontend[] | null;
 }

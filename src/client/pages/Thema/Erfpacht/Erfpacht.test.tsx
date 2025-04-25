@@ -2,17 +2,17 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
+import { Erfpacht } from './Erfpacht';
+import { routeConfig } from './Erfpacht-thema-config';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { Erfpacht } from './Erfpacht';
-import { AppState } from '../../../../universal/types/App.types';
 
 describe('<Erfpacht />', () => {
-  const routeEntry = generatePath(AppRoutes.ERFPACHT);
-  const routePath = AppRoutes.ERFPACHT;
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
 
   function Component({
     initializeState,
@@ -95,7 +95,7 @@ describe('<Erfpacht />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '123-abc'),
+        content: transformDossierResponse(ERFPACHT_DOSSIERS, '123-abc'),
       },
     } as AppState;
 

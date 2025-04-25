@@ -9,7 +9,8 @@ import {
   ONE_SECOND_MS,
 } from './app';
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
-import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
@@ -166,7 +167,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
       key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
     }),
-    postponeFetch: !zorgnedLeerlingenvervoerActive,
+    postponeFetch: !featureToggleJeugd.leerlingenvervoerActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
@@ -269,7 +270,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !FeatureToggle.erfpachtEndpointActive ||
+      !featureToggleErfpacht.erfpachtActive ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',

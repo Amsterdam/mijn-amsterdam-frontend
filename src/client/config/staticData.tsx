@@ -1,10 +1,13 @@
-import { ExternalUrls } from './app';
 import { ThemaIDs } from '../../universal/config/thema';
-import { MyNotification } from '../../universal/types';
+import { MyNotification } from '../../universal/types/App.types';
 
 const year = 2022;
 const day = 20;
 const month = 0;
+
+const CONTACT_FORM_URL =
+  'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx';
+
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
   themaID: ThemaIDs.NOTIFICATIONS,
@@ -37,7 +40,7 @@ export const WelcomeNotification: MyNotification = {
       if (usabilla) {
         usabilla('click');
       } else {
-        window.location.href = ExternalUrls.CONTACT_FORM;
+        window.location.href = CONTACT_FORM_URL;
       }
     },
     title: 'Laat ons weten wat u ervan vindt',

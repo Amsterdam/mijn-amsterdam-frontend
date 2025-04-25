@@ -1,5 +1,5 @@
 import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
-import { AppState, LinkProps } from '../../../universal/types';
+import { AppState, LinkProps } from '../../../universal/types/App.types';
 
 export type ServiceResults = {
   [serviceId: string]: ApiResponse_DEPRECATED<any>;

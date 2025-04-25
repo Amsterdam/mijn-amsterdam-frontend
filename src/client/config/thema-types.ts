@@ -2,7 +2,11 @@ import { PathMatch } from 'react-router';
 
 import { TrackingConfig } from './routes';
 import { SomeOtherString } from '../../universal/helpers/types';
-import { AppState, LinkProps, SVGComponent } from '../../universal/types';
+import {
+  AppState,
+  LinkProps,
+  SVGComponent,
+} from '../../universal/types/App.types';
 
 export type IsThemaVisibleFN = (appState: AppState) => boolean;
 

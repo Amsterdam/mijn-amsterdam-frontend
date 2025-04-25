@@ -1,13 +1,37 @@
 import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
-import { AppRoutes } from '../../../../universal/config/routes';
 import { entries } from '../../../../universal/helpers/utils';
-import { LinkProps } from '../../../../universal/types';
+import { LinkProps } from '../../../../universal/types/App.types';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   tableConfig as tableConfigVergunningen,
 } from '../Vergunningen/Vergunningen-thema-config';
+
+export const featureToggle = {
+  parkerenActive: true,
+};
+
+export const themaId = 'PARKEREN' as const;
+export const themaTitle = 'Parkeren';
+
+export const routeConfig = {
+  detailPage: {
+    path: '/parkeren/:caseType/:id',
+    trackingUrl: '/parkeren/parkeerfrontend',
+    documentTitle: `Parkeren | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/parkeren/lijst/:kind/:page?',
+    documentTitle: (_, params) =>
+      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
+  },
+  themaPage: {
+    path: '/parkeren',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
 
 export const linkListItems: LinkProps[] = [
   {
@@ -18,19 +42,13 @@ export const linkListItems: LinkProps[] = [
 
 export type ListPageParamKind = ListPageParamKindVergunningen;
 
-export const routes = {
-  listPage: AppRoutes['PARKEREN/LIST'],
-  themaPage: AppRoutes.PARKEREN,
-  detailPage: AppRoutes['PARKEREN/DETAIL'],
-};
-
 export const tableConfig = Object.fromEntries(
   entries(cloneDeep(tableConfigVergunningen)).map(([kind, tableConfig]) => {
     return [
       kind,
       {
         ...tableConfig,
-        listPageRoute: generatePath(routes.listPage, {
+        listPageRoute: generatePath(routeConfig.listPage.path, {
           kind,
           page: null,
         }),

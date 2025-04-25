@@ -4,7 +4,7 @@ import { MijnBedrijfsGegevensThema } from './commercial/ProfileCommercial';
 import { ContactmomentenListPage } from './private/ContactmomentenListPage';
 import { MijnGegevensThema } from './private/ProfilePrivate';
 import {
-  routes,
+  routeConfig,
   themaTitle,
   themaIdBRP,
   themaIdKVK,
@@ -12,17 +12,17 @@ import {
 import { default as ProfilePrivateIcon } from './ProfilePrivateIcon.svg?react';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { isLoading } from '../../../../universal/helpers/api';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { ThemaMenuItem } from '../../../config/thema-types';
 
 export const ProfileRoutes = [
-  { route: routes.themaPageBRP, Component: MijnGegevensThema },
+  { route: routeConfig.themaPageBRP.path, Component: MijnGegevensThema },
   {
-    route: routes.themaPageKVK,
+    route: routeConfig.themaPageKVK.path,
     Component: MijnBedrijfsGegevensThema,
   },
   {
-    route: routes.listPageContactmomenten,
+    route: routeConfig.listPageContactmomenten.path,
     Component: ContactmomentenListPage,
     isActive: FeatureToggle.contactmomentenActive,
   },
@@ -35,7 +35,7 @@ export const menuItems: [
   {
     title: themaTitle.BRP,
     id: themaIdBRP,
-    to: routes.themaPageBRP,
+    to: routeConfig.themaPageBRP.path,
     profileTypes: ['private'],
     isActive(appState: AppState) {
       return !isLoading(appState.BRP) && !!appState.BRP.content?.persoon;
@@ -45,7 +45,7 @@ export const menuItems: [
   {
     title: themaTitle.KVK,
     id: themaIdKVK,
-    to: routes.themaPageKVK,
+    to: routeConfig.themaPageKVK.path,
     profileTypes: ['commercial', 'private'],
     isActive(appState: AppState) {
       return !isLoading(appState.KVK) && !!appState.KVK.content;

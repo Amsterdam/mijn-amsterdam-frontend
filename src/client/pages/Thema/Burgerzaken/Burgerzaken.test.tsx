@@ -1,15 +1,12 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../../universal/config/routes';
+import { routeConfig } from './Burgerzaken-thema-config';
+import { BurgerzakenThema } from './BurgerzakenThema';
+import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { Burgerzaken } from './Burgerzaken';
-import {
-  AppState,
-  IdentiteitsbewijsFrontend,
-} from '../../../../universal/types';
 
 const identiteitsbewijzen: IdentiteitsbewijsFrontend[] = [
   {
@@ -20,12 +17,13 @@ const identiteitsbewijzen: IdentiteitsbewijsFrontend[] = [
     documentNummer: 'PP57XKG54',
     documentType: 'paspoort',
     title: 'paspoort',
-    steps: [],
     id: 'een-hash-van-documentnummer-1',
     link: {
       to: '/burgerzaken/paspoort/een-hash-van-documentnummer-1',
       title: 'Paspoort',
     },
+    displayStatus: '',
+    steps: [],
   },
   {
     datumAfloop: '2020-09-11T00:00:00Z',
@@ -35,12 +33,13 @@ const identiteitsbewijzen: IdentiteitsbewijsFrontend[] = [
     documentNummer: 'IE9962819',
     documentType: 'europese identiteitskaart',
     title: 'europese-identiteitskaart',
-    steps: [],
     id: 'een-hash-van-documentnummer-2',
     link: {
       to: '/burgerzaken/europese-identiteitskaart/een-hash-van-documentnummer-2',
       title: 'ID-kaart',
     },
+    displayStatus: '',
+    steps: [],
   },
 ];
 
@@ -53,15 +52,14 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<Burgerzaken />', () => {
-  const routeEntry = generatePath(AppRoutes.BURGERZAKEN);
-  const routePath = AppRoutes.BURGERZAKEN;
+  const routePath = routeConfig.themaPage.path;
 
   function Component() {
     return (
       <MockApp
-        routeEntry={routeEntry}
+        routeEntry={routePath}
         routePath={routePath}
-        component={Burgerzaken}
+        component={BurgerzakenThema}
         initializeState={initializeState}
       />
     );

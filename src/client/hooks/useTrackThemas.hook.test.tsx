@@ -5,7 +5,7 @@ import { MutableSnapshot, RecoilRoot } from 'recoil';
 
 import { appStateAtom, appStateReadyAtom } from './useAppState';
 import { useTrackThemas } from './useTrackThemas.hook';
-import { AppState } from '../../universal/types';
+import { AppState } from '../../universal/types/App.types';
 import { trackEvent } from '../helpers/monitoring';
 
 vi.mock('../helpers/monitoring', () => ({

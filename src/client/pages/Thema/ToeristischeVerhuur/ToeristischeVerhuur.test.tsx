@@ -4,12 +4,12 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { AppRoutes } from '../../../../universal/config/routes';
+import { routeConfig } from './ToeristischeVerhuur-thema-config';
+import { ToeristischeVerhuurThema } from './ToeristischeVerhuurThema';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { ToeristscheVerhuurThema } from './ToeristischeVerhuur';
 
 const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
   lvvRegistraties: [
@@ -81,7 +81,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-XXX-000007C',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      status: 'Verleend',
       displayStatus: 'Verleend',
     },
     {
@@ -130,7 +129,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
       processed: true,
-      status: 'Verleend',
       displayStatus: 'Verleend',
     },
     {
@@ -187,7 +185,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
       processed: true,
-      status: 'Verlopen',
       displayStatus: 'Verlopen',
     },
     {
@@ -244,7 +241,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
       processed: true,
-      status: 'Ingetrokken',
       displayStatus: 'Ingetrokken',
     },
     {
@@ -301,7 +297,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
       processed: true,
-      status: 'Verlopen',
       displayStatus: 'Verlopen',
     },
   ],
@@ -341,7 +336,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
       ],
-      status: 'Verleend',
       displayStatus: 'Verleend',
       processed: true,
       documents: [],
@@ -381,7 +375,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
       ],
-      status: 'Afgehandeld',
       displayStatus: 'Afgehandeld',
       processed: true,
       documents: [],
@@ -421,7 +414,6 @@ const verhuurContent: AppState['TOERISTISCHE_VERHUUR']['content'] = {
           isChecked: true,
         },
       ],
-      status: 'Afgehandeld',
       displayStatus: 'Zie besluit',
       processed: true,
       documents: [],
@@ -443,16 +435,16 @@ function initializeState(snapshot: MutableSnapshot, state: AppState) {
   snapshot.set(appStateAtom, state);
 }
 
-describe('<ToeristscheVerhuurThema />', () => {
-  const routeEntry = generatePath(AppRoutes.TOERISTISCHE_VERHUUR);
-  const routePath = AppRoutes.TOERISTISCHE_VERHUUR;
+describe('<ToeristischeVerhuurThema />', () => {
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
 
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ToeristscheVerhuurThema}
+        component={ToeristischeVerhuurThema}
         initializeState={(snap) => initializeState(snap, state)}
       />
     );

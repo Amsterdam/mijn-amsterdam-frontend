@@ -3,13 +3,13 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import slug from 'slugme';
 
-import { HorecaDetailPagina } from './HorecaDetail';
+import { routeConfig } from './Horeca-thema-config';
+import { vergunning } from './Horeca.test';
+import { HorecaDetail } from './HorecaDetail';
 import { HorecaVergunningFrontend } from '../../../../server/services/horeca/config-and-types';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { vergunning } from './Horeca.test';
-import { AppState } from '../../../../universal/types';
 
 const vergunning2: HorecaVergunningFrontend = {
   ...structuredClone(vergunning),
@@ -30,19 +30,19 @@ const testState = {
 
 function MockVergunningDetail({ identifier }: { identifier: string }) {
   const vergunning = content.find((v) => v.identifier === identifier);
-  const routeEntry = generatePath(AppRoutes['HORECA/DETAIL'], {
+  const routeEntry = generatePath(routeConfig.detailPage.path, {
     caseType: slug(vergunning?.caseType, {
       lower: true,
     }),
     id: vergunning?.id as string,
   });
-  const routePath = AppRoutes['HORECA/DETAIL'];
+  const routePath = routeConfig.detailPage.path;
 
   return (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={HorecaDetailPagina}
+      component={HorecaDetail}
       initializeState={(snapshot: MutableSnapshot) => {
         snapshot.set(appStateAtom, testState);
       }}

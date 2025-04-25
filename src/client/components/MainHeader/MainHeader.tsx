@@ -13,7 +13,7 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { routes as profileRoutes } from '../../pages/Thema/Profile/Profile-thema-config';
+import { routeConfig as profileRouteConfig } from '../../pages/Thema/Profile/Profile-thema-config';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import {
@@ -42,8 +42,8 @@ export function MainHeaderSecondaryLinks({
           maVariant="noUnderline"
           href={
             profileType === 'private'
-              ? profileRoutes.themaPageBRP
-              : profileRoutes.themaPageKVK
+              ? profileRouteConfig.themaPageBRP.path
+              : profileRouteConfig.themaPageKVK.path
           }
           className={linkClassName}
           title="Ga naar persoonlijke gegevens"

@@ -3,13 +3,12 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { AppRoutes } from '../../../../universal/config/routes';
-import { AppState } from '../../../../universal/types';
-import { ThemaTitles } from '../../../config/thema';
-import MockApp from '../../MockApp';
-import { Parkeren } from './Parkeren';
-import { forTesting } from './Parkeren';
+import { routeConfig, themaTitle } from './Parkeren-thema-config';
+import { ParkerenThema } from './ParkerenThema';
+import { forTesting } from './ParkerenThema';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
+import MockApp from '../../MockApp';
 
 const linkButtonTxt = 'Ga naar Mijn Parkeren';
 const EXTERNAL_PARKEREN_URL = 'https://parkeervergunningen.amsterdam.nl/';
@@ -76,15 +75,15 @@ const testState = {
 } as unknown as AppState;
 
 describe('Parkeren', () => {
-  const routeEntry = generatePath(AppRoutes.PARKEREN);
-  const routePath = AppRoutes.PARKEREN;
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={Parkeren}
+        component={ParkerenThema}
         initializeState={initializeState}
       />
     );
@@ -97,7 +96,7 @@ describe('Parkeren', () => {
   it('should render the component and show the correct title', () => {
     render(<Component />);
 
-    expect(screen.getAllByText(ThemaTitles.PARKEREN)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(themaTitle)[0]).toBeInTheDocument();
   });
 
   it('should contain the correct links', () => {

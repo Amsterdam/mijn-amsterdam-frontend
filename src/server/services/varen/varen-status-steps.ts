@@ -3,7 +3,7 @@ import {
   defaultDateFormat,
   isDateInPast,
 } from '../../../universal/helpers/date';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 
 export function getStatusSteps<T extends Varen>(
   decosZaak: T

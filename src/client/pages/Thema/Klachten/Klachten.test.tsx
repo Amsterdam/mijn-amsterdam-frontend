@@ -2,62 +2,69 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../../universal/config/routes';
+import { routeConfig } from './Klachten-thema-config';
+import { KlachtenThema } from './KlachtenThema';
+import type { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { KlachtenThemaPagina } from './Klachten';
 
-const testState: any = {
+const testState: Partial<AppState> = {
   KLACHTEN: {
     status: 'OK',
-    content: {
-      klachten: [
-        {
-          gewensteOplossing: null,
-          inbehandelingSinds: '2022-05-30T00:00:00.000Z',
-          locatie: null,
-          omschrijving: 'Dit is de omschrijving van de klacht',
-          onderwerp: 'Test voor decentrale toewijzing',
-          ontvangstDatum: '2022-05-30T00:00:00.000Z',
-          id: '36049',
-          link: {
-            title: 'Klacht 36049',
-            to: '/klachten/klacht/36049',
-          },
+    content: [
+      {
+        gewensteOplossing: null,
+        inbehandelingSinds: '2022-05-30T00:00:00.000Z',
+        locatie: null,
+        omschrijving: 'Dit is de omschrijving van de klacht',
+        onderwerp: 'Test voor decentrale toewijzing',
+        ontvangstDatum: '2022-05-30T00:00:00.000Z',
+        ontvangstDatumFormatted: '05 mei 2022',
+        id: '36049',
+        title: 'Klacht 36049',
+        displayStatus: 'Ontvangen',
+        steps: [],
+        link: {
+          title: 'Klacht 36049',
+          to: '/klachten/klacht/36049',
         },
-        {
-          gewensteOplossing: null,
-          inbehandelingSinds: '2022-05-18T00:00:00.000Z',
-          locatie: null,
-          omschrijving: 'Dear Amsterdam Municipality',
-          onderwerp: null,
-          ontvangstDatum: '2022-05-05T00:00:00.000Z',
-          id: '36046',
-          link: {
-            title: 'Klacht 36046',
-            to: '/klachten/klacht/36046',
-          },
+      },
+      {
+        gewensteOplossing: null,
+        inbehandelingSinds: '2022-05-18T00:00:00.000Z',
+        locatie: null,
+        omschrijving: 'Dear Amsterdam Municipality',
+        onderwerp: null,
+        ontvangstDatum: '2022-05-05T00:00:00.000Z',
+        ontvangstDatumFormatted: '05 mei 2022',
+        id: '36046',
+        title: 'Klacht 36046',
+        displayStatus: 'Ontvangen',
+        steps: [],
+        link: {
+          title: 'Klacht 36046',
+          to: '/klachten/klacht/36046',
         },
-      ],
-      aantal: 2,
-    },
+      },
+    ],
   },
 };
 
-function initializeState(testState: any) {
-  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
+function initializeState(testState: Partial<AppState>) {
+  return (snapshot: MutableSnapshot) =>
+    snapshot.set(appStateAtom, testState as AppState);
 }
 
-function setupTestComponent(testState: any) {
-  const routeEntry = generatePath(AppRoutes.KLACHTEN);
-  const routePath = AppRoutes.KLACHTEN;
+function setupTestComponent(testState: Partial<AppState>) {
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
 
   return function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={KlachtenThemaPagina}
+        component={KlachtenThema}
         initializeState={initializeState(testState)}
       />
     );
@@ -75,10 +82,7 @@ describe('<Klachten />', () => {
     const Component = setupTestComponent({
       KLACHTEN: {
         status: 'OK',
-        content: {
-          klachten: [],
-          aantal: 0,
-        },
+        content: [],
       },
     });
     const { asFragment } = render(<Component />);
@@ -90,6 +94,7 @@ describe('<Klachten />', () => {
       KLACHTEN: {
         status: 'ERROR',
         content: null,
+        message: 'Error fetching data',
       },
     });
     const { asFragment } = render(<Component />);
