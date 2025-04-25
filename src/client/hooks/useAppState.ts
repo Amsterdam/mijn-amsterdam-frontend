@@ -8,8 +8,7 @@ import {
   ApiResponse_DEPRECATED,
   apiPristineResult,
 } from '../../universal/helpers/api';
-import type { SomeOtherString } from '../../universal/helpers/types';
-import { AppState, BagThema } from '../../universal/types/App.types';
+import { AppState } from '../../universal/types/App.types';
 import { PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformSourceData } from '../data-transform/appState';
@@ -200,7 +199,7 @@ export function useAppStateReady() {
 
 export interface AppStateBagApiParams {
   url?: string;
-  bagThema: BagThema | SomeOtherString;
+  bagThema: string;
   key: string;
 }
 

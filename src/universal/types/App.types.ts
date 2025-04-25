@@ -1,13 +1,7 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
-import { type ThemaID } from '../config/thema';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
-
-/**
- * @deprecated Functionality related to BagThema is deprecated and will be removed in the future.
- */
-export type BagThema = `${ThemaID}_BAG`;
 
 export type AppStateBase = {
   [key in ServiceID]: ApiResponse_DEPRECATED<
@@ -15,12 +9,9 @@ export type AppStateBase = {
   >;
 };
 
-export type AppState = AppStateBase & {
-  // A place to store additional data not loaded initially but needs to be stored persistently in the app.
-  [key in BagThema]?: Record<string, any>;
-};
+export type AppState = AppStateBase;
 
-export type AppStateKey = Exclude<keyof AppState, BagThema>;
+export type AppStateKey = keyof AppState;
 
 // Generic object interface
 export interface Unshaped {

@@ -2,15 +2,16 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { MyNotificationsPage } from './MyNotifications';
-import { ThemaIDs } from '../../../universal/config/thema';
+import { MyNotificationsRoute } from './MyNotifications-routes';
+import type { AppState } from '../../../universal/types/App.types';
+import { themaId as themaIdDashboard } from '../Dashboard/Dashboard-config';
 import { themaId as themaIdInkomen } from '../Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../Thema/Profile/Profile-thema-config';
 
-const testState: any = {
+const testState = {
   NOTIFICATIONS: {
     status: 'OK',
     content: [
@@ -19,7 +20,7 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        themaID: ThemaIDs.HOME,
+        themaID: themaIdDashboard,
         themaTitle: 'Home',
         link: {
           to: '/item-1',
@@ -56,11 +57,11 @@ const testState: any = {
 };
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom, testState as AppState);
 }
 
 describe('<MyNotifications />', () => {
-  const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
+  const routeEntry = generatePath(MyNotificationsRoute.route);
 
   function Component() {
     return (

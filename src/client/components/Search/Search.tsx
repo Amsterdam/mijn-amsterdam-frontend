@@ -8,20 +8,17 @@ import {
 } from '@amsterdam/design-system-react';
 import { SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
-import { AppRoutes } from '../../../universal/config/routes';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppState';
 import { useKeyDown } from '../../hooks/useKey';
-import {
-  useProfileTypeSwitch,
-  useProfileTypeValue,
-} from '../../hooks/useProfileType';
+import { useProfileTypeSwitch } from '../../hooks/useProfileType';
+import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
@@ -162,13 +159,8 @@ export function Search({
     [setTerm_]
   );
 
-  const location = useLocation();
   const navigate = useNavigate();
-  const profileType = useProfileTypeValue();
   const isPhoneScreen = usePhoneScreen();
-  const searchCategory = location.pathname.includes(AppRoutes.SEARCH)
-    ? 'Zoekpagina'
-    : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
 
   const onFinish = useCallback(
@@ -236,12 +228,12 @@ export function Search({
   }, []);
 
   useEffect(() => {
-    const checkIfClickedOutside = (e: any) => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
       if (
         typeAhead &&
         isResultsVisible &&
         resultsRef.current &&
-        !resultsRef.current.contains(e.target)
+        !resultsRef.current.contains(e.target as Node)
       ) {
         setResultsVisible(false);
       }
@@ -278,7 +270,7 @@ export function Search({
             e.preventDefault();
             if (term) {
               navigate(
-                `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
+                `${SearchPageRoute.route}?${new URLSearchParams(`term=${term}`)}`
               );
               setResultsVisible(true);
             }

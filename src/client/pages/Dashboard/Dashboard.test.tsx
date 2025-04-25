@@ -4,12 +4,12 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { Dashboard } from './Dashboard';
+import { themaId } from './Dashboard-config';
+import { DashboardRoute } from './Dashboard-routes';
 import { remoteApiHost } from '../../../testing/setup';
 
 const testState = {
@@ -32,7 +32,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        themaID: ThemaIDs.HOME,
+        themaID: themaId,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -43,7 +43,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        themaID: ThemaIDs.HOME,
+        themaID: themaId,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -54,7 +54,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        themaID: ThemaIDs.HOME,
+        themaID: themaId,
         isAlert: true,
         link: {
           to: '/item-3',
@@ -95,8 +95,8 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<Dashboard />', () => {
-  const routeEntry = generatePath(AppRoutes.ROOT);
-  const routePath = AppRoutes.ROOT;
+  const routeEntry = generatePath(DashboardRoute.route);
+  const routePath = DashboardRoute.route;
 
   function Component() {
     return (

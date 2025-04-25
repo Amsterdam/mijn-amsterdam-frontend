@@ -1,12 +1,11 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
-import { componentCreator } from '../../MockApp';
+import { routeConfig } from './Jeugd-thema-config';
 import { JeugdThemaPagina } from './JeugdThema';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { AppState } from '../../../../universal/types/App.types';
 import { expectTableHeaders } from '../../../helpers/test-utils';
-import { routeConfig } from './Jeugd-thema-config';
+import { componentCreator } from '../../MockApp';
 
 const jeugdState: AppState['JEUGD'] = {
   content: [

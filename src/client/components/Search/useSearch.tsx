@@ -26,7 +26,6 @@ import {
   displayPath,
 } from './search-config';
 import styles from './Search.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
 import {
   ApiResponse_DEPRECATED,
   isError,
@@ -40,6 +39,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
+import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
 
 export function generateSearchIndexPageEntry(
@@ -393,7 +393,10 @@ export function useSearchActive() {
 
 export function useDisplayLiveSearch() {
   const location = useLocation();
-  const isDisplayLiveSearch = !matchPath(AppRoutes.SEARCH, location.pathname);
+  const isDisplayLiveSearch = !matchPath(
+    SearchPageRoute.route,
+    location.pathname
+  );
   return isDisplayLiveSearch;
 }
 

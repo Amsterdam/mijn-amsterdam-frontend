@@ -6,8 +6,8 @@ import { MutableSnapshot } from 'recoil';
 import { beforeAll, describe, it } from 'vitest';
 
 import { SearchPage } from './Search';
+import { SearchPageRoute } from './Search-routes';
 import { bffApi } from '../../../testing/utils';
-import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
@@ -19,8 +19,8 @@ const testState = {
 } as unknown as AppState;
 
 describe('<Search />', () => {
-  const routeEntry = generatePath(AppRoutes.SEARCH);
-  const routePath = AppRoutes.SEARCH;
+  const routeEntry = generatePath(SearchPageRoute.route);
+  const routePath = SearchPageRoute.route;
 
   function Component({
     isAppStateReady = false,

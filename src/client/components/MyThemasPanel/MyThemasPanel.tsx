@@ -2,8 +2,8 @@ import { Icon, UnorderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
+import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
@@ -62,7 +62,7 @@ export function MyThemasPanel({
           </>
         )}
       </UnorderedList>
-      <MaRouterLink href={AppRoutes.GENERAL_INFO}>
+      <MaRouterLink href={GeneralInfoRoute.route}>
         Dit ziet u in Mijn Amsterdam
       </MaRouterLink>
     </>

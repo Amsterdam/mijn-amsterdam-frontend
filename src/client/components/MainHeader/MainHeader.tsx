@@ -9,10 +9,11 @@ import { OtapLabel } from './OtapLabel';
 import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
-import { AppRoutes } from '../../../universal/config/routes';
 import { LOGOUT_URL } from '../../config/api';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
+import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { routeConfig as profileRouteConfig } from '../../pages/Thema/Profile/Profile-thema-config';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
@@ -86,7 +87,7 @@ function MainHeaderLinks() {
               e.preventDefault();
               setSearchActive(!isSearchActive);
             }}
-            href={AppRoutes.SEARCH}
+            href={SearchPageRoute.route}
           >
             {!isPhoneScreen ? 'Zoeken' : ''}
             <Icon
@@ -165,7 +166,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
             <>
               <MaRouterLink
                 className={styles.BrandNameLink}
-                href={AppRoutes.HOME}
+                href={DashboardRoute.route}
               >
                 Mijn Amsterdam
               </MaRouterLink>

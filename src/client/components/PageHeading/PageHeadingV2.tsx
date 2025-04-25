@@ -5,9 +5,8 @@ import { ChevronLeftIcon } from '@amsterdam/design-system-react-icons';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './PageHeadingV2.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
 import { LinkProps } from '../../../universal/types/App.types';
-import { ThemaTitles } from '../../config/thema';
+import { dashboardMenuItem } from '../../pages/Dashboard/Dashboard-routes';
 import { MaBreadcrumbLink, MaRouterLink } from '../MaLink/MaLink';
 import { PageContentCell } from '../Page/Page';
 
@@ -55,8 +54,8 @@ export function PageHeadingV2({
           </MaRouterLink>
         ) : (
           <Breadcrumb>
-            <MaBreadcrumbLink href={AppRoutes.HOME}>
-              {ThemaTitles.HOME}
+            <MaBreadcrumbLink href={dashboardMenuItem.to}>
+              {dashboardMenuItem.title}
             </MaBreadcrumbLink>
             {breadcrumbs.filter(Boolean).map(({ to, title }) => (
               <MaBreadcrumbLink key={to} href={to}>

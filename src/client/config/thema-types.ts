@@ -70,10 +70,3 @@ export type ThemaRenderRouteConfig = {
   Component: React.ElementType;
   isActive?: boolean;
 };
-
-/**
- * @deprecated Use `ThemaRoutesConfig` instead.
- */
-export type DocumentTitlesConfig = {
-  [key: string]: string | DocumenttitleFN;
-};

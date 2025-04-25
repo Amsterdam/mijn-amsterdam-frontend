@@ -4,9 +4,7 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './ZaakStatus.module.scss';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { SomeOtherString } from '../../../universal/helpers/types';
 import { AppStateBase, LinkProps } from '../../../universal/types/App.types';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
@@ -18,6 +16,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import { DashboardRoute } from '../Dashboard/Dashboard-routes';
 import * as HORECA from '../Thema/Horeca/Horeca-thema-config';
 import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config';
 import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
@@ -34,7 +33,7 @@ type ThemaQueryParam =
   | 'parkeren';
 
 type PageRouteResolver = {
-  baseRoute: AppRoute | SomeOtherString;
+  baseRoute: string;
   getRoute: (
     detailPageItemId: string,
     appState: AppStateBase
@@ -162,7 +161,7 @@ export function ZaakStatus() {
   const queryParams = new URLSearchParams(location.search);
   const pageRoute = useNavigateToPage(queryParams);
 
-  let linkRoute: PageRouteResolver['baseRoute'] = AppRoutes.HOME;
+  let linkRoute: PageRouteResolver['baseRoute'] = DashboardRoute.route;
   let linkText = 'Ga naar het dashboard';
 
   // Only needed if zaak with the is ID not found.

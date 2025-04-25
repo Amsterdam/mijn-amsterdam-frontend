@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { describe, expect, vi } from 'vitest';
 
 import { forTesting, ZaakStatus } from './ZaakStatus';
-import { AppRoutes } from '../../../universal/config/routes';
+import { ZAAK_STATUS_ROUTE } from './ZaakStatus-config';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
@@ -51,8 +51,8 @@ vi.mock('react-router', async (requireActual) => {
 });
 
 describe('ZaakStatus', () => {
-  const routeEntry = generatePath(AppRoutes.ZAAK_STATUS);
-  const routePath = AppRoutes.ZAAK_STATUS;
+  const routeEntry = generatePath(ZAAK_STATUS_ROUTE);
+  const routePath = ZAAK_STATUS_ROUTE;
 
   test('No query params passed', async () => {
     function Component() {

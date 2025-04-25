@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { Navigate, useLocation } from 'react-router';
 
-import { AppRoutes } from '../../../universal/config/routes';
 import { isPrivateRoute } from '../../App.routes';
 import {
   PageContentCell,
@@ -12,6 +11,7 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { captureMessage } from '../../helpers/monitoring';
+import { LandingRoute } from '../Landing/Landing-routes';
 
 export function NotFound() {
   const location = useLocation();
@@ -44,7 +44,7 @@ export function RedirectPrivateRoutesToLanding() {
 
   if (isPrivateRoute(pathname)) {
     // Private routes are redirected to Home
-    return <Navigate to={AppRoutes.HOME} />;
+    return <Navigate to={LandingRoute.route} />;
   }
 
   // All other routes are presented with a 404 page

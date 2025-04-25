@@ -2,7 +2,6 @@ import { Routes, Route, matchPath } from 'react-router';
 
 import { MyAreaRoutes } from './components/MyArea/MyArea-routest';
 import type { ThemaRenderRouteConfig } from './config/thema-types';
-import { AccessibilityRoutes } from './pages/Accessibility/Accessibility-routes';
 import { BffErrorRoutes } from './pages/BffError/BffError-routes';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes';
 import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes';
@@ -40,7 +39,6 @@ export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
 };
 
 const routeComponents: ApplicationRouteConfig[] = [
-  AccessibilityRoutes,
   AfisRoutes,
   AfvalRoutes,
   AvgRoutes,

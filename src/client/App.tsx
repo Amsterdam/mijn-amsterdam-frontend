@@ -11,6 +11,7 @@ import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
 import { MainHeaderHero } from './components/MainHeaderHero/MainHeaderHero';
+import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
 import { loginUrlByAuthMethod } from './config/api';
 import { useMonitoring } from './helpers/monitoring';
 import { useAnalytics } from './hooks/analytics.hook';
@@ -24,8 +25,7 @@ import {
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
-import { AppRoutes } from '../universal/config/routes';
-import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
+import { DashboardRoute } from './pages/Dashboard/Dashboard-routes';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -82,7 +82,7 @@ function AppAuthenticated() {
     }
   }, [redirectAfterLogin]);
 
-  const isHeroVisible = location.pathname === AppRoutes.HOME;
+  const isHeroVisible = location.pathname === DashboardRoute.route;
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 
   return (

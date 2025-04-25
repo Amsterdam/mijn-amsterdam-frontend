@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 
 import { Heading, OrderedList } from '@amsterdam/design-system-react';
-import { generatePath, useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import styles from './Dashboard.module.scss';
 import { WelcomeHeading } from './WelcomHeading';
-import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
@@ -21,6 +20,7 @@ import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
+import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -52,7 +52,7 @@ export function Dashboard() {
           <Heading level={2} size="level-3" className="ams-mb--sm">
             Recente berichten{' '}
             {total > notifications.length && (
-              <MaRouterLink href={generatePath(AppRoutes.NOTIFICATIONS)}>
+              <MaRouterLink href={myNotificationsMenuItem.to}>
                 Alle updates
               </MaRouterLink>
             )}

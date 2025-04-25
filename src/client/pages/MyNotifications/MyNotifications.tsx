@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useNavigate, useParams } from 'react-router';
 
-import { AppRoutes } from '../../../universal/config/routes';
+import { MyNotificationsRoute } from './MyNotifications-routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
@@ -85,7 +85,7 @@ export function MyNotificationsPage() {
               pageSize={PAGE_SIZE}
               onPageClick={(page) => {
                 navigate(
-                  generatePath(AppRoutes.NOTIFICATIONS, { page: `${page}` })
+                  generatePath(MyNotificationsRoute.route, { page: `${page}` })
                 );
               }}
               currentPage={currentPage}

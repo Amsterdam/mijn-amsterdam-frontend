@@ -1,5 +1,5 @@
-import { ThemaIDs } from '../../universal/config/thema';
 import { MyNotification } from '../../universal/types/App.types';
+import { themaId } from '../pages/MyNotifications/MyNotifications-config';
 
 const year = 2022;
 const day = 20;
@@ -10,7 +10,7 @@ const CONTACT_FORM_URL =
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
-  themaID: ThemaIDs.NOTIFICATIONS,
+  themaID: themaId,
   themaTitle: 'Mijn Amsterdam',
   datePublished: new Date(year, month, day).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',

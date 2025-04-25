@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
 import { removeLocalStorageKey, useLocalStorage } from './storage.hook';
-import { AppRoutes } from '../../universal/config/routes';
 import { isPrivateRoute } from '../App.routes';
+import { dashboardMenuItem } from '../pages/Dashboard/Dashboard-routes';
 
 export const ROUTE_ENTRY_KEY = 'RouteEntry';
 
@@ -33,7 +33,7 @@ export function useSetDeeplinkEntry(excludeQueryParams: string[] = []) {
 
 export function useDeeplinkRedirect() {
   const [routeEntry] = useLocalStorage(ROUTE_ENTRY_KEY, '');
-  const redirectAfterLogin = routeEntry || AppRoutes.HOME;
+  const redirectAfterLogin = routeEntry || dashboardMenuItem.to;
 
   return redirectAfterLogin;
 }
