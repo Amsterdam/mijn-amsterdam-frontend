@@ -6,13 +6,14 @@ import type { VarenZakenFrontend } from '../../../../server/services/varen/confi
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
 export function VarenList() {
-  const { kind, page } = useParams<{
+  const { kind = 'lopende-aanvragen', page } = useParams<{
     kind: ListPageParamKind;
     page: string;
   }>();
-  const { varenZaken, tableConfig, isLoading, isError, routes, breadcrumbs } =
+  const { varenZaken, tableConfig, isLoading, isError, breadcrumbs } =
     useVarenThemaData();
-  const { title, displayProps, filter, sort } = tableConfig[kind];
+  const { title, displayProps, listPageRoute, filter, sort } =
+    tableConfig[kind];
   const zaken = varenZaken.filter(filter).sort(sort);
 
   return (
@@ -21,7 +22,7 @@ export function VarenList() {
       title={title}
       isLoading={isLoading}
       isError={isError}
-      appRoute={routes.listPage}
+      appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
       appRouteParams={{ kind, page }}
       displayProps={displayProps}

@@ -1,13 +1,13 @@
 import { useParams } from 'react-router';
 
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
-import type { Klacht } from '../../../../server/services/klachten/types';
+import type { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 type KlachtenDetailContentProps = {
-  klacht: Klacht;
+  klacht: KlachtFrontend;
 };
 
 function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
@@ -42,7 +42,7 @@ function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
   );
 }
 
-export function KlachtenDetailPagina() {
+export function KlachtenDetail() {
   const { klachten, isLoading, isError, breadcrumbs } = useKlachtenThemaData();
   const { id } = useParams<{ id: string }>();
   const klacht = klachten.find((klacht) => klacht.id === id);

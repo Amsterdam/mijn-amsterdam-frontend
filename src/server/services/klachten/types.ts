@@ -1,7 +1,7 @@
 import { ZaakDetail } from '../../../universal/types/App.types';
 import { SmileFieldValue, SmileSourceResponse } from '../smile/smile-types';
 
-export type Klacht = {
+export type KlachtFrontend = {
   inbehandelingSinds: string;
   ontvangstDatum: string;
   ontvangstDatumFormatted: string | null;
@@ -25,5 +25,5 @@ export type SmileKlachtenReponse = SmileSourceResponse<SmileKlacht>;
 
 export interface KlachtenResponse {
   aantal: number;
-  klachten: Klacht[];
+  klachten: KlachtFrontend[];
 }

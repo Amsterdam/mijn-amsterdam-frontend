@@ -193,7 +193,7 @@ export async function fetchAVG(
       data,
       headers: data.getHeaders(),
       cacheKey: `avg-${requestID}`,
-      postponeFetch: !featureToggle.AvgActive,
+      postponeFetch: !featureToggle.avgActive,
     }),
     requestID
   );
@@ -236,7 +236,7 @@ export async function fetchAVGRequestThemes(
       data,
       headers: data.getHeaders(),
       cacheKey: `avg-themes-${cacheKey}`,
-      postponeFetch: !featureToggle.AvgActive,
+      postponeFetch: !featureToggle.avgActive,
     }),
     requestID
   );

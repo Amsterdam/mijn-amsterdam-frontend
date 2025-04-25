@@ -127,6 +127,14 @@ const jaaropgavenTableDisplayProps = withOmitDisplayPropsForSmallScreens(
   []
 );
 
+export const wpiLinks = {
+  BIJSTANDSUITKERING:
+    'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
+  TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
+  TONK: 'https://www.amsterdam.nl/tonk/',
+  BBZ: 'https://www.amsterdam.nl/bbz/',
+};
+
 export const linkListItems: LinkProps[] = [
   {
     to: 'https://www.amsterdam.nl/werk-inkomen',

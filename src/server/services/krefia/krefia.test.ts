@@ -1,4 +1,12 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockInstance,
+} from 'vitest';
 
 import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
 import KrefiaData from '../../../../mocks/fixtures/krefia.json';
@@ -49,7 +57,7 @@ describe('Kredietbank & FIBU service', () => {
 
   const authProfileAndToken = getAuthProfileAndToken();
 
-  let axiosRequestSpy: any;
+  let axiosRequestSpy: MockInstance;
 
   beforeAll(() => {
     axiosRequestSpy = vi.spyOn(axiosRequest, 'request');
@@ -96,6 +104,7 @@ describe('Kredietbank & FIBU service', () => {
             datePublished: '2021-07-14T12:34:17',
             title: 'Bericht Budgetbeheer (FIBU)',
             themaID: 'KREFIA',
+            themaTitle: 'Kredietbank & FIBU',
             description:
               'Er staan ongelezen berichten voor u klaar van Budgetbeheer (FIBU)',
             link: {

@@ -1,6 +1,5 @@
 import { generatePath } from 'react-router';
 
-import styles from './Vergunningen.module.scss';
 import {
   DecosZaakBase,
   WithDateRange,
@@ -13,7 +12,7 @@ import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/h
 import {
   DisplayProps,
   WithDetailLinkComponent,
-} from '../../../components/Table/TableV2';
+} from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import { TrackingConfig } from '../../../config/routes';
 
@@ -79,7 +78,7 @@ export const listPageParamKind = {
   actual: 'huidige-vergunningen-en-ontheffingen',
   historic: 'eerdere-vergunningen-en-ontheffingen',
   inProgress: 'lopende-aanvragen',
-};
+} as const;
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
@@ -107,7 +106,6 @@ export const tableConfig = {
       page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
@@ -128,7 +126,6 @@ export const tableConfig = {
       page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
-    className: styles.VergunningenTableThemaPagina,
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
@@ -153,7 +150,6 @@ export const tableConfig = {
       page: null,
     }),
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
-    className: styles.VergunningenTableThemaPagina,
   },
 } as const;
 

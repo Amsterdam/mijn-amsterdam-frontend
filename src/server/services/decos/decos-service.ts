@@ -39,7 +39,6 @@ import {
   isExcludedFromTransformation,
   isExpired,
 } from './decos-helpers';
-import { AppRouteVergunningen } from '../../../universal/config/routes';
 import {
   ApiErrorResponse,
   apiErrorResult,
@@ -839,7 +838,7 @@ export async function fetchDecosDocument(
 }
 
 export type DecosZaakFrontendTransformOptions = {
-  appRoute: AppRouteVergunningen;
+  appRoute: string;
   includeFetchDocumentsUrl?: boolean;
 };
 

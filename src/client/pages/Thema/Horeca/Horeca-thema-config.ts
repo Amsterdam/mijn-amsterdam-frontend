@@ -1,9 +1,9 @@
 import cloneDeep from 'lodash.clonedeep';
 import { generatePath } from 'react-router';
 
-import { AppRoutes } from '../../../../universal/config/routes';
 import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
+import type { ThemaRoutesConfig } from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
   listPageParamKind as listPageParamKindVergunningen,
@@ -19,13 +19,33 @@ export const LinkListItems: LinkProps[] = [
 
 export type ListPageParamKind = ListPageParamKindVergunningen;
 
-export const routes = {
-  listPage: AppRoutes['HORECA/LIST'],
-  detailPageVergunning: AppRoutes['HORECA/DETAIL'],
-  themaPage: AppRoutes.HORECA,
-} as const;
+export const featureToggle = {
+  horecaActive: true,
+};
 
-const tableHeadings = {
+export const themaId = 'HORECA' as const;
+export const themaTitle = 'Horeca';
+
+export const routeConfig = {
+  detailPage: {
+    path: '/horeca/:caseType/:id',
+    trackingUrl(match) {
+      return `/horeca/${match.params.caseType}`;
+    },
+    documentTitle: `Horeca | ${themaTitle}`,
+  },
+  listPage: {
+    path: '/horeca/lijst/:kind/:page?',
+    documentTitle: (_, params) =>
+      `${tableConfigVergunningen[(params?.kind as ListPageParamKind) || 'lopende-aanvragen'].title} | ${themaTitle}`,
+  },
+  themaPage: {
+    path: '/horeca',
+    documentTitle: `${themaTitle} | overzicht`,
+  },
+} as const satisfies ThemaRoutesConfig;
+
+const tableConfigTitles = {
   [listPageParamKindVergunningen.inProgress]: 'Lopende aanvragen',
   [listPageParamKindVergunningen.actual]: 'Huidige vergunningen',
   [listPageParamKindVergunningen.historic]:
@@ -38,8 +58,8 @@ export const tableConfig = Object.fromEntries(
       kind,
       {
         ...tableConfig,
-        title: tableHeadings[kind],
-        listPageRoute: generatePath(routes.listPage, {
+        title: tableConfigTitles[kind],
+        listPageRoute: generatePath(routeConfig.listPage.path, {
           kind,
           page: null,
         }),

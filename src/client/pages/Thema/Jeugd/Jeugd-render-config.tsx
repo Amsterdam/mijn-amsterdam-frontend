@@ -5,11 +5,11 @@ import {
   featureToggle,
 } from './Jeugd-thema-config';
 import { JeugdDetail } from './JeugdDetail';
+import { default as JeugdIcon } from './JeugdIcon.svg?react';
 import { JeugdList } from './JeugdList';
 import { JeugdThemaPagina } from './JeugdThema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { AppState } from '../../../../universal/types/App.types';
-import { IconJeugd } from '../../../assets/icons';
 import { ThemaMenuItem } from '../../../config/thema-types';
 
 export const JeugdRoutes = [
@@ -42,5 +42,5 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
     );
   },
   to: routeConfig.themaPage.path,
-  IconSVG: IconJeugd,
+  IconSVG: JeugdIcon,
 };

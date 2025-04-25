@@ -1,9 +1,8 @@
-import { krefiaTableConfig } from './Krefia-thema-config';
+import { krefiaTableConfig, themaTitle } from './Krefia-thema-config';
 import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
-import { ThemaTitles } from '../../../config/thema';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 
 const kredietBankLink: LinkProps = {
@@ -50,6 +49,6 @@ export function useKrefiaThemaData() {
     isLoading: isLoading(KREFIA),
     linkListItems,
     tableConfig: krefiaTableConfig,
-    title: ThemaTitles.KREFIA,
+    title: themaTitle,
   };
 }

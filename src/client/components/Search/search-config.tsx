@@ -35,8 +35,6 @@ import {
 } from '../../../server/services/varen/config-and-types';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ApiSuccessResponse } from '../../../universal/helpers/api';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import {
@@ -50,7 +48,6 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import { ThemaTitles } from '../../config/thema';
 import { themaId as themaIdAfis } from '../../pages/Thema/Afis/Afis-thema-config';
 import {
   featureToggle as featureToggleAVG,
@@ -66,7 +63,24 @@ import {
 } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { themaId as themaIdErfpacht } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { themaId as themaIdHLI } from '../../pages/Thema/HLI/HLI-thema-config';
+import {
+  featureToggle as featureToggleHoreca,
+  themaId as themaIdHoreca,
+} from '../../pages/Thema/Horeca/Horeca-thema-config';
+import {
+  featureToggle,
+  themaId as themaIdKrefia,
+} from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
+import {
+  routeConfig as routeConfigToeristischeVerhuur,
+  themaId as themaIdToeristischeVerhuur,
+} from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import {
+  themaId as themaIdVaren,
+  routeConfig as routeConfigVaren,
+  themaTitle as themaTitleVaren,
+} from '../../pages/Thema/Varen/Varen-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -264,7 +278,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'TOERISTISCHE_VERHUUR' as AppStateKey,
+    stateKey: themaIdToeristischeVerhuur,
     profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
@@ -277,7 +291,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
             title: 'Landelijk registratienummer',
             identifier: registratie.registrationNumber,
             link: {
-              to: AppRoutes.TOERISTISCHE_VERHUUR,
+              to: routeConfigToeristischeVerhuur.themaPage.path,
               title: 'Landelijk registratienummer',
             },
           };
@@ -422,8 +436,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.krefiaActive,
-    stateKey: 'KREFIA' as AppStateKey,
+    isEnabled: featureToggle.krefiaActive,
+    stateKey: themaIdKrefia,
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
@@ -464,7 +478,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggleAVG.AvgActive,
+    isEnabled: featureToggleAVG.avgActive,
     stateKey: themaIdAVG,
     profileTypes: ['private', 'commercial'],
     displayTitle(item: AVGRequestFrontend) {
@@ -472,8 +486,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.horecaActive,
-    stateKey: 'HORECA' as AppStateKey,
+    isEnabled: featureToggleHoreca.horecaActive,
+    stateKey: themaIdHoreca,
     profileTypes: ['private', 'commercial'],
     displayTitle(item: HorecaVergunningFrontend) {
       return (term: string) =>
@@ -481,8 +495,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.varenActive,
-    stateKey: 'VAREN' as AppStateKey,
+    isEnabled: featureToggle,
+    stateKey: themaIdVaren,
     profileTypes: ['commercial'],
     getApiBaseItems: (apiContent: {
       reder: VarenRegistratieRederType;
@@ -498,8 +512,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       const reder = {
         ...apiContent.reder,
         link: {
-          to: AppRoutes.VAREN,
-          title: ThemaTitles.VAREN,
+          to: routeConfigVaren.themaPage.path,
+          title: themaTitleVaren,
         },
       };
       return [reder, ...zaken];

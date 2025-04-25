@@ -3,9 +3,11 @@ import {
   decosZaakTransformersByCaseType,
   HorecaVergunningFrontend,
 } from './config-and-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  featureToggle,
+  routeConfig,
+  themaId,
+} from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
 import {
   apiSuccessResult,
   apiDependencyError,
@@ -41,7 +43,7 @@ export async function fetchHorecaVergunningen(
         authProfileAndToken.profile.sid,
         zaak,
         {
-          appRoute: AppRoutes['HORECA/DETAIL'],
+          appRoute: routeConfig.detailPage.path,
           includeFetchDocumentsUrl: true,
         }
       );
@@ -66,7 +68,7 @@ export async function fetchHorecaNotifications(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  if (!FeatureToggle.horecaActive) {
+  if (!featureToggle.horecaActive) {
     return apiSuccessResult({
       notifications: [],
     });
@@ -81,7 +83,7 @@ export async function fetchHorecaNotifications(
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content ?? [],
       decosZaakTransformers,
-      ThemaIDs.HORECA
+      themaId
     );
 
     return apiSuccessResult({

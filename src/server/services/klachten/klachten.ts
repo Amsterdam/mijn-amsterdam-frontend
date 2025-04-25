@@ -2,18 +2,26 @@ import FormData from 'form-data';
 import { generatePath } from 'react-router';
 import UID from 'uid-safe';
 
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Klachten/Klachten-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
-import { AppRoutes } from './../../../universal/config/routes';
 import { AuthProfileAndToken } from './../../auth/auth-types';
-import { Klacht, KlachtenResponse, SmileKlachtenReponse } from './types';
+import {
+  KlachtFrontend,
+  KlachtenResponse,
+  SmileKlachtenReponse,
+} from './types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 
 const DEFAULT_PAGE_SIZE = 250;
@@ -80,7 +88,7 @@ export function transformKlachtenResponse(
       klachtSource?.klacht_datumontvangstklacht.value || ''
     );
 
-    const klacht: Klacht = {
+    const klacht: KlachtFrontend = {
       id,
       title: id,
       inbehandelingSinds: smileDateParser(
@@ -97,7 +105,7 @@ export function transformKlachtenResponse(
       ),
       locatie: klachtSource?.klacht_locatieadres.value,
       link: {
-        to: generatePath(AppRoutes['KLACHTEN/KLACHT'], {
+        to: generatePath(routeConfig.detailPage.path, {
           id,
         }),
         title: `Klacht ${id}`,
@@ -115,9 +123,10 @@ export function transformKlachtenResponse(
   };
 }
 
-function createKlachtNotification(klacht: Klacht): MyNotification {
+function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
   const notification: MyNotification = {
-    themaID: ThemaIDs.KLACHTEN,
+    themaID: themaId,
+    themaTitle: themaTitle,
     id: `klacht-${klacht.id}-notification`,
     title: 'Klacht ontvangen',
     description: 'Uw klacht is ontvangen.',
@@ -135,7 +144,7 @@ async function fetchKlachten(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   page: number = 1
-) {
+): Promise<ApiResponse<KlachtenResponse>> {
   const data = getDataForKlachten(authProfileAndToken.profile.id!, page);
 
   return requestData<KlachtenResponse>(
@@ -189,7 +198,7 @@ export async function fetchAllKlachten(
       }
     }
 
-    return apiSuccessResult<KlachtenResponse>(result);
+    return apiSuccessResult<KlachtFrontend[]>(result.klachten);
   }
 
   return initalResponse;
@@ -202,12 +211,8 @@ export async function fetchKlachtenNotifications(
   const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);
 
   if (KLACHTEN.status === 'OK') {
-    const notifications: MyNotification[] = Array.isArray(
-      KLACHTEN.content.klachten
-    )
-      ? KLACHTEN.content.klachten.map((klacht) =>
-          createKlachtNotification(klacht)
-        )
+    const notifications: MyNotification[] = Array.isArray(KLACHTEN.content)
+      ? KLACHTEN.content.map((klacht) => createKlachtNotification(klacht))
       : [];
 
     return apiSuccessResult({
