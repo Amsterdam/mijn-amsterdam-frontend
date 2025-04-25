@@ -46,9 +46,6 @@ export const AppRoutes = {
   'HORECA/LIST': '/horeca/lijst/:kind/:page?',
   'HORECA/DETAIL': '/horeca/:caseType/:id',
   BFF_500_ERROR: '/server-error-500',
-  BODEM: '/bodem',
-  'BODEM/LIST': '/bodem/lijst/:kind/:page?',
-  'BODEM/LOOD_METING': '/bodem/lood-meting/:id',
 
   // Erfpacht v2
   ERFPACHT: '/erfpacht',

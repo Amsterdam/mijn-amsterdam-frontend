@@ -55,6 +55,10 @@ import {
   featureToggle as featureToggleBezwaren,
   themaId as themaIdBezwaren,
 } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
+import {
+  featureToggle as featureToggleBodem,
+  themaId as themaIdBodem,
+} from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { routes as profileRoutes } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
@@ -445,8 +449,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: FeatureToggle.bodemActive,
-    stateKey: 'BODEM' as AppStateKey,
+    isEnabled: featureToggleBodem.BodemActive,
+    stateKey: themaIdBodem,
     profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMetingFrontend) {
       return (term: string) => displayPath(term, [item.title, item.adres]);

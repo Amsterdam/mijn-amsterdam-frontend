@@ -8,7 +8,6 @@ import { ThemaMenuItem } from '../config/thema-types';
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
     BELASTINGEN,
-    BODEM,
     BRP,
     ERFPACHT,
     HLI,
@@ -151,13 +150,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         !isLoading(HORECA) &&
         !!HORECA?.content?.length &&
         FeatureToggle.horecaActive
-      );
-
-    case ThemaIDs.BODEM:
-      return (
-        !isLoading(BODEM) &&
-        !!BODEM?.content?.metingen?.length &&
-        FeatureToggle.bodemActive
       );
   }
 

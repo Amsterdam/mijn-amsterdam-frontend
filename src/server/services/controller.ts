@@ -22,6 +22,7 @@ import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notif
 import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
@@ -49,7 +50,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(

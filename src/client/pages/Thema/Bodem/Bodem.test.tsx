@@ -1,11 +1,11 @@
 import { render, within } from '@testing-library/react';
 
-import { AppRoutes } from '../../../../universal/config/routes';
-import { componentCreator } from '../../MockApp';
-import { Bodem } from './Bodem';
+import { routeConfig } from './Bodem-thema-config';
+import { BodemThema } from './BodemThema';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { AppState } from '../../../../universal/types';
 import { expectTableHeaders } from '../../../helpers/test-utils';
+import { componentCreator } from '../../MockApp';
 
 const metingen = [
   {
@@ -185,17 +185,15 @@ const metingen = [
 
 const testState = {
   BODEM: {
-    content: {
-      metingen,
-    },
+    content: metingen,
     status: 'OK',
   },
 } as unknown as AppState;
 
 const createComponent = componentCreator({
-  component: Bodem,
-  routeEntry: AppRoutes.BODEM,
-  routePath: AppRoutes.BODEM,
+  component: BodemThema,
+  routeEntry: routeConfig.themaPage.path,
+  routePath: routeConfig.themaPage.path,
 });
 
 describe('Bodem', () => {
@@ -294,7 +292,7 @@ describe('Bodem', () => {
     test('No items on page', () => {
       const MockBodem = createComponent({
         BODEM: {
-          content: { metingen: [] },
+          content: [],
           status: 'OK',
         },
       } as unknown as AppState);
