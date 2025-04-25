@@ -17,7 +17,8 @@ import {
   defaultDateFormat,
   isDateInPast,
 } from '../../../universal/helpers/date';
-import displayAmount, {
+import {
+  displayAmount,
   capitalizeFirstLetter,
 } from '../../../universal/helpers/text';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
