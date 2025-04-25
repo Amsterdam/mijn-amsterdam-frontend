@@ -4,7 +4,6 @@ import { NextFunction } from 'express-serve-static-core';
 
 import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import {
   OIDC_SESSION_COOKIE_NAME,
@@ -111,45 +110,44 @@ oidcRouter.get(
 /**
  * EHerkenning Oidc config
  */
-if (FeatureToggle.eherkenningActive) {
-  oidcRouter.get(
-    authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
-    (req: Request, res: Response) => {
-      const callbackOptions = {
-        redirectUri: authRoutes.AUTH_CALLBACK_EHERKENNING,
-      };
-      return res.oidc.callback(callbackOptions);
-    }
-  );
 
-  oidcRouter.get(
-    authRoutes.AUTH_LOGIN_EHERKENNING,
-    async (req: Request, res: Response) => {
-      return res.oidc.login({
-        returnTo: getReturnToUrl({
-          returnTo: RETURNTO_MAMS_LANDING_EHERKENNING,
-          ...req.query,
-        }),
-        authorizationParams: {
-          redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
-        },
-      });
-    }
-  );
+oidcRouter.get(
+  authRoutes.AUTH_BASE_EHERKENNING + AUTH_CALLBACK,
+  (req: Request, res: Response) => {
+    const callbackOptions = {
+      redirectUri: authRoutes.AUTH_CALLBACK_EHERKENNING,
+    };
+    return res.oidc.callback(callbackOptions);
+  }
+);
 
-  oidcRouter.get(
-    authRoutes.AUTH_LOGIN_EHERKENNING_LANDING,
-    async (req: Request, res: Response) => {
-      const auth = getAuth(req);
-      if (auth?.profile.id) {
-        countLoggedInVisit(auth.profile.id, 'eherkenning');
-      }
-      return res.redirect(
-        process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
-      );
+oidcRouter.get(
+  authRoutes.AUTH_LOGIN_EHERKENNING,
+  async (req: Request, res: Response) => {
+    return res.oidc.login({
+      returnTo: getReturnToUrl({
+        returnTo: RETURNTO_MAMS_LANDING_EHERKENNING,
+        ...req.query,
+      }),
+      authorizationParams: {
+        redirect_uri: authRoutes.AUTH_CALLBACK_EHERKENNING,
+      },
+    });
+  }
+);
+
+oidcRouter.get(
+  authRoutes.AUTH_LOGIN_EHERKENNING_LANDING,
+  async (req: Request, res: Response) => {
+    const auth = getAuth(req);
+    if (auth?.profile.id) {
+      countLoggedInVisit(auth.profile.id, 'eherkenning');
     }
-  );
-}
+    return res.redirect(
+      process.env.MA_FRONTEND_URL + '?authMethod=eherkenning'
+    );
+  }
+);
 
 async function authCheckHandler(req: Request, res: Response) {
   const auth = getAuth(req);
