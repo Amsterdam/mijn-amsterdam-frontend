@@ -59,6 +59,7 @@ function createVarenNotification(
     {
       datePublished: currentStep.datePublished,
       themaID: themaId,
+      themaTitle: themaTitle,
       link: {
         to: ctaLinkToThemaOrDetail,
         title: 'Bekijk details',
