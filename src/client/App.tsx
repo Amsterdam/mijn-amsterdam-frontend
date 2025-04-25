@@ -21,7 +21,6 @@ import {
   useDeeplinkRedirect,
   useSetDeeplinkEntry,
 } from './hooks/useDeeplink.hook';
-import { usePageChange } from './hooks/usePageChange';
 import { useProfileTypeValue } from './hooks/useProfileType';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
@@ -30,7 +29,6 @@ import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-them
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
-  usePageChange(false);
   useUsabilla();
 
   const location = useLocation();
@@ -68,7 +66,6 @@ function AppNotAuthenticated() {
 
 function AppAuthenticated() {
   useAppStateRemote();
-  usePageChange(true);
   useTrackThemas();
 
   const navigate = useNavigate();
