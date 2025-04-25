@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import classnames from 'classnames';
 
 import styles from './MainHeaderHero.module.scss';
@@ -36,69 +34,8 @@ function imgUrl(
   )}-${imageName}.${ext}`;
 }
 
-function useHeroSrc(profileType: ProfileType) {
-  const imageName = 'algemeen';
-
-  // ------------------------------------------------------------
-  // Produces the following image urls
-  // ------------------------------------------------------------
-  // PORTRAIT_SMALL: '/header/1080x432-$imageName.jpg';
-  // PORTRAIT_SMALL_2X: '/header/1366x342-$imageName.jpg';
-  // PORTRAIT_SMALL_3X: '/header/1024x256-$imageName.jpg';
-  // LANDSCAPE_LARGE: '/header/1600x400-$imageName.jpg';
-
-  return useMemo(() => {
-    if (!imageName) {
-      return null;
-    }
-    return {
-      PORTRAIT_SMALL: imgUrl(
-        profileType,
-        imageName,
-        IMAGE_SIZES.PORTRAIT_SMALL,
-        'portrait',
-        PIXEL_DENSITIES.STANDARD
-      ),
-      PORTRAIT_SMALL_2X: imgUrl(
-        profileType,
-        imageName,
-        IMAGE_SIZES.PORTRAIT_SMALL,
-        'portrait',
-        PIXEL_DENSITIES.RETINA
-      ),
-      PORTRAIT_SMALL_3X: imgUrl(
-        profileType,
-        imageName,
-        IMAGE_SIZES.PORTRAIT_SMALL,
-        'portrait',
-        PIXEL_DENSITIES.HIGH_DPI
-      ),
-      LANDSCAPE_LARGE: imgUrl(
-        profileType,
-        imageName,
-        IMAGE_SIZES.LANDSCAPE_LARGE,
-        'landscape',
-        PIXEL_DENSITIES.STANDARD
-      ),
-      FALLBACK: imgUrl(
-        profileType,
-        imageName,
-        IMAGE_SIZES.LANDSCAPE_LARGE,
-        'landscape',
-        PIXEL_DENSITIES.STANDARD,
-        'jpg'
-      ),
-    };
-  }, [imageName]);
-}
-
 export function MainHeaderHero() {
   const profileType = useProfileTypeValue();
-  const srcSet = useHeroSrc(profileType);
-
-  if (srcSet === null) {
-    return null;
-  }
 
   return (
     <div
