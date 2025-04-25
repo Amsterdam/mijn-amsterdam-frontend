@@ -7,7 +7,6 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Search } from '../../components/Search/Search';
-import { ThemaTitles } from '../../config/thema';
 import { useAppStateReady } from '../../hooks/useAppState';
 
 export function SearchPage() {
@@ -17,7 +16,7 @@ export function SearchPage() {
   return (
     <PageV2>
       <PageContentV2>
-        <PageHeadingV2>{ThemaTitles.SEARCH}</PageHeadingV2>
+        <PageHeadingV2>Zoeken</PageHeadingV2>
         <PageContentCell>
           {isReady ? (
             <Search

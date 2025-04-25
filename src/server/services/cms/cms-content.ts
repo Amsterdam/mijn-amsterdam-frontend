@@ -423,13 +423,17 @@ export async function fetchSearchConfig(
       fs.readFile(
         path.join(
           __dirname,
-          '../../client/components/Search/search-config.json'
+          '../../../client/components/Search/search-config.json'
         ),
         (err, content) => {
           if (err) {
             reject(err);
           }
-          resolve(apiSuccessResult(JSON.parse(content.toString())));
+          try {
+            resolve(apiSuccessResult(JSON.parse(content.toString())));
+          } catch (e) {
+            reject(e);
+          }
         }
       );
     });
