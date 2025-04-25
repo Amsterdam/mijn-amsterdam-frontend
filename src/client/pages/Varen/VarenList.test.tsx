@@ -1,6 +1,6 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -14,6 +14,7 @@ import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { VarenList } from './VarenList';
+import { expectHeaders } from '../../helpers/test-utils';
 
 type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieDecision: ExploitatieAanvraag = {
@@ -56,7 +57,7 @@ describe('<VarenList />', () => {
         routePath={AppRoutes['VAREN/LIST']}
         routeEntry={generatePath(AppRoutes['VAREN/LIST'], {
           kind: 'actieve-vergunningen',
-          page: 1,
+          page: '1',
         })}
         component={VarenList}
         initializeState={(snap) => initializeState(snap, state)}
@@ -74,7 +75,7 @@ describe('<VarenList />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(
       'Actieve vergunningen'
     );
   });
@@ -91,9 +92,17 @@ describe('<VarenList />', () => {
     }));
     const screen = render(<Component state={getTestState(vergunningen)} />);
 
-    const table = within(screen.getByRole('table'));
+    const table = screen.getByRole('table');
+    expectHeaders(table, [
+      'Naam vaartuig',
+      'Omschrijving',
+      'Datum besluit',
+      'Resultaat',
+    ]);
 
-    const columnHeaders = table.getAllByRole('columnheader');
+    const withinTable = within(table);
+
+    const columnHeaders = withinTable.getAllByRole('columnheader');
     expect(columnHeaders.map((h) => h.textContent)).toMatchObject([
       'Naam vaartuig',
       'Omschrijving',
@@ -101,16 +110,18 @@ describe('<VarenList />', () => {
       'Resultaat',
     ]);
 
-    expect(table.getAllByText('BootjeVanBerend')).toHaveLength(
+    expect(withinTable.getAllByText('BootjeVanBerend')).toHaveLength(
       vergunningen.length
     );
-    expect(table.getAllByText('Varen vergunning exploitatie')).toHaveLength(
+    expect(
+      withinTable.getAllByText('Varen vergunning exploitatie')
+    ).toHaveLength(vergunningen.length);
+    expect(withinTable.getAllByText('10 november 2023')).toHaveLength(
       vergunningen.length
     );
-    expect(table.getAllByText('10 november 2023')).toHaveLength(
+    expect(withinTable.getAllByText('Verleend')).toHaveLength(
       vergunningen.length
     );
-    expect(table.getAllByText('Verleend')).toHaveLength(vergunningen.length);
   });
 
   it('Naam vaartuig links to the corresponding aanvraag or vergunning', () => {

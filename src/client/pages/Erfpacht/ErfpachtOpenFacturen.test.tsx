@@ -1,43 +1,45 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
+import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
-  ErfpachtV2DossiersResponse,
+  ErfpachtDossiersResponse,
   transformDossierResponse,
-} from '../../../server/services/simple-connect/erfpacht';
+} from '../../../server/services/erfpacht/erfpacht';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ErfpachtOpenFacturen from './ErfpachtOpenFacturen';
+import { ErfpachtOpenFacturen } from './ErfpachtOpenFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
-  const routeEntry = generatePath(AppRoutes['ERFPACHTv2/OPEN_FACTUREN']);
-  const routePath = AppRoutes['ERFPACHTv2/OPEN_FACTUREN'];
+  const routeEntry = generatePath(AppRoutes['ERFPACHT/OPEN_FACTUREN']);
+  const routePath = AppRoutes['ERFPACHT/OPEN_FACTUREN'];
 
   const dossiersTransformed = transformDossierResponse(
-    ERFPACHTv2_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
+    ERFPACHT_DOSSIERS as unknown as ErfpachtDossiersResponse,
     'xxx-relatie-code-xxx'
   );
 
-  const Component = ({
+  function Component({
     initializeState,
   }: {
     initializeState: (snapshot: MutableSnapshot) => void;
-  }) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ErfpachtOpenFacturen}
-      initializeState={initializeState}
-    />
-  );
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ErfpachtOpenFacturen}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Renders Open Facturen List Page no data', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: null,
       },
@@ -51,15 +53,17 @@ describe('<ErfpachtOpenFacturen />', () => {
       />
     );
 
-    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
     expect(
-      screen.getByText('U heeft geen openstaande facturen.')
+      screen.getByRole('heading', { name: 'Openstaande facturen' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('U heeft (nog) geen gegevens op deze pagina.')
     ).toBeInTheDocument();
   });
 
   test('Renders Open Facturen List Page with data', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: dossiersTransformed,
       },
@@ -73,9 +77,11 @@ describe('<ErfpachtOpenFacturen />', () => {
       />
     );
 
-    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
     expect(
-      screen.queryByText('U heeft geen openstaande facturen.')
+      screen.getByRole('heading', { name: 'Openstaande facturen' })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('U heeft (nog) geen gegevens op deze pagina.')
     ).not.toBeInTheDocument();
 
     expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
@@ -91,13 +97,13 @@ describe('<ErfpachtOpenFacturen />', () => {
     expect(screen.getByText('€ 123,02')).toBeInTheDocument();
 
     expect(screen.getByText('16 april 2023')).toBeInTheDocument();
-    expect(screen.getByText('16 oktober 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 maart 2023')).toBeInTheDocument();
     expect(screen.getByText('16 december 2023')).toBeInTheDocument();
   });
 
   test('Renders Open Facturen List Page with data on a small screen device', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: dossiersTransformed,
       },
@@ -118,9 +124,11 @@ describe('<ErfpachtOpenFacturen />', () => {
       };
     });
 
-    expect(screen.getByText('Alle openstaande facturen')).toBeInTheDocument();
     expect(
-      screen.queryByText('U heeft geen openstaande facturen.')
+      screen.getByRole('heading', { name: 'Openstaande facturen' })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('U heeft (nog) geen gegevens op deze pagina.')
     ).not.toBeInTheDocument();
 
     expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
@@ -136,13 +144,13 @@ describe('<ErfpachtOpenFacturen />', () => {
     expect(screen.getByText('€ 123,02')).toBeInTheDocument();
 
     expect(screen.getByText('16 april 2023')).toBeInTheDocument();
-    expect(screen.getByText('16 oktober 2023')).toBeInTheDocument();
+    expect(screen.getByText('16 maart 2023')).toBeInTheDocument();
     expect(screen.getByText('16 december 2023')).toBeInTheDocument();
   });
 
   test('Renders Open Facturen List Page with error', () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'ERROR',
         content: null,
       },
@@ -158,9 +166,7 @@ describe('<ErfpachtOpenFacturen />', () => {
 
     expect(screen.getByText('Foutmelding')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        'We kunnen op dit moment geen openstaande facturen tonen.'
-      )
+      screen.getByText('We kunnen op dit moment niet alle gegevens tonen.')
     ).toBeInTheDocument();
   });
 });

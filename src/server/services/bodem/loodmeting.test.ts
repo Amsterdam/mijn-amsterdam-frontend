@@ -7,7 +7,7 @@ import {
 } from './loodmetingen';
 import document from '../../../../mocks/fixtures/loodmeting-rapport.json';
 import metingen from '../../../../mocks/fixtures/loodmetingen.json';
-import { remoteApi } from '../../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
@@ -20,15 +20,7 @@ vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
 describe('Loodmeting', () => {
   const requestId = '456';
 
-  const profileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: '123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: '',
-    },
-    token: 'abc123',
-  };
+  const profileAndToken: AuthProfileAndToken = getAuthProfileAndToken();
 
   afterAll(() => {
     MockDate.reset();
@@ -63,9 +55,9 @@ describe('Loodmeting', () => {
       const mostCompleteMeting = res.content?.metingen.find(
         (meting) =>
           meting.datumAanvraag &&
+          meting.datumInbehandeling &&
           meting.datumAfgehandeld &&
-          meting.datumBeoordeling &&
-          meting.datumInbehandeling
+          meting.aanvraagNummer === 'AV-001480'
       );
 
       expect(mostCompleteMeting).toStrictEqual({
@@ -74,7 +66,7 @@ describe('Loodmeting', () => {
         datumAanvraag: '2023-07-12T12:39:15Z',
         datumAanvraagFormatted: '12 juli 2023',
         datumAfgehandeld: '2023-07-19T12:14:20Z',
-        datumBeoordeling: '2023-07-13T11:18:41Z',
+        datumAfgehandeldFormatted: '19 juli 2023',
         datumInbehandeling: '2023-07-13T11:18:42Z',
         document: {
           datePublished: '2023-07-19T12:14:20Z',
@@ -92,7 +84,8 @@ describe('Loodmeting', () => {
         rapportBeschikbaar: true,
         rapportId: '690d8303-6f21-ee11-9966-0022489fda17',
         redenAfwijzing: '',
-        status: 'Afgehandeld',
+        decision: 'Afgehandeld',
+        displayStatus: 'Afgehandeld',
         steps: [
           {
             datePublished: '2023-07-12T12:39:15Z',
@@ -133,22 +126,22 @@ describe('Loodmeting', () => {
       assert(metingen, 'Test data has metingen');
 
       const inBehandelingMeting = metingen.find(
-        (meting) => meting.status === 'In behandeling'
+        (meting) => meting.displayStatus === 'In behandeling'
       )!;
       expect(inBehandelingMeting.processed).toBe(false);
 
       const afgewezenMeting = metingen.find(
-        (meting) => meting.status === 'Afgewezen'
+        (meting) => meting.displayStatus === 'Afgewezen'
       )!;
       expect(afgewezenMeting.processed).toBe(true);
 
       const afgehandeldMeting = metingen.find(
-        (meting) => meting.status === 'Afgehandeld'
+        (meting) => meting.displayStatus === 'Afgehandeld'
       )!;
       expect(afgehandeldMeting.processed).toBe(true);
 
       const ontvangenMeting = metingen.find(
-        (meting) => meting.status === 'Ontvangen'
+        (meting) => meting.displayStatus === 'Ontvangen'
       )!;
       expect(ontvangenMeting.processed).toBe(false);
     });
@@ -171,7 +164,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001521',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -183,7 +176,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001520',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -195,7 +188,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001518',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgehandeld',
             },
             {
@@ -207,7 +200,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001525',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -219,7 +212,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001529',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -231,7 +224,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001522',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
             {
@@ -243,7 +236,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001527',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -255,7 +248,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001519',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -267,7 +260,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001532',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
             {
@@ -279,7 +272,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001528',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -291,7 +284,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001526',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check afgehandeld',
             },
             {
@@ -303,7 +296,7 @@ describe('Loodmeting', () => {
                 title: 'Bekijk details',
                 to: '/bodem/lood-meting/OL-001534',
               },
-              thema: 'BODEM',
+              themaID: 'BODEM',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
           ],

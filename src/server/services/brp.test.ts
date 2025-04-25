@@ -24,6 +24,34 @@ describe('BRP data api + transformation', () => {
     const data = transformBRPData(brpDataTyped);
     expect(
       transformBRPNotifications(data, new Date(2020, 3, 23))
-    ).toMatchSnapshot();
+    ).toStrictEqual([
+      {
+        datePublished: '2020-04-22T22:00:00.000Z',
+        description: 'Op dit moment onderzoeken wij op welk adres u nu woont.',
+        id: 'brpAdresInOnderzoek',
+        isAlert: true,
+        link: {
+          title: 'Meer informatie',
+          to: '/persoonlijke-gegevens',
+        },
+        themaID: 'BRP',
+        themaTitle: 'Mijn gegevens',
+        title: 'Adres in onderzoek',
+      },
+      {
+        datePublished: '2020-04-22T22:00:00.000Z',
+        description:
+          "U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.",
+        id: 'brpVertrokkenOnbekendWaarheen',
+        isAlert: true,
+        link: {
+          title: 'Meer informatie',
+          to: '/persoonlijke-gegevens',
+        },
+        themaID: 'BRP',
+        themaTitle: 'Mijn gegevens',
+        title: 'Vertrokken Onbekend Waarheen (VOW)',
+      },
+    ]);
   });
 });

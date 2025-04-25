@@ -1,23 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 import { RecoilRoot } from 'recoil';
 
-import MyThemasPanel from './MyThemasPanel';
-import { ThemaMenuItem } from '../../config/thema';
+import { MyThemasPanel } from './MyThemasPanel';
+import { ThemaMenuItemTransformed } from '../../config/thema';
 
-const PANEL_TITLE = 'whoa!';
-const items: ThemaMenuItem[] = [
+const items: ThemaMenuItemTransformed[] = [
   {
     title: 'Belastingen',
     id: 'BELASTINGEN',
     to: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
-    rel: 'external',
-    profileTypes: ['private'],
-  },
-  {
-    title: 'Erfpacht',
-    id: 'ERFPACHT',
-    to: 'https://example.org/erfpachtdingen',
     rel: 'external',
     profileTypes: ['private'],
   },
@@ -28,30 +20,21 @@ describe('Thema panel display', () => {
     render(
       <RecoilRoot>
         <BrowserRouter>
-          <MyThemasPanel
-            title={PANEL_TITLE}
-            items={items}
-            isLoading={false}
-            trackCategory="track-test"
-          />
+          <MyThemasPanel items={items} isLoading={false} />
         </BrowserRouter>
       </RecoilRoot>
     );
-    expect(screen.getByText(PANEL_TITLE)).toBeInTheDocument();
     expect(screen.getByText('Belastingen')).toBeInTheDocument();
-    expect(screen.getByText('Erfpacht')).toBeInTheDocument();
+    expect(
+      screen.getByText('Dit ziet u in Mijn Amsterdam')
+    ).toBeInTheDocument();
   });
 
   it('Displays content loading placeholder', () => {
     const { container } = render(
       <RecoilRoot>
         <BrowserRouter>
-          <MyThemasPanel
-            title={PANEL_TITLE}
-            items={items}
-            isLoading={true}
-            trackCategory="track-test"
-          />
+          <MyThemasPanel items={items} isLoading={true} />
         </BrowserRouter>
       </RecoilRoot>
     );

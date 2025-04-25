@@ -2,24 +2,58 @@
 
 exports[`<GeneralInfo /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _TextPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <h2
-          class="ams-heading ams-heading--level-1"
+        <nav
+          class="ams-breadcrumb"
+        >
+          <ol
+            class="ams-breadcrumb__list"
+          >
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/uitleg"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Algemene info
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Algemene info
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <div>
         <p>
@@ -32,6 +66,6 @@ exports[`<GeneralInfo /> > Matches the Full Page snapshot 1`] = `
         </p>
       </div>
     </div>
-  </main>
+  </div>
 </DocumentFragment>
 `;

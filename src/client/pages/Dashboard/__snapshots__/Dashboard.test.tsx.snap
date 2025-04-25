@@ -2,941 +2,493 @@
 
 exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _Dashboard_ae30fe"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-7-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _WelcomeHeadingWrap_9aa5da"
     >
       <div
-        class="_HeadingInner_3b337d"
+        class="_WelcomeHeadingSizer_9aa5da"
+        id="skip-to-id-AppContent"
       >
         <h2
-          class="ams-heading ams-heading--level-1"
+          class="_WelcomeHeading_9aa5da"
         >
-          <a
-            class="_MyNotificationsHeadingLink_ae30fe"
-            href="/overzicht-updates"
+          <span
+            class="_ProfileNameHello_9aa5da"
           >
-            Actueel
-          </a>
+            Goedemiddag, 
+          </span>
+          <span
+            class="_ProfileNameWrap_9aa5da"
+          >
+            Bezoeker
+          </span>
         </h2>
       </div>
-    </header>
+    </div>
     <div
-      class="_TopContentContainer_ae30fe"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <div
-        class="_MyNotifications_63df5c _isLoading_63df5c"
+      <h2
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
       >
-        <ul>
-          <li
-            class="_MyNotificationItem_63df5c"
-          >
-            <aside
-              class="_MetaInfo_63df5c"
+        Recente berichten 
+      </h2>
+      <ol
+        class="ams-ordered-list ams-ordered-list--no-markers"
+      >
+        <li
+          class="ams-ordered-list__item ams-mb--sm"
+        >
+          <article>
+            <header
+              class="ams-mb--xs"
             >
-              <button
-                aria-expanded="false"
-                class="_TitleToggle_63df5c"
+              <h4
+                class="ams-heading ams-heading--level-4"
               >
-                <h4
-                  class="ams-heading ams-heading--level-4 _NotificationHeader_63df5c"
+                Notification
+              </h4>
+              <div
+                class="_MetaInfoSecondary_e4b76a"
+              >
+                <em
+                  class="_ThemaIndication_e4b76a"
                 >
-                  Notification
-                </h4>
-                <svg
-                  aria-label="Home"
-                  class="_ThemaIcon_2fc54d _Icon_63df5c"
-                  fill="#EC0000"
-                  height="32px"
-                  viewBox="0 0 32 32"
-                  width="32px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  Home
+                </em>
+                 
+                <time
+                  class="_Datum_e4b76a"
+                  datetime="2020-07-24"
                 >
-                  <g
-                    transform="translate(-5 0)"
-                  >
-                    <path
-                      d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
-                    />
-                  </g>
-                </svg>
-                <div
-                  class="_MetaInfoSecondary_63df5c"
-                >
-                  <em
-                    class="_ThemaIndication_63df5c"
-                  >
-                    Home
-                  </em>
-                  <time
-                    class="_Datum_63df5c"
-                    datetime="2020-07-24"
-                  >
-                    24 juli 2020
-                  </time>
-                </div>
-                <svg
-                  aria-hidden="true"
-                  aria-label="chevron-rechts-icoon"
-                  class="_CaretIcon_63df5c"
-                  focusable="false"
-                  height="32px"
-                  viewBox="0 0 32 32"
-                  width="32px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <polygon
-                    points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                  />
-                </svg>
-              </button>
-            </aside>
-            <div
-              aria-hidden="true"
-              class="_Body_63df5c"
-              style="height: 0px;"
-            >
-              <div>
-                <div
-                  class="_Description_63df5c"
-                >
-                  Notificatie1
-                </div>
-                <p
-                  class="_Action_63df5c"
-                >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/item-1"
-                    title="Meer informatie over de melding: Notification"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Linkje!
-                  </a>
-                </p>
+                  24 juli 2020
+                </time>
               </div>
-            </div>
-          </li>
-          <li
-            class="_MyNotificationItem_63df5c"
-          >
-            <aside
-              class="_MetaInfo_63df5c"
-            >
-              <button
-                aria-expanded="false"
-                class="_TitleToggle_63df5c"
-              >
-                <h4
-                  class="ams-heading ams-heading--level-4 _NotificationHeader_63df5c"
-                >
-                  Notification
-                </h4>
-                <svg
-                  aria-label="Home"
-                  class="_ThemaIcon_2fc54d _Icon_63df5c"
-                  fill="#EC0000"
-                  height="32px"
-                  viewBox="0 0 32 32"
-                  width="32px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <g
-                    transform="translate(-5 0)"
-                  >
-                    <path
-                      d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
-                    />
-                  </g>
-                </svg>
-                <div
-                  class="_MetaInfoSecondary_63df5c"
-                >
-                  <em
-                    class="_ThemaIndication_63df5c"
-                  >
-                    Home
-                  </em>
-                  <time
-                    class="_Datum_63df5c"
-                    datetime="2020-07-24"
-                  >
-                    24 juli 2020
-                  </time>
-                </div>
-                <svg
-                  aria-hidden="true"
-                  aria-label="chevron-rechts-icoon"
-                  class="_CaretIcon_63df5c"
-                  focusable="false"
-                  height="32px"
-                  viewBox="0 0 32 32"
-                  width="32px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <polygon
-                    points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                  />
-                </svg>
-              </button>
-            </aside>
+            </header>
             <div
-              aria-hidden="true"
-              class="_Body_63df5c"
-              style="height: 0px;"
+              class="_Body_e4b76a"
             >
-              <div>
-                <div
-                  class="_Description_63df5c"
+              <p
+                class="ams-paragraph ams-mb--xs"
+              >
+                Notificatie1
+              </p>
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="/item-1"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Notificatie2
-                </div>
-                <p
-                  class="_Action_63df5c"
+                  Linkje!
+                </a>
+              </p>
+            </div>
+          </article>
+        </li>
+        <li
+          class="ams-ordered-list__item ams-mb--sm"
+        >
+          <article>
+            <header
+              class="ams-mb--xs"
+            >
+              <h4
+                class="ams-heading ams-heading--level-4"
+              >
+                Notification
+              </h4>
+              <div
+                class="_MetaInfoSecondary_e4b76a"
+              >
+                <em
+                  class="_ThemaIndication_e4b76a"
                 >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/item-2"
-                    title="Meer informatie over de melding: Notification"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Linkje!
-                  </a>
-                </p>
+                  Home
+                </em>
+                 
+                <time
+                  class="_Datum_e4b76a"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
               </div>
-            </div>
-          </li>
-          <li
-            class="_MyNotificationItem_63df5c"
-          >
-            <aside
-              class="_MetaInfo_63df5c"
-            >
-              <button
-                aria-expanded="false"
-                class="_TitleToggle_63df5c"
-              >
-                <h4
-                  class="ams-heading ams-heading--level-4 _NotificationHeader_63df5c"
-                >
-                  Notification
-                </h4>
-                <svg
-                  aria-label="ALERT"
-                  class="_ThemaIcon_2fc54d _Icon_63df5c"
-                  fill="#EC0000"
-                  focusable="false"
-                  height="36"
-                  viewBox="0 0 36 36"
-                  width="36"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M33.63,30.9H2.37L18,3Zm-24.44-4H26.81L18,11.19Z"
-                  />
-                  <rect
-                    height="4.95"
-                    width="2"
-                    x="17"
-                    y="16.99"
-                  />
-                  <rect
-                    height="1.95"
-                    width="2"
-                    x="17"
-                    y="22.94"
-                  />
-                </svg>
-                <div
-                  class="_MetaInfoSecondary_63df5c"
-                >
-                  <em
-                    class="_ThemaIndication_63df5c"
-                  >
-                    Home
-                  </em>
-                  <time
-                    class="_Datum_63df5c"
-                    datetime="2020-07-24"
-                  >
-                    24 juli 2020
-                  </time>
-                </div>
-                <svg
-                  aria-hidden="true"
-                  aria-label="chevron-rechts-icoon"
-                  class="_CaretIcon_63df5c"
-                  focusable="false"
-                  height="32px"
-                  viewBox="0 0 32 32"
-                  width="32px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <polygon
-                    points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                  />
-                </svg>
-              </button>
-            </aside>
+            </header>
             <div
-              aria-hidden="true"
-              class="_Body_63df5c"
-              style="height: 0px;"
+              class="_Body_e4b76a"
             >
-              <div>
-                <div
-                  class="_Description_63df5c"
+              <p
+                class="ams-paragraph ams-mb--xs"
+              >
+                Notificatie2
+              </p>
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="/item-2"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Notificatie3
-                </div>
-                <p
-                  class="_Action_63df5c"
+                  Linkje!
+                </a>
+              </p>
+            </div>
+          </article>
+        </li>
+        <li
+          class="ams-ordered-list__item ams-mb--sm"
+        >
+          <article>
+            <header
+              class="ams-mb--xs"
+            >
+              <h4
+                class="ams-heading ams-heading--level-4"
+              >
+                Notification
+              </h4>
+              <div
+                class="_MetaInfoSecondary_e4b76a"
+              >
+                <em
+                  class="_ThemaIndication_e4b76a"
                 >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/item-3"
-                    title="Meer informatie over de melding: Notification"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Linkje!
-                  </a>
-                </p>
+                  Home
+                </em>
+                 
+                <time
+                  class="_Datum_e4b76a"
+                  datetime="2020-07-24"
+                >
+                  24 juli 2020
+                </time>
               </div>
-            </div>
-          </li>
-          <li
-            class="_MyNotificationItem_63df5c"
-          >
-            <aside
-              class="_MetaInfo_63df5c"
-            >
-              <button
-                aria-expanded="false"
-                class="_TitleToggle_63df5c"
-              >
-                <h4
-                  class="ams-heading ams-heading--level-4 _NotificationHeader_63df5c"
-                >
-                  Welkom op Mijn Amsterdam!
-                </h4>
-                <svg
-                  aria-label="Actueel"
-                  class="_ThemaIcon_2fc54d _Icon_63df5c"
-                  fill="#EC0000"
-                  focusable="false"
-                  height="31px"
-                  viewBox="0 0 30 31"
-                  width="30px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <path
-                    d="M12,27 L1,27 L1,23 C3.209139,23 5,21.209139 5,19 L5,11 C5,6.581722 8.581722,3 13,3 L14,3 C14,1.8954305 14.8954305,1 16,1 C17.1045695,1 18,1.8954305 18,3 L19,3 C23.418278,3 27,6.581722 27,11 L27,19 C27,21.209139 28.790861,23 31,23 L31,27 L20,27 C20,29.209139 18.209139,31 16,31 C13.790861,31 12,29.209139 12,27 Z M14,27 C14,28.1045695 14.8954305,29 16,29 C17.1045695,29 18,28.1045695 18,27 L14,27 Z M9,11 L9,19 C9,20.4571486 8.61042286,21.8233065 7.92974244,23 L24.0702576,23 C23.3895771,21.8233065 23,20.4571486 23,19 L23,11 C23,8.790861 21.209139,7 19,7 L13,7 C10.790861,7 9,8.790861 9,11 Z"
-                  />
-                </svg>
-                <div
-                  class="_MetaInfoSecondary_63df5c"
-                >
-                  <em
-                    class="_ThemaIndication_63df5c"
-                  >
-                    Actueel
-                  </em>
-                </div>
-                <svg
-                  aria-hidden="true"
-                  aria-label="chevron-rechts-icoon"
-                  class="_CaretIcon_63df5c"
-                  focusable="false"
-                  height="32px"
-                  viewBox="0 0 32 32"
-                  width="32px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <polygon
-                    points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                  />
-                </svg>
-              </button>
-            </aside>
+            </header>
             <div
-              aria-hidden="true"
-              class="_Body_63df5c"
-              style="height: 0px;"
+              class="_Body_e4b76a"
             >
-              <div>
-                <div
-                  class="_Description_63df5c"
+              <p
+                class="ams-paragraph ams-mb--xs"
+              >
+                Notificatie3
+              </p>
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="/item-3"
+                  title="Meer informatie over de melding: Notification"
                 >
+                  Linkje!
+                </a>
+              </p>
+            </div>
+          </article>
+        </li>
+        <li
+          class="ams-ordered-list__item ams-mb--sm"
+        >
+          <article>
+            <header
+              class="ams-mb--xs"
+            >
+              <h4
+                class="ams-heading ams-heading--level-4"
+              >
+                Welkom op Mijn Amsterdam!
+              </h4>
+              <div
+                class="_MetaInfoSecondary_e4b76a"
+              >
+                <em
+                  class="_ThemaIndication_e4b76a"
+                >
+                  Mijn Amsterdam
+                </em>
+                 
+              </div>
+            </header>
+            <div
+              class="_Body_e4b76a"
+            >
+              <p
+                class="ams-paragraph ams-mb--xs"
+              >
+                <span>
                   
       
-                  <p>
-                    
+                </span>
+              </p>
+              <p>
+                
         De persoonlijke digitale pagina voor burgers en ondernemers bij de
         gemeente Amsterdam. Hier ziet u op 1 centrale plek:
       
-                  </p>
-                  
+              </p>
+              
       
-                  <ul>
-                    
+              <ul>
+                
         
-                    <li>
-                      welke gegevens de gemeente van u heeft vastgelegd; 
-                    </li>
-                    
+                <li>
+                  welke gegevens de gemeente van u heeft vastgelegd; 
+                </li>
+                
         
-                    <li>
-                      hoe het met uw aanvraag staat; 
-                    </li>
-                    
+                <li>
+                  hoe het met uw aanvraag staat; 
+                </li>
+                
         
-                    <li>
-                      hoe u wijzigingen kunt doorgeven als er iets niet klopt;
-                    </li>
-                    
+                <li>
+                  hoe u wijzigingen kunt doorgeven als er iets niet klopt;
+                </li>
+                
         
-                    <li>
-                      
+                <li>
+                  
           informatie over uw buurt op een overzichtelijke
           
-                      <a
-                        href="/buurt"
-                      >
-                        kaart
-                      </a>
-                      .
+                  <a
+                    href="/buurt"
+                  >
+                    kaart
+                  </a>
+                  .
         
-                    </li>
-                    
+                </li>
+                
       
-                  </ul>
-                  
+              </ul>
+              
       
-                  <p>
-                    
+              <p>
+                
         
-                    <a
-                      href="/uitleg"
-                    >
-                      Hier
-                    </a>
-                     kunt u
+                <a
+                  href="/uitleg"
+                >
+                  Hier
+                </a>
+                 kunt u
         zien welke gegevens op dit moment getoond kunnen worden. Mijn Amsterdam
         wordt nog verder ontwikkeld en er komt steeds meer informatie bij.
       
-                  </p>
-                </div>
-                <p
-                  class="_Action_63df5c"
+              </p>
+              <p />
+              <p
+                class="ams-paragraph"
+              >
+                <a
+                  class="ams-link ams-link--standalone"
+                  href="#"
+                  title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                 >
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/"
-                    title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    Laat ons weten wat u ervan vindt
-                  </a>
-                </p>
-              </div>
+                  Laat ons weten wat u ervan vindt
+                </a>
+              </p>
             </div>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="_Panel_090d4d _MyThemasPanel_db9f57"
+          </article>
+        </li>
+      </ol>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-5-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-8-wide"
+    >
+      <h2
+        class="ams-heading ams-heading--level-3 ams-mb--sm"
       >
-        <div
-          class="_Header_db9f57"
-        >
-          <h3
-            class="ams-heading ams-heading--level-1 _Title_db9f57"
-          >
-            Mijn thema's
-          </h3>
-          <a
-            aria-label="Dit ziet u in Mijn Amsterdam"
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _GeneralInfoLink_db9f57"
-            href="/uitleg"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="info-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              height="14px"
-              viewBox="0 0 20 20"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g
-                fill-rule="evenodd"
-                stroke="none"
-                stroke-width="1"
-              >
-                <g
-                  fill-rule="nonzero"
-                >
-                  <path
-                    d="M9,15 L11,15 L11,9 L9,9 L9,15 Z M10,0 C4.5,0 0,4.5 0,10 C0,15.5 4.5,20 10,20 C15.5,20 20,15.5 20,10 C20,4.5 15.5,0 10,0 Z M10,18 C5.6,18 2,14.4 2,10 C2,5.6 5.6,2 10,2 C14.4,2 18,5.6 18,10 C18,14.4 14.4,18 10,18 Z M9,7 L11,7 L11,5 L9,5 L9,7 Z"
-                  />
-                </g>
-              </g>
-            </svg>
-          </a>
-        </div>
-        <div
-          class="_Links_db9f57"
+        Mijn thema's
+      </h2>
+      <ul
+        class="ams-unordered-list ams-unordered-list--no-markers ams-mb--sm _LinkList_db9f57"
+      >
+        <li
+          class="ams-unordered-list__item"
         >
           <a
-            class="_MainNavSubmenuLink_c3c96e"
-            data-thema-id="BELASTINGEN"
-            href="http://remote-api-host/sso/portaal/belastingen"
-            rel="external"
-          >
-            <span
-              class="_SubmenuItemIcon_c3c96e"
-            >
-              <svg
-                aria-hidden="true"
-                aria-label="belasting-icoon"
-                fill="#767676"
-                height="32px"
-                viewBox="0 0 32 32"
-                width="32px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-              >
-                <g
-                  transform="translate(11.000000, 11.000000)"
-                >
-                  <path
-                    d="M7.8150134,9.4772118 C7.55585214,9.62913391 7.22296897,9.75424437 6.81635389,9.85254692 C6.40973881,9.95084946 5.9562134,10 5.45576408,10 C4.86594879,10 4.33646347,9.91957185 3.86729223,9.75871314 C3.39812098,9.59785442 2.98927788,9.37667701 2.64075067,9.09517426 C2.29222346,8.81367151 1.99955436,8.48078834 1.76273458,8.09651475 C1.52591481,7.71224115 1.34941971,7.29669571 1.23324397,6.84986595 L0,6.84986595 L0.455764075,5.4691689 L1.05898123,5.4691689 C1.05004464,5.38873954 1.04557641,5.30831139 1.04557641,5.22788204 L1.04557641,5 C1.04557641,4.83914129 1.0589811,4.67828499 1.08579088,4.51742627 L0.0402144772,4.51742627 L0.522788204,3.1233244 L1.28686327,3.1233244 C1.42984879,2.63181166 1.63985563,2.19392507 1.91689008,1.80965147 C2.19392453,1.42537788 2.52680771,1.09919705 2.9155496,0.831099196 C3.30429149,0.56300134 3.73770985,0.357462735 4.21581769,0.214477212 C4.69392554,0.071491689 5.20553794,-2.84217094e-14 5.75067024,-2.84217094e-14 C6.14388043,-2.84217094e-14 6.54155295,0.0357458445 6.94369973,0.107238606 C7.34584651,0.178731367 7.67649558,0.27703244 7.93565684,0.402144772 L7.27882038,2.09115282 C7.08221528,1.99285027 6.83869672,1.91689035 6.54825737,1.86327078 C6.25781803,1.80965121 5.96961716,1.78284182 5.68364611,1.78284182 C5.45129464,1.78284182 5.22341488,1.81188532 5,1.86997319 C4.77658512,1.92806106 4.5688124,2.01295744 4.3766756,2.12466488 C4.18453881,2.23637232 4.01251193,2.37712158 3.86058981,2.54691689 C3.70866769,2.7167122 3.5924937,2.90884611 3.51206434,3.1233244 L7.06434316,3.1233244 L6.59517426,4.51742627 L3.13672922,4.51742627 C3.11885603,4.59785563 3.10991957,4.67604966 3.10991957,4.75201072 L3.10991957,5.23458445 C3.10991957,5.3194821 3.1143878,5.39767614 3.1233244,5.4691689 L6.3538874,5.4691689 L5.89812332,6.84986595 L3.40482574,6.84986595 C3.4673819,7.03753445 3.56568298,7.21402956 3.6997319,7.37935657 C3.83378083,7.54468358 3.99910536,7.68766696 4.19571046,7.80831099 C4.39231555,7.92895503 4.61125885,8.02278787 4.85254692,8.08981233 C5.09383499,8.1568368 5.34852413,8.19034853 5.61662198,8.19034853 C6.27793003,8.19034853 6.84539531,8.05183338 7.31903485,7.77479893 L7.8150134,9.4772118 Z"
-                  />
-                </g>
-                <path
-                  d="M16,30 C23.7319865,30 30,23.7319865 30,16 C30,8.2680135 23.7319865,2 16,2 C8.2680135,2 2,8.2680135 2,16 C2,23.7319865 8.2680135,30 16,30 Z M16,26 C10.4771525,26 6,21.5228475 6,16 C6,10.4771525 10.4771525,6 16,6 C21.5228475,6 26,10.4771525 26,16 C26,21.5228475 21.5228475,26 16,26 Z"
-                  fill-rule="nonzero"
-                />
-              </svg>
-            </span>
-            <span
-              class="_SubmenuItemTitle_c3c96e"
-            >
-              Belastingen
-            </span>
-          </a>
-          <a
-            class="_MainNavSubmenuLink_c3c96e"
-            data-thema-id="INKOMEN"
+            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
             href="/inkomen"
           >
             <span
-              class="_SubmenuItemIcon_c3c96e"
+              class="_ThemaLink_db9f57"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="inkomen-icoon"
-                fill="#767676"
-                height="28px"
-                viewBox="0 0 32 28"
-                width="32px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+              <span
+                class="ams-icon ams-icon--size-4 ams-icon--square"
               >
-                <path
-                  d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
-                  id="Shape"
-                />
-                <rect
-                  height="2"
-                  id="Rectangle"
-                  width="3"
-                  x="18"
-                  y="15"
-                />
-              </svg>
-            </span>
-            <span
-              class="_SubmenuItemTitle_c3c96e"
-            >
-              Inkomen
+                <svg
+                  aria-label="inkomen-icoon"
+                  height="28px"
+                  viewBox="0 0 32 28"
+                  width="32px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
+                    id="Shape"
+                  />
+                  <rect
+                    height="2"
+                    id="Rectangle"
+                    width="3"
+                    x="18"
+                    y="15"
+                  />
+                </svg>
+              </span>
+               Inkomen
             </span>
           </a>
+        </li>
+        <li
+          class="ams-unordered-list__item"
+        >
           <a
-            class="_MainNavSubmenuLink_c3c96e"
-            data-thema-id="MILIEUZONE"
-            href="http://remote-api-host/sso/portaal/milieuzone"
-            rel="external"
+            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+            href="http://remote-api-host/sso/portaal/belastingen"
           >
             <span
-              class="_SubmenuItemIcon_c3c96e"
+              class="_ThemaLink_db9f57"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="Milieuzone"
-                fill="#767676"
-                height="32px"
-                viewBox="0 0 32 32"
-                width="32px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+              <span
+                class="ams-icon ams-icon--size-4 ams-icon--square"
               >
-                <path
-                  d="M9,26 C10.6568542,26 12,27.3431458 12,29 C12,30.6568542 10.6568542,32 9,32 C7.34314575,32 6,30.6568542 6,29 C6,27.3431458 7.34314575,26 9,26 Z M9,13 L16,20 L16,29 L14,29 C14,26.2385763 11.7614237,24 9,24 C6.3112453,24 4.11818189,26.1223067 4.00461951,28.7831104 L4,29 L0,29 L0,19.999 L3,20 L3,15 L0,14.999 L0,13 L9,13 Z M22.125,4 C25.4389703,4 28.125,6.68640077 28.125,10 L28.1225667,10.1616961 L28.1144389,10.337265 C30.1336416,11.0466433 31.6586282,12.8055029 32.0351278,14.9592191 L32.0524152,15.067199 C32.0729524,15.1952229 32.0888297,15.3241498 32.1005526,15.4542744 L32.1121702,15.6055966 L32.1201598,15.7577643 L32.125,16 C32.125,19.3142847 29.4392847,22 26.125,22 L25.8455789,21.9935516 L25.5663435,21.9741237 L25.3050342,21.9440108 L25.0264176,21.8992684 L24.7943147,21.8515243 L24.6670491,21.8204926 C22.942852,21.3910434 21.5142487,20.2151929 20.7433216,18.6559159 L20.6728164,18.6886828 C20.3420323,18.8277714 19.9915265,18.9224925 19.6294217,18.968293 L19.3557953,18.9933996 L19.125,19 C16.9157153,19 15.125,17.2092847 15.125,15 C15.125,13.95041 15.5366504,12.9770373 16.2324936,12.2515352 L16.3859063,12.0999269 L16.488,12.008 L16.3947397,11.7355015 C16.27675,11.3615132 16.1961956,10.9785224 16.1556026,10.5889625 L16.1326901,10.2955989 L16.125,10 C16.125,6.68640077 18.8110297,4 22.125,4 Z M8,15 L5,15 L5,20 L13,20 L8,15 Z M22.125,6 C19.915661,6 18.125,7.79090843 18.125,10 C18.125,10.5651135 18.2555713,11.1198969 18.5052481,11.6529079 L18.611,11.864 L19.1888733,12.7777863 L18.1971113,13.2429495 C17.5401254,13.5915375 17.125,14.2582795 17.125,15 C17.125,16.1047153 18.0202847,17 19.125,17 C19.5004655,17 19.8583801,16.8962652 20.1676152,16.7062976 C20.1474373,16.5462006 20.1350925,16.3862058 20.1291376,16.2245758 L20.125,15.9996 L22.125,15.9996 C22.125,16.303418 22.1588436,16.5993071 22.2229678,16.8837043 L22.2332189,16.8867576 C22.5965869,18.4884552 23.8982221,19.6944791 25.4926675,19.9498304 C25.6984661,19.9826111 25.909743,19.9996 26.125,19.9996 C28.3347153,19.9996 30.125,18.2093153 30.125,15.9996 C30.125,15.759169 30.1037887,15.5236915 30.0631349,15.2949374 C29.7832082,13.7371124 28.5938651,12.4765351 27.0297587,12.1147315 L26.8236635,12.0726861 L26.815712,12.0590079 C26.5913422,12.0199572 26.3605507,11.9996 26.125,11.9996 C24.9306728,11.9996 23.8244658,12.5266407 23.0711642,13.416737 L22.9252878,13.5995484 L21.3267122,12.3976516 C22.4525366,10.9002558 24.2153641,9.9996 26.125,9.9996 L26.1201052,9.80036371 C26.0160906,7.68401307 24.2673893,6 22.125,6 Z"
-                  transform="translate(16.062500, 18.000000) scale(-1, 1) translate(-16.062500, -18.000000) "
-                />
-              </svg>
-            </span>
-            <span
-              class="_SubmenuItemTitle_c3c96e"
-            >
-              Milieuzone
+                <svg
+                  aria-label="belasting-icoon"
+                  height="32px"
+                  viewBox="0 0 32 32"
+                  width="32px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <g
+                    transform="translate(11.000000, 11.000000)"
+                  >
+                    <path
+                      d="M7.8150134,9.4772118 C7.55585214,9.62913391 7.22296897,9.75424437 6.81635389,9.85254692 C6.40973881,9.95084946 5.9562134,10 5.45576408,10 C4.86594879,10 4.33646347,9.91957185 3.86729223,9.75871314 C3.39812098,9.59785442 2.98927788,9.37667701 2.64075067,9.09517426 C2.29222346,8.81367151 1.99955436,8.48078834 1.76273458,8.09651475 C1.52591481,7.71224115 1.34941971,7.29669571 1.23324397,6.84986595 L0,6.84986595 L0.455764075,5.4691689 L1.05898123,5.4691689 C1.05004464,5.38873954 1.04557641,5.30831139 1.04557641,5.22788204 L1.04557641,5 C1.04557641,4.83914129 1.0589811,4.67828499 1.08579088,4.51742627 L0.0402144772,4.51742627 L0.522788204,3.1233244 L1.28686327,3.1233244 C1.42984879,2.63181166 1.63985563,2.19392507 1.91689008,1.80965147 C2.19392453,1.42537788 2.52680771,1.09919705 2.9155496,0.831099196 C3.30429149,0.56300134 3.73770985,0.357462735 4.21581769,0.214477212 C4.69392554,0.071491689 5.20553794,-2.84217094e-14 5.75067024,-2.84217094e-14 C6.14388043,-2.84217094e-14 6.54155295,0.0357458445 6.94369973,0.107238606 C7.34584651,0.178731367 7.67649558,0.27703244 7.93565684,0.402144772 L7.27882038,2.09115282 C7.08221528,1.99285027 6.83869672,1.91689035 6.54825737,1.86327078 C6.25781803,1.80965121 5.96961716,1.78284182 5.68364611,1.78284182 C5.45129464,1.78284182 5.22341488,1.81188532 5,1.86997319 C4.77658512,1.92806106 4.5688124,2.01295744 4.3766756,2.12466488 C4.18453881,2.23637232 4.01251193,2.37712158 3.86058981,2.54691689 C3.70866769,2.7167122 3.5924937,2.90884611 3.51206434,3.1233244 L7.06434316,3.1233244 L6.59517426,4.51742627 L3.13672922,4.51742627 C3.11885603,4.59785563 3.10991957,4.67604966 3.10991957,4.75201072 L3.10991957,5.23458445 C3.10991957,5.3194821 3.1143878,5.39767614 3.1233244,5.4691689 L6.3538874,5.4691689 L5.89812332,6.84986595 L3.40482574,6.84986595 C3.4673819,7.03753445 3.56568298,7.21402956 3.6997319,7.37935657 C3.83378083,7.54468358 3.99910536,7.68766696 4.19571046,7.80831099 C4.39231555,7.92895503 4.61125885,8.02278787 4.85254692,8.08981233 C5.09383499,8.1568368 5.34852413,8.19034853 5.61662198,8.19034853 C6.27793003,8.19034853 6.84539531,8.05183338 7.31903485,7.77479893 L7.8150134,9.4772118 Z"
+                    />
+                  </g>
+                  <path
+                    d="M16,30 C23.7319865,30 30,23.7319865 30,16 C30,8.2680135 23.7319865,2 16,2 C8.2680135,2 2,8.2680135 2,16 C2,23.7319865 8.2680135,30 16,30 Z M16,26 C10.4771525,26 6,21.5228475 6,16 C6,10.4771525 10.4771525,6 16,6 C21.5228475,6 26,10.4771525 26,16 C26,21.5228475 21.5228475,26 16,26 Z"
+                    fill-rule="nonzero"
+                  />
+                </svg>
+              </span>
+               Belastingen
             </span>
           </a>
+        </li>
+        <li
+          class="ams-unordered-list__item"
+        >
           <a
-            class="_MainNavSubmenuLink_c3c96e"
-            data-thema-id="PARKEREN"
+            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+            href="http://remote-api-host/sso/portaal/milieuzone"
+          >
+            <span
+              class="_ThemaLink_db9f57"
+            >
+              <span
+                class="ams-icon ams-icon--size-4 ams-icon--square"
+              >
+                <svg
+                  aria-label="Milieuzone"
+                  height="32px"
+                  viewBox="0 0 32 32"
+                  width="32px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M9,26 C10.6568542,26 12,27.3431458 12,29 C12,30.6568542 10.6568542,32 9,32 C7.34314575,32 6,30.6568542 6,29 C6,27.3431458 7.34314575,26 9,26 Z M9,13 L16,20 L16,29 L14,29 C14,26.2385763 11.7614237,24 9,24 C6.3112453,24 4.11818189,26.1223067 4.00461951,28.7831104 L4,29 L0,29 L0,19.999 L3,20 L3,15 L0,14.999 L0,13 L9,13 Z M22.125,4 C25.4389703,4 28.125,6.68640077 28.125,10 L28.1225667,10.1616961 L28.1144389,10.337265 C30.1336416,11.0466433 31.6586282,12.8055029 32.0351278,14.9592191 L32.0524152,15.067199 C32.0729524,15.1952229 32.0888297,15.3241498 32.1005526,15.4542744 L32.1121702,15.6055966 L32.1201598,15.7577643 L32.125,16 C32.125,19.3142847 29.4392847,22 26.125,22 L25.8455789,21.9935516 L25.5663435,21.9741237 L25.3050342,21.9440108 L25.0264176,21.8992684 L24.7943147,21.8515243 L24.6670491,21.8204926 C22.942852,21.3910434 21.5142487,20.2151929 20.7433216,18.6559159 L20.6728164,18.6886828 C20.3420323,18.8277714 19.9915265,18.9224925 19.6294217,18.968293 L19.3557953,18.9933996 L19.125,19 C16.9157153,19 15.125,17.2092847 15.125,15 C15.125,13.95041 15.5366504,12.9770373 16.2324936,12.2515352 L16.3859063,12.0999269 L16.488,12.008 L16.3947397,11.7355015 C16.27675,11.3615132 16.1961956,10.9785224 16.1556026,10.5889625 L16.1326901,10.2955989 L16.125,10 C16.125,6.68640077 18.8110297,4 22.125,4 Z M8,15 L5,15 L5,20 L13,20 L8,15 Z M22.125,6 C19.915661,6 18.125,7.79090843 18.125,10 C18.125,10.5651135 18.2555713,11.1198969 18.5052481,11.6529079 L18.611,11.864 L19.1888733,12.7777863 L18.1971113,13.2429495 C17.5401254,13.5915375 17.125,14.2582795 17.125,15 C17.125,16.1047153 18.0202847,17 19.125,17 C19.5004655,17 19.8583801,16.8962652 20.1676152,16.7062976 C20.1474373,16.5462006 20.1350925,16.3862058 20.1291376,16.2245758 L20.125,15.9996 L22.125,15.9996 C22.125,16.303418 22.1588436,16.5993071 22.2229678,16.8837043 L22.2332189,16.8867576 C22.5965869,18.4884552 23.8982221,19.6944791 25.4926675,19.9498304 C25.6984661,19.9826111 25.909743,19.9996 26.125,19.9996 C28.3347153,19.9996 30.125,18.2093153 30.125,15.9996 C30.125,15.759169 30.1037887,15.5236915 30.0631349,15.2949374 C29.7832082,13.7371124 28.5938651,12.4765351 27.0297587,12.1147315 L26.8236635,12.0726861 L26.815712,12.0590079 C26.5913422,12.0199572 26.3605507,11.9996 26.125,11.9996 C24.9306728,11.9996 23.8244658,12.5266407 23.0711642,13.416737 L22.9252878,13.5995484 L21.3267122,12.3976516 C22.4525366,10.9002558 24.2153641,9.9996 26.125,9.9996 L26.1201052,9.80036371 C26.0160906,7.68401307 24.2673893,6 22.125,6 Z"
+                    transform="translate(16.062500, 18.000000) scale(-1, 1) translate(-16.062500, -18.000000) "
+                  />
+                </svg>
+              </span>
+               Milieuzone
+            </span>
+          </a>
+        </li>
+        <li
+          class="ams-unordered-list__item"
+        >
+          <a
+            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
             href="http://remote-api-host/sso/portaal/parkeren"
           >
             <span
-              class="_SubmenuItemIcon_c3c96e"
+              class="_ThemaLink_db9f57"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="Auto"
-                fill="#767676"
-                height="34px"
-                viewBox="0 0 56 34"
-                width="56px"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+              <span
+                class="ams-icon ams-icon--size-4 ams-icon--square"
               >
-                <g
-                  transform="translate(0, -12.000000)"
+                <svg
+                  aria-label="Auto"
+                  height="34px"
+                  viewBox="0 0 56 34"
+                  width="56px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
-                  <path
-                    d="M42,35 C44.8994949,35 47.25,37.3505051 47.25,40.25 C47.25,43.1494949 44.8994949,45.5 42,45.5 C39.1005051,45.5 36.75,43.1494949 36.75,40.25 C36.75,37.3505051 39.1005051,35 42,35 Z M12.25,35 C15.1494949,35 17.5,37.3505051 17.5,40.25 C17.5,43.1494949 15.1494949,45.5 12.25,45.5 C9.35050506,45.5 7,43.1494949 7,40.25 C7,37.3505051 9.35050506,35 12.25,35 Z M33.25,12.25 L45.5,24.5 L56,24.5 L56,40.25 L50.75,40.25 C50.75,35.4175084 46.8324916,31.5 42,31.5 C37.1675084,31.5 33.25,35.4175084 33.25,40.25 L21,40.25 C21,35.4175084 17.0824916,31.5 12.25,31.5 C7.41750844,31.5 3.5,35.4175084 3.5,40.25 L-9.9475983e-14,40.25 L-9.9475983e-14,24.5 L12.25,12.25 L33.25,12.25 Z M31.5,15.75 L22.75,15.75 L22.75,24.5 L40.1833496,24.5 L31.5,15.75 Z M19.25,15.75 L14,15.75 L5.25,24.5 L19.25,24.5 L19.25,15.75 Z"
-                    id="Combined-Shape"
-                  />
-                </g>
-              </svg>
+                  <g
+                    transform="translate(0, -12.000000)"
+                  >
+                    <path
+                      d="M42,35 C44.8994949,35 47.25,37.3505051 47.25,40.25 C47.25,43.1494949 44.8994949,45.5 42,45.5 C39.1005051,45.5 36.75,43.1494949 36.75,40.25 C36.75,37.3505051 39.1005051,35 42,35 Z M12.25,35 C15.1494949,35 17.5,37.3505051 17.5,40.25 C17.5,43.1494949 15.1494949,45.5 12.25,45.5 C9.35050506,45.5 7,43.1494949 7,40.25 C7,37.3505051 9.35050506,35 12.25,35 Z M33.25,12.25 L45.5,24.5 L56,24.5 L56,40.25 L50.75,40.25 C50.75,35.4175084 46.8324916,31.5 42,31.5 C37.1675084,31.5 33.25,35.4175084 33.25,40.25 L21,40.25 C21,35.4175084 17.0824916,31.5 12.25,31.5 C7.41750844,31.5 3.5,35.4175084 3.5,40.25 L-9.9475983e-14,40.25 L-9.9475983e-14,24.5 L12.25,12.25 L33.25,12.25 Z M31.5,15.75 L22.75,15.75 L22.75,24.5 L40.1833496,24.5 L31.5,15.75 Z M19.25,15.75 L14,15.75 L5.25,24.5 L19.25,24.5 L19.25,15.75 Z"
+                      id="Combined-Shape"
+                    />
+                  </g>
+                </svg>
+              </span>
+               Parkeren
             </span>
-            <span
-              class="_SubmenuItemTitle_c3c96e"
-            >
-              Parkeren
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div
-      class="_DashboardMapContainer_f20b21"
-    >
-      <div
-        class="_MyAreaLoader_68b962"
-      >
-        Loading buurt bundle...
-      </div>
-      <a
-        class="_NavLink_f20b21"
-        href="/buurt"
-      >
-        <span
-          class="_NavLinkContentWrap_f20b21"
-        >
-          <h3
-            class="ams-heading ams-heading--level-2"
-          >
-            Mijn buurt
-          </h3>
-          <p>
-            Klik voor een overzicht van gemeentelijke informatie rond uw eigen woning.
-          </p>
-        </span>
-      </a>
-    </div>
-    <div
-      class="_DirectLinks_7319b6"
-      id="DirectLinks"
-    >
-      <h3
-        class="ams-heading ams-heading--level-2"
-        id="DirectLinksHeader"
-      >
-        Bezoek ook
-      </h3>
-      <ul
-        class="_LinkList_7319b6"
-      >
-        <li>
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="/uitleg"
-            id="Uitleg"
-          >
-            Dit ziet u in Mijn Amsterdam
-          </a>
-        </li>
-        <li>
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://www.amsterdam.nl/sbl/"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="externe-link-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g
-                fill-rule="evenodd"
-                stroke="none"
-                stroke-width="1"
-              >
-                <path
-                  d="M19.0056332,0 L32.009697,0 L32.009697,12.9918801 L28.0084466,12.9918801 L28.0084466,6.82573392 L14.4342046,20.4172392 L11.60332,17.5990006 L25.1875651,3.99750156 L19.0056332,3.99750156 L19.0056332,0 Z M26.0078214,13.9912555 L26.0178245,32 L0.0096969697,32 L0.0096969697,6.01623985 L17.9853144,6.01623985 L14.0040702,9.9937539 L14.0240765,10.0137414 L4.01094736,10.0137414 L4.01094736,28.0024984 L22.0165741,28.0024984 L22.006571,17.988757 L26.0078214,13.9912555 Z"
-                />
-              </g>
-            </svg>
-            Stadsbank van Lening
-          </a>
-        </li>
-        <li>
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="externe-link-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g
-                fill-rule="evenodd"
-                stroke="none"
-                stroke-width="1"
-              >
-                <path
-                  d="M19.0056332,0 L32.009697,0 L32.009697,12.9918801 L28.0084466,12.9918801 L28.0084466,6.82573392 L14.4342046,20.4172392 L11.60332,17.5990006 L25.1875651,3.99750156 L19.0056332,3.99750156 L19.0056332,0 Z M26.0078214,13.9912555 L26.0178245,32 L0.0096969697,32 L0.0096969697,6.01623985 L17.9853144,6.01623985 L14.0040702,9.9937539 L14.0240765,10.0137414 L4.01094736,10.0137414 L4.01094736,28.0024984 L22.0165741,28.0024984 L22.006571,17.988757 L26.0078214,13.9912555 Z"
-                />
-              </g>
-            </svg>
-            Veelgestelde vragen
-          </a>
-        </li>
-        <li>
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://mijn.overheid.nl/berichtenbox/inbox/"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="externe-link-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g
-                fill-rule="evenodd"
-                stroke="none"
-                stroke-width="1"
-              >
-                <path
-                  d="M19.0056332,0 L32.009697,0 L32.009697,12.9918801 L28.0084466,12.9918801 L28.0084466,6.82573392 L14.4342046,20.4172392 L11.60332,17.5990006 L25.1875651,3.99750156 L19.0056332,3.99750156 L19.0056332,0 Z M26.0078214,13.9912555 L26.0178245,32 L0.0096969697,32 L0.0096969697,6.01623985 L17.9853144,6.01623985 L14.0040702,9.9937539 L14.0240765,10.0137414 L4.01094736,10.0137414 L4.01094736,28.0024984 L22.0165741,28.0024984 L22.006571,17.988757 L26.0078214,13.9912555 Z"
-                />
-              </g>
-            </svg>
-            MijnOverheid Berichtenbox
-          </a>
-        </li>
-        <li>
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://www.amsterdam.nl"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="externe-link-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g
-                fill-rule="evenodd"
-                stroke="none"
-                stroke-width="1"
-              >
-                <path
-                  d="M19.0056332,0 L32.009697,0 L32.009697,12.9918801 L28.0084466,12.9918801 L28.0084466,6.82573392 L14.4342046,20.4172392 L11.60332,17.5990006 L25.1875651,3.99750156 L19.0056332,3.99750156 L19.0056332,0 Z M26.0078214,13.9912555 L26.0178245,32 L0.0096969697,32 L0.0096969697,6.01623985 L17.9853144,6.01623985 L14.0040702,9.9937539 L14.0240765,10.0137414 L4.01094736,10.0137414 L4.01094736,28.0024984 L22.0165741,28.0024984 L22.006571,17.988757 L26.0078214,13.9912555 Z"
-                />
-              </g>
-            </svg>
-            Amsterdam.nl
-          </a>
-        </li>
-        <li>
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://www.amsterdam.nl/parkeren-verkeer/taxi/"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="externe-link-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g
-                fill-rule="evenodd"
-                stroke="none"
-                stroke-width="1"
-              >
-                <path
-                  d="M19.0056332,0 L32.009697,0 L32.009697,12.9918801 L28.0084466,12.9918801 L28.0084466,6.82573392 L14.4342046,20.4172392 L11.60332,17.5990006 L25.1875651,3.99750156 L19.0056332,3.99750156 L19.0056332,0 Z M26.0078214,13.9912555 L26.0178245,32 L0.0096969697,32 L0.0096969697,6.01623985 L17.9853144,6.01623985 L14.0040702,9.9937539 L14.0240765,10.0137414 L4.01094736,10.0137414 L4.01094736,28.0024984 L22.0165741,28.0024984 L22.006571,17.988757 L26.0078214,13.9912555 Z"
-                />
-              </g>
-            </svg>
-            Taxiportaal
-          </a>
-        </li>
-        <li>
-          <a
-            class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-            href="https://www.amsterdam.nl/parkeren-verkeer/varen-amsterdam/"
-            rel="external noopener noreferrer"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="externe-link-icoon"
-              class="_Icon_c3ab45 _Icon__left_c3ab45"
-              fill="#000"
-              focusable="false"
-              height="14px"
-              viewBox="0 0 32 32"
-              width="14px"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g
-                fill-rule="evenodd"
-                stroke="none"
-                stroke-width="1"
-              >
-                <path
-                  d="M19.0056332,0 L32.009697,0 L32.009697,12.9918801 L28.0084466,12.9918801 L28.0084466,6.82573392 L14.4342046,20.4172392 L11.60332,17.5990006 L25.1875651,3.99750156 L19.0056332,3.99750156 L19.0056332,0 Z M26.0078214,13.9912555 L26.0178245,32 L0.0096969697,32 L0.0096969697,6.01623985 L17.9853144,6.01623985 L14.0040702,9.9937539 L14.0240765,10.0137414 L4.01094736,10.0137414 L4.01094736,28.0024984 L22.0165741,28.0024984 L22.006571,17.988757 L26.0078214,13.9912555 Z"
-                />
-              </g>
-            </svg>
-            Varen in Amsterdam
           </a>
         </li>
       </ul>
+      <a
+        class="ams-link ams-link--standalone"
+        href="/uitleg"
+      >
+        Dit ziet u in Mijn Amsterdam
+      </a>
     </div>
-  </main>
+  </div>
+  <div
+    class="_DashboardMapContainer_f20b21"
+  >
+    <div
+      class="_MyAreaLoader_68b962"
+    >
+      Loading buurt bundle...
+    </div>
+    <a
+      class="_NavLink_f20b21"
+      data-discover="true"
+      href="/buurt"
+    >
+      <span
+        class="_NavLinkContentWrap_f20b21"
+      >
+        <h3
+          class="ams-heading ams-heading--level-3"
+        >
+          Mijn buurt
+        </h3>
+        <p
+          class="ams-paragraph"
+        >
+          Klik voor een overzicht van gemeentelijke informatie rond uw eigen woning.
+        </p>
+      </span>
+    </a>
+  </div>
 </DocumentFragment>
 `;

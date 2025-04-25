@@ -1,16 +1,21 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
-import { Thema } from '../config/thema';
+import { type ThemaID } from '../config/thema';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
 
-export type BagThema = `${Thema}_BAG`;
+/**
+ * @deprecated Functionality related to BagThema is deprecated and will be removed in the future.
+ */
+export type BagThema = `${ThemaID}_BAG`;
 
-export type AppState = {
+export type AppStateBase = {
   [key in ServiceID]: ApiResponse_DEPRECATED<
     ReturnTypeAsync<ServicesType[key]>['content']
   >;
-} & {
+};
+
+export type AppState = AppStateBase & {
   // A place to store additional data not loaded initially but needs to be stored persistently in the app.
   [key in BagThema]?: Record<string, any>;
 };
@@ -44,40 +49,27 @@ export type SVGComponent = FunctionComponent<
   SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
 
-export type ComponentChildren = ReactNode;
-
-export interface MyNotification {
-  thema: Thema;
+export interface MyNotification<ID extends string = string> {
+  themaID: ID;
+  themaTitle?: string;
   datePublished: string;
   description: string;
   hideDatePublished?: boolean;
   id: string;
   isAlert?: boolean;
-  isTip?: boolean;
-  tipReason?: string;
   link?: LinkProps;
-  moreInformation?: string;
   subject?: string;
   title: string;
+
+  // TIP notifications
+  tipReason?: string;
+  isTip?: true;
 
   // NOTE: Maybe move this to client?
   customLink?: {
     callback: () => void;
     title: string;
   };
-}
-
-export interface MyTip {
-  thema?: Thema | null;
-  datePublished: string;
-  description: string;
-  id: string;
-  imgUrl?: string;
-  link: LinkProps;
-  priority?: number;
-  profileTypes?: ProfileType[];
-  reason: string;
-  title: string;
 }
 
 export interface GenericDocument {
@@ -111,6 +103,7 @@ export interface ZaakDetail<T extends string = string> {
   steps: StatusLineItem<T>[];
   link: LinkProps;
   about?: string;
+  displayStatus: string;
 }
 
 export type StatusLine = ZaakDetail;

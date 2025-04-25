@@ -93,7 +93,7 @@ describe('Notifications', () => {
       content: {
         notifications: [
           {
-            thema: 'VAREN',
+            themaID: 'VAREN',
             id: 'varen-Z-25-0000001-reder-notification',
             datePublished: rederRegistratie.dateRequest,
             title: 'Reder geregistreerd',
@@ -140,18 +140,18 @@ describe('Notifications', () => {
       content: {
         notifications: [
           {
-            thema: 'VAREN',
+            themaID: 'VAREN',
             id: 'varen-Z-25-0000001-inbehandeling-notification',
             title: 'Aanvraag Varen vergunning exploitatie in behandeling',
             description: 'Wij hebben uw aanvraag in behandeling genomen.',
             datePublished: zaakInProgress.dateRequest,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
-            thema: 'VAREN',
+            themaID: 'VAREN',
             id: 'varen-Z-25-0000001-meerinformatienodig-notification',
             title:
               'Meer informatie nodig omtrent uw Varen vergunning exploitatie aanvraag',
@@ -160,11 +160,11 @@ describe('Notifications', () => {
             datePublished: zaakMeerInformatieTermijn.dateStart,
             link: {
               title: 'Bekijk details',
-              to: '/passagiers-en-beroepsvaart/vergunning/Varen%20vergunning%20exploitatie/Z-25-0000001',
+              to: '/passagiers-en-beroepsvaart/vergunning/varen-vergunning-exploitatie/Z-25-0000001',
             },
           },
           {
-            thema: 'VAREN',
+            themaID: 'VAREN',
             id: 'varen-Z-25-0000001-afgehandeld-notification',
             title: 'Aanvraag Varen vergunning exploitatie afgehandeld',
             description: 'Wij hebben uw aanvraag afgehandeld.',

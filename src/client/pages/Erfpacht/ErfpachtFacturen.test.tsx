@@ -1,53 +1,53 @@
 import { render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import ERFPACHTv2_DOSSIER_DETAIL from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHTv2_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
+import ERFPACHT_DOSSIERS from '../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
-  ErfpachtV2DossiersResponse,
   transformDossierResponse,
   transformErfpachtDossierProperties,
-} from '../../../server/services/simple-connect/erfpacht';
+} from '../../../server/services/erfpacht/erfpacht';
 import { bffApi } from '../../../testing/utils';
 import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ErfpachtFacturen from './ErfpachtFacturen';
+import { ErfpachtFacturen } from './ErfpachtFacturen';
+import { ErfpachtDossiersResponse } from '../../../server/services/erfpacht/erfpacht-types';
 
 describe('<ErfpachtOpenFacturen />', () => {
-  const user = userEvent.setup();
-
-  const routeEntry = generatePath(AppRoutes['ERFPACHTv2/ALLE_FACTUREN'], {
+  const routeEntry = generatePath(AppRoutes['ERFPACHT/ALLE_FACTUREN'], {
     dossierNummerUrlParam: 'E.123.123',
+    page: null,
   });
-  const routePath = AppRoutes['ERFPACHTv2/ALLE_FACTUREN'];
-
+  const routePath = AppRoutes['ERFPACHT/ALLE_FACTUREN'];
   const dossierDetailTransformed = transformErfpachtDossierProperties(
-    ERFPACHTv2_DOSSIER_DETAIL as any
+    ERFPACHT_DOSSIER_DETAIL as any
   );
 
-  const Component = ({
+  function Component({
     initializeState,
   }: {
     initializeState: (snapshot: MutableSnapshot) => void;
-  }) => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ErfpachtFacturen}
-      initializeState={initializeState}
-    />
-  );
+  }) {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ErfpachtFacturen}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   test('Renders Facturen List Page no data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(200, { content: null, status: 'OK' });
+
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: null,
       },
@@ -62,21 +62,25 @@ describe('<ErfpachtOpenFacturen />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Alle facturen')).toBeInTheDocument();
-      expect(screen.getByText('U heeft geen facturen.')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: 'Facturen' })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('U heeft (nog) geen gegevens op deze pagina.')
+      ).toBeInTheDocument();
     });
   });
 
   test('Renders Facturen List Page with data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(200, { content: dossierDetailTransformed, status: 'OK' });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: transformDossierResponse(
-          ERFPACHTv2_DOSSIERS as unknown as ErfpachtV2DossiersResponse,
+          ERFPACHT_DOSSIERS as unknown as ErfpachtDossiersResponse,
           'xxx-relatie-code-xxx'
         ),
       },
@@ -91,9 +95,11 @@ describe('<ErfpachtOpenFacturen />', () => {
     );
 
     await waitFor(async () => {
-      expect(screen.getByText('Alle facturen')).toBeInTheDocument();
       expect(
-        screen.queryByText('U heeft geen facturen.')
+        screen.getByRole('heading', { name: 'Facturen' })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('U heeft (nog) geen facturen.')
       ).not.toBeInTheDocument();
 
       const facturenPage1 = [
@@ -113,10 +119,7 @@ describe('<ErfpachtOpenFacturen />', () => {
         expect(screen.getByText(factuur.factuurNummer)).toBeInTheDocument();
       }
 
-      expect(screen.getByText('volgende')).toBeInTheDocument();
-      user.click(screen.getByText('volgende'));
-
-      expect(screen.getByText('vorige')).toBeInTheDocument();
+      expect(screen.queryByText('volgende')).not.toBeInTheDocument();
     });
 
     await waitFor(() => {
@@ -135,14 +138,14 @@ describe('<ErfpachtOpenFacturen />', () => {
 
   test('Renders Facturen List Page with error', async () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'ERROR',
         content: null,
       },
     } as AppState;
 
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(500, { content: null, status: 'ERROR' });
 
     const screen = render(
@@ -155,7 +158,7 @@ describe('<ErfpachtOpenFacturen />', () => {
     await waitFor(() => {
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
-        screen.getByText('We kunnen op dit moment geen facturen tonen.')
+        screen.getByText('We kunnen op dit moment niet alle gegevens tonen.')
       ).toBeInTheDocument();
     });
   });

@@ -5,22 +5,19 @@ import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploi
 import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
 import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
-import type { VarenZakenFrontend } from '../../../server/services/varen/config-and-types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIcon } from '../../components';
-import { ThemaTitles } from '../../config/thema';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
-  const { vergunning, buttonItems, isLoading, isError } = useVarenDetailPage();
+  const { zaak, buttonItems, isLoading, isError, breadcrumbs } =
+    useVarenDetailPage();
 
   let noContentError = false;
   let pageContent = null;
-  switch (vergunning?.caseType) {
+  switch (zaak?.caseType) {
     case 'Varen vergunning exploitatie':
       pageContent = (
         <VarenDetailPageContentExploitatie
-          vergunning={vergunning}
+          zaak={zaak}
           buttonItems={buttonItems}
         />
       );
@@ -28,48 +25,36 @@ export function VarenDetail() {
     case 'Varen ligplaatsvergunning':
       pageContent = (
         <VarenDetailPageContentLigplaats
-          vergunning={vergunning}
+          zaak={zaak}
           buttonItems={buttonItems}
         />
       );
       break;
     case 'Varen vergunning exploitatie Wijziging vaartuignaam':
-      pageContent = (
-        <VarenDetailPageContentExploitatieHernoemen vergunning={vergunning} />
-      );
+      pageContent = <VarenDetailPageContentExploitatieHernoemen zaak={zaak} />;
       break;
     case 'Varen vergunning exploitatie Wijziging vervanging':
-      pageContent = (
-        <VarenDetailPageContentExploitatieVervangen vergunning={vergunning} />
-      );
+      pageContent = <VarenDetailPageContentExploitatieVervangen zaak={zaak} />;
       break;
     case 'Varen vergunning exploitatie Wijziging verbouwing':
-      pageContent = (
-        <VarenDetailPageContentExploitatieVerbouwen vergunning={vergunning} />
-      );
+      pageContent = <VarenDetailPageContentExploitatieVerbouwen zaak={zaak} />;
       break;
     case 'Varen vergunning exploitatie Wijziging vergunninghouder':
-      pageContent = (
-        <VarenDetailPageContentExploitatieOverdragen vergunning={vergunning} />
-      );
+      pageContent = <VarenDetailPageContentExploitatieOverdragen zaak={zaak} />;
       break;
     default:
       noContentError = true;
   }
 
   return (
-    <ThemaDetailPagina<VarenZakenFrontend>
+    <ThemaDetailPagina
       statusLabel="Status van uw aanvraag"
-      title={vergunning?.title ?? 'Varen vergunning'}
-      zaak={vergunning}
+      title={zaak?.title ?? 'Varen vergunning'}
+      zaak={zaak}
       isError={isError || noContentError}
       isLoading={isLoading}
-      icon={<ThemaIcon />}
-      pageContentTop={pageContent}
-      backLink={{
-        title: ThemaTitles.VAREN,
-        to: AppRoutes.VAREN,
-      }}
+      pageContentMain={pageContent}
+      breadcrumbs={breadcrumbs}
     />
   );
 }

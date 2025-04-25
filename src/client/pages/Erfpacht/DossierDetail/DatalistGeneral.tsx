@@ -1,11 +1,11 @@
 import { ErfpachtersList } from './ErfpachtersList';
 import { KadastraleAanduidingList } from './KadastraleAanduidingList';
-import { ErfpachtV2DossiersDetail } from '../../../../server/services/simple-connect/erfpacht';
+import { ErfpachtDossiersDetail } from '../../../../server/services/erfpacht/erfpacht';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../components/LocationModal/LocationModal';
 
 export interface ErfpachtDatalistProps {
-  dossier: ErfpachtV2DossiersDetail;
+  dossier: ErfpachtDossiersDetail;
   relatieCode?: string;
 }
 
@@ -23,7 +23,7 @@ export function DatalistGeneral({
       content: <AddressDisplayAndModal address={dossier.voorkeursadres} />,
     },
     {
-      label: dossier.titelKadastraleaanduiding,
+      label: dossier.titelKadastraleAanduiding,
       content: (
         <KadastraleAanduidingList
           kadastraleaanduidingen={dossier.kadastraleaanduidingen}

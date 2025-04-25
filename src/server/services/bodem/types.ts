@@ -49,6 +49,8 @@ export type LoodMetingStatus =
   | 'Afgewezen'
   | 'Afgehandeld';
 
+export type LoodMetingDecision = 'Afgewezen' | 'Afgehandeld';
+
 export type LoodMetingen = {
   metingen: LoodMetingFrontend[];
 };
@@ -58,9 +60,10 @@ export interface LoodMetingFrontend extends ZaakDetail<LoodMetingStatus> {
   datumAanvraag: string; // RequestedOn
   datumAanvraagFormatted: string;
   datumInbehandeling: string | null; // Workordercreatedon
-  datumAfgehandeld: string | null; // Reportsenton
-  datumBeoordeling: string | null; // ReviewedOn
-  status: LoodMetingStatus;
+  datumAfgehandeld: string | null; // Reportsenton | ReviewedOn
+  datumAfgehandeldFormatted: string | null;
+  displayStatus: LoodMetingStatus;
+  decision: LoodMetingDecision | null;
   processed: boolean;
   kenmerk: string;
   aanvraagNummer: string;

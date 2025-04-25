@@ -2,515 +2,484 @@
 
 exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Facturen en betalen"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g
-            clip-path="url(#clip0_17050_1622)"
-          >
-            <path
-              d="M4 24C2.93333 24 2 23.64 1.2 22.92C0.4 22.2 0 21.36 0 20.4V16.8H4V0L6 1.8L8 0L10 1.8L12 0L14 1.8L16 0L18 1.8L20 0L22 1.8L24 0V20.4C24 21.36 23.6 22.2 22.8 22.92C22 23.64 21.0667 24 20 24H4ZM20 21.6C20.4 21.6 20.6667 21.48 20.9333 21.24C21.2 21 21.3333 20.76 21.3333 20.4V3.6H6.66667V16.8H18.6667V20.4C18.6667 20.76 18.8 21 19.0667 21.24C19.3333 21.48 19.6 21.6 20 21.6ZM8 8.4V6H16V8.4H8ZM8 12V9.6H16V12H8ZM18.6667 8.4C18.2667 8.4 18 8.28 17.7333 8.04C17.4667 7.8 17.3333 7.56 17.3333 7.2C17.3333 6.84 17.4667 6.6 17.7333 6.36C18 6.12 18.2667 6 18.6667 6C19.0667 6 19.3333 6.12 19.6 6.36C19.8667 6.6 20 6.84 20 7.2C20 7.56 19.8667 7.8 19.6 8.04C19.3333 8.28 19.0667 8.4 18.6667 8.4ZM18.6667 12C18.2667 12 18 11.88 17.7333 11.64C17.4667 11.4 17.3333 11.16 17.3333 10.8C17.3333 10.44 17.4667 10.2 17.7333 9.96C18 9.72 18.2667 9.6 18.6667 9.6C19.0667 9.6 19.3333 9.72 19.6 9.96C19.8667 10.2 20 10.44 20 10.8C20 11.16 19.8667 11.4 19.6 11.64C19.3333 11.88 19.0667 12 18.6667 12ZM4 21.6H16V19.2H2.66667V20.4C2.66667 20.76 2.8 21 3.06667 21.24C3.33333 21.48 3.6 21.6 4 21.6Z"
-            />
-          </g>
-          <defs>
-            <clippath
-              id="clip0_17050_1622"
-            >
-              <rect
-                fill="white"
-                height="24"
-                width="24"
-              />
-            </clippath>
-          </defs>
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Facturen en betalen
-        </h2>
-      </div>
-    </header>
     <div
-      class="ams-screen ams-screen--wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
+        <nav
+          class="ams-breadcrumb"
         >
-          <p
-            class="ams-paragraph ams-mb--sm"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur een e-mail naar 
-            <a
-              class="ams-link ams-link--standalone"
-              href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren"
+            <li
+              class="ams-breadcrumb__item"
             >
-              debiteurenadministratie@amsterdam.nl
-            </a>
-             met de details van de factuur, zoals het factuurnummer of andere relevante informatie, zodat zij u verder kunnen helpen.
-          </p>
-          <p
-            class="ams-paragraph"
-          >
-            U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
-            <a
-              class="ams-link ams-link--standalone"
-              href="http://remote-api-host/sso/portaal/belastingen"
-              rel="noreferrer"
-            >
-              Mijn Belastingen
-            </a>
-            .
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <ul
-            class="ams-link-list"
-          >
-            <li>
               <a
-                class="ams-link-list__link"
-                href="https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa"
-                rel="noreferrer"
+                class="ams-breadcrumb__link"
+                href="/"
               >
-                <span
-                  class="ams-icon ams-icon--size-5"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Meer over betalen aan de gemeente
+                Home
               </a>
             </li>
-            <li>
+            <li
+              class="ams-breadcrumb__item"
+            >
               <a
-                class="ams-link-list__link"
-                href="http://remote-api-host/sso/portaal/belastingen"
-                rel="noreferrer"
+                class="ams-breadcrumb__link"
+                href="/facturen-en-betalen"
+                tabindex="-1"
               >
                 <span
-                  class="ams-icon ams-icon--size-5"
+                  class="ams-visually-hidden"
                 >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
+                  Facturen en betalen
                 </span>
-                Belastingen op Mijn Amsterdam
               </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Facturen en betalen
+        </h3>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph ams-mb--sm"
+      >
+        Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur een e-mail naar 
+        <a
+          class="ams-link ams-link--standalone"
+          href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren"
+        >
+          debiteurenadministratie@amsterdam.nl
+        </a>
+         met de details van de factuur, zoals het factuurnummer of andere relevante informatie, zodat zij u verder kunnen helpen.
+      </p>
+      <p
+        class="ams-paragraph"
+      >
+        U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
+        <a
+          class="ams-link ams-link--standalone"
+          href="http://remote-api-host/sso/portaal/belastingen"
+          rel="noreferrer"
+        >
+          Mijn Belastingen
+        </a>
+        .
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/facturen-van-de-gemeente-controleren-gegevens-wijzigen-automatische-incasso-regelen-38caa"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer over betalen aan de gemeente
+          </a>
+        </li>
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="http://remote-api-host/sso/portaal/belastingen"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Belastingen op Mijn Amsterdam
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <a
+        class="_MaButtonLink_aa758a ams-button ams-button--secondary ams-mb--sm"
+        href="/facturen-en-betalen/betaalvoorkeuren"
+      >
+        Betaalvoorkeuren
+      </a>
+      <section
+        class="ams-alert ams-alert--warning"
+      >
+        <div
+          class="ams-alert__icon"
+        >
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
+        >
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Belangrijk om te weten
+          </h2>
+          <ul
+            class="ams-unordered-list ams-unordered-list--no-markers"
+          >
+            <li
+              class="ams-unordered-list__item"
+            >
+              Het verwerken van uw betaling kan tot 4 werkdagen duren.
+            </li>
+            <li
+              class="ams-unordered-list__item"
+            >
+              Enkel het openstaande bedrag wordt getoond.
+            </li>
+            <li
+              class="ams-unordered-list__item"
+            >
+              Gebruik de betaallink alleen voor het voldoen van het volledige factuurbedrag. Indien er sprake is van een betalingsregeling of deelbetaling verzoeken we u het resterend bedrag handmatig over te maken onder vermelding van de gegevens op uw factuur.
             </li>
           </ul>
         </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
+      </section>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Openstaande facturen
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825 _FacturenTable--open_1fc87f"
         >
-          <button
-            class="ams-button ams-button--secondary ams-mb--sm"
-            type="button"
+          <thead
+            class="ams-table__header"
           >
-            Betaalvoorkeuren
-          </button>
-          <div
-            class="ams-alert ams-alert--warning"
-          >
-            <div
-              class="ams-alert__icon"
+            <tr
+              class="ams-table__row"
             >
-              <span
-                class="ams-icon ams-icon--size-5"
+              <th
+                class="ams-table__header-cell"
               >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 36 36"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-                  />
-                  <path
-                    d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-                  />
-                </svg>
-              </span>
-            </div>
-            <div
-              class="ams-alert__content"
-            >
-              <ul
-                class="ams-unordered-list"
+                Factuurnummer
+              </th>
+              <th
+                class="ams-table__header-cell"
               >
-                <li
-                  class="ams-unordered-list__item"
-                >
-                  Het verwerken van uw betaling kan tot 4 werkdagen duren.
-                </li>
-                <li
-                  class="ams-unordered-list__item"
-                >
-                  Enkel het openstaande bedrag wordt getoond.
-                </li>
-                <li
-                  class="ams-unordered-list__item"
-                >
-                  Gebruik de betaallink alleen voor het voldoen van het volledige factuurbedrag. Indien er sprake is van een betalingsregeling of deelbetaling verzoeken we u het resterend bedrag handmatig over te maken onder vermelding van de gegevens op uw factuur.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <h3
-            class="ams-heading ams-heading--level-2"
+                Afzender
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Vervaldatum
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="ams-table__body"
           >
-            Openstaande facturen
-          </h3>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_4c6825 _FacturenTable--open_1fc87f"
+            <tr
+              class="ams-table__row"
             >
-              <thead
-                class="ams-table__header"
+              <td
+                class="ams-table__cell"
               >
-                <tr
-                  class="ams-table__row"
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
                 >
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Afzender
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Factuurnummer
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Vervaldatum
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ams-table__body"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Company A
-                  </td>
-                  <td
-                    class="ams-table__cell"
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="https://download.example.com/F001"
                   >
                     <span
-                      class="_DocumentLinkWrap_81c3b4"
+                      class="_DocumentLinkIcon_81c3b4"
                     >
-                      <a
-                        class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                        href="https://download.example.com/F001"
+                      <span
+                        class="ams-icon ams-icon--size-5"
                       >
-                        <span
-                          class="_DocumentLinkIcon_81c3b4"
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          <span
-                            class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
-                          >
-                            <svg
-                              aria-label="sluiten-icoon"
-                              focusable="false"
-                              height="32px"
-                              viewBox="0 0 32 32"
-                              width="32px"
-                              xmlns="http://www.w3.org/2000/svg"
-                              xmlns:xlink="http://www.w3.org/1999/xlink"
-                            >
-                              <path
-                                d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        factuur F001
-                      </a>
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
                     </span>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    15 februari 2023
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Openstaand: 
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="https://payment.example.com/F001"
-                      target="_blank"
-                    >
-                      openstaand
-                    </a>
-                  </td>
-                </tr>
-                <tr
-                  class="ams-table__row"
+                    factuur F001
+                  </a>
+                </span>
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                Company A
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                15 februari 2023
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                Openstaand: 
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="https://payment.example.com/F001"
+                  target="_blank"
                 >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Company C
-                  </td>
-                  <td
-                    class="ams-table__cell"
+                  openstaand
+                </a>
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="https://download.example.com/F003"
                   >
                     <span
-                      class="_DocumentLinkWrap_81c3b4"
+                      class="_DocumentLinkIcon_81c3b4"
                     >
-                      <a
-                        class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                        href="https://download.example.com/F003"
+                      <span
+                        class="ams-icon ams-icon--size-5"
                       >
-                        <span
-                          class="_DocumentLinkIcon_81c3b4"
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          <span
-                            class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
-                          >
-                            <svg
-                              aria-label="sluiten-icoon"
-                              focusable="false"
-                              height="32px"
-                              viewBox="0 0 32 32"
-                              width="32px"
-                              xmlns="http://www.w3.org/2000/svg"
-                              xmlns:xlink="http://www.w3.org/1999/xlink"
-                            >
-                              <path
-                                d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        factuur F003
-                      </a>
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
                     </span>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    10 april 2023
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Openstaand: 
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="https://payment.example.com/F003"
-                      target="_blank"
-                    >
-                      openstaand
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <h3
-            class="ams-heading ams-heading--level-2"
-          >
-            Facturen in het incasso- en invorderingstraject van directie Belastingen
-          </h3>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_4c6825 _FacturenTable--afgehandeld_1fc87f"
-            >
-              <tbody
-                class="ams-table__body"
-              />
-            </table>
-          </div>
-          <p
-            class="ams-paragraph"
-          >
-            U heeft (nog) geen facturen in het incasso- en invorderingstraject van directie belastingen
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <h3
-            class="ams-heading ams-heading--level-2"
-          >
-            Afgehandelde facturen
-          </h3>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_4c6825 _FacturenTable--overgedragen_1fc87f"
-            >
-              <thead
-                class="ams-table__header"
+                    factuur F003
+                  </a>
+                </span>
+              </td>
+              <td
+                class="ams-table__cell"
               >
-                <tr
-                  class="ams-table__row"
-                >
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Afzender
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Factuurnummer
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ams-table__body"
+                Company C
+              </td>
+              <td
+                class="ams-table__cell"
               >
-                <tr
-                  class="ams-table__row"
+                10 april 2023
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                Openstaand: 
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="https://payment.example.com/F003"
+                  target="_blank"
                 >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Company B
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <span
-                      class="_DocumentLinkWrap_81c3b4"
-                    >
-                      <a
-                        class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
-                        href="https://download.example.com/F002"
-                      >
-                        <span
-                          class="_DocumentLinkIcon_81c3b4"
-                        >
-                          <span
-                            class="ams-icon ams-icon--size-5 _LinkIcon_81c3b4"
-                          >
-                            <svg
-                              aria-label="sluiten-icoon"
-                              focusable="false"
-                              height="32px"
-                              viewBox="0 0 32 32"
-                              width="32px"
-                              xmlns="http://www.w3.org/2000/svg"
-                              xmlns:xlink="http://www.w3.org/1999/xlink"
-                            >
-                              <path
-                                d="M0,27.9962465 L32,27.9962465 L32,32 L0,32 L0,27.9962465 Z M22.36,14.0131373 L25.19,16.8357835 L16,26.0444166 L6.81,16.8357835 L9.64,14.0131373 L14,18.3772287 L14,-3.55271368e-15 L18,-3.55271368e-15 L18,18.3772287 L22.36,14.0131373 Z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        factuur F002
-                      </a>
-                    </span>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    betaald
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+                  openstaand
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Facturen in het incasso- en invorderingstraject van directie Belastingen
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825 _FacturenTable--afgehandeld_1fc87f"
+        >
+          <tbody
+            class="ams-table__body"
+          />
+        </table>
+      </div>
+      <p
+        class="ams-paragraph"
+      >
+        U heeft (nog) geen facturen in het incasso- en invorderingstraject van directie belastingen
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Afgehandelde facturen
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825 _FacturenTable--overgedragen_1fc87f"
+        >
+          <thead
+            class="ams-table__header"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <th
+                class="ams-table__header-cell"
+              >
+                Factuurnummer
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Afzender
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="ams-table__body"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <span
+                  class="_DocumentLinkWrap_81c3b4"
+                >
+                  <a
+                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    href="https://download.example.com/F002"
+                  >
+                    <span
+                      class="_DocumentLinkIcon_81c3b4"
+                    >
+                      <span
+                        class="ams-icon ams-icon--size-5"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          viewBox="0 0 32 32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 27.996h32V32H0zm22.36-13.983 2.83 2.823L16 26.044l-9.19-9.208 2.83-2.823L14 18.377V0h4v18.377z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    factuur F002
+                  </a>
+                </span>
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                Company B
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                betaald
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </DocumentFragment>
 `;

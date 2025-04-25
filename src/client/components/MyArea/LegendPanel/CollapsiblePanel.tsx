@@ -6,8 +6,13 @@ import {
   useState,
 } from 'react';
 
+import { Button } from '@amsterdam/design-system-react';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from '@amsterdam/design-system-react-icons';
+
 import styles from './PanelComponent.module.scss';
-import { IconChevronRight } from '../../../assets/icons';
 
 export enum CollapsedState {
   Expanded = 'Expanded',
@@ -28,7 +33,7 @@ interface MyAreaCollapsiblePanelHeadingProps {
   state?: CollapsedState;
 }
 
-function MyAreaCollapsiblePanelHeading({
+export function MyAreaCollapsiblePanelHeading({
   onClick,
   title,
   state = CollapsedState.Collapsed,
@@ -37,13 +42,14 @@ function MyAreaCollapsiblePanelHeading({
     <>
       {title}
       {onClick && (
-        <button
+        <Button
           className={styles.CollapsibleButton}
           onClick={onClick}
           aria-expanded={isExpanded(state)}
-        >
-          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
-        </button>
+          aria-label={isExpanded(state) ? 'Sluit' : 'Open'}
+          icon={isExpanded(state) ? ChevronDownIcon : ChevronRightIcon}
+          variant="tertiary"
+        />
       )}
     </>
   );

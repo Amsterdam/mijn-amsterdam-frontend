@@ -1,4 +1,4 @@
-import { GenericDocument, LinkProps } from '../../../universal/types';
+import { GenericDocument, ZaakDetail } from '../../../universal/types';
 
 export type kenmerkKey =
   | 'statustekst'
@@ -41,28 +41,23 @@ export interface BezwaarSourceData {
 export type Bezwaar = {
   identificatie: string;
   uuid: string;
-  uuidEncrypted: string;
+  fetchUrl: string | null;
   startdatum: string;
   ontvangstdatum: string;
+  ontvangstdatumFormatted: string | null;
   omschrijving: string | null;
   toelichting: string | null;
-  status: string | null;
   statusdatum: string | null;
   datumResultaat: string | null;
+  datumResultaatFormatted: string | null;
   einddatum: string | null;
   primairbesluit: string | null;
   primairbesluitdatum: string | null;
+  primairbesluitdatumFormatted: string | null;
   resultaat: string | null;
-  statussen: BezwaarStatus[];
-  documenten: GenericDocument[];
-  link: LinkProps;
-};
-
-export type BezwaarStatus = {
-  uuid: string;
-  datum: string;
-  statustoelichting: string;
-};
+  steps: never[];
+  documenten: BezwaarDocument[];
+} & ZaakDetail;
 
 export type BezwaarSourceStatus = {
   url: string;
@@ -113,9 +108,9 @@ export interface BezwaarSourceDocument {
     | 'Online Aangeleverd';
 }
 
-export interface BezwaarDocument extends GenericDocument {
+export type BezwaarDocument = GenericDocument & {
   dossiertype: BezwaarSourceDocument['dossiertype'];
-}
+};
 
 export interface OctopusApiResponse<T> {
   items: T[];

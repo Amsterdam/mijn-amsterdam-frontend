@@ -48,6 +48,7 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
       "datumAfloopFormatted": "15 oktober 2025",
       "datumUitgifte": "2015-10-15",
       "datumUitgifteFormatted": "15 oktober 2015",
+      "displayStatus": "Verlopen",
       "documentNummer": "PP57XKG54",
       "documentType": "paspoort",
       "id": "een-hash-van-documentnummer-1",
@@ -63,6 +64,7 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
       "datumAfloopFormatted": "11 september 2020",
       "datumUitgifte": "2010-09-11",
       "datumUitgifteFormatted": "11 september 2010",
+      "displayStatus": "",
       "documentNummer": "IE9962819",
       "documentType": "europese identiteitskaart",
       "id": "een-hash-van-documentnummer-2",
@@ -155,7 +157,7 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
     "omschrijvingAdellijkeTitel": "Hertogin",
     "omschrijvingBurgerlijkeStaat": "Gehuwd",
     "omschrijvingGeslachtsaanduiding": "Man",
-    "opgemaakteNaam": "W. Beemsterboer",
+    "opgemaakteNaam": "W. B. C. X. Y. Z. Van beuningen Beemsterboer",
     "overlijdensdatum": null,
     "vertrokkenOnbekendWaarheen": true,
     "voornamen": "Wesley",
@@ -236,33 +238,4 @@ exports[`BRP data api + transformation > should transform the source data 1`] = 
     },
   ],
 }
-`;
-
-exports[`BRP data api + transformation > should transform the source data into notifications 1`] = `
-[
-  {
-    "datePublished": "2020-04-22T22:00:00.000Z",
-    "description": "Op dit moment onderzoeken wij op welk adres u nu woont.",
-    "id": "brpAdresInOnderzoek",
-    "isAlert": true,
-    "link": {
-      "title": "Meer informatie",
-      "to": "/persoonlijke-gegevens",
-    },
-    "thema": "BRP",
-    "title": "Adres in onderzoek",
-  },
-  {
-    "datePublished": "2020-04-22T22:00:00.000Z",
-    "description": "U staat sinds 01 januari 1967 in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.",
-    "id": "brpVertrokkenOnbekendWaarheen",
-    "isAlert": true,
-    "link": {
-      "title": "Meer informatie",
-      "to": "/persoonlijke-gegevens",
-    },
-    "thema": "BRP",
-    "title": "Vertrokken Onbekend Waarheen (VOW)",
-  },
-]
 `;

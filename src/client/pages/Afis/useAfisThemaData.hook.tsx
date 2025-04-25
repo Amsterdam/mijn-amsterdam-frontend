@@ -16,6 +16,7 @@ import {
   AfisFactuur,
   AfisFactuurState,
 } from '../../../server/services/afis/afis-types';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -28,8 +29,10 @@ import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../config/api';
 import { BagThemas } from '../../config/thema';
+import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateBagApi, useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   switch (factuur.status) {
@@ -51,11 +54,11 @@ function getInvoiceStatusDescriptionFrontend(factuur: AfisFactuur): ReactNode {
   }
 }
 
-function mapFactuur(factuur: AfisFactuur) {
-  return {
-    ...factuur,
-    statusDescription: getInvoiceStatusDescriptionFrontend(factuur),
-    factuurNummerEl: factuur.documentDownloadLink ? (
+function mapFactuur(factuur: AfisFactuur, isPhoneScreen: boolean) {
+  let factuurNummerEl: ReactNode = factuur.factuurNummer;
+
+  if (factuur.documentDownloadLink) {
+    factuurNummerEl = (
       <DocumentLink
         document={{
           id: factuur.factuurNummer,
@@ -64,15 +67,20 @@ function mapFactuur(factuur: AfisFactuur) {
           title: `factuur ${factuur.factuurNummer}`,
         }}
       />
-    ) : (
-      factuur.factuurNummer
-    ),
+    );
+  }
+
+  return {
+    ...factuur,
+    statusDescription: getInvoiceStatusDescriptionFrontend(factuur),
+    factuurNummerEl,
   };
 }
 
 function useTransformFacturen(
   facturenByState: AfisFacturenByStateResponse | null
 ): AfisFacturenByStateFrontend | null {
+  const isPhoneScreen = usePhoneScreen();
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
       if (facturenByState) {
@@ -83,7 +91,10 @@ function useTransformFacturen(
               state,
               {
                 ...facturenResponse,
-                facturen: facturenResponse?.facturen?.map(mapFactuur) ?? [],
+                facturen:
+                  facturenResponse?.facturen?.map((factuur) =>
+                    mapFactuur(factuur, isPhoneScreen)
+                  ) ?? [],
               },
             ])
         );
@@ -147,6 +158,8 @@ export function useAfisListPageData(state: AfisFactuurState) {
     AFIS.content?.facturen ?? null
   );
 
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.AFIS);
+
   return {
     facturenListResponse:
       (state === 'open'
@@ -161,6 +174,7 @@ export function useAfisListPageData(state: AfisFactuurState) {
       state !== 'open' ? isLoading(facturenByStateApiResponse) : false,
     listPageTitle,
     routes,
+    breadcrumbs,
   };
 }
 
@@ -182,6 +196,8 @@ export function useAfisThemaData() {
     to: urlNaarBelastingen,
   };
 
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.AFIS);
+
   return {
     belastingenLinkListItem,
     businessPartnerIdEncrypted,
@@ -192,6 +208,7 @@ export function useAfisThemaData() {
     listPageTitle,
     linkListItems: [...linkListItems, belastingenLinkListItem],
     routes,
+    breadcrumbs,
     dependencyErrors: {
       open: hasFailedDependency(AFIS, 'open'),
       afgehandeld: hasFailedDependency(AFIS, 'afgehandeld'),

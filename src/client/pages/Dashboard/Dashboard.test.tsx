@@ -1,14 +1,15 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import Mockdate from 'mockdate';
+import { generatePath } from 'react-router';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Dashboard from './Dashboard';
+import { Dashboard } from './Dashboard';
 import { remoteApiHost } from '../../../testing/setup';
 
 const testState = {
@@ -17,6 +18,10 @@ const testState = {
     content: {
       mokum: true,
     },
+  },
+  KVK: {
+    status: 'OK',
+    content: null,
   },
   MY_LOCATION: { status: 'OK', content: [{ latlng: { lat: 5, lng: 40 } }] },
   NOTIFICATIONS: {
@@ -27,7 +32,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        themaID: ThemaIDs.HOME,
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -38,7 +43,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        themaID: ThemaIDs.HOME,
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -49,7 +54,7 @@ const testState = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        themaID: ThemaIDs.HOME,
         isAlert: true,
         link: {
           to: '/item-3',
@@ -71,9 +76,6 @@ const testState = {
     },
   },
   VERGUNNINGEN: {
-    isActive: true,
-  },
-  VERGUNNINGENv2: {
     isActive: true,
   },
   PARKEREN: {
@@ -106,6 +108,14 @@ describe('<Dashboard />', () => {
       />
     );
   }
+
+  beforeAll(() => {
+    Mockdate.set('2021-09-22T14:00:00');
+  });
+
+  afterAll(() => {
+    Mockdate.reset();
+  });
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);

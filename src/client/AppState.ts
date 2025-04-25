@@ -3,6 +3,7 @@ import { createContext } from 'react';
 import { FeatureToggle } from '../universal/config/feature-toggles';
 import { apiPristineResult } from '../universal/helpers/api';
 import { AppState } from '../universal/types/App.types';
+import { zorgnedLeerlingenvervoerActive } from './pages/Jeugd/Jeugd-thema-config';
 
 export const PRISTINE_APPSTATE: AppState = {
   // Generated
@@ -70,9 +71,12 @@ export const PRISTINE_APPSTATE: AppState = {
   WMO: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  ERFPACHT: apiPristineResult({ isKnown: false }),
-  ERFPACHTv2: apiPristineResult(null, {
-    isActive: FeatureToggle.erfpachtV2Active,
+  JEUGD: apiPristineResult([], {
+    isActive: zorgnedLeerlingenvervoerActive,
+    profileTypes: ['private'],
+  }),
+  ERFPACHT: apiPristineResult(null, {
+    isActive: FeatureToggle.erfpachtActive,
     profileTypes: ['private', 'commercial'],
   }),
   SUBSIDIE: apiPristineResult(
@@ -93,7 +97,7 @@ export const PRISTINE_APPSTATE: AppState = {
     { isActive: FeatureToggle.overtredingenActive }
   ),
   PARKEREN: apiPristineResult(
-    { isKnown: true, url: undefined },
+    { isKnown: true, url: undefined, vergunningen: [] },
     {
       isActive: FeatureToggle.parkerenActive,
       profileTypes: ['private', 'commercial'],
@@ -105,7 +109,6 @@ export const PRISTINE_APPSTATE: AppState = {
     bbVergunningen: [],
   }),
   VERGUNNINGEN: apiPristineResult([]),
-  VERGUNNINGENv2: apiPristineResult([]),
 
   // KVK / Handelsregister
   KVK: apiPristineResult(null),

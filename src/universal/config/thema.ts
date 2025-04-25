@@ -1,58 +1,25 @@
-// Within the team we call these Themes / Thema's
-export type Thema =
-  | 'AFIS'
-  | 'AFVAL'
-  | 'BELASTINGEN'
-  | 'BURGERZAKEN'
-  | 'BUURT'
-  | 'BEZWAREN'
-  | 'INKOMEN'
-  | 'HLI'
-  | 'BRP'
-  | 'MILIEUZONE'
-  | 'OVERTREDINGEN'
-  | 'NOTIFICATIONS'
-  | 'ROOT'
-  | 'ERFPACHT'
-  | 'ERFPACHTv2'
-  | 'ZORG'
-  | 'VERGUNNINGEN'
-  | 'SVWI'
-  | 'KVK'
-  | 'TOERISTISCHE_VERHUUR'
-  | 'VAREN'
-  | 'SEARCH'
-  | 'SUBSIDIE'
-  | 'PARKEREN'
-  | 'KLACHTEN'
-  | 'HORECA'
-  | 'KREFIA'
-  | 'AVG'
-  | 'BODEM';
-
-export const Themas: Record<Thema, Thema> = {
+/**
+ * @deprecated
+ * Use the new thema config in the client instead.
+ */
+export const ThemaIDs = {
   AFIS: 'AFIS',
   AFVAL: 'AFVAL',
   AVG: 'AVG',
   BELASTINGEN: 'BELASTINGEN',
   BEZWAREN: 'BEZWAREN',
   BODEM: 'BODEM',
-  BRP: 'BRP',
   BURGERZAKEN: 'BURGERZAKEN',
-  BUURT: 'BUURT',
   ERFPACHT: 'ERFPACHT',
-  ERFPACHTv2: 'ERFPACHTv2',
   HLI: 'HLI',
   HORECA: 'HORECA',
-  INKOMEN: 'INKOMEN',
   KLACHTEN: 'KLACHTEN',
   KREFIA: 'KREFIA',
-  KVK: 'KVK',
   MILIEUZONE: 'MILIEUZONE',
   NOTIFICATIONS: 'NOTIFICATIONS',
   OVERTREDINGEN: 'OVERTREDINGEN',
   PARKEREN: 'PARKEREN',
-  ROOT: 'ROOT',
+  HOME: 'HOME', // Not really a theme, but used as a fallback
   SEARCH: 'SEARCH',
   SUBSIDIE: 'SUBSIDIE',
   SVWI: 'SVWI',
@@ -61,3 +28,5 @@ export const Themas: Record<Thema, Thema> = {
   VERGUNNINGEN: 'VERGUNNINGEN',
   ZORG: 'ZORG',
 } as const;
+
+export type ThemaID = (typeof ThemaIDs)[keyof typeof ThemaIDs];

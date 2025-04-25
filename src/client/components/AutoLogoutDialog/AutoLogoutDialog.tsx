@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { ActionGroup, Button, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
@@ -9,7 +9,6 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import styles from './AutoLogoutDialog.module.scss';
 import { formattedTimeFromSeconds } from '../../../universal/helpers/date';
-import { ComponentChildren } from '../../../universal/types';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
@@ -26,7 +25,7 @@ const TITLE = 'Wilt u ingelogd blijven op Mijn Amsterdam?';
 const ONE_MINUTE_SECONDS = 60;
 
 export interface AutoLogoutDialogProps {
-  children?: ComponentChildren;
+  children?: ReactNode;
   expiresAtMilliseconds: number;
   lastChanceBeforeAutoLogoutSeconds?: number;
   asynRefreshEnabled?: boolean;
@@ -94,7 +93,7 @@ function getOpensDialogInMilliseconds(
   return millisecondsBeforeAutoLogoutDialogOpens;
 }
 
-export default function AutoLogoutDialog({
+export function AutoLogoutDialog({
   asynRefreshEnabled = false,
   expiresAtMilliseconds,
   lastChanceBeforeAutoLogoutSeconds = 2 * ONE_MINUTE_SECONDS, // 120 seconds
@@ -189,8 +188,7 @@ export default function AutoLogoutDialog({
     return null;
   }
 
-  const continueLink =
-    profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING;
+  const continueLink = `${profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING}?returnTo=mams-frontend-route&route=${encodeURIComponent(window.location.pathname)}`;
   const logoutLink = LOGOUT_URL;
   const logoutLabel = continueButtonIsVisible
     ? 'Nu uitloggen'
@@ -201,6 +199,8 @@ export default function AutoLogoutDialog({
       title={TITLE}
       isOpen
       showCloseButton={false}
+      closeOnEscape={false}
+      closeOnClickOutside={false}
       actions={
         <ActionGroup>
           {continueButtonIsVisible && (
@@ -213,7 +213,6 @@ export default function AutoLogoutDialog({
                   onClick={() => {
                     session.refetch();
                     return false;
-                    // setOpen(false);
                   }}
                 >
                   Doorgaan
@@ -230,6 +229,7 @@ export default function AutoLogoutDialog({
             </>
           )}
           <MaButtonLink
+            id="logout-button"
             variant="secondary"
             className={classnames('logout-button', styles.LogoutButton)}
             href={logoutLink}

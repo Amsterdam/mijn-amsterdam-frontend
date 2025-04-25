@@ -1,12 +1,14 @@
-import { Themas } from '../../universal/config/thema';
-import { ThemaMenuItem, ThemaTitles } from '../config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
+import { ThemaTitles } from '../config/thema';
+import { ThemaMenuItem } from '../config/thema-types';
 import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
+import { themaIdBRP } from '../pages/Profile/Profile-thema-config';
 
 describe('useThemaMenuItems', () => {
   test('Parkeren is not active without an Appstate entry.', () => {
     const item: ThemaMenuItem = {
-      title: ThemaTitles.Parkeren,
-      id: Themas.PARKEREN,
+      title: ThemaTitles.PARKEREN,
+      id: ThemaIDs.PARKEREN,
       to: 'http://test',
       rel: 'external',
       profileTypes: ['private', 'commercial'],
@@ -21,31 +23,6 @@ describe('useThemaMenuItems', () => {
     expect(isActive).toBe(false);
   });
 
-  test('isThemaActive', () => {
-    const item: ThemaMenuItem = {
-      id: 'BRP',
-      profileTypes: ['private'],
-      to: 'http://test',
-      title: 'Testje!',
-    };
-
-    {
-      const isActive = isThemaActive(item, {
-        BRP: { content: { persoon: null } },
-      } as any);
-
-      expect(isActive).toBe(false);
-    }
-
-    {
-      const isActive = isThemaActive(item, {
-        BRP: { content: { persoon: { naam: 'testje' } } },
-      } as any);
-
-      expect(isActive).toBe(true);
-    }
-  });
-
   test('getThemaMenuItemsAppState', () => {
     const appState = {
       TEST: { content: 'foo', status: 'OK' },
@@ -54,13 +31,13 @@ describe('useThemaMenuItems', () => {
 
     const items: ThemaMenuItem[] = [
       {
-        id: 'BRP',
+        id: themaIdBRP,
         profileTypes: ['private'],
         to: 'http://test',
         title: 'Testje!',
       },
       {
-        id: 'PARKEREN',
+        id: ThemaIDs.PARKEREN,
         hasAppStateValue: false,
         profileTypes: ['private'],
         to: 'http://test',

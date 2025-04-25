@@ -1,21 +1,17 @@
+@use 'sass:map';
+
 // Global z-index control
 $z-index: (
-  header-error-messages: 1,
-  font-enlarger-popup: 100,
-  map-tile-layer: 200,
   my-area-dashboard-content: 401,
-  my-area-map-panel: 401,
   my-area-feature-loader: 401,
   my-area-address-loader: 401,
   my-area-error-messages: 402,
-  burger-menu-backdrop: 403,
-  mega-menu: 404,
-  submenu-panel: 410,
-  main-nav-bar-inner--tablet: 411,
+  main-header: 404,
+  main-header-searchbar: 405,
   modal: 500,
   dialog: 501,
 );
 
 @function z-index($key) {
-  @return map-get($z-index, $key);
+  @return map.get($z-index, $key);
 }

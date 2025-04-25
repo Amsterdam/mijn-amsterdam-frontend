@@ -1,6 +1,6 @@
 import { render, within } from '@testing-library/react';
 import Mockdate from 'mockdate';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -15,6 +15,11 @@ import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { Varen } from './Varen';
+import {
+  expectHeaders,
+  getTable,
+  expectTableHeaders,
+} from '../../helpers/test-utils';
 
 type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieInProgress = {
@@ -22,7 +27,7 @@ const exploitatieInProgress = {
   identifier: 'Z/24/0000001',
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  status: 'In behandeling',
+  displayStatus: 'In behandeling',
   decision: null,
   processed: false,
   vesselName: 'Titanic',
@@ -63,7 +68,7 @@ const exploitatieDecision: ExploitatieAanvraag = {
   identifier: 'Z/24/0000001',
   caseType: 'Varen vergunning exploitatie',
   title: 'Varen vergunning exploitatie',
-  status: 'Afgehandeld',
+  displayStatus: 'Afgehandeld',
   decision: 'Verleend',
   processed: true,
   vesselName: 'BootjeVanBerend',
@@ -161,7 +166,7 @@ describe('<Varen />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+    expect(screen.getAllByRole('heading', { level: 3 })[0]).toHaveTextContent(
       'Passagiers- en beroepsvaart'
     );
   });
@@ -287,56 +292,45 @@ describe('<Varen />', () => {
     it('Shows the expected rows in the tables', () => {
       const screen = render(<Component state={getTestState()} />);
 
-      const lopendeAanvraagTableHeader = screen.getByRole('heading', {
-        name: 'Lopende aanvragen',
-      });
-      const lopendeAanvraagTable = within(
-        within(lopendeAanvraagTableHeader.parentElement!).getByRole('table')
-      );
-
-      const lopendeAanvraagColumnHeaders =
-        lopendeAanvraagTable.getAllByRole('columnheader');
-      expect(
-        lopendeAanvraagColumnHeaders.map((h) => h.textContent)
-      ).toMatchObject([
+      const lopendeAanvraagTable = getTable(screen, 'Lopende aanvragen');
+      expectHeaders(lopendeAanvraagTable, [
         'Naam vaartuig',
         'Omschrijving',
         'Aangevraagd',
         'Status',
       ]);
-      expect(lopendeAanvraagTable.getByText('Titanic')).toBeDefined();
+
+      const withinLopendeAanvraagTable = within(lopendeAanvraagTable);
+      expect(withinLopendeAanvraagTable.getByText('Titanic')).toBeDefined();
       expect(
-        lopendeAanvraagTable.getByText('Varen vergunning exploitatie')
+        withinLopendeAanvraagTable.getByText('Varen vergunning exploitatie')
       ).toBeDefined();
-      expect(lopendeAanvraagTable.getByText('In behandeling')).toBeDefined();
-      expect(lopendeAanvraagTable.getByText('07 november 2023')).toBeDefined();
-
-      const actieveVergunningTableHeader = screen.getByRole('heading', {
-        name: 'Actieve vergunningen',
-      });
-      const actieveVergunningTable = within(
-        within(actieveVergunningTableHeader.parentElement!).getByRole('table')
-      );
-
-      const actieveVergunningenColumnHeaders =
-        actieveVergunningTable.getAllByRole('columnheader');
       expect(
-        actieveVergunningenColumnHeaders.map((h) => h.textContent)
-      ).toMatchObject([
+        withinLopendeAanvraagTable.getByText('In behandeling')
+      ).toBeDefined();
+      expect(
+        withinLopendeAanvraagTable.getByText('07 november 2023')
+      ).toBeDefined();
+
+      const actieveVergunningTable = getTable(screen, 'Actieve vergunningen');
+
+      expectHeaders(actieveVergunningTable, [
         'Naam vaartuig',
         'Omschrijving',
         'Datum besluit',
         'Resultaat',
       ]);
-
-      expect(actieveVergunningTable.getByText('BootjeVanBerend')).toBeDefined();
+      const withinActieveVergunningTable = within(actieveVergunningTable);
       expect(
-        actieveVergunningTable.getByText('Varen vergunning exploitatie')
+        withinActieveVergunningTable.getByText('BootjeVanBerend')
       ).toBeDefined();
       expect(
-        actieveVergunningTable.getByText('10 november 2023')
+        withinActieveVergunningTable.getByText('Varen vergunning exploitatie')
       ).toBeDefined();
-      expect(actieveVergunningTable.getByText('Verleend')).toBeDefined();
+      expect(
+        withinActieveVergunningTable.getByText('10 november 2023')
+      ).toBeDefined();
+      expect(withinActieveVergunningTable.getByText('Verleend')).toBeDefined();
     });
   });
 
@@ -359,11 +353,13 @@ describe('<Varen />', () => {
             exploitatieDecision,
             exploitatieDecision,
             exploitatieDecision,
+            exploitatieDecision,
+            exploitatieDecision,
           ].map((vergunning, index) => ({ ...vergunning, id: `${index}` }))
         )}
       />
     );
-    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(3);
+    expect(screen.getAllByText('Varen vergunning exploitatie').length).toBe(5);
     expect(screen.getByText('Alle actieve vergunningen')).toBeInTheDocument();
   });
 });

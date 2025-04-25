@@ -2,193 +2,176 @@
 
 exports[`<Burgerzaken /> > Renders without crashing 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Paspoort en ID-kaart"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32px"
-          viewBox="0 0 32 32"
-          width="32px"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <g
-            transform="translate(-5 0)"
-          >
-            <path
-              d="M17.6,5 L27,5 L27,2.52631579 L17.6,5 Z M29,5 L32,5 L32,32 L10,32 L10,5 L29,0 L29,5 Z M26,25 L16,25 L16,22 C16,21 17,20 18,20 L24,20 C25,20 26,21 26,22 L26,25 Z M21,18 C19.3431458,18 18,16.6568542 18,15 C18,13.3431458 19.3431458,12 21,12 C22.6568542,12 24,13.3431458 24,15 C24,16.6568542 22.6568542,18 21,18 Z M14,27.96 L28,27.96 L28,9 L14,9 L14,27.96 Z"
-            />
-          </g>
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Paspoort en ID-kaart
-        </h2>
-      </div>
-    </header>
     <div
-      class="ams-screen ams-screen--wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
+        <nav
+          class="ams-breadcrumb"
         >
-          <p
-            class="ams-paragraph"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <ul
-            class="ams-link-list"
-          >
-            <li>
+            <li
+              class="ams-breadcrumb__item"
+            >
               <a
-                class="ams-link-list__link"
-                href="https://www.amsterdam.nl/burgerzaken"
-                rel="noreferrer"
+                class="ams-breadcrumb__link"
+                href="/"
               >
-                <span
-                  class="ams-icon ams-icon--size-5"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Overzicht en aanvragen bij burgerzaken
+                Home
               </a>
             </li>
-          </ul>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <h3
-            class="ams-heading ams-heading--level-2"
-          >
-            Mijn reisdocumenten
-          </h3>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_4c6825"
+            <li
+              class="ams-breadcrumb__item"
             >
-              <thead
-                class="ams-table__header"
+              <a
+                class="ams-breadcrumb__link"
+                href="/paspoort-en-id-kaart"
+                tabindex="-1"
               >
-                <tr
-                  class="ams-table__row"
+                <span
+                  class="ams-visually-hidden"
                 >
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Type
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Geldig tot
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ams-table__body"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/burgerzaken/paspoort/een-hash-van-documentnummer-1"
-                    >
-                      Paspoort
-                    </a>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    15 oktober 2025
-                  </td>
-                </tr>
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="/burgerzaken/europese-identiteitskaart/een-hash-van-documentnummer-2"
-                    >
-                      Europese identiteitskaart
-                    </a>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    9 november 2020
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+                  Paspoort en ID-kaart
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+        >
+          Paspoort en ID-kaart
+        </h3>
       </div>
     </div>
-  </main>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <p
+        class="ams-paragraph"
+      >
+        Hieronder vindt u gegevens van uw paspoort en/of ID-kaart.
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/burgerzaken"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Overzicht en aanvragen bij burgerzaken
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Mijn reisdocumenten
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825"
+        >
+          <thead
+            class="ams-table__header"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <th
+                class="ams-table__header-cell"
+              >
+                Type
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Geldig tot
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="ams-table__body"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="/burgerzaken/paspoort/een-hash-van-documentnummer-1"
+                  title="Bekijk meer over paspoort"
+                >
+                  Paspoort
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                15 oktober 2025
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="/burgerzaken/europese-identiteitskaart/een-hash-van-documentnummer-2"
+                  title="Bekijk meer over europese identiteitskaart"
+                >
+                  Europese identiteitskaart
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              >
+                9 november 2020
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </DocumentFragment>
 `;

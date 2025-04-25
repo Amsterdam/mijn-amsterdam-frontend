@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { Alert, Button, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './ErrorMessages.module.scss';
 import { ApiError } from '../../../universal/types';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
-import { IconAlert, IconClose } from '../../assets/icons';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
-import { useSessionStorage } from '../../hooks/storage.hook';
-import { Button, IconButton, LinkdInline } from '../Button/Button';
+import { getApiErrors, LOGOUT_URL } from '../../config/api';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { Modal } from '../Modal/Modal';
 
 interface ComponentProps {
@@ -17,18 +16,11 @@ interface ComponentProps {
   title?: string;
 }
 
-export function useErrorMessagesDismissed(
-  dismisedKey: string = 'ErrorMessagesDismissed'
-) {
-  return useSessionStorage(dismisedKey, false);
-}
-
-export default function ErrorMessages({
+export function ErrorMessagesContent({
   className,
   errors,
   title = 'U ziet misschien niet al uw gegevens.',
 }: ComponentProps) {
-  const session = useSessionValue();
   const el = useRef(null);
   const isAllErrorMessage = errors.some(
     (error) => error.stateKey === ALL_ERROR_STATE_KEY
@@ -51,53 +43,54 @@ export default function ErrorMessages({
         className
       )}
     >
-      <p className={styles.MessageBar}>
-        <span className={styles.MessageBarInner}>
-          <IconAlert aria-hidden="true" className={styles.AlertIcon} /> {title}{' '}
-          <Button
-            lean={true}
-            variant="inline"
-            onClick={() => setModalOpen(true)}
+      <Alert
+        severity="info"
+        className={styles.MessageBar}
+        closeable
+        closeButtonLabel="Verberg bericht"
+        onClose={() => setDismissed(true)}
+      >
+        <Paragraph>
+          {title}{' '}
+          <Link
+            href="/"
+            onClick={(event) => {
+              event.preventDefault();
+              setModalOpen(true);
+            }}
             aria-label="Meer informatie over waarom u misschien niet alle gegevens ziet."
           >
             Meer informatie
-          </Button>
-          .
-        </span>
-
-        <IconButton
-          icon={IconClose}
-          className={styles.CloseButton}
-          onClick={() => setDismissed(true)}
-          aria-label="Verberg bericht"
-        />
-      </p>
+          </Link>
+        </Paragraph>
+      </Alert>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
+        pollingQuerySelector="#ok-button"
         actions={
           <div>
-            <p>
+            <Paragraph className="ams-mb--sm">
               Probeer het later nog eens.{' '}
               {isAllErrorMessage ? (
-                <LinkdInline
-                  external={true}
-                  role="button"
-                  onClick={() => session.logout()}
-                >
+                <Link rel="noopener noreferrer" href={LOGOUT_URL}>
                   Uitloggen
-                </LinkdInline>
+                </Link>
               ) : (
                 ''
               )}
-            </p>
-            <Button onClick={() => setModalOpen(false)}>OK</Button>
+            </Paragraph>
+            <Button id="ok-button" onClick={() => setModalOpen(false)}>
+              OK
+            </Button>
           </div>
         }
         title={title}
       >
-        <div className={styles.ErrorInfo}>
-          <p>Deze gegevens kunnen wij nu niet voor u ophalen:</p>
+        <div>
+          <Paragraph>
+            Deze gegevens kunnen wij nu niet voor u ophalen:
+          </Paragraph>
           <ul className={styles.ErrorList}>
             {errors.map(({ name, error }, index) => {
               return (
@@ -111,4 +104,12 @@ export default function ErrorMessages({
       </Modal>
     </div>
   );
+}
+
+export function ErrorMessages() {
+  const appState = useAppStateGetter();
+  const errors = useMemo(() => getApiErrors(appState), [appState]);
+  const hasErrors = !!errors.length;
+
+  return hasErrors && <ErrorMessagesContent errors={errors} />;
 }

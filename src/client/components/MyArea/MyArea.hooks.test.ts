@@ -11,12 +11,12 @@ const mapInstanceMock = {
 
 vi.mock('@amsterdam/react-maps');
 
-vi.mock('react-router-dom', async (requireActual) => {
+vi.mock('react-router', async (requireActual) => {
   const origModule: object = await requireActual();
   return {
     ...origModule,
-    useHistory: () => {
-      return { location: { pathname: '/', search: '' } };
+    useLocation: () => {
+      return { pathname: '/', search: '' };
     },
   };
 });

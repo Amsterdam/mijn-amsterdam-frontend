@@ -1,11 +1,9 @@
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { Themas } from '../../universal/config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
 import { isLoading } from '../../universal/helpers/api';
 import { isMokum } from '../../universal/helpers/brp';
 import { AppState, AppStateKey } from '../../universal/types/App.types';
-import { DecosCaseType } from '../../universal/types/vergunningen';
-import { ThemaMenuItem } from '../config/thema';
-import { PARKEER_CASE_TYPES } from '../pages/Parkeren/Parkeren.config';
+import { ThemaMenuItem } from '../config/thema-types';
 
 export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
   const {
@@ -17,7 +15,6 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     BODEM,
     BRP,
     ERFPACHT,
-    ERFPACHTv2,
     HLI,
     HORECA,
     KLACHTEN,
@@ -32,56 +29,24 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,
-    VERGUNNINGENv2,
     WMO,
-    WPI_AANVRAGEN,
-    WPI_BBZ,
-    WPI_SPECIFICATIES,
-    WPI_TONK,
-    WPI_TOZO,
   }: AppState = appState;
 
   const isAmsterdam = isMokum(BRP?.content) || isMokum(KVK?.content);
 
   switch (item.id) {
-    case Themas.AFIS: {
+    case ThemaIDs.AFIS: {
       return FeatureToggle.afisActive && AFIS?.content?.isKnown;
     }
-    case Themas.INKOMEN: {
-      const { jaaropgaven, uitkeringsspecificaties } =
-        WPI_SPECIFICATIES?.content ?? {};
-      const hasAanvragen = WPI_AANVRAGEN?.content?.length;
-      const hasTozo = !!WPI_TOZO?.content?.length;
-      const hasTonk = !!WPI_TONK?.content?.length;
-      const hasBbz = !!WPI_BBZ?.content?.length;
-      const hasJaaropgaven = !!jaaropgaven?.length;
-      const hasUitkeringsspecificaties = !!uitkeringsspecificaties?.length;
 
-      return (
-        !(
-          isLoading(WPI_AANVRAGEN) &&
-          isLoading(WPI_SPECIFICATIES) &&
-          isLoading(WPI_TOZO) &&
-          isLoading(WPI_TONK) &&
-          isLoading(WPI_BBZ)
-        ) &&
-        (hasAanvragen ||
-          hasTozo ||
-          hasTonk ||
-          hasJaaropgaven ||
-          hasBbz ||
-          hasUitkeringsspecificaties)
-      );
-    }
-
-    case Themas.SVWI:
+    case ThemaIDs.SVWI:
       return (
         isAmsterdam &&
         FeatureToggle.svwiLinkActive &&
         SVWI?.content?.isKnown === true
       );
 
-    case Themas.HLI: {
+    case ThemaIDs.HLI: {
       const hasStadspas =
         !!HLI?.content?.stadspas?.length &&
         FeatureToggle.hliThemaStadspasActive;
@@ -96,14 +61,14 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.ZORG:
+    case ThemaIDs.ZORG:
       return (
         FeatureToggle.zorgv2ThemapaginaActive &&
         !isLoading(WMO) &&
         !!WMO.content?.length
       );
 
-    case Themas.BELASTINGEN: {
+    case ThemaIDs.BELASTINGEN: {
       // Belastingen always visible if we receive an error from the api
       const belastingenActive =
         FeatureToggle.belastingApiActive && BELASTINGEN?.status === 'OK'
@@ -112,13 +77,13 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       return !isLoading(BELASTINGEN) && belastingenActive;
     }
 
-    case Themas.MILIEUZONE:
+    case ThemaIDs.MILIEUZONE:
       return (
         !isLoading(MILIEUZONE) &&
         (FeatureToggle.cleopatraApiActive ? MILIEUZONE.content?.isKnown : false)
       );
 
-    case Themas.OVERTREDINGEN:
+    case ThemaIDs.OVERTREDINGEN:
       return (
         !isLoading(OVERTREDINGEN) &&
         (FeatureToggle.cleopatraApiActive && FeatureToggle.overtredingenActive
@@ -126,7 +91,7 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
           : false)
       );
 
-    case Themas.AFVAL:
+    case ThemaIDs.AFVAL:
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
@@ -134,23 +99,20 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
         isAmsterdam
       );
 
-    case Themas.ERFPACHT:
-      return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
-
-    case Themas.ERFPACHTv2:
+    case ThemaIDs.ERFPACHT:
       return (
-        FeatureToggle.erfpachtV2Active &&
-        !isLoading(ERFPACHTv2) &&
-        ERFPACHTv2.content !== null &&
-        (('dossiers' in ERFPACHTv2.content &&
-          !!ERFPACHTv2.content.dossiers.dossiers?.length) ||
-          !!ERFPACHTv2.content?.isKnown)
+        FeatureToggle.erfpachtActive &&
+        !isLoading(ERFPACHT) &&
+        ERFPACHT.content !== null &&
+        (('dossiers' in ERFPACHT.content &&
+          !!ERFPACHT.content.dossiers.dossiers?.length) ||
+          !!ERFPACHT.content?.isKnown)
       );
 
-    case Themas.SUBSIDIE:
+    case ThemaIDs.SUBSIDIE:
       return !isLoading(SUBSIDIE) && SUBSIDIE.content?.isKnown === true;
 
-    case Themas.BURGERZAKEN: {
+    case ThemaIDs.BURGERZAKEN: {
       const hasIdentiteitsbewijs = !!BRP?.content?.identiteitsbewijzen?.length;
       return (
         FeatureToggle.identiteitsbewijzenActive &&
@@ -159,20 +121,10 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.BRP: {
-      return !isLoading(BRP) && !!BRP.content?.persoon;
-    }
+    case ThemaIDs.VERGUNNINGEN:
+      return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 
-    case Themas.VERGUNNINGEN:
-      return (
-        (!isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length) ||
-        (!isLoading(VERGUNNINGENv2) && !!VERGUNNINGENv2.content?.length)
-      );
-
-    case Themas.KVK:
-      return !isLoading(KVK) && !!KVK.content;
-
-    case Themas.TOERISTISCHE_VERHUUR: {
+    case ThemaIDs.TOERISTISCHE_VERHUUR: {
       const { lvvRegistraties, vakantieverhuurVergunningen, bbVergunningen } =
         TOERISTISCHE_VERHUUR?.content ?? {};
       const hasRegistraties = !!lvvRegistraties?.length;
@@ -183,61 +135,56 @@ export function isThemaActive(item: ThemaMenuItem, appState: AppState) {
       );
     }
 
-    case Themas.KREFIA:
-      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks;
+    case ThemaIDs.KREFIA:
+      return !isLoading(KREFIA) && !!KREFIA.content?.deepLinks.length;
 
-    case Themas.PARKEREN: {
-      const hasParkeerVergunningenFromThemaVergunningen = (
-        appState.VERGUNNINGEN?.content ?? []
-      ).some((vergunning) =>
-        PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType)
-      );
+    case ThemaIDs.PARKEREN: {
+      const hasDecosParkeerVergunningen =
+        !!appState.PARKEREN?.content?.vergunningen?.length;
 
       return (
         FeatureToggle.parkerenActive &&
         !isLoading(PARKEREN) &&
-        !isLoading(VERGUNNINGEN) &&
-        (!!PARKEREN?.content?.isKnown ||
-          hasParkeerVergunningenFromThemaVergunningen)
+        (!!PARKEREN?.content?.isKnown || hasDecosParkeerVergunningen)
       );
     }
 
-    case Themas.KLACHTEN:
+    case ThemaIDs.KLACHTEN:
       return (
         !isLoading(KLACHTEN) &&
         !!KLACHTEN?.content?.klachten.length &&
         FeatureToggle.klachtenActive
       );
 
-    case Themas.BEZWAREN:
+    case ThemaIDs.BEZWAREN:
       return (
         !isLoading(BEZWAREN) &&
         !!BEZWAREN?.content?.length &&
         FeatureToggle.bezwarenActive
       );
 
-    case Themas.VAREN:
+    case ThemaIDs.VAREN:
       return (
         !isLoading(VAREN) &&
         (!!VAREN?.content?.reder || !!VAREN?.content?.zaken?.length) &&
         FeatureToggle.varenActive
       );
 
-    case Themas.HORECA:
+    case ThemaIDs.HORECA:
       return (
         !isLoading(HORECA) &&
         !!HORECA?.content?.length &&
         FeatureToggle.horecaActive
       );
 
-    case Themas.AVG:
+    case ThemaIDs.AVG:
       return (
         !isLoading(AVG) &&
         !!AVG?.content?.verzoeken?.length &&
         FeatureToggle.avgActive
       );
 
-    case Themas.BODEM:
+    case ThemaIDs.BODEM:
       return (
         !isLoading(BODEM) &&
         !!BODEM?.content?.metingen?.length &&

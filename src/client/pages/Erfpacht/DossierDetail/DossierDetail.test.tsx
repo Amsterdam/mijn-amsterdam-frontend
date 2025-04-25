@@ -1,15 +1,15 @@
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import ErfpachtDossierDetail from './ErfpachtDossierDetail';
-import ERFPACHTv2_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
-import ERFPACHTv2_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
+import { ErfpachtDossierDetail } from './ErfpachtDossierDetail';
+import ERFPACHT_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
+import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
   transformDossierResponse,
   transformErfpachtDossierProperties,
-} from '../../../../server/services/simple-connect/erfpacht';
+} from '../../../../server/services/erfpacht/erfpacht';
 import { bffApi } from '../../../../testing/utils';
 import { AppRoutes } from '../../../../universal/config/routes';
 import { jsonCopy } from '../../../../universal/helpers/utils';
@@ -18,13 +18,13 @@ import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
 describe('<Erfpacht/DossierDetail />', () => {
-  const routeEntry = generatePath(AppRoutes['ERFPACHTv2/DOSSIERDETAIL'], {
+  const routeEntry = generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
     dossierNummerUrlParam: 'E.123.123',
   });
-  const routePath = AppRoutes['ERFPACHTv2/DOSSIERDETAIL'];
+  const routePath = AppRoutes['ERFPACHT/DOSSIERDETAIL'];
 
   const dossierDetailTransformed = transformErfpachtDossierProperties(
-    ERFPACHTv2_DOSSIER_DETAIL as any
+    ERFPACHT_DOSSIER_DETAIL as any
   );
 
   function Component({
@@ -44,12 +44,12 @@ describe('<Erfpacht/DossierDetail />', () => {
 
   test('Renders Dossier Detailpage no data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .times(1)
       .reply(200, { content: null, status: 'OK' });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
         content: null,
       },
@@ -64,17 +64,19 @@ describe('<Erfpacht/DossierDetail />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Erfpacht')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: 'Erfpachtdossier' })
+      ).toBeInTheDocument();
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
-        screen.getByText('We kunnen op dit moment geen erfpachtdossier tonen.')
+        screen.getByText('We kunnen op dit moment geen gegevens tonen.')
       ).toBeInTheDocument();
     });
   });
 
   test('Renders Dossier Detailpage with data', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .times(1)
       .reply(200, {
         content: jsonCopy(dossierDetailTransformed),
@@ -82,12 +84,9 @@ describe('<Erfpacht/DossierDetail />', () => {
       });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(
-          ERFPACHTv2_DOSSIERS as any,
-          '123-abc'
-        ),
+        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '123-abc'),
       },
     } as AppState;
 
@@ -107,7 +106,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('E123/456: Dit en dat plein 22 H')
+        screen.getByRole('heading', { name: 'E123/456: Dit en dat plein 22 H' })
       ).toBeInTheDocument();
       expect(screen.getByText('12132/345345/456757/ff')).toBeInTheDocument();
       expect(screen.getByText('H.J de Gruyter')).toBeInTheDocument();
@@ -193,7 +192,7 @@ describe('<Erfpacht/DossierDetail />', () => {
 
   test('Renders Dossier Detailpage with betaler aanpassen link', async () => {
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .times(1)
       .reply(200, {
         content: jsonCopy(dossierDetailTransformed),
@@ -201,9 +200,9 @@ describe('<Erfpacht/DossierDetail />', () => {
       });
 
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHTv2_DOSSIERS as any, '999999'),
+        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '999999'),
       },
     } as AppState;
 
@@ -222,15 +221,15 @@ describe('<Erfpacht/DossierDetail />', () => {
 
   test('Renders Dossier Detailpage with error', async () => {
     const testState = {
-      ERFPACHTv2: {
+      ERFPACHT: {
         status: 'ERROR',
         content: null,
       },
     } as AppState;
 
-    //http://bff-api-host/services/erfpachtv2/dossier/E.123.123
+    //http://bff-api-host/services/erfpacht/dossier/E.123.123
     bffApi
-      .get('/services/erfpachtv2/dossier/E.123.123')
+      .get('/services/erfpacht/dossier/E.123.123')
       .reply(500, { content: null, status: 'ERROR' });
 
     const screen = render(
@@ -243,7 +242,7 @@ describe('<Erfpacht/DossierDetail />', () => {
     await waitFor(() => {
       expect(screen.getByText('Foutmelding')).toBeInTheDocument();
       expect(
-        screen.getByText('We kunnen op dit moment geen erfpachtdossier tonen.')
+        screen.getByText('We kunnen op dit moment geen gegevens tonen.')
       ).toBeInTheDocument();
     });
   });

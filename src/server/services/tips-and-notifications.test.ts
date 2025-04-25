@@ -1,13 +1,14 @@
 import { describe, expect } from 'vitest';
 
-import { sortNotifications } from './tips-and-notifications';
+import { sortNotificationsAndInsertTips } from './tips-and-notifications';
+import { MyNotification } from '../../universal/types';
 
 describe('tips-and-notifications', () => {
   test('Should sort notifications by datePublished and insert tips', () => {
     const notifications = [
       {
         title: 'tip 0',
-        thema: 'thema',
+        themaID: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-09-07',
@@ -15,7 +16,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 4',
-        thema: 'thema',
+        themaID: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-08-07',
@@ -23,7 +24,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 1',
-        thema: 'thema',
+        themaID: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-07-07',
@@ -31,7 +32,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 2',
-        thema: 'thema',
+        themaID: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-06-07',
@@ -39,7 +40,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'tip 1',
-        thema: 'thema',
+        themaID: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-05-07',
@@ -47,7 +48,7 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'notification 3',
-        thema: 'thema',
+        themaID: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-04-07',
@@ -55,15 +56,18 @@ describe('tips-and-notifications', () => {
       },
       {
         title: 'tip 2',
-        thema: 'thema',
+        themaID: 'thema',
         description: 'description',
         id: 'id',
         datePublished: '2021-03-07',
         isTip: true,
       },
-    ];
+    ] as unknown as MyNotification[];
 
-    const sortedNotifications = sortNotifications(notifications, false);
+    const sortedNotifications = sortNotificationsAndInsertTips(
+      notifications,
+      false
+    );
 
     expect(sortedNotifications[0].title).toBe('notification 4');
     expect(sortedNotifications[1].title).toBe('notification 1');

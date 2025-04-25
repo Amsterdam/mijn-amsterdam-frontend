@@ -1,12 +1,14 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import MyNotifications from './MyNotifications';
-import { Themas } from '../../../universal/config/thema';
+import { MyNotificationsPage } from './MyNotifications';
+import { ThemaIDs } from '../../../universal/config/thema';
+import { themaId as themaIdInkomen } from '../Inkomen/Inkomen-thema-config';
+import { themaIdBRP } from '../Profile/Profile-thema-config';
 
 const testState: any = {
   NOTIFICATIONS: {
@@ -17,7 +19,8 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie1',
         datePublished: '2020-07-24',
-        thema: Themas.ROOT,
+        themaID: ThemaIDs.HOME,
+        themaTitle: 'Home',
         link: {
           to: '/item-1',
           title: 'Linkje!',
@@ -28,7 +31,8 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie2',
         datePublished: '2020-07-24',
-        thema: Themas.BRP,
+        themaID: themaIdBRP,
+        themaTitle: 'Mijn gegevens',
         link: {
           to: '/item-2',
           title: 'Linkje!',
@@ -39,7 +43,8 @@ const testState: any = {
         title: 'Notification',
         description: 'Notificatie3',
         datePublished: '2020-07-24',
-        thema: Themas.INKOMEN,
+        themaID: themaIdInkomen,
+        themaTitle: 'Inkomen',
         isAlert: true,
         link: {
           to: '/item-3',
@@ -56,16 +61,17 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<MyNotifications />', () => {
   const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
-  const routePath = AppRoutes.NOTIFICATIONS;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={MyNotifications}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routeEntry}
+        component={MyNotificationsPage}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);

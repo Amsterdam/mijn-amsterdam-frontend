@@ -1,5 +1,4 @@
 import type {
-  CaseTypeVaren,
   DecosZaakVarensFieldsSource,
   VarenRegistratieRederType,
   VarenStatus,
@@ -11,12 +10,12 @@ import type {
   VarenVergunningLigplaatsType,
 } from './config-and-types';
 import { isDateInPast } from '../../../universal/helpers/date';
-import { transformFieldValuePairs } from '../decos/decos-service';
 import {
-  DecosZaakBase,
   DecosZaakTransformer,
+  DecosZaakBase,
   SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/decos-types';
+} from '../decos/config-and-types';
+import { transformFieldValuePairs } from '../decos/decos-service';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselLengths = {
@@ -98,22 +97,25 @@ const VarenBaseExploitatieVergunning = {
     varens: {
       name: 'vergunningen',
       transform: (vergunningen: DecosZaakVarensFieldsSource[] | null) =>
-        (vergunningen || []).map((vergunning) =>
-          transformFieldValuePairs<VarenVergunningExploitatieType>(
-            {
-              ...vesselLengths,
-              ...vesselSegment,
-              ...vesselEniNumber,
-              mark: {
-                name: 'id',
-                transform: (input: string) => input.replace(/\//g, '-'),
+        (vergunningen || [])
+          .map((vergunning) =>
+            transformFieldValuePairs<VarenVergunningExploitatieType>(
+              {
+                ...vesselLengths,
+                ...vesselSegment,
+                ...vesselEniNumber,
+                mark: 'identifier',
+                subject2: 'vesselName' as const,
               },
-              subject2: 'vesselName' as const,
-              text11: 'vergunningKenmerk' as const,
-            },
-            vergunning
+              vergunning
+            )
           )
-        ),
+          .map((vergunning) => ({
+            id:
+              vergunning.identifier?.replaceAll('/', '-') ??
+              'unknown-decoszaak-id',
+            ...vergunning,
+          })),
     },
   },
   afterTransform: setStatusIfActiveTermijn,
@@ -136,6 +138,7 @@ export const VarenVergunningExploitatieWijzigenVaartuignaam: DecosZaakTransforme
     ...VarenBaseExploitatieVergunning,
     transformFields: {
       ...VarenBaseExploitatieVergunning.transformFields,
+      text33: 'vesselName',
       text18: 'vesselNameNew',
     },
   };
@@ -167,6 +170,7 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
     ...VarenBaseExploitatieVergunning,
     transformFields: {
       ...VarenBaseExploitatieVergunning.transformFields,
+      text33: 'vesselName',
       text18: 'vesselNameNew',
     },
   };
@@ -182,19 +186,18 @@ export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigpl
     },
   };
 
-export const decosZaakTransformers = [
-  VarenRegistratieReder,
-  VarenVergunningExploitatie,
-  VarenVergunningLigplaats,
-  VarenVergunningExploitatieWijzigenVaartuignaam,
-  VarenVergunningExploitatieWijzigenVerbouwing,
-  VarenVergunningExploitatieWijzigingVergunningshouder,
-  VarenVergunningExploitatieWijzigingVervanging,
-];
-export const decosCaseToZaakTransformers = decosZaakTransformers.reduce(
-  (acc, zaakTransformer) => ({
-    ...acc,
-    [zaakTransformer.caseType]: zaakTransformer,
-  }),
-  {} as Record<CaseTypeVaren, DecosZaakTransformer<DecosZaakBase>>
-);
+export const decosCaseToZaakTransformers = {
+  [VarenRegistratieReder.caseType]: VarenRegistratieReder,
+  [VarenVergunningExploitatie.caseType]: VarenVergunningExploitatie,
+  [VarenVergunningLigplaats.caseType]: VarenVergunningLigplaats,
+  [VarenVergunningExploitatieWijzigenVaartuignaam.caseType]:
+    VarenVergunningExploitatieWijzigenVaartuignaam,
+  [VarenVergunningExploitatieWijzigenVerbouwing.caseType]:
+    VarenVergunningExploitatieWijzigenVerbouwing,
+  [VarenVergunningExploitatieWijzigingVergunningshouder.caseType]:
+    VarenVergunningExploitatieWijzigingVergunningshouder,
+  [VarenVergunningExploitatieWijzigingVervanging.caseType]:
+    VarenVergunningExploitatieWijzigingVervanging,
+} as const;
+
+export const decosZaakTransformers = Object.values(decosCaseToZaakTransformers);

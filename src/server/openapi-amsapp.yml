@@ -202,7 +202,13 @@ paths:
             type: string
       responses:
         '200':
-          description: Blocking stadspas was successful
+          description: |
+             Blocking stadspas was successful or an attempt was made to block a pass that is not active.
+             This returns the state of the pass after this request.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/StadspasBlockResponse'
         '400':
           description: Returns bad request error
           content:
@@ -376,6 +382,23 @@ components:
             Used in subsequent requests to other endpoints requiring this.
             This contains the passNumber and administrationNumber in an encrypted format.
           type: string
+
+    StadspasBlockResponse:
+      type: object
+      properties:
+        content:
+          type: object
+          properties:
+            "<passnumber>":
+              type: boolean
+              description: |
+                The passnumber key is the number itself and the value is the new active state. So false will mean that the pass is now blocked while true will mean it is still active.
+              example: false
+        status:
+          type: string
+          enum:
+            - 'SUCCESS'
+          example: "OK"
 
     StadspassenResponse:
       type: object

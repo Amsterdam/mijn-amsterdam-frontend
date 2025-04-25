@@ -1,13 +1,12 @@
-import { HTMLProps } from 'react';
+import { HTMLProps, ReactNode } from 'react';
 
 import classnames from 'classnames';
 
 import styles from './Panel.module.scss';
-import { ComponentChildren } from '../../../universal/types';
 
 export interface PanelProps extends HTMLProps<HTMLDivElement> {
   className?: string;
-  children: ComponentChildren;
+  children: ReactNode;
 }
 
 export default function Panel({

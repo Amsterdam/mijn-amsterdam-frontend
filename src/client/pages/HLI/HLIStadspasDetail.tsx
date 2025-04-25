@@ -4,14 +4,12 @@ import {
   ActionGroup,
   Alert,
   Button,
-  Grid,
   Heading,
+  Link,
   Paragraph,
-  Screen,
 } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
-import { getThemaTitleWithAppState } from './helpers';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -28,19 +26,22 @@ import {
   isLoading,
 } from '../../../universal/helpers/api';
 import { dateSort } from '../../../universal/helpers/date';
-import {
-  DetailPage,
-  ErrorAlert,
-  LoadingContent,
-  Modal,
-  PageHeading,
-  ThemaIcon,
-} from '../../components';
+import ErrorAlert from '../../components/Alert/Alert';
 import { Datalist } from '../../components/Datalist/Datalist';
-import { BarConfig } from '../../components/LoadingContent/LoadingContent';
+import LoadingContent, {
+  BarConfig,
+} from '../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { Modal } from '../../components/Modal/Modal';
+import {
+  DetailPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { TableV2 } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -84,7 +85,7 @@ const PHONENUMBERS = {
   WerkEnInkomen: '020 252 6000',
 } as const;
 
-export default function HLIStadspasDetail() {
+export function HLIStadspasDetail() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
 
@@ -144,21 +145,18 @@ export default function HLIStadspasDetail() {
     !!stadspas?.budgets.length && stadspas.budgets.length > 1 && !isPhoneScreen;
 
   return (
-    <DetailPage>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HLI,
-          title: getThemaTitleWithAppState(appState),
-        }}
-        icon={<ThemaIcon />}
-      >
-        Overzicht Stadspas{' '}
-        {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
-      </PageHeading>
-      <Screen>
-        <Grid>
-          {stadspas ? (
-            <Grid.Cell span="all">
+    <DetailPageV2>
+      <PageContentV2>
+        <PageHeadingV2
+          breadcrumbs={[{ to: AppRoutes.HLI, title: ThemaTitles.HLI }]}
+        >
+          Overzicht Stadspas{' '}
+          {stadspas?.owner && ` van ${stadspas?.owner.firstname}`}
+        </PageHeadingV2>
+
+        {stadspas ? (
+          <>
+            <PageContentCell>
               <Datalist rows={[NAME]} />
               <Paragraph className={styles.StadspasNummerInfo}>
                 Hieronder staat het Stadspasnummer van uw{' '}
@@ -170,79 +168,72 @@ export default function HLIStadspasDetail() {
               {FeatureToggle.hliThemaStadspasBlokkerenActive && (
                 <BlockStadspas stadspas={stadspas} />
               )}
-            </Grid.Cell>
-          ) : (
-            <Grid.Cell span="all">
-              {isLoadingStadspas && (
-                <LoadingContent barConfig={loadingContentBarConfigDetails} />
-              )}
-              {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
-                <ErrorAlert>
-                  We kunnen op dit moment geen gegevens tonen.{' '}
-                  <MaRouterLink href={AppRoutes.HLI}>
-                    Naar het overzicht
-                  </MaRouterLink>
-                </ErrorAlert>
-              )}
-            </Grid.Cell>
-          )}
-          <>
-            <Grid.Cell span="all">
-              <Heading>Gekregen tegoed</Heading>
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              {isLoadingStadspas && (
-                <LoadingContent barConfig={loadingContentBarConfigList} />
-              )}
-              {!isLoadingStadspas && !!stadspas?.budgets.length && (
-                <TableV2<StadspasBudget>
-                  className={styles.Table_budgets}
-                  items={stadspas.budgets.toSorted(dateSort('dateEnd', 'asc'))}
-                  displayProps={displayPropsBudgets}
-                />
-              )}
-              {!isLoadingStadspas && !stadspas?.budgets.length && (
-                <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
-              )}
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              <Heading>Uw uitgaven</Heading>
-            </Grid.Cell>
-            <Grid.Cell span="all">
-              {(isLoadingTransacties || isLoadingStadspas) && (
-                <LoadingContent barConfig={loadingContentBarConfigList} />
-              )}
-              {!isLoadingStadspas && !isLoadingTransacties && (
-                <Paragraph>
-                  {determineUwUitgavenDescription(stadspas, hasTransactions)}
-                </Paragraph>
-              )}
-            </Grid.Cell>
-            {!isLoadingTransacties && hasTransactions && (
-              <>
-                <Grid.Cell span="all">
-                  <TableV2<StadspasBudgetTransaction>
-                    className={
-                      showMultiBudgetTransactions
-                        ? styles.Table_transactions__withBudget
-                        : styles.Table_transactions
-                    }
-                    items={transactions.toSorted(
-                      dateSort('datePublished', 'desc')
-                    )}
-                    displayProps={
-                      showMultiBudgetTransactions
-                        ? displayPropsTransactiesWithBudget
-                        : displayPropsTransacties
-                    }
-                  />
-                </Grid.Cell>
-              </>
+            </PageContentCell>
+            {FeatureToggle.hliThemaStadspasDeblokkerenActive && (
+              <UnblockStadspas stadspas={stadspas} />
             )}
           </>
-        </Grid>
-      </Screen>
-    </DetailPage>
+        ) : (
+          <PageContentCell>
+            {isLoadingStadspas && (
+              <LoadingContent barConfig={loadingContentBarConfigDetails} />
+            )}
+            {(isErrorStadspas || (!isLoadingStadspas && noContent)) && (
+              <ErrorAlert>
+                We kunnen op dit moment geen gegevens tonen.{' '}
+                <MaRouterLink href={AppRoutes.HLI}>
+                  Naar het overzicht
+                </MaRouterLink>
+              </ErrorAlert>
+            )}
+          </PageContentCell>
+        )}
+        <PageContentCell>
+          <Heading className="ams-mb--sm">Gekregen tegoed</Heading>
+          {isLoadingStadspas && (
+            <LoadingContent barConfig={loadingContentBarConfigList} />
+          )}
+          {!isLoadingStadspas && !!stadspas?.budgets.length && (
+            <TableV2<StadspasBudget>
+              className={styles.Table_budgets}
+              items={stadspas.budgets.toSorted(dateSort('dateEnd', 'asc'))}
+              displayProps={displayPropsBudgets}
+            />
+          )}
+          {!isLoadingStadspas && !stadspas?.budgets.length && (
+            <Paragraph>U heeft (nog) geen tegoed gekregen.</Paragraph>
+          )}
+        </PageContentCell>
+        <PageContentCell>
+          <Heading className="ams-mb--sm">Uw uitgaven</Heading>
+          {(isLoadingTransacties || isLoadingStadspas) && (
+            <LoadingContent barConfig={loadingContentBarConfigList} />
+          )}
+          {!isLoadingStadspas && !isLoadingTransacties && (
+            <Paragraph>
+              {determineUwUitgavenDescription(stadspas, hasTransactions)}
+            </Paragraph>
+          )}
+        </PageContentCell>
+        {!isLoadingTransacties && hasTransactions && (
+          <PageContentCell>
+            <TableV2<StadspasBudgetTransaction>
+              className={
+                showMultiBudgetTransactions
+                  ? styles.Table_transactions__withBudget
+                  : styles.Table_transactions
+              }
+              items={transactions.toSorted(dateSort('datePublished', 'desc'))}
+              displayProps={
+                showMultiBudgetTransactions
+                  ? displayPropsTransactiesWithBudget
+                  : displayPropsTransacties
+              }
+            />
+          </PageContentCell>
+        )}
+      </PageContentV2>
+    </DetailPageV2>
   );
 }
 
@@ -250,40 +241,52 @@ function determineUwUitgavenDescription(
   stadspas: StadspasFrontend | undefined,
   hasTransactions: boolean
 ) {
-  const expenseInfoTextBase = 'U heeft nog geen uitgaven.';
+  const expenseInfoTextBase = <>U heeft nog geen uitgaven.</>;
 
-  const extraInfo = `Deze informatie kan een dag achterlopen.
-Maar het saldo dat u nog over heeft klopt altijd.`;
+  const extraInfo = (
+    <>
+      Deze informatie kan een dag achterlopen. Maar het saldo dat u nog over
+      heeft klopt altijd.
+    </>
+  );
 
   if (!stadspas) {
     return expenseInfoTextBase;
   }
 
   if (hasTransactions) {
-    return `Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
-informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
-klopt altijd.`;
+    return (
+      <>
+        Hieronder ziet u bij welke winkels u het tegoed hebt uitgegeven. Deze
+        informatie kan een dag achterlopen. Maar het saldo dat u nog over heeft
+        klopt altijd.
+      </>
+    );
   } else if (stadspas.budgets && stadspas.balance > 0) {
-    return `${expenseInfoTextBase} ${extraInfo}`;
+    return (
+      <>
+        {expenseInfoTextBase}
+        {extraInfo}
+      </>
+    );
   }
   return expenseInfoTextBase;
 }
 
 function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
-  if (!stadspas.actief) {
-    return <PassBlockedAlert />;
-  }
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
-
-  const { error, isMutating, trigger: blokkeerStadspas } = useBlockStadspas();
+  const { error, isMutating, trigger: blockStadspas } = useBlockStadspas();
 
   useEffect(() => {
     if (error && !isMutating && !showError) {
       setShowError(true);
     }
   }, [error, showError, isMutating]);
+
+  if (!stadspas.actief) {
+    return <PassBlockedAlert />;
+  }
 
   return (
     <>
@@ -294,7 +297,9 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           severity="error"
         >
           Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
-          {PHONENUMBERS.WerkEnInkomen}
+          <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
+            {PHONENUMBERS.WerkEnInkomen}
+          </Link>
         </Alert>
       )}
       {isMutating ? (
@@ -313,27 +318,26 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           Blokkeer deze Stadspas
         </Button>
       )}
+
       <Modal
         title="Uw pas is gestolen of u bent deze kwijt."
         className={styles.BlokkeerDialog}
         isOpen={isModalOpen}
         showCloseButton
+        closeOnEscape
         onClose={() => setIsModalOpen(false)}
-        onKeyUp={(event) => {
-          if (event.code === 'Escape') {
-            setIsModalOpen(false);
-          }
-        }}
+        pollingQuerySelector="#blokkeer-pas"
         actions={
           <ActionGroup>
             <Button
+              id="blokkeer-pas"
               type="submit"
               variant="primary"
               onClick={() => {
                 setShowError(false);
                 setIsModalOpen(false);
                 if (stadspas.blockPassURL) {
-                  blokkeerStadspas(stadspas.blockPassURL);
+                  blockStadspas(stadspas.blockPassURL);
                 }
               }}
             >
@@ -356,7 +360,11 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Paragraph>
         <Paragraph className="ams-mb--sm">
           Let op: het blokkeren kan alleen worden teruggedraaid door te bellen
-          met <br /> {PHONENUMBERS.WerkEnInkomen}.
+          met{' '}
+          <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
+            {PHONENUMBERS.WerkEnInkomen}
+          </Link>
+          .
         </Paragraph>
         <Paragraph>
           Om een nieuwe pas aan te vragen, belt u naar{' '}
@@ -377,8 +385,11 @@ function PassBlockedAlert() {
     >
       <Paragraph>
         Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
-        naar {PHONENUMBERS.WerkEnInkomen}. Na het telefoongesprek kun je de pas
-        meteen weer gebruiken.
+        naar{' '}
+        <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
+          {PHONENUMBERS.WerkEnInkomen}
+        </Link>{' '}
+        Na het telefoongesprek kun je de pas meteen weer gebruiken.
       </Paragraph>
       <Paragraph>
         De nieuwe pas wordt binnen drie weken thuisgestuurd en is dan meteen te
@@ -389,6 +400,90 @@ function PassBlockedAlert() {
         ook weer op de nieuwe pas.
       </Paragraph>
     </Alert>
+  );
+}
+
+function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const { error, isMutating, trigger: deblokkeerStadspas } = useBlockStadspas();
+
+  useEffect(() => {
+    if (error && !isMutating && !showError) {
+      setShowError(true);
+    }
+  }, [error, showError, isMutating]);
+
+  if (stadspas.actief) {
+    return;
+  }
+
+  return (
+    <PageContentCell>
+      {showError && (
+        <Alert
+          className="ams-mb--sm"
+          heading="Fout bij het deblokkeren van de pas"
+          severity="error"
+        >
+          Probeer het nog eens.
+        </Alert>
+      )}
+      {isMutating ? (
+        <Alert severity="warning">
+          <Paragraph>
+            <Spinner /> <span>Bezig met deblokkeren...</span>
+          </Paragraph>
+        </Alert>
+      ) : (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          Deblokkeer
+        </Button>
+      )}
+
+      <Modal
+        title="Weet u zeker dat u uw Stadspas wilt deblokkeren?"
+        className={styles.BlokkeerDialog}
+        isOpen={isModalOpen}
+        showCloseButton
+        closeOnEscape
+        onClose={() => setIsModalOpen(false)}
+        pollingQuerySelector="#deblokkeer-pas"
+        actions={
+          <ActionGroup>
+            <Button
+              id="deblokkeer-pas"
+              type="submit"
+              variant="primary"
+              onClick={() => {
+                setShowError(false);
+                setIsModalOpen(false);
+                if (stadspas.unblockPassURL) {
+                  deblokkeerStadspas(stadspas.unblockPassURL);
+                }
+              }}
+            >
+              Deblokkeer
+            </Button>
+            <Button
+              variant="tertiary"
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
+            >
+              Doe niks
+            </Button>
+          </ActionGroup>
+        }
+      >
+        Deblokkeren die pas!
+      </Modal>
+    </PageContentCell>
   );
 }
 

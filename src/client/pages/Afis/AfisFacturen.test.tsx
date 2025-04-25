@@ -1,5 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { bffApi } from '../../../testing/utils';
@@ -59,16 +59,19 @@ describe('<AfisFacturen />', () => {
   test('Lists Open facturen', async () => {
     const routeEntry = generatePath(routePath, {
       state: 'open',
+      page: null,
     });
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={AfisFacturen}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={AfisFacturen}
+          initializeState={initializeState}
+        />
+      );
+    }
     const screen = render(<Component />);
 
     await waitFor(() => {
@@ -126,16 +129,19 @@ describe('<AfisFacturen />', () => {
 
     const routeEntry = generatePath(routePath, {
       state: 'afgehandeld',
+      page: null,
     });
 
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={AfisFacturen}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routePath}
+          component={AfisFacturen}
+          initializeState={initializeState}
+        />
+      );
+    }
     const screen = render(<Component />);
 
     await waitFor(() => {

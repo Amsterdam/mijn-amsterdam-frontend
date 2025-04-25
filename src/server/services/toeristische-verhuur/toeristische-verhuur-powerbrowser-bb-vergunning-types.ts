@@ -38,7 +38,7 @@ export type SearchRequestResponse<
   F extends PBRecordField[] = PBRecordField[],
 > = {
   mainTableName: T;
-  records: PBRecord<T, F>[];
+  records?: PBRecord<T, F>[];
 };
 
 export type PBZaakFields =
@@ -75,22 +75,25 @@ export type BBVergunningZaakResult =
   | string
   | null;
 
-export interface BBVergunning extends ZaakDetail {
-  heeftOvergangsRecht: boolean;
-  adres: string | null;
-  dateReceived: string | null;
+export type BBVergunning = ZaakDetail & {
+  location: string | null;
   dateDecision: string | null;
-  dateStart: string;
-  dateStartFormatted: string | null;
+  dateDecisionFormatted: string | null;
   dateEnd: string | null;
   dateEndFormatted: string | null;
-  isActual: boolean;
-  result: BBVergunningZaakResult;
-  status: BBVergunningZaakStatus | BBVergunningZaakResult;
-  zaaknummer: string;
+  dateRequest: string | null;
+  dateRequestFormatted: string | null;
+  dateStart: string;
+  dateStartFormatted: string | null;
+  decision: BBVergunningZaakResult;
   documents: GenericDocument[];
+  heeftOvergangsRecht: boolean;
+  identifier: string;
+  processed: boolean;
+  isExpired: boolean;
+  displayStatus: BBVergunningZaakStatus | BBVergunningZaakResult;
   title: 'Vergunning bed & breakfast';
-}
+};
 
 export const fieldMap: Record<PBZaakFields['fieldName'], string> = {
   ZAAK_IDENTIFICATIE: 'zaaknummer',

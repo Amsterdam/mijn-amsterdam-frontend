@@ -1,8 +1,5 @@
-import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 
-import { streamEndpointQueryParamKeys } from '../../universal/config/app';
-import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -10,9 +7,9 @@ import {
   getSettledResult,
 } from '../../universal/helpers/api';
 import { omit } from '../../universal/helpers/utils';
-import { MyNotification } from '../../universal/types';
 import { getAuth } from '../auth/auth-helpers';
 import { AuthProfileAndToken } from '../auth/auth-types';
+import { logger } from '../logging';
 import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
@@ -20,10 +17,11 @@ import { fetchAVG } from './avg/avg';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
 import { fetchBRP } from './brp';
-import { fetchCMSCONTENT } from './cms-content';
-import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
+import { fetchCMSCONTENT } from './cms/cms-content';
+import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
+import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
-import { fetchHorecaVergunningen } from './horeca';
+import { fetchHorecaVergunningen } from './horeca/horeca';
 import { fetchAllKlachten } from './klachten/klachten';
 import { fetchKrefia } from './krefia';
 import { fetchKVK } from './kvk';
@@ -38,21 +36,11 @@ import {
   fetchOvertredingen,
   fetchSubsidie,
 } from './simple-connect';
-import { fetchErfpacht, fetchErfpachtV2 } from './simple-connect/erfpacht';
 import { fetchSVWI } from './simple-connect/svwi';
-import {
-  convertTipToNotication,
-  createTipsFromServiceResults,
-  prefixTipNotification,
-} from './tips/tips-service';
-import {
-  fetchTipsAndNotifications,
-  sortNotifications,
-} from './tips-and-notifications';
+import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVaren } from './varen/varen';
 import { fetchVergunningen } from './vergunningen/vergunningen';
-import { fetchVergunningenV2 } from './vergunningen-v2/vergunningen';
 import { fetchWmo } from './wmo/wmo';
 import {
   fetchBbz,
@@ -61,7 +49,7 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { logger } from '../logging';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -130,71 +118,55 @@ const CMS_CONTENT = (requestID: RequestID, req: Request) => {
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
 );
+
 // Protected services
 const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
+const AVG = callAuthenticatedService(fetchAVG);
+const BEZWAREN = callAuthenticatedService(fetchBezwaren);
+const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 const BRP = callAuthenticatedService(fetchBRP);
+const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const HLI = callAuthenticatedService(fetchHLI);
+const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
+const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
 const KREFIA = callAuthenticatedService(fetchKrefia);
 const KVK = callAuthenticatedService(fetchKVK);
 const PARKEREN = callAuthenticatedService(fetchParkeren);
+const PROFILE = callAuthenticatedService(fetchProfile);
 const SVWI = callAuthenticatedService(fetchSVWI);
+const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
+const VAREN = callAuthenticatedService(fetchVaren);
+const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
+const WMO = callAuthenticatedService(fetchWmo);
+const JEUGD = callAuthenticatedService(fetchLeerlingenvervoer);
 const WPI_AANVRAGEN = callAuthenticatedService(fetchBijstandsuitkering);
 const WPI_BBZ = callAuthenticatedService(fetchBbz);
 const WPI_SPECIFICATIES = callAuthenticatedService(fetchSpecificaties);
 const WPI_TONK = callAuthenticatedService(fetchTonk);
 const WPI_TOZO = callAuthenticatedService(fetchTozo);
-const WMO = callAuthenticatedService(fetchWmo);
-const TOERISTISCHE_VERHUUR = callAuthenticatedService(fetchToeristischeVerhuur);
-const VAREN = callAuthenticatedService(fetchVaren);
 
-const VERGUNNINGEN = callAuthenticatedService(fetchVergunningen);
-const VERGUNNINGENv2 = callAuthenticatedService(fetchVergunningenV2);
-const HORECA = callAuthenticatedService(fetchHorecaVergunningen);
-// Location, address, based services
-const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
-const AFVAL = callAuthenticatedService(fetchAfval);
-const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
-const ERFPACHT = callAuthenticatedService(fetchErfpacht);
-const ERFPACHTv2 = callAuthenticatedService(fetchErfpachtV2);
 const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
-const KLACHTEN = callAuthenticatedService(fetchAllKlachten);
-
-const BEZWAREN = callAuthenticatedService(fetchBezwaren);
-const PROFILE = callAuthenticatedService(fetchProfile);
-const AVG = callAuthenticatedService(fetchAVG);
-const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
+
+// Location, address, based services
+const AFVAL = callAuthenticatedService(fetchAfval);
+const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
+const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
 
 // Special services that aggregates NOTIFICATIONS from various services
 export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
   const authProfileAndToken = getAuth(req);
-
-  if (!authProfileAndToken) {
-    return apiErrorResult('Not authorized', null, HttpStatusCode.Unauthorized);
-  }
-
-  const [tipNotifications, themaAndTipNotifications] = await Promise.all([
-    getTipNotifications(requestID, req),
-    fetchTipsAndNotifications(requestID, authProfileAndToken),
-  ]);
-
-  const notifications: Array<MyNotification> = [
-    ...tipNotifications,
-    ...themaAndTipNotifications,
-  ].map((notification) => {
-    if (notification.isTip) {
-      notification.hideDatePublished = true;
-      return prefixTipNotification(notification);
-    }
-    return notification;
-  });
-
-  const notificationsWithTipsInserted = sortNotifications(notifications);
-
+  const serviceResults = await getServiceResultsForTips(requestID, req);
+  const notificationsWithTipsInserted =
+    await fetchNotificationsWithTipsInserted(
+      requestID,
+      serviceResults,
+      authProfileAndToken
+    );
   return apiSuccessResult(notificationsWithTipsInserted);
 };
 
@@ -212,7 +184,6 @@ const SERVICES_INDEX = {
   CMS_CONTENT,
   CMS_MAINTENANCE_NOTIFICATIONS,
   ERFPACHT,
-  ERFPACHTv2,
   HLI,
   HORECA,
   KLACHTEN,
@@ -230,8 +201,8 @@ const SERVICES_INDEX = {
   TOERISTISCHE_VERHUUR,
   VAREN,
   VERGUNNINGEN,
-  VERGUNNINGENv2,
   WMO,
+  JEUGD,
   WPI_AANVRAGEN,
   WPI_BBZ,
   WPI_SPECIFICATIES,
@@ -260,7 +231,6 @@ type CommercialServices = Pick<
   | 'CMS_CONTENT'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
-  | 'ERFPACHTv2'
   | 'HORECA'
   | 'KVK'
   | 'MILIEUZONE'
@@ -272,7 +242,6 @@ type CommercialServices = Pick<
   | 'TOERISTISCHE_VERHUUR'
   | 'VAREN'
   | 'VERGUNNINGEN'
-  | 'VERGUNNINGENv2'
 >;
 
 type ServicesByProfileType = {
@@ -294,7 +263,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
-    ERFPACHTv2,
     HLI,
     HORECA,
     KLACHTEN,
@@ -310,13 +278,13 @@ export const servicesByProfileType: ServicesByProfileType = {
     SVWI,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
-    VERGUNNINGENv2,
     WMO,
     WPI_AANVRAGEN,
     WPI_BBZ,
     WPI_SPECIFICATIES,
     WPI_TONK,
     WPI_TOZO,
+    JEUGD,
   },
   'private-attributes': {
     CMS_CONTENT,
@@ -333,7 +301,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     CMS_CONTENT,
     CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
-    ERFPACHTv2,
     HORECA,
     KVK,
     MILIEUZONE,
@@ -345,7 +312,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,
-    VERGUNNINGENv2,
   },
 };
 
@@ -444,12 +410,10 @@ export async function loadServicesAll(req: Request, res: Response) {
 }
 
 /**
- * TIPS specific services
+ * Services specific to TIPS
+ * Retrieves service results based on profile type to generate tips.
  */
-export async function getServiceResultsForTips(
-  requestID: RequestID,
-  req: Request
-) {
+async function getServiceResultsForTips(requestID: RequestID, req: Request) {
   let requestData = null;
 
   const auth = getAuth(req);
@@ -469,37 +433,7 @@ export async function getServiceResultsForTips(
   return requestData;
 }
 
-export async function getTipNotifications(
-  requestID: RequestID,
-  req: Request
-): Promise<MyNotification[]> {
-  const serviceResults = await getServiceResultsForTips(requestID, req);
-  const authProfileAndToken = getAuth(req);
-
-  if (authProfileAndToken) {
-    const { content: tipNotifications } = await createTipsFromServiceResults(
-      authProfileAndToken.profile.profileType,
-      {
-        serviceResults,
-        tipsDirectlyFromServices: [],
-        compareDate:
-          FeatureToggle.passQueryParamsToStreamUrl &&
-          req.query?.[streamEndpointQueryParamKeys.tipsCompareDate]
-            ? new Date(
-                req.query[
-                  streamEndpointQueryParamKeys.tipsCompareDate
-                ] as string
-              )
-            : new Date(),
-      }
-    );
-
-    return tipNotifications.map(convertTipToNotication);
-  }
-
-  return [];
-}
-
 export const forTesting = {
   CMS_CONTENT,
+  getServiceResultsForTips,
 };

@@ -25,7 +25,7 @@ export const FeatureToggle = {
   // Loodmetingen
   bodemActive: true,
 
-  cmsFooterActive: true,
+  useCMSFooterStaticDataBackup: true,
 
   // Database
   dbSessionsEnabled: true,
@@ -35,11 +35,8 @@ export const FeatureToggle = {
   eherkenningActive: true,
 
   // ErfachtV2 VerNise
-  erfpachtV2Active: true,
-  erfpachtV2EndpointActive: true,
-
-  // Legacy Mijn Erfpacht
-  mijnErfpachtActive: false,
+  erfpachtActive: true,
+  erfpachtEndpointActive: true,
 
   // Afval api + Afval thema
   garbageInformationPage: true,
@@ -49,6 +46,7 @@ export const FeatureToggle = {
   hliThemaActive: true,
   hliThemaStadspasActive: true,
   hliThemaStadspasBlokkerenActive: true,
+  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,
@@ -83,17 +81,6 @@ export const FeatureToggle = {
   // Mijn Gegegvens -> aantal bewoners op adres.
   residentCountActive: true,
 
-  // Sport dataset op de kaart
-  sportDatasetsActive: true,
-  // Bekendmakingen dataset op de kaart
-  bekendmakingenDatasetActive: false,
-  // Evenementen dataset op de kaart
-  evenementenDatasetActive: false,
-  // Laadpalen dataset op de kaart
-  laadpalenActive: !IS_PRODUCTION,
-  // Meldingen dataset op de kaart
-  meldingenBuurtActive: true,
-
   // Subsidie patroon C
   subsidieActive: true,
 
@@ -113,16 +100,8 @@ export const FeatureToggle = {
   //Varen (komt uit Decos)
   varenActive: !IS_PRODUCTION,
 
-  // Vergunningen V1 (met koppel api)
   vergunningenActive: true,
-  // Vergunningen V2 met BFF integratie
-  vergunningenV2Active: false, // TODO: Enable when working on MIJN-8914
-  decosServiceActive: !IS_PRODUCTION, // TODO: Enable when working on MIJN-8914
-
-  // WIOR Kaar data
-  wiorDatasetActive: true,
-  // WIOR Meldingen aan de hand van de kaartdata.
-  wiorMeldingen: true,
+  decosServiceActive: true,
 
   // Zorgned WMO documenten
   zorgnedDocumentAttachmentsActive: true,
@@ -130,4 +109,4 @@ export const FeatureToggle = {
   zorgnedDocumentDecisionDateActive: true,
   // Zorg thema actief
   zorgv2ThemapaginaActive: true,
-};
+} as const;

@@ -1,34 +1,33 @@
 import { subMonths } from 'date-fns';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import {
   LVVRegistratie,
   ToeristischeVerhuurVergunning,
-} from './toeristische-verhuur-types';
+} from './toeristische-verhuur-config-and-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateFormat, isDateInPast } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../../../universal/helpers/vergunningen';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { isNearEndDate } from '../decos/helpers';
+import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen/config-and-types';
+import { isNearEndDate } from '../vergunningen/vergunningen-helpers';
 
 export function createToeristischeVerhuurNotification(
   vergunning: ToeristischeVerhuurVergunning,
-  items: ToeristischeVerhuurVergunning[],
   dateNow: Date = new Date()
 ): MyNotification {
   const vergunningTitleLower = vergunning.title.toLowerCase();
 
   let title = `Aanvraag ${vergunningTitleLower} in behandeling`;
-  let description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} in behandeling.`;
+  let description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} in behandeling.`;
   let datePublished =
     vergunning.steps.find((step) => step.status === 'In behandeling')
       ?.datePublished ??
-    vergunning.dateReceived ??
+    vergunning.dateRequest ??
     '';
   let cta = 'Bekijk uw aanvraag';
   let linkTo: string = AppRoutes.TOERISTISCHE_VERHUUR;
@@ -56,11 +55,11 @@ export function createToeristischeVerhuurNotification(
 
     switch (true) {
       // B&B + Vakantieverhuurvergunning
-      case vergunning.result === 'Verleend' &&
+      case vergunning.decision === 'Verleend' &&
         !!vergunning.dateEnd &&
-        isNearEndDate(vergunning):
+        isNearEndDate(vergunning.dateEnd):
         title = `Uw ${vergunningTitleLower} loopt af`;
-        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
+        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
         linkTo = ctaLinkToAanvragen;
         datePublished = vergunning.dateEnd
@@ -74,27 +73,27 @@ export function createToeristischeVerhuurNotification(
           : datePublished;
         break;
       // B&B + Vakantieverhuurvergunning
-      case vergunning.result === 'Verleend' &&
+      case vergunning.decision === 'Verleend' &&
         !!vergunning.dateEnd &&
         isDateInPast(vergunning.dateEnd, dateNow):
         title = `Uw ${vergunningTitleLower} is verlopen`;
-        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
+        description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} is verlopen. U kunt een nieuwe vergunning aanvragen.`;
         cta = 'Vergunning aanvragen';
         linkTo = ctaLinkToAanvragen;
         datePublished = vergunning.dateEnd;
         break;
       // B&B only
-      case vergunning.status === 'Ontvangen':
+      case vergunning.displayStatus === 'Ontvangen':
         title = `Aanvraag ${vergunningTitleLower} ontvangen`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} ontvangen.`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} ontvangen.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
-        datePublished = vergunning.dateReceived ?? '';
+        datePublished = vergunning.dateRequest ?? '';
         break;
       // B&B only
-      case vergunning.status === 'Meer informatie nodig':
+      case vergunning.displayStatus === 'Meer informatie nodig':
         title = `Aanvraag ${vergunningTitleLower}: meer informatie nodig`;
-        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} te behandelen.`;
+        description = `Wij hebben meer informatie en tijd nodig om uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} te behandelen.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished =
@@ -103,13 +102,13 @@ export function createToeristischeVerhuurNotification(
           )?.datePublished ?? '';
         break;
       // B&B + Vakantieverhuurvergunning
-      case !!vergunning.result:
-        title = `Aanvraag ${vergunningTitleLower} ${vergunning.result.toLowerCase()}`;
-        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.zaaknummer} ${vergunning.result.toLowerCase()}.`;
+      case !!vergunning.decision:
+        title = `Aanvraag ${vergunningTitleLower} ${vergunning.decision.toLowerCase()}`;
+        description = `Wij hebben uw aanvraag voor een ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} ${vergunning.decision.toLowerCase()}.`;
         cta = 'Bekijk uw aanvraag';
         linkTo = ctaLinkToDetail;
         datePublished =
-          (vergunning.dateDecision || vergunning.dateReceived) ?? '';
+          (vergunning.dateDecision || vergunning.dateRequest) ?? '';
         break;
     }
   }
@@ -117,7 +116,7 @@ export function createToeristischeVerhuurNotification(
   return {
     id: `vergunning-${vergunning.id}-notification`,
     datePublished,
-    thema: Themas.TOERISTISCHE_VERHUUR,
+    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description: description,
     link: {
@@ -141,7 +140,7 @@ function createRegistratieNotification(
   return {
     id: `toeristiche-verhuur-registratie-${vergunning.registrationNumber}-notification`,
     datePublished,
-    thema: Themas.TOERISTISCHE_VERHUUR,
+    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
     title,
     description,
     link: {
@@ -149,6 +148,17 @@ function createRegistratieNotification(
       title: cta,
     },
   };
+}
+
+function hasNotification(
+  vergunning: ToeristischeVerhuurVergunning,
+  compareToDate: Date
+) {
+  return (
+    !vergunning.processed ||
+    (!!vergunning.dateDecision &&
+      isRecentNotification(vergunning.dateDecision, compareToDate))
+  );
 }
 
 export async function fetchToeristischeVerhuurNotifications(
@@ -165,22 +175,22 @@ export async function fetchToeristischeVerhuurNotifications(
 
   const vakantieverhuurVergunningen =
     TOERISTISCHE_VERHUUR.content.vakantieverhuurVergunningen ?? [];
-  const vakantieverhuurVergunningNotifications =
-    vakantieverhuurVergunningen.map((vergunning) =>
-      createToeristischeVerhuurNotification(
-        vergunning,
-        vakantieverhuurVergunningen
-      )
-    );
+  const vakantieverhuurVergunningNotifications = vakantieverhuurVergunningen
+    .filter((vergunning) => hasNotification(vergunning, compareToDate))
+    .map((vergunning) => createToeristischeVerhuurNotification(vergunning));
   const bbVergunningen = TOERISTISCHE_VERHUUR.content.bbVergunningen ?? [];
-  const vergunningNotifications = bbVergunningen.map((vergunning) =>
-    createToeristischeVerhuurNotification(vergunning, bbVergunningen)
-  );
+  const vergunningNotifications = bbVergunningen
+    .filter((vergunning) => hasNotification(vergunning, compareToDate))
+    .map((vergunning) => createToeristischeVerhuurNotification(vergunning));
 
   const registrationsNotifications =
-    TOERISTISCHE_VERHUUR.content.lvvRegistraties?.map(
-      createRegistratieNotification
-    ) ?? [];
+    TOERISTISCHE_VERHUUR.content.lvvRegistraties
+      ?.filter(
+        (registratie) =>
+          !!registratie.agreementDate &&
+          isRecentNotification(registratie.agreementDate, compareToDate)
+      )
+      ?.map(createRegistratieNotification) ?? [];
 
   const notifications = [
     ...vakantieverhuurVergunningNotifications,
@@ -188,13 +198,7 @@ export async function fetchToeristischeVerhuurNotifications(
     ...registrationsNotifications,
   ];
 
-  const actualNotifications = notifications.filter(
-    (notification) =>
-      !!notification.datePublished &&
-      isRecentNotification(notification.datePublished, compareToDate)
-  );
-
   return apiSuccessResult({
-    notifications: actualNotifications,
+    notifications,
   });
 }

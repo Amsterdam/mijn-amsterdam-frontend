@@ -1,29 +1,30 @@
 import { useEffect, useMemo } from 'react';
 
-import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { OrderedList } from '@amsterdam/design-system-react';
+import { generatePath, useNavigate, useParams } from 'react-router';
 
-import styles from './MyNotifications.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
+import ErrorAlert from '../../components/Alert/Alert';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { MyNotification } from '../../components/MyNotification/MyNotification';
 import {
-  ErrorAlert,
-  ThemaIcon,
-  DetailPage,
-  MyNotifications,
-  PageContent,
-  PageHeading,
-  Pagination,
-} from '../../components';
+  OverviewPageV2,
+  PageContentCell,
+  PageContentV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { PaginationV2 } from '../../components/Pagination/PaginationV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 
 const PAGE_SIZE = 12;
 
-export default function MyNotificationsPage() {
+export function MyNotificationsPage() {
   const { NOTIFICATIONS } = useAppStateGetter();
-  const notifications = useAppStateNotifications();
+  const { notifications, total } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const currentPage = useMemo(() => {
     if (!page) {
@@ -32,13 +33,12 @@ export default function MyNotificationsPage() {
     return parseInt(page, 10);
   }, [page]);
 
-  const itemsPaginated = useMemo(() => {
+  const notificationsPaginated = useMemo(() => {
     const startIndex = currentPage - 1;
     const start = startIndex * PAGE_SIZE;
     const end = start + PAGE_SIZE;
     return notifications.slice(start, end);
   }, [currentPage, notifications]);
-  const total = notifications.length;
 
   useEffect(() => {
     window.scrollBy({
@@ -49,56 +49,50 @@ export default function MyNotificationsPage() {
   }, [currentPage]);
 
   return (
-    <DetailPage className={styles.MyNotifications}>
-      <PageHeading
-        backLink={{
-          to: AppRoutes.HOME,
-          title: 'Home',
-        }}
-        className={styles.MainHeader}
-        icon={<ThemaIcon />}
-      >
-        Actueel
-      </PageHeading>
-      <PageContent>
-        {isError(NOTIFICATIONS) && (
-          <ErrorAlert>
-            Niet alle updates kunnen op dit moment worden getoond.
-          </ErrorAlert>
-        )}
-      </PageContent>
-      {total > PAGE_SIZE && (
-        <PageContent>
-          <Pagination
-            className={styles.Pagination}
-            totalCount={total}
-            pageSize={PAGE_SIZE}
-            currentPage={currentPage}
-            onPageClick={(page) => {
-              history.replace(generatePath(AppRoutes.NOTIFICATIONS, { page }));
-            }}
-          />
-        </PageContent>
-      )}
-      <MyNotifications
-        isLoading={isLoading(NOTIFICATIONS)}
-        items={itemsPaginated}
-        noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
-        trackCategory="Actueel overzicht"
-      />
-      {total > PAGE_SIZE && (
-        <PageContent>
-          <Pagination
-            className={styles.Pagination}
-            totalCount={total}
-            pageSize={PAGE_SIZE}
-            currentPage={currentPage}
-            onPageClick={(page) => {
-              history.replace(generatePath(AppRoutes.NOTIFICATIONS, { page }));
-            }}
-          />
-        </PageContent>
-      )}
-    </DetailPage>
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2>Actueel</PageHeadingV2>
+        <PageContentCell>
+          {isError(NOTIFICATIONS) && (
+            <ErrorAlert className="ams-mb--sm">
+              Niet alle updates kunnen op dit moment worden getoond.
+            </ErrorAlert>
+          )}
+          <OrderedList markers={false}>
+            {isLoading(NOTIFICATIONS) && (
+              <OrderedList.Item>
+                <LoadingContent />
+              </OrderedList.Item>
+            )}
+            {!isLoading(NOTIFICATIONS) &&
+              notificationsPaginated.map((notification, index) => {
+                return (
+                  <OrderedList.Item
+                    key={`${notification.themaID}-${notification.id}-${index}`}
+                    className="ams-mb--sm"
+                  >
+                    <MyNotification
+                      notification={notification}
+                      trackCategory="Dashboard / Actueel"
+                    />
+                  </OrderedList.Item>
+                );
+              })}
+          </OrderedList>
+          {total > PAGE_SIZE && (
+            <PaginationV2
+              totalCount={total}
+              pageSize={PAGE_SIZE}
+              onPageClick={(page) => {
+                navigate(
+                  generatePath(AppRoutes.NOTIFICATIONS, { page: `${page}` })
+                );
+              }}
+              currentPage={currentPage}
+            />
+          )}
+        </PageContentCell>
+      </PageContentV2>
+    </OverviewPageV2>
   );
 }

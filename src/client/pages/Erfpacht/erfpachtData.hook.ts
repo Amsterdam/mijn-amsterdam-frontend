@@ -1,91 +1,48 @@
-import { ErfpachtV2DossiersResponse } from '../../../server/services/simple-connect/erfpacht';
-import { isLoading } from '../../../universal/helpers/api';
+import {
+  getTableConfig,
+  linkListItems,
+  listPageParamKind,
+  routes,
+} from './Erfpacht-thema-config';
+import { ErfpachtDossiersResponse } from '../../../server/services/erfpacht/erfpacht-types';
+import { ThemaIDs } from '../../../universal/config/thema';
+import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
-import { useMediumScreen } from '../../hooks/media.hook';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
-type DisplayPropsDossiers = Record<string, string> & {
-  voorkeursadres: string;
-  dossierNummer: string;
-  zaaknummer?: string;
-  wijzigingsAanvragen?: string;
-};
+export function useErfpachtThemaData() {
+  const { ERFPACHT } = useAppStateGetter();
+  const erfpachtData = ERFPACHT.content as ErfpachtDossiersResponse | null;
 
-type DisplayPropsFacturen = Record<string, string> & {
-  dossierAdres?: string;
-  factuurNummer: string;
-  formattedFactuurBedrag: string;
-  status?: string;
-  vervalDatum: string;
-};
+  // Dossiers
+  const dossiersBase = erfpachtData?.dossiers ?? null;
 
-export function useErfpachtV2Data() {
-  const { ERFPACHTv2 } = useAppStateGetter();
-  const isMediumScreen = useMediumScreen();
-  const erfpachtData = ERFPACHTv2.content as ErfpachtV2DossiersResponse;
-  const dossiersBase = erfpachtData?.dossiers;
   const dossiers = addLinkElementToProperty(
     dossiersBase?.dossiers ?? [],
     'voorkeursadres'
   );
-  const openFacturenBase = erfpachtData?.openstaandeFacturen;
+
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.ERFPACHT);
+
+  // Facturen
+  const openFacturenBase = erfpachtData?.openstaandeFacturen ?? null;
   const openFacturen = openFacturenBase?.facturen ?? [];
-
-  let displayPropsDossiers: DisplayPropsDossiers | null = null;
-  const titleDossiers = erfpachtData?.titelDossiersKop;
-  let displayPropsOpenFacturen: Partial<DisplayPropsFacturen> | null = null;
-  let displayPropsAlleFacturen: DisplayPropsFacturen | null = null;
-  const titleOpenFacturen = erfpachtData?.titelOpenFacturenKop;
-
-  if (dossiersBase) {
-    displayPropsDossiers = {
-      voorkeursadres: dossiersBase.titelVoorkeursAdres,
-      dossierNummer: dossiersBase.titelDossiernummer,
-    };
-
-    if (!!dossiers?.length && 'zaaknummer' in dossiers[0]) {
-      displayPropsDossiers.zaaknummer = dossiersBase.titelZaakNummer;
-    }
-    if (!!dossiers?.length && 'wijzigingsAanvragen' in dossiers[0]) {
-      displayPropsDossiers.wijzigingsAanvragen =
-        dossiersBase.titelWijzigingsAanvragen;
-    }
-  }
-
-  if (openFacturenBase) {
-    if (isMediumScreen) {
-      displayPropsOpenFacturen = {
-        dossierAdres: openFacturenBase.titelFacturenDossierAdres,
-      };
-    }
-    displayPropsOpenFacturen = {
-      ...displayPropsOpenFacturen,
-      factuurNummer: openFacturenBase.titelFacturenNummer,
-      formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
-      status: openFacturenBase.titelFacturenStatus,
-      vervalDatum: openFacturenBase.titelFacturenVervaldatum,
-    };
-  }
-
-  if (openFacturenBase) {
-    displayPropsAlleFacturen = {
-      factuurNummer: openFacturenBase.titelFacturenNummer,
-      formattedFactuurBedrag: openFacturenBase.titelFacturenFactuurBedrag,
-      status: openFacturenBase.titelFacturenStatus,
-      vervalDatum: openFacturenBase.titelFacturenVervaldatum,
-    };
-  }
+  const tableConfig = getTableConfig({ erfpachtData });
 
   return {
-    isMediumScreen,
-    ERFPACHTv2,
+    title: ThemaTitles.ERFPACHT,
+    erfpachtData,
+    relatieCode: erfpachtData?.relatieCode,
     openFacturen,
     dossiers,
-    displayPropsDossiers,
-    displayPropsOpenFacturen,
-    displayPropsAlleFacturen,
-    titleDossiers,
-    titleOpenFacturen,
-    isLoading: isLoading(ERFPACHTv2),
+    isLoading: isLoading(ERFPACHT),
+    isError: isError(ERFPACHT),
+    linkListItems,
+    tableConfig,
+    listPageParamKind,
+    routes,
+    breadcrumbs,
   };
 }

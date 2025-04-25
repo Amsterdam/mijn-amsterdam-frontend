@@ -1,29 +1,33 @@
-import { Grid, Link, Paragraph } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router-dom';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
+import { useParams } from 'react-router';
 
+import { THEMA_DETAIL_TITLE_DEFAULT } from './toeristischeVerhuur-thema-config';
 import styles from './ToeristischeVerhuurDetail.module.scss';
 import { useToeristischeVerhuurThemaData } from './useToeristischeVerhuur.hook';
-import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
+import { ToeristischeVerhuurVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { getFullAddress, getFullName } from '../../../universal/helpers/brp';
 import { Datalist, Row, RowSet } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
+import { PageContentCell } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook';
 
 function getMailBody(
   vergunning: ToeristischeVerhuurVergunning,
   fullName: string,
   fullAddress: string
 ) {
-  return `Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.zaaknummer} op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0A${fullName}%0D%0A%0D%0A${fullAddress}`;
+  return `Geachte heer/mevrouw,%0D%0A%0D%0AHierbij verzoek ik u om het [document type] document van de vergunning met zaaknummer ${vergunning.identifier} op te sturen.%0D%0A%0D%0AMet vriendelijke groet,%0D%0A%0D%0A${fullName}%0D%0A%0D%0A${fullAddress}`;
 }
 
 function getMailSubject(vergunning: ToeristischeVerhuurVergunning) {
-  return `${vergunning.zaaknummer} - Document opvragen`;
+  return `${vergunning.identifier} - Document opvragen`;
 }
 
-function DocumentInfo({
+function BnBDocumentInfo({
   vergunning,
 }: {
   vergunning: ToeristischeVerhuurVergunning;
@@ -58,25 +62,6 @@ function DocumentInfo({
   );
 }
 
-interface VerhuurDocumentListProps {
-  vergunning: ToeristischeVerhuurVergunning;
-}
-
-function VerhuurDocumentList({ vergunning }: VerhuurDocumentListProps) {
-  return (
-    <>
-      <DocumentListV2
-        documents={vergunning.documents}
-        columns={['', '']}
-        className="ams-mb--sm"
-      />
-      {vergunning.title === 'Vergunning bed & breakfast' && (
-        <DocumentInfo vergunning={vergunning} />
-      )}
-    </>
-  );
-}
-
 type DetailPageContentProps = {
   vergunning: ToeristischeVerhuurVergunning;
 };
@@ -85,7 +70,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
   const rows: Array<Row | RowSet> = [
     {
       label: 'Gemeentelijk zaaknummer',
-      content: vergunning.zaaknummer,
+      content: vergunning.identifier,
     },
     {
       rows: [
@@ -100,21 +85,17 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
           className: styles.VanTot_Col2,
         },
       ],
-      isVisible: vergunning.result === 'Verleend',
+      isVisible: vergunning.decision === 'Verleend',
     },
     {
       label: 'Adres',
-      content: (
-        <>
-          <AddressDisplayAndModal address={vergunning.adres ?? ''} />
-        </>
-      ),
-      isVisible: !!vergunning.adres,
+      content: <AddressDisplayAndModal address={vergunning.location ?? ''} />,
+      isVisible: !!vergunning.location,
     },
     {
       label: 'Resultaat',
-      content: vergunning.result,
-      isVisible: !!(vergunning.result && vergunning.dateDecision),
+      content: vergunning.decision,
+      isVisible: !!(vergunning.decision && vergunning.dateDecision),
     },
   ];
 
@@ -123,7 +104,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
   return (
     <>
       {isVakantieVerhuur && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Paragraph>
             Vakantieverhuur kunt u melden en annuleren via{' '}
             <Link
@@ -135,50 +116,96 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
             </Link>
             .
           </Paragraph>
-        </Grid.Cell>
+        </PageContentCell>
       )}
       {!!rows.length && (
-        <Grid.Cell span="all">
+        <PageContentCell>
           <Datalist rows={rows} />
-        </Grid.Cell>
+        </PageContentCell>
       )}
-
-      <Grid.Cell span={8}>
-        <Datalist
-          rows={[
-            {
-              label: 'Document',
-              content: <VerhuurDocumentList vergunning={vergunning} />,
-            },
-          ]}
-        />
-      </Grid.Cell>
     </>
   );
 }
 
-export function ToeristischeVerhuurDetail() {
-  const { vergunningen, isError, isLoading, title, routes } =
+export function ToeristischeVerhuurDetailPagina() {
+  const { vergunningen, isError, isLoading, breadcrumbs } =
     useToeristischeVerhuurThemaData();
   const { id } = useParams<{ id: string }>();
-  const vergunning = vergunningen?.find((item) => item.id === id) ?? null;
+  const vergunning = vergunningen.find((v) => v.id === id);
+  const isBnBVergunning = vergunning?.title === 'Vergunning bed & breakfast';
+  const fetchDocumentsUrl = isBnBVergunning
+    ? undefined
+    : vergunning?.fetchDocumentsUrl;
+
+  let vergunningDocuments = isBnBVergunning ? vergunning.documents : [];
+
+  const {
+    documents,
+    isLoading: isLoadingDocuments,
+    isError: isErrorDocuments,
+  } = useVergunningDocumentList(fetchDocumentsUrl);
+
+  if (!isBnBVergunning) {
+    vergunningDocuments = documents;
+  }
 
   return (
-    <ThemaDetailPagina<ToeristischeVerhuurVergunning>
-      title={vergunning?.title ?? 'Vergunning toeristische verhuur'}
+    <ThemaDetailPagina
+      title={vergunning?.title ?? THEMA_DETAIL_TITLE_DEFAULT}
       zaak={vergunning}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={
-        vergunning && <DetailPageContent vergunning={vergunning} />
+      pageContentMain={
+        vergunning && (
+          <>
+            <DetailPageContent vergunning={vergunning} />
+            <PageContentCell spanWide={8}>
+              <Datalist
+                rows={[
+                  {
+                    label: 'Document',
+                    content: (
+                      <>
+                        {!isBnBVergunning &&
+                          !isLoadingDocuments &&
+                          !isErrorDocuments &&
+                          !vergunningDocuments.length && (
+                            <Paragraph>Geen document beschikbaar.</Paragraph>
+                          )}
+                        {isErrorDocuments && (
+                          <Paragraph>Documenten ophalen is mislukt.</Paragraph>
+                        )}
+                        {isLoadingDocuments && <LoadingContent />}
+                        {!isLoadingDocuments && !isLoading && (
+                          <>
+                            {!!vergunningDocuments.length && (
+                              <DocumentListV2
+                                documents={vergunningDocuments}
+                                columns={['', '']}
+                                className={
+                                  vergunning.title ===
+                                  'Vergunning bed & breakfast'
+                                    ? 'ams-mb--sm'
+                                    : ''
+                                }
+                              />
+                            )}
+                            {vergunning.title ===
+                              'Vergunning bed & breakfast' && (
+                              <BnBDocumentInfo vergunning={vergunning} />
+                            )}
+                          </>
+                        )}
+                      </>
+                    ),
+                  },
+                ]}
+              />
+            </PageContentCell>
+          </>
+        )
       }
-      backLink={{
-        title: title,
-        to: routes.themaPage,
-      }}
-      documentPathForTracking={(document) =>
-        `/downloads/toeristische-verhuur/vergunning/${vergunning?.title}/${document.title.split(/\n/)[0]}`
-      }
+      breadcrumbs={breadcrumbs}
     />
   );
 }

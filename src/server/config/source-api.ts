@@ -2,7 +2,14 @@ import https from 'https';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { ONE_HOUR_MS, ONE_MINUTE_MS, ONE_SECOND_MS } from './app';
+import {
+  BFF_REQUEST_CACHE_ENABLED,
+  ONE_HOUR_MS,
+  ONE_MINUTE_MS,
+  ONE_SECOND_MS,
+} from './app';
+import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Jeugd/Jeugd-thema-config';
+import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
@@ -23,6 +30,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * In this case we can use a cacheKey. !!!!!Be sure this key is unique to the visitor.!!!!!! The for example the requestID parameter can be used.
    */
   cacheKey?: string;
+  enableCache?: boolean;
   /**
    * If true the token passed via `authProfileAndToken` will be sent via { Authorization: `Bearer ${authProfileAndToken.token}` } with the request.
    * If this flag _and_ a custom Authorization header is configured for a request, the custom Header takes presedence.
@@ -38,7 +46,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 }
 
 /* eslint-disable no-magic-numbers */
-export const DEFAULT_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
+export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 /* eslint-enable no-magic-numbers */
 
@@ -46,6 +54,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
   method: 'get',
   cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
+  enableCache: BFF_REQUEST_CACHE_ENABLED,
   postponeFetch: false,
   passthroughOIDCToken: false,
   responseType: 'json',
@@ -72,7 +81,6 @@ export type SourceApiKey =
   | 'DECOS_API'
   | 'ENABLEU_2_SMILE'
   | 'ERFPACHT'
-  | 'ERFPACHTv2'
   | 'GPASS'
   | 'KREFIA'
   | 'KVK'
@@ -86,12 +94,12 @@ export type SourceApiKey =
   | 'SUBSIDIE'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
-  | 'VERGUNNINGEN'
   | 'WPI_AANVRAGEN'
   | 'WPI_E_AANVRAGEN'
   | 'WPI_SPECIFICATIES'
   | 'ZORGNED_AV'
-  | 'ZORGNED_JZD';
+  | 'ZORGNED_JZD'
+  | 'ZORGNED_LEERLINGENVERVOER';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -125,7 +133,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': 'JZD',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'JZD' : undefined,
     },
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
@@ -135,13 +143,27 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': 'AV',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'AV' : undefined,
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
     postponeFetch: !FeatureToggle.hliThemaActive,
+  },
+  ZORGNED_LEERLINGENVERVOER: {
+    method: 'post',
+    url: `${getFromEnv('BFF_ZORGNED_API_BASE_URL')}`,
+    headers: {
+      Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
+      'Content-type': 'application/json; charset=utf-8',
+      'X-Mams-Api-User': IS_DEVELOPMENT ? 'LLV' : undefined,
+    },
+    httpsAgent: new https.Agent({
+      cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
+      key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
+    }),
+    postponeFetch: !zorgnedLeerlingenvervoerActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
@@ -202,11 +224,6 @@ export const ApiConfig: ApiDataRequestConfig = {
       'Content-type': 'application/json; charset=utf-8',
     },
   },
-  VERGUNNINGEN: {
-    url: `${getFromEnv('BFF_VERGUNNINGEN_API_BASE_URL')}/decosjoin/getvergunningen`,
-    postponeFetch: !FeatureToggle.vergunningenActive,
-    passthroughOIDCToken: true,
-  },
   POWERBROWSER: {
     method: 'POST',
     url: `${getFromEnv('BFF_POWERBROWSER_API_URL')}`,
@@ -231,7 +248,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
-    postponeFetch: !FeatureToggle.cmsFooterActive,
+    postponeFetch: !FeatureToggle.useCMSFooterStaticDataBackup,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
@@ -241,23 +258,15 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
     passthroughOIDCToken: true,
   },
-  ERFPACHT: {
-    url: `${getFromEnv('BFF_MIJN_ERFPACHT_API_URL')}`,
-    // NOTE: Temporarily disable https validation until we solve the cert verification error. See also: MIJN-9122
-    httpsAgent: new https.Agent({
-      rejectUnauthorized: false,
-    }),
-    postponeFetch: !FeatureToggle.mijnErfpachtActive,
-  },
   BAG: {
     url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
   },
-  ERFPACHTv2: {
+  ERFPACHT: {
     url: getFromEnv('BFF_ERFPACHT_API_URL'),
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !FeatureToggle.erfpachtV2EndpointActive ||
+      !FeatureToggle.erfpachtEndpointActive ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',

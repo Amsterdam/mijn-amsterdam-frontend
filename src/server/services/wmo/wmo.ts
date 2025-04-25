@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
@@ -6,7 +6,6 @@ import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -20,10 +19,12 @@ import {
 import { WMOVoorzieningFrontend } from './wmo-config-and-types';
 import { wmoStatusLineItemsConfig } from './wmo-status-line-items';
 import { fetchZorgnedAanvragenWMO } from './wmo-zorgned-service';
+import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
 
-function getDocuments(
+export function getDocuments(
   sessionID: SessionID,
-  aanvraagTransformed: ZorgnedAanvraagTransformed
+  aanvraagTransformed: ZorgnedAanvraagTransformed,
+  withDownloadBFFEndpoint: string
 ) {
   if (
     FeatureToggle.zorgnedDocumentAttachmentsActive &&
@@ -40,7 +41,7 @@ function getDocuments(
         );
         return {
           ...document,
-          url: generateFullApiUrlBFF(BffEndpoints.WMO_DOCUMENT_DOWNLOAD, {
+          url: generateFullApiUrlBFF(withDownloadBFFEndpoint, {
             id: idEncrypted,
           }),
         };
@@ -48,33 +49,6 @@ function getDocuments(
   }
 
   return [];
-}
-
-function getLatestStatusStep(steps: StatusLineItem[]): StatusLineItem | null {
-  const active = steps.findLast((step) => step.isActive);
-  if (active) {
-    return active;
-  }
-  const checked = steps.findLast((step) => step.isChecked);
-  if (checked) {
-    return checked;
-  }
-  return null;
-}
-
-function getLatestStatus(steps: StatusLineItem[]) {
-  return getLatestStatusStep(steps)?.status ?? 'Onbekend';
-}
-
-function getLatestStatusDate(
-  steps: StatusLineItem[],
-  doTransformDate: boolean = false
-) {
-  const date = getLatestStatusStep(steps)?.datePublished;
-  if (date && doTransformDate) {
-    return defaultDateFormat(date);
-  }
-  return date || '-';
 }
 
 function transformVoorzieningenForFrontend(
@@ -115,7 +89,11 @@ function transformVoorzieningenForFrontend(
           title: 'Meer informatie',
           to: route,
         },
-        documents: getDocuments(sessionID, aanvraag),
+        documents: getDocuments(
+          sessionID,
+          aanvraag,
+          BffEndpoints.WMO_DOCUMENT_DOWNLOAD
+        ),
         steps: lineItems,
         // NOTE: Keep! This field is added specifically for the Tips api.
         itemTypeCode: aanvraag.productsoortCode,
@@ -127,7 +105,7 @@ function transformVoorzieningenForFrontend(
         dateDecisionFormatted: dateDecision
           ? defaultDateFormat(dateDecision)
           : '',
-        status: getLatestStatus(lineItems),
+        displayStatus: getLatestStatus(lineItems),
         statusDate: getLatestStatusDate(lineItems),
         statusDateFormatted: getLatestStatusDate(lineItems, true),
         disclaimer,

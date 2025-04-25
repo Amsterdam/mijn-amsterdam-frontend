@@ -1,8 +1,8 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { StadspasFrontend } from './stadspas-types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types';
 
@@ -27,10 +27,10 @@ export function getBudgetNotifications(stadspassen: StadspasFrontend[]) {
   const createNotificationBudget = (
     description: string,
     stadspasPassNumber?: string
-  ) => ({
+  ): MyNotification => ({
     id: `stadspas-budget-notification`,
     datePublished: dateFormat(new Date(), 'yyyy-MM-dd'),
-    thema: Themas.HLI,
+    themaID: ThemaIDs.HLI,
     title: `Stadspas kindtegoed: Maak je tegoed op voor ${defaultDateFormat(
       BUDGET_NOTIFICATION_DATE_END
     )}!`,

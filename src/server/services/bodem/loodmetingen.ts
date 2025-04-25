@@ -1,5 +1,5 @@
 import FormData from 'form-data';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getBodemStatusSteps } from './loodmeting-status-line-items';
 import {
@@ -11,7 +11,7 @@ import {
   LoodMetingen,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
@@ -23,7 +23,6 @@ import {
 } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -95,7 +94,19 @@ function transformLood365Response(
 
         const lowercaseStatus =
           location.Friendlystatus.toLowerCase() as LoodMetingStatusLowerCase;
+        const isProcessed = ['afgewezen', 'afgehandeld'].includes(
+          lowercaseStatus
+        );
 
+        const statusToDecisionMapping = {
+          ontvangen: null,
+          'in behandeling': null,
+          afgehandeld: 'Afgehandeld' as const,
+          afgewezen: 'Afgewezen' as const,
+        };
+        const decision = statusToDecisionMapping[lowercaseStatus];
+
+        const datumAfgehandeld = location?.Reportsenton ?? location?.ReviewedOn;
         const loodMeting: LoodMetingFrontend = {
           id: location.Reference,
           title: 'Lood in de bodem-check',
@@ -107,10 +118,13 @@ function transformLood365Response(
             ? defaultDateFormat(request.RequestedOn)
             : '',
           datumInbehandeling: location?.Workordercreatedon,
-          datumAfgehandeld: location?.Reportsenton,
-          datumBeoordeling: location?.ReviewedOn,
-          status: location.Friendlystatus,
-          processed: ['afgewezen', 'afgehandeld'].includes(lowercaseStatus),
+          datumAfgehandeld: datumAfgehandeld,
+          datumAfgehandeldFormatted: datumAfgehandeld
+            ? defaultDateFormat(datumAfgehandeld)
+            : '',
+          decision: decision,
+          displayStatus: location.Friendlystatus,
+          processed: isProcessed,
           kenmerk: location.Reference,
           aanvraagNummer: request.Reference,
           rapportBeschikbaar: location?.Reportavailable ?? false,
@@ -178,13 +192,14 @@ export async function fetchLoodmetingen(
   const data = getDataForLood365(authProfileAndToken);
 
   const requestConfig = getApiConfig('LOOD_365', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/be_getrequestdetails`;
+    },
     headers: await getLoodApiHeaders(requestID),
     data,
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
   });
-
-  requestConfig.url = `${requestConfig.url}/be_getrequestdetails`;
 
   return requestData<LoodMetingen>(requestConfig, requestID);
 }
@@ -194,14 +209,14 @@ export async function fetchLoodMetingDocument(
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  const requestConfigBase = getApiConfig('LOOD_365');
-  const requestConfig: DataRequestConfig = {
-    ...requestConfigBase,
+  const requestConfig = getApiConfig('LOOD_365', {
     headers: await getLoodApiHeaders(requestID),
     data: {
       workorderid: documentId,
     },
-    url: `${requestConfigBase.url}/be_downloadleadreport`,
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/be_downloadleadreport`;
+    },
     transformResponse: (documentResponseData: LoodMetingDocument) => {
       const data = Buffer.from(documentResponseData.documentbody, 'base64');
       return {
@@ -211,7 +226,7 @@ export async function fetchLoodMetingDocument(
         data,
       };
     },
-  };
+  });
 
   return requestData<DocumentDownloadData>(requestConfig, requestID);
 }
@@ -245,8 +260,11 @@ export async function fetchLoodMetingNotifications(
 }
 
 function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
-  const baseNotification = {
-    thema: Themas.BODEM,
+  const baseNotification: Omit<
+    MyNotification,
+    'title' | 'description' | 'datePublished'
+  > = {
+    themaID: ThemaIDs.BODEM,
     id: meting.kenmerk,
     link: {
       to: meting.link.to,
@@ -254,7 +272,7 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
     },
   };
 
-  switch (meting.status.toLowerCase() as LoodMetingStatusLowerCase) {
+  switch (meting.displayStatus.toLowerCase() as LoodMetingStatusLowerCase) {
     case 'in behandeling': {
       return {
         ...baseNotification,
@@ -276,7 +294,7 @@ function createLoodNotification(meting: LoodMetingFrontend): MyNotification {
         ...baseNotification,
         title: 'Aanvraag lood in de bodem-check afgewezen',
         description: `Uw aanvraag lood in de bodem-check voor ${meting.adres} is afgewezen.`,
-        datePublished: meting.datumBeoordeling!,
+        datePublished: meting.datumAfgehandeld!,
       };
     }
     default: {

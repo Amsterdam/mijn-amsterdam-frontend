@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import { getBudgetNotifications } from './stadspas-config-and-content';
 import {
@@ -7,6 +7,7 @@ import {
   fetchGpassBudgetTransactions,
   fetchGpassDiscountTransactions,
   fetchStadspassen,
+  mutateGpassUnblockPass,
 } from './stadspas-gpass-service';
 import {
   StadspasAdministratieNummer,
@@ -51,21 +52,20 @@ export async function fetchStadspas(
         }
       );
 
-      let blockPassURL = null;
-      if (stadspas.actief) {
-        blockPassURL = generateFullApiUrlBFF(BffEndpoints.STADSPAS_BLOCK_PASS, {
-          transactionsKeyEncrypted,
-        });
-      }
-
       const stadspasFrontend: StadspasFrontend = {
         ...stadspas,
         urlTransactions,
         transactionsKeyEncrypted,
-        blockPassURL,
+        blockPassURL: generateFullApiUrlBFF(BffEndpoints.STADSPAS_BLOCK_PASS, {
+          transactionsKeyEncrypted,
+        }),
+        unblockPassURL: generateFullApiUrlBFF(
+          BffEndpoints.STADSPAS_UNBLOCK_PASS,
+          { transactionsKeyEncrypted }
+        ),
         link: {
           to: generatePath(AppRoutes['HLI/STADSPAS'], {
-            passNumber: stadspas.passNumber,
+            passNumber: `${stadspas.passNumber}`,
           }),
           title: `Stadspas van ${stadspas.owner.firstname}`,
         },
@@ -186,6 +186,20 @@ export async function blockStadspas(
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) => {
       return mutateGpassBlockPass(requestID, pasnummer, administratienummer);
+    },
+    transactionsKeyEncrypted,
+    verifySessionId
+  );
+}
+
+export async function unblockStadspas(
+  requestID: RequestID,
+  transactionsKeyEncrypted: string,
+  verifySessionId?: AuthProfileAndToken['profile']['sid']
+) {
+  return stadspasDecryptAndFetch(
+    (administratienummer, pasnummer) => {
+      return mutateGpassUnblockPass(requestID, pasnummer, administratienummer);
     },
     transactionsKeyEncrypted,
     verifySessionId

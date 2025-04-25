@@ -14,25 +14,31 @@ import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { getAuth, getReturnToUrlZaakStatus } from '../auth/auth-helpers';
+import {
+  getAuth,
+  getReturnToUrlZaakStatus,
+  getZaakStatusQueryParams,
+} from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { RELEASE_VERSION } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import {
-  QueryParamsCMSFooter,
-  fetchCMSCONTENT,
-  fetchCmsFooter,
   fetchDataset,
-  fetchSearchConfig,
-  loadClusterDatasets,
   loadFeatureDetail,
   loadPolylineFeatures,
-} from '../services';
+} from '../services/buurt/buurt';
 import { getDatasetEndpointConfig } from '../services/buurt/helpers';
+import { loadClusterDatasets } from '../services/buurt/supercluster';
 import {
-  QueryParamsMaintenanceNotifications,
+  fetchCMSCONTENT,
+  QueryParamsCMSFooter,
+  fetchCmsFooter,
+  fetchSearchConfig,
+} from '../services/cms/cms-content';
+import {
   fetchMaintenanceNotificationsActual,
-} from '../services/cms-maintenance-notifications';
+  QueryParamsMaintenanceNotifications,
+} from '../services/cms/cms-maintenance-notifications';
 
 export const router = express.Router();
 
@@ -198,9 +204,7 @@ export async function zaakStatusHandler(
   const authType =
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
   const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
-
-  const loginRouteWithReturnTo = `${loginRoute}?returnTo=${AppRoutes.ZAAK_STATUS}&id=${params.id}&thema=${params.thema}`;
-
+  const loginRouteWithReturnTo = `${loginRoute}${getZaakStatusQueryParams(params)}&returnTo=${AppRoutes.ZAAK_STATUS}`;
   return res.redirect(loginRouteWithReturnTo);
 }
 

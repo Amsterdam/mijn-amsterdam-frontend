@@ -5,13 +5,15 @@ import { componentCreator } from '../MockApp';
 import { Bodem } from './Bodem';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
 import { AppState } from '../../../universal/types';
+import { expectTableHeaders } from '../../helpers/test-utils';
 
 const metingen = [
   {
     adres: 'Schipluidenlaan 12A',
     datumAanvraag: '2022-12-01T09:53:11Z',
     datumAanvraagFormatted: '01 december 2022',
-    status: 'Ontvangen',
+    decision: null,
+    displayStatus: 'Ontvangen',
     processed: false,
     kenmerk: 'OL-001478',
     aanvraagNummer: 'AV-001447',
@@ -50,7 +52,8 @@ const metingen = [
     adres: 'Schipluidenlaan 12A',
     datumAanvraag: '2022-12-01T09:53:11Z',
     datumAanvraagFormatted: '01 december 2022',
-    status: 'In behandeling',
+    decision: null,
+    displayStatus: 'In behandeling',
     processed: false,
     kenmerk: 'OL-001478',
     aanvraagNummer: 'AV-001447',
@@ -90,8 +93,10 @@ const metingen = [
     datumAanvraag: '2022-11-29T09:54:22Z',
     datumAanvraagFormatted: '29 november 2022',
     datumInbehandeling: '2022-11-29T09:54:44Z',
-    datumBeoordeling: '2022-12-15T08:52:00Z',
-    status: 'Afgewezen',
+    datumAfgehandeld: '2022-12-15T08:52:00Z',
+    datumAfgehandeldFormatted: '15 december 2022',
+    decision: 'Afgewezen',
+    displayStatus: 'Afgewezen',
     processed: true,
     kenmerk: 'OL-001475',
     aanvraagNummer: 'AV-001446',
@@ -133,8 +138,9 @@ const metingen = [
     datumAanvraagFormatted: '28 november 2022',
     datumInbehandeling: '2022-11-28T12:24:20Z',
     datumAfgehandeld: '2022-11-28T13:53:42Z',
-    datumBeoordeling: '2022-11-28T12:24:19Z',
-    status: 'Afgehandeld',
+    datumAfgehandeldFormatted: '28 november 2022',
+    decision: 'Afgehandeld',
+    displayStatus: 'Afgehandeld',
     processed: true,
     kenmerk: 'OL-001471',
     aanvraagNummer: 'AV-001444',
@@ -208,24 +214,16 @@ describe('Bodem', () => {
       const MockBodem = createComponent(testState);
       const screen = render(<MockBodem />);
 
-      const lopendeAanvraagTableHeader = screen.getByRole('heading', {
-        name: 'Lopende aanvragen',
-      });
-
-      const columnHeaders = ['Adres', 'Aangevraagd', 'Resultaat'];
-
-      const lopendeAanvraagTable = lopendeAanvraagTableHeader.parentElement!;
-      const lopendeAanvraagColumnHeaders =
-        within(lopendeAanvraagTable).getAllByRole('columnheader');
-      expect(
-        lopendeAanvraagColumnHeaders.map((header) => header.textContent)
-      ).toStrictEqual(columnHeaders);
-
-      const afgehandeldeAanvraagColumnHeaders =
-        within(lopendeAanvraagTable).getAllByRole('columnheader');
-      expect(
-        afgehandeldeAanvraagColumnHeaders.map((header) => header.textContent)
-      ).toStrictEqual(columnHeaders);
+      expectTableHeaders(screen, 'Lopende aanvragen', [
+        'Adres',
+        'Aangevraagd op',
+        'Status',
+      ]);
+      expectTableHeaders(screen, 'Afgehandelde aanvragen', [
+        'Adres',
+        'Afgehandeld op',
+        'Resultaat',
+      ]);
     });
 
     test('Items are sorted correctly', () => {
@@ -248,6 +246,9 @@ describe('Bodem', () => {
       const statusPatterns = {
         ontvangen: /Ontvangen/,
         inBehandeling: /In behandeling/,
+      };
+
+      const decisionPatterns = {
         afgehandeld: /Afgehandeld/,
         afgewezen: /Afgewezen/,
       };
@@ -256,34 +257,34 @@ describe('Bodem', () => {
       // If we don't do this, we can run into the situation that these -
       // fail and that the tests afterwards always succeed while the pattern is incorrect.
       {
-        within(lopendeAanvraagTable).getByRole('row', {
+        within(lopendeAanvraagTable).getByRole('cell', {
           name: statusPatterns.ontvangen,
         });
 
-        within(lopendeAanvraagTable).getByRole('row', {
+        within(lopendeAanvraagTable).getByRole('cell', {
           name: statusPatterns.inBehandeling,
         });
 
-        within(afgehandeldeAanvraagTable).getByRole('row', {
-          name: statusPatterns.afgehandeld,
+        within(afgehandeldeAanvraagTable).getByRole('cell', {
+          name: decisionPatterns.afgehandeld,
         });
 
-        within(afgehandeldeAanvraagTable).getByRole('row', {
-          name: statusPatterns.afgewezen,
+        within(afgehandeldeAanvraagTable).getByRole('cell', {
+          name: decisionPatterns.afgewezen,
         });
       }
 
       const lopendeAanvraagRows = within(
         afgehandeldeAanvraagTable
-      ).queryAllByRole('row', {
+      ).queryAllByRole('cell', {
         name: `(${statusPatterns.inBehandeling})|${statusPatterns.ontvangen}`,
       });
       expect(lopendeAanvraagRows.length).toBe(0);
 
       const afgehandeldeAanvraagRows = within(
         lopendeAanvraagTable
-      ).queryAllByRole('row', {
-        name: `(${statusPatterns.afgehandeld})|${statusPatterns.afgewezen}`,
+      ).queryAllByRole('cell', {
+        name: `(${decisionPatterns.afgehandeld})|${decisionPatterns.afgewezen}`,
       });
       expect(afgehandeldeAanvraagRows.length).toBe(0);
     });

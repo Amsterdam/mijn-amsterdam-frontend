@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
 import { MijnBedrijfsGegevensThema } from './ProfileCommercial';
 import { KVKData } from '../../../../server/services/kvk';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { AppState } from '../../../../universal/types';
-import { ThemaTitles } from '../../../config/thema';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
+import { routes } from '../Profile-thema-config';
 
 const responseData = {
   eigenaar: {
@@ -201,8 +199,6 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
-const PAGE_TITLE = ThemaTitles.KVK;
-
 const panelHeadings = [
   'Onderneming',
   'Hoofdvestiging',
@@ -215,14 +211,13 @@ const panelHeadings = [
 ];
 
 describe('<MijnBedrijfsGegevensThema />', () => {
-  const routeEntry = generatePath(AppRoutes.KVK);
-  const routePath = AppRoutes.KVK;
+  const routeEntry = routes.themaPageKVK;
 
   function Component() {
     return (
       <MockApp
         routeEntry={routeEntry}
-        routePath={routePath}
+        routePath={routeEntry}
         component={MijnBedrijfsGegevensThema}
         initializeState={initializeState}
       />
@@ -233,7 +228,11 @@ describe('<MijnBedrijfsGegevensThema />', () => {
     render(<Component />);
     const user = userEvent.setup();
 
-    expect(screen.getByText(PAGE_TITLE)).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: 'Mijn onderneming',
+      })
+    ).toBeInTheDocument();
 
     panelHeadings.forEach((heading) => {
       expect(screen.getByText(heading)).toBeInTheDocument();

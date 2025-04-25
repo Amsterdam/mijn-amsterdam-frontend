@@ -18,11 +18,11 @@ import {
   requestID,
   useSearchIndex,
 } from './useSearch';
-import type { Vergunning } from '../../../server/services';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { bffApi } from '../../../testing/utils';
-import { AppRoutes } from '../../../universal/config/routes';
 import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
+import { routeConfig } from '../MyArea/MyArea-thema-config';
 
 export function setupFetchStub(data: any) {
   return function fetchStub(_url: string) {
@@ -42,7 +42,7 @@ const vergunningenData = [
     status: 'Ontvangen',
     description: 'Amstel 1 GPK aanvraag',
     link: {
-      to: AppRoutes.BUURT + '/vergunningen/detail/1726584505',
+      to: routeConfig.themaPage.path + '/vergunningen/detail/1726584505',
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
   },
@@ -71,21 +71,33 @@ const vergunningenData = [
 ];
 
 const krefiaData = {
-  deepLinks: {
-    budgetbeheer: {
-      title: 'Beheer uw budget op FiBu',
-      url: 'http://host/bbr/2064866/3',
+  deepLinks: [
+    {
+      type: 'budgetbeheer',
+      status: 'unread',
+      link: {
+        title: 'Beheer uw budget op FiBu',
+        to: 'http://host/bbr/2064866/3',
+      },
     },
-    lening: {
-      title:
-        'Kredietsom \u20ac1.689,12 met openstaand termijnbedrag \u20ac79,66',
-      url: 'http://host/pl/2442531/1',
+    {
+      type: 'lening',
+      status: 'unread',
+      link: {
+        title:
+          'Kredietsom \u20ac1.689,12 met openstaand termijnbedrag \u20ac79,66',
+        to: 'http://host/pl/2442531/1',
+      },
     },
-    schuldhulp: {
-      title: 'Afkoopvoorstellen zijn verstuurd',
-      url: 'http://host/srv/2442531/2',
+    {
+      type: 'schuldhulp',
+      status: 'unread',
+      link: {
+        title: 'Afkoopvoorstellen zijn verstuurd',
+        to: 'http://host/srv/2442531/2',
+      },
     },
-  },
+  ],
 };
 
 describe('Search hooks and helpers', () => {
@@ -155,7 +167,7 @@ describe('Search hooks and helpers', () => {
         {
           ...API_SEARCH_CONFIG_DEFAULT,
           stateKey: 'VERGUNNINGEN',
-          displayTitle: (vergunning: Vergunning) => (term: string) => {
+          displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
             return displayPath(term, [vergunning.title, vergunning.identifier]);
           },
           ...apiConfigRemote,
@@ -209,6 +221,7 @@ describe('Search hooks and helpers', () => {
     const config = apiSearchConfigs.find(
       (config) => config.stateKey === 'KREFIA'
     )!;
+
     const remoteConfig = {
       keywords: [
         'lening',
@@ -219,12 +232,13 @@ describe('Search hooks and helpers', () => {
         'budgetbeheer',
       ],
     };
+
     const origVal = config.isEnabled;
     config.isEnabled = false;
 
     const appState = {
       KREFIA: { content: krefiaData, status: 'OK' },
-    } as AppState;
+    } as unknown as AppState;
 
     const pageEntries = generateSearchIndexPageEntries('private', appState, [
       {
@@ -232,8 +246,11 @@ describe('Search hooks and helpers', () => {
         ...remoteConfig,
       },
     ]);
+
     expect(pageEntries).toMatchInlineSnapshot('[]');
+
     config.isEnabled = true;
+
     const pageEntriesEnabled = generateSearchIndexPageEntries(
       'private',
       appState,
@@ -244,6 +261,7 @@ describe('Search hooks and helpers', () => {
         },
       ]
     );
+
     expect(pageEntriesEnabled).toMatchInlineSnapshot(`
       [
         {
@@ -294,7 +312,7 @@ describe('Search hooks and helpers', () => {
   });
 
   test('useSearchIndex <failure>', async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject() as any);
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject());
 
     const wrapper = ({ children }: { children: ReactNode }) => (
       <RecoilRoot
@@ -302,6 +320,7 @@ describe('Search hooks and helpers', () => {
           snapshot.set(appStateAtom, {
             VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
           } as AppState);
+
           snapshot.set(requestID, 1);
         }}
       >

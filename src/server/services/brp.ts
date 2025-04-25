@@ -1,9 +1,18 @@
-import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
-import { generatePath } from 'react-router-dom';
+import {
+  differenceInCalendarDays,
+  differenceInMonths,
+  isAfter,
+} from 'date-fns';
+import { generatePath } from 'react-router';
 import slug from 'slugme';
 
+import {
+  routes,
+  themaIdBRP,
+  themaTitle,
+} from '../../client/pages/Profile/Profile-thema-config';
 import { AppRoutes } from '../../universal/config/routes';
-import { Themas } from '../../universal/config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
 import {
   ApiResponse_DEPRECATED,
   ApiSuccessResponse,
@@ -86,7 +95,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: Themas.BURGERZAKEN,
+        themaID: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         hideDatePublished: true,
         isAlert: true,
@@ -108,7 +117,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: Themas.BURGERZAKEN,
+        themaID: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         id: `${document.documentType}-datum-afloop-binnenkort`,
@@ -129,7 +138,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
-        thema: Themas.BURGERZAKEN,
+        themaID: ThemaIDs.BURGERZAKEN,
         datePublished: compareDate.toISOString(),
         isAlert: true,
         hideDatePublished: true,
@@ -148,7 +157,8 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (adresInOnderzoek) {
     notifications.push({
-      thema: Themas.BRP,
+      themaID: themaIdBRP,
+      themaTitle: themaTitle.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
@@ -158,7 +168,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
           ? 'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.'
           : 'Op dit moment onderzoeken wij op welk adres u nu woont.',
       link: {
-        to: AppRoutes.BRP,
+        to: routes.themaPageBRP,
         title: 'Meer informatie',
       },
     });
@@ -166,14 +176,15 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      thema: Themas.BRP,
+      themaID: themaIdBRP,
+      themaTitle: themaTitle.BRP,
       datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',
       title: 'Vertrokken Onbekend Waarheen (VOW)',
       description: `U staat sinds ${dateLeft} in de Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
-        to: AppRoutes.BRP,
+        to: routes.themaPageBRP,
         title: 'Meer informatie',
       },
     });
@@ -204,6 +215,10 @@ function transformIdentiteitsBewijzen(
         to: route,
         title: document.documentType,
       },
+      displayStatus:
+        document.datumAfloop && isAfter(document.datumAfloop, new Date())
+          ? 'Verlopen'
+          : '',
       steps: [], // Placeholder for status steps. Not used in this project.
     });
   });

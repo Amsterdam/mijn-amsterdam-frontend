@@ -3,7 +3,7 @@ import jose from 'node-jose';
 import { ApiPatternResponseA, fetchService } from './api-service';
 import { IS_TAP } from '../../../universal/config/env';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiErrorResult,
   apiSuccessResult,
@@ -118,18 +118,20 @@ function transformCleopatraResponse(response: CleopatraMessage[]) {
         // Melding / Notification
         case message.categorie === 'M1' || message.categorie === 'F3':
           {
-            let thema = Themas.MILIEUZONE;
+            let themaID:
+              | typeof ThemaIDs.MILIEUZONE
+              | typeof ThemaIDs.OVERTREDINGEN = ThemaIDs.MILIEUZONE;
 
             if (
               FeatureToggle.overtredingenActive &&
               message.thema === 'Overtredingen'
             ) {
-              thema = Themas.OVERTREDINGEN;
+              themaID = ThemaIDs.OVERTREDINGEN;
             }
 
             notifications.push({
-              id: `${thema}-${message.categorie}`,
-              thema,
+              id: `${themaID}-${message.categorie}`,
+              themaID: themaID,
               title: message.titel,
               datePublished: message.datum,
               description: message.omschrijving,
@@ -218,7 +220,7 @@ export async function fetchMilieuzoneNotifications(
     return apiSuccessResult({
       notifications:
         response.content?.notifications?.filter(
-          (notifiction) => notifiction.thema === Themas.MILIEUZONE
+          (notifiction) => notifiction.themaID === ThemaIDs.MILIEUZONE
         ) ?? [],
     });
   }
@@ -236,7 +238,7 @@ export async function fetchOvertredingenNotifications(
     return apiSuccessResult({
       notifications:
         response.content?.notifications?.filter(
-          (notifiction) => notifiction.thema === Themas.OVERTREDINGEN
+          (notifiction) => notifiction.themaID === ThemaIDs.OVERTREDINGEN
         ) ?? [],
     });
   }

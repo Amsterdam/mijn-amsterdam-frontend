@@ -1,57 +1,65 @@
-import { Grid } from '@amsterdam/design-system-react';
-import { generatePath } from 'react-router-dom';
-
 import { useBodemDetailData } from './useBodemDetailData.hook';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { Datalist } from '../../components/Datalist/Datalist';
+import { Datalist, Row } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
-import ThemaIcon from '../../components/ThemaIcon/ThemaIcon';
-import { ThemaTitles } from '../../config/thema';
+import { PageContentCell } from '../../components/Page/Page';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function LoodMeting() {
-  const { meting, isLoading, isError } = useBodemDetailData();
+  const { meting, isLoading, isError, breadcrumbs } = useBodemDetailData();
 
   const BodemDetailRows = (meting: LoodMetingFrontend) => {
-    return [
-      { label: 'Kenmerk', content: meting.kenmerk },
-      {
+    const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
+
+    if (meting.adres) {
+      rows.push({
         label: 'Locatie',
-        content: !!meting.adres && (
-          <AddressDisplayAndModal address={meting.adres} />
-        ),
-      },
-      {
+        content: <AddressDisplayAndModal address={meting.adres} />,
+      });
+    }
+
+    if (meting.document) {
+      rows.push({
         label: 'Document',
-        content: !!meting.document && (
-          <DocumentLink document={meting.document} />
-        ),
-      },
-    ].filter((row) => !!row.content);
+        content: <DocumentLink document={meting.document} />,
+      });
+    }
+
+    if (meting.decision === 'Afgewezen') {
+      rows.push(
+        ...[
+          {
+            label: 'Resultaat',
+            content: meting.decision,
+          },
+          {
+            label: 'Reden afwijzing',
+            content: meting.redenAfwijzing,
+          },
+        ]
+      );
+    }
+
+    return rows.filter((row) => !!row.content);
   };
 
   function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
     return (
-      <Grid.Cell span="all">
+      <PageContentCell>
         <Datalist rows={BodemDetailRows(meting)} />
-      </Grid.Cell>
+      </PageContentCell>
     );
   }
 
   return (
     <ThemaDetailPagina
       title="Lood in bodem-check"
-      icon={<ThemaIcon />}
       zaak={meting}
-      backLink={{
-        to: generatePath(AppRoutes.BODEM),
-        title: ThemaTitles.BODEM,
-      }}
+      breadcrumbs={breadcrumbs}
       isError={isError}
       isLoading={isLoading}
-      pageContentTop={!!meting && <BodemDetailContent meting={meting} />}
+      pageContentMain={!!meting && <BodemDetailContent meting={meting} />}
     />
   );
 }

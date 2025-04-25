@@ -1,4 +1,3 @@
-import { Themas } from '../../../../universal/config/thema';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import { createProcessNotification, isRequestProcessActual } from '../helpers';
 import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
@@ -61,6 +60,7 @@ export const requestProcess: WpiRequestProcessLabels = {
               href=${
                 WpiExternalUrls.BijstandsUitkeringAanvragenRechtenEnPlichten
               }
+              class="ams-link
               rel="external noopener noreferrer"
             >
               rechten en plichten
@@ -137,6 +137,7 @@ export const requestProcess: WpiRequestProcessLabels = {
             <p>
               <a
                 href=${WpiExternalUrls.BetaalDataUitkering}
+                class="ams-link"
                 rel="external noopener noreferrer"
               >
                 Bekijk hier de betaaldata van de uitkering
@@ -162,12 +163,7 @@ export function getNotifications(
     })
     .flatMap((aanvraag) =>
       aanvraag.steps.map((step) =>
-        createProcessNotification(
-          aanvraag,
-          step,
-          requestProcess,
-          Themas.INKOMEN
-        )
+        createProcessNotification(aanvraag, step, requestProcess)
       )
     );
 

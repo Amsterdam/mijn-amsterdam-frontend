@@ -1,5 +1,7 @@
 import { getThemaTitle } from './helpers';
 import {
+  kindTegoedLinkListItem,
+  linkListItems,
   listPageParamKind,
   listPageTitle,
   routes,
@@ -7,6 +9,7 @@ import {
 } from './HLI-thema-config';
 import { useStadspassen } from './useStadspassen.hook';
 import { HLIRegeling } from '../../../server/services/hli/hli-regelingen-types';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   hasFailedDependency,
   isError,
@@ -14,6 +17,7 @@ import {
 } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();
@@ -24,7 +28,7 @@ export function useHliThemaData() {
     'title',
     true
   );
-
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.HLI);
   const hasRegelingen = !!regelingen.length;
   const title = getThemaTitle(hasStadspas, hasRegelingen);
   const hasKindtegoed = stadspassen?.some((stadspas) =>
@@ -57,5 +61,9 @@ export function useHliThemaData() {
     tableConfig,
     listPageTitle,
     listPageParamKind,
+    linkListItems: hasKindtegoed
+      ? [...linkListItems, kindTegoedLinkListItem]
+      : linkListItems,
+    breadcrumbs,
   };
 }

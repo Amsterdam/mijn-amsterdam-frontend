@@ -1,13 +1,13 @@
 import { differenceInMonths } from 'date-fns';
 
+import { themaId } from '../../../../client/pages/Inkomen/Inkomen-thema-config';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
-import { Themas } from '../../../../universal/config/thema';
 import {
   dateFormat,
   defaultDateFormat,
 } from '../../../../universal/helpers/date';
 import { MyNotification } from '../../../../universal/types';
-import { ServiceResults } from '../../tips/tip-types';
+import { ServiceResults } from '../../content-tips/tip-types';
 import { addApiBasePathToDocumentUrls, documentDownloadName } from '../helpers';
 import type {
   WpiIncomeSpecification,
@@ -39,7 +39,7 @@ function transformIncomeSpecificationNotification(
     return {
       id: 'nieuwe-jaaropgave',
       datePublished: item.datePublished,
-      thema: Themas.INKOMEN,
+      themaID: themaId,
       title: 'Nieuwe jaaropgave',
       description: `Uw ${item.title} staat voor u klaar.`,
       link: {
@@ -52,7 +52,7 @@ function transformIncomeSpecificationNotification(
   return {
     id: 'nieuwe-uitkeringsspecificatie',
     datePublished: item.datePublished,
-    thema: Themas.INKOMEN,
+    themaID: themaId,
     title: 'Nieuwe uitkeringsspecificatie',
     description: `Uw uitkeringsspecificatie van ${dateFormat(
       item.datePublished,
@@ -117,7 +117,7 @@ export function transformIncomeSpecificationItem(
   sessionID: SessionID,
   item: WpiIncomeSpecification
 ): WpiIncomeSpecificationTransformed {
-  const displayDatePublished = defaultDateFormat(item.datePublished);
+  const datePublishedFormatted = defaultDateFormat(item.datePublished);
   const [{ url }] = addApiBasePathToDocumentUrls(sessionID, [item]);
   const categoryFromSource = item.variant;
 
@@ -126,6 +126,6 @@ export function transformIncomeSpecificationItem(
     category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
     url,
     download: documentDownloadName(item),
-    displayDatePublished,
+    datePublishedFormatted,
   };
 }

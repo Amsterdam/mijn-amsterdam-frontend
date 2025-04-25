@@ -1,80 +1,92 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
-import { Link, generatePath, useHistory } from 'react-router-dom';
+import { Heading, OrderedList } from '@amsterdam/design-system-react';
+import { generatePath, useLocation, useNavigate } from 'react-router';
 
 import styles from './Dashboard.module.scss';
+import { WelcomeHeading } from './WelcomHeading';
 import { AppRoutes } from '../../../universal/config/routes';
 import { isLoading } from '../../../universal/helpers/api';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
+import { MyAreaDashboard } from '../../components/MyArea/MyAreaDashboard';
+import { MyNotification } from '../../components/MyNotification/MyNotification';
+import { MyThemasPanel } from '../../components/MyThemasPanel/MyThemasPanel';
 import {
-  DirectLinks,
-  MyNotifications,
-  MyThemasPanel,
-  Page,
-  PageHeading,
-} from '../../components';
-import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
+  PageContentCell,
+  PageContentV2,
+  PageV2,
+} from '../../components/Page/Page';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
-export default function Dashboard() {
+export function Dashboard() {
   const appState = useAppStateGetter();
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { NOTIFICATIONS } = appState;
-  const notifications = useAppStateNotifications();
-
-  const notificationItems = useMemo(() => {
-    return notifications.slice(0, MAX_NOTIFICATIONS_VISIBLE);
-  }, [notifications]);
+  const { notifications, total } = useAppStateNotifications(
+    MAX_NOTIFICATIONS_VISIBLE
+  );
 
   const isPhoneScreen = usePhoneScreen();
-  const NOTIFICATIONSTotal = notifications.length;
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useThemaMenuItems();
 
-  const profileType = useProfileTypeValue();
-
   useEffect(() => {
-    if (history.location.search) {
-      history.replace(history.location.pathname);
+    if (location.search) {
+      navigate(location.pathname, { replace: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <>
-      <Page className={styles.Dashboard}>
-        <PageHeading>
-          <Link
-            className={styles.MyNotificationsHeadingLink}
-            to={generatePath(AppRoutes.NOTIFICATIONS)}
-          >
-            Actueel
-          </Link>
-        </PageHeading>
-        <div className={styles.TopContentContainer}>
-          <MyNotifications
-            items={notificationItems}
-            showMoreLink={NOTIFICATIONSTotal > MAX_NOTIFICATIONS_VISIBLE}
-            isLoading={isLoading(NOTIFICATIONS)}
-            trackCategory="Dashboard / Actueel"
-            isEmbedded={true}
-          />
-          <MyThemasPanel
-            isLoading={isMyThemasLoading}
-            items={myThemaItems}
-            title="Mijn thema's"
-            trackCategory="Dashboard / Mijn Thema's"
-          />
-        </div>
-        {!isPhoneScreen && <MyAreaDashboard />}
-        <DirectLinks profileType={profileType} />
-      </Page>
-    </>
+    <PageV2 className={styles.Dashboard}>
+      <PageContentV2>
+        <WelcomeHeading />
+        <PageContentCell spanWide={6}>
+          <Heading level={2} size="level-3" className="ams-mb--sm">
+            Recente berichten{' '}
+            {total > notifications.length && (
+              <MaRouterLink href={generatePath(AppRoutes.NOTIFICATIONS)}>
+                Alle updates
+              </MaRouterLink>
+            )}
+          </Heading>
+          <OrderedList markers={false}>
+            {isLoading(NOTIFICATIONS) && (
+              <OrderedList.Item>
+                <LoadingContent />
+              </OrderedList.Item>
+            )}
+            {!isLoading(NOTIFICATIONS) &&
+              notifications.map((notification, index) => {
+                return (
+                  <OrderedList.Item
+                    key={`${notification.themaID}-${notification.id}-${index}`}
+                    className="ams-mb--sm"
+                  >
+                    <MyNotification
+                      notification={notification}
+                      trackCategory="Dashboard / Actueel"
+                    />
+                  </OrderedList.Item>
+                );
+              })}
+          </OrderedList>
+        </PageContentCell>
+        <PageContentCell startWide={8} spanWide={5}>
+          <Heading level={2} size="level-3" className="ams-mb--sm">
+            Mijn thema&apos;s
+          </Heading>
+          <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />
+        </PageContentCell>
+      </PageContentV2>
+      {!isPhoneScreen && <MyAreaDashboard />}
+    </PageV2>
   );
 }

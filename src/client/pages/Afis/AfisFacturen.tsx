@@ -1,14 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { AfisDisclaimer, AfisDisclaimerOvergedragenFacturen } from './Afis';
 import styles from './Afis.module.scss';
 import { useAfisListPageData } from './useAfisThemaData.hook';
-import {
-  AfisFactuur,
-  AfisFactuurState,
-} from '../../../server/services/afis/afis-types';
+import { AfisFactuurState } from '../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
-import { ThemaTitles } from '../../config/thema';
+import { PageContentCell } from '../../components/Page/Page';
 
 function AfisListPageBody({ state }: { state: AfisFactuurState }) {
   switch (state) {
@@ -31,20 +28,24 @@ export function AfisFacturen() {
     isThemaPaginaError,
     isThemaPaginaLoading,
     routes,
+    breadcrumbs,
   } = useAfisListPageData(state);
 
   const listPageTableConfig = facturenTableConfig[state];
   const facturen = facturenListResponse?.facturen ?? [];
 
   return (
-    <ListPagePaginated<AfisFactuur>
+    <ListPagePaginated
       items={facturen}
-      body={<AfisListPageBody state={state} />}
-      backLinkTitle={ThemaTitles.AFIS}
+      pageContentTop={
+        <PageContentCell>
+          <AfisListPageBody state={state} />
+        </PageContentCell>
+      }
       title={listPageTableConfig.title}
       appRoute={routes.listPageFacturen}
       appRouteParams={{ state }}
-      appRouteBack={routes.themaPage}
+      breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isThemaPaginaLoading || isListPageLoading}
       isError={isThemaPaginaError || isListPageError}

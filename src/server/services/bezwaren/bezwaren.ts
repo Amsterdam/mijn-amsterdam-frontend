@@ -1,6 +1,6 @@
 import * as jose from 'jose';
 import memoizee from 'memoizee';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 
 import {
   Bezwaar,
@@ -8,22 +8,22 @@ import {
   BezwaarSourceData,
   BezwaarSourceDocument,
   BezwaarSourceStatus,
-  BezwaarStatus,
   BezwarenSourceResponse,
   Kenmerk,
   OctopusApiResponse,
   kenmerkKey,
 } from './types';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiDependencyError,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification, StatusLineItem } from '../../../universal/types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
@@ -32,7 +32,6 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-import { decryptEncryptedRouteParamAndValidateSessionID } from '../shared/decrypt-route-param';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
@@ -89,7 +88,7 @@ function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
     : 'rol__betrokkeneIdentificatie__natuurlijkPersoon__inpBsn';
 }
 
-function getZaakUrl(zaakId: string) {
+function getZaakUrl(zaakId: Bezwaar['uuid']) {
   return `${process.env.BFF_BEZWAREN_API}/zaken/${zaakId}`;
 }
 
@@ -131,22 +130,32 @@ async function fetchMultiple<T>(
   return response;
 }
 
+const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
+
 function transformBezwaarStatus(
   response: BezwarenSourceResponse<BezwaarSourceStatus>
-): BezwaarStatus[] {
-  const results = response.results;
-  if (Array.isArray(results)) {
-    return results.map((result) => {
-      const statusDatum = new Date(result.datumStatusGezet);
+): StatusLineItem[] {
+  const statussen = response.results;
+
+  if (Array.isArray(statussen)) {
+    const index = statussen.findIndex((s) => s.uuid === EMPTY_UUID);
+    const activeIndex =
+      index > 0 ? index - 1 : index === 0 ? index : statussen.length - 1;
+
+    return statussen.map((status, index) => {
+      const statusDatum = new Date(status.datumStatusGezet);
       const now = new Date();
 
-      const status = {
-        uuid: result.uuid,
-        datum: statusDatum <= now ? result.datumStatusGezet : '',
-        statustoelichting: result.statustoelichting,
+      const statusLineItem: StatusLineItem = {
+        id: status.uuid,
+        datePublished: statusDatum <= now ? status.datumStatusGezet : '',
+        description: '',
+        isChecked: status.uuid !== EMPTY_UUID,
+        isActive: activeIndex === index,
+        status: status.statustoelichting,
       };
 
-      return status;
+      return statusLineItem;
     });
   }
 
@@ -156,7 +165,7 @@ function transformBezwaarStatus(
 async function fetchBezwaarStatus(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: string
+  zaakId: Bezwaar['uuid']
 ) {
   const params = {
     zaak: getZaakUrl(zaakId),
@@ -168,7 +177,7 @@ async function fetchBezwaarStatus(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const statusResponse = await requestData<BezwaarStatus[]>(
+  const statusResponse = await requestData<StatusLineItem[]>(
     requestConfig,
     requestID,
     authProfileAndToken
@@ -192,9 +201,11 @@ function transformBezwarenDocumentsResults(
           id: documentIdEncrypted,
           title: bestandsnaam,
           datePublished: verzenddatum,
-          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, {
-            id: documentIdEncrypted,
-          }),
+          url: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DOCUMENT_DOWNLOAD, [
+            {
+              id: documentIdEncrypted,
+            },
+          ]),
           dossiertype,
         };
       }
@@ -213,7 +224,7 @@ function transformBezwarenDocumentsResults(
 export async function fetchBezwarenDocuments(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakId: string
+  zaakId: Bezwaar['uuid']
 ) {
   const params = {
     page: 1,
@@ -263,41 +274,60 @@ function transformBezwarenResults(
           bezwaarBron.uuid
         );
 
+        const datumResultaat =
+          bezwaarBron.publicatiedatum &&
+          !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
+            ? bezwaarBron.publicatiedatum
+            : null;
+
+        const primairbesluitdatum = getKenmerkValue(
+          bezwaarBron.kenmerken,
+          'besluitdatum'
+        );
+
         const bezwaar: Bezwaar = {
           identificatie: bezwaarBron.identificatie,
+          id: bezwaarBron.uuid,
           uuid: bezwaarBron.uuid,
-          uuidEncrypted: idEncrypted,
+
+          fetchUrl: generateFullApiUrlBFF(BffEndpoints.BEZWAREN_DETAIL, [
+            { id: idEncrypted },
+          ]),
 
           // Wanneer het bezwaar is ontvangen
           ontvangstdatum: bezwaarBron.registratiedatum,
+          ontvangstdatumFormatted: bezwaarBron.registratiedatum
+            ? defaultDateFormat(bezwaarBron.registratiedatum)
+            : null,
           // Wanneer het bezwaar in behandeling is genomen
           startdatum: bezwaarBron.startdatum,
           // Wanneer het bezwaar is afgehandeld
           einddatum: bezwaarBron.einddatum,
 
+          title: `Bezwaar ${bezwaarBron.identificatie}`,
           omschrijving: bezwaarBron.omschrijving,
           toelichting: bezwaarBron.toelichting,
 
           // Laatste status van het bezwaar
-          status: getKenmerkValue(bezwaarBron.kenmerken, 'statustekst'),
+          displayStatus:
+            getKenmerkValue(bezwaarBron.kenmerken, 'statustekst') ?? 'Onbekend',
           statusdatum: getKenmerkValue(bezwaarBron.kenmerken, 'statusdatum'),
 
           // Placeholder voor alle (historische) statussen van het bezwaar
-          statussen: [],
+          steps: [],
 
           // Gerelateerd aan het besluit waarop het bezwaar is ingediend.
           primairbesluit: getKenmerkValue(bezwaarBron.kenmerken, 'besluitnr'),
-          primairbesluitdatum: getKenmerkValue(
-            bezwaarBron.kenmerken,
-            'besluitdatum'
-          ),
+          primairbesluitdatum,
+          primairbesluitdatumFormatted: primairbesluitdatum
+            ? defaultDateFormat(primairbesluitdatum)
+            : null,
 
           // Het resultaat van het bezwaar
-          datumResultaat:
-            bezwaarBron.publicatiedatum &&
-            !['01-01-1753', '1753-01-01'].includes(bezwaarBron.publicatiedatum) // Empty date in Octopus is a date! :D
-              ? bezwaarBron.publicatiedatum
-              : null,
+          datumResultaat,
+          datumResultaatFormatted: datumResultaat
+            ? defaultDateFormat(datumResultaat)
+            : null,
           resultaat: getKenmerkValue(bezwaarBron.kenmerken, 'resultaattekst'),
 
           documenten: [],
@@ -370,7 +400,7 @@ export async function fetchBezwaren(
 
 function createBezwaarNotification(bezwaar: Bezwaar) {
   const notification: MyNotification = {
-    thema: Themas.BEZWAREN,
+    themaID: ThemaIDs.BEZWAREN,
     id: bezwaar.identificatie,
     title: 'Bezwaar ontvangen',
     description: `Wij hebben uw bezwaar ${bezwaar.identificatie} ontvangen.`,
@@ -381,7 +411,7 @@ function createBezwaarNotification(bezwaar: Bezwaar) {
     },
   };
 
-  switch (bezwaar.status) {
+  switch (bezwaar.displayStatus) {
     case 'Beoordeling bezwaarschrift':
       notification.title = 'Beoordeling in behandeling nemen bezwaar';
       notification.description = `Wij kijken of we uw bezwaar ${bezwaar.identificatie} inhoudelijk in behandeling kunnen nemen.`;
@@ -423,58 +453,47 @@ export async function fetchBezwarenNotifications(
 }
 
 export type BezwaarDetail = {
-  statussen: BezwaarStatus[] | null;
+  statussen: StatusLineItem[] | null;
   documents: BezwaarDocument[] | null;
 };
 
 export async function fetchBezwaarDetail(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
-  zaakIdEncrypted: string
+  zaakId: Bezwaar['uuid']
 ) {
-  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
-    zaakIdEncrypted,
-    authProfileAndToken
+  const bezwaarStatusRequest = fetchBezwaarStatus(
+    requestID,
+    authProfileAndToken,
+    zaakId
   );
 
-  if (decryptResult.status === 'OK') {
-    const zaakId = decryptResult.content;
+  const bezwaarDocumentsRequest = fetchBezwarenDocuments(
+    requestID,
+    authProfileAndToken,
+    zaakId
+  );
 
-    const bezwaarStatusRequest = fetchBezwaarStatus(
-      requestID,
-      authProfileAndToken,
-      zaakId
-    );
+  const [statussenResponse, documentsResponse] = await Promise.allSettled([
+    bezwaarStatusRequest,
+    bezwaarDocumentsRequest,
+  ]);
 
-    const bezwaarDocumentsRequest = fetchBezwarenDocuments(
-      requestID,
-      authProfileAndToken,
-      zaakId
-    );
+  const statussen = getSettledResult(statussenResponse);
+  const documents = getSettledResult(documentsResponse);
 
-    const [statussenResponse, documentsResponse] = await Promise.allSettled([
-      bezwaarStatusRequest,
-      bezwaarDocumentsRequest,
-    ]);
+  const failedDependencies = getFailedDependencies({
+    statussen,
+    documents,
+  });
 
-    const statussen = getSettledResult(statussenResponse);
-    const documents = getSettledResult(documentsResponse);
-
-    const failedDependencies = getFailedDependencies({
-      statussen,
-      documents,
-    });
-
-    return apiSuccessResult(
-      {
-        statussen: statussen.content,
-        documents: documents.content,
-      },
-      failedDependencies
-    );
-  }
-
-  return decryptResult;
+  return apiSuccessResult(
+    {
+      statussen: statussen.content,
+      documents: documents.content,
+    },
+    failedDependencies
+  );
 }
 
 export async function fetchBezwaarDocument(
@@ -506,4 +525,5 @@ export async function fetchBezwaarDocument(
 
 export const forTesting = {
   fetchMultiple,
+  transformBezwaarStatus,
 };

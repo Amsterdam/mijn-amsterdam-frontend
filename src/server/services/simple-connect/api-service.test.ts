@@ -99,27 +99,25 @@ describe('simple-connect/api-service', () => {
         {
           url: apiUrlTest,
         },
-        'TEST_THEMA'
+        'INKOMEN'
       );
 
-    expect(responseContentTipsAndNotifications).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "notifications": [
-            {
-              "datePublished": "2022-04-22",
-              "description": "Bekijk deze mooie site eens!",
-              "link": {
-                "title": "Bekijk hier",
-                "to": "https://mijn.amsterdam.nl",
-              },
-              "thema": "TEST_THEMA",
-              "title": "Dingen en zo",
+    expect(responseContentTipsAndNotifications).toStrictEqual({
+      content: {
+        notifications: [
+          {
+            datePublished: '2022-04-22',
+            description: 'Bekijk deze mooie site eens!',
+            link: {
+              title: 'Bekijk hier',
+              to: 'https://mijn.amsterdam.nl',
             },
-          ],
-        },
-        "status": "OK",
-      }
-    `);
+            themaID: 'INKOMEN',
+            title: 'Dingen en zo',
+          },
+        ],
+      },
+      status: 'OK',
+    });
   });
 });

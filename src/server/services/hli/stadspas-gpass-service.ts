@@ -25,12 +25,12 @@ import {
 } from './stadspas-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
-  apiErrorResult,
   ApiResponse_DEPRECATED,
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
   getSettledResult,
+  apiErrorResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import displayAmount from '../../../universal/helpers/text';
@@ -364,11 +364,58 @@ export async function fetchGpassDiscountTransactions(
   );
 }
 
+type PasblokkadeResponse =
+  ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>;
+
 export async function mutateGpassBlockPass(
   requestID: RequestID,
   passNumber: number,
   administratienummer: string
-): Promise<ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>> {
+): Promise<PasblokkadeResponse> {
+  return mutateGpassTogglePassChecked(
+    requestID,
+    passNumber,
+    administratienummer,
+    (pass) => !pass.actief
+  );
+}
+
+export async function mutateGpassUnblockPass(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<PasblokkadeResponse> {
+  return mutateGpassTogglePassChecked(
+    requestID,
+    passNumber,
+    administratienummer,
+    (pas) => pas.actief
+  );
+}
+
+async function mutateGpassTogglePass(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string
+): Promise<PasblokkadeResponse> {
+  const config = getApiConfig('GPASS', {
+    method: 'POST',
+    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
+    headers: getHeaders(administratienummer),
+    enableCache: false,
+    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
+    transformResponse: transformTogglePassResponse,
+  });
+
+  return requestData<PasblokkadeByPasnummer>(config, requestID);
+}
+
+async function mutateGpassTogglePassChecked(
+  requestID: RequestID,
+  passNumber: number,
+  administratienummer: string,
+  sendMutatingRequestPredicate: (pas: StadspasDetailSource) => boolean
+): Promise<PasblokkadeResponse> {
   const passResponse = await fetchStadspasSource(
     requestID,
     passNumber,
@@ -377,32 +424,27 @@ export async function mutateGpassBlockPass(
   if (passResponse.status !== 'OK') {
     return passResponse;
   }
+
   // This may not give unexpected results so we do extra typechecking on the source input.
-  if (
-    typeof passResponse.content?.actief !== 'boolean' ||
-    !passResponse.content.actief
-  ) {
+  if (typeof passResponse.content?.actief !== 'boolean') {
     return apiErrorResult(
-      'The citypass is not active. We cannot unblock an active pass.',
+      "Could not determine 'actief' state of pass because of an invalid response",
       null,
-      HttpStatusCode.Forbidden
+      HttpStatusCode.InternalServerError
     );
   }
 
-  const config = getApiConfig('GPASS', {
-    method: 'POST',
-    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
-    headers: getHeaders(administratienummer),
-    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
-    transformResponse: (pas: StadspasDetailSource) => {
-      if (pas.actief) {
-        throw Error('City pass is still active after trying to block it.');
-      }
-      return { [pas.pasnummer]: pas.actief };
-    },
-  });
+  if (sendMutatingRequestPredicate(passResponse.content)) {
+    return apiSuccessResult(transformTogglePassResponse(passResponse.content));
+  }
 
-  return requestData<PasblokkadeByPasnummer>(config, requestID);
+  return mutateGpassTogglePass(requestID, passNumber, administratienummer);
+}
+
+function transformTogglePassResponse(
+  pas: StadspasDetailSource
+): PasblokkadeByPasnummer {
+  return { [pas.pasnummer]: pas.actief };
 }
 
 export const forTesting = {

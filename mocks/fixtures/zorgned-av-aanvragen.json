@@ -193,7 +193,77 @@
               "resultaat": "toegewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2024-08-01",
-                "datumEindeGeldigheid": "2024-07-31",
+                "datumEindeGeldigheid": "2025-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["123123", "123123", "123123"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B2806767",
+            "omschrijving": "AV-SP Rapportage verkort",
+            "omschrijvingclientportaal": "AV-SP Rapportage verkort",
+            "datumDefinitief": "2024-06-17T11:01:01.083"
+          },
+          {
+            "documentidentificatie": "B2806768",
+            "omschrijving": "AV-SP aanvraag 23-24 toekenning 24-25 - TIJDELIJK",
+            "datumDefinitief": "2024-06-17T11:00:51.177"
+          }
+        ]
+      },
+      {
+        "identificatie": "2707672.b",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2024-12-27",
+          "aanmeldwijze": {
+            "omschrijving": "AV-HLI"
+          },
+          "verwijzer": {
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            },
+            "naam": "AV-cliënt"
+          }
+        },
+        "datumAanmelding": "2024-12-27",
+        "datumAanvraag": "2024-12-27",
+        "beschikking": {
+          "beschikkingNummer": 300985073,
+          "datumAfgifte": "2025-02-17",
+          "beschikteProducten": [
+            {
+              "identificatie": "1204586.b",
+              "product": {
+                "identificatie": "AV-SPM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Stadspas 31-07"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-08-01",
+                "datumEindeGeldigheid": "2026-07-31",
                 "actueel": true,
                 "omvang": {
                   "volume": 1,

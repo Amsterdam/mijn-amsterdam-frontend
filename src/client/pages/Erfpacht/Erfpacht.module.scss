@@ -1,16 +1,9 @@
-@include DesignSystemStyleAdjust();
-
 .OpenFacturenTableThemaPagina {
-  @media screen and (max-width: $ams-breakpoint-medium) {
-    :global {
-      caption.ams-table__caption {
-        font-size: var(--ams-text-level-3-font-size);
-      }
-    }
-  }
   tr {
     th,
     td {
+      vertical-align: top;
+
       // Fix for large cell content and horizontal white space between this and the next cell.
       &:nth-child(3) {
         width: 25%;
@@ -29,8 +22,13 @@
           width: 15%;
         }
       }
-
-      vertical-align: top;
+    }
+  }
+  @media screen and (max-width: $ams-breakpoint-medium) {
+    :global {
+      caption.ams-table__caption {
+        font-size: var(--ams-text-level-3-font-size);
+      }
     }
   }
 }

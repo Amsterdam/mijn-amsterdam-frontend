@@ -2,232 +2,221 @@
 
 exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
-    >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Zorg en ondersteuning"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          focusable="false"
-          height="32px"
-          viewBox="0 0 32 32"
-          width="32px"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <polygon
-            id="Path"
-            points="14 25 18 25 18 21 22 21 22 17 18 17 18 13 14 13 14 17 10 17 10 21 14 21"
-          />
-          <path
-            d="M25,6 L25,0 L7,0 L7,6 L0,6 L0,32 L32,32 L32,6 L25,6 Z M11,4 L21,4 L21,6 L11,6 L11,4 Z M28,28 L4,28 L4,10 L28,10 L28,28 Z"
-            id="Shape"
-          />
-        </svg>
-      </span>
-      <div
-        class="_HeadingInner_3b337d"
-      >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
-        >
-          Zorg en ondersteuning
-        </h2>
-      </div>
-    </header>
     <div
-      class="ams-screen ams-screen--wide"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
       <div
-        class="ams-grid"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
+        <nav
+          class="ams-breadcrumb"
         >
-          <p
-            class="ams-paragraph"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke ondersteuning (Wmo). Heeft u vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo Helpdesk: 
-            <a
-              class="ams-link ams-link--inline"
-              href="tel:08000643"
-              rel="noreferrer"
+            <li
+              class="ams-breadcrumb__item"
             >
-              0800 0643
-            </a>
-             (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het Sociaal Loket.
-          </p>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <ul
-            class="ams-link-list"
-          >
-            <li>
               <a
-                class="ams-link-list__link"
-                href="https://www.amsterdam.nl/zorg-ondersteuning/"
-                rel="noreferrer"
+                class="ams-breadcrumb__link"
+                href="/"
               >
-                <span
-                  class="ams-icon ams-icon--size-5"
-                >
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                      fill-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Lees hier meer over zorg en ondersteuning
+                Home
               </a>
             </li>
-          </ul>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
-        >
-          <h3
-            class="ams-heading ams-heading--level-2"
-          >
-            Huidige voorzieningen
-          </h3>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_14a7ab"
+            <li
+              class="ams-breadcrumb__item"
             >
-              <thead
-                class="ams-table__header"
+              <a
+                class="ams-breadcrumb__link"
+                href="/zorg-en-ondersteuning"
+                tabindex="-1"
               >
-                <tr
-                  class="ams-table__row"
+                <span
+                  class="ams-visually-hidden"
                 >
-                  <td
-                    class="ams-table__cell"
-                  />
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Status
-                  </th>
-                  <th
-                    class="ams-table__header-cell"
-                  >
-                    Datum
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="ams-table__body"
-              >
-                <tr
-                  class="ams-table__row"
-                >
-                  <td
-                    class="ams-table__cell"
-                  >
-                    <a
-                      class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-                      href="http://example.org/ding"
-                    >
-                      Wmo item 1
-                    </a>
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    Levering gestart
-                  </td>
-                  <td
-                    class="ams-table__cell"
-                  >
-                    24 september 2020
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-all"
+                  Zorg en ondersteuning
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          <h3
-            class="ams-heading ams-heading--level-2"
-          >
-            Eerdere en afgewezen voorzieningen
-          </h3>
-          <div
-            class="ams-table"
-          >
-            <table
-              class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_14a7ab"
-            >
-              <tbody
-                class="ams-table__body"
-              />
-            </table>
-          </div>
-          <p
-            class="ams-paragraph"
-          >
-            U heeft geen eerdere en/of afgewezen voorzieningen. U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.
-          </p>
-        </div>
+          Zorg en ondersteuning
+        </h3>
       </div>
     </div>
-  </main>
-  <p
-    class="ams-paragraph _HistoricItemsMention_14a7ab"
-  >
-    U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van daarvoor? Bel dan de Wmo Helpdesk: 
-    <a
-      class="ams-link ams-link--standalone"
-      href="tel:08000643"
-      rel="noreferrer"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      0800 0643
-    </a>
-    .
-    <br />
-    U ziet ook geen begeleid thuis en beschermd verblijf (vroeger maatschappelijke opvang en beschermd wonen). Hier zijn we nog mee bezig.
-  </p>
+      <p
+        class="ams-paragraph ams-mb--sm"
+      >
+        Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke ondersteuning (Wmo).
+      </p>
+      <p
+        class="ams-paragraph"
+      >
+        Heeft u vragen of wilt u een wijziging doorgeven? 
+        <br />
+        Bel dan gratis de Wmo Helpdesk: 
+        <a
+          class="ams-link ams-link--inline"
+          href="tel:08000643"
+          rel="noreferrer"
+        >
+          0800 0643
+        </a>
+         (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het Sociaal Loket.
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/zorg-ondersteuning/"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Lees hier meer over zorg en ondersteuning
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Huidige voorzieningen
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825 _HuidigeRegelingen_14a7ab"
+        >
+          <thead
+            class="ams-table__header"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <th
+                class="ams-table__header-cell"
+              >
+                Naam
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Status
+              </th>
+              <th
+                class="ams-table__header-cell"
+              >
+                Datum
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="ams-table__body"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="http://example.org/ding"
+                  title="Bekijk meer over Wmo item 1"
+                >
+                  Wmo item 1
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              />
+              <td
+                class="ams-table__cell"
+              >
+                24 september 2020
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <h3
+        class="ams-heading ams-heading--level-2"
+      >
+        Eerdere en afgewezen voorzieningen
+      </h3>
+      <div
+        class="ams-table"
+      >
+        <table
+          class="ams-table__table _TableV2_4c6825 _EerdereRegelingen_14a7ab"
+        >
+          <tbody
+            class="ams-table__body"
+          />
+        </table>
+      </div>
+      <p
+        class="ams-paragraph"
+      >
+        U heeft geen eerdere en/of afgewezen voorzieningen. U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.
+      </p>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-3-wide"
+    >
+      <p
+        class="ams-paragraph _SuppressedParagraph_2fb90c"
+      >
+        U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van daarvoor? Bel dan de Wmo Helpdesk: 
+        <a
+          class="ams-link ams-link--standalone"
+          href="tel:08000643"
+          rel="noreferrer"
+        >
+          0800 0643
+        </a>
+        . U ziet ook geen begeleid thuis en beschermd verblijf (vroeger maatschappelijke opvang en beschermd wonen). Hier zijn we nog mee bezig.
+      </p>
+    </div>
+  </div>
 </DocumentFragment>
 `;

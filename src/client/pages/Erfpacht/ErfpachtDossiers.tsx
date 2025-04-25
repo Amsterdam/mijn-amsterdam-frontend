@@ -1,23 +1,23 @@
-import { useErfpachtV2Data } from './erfpachtData.hook';
-import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
-import { isError, isLoading } from '../../../universal/helpers/api';
+import { listPageParamKind } from './Erfpacht-thema-config';
+import { useErfpachtThemaData } from './erfpachtData.hook';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
 
-export default function ErfpachtDossiers() {
-  const { ERFPACHTv2, dossiers, displayPropsDossiers, titleDossiers } =
-    useErfpachtV2Data();
+export function ErfpachtDossiers() {
+  const { isLoading, isError, dossiers, tableConfig, breadcrumbs } =
+    useErfpachtThemaData();
+
+  const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtRechten];
+  const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};
 
   return (
     <ListPagePaginated
       items={dossiers}
-      title={`Alle ${titleDossiers?.toLowerCase()}`}
-      appRoute={AppRoutes['ERFPACHTv2/DOSSIERS']}
-      appRouteBack={AppRoutes['ERFPACHTv2']}
+      title={tableConfigDossiers?.title ?? 'Erfpachtrechten'}
+      appRoute={tableConfigDossiers?.listPageRoute ?? ''}
+      breadcrumbs={breadcrumbs}
       displayProps={displayPropsDossiers}
-      thema={Themas.ERFPACHTv2}
-      isLoading={isLoading(ERFPACHTv2)}
-      isError={isError(ERFPACHTv2)}
+      isLoading={isLoading}
+      isError={isError}
     />
   );
 }

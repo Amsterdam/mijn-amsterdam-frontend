@@ -1,15 +1,13 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
 import { MijnGegevensThema } from './ProfilePrivate';
 import { ContactMoment } from '../../../../server/services/salesforce/contactmomenten.types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { Adres, AppState, BRPData } from '../../../../universal/types';
-import { ThemaTitles } from '../../../config/thema';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
+import { routes } from '../Profile-thema-config';
 
 const responseData = {
   adres: {
@@ -187,15 +185,15 @@ const testState = (
   responseSF: ContactMoment[] = []
 ) => ({
   BRP: { status: 'OK', content: responseBRP },
+  KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
+  // PARKEREN: { status: 'OK', content: null },
 });
 
 function initializeState(testState: unknown) {
   return (snapshot: MutableSnapshot) =>
     snapshot.set(appStateAtom, testState as AppState);
 }
-
-const PAGE_TITLE = ThemaTitles.BRP;
 
 const panelHeadings = [
   'Persoonlijke gegevens',
@@ -208,8 +206,7 @@ const panelHeadings = [
 ];
 
 describe('<Profile />', () => {
-  const routeEntry = generatePath(AppRoutes.BRP);
-  const routePath = AppRoutes.BRP;
+  const routeEntry = routes.themaPageBRP;
 
   beforeAll(() => {
     (window.matchMedia as unknown) = vi.fn(() => {
@@ -225,14 +222,18 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(testState())}
         />
       );
     }
     render(<Component />);
-    expect(screen.getByText(PAGE_TITLE)).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        name: 'Mijn gegevens',
+      })
+    ).toBeInTheDocument();
     expect(
       screen.getByText(responseData.persoon.geslachtsnaam as string)
     ).toBeInTheDocument();
@@ -271,7 +272,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -313,7 +314,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -345,7 +346,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -372,7 +373,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -397,7 +398,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -436,7 +437,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -463,7 +464,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -495,7 +496,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState(responseData, [
@@ -548,7 +549,7 @@ describe('<Profile />', () => {
       return (
         <MockApp
           routeEntry={routeEntry}
-          routePath={routePath}
+          routePath={routeEntry}
           component={MijnGegevensThema}
           initializeState={initializeState(
             testState({
@@ -591,7 +592,7 @@ describe('<Profile />', () => {
         return (
           <MockApp
             routeEntry={routeEntry}
-            routePath={routePath}
+            routePath={routeEntry}
             component={MijnGegevensThema}
             initializeState={initializeState(
               testState({

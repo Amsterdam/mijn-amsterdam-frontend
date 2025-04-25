@@ -30,15 +30,12 @@ export const BffEndpoints = {
   STADSPAS_TRANSACTIONS:
     '/services/stadspas/transactions/:transactionsKeyEncrypted?',
   STADSPAS_BLOCK_PASS: '/services/stadspas/block/:transactionsKeyEncrypted',
+  STADSPAS_UNBLOCK_PASS: '/services/stadspas/unblock/:transactionsKeyEncrypted',
 
-  // Decos
+  // Decos (Vergunningen, Horeca, Parkeren en Toeristische verhuur)
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
-
-  // Vergunningen / Koppel api
-  VERGUNNINGEN_DOCUMENT_DOWNLOAD:
-    '/services/vergunningen/documents/download/:id',
-  VERGUNNINGEN_LIST_DOCUMENTS: '/services/vergunningen/documents/list/:id',
+  DECOS_ZAKEN_BY_USERIDS_RAW: '/services/decos/zaken-raw',
 
   // MKS bewoners
   MKS_AANTAL_BEWONERS: '/service/mks/aantal-bewoners/:addressKeyEncrypted',
@@ -52,17 +49,20 @@ export const BffEndpoints = {
   // AV / Zorgned
   HLI_DOCUMENT_DOWNLOAD: `/services/v1/stadspas-en-andere-regelingen/document/:id`,
 
+  // LLV / Zorgned
+  LLV_DOCUMENT_DOWNLOAD: `/services/llv/document/:id`,
+
   // Legacy login links (still used in other portals)
   LEGACY_LOGIN_API_LOGIN: '/api/login',
   LEGACY_LOGIN_API1_LOGIN: '/api1/login',
 
   // Bezwaren
-  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document/:id',
-  BEZWAREN_DETAIL: '/services/bezwaren/:id',
+  BEZWAREN_DOCUMENT_DOWNLOAD: '/services/bezwaren/document',
+  BEZWAREN_DETAIL: '/services/bezwaren',
 
   // ErfpachtV2
-  ERFPACHTv2_DOSSIER_DETAILS:
-    '/services/erfpachtv2/dossier/:dossierNummerUrlParam?',
+  ERFPACHT_DOSSIER_DETAILS:
+    '/services/erfpacht/dossier/:dossierNummerUrlParam?',
 
   // Toeristische verhuur / Bed & Breakfast
   TOERISTISCHE_VERHUUR_BB_DOCUMENT_DOWNLOAD:

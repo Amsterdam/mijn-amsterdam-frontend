@@ -1,5 +1,5 @@
 import { fetchService, fetchTipsAndNotifications } from './api-service';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 
@@ -38,7 +38,7 @@ export async function fetchSVWINotifications(
     getApiConfig('SVWI', {
       transformResponse: transformSVWIResponse,
     }),
-    Themas.SVWI,
+    ThemaIDs.SVWI,
     authProfileAndToken
   );
 }

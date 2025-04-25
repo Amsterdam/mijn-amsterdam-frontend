@@ -1,61 +1,34 @@
-import { PARKEER_CASE_TYPES } from './Parkeren.config';
-import { Vergunning } from '../../../server/services/vergunningen/vergunningen';
-import { VergunningFrontendV2 } from '../../../server/services/vergunningen-v2/config-and-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { linkListItems, routes, tableConfig } from './Parkeren-thema-config';
+import { DecosParkeerVergunning } from '../../../server/services/parkeren/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { DecosCaseType } from '../../../universal/types/vergunningen';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
+import { ThemaTitles } from '../../config/thema';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useVergunningenTransformed } from '../Vergunningen/useVergunningenTransformed.hook';
-import { tableConfig } from '../VergunningenV2/config';
-
-function getVergunningenFromThemaVergunningen(
-  content: VergunningFrontendV2[] | Vergunning[] | null
-) {
-  const vergunningen = (content ?? [])
-    .filter((vergunning) => {
-      return PARKEER_CASE_TYPES.has(vergunning.caseType as DecosCaseType);
-    })
-    .map((vergunning) => ({
-      ...vergunning,
-      link: {
-        ...vergunning.link,
-        to: vergunning.link.to.replace('vergunningen', 'parkeren'),
-      },
-    }));
-  return addLinkElementToProperty<VergunningFrontendV2 | Vergunning>(
-    vergunningen,
-    'identifier'
-  );
-}
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useParkerenData() {
-  const { VERGUNNINGENv2, VERGUNNINGEN, PARKEREN } = useAppStateGetter();
-  const vergunningenState = FeatureToggle.vergunningenV2Active
-    ? VERGUNNINGENv2
-    : VERGUNNINGEN;
-  const vergunningen =
-    (vergunningenState === VERGUNNINGEN
-      ? useVergunningenTransformed(VERGUNNINGEN)
-      : VERGUNNINGENv2.content) ?? [];
-
-  const parkeerVergunningenFromThemaVergunningen =
-    getVergunningenFromThemaVergunningen(vergunningen);
+  const { PARKEREN } = useAppStateGetter();
   const hasMijnParkerenVergunningen = !!PARKEREN.content?.isKnown;
 
+  const vergunningen = addLinkElementToProperty<
+    VergunningFrontend<DecosParkeerVergunning>
+  >(PARKEREN.content?.vergunningen ?? [], 'identifier', true);
+
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.PARKEREN);
+
   return {
+    title: ThemaTitles.PARKEREN,
     tableConfig,
-    parkeerVergunningenFromThemaVergunningen,
+    vergunningen,
     hasMijnParkerenVergunningen,
-    isLoading: isLoading(vergunningenState) || isLoading(PARKEREN),
-    isError: isError(vergunningenState) || isError(PARKEREN),
+    isLoading: isLoading(PARKEREN),
+    isError: isError(PARKEREN),
     parkerenUrlSSO: PARKEREN.content?.url ?? '/',
     isLoadingParkerenUrl: isLoading(PARKEREN),
-    linkListItems: [
-      {
-        to: 'https://www.amsterdam.nl/parkeren/parkeervergunning/parkeervergunning-bewoners/',
-        title: 'Meer over parkeervergunningen',
-      },
-    ],
+    linkListItems,
+    routes,
+    breadcrumbs,
   };
 }

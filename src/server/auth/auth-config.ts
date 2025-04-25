@@ -13,6 +13,8 @@ import { getFromEnv } from '../helpers/env';
 export const RETURNTO_AMSAPP_STADSPAS_ADMINISTRATIENUMMER =
   'amsapp-stadspas-administratienummer';
 export const RETURNTO_AMSAPP_STADSPAS_APP_LANDING = 'amsapp-stadspas-landing';
+// returnTo key that allow redirecting to a specific frontend route. e.g /api/v1/auth/login/digid?returnTo=mams-frontend-route&route=https://mijn.amsterdam.nl/mams-frontend-route
+export const RETURNTO_MAMS_FRONTEND_ROUTE = 'mams-frontend-route';
 
 // Mijn Amsterdam return to url config
 export const RETURNTO_MAMS_LANDING_DIGID = 'mams-landing-digid';
@@ -55,6 +57,7 @@ export const oidcConfigBase: ConfigParams = {
       getFromEnv('MA_APP_MODE') !== 'unittest'
         ? getSessionStore(openIdAuth as typeof expressSession, {
             tableName: OIDC_SESSIONS_TABLE_NAME,
+            maxAgeSeconds: OIDC_SESSION_MAX_AGE_SECONDS,
           })
         : undefined,
   },

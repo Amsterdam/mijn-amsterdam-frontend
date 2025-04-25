@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Button, OrderedList } from '@amsterdam/design-system-react';
 
-import { ErfpachtCanon } from '../../../../server/services/simple-connect/erfpacht';
+import { ErfpachtCanon } from '../../../../server/services/erfpacht/erfpacht';
 
 const MAX_CANONS_VISIBLE_INITIALLY = 2;
 
@@ -34,8 +34,10 @@ export function DatalistCanons({ canons }: DatalistCanonsProps) {
         {shouldCollapse && (
           <Button
             variant="tertiary"
+            aria-expanded={!isCollapsed}
             style={{ transform: 'translateX(-1.4rem)' }}
             onClick={() => setIsCollapsed(!isCollapsed)}
+            title={`${isCollapsed ? 'Toon meer' : 'Verberg'} erfpachtcanons`}
           >
             {isCollapsed ? 'Toon meer' : 'Verberg'}
           </Button>

@@ -1,7 +1,9 @@
-import { linkListItems, tableConfig } from './config';
+import { linkListItems, tableConfig } from './Bodem-thema-config';
+import { ThemaIDs } from '../../../universal/config/thema';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../components/Table/TableV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useThemaBreadcrumbs } from '../../hooks/useThemaMenuItems';
 
 export function useBodemData() {
   const { BODEM } = useAppStateGetter();
@@ -12,11 +14,14 @@ export function useBodemData() {
     true
   );
 
+  const breadcrumbs = useThemaBreadcrumbs(ThemaIDs.BODEM);
+
   return {
     tableConfig,
     isLoading: isLoading(BODEM),
     isError: isError(BODEM),
     items,
     linkListItems,
+    breadcrumbs,
   };
 }

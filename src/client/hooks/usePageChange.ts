@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { matchPath, useHistory, useLocation } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router';
 
 import { trackPageViewWithCustomDimension } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
@@ -24,7 +24,6 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
 }) as AppRoute[];
 
 export function usePageChange(isAuthenticated: boolean) {
-  const history = useHistory();
   const location = useLocation();
   const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
@@ -47,12 +46,7 @@ export function usePageChange(isAuthenticated: boolean) {
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex((route) => {
       return (
-        location.pathname === route ||
-        !!matchPath(location.pathname, {
-          path: route,
-          exact: true,
-          strict: false,
-        })
+        location.pathname === route || !!matchPath(route, location.pathname)
       );
     });
 
@@ -68,11 +62,7 @@ export function usePageChange(isAuthenticated: boolean) {
     if (typeof assignedDocumentTitle === 'function') {
       assignedDocumentTitle = assignedDocumentTitle(
         tackingConfig,
-        matchPath(location.pathname, {
-          path: route,
-          exact: true,
-          strict: false,
-        })?.params ?? null
+        matchPath(route, location.pathname)?.params ?? null
       );
     }
 
@@ -85,12 +75,7 @@ export function usePageChange(isAuthenticated: boolean) {
 
     const isAppRouteKnown = !hasPageTitleAssigned
       ? Object.values(AppRoutes).find(
-          (route) =>
-            !!matchPath(location.pathname, {
-              path: route,
-              exact: true,
-              strict: false,
-            })
+          (route) => !!matchPath(route, location.pathname)
         )
       : true;
 
@@ -134,7 +119,6 @@ export function usePageChange(isAuthenticated: boolean) {
     profileType,
     userCity,
     isAuthenticated,
-    history.action,
   ]);
 }
 
@@ -151,7 +135,7 @@ export function getCustomTrackingUrl(
     const matchResult = matchPath(pathname, route);
     const trackingUrlFn = CustomTrackingUrls[route];
 
-    if (!matchResult || !matchResult.isExact || !trackingUrlFn) {
+    if (!matchResult || !trackingUrlFn) {
       return pathname;
     }
 

@@ -1,29 +1,26 @@
 import { ReactNode, useMemo } from 'react';
 
-import { Grid, Paragraph, Screen } from '@amsterdam/design-system-react';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { Paragraph } from '@amsterdam/design-system-react';
+import { generatePath, Params, useNavigate, useParams } from 'react-router';
 
-import {
-  ErrorAlert,
-  LoadingContent,
-  OverviewPage,
-  PageHeading,
-  ThemaIcon,
-} from '..';
-import { Thema } from '../../../universal/config/thema';
-import { ZaakDetail } from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
+import ErrorAlert from '../Alert/Alert';
+import LoadingContent from '../LoadingContent/LoadingContent';
+import { OverviewPageV2, PageContentCell, PageContentV2 } from '../Page/Page';
+import { PageHeadingV2 } from '../PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../Pagination/PaginationV2';
 import { DisplayProps, TableV2 } from '../Table/TableV2';
 
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = 20;
 
 interface ListPagePaginatedProps<T> {
   appRoute: string;
-  appRouteBack: string;
-  appRouteParams?: Record<string, string> | null;
-  backLinkTitle?: string;
-  body?: ReactNode;
-  displayProps: DisplayProps<T> | null;
+  breadcrumbs?: LinkProps[];
+  appRouteParams?: Record<string, string> | Readonly<Params<string>> | null;
+  pageContentTop?: ReactNode;
+  pageContentBottom?: ReactNode;
+  displayProps: DisplayProps<T>;
   errorText?: string;
   isError: boolean;
   isLoading: boolean;
@@ -31,18 +28,16 @@ interface ListPagePaginatedProps<T> {
   noItemsText?: string;
   pageSize?: number;
   tableClassName?: string;
-  thema?: Thema;
   title: string;
   totalCount?: number;
 }
 
 export function ListPagePaginated<T extends object = ZaakDetail>({
   appRoute,
-  appRouteBack,
+  breadcrumbs,
   appRouteParams = null,
-  backLinkTitle = 'Overzicht',
-  body,
-  thema,
+  pageContentTop,
+  pageContentBottom,
   displayProps,
   errorText = 'We kunnen op dit moment niet alle gegevens tonen.',
   noItemsText = 'U heeft (nog) geen gegevens op deze pagina.',
@@ -54,7 +49,9 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   tableClassName,
   title,
 }: ListPagePaginatedProps<T>) {
-  const history = useHistory();
+  usePageTypeSetting('listpage');
+
+  const navigate = useNavigate();
 
   const { page = '1' } = useParams<{
     page?: string;
@@ -77,65 +74,56 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   const total = totalCount ?? items.length;
 
   return (
-    <OverviewPage>
-      <PageHeading
-        icon={thema ? <ThemaIcon thema={thema} /> : <ThemaIcon />}
-        backLink={{ to: appRouteBack, title: backLinkTitle }}
-      >
-        {title}
-      </PageHeading>
-      <Screen>
-        <Grid>
-          {!!body && <Grid.Cell span="all">{body}</Grid.Cell>}
-          {isError && (
-            <Grid.Cell span="all">
-              <ErrorAlert>{errorText}</ErrorAlert>
-            </Grid.Cell>
+    <OverviewPageV2>
+      <PageContentV2>
+        <PageHeadingV2 breadcrumbs={breadcrumbs}>{title}</PageHeadingV2>
+        {isError && (
+          <PageContentCell>
+            <ErrorAlert>{errorText}</ErrorAlert>
+          </PageContentCell>
+        )}
+        {pageContentTop}
+        <PageContentCell>
+          {isLoading && (
+            <LoadingContent
+              barConfig={[
+                ['100%', '2rem', '2rem'],
+                ['100%', '2rem', '2rem'],
+                ['100%', '2rem', '2rem'],
+              ]}
+            />
           )}
-          <Grid.Cell span="all">
-            {isLoading && (
-              <LoadingContent
-                barConfig={[
-                  ['100%', '2rem', '2rem'],
-                  ['100%', '2rem', '2rem'],
-                  ['100%', '2rem', '2rem'],
-                ]}
-              />
-            )}
-            {!isError && (
-              <>
-                {!isLoading && !itemsPaginated.length && !!noItemsText && (
-                  <Grid.Cell span="all">
-                    <Paragraph>{noItemsText}</Paragraph>
-                  </Grid.Cell>
-                )}
-                {!isLoading && !!itemsPaginated.length && (
-                  <TableV2<T>
-                    items={itemsPaginated}
-                    displayProps={displayProps}
-                    className={tableClassName}
-                  />
-                )}
-                {items.length > pageSize && (
-                  <PaginationV2
-                    totalCount={total}
-                    pageSize={pageSize}
-                    currentPage={currentPage}
-                    onPageClick={(page: number) => {
-                      history.push(
-                        generatePath(appRoute, {
-                          ...appRouteParams,
-                          page,
-                        })
-                      );
-                    }}
-                  />
-                )}
-              </>
-            )}
-          </Grid.Cell>
-        </Grid>
-      </Screen>
-    </OverviewPage>
+          {!isError && (
+            <>
+              {!isLoading && !itemsPaginated.length && !!noItemsText && (
+                <Paragraph>{noItemsText}</Paragraph>
+              )}
+              {!isLoading && !!itemsPaginated.length && (
+                <TableV2<T>
+                  items={itemsPaginated}
+                  displayProps={displayProps}
+                  className={tableClassName}
+                />
+              )}
+              {items.length > pageSize && (
+                <PaginationV2
+                  totalCount={total}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageClick={(page: number) => {
+                    const path = generatePath(appRoute, {
+                      ...appRouteParams,
+                      page,
+                    });
+                    navigate(path);
+                  }}
+                />
+              )}
+            </>
+          )}
+        </PageContentCell>
+        {pageContentBottom}
+      </PageContentV2>
+    </OverviewPageV2>
   );
 }

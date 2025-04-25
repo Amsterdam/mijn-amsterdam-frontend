@@ -50,7 +50,7 @@ describe('AVG', () => {
         opschortenGestartOp: '',
         registratieDatum: '2023-03-16T00:00:00.000Z',
         resultaat: '',
-        status: 'Afgehandeld',
+        displayStatus: 'Afgehandeld',
         steps: [
           {
             datePublished: '2022-03-09T00:00:00.000Z',
@@ -108,7 +108,7 @@ describe('AVG', () => {
               opschortenGestartOp: '2023-03-16T00:00:00.000Z',
               registratieDatum: '',
               resultaat: '',
-              status: 'Open',
+              displayStatus: 'Open',
               steps: [
                 {
                   datePublished: '2023-03-06T00:00:00.000Z',
@@ -127,7 +127,7 @@ describe('AVG', () => {
                   id: 'item-2',
                   isActive: true,
                   isChecked: false,
-                  status: 'Extra informatie nodig',
+                  status: 'Meer informatie nodig',
                 },
                 {
                   datePublished: '',
@@ -166,7 +166,7 @@ describe('AVG', () => {
               opschortenGestartOp: '',
               registratieDatum: '2023-03-30T00:00:00.000Z',
               resultaat: '',
-              status: 'Open',
+              displayStatus: 'Open',
               steps: [
                 {
                   datePublished: '2023-03-08T00:00:00.000Z',
@@ -214,7 +214,7 @@ describe('AVG', () => {
               opschortenGestartOp: '',
               registratieDatum: '2023-03-16T00:00:00.000Z',
               resultaat: '',
-              status: 'Afgehandeld',
+              displayStatus: 'Afgehandeld',
               steps: [
                 {
                   datePublished: '2022-03-09T00:00:00.000Z',
@@ -263,7 +263,7 @@ describe('AVG', () => {
               opschortenGestartOp: '2022-03-12T00:00:00.000Z',
               registratieDatum: '2023-03-20T00:00:00.000Z',
               resultaat: '',
-              status: 'Afgehandeld',
+              displayStatus: 'Afgehandeld',
               steps: [
                 {
                   datePublished: '2022-03-10T00:00:00.000Z',
@@ -281,7 +281,7 @@ describe('AVG', () => {
                   id: 'item-2',
                   isActive: false,
                   isChecked: true,
-                  status: 'Extra informatie nodig',
+                  status: 'Meer informatie nodig',
                 },
                 {
                   datePublished: '2023-03-20T00:00:00.000Z',
@@ -322,7 +322,7 @@ describe('AVG', () => {
               opschortenGestartOp: '2023-06-03T00:00:00.000Z',
               registratieDatum: '2023-05-30T00:00:00.000Z',
               resultaat: '',
-              status: 'Open',
+              displayStatus: 'Open',
               steps: [
                 {
                   datePublished: '2023-03-18T00:00:00.000Z',
@@ -350,7 +350,7 @@ describe('AVG', () => {
                   id: 'item-2',
                   isActive: true,
                   isChecked: true,
-                  status: 'Extra informatie nodig',
+                  status: 'Meer informatie nodig',
                 },
                 {
                   datePublished: '',
@@ -380,7 +380,7 @@ describe('AVG', () => {
               opschortenGestartOp: '',
               registratieDatum: '',
               resultaat: '',
-              status: 'Open',
+              displayStatus: 'Open',
               steps: [
                 {
                   datePublished: '2023-03-18T00:00:00.000Z',
@@ -436,7 +436,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/1',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek meer informatie nodig',
             },
             {
@@ -447,7 +447,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/2',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek in behandeling',
             },
             {
@@ -459,7 +459,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/223',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek afgehandeld',
             },
             {
@@ -471,7 +471,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/425',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek afgehandeld',
             },
             {
@@ -483,7 +483,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/561',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek meer informatie nodig',
             },
             {
@@ -494,7 +494,7 @@ describe('AVG', () => {
                 title: 'Bekijk details',
                 to: '/avg/verzoek/156',
               },
-              thema: 'AVG',
+              themaID: 'AVG',
               title: 'AVG verzoek ontvangen',
             },
           ],

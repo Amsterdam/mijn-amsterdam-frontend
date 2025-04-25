@@ -221,7 +221,7 @@
       {
         "fieldName": "STARTDATUM",
         "text": "01-10-2024",
-        "f2024-10-08T09:01:57.004114055Z ieldValue": "2024-09-30T22:00:00.0000000Z"
+        "fieldValue": "2024-09-30T22:00:00.0000000Z"
       },
       {
         "fieldName": "EINDDATUM",
@@ -347,6 +347,41 @@
         "fieldName": "RESULTAAT_ID",
         "text": "Buiten behandeling",
         "fieldValue": "716"
+      }
+    ]
+  },
+  {
+    "id": "12608867799",
+    "fields": [
+      {
+        "fieldName": "ZAAK_IDENTIFICATIE",
+        "text": "Z2024-WK001232",
+        "fieldValue": "Z2024-WK001232"
+      },
+      {
+        "fieldName": "STARTDATUM",
+        "text": "01-10-2024",
+        "fieldValue": "2024-09-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "EINDDATUM",
+        "text": "02-10-2024",
+        "fieldValue": "2024-10-01T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "INGANGSDATUM",
+        "text": "01-10-2024",
+        "fieldValue": "2024-09-30T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "DATUM_TOT",
+        "text": "01-02-2025",
+        "fieldValue": "2025-02-01T22:00:00.0000000Z"
+      },
+      {
+        "fieldName": "RESULTAAT_ID",
+        "text": "Verleend zonder overgangsrecht",
+        "fieldValue": "123"
       }
     ]
   },

@@ -1,6 +1,9 @@
+const { HttpStatusCode } = require('axios');
+
 const ZORGNED_AV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-av-aanvragen.json');
-const ZORGNED_JZD_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-jzd-aanvragen.json');
 const ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE = require('../fixtures/zorgned-av-persoonsgegevensNAW.json');
+const ZORGNED_JZD_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-jzd-aanvragen.json');
+const ZORGNED_LLV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-leerlingenvervoer-aanvragen.json');
 const settings = require('../settings.js');
 
 module.exports = [
@@ -13,17 +16,30 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
+          middleware: (req, res, _next, core) => {
             if (!('x-mams-api-user' in req.headers)) {
               return res
-                .status(400)
+                .status(HttpStatusCode.BadRequest)
                 .send('x-mams-api-user key not found in request headers.');
             }
-            return res.send(
-              req.headers['x-mams-api-user'] === 'AV'
-                ? ZORGNED_AV_AANVRAGEN_RESPONSE
-                : ZORGNED_JZD_AANVRAGEN_RESPONSE
-            );
+
+            const apiUser = req.headers['x-mams-api-user'];
+            switch (apiUser) {
+              case 'AV': {
+                return res.send(ZORGNED_AV_AANVRAGEN_RESPONSE);
+              }
+              case 'JZD': {
+                return res.send(ZORGNED_JZD_AANVRAGEN_RESPONSE);
+              }
+              case 'LLV': {
+                return res.send(ZORGNED_LLV_AANVRAGEN_RESPONSE);
+              }
+              default: {
+                const msg = `No fixture response found for ${apiUser}`;
+                core.logger.error(msg);
+                return res.status(HttpStatusCode.NotFound).send(msg);
+              }
+            }
           },
         },
       },

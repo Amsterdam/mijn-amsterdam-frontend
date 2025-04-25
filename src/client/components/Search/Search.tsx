@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Heading } from '@amsterdam/design-system-react';
+import {
+  Button,
+  Heading,
+  Paragraph,
+  UnorderedList,
+} from '@amsterdam/design-system-react';
+import { SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
-import styles from './Search.module.scss';
 import { SearchEntry, displayPath } from './search-config';
+import styles from './Search.module.scss';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 import { AppRoutes } from '../../../universal/config/routes';
-import { IconSearch } from '../../assets/icons';
-import { Colors } from '../../config/app';
-import {
-  trackSearch,
-  trackSearchResultClick,
-} from '../../hooks/analytics.hook';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppState';
 import { useKeyDown } from '../../hooks/useKey';
@@ -22,7 +22,7 @@ import {
   useProfileTypeSwitch,
   useProfileTypeValue,
 } from '../../hooks/useProfileType';
-import { Button, IconButton } from '../Button/Button';
+import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {
@@ -33,7 +33,6 @@ interface ResultSetProps {
   isLoading?: boolean;
   term: string;
   extendedResults?: boolean;
-  showIcon?: boolean;
   onClickResult?: (
     result: SearchEntry,
     resultNumber: number,
@@ -50,7 +49,6 @@ export function ResultSet({
   noResultsMessage = 'Geen resultaten',
   term,
   extendedResults = false,
-  showIcon = false,
   onClickResult: onClickResultCallback,
 }: ResultSetProps) {
   const onClickResult = useCallback(
@@ -72,32 +70,28 @@ export function ResultSet({
   return (
     <div className={styles.ResultSet}>
       {!!title && (
-        <Heading className={styles.ResultSetTitle} size="level-4" level={3}>
+        <Heading size="level-3" level={3} className="ams-mb--sm">
           {title}
         </Heading>
       )}
       {isLoading && !results.length && (
-        <p className={styles.ResultsPending}>
-          <Spinner />
-          Zoeken...
-        </p>
+        <Paragraph className={styles.ResultsPending}>
+          <Spinner /> Zoeken...
+        </Paragraph>
       )}
       {!!term && !results.length && !isLoading && (
-        <p className={styles.NoResults}>{noResultsMessage}</p>
+        <Paragraph className={styles.NoResults}>{noResultsMessage}</Paragraph>
       )}
-      <ul className={styles.ResultList}>
+      <UnorderedList className={styles.ResultList} markers={false}>
         {results.map((result, index) => {
+          const LinkComponent = result.url.startsWith('http')
+            ? MaLink
+            : MaRouterLink;
           return (
-            <li
-              key={result.url + index}
-              className={classnames(
-                styles.ResultListItem,
-                extendedResults && styles['is-extended']
-              )}
-            >
-              <a
+            <UnorderedList.Item key={result.url + index} className="Result">
+              <LinkComponent
+                maVariant="fatNoUnderline"
                 href={result.url}
-                className={styles.ResultSetLink}
                 onClick={(event) => {
                   event.preventDefault();
                   onClickResult(result, index + 1, results.length);
@@ -108,18 +102,17 @@ export function ResultSet({
                   : typeof result.displayTitle === 'string'
                     ? displayPath(term, [result.displayTitle])
                     : result.displayTitle}
-                {result.trailingIcon}
                 {extendedResults && (
-                  <p className={styles.ResultDescription}>
-                    <span className={styles.ResultUrl}>{result.url}</span>
+                  <Paragraph>
+                    <span>{result.url}</span>
                     {result.description}
-                  </p>
+                  </Paragraph>
                 )}
-              </a>
-            </li>
+              </LinkComponent>
+            </UnorderedList.Item>
           );
         })}
-      </ul>
+      </UnorderedList>
     </div>
   );
 }
@@ -132,9 +125,11 @@ interface SearchProps {
   typeAhead?: boolean;
   extendedAMResults?: boolean;
   replaceResultUrl?: (result: SearchEntry) => boolean;
+  className?: string;
 }
 
 const MAX_RESULT_COUNT_DISPLAY = 10;
+
 export function Search({
   onFinish: onFinishCallback,
   term: termInitial = '',
@@ -142,10 +137,11 @@ export function Search({
   autoFocus = true,
   typeAhead = true,
   extendedAMResults = false,
+  className,
   replaceResultUrl,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
-  const resultsRef = useRef<any>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const [isResultsVisible, setResultsVisible] = useState(false);
 
@@ -166,10 +162,11 @@ export function Search({
     [setTerm_]
   );
 
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const profileType = useProfileTypeValue();
   const isPhoneScreen = usePhoneScreen();
-  const searchCategory = history.location.pathname.includes(AppRoutes.SEARCH)
+  const searchCategory = location.pathname.includes(AppRoutes.SEARCH)
     ? 'Zoekpagina'
     : 'Zoekbalk';
   const isAppStateReady = useAppStateReady();
@@ -182,16 +179,6 @@ export function Search({
   );
 
   useProfileTypeSwitch(() => onFinish('Profiel toggle'));
-
-  const SEARCH_INPUT_DELAY_MS = 2000;
-  const trackSearchDebounced = useDebouncedCallback(
-    (term: string, count: number) => {
-      if (term) {
-        trackSearch(term, count, searchCategory, profileType);
-      }
-    },
-    SEARCH_INPUT_DELAY_MS
-  );
 
   const SET_TERM_DELAY_MS = 300;
   const setTermDebounced = useDebouncedCallback((term: string) => {
@@ -219,40 +206,17 @@ export function Search({
   );
 
   const onClickResult = useCallback(
-    (
-      result: SearchEntry,
-      resultNumber: number,
-      amountOfResults: number,
-      amountOfResultsShown: number
-    ) => {
-      trackSearchResultClick({
-        keyword: term,
-        searchResult: {
-          position: resultNumber,
-          title:
-            typeof result.displayTitle !== 'string'
-              ? result.description
-              : result.displayTitle,
-          type: '',
-          url: result.url,
-        },
-        amountOfResults,
-        amountOfResultsShown,
-        type: 'autocomplete',
-      });
+    (result: SearchEntry) => {
       setResultsVisible(false);
       onFinish('Click result');
 
       if (result.url.startsWith('http')) {
         window.location.href = result.url;
         return;
-      } else if (replaceResultUrl?.(result)) {
-        history.replace(result.url);
-      } else {
-        history.push(result.url);
       }
+      navigate(result.url, { replace: !!replaceResultUrl?.(result) });
     },
-    [replaceResultUrl, history, setResultsVisible, onFinish, term]
+    [replaceResultUrl, setResultsVisible, onFinish, term]
   );
 
   useKeyDown(keyHandler);
@@ -301,7 +265,11 @@ export function Search({
 
   return (
     <div
-      className={classnames(styles.SearchBar, !typeAhead && styles['in-page'])}
+      className={classnames(
+        styles.SearchBar,
+        !typeAhead && styles['in-page'],
+        className
+      )}
     >
       <div ref={resultsRef}>
         <form
@@ -309,11 +277,10 @@ export function Search({
           onSubmit={(e) => {
             e.preventDefault();
             if (term) {
-              history.push(
+              navigate(
                 `${AppRoutes.SEARCH}?${new URLSearchParams(`term=${term}`)}`
               );
               setResultsVisible(true);
-              trackSearch(term, 0, searchCategory, profileType);
             }
           }}
         >
@@ -337,17 +304,15 @@ export function Search({
               setResultsVisible(true);
               const term = e.target.value;
               setTermDebounced(term);
-              trackSearchDebounced(term, 0);
             }}
           />
 
-          <IconButton
+          <Button
+            iconOnly
             className={styles.SubmitButton}
             aria-label="Verstuur zoekopdracht"
             type="submit"
-            iconSize="36"
-            iconFill={Colors.white}
-            icon={IconSearch}
+            icon={SearchIcon}
           />
         </form>
 
@@ -359,7 +324,6 @@ export function Search({
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               totalAmountOfResults={results?.ma?.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              showIcon={extendedAMResults}
               onClickResult={onClickResult}
             />
 
@@ -384,15 +348,14 @@ export function Search({
             />
 
             {extendedAMResults && (
-              <p>
-                <Button
-                  onClick={() =>
-                    (window.location.href = `https://www.amsterdam.nl/zoeken/?Zoe=${term}`)
-                  }
+              <Paragraph>
+                <MaButtonLink
+                  href={`https://www.amsterdam.nl/zoeken/?Zoe=${term}`}
+                  rel="noopener noreferrer"
                 >
                   Zoek verder op Amsterdam.nl
-                </Button>
-              </p>
+                </MaButtonLink>
+              </Paragraph>
             )}
           </div>
         )}

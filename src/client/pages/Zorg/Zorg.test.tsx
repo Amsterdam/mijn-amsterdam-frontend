@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import ThemaPaginaZorg from './Zorg';
+import { ZorgThemaPagina } from './Zorg';
 import { AppState } from '../../../universal/types';
 
 const testState: Pick<AppState, 'WMO'> = {
@@ -62,14 +62,16 @@ describe('<Zorg />', () => {
   const routeEntry = generatePath(AppRoutes.ZORG);
   const routePath = AppRoutes.ZORG;
 
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={ThemaPaginaZorg}
-      initializeState={initializeState}
-    />
-  );
+  function Component() {
+    return (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={ZorgThemaPagina}
+        initializeState={initializeState}
+      />
+    );
+  }
 
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);

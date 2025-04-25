@@ -1,8 +1,7 @@
-const settings = require('../settings.js');
-
+const BEZWAREN_DOCUMENTEN_RESPONSE = require('../fixtures/bezwaren-documents.json');
 const BEZWAREN_STATUS_RESPONSE = require('../fixtures/bezwaren-status.json');
 const BEZWAREN_LIST_RESPONSE = require('../fixtures/bezwaren.json');
-const BEZWAREN_DOCUMENTEN_RESPONSE = require('../fixtures/bezwaren-documents.json');
+const settings = require('../settings.js');
 
 module.exports = [
   {
@@ -12,10 +11,23 @@ module.exports = [
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: BEZWAREN_LIST_RESPONSE,
+          middleware: (req, res, next) => {
+            const bezwaren = BEZWAREN_LIST_RESPONSE.results;
+            return res.send({
+              ...BEZWAREN_LIST_RESPONSE,
+              results: Array.from({ length: 4 })
+                .flatMap(() => bezwaren)
+                .map((bezwaar, index) => {
+                  return {
+                    ...bezwaar,
+                    uuid: `${bezwaar.uuid} -- ${index}`,
+                    identificatie: `${bezwaar.identificatie} -- ${index}`,
+                  };
+                }),
+            });
+          },
         },
       },
     ],

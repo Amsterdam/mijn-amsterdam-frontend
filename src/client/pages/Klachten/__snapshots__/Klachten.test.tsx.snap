@@ -2,614 +2,429 @@
 
 exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0 _Klachten_352a1c"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Klachten"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32px"
-          viewBox="0 0 32 32"
-          width="32px"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <g
-            fill-rule="evenodd"
-            stroke="none"
-            stroke-width="1"
-          >
-            <path
-              d="M29,2 L29,22 L20,22 L20,30 L12.004178,22 L3,22 L3,2 L29,2 Z M16,5 C15.4466667,5 15,5.43459459 15,5.97297297 L15,7 C12.8961906,7 11,8.82702703 11,11 L11,14.8918919 L10,16 L10,17 L15,17 C15,17.5527638 15.4472362,18 16,18 C16.5527638,18 17,17.5527638 17,17 L22,17 L22,16 L21,15.0540541 L21,11 C21,8.82702703 18.984787,7 17,7 L17,5.97297297 C17,5.43459459 16.5533333,5 16,5 Z"
-            />
-          </g>
-        </svg>
-      </span>
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
+        <nav
+          class="ams-breadcrumb"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/klachten"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Klachten
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Klachten
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <p>
+      <p
+        class="ams-paragraph"
+      >
         Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
       </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Meer informatie over de afhandeling van uw klacht
-        </a>
-      </p>
-      <section
-        class="ams-alert ams-alert--error"
-      >
-        <div
-          class="ams-alert__icon"
-        >
-          <span
-            class="ams-icon ams-icon--size-4"
-          >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 36 36"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
-              />
-            </svg>
-          </span>
-        </div>
-        <div
-          class="ams-alert__content"
-        >
-          <h2
-            class="ams-heading ams-heading--level-4"
-          >
-            Foutmelding
-          </h2>
-          <p
-            class="ams-paragraph"
-          >
-            We kunnen op dit moment geen klachten tonen.
-          </p>
-        </div>
-      </section>
     </div>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_352a1c"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over de afhandeling van uw klacht
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-2"
       >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Ingediende klachten
-        </button>
+        Ingediende klachten
       </h3>
       <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
+        class="ams-table"
       >
-        <div
-          class="_PanelInner_b93dc7"
+        <table
+          class="ams-table__table _TableV2_4c6825"
         >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft nog geen klachten ingediend.
-          </p>
-        </div>
+          <tbody
+            class="ams-table__body"
+          />
+        </table>
       </div>
-    </section>
-  </main>
+      <p
+        class="ams-paragraph"
+      >
+        U heeft (nog) geen ingediende klachten
+      </p>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0 _Klachten_352a1c"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Klachten"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32px"
-          viewBox="0 0 32 32"
-          width="32px"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <g
-            fill-rule="evenodd"
-            stroke="none"
-            stroke-width="1"
-          >
-            <path
-              d="M29,2 L29,22 L20,22 L20,30 L12.004178,22 L3,22 L3,2 L29,2 Z M16,5 C15.4466667,5 15,5.43459459 15,5.97297297 L15,7 C12.8961906,7 11,8.82702703 11,11 L11,14.8918919 L10,16 L10,17 L15,17 C15,17.5527638 15.4472362,18 16,18 C16.5527638,18 17,17.5527638 17,17 L22,17 L22,16 L21,15.0540541 L21,11 C21,8.82702703 18.984787,7 17,7 L17,5.97297297 C17,5.43459459 16.5533333,5 16,5 Z"
-            />
-          </g>
-        </svg>
-      </span>
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
+        <nav
+          class="ams-breadcrumb"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/klachten"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Klachten
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Klachten
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <p>
+      <p
+        class="ams-paragraph"
+      >
         Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
       </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Meer informatie over de afhandeling van uw klacht
-        </a>
-      </p>
     </div>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_352a1c"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over de afhandeling van uw klacht
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-2"
       >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Ingediende klachten
-        </button>
+        Ingediende klachten
       </h3>
       <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
+        class="ams-table"
       >
-        <div
-          class="_PanelInner_b93dc7"
+        <table
+          class="ams-table__table _TableV2_4c6825"
         >
-          <table
-            class="_Table_a66dcc"
+          <thead
+            class="ams-table__header"
           >
-            <thead>
-              <tr
-                class="_TableRow_a66dcc"
+            <tr
+              class="ams-table__row"
+            >
+              <th
+                class="ams-table__header-cell"
               >
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Nummer van uw klacht
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Ontvangen op
-                </th>
-                <th
-                  class="_DisplayProp_a66dcc"
-                >
-                  Onderwerp
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="_TableRow_a66dcc"
+                Nummer van uw klacht
+              </th>
+              <th
+                class="ams-table__header-cell"
               >
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Nummer van uw klacht:
-                  </span>
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/klachten/klacht/36049"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    36049
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Ontvangen op:
-                  </span>
-                  <span>
-                    30 mei 2022
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Onderwerp:
-                  </span>
-                  <span>
-                    Test voor decentrale toewijzing
-                  </span>
-                </td>
-              </tr>
-              <tr
-                class="_TableRow_a66dcc"
+                Ontvangen op
+              </th>
+              <th
+                class="ams-table__header-cell"
               >
-                <td
-                  class="_DisplayProp_a66dcc"
+                Onderwerp
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="ams-table__body"
+          >
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="/klachten/klacht/36049"
+                  title="Bekijk meer over klacht 36049"
                 >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Nummer van uw klacht:
-                  </span>
-                  <a
-                    class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-                    href="/klachten/klacht/36046"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      aria-label="chevron-rechts-icoon"
-                      class="_Icon_c3ab45 _Icon__left_c3ab45"
-                      fill="#000"
-                      focusable="false"
-                      height="14px"
-                      viewBox="0 0 32 32"
-                      width="14px"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      <polygon
-                        points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-                      />
-                    </svg>
-                    36046
-                  </a>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
+                  36049
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              />
+              <td
+                class="ams-table__cell"
+              >
+                Test voor decentrale toewijzing
+              </td>
+            </tr>
+            <tr
+              class="ams-table__row"
+            >
+              <td
+                class="ams-table__cell"
+              >
+                <a
+                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  href="/klachten/klacht/36046"
+                  title="Bekijk meer over klacht 36046"
                 >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Ontvangen op:
-                  </span>
-                  <span>
-                    05 mei 2022
-                  </span>
-                </td>
-                <td
-                  class="_DisplayProp_a66dcc"
-                >
-                  <span
-                    class="_DisplayPropLabel_a66dcc"
-                  >
-                    Onderwerp:
-                  </span>
-                  <span>
-                     
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  36046
+                </a>
+              </td>
+              <td
+                class="ams-table__cell"
+              />
+              <td
+                class="ams-table__cell"
+              />
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`<Klachten /> > Matches the Full Page snapshot when there are no complaints 1`] = `
 <DocumentFragment>
-  <main
-    class="_Page_47d7c0 _OverviewPage_47d7c0 _Klachten_352a1c"
+  <div
+    class="ams-grid"
   >
-    <header
-      class="_PageHeading_3b337d _hasIcon_3b337d _hasBackLink_3b337d"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
     >
-      <span
-        aria-hidden="true"
-        class="_Icon_3b337d"
-      >
-        <svg
-          aria-label="Klachten"
-          class="_ThemaIcon_2fc54d"
-          fill="black"
-          height="32px"
-          viewBox="0 0 32 32"
-          width="32px"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <g
-            fill-rule="evenodd"
-            stroke="none"
-            stroke-width="1"
-          >
-            <path
-              d="M29,2 L29,22 L20,22 L20,30 L12.004178,22 L3,22 L3,2 L29,2 Z M16,5 C15.4466667,5 15,5.43459459 15,5.97297297 L15,7 C12.8961906,7 11,8.82702703 11,11 L11,14.8918919 L10,16 L10,17 L15,17 C15,17.5527638 15.4472362,18 16,18 C16.5527638,18 17,17.5527638 17,17 L22,17 L22,16 L21,15.0540541 L21,11 C21,8.82702703 18.984787,7 17,7 L17,5.97297297 C17,5.43459459 16.5533333,5 16,5 Z"
-            />
-          </g>
-        </svg>
-      </span>
       <div
-        class="_HeadingInner_3b337d"
+        class="_PageHeadingInner_c5a3f1"
+        id="skip-to-id-AppContent"
       >
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45 _BackLink_3b337d"
-          href="/"
+        <nav
+          class="ams-breadcrumb"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-links-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
+          <ol
+            class="ams-breadcrumb__list"
           >
-            <polygon
-              points="22.8571429 32 6.85714286 16 22.8571429 0 25.7568858 2.91002571 12.6771943 16 25.7568858 29.0899743"
-            />
-          </svg>
-          Home
-        </a>
-        <h2
-          class="ams-heading ams-heading--level-1"
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="ams-breadcrumb__item"
+            >
+              <a
+                class="ams-breadcrumb__link"
+                href="/klachten"
+                tabindex="-1"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Klachten
+                </span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <h3
+          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
           Klachten
-        </h2>
+        </h3>
       </div>
-    </header>
+    </div>
     <div
-      class="_PageContent_47d7c0"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <p>
+      <p
+        class="ams-paragraph"
+      >
         Hier ziet u een overzicht van de klachten die U heeft ingediend bij gemeente Amsterdam.
       </p>
-      <p>
-        <a
-          class="_Button_c3ab45 _Button__plain_c3ab45 _Button__lean_c3ab45 _Linkd_c3ab45"
-          href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
-          rel="external noopener noreferrer"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_Icon_c3ab45 _Icon__left_c3ab45"
-            fill="#000"
-            focusable="false"
-            height="14px"
-            viewBox="0 0 32 32"
-            width="14px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-          Meer informatie over de afhandeling van uw klacht
-        </a>
-      </p>
     </div>
-    <section
-      class="_SectionCollapsible_b93dc7 _SectionCollapsibleFirst_352a1c"
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
+    >
+      <ul
+        class="ams-link-list"
+      >
+        <li>
+          <a
+            class="ams-link-list__link"
+            href="https://www.amsterdam.nl/veelgevraagd/klacht-indienen-over-de-gemeente-42fd5#case_%7B9846AD0A-E989-4B5D-A1D3-6D79E34DF1BE%7D"
+            rel="noreferrer"
+          >
+            <span
+              class="ams-icon ams-icon--size-5"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+            Meer informatie over de afhandeling van uw klacht
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-3 _Title_b93dc7 _TitleWithItems_b93dc7"
+        class="ams-heading ams-heading--level-2"
       >
-        <button
-          aria-expanded="true"
-          class="_TitleToggle_b93dc7"
-        >
-          <svg
-            aria-hidden="true"
-            aria-label="chevron-rechts-icoon"
-            class="_CaretIcon_b93dc7"
-            focusable="false"
-            height="32px"
-            viewBox="0 0 32 32"
-            width="32px"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <polygon
-              points="9.75688579 32 6.85714286 29.0899743 19.9368344 16 6.85714286 2.91002571 9.75688579 0 25.7568858 16"
-            />
-          </svg>
-           Ingediende klachten
-        </button>
+        Ingediende klachten
       </h3>
       <div
-        aria-hidden="false"
-        class="_Panel_b93dc7"
-        style="height: 0px;"
+        class="ams-table"
       >
-        <div
-          class="_PanelInner_b93dc7"
+        <table
+          class="ams-table__table _TableV2_4c6825"
         >
-          <p
-            class="_NoItemsMessage_b93dc7"
-          >
-            U heeft nog geen klachten ingediend.
-          </p>
-        </div>
+          <tbody
+            class="ams-table__body"
+          />
+        </table>
       </div>
-    </section>
-  </main>
+      <p
+        class="ams-paragraph"
+      >
+        U heeft (nog) geen ingediende klachten
+      </p>
+    </div>
+  </div>
 </DocumentFragment>
 `;

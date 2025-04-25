@@ -3,13 +3,7 @@ import { ReactNode } from 'react';
 import escapeRegex from 'lodash.escaperegexp';
 
 import styles from './Search.module.scss';
-import type {
-  HorecaVergunningen,
-  Krefia,
-  KrefiaDeepLink,
-  VakantieverhuurVergunning,
-  Vergunning,
-} from '../../../server/services';
+import type { Krefia, KrefiaDeepLink } from '../../../server/services';
 import {
   AfisThemaResponse,
   AfisFactuur,
@@ -17,17 +11,22 @@ import {
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { Bezwaar } from '../../../server/services/bezwaren/types';
 import { LoodMetingFrontend } from '../../../server/services/bodem/types';
+import {
+  ErfpachtDossier,
+  ErfpachtDossiersResponse,
+} from '../../../server/services/erfpacht/erfpacht';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
+import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
 import {
-  ErfpachtV2Dossier,
-  ErfpachtV2DossiersResponse,
-} from '../../../server/services/simple-connect/erfpacht';
+  LVVRegistratie,
+  VakantieverhuurVergunningFrontend,
+} from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { LVVRegistratie } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-types';
 import {
-  VarenZakenFrontend,
   VarenRegistratieRederType,
+  VarenZakenFrontend,
 } from '../../../server/services/varen/config-and-types';
+import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { WMOVoorzieningFrontend } from '../../../server/services/wmo/wmo-config-and-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { AppRoutes } from '../../../universal/config/routes';
@@ -42,11 +41,12 @@ import { uniqueArray } from '../../../universal/helpers/utils';
 import {
   AppStateKey,
   BRPData,
-  Identiteitsbewijs,
+  IdentiteitsbewijsFrontend,
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types';
 import { ThemaTitles } from '../../config/thema';
+import { routes as profileRoutes } from '../../pages/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -228,18 +228,18 @@ interface ToeristischRegistratieItem {
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
     stateKey: 'VERGUNNINGEN' as AppStateKey,
-    displayTitle: (vergunning: Vergunning) => (term: string) => {
+    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
   },
   {
-    stateKey: 'ERFPACHTv2' as AppStateKey,
+    stateKey: 'ERFPACHT' as AppStateKey,
     getApiBaseItems: (
-      erfpachtV2DossiersResponse: ErfpachtV2DossiersResponse
-    ): ErfpachtV2Dossier[] => {
-      return erfpachtV2DossiersResponse?.dossiers?.dossiers ?? [];
+      erfpachtDossiersResponse: ErfpachtDossiersResponse
+    ): ErfpachtDossier[] => {
+      return erfpachtDossiersResponse?.dossiers?.dossiers ?? [];
     },
-    displayTitle: (dossier: ErfpachtV2Dossier) => (term: string) => {
+    displayTitle: (dossier: ErfpachtDossier) => (term: string) => {
       return displayPath(term, [dossier.title]);
     },
   },
@@ -248,7 +248,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
-      vakantieverhuurVergunningen: VakantieverhuurVergunning[];
+      vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];
       bbVergunningen: BBVergunning[];
     }) => {
       const registratienummers = apiContent.lvvRegistraties?.map(
@@ -382,21 +382,21 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         {
           title: name || 'Mijn naam',
           link: {
-            to: AppRoutes.BRP,
+            to: profileRoutes.themaPageBRP,
             title: `Mijn naam | ${name}`,
           },
         },
         {
           title: address || 'Mijn adres',
           link: {
-            to: AppRoutes.BRP,
+            to: profileRoutes.themaPageBRP,
             title: `Mijn adres | ${address}`,
           },
         },
       ];
       return [...identiteitsBewijzen, ...brpDataItems];
     },
-    displayTitle: (item: Identiteitsbewijs | ApiBaseItem) => {
+    displayTitle: (item: IdentiteitsbewijsFrontend | ApiBaseItem) => {
       return (term: string) =>
         displayPath(term, [capitalizeFirstLetter(item.title)]);
     },
@@ -407,19 +407,13 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
-        Object.values(apiContent.deepLinks)
-          .filter(
-            (deepLink: KrefiaDeepLink): deepLink is KrefiaDeepLink =>
-              deepLink !== null
-          )
+        apiContent.deepLinks
+          .filter((deepLink: KrefiaDeepLink) => deepLink !== null)
           .map((deepLink) => {
             return {
               ...deepLink,
-              title: deepLink.title,
-              link: {
-                to: deepLink.url,
-                title: deepLink.title,
-              },
+              title: deepLink.link.title,
+              link: deepLink.link,
             };
           });
       return deepLinks || [];
@@ -461,7 +455,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: FeatureToggle.horecaActive,
     stateKey: 'HORECA' as AppStateKey,
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: HorecaVergunningen) {
+    displayTitle(item: HorecaVergunningFrontend) {
       return (term: string) =>
         displayPath(term, [`Horecavergunning ${item.title}`]);
     },

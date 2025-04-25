@@ -1,5 +1,5 @@
 import { ExternalUrls } from './app';
-import { Themas } from '../../universal/config/thema';
+import { ThemaIDs } from '../../universal/config/thema';
 import { MyNotification } from '../../universal/types';
 
 const year = 2022;
@@ -7,7 +7,8 @@ const day = 20;
 const month = 0;
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
-  thema: Themas.NOTIFICATIONS,
+  themaID: ThemaIDs.NOTIFICATIONS,
+  themaTitle: 'Mijn Amsterdam',
   datePublished: new Date(year, month, day).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: true,

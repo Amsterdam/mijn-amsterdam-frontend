@@ -6,7 +6,7 @@ import { getApproximateDistance } from '../../../universal/helpers/geo';
 import { sortByNumber } from '../../../universal/helpers/utils';
 import type {
   AfvalPuntenData,
-  GarbageCenter,
+  AfvalCenter,
 } from '../../../universal/types/afval';
 
 function addApproximateDistance(
@@ -26,6 +26,6 @@ function addApproximateDistance(
 
 export function fetchAfvalpuntenByLatLng(latlng: LatLngLiteral | null) {
   const centers = addApproximateDistance(latlng, afvalpunten);
-  const responseData: { centers: GarbageCenter[] } = { centers };
+  const responseData: { centers: AfvalCenter[] } = { centers };
   return apiSuccessResult(responseData);
 }

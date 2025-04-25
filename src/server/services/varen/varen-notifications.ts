@@ -1,4 +1,5 @@
-import { generatePath } from 'react-router-dom';
+import { generatePath } from 'react-router';
+import slug from 'slugme';
 
 import {
   VarenZakenFrontend,
@@ -7,7 +8,7 @@ import {
 import { fetchVaren } from './varen';
 import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
-import { Themas } from '../../../universal/config/thema';
+import { ThemaIDs } from '../../../universal/config/thema';
 import {
   apiErrorResult,
   ApiResponse,
@@ -23,7 +24,7 @@ function createVarenRederRegisteredNotification(
   return {
     id: `varen-${zaak.id}-reder-notification`,
     datePublished: zaak.dateRequest,
-    thema: Themas.VAREN,
+    themaID: ThemaIDs.VAREN,
     title: `Reder geregistreerd`,
     description: `U heeft zich geregistreerd.`,
     link: {
@@ -46,18 +47,19 @@ function createVarenNotification(
     !zaak.processed || isVergunning(zaak)
       ? generatePath(AppRoutes['VAREN/DETAIL'], {
           id: zaak.id,
-          caseType: zaak.caseType,
+          caseType: slug(zaak.caseType, { lower: true }),
         })
       : AppRoutes.VAREN;
 
-  const baseNotification = {
-    datePublished: currentStep.datePublished,
-    thema: Themas.VAREN,
-    link: {
-      to: ctaLinkToThemaOrDetail,
-      title: 'Bekijk details',
-    },
-  };
+  const baseNotification: Omit<MyNotification, 'id' | 'description' | 'title'> =
+    {
+      datePublished: currentStep.datePublished,
+      themaID: ThemaIDs.VAREN,
+      link: {
+        to: ctaLinkToThemaOrDetail,
+        title: 'Bekijk details',
+      },
+    };
 
   switch (currentStep.status) {
     case 'Ontvangen':

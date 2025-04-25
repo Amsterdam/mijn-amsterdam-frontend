@@ -1,33 +1,38 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 import { ListPageParamKind } from './HLI-thema-config';
 import { HistoricItemsMention } from './HLIThemaPagina';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../components/ListPagePaginated/ListPagePaginated';
+import { PageContentCell } from '../../components/Page/Page';
 
-export default function HLIRegelingen() {
+export function HLIRegelingen() {
   const { kind } = useParams<{ kind: ListPageParamKind }>();
-  const { regelingen, tableConfig, title, routes, isLoading, isError } =
+  const { regelingen, tableConfig, routes, isLoading, isError, breadcrumbs } =
     useHliThemaData();
-  const listPageTableConfig = tableConfig[kind];
+
+  const { filter, sort, title, displayProps, className } = tableConfig[kind];
 
   return (
     <>
       <ListPagePaginated
-        items={regelingen
-          .filter(listPageTableConfig.filter)
-          .sort(listPageTableConfig.sort)}
-        backLinkTitle={title}
-        title={listPageTableConfig.title}
+        items={regelingen.filter(filter).sort(sort)}
+        title={title}
         appRoute={routes.listPage}
         appRouteParams={{ kind }}
-        appRouteBack={routes.themaPage}
-        displayProps={listPageTableConfig.displayProps}
+        breadcrumbs={breadcrumbs}
+        displayProps={displayProps}
         isLoading={isLoading}
         isError={isError}
-        tableClassName={listPageTableConfig.className}
+        tableClassName={className}
+        pageContentBottom={
+          <PageContentCell startWide={3} spanWide={8}>
+            {kind === 'eerdere-en-afgewezen-regelingen' && (
+              <HistoricItemsMention />
+            )}
+          </PageContentCell>
+        }
       />
-      {kind === 'eerdere-en-afgewezen-regelingen' && <HistoricItemsMention />}
     </>
   );
 }

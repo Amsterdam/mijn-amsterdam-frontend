@@ -1,11 +1,10 @@
 import { render } from '@testing-library/react';
-import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Inkomen from './Inkomen';
+import { InkomenThemaPagina } from './Inkomen';
+import { routes } from './Inkomen-thema-config';
 
 const testState: any = {
   WPI_AANVRAGEN: {
@@ -137,7 +136,7 @@ const testState: any = {
           id: 'jaaropgave-1',
           url: '/wpi/document/id',
           variant: null,
-          displayDatePublished: '14 Juli 2020',
+          datePublishedFormatted: '14 Juli 2020',
           documentUrl: '/wpi/document/id',
         },
       ],
@@ -148,7 +147,7 @@ const testState: any = {
           id: 'spec-1',
           url: '/wpi/document/id',
           variant: null,
-          displayDatePublished: '14 Mei 2020',
+          datePublishedFormatted: '14 Mei 2020',
           documentUrl: '/wpi/document/id',
         },
       ],
@@ -157,22 +156,23 @@ const testState: any = {
 };
 
 describe('<Inkomen />', () => {
+  const routeEntry = routes.themaPage;
+
   describe('with items from BBZ, TONK, TOZO', () => {
     function initializeState(snapshot: MutableSnapshot) {
       snapshot.set(appStateAtom, testState);
     }
 
-    const routeEntry = generatePath(AppRoutes.INKOMEN);
-    const routePath = AppRoutes.INKOMEN;
-
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Inkomen}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={InkomenThemaPagina}
+          initializeState={initializeState}
+        />
+      );
+    }
 
     it('Matches the Full Page snapshot', () => {
       const { asFragment } = render(<Component />);
@@ -192,17 +192,16 @@ describe('<Inkomen />', () => {
       } as any);
     }
 
-    const routeEntry = generatePath(AppRoutes.INKOMEN);
-    const routePath = AppRoutes.INKOMEN;
-
-    const Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={Inkomen}
-        initializeState={initializeState}
-      />
-    );
+    function Component() {
+      return (
+        <MockApp
+          routeEntry={routeEntry}
+          routePath={routeEntry}
+          component={InkomenThemaPagina}
+          initializeState={initializeState}
+        />
+      );
+    }
 
     it('Matches the Full Page snapshot', () => {
       const { asFragment } = render(<Component />);

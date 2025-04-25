@@ -1,12 +1,15 @@
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import {
-  LinkdInline,
-  PageContent,
-  PageHeading,
-  TextPage,
-} from '../../components';
+import { Paragraph } from '@amsterdam/design-system-react';
 
-export default function Bff500Error() {
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import { MaRouterLink } from '../../components/MaLink/MaLink';
+import {
+  PageContentCell,
+  PageContentV2,
+  TextPageV2,
+} from '../../components/Page/Page';
+import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+
+export function BFF500Error() {
   const queryParams = new URL(location.href).searchParams;
   let stack = '';
   try {
@@ -17,17 +20,19 @@ export default function Bff500Error() {
   }
 
   return (
-    <TextPage>
-      <PageHeading>500 - Api Error</PageHeading>
-      <PageContent id="skip-to-id-AppContent">
-        <p>
-          Er is een fout opgetreden in de communicatie met de server.{' '}
-          <LinkdInline href="/">Ga verder naar home.</LinkdInline>
-          {!IS_PRODUCTION && (
-            <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
-          )}
-        </p>
-      </PageContent>
-    </TextPage>
+    <TextPageV2>
+      <PageContentV2 id="skip-to-id-AppContent">
+        <PageHeadingV2>500 - Api Error</PageHeadingV2>
+        <PageContentCell>
+          <Paragraph className="ams-mb--xl">
+            Er is een fout opgetreden in de communicatie met de server.{' '}
+            <MaRouterLink href="/">Ga verder naar home.</MaRouterLink>
+            {!IS_PRODUCTION && (
+              <pre style={{ whiteSpace: 'break-spaces' }}>{stack}</pre>
+            )}
+          </Paragraph>
+        </PageContentCell>
+      </PageContentV2>
+    </TextPageV2>
   );
 }
