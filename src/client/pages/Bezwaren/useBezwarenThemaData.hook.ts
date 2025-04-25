@@ -1,4 +1,4 @@
-import { isError } from 'lodash';
+import isError from 'lodash.iserror';
 
 import { tableConfig, LinkListItems, routes } from './Bezwaren-thema-config';
 import { Bezwaar } from '../../../server/services/bezwaren/types';

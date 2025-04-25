@@ -1,4 +1,4 @@
-import { isError } from 'lodash';
+import isError from 'lodash.iserror';
 
 import { tableConfig, LinkListItems, routes } from './Horeca-thema-config';
 import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
