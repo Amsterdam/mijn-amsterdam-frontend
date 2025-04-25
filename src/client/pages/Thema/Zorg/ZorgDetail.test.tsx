@@ -4,10 +4,11 @@ import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Zorg-thema-config';
 import { ZorgDetail } from './ZorgDetail';
+import type { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
-const testState: any = {
+const testState = {
   WMO: {
     status: 'OK',
     content: [
@@ -253,7 +254,7 @@ const testState: any = {
 };
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom, testState as unknown as AppState);
 }
 
 function testDetailPage(id: string, title: string) {

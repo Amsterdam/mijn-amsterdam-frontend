@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Zorg-thema-config';
-import { ZorgThemaPagina } from './ZorgThema';
+import { ZorgThema } from './ZorgThema';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
@@ -25,7 +25,7 @@ const testState: Pick<AppState, 'WMO'> = {
           to: 'http://example.org/ding',
           title: 'Linkje!! naar wmo item 1',
         },
-        status: 'Levering gestart',
+        displayStatus: 'Levering gestart',
         decision: 'Klaar',
         documents: [],
         itemTypeCode: 'WMO',
@@ -67,7 +67,7 @@ describe('<Zorg />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ZorgThemaPagina}
+        component={ZorgThema}
         initializeState={initializeState}
       />
     );

@@ -29,7 +29,7 @@ import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/Toe
 import { VarenRoutes } from './pages/Thema/Varen/Varen-render-config';
 import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-render-config';
 import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-render-config';
-import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatusRoutes';
+import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatus-routes';
 
 export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
   props?: {

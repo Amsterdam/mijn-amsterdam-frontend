@@ -19,8 +19,8 @@ import {
   MaSession,
   TokenData,
 } from './auth-types';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
-import { AppRoutes } from '../../universal/config/routes';
 import { PROFILE_TYPES } from '../../universal/types/App.types';
 import { ONE_SECOND_MS } from '../config/app';
 import { logger } from '../logging';
@@ -50,7 +50,7 @@ export function getReturnToUrl(
         ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
       );
     }
-    case AppRoutes.ZAAK_STATUS:
+    case ZAAK_STATUS_ROUTE:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:
       return authRoutes.AUTH_LOGIN_EHERKENNING_LANDING;
@@ -71,7 +71,7 @@ export function getZaakStatusQueryParams(
 }
 export function getReturnToUrlZaakStatus(queryParams?: ParsedQs) {
   const params = getZaakStatusQueryParams(queryParams);
-  const redirectUrl = `${process.env.MA_FRONTEND_URL}${AppRoutes.ZAAK_STATUS}${params}`;
+  const redirectUrl = `${process.env.MA_FRONTEND_URL}${ZAAK_STATUS_ROUTE}${params}`;
   return redirectUrl;
 }
 
