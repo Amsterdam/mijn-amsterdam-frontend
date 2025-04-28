@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="28px" viewBox="0 0 32 28" version="1.1" xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink" aria-label="inkomen-icoon">
-  <path
-    d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
-    id="Shape"></path>
-  <rect id="Rectangle" x="18" y="15" width="3" height="2"></rect>
-</svg>
