@@ -60,6 +60,7 @@
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/lodash.escaperegexp": "^4.1.9",
     "@types/lodash.isequal": "^4.5.8",
+    "@types/lodash.iserror": "^3.1.9",
     "@types/lodash.keyby": "^4.6.9",
     "@types/memoizee": "^0.4.11",
     "@types/memory-cache": "^0.2.6",
@@ -108,6 +109,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.escaperegexp": "^4.1.2",
     "lodash.isequal": "^4.5.0",
+    "lodash.iserror": "^3.1.1",
     "lodash.keyby": "^4.6.0",
     "log-that-http": "^1.0.1",
     "memoizee": "^0.4.17",
@@ -154,6 +156,7 @@
     "@rollup/rollup-linux-x64-gnu": "4.28.1"
   },
   "devDependencies": {
+    "history": "^5.3.0",
     "@eslint/js": "^9.24.0",
     "@mocks-server/main": "^4.1.0",
     "eslint": "^9.24.0",
