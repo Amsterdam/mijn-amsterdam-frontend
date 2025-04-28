@@ -367,10 +367,12 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           .
         </Paragraph>
         <Paragraph>
-          Om een nieuwe pas aan te vragen, belt u naar{' '}
-          {PHONENUMBERS.WerkEnInkomen}. De nieuwe pas wordt binnen 3 weken
-          thuisgestuurd. Binnen 5 dagen staat de nieuwe pas digitaal in de
-          Amsterdam App.
+          Om een nieuwe pas aan te vragen, belt u ook naar{' '}
+          <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
+            {PHONENUMBERS.WerkEnInkomen}
+          </Link>
+          . De nieuwe pas wordt binnen 3 weken thuisgestuurd. Binnen 5 dagen
+          staat de nieuwe pas digitaal in de Amsterdam App.
         </Paragraph>
       </Modal>
     </>
