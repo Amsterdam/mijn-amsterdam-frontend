@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import {
   Footer,
@@ -17,13 +17,13 @@ import {
   PageContentV2,
   TextPageV2,
 } from '../../components/Page/Page';
-import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useUsabilla } from '../../hooks/useUsabilla';
 
 function ApplicationErrorContent({ error }: { error?: Error }) {
-  useHTMLDocumentTitle({
-    documentTitle: 'Kritieke applicatie fout - Mijn Amsterdam',
-  });
+  useEffect(() => {
+    document.title = 'Kritieke applicatie fout - Mijn Amsterdam';
+  }, []);
+
   return (
     <>
       <PageContentCell startWide={1} spanWide={12}>

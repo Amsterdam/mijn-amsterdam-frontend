@@ -44,7 +44,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   isError,
   isLoading,
   items,
-  pageSize = DEFAULT_PAGE_SIZE,
+  pageSize = 5,
   totalCount,
   tableClassName,
   title,
@@ -72,6 +72,11 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   }, [currentPage, items, pageSize]);
 
   const total = totalCount ?? items.length;
+
+  // It's easy to pass a pre-generated path with the page param omitted so let's be kind and add it if it's missing.
+  const appRouteWithPageParam = !appRoute.includes(':page')
+    ? `${appRoute}/:page`
+    : appRoute;
 
   return (
     <OverviewPageV2>
@@ -111,7 +116,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
                   pageSize={pageSize}
                   currentPage={currentPage}
                   onPageClick={(page: number) => {
-                    const path = generatePath(appRoute, {
+                    const path = generatePath(appRouteWithPageParam, {
                       ...appRouteParams,
                       page,
                     });
