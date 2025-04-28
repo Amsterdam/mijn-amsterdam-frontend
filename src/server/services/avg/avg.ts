@@ -13,6 +13,7 @@ import {
   featureToggle,
   routeConfig,
   themaId,
+  themaTitle,
 } from '../../../client/pages/Thema/AVG/AVG-thema-config';
 import {
   ApiSuccessResponse,
@@ -271,6 +272,7 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
 
   const notification: MyNotification = {
     themaID: themaId,
+    themaTitle: themaTitle,
     id: `avg-${verzoek.id}-notification`,
     title: 'AVG verzoek ontvangen',
     description: 'Uw AVG verzoek is ontvangen.',

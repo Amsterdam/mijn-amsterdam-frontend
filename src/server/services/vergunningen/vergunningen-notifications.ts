@@ -12,6 +12,7 @@ import { isNearEndDate } from './vergunningen-helpers';
 import {
   routeConfig,
   themaId,
+  themaTitle,
 } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   apiDependencyError,
@@ -69,10 +70,12 @@ export function getNotificationLabels(
 
 function getNotificationBase<ID extends string>(
   vergunning: VergunningFrontend,
-  themaID: ID
-): Pick<MyNotification, 'themaID' | 'id' | 'link'> {
+  themaID: ID,
+  themaTitle: string
+): Pick<MyNotification, 'themaID' | 'themaTitle' | 'id' | 'link'> {
   const notificationBaseProperties = {
     themaID: themaID,
+    themaTitle,
     id: `vergunning-${vergunning.id}-notification`,
     link: {
       to: vergunning.link.to,
@@ -83,7 +86,10 @@ function getNotificationBase<ID extends string>(
 }
 
 function mergeNotificationProperties(
-  notificationBase: Pick<MyNotification, 'themaID' | 'id' | 'link'>,
+  notificationBase: Pick<
+    MyNotification,
+    'themaID' | 'themaTitle' | 'id' | 'link'
+  >,
   content: NotificationLabels,
   vergunning: VergunningFrontend
 ): MyNotification {
@@ -103,12 +109,17 @@ export function createVergunningNotification<
 >(
   vergunning: VergunningFrontend<DZ>,
   zaakTypeTransformer: DecosZaakTransformer<DZ>,
-  themaID: ID
+  themaID: ID,
+  themaTitle: string
 ): MyNotification | null {
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
-    const notificationBase = getNotificationBase(vergunning, themaID);
+    const notificationBase = getNotificationBase(
+      vergunning,
+      themaID,
+      themaTitle
+    );
     const notificationLabels = getNotificationLabels(labels, vergunning);
     if (notificationLabels !== null) {
       return mergeNotificationProperties(
@@ -128,7 +139,8 @@ export function getVergunningNotifications<
 >(
   vergunningen: VergunningFrontend<DZ>[],
   decosZaakTransformers: DecosZaakTransformer<DZ>[],
-  themaID: ID
+  themaID: ID,
+  themaTitle: string
 ) {
   return vergunningen
     .map((vergunning) => {
@@ -138,7 +150,12 @@ export function getVergunningNotifications<
       if (!zaakTransformer) {
         return null;
       }
-      return createVergunningNotification(vergunning, zaakTransformer, themaID);
+      return createVergunningNotification(
+        vergunning,
+        zaakTransformer,
+        themaID,
+        themaTitle
+      );
     })
     .filter(
       (notification: MyNotification | null): notification is MyNotification =>
@@ -160,7 +177,8 @@ export async function fetchVergunningenNotifications(
     const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
       decosZaakTransformers,
-      themaId
+      themaId,
+      themaTitle
     );
 
     return apiSuccessResult({

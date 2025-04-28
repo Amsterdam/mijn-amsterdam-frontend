@@ -7,6 +7,7 @@ import {
   featureToggle,
   routeConfig,
   themaId,
+  themaTitle,
 } from '../../../client/pages/Thema/Horeca/Horeca-thema-config';
 import {
   apiSuccessResult,
@@ -83,7 +84,8 @@ export async function fetchHorecaNotifications(
     const notifications = getVergunningNotifications(
       VERGUNNINGEN.content ?? [],
       decosZaakTransformers,
-      themaId
+      themaId,
+      themaTitle
     );
 
     return apiSuccessResult({

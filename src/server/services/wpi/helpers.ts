@@ -13,6 +13,7 @@ import {
 import {
   routeConfig,
   themaId as themaIdInkomen,
+  themaTitle as themaTitleInkomen,
 } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -104,6 +105,7 @@ export function createProcessNotification(
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
     themaID: themaIdInkomen,
+    themaTitle: themaTitleInkomen,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,

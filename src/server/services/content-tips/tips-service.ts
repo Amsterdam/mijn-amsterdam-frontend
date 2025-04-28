@@ -75,6 +75,7 @@ export function fetchContentTips(
       description: t.description,
       link: t.link,
       themaID: t.themaID,
+      themaTitle: t.themaTitle ?? 'Mijn Amsterdam',
       tipReason: t.reason,
       isTip: true,
     };
