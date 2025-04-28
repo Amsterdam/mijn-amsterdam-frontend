@@ -4,12 +4,13 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningenDetail, forTesting } from './VergunningenDetail';
+import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken';
 import { componentCreator } from '../../MockApp';
 
 const mocks = vi.hoisted(() => {
   return {
-    DetailComponent({ vergunning }: any) {
+    DetailComponent({ vergunning }: { vergunning: VergunningFrontend }) {
       return <span>{vergunning.caseType}</span>;
     },
   };
@@ -17,9 +18,7 @@ const mocks = vi.hoisted(() => {
 
 // Mock all the React component dependencies
 vi.mock('./detail-page-content/AanbiedenDienstenEnStraatartiesten', () => ({
-  AanbiedenDienstenEnStraatartiestenContent: ({ vergunning }: any) => (
-    <span>{vergunning.caseType}</span>
-  ),
+  AanbiedenDienstenEnStraatartiestenContent: mocks.DetailComponent,
 }));
 vi.mock('./detail-page-content/ERVV', () => ({
   ERVV: mocks.DetailComponent,
@@ -84,6 +83,11 @@ describe('VergunningDetailPagina', () => {
       isLoading: false,
       isError: false,
       breadcrumbs: [],
+      routeConfig: {
+        detailPage: {
+          path: '/vergunningen/:caseType/:id',
+        },
+      },
     });
     (useVergunningenDetailData as Mock).mockReturnValue({
       vergunning: mockVergunning,
@@ -110,6 +114,11 @@ describe('VergunningDetailPagina', () => {
       vergunningen: [],
       isLoading: false,
       isError: false,
+      routeConfig: {
+        detailPage: {
+          path: '/vergunningen/:caseType/:id',
+        },
+      },
       breadcrumbs: [
         {
           to: '/vergunningen',

@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { LandingPage } from './Landing';
 import { bffApi } from '../../../testing/utils';
 import { SessionState, sessionAtom } from '../../hooks/api/useSessionApi';
+import MockApp from '../MockApp';
 
 const appState = { isAuthenticated: false } as SessionState;
 
@@ -15,11 +15,12 @@ describe('<Landing />', () => {
 
   it('Renders without crashing', () => {
     const { asFragment } = render(
-      <RecoilRoot
+      <MockApp
+        routeEntry="/"
+        routePath="/"
+        component={LandingPage}
         initializeState={(snapshot) => snapshot.set(sessionAtom, appState)}
-      >
-        <LandingPage />
-      </RecoilRoot>
+      />
     );
     expect(asFragment()).toMatchSnapshot();
   });

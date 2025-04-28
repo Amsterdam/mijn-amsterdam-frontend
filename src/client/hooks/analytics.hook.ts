@@ -45,8 +45,6 @@ function _trackPageView(href: string, customDimensions?: CustomDimension[]) {
     customDimensions,
   };
 
-  console.log('trackPageView', payload);
-
   return PiwikInstance && PiwikInstance.trackPageView(payload);
 }
 

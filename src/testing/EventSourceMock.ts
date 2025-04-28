@@ -13,13 +13,13 @@ export function newEventSourceMock() {
     this.readyState = readyState;
   };
   EventSourceMock.prototype.open = vi.fn(() => {
-    EventSourceMock.prototype.evHandlers?.open();
+    EventSourceMock.prototype.evHandlers.open?.();
   });
   EventSourceMock.prototype.close = vi.fn(() => {
-    EventSourceMock.prototype.evHandlers?.close();
+    EventSourceMock.prototype.evHandlers.close?.();
   });
   EventSourceMock.prototype.error = vi.fn((error: any) => {
-    EventSourceMock.prototype.evHandlers?.error(error);
+    EventSourceMock.prototype.evHandlers.error?.(error);
   });
   EventSourceMock.prototype.addEventListener = vi.fn(
     (eventName: string, handler: (args: any) => void) => {

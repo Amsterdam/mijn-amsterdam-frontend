@@ -479,7 +479,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         <p
           class="ams-paragraph"
         >
-          Klik voor een overzicht van gemeentelijke informatie rond uw eigen woning.
+          Klik voor een overzicht van gemeentelijke informatie rond uw adres.
         </p>
       </span>
     </a>
