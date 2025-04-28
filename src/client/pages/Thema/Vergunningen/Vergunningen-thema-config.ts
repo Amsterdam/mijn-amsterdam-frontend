@@ -25,14 +25,6 @@ type VergunningFrontendExpireableDisplayProps = DisplayProps<
   >
 >;
 
-// Created because the tableconfig here is also used for other types of Vergunning, for example ToeristischeVerhuurVergunning.
-// This type extends Decos and PowerBrowser types and the type below satisfies both of them.
-type VergunningPropsCommon = {
-  processed: boolean;
-  decision: string | null;
-  isExpired?: boolean;
-};
-
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
@@ -115,7 +107,7 @@ function isVergunningExpirable(vergunning: { isExpired?: boolean }) {
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: <T extends VergunningPropsCommon>(vergunning: T) =>
+    filter: <T extends VergunningFrontend>(vergunning: T) =>
       !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
@@ -127,11 +119,11 @@ export const tableConfig = {
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: <T extends VergunningPropsCommon>(vergunning: T) => {
+    filter: <T extends VergunningFrontend>(vergunning: T) => {
       if (isVergunningExpirable(vergunning)) {
-        const isCurrentlyActivePermit =
-          vergunning.processed && vergunning.decision === 'Verleend';
-        return isCurrentlyActivePermit && vergunning.isExpired !== true;
+        return vergunning.steps.some(
+          (step) => step.status === 'Verlopen' && step.isActive
+        );
       }
       return false;
     },
@@ -145,16 +137,13 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: <T extends VergunningPropsCommon>(vergunning: T) => {
+    filter: <T extends VergunningFrontend>(vergunning: T) => {
       if (vergunning.processed && vergunning.decision !== 'Verleend') {
         return true;
       }
-
       if (isVergunningExpirable(vergunning)) {
-        return (
-          vergunning.processed &&
-          vergunning.decision === 'Verleend' &&
-          vergunning.isExpired === true
+        return vergunning.steps.some(
+          (step) => step.status === 'Verlopen' && !step.isActive
         );
       }
       return false;
