@@ -138,15 +138,13 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
     filter: <T extends VergunningFrontend>(vergunning: T) => {
-      if (vergunning.processed && vergunning.decision !== 'Verleend') {
-        return true;
-      }
       if (isVergunningExpirable(vergunning)) {
         return vergunning.steps.some(
           (step) => step.status === 'Verlopen' && !step.isActive
         );
       }
-      return false;
+
+      return vergunning.processed;
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,
