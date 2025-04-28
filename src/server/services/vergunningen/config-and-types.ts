@@ -58,6 +58,7 @@ export type EvenementVergunning = DecosZaakBase &
   WithLocation &
   WithDateTimeRange & {
     caseType: GetCaseType<'EvenementVergunning'>;
+    description: string | null;
   };
 
 export type Omzettingsvergunning = DecosZaakBase &

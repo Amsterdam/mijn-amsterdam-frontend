@@ -13,7 +13,7 @@ export function EvenementVergunning({
   const rows = getRows(vergunning, [
     'identifier',
     'description',
-    'location',
+    'address',
     'dateTimeRange',
     'decision',
   ]);

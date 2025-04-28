@@ -119,6 +119,7 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
       Verleend: ['Verleend (Bijzonder/Bewaren)', 'Verleend zonder borden'],
       '': ['Nog niet bekend', 'Nog niet  bekend'],
     }),
+    subject1: description,
     date6: dateStart,
     date7: dateEnd,
     text6: location,
