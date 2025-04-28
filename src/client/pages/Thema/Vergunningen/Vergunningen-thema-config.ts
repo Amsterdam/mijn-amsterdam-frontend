@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router';
+import { generatePath, type Params } from 'react-router';
 
 import {
   DecosZaakBase,
@@ -179,7 +179,7 @@ export const linkListItems: LinkProps[] = [
 ];
 
 export function getListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(params: T | null): string => {
+  return <T extends Params<string>>(params: T | null): string => {
     const kind = params?.kind as ListPageParamKind;
     return kind in tableConfig
       ? `${tableConfig[kind].title} | ${themaTitle}`
