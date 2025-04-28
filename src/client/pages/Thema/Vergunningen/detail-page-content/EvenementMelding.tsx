@@ -11,7 +11,7 @@ export function EvenementMelding({
   vergunning: VergunningFrontend<EvenementMelding>;
 }) {
   const onFromTo = (vergunning: VergunningFrontend<EvenementMelding>) => {
-    return vergunning.decision === 'Verleend'
+    return vergunning.processed
       ? commonTransformers.onFromTo(vergunning)
       : null;
   };
