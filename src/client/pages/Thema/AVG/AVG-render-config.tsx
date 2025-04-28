@@ -6,7 +6,7 @@ import {
 } from './AVG-thema-config';
 import { AVGDetail } from './AVGDetail';
 import { default as AvgIcon } from './AvgIcon.svg?react';
-import { AVGLijst } from './AVGLijst';
+import { AVGList } from './AVGList';
 import { AVGThema } from './AVGThema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
@@ -23,7 +23,7 @@ export const AvgRoutes = [
   },
   {
     route: routeConfig.listPage.path,
-    Component: AVGLijst,
+    Component: AVGList,
     isActive: featureToggle.avgActive,
   },
   {

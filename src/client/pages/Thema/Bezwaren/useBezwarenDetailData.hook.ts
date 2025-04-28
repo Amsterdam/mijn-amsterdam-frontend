@@ -14,7 +14,7 @@ import { uniqueArray } from '../../../../universal/helpers/utils';
 export function useBezwarenDetailData() {
   const {
     bezwaren,
-    routes,
+    routeConfig,
     isError: isErrorThemaData,
     isLoading: isLoadingThemaData,
     breadcrumbs,
@@ -47,7 +47,7 @@ export function useBezwarenDetailData() {
 
   return {
     title: bezwaar?.identificatie ?? 'Bezwaar',
-    routes,
+    routeConfig,
     bezwaar,
     bezwaarDetail,
     documents,

@@ -24,5 +24,6 @@ export function useAVGListPageData() {
     breadcrumbs,
     params,
     listPageRoute: routeConfig.listPage.path,
+    routeConfig,
   };
 }

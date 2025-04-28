@@ -5,6 +5,7 @@ import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -20,7 +21,9 @@ export function AVGThema() {
     isError,
     linkListItems,
     title,
+    routeConfig,
   } = useAVGData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const tables = Object.entries(tableConfig).map(
     ([

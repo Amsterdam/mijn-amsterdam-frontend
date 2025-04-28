@@ -1,6 +1,7 @@
 // src/client/pages/Burgerzaken/useBurgerZakenDetailData.hook.tsx
 import { useParams } from 'react-router';
 
+import { routeConfig } from './Burgerzaken-thema-config';
 import { useBurgerZakenData } from './useBurgerZakenData.hook';
 
 export function useBurgerZakenDetailData() {
@@ -13,5 +14,6 @@ export function useBurgerZakenDetailData() {
     isLoading,
     isError,
     breadcrumbs,
+    routeConfig,
   };
 }

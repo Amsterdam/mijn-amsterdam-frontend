@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { formatKvkProfileData } from './ProfileCommercial.transform';
 import { isError, isLoading } from '../../../../../universal/helpers/api';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
-import { themaTitle } from '../Profile-thema-config';
+import { routeConfig, themaTitle } from '../Profile-thema-config';
 
 export function useProfileData() {
   const { KVK } = useAppStateGetter();
@@ -19,6 +19,7 @@ export function useProfileData() {
     profileData,
     isLoading: isLoading(KVK),
     isError: isError(KVK),
+    routeConfig,
     linkListItems: [
       {
         to: 'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',

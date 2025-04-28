@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import { parseISO } from 'date-fns';
 import { useParams, generatePath, useNavigate } from 'react-router';
 
-import { routeConfig, tableConfigSpecificaties } from './Inkomen-thema-config';
+import { tableConfigSpecificaties } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
 
 export function useInkomenSpecificatiesListPageData() {
@@ -14,6 +14,7 @@ export function useInkomenSpecificatiesListPageData() {
     isLoadingWpiSpecificaties,
     listPageParamKind,
     breadcrumbs,
+    routeConfig,
   } = useInkomenThemaData();
 
   const params = useParams<{
@@ -141,5 +142,6 @@ export function useInkomenSpecificatiesListPageData() {
     total,
     breadcrumbs,
     themaPageRoute: routeConfig.themaPage.path,
+    routeConfig,
   };
 }

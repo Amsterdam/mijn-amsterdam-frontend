@@ -3,6 +3,7 @@ import isError from 'lodash.iserror';
 import {
   klachtenTableConfig,
   LinkListItems,
+  routeConfig,
   themaId,
   themaTitle,
 } from './Klachten-thema-config';
@@ -32,5 +33,6 @@ export function useKlachtenThemaData() {
     tableConfig: klachtenTableConfig,
     themaTitle: themaTitle,
     breadcrumbs,
+    routeConfig,
   };
 }

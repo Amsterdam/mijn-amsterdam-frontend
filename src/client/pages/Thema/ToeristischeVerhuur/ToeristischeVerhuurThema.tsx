@@ -12,6 +12,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ToeristischeVerhuurThema() {
   const {
@@ -30,7 +31,9 @@ export function ToeristischeVerhuurThema() {
     hasLVVRegistratiesError,
     hasVakantieVerhuurVergunningError,
     linkListItems,
+    routeConfig,
   } = useToeristischeVerhuurThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const errorAlertContent = isError ? (
     <>Wij kunnen nu niet alle gegevens laten zien.</>

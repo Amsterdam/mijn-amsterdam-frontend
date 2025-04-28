@@ -17,7 +17,7 @@ export const themaId = 'JEUGD' as const;
 
 const detailRouteBase = '/jeugd/voorziening';
 
-export const routeConfig: ThemaRoutesConfig = {
+export const routeConfig = {
   themaPage: {
     path: '/jeugd',
     documentTitle: themaTitle,
@@ -31,7 +31,7 @@ export const routeConfig: ThemaRoutesConfig = {
     documentTitle: `Voorziening | ${themaTitle}`,
     trackingUrl: detailRouteBase,
   },
-} as const;
+} as const satisfies ThemaRoutesConfig;
 
 export const linkListItems: LinkProps[] = [
   {

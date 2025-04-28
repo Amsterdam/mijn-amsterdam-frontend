@@ -31,5 +31,6 @@ export function useHorecaThemaData() {
     themaTitle: themaTitle,
     breadcrumbs,
     listPageRoute: routeConfig.listPage.path,
+    routeConfig,
   };
 }

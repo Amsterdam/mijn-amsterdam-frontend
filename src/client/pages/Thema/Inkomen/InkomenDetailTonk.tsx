@@ -4,6 +4,7 @@ import { wpiLinks } from './Inkomen-thema-config';
 import { useInkomenDetailData } from './useInkomenDetailData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -22,8 +23,9 @@ const pageContentTop = (
 );
 
 export function InkomenDetailTonk() {
-  const { isLoading, isError, zaak, breadcrumbs } =
+  const { isLoading, isError, zaak, breadcrumbs, routeConfig } =
     useInkomenDetailData('WPI_TONK');
+  useHTMLDocumentTitle(routeConfig.detailPageTonk.documentTitle);
 
   return (
     <ThemaDetailPagina

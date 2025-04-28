@@ -7,6 +7,7 @@ import { VergunningFrontend } from '../../../../server/services/vergunningen/con
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { getRows } from '../Vergunningen/detail-page-content/fields-config';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
@@ -35,10 +36,11 @@ function ExploitatieHorecaBedrijf({
 }
 
 export function HorecaDetail() {
-  const { vergunningen, isLoading, isError, breadcrumbs } =
+  const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
     useHorecaThemaData();
   const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
     useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   return (
     <ThemaDetailPagina

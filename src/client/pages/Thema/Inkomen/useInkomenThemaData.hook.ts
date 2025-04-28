@@ -102,5 +102,6 @@ export function useInkomenThemaData() {
     tableConfig,
     breadcrumbs,
     listPageRoute: routeConfig.listPage.path,
+    routeConfig,
   };
 }

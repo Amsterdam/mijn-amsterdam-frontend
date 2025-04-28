@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { ListPageParamKind } from './Bezwaren-thema-config';
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BezwarenList() {
   const { kind = 'lopende-bezwaren' } = useParams<{
@@ -17,6 +18,7 @@ export function BezwarenList() {
     breadcrumbs,
   } = useBezwarenThemaData();
   const listPageTableConfig = tableConfig[kind];
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
 
   return (
     <ListPagePaginated

@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 
+import { routeConfig } from './AVG-thema-config';
 import { useAVGData } from './useAVGData.hook';
 
 export function useAVGDetailPage() {
@@ -13,5 +14,6 @@ export function useAVGDetailPage() {
     isLoading,
     isError,
     breadcrumbs,
+    routeConfig,
   };
 }

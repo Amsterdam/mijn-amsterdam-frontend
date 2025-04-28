@@ -5,6 +5,7 @@ import { HorecaVergunningFrontend } from '../../../../server/services/horeca/con
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -23,7 +24,9 @@ export function HorecaThema() {
     isLoading,
     isError,
     linkListItems,
+    routeConfig,
   } = useHorecaThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {

@@ -24,5 +24,6 @@ export function useBodemData() {
     linkListItems,
     breadcrumbs,
     listPageRoute: routeConfig.listPage.path,
+    routeConfig,
   };
 }

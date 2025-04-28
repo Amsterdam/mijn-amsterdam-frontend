@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import { themaId } from './Inkomen-thema-config';
+import { routeConfig, themaId } from './Inkomen-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -21,5 +21,6 @@ export function useInkomenDetailData(
     isLoading: isLoading(STATE),
     isError: isError(STATE),
     breadcrumbs,
+    routeConfig,
   };
 }

@@ -44,6 +44,7 @@ import { TableV2 } from '../../../components/Table/TableV2';
 import { useDataApi } from '../../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 const loadingContentBarConfigDetails: BarConfig = [
@@ -88,6 +89,7 @@ const PHONENUMBERS = {
 export function HLIStadspasDetail() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
+  useHTMLDocumentTitle(routeConfig.detailPageStadspas.documentTitle);
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();

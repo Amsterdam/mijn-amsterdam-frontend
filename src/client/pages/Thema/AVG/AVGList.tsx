@@ -1,7 +1,8 @@
 import { useAVGListPageData } from './useAVGListPage.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
-export function AVGLijst() {
+export function AVGList() {
   const {
     avgVerzoeken,
     isLoading,
@@ -13,7 +14,9 @@ export function AVGLijst() {
     displayProps,
     params,
     listPageRoute,
+    routeConfig,
   } = useAVGListPageData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
 
   return (
     <ListPagePaginated

@@ -1,7 +1,6 @@
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { listPageParamKind } from './Erfpacht-thema-config';
-import { useErfpachtThemaData } from './erfpachtData.hook';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import {
   ErfpachtDossierFrontend,
   ErfpachtDossierFactuurFrontend,
@@ -10,6 +9,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtThema() {
   const {
@@ -20,7 +20,10 @@ export function ErfpachtThema() {
     tableConfig,
     dossiers,
     openFacturen,
+    routeConfig,
+    listPageParamKind,
   } = useErfpachtThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const pageContentTables = tableConfig
     ? entries(tableConfig)

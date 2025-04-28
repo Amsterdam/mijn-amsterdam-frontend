@@ -4,6 +4,7 @@ import {
   linkListItems,
   listPageParamKind,
   listPageTitle,
+  routeConfig,
   tableConfig,
   themaId,
 } from './HLI-thema-config';
@@ -63,5 +64,6 @@ export function useHliThemaData() {
       ? [...linkListItems, kindTegoedLinkListItem]
       : linkListItems,
     breadcrumbs,
+    routeConfig,
   };
 }

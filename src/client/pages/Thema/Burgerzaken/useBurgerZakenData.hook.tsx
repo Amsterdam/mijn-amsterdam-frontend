@@ -30,5 +30,6 @@ export function useBurgerZakenData() {
     documents,
     breadcrumbs,
     listPageRoute: routeConfig.listPage.path,
+    routeConfig,
   };
 }

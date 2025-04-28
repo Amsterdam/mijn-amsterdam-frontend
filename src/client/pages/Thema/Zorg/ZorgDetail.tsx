@@ -5,6 +5,7 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type WMODetailContentProps = {
   voorziening: WMOVoorzieningFrontend;
@@ -46,8 +47,9 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
 }
 
 export function ZorgDetail() {
-  const { title, voorziening, breadcrumbs, isError, isLoading } =
+  const { title, voorziening, breadcrumbs, isError, isLoading, routeConfig } =
     useZorgDetailData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   return (
     <ThemaDetailPagina

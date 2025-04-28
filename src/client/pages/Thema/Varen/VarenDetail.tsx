@@ -5,7 +5,8 @@ import { VarenDetailPageContentExploitatieHernoemen } from './VarenDetailExploit
 import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploitatieOverdragen';
 import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
-import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function VarenDetail() {
   const {
@@ -16,7 +17,9 @@ export function VarenDetail() {
     isLoading,
     isError,
     breadcrumbs,
+    routeConfig
   } = useVarenDetailPage();
+useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   let pageContent = null;
   switch (zaak?.caseType) {

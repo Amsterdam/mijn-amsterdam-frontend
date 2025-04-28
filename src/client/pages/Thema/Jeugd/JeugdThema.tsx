@@ -6,14 +6,16 @@ import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/service
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import {
   WMO_HELPDESK_HREF_TEL_LINK,
   WMO_HELPDESK_PHONENUMBER,
 } from '../Zorg/ZorgThema';
 
 export function JeugdThemaPagina() {
-  const { isError, isLoading, voorzieningen, title, tableConfig } =
+  const { isError, isLoading, voorzieningen, title, tableConfig, routeConfig } =
     useJeugdThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
@@ -39,7 +41,6 @@ export function JeugdThemaPagina() {
       <ThemaPaginaTable<LeerlingenvervoerVoorzieningFrontend>
         key={kind}
         title={config.title}
-        className={config.className}
         zaken={voorzieningen.filter(config.filter)}
         listPageRoute={config.listPageRoute}
         displayProps={config.displayProps}

@@ -8,6 +8,7 @@ import styles from './ErfpachtDetail.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtDetail() {
   const {
@@ -20,7 +21,9 @@ export function ErfpachtDetail() {
     displayPropsDossierFacturen,
     breadcrumbs,
     title,
+    routeConfig,
   } = useDossierDetailData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   return (
     <ThemaDetailPagina

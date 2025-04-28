@@ -5,13 +5,21 @@ import { HistoricItemsMention } from './HLIThema';
 import { useHliThemaData } from './useHliThemaData';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function HLIList() {
   const { kind = 'huidige-regelingen' } = useParams<{
     kind: ListPageParamKind;
   }>();
-  const { regelingen, tableConfig, isLoading, isError, breadcrumbs } =
-    useHliThemaData();
+  const {
+    regelingen,
+    tableConfig,
+    isLoading,
+    isError,
+    breadcrumbs,
+    routeConfig,
+  } = useHliThemaData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];

@@ -90,9 +90,7 @@ export function useContactmomenten() {
     isError: isError(KLANT_CONTACT),
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
-    routes: {
-      listPage: routeConfig.listPageContactmomenten.path,
-    },
+    routeConfig,
     breadcrumbs,
     routeParams,
   };

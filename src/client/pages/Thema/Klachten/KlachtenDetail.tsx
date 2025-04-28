@@ -5,6 +5,7 @@ import type { KlachtFrontend } from '../../../../server/services/klachten/types'
 import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type KlachtenDetailContentProps = {
   klacht: KlachtFrontend;
@@ -43,7 +44,9 @@ function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
 }
 
 export function KlachtenDetail() {
-  const { klachten, isLoading, isError, breadcrumbs } = useKlachtenThemaData();
+  const { klachten, isLoading, isError, breadcrumbs, routeConfig } =
+    useKlachtenThemaData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
   const { id } = useParams<{ id: string }>();
   const klacht = klachten.find((klacht) => klacht.id === id);
 

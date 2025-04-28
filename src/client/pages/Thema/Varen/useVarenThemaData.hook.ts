@@ -4,6 +4,7 @@ import {
   varenMeerInformatieLink,
   themaTitle,
   themaId,
+  routeConfig,
 } from './Varen-thema-config';
 import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
@@ -36,5 +37,6 @@ export function useVarenThemaData() {
     buttonItems: [],
     breadcrumbs,
     title: themaTitle,
+    routeConfig,
   };
 }

@@ -14,6 +14,7 @@ import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/Para
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function HistoricItemsMention() {
   return (
@@ -98,7 +99,9 @@ export function HLIThema() {
     dependencyError,
     stadspassen,
     linkListItems,
+    routeConfig,
   } = useHliThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

@@ -3,13 +3,21 @@ import { useParams } from 'react-router';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { ListPageParamKind } from './Vergunningen-thema-config';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function VergunningenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{
     kind: ListPageParamKind;
   }>();
-  const { vergunningen, isLoading, isError, tableConfig, routes, breadcrumbs } =
-    useVergunningenThemaData();
+  const {
+    vergunningen,
+    isLoading,
+    isError,
+    tableConfig,
+    routeConfig,
+    breadcrumbs,
+  } = useVergunningenThemaData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
 
   const { title, displayProps, filter, sort, listPageRoute } =
     tableConfig[kind] ?? null;

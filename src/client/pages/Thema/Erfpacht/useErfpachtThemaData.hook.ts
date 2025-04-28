@@ -2,6 +2,7 @@ import {
   getTableConfig,
   linkListItems,
   listPageParamKind,
+  routeConfig,
   themaId,
   themaTitle,
 } from './Erfpacht-thema-config';
@@ -42,5 +43,6 @@ export function useErfpachtThemaData() {
     tableConfig,
     listPageParamKind,
     breadcrumbs,
+    routeConfig,
   };
 }

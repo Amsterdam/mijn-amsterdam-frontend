@@ -2,6 +2,7 @@ import {
   linkListItems,
   listPageParamKind,
   listPageTitle,
+  routeConfig,
   tableConfig,
   themaId,
   themaTitle,
@@ -33,5 +34,6 @@ export function useZorgThemaData() {
     listPageParamKind,
     linkListItems,
     breadcrumbs,
+    routeConfig,
   };
 }

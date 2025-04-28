@@ -1,5 +1,6 @@
 import {
   linkListItems,
+  routeConfig,
   tableConfig,
   themaId,
   themaTitle,
@@ -32,5 +33,6 @@ export function useParkerenData() {
     isLoadingParkerenUrl: isLoading(PARKEREN),
     linkListItems,
     breadcrumbs,
+    routeConfig,
   };
 }

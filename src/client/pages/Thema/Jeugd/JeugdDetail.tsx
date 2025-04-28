@@ -7,6 +7,7 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type ContentProps = {
   voorziening: LeerlingenvervoerVoorzieningFrontend;
@@ -38,8 +39,9 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
 }
 
 export function JeugdDetail() {
-  const { voorzieningen, isError, isLoading, breadcrumbs } =
+  const { voorzieningen, isError, isLoading, breadcrumbs, routeConfig } =
     useJeugdThemaData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
   const { id } = useParams<{
     id: LeerlingenvervoerVoorzieningFrontend['id'];
   }>();

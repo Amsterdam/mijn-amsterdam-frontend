@@ -3,6 +3,7 @@ import {
   linkListItems,
   themaTitle,
   themaId,
+  routeConfig,
 } from './AVG-thema-config';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
@@ -29,5 +30,6 @@ export function useAVGData() {
     avgVerzoeken,
     linkListItems,
     breadcrumbs,
+    routeConfig,
   };
 }

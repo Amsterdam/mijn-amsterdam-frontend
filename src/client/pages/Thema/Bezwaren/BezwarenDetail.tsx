@@ -10,6 +10,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import { Steps } from '../../../components/StatusSteps/StatusSteps';
 import { TextClamp } from '../../../components/TextClamp/TextClamp';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type BezwaarDetailContentProps = {
   bezwaar: BezwaarFrontend;
@@ -111,7 +112,9 @@ export function BezwarenDetail() {
     breadcrumbs,
     statussen,
     title,
+    routeConfig,
   } = useBezwarenDetailData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   const pageContentErrorAlert = (
     <>

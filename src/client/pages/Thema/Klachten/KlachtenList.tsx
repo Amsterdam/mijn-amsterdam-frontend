@@ -1,9 +1,17 @@
 import { useKlachtenThemaData } from './useKlachtenThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function KlachtenList() {
-  const { klachten, tableConfig, breadcrumbs, isLoading, isError } =
-    useKlachtenThemaData();
+  const {
+    klachten,
+    tableConfig,
+    breadcrumbs,
+    isLoading,
+    isError,
+    routeConfig,
+  } = useKlachtenThemaData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
 
   return (
     <ListPagePaginated

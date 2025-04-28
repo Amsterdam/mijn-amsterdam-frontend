@@ -3,13 +3,21 @@ import { useParams } from 'react-router';
 import type { ListPageParamKind } from './Jeugd-thema-config';
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function JeugdList() {
   const { kind = 'huidige-voorzieningen' } = useParams<{
     kind: ListPageParamKind;
   }>();
-  const { voorzieningen, tableConfig, isLoading, isError, breadcrumbs } =
-    useJeugdThemaData();
+  const {
+    voorzieningen,
+    tableConfig,
+    isLoading,
+    isError,
+    breadcrumbs,
+    routeConfig,
+  } = useJeugdThemaData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
   const listPageTableConfig = tableConfig[kind];
 
   return (
@@ -22,7 +30,6 @@ export function JeugdList() {
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}
       isError={isError}
-      tableClassName={listPageTableConfig.className}
     />
   );
 }

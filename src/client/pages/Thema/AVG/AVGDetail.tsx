@@ -3,6 +3,7 @@ import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function getVerzoekRows(verzoek: AVGRequestFrontend) {
   return [
@@ -24,8 +25,9 @@ function AVGDetailContent({ verzoek }: { verzoek: AVGRequestFrontend }) {
 }
 
 export function AVGDetail() {
-  const { verzoek, isLoading, isError, breadcrumbs, title } =
+  const { verzoek, isLoading, isError, breadcrumbs, title, routeConfig } =
     useAVGDetailPage();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
   return (
     <ThemaDetailPagina
       title={title}

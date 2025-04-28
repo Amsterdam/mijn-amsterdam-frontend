@@ -2,6 +2,7 @@ import isError from 'lodash.iserror';
 
 import {
   linkListItems,
+  routeConfig,
   tableConfig,
   themaId,
   themaTitle,
@@ -29,5 +30,6 @@ export function useVergunningenThemaData() {
     tableConfig,
     linkListItems,
     breadcrumbs,
+    routeConfig,
   };
 }

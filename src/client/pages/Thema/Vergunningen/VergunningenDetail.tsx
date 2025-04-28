@@ -19,6 +19,7 @@ import { VergunningFrontend } from '../../../../server/services/vergunningen/con
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 interface DetailPageContentProps<V> {
   vergunning: V;
@@ -86,10 +87,11 @@ function DetailPageContent<V extends VergunningFrontend>({
 }
 
 export function VergunningenDetail() {
-  const { vergunningen, isLoading, isError, breadcrumbs } =
+  const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
     useVergunningenThemaData();
   const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
     useVergunningenDetailData(vergunningen);
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   return (
     <ThemaDetailPagina

@@ -5,7 +5,7 @@ import { isError, isLoading } from '../../../../../universal/helpers/api';
 import { BFFApiUrls } from '../../../../config/api';
 import { useAppStateBagApi } from '../../../../hooks/useAppState';
 import { getTableConfig, themaId } from '../Erfpacht-thema-config';
-import { useErfpachtThemaData } from '../erfpachtData.hook';
+import { useErfpachtThemaData } from '../useErfpachtThemaData.hook';
 
 export function useDossierDetaiLData() {
   const { dossierNummerUrlParam } = useParams<{
@@ -19,6 +19,7 @@ export function useDossierDetaiLData() {
     listPageParamKind,
     erfpachtData,
     breadcrumbs,
+    routeConfig,
   } = useErfpachtThemaData();
 
   const EVER_CHANING_FALLBACK_KEY = `erfpacht-dossier-${new Date().getTime()}`;
@@ -44,5 +45,6 @@ export function useDossierDetaiLData() {
     displayPropsDossierFacturen:
       tableConfig?.[listPageParamKind.alleFacturen]?.displayProps ?? {},
     breadcrumbs,
+    routeConfig,
   };
 }

@@ -2,17 +2,19 @@ import { Heading } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
 import { themaId } from './Erfpacht-thema-config';
-import { useErfpachtThemaData } from './erfpachtData.hook';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { ErfpachtDossiersDetail } from '../../../../server/services/erfpacht/erfpacht-types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
 import { BFFApiUrls } from '../../../config/api';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtListFacturen() {
-  const { tableConfig, listPageParamKind, breadcrumbs } =
+  const { tableConfig, listPageParamKind, breadcrumbs, routeConfig } =
     useErfpachtThemaData();
+  useHTMLDocumentTitle(routeConfig.listPageAlleFacturen.documentTitle);
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;

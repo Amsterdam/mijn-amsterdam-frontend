@@ -5,10 +5,12 @@ import { useProfileData } from './useProfileData.hook';
 import { PageContentCell } from '../../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../../components/Thema/ThemaPagina';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
 
 function ProfileCommercialSectionPanels() {
-  const { KVK, profileData } = useProfileData();
+  const { KVK, profileData, routeConfig } = useProfileData();
+  useHTMLDocumentTitle(routeConfig.themaPageKVK.documentTitle);
 
   return (
     <>

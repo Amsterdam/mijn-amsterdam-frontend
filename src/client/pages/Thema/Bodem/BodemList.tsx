@@ -1,5 +1,6 @@
 import { useBodemListPageData } from './useBodemListPageData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemList() {
   const {
@@ -13,7 +14,9 @@ export function BodemList() {
     params,
     breadcrumbs,
     listPageRoute,
+    routeConfig,
   } = useBodemListPageData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
 
   return (
     <ListPagePaginated

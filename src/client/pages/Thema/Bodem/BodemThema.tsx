@@ -5,10 +5,19 @@ import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function BodemThema() {
-  const { items, tableConfig, isLoading, isError, linkListItems, title } =
-    useBodemData();
+  const {
+    items,
+    tableConfig,
+    isLoading,
+    isError,
+    linkListItems,
+    title,
+    routeConfig,
+  } = useBodemData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const tables = Object.entries(tableConfig).map(
     ([

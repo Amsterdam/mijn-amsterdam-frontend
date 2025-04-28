@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { ListPageParamKind } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function InkomenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{
@@ -15,7 +16,9 @@ export function InkomenList() {
     isLoadingWpi,
     isErrorWpi,
     breadcrumbs,
+    routeConfig,
   } = useInkomenThemaData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
   const listPageTableConfig = tableConfig[kind];
 
   return (

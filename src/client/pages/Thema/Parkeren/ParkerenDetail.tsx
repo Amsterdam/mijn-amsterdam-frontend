@@ -11,6 +11,7 @@ import { VergunningFrontend } from '../../../../server/services/vergunningen/con
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
 
@@ -58,9 +59,11 @@ function DetailPageContent<
 }
 
 export function ParkerenDetail() {
-  const { vergunningen, isLoading, isError, breadcrumbs } = useParkerenData();
+  const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
+    useParkerenData();
   const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
     useVergunningenDetailData(vergunningen);
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   return (
     <ThemaDetailPagina

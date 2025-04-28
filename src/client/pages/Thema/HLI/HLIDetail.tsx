@@ -7,6 +7,7 @@ import { Datalist, Row } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type DetailPageContentProps = {
   hliRegeling: HLIRegelingFrontend;
@@ -40,7 +41,9 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
 }
 
 export function HLIDetail() {
-  const { regelingen, isError, isLoading, breadcrumbs } = useHliThemaData();
+  const { regelingen, isError, isLoading, breadcrumbs, routeConfig } =
+    useHliThemaData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
   const { id } = useParams<{ id: string }>();
   const regelingDetail = regelingen?.find((item) => item.id === id) ?? null;
 

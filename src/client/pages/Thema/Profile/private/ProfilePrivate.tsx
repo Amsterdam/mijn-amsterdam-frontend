@@ -14,9 +14,12 @@ import {
 import { PageContentCell } from '../../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../../components/Thema/ThemaPagina';
+import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
 
 function ProfilePrivateSectionPanels() {
-  const { BRP, profileData } = useProfileData();
+  const { BRP, profileData, routeConfig } = useProfileData();
+
+  useHTMLDocumentTitle(routeConfig.themaPageBRP.documentTitle);
 
   return (
     <>

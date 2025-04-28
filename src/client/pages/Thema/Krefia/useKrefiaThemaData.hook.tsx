@@ -1,4 +1,8 @@
-import { krefiaTableConfig, themaTitle } from './Krefia-thema-config';
+import {
+  krefiaTableConfig,
+  routeConfig,
+  themaTitle,
+} from './Krefia-thema-config';
 import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -50,5 +54,6 @@ export function useKrefiaThemaData() {
     linkListItems,
     tableConfig: krefiaTableConfig,
     title: themaTitle,
+    routeConfig,
   };
 }

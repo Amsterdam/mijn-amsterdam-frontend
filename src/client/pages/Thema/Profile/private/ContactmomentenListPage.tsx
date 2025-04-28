@@ -8,7 +8,7 @@ export function ContactmomentenListPage() {
     isLoading,
     isError,
     title,
-    routes,
+    routeConfig,
     breadcrumbs,
     routeParams,
   } = useContactmomenten();
@@ -17,7 +17,7 @@ export function ContactmomentenListPage() {
     <ListPagePaginated
       items={contactmomenten}
       title={`Alle ${title.toLowerCase()}`}
-      appRoute={routes.listPage}
+      appRoute={routeConfig.listPageContactmomenten.path}
       appRouteParams={routeParams}
       breadcrumbs={breadcrumbs}
       displayProps={contactmomentenDisplayProps}

@@ -8,6 +8,7 @@ import DateInput, {
 } from '../../../components/DateInput/DateInput';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function Caret() {
   return <i className={styles.SearchButtonIcon}>&#9698;</i>;
@@ -40,7 +41,9 @@ export function InkomenListSpecificaties() {
     total,
     breadcrumbs,
     themaPageRoute,
+    routeConfig,
   } = useInkomenSpecificatiesListPageData();
+  useHTMLDocumentTitle(routeConfig.listPageSpecificaties.documentTitle);
 
   const pageContentMain = (
     <PageContentCell>

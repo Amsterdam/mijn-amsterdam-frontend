@@ -6,6 +6,7 @@ import { entries } from '../../../../universal/helpers/utils';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function KrefiaThema() {
   const {
@@ -18,7 +19,9 @@ export function KrefiaThema() {
     linkListItems,
     isError,
     isLoading,
+    routeConfig,
   } = useKrefiaThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

@@ -6,6 +6,7 @@ import { formatBrpProfileData } from './ProfilePrivate.transform';
 import { useAantalBewonersOpAdres } from './useAantalBewonersOpAdres.hook';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
+import { routeConfig } from '../Profile-thema-config';
 
 export function useProfileData() {
   const { BRP } = useAppStateGetter();
@@ -47,5 +48,6 @@ export function useProfileData() {
     BRP,
     profileData,
     residentCount,
+    routeConfig,
   };
 }

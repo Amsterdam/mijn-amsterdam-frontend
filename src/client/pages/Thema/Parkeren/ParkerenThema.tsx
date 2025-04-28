@@ -8,6 +8,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
 
 export function ParkerenThema() {
@@ -20,7 +21,10 @@ export function ParkerenThema() {
     isError,
     parkerenUrlSSO,
     linkListItems,
+    routeConfig,
   } = useParkerenData();
+
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const tables = Object.entries(tableConfig).map(
     ([

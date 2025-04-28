@@ -5,6 +5,7 @@ import { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
@@ -23,7 +24,9 @@ export function KlachtenThema() {
     isLoading,
     isError,
     linkListItems,
+    routeConfig,
   } = useKlachtenThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   return (
     <ThemaPagina

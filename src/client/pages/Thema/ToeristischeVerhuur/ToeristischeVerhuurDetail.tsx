@@ -13,6 +13,7 @@ import { AddressDisplayAndModal } from '../../../components/LocationModal/Locati
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useAppStateGetter } from '../../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook';
 
 function getMailBody(
@@ -128,8 +129,10 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
 }
 
 export function ToeristischeVerhuurDetail() {
-  const { vergunningen, isError, isLoading, breadcrumbs } =
+  const { vergunningen, isError, isLoading, breadcrumbs, routeConfig } =
     useToeristischeVerhuurThemaData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+
   const { id } = useParams<{ id: string }>();
   const vergunning = vergunningen.find((v) => v.id === id);
   const isBnBVergunning = vergunning?.title === 'Vergunning bed & breakfast';

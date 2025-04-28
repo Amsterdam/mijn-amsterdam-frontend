@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function BurgerzakenIdentiteitsbewijsContent({
   document,
@@ -37,8 +38,9 @@ function getRows(document: IdentiteitsbewijsFrontend) {
 }
 
 export function BurgerzakenDetail() {
-  const { document, isLoading, isError, breadcrumbs } =
+  const { document, isLoading, isError, breadcrumbs, routeConfig } =
     useBurgerZakenDetailData();
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   return (
     <ThemaDetailPagina

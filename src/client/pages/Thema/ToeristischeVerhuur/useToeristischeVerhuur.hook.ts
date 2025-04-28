@@ -4,6 +4,7 @@ import {
   tableConfig,
   themaId,
   themaTitle,
+  routeConfig,
 } from './ToeristischeVerhuur-thema-config';
 import { ToeristischeVerhuurVergunning } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import {
@@ -112,5 +113,6 @@ export function useToeristischeVerhuurThemaData() {
     hasVergunningBB,
     linkListItems,
     breadcrumbs,
+    routeConfig,
   };
 }

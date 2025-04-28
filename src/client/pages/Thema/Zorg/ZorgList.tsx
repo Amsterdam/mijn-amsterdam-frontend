@@ -5,6 +5,7 @@ import { ListPageParamKind } from './Zorg-thema-config';
 import { HistoricItemsMention } from './ZorgThema';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ZorgList() {
   const { kind = 'huidige-voorzieningen' } = useParams<{
@@ -18,7 +19,9 @@ export function ZorgList() {
     isError,
     listPageParamKind,
     breadcrumbs,
+    routeConfig,
   } = useZorgThemaData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
 
   const { filter, title, displayProps, listPageRoute } = tableConfig[kind];
 

@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { ListPageParamKind } from './Horeca-thema-config';
 import { useHorecaThemaData } from './useHorecaThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function HorecaList() {
   const { kind = 'lopende-aanvragen' } = useParams<{
@@ -15,7 +16,9 @@ export function HorecaList() {
     isLoading,
     isError,
     breadcrumbs,
+    routeConfig,
   } = useHorecaThemaData();
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
   const listPageTableConfig = tableConfig[kind];
 
   return (

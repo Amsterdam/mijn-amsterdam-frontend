@@ -1,5 +1,6 @@
-import { useErfpachtThemaData } from './erfpachtData.hook';
+import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 export function ErfpachtListOpenFacturen() {
   const {
@@ -9,7 +10,9 @@ export function ErfpachtListOpenFacturen() {
     openFacturen,
     listPageParamKind,
     breadcrumbs,
+    routeConfig,
   } = useErfpachtThemaData();
+  useHTMLDocumentTitle(routeConfig.listPageOpenFacturen.documentTitle);
 
   const tableConfigFacturen = tableConfig?.[listPageParamKind.openFacturen];
   const displayProps = tableConfigFacturen?.displayProps ?? {};
