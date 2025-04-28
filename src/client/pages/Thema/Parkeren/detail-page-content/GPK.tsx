@@ -4,26 +4,26 @@ import { Datalist } from '../../../../components/Datalist/Datalist';
 import { getRows } from '../../Vergunningen/detail-page-content/fields-config';
 
 export function GPK({ vergunning }: { vergunning: VergunningFrontend<GPK> }) {
+  const cardNumber = () => ({
+    label: 'Kaartnummer',
+    content: vergunning.cardNumber,
+  });
+
+  const cardType = () => ({
+    label: 'Soort kaart',
+    content: vergunning.cardType,
+  });
+
+  const dateEnd = () => ({
+    label: 'Vervaldatum',
+    content: vergunning.dateEndFormatted,
+  });
+
   const rows = getRows(vergunning, [
     'identifier',
-    {
-      cardNumber: () => ({
-        label: 'Kaartnummer',
-        content: vergunning.cardNumber,
-      }),
-    },
-    {
-      cardNumber: () => ({
-        label: 'Soort kaart',
-        content: vergunning.cardType,
-      }),
-    },
-    {
-      dateEnd: () => ({
-        label: 'Vervaldatum',
-        content: vergunning.dateEndFormatted,
-      }),
-    },
+    cardNumber,
+    cardType,
+    dateEnd,
     'decision',
   ]);
 

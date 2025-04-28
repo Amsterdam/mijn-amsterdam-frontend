@@ -18,34 +18,33 @@ export function Touringcar({
   >;
 }) {
   const isGranted = vergunning.decision === 'Verleend';
+  const destination = () => ({
+    label: 'Bestemming',
+    content: vergunning.destination,
+  });
+
+  const dateRangeYear = () => {
+    return vergunning.processed &&
+      isGranted &&
+      vergunning.caseType === 'Touringcar Jaarontheffing'
+      ? dateRange(vergunning)
+      : null;
+  };
+
+  const dateRangeDay = () => {
+    return vergunning.processed &&
+      isGranted &&
+      vergunning.caseType === 'Touringcar Dagontheffing'
+      ? dateTimeRange(vergunning)
+      : null;
+  };
 
   const rows = getRows(vergunning, [
     'identifier',
     'kentekens',
-    {
-      destination: () => ({
-        label: 'Bestemming',
-        content: vergunning.destination,
-      }),
-    },
-    {
-      dateRangeYear: () => {
-        return vergunning.processed &&
-          isGranted &&
-          vergunning.caseType === 'Touringcar Jaarontheffing'
-          ? dateRange(vergunning)
-          : null;
-      },
-    },
-    {
-      dateRangeDay: () => {
-        return vergunning.processed &&
-          isGranted &&
-          vergunning.caseType === 'Touringcar Dagontheffing'
-          ? dateTimeRange(vergunning)
-          : null;
-      },
-    },
+    destination,
+    dateRangeYear,
+    dateRangeDay,
     'decision',
   ]);
 

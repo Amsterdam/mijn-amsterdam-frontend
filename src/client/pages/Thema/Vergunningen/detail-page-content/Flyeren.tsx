@@ -5,28 +5,28 @@ import type {
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
-export function getRowsFlyeren(vergunning: VergunningFrontend) {
+export function getRowsFlyeren(vergunning: VergunningFrontend<Flyeren>) {
   const isVerleend = vergunning.decision === 'Verleend';
   const isSameDate =
     vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
 
+  const onFromTo = () => {
+    return isVerleend && isSameDate
+      ? commonTransformers.onFromTo(vergunning)
+      : null;
+  };
+
+  const dateTimeRangeBetween = () => {
+    return isVerleend && !isSameDate
+      ? commonTransformers.dateTimeRangeBetween(vergunning)
+      : null;
+  };
+
   const rows = getRows(vergunning, [
     'identifier',
     'location',
-    {
-      onFromTo: (vergunning) => {
-        return isVerleend && isSameDate
-          ? commonTransformers.onFromTo(vergunning)
-          : null;
-      },
-    },
-    {
-      dateTimeRangeBetween: (vergunning) => {
-        return isVerleend && !isSameDate
-          ? commonTransformers.dateTimeRangeBetween(vergunning)
-          : null;
-      },
-    },
+    onFromTo,
+    dateTimeRangeBetween,
     'decision',
   ]);
 

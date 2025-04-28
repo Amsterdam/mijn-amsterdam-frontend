@@ -10,33 +10,33 @@ export function VOB({
 }: {
   vergunning: VergunningFrontend<Ligplaatsvergunning>;
 }) {
+  const vesselKind = () => ({
+    label: 'Soort vaartuig',
+    content: vergunning.vesselKind || '-',
+  });
+
+  const vesselName = () => ({
+    label: 'Naam vaartuig',
+    content: vergunning.vesselName || '-',
+  });
+
+  const requestKind = () => ({
+    label: 'Soort aanvraag',
+    content: vergunning.requestKind || '-',
+  });
+
+  const reason = () => ({
+    label: 'Reden',
+    content: vergunning.reason || '-',
+  });
+
   const rows = getRows(vergunning, [
     'identifier',
     'location',
-    {
-      vesselKind: (vergunning) => ({
-        label: 'Soort vaartuig',
-        content: vergunning.vesselKind || '-',
-      }),
-    },
-    {
-      vesselName: (vergunning) => ({
-        label: 'Naam vaartuig',
-        content: vergunning.vesselName || '-',
-      }),
-    },
-    {
-      requestKind: (vergunning) => ({
-        label: 'Soort aanvraag',
-        content: vergunning.requestKind || '-',
-      }),
-    },
-    {
-      reason: (vergunning) => ({
-        label: 'Reden',
-        content: vergunning.reason || '-',
-      }),
-    },
+    vesselKind,
+    vesselName,
+    requestKind,
+    reason,
     'decision',
   ]);
 

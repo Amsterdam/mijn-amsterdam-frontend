@@ -19,16 +19,16 @@ type ExploitatieHorecaBedrijfProps = {
 function ExploitatieHorecaBedrijf({
   vergunning,
 }: ExploitatieHorecaBedrijfProps) {
+  const dateStart = () => ({
+    label: 'Begindatum',
+    content: vergunning.dateStartFormatted,
+    isVisible: vergunning.processed && vergunning.decision === 'Verleend',
+  });
+
   const rows = getRows(vergunning, [
     'identifier',
     'location',
-    {
-      dateStart: () => ({
-        label: 'Begindatum',
-        content: vergunning.dateStartFormatted,
-        isVisible: vergunning.processed && vergunning.decision === 'Verleend',
-      }),
-    },
+    dateStart,
     'decision',
   ]);
 

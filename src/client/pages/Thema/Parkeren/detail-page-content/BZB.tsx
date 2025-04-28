@@ -60,29 +60,29 @@ export function ExpirationNotifications({ id }: { id: string }) {
 }
 
 export function BZB({ vergunning }: { vergunning: VergunningFrontend<BZB> }) {
+  const companyName = () => {
+    return {
+      label: 'Naam bedrijf',
+      content: vergunning.companyName || '-',
+    };
+  };
+
+  const numberOfPermits = () => {
+    return {
+      label: 'Aantal aangevraagde ontheffingen',
+      content: vergunning.numberOfPermits || '-',
+    };
+  };
+
+  const dateRangeTransformer = () => {
+    return vergunning.processed ? dateRange(vergunning) : null;
+  };
+
   const rows = getRows(vergunning, [
     'identifier',
-    {
-      companyName: () => {
-        return {
-          label: 'Naam bedrijf',
-          content: vergunning.companyName || '-',
-        };
-      },
-    },
-    {
-      numberOfPermits: () => {
-        return {
-          label: 'Aantal aangevraagde ontheffingen',
-          content: vergunning.numberOfPermits || '-',
-        };
-      },
-    },
-    {
-      dateRange: (vergunning) => {
-        return vergunning.processed ? dateRange(vergunning) : null;
-      },
-    },
+    companyName,
+    numberOfPermits,
+    dateRangeTransformer,
     'decision',
   ]);
 

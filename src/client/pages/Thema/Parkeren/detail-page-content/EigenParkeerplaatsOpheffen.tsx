@@ -11,43 +11,43 @@ export function EigenParkeerplaatsOpheffen({
 }: {
   vergunning: VergunningFrontend<EigenParkeerplaatsOpheffen>;
 }) {
+  const requestType = () => {
+    return {
+      label: 'Verzoek',
+      content: `Opheffing ${
+        vergunning.isCarsharingpermit ? 'autodeelbedrijf' : ''
+      }`,
+    };
+  };
+
+  const locationType = () => {
+    return {
+      label: 'Soort plek',
+      content: vergunning.location.type,
+    };
+  };
+
+  const locationUrl = () => {
+    return {
+      label: 'Parkeervak',
+      content: (
+        <Link
+          rel="noreferrer"
+          className={styles.LocationModalLink}
+          variant="inline"
+          href={vergunning.location.url}
+        >
+          Bekijk parkeervak
+        </Link>
+      ),
+    };
+  };
+
   const rows = getRows(vergunning, [
     'identifier',
-    {
-      requestType: (vergunning) => {
-        return {
-          label: 'Verzoek',
-          content: `Opheffing ${
-            vergunning.isCarsharingpermit ? 'autodeelbedrijf' : ''
-          }`,
-        };
-      },
-    },
-    {
-      locationType: (vergunning) => {
-        return {
-          label: 'Soort plek',
-          content: vergunning.location.type,
-        };
-      },
-    },
-    {
-      locationUrl: (vergunning) => {
-        return {
-          label: 'Parkeervak',
-          content: (
-            <Link
-              rel="noreferrer"
-              className={styles.LocationModalLink}
-              variant="inline"
-              href={vergunning.location.url}
-            >
-              Bekijk parkeervak
-            </Link>
-          ),
-        };
-      },
-    },
+    requestType,
+    locationType,
+    locationUrl,
     'decision',
   ]);
 

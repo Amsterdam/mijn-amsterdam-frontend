@@ -12,28 +12,26 @@ export function WVOSContent({
 }: {
   vergunning: VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
 }) {
-  const werkzaamhedenTransformer = {
-    werkzaamheden: () => {
-      return {
-        label: 'Werkzaamheden',
-        content: (
-          <UnorderedList>
-            {vergunning.werkzaamheden.map((activiteit) => (
-              <UnorderedList.Item key={activiteit}>
-                {activiteit}
-              </UnorderedList.Item>
-            ))}
-          </UnorderedList>
-        ),
-      };
-    },
+  const werkzaamheden = () => {
+    return {
+      label: 'Werkzaamheden',
+      content: (
+        <UnorderedList>
+          {vergunning.werkzaamheden.map((activiteit) => (
+            <UnorderedList.Item key={activiteit}>
+              {activiteit}
+            </UnorderedList.Item>
+          ))}
+        </UnorderedList>
+      ),
+    };
   };
 
   const rows = getRows(vergunning, [
     'identifier',
     'location',
     'kentekens',
-    werkzaamhedenTransformer,
+    werkzaamheden,
     'decision',
   ]);
 

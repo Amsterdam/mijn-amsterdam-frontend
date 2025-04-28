@@ -14,77 +14,77 @@ export function EigenParkeerplaats({
 }: {
   vergunning: VergunningFrontend<EigenParkeerplaats>;
 }) {
+  const requestTypes = () => {
+    return {
+      label: 'Verzoek',
+      content:
+        vergunning.requestTypes.length > 1 ? (
+          <ul>
+            {vergunning.requestTypes.map((d) => (
+              <li key={d}>{d}</li>
+            ))}
+          </ul>
+        ) : (
+          vergunning.requestTypes[0]
+        ),
+    };
+  };
+
+  const location = () => {
+    const rows: RowSet[] = vergunning.locations?.map((location, i) => {
+      return {
+        // label: `Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`,
+        rows: [
+          {
+            label: `Locatie`,
+            content: (
+              <AddressDisplayAndModal
+                address={`${location.street} ${location.houseNumber}`}
+              />
+            ),
+          },
+          {
+            label: 'Soort plek',
+            content: location.type || null,
+          },
+          {
+            label: 'Parkeervak',
+            content: location.url ? (
+              <Link rel="noreferrer" variant="inline" href={location.url}>
+                Bekijk parkeervak
+              </Link>
+            ) : null,
+          },
+        ],
+      };
+    });
+    return rows;
+  };
+
+  const vorigeKentekens = () => {
+    return vergunning.requestTypes.some(
+      (type) => type === 'Kentekenwijziging'
+    ) && 'vorigeKentekens' in vergunning
+      ? {
+          label: 'Oud kenteken',
+          content: vergunning.vorigeKentekens || '-',
+        }
+      : null;
+  };
+
+  const dateRangeTransformer = () => {
+    return vergunning.dateStart && vergunning.dateEnd
+      ? dateRange(vergunning)
+      : null;
+  };
+
   const rows = getRows(vergunning, [
     'identifier',
-    {
-      requestTypes: (vergunning: VergunningFrontend<EigenParkeerplaats>) => {
-        return {
-          label: 'Verzoek',
-          content:
-            vergunning.requestTypes.length > 1 ? (
-              <ul>
-                {vergunning.requestTypes.map((d) => (
-                  <li key={d}>{d}</li>
-                ))}
-              </ul>
-            ) : (
-              vergunning.requestTypes[0]
-            ),
-        };
-      },
-    },
-    {
-      locations: (vergunning: VergunningFrontend<EigenParkeerplaats>) => {
-        const rows: RowSet[] = vergunning.locations?.map((location, i) => {
-          return {
-            // label: `Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`,
-            rows: [
-              {
-                label: `Locatie`,
-                content: (
-                  <AddressDisplayAndModal
-                    address={`${location.street} ${location.houseNumber}`}
-                  />
-                ),
-              },
-              {
-                label: 'Soort plek',
-                content: location.type || null,
-              },
-              {
-                label: 'Parkeervak',
-                content: location.url ? (
-                  <Link rel="noreferrer" variant="inline" href={location.url}>
-                    Bekijk parkeervak
-                  </Link>
-                ) : null,
-              },
-            ],
-          };
-        });
-        return rows;
-      },
-    },
+    requestTypes,
+    location,
     'kentekens',
-    {
-      vorigeKentekens: (vergunning) => {
-        return vergunning.requestTypes.some(
-          (type) => type === 'Kentekenwijziging'
-        ) && 'vorigeKentekens' in vergunning
-          ? {
-              label: 'Oud kenteken',
-              content: vergunning.vorigeKentekens || '-',
-            }
-          : null;
-      },
-    },
-    {
-      dateRange: (vergunning) => {
-        return vergunning.dateStart && vergunning.dateEnd
-          ? dateRange(vergunning)
-          : null;
-      },
-    },
+    vorigeKentekens,
+    dateRangeTransformer,
     'decision',
   ]);
 

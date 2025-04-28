@@ -47,28 +47,28 @@ export function AanbiedenDienstenEnStraatartiestenContent({
         }
       : null;
 
+  const location = () => {
+    const location = commonTransformers.location(vergunning);
+    return {
+      content: location && 'content' in location ? location.content : '-',
+      label: 'Locatie',
+    };
+  };
+
+  const stadsdeel = () => {
+    return {
+      label: 'Stadsdeel',
+      content: vergunning.stadsdeel,
+    };
+  };
+
   const rows = getRows(vergunning, [
     'identifier',
-    { waarvoor },
-    {
-      stadsdeel: (vergunning) => {
-        return {
-          label: 'Stadsdeel',
-          content: vergunning.stadsdeel,
-        };
-      },
-    },
-    {
-      location: (vergunning) => {
-        const location = commonTransformers.location(vergunning);
-        return {
-          content: location && 'content' in location ? location.content : '-',
-          label: 'Locatie',
-        };
-      },
-    },
-    { op },
-    { vanTot },
+    waarvoor,
+    stadsdeel,
+    location,
+    op,
+    vanTot,
     'decision',
   ]);
 
