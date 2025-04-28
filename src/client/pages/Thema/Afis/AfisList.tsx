@@ -1,6 +1,9 @@
 import { useParams } from 'react-router';
 
-import { AfisDisclaimer, AfisDisclaimerOvergedragenFacturen } from './Afis';
+import {
+  AfisDisclaimer,
+  AfisDisclaimerOvergedragenFacturen,
+} from './AfisThema';
 import { useAfisListPageData } from './useAfisThemaData.hook';
 import { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
@@ -17,7 +20,7 @@ function AfisListPageBody({ state }: { state: AfisFactuurState }) {
   }
 }
 
-export function AfisFacturen() {
+export function AfisList() {
   const { state = 'open' } = useParams<{ state: AfisFactuurState }>();
   const {
     facturenListResponse,

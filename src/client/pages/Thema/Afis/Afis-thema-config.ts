@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { generatePath } from 'react-router';
+import { generatePath, type Params } from 'react-router';
 
 import {
   AfisBusinessPartnerDetailsTransformed,
@@ -28,7 +28,7 @@ export const routeConfig = {
   },
   listPage: {
     path: '/facturen-en-betalen/facturen/lijst/:state/:page?',
-    documentTitle: getAfisListPageDocumentTitle(themaTitle),
+    documentTitle: getAfisListPageDocumentTitle,
   },
   themaPage: {
     path: '/facturen-en-betalen',
@@ -180,17 +180,17 @@ export const linkListItems: LinkProps[] = [
   },
 ];
 
-export function getAfisListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(params: T | null) => {
-    switch (params?.state) {
-      case 'open':
-        return `Open facturen | ${themaTitle}`;
-      case 'afgehandeld':
-        return `Afgehandelde facturen | ${themaTitle}`;
-      case 'overgedragen':
-        return `Overgedragen aan belastingen facturen | ${themaTitle}`;
-      default:
-        return `Facturen | ${themaTitle}`;
-    }
-  };
+export function getAfisListPageDocumentTitle<T extends Params<string>>(
+  params: T | null
+) {
+  switch (params?.state) {
+    case 'open':
+      return `Open facturen | ${themaTitle}`;
+    case 'afgehandeld':
+      return `Afgehandelde facturen | ${themaTitle}`;
+    case 'overgedragen':
+      return `Overgedragen aan belastingen facturen | ${themaTitle}`;
+    default:
+      return `Facturen | ${themaTitle}`;
+  }
 }

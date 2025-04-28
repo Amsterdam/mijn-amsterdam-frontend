@@ -94,7 +94,7 @@ export function AfisDisclaimerOvergedragenFacturen() {
   );
 }
 
-export function AfisThemaPagina() {
+export function AfisThema() {
   const {
     dependencyErrors,
     facturenByState,

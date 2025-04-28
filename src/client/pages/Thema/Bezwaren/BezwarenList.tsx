@@ -4,7 +4,7 @@ import { ListPageParamKind } from './Bezwaren-thema-config';
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
-export function BezwarenLijst() {
+export function BezwarenList() {
   const { kind = 'lopende-bezwaren' } = useParams<{
     kind: ListPageParamKind;
   }>();

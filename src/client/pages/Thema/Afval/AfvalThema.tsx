@@ -7,12 +7,12 @@ import {
 
 import { links, themaTitle } from './Afval-thema-config';
 import styles from './Afval.module.scss';
+import type {
+  AfvalFractionInformationTransformed,
+  AfvalFractionCode,
+} from '../../../../server/services/afval/afval.types';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { getFullAddress } from '../../../../universal/helpers/brp';
-import {
-  AfvalFractionCode,
-  AfvalFractionInformationTransformed,
-} from '../../../../universal/types/App.types';
 import {
   IconAfvalGft,
   IconAfvalGlas,

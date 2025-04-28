@@ -6,7 +6,7 @@ import {
 } from './Bezwaren-thema-config';
 import { BezwarenDetail } from './BezwarenDetail';
 import { default as BezwarenIcon } from './BezwarenIcon.svg?react';
-import { BezwarenLijst } from './BezwarenLijst';
+import { BezwarenList } from './BezwarenList';
 import { BezwarenThema } from './BezwarenThema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
@@ -23,7 +23,7 @@ export const BezwarenRoutes = [
   },
   {
     route: routeConfig.listPage.path,
-    Component: BezwarenLijst,
+    Component: BezwarenList,
     isActive: featureToggle.BezwarenActive,
   },
   {

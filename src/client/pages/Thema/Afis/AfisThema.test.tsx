@@ -2,7 +2,7 @@ import { render, waitFor } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AfisThemaPagina } from './Afis';
+import { AfisThema } from './AfisThema';
 import { routeConfig } from './Afis-thema-config';
 import {
   AfisBusinessPartnerDetailsTransformed,
@@ -146,7 +146,7 @@ describe('<Afis />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={AfisThemaPagina}
+        component={AfisThema}
         initializeState={initializeState}
       />
     );

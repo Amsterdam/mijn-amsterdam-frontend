@@ -1,4 +1,4 @@
-import { AfisThemaPagina } from './Afis';
+import { AfisThema } from './AfisThema';
 import {
   routeConfig,
   themaId,
@@ -6,7 +6,7 @@ import {
   featureToggle,
 } from './Afis-thema-config';
 import { AfisBetaalVoorkeuren } from './AfisBetaalVoorkeuren';
-import { AfisFacturen } from './AfisFacturen';
+import { AfisList } from './AfisList';
 import { default as AfisIcon } from './AfisIcon.svg?react';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
@@ -18,7 +18,7 @@ import {
 export const AfisRoutes = [
   {
     route: routeConfig.listPage.path,
-    Component: AfisFacturen,
+    Component: AfisList,
     isActive: featureToggle.AfisActive,
   },
   {
@@ -28,7 +28,7 @@ export const AfisRoutes = [
   },
   {
     route: routeConfig.themaPage.path,
-    Component: AfisThemaPagina,
+    Component: AfisThema,
     isActive: featureToggle.AfisActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
