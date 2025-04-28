@@ -17,9 +17,9 @@ export function VarenDetail() {
     isLoading,
     isError,
     breadcrumbs,
-    routeConfig
+    routeConfig,
   } = useVarenDetailPage();
-useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   let pageContent = null;
   switch (zaak?.caseType) {

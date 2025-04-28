@@ -13,9 +13,9 @@ import {
 } from '../../../../server/services/varen/config-and-types';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
+import { expectHeaders, getTable } from '../../../helpers/test-utils';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { expectHeaders, getTable } from '../../helpers/test-utils';
 
 type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieInProgress = {

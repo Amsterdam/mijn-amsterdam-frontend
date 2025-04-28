@@ -11,7 +11,7 @@ import {
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
-import { isVergunning } from '../../../client/pages/Varen/helper';
+import { isVergunning } from '../../../client/pages/Thema/Varen/helper';
 import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { omit, toDateFormatted } from '../../../universal/helpers/utils';
