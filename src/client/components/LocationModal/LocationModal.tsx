@@ -63,10 +63,6 @@ export interface LocationModalProps {
   modalTitle?: string;
   // Explicit latlng
   latlng?: LatLngLiteral;
-  // Custom tracking url
-  trackPageViewUrl?: string;
-  // Custom tracking title
-  trackPageViewTitle?: string;
   children?: ReactNode;
 }
 
