@@ -70,19 +70,17 @@ function transformVarenZakenFrontend(
     return [createZaakVergunning(zaak.vergunningen[0])];
   }
 
-  const zakenFrontend = zaak.vergunningen.map((vergunning) => {
-    return {
-      ...createZaakVergunning(vergunning),
-      id: vergunning.id,
-      link: {
-        to: generatePath(appRoute, {
-          caseType: slug(zaak.caseType, { lower: true }),
-          id: vergunning.id,
-        }),
-        title: `Bekijk hoe het met uw aanvraag staat`,
-      },
-    };
-  });
+  const zakenFrontend = zaak.vergunningen.map((vergunning) => ({
+    ...createZaakVergunning(vergunning),
+    id: vergunning.id,
+    link: {
+      to: generatePath(appRoute, {
+        caseType: slug(zaak.caseType, { lower: true }),
+        id: vergunning.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  }));
 
   return zakenFrontend;
 }
