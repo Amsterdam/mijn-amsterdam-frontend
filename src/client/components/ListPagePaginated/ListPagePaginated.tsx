@@ -44,7 +44,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   isError,
   isLoading,
   items,
-  pageSize = 5,
+  pageSize = DEFAULT_PAGE_SIZE,
   totalCount,
   tableClassName,
   title,

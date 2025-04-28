@@ -96,52 +96,45 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <h3
-        class="ams-heading ams-heading--level-2"
+      <section
+        class="ams-alert ams-alert--error"
       >
-        Lopende bezwaren
-      </h3>
-      <div
-        class="ams-table"
-      >
-        <table
-          class="ams-table__table _TableV2_4c6825"
+        <div
+          class="ams-alert__icon"
         >
-          <tbody
-            class="ams-table__body"
-          />
-        </table>
-      </div>
-      <p
-        class="ams-paragraph"
-      >
-        U heeft geen lopende zaken. Het kan zijn dat een ingediend bezwaar nog niet is geregistreerd.
-      </p>
-    </div>
-    <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
-    >
-      <h3
-        class="ams-heading ams-heading--level-2"
-      >
-        Afgehandelde bezwaren
-      </h3>
-      <div
-        class="ams-table"
-      >
-        <table
-          class="ams-table__table _TableV2_4c6825"
+          <span
+            class="ams-icon ams-icon--size-4"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
+              />
+              <path
+                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          class="ams-alert__content"
         >
-          <tbody
-            class="ams-table__body"
-          />
-        </table>
-      </div>
-      <p
-        class="ams-paragraph"
-      >
-        U heeft nog geen afgehandelde bezwaren.
-      </p>
+          <h2
+            class="ams-heading ams-heading--level-4"
+          >
+            Foutmelding
+          </h2>
+          <p
+            class="ams-paragraph"
+          >
+            We kunnen op dit moment niet alle gegevens tonen.
+          </p>
+        </div>
+      </section>
     </div>
   </div>
 </DocumentFragment>

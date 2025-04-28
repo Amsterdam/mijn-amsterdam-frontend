@@ -5,7 +5,7 @@ export const featureToggle = {
 };
 
 export const themaId = 'AFVAL' as const;
-export const themaTitle = 'Afval rond uw adres';
+export const themaTitle = 'Afval';
 
 export const routeConfig = {
   themaPage: {

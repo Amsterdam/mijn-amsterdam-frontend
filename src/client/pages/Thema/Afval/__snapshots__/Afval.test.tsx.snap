@@ -39,7 +39,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
                 <span
                   class="ams-visually-hidden"
                 >
-                  Afval rond uw adres
+                  Afval
                 </span>
               </a>
             </li>
@@ -48,7 +48,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         <h3
           class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
         >
-          Afval rond uw adres
+          Afval
         </h3>
       </div>
     </div>
