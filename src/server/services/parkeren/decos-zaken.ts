@@ -241,11 +241,11 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
     additionalSelectFields: ['text25', 'num14', 'text17', 'text19', 'text18'],
     async afterTransform(vergunning, zaakSource) {
       vergunning.location = {
-        street: String(zaakSource.fields.text25),
-        houseNumber: String(zaakSource.fields.num14),
-        type: String(zaakSource.fields.text17),
-        url: String(zaakSource.fields.tex19),
-        fiscalNumber: String(zaakSource.fields.tex18),
+        street: zaakSource.fields.text25?.toString() ?? null,
+        houseNumber: zaakSource.fields.num14?.toString() ?? null,
+        type: zaakSource.fields.text17?.toString() ?? null,
+        url: zaakSource.fields.tex19?.toString() ?? null,
+        fiscalNumber: zaakSource.fields.tex18?.toString() ?? null,
       };
       vergunning.title =
         getCustomTitleForDecosZaakWithLicensePlates(vergunning);

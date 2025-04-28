@@ -107,11 +107,11 @@ export type TouringcarJaarontheffing = DecosZaakBase &
   };
 
 export type Parkeerplaats = {
-  fiscalNumber: string;
-  houseNumber: string;
-  street: string;
-  type: string;
-  url: string;
+  fiscalNumber: string | null;
+  houseNumber: string | null;
+  street: string | null;
+  type: string | null;
+  url: string | null;
 };
 
 export type EigenParkeerplaatsRequestType =

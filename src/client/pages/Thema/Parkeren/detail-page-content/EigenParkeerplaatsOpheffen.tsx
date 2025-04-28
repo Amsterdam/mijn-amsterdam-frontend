@@ -24,26 +24,30 @@ export function EigenParkeerplaatsOpheffen({
   };
 
   const locationType = () => {
-    return {
-      label: 'Soort plek',
-      content: vergunning.location.type,
-    };
+    return vergunning.location.type
+      ? {
+          label: 'Soort plek',
+          content: vergunning.location.type,
+        }
+      : null;
   };
 
   const locationUrl = () => {
-    return {
-      label: 'Parkeervak',
-      content: (
-        <Link
-          rel="noreferrer"
-          className={styles.LocationModalLink}
-          variant="inline"
-          href={vergunning.location.url}
-        >
-          Bekijk parkeervak
-        </Link>
-      ),
-    };
+    return vergunning.location.url
+      ? {
+          label: 'Parkeervak',
+          content: (
+            <Link
+              rel="noreferrer"
+              className={styles.LocationModalLink}
+              variant="inline"
+              href={vergunning.location.url}
+            >
+              Bekijk parkeervak
+            </Link>
+          ),
+        }
+      : null;
   };
 
   const rows = getRows(vergunning, [
