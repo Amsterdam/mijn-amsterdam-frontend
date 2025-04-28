@@ -1,4 +1,4 @@
-import { PathMatch } from 'react-router';
+import { PathMatch, type Params } from 'react-router';
 
 import { SomeOtherString } from '../../universal/helpers/types';
 import {
@@ -44,9 +44,7 @@ type ThemaPageType =
   | `detailPage${string}`
   | SomeOtherString;
 
-type DocumenttitleFN = <T extends Record<string, string>>(
-  params: T | null
-) => string;
+type DocumenttitleFN = <T extends Params<string>>(params: T | null) => string;
 
 type TrackinUrlFN = (match: PathMatch) => string;
 
