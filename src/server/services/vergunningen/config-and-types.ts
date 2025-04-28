@@ -1,4 +1,4 @@
-import { LinkProps } from '../../../universal/types';
+import { LinkProps } from '../../../universal/types/App.types';
 import {
   DecosZaakBase,
   WithLocation,

@@ -2,7 +2,7 @@ import {
   GenericDocument,
   LinkProps,
   ZaakDetail,
-} from '../../../universal/types';
+} from '../../../universal/types/App.types';
 
 export type Lood365Response = {
   '@onformdata.context': string;
@@ -50,10 +50,7 @@ export type LoodMetingStatus =
   | 'Afgehandeld';
 
 export type LoodMetingDecision = 'Afgewezen' | 'Afgehandeld';
-
-export type LoodMetingen = {
-  metingen: LoodMetingFrontend[];
-};
+export type LoodMetingen = LoodMetingFrontend[];
 
 export interface LoodMetingFrontend extends ZaakDetail<LoodMetingStatus> {
   adres: string;

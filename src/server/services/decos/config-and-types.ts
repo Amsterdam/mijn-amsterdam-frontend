@@ -1,6 +1,9 @@
 import { SomeOtherString } from '../../../universal/helpers/types';
 import { OmitMapped } from '../../../universal/helpers/utils';
-import { GenericDocument, ZaakDetail } from '../../../universal/types';
+import {
+  GenericDocument,
+  ZaakDetail,
+} from '../../../universal/types/App.types';
 import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
@@ -323,8 +326,8 @@ export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
 
 export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
   OmitMapped<T, 'statusDates' | 'termijnDates'> & {
-    dateDecisionFormatted?: string | null;
     dateRequestFormatted: string;
+    dateDecisionFormatted?: string | null;
     isExpired?: boolean;
     // Url to fetch documents for a specific Zaak.
     fetchDocumentsUrl?: string;

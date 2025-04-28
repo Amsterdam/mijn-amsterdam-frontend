@@ -1,27 +1,18 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import apiResponse from '../../../../mocks/fixtures/klachten.json';
-import { remoteApi } from '../../../testing/utils';
-import { ApiConfig } from '../../config/source-api';
-import { AuthProfileAndToken } from './../../auth/auth-types';
 import {
   fetchAllKlachten,
   fetchKlachtenNotifications,
   transformKlachtenResponse,
 } from './klachten';
+import apiResponse from '../../../../mocks/fixtures/klachten.json';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
+import { ApiConfig } from '../../config/source-api';
 
 describe('Klachten', () => {
   const requestId = '456';
 
-  const profileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: '123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: '',
-    },
-    token: 'abc123',
-  };
+  const profileAndToken = getAuthProfileAndToken();
 
   ApiConfig.ENABLEU_2_SMILE.postponeFetch = false;
 
@@ -39,8 +30,7 @@ describe('Klachten', () => {
 
     expect(scope!.isDone()).toBeTruthy();
     expect(res.status).toBe('OK');
-    expect(res.content?.aantal).toBe(5);
-    expect(res.content?.klachten.length).toBe(5);
+    expect(res.content?.length).toBe(5);
   });
 
   it('Fetch all paginated', async () => {
@@ -60,8 +50,7 @@ describe('Klachten', () => {
 
     expect(scope!.isDone()).toBeTruthy();
     expect(res.status).toBe('OK');
-    expect(res.content?.aantal).toBe(10);
-    expect(res.content?.klachten.length).toBe(10);
+    expect(res.content?.length).toBe(10);
   });
 
   it('klachtenNotifications: should generate the expected response', async () => {
@@ -84,6 +73,7 @@ describe('Klachten', () => {
               to: '/klachten/klacht/230541',
             },
             themaID: 'KLACHTEN',
+            themaTitle: 'Klachten',
             title: 'Klacht ontvangen',
           },
           {
@@ -95,6 +85,7 @@ describe('Klachten', () => {
               to: '/klachten/klacht/2505661',
             },
             themaID: 'KLACHTEN',
+            themaTitle: 'Klachten',
             title: 'Klacht ontvangen',
           },
           {
@@ -106,6 +97,7 @@ describe('Klachten', () => {
               to: '/klachten/klacht/280321',
             },
             themaID: 'KLACHTEN',
+            themaTitle: 'Klachten',
             title: 'Klacht ontvangen',
           },
           {
@@ -117,6 +109,7 @@ describe('Klachten', () => {
               to: '/klachten/klacht/237821',
             },
             themaID: 'KLACHTEN',
+            themaTitle: 'Klachten',
             title: 'Klacht ontvangen',
           },
           {
@@ -128,6 +121,7 @@ describe('Klachten', () => {
               to: '/klachten/klacht/438001',
             },
             themaID: 'KLACHTEN',
+            themaTitle: 'Klachten',
             title: 'Klacht ontvangen',
           },
         ],
@@ -162,7 +156,7 @@ describe('Klachten', () => {
   it('should return data in expected format', async () => {
     remoteApi.post('/smile').reply(200, apiResponse);
     const res = await fetchAllKlachten(requestId, profileAndToken);
-    expect(res.content?.klachten.map((klacht) => klacht.id)).toStrictEqual([
+    expect(res.content?.map((klacht) => klacht.id)).toStrictEqual([
       '23054',
       '250566',
       '28032',

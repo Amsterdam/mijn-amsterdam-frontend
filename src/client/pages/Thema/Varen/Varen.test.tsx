@@ -4,17 +4,17 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
+import { routeConfig } from './Varen-thema-config';
+import { VarenThema } from './VarenThema';
 import {
   VarenZakenFrontend,
   VarenRegistratieRederType,
   VarenVergunningExploitatieType,
 } from '../../../../server/services/varen/config-and-types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { Varen } from './Varen';
 import { expectHeaders, getTable } from '../../helpers/test-utils';
 
 type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
@@ -137,8 +137,8 @@ function initializeState(snapshot: MutableSnapshot, state: AppState) {
   snapshot.set(appStateAtom, state);
 }
 
-const routePath = AppRoutes.VAREN;
-const routeEntry = generatePath(AppRoutes.VAREN);
+const routePath = routeConfig.themaPage.path;
+const routeEntry = generatePath(routeConfig.themaPage.path);
 
 describe('<Varen />', () => {
   function Component({ state }: { state: AppState }) {
@@ -146,7 +146,7 @@ describe('<Varen />', () => {
       <MockApp
         routePath={routePath}
         routeEntry={routeEntry}
-        component={Varen}
+        component={VarenThema}
         initializeState={(snap) => initializeState(snap, state)}
       />
     );

@@ -2,7 +2,7 @@ import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import type { BZB } from '../../../../../server/services/parkeren/config-and-types';
 import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import { MyNotification } from '../../../../../universal/types';
+import { MyNotification } from '../../../../../universal/types/App.types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
 import {

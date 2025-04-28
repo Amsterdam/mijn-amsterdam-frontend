@@ -15,7 +15,10 @@ import classNames from 'classnames';
 
 import styles from './StatusSteps.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { GenericDocument, StatusLineItem } from '../../../universal/types';
+import {
+  GenericDocument,
+  StatusLineItem,
+} from '../../../universal/types/App.types';
 import { DocumentLink } from '../DocumentList/DocumentLink';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import { MaButtonLink } from '../MaLink/MaLink';

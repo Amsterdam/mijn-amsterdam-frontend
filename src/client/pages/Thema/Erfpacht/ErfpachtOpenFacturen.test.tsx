@@ -2,20 +2,18 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
+import { routeConfig } from './Erfpacht-thema-config';
+import { ErfpachtOpenFacturen } from './ErfpachtOpenFacturen';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
-import {
-  ErfpachtDossiersResponse,
-  transformDossierResponse,
-} from '../../../../server/services/erfpacht/erfpacht';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
+import type { ErfpachtDossiersResponse } from '../../../../server/services/erfpacht/erfpacht-types';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { ErfpachtOpenFacturen } from './ErfpachtOpenFacturen';
 
 describe('<ErfpachtOpenFacturen />', () => {
-  const routeEntry = generatePath(AppRoutes['ERFPACHT/OPEN_FACTUREN']);
-  const routePath = AppRoutes['ERFPACHT/OPEN_FACTUREN'];
+  const routeEntry = generatePath(routeConfig.listPageOpenFacturen.path);
+  const routePath = routeConfig.listPageOpenFacturen.path;
 
   const dossiersTransformed = transformDossierResponse(
     ERFPACHT_DOSSIERS as unknown as ErfpachtDossiersResponse,

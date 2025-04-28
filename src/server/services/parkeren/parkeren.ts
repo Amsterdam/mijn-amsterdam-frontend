@@ -6,7 +6,7 @@ import {
 import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
-import { fetchBRP } from '../brp';
+import { fetchBRP } from '../profile/brp';
 import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
 import {
   hasPermitsOrPermitRequests,

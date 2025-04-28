@@ -4,7 +4,7 @@ import { formatKvkProfileData } from './ProfileCommercial.transform';
 import type {
   KVKData,
   KVKSourceDataContent,
-} from '../../../../../server/services/kvk';
+} from '../../../../../server/services/profile/kvk';
 
 describe('formatKvkProfileData', () => {
   test('should not format data when no kvkData is provided', () => {

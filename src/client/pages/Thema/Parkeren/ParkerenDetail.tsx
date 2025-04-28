@@ -1,18 +1,18 @@
 import { BZB } from './detail-page-content/BZB';
 import { BZP } from './detail-page-content/BZP';
+import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats';
 import { EigenParkeerplaatsOpheffen } from './detail-page-content/EigenParkeerplaatsOpheffen';
 import { GPK } from './detail-page-content/GPK';
 import { GPPContent } from './detail-page-content/GPP';
+import { Touringcar } from './detail-page-content/Touringcar';
 import { useParkerenData } from './useParkerenData.hook';
 import { DecosParkeerVergunning } from '../../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { Touringcar } from './detail-page-content/Touringcar';
-import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
-import { EigenParkeerplaats } from './detail-page-content/EigenParkeerplaats';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
+import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
 
 interface DetailPageContentProps<V> {
   vergunning: V;
@@ -57,7 +57,7 @@ function DetailPageContent<
   );
 }
 
-export function ParkerenDetailPagina() {
+export function ParkerenDetail() {
   const { vergunningen, isLoading, isError, breadcrumbs } = useParkerenData();
   const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
     useVergunningenDetailData(vergunningen);

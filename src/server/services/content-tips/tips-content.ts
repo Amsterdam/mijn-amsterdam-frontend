@@ -27,9 +27,13 @@ import {
 } from './predicates';
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
+import {
+  themaId as themaIdHLI,
+  themaTitle as themaTitleHLI,
+} from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
-import { ThemaIDs } from '../../../universal/config/thema';
+import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 
 const DAYS = 90;
 
@@ -59,7 +63,8 @@ export const tips: ContentTipSource[] = [
     datePublished: '2019-10-22',
     title: 'Tip: Op stap met uw Stadspas',
     profileTypes: ['private'],
-    themaID: ThemaIDs.HLI,
+    themaID: themaIdHLI,
+    themaTitle: themaTitleHLI,
     description: 'Haalt u alles uit uw Stadspas?',
     reason: 'U ziet deze tip omdat u een Stadspas hebt aangevraagd.',
     predicates: [hasValidRecentStadspasRequest],
@@ -98,7 +103,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2020-11-26',
     title: 'Tip: Sporten met korting',
-    themaID: ThemaIDs.HLI,
+    themaID: themaIdHLI,
+    themaTitle: themaTitleHLI,
     profileTypes: ['private'],
     description:
       'Met de Stadspas krijgt u maximaal € 300 korting op een sportabonnement voor uw kind.',
@@ -252,7 +258,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-10-15',
     title: 'Tip: Particuliere vakantieverhuur',
-    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+    themaID: themaIdToeristischeVerhuur,
     profileTypes: ['private'],
     description:
       'Bij vakantieverhuur moet u naast het eenmalige registratienummer ook jaarlijks een vergunning bij de gemeente aanvragen. Ook moet u iedere keer dat u de woning verhuurt dit bij ons melden.',
@@ -274,7 +280,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-06-15',
     title: 'Tip: Overgangsrecht bij Bed and breakfast',
-    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+    themaID: themaIdToeristischeVerhuur,
     profileTypes: ['private'],
     description:
       'Hebt u uw B&B voor 1 januari 2019 aangevraagd? Dan mag u tot 1 juli 2026 verhuren volgens deze regels.',
@@ -294,7 +300,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2021-06-15',
     title: 'Tip: Bed & breakfast',
-    themaID: ThemaIDs.TOERISTISCHE_VERHUUR,
+    themaID: themaIdToeristischeVerhuur,
     profileTypes: ['private'],
     description:
       'Vanaf 1 april 2021 moet u naast een vergunning ook een registratienummer aanvragen voor een bed & breakfast.',
@@ -394,7 +400,8 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2025-01-16',
     title: '€300 korting op witgoed',
-    themaID: ThemaIDs.HLI,
+    themaID: themaIdHLI,
+    themaTitle: themaTitleHLI,
     profileTypes: ['private'],
     description:
       'Met je Stadspas krijg je € 300,- korting op een nieuwe energiezuinige wasmachine of koelkast. Dit helpt je om geld te besparen op je energierekening.',

@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
+import { routeConfig } from './Bodem-thema-config';
 import { LoodMeting } from './LoodMeting';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
-import { AppRoutes } from '../../../../universal/config/routes';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { componentCreator } from '../../MockApp';
 
 const metingen: LoodMetingFrontend[] = [
@@ -63,7 +63,7 @@ const metingen: LoodMetingFrontend[] = [
     datumAfgehandeld: '2022-12-15T08:52:00Z',
     datumAfgehandeldFormatted: '15 december 2022',
     decision: 'Afgewezen',
-    status: 'Afgewezen',
+    displayStatus: 'Afgewezen',
     kenmerk: 'OL-000001',
     aanvraagNummer: 'AV-001446',
     rapportBeschikbaar: false,
@@ -109,7 +109,7 @@ const metingen: LoodMetingFrontend[] = [
     datumAfgehandeld: '2022-11-28T13:53:42Z',
     datumAfgehandeldFormatted: '28 november 2022',
     decision: 'Afgehandeld',
-    status: 'Afgehandeld',
+    displayStatus: 'Afgehandeld',
     kenmerk: 'OL-000001',
     aanvraagNummer: 'AV-001444',
     rapportBeschikbaar: true,
@@ -157,17 +157,15 @@ const [metingOntvangen, metingAfgewezen, metingAfgehandeld] = metingen;
 
 const createLoodMeting = componentCreator({
   component: LoodMeting,
-  routeEntry: generatePath(AppRoutes['BODEM/LOOD_METING'], {
+  routeEntry: generatePath(routeConfig.detailPage.path, {
     id: 'OL-000001',
   }),
-  routePath: AppRoutes['BODEM/LOOD_METING'],
+  routePath: routeConfig.detailPage.path,
 });
 const createComponentMetingen = (metingen: LoodMetingFrontend[]) =>
   createLoodMeting({
     BODEM: {
-      content: {
-        metingen,
-      },
+      content: metingen,
       status: 'OK',
     },
   } as unknown as AppState);

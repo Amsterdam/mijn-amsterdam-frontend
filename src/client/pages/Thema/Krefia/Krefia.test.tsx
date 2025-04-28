@@ -2,14 +2,12 @@ import { render, screen } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { KrefiaThemaPagina } from './Krefia';
+import { routeConfig } from './Krefia-thema-config';
+import { KrefiaThema } from './KrefiaThema';
 import KrefiaData from '../../../../../mocks/fixtures/krefia.json';
-import {
-  forTesting,
-  KrefiaSourceResponse,
-} from '../../../../server/services/krefia';
-import { AppRoutes } from '../../../../universal/config/routes';
-import { AppState } from '../../../../universal/types';
+import { forTesting } from '../../../../server/services/krefia/krefia';
+import type { KrefiaSourceResponse } from '../../../../server/services/krefia/krefia.types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
@@ -27,14 +25,15 @@ function initializeState(snapshot: MutableSnapshot, state: AppState) {
 }
 
 describe('<Krefia />', () => {
-  const routeEntry = generatePath(AppRoutes.KREFIA);
-  const routePath = AppRoutes.KREFIA;
+  const routeEntry = generatePath(routeConfig.themaPage.path);
+  const routePath = routeConfig.themaPage.path;
+
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={KrefiaThemaPagina}
+        component={KrefiaThema}
         initializeState={(snap) => initializeState(snap, state)}
       />
     );

@@ -14,7 +14,6 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
-import { ExternalUrls } from '../../config/app';
 
 export function LandingPage() {
   const loginButton = useRef(null);
@@ -70,7 +69,10 @@ export function LandingPage() {
             Hebt u nog geen DigiD? Regel dit dan eerst.
             <br />
             Ga naar{' '}
-            <Link rel="noopener noreferrer" href={ExternalUrls.DIGID_AANVRAGEN}>
+            <Link
+              rel="noopener noreferrer"
+              href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen"
+            >
               DigiD aanvragen
             </Link>
           </Paragraph>
@@ -125,7 +127,7 @@ export function LandingPage() {
             Kijk bij{' '}
             <Link
               rel="noopener noreferrer"
-              href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+              href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
             >
               veelgestelde vragen over Mijn Amsterdam
             </Link>

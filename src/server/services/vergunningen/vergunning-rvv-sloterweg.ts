@@ -1,5 +1,5 @@
 import { RVVSloterweg, VergunningFrontend } from './config-and-types';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 
 const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
 const RVV_SLOTERWEG_RESULT_EXPIRED = 'Verlopen';

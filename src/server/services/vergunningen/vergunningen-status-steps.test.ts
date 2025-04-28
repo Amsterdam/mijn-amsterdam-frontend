@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 
 import { VergunningFrontend, RVVSloterweg } from './config-and-types';
 import { getStatusSteps, getDisplayStatus } from './vergunningen-status-steps';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 
 describe('vergunningen-status-steps', () => {
   describe('getStatusSteps', () => {

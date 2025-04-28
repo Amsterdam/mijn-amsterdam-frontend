@@ -3,8 +3,8 @@ import { Paragraph } from '@amsterdam/design-system-react';
 import { listPageParamKind } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './erfpachtData.hook';
 import {
-  ErfpachtDossier,
-  ErfpachtDossierFactuur,
+  ErfpachtDossierFrontend,
+  ErfpachtDossierFactuurFrontend,
 } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -27,7 +27,9 @@ export function Erfpacht() {
         .filter(([kind]) => kind !== listPageParamKind.alleFacturen)
         .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
           return (
-            <ThemaPaginaTable<ErfpachtDossier | ErfpachtDossierFactuur>
+            <ThemaPaginaTable<
+              ErfpachtDossierFrontend | ErfpachtDossierFactuurFrontend
+            >
               key={kind}
               title={title}
               zaken={

@@ -1,7 +1,6 @@
 import { Button, Link, Paragraph } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
-import { routes } from './Inkomen-thema-config';
 import styles from './InkomenSpecificaties.module.scss';
 import { useInkomenSpecificatiesListPageData } from './useInkomenSpecificatiesListPageData.hook';
 import DateInput, {
@@ -40,6 +39,7 @@ export function InkomenSpecificaties() {
     toggleSearchPanel,
     total,
     breadcrumbs,
+    themaPageRoute,
   } = useInkomenSpecificatiesListPageData();
 
   const pageContentMain = (
@@ -69,7 +69,7 @@ export function InkomenSpecificaties() {
                   <Link
                     className={styles.ResetFilterButton}
                     onClick={() => selectCategoryFilter('')}
-                    href={routes.themaPage}
+                    href={themaPageRoute}
                   >
                     resetten
                   </Link>

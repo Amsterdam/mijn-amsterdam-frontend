@@ -99,7 +99,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
       <h3
         class="ams-heading ams-heading--level-2"
       >
-        Mijn reisdocumenten
+        Identiteitsbewijzen
       </h3>
       <div
         class="ams-table"

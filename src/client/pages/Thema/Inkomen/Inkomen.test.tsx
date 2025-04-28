@@ -1,12 +1,13 @@
 import { render } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
 
+import { InkomenThemaPagina } from './Inkomen';
+import { routeConfig } from './Inkomen-thema-config';
+import type { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { InkomenThemaPagina } from './Inkomen';
-import { routes } from './Inkomen-thema-config';
 
-const testState: any = {
+const testState = {
   WPI_AANVRAGEN: {
     status: 'OK',
     content: [
@@ -156,11 +157,11 @@ const testState: any = {
 };
 
 describe('<Inkomen />', () => {
-  const routeEntry = routes.themaPage;
+  const routeEntry = routeConfig.themaPage.path;
 
   describe('with items from BBZ, TONK, TOZO', () => {
     function initializeState(snapshot: MutableSnapshot) {
-      snapshot.set(appStateAtom, testState);
+      snapshot.set(appStateAtom, testState as unknown as AppState);
     }
 
     function Component() {
@@ -189,7 +190,7 @@ describe('<Inkomen />', () => {
         WPI_TOZO: {},
         WPI_TONK: {},
         WPI_BBZ: {},
-      } as any);
+      } as unknown as AppState);
     }
 
     function Component() {

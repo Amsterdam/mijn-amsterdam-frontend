@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import {
   listPageParamKind,
-  routes,
+  routeConfig,
   tableConfig,
   themaId,
   themaTitle,
@@ -99,8 +99,8 @@ export function useInkomenThemaData() {
     isLoadingWpiSpecificaties,
     isErrorWpiSpecificaties,
     listPageParamKind,
-    routes,
     tableConfig,
     breadcrumbs,
+    listPageRoute: routeConfig.listPage.path,
   };
 }

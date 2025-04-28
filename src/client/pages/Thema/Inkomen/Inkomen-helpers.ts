@@ -1,5 +1,5 @@
 import { isLoading } from '../../../../universal/helpers/api';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 
 export function isInkomenThemaActive(appState: AppState): boolean {
   const { WPI_AANVRAGEN, WPI_SPECIFICATIES, WPI_TOZO, WPI_TONK, WPI_BBZ } =

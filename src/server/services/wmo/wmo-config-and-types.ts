@@ -1,6 +1,9 @@
 import { parseISO } from 'date-fns';
 
-import { GenericDocument, ZaakDetail } from '../../../universal/types';
+import {
+  GenericDocument,
+  ZaakDetail,
+} from '../../../universal/types/App.types';
 import {
   BeschikkingsResultaat,
   ProductSoortCode,

@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router';
 
 import styles from './PageHeadingV2.module.scss';
 import { AppRoutes } from '../../../universal/config/routes';
-import { LinkProps } from '../../../universal/types';
+import { LinkProps } from '../../../universal/types/App.types';
 import { ThemaTitles } from '../../config/thema';
 import { MaBreadcrumbLink, MaRouterLink } from '../MaLink/MaLink';
 import { PageContentCell } from '../Page/Page';

@@ -1,6 +1,12 @@
 import { Link } from '@amsterdam/design-system-react';
 
 import styles from './ProfilePrivate.module.scss';
+import type {
+  BRPData,
+  Persoon,
+  Adres,
+  VerbintenisHistorisch,
+} from '../../../../../server/services/profile/brp.types';
 import { FeatureToggle } from '../../../../../universal/config/feature-toggles';
 import {
   formatBirthdate,
@@ -9,15 +15,9 @@ import {
   isMokum,
 } from '../../../../../universal/helpers/brp';
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
-import {
-  Adres,
-  AppState,
-  BRPData,
-  Persoon,
-  VerbintenisHistorisch,
-} from '../../../../../universal/types';
+import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
-import { ExternalUrls } from '../../../../config/external-urls';
+import { profileLinks } from '../Profile-thema-config';
 import {
   ProfileLabels,
   formatProfileSectionData,
@@ -317,7 +317,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
     if (isMokum(BRP.content)) {
       actionLinks.push({
         title: 'Inzien of correctie doorgeven',
-        url: ExternalUrls.CHANGE_PERSONAL_DATA,
+        url: profileLinks.CHANGE_PERSONAL_DATA,
         external: true,
       });
     }
@@ -335,7 +335,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
     const actionLinks: ActionLink[] = [
       {
         title,
-        url: ExternalUrls.REPORT_RELOCATION,
+        url: profileLinks.REPORT_RELOCATION,
         external: true,
       },
     ];
@@ -347,7 +347,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
     ) {
       actionLinks.push({
         title: 'Onjuiste inschrijving melden',
-        url: ExternalUrls.CHANGE_RESIDENT_COUNT,
+        url: profileLinks.CHANGE_RESIDENT_COUNT,
         external: true,
         className: styles['ActionLink--reportIncorrectResidentCount'],
       });
@@ -364,7 +364,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
       ? [
           {
             title: 'Inzien of correctie doorgeven',
-            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            url: profileLinks.CHANGE_PERSONAL_DATA,
             external: true,
           },
         ]
@@ -376,7 +376,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
       ? [
           {
             title: 'Inzien of correctie doorgeven',
-            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            url: profileLinks.CHANGE_PERSONAL_DATA,
             external: true,
           },
         ]
@@ -392,7 +392,7 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
       ? [
           {
             title: 'Inzien of correctie doorgeven',
-            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            url: profileLinks.CHANGE_PERSONAL_DATA,
             external: true,
           },
         ]

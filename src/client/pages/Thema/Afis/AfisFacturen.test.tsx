@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { routeConfig } from './Afis-thema-config';
 import { AfisFacturen } from './AfisFacturen';
 import { bffApi } from '../../../../testing/utils';
-import { AppState } from '../../../../universal/types';
+import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 

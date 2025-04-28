@@ -1,6 +1,6 @@
 import { ServiceResults, ContentTipSource } from './tip-types';
 import { tips } from './tips-content';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 
 export function prefixTipNotification(
   notification: MyNotification

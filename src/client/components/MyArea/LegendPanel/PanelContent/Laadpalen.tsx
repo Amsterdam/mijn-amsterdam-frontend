@@ -4,7 +4,7 @@ import GenericBase from './GenericBase';
 import styles from './Laadpalen.module.scss';
 import { laadpaalValueConfig } from '../../../../../universal/config/myarea-datasets';
 import { getFullAddress } from '../../../../../universal/helpers/brp';
-import { Unshaped } from '../../../../../universal/types';
+import { Unshaped } from '../../../../../universal/types/App.types';
 import {
   IconConnectorTypeCCS,
   IconConnectorTypeChademo,

@@ -4,17 +4,17 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
+import { routeConfig } from './Varen-thema-config';
+import { VarenList } from './VarenList';
 import {
   VarenZakenFrontend,
   VarenVergunningExploitatieType,
 } from '../../../../server/services/varen/config-and-types';
-import { AppRoutes } from '../../../../universal/config/routes';
 import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
+import { expectHeaders } from '../../../helpers/test-utils';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
-import { VarenList } from './VarenList';
-import { expectHeaders } from '../../../helpers/test-utils';
 
 type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieDecision: ExploitatieAanvraag = {
@@ -54,8 +54,8 @@ describe('<VarenList />', () => {
   function Component({ state }: { state: AppState }) {
     return (
       <MockApp
-        routePath={AppRoutes['VAREN/LIST']}
-        routeEntry={generatePath(AppRoutes['VAREN/LIST'], {
+        routePath={routeConfig.listPage.path}
+        routeEntry={generatePath(routeConfig.listPage.path, {
           kind: 'actieve-vergunningen',
           page: '1',
         })}

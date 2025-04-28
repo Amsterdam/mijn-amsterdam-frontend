@@ -23,7 +23,7 @@ export type ErfpachtDossierFactuur = {
   titelFacturenDossierAdres: string;
   status: string;
   titelFacturenStatus: string;
-  stopcode: string;
+  stopcode?: string;
   open: boolean;
   factuurNummer: string;
   titelFacturenNummer: string;
@@ -35,9 +35,6 @@ export type ErfpachtDossierFactuur = {
   titelFacturenOpenstaandBedrag: string;
   vervalDatum: string;
   titelFacturenVervaldatum: string;
-
-  // Added
-  dossierNummerUrlParam: string;
 };
 
 export type ErfpachtDossierDetailToekomstigePeriode = {
@@ -77,16 +74,16 @@ export type ErfpachtDossierDetailHuidigePeriode = {
   titelAfgekocht: string;
   titelGeenCanon: string;
   canons?: ErfpachtCanon[];
-  titelFinancieelCanon: 'Canon';
+  titelFinancieelCanon: string;
 };
 
 export type ErfpachtDossierDetailKadastraleAanduiding = {
   gemeenteCode: string;
   gemeenteNaam: string;
   sectie: string;
-  perceelsnummer: 0;
+  perceelnummer: string;
   letter: string;
-  volgnummer: 0;
+  volgnummer: string;
   samengesteld: string;
 };
 
@@ -111,7 +108,7 @@ export type ErfpachtDossierDetailBijzondereBepaling = {
   omschrijving: string;
   titelBestemmingOmschrijving: string;
   categorie: string;
-  oppervlakte: number;
+  oppervlakte: string;
   titelOppervlakte: string;
   eenheid: string;
   samengesteldeOppervlakteEenheid: string;
@@ -137,8 +134,8 @@ export type ErfpachtDossiersDetailSource = {
   juridisch?: ErfpachtDossierDetailJuridisch;
   bijzondereBepalingen?: ErfpachtDossierDetailBijzondereBepaling[];
   financieel?: {
-    huidigePeriode: ErfpachtDossierDetailHuidigePeriode;
-    toekomstigePeriodeList: ErfpachtDossierDetailToekomstigePeriode[];
+    huidigePeriode?: ErfpachtDossierDetailHuidigePeriode;
+    toekomstigePeriodeList?: ErfpachtDossierDetailToekomstigePeriode[];
   };
   facturen: {
     betaler: string;
@@ -147,7 +144,7 @@ export type ErfpachtDossiersDetailSource = {
     titelDebiteurNummer: string;
     titelFacturen: string;
     titelVerklarendeTekstFacturen: string;
-    titelVerklarendeTekstFacturen2: string;
+    titelVerklarendeTekstFacturen2?: string;
     titelFactuurZoekveld: string;
     titelFacturenDossierAdres: string;
     titelFacturenStatus: string;
@@ -174,13 +171,13 @@ export type ErfpachtDossiersDetail =
 
 export type ErfpachtDossierSource = {
   dossierNummer: string;
-  titelDossierNummer: string;
+  titelDossiernummer: string;
   voorkeursadres: string;
-  titelVoorkeursadres: string;
+  titelVoorkeursAdres: string;
   titelZaaknummer: string;
-  zaaknummer: string;
-  titelWijzigingsAanvragen: string;
-  wijzigingsAanvragen: string[];
+  zaaknummer?: string;
+  titelWijzigingsAanvragen?: string;
+  wijzigingsAanvragen?: string[];
   titelResultatenGevonden: string;
   titelGeenResultatenGevonden: string;
   titelDossierZoekveld: string;
@@ -197,8 +194,8 @@ export type ErfpachtDossiersResponseSource = {
     dossiers: ErfpachtDossierSource[];
     titelDossiernummer: string;
     titelVoorkeursAdres: string;
-    titelZaakNummer: string;
-    titelWijzigingsAanvragen: string;
+    titelZaaknummer: string;
+    titelWijzigingsAanvragen?: string;
     titelResultatenGevonden: string;
     titelGeenResultatenGevonden: string;
     titelDossierZoekveld: string;
@@ -208,13 +205,13 @@ export type ErfpachtDossiersResponseSource = {
   titelOpenFacturenKop: string;
   titelLinkFacturen: string;
   openstaandeFacturen?: {
-    betaler: string;
+    betaler?: string;
     titelBetaler: string;
-    debiteurnummer: string;
+    debiteurnummer?: string;
     titelDebiteurNummer: string;
     titelFacturen: string;
     titelVerklarendeTekstFacturen: string;
-    titelVerklarendeTekstFacturen2: string;
+    titelVerklarendeTekstFacturen2?: string;
     titelFactuurZoekveld: string;
     titelFacturenDossierAdres: string;
     titelFacturenStatus: string;
@@ -229,15 +226,19 @@ export type ErfpachtDossiersResponseSource = {
   };
 };
 
-export type ErfpachtDossier =
+export type ErfpachtDossierFrontend =
   ErfpachtDossierPropsFrontend<ErfpachtDossierSource>;
+
+export type ErfpachtDossierFactuurFrontend = ErfpachtDossierFactuur & {
+  dossierNummerUrlParam: string;
+};
 
 export type ErfpachtDossiersResponse = ErfpachtDossiersResponseSource & {
   dossiers: ErfpachtDossiersResponseSource['dossiers'] & {
-    dossiers?: ErfpachtDossier[];
+    dossiers?: ErfpachtDossierFrontend[];
   };
   openstaandeFacturen: ErfpachtDossiersResponseSource['openstaandeFacturen'] & {
-    dossiers: ErfpachtDossierFactuur[];
+    facturen: ErfpachtDossierFactuurFrontend[];
   };
   isKnown: boolean;
   relatieCode: string;

@@ -2,7 +2,7 @@ import {
   ApiResponse_DEPRECATED,
   FailedDependencies,
 } from '../../universal/helpers/api';
-import { ApiError, AppState } from '../../universal/types';
+import { ApiError, AppState } from '../../universal/types/App.types';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;

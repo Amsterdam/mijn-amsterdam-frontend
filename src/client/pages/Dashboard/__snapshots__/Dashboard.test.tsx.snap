@@ -315,44 +315,6 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         >
           <a
             class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
-            href="/inkomen"
-          >
-            <span
-              class="_ThemaLink_db9f57"
-            >
-              <span
-                class="ams-icon ams-icon--size-4 ams-icon--square"
-              >
-                <svg
-                  aria-label="inkomen-icoon"
-                  height="28px"
-                  viewBox="0 0 32 28"
-                  width="32px"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <path
-                    d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
-                    id="Shape"
-                  />
-                  <rect
-                    height="2"
-                    id="Rectangle"
-                    width="3"
-                    x="18"
-                    y="15"
-                  />
-                </svg>
-              </span>
-               Inkomen
-            </span>
-          </a>
-        </li>
-        <li
-          class="ams-unordered-list__item"
-        >
-          <a
-            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
             href="http://remote-api-host/sso/portaal/belastingen"
           >
             <span
@@ -383,6 +345,44 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 </svg>
               </span>
                Belastingen
+            </span>
+          </a>
+        </li>
+        <li
+          class="ams-unordered-list__item"
+        >
+          <a
+            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+            href="/inkomen"
+          >
+            <span
+              class="_ThemaLink_db9f57"
+            >
+              <span
+                class="ams-icon ams-icon--size-4 ams-icon--square"
+              >
+                <svg
+                  aria-label="inkomen-icoon"
+                  height="28px"
+                  viewBox="0 0 32 28"
+                  width="32px"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                >
+                  <path
+                    d="M21,4 L21,0 L0,4 L0,28 L32,28 L32,4 L21,4 Z M28,18 L17,18 L17,14 L28,14 L28,18 Z M28,12 L15,12 L15,20 L28,20 L28,24 L4,24 L4,8 L28,8 L28,12 Z"
+                    id="Shape"
+                  />
+                  <rect
+                    height="2"
+                    id="Rectangle"
+                    width="3"
+                    x="18"
+                    y="15"
+                  />
+                </svg>
+              </span>
+               Inkomen
             </span>
           </a>
         </li>
@@ -431,21 +431,15 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-icon ams-icon--size-4 ams-icon--square"
               >
                 <svg
-                  aria-label="Auto"
-                  height="34px"
-                  viewBox="0 0 56 34"
-                  width="56px"
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 32 32"
                   xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
-                  <g
-                    transform="translate(0, -12.000000)"
-                  >
-                    <path
-                      d="M42,35 C44.8994949,35 47.25,37.3505051 47.25,40.25 C47.25,43.1494949 44.8994949,45.5 42,45.5 C39.1005051,45.5 36.75,43.1494949 36.75,40.25 C36.75,37.3505051 39.1005051,35 42,35 Z M12.25,35 C15.1494949,35 17.5,37.3505051 17.5,40.25 C17.5,43.1494949 15.1494949,45.5 12.25,45.5 C9.35050506,45.5 7,43.1494949 7,40.25 C7,37.3505051 9.35050506,35 12.25,35 Z M33.25,12.25 L45.5,24.5 L56,24.5 L56,40.25 L50.75,40.25 C50.75,35.4175084 46.8324916,31.5 42,31.5 C37.1675084,31.5 33.25,35.4175084 33.25,40.25 L21,40.25 C21,35.4175084 17.0824916,31.5 12.25,31.5 C7.41750844,31.5 3.5,35.4175084 3.5,40.25 L-9.9475983e-14,40.25 L-9.9475983e-14,24.5 L12.25,12.25 L33.25,12.25 Z M31.5,15.75 L22.75,15.75 L22.75,24.5 L40.1833496,24.5 L31.5,15.75 Z M19.25,15.75 L14,15.75 L5.25,24.5 L19.25,24.5 L19.25,15.75 Z"
-                      id="Combined-Shape"
-                    />
-                  </g>
+                  <path
+                    d="M24 20a3 3 0 1 1 0 6 3 3 0 0 1 0-6M7 20a3 3 0 1 1 0 6 3 3 0 0 1 0-6M19 7l7 7h6v9h-3a5 5 0 0 0-10 0h-7a5 5 0 0 0-10 0H0v-9l7-7zm-1 2h-5v5h9.962zm-7 0H8l-5 5h8z"
+                    fill-rule="evenodd"
+                  />
                 </svg>
               </span>
                Parkeren

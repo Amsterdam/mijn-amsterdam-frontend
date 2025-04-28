@@ -1,4 +1,4 @@
-import { ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types/App.types';
 import { SmileSourceResponse, SmileFieldValue } from '../smile/smile-types';
 
 export type AVGResponse = {

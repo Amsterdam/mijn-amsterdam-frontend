@@ -22,7 +22,7 @@ import {
   useThemaBreadcrumbs,
   useThemaMenuItems,
 } from '../../../../hooks/useThemaMenuItems';
-import { routes, themaIdBRP } from '../Profile-thema-config';
+import { routeConfig, themaIdBRP } from '../Profile-thema-config';
 
 function getLinkToThemaPage(
   onderwerp: string,
@@ -87,7 +87,7 @@ export function useContactmomenten() {
     isLoading: isLoading(KLANT_CONTACT),
     title: 'Contactmomenten',
     routes: {
-      listPage: routes.listPageContactmomenten,
+      listPage: routeConfig.listPageContactmomenten.path,
     },
     breadcrumbs,
     routeParams,

@@ -1,7 +1,7 @@
-import { HLIRegeling } from './HLIRegeling';
-import { HLIRegelingen } from './HLIRegelingen';
+import { HLIDetail } from './HLIDetail';
+import { HLIList } from './HLIList';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
-import { HLIThemaPagina } from './HLIThemaPagina';
+import { HLIThema } from './HLIThema';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 
 export const HLIRoutes = [
@@ -12,17 +12,17 @@ export const HLIRoutes = [
   },
   {
     route: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-    Component: HLIRegeling,
+    Component: HLIDetail,
     isActive: FeatureToggle.hliThemaRegelingenActive,
   },
   {
     route: '/regelingen-bij-laag-inkomen/lijst/:kind/:page?',
-    Component: HLIRegelingen,
+    Component: HLIList,
     isActive: FeatureToggle.hliThemaRegelingenActive,
   },
   {
     route: '/regelingen-bij-laag-inkomen',
-    Component: HLIThemaPagina,
+    Component: HLIThema,
     isActive: FeatureToggle.hliThemaActive,
   },
 ];

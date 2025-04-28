@@ -3,7 +3,7 @@ import {
   LoodMetingStatus,
   LoodMetingStatusLowerCase,
 } from '../../../server/services/bodem/types';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 
 export function getBodemStatusSteps(
   request: LoodMetingFrontend,

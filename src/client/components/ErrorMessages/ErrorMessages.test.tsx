@@ -4,7 +4,7 @@ import { MutableSnapshot } from 'recoil';
 import { describe, it, expect } from 'vitest';
 
 import { ErrorMessages } from './ErrorMessages';
-import { AppState } from '../../../universal/types';
+import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 

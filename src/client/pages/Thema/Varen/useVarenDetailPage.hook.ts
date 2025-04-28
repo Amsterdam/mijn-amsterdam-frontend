@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 
 import { useVarenThemaData } from './useVarenThemaData.hook';
 import { exploitatieVergunningWijzigenLink } from './Varen-thema-config';
-import { ButtonLinkProps } from '../../../universal/types';
+import { ButtonLinkProps } from '../../../../universal/types/App.types';
 
 export function useVarenDetailPage() {
   const { varenRederRegistratie, varenZaken, breadcrumbs, isLoading, isError } =

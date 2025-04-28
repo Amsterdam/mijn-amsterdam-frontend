@@ -52,7 +52,7 @@ describe('Loodmeting', () => {
       const res = await fetchLoodmetingen(requestId, profileAndToken);
 
       // Grab the most complete meting item, to prevent checking more then 600 lines of items for nothing.
-      const mostCompleteMeting = res.content?.metingen.find(
+      const mostCompleteMeting = res.content?.find(
         (meting) =>
           meting.datumAanvraag &&
           meting.datumInbehandeling &&
@@ -122,7 +122,7 @@ describe('Loodmeting', () => {
     test('Assigns processed status based on status', async () => {
       const res = await fetchLoodmetingen(requestId, profileAndToken);
 
-      const metingen = res.content?.metingen;
+      const metingen = res.content;
       assert(metingen, 'Test data has metingen');
 
       const inBehandelingMeting = metingen.find(
@@ -165,6 +165,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001521',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -177,6 +178,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001520',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -189,6 +191,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001518',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check afgehandeld',
             },
             {
@@ -201,6 +204,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001525',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -213,6 +217,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001529',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -225,6 +230,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001522',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
             {
@@ -237,6 +243,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001527',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check afgewezen',
             },
             {
@@ -249,6 +256,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001519',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -261,6 +269,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001532',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
             {
@@ -273,6 +282,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001528',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check in behandeling',
             },
             {
@@ -285,6 +295,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001526',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check afgehandeld',
             },
             {
@@ -297,6 +308,7 @@ describe('Loodmeting', () => {
                 to: '/bodem/lood-meting/OL-001534',
               },
               themaID: 'BODEM',
+              themaTitle: 'Bodem',
               title: 'Aanvraag lood in de bodem-check ontvangen',
             },
           ],

@@ -2,34 +2,34 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { generatePath } from 'react-router';
 
-import { componentCreator } from '../../MockApp';
+import { routeConfig } from './HLI-thema-config';
 import { HLIStadspasDetail } from './HLIStadspasDetail';
 import { forTesting } from './HLIStadspasDetail';
 import { createHLIState } from './test-helpers';
 import { stadspasCreator } from './test-helpers';
 import { StadspasBudget } from '../../../../server/services/hli/stadspas-types';
 import { bffApi } from '../../../../testing/utils';
-import { AppRoutes } from '../../../../universal/config/routes';
+import { componentCreator } from '../../MockApp';
 
 const createStadspas = stadspasCreator();
 const passNumber = 12345678;
 
 const activePasState = createHLIState({
-  stadspassen: [
+  stadspas: [
     createStadspas({ actief: true, passNumber }, { firstname: 'Kerub' }),
   ],
 });
 
 const pasBlockedState = createHLIState({
-  stadspassen: [
+  stadspas: [
     createStadspas({ actief: false, passNumber }, { firstname: 'Lou' }),
   ],
 });
 
 const createHLIStadspasComponent = componentCreator({
   component: HLIStadspasDetail,
-  routePath: AppRoutes['HLI/STADSPAS'],
-  routeEntry: generatePath(AppRoutes['HLI/STADSPAS'], {
+  routePath: routeConfig.detailPageStadspas.path,
+  routeEntry: generatePath(routeConfig.detailPageStadspas.path, {
     passNumber: `${passNumber}`,
   }),
 });

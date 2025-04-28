@@ -1,11 +1,10 @@
 import { useParams } from 'react-router';
 
-import { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht';
+import type { ErfpachtDossiersDetail } from '../../../../../server/services/erfpacht/erfpacht-types';
 import { isError, isLoading } from '../../../../../universal/helpers/api';
 import { BFFApiUrls } from '../../../../config/api';
-import { BagThemas } from '../../../../config/thema';
 import { useAppStateBagApi } from '../../../../hooks/useAppState';
-import { getTableConfig } from '../Erfpacht-thema-config';
+import { getTableConfig, themaId } from '../Erfpacht-thema-config';
 import { useErfpachtThemaData } from '../erfpachtData.hook';
 
 export function useDossierDetaiLData() {
@@ -16,17 +15,18 @@ export function useDossierDetaiLData() {
   const {
     isLoading: isLoadingThemaData,
     isError: isErrorThemaData,
-    routes,
     relatieCode,
     listPageParamKind,
     erfpachtData,
     breadcrumbs,
   } = useErfpachtThemaData();
 
+  const EVER_CHANING_FALLBACK_KEY = `erfpacht-dossier-${new Date().getTime()}`;
+
   const [dossierApiResponse] = useAppStateBagApi<ErfpachtDossiersDetail>({
     url: `${BFFApiUrls.ERFPACHT_DOSSIER_DETAILS}/${dossierNummerUrlParam}`,
-    bagThema: BagThemas.ERFPACHT,
-    key: dossierNummerUrlParam,
+    bagThema: `${themaId}_BAG`,
+    key: dossierNummerUrlParam ?? EVER_CHANING_FALLBACK_KEY,
   });
   const dossier = dossierApiResponse.content;
   const tableConfig = dossier
@@ -40,7 +40,6 @@ export function useDossierDetaiLData() {
     isError: isError(dossierApiResponse),
     isLoadingThemaData,
     isErrorThemaData,
-    routes,
     relatieCode,
     displayPropsDossierFacturen:
       tableConfig?.[listPageParamKind.alleFacturen]?.displayProps ?? {},

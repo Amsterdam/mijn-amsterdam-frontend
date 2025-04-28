@@ -12,7 +12,7 @@ import { getFullAddress } from '../../../../universal/helpers/brp';
 import {
   AfvalFractionCode,
   AfvalFractionInformationTransformed,
-} from '../../../../universal/types';
+} from '../../../../universal/types/App.types';
 import {
   IconAfvalGft,
   IconAfvalGlas,

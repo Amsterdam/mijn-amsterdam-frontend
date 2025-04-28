@@ -12,14 +12,14 @@ export function BodemList() {
     displayProps,
     params,
     breadcrumbs,
-    routes,
+    listPageRoute,
   } = useBodemListPageData();
 
   return (
     <ListPagePaginated
       items={items.filter(filter).sort(sort)}
       title={title}
-      appRoute={routes.listPage}
+      appRoute={listPageRoute}
       appRouteParams={params}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
