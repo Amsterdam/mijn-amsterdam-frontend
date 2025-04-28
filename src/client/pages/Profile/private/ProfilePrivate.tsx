@@ -13,7 +13,7 @@ import {
 } from '../../../../universal/helpers/brp';
 import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../ThemaPagina/ThemaPagina';
+import ThemaPagina from '../../../components/Thema/ThemaPagina';
 
 function ProfilePrivateSectionPanels() {
   const { BRP, profileData } = useProfileData();

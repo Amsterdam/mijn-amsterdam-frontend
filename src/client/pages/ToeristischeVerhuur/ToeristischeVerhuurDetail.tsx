@@ -12,7 +12,7 @@ import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
 import { PageContentCell } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 import { useVergunningDocumentList } from '../Vergunningen/detail-page-content/useVergunningDocumentsList.hook';
 
 function getMailBody(

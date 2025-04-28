@@ -16,7 +16,7 @@ import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../components/Datalist/Datalist';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 import { WVOSContent } from './detail-page-content/WVOS';
 import { PageContentCell } from '../../components/Page/Page';
 

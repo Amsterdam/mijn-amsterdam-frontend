@@ -7,7 +7,7 @@ import { useDossierDetaiLData as useDossierDetailData } from './erfpachtDossierD
 import styles from './ErfpachtDossierDetail.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { PageContentCell } from '../../../components/Page/Page';
-import ThemaDetailPagina from '../../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
 export function ErfpachtDossierDetail() {
   const {

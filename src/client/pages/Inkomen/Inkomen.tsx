@@ -4,8 +4,8 @@ import { tableConfigSpecificaties } from './Inkomen-thema-config';
 import styles from './Inkomen.module.scss';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

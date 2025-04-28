@@ -4,8 +4,8 @@ import { linkListItems } from './Jeugd-thema-config';
 import { useJeugdThemaData } from './useJeugdThemaData';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/jeugd/jeugd';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 import {
   WMO_HELPDESK_HREF_TEL_LINK,
   WMO_HELPDESK_PHONENUMBER,
@@ -49,13 +49,13 @@ export function JeugdThemaPagina() {
   });
 
   return (
-      <ThemaPagina
-        title={title}
-        pageContentTop={pageContentTop}
-        linkListItems={linkListItems}
-        pageContentMain={tables}
-        isError={isError}
-        isLoading={isLoading}
-      />
+    <ThemaPagina
+      title={title}
+      pageContentTop={pageContentTop}
+      linkListItems={linkListItems}
+      pageContentMain={tables}
+      isError={isError}
+      isLoading={isLoading}
+    />
   );
 }

@@ -4,7 +4,7 @@ import { panelConfig } from './ProfileCommercial.transform';
 import { useProfileData } from './useProfileData.hook';
 import { PageContentCell } from '../../../components/Page/Page';
 import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
-import ThemaPagina from '../../ThemaPagina/ThemaPagina';
+import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import { ProfileSectionPanel } from '../ProfileSectionPanel';
 
 function ProfileCommercialSectionPanels() {

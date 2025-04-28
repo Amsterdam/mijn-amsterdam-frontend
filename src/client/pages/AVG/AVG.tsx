@@ -4,8 +4,8 @@ import { useAVGData } from './useAVGData.hook';
 import { AVGRequestFrontend } from '../../../server/services/avg/types';
 import { PageContentCell } from '../../components/Page/Page';
 import { ThemaTitles } from '../../config/thema';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>

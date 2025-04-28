@@ -4,7 +4,7 @@ import { Datalist, Row } from '../../components/Datalist/Datalist';
 import { DocumentLink } from '../../components/DocumentList/DocumentLink';
 import { AddressDisplayAndModal } from '../../components/LocationModal/LocationModal';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 export function LoodMeting() {
   const { meting, isLoading, isError, breadcrumbs } = useBodemDetailData();

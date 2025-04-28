@@ -14,8 +14,8 @@ import { Datalist } from '../../components/Datalist/Datalist';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import { PageContentCell } from '../../components/Page/Page';
 import { DisplayProps } from '../../components/Table/TableV2';
-import ThemaPagina from '../ThemaPagina/ThemaPagina';
-import ThemaPaginaTable from '../ThemaPagina/ThemaPaginaTable';
+import ThemaPagina from '../../components/Thema/ThemaPagina';
+import ThemaPaginaTable from '../../components/Thema/ThemaPaginaTable';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;

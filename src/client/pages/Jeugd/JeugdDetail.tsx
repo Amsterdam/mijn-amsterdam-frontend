@@ -6,7 +6,7 @@ import { LeerlingenvervoerVoorzieningFrontend } from '../../../server/services/j
 import { Datalist } from '../../components/Datalist/Datalist';
 import DocumentListV2 from '../../components/DocumentList/DocumentListV2';
 import { PageContentCell } from '../../components/Page/Page';
-import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
+import ThemaDetailPagina from '../../components/Thema/ThemaDetailPagina';
 
 type ContentProps = {
   voorziening: LeerlingenvervoerVoorzieningFrontend;
