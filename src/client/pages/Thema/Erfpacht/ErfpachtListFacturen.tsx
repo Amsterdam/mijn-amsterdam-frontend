@@ -10,7 +10,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import { BFFApiUrls } from '../../../config/api';
 import { useAppStateBagApi } from '../../../hooks/useAppState';
 
-export function ErfpachtFacturen() {
+export function ErfpachtListFacturen() {
   const { tableConfig, listPageParamKind, breadcrumbs } =
     useErfpachtThemaData();
 

@@ -2,8 +2,8 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { Erfpacht } from './Erfpacht';
 import { routeConfig } from './Erfpacht-thema-config';
+import { ErfpachtThema } from './ErfpachtThema';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import { transformDossierResponse } from '../../../../server/services/erfpacht/erfpacht';
 import { AppState } from '../../../../universal/types/App.types';
@@ -23,7 +23,7 @@ describe('<Erfpacht />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={Erfpacht}
+        component={ErfpachtThema}
         initializeState={initializeState}
       />
     );

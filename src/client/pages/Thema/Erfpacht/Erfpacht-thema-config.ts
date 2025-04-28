@@ -44,7 +44,7 @@ export const linkListItems: LinkProps[] = [
 ];
 
 export const listPageParamKind = {
-  erfpachtRechten: 'erfpachtrechten',
+  erfpachtDossiers: 'erfpacht-dossiers',
   openFacturen: 'openstaande-facturen',
   alleFacturen: 'alle-facturen',
 } as const;
@@ -77,7 +77,7 @@ export const routeConfig = {
     trackingUrl: '/erfpacht/lijst/facturen-dossier',
     documentTitle: `Lijst met facturen | ${themaTitle}`,
   },
-  listPageDossiers: {
+  listPage: {
     path: '/erfpacht/dossiers/:page?',
     documentTitle: `Lijst met facturen | ${themaTitle}`,
   },
@@ -128,9 +128,9 @@ export function getTableConfig({
   };
 
   const tableConfig = {
-    [listPageParamKind.erfpachtRechten]: {
+    [listPageParamKind.erfpachtDossiers]: {
       title: titleDossiers ?? 'Erfpachtrechten',
-      listPageRoute: routeConfig.listPageDossiers.path,
+      listPageRoute: routeConfig.listPage.path,
       displayProps: displayPropsDossiers,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
     },

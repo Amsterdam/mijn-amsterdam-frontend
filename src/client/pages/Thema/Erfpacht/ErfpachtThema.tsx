@@ -11,7 +11,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 
-export function Erfpacht() {
+export function ErfpachtThema() {
   const {
     title,
     isError,
@@ -33,7 +33,7 @@ export function Erfpacht() {
               key={kind}
               title={title}
               zaken={
-                kind === listPageParamKind.erfpachtRechten
+                kind === listPageParamKind.erfpachtDossiers
                   ? dossiers
                   : openFacturen
               }

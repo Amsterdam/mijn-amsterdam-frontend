@@ -1,15 +1,15 @@
-import { DataTableBijzondereBepalingen } from './DatalistBijzondereBepalingen';
-import { DatalistGeneral } from './DatalistGeneral';
-import { DatalistJuridisch } from './DatalistJuridisch';
-import { DatalistsFinancieel } from './DatalistsFinancieel';
-import { DataTableFacturen } from './DataTableFacturen';
-import { useDossierDetaiLData as useDossierDetailData } from './erfpachtDossierData.hook';
+import { DataTableBijzondereBepalingen } from './DossierDetail/DatalistBijzondereBepalingen';
+import { DatalistGeneral } from './DossierDetail/DatalistGeneral';
+import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch';
+import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel';
+import { DataTableFacturen } from './DossierDetail/DataTableFacturen';
+import { useDossierDetaiLData as useDossierDetailData } from './DossierDetail/erfpachtDossierData.hook';
 import styles from './ErfpachtDossierDetail.module.scss';
-import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/CollapsiblePanel';
-import { PageContentCell } from '../../../../components/Page/Page';
-import ThemaDetailPagina from '../../../../components/Thema/ThemaDetailPagina';
+import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
+import { PageContentCell } from '../../../components/Page/Page';
+import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
-export function ErfpachtDossierDetail() {
+export function ErfpachtDetail() {
   const {
     dossier,
     isError,

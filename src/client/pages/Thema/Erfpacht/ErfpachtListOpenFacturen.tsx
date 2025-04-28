@@ -1,7 +1,7 @@
 import { useErfpachtThemaData } from './erfpachtData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
-export function ErfpachtOpenFacturen() {
+export function ErfpachtListOpenFacturen() {
   const {
     tableConfig,
     isLoading,

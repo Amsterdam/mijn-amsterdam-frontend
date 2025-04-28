@@ -3,7 +3,7 @@ import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
 import { routeConfig } from './Erfpacht-thema-config';
-import { ErfpachtFacturen } from './ErfpachtFacturen';
+import { ErfpachtListFacturen } from './ErfpachtListFacturen';
 import ERFPACHT_DOSSIER_DETAIL from '../../../../../mocks/fixtures/erfpacht-v2-dossierinfo-bsn.json';
 import ERFPACHT_DOSSIERS from '../../../../../mocks/fixtures/erfpacht-v2-dossiers.json';
 import {
@@ -35,7 +35,7 @@ describe('<ErfpachtOpenFacturen />', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={ErfpachtFacturen}
+        component={ErfpachtListFacturen}
         initializeState={initializeState}
       />
     );

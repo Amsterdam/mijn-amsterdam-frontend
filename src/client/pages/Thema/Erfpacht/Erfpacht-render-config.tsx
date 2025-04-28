@@ -1,5 +1,3 @@
-import { ErfpachtDossierDetail } from './DossierDetail/ErfpachtDossierDetail';
-import { Erfpacht } from './Erfpacht';
 import {
   ERFPACHT_ZAKELIJK_ROUTE_DEFAULT,
   featureToggle,
@@ -7,10 +5,12 @@ import {
   themaId,
   themaTitle,
 } from './Erfpacht-thema-config';
-import { ErfpachtDossiers } from './ErfpachtDossiers';
-import { ErfpachtFacturen } from './ErfpachtFacturen';
+import { ErfpachtDetail } from './ErfpachtDetail';
 import { default as ErfpachtIcon } from './ErfpachtIcon.svg?react';
-import { ErfpachtOpenFacturen } from './ErfpachtOpenFacturen';
+import { ErfpachtList } from './ErfpachtList';
+import { ErfpachtListFacturen } from './ErfpachtListFacturen';
+import { ErfpachtListOpenFacturen } from './ErfpachtListOpenFacturen';
+import { ErfpachtThema } from './ErfpachtThema';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -21,27 +21,27 @@ import {
 export const ErfpachtRoutes = [
   {
     route: routeConfig.listPageOpenFacturen.path,
-    Component: ErfpachtOpenFacturen,
+    Component: ErfpachtListOpenFacturen,
     isActive: featureToggle.erfpachtActive,
   },
   {
     route: routeConfig.listPageAlleFacturen.path,
-    Component: ErfpachtFacturen,
+    Component: ErfpachtListFacturen,
     isActive: featureToggle.erfpachtActive,
   },
   {
-    route: routeConfig.listPageDossiers.path,
-    Component: ErfpachtDossiers,
+    route: routeConfig.listPage.path,
+    Component: ErfpachtList,
     isActive: featureToggle.erfpachtActive,
   },
   {
     route: routeConfig.detailPage.path,
-    Component: ErfpachtDossierDetail,
+    Component: ErfpachtDetail,
     isActive: featureToggle.erfpachtActive,
   },
   {
     route: routeConfig.themaPage.path,
-    Component: Erfpacht,
+    Component: ErfpachtThema,
     isActive: featureToggle.erfpachtActive,
   },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
