@@ -28,7 +28,10 @@ type DataListRowOptions = {
 };
 
 type VergunningDataListRow<T extends VergunningFrontend = VergunningFrontend> =
-  (vergunning: T, options?: DataListRowOptions) => Row | RowSet | null;
+  (
+    vergunning: T,
+    options?: DataListRowOptions
+  ) => Row | RowSet | null | Array<Row | RowSet | null>;
 
 export type RowTransformer<T extends VergunningFrontend = VergunningFrontend> =
   Record<string, VergunningDataListRow<T>>;
@@ -287,6 +290,7 @@ export function getRows<T extends VergunningFrontend>(
       // KeyOrTransformer is a transformer object
       return keyOrTransformer(vergunning);
     })
+    .flat()
     .filter((row) => row !== null);
 
   return rows;
