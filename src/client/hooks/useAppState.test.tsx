@@ -11,10 +11,10 @@ import {
 } from 'vitest';
 
 import * as dataApiHook from './api/useDataApi';
-import { newEventSourceMock } from './EventSourceMock';
 import { addParamsToStreamEndpoint, useAppStateRemote } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
+import { newEventSourceMock } from '../../testing/EventSourceMock';
 import { renderRecoilHook } from '../../testing/render-recoil.hook';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import * as appStateModule from '../AppState';
