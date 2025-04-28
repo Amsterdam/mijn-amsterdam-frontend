@@ -128,14 +128,12 @@ export const tableConfig = {
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
     filter: <T extends VergunningPropsCommon>(vergunning: T) => {
-      const isCurrentlyActivePermit =
-        vergunning.processed && vergunning.decision === 'Verleend';
-
       if (isVergunningExpirable(vergunning)) {
+        const isCurrentlyActivePermit =
+          vergunning.processed && vergunning.decision === 'Verleend';
         return isCurrentlyActivePermit && vergunning.isExpired !== true;
       }
-      // Assume if something is not expirable then it's not expired.
-      return isCurrentlyActivePermit;
+      return false;
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
