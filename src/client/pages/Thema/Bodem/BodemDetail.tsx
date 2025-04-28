@@ -6,11 +6,11 @@ import { AddressDisplayAndModal } from '../../../components/LocationModal/Locati
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 
-export function LoodMeting() {
+export function BodemDetail() {
   const { meting, isLoading, isError, breadcrumbs, title } =
     useBodemDetailData();
 
-  const BodemDetailRows = (meting: LoodMetingFrontend) => {
+  const LoodMetingRows = (meting: LoodMetingFrontend) => {
     const rows: Row[] = [{ label: 'Kenmerk', content: meting.kenmerk }];
 
     if (meting.adres) {
@@ -48,7 +48,7 @@ export function LoodMeting() {
   function BodemDetailContent({ meting }: { meting: LoodMetingFrontend }) {
     return (
       <PageContentCell>
-        <Datalist rows={BodemDetailRows(meting)} />
+        <Datalist rows={LoodMetingRows(meting)} />
       </PageContentCell>
     );
   }

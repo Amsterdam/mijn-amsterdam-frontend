@@ -13,7 +13,7 @@ function Caret() {
   return <i className={styles.SearchButtonIcon}>&#9698;</i>;
 }
 
-export function InkomenSpecificaties() {
+export function InkomenListSpecificaties() {
   const {
     categoryFilterActive,
     categoryFilterOptions,

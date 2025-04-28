@@ -4,7 +4,7 @@ import { ListPageParamKind } from './Inkomen-thema-config';
 import { useInkomenThemaData } from './useInkomenThemaData.hook';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 
-export function InkomenLijstPagina() {
+export function InkomenList() {
   const { kind = 'lopende-aanvragen' } = useParams<{
     kind: Exclude<ListPageParamKind, 'jaaropgaven' | 'uitkering'>;
   }>();

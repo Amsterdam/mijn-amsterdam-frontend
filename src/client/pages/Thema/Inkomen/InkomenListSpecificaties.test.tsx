@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { describe, expect, it } from 'vitest';
 
 import { listPageParamKind, routeConfig } from './Inkomen-thema-config';
-import { InkomenSpecificaties } from './InkomenSpecificaties';
+import { InkomenListSpecificaties } from './InkomenListSpecificaties';
 import { transformIncomSpecificationResponse } from '../../../../server/services/wpi/api-service';
 import { WpiIncomeSpecificationResponseData } from '../../../../server/services/wpi/wpi-types';
 import { dateSort } from '../../../../universal/helpers/date';
@@ -94,7 +94,7 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={InkomenSpecificaties}
+        component={InkomenListSpecificaties}
         initializeState={initializeState}
       />
     );
@@ -154,7 +154,7 @@ describe('<InkomenSpecificaties /> Jaaropgave', () => {
       <MockApp
         routeEntry={routeEntry}
         routePath={routePath}
-        component={InkomenSpecificaties}
+        component={InkomenListSpecificaties}
         initializeState={initializeState}
       />
     );

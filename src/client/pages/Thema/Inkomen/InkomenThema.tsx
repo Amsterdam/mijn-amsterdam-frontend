@@ -15,7 +15,7 @@ const pageContentTop = (
   </PageContentCell>
 );
 
-export function InkomenThemaPagina() {
+export function InkomenThema() {
   const {
     title,
     tableConfig,

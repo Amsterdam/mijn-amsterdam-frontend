@@ -1,4 +1,3 @@
-import { InkomenThemaPagina } from './Inkomen';
 import { isInkomenThemaActive } from './Inkomen-helpers';
 import { routeConfig, themaId, themaTitle } from './Inkomen-thema-config';
 import { InkomenDetailBbz } from './InkomenDetailBbz';
@@ -6,8 +5,9 @@ import { InkomenDetailTonk } from './InkomenDetailTonk';
 import { InkomenDetailTozo } from './InkomenDetailTozo';
 import { InkomenDetailUitkering } from './InkomenDetailUitkering';
 import { default as InkomenIcon } from './InkomenIcon.svg?react';
-import { InkomenLijstPagina } from './InkomenListPage';
-import { InkomenSpecificaties } from './InkomenSpecificaties';
+import { InkomenList } from './InkomenList';
+import { InkomenListSpecificaties } from './InkomenListSpecificaties';
+import { InkomenThema } from './InkomenThema';
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import {
   type ThemaMenuItem,
@@ -25,7 +25,7 @@ export const InkomenRoutes = [
   },
   {
     route: routeConfig.listPageSpecificaties.path,
-    Component: InkomenSpecificaties,
+    Component: InkomenListSpecificaties,
   },
   {
     route: routeConfig.detailPageUitkering.path,
@@ -36,8 +36,8 @@ export const InkomenRoutes = [
     Component: InkomenDetailBbz,
     isActive: FeatureToggle.inkomenBBZActive,
   },
-  { route: routeConfig.listPage.path, Component: InkomenLijstPagina },
-  { route: routeConfig.themaPage.path, Component: InkomenThemaPagina },
+  { route: routeConfig.listPage.path, Component: InkomenList },
+  { route: routeConfig.themaPage.path, Component: InkomenThema },
 ] as const satisfies readonly ThemaRenderRouteConfig[];
 
 export const menuItem: ThemaMenuItem<typeof themaId> = {

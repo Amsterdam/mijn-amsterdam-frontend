@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 
 import { routeConfig } from './Bodem-thema-config';
-import { LoodMeting } from './LoodMeting';
+import { BodemDetail } from './BodemDetail';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { AppState } from '../../../../universal/types/App.types';
 import { componentCreator } from '../../MockApp';
@@ -156,7 +156,7 @@ const metingen: LoodMetingFrontend[] = [
 const [metingOntvangen, metingAfgewezen, metingAfgehandeld] = metingen;
 
 const createLoodMeting = componentCreator({
-  component: LoodMeting,
+  component: BodemDetail,
   routeEntry: generatePath(routeConfig.detailPage.path, {
     id: 'OL-000001',
   }),

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { MutableSnapshot } from 'recoil';
 
-import { InkomenThemaPagina } from './Inkomen';
+import { InkomenThema } from './InkomenThema';
 import { routeConfig } from './Inkomen-thema-config';
 import type { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
@@ -169,7 +169,7 @@ describe('<Inkomen />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routeEntry}
-          component={InkomenThemaPagina}
+          component={InkomenThema}
           initializeState={initializeState}
         />
       );
@@ -198,7 +198,7 @@ describe('<Inkomen />', () => {
         <MockApp
           routeEntry={routeEntry}
           routePath={routeEntry}
-          component={InkomenThemaPagina}
+          component={InkomenThema}
           initializeState={initializeState}
         />
       );

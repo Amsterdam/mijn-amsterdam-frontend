@@ -7,7 +7,7 @@ import {
 import { default as BodemIcon } from './BodemIcon.svg?react';
 import { BodemList } from './BodemList';
 import { BodemThema } from './BodemThema';
-import { LoodMeting } from './LoodMeting';
+import { BodemDetail } from './BodemDetail';
 import { isLoading } from '../../../../universal/helpers/api';
 import { type AppState } from '../../../../universal/types/App.types';
 import {
@@ -18,7 +18,7 @@ import {
 export const BodemRoutes = [
   {
     route: routeConfig.detailPage.path,
-    Component: LoodMeting,
+    Component: BodemDetail,
     isActive: featureToggle.BodemActive,
   },
   {
