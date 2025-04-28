@@ -8,4 +8,5 @@ export { default as IconConnectorTypeCCS } from './map/connector-type-ccs.svg?re
 export { default as IconConnectorTypeChademo } from './map/connector-type-chademo.svg?react';
 export { default as IconConnectorTypeMennekes } from './map/connector-type-mennekes.svg?react';
 export { default as IconIndeterminate } from './min.svg?react';
+export { default as IconHome } from './home.svg?react';
 export { default as IconWior } from './wior.svg?react';
