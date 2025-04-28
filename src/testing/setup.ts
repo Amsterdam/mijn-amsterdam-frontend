@@ -108,9 +108,6 @@ process.env.BFF_OIDC_BASE_URL = bffApiHost;
 process.env.BFF_OIDC_USERINFO_ENDPOINT = `${bffApiHost}/oidc/userinfo`;
 process.env.BFF_OIDC_CLIENT_ID_DIGID = 'mijnamsterdam';
 process.env.BFF_OIDC_CLIENT_ID_EHERKENNING = 'mijnamsterdam1';
-process.env.BFF_MIJN_ERFPACHT_API_KEY = 'foo-bar-123';
-process.env.BFF_MIJN_ERFPACHT_ENCRYPTION_KEY_V2 = 'xxxxxxxxxxxxxxxx';
-process.env.BFF_MIJN_ERFPACHT_API_URL = `${remoteApiHost}/erfpacht`;
 
 //AFIS
 process.env.BFF_AFIS_API_BASE_URL = `${remoteApiHost}/afis/RESTAdapter`;
