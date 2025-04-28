@@ -155,6 +155,16 @@ export const location: VergunningDataListRow<
 > = (vergunning) =>
   'location' in vergunning && typeof vergunning.location === 'string'
     ? {
+        label: 'Locatie',
+        content: <AddressDisplayAndModal address={vergunning.location} />,
+      }
+    : null;
+
+export const address: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithLocation>
+> = (vergunning) =>
+  'location' in vergunning && typeof vergunning.location === 'string'
+    ? {
         label: 'Adres',
         content: <AddressDisplayAndModal address={vergunning.location} />,
       }
@@ -267,6 +277,7 @@ export const commonTransformers = {
   identifier,
   kentekens,
   location,
+  address,
   onFromTo,
   timeEnd,
   timeRange,
