@@ -75,8 +75,7 @@ export const onFromTo: VergunningDataListRow<
 export const dateTimeRange: VergunningDataListRow<
   VergunningFrontend<DecosZaakBase & WithDateTimeRange>
 > = (vergunning) => {
-  const isVerleend = vergunning?.decision === 'Verleend';
-  if (!('timeStart' in vergunning && 'timeEnd' in vergunning) || !isVerleend) {
+  if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
     return null;
   }
 
@@ -85,7 +84,7 @@ export const dateTimeRange: VergunningDataListRow<
     content:
       vergunning?.timeStart && vergunning?.dateStart
         ? defaultDateTimeFormat(
-            `${vergunning.dateStart}T${vergunning.timeStart}`
+            `${vergunning.dateStart.split('T')[0]}T${vergunning.timeStart}`
           )
         : vergunning.dateStart
           ? defaultDateFormat(vergunning.dateStart)
@@ -97,7 +96,9 @@ export const dateTimeRange: VergunningDataListRow<
     label: 'Tot en met',
     content:
       vergunning?.timeEnd && vergunning?.dateEnd
-        ? defaultDateTimeFormat(`${vergunning.dateEnd}T${vergunning.timeEnd}`)
+        ? defaultDateTimeFormat(
+            `${vergunning.dateEnd.split('T')[0]}T${vergunning.timeEnd}`
+          )
         : vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
           : '-',
