@@ -2,15 +2,15 @@ import { Heading, Link } from '@amsterdam/design-system-react';
 
 import { DatalistCanons } from './DatalistCanons';
 import { ErfpachtDatalistProps } from './DatalistGeneral';
-import styles from './ErfpachtDossierDetail.module.scss';
 import {
   ErfpachtDossierDetailHuidigePeriode,
   ErfpachtDossierDetailToekomstigePeriode,
-} from '../../../../../server/services/erfpacht/erfpacht';
+} from '../../../../../server/services/erfpacht/erfpacht-types';
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import { Datalist, Row } from '../../../../components/Datalist/Datalist';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../../config/app';
 import { LINKS } from '../Erfpacht-thema-config';
+import styles from '../ErfpachtDetail.module.scss';
 
 interface DatalistFinancieelPeriodeProps<T> {
   periode: T;

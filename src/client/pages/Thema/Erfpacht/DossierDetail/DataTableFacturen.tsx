@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { generatePath, useParams } from 'react-router';
 
 import { ErfpachtDatalistProps } from './DatalistGeneral';
-import styles from './ErfpachtDossierDetail.module.scss';
+import styles from '../ErfpachtDetail.module.scss';
 import { WijzigenLink } from './WijzigenLink';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import { LinkToListPage } from '../../../../components/LinkToListPage/LinkToListPage';

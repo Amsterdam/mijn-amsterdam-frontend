@@ -4,7 +4,7 @@ import { DatalistJuridisch } from './DossierDetail/DatalistJuridisch';
 import { DatalistsFinancieel } from './DossierDetail/DatalistsFinancieel';
 import { DataTableFacturen } from './DossierDetail/DataTableFacturen';
 import { useDossierDetaiLData as useDossierDetailData } from './DossierDetail/erfpachtDossierData.hook';
-import styles from './ErfpachtDossierDetail.module.scss';
+import styles from './ErfpachtDetail.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
