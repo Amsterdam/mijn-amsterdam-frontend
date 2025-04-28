@@ -86,7 +86,7 @@ describe('With basic request where data returned does not matter', () => {
     );
 
     const heading = screen.getByRole('heading', {
-      name: 'Weet u zeker dat u uw Stadspas wilt blokkeren?',
+      name: 'Uw pas is gestolen of u bent deze kwijt.',
     });
     expect(heading).toBeInTheDocument();
 

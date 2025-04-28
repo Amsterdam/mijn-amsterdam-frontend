@@ -1,4 +1,4 @@
-import { isError } from 'lodash';
+import isError from 'lodash.iserror';
 
 import {
   linkListItems,
