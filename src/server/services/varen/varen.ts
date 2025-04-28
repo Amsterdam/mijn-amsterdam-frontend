@@ -67,6 +67,8 @@ function transformVarenZakenFrontend(
   });
 
   const zakenFrontend = zaak.vergunningen.map((vergunning) => {
+    // Vergunningen are treated as zaken.
+    // For vergunningen, we use the vergunning id because multiple vergunningen can be created from one zaak and would not be unique
     const zaakVergunningId = isVergunning(zaak) ? vergunning.id : zaak.id;
     return {
       ...zaakFrontend,
