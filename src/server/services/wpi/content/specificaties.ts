@@ -1,6 +1,6 @@
 import { differenceInMonths } from 'date-fns';
 
-import { themaId } from '../../../../client/pages/Inkomen/Inkomen-thema-config';
+import { themaId } from '../../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import {
   dateFormat,

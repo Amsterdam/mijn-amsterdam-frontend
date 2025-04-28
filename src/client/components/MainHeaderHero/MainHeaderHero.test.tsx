@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import { MainHeaderHero } from './MainHeaderHero';
-import { routes } from '../../pages/Inkomen/Inkomen-thema-config';
+import { routes } from '../../pages/Thema/Inkomen/Inkomen-thema-config';
 import MockApp from '../../pages/MockApp';
 
 describe('<MainHeaderHero />', () => {

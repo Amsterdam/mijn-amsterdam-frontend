@@ -10,7 +10,7 @@ import {
   routes,
   themaIdBRP,
   themaTitle,
-} from '../../client/pages/Profile/Profile-thema-config';
+} from '../../client/pages/Thema/Profile/Profile-thema-config';
 import { AppRoutes } from '../../universal/config/routes';
 import { ThemaIDs } from '../../universal/config/thema';
 import {

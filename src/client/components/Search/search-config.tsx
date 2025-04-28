@@ -46,7 +46,7 @@ import {
   StatusLineItem,
 } from '../../../universal/types';
 import { ThemaTitles } from '../../config/thema';
-import { routes as profileRoutes } from '../../pages/Profile/Profile-thema-config';
+import { routes as profileRoutes } from '../../pages/Thema/Profile/Profile-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {

@@ -6,7 +6,7 @@ import {
   VarenRegistratieRederType,
 } from './config-and-types';
 import { fetchVaren } from './varen';
-import { isVergunning } from '../../../client/pages/Varen/helper';
+import { isVergunning } from '../../../client/pages/Thema/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaIDs } from '../../../universal/config/thema';
 import {
