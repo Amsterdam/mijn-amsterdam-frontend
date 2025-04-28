@@ -3,6 +3,7 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
+  DecosVarenZaakVergunning,
   Varen,
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
@@ -58,24 +59,28 @@ function transformVarenZakenFrontend(
     return [zaakFrontend];
   }
 
-  const createLink = (id: string) => ({
-    to: generatePath(appRoute, {
-      caseType: slug(zaak.caseType, { lower: true }),
-      id: id,
-    }),
-    title: `Bekijk hoe het met uw aanvraag staat`,
+  const createZaakVergunning = (vergunning: DecosVarenZaakVergunning) => ({
+    ...zaakFrontend,
+    vergunning,
+    vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
   });
 
+  if (!isVergunning(zaak)) {
+    // If the zaak is not a vergunning, only one vergunning can be attached
+    return [createZaakVergunning(zaak.vergunningen[0])];
+  }
+
   const zakenFrontend = zaak.vergunningen.map((vergunning) => {
-    // Vergunningen are treated as zaken.
-    // For vergunningen, we use the vergunning id because multiple vergunningen can be created from one zaak and would not be unique
-    const zaakVergunningId = isVergunning(zaak) ? vergunning.id : zaak.id;
     return {
-      ...zaakFrontend,
-      vergunning,
-      vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
-      id: zaakVergunningId,
-      link: createLink(zaakVergunningId),
+      ...createZaakVergunning(vergunning),
+      id: vergunning.id,
+      link: {
+        to: generatePath(appRoute, {
+          caseType: slug(zaak.caseType, { lower: true }),
+          id: vergunning.id,
+        }),
+        title: `Bekijk hoe het met uw aanvraag staat`,
+      },
     };
   });
 
