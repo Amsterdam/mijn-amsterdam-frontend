@@ -1,31 +1,31 @@
+import { isVergunning } from './helper';
 import { useVarenDetailPage } from './useVarenDetailPage.hook';
 import { VarenDetailPageContentExploitatie } from './VarenDetailExploitatie';
 import { VarenDetailPageContentExploitatieHernoemen } from './VarenDetailExploitatieHernoemen';
 import { VarenDetailPageContentExploitatieOverdragen } from './VarenDetailExploitatieOverdragen';
 import { VarenDetailPageContentExploitatieVerbouwen } from './VarenDetailExploitatieVerbouwen';
 import { VarenDetailPageContentExploitatieVervangen } from './VarenDetailExploitatieVervangen';
-import { VarenDetailPageContentLigplaats } from './VarenDetailLigplaats';
 import ThemaDetailPagina from '../ThemaPagina/ThemaDetailPagina';
 
 export function VarenDetail() {
-  const { zaak, buttonItems, isLoading, isError, breadcrumbs } =
-    useVarenDetailPage();
+  const {
+    zaak,
+    linkedWijzigingZaak,
+    hasRegistratieReder,
+    buttonItems,
+    isLoading,
+    isError,
+    breadcrumbs,
+  } = useVarenDetailPage();
 
-  let noContentError = false;
   let pageContent = null;
   switch (zaak?.caseType) {
     case 'Varen vergunning exploitatie':
       pageContent = (
         <VarenDetailPageContentExploitatie
           zaak={zaak}
-          buttonItems={buttonItems}
-        />
-      );
-      break;
-    case 'Varen ligplaatsvergunning':
-      pageContent = (
-        <VarenDetailPageContentLigplaats
-          zaak={zaak}
+          linkedWijzigingZaak={linkedWijzigingZaak}
+          hasRegistratieReder={hasRegistratieReder}
           buttonItems={buttonItems}
         />
       );
@@ -42,8 +42,6 @@ export function VarenDetail() {
     case 'Varen vergunning exploitatie Wijziging vergunninghouder':
       pageContent = <VarenDetailPageContentExploitatieOverdragen zaak={zaak} />;
       break;
-    default:
-      noContentError = true;
   }
 
   return (
@@ -51,10 +49,11 @@ export function VarenDetail() {
       statusLabel="Status van uw aanvraag"
       title={zaak?.title ?? 'Varen vergunning'}
       zaak={zaak}
-      isError={isError || noContentError}
+      isError={isError || !pageContent}
       isLoading={isLoading}
       pageContentMain={pageContent}
       breadcrumbs={breadcrumbs}
+      showStatusSteps={!isVergunning(zaak)}
     />
   );
 }

@@ -15,11 +15,7 @@ import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { Varen } from './Varen';
-import {
-  expectHeaders,
-  getTable,
-  expectTableHeaders,
-} from '../../helpers/test-utils';
+import { expectHeaders, getTable } from '../../helpers/test-utils';
 
 type ExploitatieAanvraag = VarenZakenFrontend<VarenVergunningExploitatieType>;
 const exploitatieInProgress = {

@@ -22,7 +22,6 @@ export const caseTypeVaren = {
     'Varen vergunning exploitatie Wijziging verbouwing',
   VarenVergunningExploitatieWijzigingVaartuignaam:
     'Varen vergunning exploitatie Wijziging vaartuignaam',
-  VarenVergunningLigplaats: 'Varen ligplaatsvergunning',
 } as const;
 
 type CaseTypeVarenKey = keyof typeof caseTypeVaren;
@@ -87,11 +86,6 @@ export type VarenVergunningExploitatieWijzigingVervangingType =
     vesselNameNew: string | null;
   };
 
-export type VarenVergunningLigplaatsType = DecosVarenZaakBase & {
-  caseType: GetCaseType<'VarenVergunningLigplaats'>;
-  location: string | null;
-};
-
 export type VarenRegistratieRederType = DecosZaakBase & {
   linkDataRequest: string | null;
   caseType: GetCaseType<'VarenRederRegistratie'>;
@@ -112,7 +106,6 @@ export type VarenRegistratieRederFrontend = VarenRegistratieRederType & {
 };
 
 export type Varen =
-  | VarenVergunningLigplaatsType
   | VarenVergunningExploitatieType
   | VarenVergunningExploitatieWijzigingVaartuigNaamType
   | VarenVergunningExploitatieWijzigingVerbouwingType

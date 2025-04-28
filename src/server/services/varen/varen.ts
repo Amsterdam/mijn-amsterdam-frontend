@@ -3,6 +3,7 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
+  DecosVarenZaakVergunning,
   Varen,
   VarenRegistratieRederFrontend,
   VarenRegistratieRederType,
@@ -10,6 +11,7 @@ import {
 } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
 import { getStatusSteps } from './varen-status-steps';
+import { isVergunning } from '../../../client/pages/Varen/helper';
 import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { omit, toDateFormatted } from '../../../universal/helpers/utils';
@@ -57,24 +59,28 @@ function transformVarenZakenFrontend(
     return [zaakFrontend];
   }
 
-  const createLink = (id: string) => ({
-    to: generatePath(appRoute, {
-      caseType: slug(zaak.caseType, { lower: true }),
-      id: id,
-    }),
-    title: `Bekijk hoe het met uw aanvraag staat`,
+  const createZaakVergunning = (vergunning: DecosVarenZaakVergunning) => ({
+    ...zaakFrontend,
+    vergunning,
+    vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
   });
 
-  const zakenFrontend = zaak.vergunningen.map((vergunning) => {
-    const combinedIdZaakVergunning = `${zaak.id}-${vergunning.id}`;
-    return {
-      ...zaakFrontend,
-      vergunning,
-      vesselName: vergunning.vesselName || zaak.vesselName, // The vesselName from the vergunning is leading
-      id: combinedIdZaakVergunning,
-      link: createLink(combinedIdZaakVergunning),
-    };
-  });
+  if (!isVergunning(zaak)) {
+    // If the zaak is not a vergunning, only one vergunning can be attached
+    return [createZaakVergunning(zaak.vergunningen[0])];
+  }
+
+  const zakenFrontend = zaak.vergunningen.map((vergunning) => ({
+    ...createZaakVergunning(vergunning),
+    id: vergunning.id,
+    link: {
+      to: generatePath(appRoute, {
+        caseType: slug(zaak.caseType, { lower: true }),
+        id: vergunning.id,
+      }),
+      title: `Bekijk hoe het met uw aanvraag staat`,
+    },
+  }));
 
   return zakenFrontend;
 }

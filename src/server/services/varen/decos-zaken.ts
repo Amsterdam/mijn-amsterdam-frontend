@@ -7,7 +7,6 @@ import type {
   VarenVergunningExploitatieWijzigingVerbouwingType,
   VarenVergunningExploitatieWijzigingVergunningshouderType,
   VarenVergunningExploitatieWijzigingVervangingType,
-  VarenVergunningLigplaatsType,
 } from './config-and-types';
 import { isDateInPast } from '../../../universal/helpers/date';
 import {
@@ -175,21 +174,9 @@ export const VarenVergunningExploitatieWijzigingVervanging: DecosZaakTransformer
     },
   };
 
-export const VarenVergunningLigplaats: DecosZaakTransformer<VarenVergunningLigplaatsType> =
-  {
-    caseType: 'Varen ligplaatsvergunning',
-    title: 'Varen ligplaatsvergunning',
-    ...VarenBaseExploitatieVergunning,
-    transformFields: {
-      ...VarenBaseExploitatieVergunning.transformFields,
-      text6: 'location',
-    },
-  };
-
 export const decosCaseToZaakTransformers = {
   [VarenRegistratieReder.caseType]: VarenRegistratieReder,
   [VarenVergunningExploitatie.caseType]: VarenVergunningExploitatie,
-  [VarenVergunningLigplaats.caseType]: VarenVergunningLigplaats,
   [VarenVergunningExploitatieWijzigenVaartuignaam.caseType]:
     VarenVergunningExploitatieWijzigenVaartuignaam,
   [VarenVergunningExploitatieWijzigenVerbouwing.caseType]:

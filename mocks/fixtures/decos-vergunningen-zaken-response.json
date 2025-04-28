@@ -838,7 +838,33 @@
         "num8": 150,
         "num10": "11223344",
         "text10": "Onbemand",
-        "text15": 2
+        "text15": 2,
+        "varens": "Z/25/0000001-10001"
+      },
+      "links": []
+    },
+    {
+      "key": "HEHEFJSDIAJI4834278O8888B7B11891",
+      "fields": {
+        "title": "Afgehandeld",
+        "text45": "Varen vergunning exploitatie",
+        "mark": "Z/24/3421791",
+        "dfunction": "Verleend",
+        "SUBJECT1": "Een beschrijving van deze vergunning",
+        "document_date": "2023-11-07T00:00:00",
+        "date5": "2023-11-07T00:00:00",
+        "processed": true,
+        "text11": "Nvt",
+        "text18": "Bootje van Berend",
+        "text21": "2,38",
+        "text22": "2,48",
+        "text23": "3,00",
+        "text24": "6,00",
+        "num8": 150,
+        "num10": "11223355",
+        "text10": "Onbemand",
+        "text15": 2,
+        "varens": "Z/25/0000002-10001"
       },
       "links": []
     },
@@ -904,7 +930,8 @@
         "mailaddress": "Amstel 1, 1011 PN Amsterdam",
         "zipcode": "1234 ZG",
         "city": "Amsterdam",
-        "phone1": "0612345678"
+        "phone1": "0612345678",
+        "varens": "Z/25/0000001-10001"
       },
       "links": []
     },
@@ -931,7 +958,8 @@
         "mailaddress": "Amstel 1, 1011 PN Amsterdam",
         "zipcode": "1234 ZG",
         "city": "Amsterdam",
-        "phone1": "0612345678"
+        "phone1": "0612345678",
+        "varens": "Z/25/0000001-10001"
       },
       "links": []
     }

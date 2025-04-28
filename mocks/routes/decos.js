@@ -11,13 +11,8 @@ const zakenKeysStatusInBehandeling = ZAKEN.content
   .filter((zaak) => zaak.fields.title === 'In behandeling')
   .map((zaak) => zaak.key);
 
-const zakenKeysHasVarens = ZAKEN.content
-  .filter(
-    (zaak) =>
-      zaak.fields.text45 !== 'Varen vergunning exploitatie' ||
-      zaak.fields.processed
-  )
-  .map((zaak) => zaak.key);
+const getVarensBelongingToZaak = (zaak) =>
+  VARENS.content?.find((v) => v.fields.mark === zaak?.fields?.varens) || null;
 
 function getZaakByKey(key) {
   return ZAKEN.content.find((zaak) => zaak.key === key);
@@ -173,9 +168,10 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res, next, core) => {
-            if (zakenKeysHasVarens.includes(req.params.key)) {
-              VARENS.content[0].key = req.params.key;
-              return res.send(VARENS);
+            const zaak = getZaakByKey(req.params.key);
+            const vergunning = getVarensBelongingToZaak(zaak);
+            if (vergunning) {
+              return res.send({ content: [vergunning] });
             }
             return res.send({ content: [] });
           },

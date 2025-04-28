@@ -34,6 +34,7 @@ interface ThemaDetailPaginaProps<T> {
   statusLabel?: string;
   title?: string;
   className?: string;
+  showStatusSteps?: boolean;
 }
 
 export default function ThemaDetailPagina<T extends ZaakDetail>({
@@ -48,6 +49,7 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
   isLoading,
   reverseSteps = false,
   statusLabel = 'Status',
+  showStatusSteps = true,
 }: ThemaDetailPaginaProps<T>) {
   let statusItemSteps = zaak?.steps ?? [];
 
@@ -75,7 +77,7 @@ export default function ThemaDetailPagina<T extends ZaakDetail>({
 
         {pageContentMain}
 
-        {!!statusItemSteps.length && zaak && (
+        {showStatusSteps && zaak && !!statusItemSteps.length && (
           <PageContentCell startWide={1} spanWide={12}>
             <Steps title={statusLabel} steps={statusItemSteps} />
           </PageContentCell>
