@@ -107,16 +107,16 @@ describe('vergunningen-notifications', () => {
       expect(labels).toBe('In behandeling');
     });
 
-    it('should return correct label for statusAanvraag', () => {
+    it('should return correct label for statusOntvangen', () => {
       const vergunning = {
         processed: false,
       } as VergunningFrontend;
 
       const labels = getNotificationLabels(
-        { statusAanvraag: 'Aanvraag' } as any,
+        { statusOntvangen: 'Ontvangen' } as any,
         vergunning
       );
-      expect(labels).toBe('Aanvraag');
+      expect(labels).toBe('Ontvangen');
     });
 
     it('should return null if no matching label', () => {
@@ -140,7 +140,7 @@ describe('vergunningen-notifications', () => {
       const zaakTypeTransformer = {
         caseType: 'TestCase',
         notificationLabels: {
-          statusAanvraag: {
+          statusOntvangen: {
             title: () => 'Test Title',
             description: () => 'Test Description',
             datePublished: () => '2023-01-01',
@@ -152,7 +152,8 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        themaId
+        themaId,
+        themaTitle
       );
       expect(notification).toHaveProperty('title', 'Test Title');
       expect(notification).toHaveProperty('description', 'Test Description');
@@ -178,7 +179,8 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        themaId
+        themaId,
+        themaTitle
       );
       expect(notification).toBeNull();
     });
@@ -215,7 +217,7 @@ describe('vergunningen-notifications', () => {
         {
           caseType: 'TestCase',
           notificationLabels: {
-            statusAanvraag: {
+            statusOntvangen: {
               title: () => 'Aanvraag',
               description: () => 'Test Description',
               datePublished: () => '2023-01-01',

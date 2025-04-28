@@ -15,6 +15,7 @@ import {
 } from './config-and-types';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
+import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
 // Checks to see if a payment was not processed correctly/completely yet.
@@ -161,6 +162,10 @@ export function getStatusDate(
   return (
     statuses.find(({ status }) => status === zaakStatus)?.datePublished || null
   );
+}
+
+export function getActiveStatus(zaak: { steps?: StatusLineItem[] }) {
+  return zaak.steps?.find((step) => step.isActive)?.status ?? null;
 }
 
 export function isExpired(dateExpiry: string | null, dateNow?: Date) {

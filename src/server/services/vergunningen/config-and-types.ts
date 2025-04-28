@@ -229,7 +229,7 @@ export type NotificationLabels = NotificationLabelsBase & {
 };
 
 export type NotificationTypeKey =
-  | 'statusAanvraag'
+  | 'statusOntvangen'
   | 'statusInBehandeling'
   | 'statusAfgehandeld'
   | 'verlooptBinnenkort'

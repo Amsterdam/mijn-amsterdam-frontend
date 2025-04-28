@@ -35,7 +35,7 @@ export function EigenParkeerplaats({
       ?.map((location, i) => {
         return [
           {
-            label: 'Locatie',
+            label: 'Adres',
             content: (
               <AddressDisplayAndModal
                 address={`${location.street} ${location.houseNumber}`}

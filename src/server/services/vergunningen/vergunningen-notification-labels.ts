@@ -13,7 +13,7 @@ const link = (vergunning: VergunningFrontend) => ({
   to: vergunning.link.to,
 });
 
-const statusAanvraag: NotificationLabels = {
+const statusOntvangen: NotificationLabels = {
   title: (vergunning) => `Aanvraag ${vergunning.title} ontvangen`,
   description: (vergunning) =>
     `Wij hebben uw aanvraag ${vergunning.title} ontvangen.`,
@@ -92,7 +92,7 @@ const isIngetrokken: NotificationLabels = {
 };
 
 export const caseNotificationLabelsDefault = {
-  statusAanvraag,
+  statusOntvangen,
   statusInBehandeling,
   statusAfgehandeld,
 };
