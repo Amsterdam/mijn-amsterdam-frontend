@@ -48,40 +48,17 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import { themaId as themaIdAfis } from '../../pages/Thema/Afis/Afis-thema-config';
-import {
-  featureToggle as featureToggleAVG,
-  themaId as themaIdAVG,
-} from '../../pages/Thema/AVG/AVG-thema-config';
-import {
-  featureToggle as featureToggleBezwaren,
-  themaId as themaIdBezwaren,
-} from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
-import {
-  featureToggle as featureToggleBodem,
-  themaId as themaIdBodem,
-} from '../../pages/Thema/Bodem/Bodem-thema-config';
-import { themaId as themaIdErfpacht } from '../../pages/Thema/Erfpacht/Erfpacht-thema-config';
-import { themaId as themaIdHLI } from '../../pages/Thema/HLI/HLI-thema-config';
-import {
-  featureToggle as featureToggleHoreca,
-  themaId as themaIdHoreca,
-} from '../../pages/Thema/Horeca/Horeca-thema-config';
-import {
-  featureToggle,
-  themaId as themaIdKrefia,
-} from '../../pages/Thema/Krefia/Krefia-thema-config';
+import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
+import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
+import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
+import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
+import { featureToggle } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
+import { routeConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
-  routeConfig as routeConfigToeristischeVerhuur,
-  themaId as themaIdToeristischeVerhuur,
-} from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import {
-  themaId as themaIdVaren,
   routeConfig as routeConfigVaren,
   themaTitle as themaTitleVaren,
 } from '../../pages/Thema/Varen/Varen-thema-config';
-import { themaId as themaIdVergunningen } from '../../pages/Thema/Vergunningen/Vergunningen-thema-config';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
@@ -262,13 +239,13 @@ interface ToeristischRegistratieItem {
 
 export const apiSearchConfigs: ApiSearchConfig[] = [
   {
-    stateKey: themaIdVergunningen,
+    stateKey: 'VERGUNNINGEN',
     displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
   },
   {
-    stateKey: themaIdErfpacht,
+    stateKey: 'ERFPACHT',
     getApiBaseItems: (
       erfpachtDossiersResponse: ErfpachtDossiersResponse
     ): ErfpachtDossierFrontend[] => {
@@ -279,7 +256,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: themaIdToeristischeVerhuur,
+    stateKey: 'TOERISTISCHEVERHUUR',
     profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
@@ -332,7 +309,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'WMO' as AppStateKey,
+    stateKey: 'WMO',
     generateKeywords: (wmoItem: WMOVoorzieningFrontend): string[] =>
       uniqueArray(
         wmoItem.steps.flatMap((step) => [step.description, step.status])
@@ -348,7 +325,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: themaIdHLI,
+    stateKey: 'HLI',
     getApiBaseItems: (apiContent: HLIresponseData) => {
       const stadspassen =
         apiContent?.stadspas?.map((stadspas) => {
@@ -376,7 +353,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: themaIdAfis,
+    stateKey: 'AFIS',
     profileTypes: ['private', 'commercial'],
     getApiBaseItems: (data: AfisThemaResponse) => {
       if (data?.facturen) {
@@ -408,7 +385,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   getWpiConfig('WPI_BBZ'),
   getWpiConfig('WPI_AANVRAGEN'),
   {
-    stateKey: 'BRP' as AppStateKey,
+    stateKey: 'BRP',
     getApiBaseItems: (apiContent: BRPData) => {
       const identiteitsBewijzen = apiContent?.identiteitsbewijzen || [];
       const address = getFullAddress(apiContent.adres, true);
@@ -438,7 +415,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: featureToggle.krefiaActive,
-    stateKey: themaIdKrefia,
+    stateKey: 'KREFIA',
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
         !!apiContent?.deepLinks &&
@@ -456,7 +433,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: featureToggleBezwaren.BezwarenActive,
-    stateKey: themaIdBezwaren,
+    stateKey: 'BEZWAREN',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: BezwaarFrontend) {
       return (term: string) =>
@@ -465,14 +442,14 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: true,
-    stateKey: 'SVWI' as AppStateKey,
+    stateKey: 'SVWI',
     displayTitle(item: { title: string }) {
       return (term: string) => displayPath(term, [item.title]);
     },
   },
   {
     isEnabled: featureToggleBodem.BodemActive,
-    stateKey: themaIdBodem,
+    stateKey: 'BODEM',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: LoodMetingFrontend) {
       return (term: string) => displayPath(term, [item.title, item.adres]);
@@ -480,7 +457,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: featureToggleAVG.avgActive,
-    stateKey: themaIdAVG,
+    stateKey: 'AVG',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: AVGRequestFrontend) {
       return (term: string) => displayPath(term, [item.title]);
@@ -488,7 +465,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: featureToggleHoreca.horecaActive,
-    stateKey: themaIdHoreca,
+    stateKey: 'HORECA',
     profileTypes: ['private', 'commercial'],
     displayTitle(item: HorecaVergunningFrontend) {
       return (term: string) =>
@@ -497,7 +474,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     isEnabled: featureToggle,
-    stateKey: themaIdVaren,
+    stateKey: 'VAREN',
     profileTypes: ['commercial'],
     getApiBaseItems: (apiContent: {
       reder: VarenRegistratieRederType;
