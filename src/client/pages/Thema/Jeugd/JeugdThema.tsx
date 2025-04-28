@@ -15,7 +15,7 @@ import {
 export function JeugdThemaPagina() {
   const { isError, isLoading, voorzieningen, title, tableConfig, routeConfig } =
     useJeugdThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

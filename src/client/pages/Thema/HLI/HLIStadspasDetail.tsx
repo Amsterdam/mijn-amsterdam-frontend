@@ -89,7 +89,7 @@ const PHONENUMBERS = {
 export function HLIStadspasDetail() {
   const isPhoneScreen = usePhoneScreen();
   const appState = useAppStateGetter();
-  useHTMLDocumentTitle(routeConfig.detailPageStadspas.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPageStadspas);
 
   const { HLI } = appState;
   const { passNumber } = useParams<{ passNumber: string }>();

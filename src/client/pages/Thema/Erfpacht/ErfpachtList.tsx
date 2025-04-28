@@ -12,7 +12,7 @@ export function ErfpachtList() {
     breadcrumbs,
     routeConfig,
   } = useErfpachtThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   const tableConfigDossiers = tableConfig?.[listPageParamKind.erfpachtDossiers];
   const displayPropsDossiers = tableConfigDossiers?.displayProps ?? {};

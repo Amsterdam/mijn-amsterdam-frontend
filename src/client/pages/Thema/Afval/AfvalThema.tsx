@@ -207,7 +207,7 @@ function AfvalFractionPanels({ fractions }: AfvalFractionPanelsProps) {
 }
 
 export function AfvalThemaPagina() {
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const { AFVAL, AFVALPUNTEN, MY_LOCATION } = useAppStateGetter();
   const profileType = useProfileTypeValue();

@@ -94,7 +94,7 @@ export default function MyArea({
   showHomeLocationMarker = true,
   showSecondaryLocationMarkers = true,
 }: MyAreaProps) {
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;

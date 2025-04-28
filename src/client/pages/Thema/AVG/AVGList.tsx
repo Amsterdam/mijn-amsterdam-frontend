@@ -16,7 +16,7 @@ export function AVGList() {
     listPageRoute,
     routeConfig,
   } = useAVGListPageData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   return (
     <ListPagePaginated

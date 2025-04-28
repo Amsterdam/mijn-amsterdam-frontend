@@ -12,7 +12,9 @@ import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function BFF500Error() {
-  useHTMLDocumentTitle(BFF500_PAGE_DOCUMENT_TITLE);
+  useHTMLDocumentTitle({
+    documentTitle: BFF500_PAGE_DOCUMENT_TITLE,
+  });
 
   const queryParams = new URL(location.href).searchParams;
   let stack = '';

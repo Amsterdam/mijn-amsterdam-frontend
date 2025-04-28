@@ -101,7 +101,7 @@ export function HLIThema() {
     linkListItems,
     routeConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

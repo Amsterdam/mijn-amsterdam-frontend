@@ -25,7 +25,7 @@ const pageContentTop = (
 export function InkomenDetailTonk() {
   const { isLoading, isError, zaak, breadcrumbs, routeConfig } =
     useInkomenDetailData('WPI_TONK');
-  useHTMLDocumentTitle(routeConfig.detailPageTonk.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPageTonk);
 
   return (
     <ThemaDetailPagina

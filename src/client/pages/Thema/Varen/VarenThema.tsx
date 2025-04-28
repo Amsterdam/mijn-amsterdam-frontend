@@ -116,7 +116,7 @@ export function VarenThema() {
     title,
     routeConfig,
   } = useVarenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const actionButtons =
     varenRederRegistratie && buttonItems.length ? (

@@ -24,7 +24,7 @@ export function BurgerzakenThema() {
     title,
     routeConfig,
   } = useBurgerZakenData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, sort, listPageRoute }]) => {

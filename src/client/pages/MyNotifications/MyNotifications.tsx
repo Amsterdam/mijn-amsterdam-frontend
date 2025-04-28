@@ -23,7 +23,9 @@ import { useAppStateNotifications } from '../../hooks/useNotifications';
 const PAGE_SIZE = 12;
 
 export function MyNotificationsPage() {
-  useHTMLDocumentTitle(MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE);
+  useHTMLDocumentTitle({
+    documentTitle: MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE,
+  });
 
   const { NOTIFICATIONS } = useAppStateGetter();
   const { notifications, total } = useAppStateNotifications();

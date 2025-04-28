@@ -13,7 +13,9 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function GeneralInfo() {
-  useHTMLDocumentTitle(GENERAL_INFO_PAGE_DOCUMENT_TITLE);
+  useHTMLDocumentTitle({
+    documentTitle: GENERAL_INFO_PAGE_DOCUMENT_TITLE,
+  });
 
   const { CMS_CONTENT } = useAppStateGetter();
   const generalInfo = CMS_CONTENT.content?.generalInfo;

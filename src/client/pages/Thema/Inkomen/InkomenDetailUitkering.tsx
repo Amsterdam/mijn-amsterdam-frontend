@@ -25,7 +25,7 @@ const pageContentTop = (
 export function InkomenDetailUitkering() {
   const { isLoading, isError, zaak, breadcrumbs, routeConfig } =
     useInkomenDetailData('WPI_AANVRAGEN');
-  useHTMLDocumentTitle(routeConfig.detailPageUitkering.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPageUitkering);
 
   return (
     <ThemaDetailPagina

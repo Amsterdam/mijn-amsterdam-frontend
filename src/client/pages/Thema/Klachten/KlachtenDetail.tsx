@@ -46,7 +46,7 @@ function KlachtenDetailContent({ klacht }: KlachtenDetailContentProps) {
 export function KlachtenDetail() {
   const { klachten, isLoading, isError, breadcrumbs, routeConfig } =
     useKlachtenThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
   const { id } = useParams<{ id: string }>();
   const klacht = klachten.find((klacht) => klacht.id === id);
 

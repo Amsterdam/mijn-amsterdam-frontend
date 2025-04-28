@@ -1,4 +1,4 @@
-import { generatePath, type PathMatch } from 'react-router';
+import { generatePath } from 'react-router';
 
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { dateSort } from '../../../../universal/helpers/date';
@@ -56,9 +56,9 @@ export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
 export const routeConfig = {
   detailPage: {
     path: '/regelingen-bij-laag-inkomen/regeling/:regeling/:id',
-    trackingUrl: (match: PathMatch) =>
+    trackingUrl: (params) =>
       generatePath('/regelingen-bij-laag-inkomen/regeling/:regeling', {
-        regeling: match.params?.regeling ?? '',
+        regeling: params?.regeling ?? '',
       }),
     documentTitle: `Regeling | ${themaTitle}`,
   },

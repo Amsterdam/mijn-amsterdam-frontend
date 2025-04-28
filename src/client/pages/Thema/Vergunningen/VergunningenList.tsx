@@ -17,7 +17,7 @@ export function VergunningenList() {
     routeConfig,
     breadcrumbs,
   } = useVergunningenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   const { title, displayProps, filter, sort, listPageRoute } =
     tableConfig[kind] ?? null;

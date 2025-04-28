@@ -18,7 +18,7 @@ export function ParkerenList() {
     breadcrumbs,
     routeConfig,
   } = useParkerenData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   const { displayProps, title, filter, sort, listPageRoute } =
     tableConfig[kind];

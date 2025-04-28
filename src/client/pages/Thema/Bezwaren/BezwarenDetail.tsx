@@ -114,7 +114,7 @@ export function BezwarenDetail() {
     title,
     routeConfig,
   } = useBezwarenDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   const pageContentErrorAlert = (
     <>

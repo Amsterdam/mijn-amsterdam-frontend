@@ -33,7 +33,7 @@ export function AfisList() {
     routeConfig,
     breadcrumbs,
   } = useAfisListPageData(state);
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   const listPageTableConfig = facturenTableConfig[state];
   const facturen = facturenListResponse?.facturen ?? [];

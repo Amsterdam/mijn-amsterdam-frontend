@@ -10,7 +10,7 @@ import { ProfileSectionPanel } from '../ProfileSectionPanel';
 
 function ProfileCommercialSectionPanels() {
   const { KVK, profileData, routeConfig } = useProfileData();
-  useHTMLDocumentTitle(routeConfig.themaPageKVK.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPageKVK);
 
   return (
     <>

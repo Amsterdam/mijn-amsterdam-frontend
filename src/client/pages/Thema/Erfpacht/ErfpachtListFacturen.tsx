@@ -14,7 +14,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 export function ErfpachtListFacturen() {
   const { tableConfig, listPageParamKind, breadcrumbs, routeConfig } =
     useErfpachtThemaData();
-  useHTMLDocumentTitle(routeConfig.listPageAlleFacturen.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPageAlleFacturen);
 
   const { dossierNummerUrlParam } = useParams<{
     dossierNummerUrlParam: string;

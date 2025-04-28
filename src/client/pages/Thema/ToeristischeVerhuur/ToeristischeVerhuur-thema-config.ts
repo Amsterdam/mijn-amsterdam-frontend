@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import { generatePath, type PathMatch } from 'react-router';
+import { generatePath } from 'react-router';
 
 import {
   LVVRegistratie,
@@ -27,8 +27,8 @@ export const themaTitle = 'Toeristische verhuur';
 export const routeConfig = {
   detailPage: {
     path: '/toeristische-verhuur/vergunning/:caseType/:id',
-    trackingUrl: (match: PathMatch) =>
-      `/toeristische-verhuur/vergunning/${match.params.caseType ?? ''}`,
+    trackingUrl: (params) =>
+      `/toeristische-verhuur/vergunning/${params?.caseType ?? ''}`,
     documentTitle: `Toeristische verhuur | ${themaTitle}`,
   },
   listPage: {

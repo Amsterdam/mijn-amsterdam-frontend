@@ -18,7 +18,7 @@ export function InkomenList() {
     breadcrumbs,
     routeConfig,
   } = useInkomenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
   const listPageTableConfig = tableConfig[kind];
 
   return (

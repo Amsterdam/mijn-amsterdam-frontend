@@ -43,7 +43,7 @@ export function InkomenListSpecificaties() {
     themaPageRoute,
     routeConfig,
   } = useInkomenSpecificatiesListPageData();
-  useHTMLDocumentTitle(routeConfig.listPageSpecificaties.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPageSpecificaties);
 
   const pageContentMain = (
     <PageContentCell>

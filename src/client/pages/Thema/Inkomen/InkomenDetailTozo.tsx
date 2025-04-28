@@ -9,7 +9,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 export function InkomenDetailTozo() {
   const { isLoading, isError, zaak, breadcrumbs, routeConfig } =
     useInkomenDetailData('WPI_TOZO');
-  useHTMLDocumentTitle(routeConfig.detailPageTozo.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPageTozo);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

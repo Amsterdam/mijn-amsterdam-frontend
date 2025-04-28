@@ -49,7 +49,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
 export function ZorgDetail() {
   const { title, voorziening, breadcrumbs, isError, isLoading, routeConfig } =
     useZorgDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
     <ThemaDetailPagina

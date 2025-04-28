@@ -26,7 +26,7 @@ export function KlachtenThema() {
     linkListItems,
     routeConfig,
   } = useKlachtenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   return (
     <ThemaPagina

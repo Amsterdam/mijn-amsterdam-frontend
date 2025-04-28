@@ -18,7 +18,7 @@ export function BezwarenList() {
     breadcrumbs,
   } = useBezwarenThemaData();
   const listPageTableConfig = tableConfig[kind];
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   return (
     <ListPagePaginated

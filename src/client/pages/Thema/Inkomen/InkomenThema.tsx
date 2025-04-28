@@ -29,7 +29,7 @@ export function InkomenThema() {
     specificaties,
     routeConfig,
   } = useInkomenThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const tables = Object.entries(tableConfig).map(
     ([kind, { title, displayProps, filter, listPageRoute, maxItems }]) => {

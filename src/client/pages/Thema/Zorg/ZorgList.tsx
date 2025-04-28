@@ -21,7 +21,7 @@ export function ZorgList() {
     breadcrumbs,
     routeConfig,
   } = useZorgThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   const { filter, title, displayProps, listPageRoute } = tableConfig[kind];
 

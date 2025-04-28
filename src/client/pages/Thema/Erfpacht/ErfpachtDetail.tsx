@@ -23,7 +23,7 @@ export function ErfpachtDetail() {
     title,
     routeConfig,
   } = useDossierDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
     <ThemaDetailPagina

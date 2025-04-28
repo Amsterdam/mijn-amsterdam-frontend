@@ -15,7 +15,9 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { LandingRoute } from '../Landing/Landing-routes';
 
 export function NotFound() {
-  useHTMLDocumentTitle('404 - Pagina niet gevonden | Mijn Amsterdam');
+  useHTMLDocumentTitle({
+    documentTitle: '404 - Pagina niet gevonden | Mijn Amsterdam',
+  });
 
   const location = useLocation();
 

@@ -30,7 +30,7 @@ const pageContentTop = (
 export function InkomenDetailBbz() {
   const { isLoading, isError, zaak, breadcrumbs, routeConfig } =
     useInkomenDetailData('WPI_BBZ');
-  useHTMLDocumentTitle(routeConfig.detailPageBbz.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPageBbz);
 
   return (
     <ThemaDetailPagina

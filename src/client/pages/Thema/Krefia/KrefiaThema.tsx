@@ -21,7 +21,7 @@ export function KrefiaThema() {
     isLoading,
     routeConfig,
   } = useKrefiaThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

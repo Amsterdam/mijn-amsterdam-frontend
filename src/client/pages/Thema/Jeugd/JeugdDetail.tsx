@@ -41,7 +41,7 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
 export function JeugdDetail() {
   const { voorzieningen, isError, isLoading, breadcrumbs, routeConfig } =
     useJeugdThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
   const { id } = useParams<{
     id: LeerlingenvervoerVoorzieningFrontend['id'];
   }>();

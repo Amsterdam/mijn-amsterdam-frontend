@@ -40,7 +40,7 @@ export function HorecaDetail() {
     useHorecaThemaData();
   const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
     useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
     <ThemaDetailPagina

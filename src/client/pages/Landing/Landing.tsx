@@ -18,7 +18,9 @@ import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function LandingPage() {
-  useHTMLDocumentTitle(DASHBOARD_PAGE_DOCUMENT_TITLE);
+  useHTMLDocumentTitle({
+    documentTitle: DASHBOARD_PAGE_DOCUMENT_TITLE,
+  });
 
   const loginButton = useRef(null);
   const [isRedirecting, setRedirecting] = useState(false);

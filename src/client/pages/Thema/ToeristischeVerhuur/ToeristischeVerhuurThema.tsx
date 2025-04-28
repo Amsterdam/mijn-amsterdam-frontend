@@ -33,7 +33,7 @@ export function ToeristischeVerhuurThema() {
     linkListItems,
     routeConfig,
   } = useToeristischeVerhuurThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const errorAlertContent = isError ? (
     <>Wij kunnen nu niet alle gegevens laten zien.</>

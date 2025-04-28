@@ -17,7 +17,7 @@ export function BodemThema() {
     title,
     routeConfig,
   } = useBodemData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const tables = Object.entries(tableConfig).map(
     ([

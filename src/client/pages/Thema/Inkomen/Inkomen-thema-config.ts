@@ -1,4 +1,4 @@
-import { generatePath, PathMatch } from 'react-router';
+import { generatePath } from 'react-router';
 
 import {
   WpiIncomeSpecificationTransformed,
@@ -44,8 +44,8 @@ export const routeConfig = {
   },
   detailPageTozo: {
     path: '/inkomen/tozo/:version/:id',
-    trackingUrl: (match: PathMatch) => {
-      return `/inkomen/tozo/${match.params?.version}`;
+    trackingUrl: (params) => {
+      return `/inkomen/tozo/${params?.version}`;
     },
     documentTitle: `Tozo | ${themaTitle}`,
   },

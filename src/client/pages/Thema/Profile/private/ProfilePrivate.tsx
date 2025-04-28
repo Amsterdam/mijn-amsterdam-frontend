@@ -19,7 +19,7 @@ import { useHTMLDocumentTitle } from '../../../../hooks/useHTMLDocumentTitle';
 function ProfilePrivateSectionPanels() {
   const { BRP, profileData, routeConfig } = useProfileData();
 
-  useHTMLDocumentTitle(routeConfig.themaPageBRP.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPageBRP);
 
   return (
     <>

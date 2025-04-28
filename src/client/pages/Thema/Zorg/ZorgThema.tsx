@@ -36,7 +36,7 @@ export function ZorgThema() {
     linkListItems,
     routeConfig,
   } = useZorgThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

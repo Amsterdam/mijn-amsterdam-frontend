@@ -23,7 +23,7 @@ export function AVGThema() {
     title,
     routeConfig,
   } = useAVGData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const tables = Object.entries(tableConfig).map(
     ([

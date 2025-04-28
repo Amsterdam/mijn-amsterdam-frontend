@@ -27,7 +27,9 @@ import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-rout
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
 export function Dashboard() {
-  useHTMLDocumentTitle(DASHBOARD_PAGE_DOCUMENT_TITLE);
+  useHTMLDocumentTitle({
+    documentTitle: DASHBOARD_PAGE_DOCUMENT_TITLE,
+  });
 
   const appState = useAppStateGetter();
   const location = useLocation();

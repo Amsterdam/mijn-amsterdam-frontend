@@ -17,7 +17,7 @@ export function JeugdList() {
     breadcrumbs,
     routeConfig,
   } = useJeugdThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
   const listPageTableConfig = tableConfig[kind];
 
   return (

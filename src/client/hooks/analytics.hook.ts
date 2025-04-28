@@ -41,9 +41,11 @@ export function useAnalytics(isEnabled: boolean = true) {
 
 function _trackPageView(href: string, customDimensions?: CustomDimension[]) {
   const payload: TrackPageViewParams = {
-    href: `/mijn-amsterdam${href}/`,
+    href: `/mijn-amsterdam${href}`,
     customDimensions,
   };
+
+  console.log('trackPageView', payload);
 
   return PiwikInstance && PiwikInstance.trackPageView(payload);
 }

@@ -158,7 +158,7 @@ function useNavigateToPage(queryParams: URLSearchParams) {
 }
 
 export function ZaakStatus() {
-  useHTMLDocumentTitle(ZAAK_STATUS_PAGE_DOCUMENT_TITLE);
+  useHTMLDocumentTitle({ documentTitle: ZAAK_STATUS_PAGE_DOCUMENT_TITLE });
 
   const appStateReady = useAppStateReady();
   const location = useLocation();

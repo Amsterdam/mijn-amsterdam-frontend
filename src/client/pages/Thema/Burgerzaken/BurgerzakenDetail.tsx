@@ -40,7 +40,7 @@ function getRows(document: IdentiteitsbewijsFrontend) {
 export function BurgerzakenDetail() {
   const { document, isLoading, isError, breadcrumbs, routeConfig } =
     useBurgerZakenDetailData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
     <ThemaDetailPagina

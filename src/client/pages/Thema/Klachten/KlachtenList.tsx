@@ -11,7 +11,7 @@ export function KlachtenList() {
     isError,
     routeConfig,
   } = useKlachtenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   return (
     <ListPagePaginated

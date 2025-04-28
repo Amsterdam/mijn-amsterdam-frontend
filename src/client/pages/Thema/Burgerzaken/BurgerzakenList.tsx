@@ -18,7 +18,7 @@ export function BurgerzakenList() {
     listPageRoute,
     routeConfig,
   } = useBurgerZakenData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
   const params = useParams<{ kind: ListPageParamKind }>();
   const { kind = listPageParamKind.identiteitsbewijzen } = params;
   const { sort, title, displayProps } = tableConfig[kind];

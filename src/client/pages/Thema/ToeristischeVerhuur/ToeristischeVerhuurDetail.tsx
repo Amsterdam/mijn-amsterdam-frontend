@@ -131,7 +131,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
 export function ToeristischeVerhuurDetail() {
   const { vergunningen, isError, isLoading, breadcrumbs, routeConfig } =
     useToeristischeVerhuurThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   const { id } = useParams<{ id: string }>();
   const vergunning = vergunningen.find((v) => v.id === id);

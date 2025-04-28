@@ -19,7 +19,7 @@ export function HLIList() {
     breadcrumbs,
     routeConfig,
   } = useHliThemaData();
-  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.detailPage);
 
   const { filter, sort, title, displayProps, listPageRoute } =
     tableConfig[kind];

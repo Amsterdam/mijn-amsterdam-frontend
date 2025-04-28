@@ -23,7 +23,7 @@ export function ErfpachtThema() {
     routeConfig,
     listPageParamKind,
   } = useErfpachtThemaData();
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const pageContentTables = tableConfig
     ? entries(tableConfig)

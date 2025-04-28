@@ -24,7 +24,7 @@ export function ParkerenThema() {
     routeConfig,
   } = useParkerenData();
 
-  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.themaPage);
 
   const tables = Object.entries(tableConfig).map(
     ([

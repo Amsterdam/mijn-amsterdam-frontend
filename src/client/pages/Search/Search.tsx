@@ -12,7 +12,9 @@ import { useAppStateReady } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
 export function SearchPage() {
-  useHTMLDocumentTitle(SEARCH_PAGE_DOCUMENT_TITLE);
+  useHTMLDocumentTitle({
+    documentTitle: SEARCH_PAGE_DOCUMENT_TITLE,
+  });
 
   const termParam =
     new URLSearchParams(window.location.search).get('term') || '';

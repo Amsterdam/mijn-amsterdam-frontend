@@ -19,7 +19,7 @@ export function VarenList() {
     breadcrumbs,
     routeConfig,
   } = useVarenThemaData();
-  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPage);
 
   const { title, displayProps, listPageRoute, filter, sort } =
     tableConfig[kind];

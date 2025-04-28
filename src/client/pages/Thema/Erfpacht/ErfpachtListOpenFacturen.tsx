@@ -12,7 +12,7 @@ export function ErfpachtListOpenFacturen() {
     breadcrumbs,
     routeConfig,
   } = useErfpachtThemaData();
-  useHTMLDocumentTitle(routeConfig.listPageOpenFacturen.documentTitle);
+  useHTMLDocumentTitle(routeConfig.listPageOpenFacturen);
 
   const tableConfigFacturen = tableConfig?.[listPageParamKind.openFacturen];
   const displayProps = tableConfigFacturen?.displayProps ?? {};
