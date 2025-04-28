@@ -872,12 +872,7 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   }
 
   // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
-  if (
-    'dateEnd' in zaak &&
-    'dateStart' in zaak &&
-    zaak.dateStart &&
-    zaak.dateEnd
-  ) {
+  if ('dateEnd' in zaak && 'dateStart' in zaak) {
     const zaakFrontendWithExpiry: DecosZaakFrontend<T> & WithDateRange = {
       ...zaakFrontend,
       isExpired: isExpired(zaak.dateEnd),
