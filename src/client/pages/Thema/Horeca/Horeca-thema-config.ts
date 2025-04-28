@@ -29,8 +29,8 @@ export const themaTitle = 'Horeca';
 export const routeConfig = {
   detailPage: {
     path: '/horeca/:caseType/:id',
-    trackingUrl(match) {
-      return `/horeca/${match.params.caseType}`;
+    trackingUrl(params) {
+      return `/horeca/${params?.caseType}`;
     },
     documentTitle: `Horeca | ${themaTitle}`,
   },

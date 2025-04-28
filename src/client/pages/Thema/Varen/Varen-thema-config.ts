@@ -31,8 +31,8 @@ export const themaTitle = 'Passagiers- en beroepsvaart' as const;
 export const routeConfig = {
   detailPage: {
     path: '/passagiers-en-beroepsvaart/vergunning/:caseType/:id',
-    trackingUrl(match) {
-      return `/passagiers-en-beroepsvaart/vergunning/${match.params.caseType ?? ''}`;
+    trackingUrl(params) {
+      return `/passagiers-en-beroepsvaart/vergunning/${params?.caseType ?? ''}`;
     },
     documentTitle: getVarenDetailPageDocumentTitle(themaTitle),
   },

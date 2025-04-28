@@ -92,8 +92,8 @@ export const themaTitle = 'Vergunningen';
 export const routeConfig = {
   detailPage: {
     path: '/vergunningen/:caseType/:id',
-    trackingUrl(match) {
-      return `/vergunningen/${match.params.caseType}`;
+    trackingUrl(params) {
+      return `/vergunningen/${params?.caseType}`;
     },
     documentTitle: `Vergunningen | ${themaTitle}`,
   },
