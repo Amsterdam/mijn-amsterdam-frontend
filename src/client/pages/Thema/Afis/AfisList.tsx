@@ -8,6 +8,7 @@ import { useAfisListPageData } from './useAfisThemaData.hook';
 import { AfisFactuurState } from '../../../../server/services/afis/afis-types';
 import { ListPagePaginated } from '../../../components/ListPagePaginated/ListPagePaginated';
 import { PageContentCell } from '../../../components/Page/Page';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function AfisListPageBody({ state }: { state: AfisFactuurState }) {
   switch (state) {
@@ -32,6 +33,7 @@ export function AfisList() {
     routeConfig,
     breadcrumbs,
   } = useAfisListPageData(state);
+  useHTMLDocumentTitle(routeConfig.listPage.documentTitle);
 
   const listPageTableConfig = facturenTableConfig[state];
   const facturen = facturenListResponse?.facturen ?? [];

@@ -15,6 +15,7 @@ import { MaButtonRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function PageContentTop({
   urlNaarBelastingen,
@@ -107,6 +108,7 @@ export function AfisThema() {
     belastingenLinkListItem,
     title,
   } = useAfisThemaData();
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
 
   const isPartialError = entries(dependencyErrors).some(
     ([, hasError]) => hasError

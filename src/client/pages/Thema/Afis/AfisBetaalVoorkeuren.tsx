@@ -16,6 +16,7 @@ import { PageContentCell } from '../../../components/Page/Page';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
+import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
@@ -77,6 +78,7 @@ export function AfisBetaalVoorkeuren() {
     isThemaPaginaLoading,
     linkListItems,
     breadcrumbs,
+    routeConfig,
   } = useAfisThemaData();
 
   const {
@@ -93,6 +95,8 @@ export function AfisBetaalVoorkeuren() {
     isLoadingBusinessPartnerDetails,
     isLoadingEmandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
+
+  useHTMLDocumentTitle(routeConfig.detailPage.documentTitle);
 
   const isLoadingAllAPis =
     isThemaPaginaLoading &&
