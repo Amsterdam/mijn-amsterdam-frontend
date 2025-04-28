@@ -42,7 +42,7 @@ export type SVGComponent = FunctionComponent<
 
 export interface MyNotification<ID extends string = string> {
   themaID: ID;
-  themaTitle?: string;
+  themaTitle: string;
   datePublished: string;
   description: string;
   hideDatePublished?: boolean;
