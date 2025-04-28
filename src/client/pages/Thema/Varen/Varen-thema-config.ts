@@ -1,4 +1,4 @@
-import { generatePath } from 'react-router';
+import { generatePath, type Params } from 'react-router';
 
 import { isVergunning } from './helper';
 import type { VarenZakenFrontend } from '../../../../server/services/varen/config-and-types';
@@ -128,7 +128,7 @@ export const rederRegistratieLink: LinkProps = {
 } as const;
 
 export function getVarenListPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(params: T | null) => {
+  return <T extends Params<string>>(params: T | null) => {
     const kind = params?.kind as ListPageParamKind;
     return kind in tableConfig
       ? `${tableConfig[kind].title} | ${themaTitle}`
@@ -137,7 +137,7 @@ export function getVarenListPageDocumentTitle(themaTitle: string) {
 }
 
 export function getVarenDetailPageDocumentTitle(themaTitle: string) {
-  return <T extends Record<string, string>>(params: T | null) => {
+  return <T extends Params<string>>(params: T | null) => {
     switch (params?.caseType) {
       case 'exploitatievergunning':
         return `Exploitatievergunning | ${themaTitle}`;
