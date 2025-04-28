@@ -18,6 +18,6 @@ export const themaTitle = 'Mijn buurt' as const;
 export const routeConfig = {
   themaPage: {
     path: '/buurt',
-    documentTitle: themaTitle,
+    documentTitle: `${themaTitle} | Mijn Amsterdam`,
   },
 } as const satisfies ThemaRoutesConfig;

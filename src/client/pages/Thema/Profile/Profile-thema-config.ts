@@ -20,11 +20,11 @@ export const themaTitle = {
 export const routeConfig = {
   themaPageBRP: {
     path: '/persoonlijke-gegevens',
-    documentTitle: 'Mijn gegevens',
+    documentTitle: `${themaTitle.BRP} | Mijn Amsterdam`,
   },
   themaPageKVK: {
     path: '/gegevens-handelsregister',
-    documentTitle: 'Mijn onderneming',
+    documentTitle: `${themaTitle.KVK} | Mijn Amsterdam`,
   },
   listPageContactmomenten: {
     path: '/contactmomenten/:page?',

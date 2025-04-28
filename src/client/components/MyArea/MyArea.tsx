@@ -24,6 +24,7 @@ import BaseLayerToggle, {
 import Map from './Map/Map';
 import ViewerContainer from './Map/ViewerContainer';
 import Zoom from './Map/Zoom';
+import { routeConfig } from './MyArea-thema-config';
 import {
   MapLocationMarker,
   useMapLocations,
@@ -34,6 +35,7 @@ import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButt
 import { MyAreaDatasets } from './MyAreaDatasets';
 import HomeControlButton from './MyAreaHomeControlButton';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { AmsMainMenuClassname } from '../MainHeader/MainHeader';
 
 const baseLayerOptions: TileLayerOptions = {
@@ -92,6 +94,8 @@ export default function MyArea({
   showHomeLocationMarker = true,
   showSecondaryLocationMarkers = true,
 }: MyAreaProps) {
+  useHTMLDocumentTitle(routeConfig.themaPage.documentTitle);
+
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
   const mapContainerRef = useRef<HTMLDivElement>(null);
