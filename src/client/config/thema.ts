@@ -1,4 +1,5 @@
 import { ThemaMenuItem } from './thema-types';
+import { MIJN_AMSTERDAM } from '../../universal/config/app';
 import { menuItem as menuItemAfis } from '../pages/Thema/Afis/Afis-render-config';
 import { menuItem as menuItemAfval } from '../pages/Thema/Afval/Afval-render-config';
 import { menuItem as menuItemAVG } from '../pages/Thema/AVG/AVG-render-config';
@@ -26,8 +27,8 @@ import { menuItem as menuItemVergunningen } from '../pages/Thema/Vergunningen/Ve
 import { menuItem as menuItemZorg } from '../pages/Thema/Zorg/Zorg-render-config';
 
 export const NOT_FOUND_TITLE = 'Pagina niet gevonden';
-export const DocumentTitleMain = 'Mijn Amsterdam';
-export const PageTitleMain = 'Mijn Amsterdam';
+export const DocumentTitleMain = MIJN_AMSTERDAM;
+export const PageTitleMain = MIJN_AMSTERDAM;
 
 export const myThemasMenuItems: ThemaMenuItem[] = [
   ...profileMenuItems,

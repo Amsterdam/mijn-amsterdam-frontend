@@ -1,3 +1,4 @@
+import { MIJN_AMSTERDAM } from '../../universal/config/app';
 import { MyNotification } from '../../universal/types/App.types';
 import { themaId } from '../pages/MyNotifications/MyNotifications-config';
 
@@ -11,7 +12,7 @@ const CONTACT_FORM_URL =
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
   themaID: themaId,
-  themaTitle: 'Mijn Amsterdam',
+  themaTitle: MIJN_AMSTERDAM,
   datePublished: new Date(year, month, day).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: true,
