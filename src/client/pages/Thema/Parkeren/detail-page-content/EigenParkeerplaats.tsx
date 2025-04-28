@@ -2,7 +2,7 @@ import { Link } from '@amsterdam/design-system-react';
 
 import type { EigenParkeerplaats } from '../../../../../server/services/parkeren/config-and-types';
 import type { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import { Datalist, RowSet } from '../../../../components/Datalist/Datalist';
+import { Datalist, type Row } from '../../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
 import {
   dateRange,
@@ -31,12 +31,11 @@ export function EigenParkeerplaats({
   };
 
   const location = () => {
-    const rows: RowSet[] = vergunning.locations?.map((location, i) => {
-      return {
-        // label: `Adres ${vergunning.locations?.length == 2 ? i + 1 : ''}`,
-        rows: [
+    const rows: Row[] = vergunning.locations
+      ?.map((location, i) => {
+        return [
           {
-            label: `Locatie`,
+            label: 'Locatie',
             content: (
               <AddressDisplayAndModal
                 address={`${location.street} ${location.houseNumber}`}
@@ -55,9 +54,9 @@ export function EigenParkeerplaats({
               </Link>
             ) : null,
           },
-        ],
-      };
-    });
+        ].filter((row) => row.content !== null);
+      })
+      .flat();
     return rows;
   };
 
@@ -73,7 +72,7 @@ export function EigenParkeerplaats({
   };
 
   const dateRangeTransformer = () => {
-    return vergunning.dateStart && vergunning.dateEnd
+    return vergunning.processed && vergunning.dateStart && vergunning.dateEnd
       ? dateRange(vergunning)
       : null;
   };

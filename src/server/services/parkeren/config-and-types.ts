@@ -130,12 +130,13 @@ export type EigenParkeerplaats = DecosZaakBase &
     locations: Parkeerplaats[];
   };
 
-export type EigenParkeerplaatsOpheffen = DecosZaakBase & {
-  caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
-  isCarsharingpermit: boolean;
-  dateEnd: string | null;
-  location: Parkeerplaats;
-};
+export type EigenParkeerplaatsOpheffen = DecosZaakBase &
+  WithKentekens & {
+    caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
+    isCarsharingpermit: boolean;
+    dateEnd: string | null;
+    location: Parkeerplaats;
+  };
 
 export type DecosParkeerVergunning =
   | GPK

@@ -4,7 +4,10 @@ import type { EigenParkeerplaatsOpheffen } from '../../../../../server/services/
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import styles from '../../../../components/LocationModal/LocationModal.module.scss';
-import { getRows } from '../../Vergunningen/detail-page-content/fields-config';
+import {
+  getRows,
+  kentekens,
+} from '../../Vergunningen/detail-page-content/fields-config';
 
 export function EigenParkeerplaatsOpheffen({
   vergunning,
@@ -47,6 +50,7 @@ export function EigenParkeerplaatsOpheffen({
     'identifier',
     requestType,
     locationType,
+    kentekens,
     locationUrl,
     'decision',
   ]);
