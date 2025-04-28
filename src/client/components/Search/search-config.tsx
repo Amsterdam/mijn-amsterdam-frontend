@@ -245,6 +245,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
+    stateKey: 'PARKEREN',
+    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+      return displayPath(term, [vergunning.title, vergunning.identifier]);
+    },
+  },
+  {
     stateKey: 'ERFPACHT',
     getApiBaseItems: (
       erfpachtDossiersResponse: ErfpachtDossiersResponse
