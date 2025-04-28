@@ -18,7 +18,6 @@ export function VarenDetail() {
     breadcrumbs,
   } = useVarenDetailPage();
 
-  let noContentError = false;
   let pageContent = null;
   switch (zaak?.caseType) {
     case 'Varen vergunning exploitatie':
@@ -43,8 +42,6 @@ export function VarenDetail() {
     case 'Varen vergunning exploitatie Wijziging vergunninghouder':
       pageContent = <VarenDetailPageContentExploitatieOverdragen zaak={zaak} />;
       break;
-    default:
-      noContentError = true;
   }
 
   return (
@@ -52,7 +49,7 @@ export function VarenDetail() {
       statusLabel="Status van uw aanvraag"
       title={zaak?.title ?? 'Varen vergunning'}
       zaak={zaak}
-      isError={isError || noContentError}
+      isError={isError || !pageContent}
       isLoading={isLoading}
       pageContentMain={pageContent}
       breadcrumbs={breadcrumbs}
