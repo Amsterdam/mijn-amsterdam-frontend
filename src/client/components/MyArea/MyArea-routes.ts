@@ -1,5 +1,8 @@
 import { routeConfig, themaId, themaTitle } from './MyArea-thema-config';
+import { MyAreaLoader } from './MyAreaLoader';
 import { CategoryMenuItem } from '../../config/thema-types';
+
+export const MyAreaRoutes = [{ route: '/buurt', Component: MyAreaLoader }];
 
 export const menuCategoryItem: CategoryMenuItem<typeof themaId> = {
   title: themaTitle,

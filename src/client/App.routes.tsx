@@ -1,6 +1,6 @@
 import { Routes, Route, matchPath } from 'react-router';
 
-import { MyAreaRoutes } from './components/MyArea/MyArea-routest';
+import { MyAreaRoutes } from './components/MyArea/MyArea-routes';
 import type { ThemaRenderRouteConfig } from './config/thema-types';
 import { BffErrorRoutes } from './pages/BffError/BffError-routes';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes';
