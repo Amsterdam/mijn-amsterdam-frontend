@@ -33,13 +33,13 @@ export const labels: Record<string, { text: string; html?: string }> = {
   'de container kaart': { text: 'de kaart' },
   'de afvalpunt kaart': { text: 'de kaart' },
   'particulier-N': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-noord',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-noord',
   },
   'particulier-S': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-weesp',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-weesp',
   },
   'particulier-T': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-zuidoost',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-zuidoost',
   },
   Rest: { text: 'Restafval' },
   'Resultaat voor': { text: 'Informatie' },
@@ -56,7 +56,7 @@ export const labels: Record<string, { text: string; html?: string }> = {
     },
   'Wegbrengen naar een Afvalpunt of buiten zetten': {
     text: 'Wegbrengen naar een Afvalpunt of buiten zetten',
-    html: '<p>Wegbrengen naar een <a href="https://www.amsterdam.nl/afval-en-hergebruik/grofafval/spullen-wegbrengen-afvalpunt/">Afvalpunt</a> of buiten zetten</p>',
+    html: '<p>Wegbrengen naar een <a href="https://www.amsterdam.nl/afval/spullen-wegbrengen-naar-een-recyclepunt/">Afvalpunt</a> of buiten zetten</p>',
   },
   'Dit is een bedrijfspand.': { text: 'Dit is geen woonadres.' },
   'In de container voor gfe. Dit kan alleen met een pas.': {
@@ -72,11 +72,11 @@ export const labels: Record<string, { text: string; html?: string }> = {
   },
   'dinsdag, donderdag': { text: 'Dinsdag en donderdag' },
   'bedrijfsafval-T': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-zuidoost/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-zuidoost/',
   },
   'De gemeente haalt uw afval aan huis op.': {
     text: 'De gemeente haalt uw afval aan huis op.',
-    html: '<p>De gemeente haalt uw afval aan huis op. Lees <a href="https://www.amsterdam.nl/afval-en-hergebruik/proef-afval-ophalen-afspraak/">hoe dit werkt</a>.</p>',
+    html: '<p>De gemeente haalt uw afval aan huis op. Lees <a href="https://www.amsterdam.nl/afval/proef-afval-ophalen-afspraak/">hoe dit werkt</a>.</p>',
   },
   dinsdag: { text: 'Dinsdag' },
   'dinsdag, vrijdag': { text: 'Dinsdag en vrijdag' },
@@ -101,22 +101,22 @@ export const labels: Record<string, { text: string; html?: string }> = {
   'maandag, donderdag': { text: 'Maandag en donderdag' },
   'maandag, vrijdag': { text: 'Maandag en vrijdag' },
   'particulier-A': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-centrum',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-centrum',
   },
   'particulier-B': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-westpoort',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-westpoort',
   },
   'particulier-E': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-west',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-west',
   },
   'particulier-F': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-nieuw-west',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-nieuw-west',
   },
   'particulier-K': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-zuid',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-zuid',
   },
   'particulier-M': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/extra-informatie-oost',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/extra-informatie-oost',
   },
   GA: { text: 'Grof afval' },
   'maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag': {
@@ -124,27 +124,27 @@ export const labels: Record<string, { text: string; html?: string }> = {
   },
   Papier: { text: 'Papier en karton' },
   'bedrijfsafval-A': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-centrum/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-centrum/',
   },
   'bedrijfsafval-B': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-westpoort/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-westpoort/',
   },
   'bedrijfsafval-E': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-west/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-west/',
   },
   'bedrijfsafval-F': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-nieuw-west/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-nieuw-west/',
   },
   'bedrijfsafval-K': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-zuid/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-zuid/',
   },
   'bedrijfsafval-M': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-oost/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-oost/',
   },
   'bedrijfsafval-N': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-noord/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-noord/',
   },
   'bedrijfsafval-S': {
-    text: 'https://www.amsterdam.nl/afval-en-hergebruik/afvalinformatie/bedrijfsafval-weesp/',
+    text: 'https://www.amsterdam.nl/afval/afvalinformatie/bedrijfsafval-weesp/',
   },
 };

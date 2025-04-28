@@ -100,7 +100,7 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
           Voor dit adres geldt{' '}
           <Link
             rel="noopener noreferrer"
-            href="https://www.amsterdam.nl/veelgevraagd/geheimhouding-persoonsgegevens-7ed1c"
+            href="https://www.amsterdam.nl/burgerzaken/geheimhouding-persoonsgegevens-aanvragen/"
           >
             geheimhouding
           </Link>
