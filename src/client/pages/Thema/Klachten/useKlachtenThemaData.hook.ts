@@ -1,5 +1,3 @@
-import isError from 'lodash.iserror';
-
 import {
   klachtenTableConfig,
   LinkListItems,
@@ -8,7 +6,7 @@ import {
   themaTitle,
 } from './Klachten-thema-config';
 import type { KlachtFrontend } from '../../../../server/services/klachten/types';
-import { isLoading } from '../../../../universal/helpers/api';
+import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';

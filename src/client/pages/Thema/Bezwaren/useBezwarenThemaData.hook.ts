@@ -1,5 +1,3 @@
-import isError from 'lodash.iserror';
-
 import {
   tableConfig,
   LinkListItems,
@@ -8,7 +6,7 @@ import {
   themaTitle,
 } from './Bezwaren-thema-config';
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
-import { isLoading } from '../../../../universal/helpers/api';
+import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
