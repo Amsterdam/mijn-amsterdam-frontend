@@ -12,6 +12,8 @@ function lowercaseFirstLetter(text) {
   return text.charAt(0).toLowerCase() + text.slice(1);
 }
 
+// TODO: Create support for the creation of the standard components, add a config option (thema,render,components) to enable it. See MIJN-11557
+
 // --id <string> --title <string> --zaakType <string> --private --commercial
 // user@computer mijn-amsterdam-frontend % node scripts/generate-thema.js --id BELASTINGEN --title Belastingen --zaakType CombinatieAanslag --private --commercial --config thema,render
 
@@ -293,7 +295,7 @@ const fileNameThemaConfig = `${basePath}/${titleName}/${titleName}-thema-config.
 const fileNameRenderConfig = `${basePath}/${titleName}/${titleName}-render-config.tsx`;
 const svgFileName = `${basePath}/${titleName}/${titleName}Icon.svg`;
 
-if (hasRenderConfig || hasThemaConfig || hasCoreConfig) {
+if (hasRenderConfig || hasThemaConfig) {
   fs.mkdirSync(path.dirname(fileNameThemaConfig), { recursive: true });
 }
 
