@@ -11,7 +11,7 @@ export type VergunningExpirable = VergunningAanvraag & {
 export function isVergunningExpirable<T extends VergunningExpirable>(
   vergunning: T
 ) {
-  return !!vergunning.steps?.some((step) => step.status === 'Verlopen');
+  return !!vergunning.steps.some((step) => step.status === 'Verlopen');
 }
 
 export function isVergunningExpired<T extends VergunningExpirable>(
