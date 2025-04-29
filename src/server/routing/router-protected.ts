@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
-import { sendUnauthorized } from './route-helpers';
+import { sendUnauthorized, type RequestWithQueryParams } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { getAuth } from '../auth/auth-helpers';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
@@ -23,7 +23,10 @@ import {
   fetchDecosDocumentsList,
   fetchZakenByUserIDs,
 } from '../services/decos/decos-route-handlers';
-import { fetchDecosDocument } from '../services/decos/decos-service';
+import {
+  fetchDecosDocument,
+  fetchWorkflowsRaw,
+} from '../services/decos/decos-service';
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
 import {
   fetchZorgnedAVDocument,
@@ -128,6 +131,15 @@ router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
 
 if (!IS_PRODUCTION) {
   router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
+  router.get(
+    BffEndpoints.DECOS_WORKFLOW_BY_KEY_RAW,
+    async (req: RequestWithQueryParams<{ key: string }>, res: Response) =>
+      res.send(
+        req.query.key
+          ? await fetchWorkflowsRaw(res.locals.requestID, req.query.key)
+          : 'no key provided'
+      )
+  );
 }
 
 attachDocumentDownloadRoute(

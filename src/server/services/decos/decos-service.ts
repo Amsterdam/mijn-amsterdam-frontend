@@ -13,7 +13,6 @@ import {
   AddressBookEntry,
   DecosFieldValue,
   DecosZaakDocument,
-  DecosWorkflowStepDate,
   DecosWorkflowStepTitle,
   DecosDocumentBlobSource,
   DecosDocumentSource,
@@ -31,6 +30,8 @@ import {
   DecosFieldTransformerObject,
   DecosFieldsObject,
   WithDateRange,
+  type DecosWorkflowSource,
+  type DecosWorkflowDateByStepTitle,
 } from './config-and-types';
 import { CASE_TYP_FIELD_DECOS } from './decos-field-transformers';
 import {
@@ -540,9 +541,9 @@ export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
   },
 });
 
-function transformDecosWorkflowKeysResponse(workflowsResponseData: {
-  content: Array<{ key: string }>;
-}) {
+function transformDecosWorkflowKeysResponse(
+  workflowsResponseData: DecosZakenResponse<Array<{ key: string }>>
+) {
   if (workflowsResponseData?.content?.length) {
     const lastKey = workflowsResponseData.content.pop();
     return lastKey?.key ?? null;
@@ -553,7 +554,7 @@ function transformDecosWorkflowKeysResponse(workflowsResponseData: {
 function transformDecosWorkflowDateResponse(
   stepTitles: DecosWorkflowStepTitle[],
   singleWorkflowResponseData: DecosWorkflowResponse
-): { [key: DecosWorkflowStepTitle]: string | null } {
+): DecosWorkflowDateByStepTitle {
   const responseStepTitleDates = singleWorkflowResponseData.content
     .filter((workflowStep) => workflowStep.fields.text7 != null)
     .reduce(
@@ -569,18 +570,75 @@ function transformDecosWorkflowDateResponse(
       ...acc,
       [stepTitle]: responseStepTitleDates[stepTitle] ?? null,
     }),
-    {} as Record<DecosWorkflowStepTitle, string | null>
+    {} as DecosWorkflowDateByStepTitle
   );
   return stepTitleToDate;
+}
+
+async function fetchWorkflowInstance<
+  ST extends DecosWorkflowStepTitle[] | undefined,
+>(
+  requestID: RequestID,
+  options: {
+    key: string;
+    urlParams?: URLSearchParams;
+    stepTitles?: ST;
+  }
+) {
+  const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
+    formatUrl: (config) =>
+      `${config.url}/items/${options.key}/workflowlinkinstances?${options.urlParams ?? ''}`,
+    transformResponse: (responseData: DecosWorkflowResponse) =>
+      options.stepTitles
+        ? transformDecosWorkflowDateResponse(options.stepTitles, responseData)
+        : responseData.content,
+  });
+
+  type WorkflowReturnType<X extends undefined | string[]> = X extends undefined
+    ? DecosWorkflowSource[]
+    : DecosWorkflowDateByStepTitle;
+
+  return requestData<WorkflowReturnType<ST>>(
+    apiConfigSingleWorkflow,
+    requestID
+  );
+}
+
+export async function fetchWorkflowsRaw(
+  requestID: RequestID,
+  zaakID: DecosZaakBase['key']
+) {
+  const apiConfigWorkflows = getApiConfig('DECOS_API', {
+    formatUrl: (config) => {
+      return `${config.url}/items/${zaakID}/workflows
+      `;
+    },
+  });
+
+  const { content: workflowResponseData } = await requestData<
+    DecosZakenResponse<Array<{ key: string }>>
+  >(apiConfigWorkflows, requestID);
+
+  if (!workflowResponseData) {
+    return apiSuccessResult({});
+  }
+
+  const workflowInstances = await Promise.all(
+    workflowResponseData.content?.map(({ key }) =>
+      fetchWorkflowInstance(requestID, { key }).then((instances) => ({
+        key,
+        instances,
+      }))
+    ) ?? []
+  );
+  return apiSuccessResult(workflowInstances);
 }
 
 export async function fetchDecosWorkflowDates(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   stepTitles: DecosWorkflowStepTitle[]
-): Promise<
-  ApiResponse<Record<string, DecosWorkflowStepDate | null | undefined>>
-> {
+): Promise<ApiResponse<DecosWorkflowDateByStepTitle>> {
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
@@ -607,14 +665,11 @@ export async function fetchDecosWorkflowDates(
       .join(' or '),
   });
 
-  const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
-    formatUrl: (config) =>
-      `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?${urlParams}`,
-    transformResponse: (responseData: DecosWorkflowResponse) =>
-      transformDecosWorkflowDateResponse(stepTitles, responseData),
+  return fetchWorkflowInstance(requestID, {
+    key: latestWorkflowKey,
+    urlParams,
+    stepTitles,
   });
-
-  return requestData(apiConfigSingleWorkflow, requestID);
 }
 
 export async function fetchDecosTermijnen(

@@ -128,6 +128,9 @@ type DecosTermijnFieldsSource = {
   date5: string; // dateEnd
   num1?: number; // number of days
 };
+export type DecosWorkflowDateByStepTitle = {
+  [key: DecosWorkflowStepTitle]: DecosWorkflowStepDate | null;
+};
 export type AddressBookEntry = {
   key: string;
 };
