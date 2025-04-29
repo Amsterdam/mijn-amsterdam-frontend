@@ -201,7 +201,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
     'dateEndFormatted' in vergunning &&
     vergunning.decision?.startsWith('Verleend') // TODO: Discuss with the team if this is the right way to check for a valid decision.
   ) {
-    const isVerlopenActive = !!(isAfgehandeld && (isVerlopen || isIngetrokken));
+    const isVerlopenActive = isAfgehandeld && (isVerlopen || !!isIngetrokken);
 
     let datePublished = '';
 
