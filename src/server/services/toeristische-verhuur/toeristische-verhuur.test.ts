@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
-import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
@@ -233,7 +233,7 @@ describe('Toeristische verhuur service', () => {
       displayStatus: 'Afgehandeld',
     };
 
-    const bbVergunnig: BBVergunning = {
+    const bbVergunnig: BBVergunningFrontend = {
       dateDecision: '22 maart 2023',
       dateDecisionFormatted: '22 maart 2023',
       dateRequest: '13 februari 2023',

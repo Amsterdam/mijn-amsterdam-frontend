@@ -1,4 +1,4 @@
-import { BBVergunning } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   DecosZaakTransformer,
   DecosZaakBase,
@@ -65,12 +65,12 @@ export type VakantieverhuurVergunningFrontend =
   VergunningFrontend<DecosVakantieverhuurVergunningaanvraag>;
 
 export type ToeristischeVerhuurVergunning =
-  | BBVergunning
+  | BBVergunningFrontend
   | VakantieverhuurVergunningFrontend;
 
 export type ToeristischeVerhuur = {
   vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];
-  bbVergunningen: BBVergunning[];
+  bbVergunningen: BBVergunningFrontend[];
   lvvRegistraties: LVVRegistratie[];
 };
 

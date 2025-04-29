@@ -3,7 +3,7 @@ import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 
 import {
-  BBVergunning,
+  BBVergunningFrontend,
   BBVergunningZaakResult,
   FetchPersoonOrMaatschapIdByUidOptions,
   FetchZaakIdsOptions,
@@ -161,10 +161,10 @@ function getFieldValue(
 }
 
 function getZaakStatus(
-  zaak: BBVergunning
-): BBVergunning['displayStatus'] | BBVergunning['decision'] {
+  zaak: BBVergunningFrontend
+): BBVergunningFrontend['displayStatus'] | BBVergunningFrontend['decision'] {
   const lastStepStatus = zaak.steps.findLast((step) => step.isActive)
-    ?.status as BBVergunning['displayStatus'];
+    ?.status as BBVergunningFrontend['displayStatus'];
 
   if (lastStepStatus !== 'Verlopen' && zaak.decision) {
     return zaak.decision;
@@ -178,7 +178,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
     return null;
   }
 
-  const resultaatTransformed: BBVergunning['decision'] = resultaat;
+  const resultaatTransformed: BBVergunningFrontend['decision'] = resultaat;
 
   const resultatenVerleend = [
     'Verleend met overgangsrecht',
@@ -207,7 +207,7 @@ function getZaakResultaat(resultaat: PBZaakResultaat | null) {
 }
 
 function transformZaakStatusResponse(
-  zaak: BBVergunning,
+  zaak: BBVergunningFrontend,
   statusResponse: PowerBrowserStatusResponse
 ): StatusLineItem[] {
   function getStatusDate(status: string[]) {
@@ -329,7 +329,7 @@ async function fetchZaakAdres(
 
 async function fetchZaakStatussen(
   requestID: RequestID,
-  zaak: BBVergunning
+  zaak: BBVergunningFrontend
 ): Promise<ApiResponse_DEPRECATED<StatusLineItem[] | null>> {
   const statusResponse = await fetchPowerBrowserData<StatusLineItem[]>(
     requestID,
@@ -361,16 +361,16 @@ async function fetchZaakStatussen(
 async function fetchAndMergeDocuments(
   requestID: RequestID,
   authProfile: AuthProfile,
-  zaken: BBVergunning[]
-): Promise<BBVergunning[]> {
+  zaken: BBVergunningFrontend[]
+): Promise<BBVergunningFrontend[]> {
   const documentRequests = zaken.map((zaak) => {
     return fetchBBDocumentsList(requestID, authProfile, zaak.id);
   });
   const documentResults = await Promise.allSettled(documentRequests);
-  const zakenWithdocuments: BBVergunning[] = [];
+  const zakenWithdocuments: BBVergunningFrontend[] = [];
 
   for (let i = 0; i < zaken.length; i++) {
-    const zaak: BBVergunning = { ...zaken[i] };
+    const zaak: BBVergunningFrontend = { ...zaken[i] };
     const documentResponse = getSettledResult(documentResults[i]);
 
     zaak.documents =
@@ -385,16 +385,16 @@ async function fetchAndMergeDocuments(
 
 async function fetchAndMergeZaakStatussen(
   requestID: RequestID,
-  zaken: BBVergunning[]
-): Promise<BBVergunning[]> {
+  zaken: BBVergunningFrontend[]
+): Promise<BBVergunningFrontend[]> {
   const statussenRequests = zaken.map((zaak) => {
     return fetchZaakStatussen(requestID, zaak);
   });
   const statussenResults = await Promise.allSettled(statussenRequests);
-  const zakenWithstatussen: BBVergunning[] = [];
+  const zakenWithstatussen: BBVergunningFrontend[] = [];
 
   for (let i = 0; i < zaken.length; i++) {
-    const zaak: BBVergunning = { ...zaken[i] };
+    const zaak: BBVergunningFrontend = { ...zaken[i] };
     const statussenResponse = getSettledResult(statussenResults[i]);
 
     zaak.steps =
@@ -411,13 +411,13 @@ async function fetchAndMergeZaakStatussen(
 
 async function fetchAndMergeAdressen(
   requestID: RequestID,
-  zaken: BBVergunning[]
-): Promise<BBVergunning[]> {
+  zaken: BBVergunningFrontend[]
+): Promise<BBVergunningFrontend[]> {
   const addressRequests = zaken.map((zaak) => {
     return fetchZaakAdres(requestID, zaak.id);
   });
   const addressResults = await Promise.allSettled(addressRequests);
-  const zakenWithAddress: BBVergunning[] = [];
+  const zakenWithAddress: BBVergunningFrontend[] = [];
 
   for (let i = 0; i < zaken.length; i++) {
     const addressResponse = getSettledResult(addressResults[i]);
@@ -426,7 +426,7 @@ async function fetchAndMergeAdressen(
         ? addressResponse.content
         : '';
 
-    const zaak: BBVergunning = { ...zaken[i], location };
+    const zaak: BBVergunningFrontend = { ...zaken[i], location };
 
     zakenWithAddress.push(zaak);
   }
@@ -452,7 +452,7 @@ function isZaakActual({
   return !!dateEnd && !!compareDate && !isDateInPast(dateEnd, compareDate);
 }
 
-function transformZaak(zaak: PBZaakRecord): BBVergunning {
+function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
   const pbZaak = Object.fromEntries(
     entries(fieldMap).map(([pbFieldName, desiredName]) => {
       return [desiredName, getFieldValue(pbFieldName, zaak.fields)];
@@ -515,7 +515,7 @@ async function fetchZakenByIds(
   requestID: RequestID,
   authProfile: AuthProfile,
   zaakIds: string[]
-): Promise<ApiResponse_DEPRECATED<BBVergunning[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend[] | null>> {
   const requestConfig: DataRequestConfig = {
     method: 'get',
     formatUrl({ url }) {
@@ -526,7 +526,7 @@ async function fetchZakenByIds(
     },
   };
 
-  const zakenResponse = await fetchPowerBrowserData<BBVergunning[]>(
+  const zakenResponse = await fetchPowerBrowserData<BBVergunningFrontend[]>(
     requestID,
     requestConfig
   );
@@ -557,7 +557,7 @@ async function fetchZakenByIds(
 export async function fetchBBVergunningen(
   requestID: RequestID,
   authProfile: AuthProfile
-): Promise<ApiResponse_DEPRECATED<BBVergunning[] | null>> {
+): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend[] | null>> {
   // Set-up the options for the PowerBrowser API request based on the profile type.
   const optionsByProfileType: Record<
     ProfileType,
@@ -655,7 +655,7 @@ const documentNamenMA_PB = {
 function transformPowerbrowserLinksResponse(
   sessionID: SessionID,
   responseData: SearchRequestResponse<'DOCLINK', PBDocumentFields[]>
-): BBVergunning['documents'] {
+): BBVergunningFrontend['documents'] {
   type PBDocument = {
     [K in PBDocumentFields['fieldName']]: string;
   };
@@ -706,8 +706,8 @@ function transformPowerbrowserLinksResponse(
 export async function fetchBBDocumentsList(
   requestID: RequestID,
   authProfile: AuthProfile,
-  zaakId: BBVergunning['id']
-): Promise<ApiResponse_DEPRECATED<BBVergunning['documents'] | null>> {
+  zaakId: BBVergunningFrontend['id']
+): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend['documents'] | null>> {
   const dataRequestConfig: DataRequestConfig = {
     method: 'post',
     formatUrl({ url }) {

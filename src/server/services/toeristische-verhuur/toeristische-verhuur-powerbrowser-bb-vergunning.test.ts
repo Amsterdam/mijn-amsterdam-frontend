@@ -10,7 +10,7 @@ import {
   forTesting,
 } from './toeristische-verhuur-powerbrowser-bb-vergunning';
 import {
-  BBVergunning,
+  BBVergunningFrontend,
   PBDocumentFields,
   PBZaakFields,
   PBZaakRecord,
@@ -372,7 +372,7 @@ describe('B&B Vergunningen service', () => {
       const zaak = {
         steps: [{ isActive: true, status: 'In behandeling' }],
         decision: 'Verleend',
-      } as unknown as BBVergunning;
+      } as unknown as BBVergunningFrontend;
 
       const result = forTesting.getZaakStatus(zaak);
       expect(result).toBe('Verleend');
@@ -382,7 +382,7 @@ describe('B&B Vergunningen service', () => {
       const zaak = {
         steps: [{ isActive: true, status: 'In behandeling' }],
         decision: null,
-      } as unknown as BBVergunning;
+      } as unknown as BBVergunningFrontend;
 
       const result = forTesting.getZaakStatus(zaak);
       expect(result).toBe('In behandeling');
@@ -417,7 +417,7 @@ describe('B&B Vergunningen service', () => {
             url: 'https://example.com/document',
           },
         ],
-      } as unknown as BBVergunning;
+      } as unknown as BBVergunningFrontend;
 
       const statusResponse = [
         { omschrijving: 'In behandeling', datum: '2023-01-10' },
@@ -478,7 +478,7 @@ describe('B&B Vergunningen service', () => {
         dateEnd: null,
         decision: null,
         documents: [],
-      } as unknown as BBVergunning;
+      } as unknown as BBVergunningFrontend;
 
       const statusResponse = [
         { omschrijving: 'In behandeling', datum: '2023-01-10' },
@@ -521,7 +521,7 @@ describe('B&B Vergunningen service', () => {
         dateEnd: null,
         decision: null,
         documents: [],
-      } as unknown as BBVergunning;
+      } as unknown as BBVergunningFrontend;
 
       const statusResponse = [] as PowerBrowserStatusResponse;
 
@@ -610,7 +610,7 @@ describe('B&B Vergunningen service', () => {
         dateRequest: '2023-01-01',
         dateEnd: null,
         documents: [],
-      } as unknown as BBVergunning;
+      } as unknown as BBVergunningFrontend;
 
       const result = await forTesting.fetchZaakStatussen(
         'test-request-id',
@@ -629,7 +629,7 @@ describe('B&B Vergunningen service', () => {
         id: 'test-zaak-id',
         dateRequest: '2023-01-01',
         dateEnd: null,
-      } as unknown as BBVergunning;
+      } as unknown as BBVergunningFrontend;
 
       const result = await forTesting.fetchZaakStatussen(
         'test-request-id',
@@ -652,7 +652,7 @@ describe('B&B Vergunningen service', () => {
           dateEnd: null,
           documents: [],
         },
-      ] as unknown as BBVergunning[];
+      ] as unknown as BBVergunningFrontend[];
 
       const result = await forTesting.fetchAndMergeZaakStatussen(
         'test-request-id',
@@ -681,7 +681,7 @@ describe('B&B Vergunningen service', () => {
 
       const zaken = [
         { id: 'test-zaak-id', dateRequest: '2023-01-01', dateEnd: null },
-      ] as unknown as BBVergunning[];
+      ] as unknown as BBVergunningFrontend[];
 
       const result = await forTesting.fetchAndMergeDocuments(
         'test-request-id',
@@ -698,7 +698,7 @@ describe('B&B Vergunningen service', () => {
 
       const zaken = [
         { id: 'test-zaak-id', dateRequest: '2023-01-01', dateEnd: null },
-      ] as unknown as BBVergunning[];
+      ] as unknown as BBVergunningFrontend[];
 
       const result = await forTesting.fetchAndMergeDocuments(
         'test-request-id',
@@ -722,7 +722,7 @@ describe('B&B Vergunningen service', () => {
 
       const zaken = [
         { id: 'test-zaak-id', dateRequest: '2023-01-01', dateEnd: null },
-      ] as unknown as BBVergunning[];
+      ] as unknown as BBVergunningFrontend[];
 
       const result = await forTesting.fetchAndMergeAdressen(
         'test-request-id',

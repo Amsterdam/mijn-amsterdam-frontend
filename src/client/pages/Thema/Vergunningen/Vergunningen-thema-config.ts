@@ -121,7 +121,7 @@ export const tableConfig = {
     title: 'Huidige vergunningen en ontheffingen',
     filter: (vergunning: VergunningExpirable) => {
       if (isVergunningExpirable(vergunning)) {
-        return isVergunningExpired(vergunning);
+        return !isVergunningExpired(vergunning);
       }
       return false;
     },
