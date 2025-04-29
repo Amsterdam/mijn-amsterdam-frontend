@@ -541,16 +541,6 @@ export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
   },
 });
 
-function transformDecosWorkflowKeysResponse(
-  workflowsResponseData: DecosZakenResponse<Array<{ key: string }>>
-) {
-  if (workflowsResponseData?.content?.length) {
-    const lastKey = workflowsResponseData.content.pop();
-    return lastKey?.key ?? null;
-  }
-  return null;
-}
-
 function transformDecosWorkflowDateResponse(
   stepTitles: DecosWorkflowStepTitle[],
   singleWorkflowResponseData: DecosWorkflowResponse
@@ -577,9 +567,11 @@ function transformDecosWorkflowDateResponse(
 
 async function fetchWorkflowInstance<
   ST extends DecosWorkflowStepTitle[] | undefined,
+  B extends boolean,
 >(
   requestID: RequestID,
   options: {
+    useRawResponse: B;
     key: string;
     urlParams?: URLSearchParams;
     stepTitles?: ST;
@@ -594,22 +586,31 @@ async function fetchWorkflowInstance<
         : responseData.content,
   });
 
-  type WorkflowReturnType<X extends undefined | string[]> = X extends undefined
+  type WorkflowReturnType<B extends boolean> = B extends true
     ? DecosWorkflowSource[]
     : DecosWorkflowDateByStepTitle;
 
-  return requestData<WorkflowReturnType<ST>>(
-    apiConfigSingleWorkflow,
-    requestID
-  );
+  return requestData<WorkflowReturnType<B>>(apiConfigSingleWorkflow, requestID);
+}
+
+function transformDecosWorkflowKeysResponse(
+  workflowsResponseData: DecosZakenResponse<Array<{ key: string }>>
+): DecosWorkflowSource['key'][] {
+  return workflowsResponseData.content?.map((workflow) => workflow.key) ?? [];
 }
 
 export async function fetchDecosWorkflowDates(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
-  stepTitles: DecosWorkflowStepTitle[] = [],
+  stepTitles?: DecosWorkflowStepTitle[],
   select: string[] = ['mark', 'date1', 'date2', 'text7']
-): Promise<ApiResponse<DecosWorkflowDateByStepTitle>> {
+): Promise<
+  | ApiResponse<DecosWorkflowDateByStepTitle>
+  | ApiSuccessResponse<
+      Array<{ key: string; instances: DecosWorkflowSource[] | null }>
+    >
+> {
+  const pickLatestWorkflow = !!stepTitles?.length;
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
@@ -617,12 +618,11 @@ export async function fetchDecosWorkflowDates(
     transformResponse: transformDecosWorkflowKeysResponse,
   });
 
-  const { content: latestWorkflowKey } = await requestData<string | null>(
-    apiConfigWorkflows,
-    requestID
-  );
+  const { content: workflowKeys } = await requestData<
+    DecosWorkflowSource['key'][] | null
+  >(apiConfigWorkflows, requestID);
 
-  if (!latestWorkflowKey) {
+  if (!workflowKeys?.length) {
     return apiSuccessResult({});
   }
 
@@ -636,18 +636,42 @@ export async function fetchDecosWorkflowDates(
     urlParams.append('select', select.join(','));
   }
 
-  if (stepTitles.length) {
+  if (stepTitles?.length) {
     urlParams.append(
       'filter',
       stepTitles.map((stepTitle) => `text7 eq '${stepTitle}'`).join(' or ')
     );
   }
+  const lastWorkflowKey = workflowKeys.at(-1);
 
-  return fetchWorkflowInstance(requestID, {
-    key: latestWorkflowKey,
-    urlParams,
-    stepTitles,
-  });
+  if (pickLatestWorkflow) {
+    return lastWorkflowKey
+      ? fetchWorkflowInstance(requestID, {
+          key: lastWorkflowKey,
+          urlParams,
+          stepTitles,
+          useRawResponse: false,
+        })
+      : Promise.resolve(apiSuccessResult({}));
+  }
+
+  return Promise.all(
+    workflowKeys.map((key) =>
+      fetchWorkflowInstance(requestID, {
+        key,
+        urlParams,
+        stepTitles,
+        useRawResponse: true,
+      }).then(({ content }) => {
+        return {
+          key,
+          instances: content,
+        };
+      })
+    )
+  ).then((workflowInstanceResponses) =>
+    apiSuccessResult(workflowInstanceResponses)
+  );
 }
 
 export async function fetchDecosTermijnen(
