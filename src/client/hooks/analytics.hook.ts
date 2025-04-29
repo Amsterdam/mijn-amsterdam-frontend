@@ -6,8 +6,6 @@ import {
 } from '@amsterdam/piwik-tracker/lib/types';
 import memoize from 'memoizee';
 
-import { ThemaTitles } from '../config/thema';
-
 let PiwikInstance: PiwikTracker;
 
 const siteId = (import.meta.env.REACT_APP_ANALYTICS_ID ||
@@ -23,9 +21,6 @@ const PiwikTrackerConfig: UserOptions = {
   },
 };
 
-const DEFAULT_THEMA_VALUE = 'Mijn Amsterdam algemeen';
-const MIN_SEARCH_LENGTH = 3;
-
 // See dimension Ids specified in aansluitgids MIJN-5416
 enum CustomDimensionId {
   ProfileType = 'user_type',
@@ -37,24 +32,6 @@ function profileTypeDimension(profileType: ProfileType) {
   return { id: CustomDimensionId.ProfileType, value: profileType as string };
 }
 
-function userCityDimension(userCity: string) {
-  return { id: CustomDimensionId.City, value: userCity };
-}
-
-function maThema(thema: string) {
-  return { id: CustomDimensionId.Thema, value: thema };
-}
-
-export function getDerivedThemaNaamFromDocumentTitle() {
-  const title = typeof document !== 'undefined' ? document.title : '';
-
-  return (
-    Object.values(ThemaTitles).find((t) => {
-      return title.includes(t);
-    }) ?? DEFAULT_THEMA_VALUE
-  );
-}
-
 // Initialize connection with analytics
 export function useAnalytics(isEnabled: boolean = true) {
   if (isEnabled && hasSiteId && !PiwikInstance) {
@@ -64,7 +41,7 @@ export function useAnalytics(isEnabled: boolean = true) {
 
 function _trackPageView(href: string, customDimensions?: CustomDimension[]) {
   const payload: TrackPageViewParams = {
-    href: `/mijn-amsterdam${href}/`,
+    href: `/mijn-amsterdam${href}`,
     customDimensions,
   };
 
@@ -76,29 +53,6 @@ export const trackPageView = memoize(_trackPageView, {
   length: 1,
   max: 1,
 });
-
-export function trackPageViewWithCustomDimension(
-  title: string,
-  url: string,
-  profileType: ProfileType,
-  userCity?: string,
-  thema?: string
-) {
-  const dimensions = [profileTypeDimension(profileType)];
-
-  if (userCity) {
-    dimensions.push(userCityDimension(userCity));
-  }
-
-  if (thema) {
-    dimensions.push(maThema(thema));
-  } else {
-    thema = getDerivedThemaNaamFromDocumentTitle();
-    dimensions.push(maThema(thema));
-  }
-
-  return trackPageView(url, dimensions);
-}
 
 export function trackLink(
   url: string,
@@ -127,22 +81,15 @@ export function trackDownload(
   downloadDescription: string,
   fileType: string | undefined = 'pdf',
   downloadUrl: string,
-  profileType: ProfileType,
-  userCity: string
+  profileType: ProfileType
 ) {
-  const thema = getDerivedThemaNaamFromDocumentTitle();
-
   return (
     PiwikInstance &&
     PiwikInstance.trackDownload({
       downloadDescription,
       fileType,
       downloadUrl,
-      customDimensions: [
-        profileTypeDimension(profileType),
-        userCityDimension(userCity),
-        maThema(thema),
-      ],
+      customDimensions: [profileTypeDimension(profileType)],
     })
   );
 }

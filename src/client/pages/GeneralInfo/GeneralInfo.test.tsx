@@ -2,12 +2,13 @@ import { render } from '@testing-library/react';
 import { generatePath } from 'react-router';
 import { MutableSnapshot } from 'recoil';
 
-import { AppRoutes } from '../../../universal/config/routes';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import { GeneralInfo } from './GeneralInfo';
+import { GeneralInfoRoute } from './GeneralInfo-routes';
+import type { AppState } from '../../../universal/types/App.types';
 
-const testState: any = {
+const testState = {
   CMS_CONTENT: {
     status: 'OK',
     content: {
@@ -20,12 +21,12 @@ const testState: any = {
 };
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom, testState as AppState);
 }
 
 describe('<GeneralInfo />', () => {
-  const routeEntry = generatePath(AppRoutes.GENERAL_INFO);
-  const routePath = AppRoutes.GENERAL_INFO;
+  const routeEntry = generatePath(GeneralInfoRoute.route);
+  const routePath = GeneralInfoRoute.route;
 
   function Component() {
     return (

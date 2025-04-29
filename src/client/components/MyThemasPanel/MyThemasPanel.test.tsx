@@ -3,14 +3,13 @@ import { BrowserRouter } from 'react-router';
 import { RecoilRoot } from 'recoil';
 
 import { MyThemasPanel } from './MyThemasPanel';
-import { ThemaMenuItemTransformed } from '../../config/thema';
+import type { ThemaMenuItemTransformed } from '../../config/thema-types';
 
 const items: ThemaMenuItemTransformed[] = [
   {
     title: 'Belastingen',
     id: 'BELASTINGEN',
     to: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
-    rel: 'external',
     profileTypes: ['private'],
   },
 ];

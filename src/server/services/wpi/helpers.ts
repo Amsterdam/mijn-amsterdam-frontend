@@ -11,11 +11,15 @@ import {
   WpiRequestStatus,
 } from './wpi-types';
 import {
-  routes,
+  routeConfig,
   themaId as themaIdInkomen,
-} from '../../../client/pages/Inkomen/Inkomen-thema-config';
+  themaTitle as themaTitleInkomen,
+} from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { GenericDocument, MyNotification } from '../../../universal/types';
+import {
+  GenericDocument,
+  MyNotification,
+} from '../../../universal/types/App.types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
@@ -101,6 +105,7 @@ export function createProcessNotification(
     id: `${requestProcess.id}-notification`,
     datePublished: statusStep.datePublished,
     themaID: themaIdInkomen,
+    themaTitle: themaTitleInkomen,
     title: titleTransform
       ? titleTransform(requestProcess, statusStep)
       : `Update: ${requestProcess.about} aanvraag.`,
@@ -158,7 +163,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
   switch (requestProcess.about) {
     case 'TONK':
       link = {
-        to: generatePath(routes.detailPageTonk, {
+        to: generatePath(routeConfig.detailPageTonk.path, {
           id,
           version: '1',
         }),
@@ -171,7 +176,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
     case 'Tozo 4':
     case 'Tozo 5':
       link = {
-        to: generatePath(routes.detailPageTozo, {
+        to: generatePath(routeConfig.detailPageTozo.path, {
           id,
           version: requestProcess.about.replace('Tozo ', ''),
         }),
@@ -180,7 +185,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bijstandsuitkering':
       link = {
-        to: generatePath(routes.detailPageUitkering, {
+        to: generatePath(routeConfig.detailPageUitkering.path, {
           id,
         }),
         title,
@@ -188,7 +193,7 @@ export function addLink(requestProcess: WpiRequestProcess) {
       break;
     case 'Bbz':
       link = {
-        to: generatePath(routes.detailPageBbz, {
+        to: generatePath(routeConfig.detailPageBbz.path, {
           id,
           version: '1',
         }),

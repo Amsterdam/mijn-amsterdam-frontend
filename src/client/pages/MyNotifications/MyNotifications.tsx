@@ -3,7 +3,8 @@ import { useEffect, useMemo } from 'react';
 import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useNavigate, useParams } from 'react-router';
 
-import { AppRoutes } from '../../../universal/config/routes';
+import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config';
+import { MyNotificationsRoute } from './MyNotifications-routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
@@ -16,11 +17,16 @@ import {
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { PaginationV2 } from '../../components/Pagination/PaginationV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 
 const PAGE_SIZE = 12;
 
 export function MyNotificationsPage() {
+  useHTMLDocumentTitle({
+    documentTitle: MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE,
+  });
+
   const { NOTIFICATIONS } = useAppStateGetter();
   const { notifications, total } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
@@ -85,7 +91,7 @@ export function MyNotificationsPage() {
               pageSize={PAGE_SIZE}
               onPageClick={(page) => {
                 navigate(
-                  generatePath(AppRoutes.NOTIFICATIONS, { page: `${page}` })
+                  generatePath(MyNotificationsRoute.route, { page: `${page}` })
                 );
               }}
               currentPage={currentPage}

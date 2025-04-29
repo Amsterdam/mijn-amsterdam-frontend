@@ -8,7 +8,10 @@ import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../universal/helpers/api';
-import { GenericDocument, StatusLineItem } from '../../../universal/types';
+import {
+  GenericDocument,
+  StatusLineItem,
+} from '../../../universal/types/App.types';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
 
 vi.mock('./hli-zorgned-service', () => ({

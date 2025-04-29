@@ -22,16 +22,15 @@ export function MainMenu() {
           </Heading>
           <MegaMenu.ListCategory>
             {items.map((thema) => {
-              const LinkComponent =
-                thema.rel === 'external' || thema.to.startsWith('http')
-                  ? MaLink
-                  : MaRouterLink;
+              const LinkComponent = thema.to.startsWith('http')
+                ? MaLink
+                : MaRouterLink;
               return (
                 <LinkComponent
                   key={thema.id}
                   href={thema.to}
                   maVariant="fatNoDefaultUnderline"
-                  rel={thema.rel === 'external' ? 'noreferrer' : undefined}
+                  rel={thema.to.startsWith('http') ? 'noreferrer' : undefined}
                   className={styles.MenuItem}
                 >
                   {thema.title}

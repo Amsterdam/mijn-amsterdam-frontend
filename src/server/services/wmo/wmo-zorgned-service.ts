@@ -1,5 +1,5 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
-import { GenericDocument } from '../../../universal/types';
+import { GenericDocument } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';

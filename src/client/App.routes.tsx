@@ -1,38 +1,36 @@
 import { Routes, Route, matchPath } from 'react-router';
 
-import { MyAreaRoutes } from './components/MyArea/MyArea-routest';
-import { AccessibilityRoutes } from './pages/Accessibility/Accessibility-routes';
-import { AfisRoutes } from './pages/Afis/Afis-routes';
-import { AfvalRoutes } from './pages/Afval/Afval-routes';
-import { AVGRoutes } from './pages/AVG/AVG-routes';
-import { BezwarenRoutes } from './pages/Bezwaren/Bezwaren-routes';
+import { MyAreaRoutes } from './components/MyArea/MyArea-routes';
+import type { ThemaRenderRouteConfig } from './config/thema-types';
 import { BffErrorRoutes } from './pages/BffError/BffError-routes';
-import { BodemRoutes } from './pages/Bodem/Bodem-routes';
-import { BurgerzakenRoutes } from './pages/Burgerzaken/Burgerzaken-routes';
 import { DashboardRoutes } from './pages/Dashboard/Dashboard-routes';
-import { ErfpachtRoutes } from './pages/Erfpacht/Erfpacht-routes';
 import { GeneralInfoRoutes } from './pages/GeneralInfo/GeneralInfo-routes';
-import { HLIRoutes } from './pages/HLI/HLI-routes';
-import { HorecaRoutes } from './pages/Horeca/Horeca-routes';
-import { InkomenRoutes } from './pages/Inkomen/Inkomen-render-config';
-import { JeugdRoutes } from './pages/Jeugd/Jeugd-render-config';
-import { KlachtenRoutes } from './pages/Klachten/Klachten-routes';
-import { KrefiaRoutes } from './pages/Krefia/Krefia-routes';
 import { LandingRoutes } from './pages/Landing/Landing-routes';
 import { MyNotificationsRoutes } from './pages/MyNotifications/MyNotifications-routes';
 import { NotFoundRoutes } from './pages/NotFound/NotFound-routes';
-import { ParkerenRoutes } from './pages/Parkeren/Parkeren-routes';
-import { ProfileRoutes } from './pages/Profile/Profile-render-config';
 import { SearchRoutes } from './pages/Search/Search-routes';
-import { ToeristischeVerhuurRoutes } from './pages/ToeristischeVerhuur/ToeristischeVerhuur-routes';
-import { VarenRoutes } from './pages/Varen/Varen-routes';
-import { VergunningenRoutes } from './pages/Vergunningen/Vergunningen-routes';
-import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatusRoutes';
-import { ZorgRoutes } from './pages/Zorg/Zorg-routes';
+import { AfisRoutes } from './pages/Thema/Afis/Afis-render-config';
+import { AfvalRoutes } from './pages/Thema/Afval/Afval-render-config';
+import { AvgRoutes } from './pages/Thema/AVG/AVG-render-config';
+import { BezwarenRoutes } from './pages/Thema/Bezwaren/Bezwaren-render-config';
+import { BodemRoutes } from './pages/Thema/Bodem/Bodem-render-config';
+import { BurgerzakenRoutes } from './pages/Thema/Burgerzaken/Burgerzaken-render-config';
+import { ErfpachtRoutes } from './pages/Thema/Erfpacht/Erfpacht-render-config';
+import { HLIRoutes } from './pages/Thema/HLI/HLI-render-config';
+import { HorecaRoutes } from './pages/Thema/Horeca/Horeca-render-config';
+import { InkomenRoutes } from './pages/Thema/Inkomen/Inkomen-render-config';
+import { JeugdRoutes } from './pages/Thema/Jeugd/Jeugd-render-config';
+import { KlachtenRoutes } from './pages/Thema/Klachten/Klachten-render-config';
+import { KrefiaRoutes } from './pages/Thema/Krefia/Krefia-render-config';
+import { ParkerenRoutes } from './pages/Thema/Parkeren/Parkeren-render-config';
+import { ProfileRoutes } from './pages/Thema/Profile/Profile-render-config';
+import { ToeristischeVerhuurRoutes } from './pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
+import { VarenRoutes } from './pages/Thema/Varen/Varen-render-config';
+import { VergunningenRoutes } from './pages/Thema/Vergunningen/Vergunningen-render-config';
+import { ZorgRoutes } from './pages/Thema/Zorg/Zorg-render-config';
+import { ZaakStatusRoutes } from './pages/ZaakStatus/ZaakStatus-routes';
 
-export type ApplicationRouteConfig = {
-  route: string;
-  Component: React.ComponentType;
+export type ApplicationRouteConfig = ThemaRenderRouteConfig & {
   props?: {
     index?: boolean;
   };
@@ -41,10 +39,9 @@ export type ApplicationRouteConfig = {
 };
 
 const routeComponents: ApplicationRouteConfig[] = [
-  AccessibilityRoutes,
   AfisRoutes,
   AfvalRoutes,
-  AVGRoutes,
+  AvgRoutes,
   BezwarenRoutes,
   BffErrorRoutes,
   BodemRoutes,
@@ -53,15 +50,15 @@ const routeComponents: ApplicationRouteConfig[] = [
   ErfpachtRoutes,
   GeneralInfoRoutes,
   HLIRoutes,
-  JeugdRoutes,
   HorecaRoutes,
   InkomenRoutes,
+  JeugdRoutes,
   KlachtenRoutes,
   KrefiaRoutes,
   LandingRoutes,
   MyAreaRoutes,
-  NotFoundRoutes,
   MyNotificationsRoutes,
+  NotFoundRoutes,
   ParkerenRoutes,
   ProfileRoutes,
   SearchRoutes,
@@ -81,14 +78,16 @@ const publicRoutes = routeComponents.filter((config) => config.public === true);
 function ApplicationRoutes({ routes }: { routes: ApplicationRouteConfig[] }) {
   return (
     <Routes>
-      {routes.map(({ route, Component, props }) => (
-        <Route
-          {...(props ? props : {})}
-          key={route}
-          path={route}
-          element={<Component />}
-        />
-      ))}
+      {routes
+        .filter(({ isActive }) => isActive !== false)
+        .map(({ route, Component, props }) => (
+          <Route
+            {...(props ? props : {})}
+            key={route}
+            path={route}
+            element={<Component />}
+          />
+        ))}
     </Routes>
   );
 }

@@ -8,7 +8,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import { Search } from './Search';
 import * as remoteConfig from './search-config.json';
 import { bffApi } from '../../../testing/utils';
-import { AppState } from '../../../universal/types';
+import { AppState } from '../../../universal/types/App.types';
 import { appStateAtom, appStateReadyAtom } from '../../hooks/useAppState';
 
 describe('<Search />', () => {

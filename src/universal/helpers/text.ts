@@ -7,7 +7,7 @@ const formatter = new Intl.NumberFormat('nl-NL', {
   maximumFractionDigits: 2,
 });
 
-export default function displayAmount(amount: number) {
+export function displayAmount(amount: number) {
   return formatter.format(amount);
 }
 

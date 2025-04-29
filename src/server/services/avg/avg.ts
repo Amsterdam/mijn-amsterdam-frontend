@@ -9,16 +9,19 @@ import {
   SmileAvgResponse,
   SmileAvgThemesResponse,
 } from './types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  featureToggle,
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/AVG/AVG-thema-config';
 import {
   ApiSuccessResponse,
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -160,7 +163,7 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
       themas: '',
       steps: [],
       link: {
-        to: generatePath(AppRoutes['AVG/DETAIL'], {
+        to: generatePath(routeConfig.detailPage.path, {
           id,
         }),
         title,
@@ -191,7 +194,7 @@ export async function fetchAVG(
       data,
       headers: data.getHeaders(),
       cacheKey: `avg-${requestID}`,
-      postponeFetch: !FeatureToggle.avgActive,
+      postponeFetch: !featureToggle.avgActive,
     }),
     requestID
   );
@@ -234,7 +237,7 @@ export async function fetchAVGRequestThemes(
       data,
       headers: data.getHeaders(),
       cacheKey: `avg-themes-${cacheKey}`,
-      postponeFetch: !FeatureToggle.avgActive,
+      postponeFetch: !featureToggle.avgActive,
     }),
     requestID
   );
@@ -268,7 +271,8 @@ function createAVGNotification(verzoek: AVGRequestFrontend) {
   const inProgressActive = !!verzoek.datumInBehandeling;
 
   const notification: MyNotification = {
-    themaID: ThemaIDs.AVG,
+    themaID: themaId,
+    themaTitle: themaTitle,
     id: `avg-${verzoek.id}-notification`,
     title: 'AVG verzoek ontvangen',
     description: 'Uw AVG verzoek is ontvangen.',

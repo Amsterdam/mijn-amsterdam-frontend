@@ -3,8 +3,8 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 import { DecosVergunning } from './config-and-types';
 import { forTesting } from './vergunningen';
 import { getStatusSteps, getDisplayStatus } from './vergunningen-status-steps';
+import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { getAuthProfileAndToken } from '../../../testing/utils';
-import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiSuccessResult,
   apiErrorResult,
@@ -45,7 +45,7 @@ describe('vergunningen', () => {
       const result = transformVergunningFrontend(
         authProfileAndToken.profile.sid,
         decosVergunning as DecosVergunning,
-        AppRoutes['VERGUNNINGEN/DETAIL']
+        routeConfig.detailPage.path
       );
       expect(result).toHaveProperty('transformed', true);
       expect(result).toHaveProperty('steps', ['step1', 'step2']);

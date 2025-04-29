@@ -8,7 +8,9 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app';
-import { zorgnedLeerlingenvervoerActive } from '../../client/pages/Jeugd/Jeugd-thema-config';
+import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
+import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
@@ -91,7 +93,7 @@ export type SourceApiKey =
   | 'POWERBROWSER'
   | 'SEARCH_CONFIG'
   | 'CONTACTMOMENTEN'
-  | 'SUBSIDIE'
+  | 'SUBSIDIES'
   | 'SVWI'
   | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
   | 'WPI_AANVRAGEN'
@@ -163,7 +165,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),
       key: getCert('BFF_ZORGNED_LEERLINGENVERVOER_KEY'),
     }),
-    postponeFetch: !zorgnedLeerlingenvervoerActive,
+    postponeFetch: !featureToggleJeugd.leerlingenvervoerActive,
   },
   GPASS: {
     url: `${getFromEnv('BFF_GPASS_API_BASE_URL')}`,
@@ -266,7 +268,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
     postponeFetch:
-      !FeatureToggle.erfpachtEndpointActive ||
+      !featureToggleErfpacht.erfpachtActive ||
       !getFromEnv('BFF_ERFPACHT_API_URL'),
     headers: {
       'X-HERA-REQUESTORIGIN': 'MijnAmsterdam',
@@ -309,7 +311,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.krefiaActive,
     passthroughOIDCToken: true,
   },
-  SUBSIDIE: {
+  SUBSIDIES: {
     url: `${getFromEnv('BFF_SISA_API_ENDPOINT')}`,
     postponeFetch: !FeatureToggle.subsidieActive,
   },
@@ -326,12 +328,12 @@ export const ApiConfig: ApiDataRequestConfig = {
   LOOD_365: {
     url: `${getFromEnv('BFF_LOOD_API_URL')}`,
     method: 'POST',
-    postponeFetch: !FeatureToggle.bodemActive,
+    postponeFetch: !featureToggleBodem.BodemActive,
   },
   LOOD_365_OAUTH: {
     url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
-    postponeFetch: !FeatureToggle.bodemActive,
+    postponeFetch: !featureToggleBodem.BodemActive,
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 59 * ONE_MINUTE_MS,
   },

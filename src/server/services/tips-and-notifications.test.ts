@@ -1,7 +1,7 @@
 import { describe, expect } from 'vitest';
 
 import { sortNotificationsAndInsertTips } from './tips-and-notifications';
-import { MyNotification } from '../../universal/types';
+import { MyNotification } from '../../universal/types/App.types';
 
 describe('tips-and-notifications', () => {
   test('Should sort notifications by datePublished and insert tips', () => {

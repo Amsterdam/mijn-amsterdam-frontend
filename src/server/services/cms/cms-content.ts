@@ -3,7 +3,6 @@ import path from 'path';
 
 import { parse } from 'html-to-ast';
 import { Attr } from 'html-to-ast/dist/types';
-import { LinkProps } from 'react-router';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
 
 import { IS_TAP } from '../../../universal/config/env';
@@ -16,6 +15,7 @@ import {
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { hash } from '../../../universal/helpers/utils';
+import type { LinkProps } from '../../../universal/types/App.types';
 import { isValidProfileType } from '../../auth/auth-helpers';
 import FileCache from '../../helpers/file-cache';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -423,13 +423,17 @@ export async function fetchSearchConfig(
       fs.readFile(
         path.join(
           __dirname,
-          '../../client/components/Search/search-config.json'
+          '../../../client/components/Search/search-config.json'
         ),
         (err, content) => {
           if (err) {
             reject(err);
           }
-          resolve(apiSuccessResult(JSON.parse(content.toString())));
+          try {
+            resolve(apiSuccessResult(JSON.parse(content.toString())));
+          } catch (e) {
+            reject(e);
+          }
         }
       );
     });

@@ -12,7 +12,7 @@ import {
 } from './TableV2.types';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
-import { ZaakDetail } from '../../../universal/types';
+import { ZaakDetail } from '../../../universal/types/App.types';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
 

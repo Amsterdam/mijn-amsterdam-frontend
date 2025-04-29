@@ -5,6 +5,11 @@ import classNames from 'classnames';
 import { LatLngLiteral } from 'leaflet';
 
 import styles from './LocationModal.module.scss';
+import {
+  BAGAdreseerbaarObject,
+  BAGQueryParams,
+  BAGSourceData,
+} from '../../../server/services/bag/bag.types';
 import { LOCATION_ZOOM } from '../../../universal/config/myarea-datasets';
 import { PUBLIC_API_URLS } from '../../../universal/config/url';
 import {
@@ -14,14 +19,8 @@ import {
   isLocatedInWeesp,
   LatLngWithAddress,
 } from '../../../universal/helpers/bag';
-import {
-  BAGAdreseerbaarObject,
-  BAGQueryParams,
-  BAGSourceData,
-} from '../../../universal/types/bag';
 import { BaseLayerType } from '../../components/MyArea/Map/BaseLayerToggle';
 import { MyAreaLoader } from '../../components/MyArea/MyAreaLoader';
-import { trackPageView } from '../../hooks/analytics.hook';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { Modal } from '../Modal/Modal';
 import { MapLocationMarker } from '../MyArea/MyArea.hooks';
@@ -64,10 +63,6 @@ export interface LocationModalProps {
   modalTitle?: string;
   // Explicit latlng
   latlng?: LatLngLiteral;
-  // Custom tracking url
-  trackPageViewUrl?: string;
-  // Custom tracking title
-  trackPageViewTitle?: string;
   children?: ReactNode;
 }
 
@@ -77,8 +72,6 @@ export function LocationModal({
   latlng,
   modalTitle,
   label,
-  trackPageViewUrl,
-  trackPageViewTitle,
   children,
 }: LocationModalProps) {
   const [isLocationModalOpen, setLocationModalOpen] = useState(false);
@@ -122,20 +115,7 @@ export function LocationModal({
         },
       });
     }
-  }, [
-    isLocationModalOpen,
-    address,
-    fetchBag,
-    bagApi.isDirty,
-    trackPageViewTitle,
-    trackPageViewUrl,
-  ]);
-
-  useEffect(() => {
-    if (isLocationModalOpen && trackPageViewTitle && trackPageViewUrl) {
-      trackPageView(trackPageViewUrl);
-    }
-  }, [isLocationModalOpen, trackPageViewTitle, trackPageViewUrl]);
+  }, [isLocationModalOpen, address, fetchBag, bagApi.isDirty]);
 
   const latlngFromBagSearch = bagApi.data?.[0];
   const latlngFound = latlng ?? latlngFromBagSearch;

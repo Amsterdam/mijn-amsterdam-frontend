@@ -4,12 +4,12 @@ import proxy from 'express-http-proxy';
 
 import { BffEndpoints } from './bff-routes';
 import { queryParams } from './route-helpers';
+import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
 import { OTAP_ENV } from '../../universal/config/env';
 import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../universal/config/myarea-datasets';
-import { AppRoutes } from '../../universal/config/routes';
 import {
   ApiResponse_DEPRECATED,
   apiSuccessResult,
@@ -204,7 +204,7 @@ export async function zaakStatusHandler(
   const authType =
     params['auth-type'] === 'eherkenning' ? 'EHERKENNING' : 'DIGID';
   const loginRoute = authRoutes[`AUTH_LOGIN_${authType}`];
-  const loginRouteWithReturnTo = `${loginRoute}${getZaakStatusQueryParams(params)}&returnTo=${AppRoutes.ZAAK_STATUS}`;
+  const loginRouteWithReturnTo = `${loginRoute}${getZaakStatusQueryParams(params)}&returnTo=${ZAAK_STATUS_ROUTE}`;
   return res.redirect(loginRouteWithReturnTo);
 }
 

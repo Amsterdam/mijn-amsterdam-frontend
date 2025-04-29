@@ -5,11 +5,10 @@ import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
 import { useAppStateGetter, useAppStateReady } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
-import { type ThemaID } from '../../universal/config/thema';
-import { LinkProps } from '../../universal/types';
+import { sortAlpha } from '../../universal/helpers/utils';
+import { LinkProps } from '../../universal/types/App.types';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema-types';
-import { getThemaMenuItemsAppState, isThemaActive } from '../helpers/themas';
 
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];
@@ -20,30 +19,19 @@ export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
-  const themaItems = themasByProfileType(profileType);
+  const themaItems = themasByProfileType(profileType).sort(sortAlpha('title'));
 
   const items = useMemo(() => {
     return themaItems.filter((item) => {
       // Check to see if Thema has been loaded or if it is directly available
-      return item.isActive
-        ? item.isActive(appState)
-        : item.isAlwaysVisible || isThemaActive(item, appState);
+      return item.isActive ? item.isActive(appState) : item.isAlwaysVisible;
     });
   }, [themaItems, appState]);
 
-  const themaItemsWithAppState = useMemo(() => {
-    return getThemaMenuItemsAppState(appState, themaItems);
-  }, [appState, themaItems]);
-
-  const themasState = useMemo(
-    () => ({
-      items,
-      isLoading: !isAppStateReady,
-    }),
-    [items, appState, themaItemsWithAppState, isAppStateReady]
-  );
-
-  return themasState;
+  return {
+    items,
+    isLoading: !isAppStateReady,
+  };
 }
 
 export function useThemaMenuItemsByThemaID() {
@@ -64,12 +52,18 @@ export function useThemaMenuItemsByThemaID() {
   return themaById;
 }
 
-export function useThemaMenuItemByThemaID(themaID: ThemaID) {
+export function useThemaMenuItemByThemaID<ID extends string = string>(
+  themaID: ID
+): ThemaMenuItemTransformed<ID> | null {
   const itemsById = useThemaMenuItemsByThemaID();
-  return itemsById[themaID];
+  return itemsById[themaID]
+    ? (itemsById[themaID] as ThemaMenuItemTransformed<ID>)
+    : null;
 }
 
-export function useThemaBreadcrumbs(themaID: ThemaID): LinkProps[] {
+export function useThemaBreadcrumbs<ID extends string = string>(
+  themaID: ID
+): LinkProps[] {
   const themaPaginaBreadcrumb = useThemaMenuItemByThemaID(themaID);
   const location = useLocation();
   const from = location?.state?.from;
@@ -82,7 +76,7 @@ export function useThemaBreadcrumbs(themaID: ThemaID): LinkProps[] {
           title: themaPaginaBreadcrumb?.title,
         }
       : null,
-    fromPageType === 'listpage'
+    themaPaginaBreadcrumb && fromPageType === 'listpage'
       ? {
           to: from,
           title: 'Lijst',

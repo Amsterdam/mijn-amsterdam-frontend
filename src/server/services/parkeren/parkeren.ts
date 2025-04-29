@@ -1,4 +1,9 @@
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
+import {
+  hasPermitsOrPermitRequests,
+  fetchSSOURL,
+} from './parkeren-egis-service';
+import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
@@ -6,12 +11,7 @@ import {
 import { isMokum } from '../../../universal/helpers/brp';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
-import { fetchBRP } from '../brp';
-import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
-import {
-  hasPermitsOrPermitRequests,
-  fetchSSOURL,
-} from './parkeren-egis-service';
+import { fetchBRP } from '../profile/brp';
 
 export async function fetchParkeren(
   requestID: RequestID,
@@ -25,7 +25,7 @@ export async function fetchParkeren(
   const shouldCheckForPermitsOrPermitRequests =
     isProfileTypePrivate &&
     livesOutsideAmsterdam &&
-    FeatureToggle.parkerenCheckForProductAndPermitsActive;
+    featureToggle.parkerenCheckForProductAndPermitsActive;
 
   let isKnown = true;
 

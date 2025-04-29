@@ -3,6 +3,7 @@ import { vi, describe, it, expect } from 'vitest';
 
 import { App } from './App';
 import { bffApi } from '../testing/utils';
+import { MIJN_AMSTERDAM } from '../universal/config/app';
 
 const mocks = vi.hoisted(() => {
   return {
@@ -50,7 +51,7 @@ describe('App', () => {
 
     const screen = render(<App />);
 
-    expect(screen.getAllByText('Mijn Amsterdam').length).toBe(2);
+    expect(screen.getAllByText(MIJN_AMSTERDAM).length).toBe(2);
     await screen.findByText('Voor particulieren en eenmanszaken');
     expect(
       screen.getByText('Voor particulieren en eenmanszaken')
@@ -71,7 +72,7 @@ describe('App', () => {
 
     const screen = render(<App />);
 
-    expect(screen.getAllByText('Mijn Amsterdam').length).toBe(2);
+    expect(screen.getAllByText(MIJN_AMSTERDAM).length).toBe(2);
     await screen.findByRole('heading', { name: /Recente berichten/i });
 
     expect(

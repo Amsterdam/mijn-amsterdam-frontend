@@ -1,9 +1,7 @@
 import { createContext } from 'react';
 
-import { FeatureToggle } from '../universal/config/feature-toggles';
 import { apiPristineResult } from '../universal/helpers/api';
 import { AppState } from '../universal/types/App.types';
-import { zorgnedLeerlingenvervoerActive } from './pages/Jeugd/Jeugd-thema-config';
 
 export const PRISTINE_APPSTATE: AppState = {
   // Generated
@@ -12,7 +10,6 @@ export const PRISTINE_APPSTATE: AppState = {
   VAREN: apiPristineResult(
     { reder: null, zaken: [] },
     {
-      isActive: FeatureToggle.varenActive,
       profileTypes: ['commercial'],
     }
   ),
@@ -25,7 +22,6 @@ export const PRISTINE_APPSTATE: AppState = {
       facturen: null,
     },
     {
-      isActive: FeatureToggle.afisActive,
       profileTypes: ['private', 'commercial'],
     }
   ),
@@ -39,7 +35,6 @@ export const PRISTINE_APPSTATE: AppState = {
     }
   ),
   KREFIA: apiPristineResult(null, {
-    isActive: FeatureToggle.krefiaActive,
     profileTypes: ['private'],
   }),
   WPI_AANVRAGEN: apiPristineResult([], {
@@ -61,45 +56,33 @@ export const PRISTINE_APPSTATE: AppState = {
     },
     {
       profileTypes: ['private'],
-      isActive: FeatureToggle.hliThemaActive,
     }
   ),
   SVWI: apiPristineResult(null, {
-    isActive: FeatureToggle.svwiLinkActive,
     profileTypes: ['private'],
   }),
   WMO: apiPristineResult([], {
     profileTypes: ['private'],
   }),
   JEUGD: apiPristineResult([], {
-    isActive: zorgnedLeerlingenvervoerActive,
     profileTypes: ['private'],
   }),
   ERFPACHT: apiPristineResult(null, {
-    isActive: FeatureToggle.erfpachtActive,
     profileTypes: ['private', 'commercial'],
   }),
-  SUBSIDIE: apiPristineResult(
-    { isKnown: false, notifications: [] },
-    { isActive: FeatureToggle.subsidieActive }
-  ),
+  SUBSIDIES: apiPristineResult({ isKnown: false, notifications: [] }),
   BELASTINGEN: apiPristineResult(
     { isKnown: true },
     { profileTypes: ['private'] }
   ),
   BEZWAREN: apiPristineResult([], {
-    isActive: FeatureToggle.bezwarenActive,
     profileTypes: ['private'],
   }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),
-  OVERTREDINGEN: apiPristineResult(
-    { isKnown: false },
-    { isActive: FeatureToggle.overtredingenActive }
-  ),
+  OVERTREDINGEN: apiPristineResult({ isKnown: false }),
   PARKEREN: apiPristineResult(
     { isKnown: true, url: undefined, vergunningen: [] },
     {
-      isActive: FeatureToggle.parkerenActive,
       profileTypes: ['private', 'commercial'],
     }
   ),
@@ -119,7 +102,6 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   KLANT_CONTACT: apiPristineResult([], {
     profileTypes: ['private'],
-    isActive: FeatureToggle.contactmomentenActive,
   }),
   PROFILE: apiPristineResult(null, {
     profileTypes: ['private-attributes'],
@@ -138,19 +120,15 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
 
-  KLACHTEN: apiPristineResult(
-    { aantal: 0, klachten: [] },
-    { profileTypes: ['private'] }
-  ),
+  KLACHTEN: apiPristineResult([], { profileTypes: ['private'] }),
 
   HORECA: apiPristineResult([]),
 
   AVG: apiPristineResult(null, {
-    isActive: FeatureToggle.avgActive,
     profileTypes: ['private'],
   }),
 
-  BODEM: apiPristineResult(null, { isActive: FeatureToggle.bodemActive }),
+  BODEM: apiPristineResult(null),
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

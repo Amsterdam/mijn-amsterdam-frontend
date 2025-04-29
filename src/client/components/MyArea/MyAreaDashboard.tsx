@@ -10,11 +10,9 @@ import { isLoading } from '../../../universal/helpers/api';
 import { isMokum } from '../../../universal/helpers/brp';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
 import LoadingContent from '../LoadingContent/LoadingContent';
 
 export function MyAreaDashboard() {
-  const termReplace = useTermReplacement();
   const profileType = useProfileTypeValue();
   const ref = useRef<HTMLDivElement | null>(null);
   const { BRP, KVK } = useAppStateGetter();
@@ -27,7 +25,7 @@ export function MyAreaDashboard() {
       <MyAreaLoader isDashboard={true} />
       <NavLink className={styles.NavLink} to={routeConfig.themaPage.path}>
         <span className={styles.NavLinkContentWrap}>
-          <Heading level={3}>{termReplace(themaTitle)}</Heading>
+          <Heading level={3}>{themaTitle}</Heading>
           {isLoadingBrpKvk && (
             <LoadingContent barConfig={[['200px', '30px', '20px']]} />
           )}
@@ -39,8 +37,8 @@ export function MyAreaDashboard() {
                 </Paragraph>
               ) : (
                 <Paragraph>
-                  Klik voor een overzicht van gemeentelijke informatie rond uw{' '}
-                  {termReplace('eigen woning')}.
+                  Klik voor een overzicht van gemeentelijke informatie rond uw
+                  adres.
                 </Paragraph>
               )}
             </>

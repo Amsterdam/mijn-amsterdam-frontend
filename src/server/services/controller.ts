@@ -14,29 +14,30 @@ import { queryParams, sendMessage } from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
+import { fetchMyLocation } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms/cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
 import { fetchHorecaVergunningen } from './horeca/horeca';
+import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 import { fetchAllKlachten } from './klachten/klachten';
-import { fetchKrefia } from './krefia';
-import { fetchKVK } from './kvk';
+import { fetchKrefia } from './krefia/krefia';
 import { captureException } from './monitoring';
-import { fetchMyLocation } from './my-locations';
 import { fetchParkeren } from './parkeren/parkeren';
-import { fetchProfile } from './profile';
-import { fetchContactmomenten } from './salesforce/contactmomenten';
 import {
   fetchBelasting,
   fetchMilieuzone,
   fetchOvertredingen,
   fetchSubsidie,
-} from './simple-connect';
-import { fetchSVWI } from './simple-connect/svwi';
+} from './patroon-c';
+import { fetchSVWI } from './patroon-c/svwi';
+import { fetchBRP } from './profile/brp';
+import { fetchKVK } from './profile/kvk';
+import { fetchProfile } from './profile/profile';
+import { fetchContactmomenten } from './salesforce/contactmomenten';
 import { fetchNotificationsWithTipsInserted } from './tips-and-notifications';
 import { fetchToeristischeVerhuur } from './toeristische-verhuur/toeristische-verhuur';
 import { fetchVaren } from './varen/varen';
@@ -49,7 +50,6 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
-import { fetchLeerlingenvervoer } from './jeugd/jeugd';
 
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
@@ -149,7 +149,7 @@ const WPI_TOZO = callAuthenticatedService(fetchTozo);
 const BELASTINGEN = callAuthenticatedService(fetchBelasting);
 const MILIEUZONE = callAuthenticatedService(fetchMilieuzone);
 const OVERTREDINGEN = callAuthenticatedService(fetchOvertredingen);
-const SUBSIDIE = callAuthenticatedService(fetchSubsidie);
+const SUBSIDIES = callAuthenticatedService(fetchSubsidie);
 const KLANT_CONTACT = callAuthenticatedService(fetchContactmomenten); // For now salesforcre only consists of contactmomenten.
 
 // Location, address, based services
@@ -195,7 +195,7 @@ const SERVICES_INDEX = {
   OVERTREDINGEN,
   PARKEREN,
   PROFILE,
-  SUBSIDIE,
+  SUBSIDIES,
   SVWI,
   KLANT_CONTACT,
   TOERISTISCHE_VERHUUR,
@@ -238,7 +238,7 @@ type CommercialServices = Pick<
   | 'NOTIFICATIONS'
   | 'OVERTREDINGEN'
   | 'PARKEREN'
-  | 'SUBSIDIE'
+  | 'SUBSIDIES'
   | 'TOERISTISCHE_VERHUUR'
   | 'VAREN'
   | 'VERGUNNINGEN'
@@ -274,7 +274,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     OVERTREDINGEN,
     PARKEREN,
     KLANT_CONTACT,
-    SUBSIDIE,
+    SUBSIDIES,
     SVWI,
     TOERISTISCHE_VERHUUR,
     VERGUNNINGEN,
@@ -308,7 +308,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     NOTIFICATIONS,
     OVERTREDINGEN,
     PARKEREN,
-    SUBSIDIE,
+    SUBSIDIES,
     TOERISTISCHE_VERHUUR,
     VAREN,
     VERGUNNINGEN,

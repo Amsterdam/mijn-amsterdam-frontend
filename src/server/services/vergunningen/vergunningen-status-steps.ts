@@ -1,5 +1,5 @@
 import { RVVSloterweg, VergunningFrontend } from './config-and-types';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 import {
   DecosZaakBase,
   DecosZaakFrontend,

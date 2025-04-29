@@ -6,9 +6,9 @@ import { describe, expect, it, vi, Mock } from 'vitest';
 
 import DocumentListV2 from './DocumentListV2';
 import { GenericDocument } from '../../../universal/types/App.types';
+import * as Monitoring from '../../helpers/monitoring';
 import * as analytics from '../../hooks/analytics.hook';
 import { trackDownload } from '../../hooks/analytics.hook';
-import * as Monitoring from '../../helpers/monitoring';
 
 vi.mock('../../hooks/analytics.hook');
 
@@ -69,8 +69,7 @@ describe('DocumentListV2', () => {
         'pdf',
         // The additional leading / is representing window.location.pathname
         '//downloads/' + ITEMS[0].title + '.pdf',
-        'private',
-        ''
+        'private'
       )
     );
 
@@ -109,8 +108,7 @@ describe('DocumentListV2', () => {
         'pdf',
         // The additional leading / is representing window.location.pathname
         '/compleet/ander/pad.pdf',
-        'private',
-        ''
+        'private'
       )
     );
 

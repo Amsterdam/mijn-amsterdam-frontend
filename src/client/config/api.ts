@@ -2,9 +2,7 @@ import {
   ApiResponse_DEPRECATED,
   FailedDependencies,
 } from '../../universal/helpers/api';
-import { ApiError, AppState } from '../../universal/types';
-import { errorMessage as jeugdErrorMessage } from '../pages/Jeugd/Jeugd-thema-config';
-import { errorMessage as profileErrorMessage } from '../pages/Profile/Profile-thema-config';
+import { ApiError, AppState } from '../../universal/types/App.types';
 
 export const BFF_API_BASE_URL = import.meta.env.REACT_APP_BFF_API_URL;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
@@ -44,8 +42,9 @@ export const ExcludePageViewTrackingUrls = [
  * @deprecated
  */
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  ...profileErrorMessage,
-  ...jeugdErrorMessage,
+  BRP: 'Persoonlijke gegevens, paspoort, ID-kaart',
+  KVK: 'Mijn onderneming',
+  JEUGD: 'Jeugd: aanvragen en voorzieningen',
   AFIS: 'Facturen en betalen',
   AFIS_facturenoverview: 'Facturen en betalen: Overzicht van facturen',
   AFIS_afgehandeld: 'Facturen en betalen: Afgehandelde facturen',
@@ -75,7 +74,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   OVERTREDINGEN: 'Overtredingen voertuigen',
   PARKEREN: 'Parkeren',
   PARKEREN_vergunningen: 'Parkeervergunningen',
-  SUBSIDIE: 'Subsidies',
+  SUBSIDIES: 'Subsidies',
   SVWI: 'Werk & Inkomen portaal',
   TOERISTISCHE_VERHUUR_bbVergunningen: 'Uw vergunning Bed & Breakfast',
   TOERISTISCHE_VERHUUR_lvvRegistraties:

@@ -1,8 +1,8 @@
 import { generatePath } from 'react-router';
 
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
+import { routeConfig } from '../../../client/pages/Thema/Zorg/Zorg-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import { AppRoutes } from '../../../universal/config/routes';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
@@ -70,7 +70,7 @@ function transformVoorzieningenForFrontend(
     );
 
     if (lineItems?.length) {
-      const route = generatePath(AppRoutes['ZORG/VOORZIENING'], {
+      const route = generatePath(routeConfig.detailPage.path, {
         id,
       });
 

@@ -1,5 +1,5 @@
 import { AVGRequestFrontend } from './types';
-import { StatusLineItem } from '../../../universal/types';
+import { StatusLineItem } from '../../../universal/types/App.types';
 
 function createStatusLineItem(
   id: string,

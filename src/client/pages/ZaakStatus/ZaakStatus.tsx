@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useLocation, useNavigate } from 'react-router';
 
+import { ZAAK_STATUS_PAGE_DOCUMENT_TITLE } from './ZaakStatus-routes';
 import styles from './ZaakStatus.module.scss';
-import { AppRoute, AppRoutes } from '../../../universal/config/routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
-import { SomeOtherString } from '../../../universal/helpers/types';
 import { AppStateBase, LinkProps } from '../../../universal/types/App.types';
 import ErrorAlert from '../../components/Alert/Alert';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
@@ -18,6 +17,12 @@ import {
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
+import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
+import { DashboardRoute } from '../Dashboard/Dashboard-routes';
+import * as HORECA from '../Thema/Horeca/Horeca-thema-config';
+import * as PARKEREN from '../Thema/Parkeren/Parkeren-thema-config';
+import * as TOERISTISCHE_VERHUUR from '../Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import * as VERGUNNINGEN from '../Thema/Vergunningen/Vergunningen-thema-config';
 
 const ITEM_NOT_FOUND = 'not-found';
 const STATE_ERROR = 'state-error';
@@ -30,7 +35,7 @@ type ThemaQueryParam =
   | 'parkeren';
 
 type PageRouteResolver = {
-  baseRoute: AppRoute | SomeOtherString;
+  baseRoute: string;
   getRoute: (
     detailPageItemId: string,
     appState: AppStateBase
@@ -102,14 +107,21 @@ function baseThemaConfig<K extends keyof AppStateBase>(
 }
 
 const pageRouteResolvers: PageRouteResolvers = {
-  vergunningen: baseThemaConfig(AppRoutes.VERGUNNINGEN, 'VERGUNNINGEN'),
-  horeca: baseThemaConfig(AppRoutes.HORECA, 'HORECA'),
-  parkeren: baseThemaConfig(AppRoutes.PARKEREN, 'PARKEREN', (stateSlice) => {
-    return stateSlice.content?.vergunningen ?? null;
-  }),
+  vergunningen: baseThemaConfig(
+    VERGUNNINGEN.routeConfig.themaPage.path,
+    VERGUNNINGEN.themaId
+  ),
+  horeca: baseThemaConfig(HORECA.routeConfig.themaPage.path, HORECA.themaId),
+  parkeren: baseThemaConfig(
+    PARKEREN.routeConfig.themaPage.path,
+    PARKEREN.themaId,
+    (stateSlice) => {
+      return stateSlice.content?.vergunningen ?? null;
+    }
+  ),
   toeristischeVerhuur: baseThemaConfig(
-    AppRoutes.TOERISTISCHE_VERHUUR,
-    'TOERISTISCHE_VERHUUR',
+    TOERISTISCHE_VERHUUR.routeConfig.themaPage.path,
+    TOERISTISCHE_VERHUUR.themaId,
     (stateSlice) => {
       return stateSlice.content?.vakantieverhuurVergunningen ?? null;
     }
@@ -146,12 +158,14 @@ function useNavigateToPage(queryParams: URLSearchParams) {
 }
 
 export function ZaakStatus() {
+  useHTMLDocumentTitle({ documentTitle: ZAAK_STATUS_PAGE_DOCUMENT_TITLE });
+
   const appStateReady = useAppStateReady();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const pageRoute = useNavigateToPage(queryParams);
 
-  let linkRoute: PageRouteResolver['baseRoute'] = AppRoutes.HOME;
+  let linkRoute: PageRouteResolver['baseRoute'] = DashboardRoute.route;
   let linkText = 'Ga naar het dashboard';
 
   // Only needed if zaak with the is ID not found.

@@ -1,4 +1,4 @@
-import { GenericDocument } from '../../../universal/types';
+import { GenericDocument } from '../../../universal/types/App.types';
 
 export const ZORGNED_GEMEENTE_CODE = '0363';
 

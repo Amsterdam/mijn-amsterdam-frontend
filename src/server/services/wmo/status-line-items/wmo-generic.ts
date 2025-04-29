@@ -4,7 +4,7 @@ import {
   defaultDateFormat,
   isDateInPast,
 } from '../../../../universal/helpers/date';
-import { GenericDocument } from '../../../../universal/types';
+import { GenericDocument } from '../../../../universal/types/App.types';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemTransformerConfig,

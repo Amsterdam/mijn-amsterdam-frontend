@@ -1,12 +1,15 @@
 import { fetchIsKnownInAFIS } from './afis';
 import { AfisFactuur, AfisFactuurStatus } from './afis-types';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { htmlTextContent } from '../../helpers/text';
 
@@ -42,12 +45,13 @@ export function createAfisFacturenNotification(
 
   const datePublished = new Date().toISOString();
   const cta = 'Bekijk uw openstaande facturen';
-  const linkTo = AppRoutes.AFIS;
+  const linkTo = routeConfig.themaPage.path;
 
   return {
     id: `facturen-open-notification`,
     datePublished,
-    themaID: ThemaIDs.AFIS,
+    themaID: themaId,
+    themaTitle: themaTitle,
     title,
     description,
     link: {

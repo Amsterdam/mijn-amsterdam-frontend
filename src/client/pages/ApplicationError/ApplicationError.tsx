@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import {
   Footer,
@@ -17,10 +17,13 @@ import {
   PageContentV2,
   TextPageV2,
 } from '../../components/Page/Page';
-import { ExternalUrls } from '../../config/external-urls';
 import { useUsabilla } from '../../hooks/useUsabilla';
 
 function ApplicationErrorContent({ error }: { error?: Error }) {
+  useEffect(() => {
+    document.title = 'Kritieke applicatie fout - Mijn Amsterdam';
+  }, []);
+
   return (
     <>
       <PageContentCell startWide={1} spanWide={12}>
@@ -52,7 +55,7 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
         <Paragraph className="ams-mb--xl">
           Kijk bij{' '}
           <Link
-            href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+            href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
             rel="noopener noreferrer"
           >
             veelgestelde vragen over Mijn Amsterdam

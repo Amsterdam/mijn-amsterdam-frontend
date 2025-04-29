@@ -1,54 +1,16 @@
 import { LatLngLiteral } from 'leaflet';
 
+import type {
+  AfvalFractionData,
+  AfvalFractionInformationTransformed,
+  AFVALSourceData,
+} from './afval.types';
 import { labels } from './translations';
 import { routeConfig as buurtRouteConfig } from '../../../client/components/MyArea/MyArea-thema-config';
-import {
-  AfvalFractionCode,
-  AfvalFractionInformationTransformed,
-  LinkProps,
-} from '../../../universal/types';
+import type { LinkProps } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { sanitizeCmsContent } from '../cms/cms-content';
-
-export interface AfvalFractionData {
-  straatnaam: string;
-  huisnummer: number;
-  huisletter: string | null;
-  huisnummertoevoeging: string | null;
-  postcode: string;
-  woonplaatsnaam: string;
-  afvalwijzerInstructie: string | null;
-  afvalwijzerPerXWeken: string | null;
-  afvalwijzerBuitenzettenVanafTot: string | null;
-  afvalwijzerBuitenzettenVanaf: string | null;
-  afvalwijzerBuitenzettenTot: string | null;
-  afvalwijzerAfvalkalenderOpmerking: string | null;
-  afvalwijzerAfvalkalenderFrequentie: string | null;
-  afvalwijzerFractieNaam: string;
-  afvalwijzerFractieCode: AfvalFractionCode;
-  afvalwijzerRoutetypeNaam: string | null;
-  afvalwijzerOphaaldagen: string | null;
-  afvalwijzerAfvalkalenderMelding: string | null;
-  afvalwijzerAfvalkalenderVan: string | null;
-  afvalwijzerAfvalkalenderTot: string | null;
-  afvalwijzerInstructie2: string | null;
-  afvalwijzerOphaaldagen2: string[] | string | null;
-  afvalwijzerWaar: string | null;
-  afvalwijzerBuitenzetten: string | null;
-  afvalwijzerBasisroutetypeCode: string | null;
-  afvalwijzerButtontekst: string | null;
-  afvalwijzerUrl: string | null;
-  gbdBuurtCode: string | null;
-  bagNummeraanduidingId: string | null;
-  gebruiksdoelWoonfunctie: boolean;
-}
-
-export interface AFVALSourceData {
-  _embedded: {
-    afvalwijzer: AfvalFractionData[];
-  };
-}
 
 function formatKalenderOpmerking(
   fractionData: AfvalFractionData

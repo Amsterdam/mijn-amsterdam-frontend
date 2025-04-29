@@ -1,11 +1,14 @@
 import { generatePath } from 'react-router';
 
 import { jeugdStatusLineItemsConfig } from './status-line-items';
-import { routeConfig } from '../../../client/pages/Jeugd/Jeugd-thema-config';
+import { routeConfig } from '../../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { GenericDocument, ZaakDetail } from '../../../universal/types';
+import {
+  GenericDocument,
+  ZaakDetail,
+} from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getLatestStatus, getLatestStatusDate } from '../../helpers/zaken';
 import { BffEndpoints } from '../../routing/bff-routes';

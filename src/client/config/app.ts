@@ -1,6 +1,5 @@
 // Legacy export, these used to live in this file
 export { Colors } from '../../universal/config/colors';
-export { ExternalUrls } from './external-urls';
 
 // NOTE: Keep up-to-date with _breakpoints.scss
 export const Breakpoints = {
@@ -14,3 +13,4 @@ export const PLACEHOLDER_IMAGE_URL =
   'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
 
 export const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 3;
+export const MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND = 5;

@@ -8,11 +8,14 @@ import {
   ErfpachtDossiersDetailSource,
   ErfpachtDossierSource,
   ErfpachtDossierPropsFrontend,
+  type ErfpachtDossierFactuurFrontend,
+  type ErfpachtDossiersResponseSource,
 } from './erfpacht-types';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { jsonCopy, sortAlpha } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -20,11 +23,17 @@ function transformIsErfpachterResponseSource(
   responseData: ErfpachtErpachterResponseSource,
   profileType: ProfileType
 ): ErfpachtErpachterResponse {
-  return {
+  const response: ErfpachtErpachterResponse = {
     isKnown: !!responseData?.erfpachter,
     relatieCode: responseData?.relationCode,
     profileType,
   };
+
+  if (response.profileType === 'commercial') {
+    response.url = getFromEnv('BFF_SSO_URL_ERFPACHT_ZAKELIJK') ?? '';
+  }
+
+  return response;
 }
 
 function getDossierNummerUrlParam(dossierNummer: string) {
@@ -70,20 +79,27 @@ export function transformErfpachtDossierProperties<
   }
 
   if ('facturen' in dossier && 'facturen' in dossier.facturen) {
-    dossier.facturen.facturen = dossier.facturen.facturen?.map((factuur) => {
-      factuur.vervalDatum = defaultDateFormat(factuur.vervalDatum);
-      factuur.dossierNummerUrlParam = getDossierNummerUrlParam(
-        dossier.dossierNummer
-      );
-      return factuur;
-    });
+    const facturen: ErfpachtDossierFactuurFrontend[] =
+      dossier.facturen.facturen?.map((factuur) => {
+        const updatedFactuur: ErfpachtDossierFactuurFrontend = {
+          ...factuur,
+          vervalDatum: defaultDateFormat(factuur.vervalDatum),
+          dossierNummerUrlParam: getDossierNummerUrlParam(
+            dossier.dossierNummer
+          ),
+        };
+
+        return updatedFactuur;
+      }) ?? [];
+
+    dossier.facturen.facturen = facturen;
   }
   const zaak: ErfpachtDossierPropsFrontend<T> = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
     id: dossierNummerUrlParam,
     link: {
-      to: generatePath(AppRoutes['ERFPACHT/DOSSIERDETAIL'], {
+      to: generatePath(routeConfig.detailPage.path, {
         dossierNummerUrlParam,
       }),
       title,
@@ -94,9 +110,9 @@ export function transformErfpachtDossierProperties<
 }
 
 export function transformDossierResponse(
-  responseDataSource: ErfpachtDossiersResponse,
+  responseDataSource: ErfpachtDossiersResponseSource,
   relatieCode: ErfpachtErpachterResponseSource['relationCode']
-) {
+): ErfpachtDossiersResponse {
   const responseData: ErfpachtDossiersResponse = responseDataSource
     ? jsonCopy(responseDataSource)
     : {};
@@ -144,10 +160,11 @@ export async function fetchErfpacht(
     authProfileAndToken
   );
 
-  if (
-    !!erfpachterResponse.content?.isKnown &&
-    authProfileAndToken.profile.profileType !== 'commercial' // Commerciële  gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
-  ) {
+  // Commerciële gebruikers (EHerkenning) maken gebruik van een eigen portaal (Patroon C)
+  const isNotCommercial =
+    authProfileAndToken.profile.profileType !== 'commercial';
+
+  if (!!erfpachterResponse.content?.isKnown && isNotCommercial) {
     return requestData<ErfpachtDossiersResponse>(
       {
         ...config,

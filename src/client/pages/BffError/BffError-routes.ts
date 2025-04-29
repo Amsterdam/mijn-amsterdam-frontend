@@ -8,3 +8,5 @@ export const BffErrorRoutes = [
     private: true,
   },
 ];
+
+export const BFF500_PAGE_DOCUMENT_TITLE = '500 Server Error | Mijn Amsterdam';

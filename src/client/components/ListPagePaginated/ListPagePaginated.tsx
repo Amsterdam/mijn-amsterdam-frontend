@@ -3,7 +3,7 @@ import { ReactNode, useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { generatePath, Params, useNavigate, useParams } from 'react-router';
 
-import { LinkProps, ZaakDetail } from '../../../universal/types';
+import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
 import ErrorAlert from '../Alert/Alert';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -73,6 +73,11 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
 
   const total = totalCount ?? items.length;
 
+  // It's easy to pass a pre-generated path with the page param omitted so let's be kind and add it if it's missing.
+  const appRouteWithPageParam = !appRoute.includes(':page')
+    ? `${appRoute}/:page`
+    : appRoute;
+
   return (
     <OverviewPageV2>
       <PageContentV2>
@@ -111,7 +116,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
                   pageSize={pageSize}
                   currentPage={currentPage}
                   onPageClick={(page: number) => {
-                    const path = generatePath(appRoute, {
+                    const path = generatePath(appRouteWithPageParam, {
                       ...appRouteParams,
                       page,
                     });

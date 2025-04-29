@@ -2,7 +2,7 @@ import { isAfter, parseISO } from 'date-fns';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
-import { HLIRegeling, HLIresponseData } from './hli-regelingen-types';
+import { HLIRegelingFrontend, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
@@ -10,14 +10,17 @@ import {
   filterCombineRtmData,
   heeftDeel2VanDeRegelingNietVoltooid,
 } from './status-line-items/regeling-rtm';
-import { AppRoutes } from '../../../universal/config/routes';
+import { routeConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
 } from '../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { GenericDocument, StatusLineItem } from '../../../universal/types';
+import {
+  GenericDocument,
+  StatusLineItem,
+} from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -108,7 +111,7 @@ async function transformRegelingForFrontend(
 ) {
   const id = aanvraag.id;
 
-  const route = generatePath(AppRoutes['HLI/REGELING'], {
+  const route = generatePath(routeConfig.detailPage.path, {
     id,
     regeling: slug(aanvraag.titel),
   });
@@ -122,7 +125,7 @@ async function transformRegelingForFrontend(
     isActual = false;
   }
 
-  const regelingFrontend: HLIRegeling = {
+  const regelingFrontend: HLIRegelingFrontend = {
     id,
     title: transformRegelingTitle(aanvraag),
     isActual,
@@ -148,8 +151,8 @@ async function transformRegelingenForFrontend(
   authProfileAndToken: AuthProfileAndToken,
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[],
   today: Date
-): Promise<HLIRegeling[]> {
-  const regelingenFrontend: HLIRegeling[] = [];
+): Promise<HLIRegelingFrontend[]> {
+  const regelingenFrontend: HLIRegelingFrontend[] = [];
 
   let aanvragenWithDocumentsCombined = filterCombineUpcPcvData(aanvragen);
   aanvragenWithDocumentsCombined = filterCombineRtmData(

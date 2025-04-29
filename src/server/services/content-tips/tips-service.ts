@@ -1,6 +1,7 @@
 import { ServiceResults, ContentTipSource } from './tip-types';
 import { tips } from './tips-content';
-import { MyNotification } from '../../../universal/types';
+import { MIJN_AMSTERDAM } from '../../../universal/config/app';
+import { MyNotification } from '../../../universal/types/App.types';
 
 export function prefixTipNotification(
   notification: MyNotification
@@ -75,6 +76,7 @@ export function fetchContentTips(
       description: t.description,
       link: t.link,
       themaID: t.themaID,
+      themaTitle: t.themaTitle ?? MIJN_AMSTERDAM,
       tipReason: t.reason,
       isTip: true,
     };

@@ -2,15 +2,14 @@ import { useCallback, useState } from 'react';
 
 import { Icon } from '@amsterdam/design-system-react';
 import { AlertIcon, DownloadIcon } from '@amsterdam/design-system-react-icons';
+import { HttpStatusCode } from 'axios';
 import classnames from 'classnames';
 
 import styles from './DocumentLink.module.scss';
-import { HttpStatusCode } from 'axios';
-import { GenericDocument } from '../../../universal/types';
+import type { GenericDocument } from '../../../universal/types/App.types';
 import { captureException } from '../../helpers/monitoring';
 import { trackDownload } from '../../hooks/analytics.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { useUserCity } from '../../hooks/useUserCity';
 import { MaLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
 
@@ -48,7 +47,6 @@ export function DocumentLink({
   const [isErrorVisible, setErrorVisible] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
-  const userCity = useUserCity();
 
   const onClickDocumentLink = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -85,13 +83,7 @@ export function DocumentLink({
 
           const fileType = trackingUrl.split('.').pop();
 
-          trackDownload(
-            document.title,
-            fileType,
-            trackingUrl,
-            profileType,
-            userCity ?? ''
-          );
+          trackDownload(document.title, fileType, trackingUrl, profileType);
 
           if (!blob) {
             downloadFile(document);
@@ -124,7 +116,7 @@ export function DocumentLink({
         });
       return false;
     },
-    [document, profileType, isLoading, trackPath, userCity, setErrorVisible]
+    [document, profileType, isLoading, trackPath, setErrorVisible]
   );
 
   return (

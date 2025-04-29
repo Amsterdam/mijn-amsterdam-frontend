@@ -2,9 +2,8 @@ import { Icon, UnorderedList } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MyThemasPanel.module.scss';
-import { AppRoutes } from '../../../universal/config/routes';
 import { ThemaMenuItemTransformed } from '../../config/thema-types';
-import { ThemaIcons } from '../../config/themaIcons';
+import { GeneralInfoRoute } from '../../pages/GeneralInfo/GeneralInfo-routes';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
@@ -44,15 +43,13 @@ export function MyThemasPanel({
       >
         {items.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
-          const IconSVG_ = IconSVG || ThemaIcons[id];
           return (
             <UnorderedList.Item key={id}>
               <LinkComponent maVariant="fatNoUnderline" href={to}>
-                {IconSVG_ && (
-                  <span className={styles.ThemaLink}>
-                    <Icon svg={IconSVG_} size="level-4" square /> {title}
-                  </span>
-                )}
+                <span className={styles.ThemaLink}>
+                  {IconSVG && <Icon svg={IconSVG} size="level-4" square />}{' '}
+                  {title}
+                </span>
               </LinkComponent>
             </UnorderedList.Item>
           );
@@ -65,7 +62,7 @@ export function MyThemasPanel({
           </>
         )}
       </UnorderedList>
-      <MaRouterLink href={AppRoutes.GENERAL_INFO}>
+      <MaRouterLink href={GeneralInfoRoute.route}>
         Dit ziet u in Mijn Amsterdam
       </MaRouterLink>
     </>

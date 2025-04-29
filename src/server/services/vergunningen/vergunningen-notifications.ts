@@ -9,14 +9,17 @@ import {
 import { decosZaakTransformers } from './decos-zaken';
 import { fetchVergunningen } from './vergunningen';
 import { isNearEndDate } from './vergunningen-helpers';
-import { AppRoutes } from '../../../universal/config/routes';
-import { ThemaID, ThemaIDs } from '../../../universal/config/thema';
+import {
+  routeConfig,
+  themaId,
+  themaTitle,
+} from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { MyNotification } from '../../../universal/types';
+import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
 
@@ -65,12 +68,14 @@ export function getNotificationLabels(
   return null;
 }
 
-function getNotificationBase(
+function getNotificationBase<ID extends string>(
   vergunning: VergunningFrontend,
-  themaID: ThemaID
-): Pick<MyNotification, 'themaID' | 'id' | 'link'> {
+  themaID: ID,
+  themaTitle: string
+): Pick<MyNotification, 'themaID' | 'themaTitle' | 'id' | 'link'> {
   const notificationBaseProperties = {
     themaID: themaID,
+    themaTitle,
     id: `vergunning-${vergunning.id}-notification`,
     link: {
       to: vergunning.link.to,
@@ -81,7 +86,10 @@ function getNotificationBase(
 }
 
 function mergeNotificationProperties(
-  notificationBase: Pick<MyNotification, 'themaID' | 'id' | 'link'>,
+  notificationBase: Pick<
+    MyNotification,
+    'themaID' | 'themaTitle' | 'id' | 'link'
+  >,
   content: NotificationLabels,
   vergunning: VergunningFrontend
 ): MyNotification {
@@ -95,15 +103,23 @@ function mergeNotificationProperties(
   return { ...notificationBase, ...notificationLabels };
 }
 
-export function createVergunningNotification<DZ extends DecosZaakBase>(
+export function createVergunningNotification<
+  DZ extends DecosZaakBase,
+  ID extends string = string,
+>(
   vergunning: VergunningFrontend<DZ>,
   zaakTypeTransformer: DecosZaakTransformer<DZ>,
-  themaID: ThemaID
+  themaID: ID,
+  themaTitle: string
 ): MyNotification | null {
   const labels = zaakTypeTransformer.notificationLabels;
 
   if (labels) {
-    const notificationBase = getNotificationBase(vergunning, themaID);
+    const notificationBase = getNotificationBase(
+      vergunning,
+      themaID,
+      themaTitle
+    );
     const notificationLabels = getNotificationLabels(labels, vergunning);
     if (notificationLabels !== null) {
       return mergeNotificationProperties(
@@ -117,10 +133,14 @@ export function createVergunningNotification<DZ extends DecosZaakBase>(
   return null;
 }
 
-export function getVergunningNotifications<DZ extends DecosZaakBase>(
+export function getVergunningNotifications<
+  DZ extends DecosZaakBase,
+  ID extends string = string,
+>(
   vergunningen: VergunningFrontend<DZ>[],
   decosZaakTransformers: DecosZaakTransformer<DZ>[],
-  themaID: ThemaID
+  themaID: ID,
+  themaTitle: string
 ) {
   return vergunningen
     .map((vergunning) => {
@@ -130,7 +150,12 @@ export function getVergunningNotifications<DZ extends DecosZaakBase>(
       if (!zaakTransformer) {
         return null;
       }
-      return createVergunningNotification(vergunning, zaakTransformer, themaID);
+      return createVergunningNotification(
+        vergunning,
+        zaakTransformer,
+        themaID,
+        themaTitle
+      );
     })
     .filter(
       (notification: MyNotification | null): notification is MyNotification =>
@@ -145,14 +170,15 @@ export async function fetchVergunningenNotifications(
   const VERGUNNINGEN = await fetchVergunningen(
     requestID,
     authProfileAndToken,
-    AppRoutes['VERGUNNINGEN/DETAIL']
+    routeConfig.detailPage.path
   );
 
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
       decosZaakTransformers,
-      ThemaIDs.VERGUNNINGEN
+      themaId,
+      themaTitle
     );
 
     return apiSuccessResult({

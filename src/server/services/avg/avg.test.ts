@@ -3,21 +3,12 @@ import { describe, expect, beforeEach, afterEach, vi, it } from 'vitest';
 import { fetchAVG, fetchAVGNotifications, transformAVGResponse } from './avg';
 import avgThemasResponse from '../../../../mocks/fixtures/avg-themas.json';
 import apiResponse from '../../../../mocks/fixtures/avg.json';
-import { remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 describe('AVG', () => {
   const requestId = '456';
 
-  const profileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: '123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: '',
-    },
-    token: 'abc123',
-  };
+  const profileAndToken = getAuthProfileAndToken();
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -437,6 +428,7 @@ describe('AVG', () => {
                 to: '/avg/verzoek/1',
               },
               themaID: 'AVG',
+              themaTitle: 'AVG persoonsgegevens',
               title: 'AVG verzoek meer informatie nodig',
             },
             {
@@ -448,6 +440,7 @@ describe('AVG', () => {
                 to: '/avg/verzoek/2',
               },
               themaID: 'AVG',
+              themaTitle: 'AVG persoonsgegevens',
               title: 'AVG verzoek in behandeling',
             },
             {
@@ -460,6 +453,7 @@ describe('AVG', () => {
                 to: '/avg/verzoek/223',
               },
               themaID: 'AVG',
+              themaTitle: 'AVG persoonsgegevens',
               title: 'AVG verzoek afgehandeld',
             },
             {
@@ -472,6 +466,7 @@ describe('AVG', () => {
                 to: '/avg/verzoek/425',
               },
               themaID: 'AVG',
+              themaTitle: 'AVG persoonsgegevens',
               title: 'AVG verzoek afgehandeld',
             },
             {
@@ -484,6 +479,7 @@ describe('AVG', () => {
                 to: '/avg/verzoek/561',
               },
               themaID: 'AVG',
+              themaTitle: 'AVG persoonsgegevens',
               title: 'AVG verzoek meer informatie nodig',
             },
             {
@@ -495,6 +491,7 @@ describe('AVG', () => {
                 to: '/avg/verzoek/156',
               },
               themaID: 'AVG',
+              themaTitle: 'AVG persoonsgegevens',
               title: 'AVG verzoek ontvangen',
             },
           ],
