@@ -59,7 +59,7 @@ into other files as done in `src/client/pages/Profile` or `src/server/services/f
 **TODO: Describe thema concept + creation. See MIJN-11557**
 
 Configuration / static data and other related code for Thema's in the Front-end are put in `$Name-thema-config.ts` and `$Name-render-config.tsx` files. 
-The render config fiels are used for code related to React components where the thema config are intended to be used without React. This way these files can also be imported in the BFF without having that (backend) environment
+The render config fields are used for code related to React components where the thema config are intended to be used without React. This way these files can also be imported in the BFF without having that (backend) environment
 to be configured for React.
 
 An experimental `$Thema` generator can be found in `/scripts/generate-thema.js`. Use it like `node scripts/generate-thema.js --id $THEMA_ID --title 'Thema readable name' --zaakType $ThemaZaakFrontend --private --commercial --config thema,render`.
