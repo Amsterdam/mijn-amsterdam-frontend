@@ -307,6 +307,7 @@ if (hasThemaConfig) {
       encoding: 'utf-8',
     }
   );
+  console.log(`Thema config generated at ${fileNameThemaConfig}`);
 }
 
 if (hasRenderConfig) {
@@ -328,13 +329,8 @@ if (hasRenderConfig) {
       encoding: 'utf-8',
     }
   );
-}
-
-if (hasThemaConfig) {
-  console.log(`Thema config generated at ${fileNameThemaConfig}`);
-}
-if (hasRenderConfig) {
   console.log(`Render config generated at ${fileNameRenderConfig}`);
 }
+
 console.log('Done!');
 console.log('Please check the generated files and adjust them as needed.');
