@@ -1,6 +1,12 @@
 import { generatePath, type Params } from 'react-router';
 
 import {
+  isVergunningExpirable,
+  isVergunningExpired,
+  type VergunningAanvraag,
+  type VergunningExpirable,
+} from './Vergunningen-helpers';
+import {
   DecosZaakBase,
   WithDateRange,
 } from '../../../../server/services/decos/config-and-types';
@@ -99,16 +105,10 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-function isVergunningExpirable(vergunning: { isExpired?: boolean }) {
-  // isExpired is only present on vergunningen that have an end date.
-  return 'isExpired' in vergunning;
-}
-
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: <T extends VergunningFrontend>(vergunning: T) =>
-      !vergunning.processed,
+    filter: (vergunning: VergunningAanvraag) => !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
     listPageRoute: generatePath(routeConfig.listPage.path, {
@@ -119,11 +119,9 @@ export const tableConfig = {
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: <T extends VergunningFrontend>(vergunning: T) => {
+    filter: (vergunning: VergunningExpirable) => {
       if (isVergunningExpirable(vergunning)) {
-        return vergunning.steps.some(
-          (step) => step.status === 'Verlopen' && step.isActive
-        );
+        return isVergunningExpired(vergunning);
       }
       return false;
     },
@@ -137,11 +135,9 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: <T extends VergunningFrontend>(vergunning: T) => {
+    filter: (vergunning: VergunningAanvraag) => {
       if (isVergunningExpirable(vergunning)) {
-        return vergunning.steps.some(
-          (step) => step.status === 'Verlopen' && !step.isActive
-        );
+        return isVergunningExpired(vergunning);
       }
 
       return vergunning.processed;
