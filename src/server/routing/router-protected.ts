@@ -14,6 +14,7 @@ import {
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
+import { fetchAantalBewoners } from '../services/brp';
 import {
   NOTIFICATIONS,
   loadServicesAll,
@@ -25,7 +26,7 @@ import {
 } from '../services/decos/decos-route-handlers';
 import {
   fetchDecosDocument,
-  fetchWorkflowsRaw,
+  fetchDecosWorkflowDates,
 } from '../services/decos/decos-service';
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
 import {
@@ -35,7 +36,6 @@ import {
   handleUnblockStadspas,
 } from '../services/hli/hli-route-handlers';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
-import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
@@ -133,10 +133,22 @@ if (!IS_PRODUCTION) {
   router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
   router.get(
     BffEndpoints.DECOS_WORKFLOW_BY_KEY_RAW,
-    async (req: RequestWithQueryParams<{ key: string }>, res: Response) =>
+    async (
+      req: RequestWithQueryParams<{
+        key: string;
+        stepTitles?: string;
+        select?: string;
+      }>,
+      res: Response
+    ) =>
       res.send(
         req.query.key
-          ? await fetchWorkflowsRaw(res.locals.requestID, req.query.key)
+          ? await fetchDecosWorkflowDates(
+              res.locals.requestID,
+              req.query.key,
+              req.query.stepTitles?.split(',') ?? [],
+              req.query.select?.split(',')
+            )
           : 'no key provided'
       )
   );
