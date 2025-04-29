@@ -14,7 +14,6 @@ import {
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
 import { fetchLoodMetingDocument } from '../services/bodem/loodmetingen';
-import { fetchAantalBewoners } from '../services/brp';
 import {
   NOTIFICATIONS,
   loadServicesAll,
@@ -36,6 +35,7 @@ import {
   handleUnblockStadspas,
 } from '../services/hli/hli-route-handlers';
 import { fetchZorgnedLLVDocument } from '../services/jeugd/route-handlers';
+import { fetchAantalBewoners } from '../services/profile/brp';
 import { attachDocumentDownloadRoute } from '../services/shared/document-download-route-handler';
 import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning';
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';

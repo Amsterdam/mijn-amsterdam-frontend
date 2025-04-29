@@ -599,16 +599,19 @@ function transformDecosWorkflowKeysResponse(
   return workflowsResponseData.content?.map((workflow) => workflow.key) ?? [];
 }
 
-export async function fetchDecosWorkflowDates(
+export async function fetchDecosWorkflowDates<
+  ST extends DecosWorkflowStepTitle[] | undefined,
+>(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
-  stepTitles?: DecosWorkflowStepTitle[],
+  stepTitles?: ST,
   select: string[] = ['mark', 'date1', 'date2', 'text7']
 ): Promise<
-  | ApiResponse<DecosWorkflowDateByStepTitle>
-  | ApiSuccessResponse<
-      Array<{ key: string; instances: DecosWorkflowSource[] | null }>
-    >
+  ST extends undefined
+    ? ApiResponse<
+        Array<{ key: string; instances: DecosWorkflowSource[] | null }> | object
+      >
+    : ApiResponse<DecosWorkflowDateByStepTitle | any>
 > {
   const pickLatestWorkflow = !!stepTitles?.length;
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
@@ -652,7 +655,7 @@ export async function fetchDecosWorkflowDates(
           stepTitles,
           useRawResponse: false,
         })
-      : Promise.resolve(apiSuccessResult({}));
+      : apiSuccessResult({});
   }
 
   return Promise.all(
