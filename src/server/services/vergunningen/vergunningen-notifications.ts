@@ -33,7 +33,7 @@ export function getNotificationLabels(
   // Ignore formatting of the switch case statements for readability
   switch (true) {
     case notificationLabels.verlooptBinnenkort &&
-      vergunning.processed &&
+      activeStatus === 'Afgehandeld' &&
       isNearEndDate(vergunning.dateEnd, compareToDate):
       return notificationLabels.verlooptBinnenkort;
 
