@@ -47,7 +47,7 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
     ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      date2: dateEnd,
+      date7: dateEnd,
       date6: dateStart,
       text6: location,
     },

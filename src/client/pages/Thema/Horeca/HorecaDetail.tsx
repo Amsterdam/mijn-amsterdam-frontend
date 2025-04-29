@@ -25,11 +25,7 @@ function ExploitatieHorecaBedrijf({
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.location,
-    {
-      label: 'Begindatum',
-      content: vergunning.dateStartFormatted,
-      isVisible: vergunning.processed && vergunning.decision === 'Verleend',
-    },
+    () => (vergunning.processed ? commonTransformers.dateRange(vergunning) : null),,
     commonTransformers.decision,
   ]);
 
