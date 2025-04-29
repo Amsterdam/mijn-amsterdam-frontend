@@ -97,9 +97,8 @@ router.get(
 router.get(
   BffEndpoints.SEARCH_CONFIG,
   async (req: Request, res: Response, next: NextFunction) => {
-    const requestID = res.locals.requestID;
     try {
-      const response = await fetchSearchConfig(requestID, queryParams(req));
+      const response = await fetchSearchConfig(queryParams(req));
       return res.json(response);
     } catch (error) {
       next(error);
@@ -159,7 +158,6 @@ router.get(
       ) {
         const [[, datasetConfig]] = getDatasetEndpointConfig([datasetId]);
         response = await fetchDataset(
-          res.locals.requestID,
           datasetId,
           datasetConfig,
           {},

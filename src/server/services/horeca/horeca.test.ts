@@ -50,10 +50,7 @@ describe('horeca', () => {
       (getStatusSteps as Mock).mockReturnValue(['step1', 'step2']);
       (getDisplayStatus as Mock).mockReturnValue('displayStatus');
 
-      const result = await fetchHorecaVergunningen(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchHorecaVergunningen(authProfileAndToken);
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(2);
       expect(result.content?.[0]).toHaveProperty('transformed', true);
@@ -69,10 +66,7 @@ describe('horeca', () => {
         apiErrorResult('Error fetching Decos Zaken', null)
       );
 
-      const result = await fetchHorecaVergunningen(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchHorecaVergunningen(authProfileAndToken);
       expect(result.status).toBe('ERROR');
     });
   });
@@ -81,16 +75,14 @@ describe('horeca', () => {
     it('should return empty notifications if feature toggle is off', async () => {
       featureToggle.horecaActive = false;
 
-      const result = await fetchHorecaNotifications(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchHorecaNotifications(authProfileAndToken);
       expect(result.status).toBe('OK');
       expect(result.content?.notifications).toHaveLength(0);
     });
 
     it('should return notifications if fetchHorecaVergunningen is successful', async () => {
       featureToggle.horecaActive = true;
+
       (fetchDecosZaken as unknown as Mock).mockResolvedValue(
         apiSuccessResult([])
       );
@@ -99,23 +91,18 @@ describe('horeca', () => {
         'notification2',
       ]);
 
-      const result = await fetchHorecaNotifications(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchHorecaNotifications(authProfileAndToken);
       expect(result.status).toBe('OK');
       expect(result.content?.notifications).toHaveLength(2);
     });
 
     it('should return an error if fetchHorecaVergunningen fails', async () => {
       featureToggle.horecaActive = true;
+
       (fetchDecosZaken as unknown as Mock).mockResolvedValue(
         apiErrorResult('failed to fetch vergunningen', null)
       );
-      const result = await fetchHorecaNotifications(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchHorecaNotifications(authProfileAndToken);
       expect(result.status).toBe('DEPENDENCY_ERROR');
     });
   });

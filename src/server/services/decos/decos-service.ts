@@ -109,10 +109,7 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
  *
  */
 
-async function getUserKeys(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function getUserKeys(authProfileAndToken: AuthProfileAndToken) {
   const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
     formatUrl: (config) => {
@@ -134,7 +131,7 @@ async function getUserKeys(
       authProfileAndToken.profile.id
     );
     const requestConfig = { ...apiConfig, data: requestBody };
-    const request = requestData<AddressBookEntry[]>(requestConfig, requestID);
+    const request = requestData<AddressBookEntry[]>(requestConfig);
 
     bookSearches.push(request);
   }
@@ -159,7 +156,6 @@ async function transformDecosZaakResponse<
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
-  requestID: RequestID,
   decosZaakTransformers: T[],
   decosZaakSource: DecosZaakSource
 ): Promise<DZ | null> {
@@ -182,11 +178,7 @@ async function transformDecosZaakResponse<
       return [];
     }
     const fetchLinkedItem = async (decosLinkName: string) => {
-      const r = await fetchDecosLinkedField(
-        requestID,
-        decosZaakSource.key,
-        decosLinkName
-      );
+      const r = await fetchDecosLinkedField(decosZaakSource.key, decosLinkName);
       if (r.status === 'OK') {
         return r.content;
       }
@@ -227,7 +219,6 @@ async function transformDecosZaakResponse<
       ({ stepTitle }) => stepTitle
     );
     const workFlowDates = await fetchDecosWorkflowDates(
-      requestID,
       decosZaakSource.key,
       stepTitles
     );
@@ -250,7 +241,6 @@ async function transformDecosZaakResponse<
       ])
     );
     const termijnDates = await fetchDecosTermijnen(
-      requestID,
       decosZaakSource.key,
       Object.keys(termijnMap)
     );
@@ -316,11 +306,7 @@ export function transformFieldValuePairs<T extends DecosZaakBase>(
 async function transformDecosZakenResponse<
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
->(
-  requestID: RequestID,
-  decosZaakTransformers: T[],
-  decosZakenSource: DecosZaakSource[]
-) {
+>(decosZaakTransformers: T[], decosZakenSource: DecosZaakSource[]) {
   const zakenToBeTransformed: [T, DecosZaakSource][] = [];
   for (const decosZaakSource of decosZakenSource) {
     const zaakType: T['caseType'] = getDecosZaakTypeFromSource(decosZaakSource);
@@ -346,11 +332,7 @@ async function transformDecosZakenResponse<
   try {
     decosZaken = await Promise.all(
       zakenToBeTransformed.map(([decosZaakTransformer, decosZaak]) => {
-        return transformDecosZaakResponse(
-          requestID,
-          [decosZaakTransformer],
-          decosZaak
-        );
+        return transformDecosZaakResponse([decosZaakTransformer], decosZaak);
       })
     );
   } catch (err) {
@@ -378,7 +360,6 @@ function getSelectFields(
 }
 
 async function getZakenByUserKey(
-  requestID: RequestID,
   userKey: string,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
@@ -412,23 +393,19 @@ async function getZakenByUserKey(
     },
   });
 
-  const responseSource = await requestData<DecosZaakSource[]>(
-    apiConfig,
-    requestID
-  );
+  const responseSource = await requestData<DecosZaakSource[]>(apiConfig);
 
   return responseSource;
 }
 
 export async function fetchDecosZakenFromSourceRaw(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   selectFields?: string,
   filterCaseTypes?: string,
   includeProperties: boolean = false,
   top: string = DECOS_ZAKEN_FETCH_TOP
 ) {
-  const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
+  const userKeysResponse = await getUserKeys(authProfileAndToken);
 
   const caseTypes = filterCaseTypes
     ?.split(',')
@@ -455,7 +432,7 @@ export async function fetchDecosZakenFromSourceRaw(
       },
     });
 
-    return requestData<DecosZaakSource[]>(apiConfig, `${requestID}-${userKey}`);
+    return requestData<DecosZaakSource[]>(apiConfig);
   }
 
   if (userKeysResponse.status === 'ERROR') {
@@ -475,11 +452,10 @@ export async function fetchDecosZakenFromSourceRaw(
 }
 
 export async function fetchDecosZakenFromSource(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
-  const userKeysResponse = await getUserKeys(requestID, authProfileAndToken);
+  const userKeysResponse = await getUserKeys(authProfileAndToken);
 
   if (userKeysResponse.status === 'ERROR') {
     return userKeysResponse;
@@ -487,7 +463,7 @@ export async function fetchDecosZakenFromSource(
 
   const zakenSourceResponses = await Promise.allSettled(
     userKeysResponse.content.map((userKey) =>
-      getZakenByUserKey(requestID, userKey, zaakTypeTransformers)
+      getZakenByUserKey(userKey, zaakTypeTransformers)
     )
   );
 
@@ -510,12 +486,10 @@ export async function fetchDecosZaken_<
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: T[]
 ): Promise<ApiSuccessResponse<DZ[]> | ApiErrorResponse<null>> {
   const zakenSourceResponse = await fetchDecosZakenFromSource(
-    requestID,
     authProfileAndToken,
     zaakTypeTransformers
   );
@@ -523,7 +497,6 @@ export async function fetchDecosZaken_<
   if (zakenSourceResponse.status === 'OK') {
     const decosZakenSource = zakenSourceResponse.content;
     const zaken = await transformDecosZakenResponse(
-      requestID,
       zaakTypeTransformers,
       decosZakenSource
     );
@@ -575,7 +548,6 @@ function transformDecosWorkflowDateResponse(
 }
 
 export async function fetchDecosWorkflowDates(
-  requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   stepTitles: DecosWorkflowStepTitle[]
 ): Promise<
@@ -589,8 +561,7 @@ export async function fetchDecosWorkflowDates(
   });
 
   const { content: latestWorkflowKey } = await requestData<string | null>(
-    apiConfigWorkflows,
-    requestID
+    apiConfigWorkflows
   );
 
   if (!latestWorkflowKey) {
@@ -614,11 +585,10 @@ export async function fetchDecosWorkflowDates(
       transformDecosWorkflowDateResponse(stepTitles, responseData),
   });
 
-  return requestData(apiConfigSingleWorkflow, requestID);
+  return requestData(apiConfigSingleWorkflow);
 }
 
 export async function fetchDecosTermijnen(
-  requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   termijnTypes: DecosTermijnType[]
 ): Promise<ApiResponse<DecosTermijn[]>> {
@@ -653,11 +623,10 @@ export async function fetchDecosTermijnen(
     transformResponse: transformDecosTermijnenResponse,
   });
 
-  return requestData(apiConfigTermijnens, requestID);
+  return requestData(apiConfigTermijnens);
 }
 
 export async function fetchDecosLinkedField(
-  requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   field: string
 ): Promise<ApiResponse<Record<string, unknown>>> {
@@ -678,13 +647,10 @@ export async function fetchDecosLinkedField(
     transformResponse: extractContentList,
   });
 
-  return requestData(apiConfigLinkedField, requestID);
+  return requestData(apiConfigLinkedField);
 }
 
-async function fetchIsPdfDocument(
-  requestID: RequestID,
-  documentKey: DecosZaakDocument['key']
-) {
+async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
   // items / { document_id } / blob ? select = bol10
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
@@ -701,7 +667,7 @@ async function fetchIsPdfDocument(
   const documentTransformed = await requestData<{
     isPDF: boolean;
     key: string;
-  }>(apiConfigDocuments, requestID);
+  }>(apiConfigDocuments);
   return documentTransformed;
 }
 
@@ -717,7 +683,6 @@ function filterValidDocument({
 }
 
 async function transformDecosDocumentListResponse(
-  requestID: RequestID,
   sessionID: SessionID,
   decosDocumentsListResponse: DecosZakenResponse<DecosDocumentSource[]>
 ) {
@@ -725,7 +690,7 @@ async function transformDecosDocumentListResponse(
     const documentsSourceFiltered = decosDocumentsListResponse.content
       .filter(filterValidDocument)
       .map(async ({ fields: documentMetadata, key }) => {
-        const isPdfResponse = await fetchIsPdfDocument(requestID, key);
+        const isPdfResponse = await fetchIsPdfDocument(key);
         if (isPdfResponse.status === 'OK' && isPdfResponse.content.isPDF) {
           const decosZaakDocument: DecosZaakDocument = {
             id: documentMetadata.mark,
@@ -757,7 +722,6 @@ async function transformDecosDocumentListResponse(
 }
 
 export async function fetchDecosDocumentList(
-  requestID: RequestID,
   sessionID: SessionID,
   zaakID: DecosZaakBase['key']
 ) {
@@ -767,13 +731,13 @@ export async function fetchDecosDocumentList(
     },
   });
 
-  const documentsSource = await requestData<
-    DecosZakenResponse<DecosDocumentSource[]>
-  >(apiConfigDocuments, requestID);
+  const documentsSource =
+    await requestData<DecosZakenResponse<DecosDocumentSource[]>>(
+      apiConfigDocuments
+    );
 
   if (documentsSource.status === 'OK') {
     const documentsTransformed = await transformDecosDocumentListResponse(
-      requestID,
       sessionID,
       documentsSource.content
     );
@@ -783,7 +747,6 @@ export async function fetchDecosDocumentList(
 }
 
 export async function fetchDecosZaakFromSource(
-  requestID: RequestID,
   zaakID: DecosZaakBase['key'],
   includeProperties: boolean = false
 ) {
@@ -800,13 +763,12 @@ export async function fetchDecosZaakFromSource(
     },
   });
 
-  return requestData<DecosZaakSource | null>(apiConfig, requestID);
+  return requestData<DecosZaakSource | null>(apiConfig);
 }
 
 type NestedType<T> = T extends DecosZaakTransformer<infer R> ? R : never;
 
 export async function fetchDecosDocument(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentID: string
 ) {
@@ -830,11 +792,7 @@ export async function fetchDecosDocument(
     },
   };
 
-  return requestData<DocumentDownloadData>(
-    config,
-    requestID,
-    authProfileAndToken
-  );
+  return requestData<DocumentDownloadData>(config, authProfileAndToken);
 }
 
 export type DecosZaakFrontendTransformOptions = {

@@ -88,7 +88,6 @@ export async function handleFetchAfisFacturen(
   }
 
   const response = await fetchAfisFacturenByState(
-    res.locals.requestID,
     authProfileAndToken.profile.sid,
     { state: req.params.state, businessPartnerID, top }
   );

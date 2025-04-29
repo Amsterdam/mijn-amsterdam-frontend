@@ -275,7 +275,6 @@ describe('hli/router-external-consumer', async () => {
       await forTesting.sendDiscountTransactionsResponse(reqMock, resMock);
 
       expect(fetchStadspasDiscountTransactionsSpy).toHaveBeenCalledWith(
-        resMock.locals.requestID,
         TRANSACTIONS_KEY_ENCRYPTED
       );
 

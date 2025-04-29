@@ -33,6 +33,7 @@ describe('B&B Vergunningen service', () => {
   const authProfileAndToken: AuthProfileAndToken = {
     profile: authProfile,
     token: 'test-tma-token',
+    expiresAtMilliseconds: 0,
   };
 
   beforeEach(() => {
@@ -63,7 +64,7 @@ describe('B&B Vergunningen service', () => {
         return [200, null];
       });
 
-      const result = await fetchBBVergunningen(requestID, authProfile);
+      const result = await fetchBBVergunningen(authProfile);
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(1);
     });
@@ -75,7 +76,7 @@ describe('B&B Vergunningen service', () => {
         }
       });
 
-      const result = await fetchBBVergunningen(requestID, authProfile);
+      const result = await fetchBBVergunningen(authProfile);
       expect(result.status).toBe('ERROR');
     });
 
@@ -93,7 +94,7 @@ describe('B&B Vergunningen service', () => {
           }
         });
 
-      const result = await fetchBBVergunningen(requestID, authProfile);
+      const result = await fetchBBVergunningen(authProfile);
       expect(result.status).toBe('ERROR');
     });
 
@@ -118,7 +119,7 @@ describe('B&B Vergunningen service', () => {
         return [200, null];
       });
 
-      const result = await fetchBBVergunningen(requestID, authProfile);
+      const result = await fetchBBVergunningen(authProfile);
       expect(result.status).toBe('ERROR');
     });
   });
@@ -149,7 +150,6 @@ describe('B&B Vergunningen service', () => {
       });
 
       const result = await fetchBBDocumentsList(
-        requestID,
         authProfileAndToken.profile,
         zaakId
       );
@@ -167,7 +167,6 @@ describe('B&B Vergunningen service', () => {
       });
 
       const result = await fetchBBDocumentsList(
-        requestID,
         authProfileAndToken.profile,
         zaakId
       );
@@ -187,11 +186,7 @@ describe('B&B Vergunningen service', () => {
         return [200, null];
       });
 
-      const result = await fetchBBDocument(
-        requestID,
-        authProfileAndToken,
-        documentId
-      );
+      const result = await fetchBBDocument(authProfileAndToken, documentId);
       expect(result.status).toBe('OK');
       expect(result.content).toEqual({
         data: expect.any(stream),
@@ -212,11 +207,7 @@ describe('B&B Vergunningen service', () => {
         return [500, null];
       });
 
-      const result = await fetchBBDocument(
-        requestID,
-        authProfileAndToken,
-        documentId
-      );
+      const result = await fetchBBDocument(authProfileAndToken, documentId);
       expect(result.status).toBe('ERROR');
     });
   });
@@ -241,7 +232,7 @@ describe('B&B Vergunningen service', () => {
     test('should fetch data successfully', async () => {
       remoteApi.post('/powerbrowser/data').reply(200, { data: 'test-data' });
 
-      const result = await forTesting.fetchPowerBrowserData('test-request-id', {
+      const result = await forTesting.fetchPowerBrowserData({
         formatUrl: ({ url }) => {
           return `${url}/data`;
         },
@@ -254,7 +245,7 @@ describe('B&B Vergunningen service', () => {
       remoteApi.post('/powerbrowser/Token').reply(200, 'test-token');
       remoteApi.get('/powerbrowser/data').reply(500, 'some-error');
 
-      const result = await forTesting.fetchPowerBrowserData('test-request-id', {
+      const result = await forTesting.fetchPowerBrowserData({
         formatUrl: ({ url }) => `${url}/data`,
       });
       expect(result.status).toBe('ERROR');
@@ -267,14 +258,11 @@ describe('B&B Vergunningen service', () => {
         records: [{ id: 'test-person-id' }],
       });
 
-      const result = await forTesting.fetchPersoonOrMaatschapIdByUid(
-        'test-request-id',
-        {
-          tableName: 'PERSONEN',
-          fieldName: 'BURGERSERVICENUMMER',
-          profileID: 'test-id',
-        }
-      );
+      const result = await forTesting.fetchPersoonOrMaatschapIdByUid({
+        tableName: 'PERSONEN',
+        fieldName: 'BURGERSERVICENUMMER',
+        profileID: 'test-id',
+      });
       expect(result.status).toBe('OK');
       expect(result.content).toBe('test-person-id');
     });
@@ -282,14 +270,11 @@ describe('B&B Vergunningen service', () => {
     test('should return null if no person ID found', async () => {
       remoteApi.post('/powerbrowser/SearchRequest').reply(200, { records: [] });
 
-      const result = await forTesting.fetchPersoonOrMaatschapIdByUid(
-        'test-request-id',
-        {
-          tableName: 'PERSONEN',
-          fieldName: 'BURGERSERVICENUMMER',
-          profileID: 'test-id',
-        }
-      );
+      const result = await forTesting.fetchPersoonOrMaatschapIdByUid({
+        tableName: 'PERSONEN',
+        fieldName: 'BURGERSERVICENUMMER',
+        profileID: 'test-id',
+      });
       expect(result.status).toBe('OK');
       expect(result.content).toBeNull();
     });
@@ -297,14 +282,11 @@ describe('B&B Vergunningen service', () => {
     test('should return an error if fetch fails', async () => {
       remoteApi.post('/powerbrowser/SearchRequest').reply(500, 'some-error');
 
-      const result = await forTesting.fetchPersoonOrMaatschapIdByUid(
-        'test-request-id',
-        {
-          tableName: 'PERSONEN',
-          fieldName: 'BURGERSERVICENUMMER',
-          profileID: 'test-id',
-        }
-      );
+      const result = await forTesting.fetchPersoonOrMaatschapIdByUid({
+        tableName: 'PERSONEN',
+        fieldName: 'BURGERSERVICENUMMER',
+        profileID: 'test-id',
+      });
       expect(result.status).toBe('ERROR');
     });
   });
@@ -315,7 +297,7 @@ describe('B&B Vergunningen service', () => {
         records: [{ id: 'test-zaak-id' }],
       });
 
-      const result = await forTesting.fetchZaakIds('test-request-id', {
+      const result = await forTesting.fetchZaakIds({
         personOrMaatschapId: 'test-person-id',
         tableName: 'PERSONEN',
       });
@@ -328,7 +310,7 @@ describe('B&B Vergunningen service', () => {
         .post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table')
         .reply(500, 'some-error');
 
-      const result = await forTesting.fetchZaakIds('test-request-id', {
+      const result = await forTesting.fetchZaakIds({
         personOrMaatschapId: 'test-person-id',
         tableName: 'PERSONEN',
       });
@@ -565,10 +547,7 @@ describe('B&B Vergunningen service', () => {
         ],
       });
 
-      const result = await forTesting.fetchZaakAdres(
-        'test-request-id',
-        'test-zaak-id'
-      );
+      const result = await forTesting.fetchZaakAdres('test-zaak-id');
       expect(result.status).toBe('OK');
       expect(result.content).toBe('Test Address');
     });
@@ -578,10 +557,7 @@ describe('B&B Vergunningen service', () => {
         .post('/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table')
         .reply(200, { records: [] });
 
-      const result = await forTesting.fetchZaakAdres(
-        'test-request-id',
-        'test-zaak-id'
-      );
+      const result = await forTesting.fetchZaakAdres('test-zaak-id');
       expect(result.status).toBe('OK');
       expect(result.content).toBeNull();
     });
@@ -591,10 +567,7 @@ describe('B&B Vergunningen service', () => {
         .post('/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table')
         .reply(500, 'some-error');
 
-      const result = await forTesting.fetchZaakAdres(
-        'test-request-id',
-        'test-zaak-id'
-      );
+      const result = await forTesting.fetchZaakAdres('test-zaak-id');
       expect(result.status).toBe('ERROR');
     });
   });
@@ -612,10 +585,7 @@ describe('B&B Vergunningen service', () => {
         documents: [],
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchZaakStatussen(
-        'test-request-id',
-        zaak
-      );
+      const result = await forTesting.fetchZaakStatussen(zaak);
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(3);
     });
@@ -631,10 +601,7 @@ describe('B&B Vergunningen service', () => {
         dateEnd: null,
       } as unknown as BBVergunningFrontend;
 
-      const result = await forTesting.fetchZaakStatussen(
-        'test-request-id',
-        zaak
-      );
+      const result = await forTesting.fetchZaakStatussen(zaak);
       expect(result.status).toBe('ERROR');
     });
   });
@@ -654,10 +621,7 @@ describe('B&B Vergunningen service', () => {
         },
       ] as unknown as BBVergunningFrontend[];
 
-      const result = await forTesting.fetchAndMergeZaakStatussen(
-        'test-request-id',
-        zaken
-      );
+      const result = await forTesting.fetchAndMergeZaakStatussen(zaken);
       expect(result).toHaveLength(1);
       expect(result[0].steps).toHaveLength(3);
     });
@@ -684,7 +648,6 @@ describe('B&B Vergunningen service', () => {
       ] as unknown as BBVergunningFrontend[];
 
       const result = await forTesting.fetchAndMergeDocuments(
-        'test-request-id',
         authProfile,
         zaken
       );
@@ -701,7 +664,6 @@ describe('B&B Vergunningen service', () => {
       ] as unknown as BBVergunningFrontend[];
 
       const result = await forTesting.fetchAndMergeDocuments(
-        'test-request-id',
         authProfile,
         zaken
       );
@@ -724,10 +686,7 @@ describe('B&B Vergunningen service', () => {
         { id: 'test-zaak-id', dateRequest: '2023-01-01', dateEnd: null },
       ] as unknown as BBVergunningFrontend[];
 
-      const result = await forTesting.fetchAndMergeAdressen(
-        'test-request-id',
-        zaken
-      );
+      const result = await forTesting.fetchAndMergeAdressen(zaken);
       expect(result).toHaveLength(1);
       expect(result[0].location).toBe('Test Address');
     });
@@ -852,7 +811,6 @@ describe('B&B Vergunningen service', () => {
       ]);
 
       const result = await forTesting.fetchZakenByIds(
-        'test-request-id',
         getAuthProfileAndToken().profile,
         ['test-zaak-id']
       );
@@ -866,7 +824,6 @@ describe('B&B Vergunningen service', () => {
         .reply(500, 'some-error');
 
       const result = await forTesting.fetchZakenByIds(
-        'test-request-id',
         getAuthProfileAndToken().profile,
         ['test-zaak-id']
       );

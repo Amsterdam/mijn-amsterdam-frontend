@@ -151,7 +151,6 @@ export function transformZorgnedAanvragen(
 }
 
 export async function fetchAanvragen(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   options: ZorgnedAanvragenServiceOptions
 ) {
@@ -173,7 +172,6 @@ export async function fetchAanvragen(
       data: postBody,
       transformResponse: transformZorgnedAanvragen,
     },
-    requestID,
     authProfileAndToken
   );
 
@@ -181,25 +179,22 @@ export async function fetchAanvragen(
 }
 
 export async function fetchAanvragenWithRelatedPersons(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   options: ZorgnedAanvragenServiceOptions
 ) {
   const zorgnedAanvragenResponse = await fetchAanvragen(
-    requestID,
     authProfileAndToken,
     options
   );
 
   if (zorgnedAanvragenResponse.status === 'OK') {
-    return fetchAndMergeRelatedPersons(requestID, zorgnedAanvragenResponse);
+    return fetchAndMergeRelatedPersons(zorgnedAanvragenResponse);
   }
 
   return zorgnedAanvragenResponse;
 }
 
 export async function fetchAndMergeRelatedPersons(
-  requestID: RequestID,
   zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>
 ): Promise<ApiSuccessResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
   const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
@@ -208,7 +203,7 @@ export async function fetchAndMergeRelatedPersons(
     (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
   );
 
-  const relatedPersonsResponse = await fetchRelatedPersons(requestID, userIDs);
+  const relatedPersonsResponse = await fetchRelatedPersons(userIDs);
 
   const personsByUserId = relatedPersonsResponse.content?.reduce(
     (acc, person) => {
@@ -243,7 +238,6 @@ export async function fetchAndMergeRelatedPersons(
 }
 
 export async function fetchDocument(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zorgnedApiConfigKey: ZorgnedApiConfigKey,
   documentId: ZorgnedDocument['documentidentificatie']
@@ -257,35 +251,32 @@ export async function fetchDocument(
   const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
   const url = `${dataRequestConfig.url}/document`;
 
-  return requestData<DocumentDownloadData>(
-    {
-      ...dataRequestConfig,
-      url,
-      data: postBody,
-      transformResponse: (
-        documentResponseData: ZorgnedDocumentResponseSource
-      ) => {
-        if (
-          !documentResponseData ||
-          typeof documentResponseData !== 'object' ||
-          !('inhoud' in documentResponseData)
-        ) {
-          throw new Error(
-            'Zorgned document download - no valid response data provided'
-          );
-        }
-        const data = Buffer.from(documentResponseData.inhoud, 'base64');
-        return {
-          data,
-          mimetype: documentResponseData.mimetype,
-          filename:
-            documentResponseData.omschrijvingclientportaal ||
-            documentResponseData.omschrijving,
-        };
-      },
+  return requestData<DocumentDownloadData>({
+    ...dataRequestConfig,
+    url,
+    data: postBody,
+    transformResponse: (
+      documentResponseData: ZorgnedDocumentResponseSource
+    ) => {
+      if (
+        !documentResponseData ||
+        typeof documentResponseData !== 'object' ||
+        !('inhoud' in documentResponseData)
+      ) {
+        throw new Error(
+          'Zorgned document download - no valid response data provided'
+        );
+      }
+      const data = Buffer.from(documentResponseData.inhoud, 'base64');
+      return {
+        data,
+        mimetype: documentResponseData.mimetype,
+        filename:
+          documentResponseData.omschrijvingclientportaal ||
+          documentResponseData.omschrijving,
+      };
     },
-    requestID
-  );
+  });
 }
 
 function transformZorgnedPersonResponse(
@@ -310,12 +301,9 @@ function transformZorgnedPersonResponse(
   return null;
 }
 
-export async function fetchRelatedPersons(
-  requestID: RequestID,
-  userIDs: string[]
-) {
+export async function fetchRelatedPersons(userIDs: string[]) {
   const requests = userIDs.map((userID) => {
-    return fetchPersoonsgegevensNAW(requestID, userID, 'ZORGNED_AV');
+    return fetchPersoonsgegevensNAW(userID, 'ZORGNED_AV');
   });
 
   const results = await Promise.allSettled(requests);
@@ -340,7 +328,6 @@ export async function fetchRelatedPersons(
 }
 
 export async function fetchPersoonsgegevensNAW_(
-  requestID: RequestID,
   userID: AuthProfileAndToken['profile']['id'],
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
@@ -357,10 +344,8 @@ export async function fetchPersoonsgegevensNAW_(
     },
   });
 
-  const response = requestData<ZorgnedPersoonsgegevensNAWResponse>(
-    dataRequestConfig,
-    requestID
-  );
+  const response =
+    requestData<ZorgnedPersoonsgegevensNAWResponse>(dataRequestConfig);
 
   return response;
 }

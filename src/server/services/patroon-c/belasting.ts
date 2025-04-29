@@ -120,19 +120,14 @@ function getConfig(
   });
 }
 
-export function fetchBelasting(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  return fetchService(requestID, getConfig(authProfileAndToken));
+export function fetchBelasting(authProfileAndToken: AuthProfileAndToken) {
+  return fetchService(getConfig(authProfileAndToken));
 }
 
 export async function fetchBelastingNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const r = await fetchTipsAndNotifications(
-    requestID,
     getConfig(authProfileAndToken),
     themaId
   );

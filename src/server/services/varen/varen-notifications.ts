@@ -100,10 +100,9 @@ function createVarenNotification(
 }
 
 export async function fetchVarenNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<{ notifications: MyNotification[] }>> {
-  const varenResponse = await fetchVaren(requestID, authProfileAndToken);
+  const varenResponse = await fetchVaren(authProfileAndToken);
 
   if (varenResponse.status === 'ERROR') {
     return apiErrorResult(

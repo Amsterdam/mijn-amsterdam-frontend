@@ -112,7 +112,6 @@ router.get(
 
     if (authProfileAndToken) {
       const bewonersResponse = await fetchAantalBewoners(
-        res.locals.requestID,
         authProfileAndToken,
         req.params.addressKeyEncrypted
       );
@@ -162,7 +161,6 @@ router.get(
     const authProfileAndToken = getAuth(req);
     if (authProfileAndToken) {
       const response = await fetchErfpachtDossiersDetail(
-        res.locals.requestID,
         authProfileAndToken,
         req.params.dossierNummerUrlParam
       );

@@ -15,10 +15,7 @@ describe('simple-connect/erfpacht', () => {
     remoteApi.get('/erfpacht/vernise/api/erfpachter').reply(200, undefined);
     remoteApi.get('/erfpacht/vernise/api/dossierinfo').reply(200, undefined);
 
-    const responseContent = await fetchErfpacht(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const responseContent = await fetchErfpacht(authProfileAndToken);
     expect(responseContent).toMatchInlineSnapshot(`
       {
         "content": {
@@ -39,10 +36,7 @@ describe('simple-connect/erfpacht', () => {
       .get('/erfpacht/vernise/api/dossierinfo')
       .reply(200, ERFPACHT_DOSSIERS);
 
-    const responseContent = await fetchErfpacht(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const responseContent = await fetchErfpacht(authProfileAndToken);
     expect(responseContent).toMatchSnapshot();
   });
 
@@ -52,7 +46,6 @@ describe('simple-connect/erfpacht', () => {
       .reply(200, ERFPACHT_DOSSIERINFO_DETAILS);
 
     const responseContent = await fetchErfpachtDossiersDetail(
-      REQUEST_ID,
       authProfileAndToken,
       'E.477.46'
     );
@@ -66,10 +59,7 @@ describe('simple-connect/erfpacht', () => {
 
     authProfileAndToken.profile.profileType = 'commercial';
 
-    const responseContent = await fetchErfpacht(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const responseContent = await fetchErfpacht(authProfileAndToken);
     expect(responseContent).toMatchInlineSnapshot(`
       {
         "content": {

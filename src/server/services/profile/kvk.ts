@@ -176,16 +176,12 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
 
 const SERVICE_NAME = 'KVK';
 
-export async function fetchKVK(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export async function fetchKVK(authProfileAndToken: AuthProfileAndToken) {
   if (FeatureToggle.kvkActive) {
     return requestData<KVKData>(
       getApiConfig(SERVICE_NAME, {
         transformResponse: transformKVKData,
       }),
-      requestID,
       authProfileAndToken
     );
   }

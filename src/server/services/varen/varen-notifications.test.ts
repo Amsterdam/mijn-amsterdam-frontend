@@ -40,7 +40,7 @@ describe('Notifications', () => {
       apiErrorResult('Error', null)
     );
 
-    const response = await fetchVarenNotifications('x0', authProfileAndToken);
+    const response = await fetchVarenNotifications(authProfileAndToken);
     const errorResponse = {
       content: null,
       message: 'Error fetching Varen zaken data',
@@ -61,10 +61,7 @@ describe('Notifications', () => {
       apiSuccessResult([zaakRecent, zaakOlderThen3Months])
     );
 
-    const { content } = await fetchVarenNotifications(
-      'x3',
-      authProfileAndToken
-    );
+    const { content } = await fetchVarenNotifications(authProfileAndToken);
 
     expect(content?.notifications).toHaveLength(1);
     expect(content?.notifications[0].datePublished).toBe(
@@ -87,7 +84,7 @@ describe('Notifications', () => {
       apiSuccessResult([rederRegistratie])
     );
 
-    const response = await fetchVarenNotifications('x1', authProfileAndToken);
+    const response = await fetchVarenNotifications(authProfileAndToken);
     const successResponse = {
       status: 'OK',
       content: {
@@ -135,7 +132,7 @@ describe('Notifications', () => {
       apiSuccessResult([zaakInProgress, zaakMeerInformatie, zaakDecision])
     );
 
-    const response = await fetchVarenNotifications('x2', authProfileAndToken);
+    const response = await fetchVarenNotifications(authProfileAndToken);
     const successResponse = {
       status: 'OK',
       content: {

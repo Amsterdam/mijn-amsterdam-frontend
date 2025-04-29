@@ -25,7 +25,6 @@ vi.mock('../../../universal/config/env', async (importOriginal) => {
   };
 });
 
-const REQUEST_ID = 'test-x-123';
 const authProfileAndToken = getAuthProfileAndToken();
 
 describe('simple-connect/cleopatra', () => {
@@ -36,10 +35,7 @@ describe('simple-connect/cleopatra', () => {
   test('missing certificate', async () => {
     mocks.IS_TAP = true;
 
-    const responseContent = await fetchMilieuzone(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const responseContent = await fetchMilieuzone(authProfileAndToken);
 
     expect(responseContent).toMatchInlineSnapshot(`
       {
@@ -73,10 +69,7 @@ describe('simple-connect/cleopatra', () => {
   test('fetchMilieuzone null content', async () => {
     remoteApi.post('/cleopatra').reply(200);
 
-    const responseContent = await fetchMilieuzone(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const responseContent = await fetchMilieuzone(authProfileAndToken);
 
     expect(responseContent).toMatchInlineSnapshot(`
       {
@@ -123,10 +116,7 @@ describe('simple-connect/cleopatra', () => {
         status: 'OK',
       });
 
-    const responseContent = await fetchMilieuzone(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const responseContent = await fetchMilieuzone(authProfileAndToken);
 
     expect(responseContent).toStrictEqual({
       content: {
@@ -136,10 +126,8 @@ describe('simple-connect/cleopatra', () => {
       status: 'OK',
     });
 
-    const notificationsResponse = await fetchMilieuzoneNotifications(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const notificationsResponse =
+      await fetchMilieuzoneNotifications(authProfileAndToken);
 
     expect(notificationsResponse).toStrictEqual({
       content: {
@@ -199,10 +187,7 @@ describe('simple-connect/cleopatra', () => {
         status: 'OK',
       });
 
-    const responseContent = await fetchOvertredingen(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const responseContent = await fetchOvertredingen(authProfileAndToken);
 
     expect(responseContent).toMatchInlineSnapshot(`
       {
@@ -214,10 +199,8 @@ describe('simple-connect/cleopatra', () => {
       }
     `);
 
-    const notificationsResponse = await fetchOvertredingenNotifications(
-      REQUEST_ID,
-      authProfileAndToken
-    );
+    const notificationsResponse =
+      await fetchOvertredingenNotifications(authProfileAndToken);
 
     expect(notificationsResponse).toStrictEqual({
       content: {

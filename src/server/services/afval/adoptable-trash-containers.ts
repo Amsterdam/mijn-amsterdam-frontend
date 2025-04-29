@@ -40,10 +40,9 @@ const filters = {
 const filterQueryParam = encodeURIComponent(JSON.stringify(filters));
 
 export async function fetchAdoptableTrashContainers(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(requestID, authProfileAndToken);
+  const BRP = await fetchBRP(authProfileAndToken);
 
   if (!BRP.content?.persoon?.geboortedatum) {
     return apiDependencyError({ BRP });
@@ -60,14 +59,13 @@ export async function fetchAdoptableTrashContainers(
     });
   }
 
-  const MY_LOCATION = await fetchMyLocation(requestID, authProfileAndToken);
+  const MY_LOCATION = await fetchMyLocation(authProfileAndToken);
 
   if (MY_LOCATION.status !== 'OK' || !MY_LOCATION.content?.[0]?.latlng) {
     return apiDependencyError({ MY_LOCATION });
   }
 
   const afvalcontainersDatasetResponse = await fetchDataset(
-    requestID,
     datasetId,
     config,
     {}

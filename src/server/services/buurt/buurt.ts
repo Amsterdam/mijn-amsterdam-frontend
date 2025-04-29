@@ -71,7 +71,6 @@ function getDatasetFileCache(
 }
 
 export async function fetchDataset(
-  requestID: RequestID,
   datasetId: DatasetId,
   datasetConfig: DatasetConfig,
   params: Record<string, string> = {},
@@ -129,7 +128,7 @@ export async function fetchDataset(
     };
   }
 
-  const response = await requestData<DatasetFeatures>(requestConfig, requestID);
+  const response = await requestData<DatasetFeatures>(requestConfig);
 
   if (response.status === 'OK') {
     const filterConfig = getDynamicDatasetFilters(datasetId);
@@ -177,7 +176,6 @@ export async function fetchDataset(
 type ApiDatasetResponse = ApiResponse_DEPRECATED<DatasetResponse | null>;
 
 export async function loadDatasetFeatures(
-  requestID: RequestID,
   configs: Array<[string, DatasetConfig]>
 ) {
   const requests: Array<Promise<ApiDatasetResponse>> = [];
@@ -186,7 +184,7 @@ export async function loadDatasetFeatures(
     const [id, config] = datasetConfig;
 
     requests.push(
-      fetchDataset(requestID, id, config).then((result) => {
+      fetchDataset(id, config).then((result) => {
         return {
           ...result,
           id,
@@ -200,18 +198,15 @@ export async function loadDatasetFeatures(
   return datasetApiResult(results);
 }
 
-export async function loadPolylineFeatures(
-  requestID: RequestID,
-  {
-    datasetIds,
-    bbox,
-    filters,
-  }: {
-    datasetIds: string[];
-    bbox: [number, number, number, number];
-    filters: DatasetFilterSelection;
-  }
-) {
+export async function loadPolylineFeatures({
+  datasetIds,
+  bbox,
+  filters,
+}: {
+  datasetIds: string[];
+  bbox: [number, number, number, number];
+  filters: DatasetFilterSelection;
+}) {
   const configs = getDatasetEndpointConfig(datasetIds, POLYLINE_GEOMETRY_TYPES);
   const requests: Array<Promise<ApiDatasetResponse>> = [];
 
@@ -219,7 +214,7 @@ export async function loadPolylineFeatures(
     const [datasetId, config] = datasetConfig;
 
     requests.push(
-      fetchDataset(requestID, datasetId, config, {}).then((result) => {
+      fetchDataset(datasetId, config, {}).then((result) => {
         return {
           ...result,
           id: datasetId,
@@ -246,11 +241,7 @@ export async function loadPolylineFeatures(
   };
 }
 
-export async function loadFeatureDetail(
-  requestID: RequestID,
-  datasetId: string,
-  id: string
-) {
+export async function loadFeatureDetail(datasetId: string, id: string) {
   const [datasetConfig] = getDatasetEndpointConfig([datasetId]);
   const [, config] = datasetConfig ?? [];
 
@@ -330,7 +321,7 @@ export async function loadFeatureDetail(
     requestConfig.request = config.requestConfig.request;
   }
 
-  const response = await requestData<DsoApiResponse>(requestConfig, requestID);
+  const response = await requestData<DsoApiResponse>(requestConfig);
 
   if (response.status === 'OK') {
     const item = discoverSingleDsoApiEmbeddedResponse(response.content);

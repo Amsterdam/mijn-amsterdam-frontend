@@ -210,7 +210,6 @@ export function transformAfvalDataResponse(
 }
 
 export async function fetchAfvalwijzer(
-  requestID: RequestID,
   bagID: string,
   latlng: LatLngLiteral | null
 ) {
@@ -222,8 +221,7 @@ export async function fetchAfvalwijzer(
       params,
       transformResponse: (afvalSourceData: AFVALSourceData) =>
         transformAfvalDataResponse(afvalSourceData, latlng),
-    }),
-    requestID
+    })
   );
 
   return garbageData;

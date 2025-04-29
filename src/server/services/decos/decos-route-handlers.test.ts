@@ -65,7 +65,6 @@ describe('fetchVergunningDocumentsList', () => {
     );
 
     expect(fetchDecosDocumentList).toHaveBeenCalledWith(
-      res.locals.requestID,
       authProfileAndToken.profile.sid,
       mockValues.id
     );

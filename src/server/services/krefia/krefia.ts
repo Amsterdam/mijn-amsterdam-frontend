@@ -80,14 +80,12 @@ function transformKrefiaResponse(responseData: KrefiaSourceResponse): Krefia {
 }
 
 async function fetchAndTransformKrefia(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<Krefia>> {
   const response = await requestData<Krefia>(
     getApiConfig('KREFIA', {
       transformResponse: transformKrefiaResponse,
     }),
-    requestID,
     authProfileAndToken
   );
 
@@ -101,11 +99,8 @@ export const fetchSource = memoize(fetchAndTransformKrefia, {
   },
 });
 
-export async function fetchKrefia(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const response = await fetchSource(requestID, authProfileAndToken);
+export async function fetchKrefia(authProfileAndToken: AuthProfileAndToken) {
+  const response = await fetchSource(authProfileAndToken);
   if (response.status === 'OK' && response.content) {
     return apiSuccessResult(omit(response.content, ['notificationTriggers']));
   }
@@ -113,10 +108,9 @@ export async function fetchKrefia(
 }
 
 export async function fetchKrefiaNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchSource(requestID, authProfileAndToken);
+  const response = await fetchSource(authProfileAndToken);
 
   if (response.status === 'OK') {
     const notifications: MyNotification[] = [];

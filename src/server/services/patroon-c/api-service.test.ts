@@ -35,7 +35,7 @@ describe('simple-connect/api-service', () => {
   });
 
   test('fetchApi 1', async () => {
-    const responseContent = await service.fetchService(REQUEST_ID, {
+    const responseContent = await service.fetchService({
       url: apiUrlTest,
     });
 
@@ -46,7 +46,7 @@ describe('simple-connect/api-service', () => {
       }
     `);
 
-    const responseContent2 = await service.fetchService(REQUEST_ID, {
+    const responseContent2 = await service.fetchService({
       url: apiUrlTest,
     });
 
@@ -63,7 +63,6 @@ describe('simple-connect/api-service', () => {
     `);
 
     const responseContent3 = await service.fetchService(
-      REQUEST_ID,
       {
         url: apiUrlTest,
       },
@@ -95,7 +94,6 @@ describe('simple-connect/api-service', () => {
 
     const responseContentTipsAndNotifications =
       await service.fetchTipsAndNotifications(
-        REQUEST_ID,
         {
           url: apiUrlTest,
         },

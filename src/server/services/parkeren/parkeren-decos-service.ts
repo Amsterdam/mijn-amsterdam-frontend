@@ -17,11 +17,9 @@ import {
 } from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchDecosParkeerVergunningen(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<ParkeerVergunningFrontend[]>> {
   const response = await fetchDecosZaken(
-    requestID,
     authProfileAndToken,
     decosZaakTransformers
   );

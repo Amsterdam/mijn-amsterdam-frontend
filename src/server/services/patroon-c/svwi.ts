@@ -55,12 +55,8 @@ function transformSVWIResponse(
   };
 }
 
-export function fetchSVWI(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export function fetchSVWI(authProfileAndToken: AuthProfileAndToken) {
   return fetchService(
-    requestID,
     getApiConfig('SVWI', {
       transformResponse: transformSVWIResponse,
     }),
@@ -70,11 +66,9 @@ export function fetchSVWI(
 }
 
 export async function fetchSVWINotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return await fetchTipsAndNotifications(
-    requestID,
     getApiConfig('SVWI', {
       transformResponse: transformSVWIResponse,
     }),

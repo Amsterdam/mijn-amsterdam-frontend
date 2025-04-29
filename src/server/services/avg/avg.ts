@@ -88,11 +88,10 @@ function getDataForAvgThemas(avgIds: string[]) {
 }
 
 export async function enrichAvgResponse(
-  requestID: RequestID,
   avgResponse: ApiSuccessResponse<AVGResponse>
 ) {
   const avgIds = avgResponse.content.verzoeken.map((verzoek) => verzoek.id);
-  const themasResponse = await fetchAVGRequestThemes(requestID, avgIds);
+  const themasResponse = await fetchAVGRequestThemes(avgIds);
 
   if (themasResponse.status === 'OK') {
     const enrichedAvgRequests: AVGRequestFrontend[] = [];
@@ -183,24 +182,19 @@ export function transformAVGResponse(data: SmileAvgResponse): AVGResponse {
   return response;
 }
 
-export async function fetchAVG(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const data = getDataForAVG(authProfileAndToken.profile.id!);
+export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
+  const data = getDataForAVG(authProfileAndToken.profile.id);
   const response = await requestData<AVGResponse>(
     getApiConfig('ENABLEU_2_SMILE', {
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: `avg-${requestID}`,
       postponeFetch: !featureToggle.avgActive,
-    }),
-    requestID
+    })
   );
 
   if (response.status === 'OK') {
-    return enrichAvgResponse(requestID, response);
+    return enrichAvgResponse(response);
   }
 
   return response;
@@ -224,10 +218,7 @@ export function transformAVGThemeResponse(
   };
 }
 
-export async function fetchAVGRequestThemes(
-  requestID: RequestID,
-  avgIds: string[]
-) {
+export async function fetchAVGRequestThemes(avgIds: string[]) {
   const data = getDataForAvgThemas(avgIds);
   const cacheKey = avgIds.join('-');
 
@@ -238,8 +229,7 @@ export async function fetchAVGRequestThemes(
       headers: data.getHeaders(),
       cacheKey: `avg-themes-${cacheKey}`,
       postponeFetch: !featureToggle.avgActive,
-    }),
-    requestID
+    })
   );
 
   return res;
@@ -247,10 +237,9 @@ export async function fetchAVGRequestThemes(
 
 // fetchNotificaties
 export async function fetchAVGNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const AVG = await fetchAVG(requestID, authProfileAndToken);
+  const AVG = await fetchAVG(authProfileAndToken);
 
   if (AVG.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(AVG.content.verzoeken)

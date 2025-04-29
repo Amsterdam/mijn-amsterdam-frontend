@@ -29,20 +29,19 @@ export type DocumentDownloadResponse =
   | ApiErrorResponse<null>
   | ApiPostponeResponse<null>;
 
-export type FetchDocumenDownloadService = (
-  requestID: RequestID,
+export type FetchDocumentDownloadService = (
   authProfileAndToken: AuthProfileAndToken,
   documentIDEncrypted: string,
   queryParams?: Record<string, string>
 ) => Promise<DocumentDownloadResponse>;
 
-type FetRouteOrQueryParamsFN = (
+type FetchRouteOrQueryParamsFN = (
   req: RequestWithRouteAndQueryParams<{ id: string }, { id: string }>
 ) => string;
 
 export function downloadDocumentRouteHandler(
-  fetchDocument: FetchDocumenDownloadService,
-  getRouteOrQueryParams: FetRouteOrQueryParamsFN = (
+  fetchDocument: FetchDocumentDownloadService,
+  getRouteOrQueryParams: FetchRouteOrQueryParamsFN = (
     req: RequestWithRouteAndQueryParams<{ id: string }, { id: string }>
   ) => req.query.id || req.params.id
 ) {
@@ -64,7 +63,6 @@ export function downloadDocumentRouteHandler(
 
       if (decryptResult.status === 'OK') {
         const documentResponse = await fetchDocument(
-          res.locals.requestID,
           authProfileAndToken,
           decryptResult.content,
           req.query as Record<string, string>
@@ -103,8 +101,8 @@ export function downloadDocumentRouteHandler(
 export function attachDocumentDownloadRoute(
   router: Router,
   route: string,
-  fetchDocumentService: FetchDocumenDownloadService,
-  getRouteOrQueryParams?: FetRouteOrQueryParamsFN
+  fetchDocumentService: FetchDocumentDownloadService,
+  getRouteOrQueryParams?: FetchRouteOrQueryParamsFN
 ) {
   router.get(
     route,

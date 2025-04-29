@@ -32,7 +32,6 @@ const transformApiResponseDefault: AxiosResponseTransformer = (
 };
 
 export async function fetchService<T extends ApiPatternResponseA>(
-  requestID: RequestID,
   apiConfig: DataRequestConfig = {},
   includeTipsAndNotifications: boolean = false,
   authProfileAndToken?: AuthProfileAndToken
@@ -45,11 +44,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
     transformResponse,
   };
 
-  const response = await requestData<T>(
-    apiConfigMerged,
-    requestID,
-    authProfileAndToken
-  );
+  const response = await requestData<T>(apiConfigMerged, authProfileAndToken);
 
   if (response.status === 'OK' && !includeTipsAndNotifications) {
     return Object.assign({}, response, {
@@ -85,19 +80,13 @@ export function transformNotificationsDefault<ID extends string = string>(
 }
 
 export async function fetchTipsAndNotifications<ID extends string = string>(
-  requestID: RequestID,
   apiConfig: DataRequestConfig = {},
   themaID: ID,
   authProfileAndToken?: AuthProfileAndToken
 ): Promise<
   ApiResponse<Pick<ApiPatternResponseA, 'notifications' | 'tips'> | null>
 > {
-  const response = await fetchService(
-    requestID,
-    apiConfig,
-    true,
-    authProfileAndToken
-  );
+  const response = await fetchService(apiConfig, true, authProfileAndToken);
 
   if (response.status === 'OK') {
     const responseData: Pick<ApiPatternResponseA, 'notifications' | 'tips'> =

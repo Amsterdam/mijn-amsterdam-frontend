@@ -188,7 +188,6 @@ const fileCache = new FileCache({
 });
 
 async function getGeneralPage(
-  requestID: RequestID,
   profileType: ProfileType = 'private',
   forceRenew: boolean = false
 ): Promise<ApiResponse_DEPRECATED<CMSPageContent | null>> {
@@ -219,33 +218,30 @@ async function getGeneralPage(
     },
   });
 
-  return requestData<CMSPageContent>(requestConfig, requestID).then(
-    (apiData) => {
-      if (
-        apiData.status === 'OK' &&
-        apiData.content?.content &&
-        apiData.content?.title
-      ) {
-        fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
-        fileCache.save();
-        return apiData;
-      }
-      // Try to get stale cache instead.
-      const staleApiData = fileCache.getKeyStale<
-        ApiSuccessResponse<CMSPageContent>
-      >('CMS_CONTENT_GENERAL_INFO_' + profileType);
-
-      if (staleApiData) {
-        return Promise.resolve(staleApiData);
-      }
-
-      return apiErrorResult('Unexpected page data from iProx CMS', null);
+  return requestData<CMSPageContent>(requestConfig).then((apiData) => {
+    if (
+      apiData.status === 'OK' &&
+      apiData.content?.content &&
+      apiData.content?.title
+    ) {
+      fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
+      fileCache.save();
+      return apiData;
     }
-  );
+    // Try to get stale cache instead.
+    const staleApiData = fileCache.getKeyStale<
+      ApiSuccessResponse<CMSPageContent>
+    >('CMS_CONTENT_GENERAL_INFO_' + profileType);
+
+    if (staleApiData) {
+      return Promise.resolve(staleApiData);
+    }
+
+    return apiErrorResult('Unexpected page data from iProx CMS', null);
+  });
 }
 
 async function getFooter(
-  requestID: RequestID,
   forceRenew: boolean = false
 ): Promise<ApiResponse_DEPRECATED<CMSFooterContent | null>> {
   const apiData =
@@ -301,27 +297,18 @@ async function getFooter(
     });
   }
 
-  return requestData<CMSFooterContent>(requestConfig, requestID).then(
-    saveCacheAndSend
-  );
+  return requestData<CMSFooterContent>(requestConfig).then(saveCacheAndSend);
 }
 
-async function fetchCmsBase(
-  requestID: RequestID,
-  query?: QueryParamsCMSFooter
-) {
+async function fetchCmsBase(query?: QueryParamsCMSFooter) {
   const forceRenew = query?.forceRenew === 'true';
   const profileType =
     query?.profileType && isValidProfileType(query?.profileType)
       ? query.profileType
       : undefined;
-  const generalInfoPageRequest = getGeneralPage(
-    requestID,
-    profileType,
-    forceRenew
-  );
+  const generalInfoPageRequest = getGeneralPage(profileType, forceRenew);
 
-  const footerInfoPageRequest = getFooter(requestID, forceRenew);
+  const footerInfoPageRequest = getFooter(forceRenew);
 
   const requests: Promise<
     ApiResponse_DEPRECATED<CMSPageContent | CMSFooterContent | null>
@@ -343,19 +330,13 @@ export type QueryParamsCMSFooter = {
   profileType?: ProfileType;
 };
 
-export async function fetchCmsFooter(
-  requestID: RequestID,
-  query?: QueryParamsCMSFooter
-) {
-  const response = await fetchCmsBase(requestID, query);
+export async function fetchCmsFooter(query?: QueryParamsCMSFooter) {
+  const response = await fetchCmsBase(query);
   return apiSuccessResult(response.footer);
 }
 
-export async function fetchCMSCONTENT(
-  requestID: RequestID,
-  query?: QueryParamsCMSFooter
-) {
-  const response = await fetchCmsBase(requestID, query);
+export async function fetchCMSCONTENT(query?: QueryParamsCMSFooter) {
+  const response = await fetchCmsBase(query);
   return apiSuccessResult(response);
 }
 
@@ -405,10 +386,7 @@ const config: SearchConfigRemote = {
 };
 */
 
-export async function fetchSearchConfig(
-  requestID: RequestID,
-  query?: Record<string, string>
-) {
+export async function fetchSearchConfig(query?: Record<string, string>) {
   const config =
     searchFileCache.getKey<ApiSuccessResponse<SearchConfigRemote>>('CONFIG');
 
@@ -439,8 +417,7 @@ export async function fetchSearchConfig(
     });
   } else {
     dataRequest = requestData<SearchConfigRemote>(
-      getApiConfig('SEARCH_CONFIG'),
-      requestID
+      getApiConfig('SEARCH_CONFIG')
     );
   }
 

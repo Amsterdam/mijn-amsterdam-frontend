@@ -27,13 +27,9 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
 
 export async function fetchStadspas(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<StadspasFrontend[] | null>> {
-  const stadspasResponse = await fetchStadspassen(
-    requestID,
-    authProfileAndToken
-  );
+  const stadspasResponse = await fetchStadspassen(authProfileAndToken);
 
   if (stadspasResponse.status !== 'OK') {
     return stadspasResponse;
@@ -144,30 +140,23 @@ export async function stadspasDecryptAndFetch<T>(
 }
 
 export async function fetchStadspasDiscountTransactions(
-  requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted']
 ) {
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
-      fetchGpassDiscountTransactions(requestID, administratienummer, pasnummer),
+      fetchGpassDiscountTransactions(administratienummer, pasnummer),
     transactionsKeyEncrypted
   );
 }
 
 export async function fetchStadspasBudgetTransactions(
-  requestID: RequestID,
   transactionsKeyEncrypted: StadspasFrontend['transactionsKeyEncrypted'],
   budgetCode?: StadspasBudget['code'],
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) =>
-      fetchGpassBudgetTransactions(
-        requestID,
-        administratienummer,
-        pasnummer,
-        budgetCode
-      ),
+      fetchGpassBudgetTransactions(administratienummer, pasnummer, budgetCode),
     transactionsKeyEncrypted,
     verifySessionId
   );
@@ -179,13 +168,12 @@ export async function fetchStadspasBudgetTransactions(
  *  The endpoint in use can also unblock cards, but we prevent this so its block only.
  */
 export async function blockStadspas(
-  requestID: RequestID,
   transactionsKeyEncrypted: string,
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) => {
-      return mutateGpassBlockPass(requestID, pasnummer, administratienummer);
+      return mutateGpassBlockPass(pasnummer, administratienummer);
     },
     transactionsKeyEncrypted,
     verifySessionId
@@ -193,13 +181,12 @@ export async function blockStadspas(
 }
 
 export async function unblockStadspas(
-  requestID: RequestID,
   transactionsKeyEncrypted: string,
   verifySessionId?: AuthProfileAndToken['profile']['sid']
 ) {
   return stadspasDecryptAndFetch(
     (administratienummer, pasnummer) => {
-      return mutateGpassUnblockPass(requestID, pasnummer, administratienummer);
+      return mutateGpassUnblockPass(pasnummer, administratienummer);
     },
     transactionsKeyEncrypted,
     verifySessionId
@@ -207,10 +194,9 @@ export async function unblockStadspas(
 }
 
 export async function fetchStadspasNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const stadspasResponse = await fetchStadspas(requestID, authProfileAndToken);
+  const stadspasResponse = await fetchStadspas(authProfileAndToken);
 
   return Array.isArray(stadspasResponse.content)
     ? getBudgetNotifications(stadspasResponse.content)

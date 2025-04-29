@@ -117,9 +117,9 @@ export function filterCombineUpcPcvData(
 }
 
 /** Checks of een Workshop niet gevolgd is.
- * 
+ *
  * In Zorgned worden datumIngangGeldigheid en datumEindeGeledigheid gebruikt om aan te geven dat de workshop niet gevolgd is.
- * Als de workshop niet gevolgd is, zijn de datumIngangGeldigheid en datumEindeGeledigheid gelijk aan elkaar. 
+ * Als de workshop niet gevolgd is, zijn de datumIngangGeldigheid en datumEindeGeledigheid gelijk aan elkaar.
  */
 export function isWorkshopNietGevolgd(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed

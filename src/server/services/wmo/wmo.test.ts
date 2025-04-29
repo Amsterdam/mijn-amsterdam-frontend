@@ -30,7 +30,7 @@ describe('Transform api items', () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
 
     expect(
-      await fetchWmo('xxxx', {
+      await fetchWmo({
         profile: {
           id: '123123',
           authMethod: 'digid',
@@ -38,6 +38,7 @@ describe('Transform api items', () => {
           sid: '',
         },
         token: '',
+        expiresAtMilliseconds: 0,
       })
     ).toMatchSnapshot();
   });

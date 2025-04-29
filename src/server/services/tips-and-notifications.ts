@@ -49,7 +49,6 @@ const TIP_IDS_DISABLED = (getFromEnv('BFF_TIPS_DISABLED_IDS', false) ?? '')
   .map((id) => id.trim());
 
 type FetchNotificationFunction = (
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) => Promise<ApiResponse_DEPRECATED<unknown>>;
 
@@ -67,18 +66,10 @@ const notificationServices: NotificationServicesByProfileType = {
     overtredingen: fetchOvertredingenNotifications,
     vergunningen: fetchVergunningenNotifications,
     horeca: fetchHorecaNotifications,
-    maintenanceNotifications: (requestID: RequestID) =>
-      fetchMaintenanceNotificationsDashboard(requestID),
+    maintenanceNotifications: fetchMaintenanceNotificationsDashboard,
     subsidie: fetchSubsidieNotifications,
-    toeristischeVerhuur: (
-      requestID: RequestID,
-      authProfileAndToken: AuthProfileAndToken
-    ) =>
-      fetchToeristischeVerhuurNotifications(
-        requestID,
-        authProfileAndToken,
-        new Date()
-      ),
+    toeristischeVerhuur: (authProfileAndToken: AuthProfileAndToken) =>
+      fetchToeristischeVerhuurNotifications(authProfileAndToken, new Date()),
     bodem: fetchLoodMetingNotifications,
     bezwaren: fetchBezwarenNotifications,
     parkeren: fetchParkeerVergunningenNotifications,
@@ -99,8 +90,7 @@ const notificationServices: NotificationServicesByProfileType = {
     fetchWpi: fetchWpiNotifications,
     horeca: fetchHorecaNotifications,
     klachten: fetchKlachtenNotifications,
-    maintenance: (requestID: RequestID) =>
-      fetchMaintenanceNotificationsDashboard(requestID),
+    maintenance: fetchMaintenanceNotificationsDashboard,
     milieuzone: fetchMilieuzoneNotifications,
     overtredingen: fetchOvertredingenNotifications,
     subsidie: fetchSubsidieNotifications,
@@ -157,7 +147,6 @@ function getTipsAndNotificationsFromApiResults(
 
 // Services can return Source tips and Content tips.
 async function fetchNotificationsAndTipsFromServices_(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<MyNotification[]> {
   if (authProfileAndToken.profile.profileType !== 'private-attributes') {
@@ -166,7 +155,7 @@ async function fetchNotificationsAndTipsFromServices_(
 
     const results = await Promise.allSettled(
       Object.values(services).map((fetchNotifications) =>
-        fetchNotifications(requestID, authProfileAndToken)
+        fetchNotifications(authProfileAndToken)
       )
     );
 
@@ -262,7 +251,7 @@ export async function fetchNotificationsWithTipsInserted(
         )
       : [],
     authProfileAndToken
-      ? fetchNotificationsAndTipsFromServices(requestID, authProfileAndToken)
+      ? fetchNotificationsAndTipsFromServices(authProfileAndToken)
       : [],
   ]);
 

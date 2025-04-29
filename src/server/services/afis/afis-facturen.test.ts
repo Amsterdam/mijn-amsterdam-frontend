@@ -42,7 +42,6 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
-const REQUEST_ID = '456';
 const SESSION_ID = '0987';
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
@@ -106,7 +105,6 @@ describe('afis-facturen', async () => {
     remoteApi.get(ROUTES.deelbetalingen).reply(200, deelbetalingenResponse);
 
     const response = await fetchAfisFacturen(
-      REQUEST_ID,
       authProfileAndToken.profile.sid,
       openParams
     );
@@ -179,7 +177,6 @@ describe('afis-facturen', async () => {
     };
 
     const response = await fetchAfisFacturen(
-      REQUEST_ID,
       authProfileAndToken.profile.sid,
       closedParams
     );
@@ -225,7 +222,6 @@ describe('afis-facturen', async () => {
       .reply(500, { message: 'Internal Server Error' });
 
     const response = await fetchAfisDocument(
-      REQUEST_ID,
       getAuthProfileAndToken('private'),
       FACTUUR_NUMMER
     );
@@ -247,7 +243,6 @@ describe('afis-facturen', async () => {
     remoteApi.get(ROUTES.documentID).reply(200, noArcDocId);
 
     const response = await fetchAfisDocument(
-      REQUEST_ID,
       getAuthProfileAndToken('private'),
       FACTUUR_NUMMER
     );
@@ -269,7 +264,6 @@ describe('afis-facturen', async () => {
       .reply(200, DOCUMENT_DOWNLOAD_RESPONSE);
 
     const response = await fetchAfisDocument(
-      REQUEST_ID,
       getAuthProfileAndToken('private'),
       FACTUUR_NUMMER
     );
@@ -744,10 +738,7 @@ describe('afis-facturen', async () => {
       businessPartnerID: GENERIC_ID,
     };
 
-    const response = await forTesting.fetchAfisFacturenDeelbetalingen(
-      REQUEST_ID,
-      params
-    );
+    const response = await forTesting.fetchAfisFacturenDeelbetalingen(params);
 
     expect(response.status).toBe('OK');
     expect(response.content).toEqual({
@@ -803,7 +794,7 @@ describe('afis-facturen', async () => {
         },
       });
 
-      const response = await fetchAfisFacturenOverview(REQUEST_ID, SESSION_ID, {
+      const response = await fetchAfisFacturenOverview(SESSION_ID, {
         businessPartnerID: GENERIC_ID,
       });
       const byStateValues =
@@ -826,7 +817,7 @@ describe('afis-facturen', async () => {
         },
       });
 
-      const response = await fetchAfisFacturenByState(REQUEST_ID, SESSION_ID, {
+      const response = await fetchAfisFacturenByState(SESSION_ID, {
         state: 'afgehandeld',
         businessPartnerID: GENERIC_ID,
       });

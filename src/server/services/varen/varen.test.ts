@@ -72,7 +72,7 @@ describe('Varen service', () => {
         apiSuccessResult([])
       );
 
-      const response = await fetchVaren('x1', authProfileAndToken);
+      const response = await fetchVaren(authProfileAndToken);
       const successResponse = {
         status: 'OK',
         content: {
@@ -88,7 +88,7 @@ describe('Varen service', () => {
         apiErrorResult('Error', null)
       );
 
-      const response = await fetchVaren('x2', authProfileAndToken);
+      const response = await fetchVaren(authProfileAndToken);
       const errorResponse = {
         content: null,
         message: 'Error',
@@ -102,7 +102,7 @@ describe('Varen service', () => {
         apiSuccessResult(zakenContent)
       );
 
-      const response = await fetchVaren('x3', authProfileAndToken);
+      const response = await fetchVaren(authProfileAndToken);
       expect(response.status).toBe('OK');
       expect(response.content?.zaken[0]).toStrictEqual({
         ...omit(zakenContent[0], [
@@ -170,7 +170,7 @@ describe('Varen service', () => {
         apiSuccessResult(zakenContentWithoutVergunning)
       );
 
-      const response = await fetchVaren('x4', authProfileAndToken);
+      const response = await fetchVaren(authProfileAndToken);
       expect(response.status).toBe('OK');
       expect(response.content?.zaken).toHaveLength(1);
       expect(response.content?.zaken[0]).toMatchObject({

@@ -8,17 +8,14 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
-export async function fetchSSOURL(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
     },
   });
 
-  const response = await requestData<{ url: string }>(config, requestID);
+  const response = await requestData<{ url: string }>(config);
 
   return response.content?.url;
 }
@@ -27,10 +24,7 @@ type JWETokenSourceResponse = {
   token: string;
 };
 
-async function fetchJWEToken(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
   const idNumberType =
     authProfileAndToken.profile.profileType === 'private'
       ? 'bsn'
@@ -48,7 +42,7 @@ async function fetchJWEToken(
     data: formData,
   });
 
-  return requestData<JWETokenSourceResponse>(config, requestID);
+  return requestData<JWETokenSourceResponse>(config);
 }
 
 /**
@@ -58,7 +52,6 @@ async function fetchJWEToken(
  * potentially useful tile in the frontend.
  */
 export async function hasPermitsOrPermitRequests(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const userType =
@@ -66,7 +59,7 @@ export async function hasPermitsOrPermitRequests(
       ? 'private'
       : 'company';
 
-  const jweTokenResponse = await fetchJWEToken(requestID, authProfileAndToken);
+  const jweTokenResponse = await fetchJWEToken(authProfileAndToken);
   if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
     return true;
   }
@@ -80,8 +73,7 @@ export async function hasPermitsOrPermitRequests(
         data: {
           token: jweTokenResponse.content,
         },
-      }),
-      requestID
+      })
     ),
     requestData<ActivePermitSourceResponse>(
       getApiConfig('PARKEREN', {
@@ -91,8 +83,7 @@ export async function hasPermitsOrPermitRequests(
         data: {
           token: jweTokenResponse.content,
         },
-      }),
-      requestID
+      })
     ),
   ]);
 

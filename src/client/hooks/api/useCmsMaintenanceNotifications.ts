@@ -1,4 +1,4 @@
-import type { CMSMaintenanceNotification } from '../../../server/services/cms-maintenance-notifications';
+import { CMSMaintenanceNotification } from '../../../server/services/cms/cms-maintenance-notifications';
 import {
   ApiResponse_DEPRECATED,
   apiPristineResult,

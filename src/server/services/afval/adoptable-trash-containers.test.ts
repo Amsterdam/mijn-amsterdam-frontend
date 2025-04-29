@@ -60,10 +60,7 @@ describe('fetchAdoptableTrashContainers', () => {
       })
     );
 
-    const result = await fetchAdoptableTrashContainers(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content?.tips).toHaveLength(1);
   });
@@ -73,10 +70,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiErrorResult('Error fetching BRP data', null)
     );
 
-    const result = await fetchAdoptableTrashContainers(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -86,10 +80,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiErrorResult('Error fetching BAG location', null)
     );
 
-    const result = await fetchAdoptableTrashContainers(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -100,10 +91,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiErrorResult('Error fetching Map locations dataset', null)
     );
 
-    const result = await fetchAdoptableTrashContainers(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -112,10 +100,7 @@ describe('fetchAdoptableTrashContainers', () => {
       apiSuccessResult({ persoon: { geboortedatum: '2010-01-01' } })
     );
 
-    const result = await fetchAdoptableTrashContainers(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content?.tips).toHaveLength(0);
   });
@@ -142,10 +127,7 @@ describe('fetchAdoptableTrashContainers', () => {
       })
     );
 
-    const result = await fetchAdoptableTrashContainers(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await fetchAdoptableTrashContainers(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content?.tips).toHaveLength(0);
   });

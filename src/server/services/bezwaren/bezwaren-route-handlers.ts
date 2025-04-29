@@ -27,7 +27,6 @@ export async function handleFetchBezwaarDetail(
 
     if (decryptResult.status === 'OK') {
       const response = await fetchBezwaarDetail(
-        res.locals.requestID,
         authProfileAndToken,
         decryptResult.content
       );

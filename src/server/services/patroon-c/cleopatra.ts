@@ -164,10 +164,7 @@ function transformCleopatraResponse(
   };
 }
 
-async function fetchCleopatra(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function fetchCleopatra(authProfileAndToken: AuthProfileAndToken) {
   const INCLUDE_TIPS_AND_NOTIFICATIONS = true;
 
   const postData = await encryptPayload(
@@ -180,22 +177,20 @@ async function fetchCleopatra(
 
   const requestConfig = getApiConfig('CLEOPATRA', {
     transformResponse: transformCleopatraResponse,
-    cacheKey: `cleopatra-${requestID}`,
+    cacheKey: `cleopatra-${authProfileAndToken.profile.sid}`,
     data: postData,
   });
 
   return fetchService<CleoPatraPatternResponse>(
-    requestID,
     requestConfig,
     INCLUDE_TIPS_AND_NOTIFICATIONS
   );
 }
 
 export async function fetchMilieuzone(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<ApiPatternResponseA>> {
-  const response = await fetchCleopatra(requestID, authProfileAndToken);
+  const response = await fetchCleopatra(authProfileAndToken);
 
   if (response.status === 'OK') {
     return apiSuccessResult({
@@ -210,10 +205,9 @@ export async function fetchMilieuzone(
 }
 
 export async function fetchOvertredingen(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<ApiPatternResponseA>> {
-  const response = await fetchCleopatra(requestID, authProfileAndToken);
+  const response = await fetchCleopatra(authProfileAndToken);
 
   if (response.status === 'OK') {
     return apiSuccessResult({
@@ -228,11 +222,10 @@ export async function fetchOvertredingen(
 }
 
 async function fetchNotifications<ID extends string = string>(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   themaID: ID
 ) {
-  const response = await fetchCleopatra(requestID, authProfileAndToken);
+  const response = await fetchCleopatra(authProfileAndToken);
 
   if (response.status === 'OK') {
     return apiSuccessResult({
@@ -247,19 +240,13 @@ async function fetchNotifications<ID extends string = string>(
 }
 
 export async function fetchMilieuzoneNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(requestID, authProfileAndToken, MILIEUZONE.themaId);
+  return fetchNotifications(authProfileAndToken, MILIEUZONE.themaId);
 }
 
 export async function fetchOvertredingenNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchNotifications(
-    requestID,
-    authProfileAndToken,
-    OVERTREDINGEN.themaId
-  );
+  return fetchNotifications(authProfileAndToken, OVERTREDINGEN.themaId);
 }

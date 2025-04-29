@@ -73,7 +73,6 @@ function statusLineTransformer(
 }
 
 export async function fetchRequestProcess(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   getLabels: (
     requestProcess: WpiRequestProcess
@@ -89,7 +88,6 @@ export async function fetchRequestProcess(
 
   const response = await requestData<WpiRequestProcess[]>(
     apiConfig,
-    requestID,
     authProfileAndToken
   );
 
@@ -108,7 +106,6 @@ export async function fetchRequestProcess(
 }
 
 export async function fetchBijstandsuitkering(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const filterResponse: FilterResponse = (response) =>
@@ -119,13 +116,12 @@ export async function fetchBijstandsuitkering(
       .map((requestProcess) => addLink(requestProcess));
 
   const response = await fetchRequestProcess(
-    requestID,
     authProfileAndToken,
     () => bijstandsuitkeringRequestProcessLabels,
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-' + requestID,
+      requestCacheKey: 'fetch-aanvragen-' + authProfileAndToken.profile.sid,
     }
   );
 
@@ -133,7 +129,6 @@ export async function fetchBijstandsuitkering(
 }
 
 export async function fetchEAanvragen(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   about?: string[]
 ) {
@@ -142,13 +137,12 @@ export async function fetchEAanvragen(
   };
 
   const response = await fetchRequestProcess(
-    requestID,
     authProfileAndToken,
     getEAanvraagRequestProcessLabels,
     {
       apiConfigName: 'WPI_E_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-e-aanvragen-' + requestID,
+      requestCacheKey: 'fetch-e-aanvragen-' + authProfileAndToken.profile.sid,
     }
   );
 
@@ -163,11 +157,8 @@ export async function fetchEAanvragen(
   return response;
 }
 
-export async function fetchTozo(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  return fetchEAanvragen(requestID, authProfileAndToken, [
+export async function fetchTozo(authProfileAndToken: AuthProfileAndToken) {
+  return fetchEAanvragen(authProfileAndToken, [
     'Tozo 1',
     'Tozo 2',
     'Tozo 3',
@@ -176,20 +167,14 @@ export async function fetchTozo(
   ]);
 }
 
-export async function fetchBbz(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const bbz = await fetchEAanvragen(requestID, authProfileAndToken, ['Bbz']);
+export async function fetchBbz(authProfileAndToken: AuthProfileAndToken) {
+  const bbz = await fetchEAanvragen(authProfileAndToken, ['Bbz']);
 
   return bbz;
 }
 
-export async function fetchTonk(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  return fetchEAanvragen(requestID, authProfileAndToken, ['TONK']);
+export async function fetchTonk(authProfileAndToken: AuthProfileAndToken) {
+  return fetchEAanvragen(authProfileAndToken, ['TONK']);
 }
 
 export function transformIncomSpecificationResponse(
@@ -213,7 +198,6 @@ export function transformIncomSpecificationResponse(
 }
 
 export async function fetchSpecificaties(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response =
@@ -225,7 +209,6 @@ export async function fetchSpecificaties(
             responseData
           ),
       }),
-      requestID,
       authProfileAndToken
     );
 
@@ -233,7 +216,6 @@ export async function fetchSpecificaties(
 }
 
 export async function fetchWpiNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const today = new Date();
@@ -242,10 +224,8 @@ export async function fetchWpiNotifications(
 
   // Bijstandsuitkeringen
   {
-    const { status, content } = await fetchBijstandsuitkering(
-      requestID,
-      authProfileAndToken
-    );
+    const { status, content } =
+      await fetchBijstandsuitkering(authProfileAndToken);
 
     if (status === 'OK') {
       if (content?.length) {
@@ -260,10 +240,7 @@ export async function fetchWpiNotifications(
 
   // E-Aanvragen
   {
-    const { status, content } = await fetchEAanvragen(
-      requestID,
-      authProfileAndToken
-    );
+    const { status, content } = await fetchEAanvragen(authProfileAndToken);
 
     if (status === 'OK') {
       if (content?.length) {
@@ -292,10 +269,7 @@ export async function fetchWpiNotifications(
 
   // Specificaties
   {
-    const { status, content } = await fetchSpecificaties(
-      requestID,
-      authProfileAndToken
-    );
+    const { status, content } = await fetchSpecificaties(authProfileAndToken);
 
     if (status === 'OK') {
       if (content) {
@@ -312,7 +286,6 @@ export async function fetchWpiNotifications(
 }
 
 export async function fetchWpiDocument(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string,
   queryParams?: Record<string, string>
@@ -338,7 +311,6 @@ export async function fetchWpiDocument(
         };
       },
     },
-    requestID,
     authProfileAndToken
   );
 }

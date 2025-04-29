@@ -13,11 +13,8 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { fetchBRP } from '../profile/brp';
 
-export async function fetchParkeren(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const brpData = await fetchBRP(requestID, authProfileAndToken);
+export async function fetchParkeren(authProfileAndToken: AuthProfileAndToken) {
+  const brpData = await fetchBRP(authProfileAndToken);
   const livesOutsideAmsterdam = !isMokum(brpData?.content);
   const isProfileTypePrivate =
     authProfileAndToken.profile.profileType === 'private';
@@ -30,15 +27,13 @@ export async function fetchParkeren(
   let isKnown = true;
 
   if (shouldCheckForPermitsOrPermitRequests) {
-    isKnown = await hasPermitsOrPermitRequests(requestID, authProfileAndToken);
+    isKnown = await hasPermitsOrPermitRequests(authProfileAndToken);
   }
 
-  const url = await fetchSSOURL(requestID, authProfileAndToken);
+  const url = await fetchSSOURL(authProfileAndToken);
 
-  const decosParkeerVergunningenResponse = await fetchDecosParkeerVergunningen(
-    requestID,
-    authProfileAndToken
-  );
+  const decosParkeerVergunningenResponse =
+    await fetchDecosParkeerVergunningen(authProfileAndToken);
 
   return apiSuccessResult(
     {

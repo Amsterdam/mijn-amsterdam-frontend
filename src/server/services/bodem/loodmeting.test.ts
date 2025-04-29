@@ -49,7 +49,7 @@ describe('Loodmeting', () => {
     });
 
     test('All fields are correctly formatted', async () => {
-      const res = await fetchLoodmetingen(requestId, profileAndToken);
+      const res = await fetchLoodmetingen(profileAndToken);
 
       // Grab the most complete meting item, to prevent checking more then 600 lines of items for nothing.
       const mostCompleteMeting = res.content?.find(
@@ -120,7 +120,7 @@ describe('Loodmeting', () => {
     });
 
     test('Assigns processed status based on status', async () => {
-      const res = await fetchLoodmetingen(requestId, profileAndToken);
+      const res = await fetchLoodmetingen(profileAndToken);
 
       const metingen = res.content;
       assert(metingen, 'Test data has metingen');
@@ -147,10 +147,7 @@ describe('Loodmeting', () => {
     });
 
     it('should return the right notifications', async () => {
-      const res = await fetchLoodMetingNotifications(
-        requestId,
-        profileAndToken
-      );
+      const res = await fetchLoodMetingNotifications(profileAndToken);
 
       expect(res).toStrictEqual({
         content: {
@@ -330,7 +327,6 @@ describe('Loodmeting', () => {
     it('should send right API response when downloading a document', async () => {
       const workorderId = '10ecf307-2f26-ee11-9965-0022489fda17';
       const response = await fetchLoodMetingDocument(
-        requestId,
         profileAndToken,
         workorderId
       );

@@ -49,7 +49,7 @@ describe('fetchParkeren', () => {
       setupMocks('digid', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.url).toBe(SUCCESS_URL);
     });
 
@@ -57,7 +57,7 @@ describe('fetchParkeren', () => {
       setupMocks('eherkenning', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('commercial');
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.url).toBe(SUCCESS_URL);
     });
 
@@ -76,7 +76,7 @@ describe('fetchParkeren', () => {
         .reply(STATUS_OK_200, MOCK_CLIENT_PRODUCT_DETAILS);
 
       const authProfileAndToken = getAuthProfileAndToken('private');
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.url).toBeDefined();
     });
   });
@@ -90,7 +90,7 @@ describe('fetchParkeren', () => {
       );
       const authProfileAndToken = getAuthProfileAndToken('private');
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
 
@@ -102,7 +102,7 @@ describe('fetchParkeren', () => {
       );
       const authProfileAndToken = getAuthProfileAndToken('private');
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
 
@@ -116,7 +116,7 @@ describe('fetchParkeren', () => {
         .post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE)
         .reply(200, [MOCK_PARKING_PERMIT_REQUEST]);
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
 
@@ -128,7 +128,7 @@ describe('fetchParkeren', () => {
       remoteApi.post(PRIVATE_CLIENT_PRODUCT_DETAIL_ROUTE).reply(400);
       remoteApi.post(PRIVATE_ACTIVE_PERMIT_REQUEST_ROUTE).reply(400);
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
 
@@ -136,7 +136,7 @@ describe('fetchParkeren', () => {
       setupMocks('digid', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
 
@@ -144,7 +144,7 @@ describe('fetchParkeren', () => {
       setupMocks('eherkenning', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
-      const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+      const response = await fetchParkeren(authProfileAndToken);
       expect(response.content.isKnown).toBe(true);
     });
   });
@@ -153,7 +153,7 @@ describe('fetchParkeren', () => {
     setupMocks('digid', { data: [] }, { data: [] }, BRP_DATA.mokumFalse);
     const authProfileAndToken = getAuthProfileAndToken('private');
 
-    const response = await fetchParkeren(REQUEST_ID, authProfileAndToken);
+    const response = await fetchParkeren(authProfileAndToken);
     expect(response.content.isKnown).toBe(false);
   });
 });

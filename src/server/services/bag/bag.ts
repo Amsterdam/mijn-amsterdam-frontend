@@ -18,7 +18,6 @@ export interface BAGData {
 }
 
 export async function fetchBAG(
-  requestID: RequestID,
   sourceAddress: Adres | null
 ): Promise<ApiResponse_DEPRECATED<BAGData | null>> {
   if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
@@ -33,7 +32,6 @@ export async function fetchBAG(
 
   const config = getApiConfig('BAG', {
     params,
-    cacheKey: `${requestID}-${sourceAddress.straatnaam}-${sourceAddress.huisnummer}${sourceAddress.huisletter}`,
     transformResponse: (responseData) => {
       const data = responseData._embedded?.adresseerbareobjecten;
       if (!data || data.length < 1) {
@@ -53,5 +51,5 @@ export async function fetchBAG(
       };
     },
   });
-  return requestData<BAGData>(config, requestID);
+  return requestData<BAGData>(config);
 }

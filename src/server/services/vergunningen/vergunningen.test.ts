@@ -68,7 +68,7 @@ describe('vergunningen', () => {
       (getStatusSteps as Mock).mockReturnValue(['step1', 'step2']);
       (getDisplayStatus as Mock).mockReturnValue('displayStatus');
 
-      const result = await fetchVergunningen_(requestID, authProfileAndToken);
+      const result = await fetchVergunningen_(authProfileAndToken);
       expect(result.status).toBe('OK');
       expect(result.content).toHaveLength(2);
       expect(result.content?.[0]).toHaveProperty('transformed', true);
@@ -84,7 +84,7 @@ describe('vergunningen', () => {
         apiErrorResult('Error fetching Decos Zaken', null)
       );
 
-      const result = await fetchVergunningen_(requestID, authProfileAndToken);
+      const result = await fetchVergunningen_(authProfileAndToken);
       expect(result.status).toBe('ERROR');
     });
   });

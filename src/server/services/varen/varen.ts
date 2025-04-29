@@ -85,12 +85,8 @@ function transformVarenZakenFrontend(
   return zakenFrontend;
 }
 
-async function fetchVaren_(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function fetchVaren_(authProfileAndToken: AuthProfileAndToken) {
   const response = await fetchDecosZaken(
-    requestID,
     authProfileAndToken,
     decosZaakTransformers
   );

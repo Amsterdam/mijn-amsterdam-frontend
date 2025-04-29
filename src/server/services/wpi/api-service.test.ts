@@ -114,7 +114,6 @@ describe('wpi/app-service', () => {
     );
 
     const response = await fetchRequestProcess(
-      requestID,
       authProfileAndToken,
       getLabelsMock,
       fetchConfig
@@ -153,7 +152,6 @@ describe('wpi/app-service', () => {
     );
 
     const response = await fetchRequestProcess(
-      requestID,
       authProfileAndToken,
       getLabelsMock,
       fetchConfig
@@ -192,10 +190,7 @@ describe('wpi/app-service', () => {
       content: [contentBijstandsuitkering, { about: 'FooBar' }, null],
     });
 
-    const response = await fetchBijstandsuitkering(
-      requestID,
-      getAuthProfileAndToken()
-    );
+    const response = await fetchBijstandsuitkering(getAuthProfileAndToken());
 
     expect(response.status).toBe('OK');
     expect(response.content?.length).toBe(1);

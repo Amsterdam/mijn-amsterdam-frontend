@@ -43,7 +43,6 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.requestID,
       { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query
@@ -81,7 +80,6 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.requestID,
       { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query
@@ -118,7 +116,6 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.requestID,
       { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query
@@ -150,7 +147,6 @@ describe('document-download-route-handler', () => {
     await handler(req, res);
 
     expect(fetchDocument).toHaveBeenCalledWith(
-      res.locals.requestID,
       { profile: { sid: 'test-sid' } },
       'decrypted-id',
       req.query

@@ -122,7 +122,6 @@ function transformCMSEventResponse(
 }
 
 async function fetchCMSMaintenanceNotifications(
-  requestID: RequestID,
   useCache: boolean = true
 ): Promise<ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>> {
   const cachedData = fileCache.getKey<
@@ -134,19 +133,16 @@ async function fetchCMSMaintenanceNotifications(
   }
 
   function fetchCMSEventData(url: string) {
-    return requestData<CMSMaintenanceNotification>(
-      {
-        url: url + '?Appidt=app-pagetype&reload=true',
-        transformResponse: transformCMSEventResponse,
-        cacheTimeout: 0,
-      },
-      requestID
-    );
+    return requestData<CMSMaintenanceNotification>({
+      url: url + '?Appidt=app-pagetype&reload=true',
+      transformResponse: transformCMSEventResponse,
+      cacheTimeout: 0,
+    });
   }
 
   const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS');
 
-  const eventItems = await requestData<CMSFeedItem[]>(requestConfig, requestID)
+  const eventItems = await requestData<CMSFeedItem[]>(requestConfig)
     .then((apiData) => {
       if (Array.isArray(apiData.content)) {
         return Promise.all(
@@ -201,11 +197,9 @@ export interface QueryParamsMaintenanceNotifications
 }
 
 export async function fetchMaintenanceNotificationsActual(
-  requestID: RequestID,
   queryParams: QueryParamsMaintenanceNotifications
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
-    requestID,
     queryParams?.cache !== 'false'
   );
 
@@ -230,13 +224,10 @@ export async function fetchMaintenanceNotificationsActual(
   );
 }
 
-export async function fetchMaintenanceNotificationsDashboard(
-  requestID: RequestID
-) {
-  const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
-    requestID,
-    { page: 'dashboard' }
-  );
+export async function fetchMaintenanceNotificationsDashboard() {
+  const maintenanceNotifications = await fetchMaintenanceNotificationsActual({
+    page: 'dashboard',
+  });
 
   if (!maintenanceNotifications.content?.length) {
     return maintenanceNotifications;

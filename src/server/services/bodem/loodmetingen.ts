@@ -156,7 +156,7 @@ function transformLood365Response(
   return metingen;
 }
 
-export async function getLoodApiHeaders(requestID: RequestID) {
+export async function getLoodApiHeaders() {
   const url = `${process.env.BFF_LOOD_API_URL}`;
   const requestConfig = { ...getApiConfig('LOOD_365_OAUTH') };
 
@@ -172,10 +172,7 @@ export async function getLoodApiHeaders(requestID: RequestID) {
     'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
   };
 
-  const response = await requestData<{ access_token: string }>(
-    requestConfig,
-    requestID
-  );
+  const response = await requestData<{ access_token: string }>(requestConfig);
 
   if (response.status === 'OK') {
     const { access_token } = response.content;
@@ -189,7 +186,6 @@ export async function getLoodApiHeaders(requestID: RequestID) {
 }
 
 export async function fetchLoodmetingen(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const data = getDataForLood365(authProfileAndToken);
@@ -198,22 +194,21 @@ export async function fetchLoodmetingen(
     formatUrl(requestConfig) {
       return `${requestConfig.url}/be_getrequestdetails`;
     },
-    headers: await getLoodApiHeaders(requestID),
+    headers: await getLoodApiHeaders(),
     data,
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
   });
 
-  return requestData<LoodMetingen>(requestConfig, requestID);
+  return requestData<LoodMetingen>(requestConfig);
 }
 
 export async function fetchLoodMetingDocument(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken,
+  _authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
   const requestConfig = getApiConfig('LOOD_365', {
-    headers: await getLoodApiHeaders(requestID),
+    headers: await getLoodApiHeaders(),
     data: {
       workorderid: documentId,
     },
@@ -231,17 +226,13 @@ export async function fetchLoodMetingDocument(
     },
   });
 
-  return requestData<DocumentDownloadData>(requestConfig, requestID);
+  return requestData<DocumentDownloadData>(requestConfig);
 }
 
 export async function fetchLoodMetingNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const metingenResponse = await fetchLoodmetingen(
-    requestID,
-    authProfileAndToken
-  );
+  const metingenResponse = await fetchLoodmetingen(authProfileAndToken);
 
   if (metingenResponse.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(

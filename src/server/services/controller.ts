@@ -54,23 +54,21 @@ import {
 // Default service call just passing requestID and query params as arguments
 function callAuthenticatedService<T>(
   fetchService: (
-    requestID: RequestID,
     authProfileAndToken: AuthProfileAndToken,
     ...args: any[]
   ) => Promise<T>
 ) {
-  return async (requestID: RequestID, req: Request) => {
+  return async (req: Request) => {
     const authProfileAndToken = getAuth(req);
     if (!authProfileAndToken) {
       return apiErrorResult('Not authorized', null);
     }
-    return fetchService(requestID, authProfileAndToken);
+    return fetchService(authProfileAndToken);
   };
 }
 
 function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
-  return async (requestID: RequestID, req: Request) =>
-    fetchService(requestID, queryParams(req));
+  return async (req: Request) => fetchService(queryParams(req));
 }
 
 function getServiceMap(profileType: ProfileType) {
@@ -108,9 +106,9 @@ export function addServiceResultHandler<
  * The service methods
  */
 // Public services
-const CMS_CONTENT = (requestID: RequestID, req: Request) => {
+const CMS_CONTENT = (req: Request) => {
   const auth = getAuth(req);
-  return fetchCMSCONTENT(requestID, {
+  return fetchCMSCONTENT({
     profileType: auth?.profile.profileType,
     ...queryParams(req),
   });

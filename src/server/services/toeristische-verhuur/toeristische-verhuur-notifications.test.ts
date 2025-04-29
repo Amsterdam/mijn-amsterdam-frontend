@@ -11,7 +11,6 @@ import { apiSuccessResult } from '../../../universal/helpers/api';
 vi.mock('./toeristische-verhuur');
 
 describe('fetchToeristischeVerhuurNotifications', () => {
-  const mockRequestID = 'test-request-id';
   const mockAuthProfileAndToken = getAuthProfileAndToken();
 
   beforeAll(() => {
@@ -59,7 +58,6 @@ describe('fetchToeristischeVerhuurNotifications', () => {
     );
 
     const result = await fetchToeristischeVerhuurNotifications(
-      mockRequestID,
       mockAuthProfileAndToken
     );
 
@@ -142,7 +140,6 @@ describe('fetchToeristischeVerhuurNotifications', () => {
     );
 
     const result = await fetchToeristischeVerhuurNotifications(
-      mockRequestID,
       mockAuthProfileAndToken
     );
 
@@ -206,7 +203,6 @@ describe('fetchToeristischeVerhuurNotifications', () => {
     );
 
     const result = await fetchToeristischeVerhuurNotifications(
-      mockRequestID,
       mockAuthProfileAndToken
     );
 

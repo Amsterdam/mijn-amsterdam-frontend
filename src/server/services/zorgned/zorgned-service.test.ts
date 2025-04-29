@@ -25,7 +25,6 @@ import * as request from '../../helpers/source-api-request';
 
 const mocks = vi.hoisted(() => {
   return {
-    mockRequestID: 'mock-request-id',
     mockAuthProfileAndToken: {
       profile: {
         id: 'mock-burgerservicenummer',
@@ -113,7 +112,6 @@ describe('zorgned-service', () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, []);
 
     const result = await fetchAanvragen(
-      mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken,
       {
         zorgnedApiConfigKey: 'ZORGNED_JZD',
@@ -142,7 +140,6 @@ describe('zorgned-service', () => {
         },
         httpsAgent: expect.any(Object),
       },
-      mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken
     );
 
@@ -165,7 +162,6 @@ describe('zorgned-service', () => {
     remoteApi.post('/zorgned/document').reply(200, payload);
 
     const result = await fetchDocument(
-      mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken,
       'ZORGNED_JZD',
       mocks.mockDocumentId
@@ -190,31 +186,27 @@ describe('zorgned-service', () => {
     });
 
     const result = await fetchDocument(
-      mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken,
       'ZORGNED_JZD',
       mocks.mockDocumentId
     );
 
-    expect(requestData).toHaveBeenCalledWith(
-      {
-        httpsAgent: expect.any(Object),
-        url: `${remoteApiHost}/zorgned/document`,
-        data: {
-          burgerservicenummer: mocks.mockAuthProfileAndToken.profile.id,
-          gemeentecode: ZORGNED_GEMEENTE_CODE,
-          documentidentificatie: mocks.mockDocumentId,
-        },
-        transformResponse: expect.any(Function),
-        method: 'post',
-        headers: {
-          Token: process.env.BFF_ZORGNED_API_TOKEN,
-          'Content-type': 'application/json; charset=utf-8',
-          'x-cache-key-supplement': 'JZD',
-        },
+    expect(requestData).toHaveBeenCalledWith({
+      httpsAgent: expect.any(Object),
+      url: `${remoteApiHost}/zorgned/document`,
+      data: {
+        burgerservicenummer: mocks.mockAuthProfileAndToken.profile.id,
+        gemeentecode: ZORGNED_GEMEENTE_CODE,
+        documentidentificatie: mocks.mockDocumentId,
       },
-      mocks.mockRequestID
-    );
+      transformResponse: expect.any(Function),
+      method: 'post',
+      headers: {
+        Token: process.env.BFF_ZORGNED_API_TOKEN,
+        'Content-type': 'application/json; charset=utf-8',
+        'x-cache-key-supplement': 'JZD',
+      },
+    });
 
     expect(result).toEqual({
       status: 'OK',
@@ -336,7 +328,6 @@ describe('zorgned-service', () => {
       } as ZorgnedPersoonsgegevensNAWResponse);
 
       const result = await fetchAanvragenWithRelatedPersons(
-        'xx1yy2xx',
         getAuthProfileAndToken(),
         {
           zorgnedApiConfigKey: 'ZORGNED_AV',
@@ -388,7 +379,6 @@ describe('zorgned-service', () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
       const result = await fetchAanvragenWithRelatedPersons(
-        'xx2yy3xx',
         getAuthProfileAndToken(),
         {
           zorgnedApiConfigKey: 'ZORGNED_AV',
@@ -409,7 +399,6 @@ describe('zorgned-service', () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(200, null!);
 
       const result = await fetchAanvragenWithRelatedPersons(
-        'xx3yy4xx',
         getAuthProfileAndToken(),
         {
           zorgnedApiConfigKey: 'ZORGNED_AV',
@@ -472,7 +461,7 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons('1', userIDs);
+    const response = await fetchRelatedPersons(userIDs);
     expect(response).toStrictEqual(
       apiErrorResult(
         'Something went wrong when retrieving related persons.',
@@ -512,7 +501,7 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons('1', userIDs);
+    const response = await fetchRelatedPersons(userIDs);
     const expected: ApiSuccessResponse<ZorgnedPerson[]> = {
       content: [
         {

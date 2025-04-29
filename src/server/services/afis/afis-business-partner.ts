@@ -67,10 +67,7 @@ async function fetchBusinessPartnerAddress(
     requestID
   );
 
-  return requestData<AfisBusinessPartnerAddress>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerAddress>(businessPartnerRequestConfig);
 }
 
 function transformBusinessPartnerFullNameResponse(
@@ -105,10 +102,7 @@ async function fetchBusinessPartnerFullName(
     requestID
   );
 
-  return requestData<AfisBusinessPartnerDetails>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerDetails>(businessPartnerRequestConfig);
 }
 
 function transformPhoneResponse(
@@ -140,10 +134,7 @@ async function fetchPhoneNumber(
     requestID
   );
 
-  return requestData<AfisBusinessPartnerPhone>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerPhone>(businessPartnerRequestConfig);
 }
 
 function transformEmailResponse(
@@ -174,10 +165,7 @@ async function fetchEmail(
     requestID
   );
 
-  return requestData<AfisBusinessPartnerEmail>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerEmail>(businessPartnerRequestConfig);
 }
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */

@@ -75,7 +75,6 @@ export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
 
 export async function requestData<T>(
   config: DataRequestConfig,
-  requestID: RequestID,
   authProfileAndToken?: AuthProfileAndToken
 ) {
   const source = axios.CancelToken.source();

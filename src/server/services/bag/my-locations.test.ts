@@ -29,7 +29,6 @@ const adres = { straatnaam: 'address1' } as Adres;
 const adres2 = { straatnaam: 'address2' } as Adres;
 
 describe('fetchPrivate', () => {
-  const requestID = 'test-request-id';
   const authProfileAndToken = getAuthProfileAndToken();
 
   it('should return private addresses if fetching BRP data is successful', async () => {
@@ -44,12 +43,9 @@ describe('fetchPrivate', () => {
       apiSuccessResult({ latlng: { lat: 1, lng: 1 }, address: 'Een adres' })
     );
 
-    const result = await forTesting.fetchPrivate(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await forTesting.fetchPrivate(authProfileAndToken);
 
-    expect(fetchBAG).toHaveBeenCalledWith(requestID, adres);
+    expect(fetchBAG).toHaveBeenCalledWith(adres);
 
     expect(result.status).toBe('OK');
     expect(result.content).toHaveLength(1);
@@ -77,10 +73,7 @@ describe('fetchPrivate', () => {
       apiSuccessResult({ latlng: null, address: null })
     );
 
-    const result = await forTesting.fetchPrivate(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await forTesting.fetchPrivate(authProfileAndToken);
 
     expect(result).toStrictEqual({
       content: [
@@ -102,10 +95,7 @@ describe('fetchPrivate', () => {
       apiSuccessResult({ mokum: false, adres: null })
     );
 
-    const result = await forTesting.fetchPrivate(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await forTesting.fetchPrivate(authProfileAndToken);
 
     expect(result.status).toBe('OK');
     expect(result.content).toHaveLength(1);
@@ -123,10 +113,7 @@ describe('fetchPrivate', () => {
       apiErrorResult('Error fetching BRP data', null)
     );
 
-    const result = await forTesting.fetchPrivate(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await forTesting.fetchPrivate(authProfileAndToken);
     expect(result.status === 'DEPENDENCY_ERROR' && result.message).toBe(
       '[BRP] Error fetching BRP data'
     );
@@ -134,7 +121,6 @@ describe('fetchPrivate', () => {
 });
 
 describe('fetchCommercial', () => {
-  const requestID = 'test-request-id';
   const authProfileAndToken = getAuthProfileAndToken('commercial');
 
   it('should return commercial addresses if fetching KVK data is successful', async () => {
@@ -151,13 +137,10 @@ describe('fetchCommercial', () => {
       apiSuccessResult({ latlng: { lat: 1, lng: 1 }, address: 'Een 2e adres' })
     );
 
-    const result = await forTesting.fetchCommercial(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await forTesting.fetchCommercial(authProfileAndToken);
 
-    expect(fetchBAG).toHaveBeenCalledWith(requestID, adres);
-    expect(fetchBAG).toHaveBeenCalledWith(requestID, adres2);
+    expect(fetchBAG).toHaveBeenCalledWith(adres);
+    expect(fetchBAG).toHaveBeenCalledWith(adres2);
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -189,16 +172,12 @@ describe('fetchCommercial', () => {
       apiErrorResult('Error fetching KVK data', null)
     );
 
-    const result = await forTesting.fetchCommercial(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await forTesting.fetchCommercial(authProfileAndToken);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 });
 
 describe('fetchMyLocation', () => {
-  const requestID = 'test-request-id';
   const authProfileAndTokenPrivate = getAuthProfileAndToken();
   const authProfileAndTokenCommercial = getAuthProfileAndToken('commercial');
 
@@ -224,7 +203,7 @@ describe('fetchMyLocation', () => {
 
     (getKvkAddresses as Mock).mockReturnValueOnce([adres2]);
 
-    const result = await fetchMyLocation(requestID, authProfileAndTokenPrivate);
+    const result = await fetchMyLocation(authProfileAndTokenPrivate);
     expect(result).toEqual({
       content: [
         {
@@ -259,10 +238,7 @@ describe('fetchMyLocation', () => {
 
     (getKvkAddresses as Mock).mockReturnValueOnce([adres2]);
 
-    const result = await fetchMyLocation(
-      requestID,
-      authProfileAndTokenCommercial
-    );
+    const result = await fetchMyLocation(authProfileAndTokenCommercial);
     expect(result.status).toBe('OK');
     expect(result.content).toHaveLength(1);
   });
@@ -272,10 +248,7 @@ describe('fetchMyLocation', () => {
       apiErrorResult('Oh Oh Server down', null)
     );
 
-    const result = await fetchMyLocation(
-      requestID,
-      authProfileAndTokenCommercial
-    );
+    const result = await fetchMyLocation(authProfileAndTokenCommercial);
     expect(result.status).toBe('DEPENDENCY_ERROR');
   });
 
@@ -288,7 +261,7 @@ describe('fetchMyLocation', () => {
       apiErrorResult('Server down!', null)
     );
 
-    const result = await fetchMyLocation(requestID, authProfileAndTokenPrivate);
+    const result = await fetchMyLocation(authProfileAndTokenPrivate);
     expect(result).toEqual({
       content: null,
       message: 'Could not fetch locations.',

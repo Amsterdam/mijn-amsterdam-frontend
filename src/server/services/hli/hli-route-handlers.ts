@@ -34,16 +34,10 @@ export async function handleFetchTransactionsRequest(
 }
 
 export async function fetchZorgnedAVDocument(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  const response = fetchDocument(
-    requestID,
-    authProfileAndToken,
-    'ZORGNED_AV',
-    documentId
-  );
+  const response = fetchDocument(authProfileAndToken, 'ZORGNED_AV', documentId);
   return response;
 }
 
@@ -58,7 +52,6 @@ export async function handleBlockStadspas(
   }
 
   const response = await blockStadspas(
-    res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     authProfileAndToken.profile.sid
   );

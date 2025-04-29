@@ -42,7 +42,7 @@ describe('BAG service', () => {
   setupNockResponse(200, BAG_MOCK_DATA);
 
   test('Bag api should reply correctly', async () => {
-    const response = await fetchBAG(REQUEST_ID, ADDRESS);
+    const response = await fetchBAG(ADDRESS);
 
     expect(response).toStrictEqual({
       status: 'OK',
@@ -59,7 +59,7 @@ describe('BAG service', () => {
 
   test('No data in response', async () => {
     setupNockResponse(200, {});
-    const response = await fetchBAG(REQUEST_ID, ADDRESS);
+    const response = await fetchBAG(ADDRESS);
     expect(response).toStrictEqual({ status: 'OK', content: null });
   });
 });

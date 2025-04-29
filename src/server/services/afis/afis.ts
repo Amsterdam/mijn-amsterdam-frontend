@@ -56,7 +56,7 @@ async function fetchAfisTokenHeader_(
 
   const tokenHeaderResponse = await requestData<{
     Authorization: string;
-  } | null>(dataRequestConfig, requestID);
+  } | null>(dataRequestConfig);
 
   if (tokenHeaderResponse.status === 'ERROR') {
     throw new Error('AFIS: Could not fetch token');
@@ -129,7 +129,6 @@ function transformBusinessPartnerisKnownResponse(
 
 /** Returns if the person logging in, is known in the AFIS source API */
 export async function fetchIsKnownInAFIS(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const profileIdentifierType =
@@ -154,7 +153,6 @@ export async function fetchIsKnownInAFIS(
 
   const response = await requestData<AfisThemaResponse | null>(
     dataRequestConfig,
-    requestID,
     authProfileAndToken
   );
 
@@ -168,7 +166,6 @@ export async function fetchIsKnownInAFIS(
   }
 
   const facturenResponse = await fetchAfisFacturenOverview(
-    requestID,
     authProfileAndToken.profile.sid,
     {
       businessPartnerID: response.content.businessPartnerId,

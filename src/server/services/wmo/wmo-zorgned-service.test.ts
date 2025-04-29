@@ -12,7 +12,6 @@ import {
 
 const mocks = vi.hoisted(() => {
   return {
-    mockRequestID: 'mock-request-id',
     mockAuthProfileAndToken: {
       profile: {
         id: 'mock-burgerservicenummer',
@@ -115,7 +114,6 @@ describe('wmo-zorgned-service', () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, []);
 
     const result = await fetchZorgnedAanvragenWMO(
-      mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken
     );
 
@@ -137,7 +135,6 @@ describe('wmo-zorgned-service', () => {
         },
         httpsAgent: expect.any(Object),
       },
-      mocks.mockRequestID,
       mocks.mockAuthProfileAndToken as AuthProfileAndToken
     );
 

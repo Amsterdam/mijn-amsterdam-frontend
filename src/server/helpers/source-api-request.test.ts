@@ -88,7 +88,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -102,7 +101,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -117,7 +115,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -136,7 +133,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -152,7 +148,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -167,7 +162,6 @@ describe('requestData.ts', () => {
         url: DUMMY_URL,
         postponeFetch: true,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -182,7 +176,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL_2,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -224,7 +217,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -240,7 +232,6 @@ describe('requestData.ts', () => {
         url: DUMMY_URL,
         passthroughOIDCToken: true,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -259,7 +250,6 @@ describe('requestData.ts', () => {
           Authorization: 'Bearer ababababab',
         },
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 

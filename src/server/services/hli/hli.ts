@@ -185,18 +185,12 @@ async function transformRegelingenForFrontend(
   return regelingenFrontend;
 }
 
-async function fetchRegelingen(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
   if (!FeatureToggle.hliThemaRegelingenActive) {
     return apiSuccessResult([]);
   }
 
-  const aanvragenResponse = await fetchZorgnedAanvragenHLI(
-    requestID,
-    authProfileAndToken
-  );
+  const aanvragenResponse = await fetchZorgnedAanvragenHLI(authProfileAndToken);
   if (aanvragenResponse.status === 'OK') {
     const regelingen = await transformRegelingenForFrontend(
       authProfileAndToken,
@@ -208,13 +202,10 @@ async function fetchRegelingen(
   return aanvragenResponse;
 }
 
-export async function fetchHLI(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export async function fetchHLI(authProfileAndToken: AuthProfileAndToken) {
   const [stadspasResult, regelingenResult] = await Promise.allSettled([
-    fetchStadspas(requestID, authProfileAndToken),
-    fetchRegelingen(requestID, authProfileAndToken),
+    fetchStadspas(authProfileAndToken),
+    fetchRegelingen(authProfileAndToken),
   ]);
 
   const regelingenResponseData = getSettledResult(regelingenResult);

@@ -158,6 +158,7 @@ describe('decos-service', () => {
       sid: 's999999',
     },
     token: '111222333',
+    expiresAtMilliseconds: 0,
   };
   let reqID: RequestID = '456-ABC';
 
@@ -178,10 +179,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('request failed');
 
-      const responseData = await fetchDecosZakenFromSource(
-        reqID,
-        authProfileAndToken
-      );
+      const responseData = await fetchDecosZakenFromSource(authProfileAndToken);
       expect(responseData.status).toBe('ERROR');
       expect(responseData.content).toBe(null);
     });
@@ -201,10 +199,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('bad request to folder');
 
-      const responseData = await fetchDecosZakenFromSource(
-        reqID,
-        authProfileAndToken
-      );
+      const responseData = await fetchDecosZakenFromSource(authProfileAndToken);
 
       expect(responseData.status).toBe('ERROR');
       expect(responseData.content).toBe(null);
@@ -228,10 +223,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch - 1)
         .reply(200);
 
-      const responseData = await fetchDecosZakenFromSource(
-        reqID,
-        authProfileAndToken
-      );
+      const responseData = await fetchDecosZakenFromSource(authProfileAndToken);
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": null,
@@ -249,7 +241,7 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200);
 
-      const responseData = await fetchDecosWorkflowDates(reqID, 'zaak-id-1', [
+      const responseData = await fetchDecosWorkflowDates('zaak-id-1', [
         'zaak - behandelen',
       ]);
 
@@ -270,7 +262,7 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200, workflowInstance);
 
-      const responseData = await fetchDecosWorkflowDates(reqID, 'zaak-id-1', [
+      const responseData = await fetchDecosWorkflowDates('zaak-id-1', [
         'Zaak - behandelen',
       ]);
 
@@ -295,7 +287,7 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200, workflowInstance2);
 
-      const responseData = await fetchDecosWorkflowDates(reqID, 'zaak-id-1', [
+      const responseData = await fetchDecosWorkflowDates('zaak-id-1', [
         'Zaak - behandelen',
       ]);
 
@@ -310,9 +302,7 @@ describe('decos-service', () => {
     test('Termijnen does not exist on item', async () => {
       remoteApi.get(/\/decos\/items\/zaak-id-1\/termijnens/).reply(404);
 
-      const responseData = await fetchDecosTermijnen(reqID, 'zaak-id-1', [
-        'Termijn',
-      ]);
+      const responseData = await fetchDecosTermijnen('zaak-id-1', ['Termijn']);
 
       expect(responseData).toMatchObject({
         content: null,
@@ -323,9 +313,7 @@ describe('decos-service', () => {
     test('No content', async () => {
       remoteApi.get(/\/decos\/items\/zaak-id-1\/termijnens/).reply(200);
 
-      const responseData = await fetchDecosTermijnen(reqID, 'zaak-id-1', [
-        'Termijn',
-      ]);
+      const responseData = await fetchDecosTermijnen('zaak-id-1', ['Termijn']);
 
       expect(responseData).toMatchInlineSnapshot(`
         {
@@ -340,9 +328,7 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/zaak-id-1\/termijnens/)
         .reply(200, termijns);
 
-      const responseData = await fetchDecosTermijnen(reqID, 'zaak-id-1', [
-        'Termijn',
-      ]);
+      const responseData = await fetchDecosTermijnen('zaak-id-1', ['Termijn']);
 
       expect(responseData).toMatchInlineSnapshot(`
         {
@@ -364,7 +350,6 @@ describe('decos-service', () => {
       remoteApi.get(/\/decos\/items\/zaak-id-1\/linkedField/).reply(404);
 
       const responseData = await fetchDecosLinkedField(
-        reqID,
         'zaak-id-1',
         'linkedField'
       );
@@ -379,7 +364,6 @@ describe('decos-service', () => {
       remoteApi.get(/\/decos\/items\/zaak-id-1\/linkedField/).reply(200);
 
       const responseData = await fetchDecosLinkedField(
-        reqID,
         'zaak-id-1',
         'linkedField'
       );
@@ -396,7 +380,6 @@ describe('decos-service', () => {
         .reply(200, linkedItem);
 
       const responseData = await fetchDecosLinkedField(
-        reqID,
         'zaak-id-1',
         'linkedField'
       );
@@ -418,11 +401,7 @@ describe('decos-service', () => {
     test('No content', async () => {
       remoteApi.get(/\/decos\/items\/zaak-id-2\/documents/).reply(200, []);
 
-      const responseData = await fetchDecosDocumentList(
-        reqID,
-        'xx',
-        'zaak-id-2'
-      );
+      const responseData = await fetchDecosDocumentList('xx', 'zaak-id-2');
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [],
@@ -437,11 +416,7 @@ describe('decos-service', () => {
         .reply(200, documents);
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
 
-      const responseData = await fetchDecosDocumentList(
-        reqID,
-        'xx',
-        'zaak-id-2'
-      );
+      const responseData = await fetchDecosDocumentList('xx', 'zaak-id-2');
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [
@@ -467,11 +442,7 @@ describe('decos-service', () => {
       blob2.content[0].fields.bol10 = false;
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob2);
 
-      const responseData = await fetchDecosDocumentList(
-        reqID,
-        'xx',
-        'zaak-id-2'
-      );
+      const responseData = await fetchDecosDocumentList('xx', 'zaak-id-2');
       expect(responseData).toMatchInlineSnapshot(`
         {
           "content": [],
@@ -489,7 +460,6 @@ describe('decos-service', () => {
         .replyWithError('Booksearch failed');
 
       const responseData = await fetchDecosZaken(
-        reqID,
         authProfileAndToken,
         decosZaakTransformers
       );
@@ -521,7 +491,6 @@ describe('decos-service', () => {
       const axiosSpy = vi.spyOn(axiosRequest, 'request');
 
       const responseData = await fetchDecosZaken(
-        reqID,
         authProfileAndToken,
         decosZaakTransformers
       );
@@ -597,7 +566,7 @@ describe('decos-service', () => {
         .post(/\/decos\/search\/books/)
         .reply(200);
 
-      const userKeys = await forTesting.getUserKeys(reqID, authProfileAndToken);
+      const userKeys = await forTesting.getUserKeys(authProfileAndToken);
 
       expect(userKeys.content).toEqual(['A', 'B', 'C', 'D', 'E', 'F']);
     });
@@ -614,7 +583,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch - 1)
         .replyWithError('Suddenly errors in the requests...');
 
-      const userKeys = await forTesting.getUserKeys(reqID, authProfileAndToken);
+      const userKeys = await forTesting.getUserKeys(authProfileAndToken);
 
       expect(userKeys.status).toBe('ERROR');
       expect(userKeys.content).toBe(null);
@@ -655,10 +624,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .replyWithError('De api geeft een error.');
 
-      const responseData = await forTesting.getZakenByUserKey(
-        reqID,
-        '123456789'
-      );
+      const responseData = await forTesting.getZakenByUserKey('123456789');
 
       expect(responseData).toMatchInlineSnapshot(`
         {
@@ -675,10 +641,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, 'abc');
 
-      const responseData = await forTesting.getZakenByUserKey(
-        reqID,
-        '123456789'
-      );
+      const responseData = await forTesting.getZakenByUserKey('123456789');
 
       expect(responseData).toMatchInlineSnapshot(`
         {
@@ -695,10 +658,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, '"abc"');
 
-      const responseData = await forTesting.getZakenByUserKey(
-        reqID,
-        '123456789'
-      );
+      const responseData = await forTesting.getZakenByUserKey('123456789');
 
       expect(responseData).toMatchInlineSnapshot(`
         {
@@ -731,7 +691,6 @@ describe('decos-service', () => {
       ];
 
       const responseData = await forTesting.getZakenByUserKey(
-        reqID,
         '123456789',
         transformers
       );
@@ -755,10 +714,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
-      const responseData = await forTesting.getZakenByUserKey(
-        reqID,
-        '123456789'
-      );
+      const responseData = await forTesting.getZakenByUserKey('123456789');
 
       expect(responseData.content?.length).toBe(1);
     });
@@ -768,11 +724,7 @@ describe('decos-service', () => {
     test('Success', async () => {
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
       const documentsTransformed =
-        await forTesting.transformDecosDocumentListResponse(
-          reqID,
-          'xx',
-          documents
-        );
+        await forTesting.transformDecosDocumentListResponse('xx', documents);
       expect(documentsTransformed).toEqual([
         {
           datePublished: '2024-06-06',
@@ -853,7 +805,6 @@ describe('decos-service', () => {
         .reply(200, workflowInstance2);
 
       const transformed = await forTesting.transformDecosZaakResponse(
-        reqID,
         decosZaakTransformers,
         zakenSource.content[0]
       );
@@ -888,7 +839,6 @@ describe('decos-service', () => {
       zaak.fields.dfunction = 'buiten behandeling';
 
       const transformed = await forTesting.transformDecosZaakResponse(
-        reqID,
         decosZaakTransformers,
         zaak
       );
@@ -902,7 +852,6 @@ describe('decos-service', () => {
 
       const transformed: WerkzaamhedenEnVervoerOpStraat | null =
         await forTesting.transformDecosZaakResponse(
-          reqID,
           decosZaakTransformers,
           zaak
         );
@@ -920,7 +869,6 @@ describe('decos-service', () => {
       zaak.fields.processed = true;
 
       const transformed = await forTesting.transformDecosZaakResponse(
-        reqID,
         decosZaakTransformers,
         zaak
       );
@@ -929,11 +877,7 @@ describe('decos-service', () => {
 
     test('Null response when no valid transformer', async () => {
       const zaak: DecosZaakSource = jsonCopy(zakenSource.content[0]);
-      const transformed = await forTesting.transformDecosZaakResponse(
-        reqID,
-        [],
-        zaak
-      );
+      const transformed = await forTesting.transformDecosZaakResponse([], zaak);
       expect(transformed).toBe(null);
     });
   });
@@ -951,7 +895,6 @@ describe('decos-service', () => {
         };
       });
       const zakenTransformed = await forTesting.transformDecosZakenResponse(
-        reqID,
         decosZaakTransformers,
         zaken
       );
@@ -963,7 +906,6 @@ describe('decos-service', () => {
     test('Empty response when no valid transformer', async () => {
       const zaak: DecosZaakSource = jsonCopy(zakenSource.content[0]);
       const zakenTransformed = await forTesting.transformDecosZakenResponse(
-        reqID,
         [],
         [zaak]
       );

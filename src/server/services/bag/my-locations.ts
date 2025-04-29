@@ -16,15 +16,13 @@ import type { Adres } from '../profile/brp.types';
 import { fetchKVK, getKvkAddresses } from '../profile/kvk';
 
 async function fetchPrivate(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
-  const BRP = await fetchBRP(requestID, authProfileAndToken);
+  const BRP = await fetchBRP(authProfileAndToken);
 
   if (BRP.status === 'OK') {
     if (isMokum(BRP.content)) {
-      const BAGLocation = (await fetchBAG(requestID, BRP.content.adres))
-        ?.content;
+      const BAGLocation = (await fetchBAG(BRP.content.adres))?.content;
 
       if (!BAGLocation?.latlng) {
         return apiSuccessResult([
@@ -55,10 +53,9 @@ async function fetchPrivate(
 }
 
 async function fetchCommercial(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
-  const KVK = await fetchKVK(requestID, authProfileAndToken);
+  const KVK = await fetchKVK(authProfileAndToken);
 
   let MY_LOCATION: ApiResponse_DEPRECATED<BAGData[] | null>;
 
@@ -67,7 +64,7 @@ async function fetchCommercial(
 
     if (addresses.length) {
       const locations = await Promise.all(
-        addresses.map((address) => fetchBAG(requestID, address))
+        addresses.map((address) => fetchBAG(address))
       ).then((results) => {
         return results
           .map((result) =>
@@ -95,22 +92,15 @@ async function fetchCommercial(
 }
 
 export async function fetchMyLocation(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<BAGData[] | null>> {
-  const commercialResponse = await fetchCommercial(
-    requestID,
-    authProfileAndToken
-  );
+  const commercialResponse = await fetchCommercial(authProfileAndToken);
 
   if (authProfileAndToken.profile.profileType === 'commercial') {
     return commercialResponse;
   }
 
-  const { content: privateAddresses } = await fetchPrivate(
-    requestID,
-    authProfileAndToken
-  );
+  const { content: privateAddresses } = await fetchPrivate(authProfileAndToken);
 
   const locations: BAGData[] = [
     ...(privateAddresses || []),
