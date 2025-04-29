@@ -198,11 +198,12 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
     'isExpired' in vergunning &&
     isAfgehandeld &&
     'dateEnd' in vergunning &&
-    'dateEndFormatted' in vergunning
+    'dateEndFormatted' in vergunning &&
+    vergunning.decision?.startsWith('Verleend') // TODO: Discuss with the team if this is the right way to check for a valid decision.
   ) {
     const isVerlopenActive = !!(isAfgehandeld && (isVerlopen || isIngetrokken));
 
-    let datePublished = vergunning.dateDecision ?? '';
+    let datePublished = '';
 
     // dateEnd is generic enough for most types of vergunningen.
     // If it is not this status should be customized with a custom transformer for the statusteps.
@@ -214,6 +215,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
 
     if (isIngetrokken) {
       description = `Wij hebben uw ${vergunning.title} ingetrokken.`;
+      datePublished = vergunning.dateDecision || ''; // TODO: Verify if this is the right date to use.
     } else if (isVerlopen) {
       description = `Uw ${vergunning.title} is verlopen.`;
     } else {
