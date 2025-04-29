@@ -50,7 +50,7 @@ export function AanbiedenDienstenEnStraatartiestenContent({
   const location = () => {
     const location = commonTransformers.location(vergunning);
     return {
-      content: location && 'content' in location ? location.content : '-',
+      content: location && 'content' in location ? location.content : null,
       label: 'Locatie',
     };
   };
