@@ -184,15 +184,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
     statusAfgehandeld,
   ];
 
-  if (
-    isAfgehandeld &&
-    'isExpired' in zaak &&
-    'dateEnd' in zaak &&
-    'dateEndFormatted' in zaak &&
-    // TODO: Discuss with the team if this is the right way to check for a valid decision.
-    zaak.decision?.includes('Verleend') &&
-    !zaak.decision?.includes('Niet verleend')
-  ) {
+  if (isAfgehandeld && (isVerlopen || !!isIngetrokken)) {
     const isVerlopenActive = isVerlopen || !!isIngetrokken;
 
     let datePublished = ''; // Ingetrokken status does not have a date associated with it.
@@ -210,7 +202,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
       datePublished = zaak.dateDecision || ''; // TODO: Verify if this is the right date to use.
     } else if (isVerlopen) {
       description = `Uw ${zaak.title} is verlopen.`;
-    } else {
+    } else if ('dateEndFormatted' in zaak && zaak.dateEndFormatted) {
       description = `Uw vergunning verloopt op ${zaak.dateEndFormatted}.`;
     }
 
