@@ -2,7 +2,7 @@ import { useHorecaThemaData } from './useHorecaThemaData.hook';
 import {
   DecosZaakExploitatieHorecabedrijf,
   HorecaVergunningFrontend,
-} from '../../../../server/services/horeca/config-and-types';
+} from '../../../../server/services/horeca/decos-zaken';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';

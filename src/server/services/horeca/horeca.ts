@@ -1,7 +1,4 @@
-import {
-  decosZaakTransformers,
-  HorecaVergunningFrontend,
-} from './config-and-types';
+import { decosZaakTransformers, HorecaVergunningFrontend } from './decos-zaken';
 import {
   featureToggle,
   routeConfig,

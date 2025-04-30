@@ -5,7 +5,7 @@ import {
   routeConfig,
   themaTitle,
 } from './Horeca-thema-config';
-import { HorecaVergunningFrontend } from '../../../../server/services/horeca/config-and-types';
+import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { isError, isLoading } from '../../../../universal/helpers/api';
 import { addLinkElementToProperty } from '../../../components/Table/TableV2';
 import { useAppStateGetter } from '../../../hooks/useAppState';
