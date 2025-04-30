@@ -1,5 +1,6 @@
 import assert from 'assert';
 
+import createDebugger from 'debug';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
@@ -69,6 +70,8 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
+const debug = createDebugger('decos-service');
+
 export const adresBoekenBSN =
   process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
 
@@ -134,8 +137,11 @@ async function getUserKeys(
   const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
     formatUrl: (config) => {
-      return `${config.url}/search/books?properties=false&select=key`;
+      return `${config.url}/search/books`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams('properties=false&select=key')
+    ),
     transformResponse: (responseData) => {
       return responseData?.itemDataResultSet?.content ?? [];
     },
@@ -144,7 +150,7 @@ async function getUserKeys(
   const bookSearches = [];
   const adresBoeken =
     adresBoekenByProfileType[authProfileAndToken.profile.profileType];
-
+  debug(adresBoeken);
   // First find user keys associated with the current user.id (bsn or kvk)
   for (const addressBookKey of adresBoeken) {
     const requestBody = getUserKeysSearchQuery(
@@ -152,7 +158,13 @@ async function getUserKeys(
       authProfileAndToken.profile.id
     );
     const requestConfig = { ...apiConfig, data: requestBody };
-    const request = requestData<AddressBookEntry[]>(requestConfig, requestID);
+    const request = requestData<AddressBookEntry[]>(
+      requestConfig,
+      requestID
+    ).then((response) => ({
+      addressBookKey,
+      response,
+    }));
 
     bookSearches.push(request);
   }
@@ -161,12 +173,17 @@ async function getUserKeys(
 
   const userKeys = [];
 
-  for (const response of bookSearchResponses) {
-    if (response.status === 'ERROR') {
-      return response;
+  for (const result of bookSearchResponses) {
+    debug({
+      [`bookSearchResponse:${result.addressBookKey}`]: {
+        count: result.response.content?.length ?? 0,
+      },
+    });
+    if (result.response.status === 'ERROR') {
+      return result.response;
     }
-    if (Array.isArray(response.content)) {
-      userKeys.push(...response.content.map((record) => record.key));
+    if (Array.isArray(result.response.content)) {
+      userKeys.push(...result.response.content.map((record) => record.key));
     }
   }
 
@@ -405,22 +422,24 @@ async function getZakenByUserKey(
   );
 
   const fields = getSelectFields(zaakTypeTransformers);
-
-  const caseTypes = zaakTypeTransformers
-    .map(
-      (transformer) => `${CASE_TYP_FIELD_DECOS} eq '${transformer.caseType}'`
-    )
+  const caseTypes = zaakTypeTransformers.map(
+    (transformer) => transformer.caseType
+  );
+  const caseTypeQuery = caseTypes
+    .map((caseType) => `${CASE_TYP_FIELD_DECOS} eq '${caseType}'`)
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
     top: DECOS_ZAKEN_FETCH_TOP,
-    ...(fields && { select: fields }),
-    ...(caseTypes && { filter: caseTypes }),
+    select: fields,
+    filter: caseTypeQuery,
   });
+
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${userKey}/folders?${decosUrlParams}`;
+      return `${config.url}/items/${userKey}/folders`;
     },
+    params: Object.fromEntries(decosUrlParams),
     transformResponse: (responseData: DecosZakenResponse) => {
       if (!Array.isArray(responseData?.content)) {
         return [];
@@ -433,6 +452,13 @@ async function getZakenByUserKey(
     apiConfig,
     requestID
   );
+
+  debug({
+    [`getZakenByUserKey:${userKey}`]: {
+      caseTypes,
+      count: responseSource.content?.length ?? 0,
+    },
+  });
 
   return responseSource;
 }
@@ -462,8 +488,9 @@ export async function fetchDecosZakenFromSourceRaw(
   async function fetchZakenByUserKey(userKey: string) {
     const apiConfig = getApiConfig('DECOS_API', {
       formatUrl: (config) => {
-        return `${config.url}/items/${userKey}/folders?${queryParams}`;
+        return `${config.url}/items/${userKey}/folders`;
       },
+      params: Object.fromEntries(queryParams),
       transformResponse: (responseData: DecosZakenResponse) => {
         if (!Array.isArray(responseData?.content)) {
           return [];
@@ -595,7 +622,10 @@ async function fetchWorkflowInstance<
 ) {
   const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
     formatUrl: (config) =>
-      `${config.url}/items/${options.key}/workflowlinkinstances?${options.urlParams ?? ''}`,
+      `${config.url}/items/${options.key}/workflowlinkinstances?`,
+    params: options.urlParams
+      ? Object.fromEntries(options.urlParams)
+      : undefined,
     transformResponse: (responseData: DecosWorkflowResponse) =>
       !options.useRawResponse && options.stepTitles
         ? transformDecosWorkflowDateResponse(options.stepTitles, responseData)
@@ -724,8 +754,9 @@ export async function fetchDecosTermijnen(
 
   const apiConfigTermijnens = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/termijnens?${urlParams}`;
+      return `${config.url}/items/${zaakID}/termijnens`;
     },
+    params: Object.fromEntries(urlParams),
     transformResponse: transformDecosTermijnenResponse,
   });
 
@@ -764,8 +795,11 @@ async function fetchIsPdfDocument(
   // items / { document_id } / blob ? select = bol10
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${documentKey}/blob?select=bol10&filter=bol10 eq true`;
+      return `${config.url}/items/${documentKey}/blob`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams('select=bol10&filter=bol10 eq true')
+    ),
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
     ) => {
@@ -839,8 +873,13 @@ export async function fetchDecosDocumentList(
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date&filter=text39 eq 'Definitief'`;
+      return `${config.url}/items/${zaakID}/documents`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams(
+        `top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date&filter=text39 eq 'Definitief'`
+      )
+    ),
   });
 
   const documentsSource = await requestData<
@@ -866,8 +905,11 @@ export async function fetchDecosZaakFromSource(
   // Fetch the zaak from Decos, this request will return all the fieldNames, no need to specify the ?select= query.
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}${includeProperties ? '?properties=true' : ''}`;
+      return `${config.url}/items/${zaakID}`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams(includeProperties ? '?properties=true' : '')
+    ),
     transformResponse: (responseData: DecosZakenResponse) => {
       if (responseData.content) {
         return responseData.content[0];

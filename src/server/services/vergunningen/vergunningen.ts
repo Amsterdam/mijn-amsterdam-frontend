@@ -1,3 +1,4 @@
+import createDebugger from 'debug';
 import memoizee from 'memoizee';
 
 import { DecosVergunning, VergunningFrontend } from './config-and-types';
@@ -11,6 +12,8 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
+
+const debug = createDebugger('vergunningen');
 
 function transformVergunningFrontend(
   sessionID: SessionID,
@@ -40,6 +43,8 @@ async function fetchVergunningen_(
     authProfileAndToken,
     decosZaakTransformers
   );
+
+  debug(response, 'fetchVergunningen_');
 
   if (response.status === 'OK') {
     const decosZaken = response.content;

@@ -186,10 +186,10 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
 
   if (
     isAfgehandeld &&
-    'isExpired' in vergunning &&
-    'dateEnd' in vergunning &&
-    'dateEndFormatted' in vergunning &&
-    vergunning.decision?.startsWith('Verleend') // TODO: Discuss with the team if this is the right way to check for a valid decision.
+    'isExpired' in zaak &&
+    'dateEnd' in zaak &&
+    'dateEndFormatted' in zaak &&
+    zaak.decision?.startsWith('Verleend') // TODO: Discuss with the team if this is the right way to check for a valid decision.
   ) {
     const isVerlopenActive = isVerlopen || !!isIngetrokken;
 
@@ -197,19 +197,19 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
 
     // dateEnd is generic enough for most types of vergunningen.
     // If it is not this status should be customized with a custom transformer for the statusteps.
-    if (isVerlopen && 'dateEnd' in vergunning && vergunning.dateEnd) {
-      datePublished = vergunning.dateEnd as string;
+    if (isVerlopen && 'dateEnd' in zaak && zaak.dateEnd) {
+      datePublished = zaak.dateEnd as string;
     }
 
     let description = '';
 
     if (isIngetrokken) {
-      description = `Wij hebben uw ${vergunning.title} ingetrokken.`;
-      datePublished = vergunning.dateDecision || ''; // TODO: Verify if this is the right date to use.
+      description = `Wij hebben uw ${zaak.title} ingetrokken.`;
+      datePublished = zaak.dateDecision || ''; // TODO: Verify if this is the right date to use.
     } else if (isVerlopen) {
-      description = `Uw ${vergunning.title} is verlopen.`;
+      description = `Uw ${zaak.title} is verlopen.`;
     } else {
-      description = `Uw vergunning verloopt op ${vergunning.dateEndFormatted}.`;
+      description = `Uw vergunning verloopt op ${zaak.dateEndFormatted}.`;
     }
 
     const statusGewijzigd: StatusLineItem = {

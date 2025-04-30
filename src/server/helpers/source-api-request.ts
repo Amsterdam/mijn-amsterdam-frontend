@@ -3,6 +3,7 @@ import axios, {
   AxiosResponse,
   AxiosResponseHeaders,
 } from 'axios';
+import createDebugger from 'debug';
 import memoryCache from 'memory-cache';
 
 import { Deferred } from './deferred';
@@ -22,6 +23,8 @@ import {
 import { logger } from '../logging';
 import { captureException } from '../services/monitoring';
 
+const debug = createDebugger('source-api-request');
+
 export const axiosRequest = axios.create({
   responseType: 'json',
   headers: { 'User-Agent': 'mijn-amsterdam-bff' },
@@ -34,17 +37,15 @@ export function isSuccessStatus(statusCode: number): boolean {
 
 function getDebugResponseData(conf: AxiosRequestConfig) {
   return (responseDataParsed: any) => {
-    logger.debug(
-      { from: conf.url, body: responseDataParsed },
-      'Received response',
-      conf.url
-    );
+    debug({ url: conf.url, params: conf.params, body: responseDataParsed });
     return responseDataParsed;
   };
 }
 
 const debugResponseDataTerms =
   process.env.DEBUG_RESPONSE_DATA?.split(',') ?? [];
+
+debug({ debugResponseDataTerms });
 
 export const cache = new memoryCache.Cache<string, any>();
 
@@ -109,8 +110,16 @@ export async function requestData<T>(
       const hasTermInRequestParams = config.params
         ? JSON.stringify(config.params).includes(term.trim())
         : false;
+      const isDebugTermMatch = hasTermInRequestUrl || hasTermInRequestParams;
+      debug({
+        term,
+        hasTermInRequestParams,
+        hasTermInRequestUrl,
+        url: config.url,
+        params: config.params,
+      });
 
-      return hasTermInRequestUrl || hasTermInRequestParams;
+      return isDebugTermMatch;
     }) &&
     !config.transformResponse?.includes(debugResponseData)
   ) {
@@ -120,19 +129,9 @@ export async function requestData<T>(
         axios.defaults.transformResponse as any
       );
     }
-    // Add the debug transformer as 2nd
-    const defaultTransformerIndex = config.transformResponse.findIndex(
-      (transformer) => transformer === axios.defaults.transformResponse
-    );
     // Insert the debug transformer after the default transformer
-    // This is important to ensure that the response is parsed before we log it
-    if (defaultTransformerIndex > -1) {
-      config.transformResponse.splice(
-        defaultTransformerIndex + 1,
-        0,
-        debugResponseData
-      );
-    }
+    // This is important to ensure that the response is parsed before we log it.
+    config.transformResponse.splice(1, 0, debugResponseData);
   }
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
