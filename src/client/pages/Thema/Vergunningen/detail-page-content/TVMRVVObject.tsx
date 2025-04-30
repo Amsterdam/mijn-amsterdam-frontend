@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import type {
   VergunningFrontend,
   TVMRVVObject,
@@ -11,11 +11,11 @@ export function TVMRVVObject({
   vergunning: VergunningFrontend<TVMRVVObject>;
 }) {
   const rows = getRows(vergunning, [
-    'identifier',
-    'description',
-    'location',
-    'dateTimeRange',
-    'decision',
+    commonTransformers.identifier,
+    commonTransformers.description,
+    commonTransformers.location,
+    commonTransformers.dateTimeRange,
+    commonTransformers.decision,
   ]);
   return <Datalist rows={rows} />;
 }

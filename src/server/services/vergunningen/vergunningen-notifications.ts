@@ -22,47 +22,46 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
+import { getActiveStatus } from '../decos/decos-helpers';
 
 export function getNotificationLabels(
   notificationLabels: Partial<NotificationLabelByType>,
   vergunning: VergunningFrontend,
   compareToDate: Date = new Date()
 ) {
+  const activeStatus = getActiveStatus(vergunning);
   // Ignore formatting of the switch case statements for readability
   switch (true) {
-    // NOTE: It's not kown if we always have Verleend as decision for expirable vergunning
     case notificationLabels.verlooptBinnenkort &&
-      vergunning.decision === 'Verleend' &&
+      activeStatus === 'Afgehandeld' &&
       isNearEndDate(vergunning.dateEnd, compareToDate):
       return notificationLabels.verlooptBinnenkort;
 
     case notificationLabels.isVerlopen &&
-      vergunning.decision === 'Verleend' &&
-      vergunning.isExpired &&
+      activeStatus === 'Verlopen' &&
       vergunning.dateEnd &&
       differenceInMonths(parseISO(vergunning.dateEnd), compareToDate) <
         NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED:
       return notificationLabels.isVerlopen;
 
     case notificationLabels.isIngetrokken &&
-      vergunning.decision === 'Ingetrokken' &&
+      activeStatus === 'Ingetrokken' &&
       vergunning.dateDecision &&
       isRecentNotification(vergunning.dateDecision):
       return notificationLabels.isIngetrokken;
 
     case notificationLabels.statusAfgehandeld &&
-      vergunning.processed &&
+      activeStatus === 'Afgehandeld' &&
       vergunning.dateDecision &&
       isRecentNotification(vergunning.dateDecision):
       return notificationLabels.statusAfgehandeld;
 
     case notificationLabels.statusInBehandeling &&
-      !vergunning.processed &&
-      vergunning.steps.some((step) => step.status === 'In behandeling'):
+      activeStatus === 'In behandeling':
       return notificationLabels.statusInBehandeling;
 
-    case notificationLabels.statusAanvraag && !vergunning.processed:
-      return notificationLabels.statusAanvraag;
+    case notificationLabels.statusOntvangen && activeStatus === 'Ontvangen':
+      return notificationLabels.statusOntvangen;
   }
 
   return null;

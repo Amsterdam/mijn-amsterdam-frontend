@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import type {
   VergunningFrontend,
   Ligplaatsvergunning,
@@ -11,33 +11,25 @@ export function VOB({
   vergunning: VergunningFrontend<Ligplaatsvergunning>;
 }) {
   const rows = getRows(vergunning, [
-    'identifier',
-    'location',
+    commonTransformers.identifier,
+    commonTransformers.location,
     {
-      vesselKind: (vergunning) => ({
-        label: 'Soort vaartuig',
-        content: vergunning.vesselKind || '-',
-      }),
+      label: 'Soort vaartuig',
+      content: vergunning.vesselKind || '-',
     },
     {
-      vesselName: (vergunning) => ({
-        label: 'Naam vaartuig',
-        content: vergunning.vesselName || '-',
-      }),
+      label: 'Naam vaartuig',
+      content: vergunning.vesselName || '-',
     },
     {
-      requestKind: (vergunning) => ({
-        label: 'Soort aanvraag',
-        content: vergunning.requestKind || '-',
-      }),
+      label: 'Soort aanvraag',
+      content: vergunning.requestKind || '-',
     },
     {
-      reason: (vergunning) => ({
-        label: 'Reden',
-        content: vergunning.reason || '-',
-      }),
+      label: 'Reden',
+      content: vergunning.reason || '-',
     },
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

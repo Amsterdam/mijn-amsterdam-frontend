@@ -119,6 +119,7 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
       Verleend: ['Verleend (Bijzonder/Bewaren)', 'Verleend zonder borden'],
       '': ['Nog niet bekend', 'Nog niet  bekend'],
     }),
+    subject1: description,
     date6: dateStart,
     date7: dateEnd,
     text6: location,
@@ -155,6 +156,7 @@ const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    description: description,
     dfunction: transformDecision({
       '': ['Nog niet bekend', 'Nog niet  bekend'],
       Verleend: [

@@ -58,6 +58,7 @@ export type EvenementVergunning = DecosZaakBase &
   WithLocation &
   WithDateTimeRange & {
     caseType: GetCaseType<'EvenementVergunning'>;
+    description: string | null;
   };
 
 export type Omzettingsvergunning = DecosZaakBase &
@@ -70,6 +71,7 @@ export type ERVV = DecosZaakBase &
   WithLocation &
   WithDateTimeRange & {
     caseType: GetCaseType<'ERVV'>;
+    description: string | null;
   };
 
 export type Flyeren = DecosZaakBase &
@@ -229,7 +231,7 @@ export type NotificationLabels = NotificationLabelsBase & {
 };
 
 export type NotificationTypeKey =
-  | 'statusAanvraag'
+  | 'statusOntvangen'
   | 'statusInBehandeling'
   | 'statusAfgehandeld'
   | 'verlooptBinnenkort'

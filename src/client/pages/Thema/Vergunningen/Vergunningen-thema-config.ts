@@ -1,6 +1,12 @@
 import { generatePath, type Params } from 'react-router';
 
 import {
+  isVergunningExpirable,
+  isVergunningExpired,
+  type VergunningAanvraag,
+  type VergunningExpirable,
+} from './Vergunningen-helpers';
+import {
   DecosZaakBase,
   WithDateRange,
 } from '../../../../server/services/decos/config-and-types';
@@ -24,14 +30,6 @@ type VergunningFrontendExpireableDisplayProps = DisplayProps<
     VergunningFrontend & VergunningFrontend<DecosZaakBase & WithDateRange>
   >
 >;
-
-// Created because the tableconfig here is also used for other types of Vergunning, for example ToeristischeVerhuurVergunning.
-// This type extends Decos and PowerBrowser types and the type below satisfies both of them.
-type VergunningPropsCommon = {
-  processed: boolean;
-  decision: string | null;
-  isExpired?: boolean;
-};
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
@@ -107,16 +105,10 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-function isVergunningExpirable(vergunning: { isExpired?: boolean }) {
-  // isExpired is only present on vergunningen that have an end date.
-  return 'isExpired' in vergunning;
-}
-
 export const tableConfig = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
-    filter: <T extends VergunningPropsCommon>(vergunning: T) =>
-      !vergunning.processed,
+    filter: (vergunning: VergunningAanvraag) => !vergunning.processed,
     sort: dateSort('dateRequest', 'desc'),
     displayProps: displayPropsLopendeAanvragen,
     listPageRoute: generatePath(routeConfig.listPage.path, {
@@ -127,15 +119,11 @@ export const tableConfig = {
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: <T extends VergunningPropsCommon>(vergunning: T) => {
-      const isCurrentlyActivePermit =
-        vergunning.processed && vergunning.decision === 'Verleend';
-
+    filter: (vergunning: VergunningAanvraag | VergunningExpirable) => {
       if (isVergunningExpirable(vergunning)) {
-        return isCurrentlyActivePermit && vergunning.isExpired !== true;
+        return !isVergunningExpired(vergunning);
       }
-      // Assume if something is not expirable then it's not expired.
-      return isCurrentlyActivePermit;
+      return false;
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
@@ -147,19 +135,12 @@ export const tableConfig = {
   },
   [listPageParamKind.historic]: {
     title: 'Eerdere en niet verleende vergunningen en ontheffingen',
-    filter: <T extends VergunningPropsCommon>(vergunning: T) => {
-      if (vergunning.processed && vergunning.decision !== 'Verleend') {
-        return true;
+    filter: (vergunning: VergunningAanvraag) => {
+      if (isVergunningExpirable(vergunning)) {
+        return isVergunningExpired(vergunning);
       }
 
-      if (isVergunningExpirable(vergunning)) {
-        return (
-          vergunning.processed &&
-          vergunning.decision === 'Verleend' &&
-          vergunning.isExpired === true
-        );
-      }
-      return false;
+      return vergunning.processed;
     },
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsEerdereVergunningen,

@@ -107,11 +107,11 @@ export type TouringcarJaarontheffing = DecosZaakBase &
   };
 
 export type Parkeerplaats = {
-  fiscalNumber: string;
-  houseNumber: string;
-  street: string;
-  type: string;
-  url: string;
+  fiscalNumber: string | null;
+  houseNumber: string | null;
+  street: string | null;
+  type: string | null;
+  url: string | null;
 };
 
 export type EigenParkeerplaatsRequestType =
@@ -130,12 +130,13 @@ export type EigenParkeerplaats = DecosZaakBase &
     locations: Parkeerplaats[];
   };
 
-export type EigenParkeerplaatsOpheffen = DecosZaakBase & {
-  caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
-  isCarsharingpermit: boolean;
-  dateEnd: string | null;
-  location: Parkeerplaats;
-};
+export type EigenParkeerplaatsOpheffen = DecosZaakBase &
+  WithKentekens & {
+    caseType: GetCaseType<'EigenParkeerplaatsOpheffen'>;
+    isCarsharingpermit: boolean;
+    dateEnd: string | null;
+    location: Parkeerplaats;
+  };
 
 export type DecosParkeerVergunning =
   | GPK

@@ -10,17 +10,17 @@ export function EvenementMelding({
 }: {
   vergunning: VergunningFrontend<EvenementMelding>;
 }) {
+  const onFromTo = (vergunning: VergunningFrontend<EvenementMelding>) => {
+    return vergunning.processed
+      ? commonTransformers.onFromTo(vergunning)
+      : null;
+  };
+
   const rows = getRows(vergunning, [
-    'identifier',
-    'location',
-    {
-      onFromTo: (vergunning: VergunningFrontend<EvenementMelding>) => {
-        return vergunning.decision === 'Verleend'
-          ? commonTransformers.onFromTo(vergunning)
-          : null;
-      },
-    },
-    'decision',
+    commonTransformers.identifier,
+    commonTransformers.location,
+    onFromTo,
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

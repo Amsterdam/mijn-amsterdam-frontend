@@ -28,7 +28,7 @@ import {
   LVVRegistratie,
   VakantieverhuurVergunningFrontend,
 } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
-import { BBVergunning } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from '../../../server/services/toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   VarenRegistratieRederType,
   VarenZakenFrontend,
@@ -245,6 +245,12 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
+    stateKey: 'PARKEREN',
+    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+      return displayPath(term, [vergunning.title, vergunning.identifier]);
+    },
+  },
+  {
     stateKey: 'ERFPACHT',
     getApiBaseItems: (
       erfpachtDossiersResponse: ErfpachtDossiersResponse
@@ -261,7 +267,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];
       vakantieverhuurVergunningen: VakantieverhuurVergunningFrontend[];
-      bbVergunningen: BBVergunning[];
+      bbVergunningen: BBVergunningFrontend[];
     }) => {
       const registratienummers = apiContent.lvvRegistraties?.map(
         (registratie) => {

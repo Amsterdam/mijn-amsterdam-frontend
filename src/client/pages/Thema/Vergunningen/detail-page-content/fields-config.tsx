@@ -1,15 +1,25 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
+import type {
+  DecosZaakBase,
+  WithDateEnd,
+  WithDateRange,
+  WithDateStart,
+  WithDateTimeRange,
+  WithKentekens,
+  WithLocation,
+  WithTimeRange,
+} from '../../../../../server/services/decos/config-and-types';
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import {
   defaultDateFormat,
   defaultDateTimeFormat,
 } from '../../../../../universal/helpers/date';
-import { entries } from '../../../../../universal/helpers/utils';
 import {
   Row,
   RowSet,
   WrappedRow,
+  type DatalistProps,
 } from '../../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
 
@@ -21,7 +31,7 @@ type VergunningDataListRow<T extends VergunningFrontend = VergunningFrontend> =
   (
     vergunning: T,
     options?: DataListRowOptions
-  ) => Row | RowSet | WrappedRow | Row[] | RowSet[] | WrappedRow[] | null;
+  ) => Row | RowSet | null | Array<Row | RowSet | null>;
 
 export type RowTransformer<T extends VergunningFrontend = VergunningFrontend> =
   Record<string, VergunningDataListRow<T>>;
@@ -33,9 +43,9 @@ export const identifier: VergunningDataListRow = (vergunning) => {
   };
 };
 
-export const onFromTo: VergunningDataListRow<VergunningFrontend> = (
-  vergunning
-) => {
+export const onFromTo: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithDateTimeRange>
+> = (vergunning) => {
   if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
     return null;
   }
@@ -62,11 +72,10 @@ export const onFromTo: VergunningDataListRow<VergunningFrontend> = (
   return { rows: [on, from, to] };
 };
 
-export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
-  vergunning
-) => {
-  const isVerleend = vergunning?.decision === 'Verleend';
-  if (!('timeStart' in vergunning && 'timeEnd' in vergunning) || !isVerleend) {
+export const dateTimeRange: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithDateTimeRange>
+> = (vergunning) => {
+  if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
     return null;
   }
 
@@ -75,7 +84,7 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
     content:
       vergunning?.timeStart && vergunning?.dateStart
         ? defaultDateTimeFormat(
-            `${vergunning.dateStart}T${vergunning.timeStart}`
+            `${vergunning.dateStart.split('T')[0]}T${vergunning.timeStart}`
           )
         : vergunning.dateStart
           ? defaultDateFormat(vergunning.dateStart)
@@ -87,7 +96,9 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
     label: 'Tot en met',
     content:
       vergunning?.timeEnd && vergunning?.dateEnd
-        ? defaultDateTimeFormat(`${vergunning.dateEnd}T${vergunning.timeEnd}`)
+        ? defaultDateTimeFormat(
+            `${vergunning.dateEnd.split('T')[0]}T${vergunning.timeEnd}`
+          )
         : vergunning.dateEnd
           ? defaultDateFormat(vergunning.dateEnd)
           : '-',
@@ -99,10 +110,9 @@ export const dateTimeRange: VergunningDataListRow<VergunningFrontend> = (
   return rowSet;
 };
 
-export const dateRange: VergunningDataListRow<VergunningFrontend> = (
-  vergunning,
-  options: DataListRowOptions = { endDateIncluded: true }
-) => {
+export const dateRange: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithDateRange>
+> = (vergunning, options: DataListRowOptions = { endDateIncluded: true }) => {
   const from = commonTransformers.dateStart(vergunning) as WrappedRow;
   const to = commonTransformers.dateEnd(vergunning, options) as WrappedRow;
 
@@ -116,9 +126,9 @@ export const dateRange: VergunningDataListRow<VergunningFrontend> = (
   return rowSet;
 };
 
-export const dateTimeRangeBetween: VergunningDataListRow<VergunningFrontend> = (
-  vergunning
-) => {
+export const dateTimeRangeBetween: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithDateTimeRange>
+> = (vergunning) => {
   const dateTimeRangeRowSet = dateTimeRange(vergunning);
   if (!dateTimeRangeRowSet) {
     return null;
@@ -134,13 +144,25 @@ export const dateTimeRangeBetween: VergunningDataListRow<VergunningFrontend> = (
   const timeRange = commonTransformers.timeRange(vergunning);
 
   if (timeRange && !('rows' in timeRange)) {
-    rowSet.rows.push(timeRange);
+    rowSet.rows.push(timeRange as WrappedRow);
   }
 
   return rowSet;
 };
 
-const location: VergunningDataListRow<VergunningFrontend> = (vergunning) =>
+export const location: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithLocation>
+> = (vergunning) =>
+  'location' in vergunning && typeof vergunning.location === 'string'
+    ? {
+        label: 'Locatie',
+        content: <AddressDisplayAndModal address={vergunning.location} />,
+      }
+    : null;
+
+export const address: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithLocation>
+> = (vergunning) =>
   'location' in vergunning && typeof vergunning.location === 'string'
     ? {
         label: 'Adres',
@@ -148,137 +170,134 @@ const location: VergunningDataListRow<VergunningFrontend> = (vergunning) =>
       }
     : null;
 
-const location2: VergunningDataListRow<VergunningFrontend> = (vergunning) =>
-  'location' in vergunning && typeof vergunning.location !== 'string'
+export const decision: VergunningDataListRow<VergunningFrontend> = (
+  vergunning
+) =>
+  vergunning.decision && vergunning.processed
     ? {
-        label: 'Adres',
-        content: JSON.stringify(vergunning.location),
+        label: 'Resultaat',
+        content: vergunning.decision,
       }
     : null;
 
-export const commonTransformers: RowTransformer<VergunningFrontend> = {
-  identifier,
-  location,
-  location2,
-  decision: (vergunning) =>
-    vergunning.decision && vergunning.processed
-      ? {
-          label: 'Resultaat',
-          content: vergunning.decision,
-        }
-      : null,
-  kentekens: (vergunning) => {
-    const hasMultipleKentekens = vergunning?.kentekens?.includes('|');
-    return 'kentekens' in vergunning && typeof vergunning.kentekens === 'string'
-      ? {
-          label: `Kenteken${hasMultipleKentekens ? 's' : ''}`,
-          content: hasMultipleKentekens ? (
-            <UnorderedList>
-              {vergunning.kentekens.split('|').map((kenteken) => (
-                <UnorderedList.Item key={kenteken}>
-                  {kenteken.trim()}
-                </UnorderedList.Item>
-              ))}
-            </UnorderedList>
-          ) : (
-            vergunning.kentekens
-          ),
-        }
-      : null;
-  },
-  dateStartedOn: (vergunning) => ({
-    label: `Op`,
-    content: vergunning.dateStartFormatted,
-  }),
-  dateStart: (vergunning) => ({
-    label: `Van`,
-    content: vergunning.dateStartFormatted,
-  }),
-  dateEnd: (vergunning, options = { endDateIncluded: true }) => ({
-    label: options?.endDateIncluded ? `Tot en met` : 'Tot',
-    content: vergunning.dateEndFormatted,
-  }),
-  dateRange,
-  dateTimeRange,
-  dateTimeRangeBetween,
-  onFromTo,
-  timeStart: (vergunning) =>
-    'timeStart' in vergunning && typeof vergunning.timeStart === 'string'
-      ? {
-          label: `Van`,
-          content: vergunning.timeStart,
-        }
-      : null,
-  timeEnd: (vergunning) =>
-    'timeEnd' in vergunning && typeof vergunning.timeEnd === 'string'
-      ? {
-          label: 'Tot',
-          content: vergunning.timeEnd,
-        }
-      : null,
-  timeRange: (vergunning) =>
-    'timeStart' in vergunning &&
-    'timeEnd' in vergunning &&
-    typeof vergunning.timeStart === 'string' &&
-    typeof vergunning.timeEnd === 'string'
-      ? {
-          label: 'Tussen',
-          content: `${vergunning.timeStart} - ${vergunning.timeEnd} uur`,
-        }
-      : null,
-  description: (vergunning) => {
-    return {
-      label: 'Omschrijving',
-      content: vergunning.description,
-    };
-  },
+export const kentekens: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithKentekens>
+> = (vergunning) => {
+  const hasMultipleKentekens = vergunning?.kentekens?.includes('|');
+  return 'kentekens' in vergunning && typeof vergunning.kentekens === 'string'
+    ? {
+        label: `Kenteken${hasMultipleKentekens ? 's' : ''}`,
+        content: hasMultipleKentekens ? (
+          <UnorderedList>
+            {vergunning.kentekens.split('|').map((kenteken) => (
+              <UnorderedList.Item key={kenteken}>
+                {kenteken.trim()}
+              </UnorderedList.Item>
+            ))}
+          </UnorderedList>
+        ) : (
+          vergunning.kentekens
+        ),
+      }
+    : null;
 };
 
-// Eplicit type because we cannot? type the keys of a Record<string, xxx>
-type TransformerKey =
-  | 'description'
-  | 'identifier'
-  | 'location'
-  | 'location2'
-  | 'decision'
-  | 'kentekens'
-  | 'dateStartedOn'
-  | 'dateStart'
-  | 'dateRange'
-  | 'dateEnd'
-  | 'onFromTo'
-  | 'dateTimeRangeBetween'
-  | 'dateTimeRange'
-  | 'timeStart'
-  | 'timeEnd'
-  | 'timeRange';
+export const dateStartedOn: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithDateStart>
+> = (vergunning) => ({
+  label: `Op`,
+  content: vergunning.dateStartFormatted,
+});
 
-export function getRowsByKey<T extends VergunningFrontend>(
-  vergunning: T,
-  keysOrTransformers: (TransformerKey | RowTransformer<T>)[]
-): Record<string, Row | RowSet | Row[] | RowSet[]> {
-  const rows = keysOrTransformers
-    .map((keyOrTransformer) => {
-      if (typeof keyOrTransformer === 'string') {
-        // Check if the key has a common transformer attached to it
-        const commonTransformer = commonTransformers[keyOrTransformer];
-        // If the key has a common transformer attached to it, return the key and the transformed value.
-        return [keyOrTransformer, commonTransformer(vergunning)];
+export const dateStart: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithDateStart>
+> = (vergunning) => ({
+  label: `Van`,
+  content: vergunning.dateStartFormatted,
+});
+
+export const dateEnd: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithDateEnd>
+> = (vergunning, options = { endDateIncluded: true }) => ({
+  label: options?.endDateIncluded ? `Tot en met` : 'Tot',
+  content: vergunning.dateEndFormatted,
+});
+
+export const timeStart: VergunningDataListRow<VergunningFrontend> = (
+  vergunning
+) =>
+  'timeStart' in vergunning && typeof vergunning.timeStart === 'string'
+    ? {
+        label: `Van`,
+        content: vergunning.timeStart,
       }
+    : null;
 
-      // KeyOrTransformer is a transformer object
-      const [key, transformer] = entries(keyOrTransformer)[0];
-      return [key, transformer(vergunning)];
-    })
-    .filter(([_, row]) => row !== null);
+export const timeEnd: VergunningDataListRow<VergunningFrontend> = (
+  vergunning
+) =>
+  'timeEnd' in vergunning && typeof vergunning.timeEnd === 'string'
+    ? {
+        label: 'Tot',
+        content: vergunning.timeEnd,
+      }
+    : null;
 
-  return Object.fromEntries(rows);
-}
+export const timeRange: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & WithTimeRange>
+> = (vergunning) =>
+  'timeStart' in vergunning &&
+  'timeEnd' in vergunning &&
+  typeof vergunning.timeStart === 'string' &&
+  typeof vergunning.timeEnd === 'string'
+    ? {
+        label: 'Tussen',
+        content: `${vergunning.timeStart} - ${vergunning.timeEnd} uur`,
+      }
+    : null;
+
+export const description: VergunningDataListRow<
+  VergunningFrontend<DecosZaakBase & { description: string | null }>
+> = (vergunning) => {
+  return {
+    label: 'Omschrijving',
+    content: vergunning.description,
+  };
+};
+
+export const commonTransformers = {
+  dateEnd,
+  dateRange,
+  dateStart,
+  dateStartedOn,
+  dateTimeRange,
+  dateTimeRangeBetween,
+  decision,
+  description,
+  identifier,
+  kentekens,
+  location,
+  address,
+  onFromTo,
+  timeEnd,
+  timeRange,
+  timeStart,
+} as const;
 
 export function getRows<T extends VergunningFrontend>(
   vergunning: T,
-  keysOrTransformers: (TransformerKey | RowTransformer<T>)[]
-): Array<Row | RowSet> {
-  const rowsByKey = getRowsByKey(vergunning, keysOrTransformers);
-  return Object.values(rowsByKey).flat();
+  keysOrTransformers: (VergunningDataListRow<T> | Row | RowSet)[]
+): DatalistProps['rows'] {
+  const rows = keysOrTransformers
+    .map((transformerOrRowType) => {
+      if (typeof transformerOrRowType === 'function') {
+        // transformerOrRowType is a transformer object
+        return transformerOrRowType(vergunning);
+      }
+      return transformerOrRowType;
+    })
+    .flat()
+    .filter((row) => row !== null);
+
+  return rows;
 }

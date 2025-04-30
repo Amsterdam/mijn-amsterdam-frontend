@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import type {
   ERVV,
   VergunningFrontend,
@@ -7,10 +7,10 @@ import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function ERVV({ vergunning }: { vergunning: VergunningFrontend<ERVV> }) {
   const rows = getRows(vergunning, [
-    'identifier',
-    'description',
-    'dateTimeRange',
-    'decision',
+    commonTransformers.identifier,
+    commonTransformers.description,
+    commonTransformers.dateTimeRange,
+    commonTransformers.decision,
   ]);
   return <Datalist rows={rows} />;
 }

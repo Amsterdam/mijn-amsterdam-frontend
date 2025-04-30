@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import type {
   VergunningFrontend,
   WoningVergunning,
@@ -10,7 +10,11 @@ export function Woonvergunningen({
 }: {
   vergunning: VergunningFrontend<WoningVergunning>;
 }) {
-  const rows = getRows(vergunning, ['identifier', 'location', 'decision']);
+  const rows = getRows(vergunning, [
+    commonTransformers.identifier,
+    commonTransformers.location,
+    commonTransformers.decision,
+  ]);
 
   return <Datalist rows={rows} />;
 }

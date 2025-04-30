@@ -6,20 +6,6 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
-function BurgerzakenIdentiteitsbewijsContent({
-  document,
-}: {
-  document: IdentiteitsbewijsFrontend;
-}) {
-  const rows = getRows(document);
-
-  return (
-    <PageContentCell>
-      <Datalist rows={rows} />
-    </PageContentCell>
-  );
-}
-
 function getRows(document: IdentiteitsbewijsFrontend) {
   return [
     {
@@ -35,6 +21,20 @@ function getRows(document: IdentiteitsbewijsFrontend) {
       content: document.datumAfloopFormatted,
     },
   ];
+}
+
+function BurgerzakenIdentiteitsbewijsContent({
+  document,
+}: {
+  document: IdentiteitsbewijsFrontend;
+}) {
+  const rows = getRows(document);
+
+  return (
+    <PageContentCell>
+      <Datalist rows={rows} />
+    </PageContentCell>
+  );
 }
 
 export function BurgerzakenDetail() {

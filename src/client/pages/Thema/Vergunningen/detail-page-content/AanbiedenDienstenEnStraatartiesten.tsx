@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { commonTransformers, getRows } from './fields-config';
 import {
   AanbiedenDiensten,
@@ -47,29 +49,31 @@ export function AanbiedenDienstenEnStraatartiestenContent({
         }
       : null;
 
+  const location = () => {
+    const location = commonTransformers.location(vergunning);
+    let content: ReactNode = null;
+
+    if (location && 'content' in location) {
+      content = location.content;
+    }
+
+    return {
+      content: content ?? '-',
+      label: 'Locatie',
+    };
+  };
+
   const rows = getRows(vergunning, [
-    'identifier',
-    { waarvoor },
+    commonTransformers.identifier,
+    waarvoor,
     {
-      stadsdeel: (vergunning) => {
-        return {
-          label: 'Stadsdeel',
-          content: vergunning.stadsdeel,
-        };
-      },
+      label: 'Stadsdeel',
+      content: vergunning.stadsdeel,
     },
-    {
-      location: (vergunning) => {
-        const location = commonTransformers.location(vergunning);
-        return {
-          content: location && 'content' in location ? location.content : '-',
-          label: 'Locatie',
-        };
-      },
-    },
-    { op },
-    { vanTot },
-    'decision',
+    location,
+    op,
+    vanTot,
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

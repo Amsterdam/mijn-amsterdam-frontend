@@ -8,7 +8,7 @@ import type { TipsPredicateFN } from './tip-types';
 import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
-import { BBVergunning } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
+import { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
 
@@ -261,7 +261,7 @@ export const hasBnBVergunning: TipsPredicateFN = (appState) => {
 
 export const hasBnBTransitionRight: TipsPredicateFN = (appState) => {
   return !!appState.TOERISTISCHE_VERHUUR?.content?.bbVergunningen.some(
-    (vergunning: BBVergunning) => vergunning.heeftOvergangsRecht
+    (vergunning: BBVergunningFrontend) => vergunning.heeftOvergangsRecht
   );
 };
 

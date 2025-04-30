@@ -8,7 +8,10 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { getRows } from '../Vergunningen/detail-page-content/fields-config';
+import {
+  commonTransformers,
+  getRows,
+} from '../Vergunningen/detail-page-content/fields-config';
 import { VergunningDetailDocumentsList } from '../Vergunningen/detail-page-content/VergunningDetailDocumentsList';
 import { useVergunningenDetailData } from '../Vergunningen/useVergunningenDetailData.hook';
 
@@ -20,16 +23,14 @@ function ExploitatieHorecaBedrijf({
   vergunning,
 }: ExploitatieHorecaBedrijfProps) {
   const rows = getRows(vergunning, [
-    'identifier',
-    'location',
+    commonTransformers.identifier,
+    commonTransformers.location,
     {
-      dateStart: () => ({
-        label: 'Begindatum',
-        content: vergunning.dateStartFormatted,
-        isVisible: vergunning.processed && vergunning.decision === 'Verleend',
-      }),
+      label: 'Begindatum',
+      content: vergunning.dateStartFormatted,
+      isVisible: vergunning.processed && vergunning.decision === 'Verleend',
     },
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

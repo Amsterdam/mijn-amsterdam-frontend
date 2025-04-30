@@ -40,6 +40,10 @@ describe('vergunningen-notifications', () => {
       const vergunning = {
         decision: 'Verleend',
         dateEnd: '2023-12-01',
+        steps: [
+          { status: 'Afgehandeld', isActive: true },
+          { status: 'Verlopen', isActive: false },
+        ],
       } as VergunningFrontend;
       (isNearEndDate as Mock).mockReturnValue(true);
 
@@ -55,6 +59,7 @@ describe('vergunningen-notifications', () => {
         decision: 'Verleend',
         isExpired: true,
         dateEnd: '2023-01-01',
+        steps: [{ status: 'Verlopen', isActive: true }],
       } as VergunningFrontend;
       (isNearEndDate as Mock).mockReturnValue(false);
       (isRecentNotification as Mock).mockReturnValue(true);
@@ -70,6 +75,7 @@ describe('vergunningen-notifications', () => {
       const vergunning = {
         decision: 'Ingetrokken',
         dateDecision: '2023-01-01',
+        steps: [{ status: 'Ingetrokken', isActive: true }],
       } as VergunningFrontend;
       (isRecentNotification as Mock).mockReturnValue(true);
 
@@ -84,6 +90,7 @@ describe('vergunningen-notifications', () => {
       const vergunning = {
         processed: true,
         dateDecision: '2023-01-01',
+        steps: [{ status: 'Afgehandeld', isActive: true }],
       } as VergunningFrontend;
       (isRecentNotification as Mock).mockReturnValue(true);
 
@@ -97,7 +104,7 @@ describe('vergunningen-notifications', () => {
     it('should return correct label for statusInBehandeling', () => {
       const vergunning = {
         processed: false,
-        steps: [{ status: 'In behandeling' }],
+        steps: [{ status: 'In behandeling', isActive: true }],
       } as VergunningFrontend;
 
       const labels = getNotificationLabels(
@@ -107,16 +114,17 @@ describe('vergunningen-notifications', () => {
       expect(labels).toBe('In behandeling');
     });
 
-    it('should return correct label for statusAanvraag', () => {
+    it('should return correct label for statusOntvangen', () => {
       const vergunning = {
         processed: false,
+        steps: [{ status: 'Ontvangen', isActive: true }],
       } as VergunningFrontend;
 
       const labels = getNotificationLabels(
-        { statusAanvraag: 'Aanvraag' } as any,
+        { statusOntvangen: 'Ontvangen' } as any,
         vergunning
       );
-      expect(labels).toBe('Aanvraag');
+      expect(labels).toBe('Ontvangen');
     });
 
     it('should return null if no matching label', () => {
@@ -135,12 +143,13 @@ describe('vergunningen-notifications', () => {
         id: '1',
         caseType: 'TestCase',
         link: { to: '/test', title: 'Test' },
+        steps: [{ status: 'Ontvangen', isActive: true }],
       } as VergunningFrontend;
 
       const zaakTypeTransformer = {
         caseType: 'TestCase',
         notificationLabels: {
-          statusAanvraag: {
+          statusOntvangen: {
             title: () => 'Test Title',
             description: () => 'Test Description',
             datePublished: () => '2023-01-01',
@@ -152,7 +161,8 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        themaId
+        themaId,
+        themaTitle
       );
       expect(notification).toHaveProperty('title', 'Test Title');
       expect(notification).toHaveProperty('description', 'Test Description');
@@ -178,7 +188,8 @@ describe('vergunningen-notifications', () => {
       const notification = createVergunningNotification(
         vergunning,
         zaakTypeTransformer,
-        themaId
+        themaId,
+        themaTitle
       );
       expect(notification).toBeNull();
     });
@@ -190,14 +201,14 @@ describe('vergunningen-notifications', () => {
         {
           id: '1',
           caseType: 'TestCase',
-          steps: [],
+          steps: [{ status: 'Ontvangen', isActive: true }],
           link: { to: '/test', title: 'Test' },
         },
         {
           id: '2',
           caseType: 'TestCase',
           dateRequest: '2023-01-01',
-          steps: [{ status: 'In behandeling' }],
+          steps: [{ status: 'In behandeling', isActive: true }],
           link: { to: '/test', title: 'Test' },
         },
         {
@@ -206,7 +217,7 @@ describe('vergunningen-notifications', () => {
           decision: 'Verleend',
           processed: true,
           dateDecision: '2025-01-01',
-          steps: [],
+          steps: [{ status: 'Afgehandeld', isActive: true }],
           link: { to: '/test', title: 'Test' },
         },
       ] as unknown as VergunningFrontend[];
@@ -215,7 +226,7 @@ describe('vergunningen-notifications', () => {
         {
           caseType: 'TestCase',
           notificationLabels: {
-            statusAanvraag: {
+            statusOntvangen: {
               title: () => 'Aanvraag',
               description: () => 'Test Description',
               datePublished: () => '2023-01-01',
@@ -276,7 +287,7 @@ describe('vergunningen-notifications', () => {
           id: '1',
           caseType: 'VOB',
           title: 'V.O.B. 2023-01',
-          steps: [],
+          steps: [{ status: 'Ontvangen', isActive: true }],
           link: { to: '/test', title: 'Test' },
         },
       ];

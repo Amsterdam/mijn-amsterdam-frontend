@@ -5,6 +5,7 @@ import type {
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import {
+  commonTransformers,
   dateRange,
   dateTimeRange,
   getRows,
@@ -19,34 +20,32 @@ export function Touringcar({
 }) {
   const isGranted = vergunning.decision === 'Verleend';
 
+  const dateRangeYear = () => {
+    return vergunning.processed &&
+      isGranted &&
+      vergunning.caseType === 'Touringcar Jaarontheffing'
+      ? dateRange(vergunning)
+      : null;
+  };
+
+  const dateRangeDay = () => {
+    return vergunning.processed &&
+      isGranted &&
+      vergunning.caseType === 'Touringcar Dagontheffing'
+      ? dateTimeRange(vergunning)
+      : null;
+  };
+
   const rows = getRows(vergunning, [
-    'identifier',
-    'kentekens',
+    commonTransformers.identifier,
+    commonTransformers.kentekens,
     {
-      destination: () => ({
-        label: 'Bestemming',
-        content: vergunning.destination,
-      }),
+      label: 'Bestemming',
+      content: vergunning.destination,
     },
-    {
-      dateRangeYear: () => {
-        return vergunning.processed &&
-          isGranted &&
-          vergunning.caseType === 'Touringcar Jaarontheffing'
-          ? dateRange(vergunning)
-          : null;
-      },
-    },
-    {
-      dateRangeDay: () => {
-        return vergunning.processed &&
-          isGranted &&
-          vergunning.caseType === 'Touringcar Dagontheffing'
-          ? dateTimeRange(vergunning)
-          : null;
-      },
-    },
-    'decision',
+    dateRangeYear,
+    dateRangeDay,
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;
