@@ -120,10 +120,7 @@ export const tableConfig = {
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
     filter: (vergunning: VergunningExpirable) => {
-      if (isVergunningExpirable(vergunning)) {
-        return !isVergunningExpired(vergunning);
-      }
-      return false;
+      return !isVergunningExpired(vergunning);
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
