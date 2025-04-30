@@ -186,6 +186,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
 
   if (
     isAfgehandeld &&
+    // TODO: Discuss with the team if this is the right way to check for a valid decision.
     (('isExpired' in zaak &&
       zaak.decision?.includes('Verleend') &&
       !zaak.decision.includes('Niet verleend')) ||
