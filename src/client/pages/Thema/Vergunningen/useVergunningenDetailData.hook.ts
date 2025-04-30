@@ -17,6 +17,6 @@ export function useVergunningenDetailData<T extends VergunningFrontend>(
     isErrorDocuments: isError,
     isLoadingDocuments: isLoading,
     documents,
-    title: vergunning?.title ?? 'Vergunning',
+    title: vergunning?.title ?? 'Horecavergunning',
   };
 }
