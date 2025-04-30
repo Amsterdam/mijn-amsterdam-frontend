@@ -23,6 +23,7 @@ import {
 import { captureException } from '../services/monitoring';
 
 const debug = createDebugger('source-api-request');
+const debugCache = createDebugger('source-api-request:cache');
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -36,7 +37,14 @@ export function isSuccessStatus(statusCode: number): boolean {
 
 function getDebugResponseData(conf: AxiosRequestConfig) {
   return (responseDataParsed: any) => {
-    debug({ url: conf.url, params: conf.params, body: responseDataParsed });
+    debug(
+      {
+        url: conf.url,
+        params: conf.params,
+      },
+      'start:debug response data'
+    );
+    debug(responseDataParsed, 'end:debug response data');
     return responseDataParsed;
   };
 }
@@ -44,7 +52,7 @@ function getDebugResponseData(conf: AxiosRequestConfig) {
 const debugResponseDataTerms =
   process.env.DEBUG_RESPONSE_DATA?.split(',') ?? [];
 
-debug({ debugResponseDataTerms });
+debug(debugResponseDataTerms, 'debug response data terms');
 
 export const cache = new memoryCache.Cache<string, any>();
 
@@ -110,13 +118,19 @@ export async function requestData<T>(
         ? JSON.stringify(config.params).includes(term.trim())
         : false;
       const isDebugTermMatch = hasTermInRequestUrl || hasTermInRequestParams;
-      debug({
-        term,
-        hasTermInRequestParams,
-        hasTermInRequestUrl,
-        url: config.url,
-        params: config.params,
-      });
+
+      if (isDebugTermMatch) {
+        debug(
+          {
+            term,
+            hasTermInRequestParams,
+            hasTermInRequestUrl,
+            url: config.url,
+            params: config.params,
+          },
+          'debug response data term match'
+        );
+      }
 
       return isDebugTermMatch;
     }) &&
@@ -195,9 +209,11 @@ export async function requestData<T>(
 
     // Use the cache Deferred for resolving the response
     if (config.enableCache && cache.get(cacheKey)) {
-      debug(
-        { url: config.url, queryParams: config.params },
-        `Cache hit for '${config.url}'`
+      debugCache(
+        {
+          url: config.url,
+        },
+        'cache hit'
       );
       cache.get(cacheKey).resolve(responseData);
     }
@@ -206,7 +222,7 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    debug(error);
+    debug(error, 'response error');
 
     captureException(error, {
       properties: {
