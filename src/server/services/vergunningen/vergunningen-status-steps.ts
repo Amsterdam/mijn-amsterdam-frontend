@@ -141,7 +141,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
     ? !!dateInBehandeling && !isAfgehandeld
     : !isAfgehandeld;
   const isVerlopen = 'isExpired' in zaak ? zaak.isExpired === true : false;
-  const isIngetrokken = zaak.decision?.includes('Ingetrokken');
+  const isIngetrokken = !!zaak.decision?.includes('Ingetrokken');
 
   const statusOntvangen: StatusLineItem = {
     id: 'step-1',
@@ -184,8 +184,8 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
     statusAfgehandeld,
   ];
 
-  if (isAfgehandeld && (isVerlopen || !!isIngetrokken)) {
-    const isVerlopenActive = isVerlopen || !!isIngetrokken;
+  if (isAfgehandeld && ('isExpired' in zaak || isIngetrokken)) {
+    const isVerlopenActive = isVerlopen || isIngetrokken;
 
     let datePublished = ''; // Ingetrokken status does not have a date associated with it.
 
