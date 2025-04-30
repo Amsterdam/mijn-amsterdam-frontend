@@ -5,10 +5,8 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
-  adresBoekenByProfileType,
   CASE_TYP_FIELD_DECOS,
   caseType,
-  DECOS_ZAKEN_FETCH_TOP,
   MA_DECISION_DEFAULT,
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
@@ -70,6 +68,21 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+
+export const adresBoekenBSN =
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
+
+export const adresBoekenKVK =
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK?.split(',') ?? [];
+
+export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
+  private: adresBoekenBSN,
+  commercial: adresBoekenKVK,
+  'private-attributes': [],
+};
+
+export const DECOS_ZAKEN_FETCH_TOP = '200';
+
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of decosZaken.
  *

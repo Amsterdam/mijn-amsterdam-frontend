@@ -1,20 +1,6 @@
 import { transformKenteken, translateValue } from './decos-helpers';
 import { DecosFieldTransformerObject, WithKentekens } from './decos-types';
 
-export const adresBoekenBSN =
-  process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
-
-export const adresBoekenKVK =
-  process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK?.split(',') ?? [];
-
-export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
-  private: adresBoekenBSN,
-  commercial: adresBoekenKVK,
-  'private-attributes': [],
-};
-
-export const DECOS_ZAKEN_FETCH_TOP = '200';
-
 export const MA_DECISION_DEFAULT = 'Zie besluit';
 
 const identifier = 'identifier';
