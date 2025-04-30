@@ -136,7 +136,6 @@ async function getUserKeys(
 ) {
   const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
-    cacheKey: `decos-user-keys-${authProfileAndToken.profile.sid}`, // only need to fetch once per session
     formatUrl: (config) => {
       return `${config.url}/search/books`;
     },
@@ -158,7 +157,12 @@ async function getUserKeys(
       addressBookKey,
       authProfileAndToken.profile.id
     );
-    const requestConfig = { ...apiConfig, data: requestBody };
+    const requestConfig = {
+      ...apiConfig,
+      data: requestBody,
+      // only need to fetch once per session
+      cacheKey: `decos-user-key-${addressBookKey}-${authProfileAndToken.profile.sid}`,
+    };
     const request = requestData<AddressBookEntry[]>(
       requestConfig,
       requestID
