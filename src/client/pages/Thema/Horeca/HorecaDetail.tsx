@@ -25,7 +25,9 @@ function ExploitatieHorecaBedrijf({
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.location,
-    () => (vergunning.processed ? commonTransformers.dateRange(vergunning) : null),,
+    () =>
+      vergunning.processed ? commonTransformers.dateRange(vergunning) : null,
+    ,
     commonTransformers.decision,
   ]);
 
