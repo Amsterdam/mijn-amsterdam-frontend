@@ -15,13 +15,13 @@ import {
 function transformVergunningFrontend(
   sessionID: SessionID,
   zaak: DecosVergunning,
-  appRoute: string
+  detailPageRoute: string
 ) {
   const zaakFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
     zaak,
     {
-      detailPageRoute: appRoute,
+      detailPageRoute,
       includeFetchDocumentsUrl: true,
       getStepsFN: getStatusSteps,
     }

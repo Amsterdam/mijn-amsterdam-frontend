@@ -1,11 +1,6 @@
 import uid from 'uid-safe';
 
 import {
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
-} from './decos-types';
-import {
   fetchDecosDocumentList,
   fetchDecosZaken,
   fetchDecosWorkflowDates,
@@ -14,9 +9,16 @@ import {
   fetchDecosTermijnen,
   fetchDecosLinkedField,
 } from './decos-service';
-import { remoteApi } from '../../../testing/utils';
+import {
+  DecosDocumentSource,
+  DecosZaakSource,
+  DecosZakenResponse,
+  type DecosWorkflowResponse,
+  type DecosZaakBase,
+  type DecosZaakTransformer,
+} from './decos-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import { axiosRequest } from '../../helpers/source-api-request';
 import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
 import {
@@ -68,17 +70,16 @@ const workflows = {
   ],
 };
 
-const workflowInstance = {
+const workflowInstance: DecosWorkflowResponse = {
   count: 1,
   content: [
     {
       fields: {
-        mark: 'Afgehandeld',
         date1: '2021-09-13T17:09:00',
-        date2: '2021-09-13T17:09:00',
         text7: 'Zaak - behandelen',
-        sequence: 1.0,
       },
+      key: '',
+      links: [],
     },
   ],
 };
@@ -150,15 +151,7 @@ const blob = {
  */
 
 describe('decos-service', () => {
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: 'b123123123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: 's999999',
-    },
-    token: '111222333',
-  };
+  const authProfileAndToken = getAuthProfileAndToken();
   let reqID: RequestID = '456-ABC';
 
   const numberOfAddressBooksToSearch =
@@ -728,7 +721,7 @@ describe('decos-service', () => {
       const transformers = [
         dienstenTransformer,
         { ...vobTransformer, additionalSelectFields: ['text45', 'order66'] },
-      ];
+      ] as DecosZaakTransformer<DecosZaakBase>[];
 
       const responseData = await forTesting.getZakenByUserKey(
         reqID,
@@ -823,15 +816,17 @@ describe('decos-service', () => {
     test('No key', () => {
       const key = forTesting.transformDecosWorkflowKeysResponse({
         content: [],
+        count: 0,
       });
-      expect(key).toBe(null);
+      expect(key).toStrictEqual([]);
     });
 
     test('Has key', () => {
-      const key = forTesting.transformDecosWorkflowKeysResponse({
+      const keys = forTesting.transformDecosWorkflowKeysResponse({
         content: [{ key: 'test-key-a' }, { key: 'test-key-b' }],
+        count: 2,
       });
-      expect(key).toBe('test-key-b');
+      expect(keys).toStrictEqual(['test-key-a', 'test-key-b']);
     });
   });
 
@@ -871,7 +866,6 @@ describe('decos-service', () => {
         key: '084239C942C647F79F1C2B5CCF8DC5DA',
         location: null,
         processed: false,
-        status: 'In behandeling',
         statusDates: [
           {
             status: 'In behandeling',
