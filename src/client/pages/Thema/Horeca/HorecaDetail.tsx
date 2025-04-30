@@ -26,7 +26,9 @@ function ExploitatieHorecaBedrijf({
     commonTransformers.identifier,
     commonTransformers.location,
     () =>
-      vergunning.processed ? commonTransformers.dateRange(vergunning) : null,
+      vergunning.processed && vergunning.dateEnd && vergunning.dateStart
+        ? commonTransformers.dateRange(vergunning)
+        : null,
     ,
     commonTransformers.decision,
   ]);
