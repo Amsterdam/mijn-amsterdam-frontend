@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import { commonTransformers, getRows } from './fields-config';
 import {
   AanbiedenDiensten,
@@ -49,8 +51,14 @@ export function AanbiedenDienstenEnStraatartiestenContent({
 
   const location = () => {
     const location = commonTransformers.location(vergunning);
+    let content: ReactNode = null;
+
+    if (location && 'content' in location) {
+      content = location.content;
+    }
+
     return {
-      content: location && 'content' in location ? location.content : null,
+      content: content ?? '-',
       label: 'Locatie',
     };
   };
