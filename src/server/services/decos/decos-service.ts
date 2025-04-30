@@ -308,6 +308,21 @@ async function transformDecosZaakResponse<
     decosZaak.decision = MA_DECISION_DEFAULT;
   }
 
+  // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
+  if (
+    'dateEnd' in decosZaak &&
+    decosZaak.dateEnd &&
+    'dateStart' in decosZaak &&
+    decosZaak.dateStart
+  ) {
+    decosZaak = {
+      ...decosZaak,
+      isExpired: isExpired(decosZaak.dateEnd),
+      dateStartFormatted: toDateFormatted(decosZaak.dateStart),
+      dateEndFormatted: toDateFormatted(decosZaak.dateEnd),
+    };
+  }
+
   // After initial transformation of the data is done, perform a Post transform action.
   // It's possible to handle some data quality improvements and/or business logic operations in the after transform function.
   if (decosZaakTransformer.afterTransform) {
@@ -994,17 +1009,6 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
       BffEndpoints.DECOS_DOCUMENTS_LIST,
       [{ id: idEncrypted }]
     );
-  }
-
-  // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
-  if ('dateEnd' in zaak && 'dateStart' in zaak) {
-    const zaakFrontendWithExpiry: DecosZaakFrontend<T> & WithDateRange = {
-      ...zaakFrontend,
-      isExpired: isExpired(zaak.dateEnd),
-      dateStartFormatted: toDateFormatted(zaak.dateStart),
-      dateEndFormatted: toDateFormatted(zaak.dateEnd),
-    };
-    return zaakFrontendWithExpiry;
   }
 
   return zaakFrontend;

@@ -189,7 +189,9 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
     'isExpired' in zaak &&
     'dateEnd' in zaak &&
     'dateEndFormatted' in zaak &&
-    zaak.decision?.startsWith('Verleend') // TODO: Discuss with the team if this is the right way to check for a valid decision.
+    // TODO: Discuss with the team if this is the right way to check for a valid decision.
+    zaak.decision?.includes('Verleend') &&
+    !zaak.decision?.includes('Niet verleend')
   ) {
     const isVerlopenActive = isVerlopen || !!isIngetrokken;
 
