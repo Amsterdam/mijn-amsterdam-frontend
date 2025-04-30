@@ -20,7 +20,6 @@ import {
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
 } from '../config/source-api';
-import { logger } from '../logging';
 import { captureException } from '../services/monitoring';
 
 const debug = createDebugger('source-api-request');
@@ -196,7 +195,7 @@ export async function requestData<T>(
 
     // Use the cache Deferred for resolving the response
     if (config.enableCache && cache.get(cacheKey)) {
-      logger.trace(
+      debug(
         { url: config.url, queryParams: config.params },
         `Cache hit for '${config.url}'`
       );
@@ -206,6 +205,8 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
+
+    debug(error);
 
     captureException(error, {
       properties: {

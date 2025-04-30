@@ -136,6 +136,7 @@ async function getUserKeys(
 ) {
   const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
+    cacheKey: `decos-user-keys-${authProfileAndToken.profile.sid}`, // only need to fetch once per session
     formatUrl: (config) => {
       return `${config.url}/search/books`;
     },
@@ -150,7 +151,7 @@ async function getUserKeys(
   const bookSearches = [];
   const adresBoeken =
     adresBoekenByProfileType[authProfileAndToken.profile.profileType];
-  debug(adresBoeken);
+  debug({ adresBoeken });
   // First find user keys associated with the current user.id (bsn or kvk)
   for (const addressBookKey of adresBoeken) {
     const requestBody = getUserKeysSearchQuery(

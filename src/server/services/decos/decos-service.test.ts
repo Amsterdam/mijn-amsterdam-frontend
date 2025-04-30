@@ -527,20 +527,15 @@ describe('decos-service', () => {
       expect(
         calls
           .slice(0, numberOfAddressBooksToSearch)
-          .every(
-            (url) =>
-              url ===
-              'http://remote-api-host/decos/search/books?properties=false&select=key'
-          )
+          .every((url) => url === 'http://remote-api-host/decos/search/books')
       ).toBe(true);
       expect(
         calls
           .slice(numberOfAddressBooksToSearch, numberOfAddressBooksToSearch * 2)
-          .every(
-            (url) =>
-              url?.startsWith(
-                'http://remote-api-host/decos/items/123456789/folders?'
-              ) && url?.includes('select=')
+          .every((url) =>
+            url?.startsWith(
+              'http://remote-api-host/decos/items/123456789/folders'
+            )
           )
       ).toBe(true);
       expect(
@@ -731,11 +726,9 @@ describe('decos-service', () => {
 
       const selectFields = forTesting.getSelectFields(transformers);
 
-      expect(
-        axiosSpy.mock.calls[0][0].url?.includes(
-          encodeURIComponent(selectFields)
-        )
-      ).toBe(true);
+      expect(axiosSpy.mock.calls[0][0].params.select).toStrictEqual(
+        selectFields
+      );
 
       expect(responseData.content?.length).toBe(1);
 

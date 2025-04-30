@@ -1,13 +1,15 @@
 import { describe, it, expect } from 'vitest';
 
-import { VergunningFrontend, RVVSloterweg } from './config-and-types';
-import { getStatusSteps, getDisplayStatus } from './vergunningen-status-steps';
+import { RVVSloterweg } from './config-and-types';
+import { getStatusSteps } from './vergunningen-status-steps';
 import { StatusLineItem } from '../../../universal/types/App.types';
+import { getDisplayStatus } from '../decos/decos-helpers';
+import type { DecosZaakBase } from '../decos/decos-types';
 
 describe('vergunningen-status-steps', () => {
   describe('getStatusSteps', () => {
     it('should return correct steps for RVVSloterweg case type', () => {
-      const vergunning = {
+      const zaak = {
         caseType: 'RVV Sloterweg',
         title: 'RVV ontheffing',
         requestType: 'Nieuw',
@@ -18,9 +20,9 @@ describe('vergunningen-status-steps', () => {
         kentekens: 'AB-123-CD',
         processed: true,
         isExpired: false,
-      } as VergunningFrontend<RVVSloterweg>;
+      } as unknown as RVVSloterweg;
 
-      const steps = getStatusSteps(vergunning);
+      const steps = getStatusSteps(zaak);
       expect(steps).toHaveLength(3);
       expect(steps[0]).toHaveProperty('status', 'Ontvangen');
       expect(steps[1]).toHaveProperty('status', 'In behandeling');
@@ -29,7 +31,7 @@ describe('vergunningen-status-steps', () => {
     });
 
     it('should return correct steps for non-RVVSloterweg case type', () => {
-      const vergunning = {
+      const zaak = {
         caseType: 'Other',
         title: 'Vergunning',
         dateRequest: '2023-01-01',
@@ -37,9 +39,10 @@ describe('vergunningen-status-steps', () => {
         decision: 'Verleend',
         processed: true,
         isExpired: false,
-      } as VergunningFrontend;
+        statusDates: [],
+      } as unknown as DecosZaakBase;
 
-      const steps = getStatusSteps(vergunning);
+      const steps = getStatusSteps(zaak);
       expect(steps).toHaveLength(3);
       expect(steps[0]).toHaveProperty('status', 'Ontvangen');
       expect(steps[1]).toHaveProperty('status', 'In behandeling');
@@ -49,16 +52,16 @@ describe('vergunningen-status-steps', () => {
 
   describe('getDisplayStatus', () => {
     it('should return decision if processed and not expired', () => {
-      const vergunning = {
+      const zaak = {
         caseType: 'Other',
         title: 'Vergunning',
         processed: true,
         isExpired: false,
         decision: 'Verleend',
-      } as VergunningFrontend;
+      } as unknown as DecosZaakBase;
 
       const steps: StatusLineItem[] = [];
-      const status = getDisplayStatus(vergunning, steps);
+      const status = getDisplayStatus(zaak, steps);
       expect(status).toBe('Verleend');
     });
 
@@ -68,7 +71,7 @@ describe('vergunningen-status-steps', () => {
         title: 'Vergunning',
         processed: false,
         isExpired: false,
-      } as VergunningFrontend;
+      } as unknown as DecosZaakBase;
 
       const steps: StatusLineItem[] = [
         {
@@ -109,7 +112,7 @@ describe('vergunningen-status-steps', () => {
         title: 'Vergunning',
         processed: false,
         isExpired: false,
-      } as VergunningFrontend;
+      } as unknown as DecosZaakBase;
 
       const steps: StatusLineItem[] = [
         {
