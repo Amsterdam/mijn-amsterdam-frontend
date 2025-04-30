@@ -59,18 +59,15 @@ describe('vergunningen', () => {
         dateDecision: null,
         dateDecisionFormatted: null,
         dateEnd: null,
-        dateEndFormatted: null,
         dateRequest: '',
         dateRequestFormatted: '',
         dateStart: null,
-        dateStartFormatted: null,
         decision: null,
         displayStatus: 'FooBar',
         fetchDocumentsUrl:
           'http://bff-api-host/api/v1/services/decos/documents?id=xxx',
         id: '1',
         identifier: 'Z/123/123',
-        isExpired: false,
         key: '',
         link: {
           title: 'Bekijk hoe het met uw aanvraag staat',
