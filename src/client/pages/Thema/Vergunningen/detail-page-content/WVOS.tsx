@@ -1,6 +1,6 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import {
   VergunningFrontend,
   WerkzaamhedenEnVervoerOpStraat,
@@ -12,8 +12,11 @@ export function WVOSContent({
 }: {
   vergunning: VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
 }) {
-  const werkzaamheden = () => {
-    return {
+  const rows = getRows(vergunning, [
+    commonTransformers.identifier,
+    commonTransformers.location,
+    commonTransformers.kentekens,
+    {
       label: 'Werkzaamheden',
       content: (
         <UnorderedList>
@@ -24,15 +27,8 @@ export function WVOSContent({
           ))}
         </UnorderedList>
       ),
-    };
-  };
-
-  const rows = getRows(vergunning, [
-    'identifier',
-    'location',
-    'kentekens',
-    werkzaamheden,
-    'decision',
+    },
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

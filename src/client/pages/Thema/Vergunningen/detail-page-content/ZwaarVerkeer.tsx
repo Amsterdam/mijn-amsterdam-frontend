@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import type {
   VergunningFrontend,
   ZwaarVerkeer,
@@ -11,18 +11,14 @@ export function ZwaarVerkeer({
   vergunning: VergunningFrontend<ZwaarVerkeer>;
 }) {
   const rows = getRows(vergunning, [
-    'identifier',
+    commonTransformers.identifier,
     {
-      exemptionKind: () => {
-        return {
-          label: 'Soort ontheffing',
-          content: vergunning.exemptionKind || '-',
-        };
-      },
+      label: 'Soort ontheffing',
+      content: vergunning.exemptionKind || '-',
     },
-    'kentekens',
-    'dateRange',
-    'decision',
+    commonTransformers.kentekens,
+    commonTransformers.dateRange,
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

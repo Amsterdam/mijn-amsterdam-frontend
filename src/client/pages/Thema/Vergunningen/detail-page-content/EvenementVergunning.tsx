@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import type {
   EvenementVergunning,
   VergunningFrontend,
@@ -11,11 +11,11 @@ export function EvenementVergunning({
   vergunning: VergunningFrontend<EvenementVergunning>;
 }) {
   const rows = getRows(vergunning, [
-    'identifier',
-    'description',
-    'address',
-    'dateTimeRange',
-    'decision',
+    commonTransformers.identifier,
+    commonTransformers.description,
+    commonTransformers.address,
+    commonTransformers.dateTimeRange,
+    commonTransformers.decision,
   ]);
   return <Datalist rows={rows} />;
 }

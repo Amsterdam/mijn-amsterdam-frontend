@@ -5,6 +5,7 @@ import type {
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import {
+  commonTransformers,
   dateRange,
   dateTimeRange,
   getRows,
@@ -18,10 +19,6 @@ export function Touringcar({
   >;
 }) {
   const isGranted = vergunning.decision === 'Verleend';
-  const destination = () => ({
-    label: 'Bestemming',
-    content: vergunning.destination,
-  });
 
   const dateRangeYear = () => {
     return vergunning.processed &&
@@ -40,12 +37,15 @@ export function Touringcar({
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
-    'kentekens',
-    destination,
+    commonTransformers.identifier,
+    commonTransformers.kentekens,
+    {
+      label: 'Bestemming',
+      content: vergunning.destination,
+    },
     dateRangeYear,
     dateRangeDay,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

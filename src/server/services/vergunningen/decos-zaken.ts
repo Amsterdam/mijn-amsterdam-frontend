@@ -156,6 +156,7 @@ const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
+    description: description,
     dfunction: transformDecision({
       '': ['Nog niet bekend', 'Nog niet  bekend'],
       Verleend: [

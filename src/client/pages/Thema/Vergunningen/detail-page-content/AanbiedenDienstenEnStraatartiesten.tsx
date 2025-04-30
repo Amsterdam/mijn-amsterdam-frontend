@@ -63,21 +63,17 @@ export function AanbiedenDienstenEnStraatartiestenContent({
     };
   };
 
-  const stadsdeel = () => {
-    return {
+  const rows = getRows(vergunning, [
+    commonTransformers.identifier,
+    waarvoor,
+    {
       label: 'Stadsdeel',
       content: vergunning.stadsdeel,
-    };
-  };
-
-  const rows = getRows(vergunning, [
-    'identifier',
-    waarvoor,
-    stadsdeel,
+    },
     location,
     op,
     vanTot,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

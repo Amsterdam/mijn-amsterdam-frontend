@@ -4,6 +4,7 @@ import { Datalist } from '../../../../components/Datalist/Datalist';
 import {
   getRows,
   dateRange,
+  commonTransformers,
 } from '../../Vergunningen/detail-page-content/fields-config';
 
 export function BZP({ vergunning }: { vergunning: VergunningFrontend<BZP> }) {
@@ -12,10 +13,10 @@ export function BZP({ vergunning }: { vergunning: VergunningFrontend<BZP> }) {
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
-    'kentekens',
+    commonTransformers.identifier,
+    commonTransformers.kentekens,
     dateRangeTransformer,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

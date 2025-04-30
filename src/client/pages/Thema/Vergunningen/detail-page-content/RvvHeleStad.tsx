@@ -1,4 +1,4 @@
-import { getRows } from './fields-config';
+import { commonTransformers, getRows } from './fields-config';
 import type {
   VergunningFrontend,
   RVVHeleStad,
@@ -11,10 +11,10 @@ export function RvvHeleStad({
   vergunning: VergunningFrontend<RVVHeleStad>;
 }) {
   const rows = getRows(vergunning, [
-    'identifier',
-    'kentekens',
-    'dateRange',
-    'decision',
+    commonTransformers.identifier,
+    commonTransformers.kentekens,
+    commonTransformers.dateRange,
+    commonTransformers.decision,
   ]);
   return <Datalist rows={rows} />;
 }

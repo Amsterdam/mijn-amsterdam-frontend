@@ -23,11 +23,11 @@ export function getRowsFlyeren(vergunning: VergunningFrontend<Flyeren>) {
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
-    'location',
+    commonTransformers.identifier,
+    commonTransformers.location,
     onFromTo,
     dateTimeRangeBetween,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return rows;

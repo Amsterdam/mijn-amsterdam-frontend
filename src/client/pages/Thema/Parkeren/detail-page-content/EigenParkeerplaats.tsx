@@ -5,6 +5,7 @@ import type { VergunningFrontend } from '../../../../../server/services/vergunni
 import { Datalist, type Row } from '../../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
 import {
+  commonTransformers,
   dateRange,
   getRows,
 } from '../../Vergunningen/detail-page-content/fields-config';
@@ -14,22 +15,6 @@ export function EigenParkeerplaats({
 }: {
   vergunning: VergunningFrontend<EigenParkeerplaats>;
 }) {
-  const requestTypes = () => {
-    return {
-      label: 'Verzoek',
-      content:
-        vergunning.requestTypes.length > 1 ? (
-          <ul>
-            {vergunning.requestTypes.map((d) => (
-              <li key={d}>{d}</li>
-            ))}
-          </ul>
-        ) : (
-          vergunning.requestTypes[0]
-        ),
-    };
-  };
-
   const location = () => {
     const rows: Row[] = vergunning.locations
       ?.map((location, i) => {
@@ -78,13 +63,25 @@ export function EigenParkeerplaats({
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
-    requestTypes,
+    commonTransformers.identifier,
+    {
+      label: 'Verzoek',
+      content:
+        vergunning.requestTypes.length > 1 ? (
+          <ul>
+            {vergunning.requestTypes.map((d) => (
+              <li key={d}>{d}</li>
+            ))}
+          </ul>
+        ) : (
+          vergunning.requestTypes[0]
+        ),
+    },
     location,
-    'kentekens',
+    commonTransformers.kentekens,
     vorigeKentekens,
     dateRangeTransformer,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

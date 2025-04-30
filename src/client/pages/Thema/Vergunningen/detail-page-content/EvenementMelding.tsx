@@ -17,10 +17,10 @@ export function EvenementMelding({
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
-    'location',
+    commonTransformers.identifier,
+    commonTransformers.location,
     onFromTo,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

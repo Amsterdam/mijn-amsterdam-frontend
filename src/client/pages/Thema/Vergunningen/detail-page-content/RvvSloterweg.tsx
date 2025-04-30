@@ -56,12 +56,12 @@ export function RvvSloterweg({
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
+    commonTransformers.identifier,
     area,
     kenteken,
     vorigeKentekens,
     dateRange,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

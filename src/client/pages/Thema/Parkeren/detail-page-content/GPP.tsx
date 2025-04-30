@@ -1,7 +1,10 @@
 import type { GPP } from '../../../../../server/services/parkeren/config-and-types';
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
-import { getRows } from '../../Vergunningen/detail-page-content/fields-config';
+import {
+  commonTransformers,
+  getRows,
+} from '../../Vergunningen/detail-page-content/fields-config';
 
 export function GPPContent({
   vergunning,
@@ -9,10 +12,10 @@ export function GPPContent({
   vergunning: VergunningFrontend<GPP>;
 }) {
   const rows = getRows(vergunning, [
-    'identifier',
-    'location',
-    'kentekens',
-    'decision',
+    commonTransformers.identifier,
+    commonTransformers.location,
+    commonTransformers.kentekens,
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

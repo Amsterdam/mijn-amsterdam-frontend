@@ -71,6 +71,7 @@ export type ERVV = DecosZaakBase &
   WithLocation &
   WithDateTimeRange & {
     caseType: GetCaseType<'ERVV'>;
+    description: string | null;
   };
 
 export type Flyeren = DecosZaakBase &

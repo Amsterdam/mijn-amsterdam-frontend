@@ -5,6 +5,7 @@ import { VergunningFrontend } from '../../../../../server/services/vergunningen/
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import { AddressDisplayAndModal } from '../../../../components/LocationModal/LocationModal';
 import {
+  commonTransformers,
   getRows,
   kentekens,
 } from '../../Vergunningen/detail-page-content/fields-config';
@@ -53,11 +54,11 @@ export function EigenParkeerplaatsOpheffen({
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
+    commonTransformers.identifier,
     requestType,
     location,
     kentekens,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return <Datalist rows={rows} />;

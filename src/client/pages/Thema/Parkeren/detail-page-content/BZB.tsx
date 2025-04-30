@@ -6,6 +6,7 @@ import { MyNotification } from '../../../../../universal/types/App.types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 import { useAppStateGetter } from '../../../../hooks/useAppState';
 import {
+  commonTransformers,
   dateRange,
   getRows,
 } from '../../Vergunningen/detail-page-content/fields-config';
@@ -60,30 +61,22 @@ export function ExpirationNotifications({ id }: { id: string }) {
 }
 
 export function BZB({ vergunning }: { vergunning: VergunningFrontend<BZB> }) {
-  const companyName = () => {
-    return {
-      label: 'Naam bedrijf',
-      content: vergunning.companyName || '-',
-    };
-  };
-
-  const numberOfPermits = () => {
-    return {
-      label: 'Aantal aangevraagde ontheffingen',
-      content: vergunning.numberOfPermits || '-',
-    };
-  };
-
   const dateRangeTransformer = () => {
     return vergunning.processed ? dateRange(vergunning) : null;
   };
 
   const rows = getRows(vergunning, [
-    'identifier',
-    companyName,
-    numberOfPermits,
+    commonTransformers.identifier,
+    {
+      label: 'Naam bedrijf',
+      content: vergunning.companyName || '-',
+    },
+    {
+      label: 'Aantal aangevraagde ontheffingen',
+      content: vergunning.numberOfPermits || '-',
+    },
     dateRangeTransformer,
-    'decision',
+    commonTransformers.decision,
   ]);
 
   return (

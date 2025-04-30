@@ -144,7 +144,7 @@ export const dateTimeRangeBetween: VergunningDataListRow<
   const timeRange = commonTransformers.timeRange(vergunning);
 
   if (timeRange && !('rows' in timeRange)) {
-    rowSet.rows.push(timeRange);
+    rowSet.rows.push(timeRange as WrappedRow);
   }
 
   return rowSet;
@@ -257,7 +257,7 @@ export const timeRange: VergunningDataListRow<
     : null;
 
 export const description: VergunningDataListRow<
-  VergunningFrontend<DecosZaakBase & { description: string }>
+  VergunningFrontend<DecosZaakBase & { description: string | null }>
 > = (vergunning) => {
   return {
     label: 'Omschrijving',
@@ -284,23 +284,17 @@ export const commonTransformers = {
   timeStart,
 } as const;
 
-// Eplicit type because we cannot? type the keys of a Record<string, xxx>
-type TransformerKey = keyof typeof commonTransformers;
-
 export function getRows<T extends VergunningFrontend>(
   vergunning: T,
-  keysOrTransformers: (TransformerKey | VergunningDataListRow<T>)[]
+  keysOrTransformers: (VergunningDataListRow<T> | Row | RowSet)[]
 ): DatalistProps['rows'] {
   const rows = keysOrTransformers
-    .map((keyOrTransformer) => {
-      if (typeof keyOrTransformer === 'string') {
-        // Check if the key has a common transformer attached to it
-        // If the key has a common transformer attached to it, return the key and the transformed value.
-        return commonTransformers[keyOrTransformer]?.(vergunning) ?? null;
+    .map((transformerOrRowType) => {
+      if (typeof transformerOrRowType === 'function') {
+        // transformerOrRowType is a transformer object
+        return transformerOrRowType(vergunning);
       }
-
-      // KeyOrTransformer is a transformer object
-      return keyOrTransformer(vergunning);
+      return transformerOrRowType;
     })
     .flat()
     .filter((row) => row !== null);
