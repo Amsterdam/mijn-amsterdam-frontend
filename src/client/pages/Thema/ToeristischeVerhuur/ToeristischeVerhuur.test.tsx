@@ -26,6 +26,7 @@ function getVergunningen<
       dateRequest: '2021-01-01T10:47:44.6107122',
       dateRequestFormatted: '1 januari 2021',
       title,
+      steps: [],
       isExpired: false,
       link: {
         to: '/vergunningen/vergunningen/123456',
@@ -39,6 +40,7 @@ function getVergunningen<
       dateRequest: '2022-06-01T10:47:44.6107122',
       dateRequestFormatted: '01 juni 2022',
       title,
+      steps: [],
       isExpired: false,
       link: {
         to: '/vergunningen/vergunningen/456789',

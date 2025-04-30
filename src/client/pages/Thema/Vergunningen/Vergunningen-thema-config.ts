@@ -119,8 +119,11 @@ export const tableConfig = {
   },
   [listPageParamKind.actual]: {
     title: 'Huidige vergunningen en ontheffingen',
-    filter: (vergunning: VergunningExpirable) => {
-      return !isVergunningExpired(vergunning);
+    filter: (vergunning: VergunningAanvraag | VergunningExpirable) => {
+      if (isVergunningExpirable(vergunning)) {
+        return !isVergunningExpired(vergunning);
+      }
+      return false;
     },
     sort: dateSort('dateEnd', 'asc'),
     displayProps: displayPropsHuidigeVergunningen,
