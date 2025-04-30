@@ -1,14 +1,10 @@
-import { RVVSloterweg, VergunningFrontend } from './config-and-types';
+import { RVVSloterweg } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types/App.types';
-import {
-  DecosZaakBase,
-  DecosZaakFrontend,
-  DecosZaakTransformer,
-} from '../decos/config-and-types';
-import { getStatusDate } from '../decos/decos-helpers';
+import { getStatusDate, getWorkflowStatusDate } from '../decos/decos-helpers';
+import { DecosZaakBase } from '../decos/decos-types';
 
 function getStatusStepsRVVSloterweg(
-  vergunning: VergunningFrontend<RVVSloterweg>
+  vergunning: RVVSloterweg
 ): StatusLineItem[] {
   const RVV_SLOTERWEG_RESULT_NOT_APPLICABLE = 'Ingetrokken';
   const RVV_SLOTERWEG_RESULT_EXPIRED = 'Verlopen';
@@ -129,32 +125,28 @@ function getStatusStepsRVVSloterweg(
   return steps;
 }
 
-export function getStatusSteps<DZ extends DecosZaakBase>(
-  vergunning: VergunningFrontend<DZ>,
-  zaakTransformer?: DecosZaakTransformer<DZ>
-) {
-  if (vergunning.caseType === 'RVV Sloterweg') {
-    return getStatusStepsRVVSloterweg(
-      vergunning as unknown as DecosZaakFrontend<RVVSloterweg>
-    );
+export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
+  if (zaak.caseType === 'RVV Sloterweg') {
+    return getStatusStepsRVVSloterweg(zaak as unknown as RVVSloterweg);
   }
 
-  const isAfgehandeld = vergunning.processed;
-  const dateInBehandeling = getStatusDate('In behandeling', vergunning) || '';
-  const hasWorkflowDateForStatusInBehandeling =
-    !!zaakTransformer?.fetchWorkflowStatusDatesFor?.some(
-      ({ status }) => status === 'In behandeling'
-    );
+  const isAfgehandeld = zaak.processed;
+  const hasWorkflowDateForStatusInBehandeling = zaak.statusDates.some(
+    (status) => status.status === 'In behandeling'
+  );
+  const dateInBehandeling = hasWorkflowDateForStatusInBehandeling
+    ? getWorkflowStatusDate('In behandeling', zaak)
+    : '';
   const isInBehandeling = hasWorkflowDateForStatusInBehandeling
     ? !!dateInBehandeling && !isAfgehandeld
     : !isAfgehandeld;
-  const isVerlopen = vergunning.isExpired === true;
-  const isIngetrokken = vergunning.decision?.includes('Ingetrokken');
+  const isVerlopen = 'isExpired' in zaak ? zaak.isExpired === true : false;
+  const isIngetrokken = zaak.decision?.includes('Ingetrokken');
 
   const statusOntvangen: StatusLineItem = {
     id: 'step-1',
     status: 'Ontvangen',
-    datePublished: vergunning.dateRequest,
+    datePublished: zaak.dateRequest,
     description: '',
     documents: [],
     isActive: !isInBehandeling && !isAfgehandeld,
@@ -164,9 +156,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
-    datePublished: hasWorkflowDateForStatusInBehandeling
-      ? dateInBehandeling
-      : vergunning.dateRequest,
+    datePublished: dateInBehandeling ? dateInBehandeling : zaak.dateRequest,
     description: '',
     documents: [],
     isActive: isInBehandeling,
@@ -176,12 +166,12 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
   const statusAfgehandeld: StatusLineItem = {
     id: 'step-3',
     status: 'Afgehandeld',
-    datePublished: vergunning.dateDecision || '',
+    datePublished: zaak.dateDecision || '',
     description:
       isAfgehandeld &&
-      vergunning.decision &&
-      ['Verleend', 'Niet verleend', 'Geweigerd'].includes(vergunning.decision)
-        ? `Wij hebben uw aanvraag ${vergunning.title} <strong>${vergunning.decision}</strong>`
+      zaak.decision &&
+      ['Verleend', 'Niet verleend', 'Geweigerd'].includes(zaak.decision)
+        ? `Wij hebben uw aanvraag ${zaak.title} <strong>${zaak.decision}</strong>`
         : '', // Complex decisions cannot be captured in a generic text. They should be handled in the specific case.
     documents: [],
     isActive: !isVerlopen && !isIngetrokken && isAfgehandeld,
@@ -203,7 +193,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
   ) {
     const isVerlopenActive = isVerlopen || !!isIngetrokken;
 
-    let datePublished = '';
+    let datePublished = ''; // Ingetrokken status does not have a date associated with it.
 
     // dateEnd is generic enough for most types of vergunningen.
     // If it is not this status should be customized with a custom transformer for the statusteps.
@@ -235,17 +225,6 @@ export function getStatusSteps<DZ extends DecosZaakBase>(
   }
 
   return steps;
-}
-
-export function getDisplayStatus(
-  vergunning: VergunningFrontend,
-  steps: StatusLineItem[]
-) {
-  if (vergunning.processed && !vergunning.isExpired && vergunning.decision) {
-    return vergunning.decision;
-  }
-
-  return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
 }
 
 export const forTesting = {

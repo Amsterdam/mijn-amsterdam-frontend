@@ -19,7 +19,7 @@ import {
   apiErrorResult,
 } from '../../../universal/helpers/api';
 import { isRecentNotification } from '../../../universal/helpers/utils';
-import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
+import { DecosZaakBase, DecosZaakTransformer } from '../decos/decos-types';
 
 vi.mock('./vergunningen', () => ({
   fetchVergunningen: vi.fn(),

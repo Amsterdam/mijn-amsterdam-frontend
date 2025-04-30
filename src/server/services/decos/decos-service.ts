@@ -5,41 +5,44 @@ import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
-  caseType,
-  DecosZaakBase,
-  DecosZaakTransformer,
-  MA_DECISION_DEFAULT,
   adresBoekenByProfileType,
-  AddressBookEntry,
-  DecosFieldValue,
-  DecosZaakDocument,
-  DecosWorkflowStepTitle,
-  DecosDocumentBlobSource,
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
+  CASE_TYP_FIELD_DECOS,
+  caseType,
+  DECOS_ZAKEN_FETCH_TOP,
+  MA_DECISION_DEFAULT,
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
-  DecosWorkflowResponse,
-  DecosZaakFrontend,
-  DecosTermijnType,
-  DecosTermijnResponse,
-  DecosTermijn,
-  DECOS_ZAKEN_FETCH_TOP,
-  DecosLinkedFieldResponse,
-  DecosFieldTransformerObject,
-  DecosFieldsObject,
-  WithDateRange,
-  type DecosWorkflowSource,
-  type DecosWorkflowDateByStepTitle,
-} from './config-and-types';
-import { CASE_TYP_FIELD_DECOS } from './decos-field-transformers';
+} from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
+  getDisplayStatus,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
   isExpired,
 } from './decos-helpers';
+import type {
+  AddressBookEntry,
+  DecosZaakTransformer,
+  DecosZaakBase,
+  DecosZaakSource,
+  DecosFieldTransformerObject,
+  DecosFieldsObject,
+  DecosFieldValue,
+  DecosZakenResponse,
+  DecosWorkflowStepTitle,
+  DecosWorkflowResponse,
+  DecosWorkflowDateByStepTitle,
+  DecosWorkflowSource,
+  DecosTermijnType,
+  DecosTermijn,
+  DecosTermijnResponse,
+  DecosLinkedFieldResponse,
+  DecosZaakDocument,
+  DecosDocumentBlobSource,
+  DecosDocumentSource,
+  DecosZaakFrontend,
+  WithDateRange,
+} from './decos-types';
 import {
   ApiErrorResponse,
   apiErrorResult,
@@ -54,6 +57,7 @@ import {
   toDateFormatted,
   uniqueArray,
 } from '../../../universal/helpers/utils';
+import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
@@ -210,12 +214,10 @@ async function transformDecosZaakResponse<
   );
 
   // Create the base data for the decosZaak. This object is not guaranteed to have all fields defined in the type for a specific decosZaak.
-  // It depends on the query and resturned result to the decos api which field value ends up in the decosZaak.
+  // It depends on the query and returned result from the decos api which field value ends up in the decosZaak.
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
   let decosZaak: DZ = {
-    id:
-      transformedFields.identifier?.replaceAll('/', '-') ??
-      'unknown-decoszaak-id',
+    id: transformedFields.identifier.replaceAll('/', '-'),
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
@@ -232,6 +234,7 @@ async function transformDecosZaakResponse<
       decosZaakSource.key,
       stepTitles
     );
+
     if (workFlowDates.status === 'OK') {
       decosZaak.statusDates =
         decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
@@ -897,24 +900,26 @@ export async function fetchDecosDocument(
   );
 }
 
-export type DecosZaakFrontendTransformOptions = {
-  appRoute: string;
+export type DecosZaakFrontendTransformOptions<T> = {
+  detailPageRoute: string;
   includeFetchDocumentsUrl?: boolean;
+  getStepsFN?: (zaak: T) => StatusLineItem[];
 };
 
 export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
   zaak: T,
-  options: DecosZaakFrontendTransformOptions
+  options: DecosZaakFrontendTransformOptions<T>
 ): DecosZaakFrontend<T> | DecosZaakFrontend<T & WithDateRange> {
+  const steps = options.getStepsFN?.(zaak) ?? [];
   const zaakFrontend: DecosZaakFrontend<T> = {
     ...omit(zaak, ['statusDates', 'termijnDates']),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
     dateRequestFormatted: toDateFormatted(zaak.dateRequest),
-    steps: [], // NOTE: Assign Status steps later on
-    displayStatus: zaak.status, // NOTE: This is a placeholder, the actual status is assigned later on.
+    steps: options.getStepsFN?.(zaak) ?? [],
+    displayStatus: getDisplayStatus(zaak, steps),
     link: {
-      to: generatePath(options.appRoute, {
+      to: generatePath(options.detailPageRoute, {
         caseType: slug(zaak.caseType, { lower: true }),
         id: zaak.id,
       }),

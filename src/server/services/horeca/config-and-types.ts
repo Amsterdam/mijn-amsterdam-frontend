@@ -4,7 +4,7 @@ import {
   DecosZaakTransformer,
   WithDateRange,
   WithLocation,
-} from '../decos/config-and-types';
+} from '../decos/decos-types';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,

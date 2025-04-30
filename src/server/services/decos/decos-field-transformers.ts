@@ -1,7 +1,22 @@
-import { DecosFieldTransformerObject, WithKentekens } from './config-and-types';
 import { transformKenteken, translateValue } from './decos-helpers';
+import { DecosFieldTransformerObject, WithKentekens } from './decos-types';
 
-const status = 'status';
+export const adresBoekenBSN =
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
+
+export const adresBoekenKVK =
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK?.split(',') ?? [];
+
+export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
+  private: adresBoekenBSN,
+  commercial: adresBoekenKVK,
+  'private-attributes': [],
+};
+
+export const DECOS_ZAKEN_FETCH_TOP = '200';
+
+export const MA_DECISION_DEFAULT = 'Zie besluit';
+
 const identifier = 'identifier';
 const processed = 'processed';
 const dateDecision = 'dateDecision';
@@ -27,7 +42,6 @@ export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
 // { $api_attribute_name_source: $api_attribute_name_mijn_amsterdam }
 
 export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
-  title: status,
   [CASE_TYP_FIELD_DECOS]: caseType,
   dfunction: decision,
   mark: identifier,
@@ -37,6 +51,26 @@ export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
   date6: dateStart,
   date7: dateEnd,
 };
+
+export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [
+  'buiten behandeling',
+  'geannuleerd',
+  'geen aanvraag of dubbel',
+];
+// Cases with one of these subject1 values will not be included in the cases shown to the user. Payment is not yet processed or failed.
+
+export const DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1 = [
+  'wacht op online betaling',
+  'wacht op ideal betaling',
+];
+// Cases with this dfunction value will not be included in the cases shown to the user.
+
+export const DECOS_PENDING_REMOVAL_DFUNCTION = '*verwijder';
+// Cases with this text11 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
+export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 = 'nogniet';
+// Cases with this text12 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
+export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
+  'wacht op online betaling';
 
 // 1 or multiple kenteken(s)
 export const kentekens = {

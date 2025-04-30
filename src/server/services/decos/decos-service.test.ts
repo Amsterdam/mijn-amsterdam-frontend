@@ -4,7 +4,7 @@ import {
   DecosDocumentSource,
   DecosZaakSource,
   DecosZakenResponse,
-} from './config-and-types';
+} from './decos-types';
 import {
   fetchDecosDocumentList,
   fetchDecosZaken,

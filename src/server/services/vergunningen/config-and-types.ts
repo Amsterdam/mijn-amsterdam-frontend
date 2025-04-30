@@ -7,7 +7,7 @@ import {
   WithDateRange,
   ZaakStatus,
   DecosZaakFrontend,
-} from '../decos/config-and-types';
+} from '../decos/decos-types';
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;

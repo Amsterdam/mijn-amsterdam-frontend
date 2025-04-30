@@ -1,6 +1,5 @@
 import {
   decosZaakTransformers,
-  decosZaakTransformersByCaseType,
   HorecaVergunningFrontend,
 } from './config-and-types';
 import {
@@ -20,10 +19,7 @@ import {
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
 import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
-import {
-  getDisplayStatus,
-  getStatusSteps,
-} from '../vergunningen/vergunningen-status-steps';
+import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchHorecaVergunningen(
   requestID: RequestID,
@@ -38,25 +34,17 @@ export async function fetchHorecaVergunningen(
   if (response.status === 'OK') {
     const decosZaken = response.content;
     const zakenFrontend: HorecaVergunningFrontend[] = decosZaken.map((zaak) => {
-      const zaakTransformer = decosZaakTransformersByCaseType[zaak.caseType];
-
       const zaakTransformed = transformDecosZaakFrontend(
         authProfileAndToken.profile.sid,
         zaak,
         {
-          appRoute: routeConfig.detailPage.path,
+          detailPageRoute: routeConfig.detailPage.path,
           includeFetchDocumentsUrl: true,
+          getStepsFN: getStatusSteps,
         }
       );
 
-      const steps = getStatusSteps(zaakTransformed, zaakTransformer);
-      const displayStatus = getDisplayStatus(zaakTransformed, steps);
-
-      return {
-        ...zaakTransformed,
-        steps,
-        displayStatus,
-      };
+      return zaakTransformed;
     });
 
     return apiSuccessResult(zakenFrontend);

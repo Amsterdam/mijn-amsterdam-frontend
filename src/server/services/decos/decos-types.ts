@@ -92,8 +92,6 @@ export type DecosFieldValue =
   | null;
 
 export type DecosZaakFieldsSource = {
-  // status
-  title: string;
   // caseType
   text45: string;
   // decision
@@ -134,21 +132,6 @@ export type DecosWorkflowDateByStepTitle = {
 export type AddressBookEntry = {
   key: string;
 };
-export const adresBoekenBSN =
-  process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
-
-export const adresBoekenKVK =
-  process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK?.split(',') ?? [];
-
-export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
-  private: adresBoekenBSN,
-  commercial: adresBoekenKVK,
-  'private-attributes': [],
-};
-
-export const DECOS_ZAKEN_FETCH_TOP = '200';
-
-export const MA_DECISION_DEFAULT = 'Zie besluit';
 
 export type DecosFieldTransformer<T extends DecosZaakBase> = {
   name: keyof T;
@@ -210,18 +193,13 @@ export type DecosZaakBase = {
 
   decision: string | null;
 
-  // Url to fetch vergunnungen for a specific Zaak.
-  fetchDocumentsUrl: string;
-
   identifier: ZaakKenmerk;
+  id: ZaakKenmerkSlug | SomeOtherString;
   title: string;
-  id: string;
 
   // Decos key (uuid) used as primary id's in api communication.
   key: string;
-
   processed: boolean;
-  status: ZaakStatus;
 
   // WorkflowStep statusses
   statusDates: ZaakStatusDate[];
@@ -229,6 +207,7 @@ export type DecosZaakBase = {
 };
 
 export type ZaakKenmerk = `Z/${number}/${number}`; // Z/23/2230346
+export type ZaakKenmerkSlug = `Z-${number}-${number}`; // Z-23-2230346
 
 export type ZaakStatus =
   | 'Ontvangen'
@@ -273,60 +252,6 @@ export type WithTimeRange = {
 };
 export type WithDateTimeRange = WithDateRange & WithTimeRange; // A list of common readable api attributes
 
-const status = 'status';
-export const caseType = 'caseType';
-export const identifier = 'identifier';
-const processed = 'processed';
-const dateDecision = 'dateDecision';
-export const dateRequest = 'dateRequest';
-export const dateStart = 'dateStart';
-export const dateEnd = 'dateEnd';
-export const location = 'location';
-export const timeStart = 'timeStart';
-export const timeEnd = 'timeEnd';
-export const destination = 'destination';
-export const description = 'description';
-export const decision = 'decision';
-// Fields are selected per case initially but don't end up in the data we send to front end.
-// These fields are fore example used to determine payment status.
-
-export const SELECT_FIELDS_META = ['text11', 'text12', 'subject1'];
-// The set of field transforms that applies to every case.
-// { $api_attribute_name_source: $api_attribute_name_mijn_amsterdam }
-
-export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
-  title: status,
-  text45: caseType,
-  dfunction: decision,
-  mark: identifier,
-  processed: processed,
-  date5: dateDecision,
-  document_date: dateRequest,
-  date6: dateStart,
-  date7: dateEnd,
-};
-// Cases with this one of these dfunction values will not be included in the cases shown to the user.
-
-export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [
-  'buiten behandeling',
-  'geannuleerd',
-  'geen aanvraag of dubbel',
-];
-// Cases with one of these subject1 values will not be included in the cases shown to the user. Payment is not yet processed or failed.
-
-export const DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1 = [
-  'wacht op online betaling',
-  'wacht op ideal betaling',
-];
-// Cases with this dfunction value will not be included in the cases shown to the user.
-
-export const DECOS_PENDING_REMOVAL_DFUNCTION = '*verwijder';
-// Cases with this text11 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
-export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11 = 'nogniet';
-// Cases with this text12 value will not be included in the cases shown to the user. Payment is not yet processed or failed.
-export const DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12 =
-  'wacht op online betaling';
-
 export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
   OmitMapped<T, 'statusDates' | 'termijnDates'> & {
     dateRequestFormatted: string;
@@ -334,4 +259,4 @@ export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
     isExpired?: boolean;
     // Url to fetch documents for a specific Zaak.
     fetchDocumentsUrl?: string;
-  } & ZaakDetail<T['status']>;
+  } & ZaakDetail;

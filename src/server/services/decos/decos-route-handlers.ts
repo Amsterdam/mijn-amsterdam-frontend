@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { DecosZaakBase } from './config-and-types';
+import { DecosZaakBase } from './decos-types';
 import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers';
 import {
   fetchDecosDocumentList,

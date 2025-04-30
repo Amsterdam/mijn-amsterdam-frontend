@@ -13,7 +13,7 @@ import {
   type TouringcarJaarontheffing,
 } from './config-and-types';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { DecosZaakTransformer } from '../decos/config-and-types';
+import { DecosZaakTransformer } from '../decos/decos-types';
 import {
   dateEnd,
   dateStart,
