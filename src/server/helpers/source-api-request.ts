@@ -53,9 +53,9 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export function clearSessionCache(requestID: RequestID) {
+export function clearSessionCache(cachekeyStartsWith: string) {
   for (const cacheKey of cache.keys()) {
-    if (cacheKey.startsWith(requestID)) {
+    if (cacheKey.startsWith(cachekeyStartsWith)) {
       cache.del(cacheKey);
     }
   }

@@ -54,6 +54,7 @@ export function stadspasCreator() {
       balanceFormatted: '€0,00',
       balance: 0,
       blockPassURL: 'http://example.com/stadspas/block',
+      unblockPassURL: 'http://example.com/stadspas/unblock',
       actief: true,
       securityCode: '123-securitycode-123',
       ...fieldsToOverwrite,

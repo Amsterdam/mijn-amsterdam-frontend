@@ -23,9 +23,7 @@ import { requestData } from '../../helpers/source-api-request';
 
 const AFIS_TOKEN_REQUEST_ID = 'AFIS-TOKEN-REQUEST-ID';
 
-async function fetchAfisTokenHeader_(
-  requestID: RequestID = AFIS_TOKEN_REQUEST_ID
-) {
+async function fetchAfisTokenHeader_() {
   const additionalConfig: DataRequestConfig = {
     method: 'post',
     data: qs.stringify({

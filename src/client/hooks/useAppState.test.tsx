@@ -70,7 +70,7 @@ describe('useAppState', () => {
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
-    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
+    const { result } = renderRecoilHook(() => useAppStateRemote());
 
     expect(result.current).toEqual(initialAppState);
 
@@ -88,7 +88,7 @@ describe('useAppState', () => {
   it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
+    const { result } = renderRecoilHook(() => useAppStateRemote());
 
     axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
@@ -114,7 +114,7 @@ describe('useAppState', () => {
   it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
     const EventSourceMock = ((window as any).EventSource =
       newEventSourceMock());
-    const { result, rerender } = renderRecoilHook(() => useAppStateRemote());
+    const { result } = renderRecoilHook(() => useAppStateRemote());
 
     axiosGetSpy.mockRejectedValueOnce(new Error('bad stuff'));
 
@@ -145,6 +145,8 @@ describe('useAppState', () => {
 
   test('addParamsToStreamEndpoint', () => {
     const origValue = FeatureToggle.passQueryParamsToStreamUrl;
+
+    // @ts-expect-error :: For testing purposes
     FeatureToggle.passQueryParamsToStreamUrl = false;
 
     expect(addParamsToStreamEndpoint('/foo/bar')).toBe('/foo/bar');
@@ -156,6 +158,7 @@ describe('useAppState', () => {
       )
     ).toBe('/foo/bar');
 
+    // @ts-expect-error :: For testing purposes
     FeatureToggle.passQueryParamsToStreamUrl = true;
 
     expect(
@@ -165,6 +168,7 @@ describe('useAppState', () => {
       )
     ).toBe('/foo/bar?tipsCompareDate=2021-05-23');
 
+    // @ts-expect-error :: For testing purposes
     FeatureToggle.passQueryParamsToStreamUrl = origValue;
   });
 });

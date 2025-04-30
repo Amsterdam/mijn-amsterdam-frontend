@@ -11,7 +11,6 @@ import {
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
@@ -27,9 +26,9 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   formatUrl?: (requestConfig: DataRequestConfig) => string;
 
   /**
-   * The cacheKey is important if the automatically generated key doesn't suffice. For example if the url changes every request.
+   * The cacheKey is important if the automatically generated key doesn't suffice. For example if the body/headers/url changes every request.
    * This can be the case if an IV encrypted parameter is added (erfpacht) to the url. If the url changes everytime the cache won't be hit.
-   * In this case we can use a cacheKey. !!!!!Be sure this key is unique to the visitor.!!!!!! The for example the requestID parameter can be used.
+   * In this case we can use a cacheKey. !!!!!Be sure this key is unique to the visitor.!!!!!! For example the sessionID parameter can be used if a request is not unique enough.
    */
   cacheKey?: string;
   enableCache?: boolean;

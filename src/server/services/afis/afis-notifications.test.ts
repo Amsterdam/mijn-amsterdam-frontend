@@ -90,7 +90,6 @@ describe('createAfisFacturenNotification', () => {
 });
 
 describe('fetchAfisNotifications', () => {
-  const requestID = 'test-request-id';
   const authProfileAndToken = getAuthProfileAndToken();
 
   it('should return notifications if fetchIsKnownInAFIS is successful', async () => {
@@ -102,7 +101,7 @@ describe('fetchAfisNotifications', () => {
       content: { facturen: { open: { facturen } } },
     });
 
-    const result = await fetchAfisNotifications(requestID, authProfileAndToken);
+    const result = await fetchAfisNotifications(authProfileAndToken);
     expect(result).toEqual(
       apiSuccessResult({
         notifications: [
@@ -131,7 +130,7 @@ describe('fetchAfisNotifications', () => {
     };
     (fetchIsKnownInAFIS as Mock).mockResolvedValue(errorResponse);
 
-    const result = await fetchAfisNotifications(requestID, authProfileAndToken);
+    const result = await fetchAfisNotifications(authProfileAndToken);
     expect(result).toEqual(apiDependencyError({ afis: errorResponse }));
   });
 });

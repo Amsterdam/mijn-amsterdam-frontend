@@ -60,7 +60,7 @@ router.get(
   BffEndpoints.SERVICES_TIPS,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const response = await NOTIFICATIONS(res.locals.requestID, req);
+      const response = await NOTIFICATIONS(req);
       const tips =
         response.content?.filter((notification) => notification.isTip) ?? [];
       return res.json(tips);

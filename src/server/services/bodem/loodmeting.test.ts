@@ -18,8 +18,6 @@ vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
 });
 
 describe('Loodmeting', () => {
-  const requestId = '456';
-
   const profileAndToken: AuthProfileAndToken = getAuthProfileAndToken();
 
   afterAll(() => {

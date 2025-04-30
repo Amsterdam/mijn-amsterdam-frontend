@@ -160,14 +160,9 @@ describe('decos-service', () => {
     token: '111222333',
     expiresAtMilliseconds: 0,
   };
-  let reqID: RequestID = '456-ABC';
 
   const numberOfAddressBooksToSearch =
     process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',').length ?? 0;
-
-  beforeEach(() => {
-    reqID = uid.sync(18);
-  });
 
   /**
    * Testing Exported service methods

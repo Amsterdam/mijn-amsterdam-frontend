@@ -120,17 +120,13 @@ describe('HLI', () => {
   });
 
   test('fetchRegelingen', async () => {
-    const requestID = 'test-request-id';
     const authProfileAndToken = getAuthProfileAndToken('private');
 
     (fetchZorgnedAanvragenHLI as unknown as Mock).mockResolvedValue(
       apiSuccessResult([])
     );
 
-    const result = await forTesting.fetchRegelingen(
-      requestID,
-      authProfileAndToken
-    );
+    const result = await forTesting.fetchRegelingen(authProfileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content).toEqual([]);
 
@@ -138,10 +134,7 @@ describe('HLI', () => {
       apiErrorResult('Error fetching aanvragen', null)
     );
 
-    const resultError = await forTesting.fetchRegelingen(
-      requestID,
-      authProfileAndToken
-    );
+    const resultError = await forTesting.fetchRegelingen(authProfileAndToken);
     expect(resultError.status).toBe('ERROR');
   });
 

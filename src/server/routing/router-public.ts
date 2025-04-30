@@ -46,10 +46,8 @@ export const router = express.Router();
  * Endpoint that serves CMS related content like Footer link/test content and Page data.
  */
 router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
-  const requestID = res.locals.requestID;
   try {
     const response = await fetchCMSCONTENT(
-      requestID,
       queryParams<QueryParamsCMSFooter>(req)
     );
     return res.json(response);
@@ -63,10 +61,8 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
  * - forceRenew=true Forces the underlying service cache to be renewed
  */
 router.get(BffEndpoints.FOOTER, async (req, res, next) => {
-  const requestID = res.locals.requestID;
   try {
     const response = await fetchCmsFooter(
-      requestID,
       queryParams<QueryParamsCMSFooter>(req)
     );
     return res.json(response);
@@ -81,10 +77,8 @@ router.get(BffEndpoints.FOOTER, async (req, res, next) => {
 router.get(
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   async (req, res, next) => {
-    const requestID = res.locals.requestID;
     try {
       const response = await fetchMaintenanceNotificationsActual(
-        requestID,
         queryParams<QueryParamsMaintenanceNotifications>(req)
       );
       return res.json(response);
@@ -114,13 +108,13 @@ router.post(
         clusters,
         errors: clusterErrors,
         filters: clusterFilters,
-      } = await loadClusterDatasets(res.locals.requestID, req.body);
+      } = await loadClusterDatasets(req.body);
 
       const {
         features: polylines,
         errors: polylineErrors,
         filters: polylineFilters,
-      } = await loadPolylineFeatures(res.locals.requestID, req.body);
+      } = await loadPolylineFeatures(req.body);
 
       const responseContent = {
         clusters: clusters || [],
@@ -150,7 +144,7 @@ router.get(
 
     try {
       if (datasetCategoryId && datasetId && id) {
-        response = await loadFeatureDetail(res.locals.requestID, datasetId, id);
+        response = await loadFeatureDetail(datasetId, id);
       } else if (
         datasetCategoryId &&
         datasetId &&

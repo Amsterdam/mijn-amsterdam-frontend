@@ -229,7 +229,6 @@ export function sortNotificationsAndInsertTips(
 }
 
 export async function fetchNotificationsWithTipsInserted(
-  requestID: RequestID,
   serviceResults: ServiceResults | null,
   authProfileAndToken: AuthProfileAndToken | null,
   queryParams?: Record<string, string>

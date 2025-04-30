@@ -34,10 +34,7 @@ export async function handleFetchAfisBusinessPartner(
 
   const businessPartnerId = decryptResult.content;
 
-  const response = await fetchAfisBusinessPartnerDetails(
-    res.locals.requestID,
-    businessPartnerId
-  );
+  const response = await fetchAfisBusinessPartnerDetails(businessPartnerId);
 
   return sendResponse(res, response);
 }

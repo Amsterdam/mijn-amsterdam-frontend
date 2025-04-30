@@ -27,7 +27,6 @@ vi.mock('./vergunningen-status-steps', () => ({
 }));
 
 describe('vergunningen', () => {
-  const requestID = 'test-request-id';
   const authProfileAndToken = getAuthProfileAndToken();
 
   describe('transformVergunningFrontend', () => {

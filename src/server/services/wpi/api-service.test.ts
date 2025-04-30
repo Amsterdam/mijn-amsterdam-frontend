@@ -34,7 +34,6 @@ function fakeStepLabels(): WpiRequestStatusLabels {
 }
 
 describe('wpi/app-service', () => {
-  const requestID = 'xxxxxxx';
   const authProfileAndToken = getAuthProfileAndToken();
 
   const FakeRequestProcessLabels: WpiRequestProcessLabels = {

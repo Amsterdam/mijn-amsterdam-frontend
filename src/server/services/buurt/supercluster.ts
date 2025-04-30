@@ -50,17 +50,19 @@ interface SuperClusterQuery {
   filters: DatasetFilterSelection;
 }
 
-export async function loadClusterDatasets(
-  requestID: RequestID,
-  { bbox, zoom, datasetIds, filters }: SuperClusterQuery
-) {
+export async function loadClusterDatasets({
+  bbox,
+  zoom,
+  datasetIds,
+  filters,
+}: SuperClusterQuery) {
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
 
   const {
     features,
     filters: filtersBase,
     errors,
-  } = await loadDatasetFeatures(requestID, configs);
+  } = await loadDatasetFeatures(configs);
 
   const featuresWithinBoundingbox = filterPointFeaturesWithinBoundingBox(
     features,

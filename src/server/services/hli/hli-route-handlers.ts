@@ -22,7 +22,6 @@ export async function handleFetchTransactionsRequest(
   const authProfileAndToken = getAuth(req);
   if (authProfileAndToken) {
     const response = await fetchStadspasBudgetTransactions(
-      res.locals.requestID,
       req.params.transactionsKeyEncrypted,
       req.query.budgetCode as StadspasBudget['code'],
       authProfileAndToken.profile.sid
@@ -70,7 +69,6 @@ export async function handleUnblockStadspas(
   }
 
   const response = await unblockStadspas(
-    res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     authProfileAndToken.profile.sid
   );

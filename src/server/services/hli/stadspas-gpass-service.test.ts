@@ -472,7 +472,6 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('fetchStadspassenByAdministratienummer', () => {
-    const requestID = 'test-request-id';
     const administratienummer = '12345';
     const dataRequestConfig = { url: 'http://example.com' };
 
@@ -661,7 +660,6 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('fetchGpassDiscountTransactions', () => {
-    const requestID = 'test-request-id';
     const administratienummer = '12345';
     const pasnummer = 999999999;
     const dataRequestConfig = { url: 'http://example.com' };
@@ -791,7 +789,6 @@ describe('stadspas-gpass-service', () => {
       status: 'OK',
     };
 
-    const requestId = '123';
     const transactionKeysEncrypted = '123';
 
     test('Uses decrypt and fetcher', async () => {
@@ -801,7 +798,6 @@ describe('stadspas-gpass-service', () => {
       );
 
       const response = (await blockStadspas(
-        requestId,
         // This cannot be decrypted so we expect an error response.
         transactionKeysEncrypted
       )) as ApiErrorResponse<null>;

@@ -28,7 +28,6 @@ vi.mock('../buurt/buurt', () => ({
 }));
 
 describe('fetchAdoptableTrashContainers', () => {
-  const requestID = 'test-request-id';
   const authProfileAndToken = getAuthProfileAndToken();
   const defaultLatLng = { lat: DEFAULT_LAT, lng: DEFAULT_LNG };
   const locationApiResponse = apiSuccessResult([{ latlng: defaultLatLng }]);

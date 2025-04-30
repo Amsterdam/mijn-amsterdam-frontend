@@ -32,7 +32,6 @@ vi.mock('../vergunningen/vergunningen-status-steps', () => ({
 }));
 
 describe('horeca', () => {
-  const requestID = 'test-request-id';
   const authProfileAndToken = getAuthProfileAndToken();
 
   describe('fetchHorecaVergunningen', () => {

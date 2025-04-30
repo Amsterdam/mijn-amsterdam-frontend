@@ -22,7 +22,6 @@ import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
 
 describe('B&B Vergunningen service', () => {
-  const requestID = 'test-request-id';
   const authProfile: AuthProfile = {
     id: 'test-id',
     profileType: 'private',
