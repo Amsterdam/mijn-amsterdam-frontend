@@ -581,7 +581,7 @@ async function fetchWorkflowInstance<
     formatUrl: (config) =>
       `${config.url}/items/${options.key}/workflowlinkinstances?${options.urlParams ?? ''}`,
     transformResponse: (responseData: DecosWorkflowResponse) =>
-      options.stepTitles
+      !options.useRawResponse && options.stepTitles
         ? transformDecosWorkflowDateResponse(options.stepTitles, responseData)
         : responseData.content,
   });
