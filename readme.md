@@ -127,13 +127,18 @@ To log all debug or higher severity levels of logs.
 Debug includes logging response bodies at the moment.
 See all log levels at https://getpino.io/#/docs/api?id=loggerlevels-object
 
-To log outgoing request headers or bodies set these to true:
-`export LOG_THAT_HTTP_HEADERS=true`
-`export LOG_THAT_HTTP_BODY=true`
+To log outgoing request urls, headers or bodies set these to true:
+`export LOG_THAT_HTTP=true` urls
+`export LOG_THAT_HTTP_HEADERS=true` headers
+`export LOG_THAT_HTTP_BODY=true` body
+
+We also make use of the debug npm packages. For now the following debug settings possible:
+
+`DEBUG=vergunningen,source-api-request,source-api-request:cache,decos-service`
 
 To logs response data from incoming responses before any transformation.
 A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
-`export DEBUG_RESPONSE_DATA=term1,term2`
+`export DEBUG_RESPONSE_DATA=term1,term2` this setting only workd in conjunction with `DEBUG=source-api-request`
 
 #### React Autologout timer
 To debug the autologout timer you can add a localstorage item `AUTO_LOGOUT_TIMER_LOGGING` with value `true`. This enables some logging in the console
