@@ -43,7 +43,7 @@ describe('vergunningen-status-steps', () => {
       } as unknown as DecosZaakBase;
 
       const steps = getStatusSteps(zaak);
-      expect(steps).toHaveLength(3);
+      expect(steps).toHaveLength(4);
       expect(steps[0]).toHaveProperty('status', 'Ontvangen');
       expect(steps[1]).toHaveProperty('status', 'In behandeling');
       expect(steps[2]).toHaveProperty('status', 'Afgehandeld');
