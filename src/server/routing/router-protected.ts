@@ -3,7 +3,11 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
-import { sendUnauthorized, type RequestWithQueryParams } from './route-helpers';
+import {
+  sendBadRequest,
+  sendUnauthorized,
+  type RequestWithQueryParams,
+} from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
 import { getAuth } from '../auth/auth-helpers';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
@@ -140,17 +144,19 @@ if (!IS_PRODUCTION) {
         select?: string;
       }>,
       res: Response
-    ) =>
+    ) => {
+      if (!req.query.key) {
+        return sendBadRequest(res, 'no zaak.key found in query');
+      }
       res.send(
-        req.query.key
-          ? await fetchDecosWorkflowDates(
-              res.locals.requestID,
-              req.query.key,
-              req.query.stepTitles?.split(',') ?? [],
-              req.query.select?.split(',')
-            )
-          : 'no key provided'
-      )
+        await fetchDecosWorkflowDates(
+          res.locals.requestID,
+          req.query.key,
+          req.query.stepTitles?.split(',') ?? [],
+          req.query.select?.split(',')
+        )
+      );
+    }
   );
 }
 
