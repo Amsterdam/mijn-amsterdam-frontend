@@ -236,7 +236,7 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
       ...SELECT_FIELDS_TRANSFORM_BASE,
       bol8: 'isCarsharingpermit',
       date8: 'dateEnd',
-      text13: 'kentekens', // TODO: Deze erbij?
+      text13: 'kentekens',
     },
     additionalSelectFields: ['text25', 'num14', 'text17', 'text19', 'text18'],
     async afterTransform(vergunning, zaakSource) {
@@ -244,8 +244,8 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
         street: zaakSource.fields.text25?.toString() ?? null,
         houseNumber: zaakSource.fields.num14?.toString() ?? null,
         type: zaakSource.fields.text17?.toString() ?? null,
-        url: zaakSource.fields.tex19?.toString() ?? null,
-        fiscalNumber: zaakSource.fields.tex18?.toString() ?? null,
+        url: zaakSource.fields.text19?.toString() ?? null,
+        fiscalNumber: zaakSource.fields.text18?.toString() ?? null,
       };
       vergunning.title =
         getCustomTitleForDecosZaakWithLicensePlates(vergunning);
