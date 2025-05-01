@@ -47,7 +47,7 @@ import { fetchWpiDocument } from '../services/wpi/api-service';
 
 export const router = express.Router();
 
-router.BFF_ID = 'router-protected';
+(router as any).BFF_ID = 'router-protected';
 
 router.use(handleCheckProtectedRoute, isAuthenticated);
 
@@ -56,6 +56,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response = await loadServicesAll(req, res);
+      console.log('____________RESPONSE', JSON.stringify(response));
       return res.json(response);
     } catch (error) {
       next(error);

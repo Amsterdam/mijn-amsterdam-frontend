@@ -56,13 +56,13 @@ module.exports = {
     // Port number for the server to be listening at
     port: 3100,
     // Host for the server
-    //host: "0.0.0.0",
+    host: "127.0.0.1",
     cors: {
       enabled: true,
       // Options for the CORS middleware. Further information at https://github.com/expressjs/cors#configuration-options
       options: {
         preflightContinue: false,
-        origin: 'http://localhost:3000',
+        origin: 'http://127.0.0.1:3000',
         credentials: true,
       },
     },
