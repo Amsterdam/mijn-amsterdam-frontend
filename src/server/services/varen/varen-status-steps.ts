@@ -7,7 +7,7 @@ import { StatusLineItem } from '../../../universal/types/App.types';
 
 export function getStatusSteps<T extends Varen>(
   decosZaak: T
-): StatusLineItem<T['status']>[] {
+): StatusLineItem[] {
   const isAfgehandeld = decosZaak.processed;
 
   const hasTermijnen = decosZaak.termijnDates.length > 0;
@@ -74,7 +74,7 @@ export function getStatusSteps<T extends Varen>(
       datePublished: decosZaak.dateDecision || '',
       isChecked: isAfgehandeld,
     },
-  ] satisfies Partial<StatusLineItem>[];
+  ] as const satisfies Partial<StatusLineItem>[];
 
   const lastIndexOfCheckedStep = steps.findLastIndex((step) => step.isChecked);
   return steps.map((step, stepIndex) => {

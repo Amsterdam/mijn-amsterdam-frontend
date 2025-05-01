@@ -5,7 +5,7 @@
 /* tslint:disable:no-submodule-imports */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
-
+import { logger } from './logging';
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -40,7 +40,7 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
-import { logger } from './logging';
+
 import { getFromEnv } from './helpers/env';
 
 const app = express();
@@ -159,7 +159,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 async function startServerBFF() {
   if (
     getFromEnv('LOG_THAT_HTTP_HEADERS') === 'true' ||
-    getFromEnv('LOG_THAT_HTTP_BODY') === 'true'
+    getFromEnv('LOG_THAT_HTTP_BODY') === 'true' ||
+    getFromEnv('LOG_THAT_HTTP') === 'true'
   ) {
     await import('log-that-http');
   }

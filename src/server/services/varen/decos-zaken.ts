@@ -1,20 +1,15 @@
 import type {
   DecosZaakVarensFieldsSource,
   VarenRegistratieRederType,
-  VarenStatus,
   VarenVergunningExploitatieType,
   VarenVergunningExploitatieWijzigingVaartuigNaamType,
   VarenVergunningExploitatieWijzigingVerbouwingType,
   VarenVergunningExploitatieWijzigingVergunningshouderType,
   VarenVergunningExploitatieWijzigingVervangingType,
 } from './config-and-types';
-import { isDateInPast } from '../../../universal/helpers/date';
-import {
-  DecosZaakTransformer,
-  DecosZaakBase,
-  SELECT_FIELDS_TRANSFORM_BASE,
-} from '../decos/config-and-types';
+import { SELECT_FIELDS_TRANSFORM_BASE } from '../decos/decos-field-transformers';
 import { transformFieldValuePairs } from '../decos/decos-service';
+import { DecosZaakTransformer } from '../decos/decos-types';
 
 const vesselName = { text18: 'vesselName' } as const;
 const vesselLengths = {
@@ -23,17 +18,6 @@ const vesselLengths = {
 } as const;
 const vesselSegment = { text10: 'segment' } as const;
 const vesselEniNumber = { text36: 'eniNumber' } as const;
-const status = {
-  title: {
-    name: 'status' as const,
-    transform: (title: string): VarenStatus => {
-      if (title === 'Afgehandeld') {
-        return title;
-      }
-      return 'In behandeling';
-    },
-  },
-};
 
 const fetchMeerInformatieTermijn: Required<DecosZaakTransformer>['fetchTermijnenFor'][number] =
   {
@@ -41,24 +25,11 @@ const fetchMeerInformatieTermijn: Required<DecosZaakTransformer>['fetchTermijnen
     type: 'Verzoek aanvullende gegevens',
   };
 
-const setStatusIfActiveTermijn = async <T extends DecosZaakBase>(zaak: T) => {
-  if (zaak.processed) {
-    return zaak;
-  }
-  const hasActiveTermijn = zaak.termijnDates.find(
-    (zaak) => isDateInPast(zaak.dateStart) && !isDateInPast(zaak.dateEnd)
-  );
-  if (hasActiveTermijn) {
-    zaak.status = 'Meer informatie nodig';
-  }
-  return zaak;
-};
-
 const SELECT_FIELDS_TRANSFORM = {
   ...SELECT_FIELDS_TRANSFORM_BASE,
-  ...status,
   text96: 'linkDataRequest' as const,
 };
+
 export const VarenRegistratieReder: DecosZaakTransformer<VarenRegistratieRederType> =
   {
     isActive: true,
@@ -117,7 +88,6 @@ const VarenBaseExploitatieVergunning = {
           })),
     },
   },
-  afterTransform: setStatusIfActiveTermijn,
 } satisfies Omit<
   DecosZaakTransformer<VarenVergunningExploitatieType>,
   'caseType' | 'title'

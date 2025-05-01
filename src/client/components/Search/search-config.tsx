@@ -15,7 +15,7 @@ import type {
   ErfpachtDossierFrontend,
 } from '../../../server/services/erfpacht/erfpacht-types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
-import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
+import { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken';
 import type {
   Krefia,
   KrefiaDeepLink,

@@ -3,6 +3,7 @@ import axios, {
   AxiosResponse,
   AxiosResponseHeaders,
 } from 'axios';
+import createDebugger from 'debug';
 import memoryCache from 'memory-cache';
 
 import { Deferred } from './deferred';
@@ -19,8 +20,10 @@ import {
   DEFAULT_REQUEST_CONFIG,
   DataRequestConfig,
 } from '../config/source-api';
-import { logger } from '../logging';
 import { captureException } from '../services/monitoring';
+
+const debug = createDebugger('source-api-request');
+const debugCache = createDebugger('source-api-request:cache');
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -34,17 +37,22 @@ export function isSuccessStatus(statusCode: number): boolean {
 
 function getDebugResponseData(conf: AxiosRequestConfig) {
   return (responseDataParsed: any) => {
-    logger.debug(
-      { from: conf.url, body: responseDataParsed },
-      'Received response',
-      conf.url
+    debug(
+      {
+        url: conf.url,
+        params: conf.params,
+      },
+      'start:debug response data'
     );
+    debug(responseDataParsed, 'end:debug response data');
     return responseDataParsed;
   };
 }
 
 const debugResponseDataTerms =
   process.env.DEBUG_RESPONSE_DATA?.split(',') ?? [];
+
+debug(debugResponseDataTerms, 'debug response data terms');
 
 export const cache = new memoryCache.Cache<string, any>();
 
@@ -109,8 +117,22 @@ export async function requestData<T>(
       const hasTermInRequestParams = config.params
         ? JSON.stringify(config.params).includes(term.trim())
         : false;
+      const isDebugTermMatch = hasTermInRequestUrl || hasTermInRequestParams;
 
-      return hasTermInRequestUrl || hasTermInRequestParams;
+      if (isDebugTermMatch) {
+        debug(
+          {
+            term,
+            hasTermInRequestParams,
+            hasTermInRequestUrl,
+            url: config.url,
+            params: config.params,
+          },
+          'debug response data term match'
+        );
+      }
+
+      return isDebugTermMatch;
     }) &&
     !config.transformResponse?.includes(debugResponseData)
   ) {
@@ -120,19 +142,9 @@ export async function requestData<T>(
         axios.defaults.transformResponse as any
       );
     }
-    // Add the debug transformer as 2nd
-    const defaultTransformerIndex = config.transformResponse.findIndex(
-      (transformer) => transformer === axios.defaults.transformResponse
-    );
     // Insert the debug transformer after the default transformer
-    // This is important to ensure that the response is parsed before we log it
-    if (defaultTransformerIndex > -1) {
-      config.transformResponse.splice(
-        defaultTransformerIndex + 1,
-        0,
-        debugResponseData
-      );
-    }
+    // This is important to ensure that the response is parsed before we log it.
+    config.transformResponse.splice(1, 0, debugResponseData);
   }
 
   // Shortcut to passing the JWT of the connected OIDC provider along with the request as Bearer token
@@ -197,9 +209,11 @@ export async function requestData<T>(
 
     // Use the cache Deferred for resolving the response
     if (config.enableCache && cache.get(cacheKey)) {
-      logger.trace(
-        { url: config.url, queryParams: config.params },
-        `Cache hit for '${config.url}'`
+      debugCache(
+        {
+          url: config.url,
+        },
+        'cache hit'
       );
       cache.get(cacheKey).resolve(responseData);
     }
@@ -207,6 +221,8 @@ export async function requestData<T>(
     return responseData;
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
+
+    debug(error, 'response error');
 
     captureException(error, {
       properties: {

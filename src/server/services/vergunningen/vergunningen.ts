@@ -1,42 +1,36 @@
+import createDebugger from 'debug';
 import memoizee from 'memoizee';
 
 import { DecosVergunning, VergunningFrontend } from './config-and-types';
-import {
-  decosCaseToZaakTransformers,
-  decosZaakTransformers,
-} from './decos-zaken';
-import { getDisplayStatus, getStatusSteps } from './vergunningen-status-steps';
+import { decosZaakTransformers } from './decos-zaken';
+import { getStatusSteps } from './vergunningen-status-steps';
 import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunningen-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
-import { DecosZaakTransformer } from '../decos/config-and-types';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
 
+const debug = createDebugger('vergunningen');
+
 function transformVergunningFrontend(
   sessionID: SessionID,
   zaak: DecosVergunning,
-  appRoute: string
+  detailPageRoute: string
 ) {
   const zaakFrontend = transformDecosZaakFrontend<DecosVergunning>(
     sessionID,
     zaak,
-    { appRoute, includeFetchDocumentsUrl: true }
+    {
+      detailPageRoute,
+      includeFetchDocumentsUrl: true,
+      getStepsFN: getStatusSteps,
+    }
   );
-  // TODO: Fix this <any>. DecosZaakTransformer<GPP | GPK | ...> is not the same as DecosZaakTransformer<GPP> | DecosZaakTransformer<GPK> | DecosZaakTransformer<...>
-  const zaakTransformer: DecosZaakTransformer<any> =
-    decosCaseToZaakTransformers[zaak.caseType];
 
-  const steps = getStatusSteps(zaakFrontend, zaakTransformer);
-
-  return {
-    ...zaakFrontend,
-    steps,
-    displayStatus: getDisplayStatus(zaakFrontend, steps),
-  };
+  return zaakFrontend;
 }
 
 async function fetchVergunningen_(
@@ -49,6 +43,8 @@ async function fetchVergunningen_(
     authProfileAndToken,
     decosZaakTransformers
   );
+
+  debug(response, 'fetchVergunningen_');
 
   if (response.status === 'OK') {
     const decosZaken = response.content;

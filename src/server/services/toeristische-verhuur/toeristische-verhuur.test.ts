@@ -5,8 +5,7 @@ import { fetchToeristischeVerhuur } from './toeristische-verhuur';
 import { VakantieverhuurVergunningFrontend } from './toeristische-verhuur-config-and-types';
 import { createToeristischeVerhuurNotification } from './toeristische-verhuur-notifications';
 import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
-import { remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 const REGISTRATIES_DUMMY_RESPONSE_NUMBERS = [
   {
@@ -33,15 +32,7 @@ const REGISTRATIES_DUMMY_RESPONSE = {
 
 const DUMMY_TOKEN = 'xxxxx';
 
-const authProfileAndToken: AuthProfileAndToken = {
-  profile: {
-    authMethod: 'digid',
-    profileType: 'private',
-    id: 'DIGID-BSN',
-    sid: '',
-  },
-  token: 'xxxxxx',
-};
+const authProfileAndToken = getAuthProfileAndToken();
 
 describe('Toeristische verhuur service', () => {
   beforeAll(() => {
@@ -229,7 +220,6 @@ describe('Toeristische verhuur service', () => {
         to: '/toeristische-verhuur/vergunning/vakantieverhuur/Z-000-000040',
         title: 'Bekijk hoe het met uw aanvraag staat',
       },
-      status: 'Afgehandeld',
       displayStatus: 'Afgehandeld',
     };
 
@@ -270,7 +260,6 @@ describe('Toeristische verhuur service', () => {
           isChecked: true,
         },
       ],
-      status: 'Afgehandeld',
       displayStatus: 'Afgehandeld',
       processed: true,
       documents: [],

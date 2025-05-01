@@ -28,10 +28,6 @@ import {
 } from './vergunningen-notification-labels';
 import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
-  DecosZaakTransformer,
-  DecosFieldNameSource,
-} from '../decos/config-and-types';
-import {
   SELECT_FIELDS_TRANSFORM_BASE,
   transformDecision,
   description,
@@ -46,6 +42,10 @@ import {
   getCustomTitleForDecosZaakWithLicensePlates,
   getStatusDate,
 } from '../decos/decos-helpers';
+import {
+  DecosZaakTransformer,
+  DecosFieldNameSource,
+} from '../decos/decos-types';
 
 const TVMRVVObject: DecosZaakTransformer<TVMRVVObject> = {
   isActive: true,
@@ -156,7 +156,7 @@ const ERVV_TVM: DecosZaakTransformer<ERVV> = {
   title: 'e-RVV (Gratis verkeersontheffing voor elektrisch goederenvervoer)',
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
-    description: description,
+    subject1: description,
     dfunction: transformDecision({
       '': ['Nog niet bekend', 'Nog niet  bekend'],
       Verleend: [
