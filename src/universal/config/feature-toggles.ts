@@ -91,9 +91,6 @@ export const FeatureToggle = {
   // Klant/Contactmomenten (Salesforce) patroon A
   contactmomentenActive: true,
 
-  // WPI Portaal
-  svwiLinkActive: false, // NOTE: The status of this feature is unknown.
-
   // Toeristische verhuur
   toeristischeVerhuurActive: true,
   // B&B Vergunningen actief
