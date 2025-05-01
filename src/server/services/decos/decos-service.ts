@@ -161,7 +161,7 @@ async function getUserKeys(
       ...apiConfig,
       data: requestBody,
       // only need to fetch once per session
-      cacheKey: `decos-user-key-${addressBookKey}-${authProfileAndToken.profile.sid}`,
+      cacheKey: `decos-user-key-${addressBookKey}-${authProfileAndToken.profile.id}`,
     };
     const request = requestData<AddressBookEntry[]>(
       requestConfig,
