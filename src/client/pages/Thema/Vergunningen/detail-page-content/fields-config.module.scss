@@ -1,0 +1,7 @@
+:global(.ams-unordered-list).LicensePlatesList {
+  margin: 0;
+  columns: 3;
+  display: block;
+  max-width: fit-content;
+  --ams-unordered-list-item-margin-inline-start: 0.8rem;
+}

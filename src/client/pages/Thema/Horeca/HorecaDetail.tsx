@@ -39,8 +39,13 @@ function ExploitatieHorecaBedrijf({
 export function HorecaDetail() {
   const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
     useHorecaThemaData();
-  const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
-    useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
+  const {
+    vergunning,
+    title = 'Horecavergunning',
+    documents,
+    isLoadingDocuments,
+    isErrorDocuments,
+  } = useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
