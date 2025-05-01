@@ -171,7 +171,7 @@ export const fetchNotificationsAndTipsFromServices = memoize(
     maxAge: DEFAULT_API_CACHE_TTL_MS,
     normalizer: function (args) {
       // args is arguments object as accessible in memoized function
-      return args[0] + JSON.stringify(args[1]);
+      return JSON.stringify(args[0]);
     },
   }
 );
