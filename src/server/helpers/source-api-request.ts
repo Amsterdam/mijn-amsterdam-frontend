@@ -193,7 +193,7 @@ export async function requestData<T>(
     if (config.enableCache && cache.get(cacheKey)) {
       logger.trace(
         { url: config.url, queryParams: config.params },
-        `Cache hit for '${config.url}'`
+        'Cache hit'
       );
       cache.get(cacheKey).resolve(responseData);
     }
