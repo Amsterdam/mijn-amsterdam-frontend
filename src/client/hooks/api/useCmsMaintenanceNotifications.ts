@@ -29,9 +29,7 @@ export function useCmsMaintenanceNotifications(
     : CMS_MAINTENANCE_NOTIFICATIONS?.content;
 
   if (page) {
-    return notifications?.filter((notification) => {
-      return notification.path === `/${page}`;
-    });
+    return notifications?.filter(({ path }) => path === `/${page}`);
   }
 
   return [];
