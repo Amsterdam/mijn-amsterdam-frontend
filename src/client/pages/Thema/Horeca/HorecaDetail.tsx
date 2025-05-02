@@ -25,11 +25,11 @@ function ExploitatieHorecaBedrijf({
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.location,
-    {
-      label: 'Begindatum',
-      content: vergunning.dateStartFormatted,
-      isVisible: vergunning.processed && vergunning.decision === 'Verleend',
-    },
+    () =>
+      vergunning.processed && vergunning.dateEnd && vergunning.dateStart
+        ? commonTransformers.dateRange(vergunning)
+        : null,
+    ,
     commonTransformers.decision,
   ]);
 
@@ -39,8 +39,13 @@ function ExploitatieHorecaBedrijf({
 export function HorecaDetail() {
   const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
     useHorecaThemaData();
-  const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
-    useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
+  const {
+    vergunning,
+    title = 'Horecavergunning',
+    documents,
+    isLoadingDocuments,
+    isErrorDocuments,
+  } = useVergunningenDetailData<HorecaVergunningFrontend>(vergunningen);
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (

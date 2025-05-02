@@ -89,13 +89,14 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
        * Later, na controle, wordt mogelijk de vergunning weer ingetrokken.
        */
       vergunning.processed = true;
-      vergunning.decision = 'Verleend';
-      vergunning.dateDecision = !vergunning.dateDecision
-        ? vergunning.dateRequest
-        : vergunning.dateDecision;
+      vergunning.dateDecision = vergunning.dateDecision
+        ? vergunning.dateDecision
+        : vergunning.dateRequest;
 
-      if (vergunning.decision.toLowerCase().includes('ingetrokken')) {
+      if (vergunning.decision?.toLowerCase().includes('ingetrokken')) {
         vergunning.decision = 'Ingetrokken';
+      } else {
+        vergunning.decision = 'Verleend';
       }
 
       return vergunning;

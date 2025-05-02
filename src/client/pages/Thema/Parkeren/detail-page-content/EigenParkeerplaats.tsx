@@ -17,7 +17,7 @@ export function EigenParkeerplaats({
 }) {
   const location = () => {
     const rows: Row[] = vergunning.locations
-      ?.map((location, i) => {
+      ?.map((location) => {
         return [
           {
             label: 'Adres',

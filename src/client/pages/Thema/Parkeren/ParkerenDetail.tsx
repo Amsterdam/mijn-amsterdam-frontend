@@ -61,8 +61,13 @@ function DetailPageContent<
 export function ParkerenDetail() {
   const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
     useParkerenData();
-  const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
-    useVergunningenDetailData(vergunningen);
+  const {
+    vergunning,
+    title = 'Parkeervergunning of ontheffing',
+    documents,
+    isLoadingDocuments,
+    isErrorDocuments,
+  } = useVergunningenDetailData(vergunningen);
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (
