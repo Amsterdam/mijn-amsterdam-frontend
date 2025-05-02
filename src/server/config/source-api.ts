@@ -11,7 +11,6 @@ import {
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { featureToggle as featureToggleSvwi } from '../../client/pages/Thema/Svwi/Svwi-thema-config';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
@@ -186,7 +185,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   SVWI: {
     url: getFromEnv('BFF_SVWI_API_BASE_URL'),
     passthroughOIDCToken: true,
-    postponeFetch: !featureToggleSvwi.svwiActive,
     headers: {
       'Cache-Control': 'no-cache',
       'Ocp-Apim-Subscription-Key': getFromEnv('BFF_SVWI_API_KEY', false),

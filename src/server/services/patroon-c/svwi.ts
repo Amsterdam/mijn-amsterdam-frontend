@@ -4,6 +4,7 @@ import {
   type ApiPatternResponseA,
 } from './api-service';
 import {
+  featureToggle,
   SVWI_ROUTE_DEFAULT,
   themaId,
   themaTitle,
@@ -59,17 +60,14 @@ export function fetchSVWI(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(
-    requestID,
-    getApiConfig('SVWI', {
-      formatUrl(requestConfig) {
-        return `${requestConfig.url}/autorisatie/tegel`;
-      },
-      transformResponse: transformSVWIResponse,
-    }),
-    false,
-    authProfileAndToken
-  );
+  const apiConfig = getApiConfig('SVWI', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/authorisatie/tegel`;
+    },
+    transformResponse: transformSVWIResponse,
+    postponeFetch: !featureToggle.svwiActive,
+  });
+  return fetchService(requestID, apiConfig, false, authProfileAndToken);
 }
 
 export async function fetchSVWINotifications(
