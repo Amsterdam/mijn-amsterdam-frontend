@@ -131,15 +131,8 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
   }
 
   const isAfgehandeld = zaak.processed;
-  const hasWorkflowDateForStatusInBehandeling = zaak.statusDates.some(
-    (status) => status.status === 'In behandeling'
-  );
-  const dateInBehandeling = hasWorkflowDateForStatusInBehandeling
-    ? getWorkflowStatusDate('In behandeling', zaak)
-    : '';
-  const isInBehandeling = hasWorkflowDateForStatusInBehandeling
-    ? !!dateInBehandeling && !isAfgehandeld
-    : !isAfgehandeld;
+  const dateInBehandeling = getWorkflowStatusDate('In behandeling', zaak);
+  const isInBehandeling = !!dateInBehandeling;
   const isVerlopen = 'isExpired' in zaak ? zaak.isExpired === true : false;
   const isIngetrokken = !!zaak.decision?.includes('Ingetrokken');
 
@@ -156,10 +149,10 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
-    datePublished: dateInBehandeling ? dateInBehandeling : zaak.dateRequest,
+    datePublished: dateInBehandeling ? dateInBehandeling : '',
     description: '',
     documents: [],
-    isActive: isInBehandeling,
+    isActive: isInBehandeling && !isAfgehandeld,
     isChecked: isInBehandeling || isAfgehandeld,
   };
 
@@ -186,6 +179,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
 
   if (
     isAfgehandeld &&
+    // TODO: Discuss with the team if this is the right way to check for a valid decision.
     (('isExpired' in zaak &&
       zaak.decision?.includes('Verleend') &&
       !zaak.decision.includes('Niet verleend')) ||

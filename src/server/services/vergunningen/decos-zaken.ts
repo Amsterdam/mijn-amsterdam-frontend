@@ -181,6 +181,12 @@ const Flyeren: DecosZaakTransformer<Flyeren> = {
   caseType: caseTypeVergunningen.Flyeren,
   title: 'Verspreiden reclamemateriaal (sampling)',
   requirePayment: true,
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Flyeren-Sampling - Behandelen',
+    },
+  ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     date6: dateStart,
