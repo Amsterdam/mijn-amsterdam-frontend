@@ -869,7 +869,7 @@ async function transformDecosDocumentListResponse(
           const decosZaakDocument: DecosZaakDocument = {
             id: documentMetadata.mark,
             key: isPdfResponse.content.key,
-            title: documentMetadata.text41,
+            title: documentMetadata.text41 || 'Document',
             datePublished: documentMetadata.received_date,
             url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
               {
