@@ -149,7 +149,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
   const statusInBehandeling: StatusLineItem = {
     id: 'step-2',
     status: 'In behandeling',
-    datePublished: dateInBehandeling ? dateInBehandeling : '',
+    datePublished: dateInBehandeling || '',
     description: '',
     documents: [],
     isActive: isInBehandeling && !isAfgehandeld,

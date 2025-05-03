@@ -280,6 +280,15 @@ async function transformDecosZaakResponse<
         );
     }
   }
+  if (
+    !decosZaakTransformer.fetchWorkflowStatusDatesFor?.some(
+      ({ status }) => status === 'In behandeling'
+    )
+  ) {
+    decosZaak.statusDates = [
+      { datePublished: decosZaak.dateRequest, status: 'In behandeling' },
+    ];
+  }
 
   if (decosZaakTransformer.fetchTermijnenFor) {
     const termijnMap = Object.fromEntries(
