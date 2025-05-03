@@ -280,6 +280,8 @@ async function transformDecosZaakResponse<
         );
     }
   }
+
+  // A zaak is considered to immediately be "In behandeling" if no workflows for "In behandeling" are monitored
   if (
     !decosZaakTransformer.fetchWorkflowStatusDatesFor?.some(
       ({ status }) => status === 'In behandeling'
