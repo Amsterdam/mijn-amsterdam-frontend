@@ -209,6 +209,12 @@ const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
   isActive: true,
   caseType: caseTypeVergunningen.AanbiedenDiensten,
   title: caseTypeVergunningen.AanbiedenDiensten,
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Aanbieden diensten - Behandelen',
+    },
+  ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     subject1: 'category',
