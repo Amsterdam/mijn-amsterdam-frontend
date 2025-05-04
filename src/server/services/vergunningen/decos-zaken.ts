@@ -230,6 +230,12 @@ const Straatartiesten: DecosZaakTransformer<Straatartiesten> = {
   isActive: true,
   caseType: caseTypeVergunningen.Straatartiesten,
   title: caseTypeVergunningen.Straatartiesten,
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Straatartiesten - Behandelen',
+    },
+  ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     subject1: 'category',
