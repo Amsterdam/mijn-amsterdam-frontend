@@ -28,6 +28,7 @@ function getVergunningen<
       title,
       steps: [],
       isExpired: false,
+      isVerleend: false,
       link: {
         to: '/vergunningen/vergunningen/123456',
       },
@@ -42,6 +43,7 @@ function getVergunningen<
       title,
       steps: [],
       isExpired: false,
+      isVerleend: false,
       link: {
         to: '/vergunningen/vergunningen/456789',
       },
@@ -61,6 +63,7 @@ function getVergunningen<
       dateDecision: '2022-06-10T10:47:44.6107122',
       title,
       isExpired: false,
+      isVerleend: true,
       steps: [{ status: 'Verlopen', isActive: false }],
       link: {
         to: '/vergunningen/vergunningen/789012',
@@ -79,6 +82,7 @@ function getVergunningen<
       dateDecision: '2020-06-10T10:47:44.6107122',
       title,
       isExpired: true,
+      isVerleend: true,
       steps: [{ status: 'Verlopen', isActive: true }],
       link: {
         to: '/vergunningen/vergunningen/012345',
