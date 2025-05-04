@@ -171,7 +171,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
         : '', // Complex decisions cannot be captured in a generic text. They should be handled in the specific case.
     documents: [],
     isActive:
-      isAfgehandeld && ((!isVerlopen && !isIngetrokken) || !zaak.isVerleend),
+      isAfgehandeld && !isIngetrokken && (!isVerlopen || !zaak.isVerleend),
     isChecked: isAfgehandeld,
   };
 
