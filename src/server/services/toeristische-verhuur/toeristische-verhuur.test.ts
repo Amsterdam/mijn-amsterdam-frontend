@@ -180,6 +180,7 @@ describe('Toeristische verhuur service', () => {
       dateEndFormatted: '31 mei 2020',
       location: 'Amstel 1 1017AB Amsterdam',
       decision: 'Verleend',
+      isVerleend: true,
       identifier: 'Z/000/000040',
       steps: [
         {
@@ -233,6 +234,7 @@ describe('Toeristische verhuur service', () => {
       dateEnd: '01 juli 2028',
       dateEndFormatted: '01 juli 2028',
       decision: 'Verleend',
+      isVerleend: true,
       id: 'Z-23-2130506',
       identifier: 'Z/23/2130506',
       heeftOvergangsRecht: false,

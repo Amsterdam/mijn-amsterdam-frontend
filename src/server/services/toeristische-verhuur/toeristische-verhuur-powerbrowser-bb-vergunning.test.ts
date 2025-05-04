@@ -733,40 +733,6 @@ describe('B&B Vergunningen service', () => {
     });
   });
 
-  describe('isZaakActual', () => {
-    Mockdate.set('2023-01-01');
-    const now = new Date();
-
-    test('should return true if zaak is actual', () => {
-      const result = forTesting.isZaakActual({
-        decision: 'Verleend',
-        dateEnd: '2023-12-31',
-        compareDate: now,
-      });
-      expect(result).toBe(true);
-    });
-
-    test('should return false if zaak is not actual based on result', () => {
-      const result = forTesting.isZaakActual({
-        decision: 'Niet verleend',
-        dateEnd: '2023-12-31',
-        compareDate: now,
-      });
-      expect(result).toBe(false);
-    });
-
-    test('should return false if zaak is not actual based on date', () => {
-      const result = forTesting.isZaakActual({
-        decision: 'Verleend',
-        dateEnd: '2011-12-31',
-        compareDate: now,
-      });
-      expect(result).toBe(false);
-    });
-
-    Mockdate.reset();
-  });
-
   describe('transformZaak', () => {
     beforeEach(() => {
       Mockdate.set('2023-01-01');
@@ -821,6 +787,7 @@ describe('B&B Vergunningen service', () => {
         dateStart: '2024-10-17T22:00:00.0000000Z',
         dateStartFormatted: '18 oktober 2024',
         decision: 'Verleend',
+        isVerleend: true,
         displayStatus: 'Ontvangen',
         documents: [],
         heeftOvergangsRecht: false,

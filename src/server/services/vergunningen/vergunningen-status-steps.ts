@@ -1,5 +1,6 @@
 import { RVVSloterweg } from './config-and-types';
 import { StatusLineItem } from '../../../universal/types/App.types';
+import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers';
 import { getStatusDate, getWorkflowStatusDate } from '../decos/decos-helpers';
 import { DecosZaakBase } from '../decos/decos-types';
 
@@ -163,11 +164,14 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
     description:
       isAfgehandeld &&
       zaak.decision &&
-      ['Verleend', 'Niet verleend', 'Geweigerd'].includes(zaak.decision)
+      [...MA_VERLEEND_DECISIONS_COMMOM, 'Niet verleend', 'Geweigerd'].includes(
+        zaak.decision
+      )
         ? `Wij hebben uw aanvraag ${zaak.title} <strong>${zaak.decision}</strong>`
         : '', // Complex decisions cannot be captured in a generic text. They should be handled in the specific case.
     documents: [],
-    isActive: !isVerlopen && !isIngetrokken && isAfgehandeld,
+    isActive:
+      isAfgehandeld && ((!isVerlopen && !isIngetrokken) || !zaak.isVerleend),
     isChecked: isAfgehandeld,
   };
 
@@ -180,10 +184,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
   if (
     isAfgehandeld &&
     // TODO: Discuss with the team if this is the right way to check for a valid decision.
-    (('isExpired' in zaak &&
-      zaak.decision?.includes('Verleend') &&
-      !zaak.decision.includes('Niet verleend')) ||
-      isIngetrokken)
+    (('isExpired' in zaak && zaak.isVerleend) || isIngetrokken)
   ) {
     const isVerlopenActive = isVerlopen || isIngetrokken;
 

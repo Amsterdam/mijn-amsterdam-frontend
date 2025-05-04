@@ -55,7 +55,7 @@ export function createToeristischeVerhuurNotification(
 
     switch (true) {
       // B&B + Vakantieverhuurvergunning
-      case vergunning.decision === 'Verleend' &&
+      case vergunning.isVerleend &&
         !!vergunning.dateEnd &&
         isNearEndDate(vergunning.dateEnd):
         title = `Uw ${vergunningTitleLower} loopt af`;
@@ -73,7 +73,7 @@ export function createToeristischeVerhuurNotification(
           : datePublished;
         break;
       // B&B + Vakantieverhuurvergunning
-      case vergunning.decision === 'Verleend' &&
+      case vergunning.isVerleend &&
         !!vergunning.dateEnd &&
         isDateInPast(vergunning.dateEnd, dateNow):
         title = `Uw ${vergunningTitleLower} is verlopen`;
