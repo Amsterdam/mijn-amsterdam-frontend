@@ -3,7 +3,11 @@ import { DecosFieldTransformerObject, WithKentekens } from './decos-types';
 
 export const MA_DECISION_DEFAULT = 'Zie besluit';
 
-export const MA_VERLEEND_DECISIONS_COMMOM = ['Verleend', 'Toegekend'];
+export const MA_VERLEEND_DECISIONS_COMMOM = [
+  'Verleend',
+  'Deels verleend',
+  'Toegekend',
+];
 
 const identifier = 'identifier';
 const processed = 'processed';
