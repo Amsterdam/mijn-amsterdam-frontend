@@ -37,6 +37,7 @@ import {
   timeStart,
   kentekens,
   location,
+  MA_DECISION_DEFAULT,
 } from '../decos/decos-field-transformers';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
@@ -538,6 +539,11 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
       'bol8',
       'bol16',
     ],
+    isVerleend(zaak) {
+      return zaak.decision
+        ? !zaak.decision.toLowerCase().includes('Niet Verleend')
+        : false;
+    },
     async afterTransform(vergunning, zaakSource) {
       const wvosActiviteiten: Record<WVOSActiviteit, DecosFieldNameSource[]> = {
         'Rijden of een voertuig neerzetten waar dat normaal niet mag': [
@@ -563,8 +569,7 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
         .map(([activiteit]) => activiteit as WVOSActiviteit);
 
       if (vergunning.werkzaamheden.length > 1 && vergunning.processed) {
-        vergunning.decision =
-          'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.';
+        vergunning.decision = MA_DECISION_DEFAULT;
       }
 
       vergunning.title =

@@ -12,6 +12,16 @@ export function WVOSContent({
 }: {
   vergunning: VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
 }) {
+  const decision = () => {
+    return {
+      ...commonTransformers.decision(vergunning),
+      content:
+        // TODO: Moeten we hier niet de decision (deels verleend / verleend?) van de vergunning gebruiken om te bepalen of we deze tekst tonen?
+        vergunning.werkzaamheden.length > 1 && vergunning.processed
+          ? 'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.'
+          : vergunning.decision,
+    };
+  };
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.location,
@@ -28,7 +38,7 @@ export function WVOSContent({
         </UnorderedList>
       ),
     },
-    commonTransformers.decision,
+    decision,
   ]);
 
   return <Datalist rows={rows} />;

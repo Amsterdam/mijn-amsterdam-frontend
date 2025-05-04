@@ -22,7 +22,7 @@ export function AanbiedenDienstenEnStraatartiestenContent({
       : null;
 
   const op = () =>
-    vergunning.decision === 'Verleend' &&
+    vergunning.isVerleend &&
     vergunning.dateStart &&
     (!vergunning.dateEnd || vergunning.dateStart === vergunning.dateEnd)
       ? {
@@ -32,7 +32,7 @@ export function AanbiedenDienstenEnStraatartiestenContent({
       : null;
 
   const vanTot = () =>
-    vergunning.decision === 'Verleend' &&
+    vergunning.isVerleend &&
     vergunning.dateEnd !== null &&
     vergunning.dateStart !== vergunning.dateEnd
       ? {

@@ -18,6 +18,7 @@ import {
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
   isExpired,
+  isZaakDecisionVerleend,
 } from './decos-helpers';
 import type {
   AddressBookEntry,
@@ -339,6 +340,10 @@ async function transformDecosZaakResponse<
       decosZaakSource
     );
   }
+
+  decosZaak.isVerleend = decosZaakTransformer.isVerleend
+    ? decosZaakTransformer.isVerleend(decosZaak, decosZaakSource)
+    : isZaakDecisionVerleend(decosZaak);
 
   return decosZaak;
 }

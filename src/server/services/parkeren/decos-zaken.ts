@@ -26,6 +26,7 @@ import {
 } from '../decos/decos-field-transformers';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
+  isZaakDecisionVerleend,
   transformBoolean,
 } from '../decos/decos-helpers';
 import { DecosZaakTransformer } from '../decos/decos-types';
@@ -58,6 +59,13 @@ const GPK: DecosZaakTransformer<GPK> = {
   isActive: true,
   caseType: caseTypeParkeren.GPK,
   title: 'Europese gehandicaptenparkeerkaart (GPK)',
+  isVerleend(decosZaak, decosZaakSource) {
+    return isZaakDecisionVerleend(decosZaak, [
+      'Verleend',
+      'Verleend Bestuurder, niet verleend Passagier',
+      'Verleend Passagier, niet verleend Bestuurder',
+    ]);
+  },
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     dfunction: transformDecision({

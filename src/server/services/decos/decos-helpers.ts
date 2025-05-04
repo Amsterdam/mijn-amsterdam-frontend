@@ -4,6 +4,7 @@ import {
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
   DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
   DECOS_PENDING_REMOVAL_DFUNCTION,
+  MA_VERLEEND_DECISIONS_COMMOM,
 } from './decos-field-transformers';
 import type {
   DecosZaakTransformer,
@@ -195,4 +196,13 @@ export function getDisplayStatus<DZ extends DecosZaakBase>(
   }
 
   return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
+}
+
+export function isZaakDecisionVerleend<DZ extends DecosZaakBase>(
+  zaak: DZ,
+  decisions: string[] = MA_VERLEEND_DECISIONS_COMMOM
+): boolean {
+  return zaak.decision
+    ? decisions.some((decision) => decision === zaak.decision)
+    : false;
 }

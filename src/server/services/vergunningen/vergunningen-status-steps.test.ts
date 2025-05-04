@@ -37,6 +37,7 @@ describe('vergunningen-status-steps', () => {
         dateRequest: '2023-01-01',
         dateDecision: '2023-02-01',
         decision: 'Verleend',
+        isVerleend: true,
         processed: true,
         isExpired: false,
         statusDates: [],
@@ -134,6 +135,7 @@ describe('vergunningen-status-steps', () => {
         dateRequest: '2023-01-01',
         dateDecision: '2023-02-01',
         decision: 'Verleend',
+        isVerleend: true,
         processed: true,
         isExpired: true,
       } as unknown as DecosZaakBase;
