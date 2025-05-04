@@ -190,9 +190,7 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
 
     let datePublished = ''; // Ingetrokken status does not have a date associated with it.
 
-    // dateEnd is generic enough for most types of vergunningen.
-    // If it is not this status should be customized with a custom transformer for the statusteps.
-    if (isVerlopen && 'dateEnd' in zaak && zaak.dateEnd) {
+    if (isVerlopen && 'dateEnd' in zaak && zaak.dateEnd && !isIngetrokken) {
       datePublished = zaak.dateEnd as string;
     }
 
@@ -200,7 +198,6 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
 
     if (isIngetrokken) {
       description = `Wij hebben uw ${zaak.title} ingetrokken.`;
-      datePublished = zaak.dateDecision || ''; // TODO: Verify if this is the right date to use.
     } else if (isVerlopen) {
       description = `Uw ${zaak.title} is verlopen.`;
     } else if ('dateEndFormatted' in zaak && zaak.dateEndFormatted) {
