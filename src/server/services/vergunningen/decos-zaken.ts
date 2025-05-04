@@ -212,7 +212,7 @@ const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Aanbieden diensten - Behandelen',
+      stepTitle: 'Aanbieden van diensten - Behandelen',
     },
   ],
   transformFields: {
