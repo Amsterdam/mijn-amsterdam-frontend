@@ -4,7 +4,6 @@ import { generatePath } from 'react-router';
 
 import {
   BBVergunningFrontend,
-  BBVergunningZaakResult,
   FetchPersoonOrMaatschapIdByUidOptions,
   FetchZaakIdsOptions,
   fieldMap,
@@ -25,11 +24,7 @@ import {
   apiSuccessResult,
   getSettledResult,
 } from '../../../universal/helpers/api';
-import {
-  dateSort,
-  defaultDateFormat,
-  isDateInPast,
-} from '../../../universal/helpers/date';
+import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
@@ -422,24 +417,6 @@ async function fetchAndMergeAdressen(
   return zakenWithAddress;
 }
 
-function isZaakActual({
-  decision,
-  dateEnd,
-  compareDate,
-}: {
-  decision: BBVergunningZaakResult;
-  dateEnd: string | null;
-  compareDate: string | Date | null;
-}) {
-  if (!decision) {
-    return true;
-  }
-  if (decision !== 'Verleend') {
-    return false;
-  }
-  return !!dateEnd && !!compareDate && !isDateInPast(dateEnd, compareDate);
-}
-
 function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
   const pbZaak = Object.fromEntries(
     entries(fieldMap).map(([pbFieldName, desiredName]) => {
@@ -449,11 +426,11 @@ function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
 
   const title = 'Vergunning bed & breakfast';
   const decision = getZaakResultaat(pbZaak.result);
+  const isVerleend = decision === 'Verleend';
   // The permit is valid from the date we have a decision.
   const dateStart =
-    decision === 'Verleend' && pbZaak.dateDecision ? pbZaak.dateDecision : '';
-  const dateEnd =
-    decision === 'Verleend' && pbZaak.dateEnd ? pbZaak.dateEnd : '';
+    isVerleend && pbZaak.dateDecision ? pbZaak.dateDecision : '';
+  const dateEnd = isVerleend && pbZaak.dateEnd ? pbZaak.dateEnd : '';
   const id = zaak.id;
 
   const isZaakExpired = isExpired(pbZaak.dateEnd, new Date());
@@ -472,6 +449,7 @@ function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
     dateEnd,
     dateEndFormatted: dateEnd ? defaultDateFormat(dateEnd) : '-',
     decision,
+    isVerleend,
     id,
     identifier: pbZaak.zaaknummer ?? zaak.id,
     link: {
@@ -756,7 +734,6 @@ export const forTesting = {
   getFieldValue,
   getZaakResultaat,
   getZaakStatus,
-  isZaakActual,
   transformPowerbrowserLinksResponse,
   transformZaak,
   transformZaakStatusResponse,

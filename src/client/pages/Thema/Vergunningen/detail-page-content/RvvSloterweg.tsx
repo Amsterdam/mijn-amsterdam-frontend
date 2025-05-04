@@ -48,7 +48,7 @@ export function RvvSloterweg({
     const rowSet: RowSet = {
       rows: [
         { ...from, span: 4 },
-        vergunning.decision === 'Verleend' ? { ...to, span: 4 } : null,
+        vergunning.isVerleend ? { ...to, span: 4 } : null,
       ].filter((row) => row !== null) as WrappedRow[],
     };
 

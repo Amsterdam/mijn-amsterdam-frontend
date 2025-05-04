@@ -28,7 +28,7 @@ export function useToeristischeVerhuurThemaData() {
 
   const hasVergunningenVakantieVerhuurVerleend =
     TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen?.some(
-      (vergunning) => vergunning.decision === 'Verleend'
+      (vergunning) => vergunning.isVerleend
     );
 
   const hasVergunningBB =
@@ -36,7 +36,7 @@ export function useToeristischeVerhuurThemaData() {
 
   const hasVergunningBBVerleend =
     TOERISTISCHE_VERHUUR.content?.bbVergunningen?.some(
-      (vergunning) => vergunning.decision === 'Verleend'
+      (vergunning) => vergunning.isVerleend
     );
 
   const vergunningen = addLinkElementToProperty<ToeristischeVerhuurVergunning>(

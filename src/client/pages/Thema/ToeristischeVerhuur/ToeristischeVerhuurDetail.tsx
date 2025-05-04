@@ -86,7 +86,7 @@ function DetailPageContent({ vergunning }: DetailPageContentProps) {
           className: styles.VanTot_Col2,
         },
       ],
-      isVisible: vergunning.decision === 'Verleend',
+      isVisible: vergunning.isVerleend,
     },
     {
       label: 'Adres',
