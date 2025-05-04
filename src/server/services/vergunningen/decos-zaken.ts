@@ -114,6 +114,12 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
   isActive: true,
   caseType: caseTypeVergunningen.EvenementVergunning,
   title: caseTypeVergunningen.EvenementVergunning,
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'In behandeling',
+      stepTitle: 'Evenement vergunning - Behandelen',
+    },
+  ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     dfunction: transformDecision({
