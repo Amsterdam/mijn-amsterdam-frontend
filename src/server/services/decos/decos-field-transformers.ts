@@ -7,6 +7,7 @@ export const MA_VERLEEND_DECISIONS_COMMOM = [
   'Verleend',
   'Deels verleend',
   'Toegekend',
+  'Toegestaan',
 ];
 
 const identifier = 'identifier';
