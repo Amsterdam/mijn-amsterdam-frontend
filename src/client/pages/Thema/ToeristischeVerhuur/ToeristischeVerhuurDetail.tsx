@@ -163,50 +163,36 @@ export function ToeristischeVerhuurDetail() {
           <>
             <DetailPageContent vergunning={vergunning} />
             <PageContentCell spanWide={8}>
-              <Datalist
-                rows={[
-                  {
-                    label:
-                      vergunning.title === 'Vergunning bed & breakfast'
-                        ? 'Document'
-                        : null,
-                    content: (
-                      <>
-                        {!isBnBVergunning &&
-                          !isLoadingDocuments &&
-                          !isErrorDocuments &&
-                          !vergunningDocuments.length && (
-                            <Paragraph>Geen document beschikbaar.</Paragraph>
-                          )}
-                        {isErrorDocuments && (
-                          <Paragraph>Documenten ophalen is mislukt.</Paragraph>
-                        )}
-                        {isLoadingDocuments && <LoadingContent />}
-                        {!isLoadingDocuments && !isLoading && (
-                          <>
-                            {!!vergunningDocuments.length && (
-                              <DocumentListV2
-                                documents={vergunningDocuments}
-                                columns={['Document', 'Datum']}
-                                className={
-                                  vergunning.title ===
-                                  'Vergunning bed & breakfast'
-                                    ? 'ams-mb--sm'
-                                    : ''
-                                }
-                              />
-                            )}
-                            {vergunning.title ===
-                              'Vergunning bed & breakfast' && (
-                              <BnBDocumentInfo vergunning={vergunning} />
-                            )}
-                          </>
-                        )}
-                      </>
-                    ),
-                  },
-                ]}
-              />
+              <>
+                {!isBnBVergunning &&
+                  !isLoadingDocuments &&
+                  !isErrorDocuments &&
+                  !vergunningDocuments.length && (
+                    <Paragraph>Geen document beschikbaar.</Paragraph>
+                  )}
+                {isErrorDocuments && (
+                  <Paragraph>Documenten ophalen is mislukt.</Paragraph>
+                )}
+                {isLoadingDocuments && <LoadingContent />}
+                {!isLoadingDocuments && !isLoading && (
+                  <>
+                    {!!vergunningDocuments.length && (
+                      <DocumentListV2
+                        documents={vergunningDocuments}
+                        columns={['Document', 'Datum']}
+                        className={
+                          vergunning.title === 'Vergunning bed & breakfast'
+                            ? 'ams-mb--sm'
+                            : ''
+                        }
+                      />
+                    )}
+                    {vergunning.title === 'Vergunning bed & breakfast' && (
+                      <BnBDocumentInfo vergunning={vergunning} />
+                    )}
+                  </>
+                )}
+              </>
             </PageContentCell>
           </>
         )
