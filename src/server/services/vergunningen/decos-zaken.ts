@@ -488,7 +488,7 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     text15: { ...kentekens, name: 'vorigeKentekens' },
     title: 'status',
   },
-  async afterTransform(vergunning, decosZaakSource) {
+  async afterTransform(vergunning) {
     if (vergunning.status === 'Actief') {
       vergunning.processed = true;
       // if the workflow verleend has run but there is no decision then its actually Verleend.
