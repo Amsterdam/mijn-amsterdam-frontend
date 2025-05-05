@@ -91,7 +91,3 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
 
   return steps;
 }
-
-export const forTesting = {
-  getStatusStepsRVVSloterweg,
-};
