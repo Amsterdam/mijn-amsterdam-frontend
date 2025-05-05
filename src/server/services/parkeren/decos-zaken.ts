@@ -134,7 +134,8 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+      decosActionCode:
+        'Status bijwerken en notificatie verzenden - In behandeling',
     },
   ],
   transformFields: {
@@ -235,7 +236,8 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+        decosActionCode:
+          'Status bijwerken en notificatie verzenden - In behandeling',
       },
     ],
     requirePayment: true,
@@ -269,7 +271,7 @@ const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
     caseTypeParkeren.TouringcarDagontheffing.toLowerCase()
   ),
   fetchWorkflowStatusDatesFor: [
-    { status: 'In behandeling', stepTitle: 'Status naar in behandeling' },
+    { status: 'In behandeling', decosActionCode: 'Status naar in behandeling' },
   ],
   requirePayment: true,
   transformFields: {
@@ -296,7 +298,10 @@ const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
       caseTypeParkeren.TouringcarJaarontheffing.toLowerCase()
     ),
     fetchWorkflowStatusDatesFor: [
-      { status: 'In behandeling', stepTitle: 'Status naar In Behandeling' },
+      {
+        status: 'In behandeling',
+        decosActionCode: 'Status naar In Behandeling',
+      },
     ],
     requirePayment: true,
     transformFields: {

@@ -262,21 +262,22 @@ async function transformDecosZaakResponse<
   };
 
   if (decosZaakTransformer.fetchWorkflowStatusDatesFor) {
-    const stepTitles = decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
-      ({ stepTitle }) => stepTitle
-    );
+    const decosActionCodes =
+      decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
+        ({ decosActionCode }) => decosActionCode
+      );
     const workFlowDates = await fetchDecosWorkflowDates(
       requestID,
       decosZaakSource.key,
-      stepTitles
+      decosActionCodes
     );
 
     if (workFlowDates.status === 'OK') {
       decosZaak.statusDates =
         decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
-          ({ status, stepTitle }) => ({
+          ({ status, decosActionCode }) => ({
             status,
-            datePublished: workFlowDates.content?.[stepTitle] ?? null,
+            datePublished: workFlowDates.content?.[decosActionCode] ?? null,
           })
         );
     }
@@ -630,7 +631,7 @@ export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
 });
 
 function transformDecosWorkflowDateResponse(
-  stepTitles: DecosWorkflowStepTitle[],
+  decosActionCodes: DecosWorkflowStepTitle[],
   singleWorkflowResponseData: DecosWorkflowResponse
 ): DecosWorkflowDateByStepTitle {
   const responseStepTitleDates = singleWorkflowResponseData.content
@@ -643,10 +644,10 @@ function transformDecosWorkflowDateResponse(
       {} as Record<string, string | null>
     );
 
-  const stepTitleToDate = stepTitles.reduce(
-    (acc, stepTitle) => ({
+  const stepTitleToDate = decosActionCodes.reduce(
+    (acc, decosActionCode) => ({
       ...acc,
-      [stepTitle]: responseStepTitleDates[stepTitle] ?? null,
+      [decosActionCode]: responseStepTitleDates[decosActionCode] ?? null,
     }),
     {} as DecosWorkflowDateByStepTitle
   );
@@ -662,7 +663,7 @@ async function fetchWorkflowInstance<
     useRawResponse: B;
     key: string;
     urlParams?: URLSearchParams;
-    stepTitles?: ST;
+    decosActionCodes?: ST;
   }
 ) {
   const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
@@ -672,8 +673,11 @@ async function fetchWorkflowInstance<
       ? Object.fromEntries(options.urlParams)
       : undefined,
     transformResponse: (responseData: DecosWorkflowResponse) =>
-      !options.useRawResponse && options.stepTitles
-        ? transformDecosWorkflowDateResponse(options.stepTitles, responseData)
+      !options.useRawResponse && options.decosActionCodes
+        ? transformDecosWorkflowDateResponse(
+            options.decosActionCodes,
+            responseData
+          )
         : responseData.content,
   });
 
@@ -695,7 +699,7 @@ export async function fetchDecosWorkflowDates<
 >(
   requestID: RequestID,
   zaakID: DecosZaakBase['key'],
-  stepTitles?: ST,
+  decosActionCodes?: ST,
   select: string[] = ['mark', 'date1', 'date2', 'text7']
 ): Promise<
   ST extends undefined
@@ -704,7 +708,7 @@ export async function fetchDecosWorkflowDates<
       >
     : ApiResponse<DecosWorkflowDateByStepTitle | any>
 > {
-  const pickLatestWorkflow = !!stepTitles?.length;
+  const pickLatestWorkflow = !!decosActionCodes?.length;
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
@@ -730,10 +734,12 @@ export async function fetchDecosWorkflowDates<
     urlParams.append('select', select.join(','));
   }
 
-  if (stepTitles?.length) {
+  if (decosActionCodes?.length) {
     urlParams.append(
       'filter',
-      stepTitles.map((stepTitle) => `text7 eq '${stepTitle}'`).join(' or ')
+      decosActionCodes
+        .map((decosActionCode) => `text7 eq '${decosActionCode}'`)
+        .join(' or ')
     );
   }
   const lastWorkflowKey = workflowKeys.at(-1);
@@ -743,7 +749,7 @@ export async function fetchDecosWorkflowDates<
       ? fetchWorkflowInstance(requestID, {
           key: lastWorkflowKey,
           urlParams,
-          stepTitles,
+          decosActionCodes,
           useRawResponse: false,
         })
       : apiSuccessResult({});
@@ -754,7 +760,7 @@ export async function fetchDecosWorkflowDates<
       fetchWorkflowInstance(requestID, {
         key,
         urlParams,
-        stepTitles,
+        decosActionCodes,
         useRawResponse: true,
       }).then(({ content }) => {
         return {
