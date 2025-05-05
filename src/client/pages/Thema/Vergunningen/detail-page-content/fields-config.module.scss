@@ -5,3 +5,9 @@
   max-width: fit-content;
   --ams-unordered-list-item-margin-inline-start: 0.8rem;
 }
+
+:global(.ams-unordered-list).List {
+  margin: 0;
+  display: block;
+  --ams-unordered-list-item-margin-inline-start: 0.8rem;
+}
