@@ -28,7 +28,7 @@ type SVWIMessageSource = {
 type SVWISourceResponseData = {
   id: string;
   gebruikerBekend: boolean;
-  berichten: SVWIMessageSource[];
+  berichten?: SVWIMessageSource[];
 };
 
 function transformNotification(message: SVWIMessageSource): MyNotification {
@@ -51,7 +51,7 @@ function transformSVWIResponse(
 ): ApiPatternResponseA {
   return {
     isKnown: !!response?.gebruikerBekend,
-    notifications: response?.berichten.map(transformNotification) ?? [],
+    notifications: response?.berichten?.map(transformNotification) ?? [],
     url: getFromEnv('BFF_SSO_URL_SVWI') ?? SVWI_ROUTE_DEFAULT,
   };
 }
