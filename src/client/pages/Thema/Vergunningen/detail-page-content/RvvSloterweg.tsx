@@ -33,7 +33,7 @@ export function RvvSloterweg({
   const vorigeKentekens = () => {
     return vergunning.vorigeKentekens
       ? {
-          label: isChangeRequest ? 'Nieuw kenteken' : 'Kenteken',
+          label: 'Kenteken(s)',
           content: vergunning.vorigeKentekens || '-',
         }
       : null;
