@@ -62,7 +62,7 @@ export function fetchSVWI(
 ) {
   const apiConfig = getApiConfig('SVWI', {
     formatUrl(requestConfig) {
-      return `${requestConfig.url}/authorisatie/tegel`;
+      return `${requestConfig.url}/autorisatie/tegel`;
     },
     transformResponse: transformSVWIResponse,
     postponeFetch: !featureToggle.svwiActive,
