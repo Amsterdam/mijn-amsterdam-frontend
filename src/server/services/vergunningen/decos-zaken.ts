@@ -525,7 +525,10 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
     caseType: caseTypeVergunningen.WVOS,
     title: 'Werkzaamheden en vervoer op straat',
     fetchWorkflowStatusDatesFor: [
-      { status: 'In behandeling', stepTitle: 'Status - In behandeling' },
+      {
+        status: 'In behandeling',
+        stepTitle: 'Werk en vervoer op straat - Behandelen',
+      },
     ],
     requirePayment: true,
     transformFields: {
