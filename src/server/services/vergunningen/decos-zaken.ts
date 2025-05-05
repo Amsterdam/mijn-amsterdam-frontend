@@ -39,10 +39,7 @@ import {
   location,
   MA_DECISION_DEFAULT,
 } from '../decos/decos-field-transformers';
-import {
-  getCustomTitleForDecosZaakWithLicensePlates,
-  getStatusDate,
-} from '../decos/decos-helpers';
+import { getCustomTitleForDecosZaakWithLicensePlates } from '../decos/decos-helpers';
 import {
   DecosZaakTransformer,
   DecosFieldNameSource,
@@ -477,27 +474,22 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
   isActive: true,
   caseType: caseTypeVergunningen.RVVSloterweg,
   title: 'RVV ontheffing Sloterweg',
-  fetchWorkflowStatusDatesFor: [
-    { status: 'In behandeling', stepTitle: 'RVV Sloterweg - Behandelen' },
-  ],
+  fetchWorkflowStatusDatesFor: [],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     dfunction: transformDecision({
       Ingetrokken: ['Ingetrokken door gemeente'],
     }),
-    text8: {
-      name: 'requestType',
-    },
-    text7: {
-      name: 'area',
-    },
+    text8: 'requestType',
+    text7: 'area',
     date6: dateStart,
     date7: dateEnd,
     text10: kentekens,
     text15: { ...kentekens, name: 'vorigeKentekens' },
+    title: 'status',
   },
   async afterTransform(vergunning, decosZaakSource) {
-    if (getStatusDate('Verleend', vergunning)) {
+    if (vergunning.status === 'Actief') {
       vergunning.processed = true;
       // if the workflow verleend has run but there is no decision then its actually Verleend.
       // this decision (verleend) is not set by decos eventhough the actual permit is granted.
