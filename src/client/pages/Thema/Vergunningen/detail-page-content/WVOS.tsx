@@ -1,6 +1,7 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
 import { commonTransformers, getRows } from './fields-config';
+import styles from './fields-config.module.scss';
 import {
   VergunningFrontend,
   WerkzaamhedenEnVervoerOpStraat,
@@ -29,7 +30,7 @@ export function WVOSContent({
     {
       label: 'Werkzaamheden',
       content: (
-        <UnorderedList>
+        <UnorderedList className={styles.List}>
           {vergunning.werkzaamheden.map((activiteit) => (
             <UnorderedList.Item key={activiteit}>
               {activiteit}
