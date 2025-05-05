@@ -1,11 +1,11 @@
 import { Response } from 'express';
 
-import { DecosZaakBase } from './decos-types';
 import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers';
 import {
   fetchDecosDocumentList,
   fetchDecosZakenFromSourceRaw,
 } from './decos-service';
+import { DecosZaakBase } from './decos-types';
 import {
   testAccountsDigid,
   testAccountsEherkenning,
@@ -114,7 +114,7 @@ export async function fetchZakenByUserIDs(
       expiresAtMilliseconds: authProfileAndToken.expiresAtMilliseconds,
     };
 
-    const regexCaseTypeFilter = new RegExp('^[.a-zA-Z0-9,!? ]*$', 'g');
+    const regexCaseTypeFilter = /[^a-zA-Z\s-]/g;
     const regexTop = /^\d+$/g;
 
     const response = await fetchDecosZakenFromSourceRaw(
