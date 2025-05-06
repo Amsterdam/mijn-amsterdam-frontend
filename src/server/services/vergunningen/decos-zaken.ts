@@ -495,7 +495,7 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
   async afterTransform(vergunning) {
     vergunning.processed = true;
 
-    if (vergunning.status === 'Actief' && !vergunning.decision) {
+    if (!vergunning.decision) {
       // This decision (verleend) is not set by decos eventhough the actual permit is granted.
       // This is possibly some hack to have an overview of active permits in the Decos back-office.
       vergunning.decision = 'Verleend';

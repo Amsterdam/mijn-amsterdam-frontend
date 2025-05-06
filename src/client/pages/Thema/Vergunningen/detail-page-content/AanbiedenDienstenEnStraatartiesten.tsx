@@ -23,8 +23,9 @@ export function AanbiedenDienstenEnStraatartiestenContent({
 
   const op = () =>
     vergunning.isVerleend &&
-    vergunning.dateStart &&
-    (!vergunning.dateEnd || vergunning.dateStart === vergunning.dateEnd)
+    vergunning.dateStartFormatted &&
+    (!vergunning.dateEndFormatted ||
+      vergunning.dateStartFormatted === vergunning.dateEndFormatted)
       ? {
           label: 'Op',
           content: vergunning.dateStartFormatted,
@@ -33,8 +34,9 @@ export function AanbiedenDienstenEnStraatartiestenContent({
 
   const vanTot = () =>
     vergunning.isVerleend &&
-    vergunning.dateEnd !== null &&
-    vergunning.dateStart !== vergunning.dateEnd
+    vergunning.dateEndFormatted &&
+    vergunning.dateStartFormatted &&
+    vergunning.dateStartFormatted !== vergunning.dateEndFormatted
       ? {
           rows: [
             {
