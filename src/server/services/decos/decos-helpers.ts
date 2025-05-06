@@ -190,10 +190,6 @@ export function getDisplayStatus<DZ extends DecosZaakBase>(
   zaak: DZ,
   steps: StatusLineItem[]
 ) {
-  const isExpired = 'isExpired' in zaak ? zaak.isExpired === true : false;
-  if (zaak.processed && !isExpired && zaak.decision) {
-    return zaak.decision;
-  }
   const status = steps.find((step) => step.isActive)?.status;
 
   if (status === 'Afgehandeld' && zaak.decision) {
