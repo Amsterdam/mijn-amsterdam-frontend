@@ -134,6 +134,7 @@ describe('vergunningen-status-steps', () => {
         title: 'Vergunning',
         dateRequest: '2023-01-01',
         dateDecision: '2023-02-01',
+        dateEnd: '2023-03-01',
         decision: 'Verleend',
         isVerleend: true,
         processed: true,
@@ -171,7 +172,7 @@ describe('vergunningen-status-steps', () => {
           status: 'Afgehandeld',
         },
         {
-          datePublished: '',
+          datePublished: '2023-03-01',
           description: 'Uw Vergunning is verlopen.',
           id: 'step-4',
           isActive: true,
@@ -183,16 +184,13 @@ describe('vergunningen-status-steps', () => {
   });
 
   describe('getDisplayStatus', () => {
-    it('should return decision if processed and not expired', () => {
+    it('should return decision if Afgehandeld is active', () => {
       const zaak = {
-        caseType: 'Other',
-        title: 'Vergunning',
-        processed: true,
-        isExpired: false,
         decision: 'Verleend',
       } as unknown as DecosZaakBase;
-
-      const steps: StatusLineItem[] = [];
+      const steps = [
+        { status: 'Afgehandeld', isActive: true },
+      ] as StatusLineItem[];
       const status = getDisplayStatus(zaak, steps);
       expect(status).toBe('Verleend');
     });
