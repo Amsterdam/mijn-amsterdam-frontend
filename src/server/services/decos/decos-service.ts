@@ -281,6 +281,17 @@ async function transformDecosZaakResponse<
     }
   }
 
+  // A zaak is considered to immediately be "In behandeling" if no workflows for "In behandeling" are monitored
+  if (
+    !decosZaakTransformer.fetchWorkflowStatusDatesFor?.some(
+      ({ status }) => status === 'In behandeling'
+    )
+  ) {
+    decosZaak.statusDates = [
+      { datePublished: decosZaak.dateRequest, status: 'In behandeling' },
+    ];
+  }
+
   if (decosZaakTransformer.fetchTermijnenFor) {
     const termijnMap = Object.fromEntries(
       decosZaakTransformer.fetchTermijnenFor.map((termijn) => [
@@ -860,7 +871,7 @@ async function transformDecosDocumentListResponse(
           const decosZaakDocument: DecosZaakDocument = {
             id: documentMetadata.mark,
             key: isPdfResponse.content.key,
-            title: documentMetadata.text41,
+            title: documentMetadata.text41 || 'Document',
             datePublished: documentMetadata.received_date,
             url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
               {

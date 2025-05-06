@@ -183,10 +183,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     passthroughOIDCToken: true,
   },
   SVWI: {
-    url: `${getFromEnv('BFF_SVWI_API_BASE_URL')}/mijnamsterdam/v1/autorisatie/tegel`,
+    url: getFromEnv('BFF_SVWI_API_BASE_URL'),
     passthroughOIDCToken: true,
-    postponeFetch: !FeatureToggle.svwiLinkActive,
     headers: {
+      'Cache-Control': 'no-cache',
       'Ocp-Apim-Subscription-Key': getFromEnv('BFF_SVWI_API_KEY', false),
     },
   },
