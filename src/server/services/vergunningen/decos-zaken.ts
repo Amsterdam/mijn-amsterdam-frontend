@@ -512,10 +512,9 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     }
 
     // Add zone to title
-    if (vergunning.caseType === caseTypeVergunningen.RVVSloterweg) {
-      if (vergunning.area && vergunning.kentekens) {
-        vergunning.title = `RVV ontheffing ${vergunning.area} (${vergunning.kentekens})`;
-      }
+    const kentekens = vergunning.kentekens || vergunning.vorigeKentekens;
+    if (vergunning.area && kentekens) {
+      vergunning.title = `RVV ontheffing ${vergunning.area} (${kentekens})`;
     }
 
     return vergunning;
