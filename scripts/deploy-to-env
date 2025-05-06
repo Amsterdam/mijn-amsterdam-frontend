@@ -1,0 +1,63 @@
+#! /bin/bash
+
+# Stop execution on error
+set -e
+
+# Color text
+green=$(tput setaf 2)
+reset=$(tput sgr0)
+echoGreen() {
+  echo -e "$green$1$reset"
+}
+
+current_branch=$(git symbolic-ref --short HEAD)
+
+has_mijn=$(echo "$current_branch" | grep -i --only-matching 'MIJN')
+if [ ! -n "$has_mijn" ]; then
+  echoGreen "No MIJN in branch found. Proceed? [Y-n]"
+  read proceed
+  if [[ "$proceed" != "Y" && "$proceed" != "y" ]]; then
+    echoGreen "Exitting..."
+    exit 0
+  fi
+fi
+
+
+select target_branch in testen az-acceptance; do
+  if [[ "$target_branch" == "testen" || "$target_branch" == "az-acceptance" ]]; then
+    break
+  else
+    echoGreen "Invalid choice. Please select 1 or 2"
+  fi
+done
+
+echoGreen "Deploying to $target_branch"
+
+git checkout "$target_branch"
+
+set +e  # temporarily allow errors for merge
+git merge --no-edit "$current_branch"
+merge_exit_code=$?
+set -e  # re-enable exit on error
+
+if [ $merge_exit_code -eq 0 ]; then
+  echoGreen "Pushing to $target_branch"
+  git push origin "$target_branch"
+else
+  echo ""
+  echoGreen "Merge conflict detected"
+  echoGreen "Do you want to overwrite '$target_branch' with '$current_branch'? (y-n)"
+  read -r answer
+  if [[ "$answer" == "Y" || "$answer" == "y" ]]; then
+    echoGreen "Force pushing $target_branch with $current_branch"
+    git reset --hard "$current_branch"
+    git push --force
+    echoGreen "$current_branch was pushed onto $target_branch"
+  else
+    echoGreen "Aborting merge"
+    git merge --abort
+    echoGreen "Nothing was pushed"
+  fi
+fi
+
+git checkout "$current_branch"

@@ -9,7 +9,7 @@ import { NotificationLabelByType } from '../vergunningen/config-and-types';
 type DecosDocumentBase = {
   text39: string;
   text40: string;
-  text41: string;
+  text41?: string;
   // identifier / zaaknummer
   mark: string;
   // datePublished

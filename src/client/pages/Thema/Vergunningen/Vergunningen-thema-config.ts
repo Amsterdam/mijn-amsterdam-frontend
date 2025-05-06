@@ -85,7 +85,7 @@ export const featureToggle = {
 };
 
 export const themaId = 'VERGUNNINGEN' as const;
-export const themaTitle = 'Vergunningen';
+export const themaTitle = 'Vergunningen en ontheffingen';
 
 export const routeConfig = {
   detailPage: {
