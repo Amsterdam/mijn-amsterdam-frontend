@@ -1,16 +1,16 @@
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
-  DecosZaakBase,
-  DecosZaakTransformer,
-  WithDateRange,
-  WithLocation,
-} from '../decos/config-and-types';
-import {
   SELECT_FIELDS_TRANSFORM_BASE,
   dateEnd,
   dateStart,
   location,
 } from '../decos/decos-field-transformers';
+import {
+  DecosZaakBase,
+  DecosZaakTransformer,
+  WithDateRange,
+  WithLocation,
+} from '../decos/decos-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
@@ -47,7 +47,7 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
     ],
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
-      date2: dateEnd,
+      date7: dateEnd,
       date6: dateStart,
       text6: location,
     },

@@ -21,8 +21,8 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DecosZaakBase, DecosZaakTransformer } from '../decos/config-and-types';
 import { getActiveStatus } from '../decos/decos-helpers';
+import type { DecosZaakBase, DecosZaakTransformer } from '../decos/decos-types';
 
 export function getNotificationLabels(
   notificationLabels: Partial<NotificationLabelByType>,

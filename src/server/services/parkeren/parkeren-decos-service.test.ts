@@ -10,10 +10,7 @@ import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import {
-  getStatusSteps,
-  getDisplayStatus,
-} from '../vergunningen/vergunningen-status-steps';
+import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
 
 vi.mock('../decos/decos-service', () => ({
   fetchDecosZaken: vi.fn(),
@@ -31,26 +28,35 @@ describe('parkeren-decos-service', () => {
   describe('fetchDecosParkeerVergunningen', () => {
     it('should return transformed vergunningen if fetchDecosZaken is successful', async () => {
       const decosZaken = [{ id: '1' }, { id: '2' }];
+
       (fetchDecosZaken as unknown as Mock).mockResolvedValue(
         apiSuccessResult(decosZaken)
       );
-      (transformDecosZaakFrontend as Mock).mockImplementation(
-        (_sid, vergunning) => ({
-          ...vergunning,
-          transformed: true,
-        })
-      );
-      (getStatusSteps as Mock).mockReturnValue(['step1', 'step2']);
-      (getDisplayStatus as Mock).mockReturnValue('displayStatus');
 
       const result = await fetchDecosParkeerVergunningen(authProfileAndToken);
-      expect(result.status).toBe('OK');
-      expect(result.content).toHaveLength(2);
-      expect(result.content?.[0]).toHaveProperty('transformed', true);
-      expect(result.content?.[0]).toHaveProperty('steps', ['step1', 'step2']);
-      expect(result.content?.[0]).toHaveProperty(
-        'displayStatus',
-        'displayStatus'
+
+      expect(fetchDecosZaken).toHaveBeenCalledWith(
+        authProfileAndToken,
+        expect.anything() // decosZaakTransformers
+      );
+
+      expect(transformDecosZaakFrontend).toHaveBeenCalledWith(
+        authProfileAndToken.profile.sid,
+        decosZaken[0],
+        expect.objectContaining({
+          detailPageRoute: '/parkeren/:caseType/:id',
+          includeFetchDocumentsUrl: true,
+          getStepsFN: getStatusSteps,
+        })
+      );
+      expect(transformDecosZaakFrontend).toHaveBeenCalledWith(
+        authProfileAndToken.profile.sid,
+        decosZaken[1],
+        expect.objectContaining({
+          detailPageRoute: '/parkeren/:caseType/:id',
+          includeFetchDocumentsUrl: true,
+          getStepsFN: getStatusSteps,
+        })
       );
     });
 

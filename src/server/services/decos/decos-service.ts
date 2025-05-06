@@ -1,44 +1,47 @@
 import assert from 'assert';
 
+import createDebugger from 'debug';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
 import {
+  CASE_TYP_FIELD_DECOS,
   caseType,
-  DecosZaakBase,
-  DecosZaakTransformer,
   MA_DECISION_DEFAULT,
-  adresBoekenByProfileType,
-  AddressBookEntry,
-  DecosFieldValue,
-  DecosZaakDocument,
-  DecosWorkflowStepDate,
-  DecosWorkflowStepTitle,
-  DecosDocumentBlobSource,
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
   SELECT_FIELDS_META,
   SELECT_FIELDS_TRANSFORM_BASE,
-  DecosWorkflowResponse,
-  DecosZaakFrontend,
-  DecosTermijnType,
-  DecosTermijnResponse,
-  DecosTermijn,
-  DECOS_ZAKEN_FETCH_TOP,
-  DecosLinkedFieldResponse,
-  DecosFieldTransformerObject,
-  DecosFieldsObject,
-  WithDateRange,
-} from './config-and-types';
-import { CASE_TYP_FIELD_DECOS } from './decos-field-transformers';
+} from './decos-field-transformers';
 import {
   getDecosZaakTypeFromSource,
+  getDisplayStatus,
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
   isExpired,
 } from './decos-helpers';
+import type {
+  AddressBookEntry,
+  DecosZaakTransformer,
+  DecosZaakBase,
+  DecosZaakSource,
+  DecosFieldTransformerObject,
+  DecosFieldsObject,
+  DecosFieldValue,
+  DecosZakenResponse,
+  DecosWorkflowStepTitle,
+  DecosWorkflowResponse,
+  DecosWorkflowDateByStepTitle,
+  DecosWorkflowSource,
+  DecosTermijnType,
+  DecosTermijn,
+  DecosTermijnResponse,
+  DecosLinkedFieldResponse,
+  DecosZaakDocument,
+  DecosDocumentBlobSource,
+  DecosDocumentSource,
+  DecosZaakFrontend,
+  WithDateRange,
+} from './decos-types';
 import {
   ApiErrorResponse,
   apiErrorResult,
@@ -53,6 +56,7 @@ import {
   toDateFormatted,
   uniqueArray,
 } from '../../../universal/helpers/utils';
+import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   DataRequestConfig,
@@ -65,6 +69,23 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
+
+const debug = createDebugger('decos-service');
+
+export const adresBoekenBSN =
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',') ?? [];
+
+export const adresBoekenKVK =
+  process.env.BFF_DECOS_API_ADRES_BOEKEN_KVK?.split(',') ?? [];
+
+export const adresBoekenByProfileType: Record<ProfileType, string[]> = {
+  private: adresBoekenBSN,
+  commercial: adresBoekenKVK,
+  'private-attributes': [],
+};
+
+export const DECOS_ZAKEN_FETCH_TOP = '200';
+
 /**
  * The Decos service ties responses of various api calls together and produces a set of transformed set of decosZaken.
  *
@@ -113,8 +134,11 @@ async function getUserKeys(authProfileAndToken: AuthProfileAndToken) {
   const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
     formatUrl: (config) => {
-      return `${config.url}/search/books?properties=false&select=key`;
+      return `${config.url}/search/books`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams('properties=false&select=key')
+    ),
     transformResponse: (responseData) => {
       return responseData?.itemDataResultSet?.content ?? [];
     },
@@ -123,16 +147,25 @@ async function getUserKeys(authProfileAndToken: AuthProfileAndToken) {
   const bookSearches = [];
   const adresBoeken =
     adresBoekenByProfileType[authProfileAndToken.profile.profileType];
-
+  debug({ adresBoeken });
   // First find user keys associated with the current user.id (bsn or kvk)
   for (const addressBookKey of adresBoeken) {
     const requestBody = getUserKeysSearchQuery(
       addressBookKey,
       authProfileAndToken.profile.id
     );
-    const requestConfig = { ...apiConfig, data: requestBody };
-    const request = requestData<AddressBookEntry[]>(requestConfig);
-
+    const requestConfig = {
+      ...apiConfig,
+      data: requestBody,
+      // only need to fetch once per session
+      cacheKey: `decos-user-key-${addressBookKey}-${authProfileAndToken.profile.id}`,
+    };
+    const request = requestData<AddressBookEntry[]>(requestConfig).then(
+      (response) => ({
+        addressBookKey,
+        response,
+      })
+    );
     bookSearches.push(request);
   }
 
@@ -140,12 +173,17 @@ async function getUserKeys(authProfileAndToken: AuthProfileAndToken) {
 
   const userKeys = [];
 
-  for (const response of bookSearchResponses) {
-    if (response.status === 'ERROR') {
-      return response;
+  for (const result of bookSearchResponses) {
+    debug({
+      [`bookSearchResponse:${result.addressBookKey}`]: {
+        count: result.response.content?.length ?? 0,
+      },
+    });
+    if (result.response.status === 'ERROR') {
+      return result.response;
     }
-    if (Array.isArray(response.content)) {
-      userKeys.push(...response.content.map((record) => record.key));
+    if (Array.isArray(result.response.content)) {
+      userKeys.push(...result.response.content.map((record) => record.key));
     }
   }
 
@@ -201,12 +239,10 @@ async function transformDecosZaakResponse<
   );
 
   // Create the base data for the decosZaak. This object is not guaranteed to have all fields defined in the type for a specific decosZaak.
-  // It depends on the query and resturned result to the decos api which field value ends up in the decosZaak.
+  // It depends on the query and returned result from the decos api which field value ends up in the decosZaak.
   // For example, if we selected only the sourcefield `mark` we'd have a decosZaak with a value for `identifier`..
   let decosZaak: DZ = {
-    id:
-      transformedFields.identifier?.replaceAll('/', '-') ??
-      'unknown-decoszaak-id',
+    id: transformedFields.identifier.replaceAll('/', '-'),
     key: decosZaakSource.key,
     title: decosZaakTransformer.title,
     statusDates: [], // Serves as placeholder, values for this property will be added async below.
@@ -222,6 +258,7 @@ async function transformDecosZaakResponse<
       decosZaakSource.key,
       stepTitles
     );
+
     if (workFlowDates.status === 'OK') {
       decosZaak.statusDates =
         decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
@@ -231,6 +268,17 @@ async function transformDecosZaakResponse<
           })
         );
     }
+  }
+
+  // A zaak is considered to immediately be "In behandeling" if no workflows for "In behandeling" are monitored
+  if (
+    !decosZaakTransformer.fetchWorkflowStatusDatesFor?.some(
+      ({ status }) => status === 'In behandeling'
+    )
+  ) {
+    decosZaak.statusDates = [
+      { datePublished: decosZaak.dateRequest, status: 'In behandeling' },
+    ];
   }
 
   if (decosZaakTransformer.fetchTermijnenFor) {
@@ -257,6 +305,21 @@ async function transformDecosZaakResponse<
 
   if (decosZaak.processed && !decosZaak.decision) {
     decosZaak.decision = MA_DECISION_DEFAULT;
+  }
+
+  // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
+  if (
+    'dateEnd' in decosZaak &&
+    decosZaak.dateEnd &&
+    'dateStart' in decosZaak &&
+    decosZaak.dateStart
+  ) {
+    decosZaak = {
+      ...decosZaak,
+      isExpired: isExpired(decosZaak.dateEnd),
+      dateStartFormatted: toDateFormatted(decosZaak.dateStart),
+      dateEndFormatted: toDateFormatted(decosZaak.dateEnd),
+    };
   }
 
   // After initial transformation of the data is done, perform a Post transform action.
@@ -369,22 +432,24 @@ async function getZakenByUserKey(
   );
 
   const fields = getSelectFields(zaakTypeTransformers);
-
-  const caseTypes = zaakTypeTransformers
-    .map(
-      (transformer) => `${CASE_TYP_FIELD_DECOS} eq '${transformer.caseType}'`
-    )
+  const caseTypes = zaakTypeTransformers.map(
+    (transformer) => transformer.caseType
+  );
+  const caseTypeQuery = caseTypes
+    .map((caseType) => `${CASE_TYP_FIELD_DECOS} eq '${caseType}'`)
     .join(' or ');
 
   const decosUrlParams = new URLSearchParams({
     top: DECOS_ZAKEN_FETCH_TOP,
-    ...(fields && { select: fields }),
-    ...(caseTypes && { filter: caseTypes }),
+    select: fields,
+    filter: caseTypeQuery,
   });
+
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${userKey}/folders?${decosUrlParams}`;
+      return `${config.url}/items/${userKey}/folders`;
     },
+    params: Object.fromEntries(decosUrlParams),
     transformResponse: (responseData: DecosZakenResponse) => {
       if (!Array.isArray(responseData?.content)) {
         return [];
@@ -394,6 +459,13 @@ async function getZakenByUserKey(
   });
 
   const responseSource = await requestData<DecosZaakSource[]>(apiConfig);
+
+  debug({
+    [`getZakenByUserKey:${userKey}`]: {
+      caseTypes,
+      count: responseSource.content?.length ?? 0,
+    },
+  });
 
   return responseSource;
 }
@@ -422,8 +494,9 @@ export async function fetchDecosZakenFromSourceRaw(
   async function fetchZakenByUserKey(userKey: string) {
     const apiConfig = getApiConfig('DECOS_API', {
       formatUrl: (config) => {
-        return `${config.url}/items/${userKey}/folders?${queryParams}`;
+        return `${config.url}/items/${userKey}/folders`;
       },
+      params: Object.fromEntries(queryParams),
       transformResponse: (responseData: DecosZakenResponse) => {
         if (!Array.isArray(responseData?.content)) {
           return [];
@@ -513,20 +586,10 @@ export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
   },
 });
 
-function transformDecosWorkflowKeysResponse(workflowsResponseData: {
-  content: Array<{ key: string }>;
-}) {
-  if (workflowsResponseData?.content?.length) {
-    const lastKey = workflowsResponseData.content.pop();
-    return lastKey?.key ?? null;
-  }
-  return null;
-}
-
 function transformDecosWorkflowDateResponse(
   stepTitles: DecosWorkflowStepTitle[],
   singleWorkflowResponseData: DecosWorkflowResponse
-): { [key: DecosWorkflowStepTitle]: string | null } {
+): DecosWorkflowDateByStepTitle {
   const responseStepTitleDates = singleWorkflowResponseData.content
     .filter((workflowStep) => workflowStep.fields.text7 != null)
     .reduce(
@@ -542,17 +605,59 @@ function transformDecosWorkflowDateResponse(
       ...acc,
       [stepTitle]: responseStepTitleDates[stepTitle] ?? null,
     }),
-    {} as Record<DecosWorkflowStepTitle, string | null>
+    {} as DecosWorkflowDateByStepTitle
   );
   return stepTitleToDate;
 }
 
-export async function fetchDecosWorkflowDates(
+async function fetchWorkflowInstance<
+  ST extends DecosWorkflowStepTitle[] | undefined,
+  B extends boolean,
+>(options: {
+  useRawResponse: B;
+  key: string;
+  urlParams?: URLSearchParams;
+  stepTitles?: ST;
+}) {
+  const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
+    formatUrl: (config) =>
+      `${config.url}/items/${options.key}/workflowlinkinstances?`,
+    params: options.urlParams
+      ? Object.fromEntries(options.urlParams)
+      : undefined,
+    transformResponse: (responseData: DecosWorkflowResponse) =>
+      !options.useRawResponse && options.stepTitles
+        ? transformDecosWorkflowDateResponse(options.stepTitles, responseData)
+        : responseData.content,
+  });
+
+  type WorkflowReturnType<B extends boolean> = B extends true
+    ? DecosWorkflowSource[]
+    : DecosWorkflowDateByStepTitle;
+
+  return requestData<WorkflowReturnType<B>>(apiConfigSingleWorkflow);
+}
+
+function transformDecosWorkflowKeysResponse(
+  workflowsResponseData: DecosZakenResponse<Array<{ key: string }>>
+): DecosWorkflowSource['key'][] {
+  return workflowsResponseData.content?.map((workflow) => workflow.key) ?? [];
+}
+
+export async function fetchDecosWorkflowDates<
+  ST extends DecosWorkflowStepTitle[] | undefined,
+>(
   zaakID: DecosZaakBase['key'],
-  stepTitles: DecosWorkflowStepTitle[]
+  stepTitles?: ST,
+  select: string[] = ['mark', 'date1', 'date2', 'text7']
 ): Promise<
-  ApiResponse<Record<string, DecosWorkflowStepDate | null | undefined>>
+  ST extends undefined
+    ? ApiResponse<
+        Array<{ key: string; instances: DecosWorkflowSource[] | null }> | object
+      >
+    : ApiResponse<DecosWorkflowDateByStepTitle | any>
 > {
+  const pickLatestWorkflow = !!stepTitles?.length;
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
@@ -560,11 +665,11 @@ export async function fetchDecosWorkflowDates(
     transformResponse: transformDecosWorkflowKeysResponse,
   });
 
-  const { content: latestWorkflowKey } = await requestData<string | null>(
-    apiConfigWorkflows
-  );
+  const { content: workflowKeys } = await requestData<
+    DecosWorkflowSource['key'][] | null
+  >(apiConfigWorkflows);
 
-  if (!latestWorkflowKey) {
+  if (!workflowKeys?.length) {
     return apiSuccessResult({});
   }
 
@@ -572,20 +677,48 @@ export async function fetchDecosWorkflowDates(
     top: '50',
     properties: 'false',
     fetchParents: 'false',
-    select: ['mark', 'date1', 'date2', 'text7'].join(','),
-    filter: stepTitles
-      .map((stepTitle) => `text7 eq '${stepTitle}'`)
-      .join(' or '),
   });
 
-  const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
-    formatUrl: (config) =>
-      `${config.url}/items/${latestWorkflowKey}/workflowlinkinstances?${urlParams}`,
-    transformResponse: (responseData: DecosWorkflowResponse) =>
-      transformDecosWorkflowDateResponse(stepTitles, responseData),
-  });
+  if (select) {
+    urlParams.append('select', select.join(','));
+  }
 
-  return requestData(apiConfigSingleWorkflow);
+  if (stepTitles?.length) {
+    urlParams.append(
+      'filter',
+      stepTitles.map((stepTitle) => `text7 eq '${stepTitle}'`).join(' or ')
+    );
+  }
+  const lastWorkflowKey = workflowKeys.at(-1);
+
+  if (pickLatestWorkflow) {
+    return lastWorkflowKey
+      ? fetchWorkflowInstance({
+          key: lastWorkflowKey,
+          urlParams,
+          stepTitles,
+          useRawResponse: false,
+        })
+      : apiSuccessResult({});
+  }
+
+  return Promise.all(
+    workflowKeys.map((key) =>
+      fetchWorkflowInstance({
+        key,
+        urlParams,
+        stepTitles,
+        useRawResponse: true,
+      }).then(({ content }) => {
+        return {
+          key,
+          instances: content,
+        };
+      })
+    )
+  ).then((workflowInstanceResponses) =>
+    apiSuccessResult(workflowInstanceResponses)
+  );
 }
 
 export async function fetchDecosTermijnen(
@@ -618,8 +751,9 @@ export async function fetchDecosTermijnen(
 
   const apiConfigTermijnens = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/termijnens?${urlParams}`;
+      return `${config.url}/items/${zaakID}/termijnens`;
     },
+    params: Object.fromEntries(urlParams),
     transformResponse: transformDecosTermijnenResponse,
   });
 
@@ -654,8 +788,11 @@ async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
   // items / { document_id } / blob ? select = bol10
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${documentKey}/blob?select=bol10&filter=bol10 eq true`;
+      return `${config.url}/items/${documentKey}/blob`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams('select=bol10&filter=bol10 eq true')
+    ),
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
     ) => {
@@ -695,7 +832,7 @@ async function transformDecosDocumentListResponse(
           const decosZaakDocument: DecosZaakDocument = {
             id: documentMetadata.mark,
             key: isPdfResponse.content.key,
-            title: documentMetadata.text41,
+            title: documentMetadata.text41 || 'Document',
             datePublished: documentMetadata.received_date,
             url: generateFullApiUrlBFF(BffEndpoints.DECOS_DOCUMENT_DOWNLOAD, [
               {
@@ -727,8 +864,13 @@ export async function fetchDecosDocumentList(
 ) {
   const apiConfigDocuments = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}/documents?top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date&filter=text39 eq 'Definitief'`;
+      return `${config.url}/items/${zaakID}/documents`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams(
+        `top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date&filter=text39 eq 'Definitief'`
+      )
+    ),
   });
 
   const documentsSource =
@@ -753,8 +895,11 @@ export async function fetchDecosZaakFromSource(
   // Fetch the zaak from Decos, this request will return all the fieldNames, no need to specify the ?select= query.
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${zaakID}${includeProperties ? '?properties=true' : ''}`;
+      return `${config.url}/items/${zaakID}`;
     },
+    params: Object.fromEntries(
+      new URLSearchParams(includeProperties ? '?properties=true' : '')
+    ),
     transformResponse: (responseData: DecosZakenResponse) => {
       if (responseData.content) {
         return responseData.content[0];
@@ -795,24 +940,26 @@ export async function fetchDecosDocument(
   return requestData<DocumentDownloadData>(config, authProfileAndToken);
 }
 
-export type DecosZaakFrontendTransformOptions = {
-  appRoute: string;
+export type DecosZaakFrontendTransformOptions<T> = {
+  detailPageRoute: string;
   includeFetchDocumentsUrl?: boolean;
+  getStepsFN?: (zaak: T) => StatusLineItem[];
 };
 
 export function transformDecosZaakFrontend<T extends DecosZaakBase>(
   sessionID: SessionID,
   zaak: T,
-  options: DecosZaakFrontendTransformOptions
+  options: DecosZaakFrontendTransformOptions<T>
 ): DecosZaakFrontend<T> | DecosZaakFrontend<T & WithDateRange> {
+  const steps = options.getStepsFN?.(zaak) ?? [];
   const zaakFrontend: DecosZaakFrontend<T> = {
     ...omit(zaak, ['statusDates', 'termijnDates']),
     dateDecisionFormatted: toDateFormatted(zaak.dateDecision),
     dateRequestFormatted: toDateFormatted(zaak.dateRequest),
-    steps: [], // NOTE: Assign Status steps later on
-    displayStatus: zaak.status, // NOTE: This is a placeholder, the actual status is assigned later on.
+    steps: options.getStepsFN?.(zaak) ?? [],
+    displayStatus: getDisplayStatus(zaak, steps),
     link: {
-      to: generatePath(options.appRoute, {
+      to: generatePath(options.detailPageRoute, {
         caseType: slug(zaak.caseType, { lower: true }),
         id: zaak.id,
       }),
@@ -827,17 +974,6 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
       BffEndpoints.DECOS_DOCUMENTS_LIST,
       [{ id: idEncrypted }]
     );
-  }
-
-  // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
-  if ('dateEnd' in zaak && 'dateStart' in zaak) {
-    const zaakFrontendWithExpiry: DecosZaakFrontend<T> & WithDateRange = {
-      ...zaakFrontend,
-      isExpired: isExpired(zaak.dateEnd),
-      dateStartFormatted: toDateFormatted(zaak.dateStart),
-      dateEndFormatted: toDateFormatted(zaak.dateEnd),
-    };
-    return zaakFrontendWithExpiry;
   }
 
   return zaakFrontend;

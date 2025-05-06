@@ -1,14 +1,14 @@
 import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
+  SELECT_FIELDS_TRANSFORM_BASE,
+  location,
+} from '../decos/decos-field-transformers';
+import {
   DecosZaakTransformer,
   DecosZaakBase,
   WithLocation,
   WithDateRange,
-} from '../decos/config-and-types';
-import {
-  SELECT_FIELDS_TRANSFORM_BASE,
-  location,
-} from '../decos/decos-field-transformers';
+} from '../decos/decos-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
@@ -88,15 +88,15 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
        * Vakantieverhuur vergunningen worden na betaling direct verleend en per mail toegekend zonder dat de juiste status in Decos wordt gezet.
        * Later, na controle, wordt mogelijk de vergunning weer ingetrokken.
        */
-      vergunning.status = 'Afgehandeld';
       vergunning.processed = true;
-      vergunning.decision = 'Verleend';
-      vergunning.dateDecision = !vergunning.dateDecision
-        ? vergunning.dateRequest
-        : vergunning.dateDecision;
+      vergunning.dateDecision = vergunning.dateDecision
+        ? vergunning.dateDecision
+        : vergunning.dateRequest;
 
-      if (vergunning.decision.toLowerCase().includes('ingetrokken')) {
+      if (vergunning.decision?.toLowerCase().includes('ingetrokken')) {
         vergunning.decision = 'Ingetrokken';
+      } else {
+        vergunning.decision = 'Verleend';
       }
 
       return vergunning;

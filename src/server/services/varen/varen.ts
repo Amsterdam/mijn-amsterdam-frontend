@@ -19,7 +19,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
-import { getDisplayStatus } from '../vergunningen/vergunningen-status-steps';
 
 function transformVarenRederFrontend(
   zaak: VarenRegistratieRederType | null | undefined
@@ -38,21 +37,18 @@ function transformVarenZakenFrontend(
   zaak: Varen
 ): VarenZakenFrontend[] {
   const appRoute = routeConfig.detailPage.path;
-  const steps = getStatusSteps(zaak);
   const zaakTransformed = transformDecosZaakFrontend(
     authProfileAndToken.profile.sid,
     zaak,
     {
-      appRoute,
+      detailPageRoute: appRoute,
       includeFetchDocumentsUrl: false,
+      getStepsFN: getStatusSteps,
     }
   );
-  const displayStatus = getDisplayStatus(zaakTransformed, steps);
   const zaakFrontend: VarenZakenFrontend = {
     ...omit(zaakTransformed, ['vergunningen']),
-    steps,
     vergunning: null,
-    displayStatus,
   };
 
   if (!zaak.vergunningen || zaak.vergunningen.length === 0) {

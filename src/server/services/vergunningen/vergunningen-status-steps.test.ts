@@ -1,13 +1,15 @@
 import { describe, it, expect } from 'vitest';
 
-import { VergunningFrontend, RVVSloterweg } from './config-and-types';
-import { getStatusSteps, getDisplayStatus } from './vergunningen-status-steps';
+import { RVVSloterweg } from './config-and-types';
+import { getStatusSteps } from './vergunningen-status-steps';
 import { StatusLineItem } from '../../../universal/types/App.types';
+import { getDisplayStatus } from '../decos/decos-helpers';
+import type { DecosZaakBase } from '../decos/decos-types';
 
 describe('vergunningen-status-steps', () => {
   describe('getStatusSteps', () => {
     it('should return correct steps for RVVSloterweg case type', () => {
-      const vergunning = {
+      const zaak = {
         caseType: 'RVV Sloterweg',
         title: 'RVV ontheffing',
         requestType: 'Nieuw',
@@ -18,9 +20,9 @@ describe('vergunningen-status-steps', () => {
         kentekens: 'AB-123-CD',
         processed: true,
         isExpired: false,
-      } as VergunningFrontend<RVVSloterweg>;
+      } as unknown as RVVSloterweg;
 
-      const steps = getStatusSteps(vergunning);
+      const steps = getStatusSteps(zaak);
       expect(steps).toHaveLength(3);
       expect(steps[0]).toHaveProperty('status', 'Ontvangen');
       expect(steps[1]).toHaveProperty('status', 'In behandeling');
@@ -28,8 +30,8 @@ describe('vergunningen-status-steps', () => {
       expect(steps?.[2].isActive).toBe(true);
     });
 
-    it('should return correct steps for non-RVVSloterweg case type', () => {
-      const vergunning = {
+    it('should return correct steps for non-RVVSloterweg case type, active step Agehandeld', () => {
+      const zaak = {
         caseType: 'Other',
         title: 'Vergunning',
         dateRequest: '2023-01-01',
@@ -37,28 +39,159 @@ describe('vergunningen-status-steps', () => {
         decision: 'Verleend',
         processed: true,
         isExpired: false,
-      } as VergunningFrontend;
+        statusDates: [],
+      } as unknown as DecosZaakBase;
 
-      const steps = getStatusSteps(vergunning);
-      expect(steps).toHaveLength(3);
-      expect(steps[0]).toHaveProperty('status', 'Ontvangen');
-      expect(steps[1]).toHaveProperty('status', 'In behandeling');
-      expect(steps[2]).toHaveProperty('status', 'Afgehandeld');
+      const steps = getStatusSteps(zaak);
+      expect(steps).toStrictEqual([
+        {
+          datePublished: '2023-01-01',
+          description: '',
+          documents: [],
+          id: 'step-1',
+          isActive: false,
+          isChecked: true,
+          status: 'Ontvangen',
+        },
+        {
+          datePublished: '',
+          description: '',
+          documents: [],
+          id: 'step-2',
+          isActive: false,
+          isChecked: true,
+          status: 'In behandeling',
+        },
+        {
+          datePublished: '2023-02-01',
+          description:
+            'Wij hebben uw aanvraag Vergunning <strong>Verleend</strong>',
+          documents: [],
+          id: 'step-3',
+          isActive: true,
+          isChecked: true,
+          status: 'Afgehandeld',
+        },
+        {
+          datePublished: '',
+          description: '',
+          id: 'step-4',
+          isActive: false,
+          isChecked: false,
+          status: 'Verlopen',
+        },
+      ]);
+    });
+    it('should return correct steps for non-RVVSloterweg case type, active step In behandeling', () => {
+      const zaak = {
+        caseType: 'Other',
+        title: 'Vergunning',
+        dateRequest: '2023-01-01',
+        dateDecision: '',
+        decision: '',
+        processed: false,
+        isExpired: false,
+        statusDates: [
+          { status: 'In behandeling', datePublished: '2023-01-15' },
+        ],
+      } as unknown as DecosZaakBase;
+
+      const steps = getStatusSteps(zaak);
+      expect(steps).toStrictEqual([
+        {
+          datePublished: '2023-01-01',
+          description: '',
+          documents: [],
+          id: 'step-1',
+          isActive: false,
+          isChecked: true,
+          status: 'Ontvangen',
+        },
+        {
+          datePublished: '2023-01-15',
+          description: '',
+          documents: [],
+          id: 'step-2',
+          isActive: true,
+          isChecked: true,
+          status: 'In behandeling',
+        },
+        {
+          datePublished: '',
+          description: '',
+          documents: [],
+          id: 'step-3',
+          isActive: false,
+          isChecked: false,
+          status: 'Afgehandeld',
+        },
+      ]);
+    });
+    it('should return correct steps for non-RVVSloterweg case type, expired step', () => {
+      const zaak = {
+        caseType: 'Other',
+        title: 'Vergunning',
+        dateRequest: '2023-01-01',
+        dateDecision: '2023-02-01',
+        decision: 'Verleend',
+        processed: true,
+        isExpired: true,
+      } as unknown as DecosZaakBase;
+
+      const steps = getStatusSteps(zaak);
+      expect(steps).toStrictEqual([
+        {
+          datePublished: '2023-01-01',
+          description: '',
+          documents: [],
+          id: 'step-1',
+          isActive: false,
+          isChecked: true,
+          status: 'Ontvangen',
+        },
+        {
+          datePublished: '',
+          description: '',
+          documents: [],
+          id: 'step-2',
+          isActive: false,
+          isChecked: true,
+          status: 'In behandeling',
+        },
+        {
+          datePublished: '2023-02-01',
+          description:
+            'Wij hebben uw aanvraag Vergunning <strong>Verleend</strong>',
+          documents: [],
+          id: 'step-3',
+          isActive: false,
+          isChecked: true,
+          status: 'Afgehandeld',
+        },
+        {
+          datePublished: '',
+          description: 'Uw Vergunning is verlopen.',
+          id: 'step-4',
+          isActive: true,
+          isChecked: true,
+          status: 'Verlopen',
+        },
+      ]);
     });
   });
 
   describe('getDisplayStatus', () => {
     it('should return decision if processed and not expired', () => {
-      const vergunning = {
+      const zaak = {
         caseType: 'Other',
         title: 'Vergunning',
         processed: true,
         isExpired: false,
         decision: 'Verleend',
-      } as VergunningFrontend;
+      } as unknown as DecosZaakBase;
 
       const steps: StatusLineItem[] = [];
-      const status = getDisplayStatus(vergunning, steps);
+      const status = getDisplayStatus(zaak, steps);
       expect(status).toBe('Verleend');
     });
 
@@ -68,7 +201,7 @@ describe('vergunningen-status-steps', () => {
         title: 'Vergunning',
         processed: false,
         isExpired: false,
-      } as VergunningFrontend;
+      } as unknown as DecosZaakBase;
 
       const steps: StatusLineItem[] = [
         {
@@ -109,7 +242,7 @@ describe('vergunningen-status-steps', () => {
         title: 'Vergunning',
         processed: false,
         isExpired: false,
-      } as VergunningFrontend;
+      } as unknown as DecosZaakBase;
 
       const steps: StatusLineItem[] = [
         {

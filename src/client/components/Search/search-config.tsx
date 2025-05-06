@@ -15,7 +15,7 @@ import type {
   ErfpachtDossierFrontend,
 } from '../../../server/services/erfpacht/erfpacht-types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
-import { HorecaVergunningFrontend } from '../../../server/services/horeca/config-and-types';
+import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken';
 import type {
   Krefia,
   KrefiaDeepLink,
@@ -473,9 +473,8 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     isEnabled: featureToggleHoreca.horecaActive,
     stateKey: 'HORECA',
     profileTypes: ['private', 'commercial'],
-    displayTitle(item: HorecaVergunningFrontend) {
-      return (term: string) =>
-        displayPath(term, [`Horecavergunning ${item.title}`]);
+    displayTitle: (vergunning: HorecaVergunningFrontend) => (term: string) => {
+      return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
   },
   {

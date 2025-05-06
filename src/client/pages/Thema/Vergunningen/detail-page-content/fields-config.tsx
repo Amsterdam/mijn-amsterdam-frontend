@@ -1,15 +1,16 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
+import styles from './fields-config.module.scss';
 import type {
   DecosZaakBase,
-  WithDateEnd,
-  WithDateRange,
-  WithDateStart,
   WithDateTimeRange,
-  WithKentekens,
+  WithDateRange,
   WithLocation,
+  WithKentekens,
+  WithDateStart,
+  WithDateEnd,
   WithTimeRange,
-} from '../../../../../server/services/decos/config-and-types';
+} from '../../../../../server/services/decos/decos-types';
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
 import {
   defaultDateFormat,
@@ -188,7 +189,7 @@ export const kentekens: VergunningDataListRow<
     ? {
         label: `Kenteken${hasMultipleKentekens ? 's' : ''}`,
         content: hasMultipleKentekens ? (
-          <UnorderedList>
+          <UnorderedList className={styles.LicensePlatesList}>
             {vergunning.kentekens.split('|').map((kenteken) => (
               <UnorderedList.Item key={kenteken}>
                 {kenteken.trim()}

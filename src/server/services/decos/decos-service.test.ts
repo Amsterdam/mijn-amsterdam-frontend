@@ -1,11 +1,6 @@
 import uid from 'uid-safe';
 
 import {
-  DecosDocumentSource,
-  DecosZaakSource,
-  DecosZakenResponse,
-} from './config-and-types';
-import {
   fetchDecosDocumentList,
   fetchDecosZaken,
   fetchDecosWorkflowDates,
@@ -14,9 +9,16 @@ import {
   fetchDecosTermijnen,
   fetchDecosLinkedField,
 } from './decos-service';
-import { remoteApi } from '../../../testing/utils';
+import {
+  DecosDocumentSource,
+  DecosZaakSource,
+  DecosZakenResponse,
+  type DecosWorkflowResponse,
+  type DecosZaakBase,
+  type DecosZaakTransformer,
+} from './decos-types';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import { axiosRequest } from '../../helpers/source-api-request';
 import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
 import {
@@ -68,17 +70,16 @@ const workflows = {
   ],
 };
 
-const workflowInstance = {
+const workflowInstance: DecosWorkflowResponse = {
   count: 1,
   content: [
     {
       fields: {
-        mark: 'Afgehandeld',
         date1: '2021-09-13T17:09:00',
-        date2: '2021-09-13T17:09:00',
         text7: 'Zaak - behandelen',
-        sequence: 1.0,
       },
+      key: '',
+      links: [],
     },
   ],
 };
@@ -150,17 +151,7 @@ const blob = {
  */
 
 describe('decos-service', () => {
-  const authProfileAndToken: AuthProfileAndToken = {
-    profile: {
-      id: 'b123123123',
-      authMethod: 'digid',
-      profileType: 'private',
-      sid: 's999999',
-    },
-    token: '111222333',
-    expiresAtMilliseconds: 0,
-  };
-
+  const authProfileAndToken = getAuthProfileAndToken();
   const numberOfAddressBooksToSearch =
     process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',').length ?? 0;
 
@@ -498,20 +489,15 @@ describe('decos-service', () => {
       expect(
         calls
           .slice(0, numberOfAddressBooksToSearch)
-          .every(
-            (url) =>
-              url ===
-              'http://remote-api-host/decos/search/books?properties=false&select=key'
-          )
+          .every((url) => url === 'http://remote-api-host/decos/search/books')
       ).toBe(true);
       expect(
         calls
           .slice(numberOfAddressBooksToSearch, numberOfAddressBooksToSearch * 2)
-          .every(
-            (url) =>
-              url?.startsWith(
-                'http://remote-api-host/decos/items/123456789/folders?'
-              ) && url?.includes('select=')
+          .every((url) =>
+            url?.startsWith(
+              'http://remote-api-host/decos/items/123456789/folders'
+            )
           )
       ).toBe(true);
       expect(
@@ -683,7 +669,7 @@ describe('decos-service', () => {
       const transformers = [
         dienstenTransformer,
         { ...vobTransformer, additionalSelectFields: ['text45', 'order66'] },
-      ];
+      ] as DecosZaakTransformer<DecosZaakBase>[];
 
       const responseData = await forTesting.getZakenByUserKey(
         '123456789',
@@ -692,11 +678,9 @@ describe('decos-service', () => {
 
       const selectFields = forTesting.getSelectFields(transformers);
 
-      expect(
-        axiosSpy.mock.calls[0][0].url?.includes(
-          encodeURIComponent(selectFields)
-        )
-      ).toBe(true);
+      expect(axiosSpy.mock.calls[0][0].params.select).toStrictEqual(
+        selectFields
+      );
 
       expect(responseData.content?.length).toBe(1);
 
@@ -770,15 +754,17 @@ describe('decos-service', () => {
     test('No key', () => {
       const key = forTesting.transformDecosWorkflowKeysResponse({
         content: [],
+        count: 0,
       });
-      expect(key).toBe(null);
+      expect(key).toStrictEqual([]);
     });
 
     test('Has key', () => {
-      const key = forTesting.transformDecosWorkflowKeysResponse({
+      const keys = forTesting.transformDecosWorkflowKeysResponse({
         content: [{ key: 'test-key-a' }, { key: 'test-key-b' }],
+        count: 2,
       });
-      expect(key).toBe('test-key-b');
+      expect(keys).toStrictEqual(['test-key-a', 'test-key-b']);
     });
   });
 
@@ -817,7 +803,6 @@ describe('decos-service', () => {
         key: '084239C942C647F79F1C2B5CCF8DC5DA',
         location: null,
         processed: false,
-        status: 'In behandeling',
         statusDates: [
           {
             status: 'In behandeling',

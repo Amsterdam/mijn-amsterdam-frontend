@@ -6,7 +6,7 @@ import slug from 'slugme';
 import { routeConfig } from './Horeca-thema-config';
 import { vergunning } from './Horeca.test';
 import { HorecaDetail } from './HorecaDetail';
-import { HorecaVergunningFrontend } from '../../../../server/services/horeca/config-and-types';
+import { HorecaVergunningFrontend } from '../../../../server/services/horeca/decos-zaken';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';

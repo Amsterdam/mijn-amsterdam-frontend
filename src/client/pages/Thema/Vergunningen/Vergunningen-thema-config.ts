@@ -9,7 +9,7 @@ import {
 import {
   DecosZaakBase,
   WithDateRange,
-} from '../../../../server/services/decos/config-and-types';
+} from '../../../../server/services/decos/decos-types';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
@@ -85,7 +85,7 @@ export const featureToggle = {
 };
 
 export const themaId = 'VERGUNNINGEN' as const;
-export const themaTitle = 'Vergunningen';
+export const themaTitle = 'Vergunningen en ontheffingen';
 
 export const routeConfig = {
   detailPage: {

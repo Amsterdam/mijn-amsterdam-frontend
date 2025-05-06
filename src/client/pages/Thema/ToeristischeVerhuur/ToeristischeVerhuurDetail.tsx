@@ -166,7 +166,10 @@ export function ToeristischeVerhuurDetail() {
               <Datalist
                 rows={[
                   {
-                    label: 'Document',
+                    label:
+                      vergunning.title === 'Vergunning bed & breakfast'
+                        ? 'Document'
+                        : null,
                     content: (
                       <>
                         {!isBnBVergunning &&
@@ -184,7 +187,7 @@ export function ToeristischeVerhuurDetail() {
                             {!!vergunningDocuments.length && (
                               <DocumentListV2
                                 documents={vergunningDocuments}
-                                columns={['', '']}
+                                columns={['Document', 'Datum']}
                                 className={
                                   vergunning.title ===
                                   'Vergunning bed & breakfast'

@@ -5,7 +5,7 @@ import {
   WithKentekens,
   WithDateTimeRange,
   WithDateEnd,
-} from '../decos/config-and-types';
+} from '../decos/decos-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 
 export const caseTypeParkeren = {

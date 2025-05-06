@@ -2,7 +2,7 @@ import {
   DecosZaakBase,
   DecosZaakSource,
   DecosZaakTransformer,
-} from './config-and-types';
+} from './decos-types';
 import {
   isWaitingForPaymentConfirmation,
   hasInvalidDecision,

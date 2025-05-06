@@ -1,3 +1,10 @@
+import {
+  DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
+  DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
+  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
+  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
+  DECOS_PENDING_REMOVAL_DFUNCTION,
+} from './decos-field-transformers';
 import type {
   DecosZaakTransformer,
   DecosZaakSource,
@@ -5,14 +12,7 @@ import type {
   WithKentekens,
   ZaakStatus,
   DecosFieldValue,
-} from './config-and-types';
-import {
-  DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION,
-  DECOS_EXCLUDE_CASES_WITH_PENDING_PAYMENT_CONFIRMATION_SUBJECT1,
-  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT11,
-  DECOS_PENDING_PAYMENT_CONFIRMATION_TEXT12,
-  DECOS_PENDING_REMOVAL_DFUNCTION,
-} from './config-and-types';
+} from './decos-types';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { entries } from '../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../universal/types/App.types';
@@ -143,6 +143,15 @@ export function getUserKeysSearchQuery(
   return searchQuery;
 }
 
+export function getWorkflowStatusDate<DZ extends DecosZaakBase>(
+  zaakStatus: ZaakStatus,
+  zaak: DZ
+) {
+  return (
+    zaak.statusDates?.find(({ status }) => status === zaakStatus)
+      ?.datePublished ?? null
+  );
+}
 // Try to fetch and assign a specific date on which the zaak was $zaakStatus
 export function getStatusDate(
   zaakStatus: ZaakStatus,
@@ -174,4 +183,16 @@ export function isExpired(dateExpiry: string | null, dateNow?: Date) {
   }
 
   return isDateInPast(dateExpiry, dateNow || new Date());
+}
+
+export function getDisplayStatus<DZ extends DecosZaakBase>(
+  zaak: DZ,
+  steps: StatusLineItem[]
+) {
+  const isExpired = 'isExpired' in zaak ? zaak.isExpired === true : false;
+  if (zaak.processed && !isExpired && zaak.decision) {
+    return zaak.decision;
+  }
+
+  return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
 }

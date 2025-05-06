@@ -89,8 +89,13 @@ function DetailPageContent<V extends VergunningFrontend>({
 export function VergunningenDetail() {
   const { vergunningen, isLoading, isError, breadcrumbs, routeConfig } =
     useVergunningenThemaData();
-  const { vergunning, title, documents, isLoadingDocuments, isErrorDocuments } =
-    useVergunningenDetailData(vergunningen);
+  const {
+    vergunning,
+    title = 'Vergunning',
+    documents,
+    isLoadingDocuments,
+    isErrorDocuments,
+  } = useVergunningenDetailData(vergunningen);
   useHTMLDocumentTitle(routeConfig.detailPage);
 
   return (

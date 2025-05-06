@@ -48,6 +48,8 @@ export function DocumentLink({
   const [isLoading, setLoading] = useState(false);
   const profileType = useProfileTypeValue();
 
+  const documentTitle = document.title || 'Document';
+
   const onClickDocumentLink = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
       event.preventDefault();
@@ -79,11 +81,11 @@ export function DocumentLink({
           const trackingUrl = trackPath
             ? trackPath(document)
             : window.location.pathname +
-              addFileType(`/downloads/${document.download || document.title}`);
+              addFileType(`/downloads/${document.download || documentTitle}`);
 
           const fileType = trackingUrl.split('.').pop();
 
-          trackDownload(document.title, fileType, trackingUrl, profileType);
+          trackDownload(documentTitle, fileType, trackingUrl, profileType);
 
           if (!blob) {
             downloadFile(document);
@@ -91,7 +93,7 @@ export function DocumentLink({
             window.navigator &&
             (window.navigator as any).msSaveOrOpenBlob
           ) {
-            (window.navigator as any).msSaveOrOpenBlob(blob, document.title);
+            (window.navigator as any).msSaveOrOpenBlob(blob, documentTitle);
           } else {
             try {
               const fileUrl = window.URL.createObjectURL(blob);
@@ -108,7 +110,7 @@ export function DocumentLink({
           setLoading(false);
           captureException(error, {
             properties: {
-              title: document.title,
+              title: documentTitle,
               url: document.url,
             },
           });
@@ -144,7 +146,7 @@ export function DocumentLink({
             />
           )}
         </span>
-        {label || document.title || 'Document'}
+        {label || documentTitle}
       </MaLink>
       {isLoading && <span className={styles.DownloadInfo}>Downloaden...</span>}
       {isErrorVisible && (

@@ -119,7 +119,7 @@ export function createToeristischeVerhuurNotification(
     themaID: themaId,
     themaTitle: themaTitle,
     title,
-    description: description,
+    description,
     link: {
       to: linkTo,
       title: cta,

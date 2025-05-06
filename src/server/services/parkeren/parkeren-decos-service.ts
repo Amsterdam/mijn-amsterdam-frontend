@@ -1,20 +1,13 @@
 import { ParkeerVergunningFrontend } from './config-and-types';
-import {
-  decosCaseToZaakTransformers,
-  decosZaakTransformers,
-} from './decos-zaken';
+import { decosZaakTransformers } from './decos-zaken';
 import { routeConfig } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DecosZaakTransformer } from '../decos/config-and-types';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
 } from '../decos/decos-service';
-import {
-  getDisplayStatus,
-  getStatusSteps,
-} from '../vergunningen/vergunningen-status-steps';
+import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchDecosParkeerVergunningen(
   authProfileAndToken: AuthProfileAndToken
@@ -25,31 +18,18 @@ export async function fetchDecosParkeerVergunningen(
   );
 
   if (response.status === 'OK') {
-    const decosZaken = response.content;
-
-    const zakenFrontend: ParkeerVergunningFrontend[] = decosZaken.map(
+    const zakenFrontend: ParkeerVergunningFrontend[] = response.content.map(
       (zaak) => {
-        // TODO: Fix this <any>. DecosZaakTransformer<GPP | GPK | ...> is not the same as DecosZaakTransformer<GPP> | DecosZaakTransformer<GPK> | DecosZaakTransformer<...>
-        const zaakTransformer: DecosZaakTransformer<any> =
-          decosCaseToZaakTransformers[zaak.caseType];
-
         const zaakTransformed = transformDecosZaakFrontend(
           authProfileAndToken.profile.sid,
           zaak,
           {
-            appRoute: routeConfig.detailPage.path,
+            detailPageRoute: routeConfig.detailPage.path,
             includeFetchDocumentsUrl: true,
+            getStepsFN: getStatusSteps,
           }
         );
-
-        const steps = getStatusSteps(zaakTransformed, zaakTransformer);
-        const displayStatus = getDisplayStatus(zaakTransformed, steps);
-
-        return {
-          ...zaakTransformed,
-          steps,
-          displayStatus,
-        };
+        return zaakTransformed;
       }
     );
 
