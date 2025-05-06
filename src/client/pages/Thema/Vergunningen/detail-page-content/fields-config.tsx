@@ -130,7 +130,7 @@ export const dateRange: VergunningDataListRow<
 export const dateTimeRangeBetween: VergunningDataListRow<
   VergunningFrontend<DecosZaakBase & WithDateTimeRange>
 > = (vergunning) => {
-  const dateTimeRangeRowSet = dateTimeRange(vergunning);
+  const dateTimeRangeRowSet = dateRange(vergunning);
   if (!dateTimeRangeRowSet) {
     return null;
   }
