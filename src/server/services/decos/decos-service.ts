@@ -251,7 +251,7 @@ async function transformDecosZaakResponse<
     ...transformedFields,
   };
 
-  if (decosZaakTransformer.fetchWorkflowStatusDatesFor) {
+  if (decosZaakTransformer.fetchWorkflowStatusDatesFor?.length) {
     const decosActionCodes =
       decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
         ({ decosActionCode }) => decosActionCode
@@ -293,7 +293,7 @@ async function transformDecosZaakResponse<
     ];
   }
 
-  if (decosZaakTransformer.fetchTermijnenFor) {
+  if (decosZaakTransformer.fetchTermijnenFor?.length) {
     const termijnMap = Object.fromEntries(
       decosZaakTransformer.fetchTermijnenFor.map((termijn) => [
         termijn.type,
@@ -313,10 +313,6 @@ async function transformDecosZaakResponse<
         }))
         .filter((termijn) => termijn.status !== null);
     }
-  }
-
-  if (decosZaak.processed && !decosZaak.decision) {
-    decosZaak.decision = MA_DECISION_DEFAULT;
   }
 
   // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
@@ -346,6 +342,10 @@ async function transformDecosZaakResponse<
   decosZaak.isVerleend = decosZaakTransformer.isVerleend
     ? decosZaakTransformer.isVerleend(decosZaak, decosZaakSource)
     : isZaakDecisionVerleend(decosZaak);
+
+  if (decosZaak.processed && !decosZaak.decision) {
+    decosZaak.decision = MA_DECISION_DEFAULT;
+  }
 
   return decosZaak;
 }

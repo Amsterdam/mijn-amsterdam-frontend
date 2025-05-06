@@ -194,8 +194,13 @@ export function getDisplayStatus<DZ extends DecosZaakBase>(
   if (zaak.processed && !isExpired && zaak.decision) {
     return zaak.decision;
   }
+  const status = steps.find((step) => step.isActive)?.status;
 
-  return steps.find((step) => step.isActive)?.status ?? 'Onbekend';
+  if (status === 'Afgehandeld' && zaak.decision) {
+    return zaak.decision;
+  }
+
+  return status ?? 'Onbekend';
 }
 
 export function isZaakDecisionVerleend<DZ extends DecosZaakBase>(
