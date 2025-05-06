@@ -37,7 +37,9 @@ import {
   timeStart,
   kentekens,
   location,
+  MA_DECISION_DEFAULT,
   MA_DECISION_ZIE_BESLUIT,
+  MA_VERLEEND_DECISIONS_COMMOM,
 } from '../decos/decos-field-transformers';
 import { getCustomTitleForDecosZaakWithLicensePlates } from '../decos/decos-helpers';
 import {
@@ -117,6 +119,10 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
       decosActionCode: 'Evenement vergunning - Behandelen',
     },
   ],
+  isVerleend: (zaak) =>
+    [...MA_VERLEEND_DECISIONS_COMMOM, MA_DECISION_DEFAULT].includes(
+      zaak.decision || ''
+    ),
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     dfunction: transformDecision({
