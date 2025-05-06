@@ -59,20 +59,16 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
     // TODO: Discuss with the team if this is the right way to check for a valid decision.
     (('isExpired' in zaak && zaak.isVerleend) || isIngetrokken)
   ) {
-    const isVerlopenActive = isVerlopen || isIngetrokken;
+    const isActive = isVerlopen || isIngetrokken;
 
     let datePublished = ''; // Ingetrokken status does not have a date associated with it.
-
-    if (isVerlopen && 'dateEnd' in zaak && zaak.dateEnd && !isIngetrokken) {
-      datePublished = zaak.dateEnd as string;
-    }
-
     let description = '';
 
     if (isIngetrokken) {
       description = `Wij hebben uw ${zaak.title} ingetrokken.`;
     } else if (isVerlopen) {
       description = `Uw ${zaak.title} is verlopen.`;
+      datePublished = zaak.dateEnd as string; // Verlopen status always has a dateEbd associated with it.
     } else if ('dateEndFormatted' in zaak && zaak.dateEndFormatted) {
       description = `Uw vergunning verloopt op ${zaak.dateEndFormatted}.`;
     }
@@ -82,8 +78,8 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
       status: isIngetrokken ? 'Ingetrokken' : 'Verlopen',
       datePublished,
       description,
-      isActive: isVerlopenActive,
-      isChecked: isVerlopenActive,
+      isActive: isActive,
+      isChecked: isActive,
     };
 
     steps.push(statusGewijzigd);
