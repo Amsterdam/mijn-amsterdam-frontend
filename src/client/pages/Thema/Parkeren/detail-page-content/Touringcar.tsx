@@ -18,11 +18,9 @@ export function Touringcar({
     TouringcarDagontheffing | TouringcarJaarontheffing
   >;
 }) {
-  const isVerleend = vergunning.isVerleend;
-
   const dateRangeYear = () => {
     return vergunning.processed &&
-      isVerleend &&
+      vergunning.isVerleend &&
       vergunning.caseType === 'Touringcar Jaarontheffing'
       ? dateRange(vergunning)
       : null;
@@ -30,7 +28,7 @@ export function Touringcar({
 
   const dateRangeDay = () => {
     return vergunning.processed &&
-      isVerleend &&
+      vergunning.isVerleend &&
       vergunning.caseType === 'Touringcar Dagontheffing'
       ? dateTimeRange(vergunning)
       : null;
