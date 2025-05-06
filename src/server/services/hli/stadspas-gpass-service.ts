@@ -37,7 +37,12 @@ import { displayAmount } from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
+import {
+  cache,
+  isSuccessStatus,
+  requestData,
+} from '../../helpers/source-api-request';
+import { logger } from '../../logging';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -123,11 +128,23 @@ export async function fetchStadspasSource(
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
     headers: getHeaders(administratienummer),
+    cacheKey: createStadspasSourceCacheKey(passNumber, administratienummer),
     params: {
       include_balance: true,
     },
   });
   return requestData<StadspasDetailSource>(dataRequestConfig);
+}
+
+/** Create a cachekey
+ *
+ * We use both passNumber and administratienummer in case someone is brute-forcing our
+ */
+export function createStadspasSourceCacheKey(
+  passNumber: number,
+  administratienummer: string
+): string {
+  return `stadspas-source-${administratienummer}:${passNumber}`;
 }
 
 export async function fetchStadspassenByAdministratienummer(
@@ -396,6 +413,16 @@ async function mutateGpassTogglePassChecked(
   administratienummer: string,
   sendMutatingRequestPredicate: (pas: StadspasDetailSource) => boolean
 ): Promise<PasblokkadeResponse> {
+  const cacheKey = createStadspasSourceCacheKey(
+    passNumber,
+    administratienummer
+  );
+  if (!cache.del(cacheKey)) {
+    logger.warn(
+      'Cache free failed for stadspas-source while calling mutateGpassTogglePassChecked'
+    );
+  }
+
   const passResponse = await fetchStadspasSource(
     passNumber,
     administratienummer
