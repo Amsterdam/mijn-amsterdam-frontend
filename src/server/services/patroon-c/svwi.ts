@@ -4,6 +4,7 @@ import {
   type ApiPatternResponseA,
 } from './api-service';
 import {
+  featureToggle,
   SVWI_ROUTE_DEFAULT,
   themaId,
   themaTitle,
@@ -27,7 +28,7 @@ type SVWIMessageSource = {
 type SVWISourceResponseData = {
   id: string;
   gebruikerBekend: boolean;
-  berichten: SVWIMessageSource[];
+  berichten?: SVWIMessageSource[];
 };
 
 function transformNotification(message: SVWIMessageSource): MyNotification {
@@ -50,7 +51,7 @@ function transformSVWIResponse(
 ): ApiPatternResponseA {
   return {
     isKnown: !!response?.gebruikerBekend,
-    notifications: response?.berichten.map(transformNotification) ?? [],
+    notifications: response?.berichten?.map(transformNotification) ?? [],
     url: getFromEnv('BFF_SSO_URL_SVWI') ?? SVWI_ROUTE_DEFAULT,
   };
 }
@@ -59,14 +60,14 @@ export function fetchSVWI(
   requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  return fetchService(
-    requestID,
-    getApiConfig('SVWI', {
-      transformResponse: transformSVWIResponse,
-    }),
-    false,
-    authProfileAndToken
-  );
+  const apiConfig = getApiConfig('SVWI', {
+    formatUrl(requestConfig) {
+      return `${requestConfig.url}/autorisatie/tegel`;
+    },
+    transformResponse: transformSVWIResponse,
+    postponeFetch: !featureToggle.svwiActive,
+  });
+  return fetchService(requestID, apiConfig, false, authProfileAndToken);
 }
 
 export async function fetchSVWINotifications(
