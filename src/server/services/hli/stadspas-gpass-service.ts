@@ -136,10 +136,6 @@ export async function fetchStadspasSource(
   return requestData<StadspasDetailSource>(dataRequestConfig);
 }
 
-/** Create a cachekey
- *
- * We use both passNumber and administratienummer in case someone is brute-forcing our
- */
 export function createStadspasSourceCacheKey(
   passNumber: number,
   administratienummer: string
