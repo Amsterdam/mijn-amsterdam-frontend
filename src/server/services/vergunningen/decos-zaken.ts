@@ -546,9 +546,11 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
       'bol16',
     ],
     isVerleend(zaak) {
-      return zaak.decision
-        ? !zaak.decision.toLowerCase().includes('Niet Verleend')
-        : false;
+      return (
+        zaak.processed &&
+        !!zaak.decision &&
+        !zaak.decision.toLowerCase().includes('Niet Verleend')
+      );
     },
     async afterTransform(vergunning, zaakSource) {
       const wvosActiviteiten: Record<WVOSActiviteit, DecosFieldNameSource[]> = {
