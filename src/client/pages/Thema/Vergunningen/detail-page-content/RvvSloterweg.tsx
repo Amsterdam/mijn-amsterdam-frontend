@@ -33,7 +33,7 @@ export function RvvSloterweg({
   const vorigeKentekens = () => {
     return vergunning.vorigeKentekens
       ? {
-          label: 'Kenteken(s)',
+          label: isChangeRequest ? 'Nieuw kenteken' : 'Kenteken',
           content: vergunning.vorigeKentekens || '-',
         }
       : null;
@@ -48,7 +48,7 @@ export function RvvSloterweg({
     const rowSet: RowSet = {
       rows: [
         { ...from, span: 4 },
-        vergunning.isVerleend ? { ...to, span: 4 } : null,
+        { ...to, span: 4 },
       ].filter((row) => row !== null) as WrappedRow[],
     };
 
@@ -60,7 +60,7 @@ export function RvvSloterweg({
     area,
     kenteken,
     vorigeKentekens,
-    dateRange,
+    () => (vergunning.decision !== 'Vervallen' ? dateRange() : null),
     commonTransformers.decision,
   ]);
 

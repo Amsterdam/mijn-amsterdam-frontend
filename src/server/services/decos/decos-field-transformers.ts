@@ -8,7 +8,7 @@ export const MA_VERLEEND_DECISIONS_COMMOM = [
   'Deels verleend',
   'Toegekend',
   'Toegestaan',
-  'Vervallen', // RVV Sloterweg - Was ooit verleend maar is nu vervangen met een nieuwe ontheffing.
+  // 'Vervallen', // RVV Sloterweg - Was ooit verleend maar is nu vervangen met een nieuwe ontheffing.
 ];
 
 const identifier = 'identifier';
