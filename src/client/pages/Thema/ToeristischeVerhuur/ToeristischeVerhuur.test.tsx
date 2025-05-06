@@ -169,7 +169,7 @@ describe('<ToeristischeVerhuurThema />', () => {
     const lopendeAanvraagTable = getTable(screen, 'Lopende aanvragen');
 
     expectHeaders(lopendeAanvraagTable, [
-      'Kenmerk',
+      'Zaaknummer',
       'Soort vergunning',
       'Status',
       'Aangevraagd op',
@@ -201,7 +201,7 @@ describe('<ToeristischeVerhuurThema />', () => {
     );
 
     expectHeaders(eerdereVergunningTable, [
-      'Kenmerk',
+      'Zaaknummer',
       'Soort vergunning',
       'Status',
     ]);
