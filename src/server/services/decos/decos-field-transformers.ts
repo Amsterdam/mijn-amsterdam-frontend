@@ -1,7 +1,8 @@
 import { transformKenteken, translateValue } from './decos-helpers';
 import { DecosFieldTransformerObject, WithKentekens } from './decos-types';
 
-export const MA_DECISION_DEFAULT = 'Zie besluit';
+export const MA_DECISION_ZIE_BESLUIT = 'Zie besluit';
+export const MA_DECISION_DEFAULT = MA_DECISION_ZIE_BESLUIT;
 
 export const MA_VERLEEND_DECISIONS_COMMOM = [
   'Verleend',

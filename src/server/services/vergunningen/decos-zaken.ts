@@ -37,7 +37,7 @@ import {
   timeStart,
   kentekens,
   location,
-  MA_DECISION_DEFAULT,
+  MA_DECISION_ZIE_BESLUIT,
 } from '../decos/decos-field-transformers';
 import { getCustomTitleForDecosZaakWithLicensePlates } from '../decos/decos-helpers';
 import {
@@ -493,22 +493,12 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     title: 'status',
   },
   async afterTransform(vergunning) {
-    if (vergunning.status === 'Actief') {
-      vergunning.processed = true;
-      // if the workflow verleend has run but there is no decision then its actually Verleend.
-      // this decision (verleend) is not set by decos eventhough the actual permit is granted.
-      // This is some hack to have an overview of active permits in the Decos back-office.
-      if (!vergunning.decision) {
-        vergunning.decision = 'Verleend';
-      }
-    }
+    vergunning.processed = true;
 
-    // Override processed
-    if (
-      !vergunning.processed &&
-      (vergunning.dateDecision || vergunning.decision)
-    ) {
-      vergunning.processed = true;
+    if (vergunning.status === 'Actief' && !vergunning.decision) {
+      // This decision (verleend) is not set by decos eventhough the actual permit is granted.
+      // This is possibly some hack to have an overview of active permits in the Decos back-office.
+      vergunning.decision = 'Verleend';
     }
 
     // Add zone to title
@@ -585,7 +575,7 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
         .map(([activiteit]) => activiteit as WVOSActiviteit);
 
       if (vergunning.werkzaamheden.length > 1 && vergunning.processed) {
-        vergunning.decision = MA_DECISION_DEFAULT;
+        vergunning.decision = MA_DECISION_ZIE_BESLUIT;
       }
 
       vergunning.title =
