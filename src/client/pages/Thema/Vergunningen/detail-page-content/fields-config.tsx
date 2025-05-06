@@ -39,7 +39,7 @@ export type RowTransformer<T extends VergunningFrontend = VergunningFrontend> =
 
 export const identifier: VergunningDataListRow = (vergunning) => {
   return {
-    label: 'Kenmerk',
+    label: 'Zaaknummer',
     content: vergunning.identifier,
   };
 };
