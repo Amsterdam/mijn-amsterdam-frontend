@@ -127,7 +127,7 @@ export const DECOS_ZAKEN_FETCH_TOP = '200';
  *
  */
 
-async function getUserKeys(authProfileAndToken: AuthProfileAndToken) {
+async function fetchUserKeys(authProfileAndToken: AuthProfileAndToken) {
   const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
     formatUrl: (config) => {
@@ -435,7 +435,7 @@ function getSelectFields(
   return fields;
 }
 
-async function getZakenByUserKey(
+async function fetchZakenByUserKey(
   userKey: string,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
@@ -490,7 +490,7 @@ export async function fetchDecosZakenFromSourceRaw(
   includeProperties: boolean = false,
   top: string = DECOS_ZAKEN_FETCH_TOP
 ) {
-  const userKeysResponse = await getUserKeys(authProfileAndToken);
+  const userKeysResponse = await fetchUserKeys(authProfileAndToken);
 
   const caseTypes = filterCaseTypes
     ?.split(',')
@@ -541,7 +541,7 @@ export async function fetchDecosZakenFromSource(
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
-  const userKeysResponse = await getUserKeys(authProfileAndToken);
+  const userKeysResponse = await fetchUserKeys(authProfileAndToken);
 
   if (userKeysResponse.status === 'ERROR') {
     return userKeysResponse;
@@ -549,7 +549,7 @@ export async function fetchDecosZakenFromSource(
 
   const zakenSourceResponses = await Promise.allSettled(
     userKeysResponse.content.map((userKey) =>
-      getZakenByUserKey(userKey, zaakTypeTransformers)
+      fetchZakenByUserKey(userKey, zaakTypeTransformers)
     )
   );
 
@@ -992,9 +992,9 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
 
 export const forTesting = {
   filterValidDocument,
-  getUserKeys,
+  getUserKeys: fetchUserKeys,
   getSelectFields,
-  getZakenByUserKey,
+  getZakenByUserKey: fetchZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowDateResponse,
   transformDecosWorkflowKeysResponse,
