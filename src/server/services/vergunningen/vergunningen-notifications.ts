@@ -1,11 +1,6 @@
-import { subMonths } from 'date-fns';
-
-import {
-  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END,
-  VergunningFrontend,
-} from './config-and-types';
+import { VergunningFrontend } from './config-and-types';
 import { fetchVergunningen } from './vergunningen';
-import { isNearEndDate } from './vergunningen-helpers';
+import { getLifetimeTriggerDate, isNearEndDate } from './vergunningen-helpers';
 import {
   routeConfig,
   themaId,
@@ -15,8 +10,10 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import { dateFormat } from '../../../universal/helpers/date';
-import { isRecentNotification } from '../../../universal/helpers/utils';
+import {
+  isRecentNotification,
+  toDateFormatted,
+} from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import type { DecosZaakBase } from '../decos/decos-types';
@@ -96,18 +93,17 @@ export function createNotificationDefault<
       };
     case 'Afgehandeld': {
       // Verloopt binnenkort
-      if ('isExpired' in zaak && isNearEndDate(zaak.dateStart, zaak.dateEnd)) {
+      if (
+        'isExpired' in zaak &&
+        zaak.dateStart &&
+        zaak.dateEnd &&
+        isNearEndDate(zaak.dateStart, zaak.dateEnd)
+      ) {
         return {
           ...baseNotification,
-          datePublished: zaak.dateEnd
-            ? dateFormat(
-                subMonths(
-                  new Date(zaak.dateEnd),
-                  NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END
-                ),
-                'yyyy-MM-dd'
-              )
-            : '',
+          datePublished: toDateFormatted(
+            getLifetimeTriggerDate(zaak.dateStart, zaak.dateEnd)
+          ),
           title: `Uw ${zaak.title} loopt af`,
           description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} loopt binnenkort af, vraag zonodig een nieuwe aan.`,
         };

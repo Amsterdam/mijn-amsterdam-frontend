@@ -1,4 +1,4 @@
-import { differenceInDays, parseISO } from 'date-fns';
+import { addDays, differenceInDays, parseISO } from 'date-fns';
 
 import {
   MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION,
@@ -33,12 +33,28 @@ export function getCustomTitleForVergunningWithLicensePlates(
   return vergunning.title;
 }
 
+export function getLifetimeTriggerDate(
+  dateStart: string,
+  dateEnd: string,
+  percentageOfLifetime = PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION
+): Date {
+  const daysInBetweenStartAndEnd = differenceInDays(
+    parseISO(dateEnd),
+    parseISO(dateStart)
+  );
+
+  return addDays(
+    dateStart,
+    Math.round(daysInBetweenStartAndEnd * percentageOfLifetime)
+  );
+}
+
 export function isNearEndDate(
   dateStart: string | null,
   dateEnd: string | null,
   dateNow?: Date,
   percentageOfLifetime = PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION
-) {
+): boolean {
   if (!dateEnd || !dateStart || isDateInPast(dateEnd, dateNow)) {
     return false;
   }
