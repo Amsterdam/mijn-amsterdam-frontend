@@ -59,19 +59,26 @@ export function AanbiedenDienstenEnStraatartiestenContent({
       content = location.content;
     }
 
-    return {
-      content: content ?? '-',
-      label: 'Locatie',
-    };
+    return content
+      ? {
+          content,
+          label: 'Locatie',
+        }
+      : null;
   };
+
+  const stadsdeel = () =>
+    vergunning.stadsdeel
+      ? {
+          label: 'Stadsdeel',
+          content: vergunning.stadsdeel,
+        }
+      : null;
 
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     waarvoor,
-    {
-      label: 'Stadsdeel',
-      content: vergunning.stadsdeel,
-    },
+    stadsdeel,
     location,
     op,
     vanTot,

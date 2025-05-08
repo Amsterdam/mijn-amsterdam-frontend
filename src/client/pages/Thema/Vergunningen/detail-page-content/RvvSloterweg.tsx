@@ -17,24 +17,28 @@ export function RvvSloterweg({
   const isChangeRequest = vergunning.requestType === 'Wijziging';
 
   const area = () => {
-    return {
-      label: 'Zone',
-      content: vergunning.area || '-',
-    };
+    return vergunning.area
+      ? {
+          label: 'Zone',
+          content: vergunning.area,
+        }
+      : null;
   };
 
   const kenteken = () => {
-    return {
-      label: isChangeRequest ? 'Nieuw kenteken' : 'Kenteken',
-      content: vergunning.kentekens || '-',
-    };
+    return vergunning.kentekens
+      ? {
+          label: isChangeRequest ? 'Nieuw kenteken' : 'Kenteken',
+          content: vergunning.kentekens,
+        }
+      : null;
   };
 
   const vorigeKentekens = () => {
     return vergunning.vorigeKentekens
       ? {
           label: 'Oud kenteken',
-          content: vergunning.vorigeKentekens || '-',
+          content: vergunning.vorigeKentekens,
         }
       : null;
   };
