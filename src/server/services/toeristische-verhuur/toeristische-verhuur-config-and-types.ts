@@ -10,7 +10,6 @@ import {
   WithDateRange,
 } from '../decos/decos-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
-import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
 export const caseTypeToeristischeVerhuur = {
   VakantieverhuurVergunningaanvraag: 'Vakantieverhuur vergunningsaanvraag',
@@ -101,7 +100,6 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
 
       return vergunning;
     },
-    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const decosZaakTransformers = [VakantieverhuurVergunningaanvraag];

@@ -56,8 +56,9 @@ export function createToeristischeVerhuurNotification(
     switch (true) {
       // B&B + Vakantieverhuurvergunning
       case vergunning.isVerleend &&
+        !!vergunning.dateStart &&
         !!vergunning.dateEnd &&
-        isNearEndDate(vergunning.dateEnd):
+        isNearEndDate(vergunning.dateStart, vergunning.dateEnd):
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;

@@ -44,7 +44,7 @@ export interface MyNotification<ID extends string = string> {
   themaID: ID;
   themaTitle: string;
   datePublished: string;
-  description: string;
+  description?: string;
   hideDatePublished?: boolean;
   id: string;
   isAlert?: boolean;

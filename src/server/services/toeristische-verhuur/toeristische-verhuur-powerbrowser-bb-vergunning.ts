@@ -501,6 +501,7 @@ async function fetchZakenByIds(
       authProfile,
       zakenWithAddress
     );
+
     // Merge zaak statussen as last, some status steps need documents to be fetched first.
     const zakenWithStatus =
       await fetchAndMergeZaakStatussen(zakenWithDocuments);

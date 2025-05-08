@@ -1,3 +1,5 @@
+import MockDate from 'mockdate';
+
 import {
   isNearEndDate,
   getCustomTitleForVergunningWithLicensePlates,
@@ -5,29 +7,43 @@ import {
 import { TouringcarDagontheffing } from '../parkeren/config-and-types';
 
 describe('vergunningen/helpers', () => {
-  vi.useFakeTimers();
-  vi.setSystemTime(new Date('2022-10-06'));
+  beforeAll(() => {
+    MockDate.set('2023-01-01');
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
 
   describe('isNearEndDate', () => {
     test('Near', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() + 30);
-      expect(isNearEndDate(d.toISOString())).toBe(true);
+      expect(
+        isNearEndDate('2023-01-01', '2023-03-01', new Date('2023-02-24'))
+      ).toBe(true);
+    });
+
+    test('Near with custom percentage', () => {
+      expect(
+        isNearEndDate('2023-01-01', '2023-04-30', new Date('2023-02-01'), 0.25)
+      ).toBe(true);
+    });
+
+    test('Not near with custom percentage', () => {
+      expect(
+        isNearEndDate('2023-01-01', '2023-04-30', new Date('2023-01-28'), 0.25)
+      ).toBe(false);
     });
 
     test('Not near', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() + 120);
-      expect(isNearEndDate(d.toISOString())).toBe(false);
+      expect(
+        isNearEndDate('2023-01-01', '2023-03-01', new Date('2023-01-24'))
+      ).toBe(false);
     });
 
     test('In past', () => {
-      const d = new Date();
-      d.getDate();
-      d.setDate(d.getDate() - 120);
-      expect(isNearEndDate(d.toISOString())).toBe(false);
+      expect(
+        isNearEndDate('2023-01-01', '2023-03-01', new Date('2022-12-29'))
+      ).toBe(false);
     });
   });
 
