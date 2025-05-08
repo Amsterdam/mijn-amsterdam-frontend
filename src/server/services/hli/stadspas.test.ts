@@ -5,7 +5,7 @@ import { fetchAdministratienummer } from './hli-zorgned-service';
 import { blockStadspas, fetchStadspasBudgetTransactions } from './stadspas';
 import {
   fetchGpassDiscountTransactions,
-  fetchStadspassen_,
+  fetchStadspassen,
   mutateGpassBlockPass,
 } from './stadspas-gpass-service';
 import {
@@ -17,7 +17,7 @@ import {
   StadspasOwner,
   StadspasPasHouderResponse,
 } from './stadspas-types';
-import { remoteApi } from '../../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
@@ -27,16 +27,7 @@ const FAKE_API_KEY = '22222xx22222';
 const defaultPashouderResponse = createStadspasHouderResponse();
 const defaultPasResponse = createPas();
 
-const authProfileAndToken: AuthProfileAndToken = {
-  profile: {
-    authMethod: 'digid',
-    profileType: 'private',
-    id: '8899776655',
-    sid: 'my-unique-session-id',
-  },
-  token: '',
-  expiresAtMilliseconds: 0,
-};
+const authProfileAndToken: AuthProfileAndToken = getAuthProfileAndToken();
 
 vi.mock('./stadspas-gpass-service.ts', async (importOriginal) => ({
   ...(await importOriginal()),
@@ -221,7 +212,7 @@ describe('stadspas services', () => {
     test('fail administratienummer endpoint', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-      const response = await fetchStadspassen_(authProfileAndToken);
+      const response = await fetchStadspassen(authProfileAndToken);
 
       expect(response).toMatchInlineSnapshot(`
       {
@@ -243,7 +234,7 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
         .reply(401);
 
-      const response = await fetchStadspassen_(authProfileAndToken);
+      const response = await fetchStadspassen(authProfileAndToken);
 
       expect(response).toMatchInlineSnapshot(`
       {
@@ -282,7 +273,7 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
         .reply(200, defaultPasResponse);
 
-      const response = await fetchStadspassen_(authProfileAndToken);
+      const response = await fetchStadspassen(authProfileAndToken);
 
       const expectedResponse = {
         content: {
@@ -315,7 +306,7 @@ describe('stadspas services', () => {
       test('Transforms pas correctly', async () => {
         setupStadspashouderRequests({ passen: [relevantPas] });
 
-        const response = await fetchStadspassen_(authProfileAndToken);
+        const response = await fetchStadspassen(authProfileAndToken);
         expect(response.content?.stadspassen[0]).toStrictEqual({
           actief: true,
           balance: 0,
@@ -374,7 +365,7 @@ describe('stadspas services', () => {
         const passen = [relevantPas, ...toFilterOutPasses];
         setupStadspashouderRequests({ passen });
 
-        const response = await fetchStadspassen_(authProfileAndToken);
+        const response = await fetchStadspassen(authProfileAndToken);
 
         expect(response.content?.stadspassen.length).toBe(
           passen.length - toFilterOutPasses.length
@@ -398,7 +389,7 @@ describe('stadspas services', () => {
           ],
         });
 
-        const response = await fetchStadspassen_(authProfileAndToken);
+        const response = await fetchStadspassen(authProfileAndToken);
         expect(response.content?.stadspassen.length).toBe(0);
       });
 
@@ -415,7 +406,7 @@ describe('stadspas services', () => {
           ],
         });
 
-        const response = await fetchStadspassen_(authProfileAndToken);
+        const response = await fetchStadspassen(authProfileAndToken);
 
         expect(response.content?.stadspassen.length).toBe(1);
       });
@@ -441,7 +432,7 @@ describe('stadspas services', () => {
         ];
         setupStadspashouderRequests({ sub_pashouders });
 
-        const response = await fetchStadspassen_(authProfileAndToken);
+        const response = await fetchStadspassen(authProfileAndToken);
         expect(response.content?.stadspassen.length).toBe(
           passen.length - passesToFilterOut.length
         );
