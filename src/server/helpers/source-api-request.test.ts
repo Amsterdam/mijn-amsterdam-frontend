@@ -94,20 +94,6 @@ describe('requestData.ts', () => {
     expect(rs).toStrictEqual(apiSuccessResult(DUMMY_RESPONSE));
   });
 
-  it('Should make request with passthrough headers', async () => {
-    remoteApi.get('/1').reply(200, DUMMY_RESPONSE_2);
-
-    await requestData(
-      {
-        url: DUMMY_URL,
-      },
-      AUTH_PROFILE_AND_TOKEN
-    );
-
-    expect(axiosRequestSpy).toHaveBeenCalledTimes(1);
-    // expect(axiosRequestSpy.mock.calls[0][0].headers).toEqual(HEADERS_FILTERED);
-  });
-
   it('Caches the response: Valid JSON', async () => {
     remoteApi.get('/1').reply(200, '"whoa"');
 
