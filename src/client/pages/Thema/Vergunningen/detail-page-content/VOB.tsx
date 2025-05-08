@@ -10,25 +10,45 @@ export function VOB({
 }: {
   vergunning: VergunningFrontend<Ligplaatsvergunning>;
 }) {
+  const vesselKind = () =>
+    vergunning.vesselKind
+      ? {
+          label: 'Soort vaartuig',
+          content: vergunning.vesselKind,
+        }
+      : null;
+
+  const vesselName = () =>
+    vergunning.vesselName
+      ? {
+          label: 'Naam vaartuig',
+          content: vergunning.vesselName,
+        }
+      : null;
+
+  const requestKind = () =>
+    vergunning.requestKind
+      ? {
+          label: 'Soort aanvraag',
+          content: vergunning.requestKind,
+        }
+      : null;
+
+  const reason = () =>
+    vergunning.reason
+      ? {
+          label: 'Reden',
+          content: vergunning.reason,
+        }
+      : null;
+
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.location,
-    {
-      label: 'Soort vaartuig',
-      content: vergunning.vesselKind || '-',
-    },
-    {
-      label: 'Naam vaartuig',
-      content: vergunning.vesselName || '-',
-    },
-    {
-      label: 'Soort aanvraag',
-      content: vergunning.requestKind || '-',
-    },
-    {
-      label: 'Reden',
-      content: vergunning.reason || '-',
-    },
+    vesselKind,
+    vesselName,
+    requestKind,
+    reason,
     commonTransformers.decision,
   ]);
 
