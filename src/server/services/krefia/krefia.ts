@@ -1,5 +1,3 @@
-import memoize from 'memoizee';
-
 import type {
   NotificationTrigger,
   KrefiaDeepLink,
@@ -18,7 +16,6 @@ import {
 import { omit } from '../../../universal/helpers/utils';
 import type { MyNotification } from '../../../universal/types/App.types';
 import type { AuthProfileAndToken } from '../../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -79,7 +76,7 @@ function transformKrefiaResponse(responseData: KrefiaSourceResponse): Krefia {
   };
 }
 
-async function fetchAndTransformKrefia(
+export async function fetchAndTransformKrefia(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<Krefia>> {
   const response = await requestData<Krefia>(
@@ -92,15 +89,8 @@ async function fetchAndTransformKrefia(
   return response;
 }
 
-export const fetchSource = memoize(fetchAndTransformKrefia, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args: unknown[]) {
-    return args[0] + JSON.stringify(args[1]);
-  },
-});
-
 export async function fetchKrefia(authProfileAndToken: AuthProfileAndToken) {
-  const response = await fetchSource(authProfileAndToken);
+  const response = await fetchAndTransformKrefia(authProfileAndToken);
   if (response.status === 'OK' && response.content) {
     return apiSuccessResult(omit(response.content, ['notificationTriggers']));
   }
@@ -110,7 +100,7 @@ export async function fetchKrefia(authProfileAndToken: AuthProfileAndToken) {
 export async function fetchKrefiaNotifications(
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const response = await fetchSource(authProfileAndToken);
+  const response = await fetchAndTransformKrefia(authProfileAndToken);
 
   if (response.status === 'OK') {
     const notifications: MyNotification[] = [];

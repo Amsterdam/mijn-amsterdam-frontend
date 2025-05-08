@@ -1,5 +1,3 @@
-import memoize from 'memoizee';
-
 import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
@@ -9,7 +7,6 @@ import {
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification } from '../../universal/types/App.types';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { fetchAfisNotifications } from './afis/afis-notifications';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
@@ -146,7 +143,7 @@ function getTipsAndNotificationsFromApiResults(
 }
 
 // Services can return Source tips and Content tips.
-async function fetchNotificationsAndTipsFromServices_(
+async function fetchNotificationsAndTipsFromServices(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<MyNotification[]> {
   if (authProfileAndToken.profile.profileType !== 'private-attributes') {
@@ -164,17 +161,6 @@ async function fetchNotificationsAndTipsFromServices_(
 
   return [];
 }
-
-export const fetchNotificationsAndTipsFromServices = memoize(
-  fetchNotificationsAndTipsFromServices_,
-  {
-    maxAge: DEFAULT_API_CACHE_TTL_MS,
-    normalizer: function (args) {
-      // args is arguments object as accessible in memoized function
-      return JSON.stringify(args[0]);
-    },
-  }
-);
 
 export function sortNotificationsAndInsertTips(
   notifications: MyNotification[],
