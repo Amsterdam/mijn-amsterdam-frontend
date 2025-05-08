@@ -257,7 +257,6 @@ async function transformDecosZaakResponse<
         ({ decosActionCode }) => decosActionCode
       );
     const workFlowDates = await fetchDecosWorkflowDates(
-      requestID,
       decosZaakSource.key,
       decosActionCodes
     );
@@ -632,12 +631,11 @@ async function fetchWorkflowInstance<
   ST extends DecosWorkflowStepTitle[] | undefined,
   B extends boolean,
 >(options: {
-    useRawResponse: B;
-    key: string;
-    urlParams?: URLSearchParams;
-    decosActionCodes?: ST;
-  }
-) {
+  useRawResponse: B;
+  key: string;
+  urlParams?: URLSearchParams;
+  decosActionCodes?: ST;
+}) {
   const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
     formatUrl: (config) =>
       `${config.url}/items/${options.key}/workflowlinkinstances?`,
