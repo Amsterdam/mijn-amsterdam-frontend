@@ -139,7 +139,7 @@ if (!IS_PRODUCTION) {
     async (
       req: RequestWithQueryParams<{
         key: string;
-        stepTitles?: string;
+        decosActionCodes?: string;
         select?: string;
       }>,
       res: Response
@@ -150,7 +150,7 @@ if (!IS_PRODUCTION) {
       res.send(
         await fetchDecosWorkflowDates(
           req.query.key,
-          req.query.stepTitles?.split(',') ?? [],
+          req.query.decosActionCodes?.split(',') ?? [],
           req.query.select?.split(',')
         )
       );

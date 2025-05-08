@@ -41,7 +41,7 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle:
+        decosActionCode:
           'Horeca vergunning exploitatie Horecabedrijf - In behandeling nemen',
       },
     ],

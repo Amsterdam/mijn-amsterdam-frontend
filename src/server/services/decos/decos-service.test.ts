@@ -778,7 +778,7 @@ describe('decos-service', () => {
         jsonCopy(workflowInstance);
 
       const [instance1] = workflowInstance2.content;
-      instance1.fields.text7 = 'Status - In behandeling';
+      instance1.fields.text7 = 'Werk en vervoer op straat - Behandelen';
       instance1.fields.date1 = '2024-05-04';
 
       remoteApi

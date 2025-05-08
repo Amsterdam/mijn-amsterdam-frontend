@@ -174,7 +174,10 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   // Expands the selection of fields, based on the link address, with linked items as objects or array of objects
   fetchLinkedItem?: string[];
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
-  fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
+  fetchWorkflowStatusDatesFor?: {
+    status: ZaakStatus;
+    decosActionCode: string;
+  }[];
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
   fetchTermijnenFor?: {
     status: ZaakStatus;

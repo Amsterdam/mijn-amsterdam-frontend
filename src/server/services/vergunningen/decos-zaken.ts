@@ -114,7 +114,7 @@ const EvenementVergunning: DecosZaakTransformer<EvenementVergunning> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Evenement vergunning - Behandelen',
+      decosActionCode: 'Evenement vergunning - Behandelen',
     },
   ],
   transformFields: {
@@ -140,7 +140,7 @@ const Omzettingsvergunning: DecosZaakTransformer<Omzettingsvergunning> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Omzettingsvergunning - Behandelen',
+      decosActionCode: 'Omzettingsvergunning - Behandelen',
     },
   ],
   transformFields: {
@@ -188,7 +188,7 @@ const Flyeren: DecosZaakTransformer<Flyeren> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Flyeren-Sampling - Behandelen',
+      decosActionCode: 'Flyeren-Sampling - Behandelen',
     },
   ],
   transformFields: {
@@ -209,7 +209,7 @@ const AanbiedenDiensten: DecosZaakTransformer<AanbiedenDiensten> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Aanbieden van diensten - Behandelen',
+      decosActionCode: 'Aanbieden van diensten - Behandelen',
     },
   ],
   transformFields: {
@@ -230,7 +230,7 @@ const Straatartiesten: DecosZaakTransformer<Straatartiesten> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Straatartiesten - Behandelen',
+      decosActionCode: 'Straatartiesten - Behandelen',
     },
   ],
   transformFields: {
@@ -251,7 +251,7 @@ const NachtwerkOntheffing: DecosZaakTransformer<Nachtwerkontheffing> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Nachtwerkontheffing - Behandelen',
+      decosActionCode: 'Nachtwerkontheffing - Behandelen',
     },
   ],
   requirePayment: true,
@@ -341,7 +341,7 @@ const Samenvoegingsvergunning: DecosZaakTransformer<Samenvoegingsvergunning> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Samenvoegingsvergunning - Beoordelen en besluiten',
+      decosActionCode: 'Samenvoegingsvergunning - Beoordelen en besluiten',
     },
   ],
   transformFields: {
@@ -358,7 +358,7 @@ const Onttrekkingsvergunning: DecosZaakTransformer<Onttrekkingsvergunning> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle:
+      decosActionCode:
         'Onttrekkingsvergunning voor ander gebruik - Beoordelen en besluiten',
     },
   ],
@@ -377,7 +377,7 @@ const OnttrekkingsvergunningSloop: DecosZaakTransformer<OnttrekkingsvergunningSl
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle:
+        decosActionCode:
           'Onttrekkingsvergunning voor sloop - Beoordelen en besluiten',
       },
     ],
@@ -398,7 +398,7 @@ const VormenVanWoonruimte: DecosZaakTransformer<VormenVanWoonruimte> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Woningvormingsvergunning - Beoordelen en besluiten',
+      decosActionCode: 'Woningvormingsvergunning - Beoordelen en besluiten',
     },
   ],
   transformFields: {
@@ -415,7 +415,7 @@ const Splitsingsvergunning: DecosZaakTransformer<Splitsingsvergunning> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Splitsingsvergunning - Behandelen',
+      decosActionCode: 'Splitsingsvergunning - Behandelen',
     },
   ],
   transformFields: {
@@ -433,7 +433,10 @@ const VOBvergunning: DecosZaakTransformer<Ligplaatsvergunning> = {
   caseType: caseTypeVergunningen.VOB,
   title: 'Ligplaatsvergunning',
   fetchWorkflowStatusDatesFor: [
-    { status: 'In behandeling', stepTitle: 'VOB - Beoordelen en besluiten' },
+    {
+      status: 'In behandeling',
+      decosActionCode: 'VOB - Beoordelen en besluiten',
+    },
   ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
@@ -453,7 +456,8 @@ const RVVHeleStad: DecosZaakTransformer<RVVHeleStad> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+      decosActionCode:
+        'Status bijwerken en notificatie verzenden - In behandeling',
     },
   ],
   requirePayment: true,
@@ -527,7 +531,7 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle: 'Werk en vervoer op straat - Behandelen',
+        decosActionCode: 'Werk en vervoer op straat - Behandelen',
       },
     ],
     requirePayment: true,
