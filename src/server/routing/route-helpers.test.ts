@@ -47,7 +47,7 @@ describe('route-helpers', () => {
 
   describe('sendResponse tests', async () => {
     test('Sends 200 when status OK', () => {
-      const response: ApiResponse_DEPRECATED = {
+      const response: ApiResponse_DEPRECATED<null> = {
         status: 'OK',
         content: null,
       };

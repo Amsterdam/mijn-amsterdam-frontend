@@ -6,7 +6,6 @@ import { featureToggle } from '../../../client/pages/Thema/Svwi/Svwi-thema-confi
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 describe('simple-connect/svwi', () => {
-  const REQUEST_ID = 'test-x-789';
   const authProfileAndToken = getAuthProfileAndToken();
   featureToggle.svwiActive = true;
 
@@ -17,7 +16,7 @@ describe('simple-connect/svwi', () => {
       .matchHeader('Ocp-Apim-Subscription-Key', 'xxx')
       .reply(200, SVWI);
 
-    const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
+    const responseContent = await fetchSVWI(authProfileAndToken);
 
     expect(responseContent).toMatchInlineSnapshot(`
       {
@@ -39,7 +38,7 @@ describe('simple-connect/svwi', () => {
       .matchHeader('Ocp-Apim-Subscription-Key', 'xxx')
       .reply(200, SVWIWithUnknown);
 
-    const responseContent = await fetchSVWI(REQUEST_ID, authProfileAndToken);
+    const responseContent = await fetchSVWI(authProfileAndToken);
 
     expect(responseContent).toMatchInlineSnapshot(`
       {

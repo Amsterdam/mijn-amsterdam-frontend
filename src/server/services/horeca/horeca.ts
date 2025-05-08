@@ -19,11 +19,9 @@ import { getVergunningNotifications } from '../vergunningen/vergunningen-notific
 import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchHorecaVergunningen(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<HorecaVergunningFrontend[]>> {
   const response = await fetchDecosZaken(
-    requestID,
     authProfileAndToken,
     decosZaakTransformers
   );
@@ -51,7 +49,6 @@ export async function fetchHorecaVergunningen(
 }
 
 export async function fetchHorecaNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   if (!featureToggle.horecaActive) {
@@ -60,10 +57,7 @@ export async function fetchHorecaNotifications(
     });
   }
 
-  const VERGUNNINGEN = await fetchHorecaVergunningen(
-    requestID,
-    authProfileAndToken
-  );
+  const VERGUNNINGEN = await fetchHorecaVergunningen(authProfileAndToken);
 
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications(

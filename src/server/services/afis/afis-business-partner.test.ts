@@ -117,10 +117,7 @@ describe('Afis Business Partner services', () => {
       .get(ROUTES.businesspartnerEmailAddress)
       .reply(200, responseBodyBusinessEmailAddress);
 
-    const response = await fetchAfisBusinessPartnerDetails(
-      REQUEST_ID,
-      GENERIC_ID
-    );
+    const response = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -143,10 +140,7 @@ describe('Afis Business Partner services', () => {
       .get(ROUTES.businesspartnerFullName)
       .reply(200, responseBodyBusinessPartnerFullName);
 
-    const response = await fetchAfisBusinessPartnerDetails(
-      REQUEST_ID,
-      GENERIC_ID
-    );
+    const response = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
 
     expect(response).toMatchInlineSnapshot(`
         {
@@ -176,10 +170,7 @@ describe('Afis Business Partner services', () => {
       .get(ROUTES.businesspartnerFullName)
       .reply(200, responseBodyBusinessPartnerAddressId);
 
-    const response = await fetchAfisBusinessPartnerDetails(
-      REQUEST_ID,
-      GENERIC_ID
-    );
+    const response = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
 
     expect(response).toMatchInlineSnapshot(`
         {
@@ -207,10 +198,7 @@ describe('Afis Business Partner services', () => {
   it('returns an error when there is an error fetching the business partner details', async () => {
     remoteApi.get(ROUTES.businesspartnerFullName).reply(500);
 
-    const response = await fetchAfisBusinessPartnerDetails(
-      REQUEST_ID,
-      GENERIC_ID
-    );
+    const response = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
 
     expect(response).toMatchInlineSnapshot(`
         {
@@ -254,10 +242,7 @@ it('Omits email and phone properties when the business partner details data qual
     },
   });
 
-  const response = await fetchAfisBusinessPartnerDetails(
-    REQUEST_ID,
-    GENERIC_ID
-  );
+  const response = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
 
   expect(response).toMatchInlineSnapshot(`
       {
@@ -294,10 +279,7 @@ it('Omits email and phone properties when the business partner details data qual
     },
   });
 
-  const response2 = await fetchAfisBusinessPartnerDetails(
-    REQUEST_ID,
-    GENERIC_ID
-  );
+  const response2 = await fetchAfisBusinessPartnerDetails(GENERIC_ID);
 
   expect(response2).toMatchInlineSnapshot(`
       {

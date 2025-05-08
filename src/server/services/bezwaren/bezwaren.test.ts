@@ -28,7 +28,6 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
 });
 
 describe('Bezwaren', () => {
-  const requestId = '456';
   const documentId = 'e6ed38c3-a44a-4c16-97c1-89d7ebfca095';
   const documentIdEncrypted = 'test-encrypted-id';
 
@@ -55,7 +54,7 @@ describe('Bezwaren', () => {
     });
 
     it('should return data in expected format', async () => {
-      const res = await fetchBezwaren(requestId, profileAndToken);
+      const res = await fetchBezwaren(profileAndToken);
 
       expect(bezwarenApiResponse.count).toEqual(res.content?.length);
 
@@ -63,7 +62,7 @@ describe('Bezwaren', () => {
     });
 
     it('should return the right recent notifications', async () => {
-      const res = await fetchBezwarenNotifications(requestId, profileAndToken);
+      const res = await fetchBezwarenNotifications(profileAndToken);
 
       expect(res).toStrictEqual({
         content: {
@@ -95,7 +94,6 @@ describe('Bezwaren', () => {
         .reply(200);
 
       const documentResponse = await fetchBezwaarDocument(
-        requestId,
         profileAndToken,
         documentIdEncrypted
       );
@@ -112,7 +110,7 @@ describe('Bezwaren', () => {
       };
 
       remoteApi.post(`${endpointBase}/_zoek?page=1`).reply(200, emptyResponse);
-      const res = await fetchBezwaren(requestId, profileAndToken);
+      const res = await fetchBezwaren(profileAndToken);
 
       expect(res.status).toEqual('OK');
       expect(res.content?.length).toEqual(0);
@@ -129,7 +127,7 @@ describe('Bezwaren', () => {
         .post(`${endpointBase}/_zoek?page=4`)
         .reply(200, { count: 75, items: range(61, 75) });
 
-      const response = await forTesting.fetchMultiple('xx', {
+      const response = await forTesting.fetchMultiple({
         url: `${remoteApiHost}${endpointBase}/_zoek`,
         method: 'post',
         params: {
@@ -148,7 +146,7 @@ describe('Bezwaren', () => {
         .post(`${endpointBase}/_zoek?page=2`)
         .reply(500, undefined);
 
-      const response = await forTesting.fetchMultiple('xx', {
+      const response = await forTesting.fetchMultiple({
         url: `${remoteApiHost}${endpointBase}/_zoek`,
         method: 'post',
         params: {
@@ -172,7 +170,7 @@ describe('Bezwaren', () => {
           ...bezwarenApiResponse,
           count: 8,
         });
-      const res = await fetchBezwaren(requestId, profileAndToken);
+      const res = await fetchBezwaren(profileAndToken);
 
       expect(res.status).toEqual('OK');
       expect(res.content?.length).toEqual(8);
@@ -187,7 +185,7 @@ describe('Bezwaren', () => {
         .times(1)
         .reply(200, bezwarenStatus);
 
-      const res = await fetchBezwaarDetail(requestId, profileAndToken, 'xxx');
+      const res = await fetchBezwaarDetail(profileAndToken, 'xxx');
 
       expect(res.status).toEqual('OK');
       expect(res.content?.statussen?.length).toBeGreaterThan(0);
@@ -196,7 +194,6 @@ describe('Bezwaren', () => {
 
     it('should fail to fetch more results', async () => {
       const res = await fetchBezwaarDetail(
-        requestId,
         {
           ...profileAndToken,
           profile: { ...profileAndToken.profile, sid: 'nope' },

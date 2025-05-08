@@ -46,7 +46,6 @@ const DUMMY_DATA_DETAIL_RESPONSE = apiSuccessResult({
   foo: 'bar',
 });
 
-const requestID = 'xxxx';
 const datasetId = 'test-dataset';
 const datasetId2 = 'test-dataset2';
 const datasetId3 = 'test-dataset-error';
@@ -174,12 +173,7 @@ describe('Buurt services', () => {
     (createDynamicFilterConfig as Mock).mockReturnValue(DATASET_FILTERS_MOCK);
 
     // First call fetches data from source api
-    const result = await service.fetchDataset(
-      requestID,
-      datasetId,
-      datasetConfig,
-      params
-    );
+    const result = await service.fetchDataset(datasetId, datasetConfig, params);
 
     expect(cacheGetKey).toHaveBeenCalled();
     expect(FileCache).toHaveBeenCalledWith({
@@ -211,7 +205,6 @@ describe('Buurt services', () => {
       .mockReturnValueOnce(SERVICE_RESULT.content.filters);
 
     const result2 = await service.fetchDataset(
-      requestID,
       datasetId,
       datasetConfig,
       params
@@ -242,7 +235,7 @@ describe('Buurt services', () => {
       DATASET_FILTERS_MOCK
     );
 
-    const result = await service.loadDatasetFeatures(requestID, [
+    const result = await service.loadDatasetFeatures([
       [datasetId, datasetConfig],
       [datasetId2, datasetConfig2],
       [datasetId3, datasetConfig3],
@@ -294,7 +287,7 @@ describe('Buurt services', () => {
       filters: filterSelection,
     };
 
-    const result = await service.loadPolylineFeatures(requestID, requestParams);
+    const result = await service.loadPolylineFeatures(requestParams);
 
     expect(getDatasetEndpointConfig).toHaveBeenCalledWith(
       [datasetId, datasetId2],
@@ -334,11 +327,7 @@ describe('Buurt services', () => {
 
     const detailItemId = 'x-detail';
 
-    const result = await service.loadFeatureDetail(
-      requestID,
-      datasetId,
-      detailItemId
-    );
+    const result = await service.loadFeatureDetail(datasetId, detailItemId);
 
     const requestConfig = {
       url: datasetConfig.detailUrl + detailItemId,
@@ -346,7 +335,7 @@ describe('Buurt services', () => {
       headers: ACCEPT_CRS_4326,
     };
 
-    expect(requestData).toHaveBeenCalledWith(requestConfig, requestID);
+    expect(requestData).toHaveBeenCalledWith(requestConfig);
     expect(result).toEqual(DUMMY_DATA_DETAIL_RESPONSE);
   });
 
@@ -358,11 +347,7 @@ describe('Buurt services', () => {
     ]);
 
     const detailItemId = 'x';
-    const result = await service.loadFeatureDetail(
-      requestID,
-      datasetId,
-      detailItemId
-    );
+    const result = await service.loadFeatureDetail(datasetId, detailItemId);
 
     expect(result).toEqual(
       apiErrorResult(
@@ -401,11 +386,7 @@ describe('Buurt services', () => {
 
     (requestData as Mock).mockResolvedValueOnce(DUMMY_DATA_DETAIL_RESPONSE);
 
-    const result = await service.loadFeatureDetail(
-      requestID,
-      datasetId,
-      detailItemId
-    );
+    const result = await service.loadFeatureDetail(datasetId, detailItemId);
 
     expect(result).toStrictEqual({
       status: 'OK',
@@ -419,11 +400,7 @@ describe('Buurt services', () => {
     (getDatasetEndpointConfig as Mock).mockReturnValueOnce([]);
 
     const detailItemId = 'x';
-    const result = await service.loadFeatureDetail(
-      requestID,
-      datasetId,
-      detailItemId
-    );
+    const result = await service.loadFeatureDetail(datasetId, detailItemId);
 
     expect(result).toEqual(
       apiErrorResult(

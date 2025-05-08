@@ -36,11 +36,9 @@ function transformZorgnedClientNummerResponse(
 }
 
 export async function fetchAdministratienummer(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchPersoonsgegevensNAW(
-    requestID,
     authProfileAndToken.profile.id,
     'ZORGNED_AV'
   );
@@ -90,11 +88,9 @@ function transformTitle(aanvraag: ZorgnedAanvraagTransformed) {
 }
 
 async function fetchZorgnedAanvragenHLI_(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchAanvragenWithRelatedPersons(
-    requestID,
     authProfileAndToken,
     {
       zorgnedApiConfigKey: 'ZORGNED_AV',

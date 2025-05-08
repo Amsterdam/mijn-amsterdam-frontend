@@ -62,13 +62,9 @@ export function createAfisFacturenNotification(
 }
 
 export async function fetchAfisNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const afisKnownResponse = await fetchIsKnownInAFIS(
-    requestID,
-    authProfileAndToken
-  );
+  const afisKnownResponse = await fetchIsKnownInAFIS(authProfileAndToken);
 
   if (afisKnownResponse.status === 'ERROR') {
     return apiDependencyError({ afis: afisKnownResponse });

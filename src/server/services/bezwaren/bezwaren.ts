@@ -99,14 +99,10 @@ function getZaakUrl(zaakId: BezwaarFrontend['uuid']) {
 }
 
 async function fetchMultiple<T>(
-  requestID: RequestID,
   requestConfig: DataRequestConfig,
   maxPageCount: number = MAX_PAGE_COUNT
 ) {
-  let response = await requestData<OctopusApiResponse<T>>(
-    requestConfig,
-    requestID
-  );
+  let response = await requestData<OctopusApiResponse<T>>(requestConfig);
   let itemsLength = response.content?.items.length ?? 0;
   const resultCount = response.content?.count ?? 0;
 
@@ -118,10 +114,7 @@ async function fetchMultiple<T>(
         requestConfig.params.page < maxPageCount
       ) {
         requestConfig.params.page += 1; //Fetch next page
-        response = await requestData<OctopusApiResponse<T>>(
-          requestConfig,
-          requestID
-        );
+        response = await requestData<OctopusApiResponse<T>>(requestConfig);
 
         if (response.status === 'OK') {
           items = items.concat(response.content.items);
@@ -169,7 +162,6 @@ function transformBezwaarStatus(
 }
 
 async function fetchBezwaarStatus(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: BezwaarFrontend['uuid']
 ) {
@@ -185,7 +177,6 @@ async function fetchBezwaarStatus(
 
   const statusResponse = await requestData<StatusLineItem[]>(
     requestConfig,
-    requestID,
     authProfileAndToken
   );
 
@@ -228,7 +219,6 @@ function transformBezwarenDocumentsResults(
 }
 
 export async function fetchBezwarenDocuments(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: BezwaarFrontend['uuid']
 ) {
@@ -248,10 +238,8 @@ export async function fetchBezwarenDocuments(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const bezwaarDocumentenResponse = await fetchMultiple<BezwaarDocument>(
-    requestID,
-    requestConfig
-  );
+  const bezwaarDocumentenResponse =
+    await fetchMultiple<BezwaarDocument>(requestConfig);
 
   return bezwaarDocumentenResponse;
 }
@@ -371,10 +359,7 @@ function sortByBezwaarIdentificatie(
   return identificatie2 - identificatie1;
 }
 
-export async function fetchBezwaren(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   const requestBody = JSON.stringify({
     [getIdAttribute(authProfileAndToken)]: authProfileAndToken.profile.id,
   });
@@ -391,10 +376,7 @@ export async function fetchBezwaren(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(
-    requestID,
-    requestConfig
-  );
+  const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(requestConfig);
 
   if (bezwarenResponse.status === 'OK') {
     const bezwarenSorted = bezwarenResponse.content.sort(
@@ -442,10 +424,9 @@ function createBezwaarNotification(bezwaar: BezwaarFrontend) {
 }
 
 export async function fetchBezwarenNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const bezwaren = await fetchBezwaren(requestID, authProfileAndToken);
+  const bezwaren = await fetchBezwaren(authProfileAndToken);
 
   if (bezwaren.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(bezwaren.content)
@@ -468,18 +449,12 @@ export type BezwaarDetail = {
 };
 
 export async function fetchBezwaarDetail(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   zaakId: BezwaarFrontend['uuid']
 ) {
-  const bezwaarStatusRequest = fetchBezwaarStatus(
-    requestID,
-    authProfileAndToken,
-    zaakId
-  );
+  const bezwaarStatusRequest = fetchBezwaarStatus(authProfileAndToken, zaakId);
 
   const bezwaarDocumentsRequest = fetchBezwarenDocuments(
-    requestID,
     authProfileAndToken,
     zaakId
   );
@@ -507,7 +482,6 @@ export async function fetchBezwaarDetail(
 }
 
 export async function fetchBezwaarDocument(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
@@ -528,7 +502,6 @@ export async function fetchBezwaarDocument(
         };
       },
     },
-    requestID,
     authProfileAndToken
   );
 }

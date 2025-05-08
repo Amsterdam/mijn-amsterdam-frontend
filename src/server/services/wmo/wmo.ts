@@ -120,14 +120,9 @@ function transformVoorzieningenForFrontend(
   return voorzieningenFrontend;
 }
 
-export async function fetchWmo(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const voorzieningenResponse = await fetchZorgnedAanvragenWMO(
-    requestID,
-    authProfileAndToken
-  );
+export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
+  const voorzieningenResponse =
+    await fetchZorgnedAanvragenWMO(authProfileAndToken);
 
   if (voorzieningenResponse.status === 'OK') {
     const voorzieningenFrontend = transformVoorzieningenForFrontend(

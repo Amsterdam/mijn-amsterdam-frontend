@@ -13,14 +13,13 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
 async function fetchSalesforceData<T>(
-  requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
 ) {
   const dataRequestConfigBase = getApiConfig(
     'CONTACTMOMENTEN',
     dataRequestConfigSpecific
   );
-  return requestData<T>(dataRequestConfigBase, requestID);
+  return requestData<T>(dataRequestConfigBase);
 }
 
 function transformContactmomentenResponse(
@@ -43,7 +42,6 @@ function transformContactmomentenResponse(
 }
 
 export async function fetchContactmomenten(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   if (!FeatureToggle.contactmomentenActive) {
@@ -73,5 +71,5 @@ export async function fetchContactmomenten(
     },
     transformResponse: transformContactmomentenResponse,
   };
-  return fetchSalesforceData<ContactMoment[]>(requestID, requestConfig);
+  return fetchSalesforceData<ContactMoment[]>(requestConfig);
 }

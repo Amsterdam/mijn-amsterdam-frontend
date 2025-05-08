@@ -164,14 +164,11 @@ function hasNotification(
 }
 
 export async function fetchToeristischeVerhuurNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   compareDate?: Date
 ) {
-  const TOERISTISCHE_VERHUUR = await fetchToeristischeVerhuur(
-    requestID,
-    authProfileAndToken
-  );
+  const TOERISTISCHE_VERHUUR =
+    await fetchToeristischeVerhuur(authProfileAndToken);
 
   const compareToDate = compareDate || new Date();
 

@@ -140,10 +140,7 @@ export function transformDossierResponse(
   return responseData;
 }
 
-export async function fetchErfpacht(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('ERFPACHT');
 
   const erfpachterResponse = await requestData<ErfpachtErpachterResponse>(
@@ -156,7 +153,6 @@ export async function fetchErfpacht(
           authProfileAndToken.profile.profileType
         ),
     },
-    requestID,
     authProfileAndToken
   );
 
@@ -175,7 +171,6 @@ export async function fetchErfpacht(
             erfpachterResponse.content.relatieCode
           ),
       },
-      requestID,
       authProfileAndToken
     );
   }
@@ -184,7 +179,6 @@ export async function fetchErfpacht(
 }
 
 export async function fetchErfpachtDossiersDetail(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   dossierNummerUrlParam: string
 ) {
@@ -197,7 +191,6 @@ export async function fetchErfpachtDossiersDetail(
       ).toString(),
       transformResponse: transformErfpachtDossierProperties,
     },
-    requestID,
     authProfileAndToken
   );
 

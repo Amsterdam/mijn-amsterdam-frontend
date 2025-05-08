@@ -12,13 +12,9 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getVergunningNotifications } from '../vergunningen/vergunningen-notifications';
 
 export async function fetchParkeerVergunningenNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const VERGUNNINGEN = await fetchDecosParkeerVergunningen(
-    requestID,
-    authProfileAndToken
-  );
+  const VERGUNNINGEN = await fetchDecosParkeerVergunningen(authProfileAndToken);
 
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications<any>(

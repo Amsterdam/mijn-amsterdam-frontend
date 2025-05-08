@@ -472,7 +472,6 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('fetchStadspassenByAdministratienummer', () => {
-    const requestID = 'test-request-id';
     const administratienummer = '12345';
     const dataRequestConfig = { url: 'http://example.com' };
 
@@ -487,10 +486,8 @@ describe('stadspas-gpass-service', () => {
         code: HttpStatusCode.Unauthorized,
       });
 
-      const result = await fetchStadspassenByAdministratienummer(
-        requestID,
-        administratienummer
-      );
+      const result =
+        await fetchStadspassenByAdministratienummer(administratienummer);
 
       expect(result).toStrictEqual(
         apiSuccessResult({
@@ -505,10 +502,8 @@ describe('stadspas-gpass-service', () => {
         content: { message: 'API key invalid' },
       });
 
-      const result2 = await fetchStadspassenByAdministratienummer(
-        requestID,
-        administratienummer
-      );
+      const result2 =
+        await fetchStadspassenByAdministratienummer(administratienummer);
 
       expect(result2).toStrictEqual(
         apiSuccessResult({
@@ -525,10 +520,8 @@ describe('stadspas-gpass-service', () => {
       };
       (requestData as Mock).mockResolvedValueOnce(errorResponse);
 
-      const result = await fetchStadspassenByAdministratienummer(
-        requestID,
-        administratienummer
-      );
+      const result =
+        await fetchStadspassenByAdministratienummer(administratienummer);
 
       expect(result).toStrictEqual(errorResponse);
     });
@@ -623,10 +616,8 @@ describe('stadspas-gpass-service', () => {
           ],
         });
 
-      const result = await fetchStadspassenByAdministratienummer(
-        requestID,
-        administratienummer
-      );
+      const result =
+        await fetchStadspassenByAdministratienummer(administratienummer);
 
       expect(result).toStrictEqual(
         apiSuccessResult({
@@ -669,7 +660,6 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('fetchGpassDiscountTransactions', () => {
-    const requestID = 'test-request-id';
     const administratienummer = '12345';
     const pasnummer = 999999999;
     const dataRequestConfig = { url: 'http://example.com' };
@@ -728,7 +718,6 @@ describe('stadspas-gpass-service', () => {
       });
 
       const result = await fetchGpassDiscountTransactions(
-        requestID,
         administratienummer,
         pasnummer
       );
@@ -765,7 +754,6 @@ describe('stadspas-gpass-service', () => {
       });
 
       const result = await fetchGpassDiscountTransactions(
-        requestID,
         administratienummer,
         pasnummer
       );
@@ -785,7 +773,6 @@ describe('stadspas-gpass-service', () => {
       (requestData as Mock).mockResolvedValueOnce(errorResponse);
 
       const result = await fetchGpassDiscountTransactions(
-        requestID,
         administratienummer,
         pasnummer
       );
@@ -802,7 +789,6 @@ describe('stadspas-gpass-service', () => {
       status: 'OK',
     };
 
-    const requestId = '123';
     const transactionKeysEncrypted = '123';
 
     test('Uses decrypt and fetcher', async () => {
@@ -812,7 +798,6 @@ describe('stadspas-gpass-service', () => {
       );
 
       const response = (await blockStadspas(
-        requestId,
         // This cannot be decrypted so we expect an error response.
         transactionKeysEncrypted
       )) as ApiErrorResponse<null>;
@@ -831,7 +816,7 @@ describe('stadspas-gpass-service', () => {
         content: { pasnummer: PASSNUMBER, actief: false },
       });
 
-      const response = await mutateGpassBlockPass(requestId, 123, '123');
+      const response = await mutateGpassBlockPass(123, '123');
       expect(response).toStrictEqual({
         content: {
           actief: false,
@@ -848,11 +833,7 @@ describe('stadspas-gpass-service', () => {
         content: { pasnummer: PASSNUMBER, actief: false },
       });
 
-      const response = await mutateGpassBlockPass(
-        requestId,
-        PASSNUMBER,
-        '123456789'
-      );
+      const response = await mutateGpassBlockPass(PASSNUMBER, '123456789');
       expect(response).toStrictEqual({
         content: { [PASSNUMBER]: false },
         status: 'OK',
@@ -866,11 +847,7 @@ describe('stadspas-gpass-service', () => {
         content: { pasnummer: PASSNUMBER, actief: 'INVALID' },
       });
 
-      const response = await mutateGpassBlockPass(
-        requestId,
-        PASSNUMBER,
-        '123456789'
-      );
+      const response = await mutateGpassBlockPass(PASSNUMBER, '123456789');
       expect(response).toStrictEqual({
         code: 500,
         content: null,
@@ -891,11 +868,7 @@ describe('stadspas-gpass-service', () => {
         content: { [PASSNUMBER]: true },
       });
 
-      const response = await mutateGpassUnblockPass(
-        requestId,
-        PASSNUMBER,
-        '123456789'
-      );
+      const response = await mutateGpassUnblockPass(PASSNUMBER, '123456789');
 
       expect(response).toStrictEqual({
         content: {

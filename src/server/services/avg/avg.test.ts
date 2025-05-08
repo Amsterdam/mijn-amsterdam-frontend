@@ -6,8 +6,6 @@ import apiResponse from '../../../../mocks/fixtures/avg.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 describe('AVG', () => {
-  const requestId = '456';
-
   const profileAndToken = getAuthProfileAndToken();
 
   afterEach(() => {
@@ -80,7 +78,7 @@ describe('AVG', () => {
     });
 
     it('should return data in expected format', async () => {
-      const res = await fetchAVG(requestId, profileAndToken);
+      const res = await fetchAVG(profileAndToken);
 
       expect(res).toEqual({
         content: {
@@ -413,7 +411,7 @@ describe('AVG', () => {
     });
 
     it('should return the right notifications', async () => {
-      const res = await fetchAVGNotifications(requestId, profileAndToken);
+      const res = await fetchAVGNotifications(profileAndToken);
 
       expect(res).toEqual({
         content: {

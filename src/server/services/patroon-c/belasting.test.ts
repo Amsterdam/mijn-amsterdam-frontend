@@ -3,15 +3,13 @@ import { describe, expect, test } from 'vitest';
 import { fetchBelasting, fetchBelastingNotifications } from './belasting';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
-const REQUEST_ID = 'test-x-999';
 const authProfileAndToken = getAuthProfileAndToken();
 
 describe('simple-connect/belasting', () => {
   test('fetchBelasting: no content', async () => {
     remoteApi.get('/belastingen').reply(200, null as any);
 
-    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
-      .toMatchInlineSnapshot(`
+    expect(await fetchBelasting(authProfileAndToken)).toMatchInlineSnapshot(`
         {
           "content": {
             "isKnown": false,
@@ -27,8 +25,7 @@ describe('simple-connect/belasting', () => {
       status: 'BSN known',
     });
 
-    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
-      .toMatchInlineSnapshot(`
+    expect(await fetchBelasting(authProfileAndToken)).toMatchInlineSnapshot(`
         {
           "content": {
             "isKnown": true,
@@ -76,8 +73,7 @@ describe('simple-connect/belasting', () => {
         ],
       });
 
-    expect(await fetchBelasting(REQUEST_ID, authProfileAndToken))
-      .toMatchInlineSnapshot(`
+    expect(await fetchBelasting(authProfileAndToken)).toMatchInlineSnapshot(`
         {
           "content": {
             "isKnown": true,
@@ -88,7 +84,7 @@ describe('simple-connect/belasting', () => {
       `);
 
     expect(
-      await fetchBelastingNotifications(REQUEST_ID, authProfileAndToken)
+      await fetchBelastingNotifications(authProfileAndToken)
     ).toStrictEqual({
       content: {
         notifications: [

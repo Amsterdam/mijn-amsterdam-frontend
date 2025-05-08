@@ -16,7 +16,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 
 async function fetchAndTransformToeristischeVerhuur(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiSuccessResponse<ToeristischeVerhuur>> {
   if (!FeatureToggle.toeristischeVerhuurActive) {
@@ -30,17 +29,14 @@ async function fetchAndTransformToeristischeVerhuur(
   const lvvRegistratiesRequest =
     authProfileAndToken.profile.profileType === 'commercial'
       ? Promise.resolve(apiSuccessResult([]))
-      : fetchRegistraties(requestID, authProfileAndToken);
+      : fetchRegistraties(authProfileAndToken);
 
   const bbVergunningenRequest = fetchBBVergunningen(
-    requestID,
     authProfileAndToken.profile
   );
 
-  const vakantieverhuurVergunningenRequest = fetchVakantieverhuurVergunningen(
-    requestID,
-    authProfileAndToken
-  );
+  const vakantieverhuurVergunningenRequest =
+    fetchVakantieverhuurVergunningen(authProfileAndToken);
 
   const [
     lvvRegistratiesResponse,
@@ -87,7 +83,7 @@ export const fetchToeristischeVerhuur = memoize(
   {
     maxAge: DEFAULT_API_CACHE_TTL_MS,
     normalizer: function (args) {
-      return args[0] + JSON.stringify(args[1]);
+      return JSON.stringify(args[0]);
     },
   }
 );

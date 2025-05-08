@@ -61,20 +61,16 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export function clearSessionCache(requestID: RequestID) {
+export function clearSessionCache(cachekeyStartsWith: string) {
   for (const cacheKey of cache.keys()) {
-    if (cacheKey.startsWith(requestID)) {
+    if (cacheKey.startsWith(cachekeyStartsWith)) {
       cache.del(cacheKey);
     }
   }
 }
 
-export function getRequestConfigCacheKey(
-  requestID: string,
-  requestConfig: DataRequestConfig
-) {
+export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
   return [
-    requestID,
     requestConfig.method,
     requestConfig.url,
     requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
@@ -87,7 +83,6 @@ export function getRequestConfigCacheKey(
 
 export async function requestData<T>(
   config: DataRequestConfig,
-  requestID: RequestID,
   authProfileAndToken?: AuthProfileAndToken
 ) {
   const source = axios.CancelToken.source();
@@ -160,8 +155,7 @@ export async function requestData<T>(
   }
 
   // Construct a cache key based on unique properties of a request
-  const cacheKey =
-    config.cacheKey || getRequestConfigCacheKey(requestID, config);
+  const cacheKey = config.cacheKey || getRequestConfigCacheKey(config);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
@@ -213,7 +207,7 @@ export async function requestData<T>(
         {
           url: config.url,
         },
-        'cache hit'
+        'Cache hit'
       );
       cache.get(cacheKey).resolve(responseData);
     }

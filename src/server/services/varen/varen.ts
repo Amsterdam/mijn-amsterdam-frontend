@@ -81,12 +81,8 @@ function transformVarenZakenFrontend(
   return zakenFrontend;
 }
 
-async function fetchVaren_(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function fetchVaren_(authProfileAndToken: AuthProfileAndToken) {
   const response = await fetchDecosZaken(
-    requestID,
     authProfileAndToken,
     decosZaakTransformers
   );
@@ -115,6 +111,6 @@ async function fetchVaren_(
 export const fetchVaren = memoize(fetchVaren_, {
   maxAge: DEFAULT_API_CACHE_TTL_MS,
   normalizer: function (args) {
-    return args[0] + JSON.stringify(args[1]);
+    return JSON.stringify(args[0]);
   },
 });

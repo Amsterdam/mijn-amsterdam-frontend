@@ -141,25 +141,21 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
 }
 
 async function fetchKlachten(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   page: number = 1
 ): Promise<ApiResponse<KlachtenResponse>> {
-  const data = getDataForKlachten(authProfileAndToken.profile.id!, page);
+  const data = getDataForKlachten(authProfileAndToken.profile.id, page);
 
   return requestData<KlachtenResponse>(
     getApiConfig('ENABLEU_2_SMILE', {
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: `klachten-${requestID}`,
-    }),
-    requestID
+    })
   );
 }
 
 export async function fetchAllKlachten(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   let page = 0;
@@ -171,11 +167,7 @@ export async function fetchAllKlachten(
     klachten: [],
   };
 
-  const initalResponse = await fetchKlachten(
-    requestID,
-    authProfileAndToken,
-    page
-  );
+  const initalResponse = await fetchKlachten(authProfileAndToken, page);
 
   if (initalResponse.status === 'OK') {
     result.aantal = initalResponse.content.aantal;
@@ -185,11 +177,7 @@ export async function fetchAllKlachten(
       result.klachten.length < result.aantal &&
       result.klachten.length < MAX_KLACHTEN_COUNT
     ) {
-      const response = await fetchKlachten(
-        requestID,
-        authProfileAndToken,
-        (page += 1)
-      );
+      const response = await fetchKlachten(authProfileAndToken, (page += 1));
 
       if (response.status === 'OK') {
         result.klachten = result.klachten.concat(response.content.klachten);
@@ -205,10 +193,9 @@ export async function fetchAllKlachten(
 }
 
 export async function fetchKlachtenNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const KLACHTEN = await fetchAllKlachten(requestID, authProfileAndToken);
+  const KLACHTEN = await fetchAllKlachten(authProfileAndToken);
 
   if (KLACHTEN.status === 'OK') {
     const notifications: MyNotification[] = Array.isArray(KLACHTEN.content)

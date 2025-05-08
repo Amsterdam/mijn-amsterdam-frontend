@@ -34,12 +34,10 @@ function transformVergunningFrontend(
 }
 
 async function fetchVergunningen_(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   appRouteDetailPage: string = routeConfig.detailPage.path
 ): Promise<ApiResponse<VergunningFrontend[]>> {
   const response = await fetchDecosZaken(
-    requestID,
     authProfileAndToken,
     decosZaakTransformers
   );

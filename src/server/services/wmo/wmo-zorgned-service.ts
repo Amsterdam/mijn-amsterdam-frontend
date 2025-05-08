@@ -95,7 +95,6 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
 }
 
 export async function fetchZorgnedAanvragenWMO(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const requestBodyParams = {
@@ -103,14 +102,10 @@ export async function fetchZorgnedAanvragenWMO(
     regeling: ZORGNED_JZD_REGELING_IDENTIFICATIE,
   };
 
-  const aanvragenResponse = await fetchAanvragen(
-    requestID,
-    authProfileAndToken,
-    {
-      zorgnedApiConfigKey: 'ZORGNED_JZD',
-      requestBodyParams,
-    }
-  );
+  const aanvragenResponse = await fetchAanvragen(authProfileAndToken, {
+    zorgnedApiConfigKey: 'ZORGNED_JZD',
+    requestBodyParams,
+  });
 
   if (aanvragenResponse.status === 'OK') {
     // Filter the aanvragen that we should show in frontend.

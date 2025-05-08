@@ -19,13 +19,12 @@ export function getFeedEntryProperties<T>(
 }
 
 export async function getAfisApiConfig(
-  additionalConfig?: DataRequestConfig,
-  requestID?: RequestID
+  additionalConfig?: DataRequestConfig
 ): Promise<DataRequestConfig> {
   // If Afis EnableU is active, token fetching is taken care of by EnableU Gateway.
   const authHeader =
     getFromEnv('BFF_AFIS_ENABLE_DIRECT_TOKEN_FETCHING') === 'true'
-      ? await fetchAfisTokenHeader(requestID)
+      ? await fetchAfisTokenHeader()
       : { apiKey: getFromEnv('BFF_ENABLEU_API_KEY_AFIS') };
 
   const additionalConfigWithHeader: DataRequestConfig = {

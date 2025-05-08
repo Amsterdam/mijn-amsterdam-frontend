@@ -65,13 +65,11 @@ function fetchPowerBrowserToken_(): Promise<ApiResponse<PowerBrowserToken>> {
       apiKey: process.env.BFF_POWERBROWSER_TOKEN_API_KEY,
     },
   });
-  // Token is shared between all requests so we give a fixed requestID here.
-  return requestData<PowerBrowserToken>(requestConfig, 'powerbrowser-token');
+  return requestData<PowerBrowserToken>(requestConfig);
 }
 
 /** Fetch any data from Powerbrowser by extending a default `dataRequestConfig`. */
 async function fetchPowerBrowserData<T>(
-  requestID: RequestID,
   dataRequestConfigSpecific: DataRequestConfig
 ) {
   const tokenResponse = await fetchPowerBrowserToken();
@@ -87,7 +85,7 @@ async function fetchPowerBrowserData<T>(
     },
   };
 
-  const response = await requestData<T>(dataRequestConfig, requestID);
+  const response = await requestData<T>(dataRequestConfig);
 
   if (response.status === 'ERROR') {
     fetchPowerBrowserToken.clear();
@@ -97,7 +95,6 @@ async function fetchPowerBrowserData<T>(
 }
 
 async function fetchPersoonOrMaatschapIdByUid(
-  requestID: RequestID,
   options: FetchPersoonOrMaatschapIdByUidOptions
 ): Promise<ApiResponse<string | null>> {
   const requestConfig: DataRequestConfig = {
@@ -126,11 +123,10 @@ async function fetchPersoonOrMaatschapIdByUid(
       pageNumber: 0,
     },
   };
-  return fetchPowerBrowserData<string | null>(requestID, requestConfig);
+  return fetchPowerBrowserData<string | null>(requestConfig);
 }
 
 async function fetchZaakIds(
-  requestID: RequestID,
   options: FetchZaakIdsOptions
 ): Promise<ApiResponse<string[]>> {
   const requestConfig: DataRequestConfig = {
@@ -143,7 +139,7 @@ async function fetchZaakIds(
     data: [options.personOrMaatschapId],
   };
 
-  return fetchPowerBrowserData<string[]>(requestID, requestConfig);
+  return fetchPowerBrowserData<string[]>(requestConfig);
 }
 
 function getFieldValue(
@@ -294,10 +290,9 @@ function transformZaakStatusResponse(
 }
 
 async function fetchZaakAdres(
-  requestID: RequestID,
   zaakId: PBZaakRecord['id']
 ): Promise<ApiResponse_DEPRECATED<string | null>> {
-  const addressResponse = await fetchPowerBrowserData<string>(requestID, {
+  const addressResponse = await fetchPowerBrowserData<string>({
     method: 'post',
     formatUrl({ url }) {
       return `${url}/Link/GFO_ZAKEN/ADRESSEN/Table`;
@@ -328,43 +323,38 @@ async function fetchZaakAdres(
 }
 
 async function fetchZaakStatussen(
-  requestID: RequestID,
   zaak: BBVergunningFrontend
 ): Promise<ApiResponse_DEPRECATED<StatusLineItem[] | null>> {
-  const statusResponse = await fetchPowerBrowserData<StatusLineItem[]>(
-    requestID,
-    {
-      formatUrl({ url }) {
-        return `${url}/Report/RunSavedReport`;
-      },
-      transformResponse(responseData) {
-        return transformZaakStatusResponse(zaak, responseData);
-      },
-      data: {
-        reportFileName:
-          'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamStatus.gov',
-        Parameters: [
-          {
-            Name: 'GFO_ZAKEN_ID',
-            Type: 'String',
-            Value: {
-              StringValue: `${zaak.id}`,
-            },
+  const statusResponse = await fetchPowerBrowserData<StatusLineItem[]>({
+    formatUrl({ url }) {
+      return `${url}/Report/RunSavedReport`;
+    },
+    transformResponse(responseData) {
+      return transformZaakStatusResponse(zaak, responseData);
+    },
+    data: {
+      reportFileName:
+        'D:\\Genetics\\PowerForms\\Overzichten\\Wonen\\MijnAmsterdamStatus.gov',
+      Parameters: [
+        {
+          Name: 'GFO_ZAKEN_ID',
+          Type: 'String',
+          Value: {
+            StringValue: `${zaak.id}`,
           },
-        ],
-      },
-    }
-  );
+        },
+      ],
+    },
+  });
   return statusResponse;
 }
 
 async function fetchAndMergeDocuments(
-  requestID: RequestID,
   authProfile: AuthProfile,
   zaken: BBVergunningFrontend[]
 ): Promise<BBVergunningFrontend[]> {
   const documentRequests = zaken.map((zaak) => {
-    return fetchBBDocumentsList(requestID, authProfile, zaak.id);
+    return fetchBBDocumentsList(authProfile, zaak.id);
   });
   const documentResults = await Promise.allSettled(documentRequests);
   const zakenWithdocuments: BBVergunningFrontend[] = [];
@@ -384,11 +374,10 @@ async function fetchAndMergeDocuments(
 }
 
 async function fetchAndMergeZaakStatussen(
-  requestID: RequestID,
   zaken: BBVergunningFrontend[]
 ): Promise<BBVergunningFrontend[]> {
   const statussenRequests = zaken.map((zaak) => {
-    return fetchZaakStatussen(requestID, zaak);
+    return fetchZaakStatussen(zaak);
   });
   const statussenResults = await Promise.allSettled(statussenRequests);
   const zakenWithstatussen: BBVergunningFrontend[] = [];
@@ -410,11 +399,10 @@ async function fetchAndMergeZaakStatussen(
 }
 
 async function fetchAndMergeAdressen(
-  requestID: RequestID,
   zaken: BBVergunningFrontend[]
 ): Promise<BBVergunningFrontend[]> {
   const addressRequests = zaken.map((zaak) => {
-    return fetchZaakAdres(requestID, zaak.id);
+    return fetchZaakAdres(zaak.id);
   });
   const addressResults = await Promise.allSettled(addressRequests);
   const zakenWithAddress: BBVergunningFrontend[] = [];
@@ -512,7 +500,6 @@ function transformZaak(zaak: PBZaakRecord): BBVergunningFrontend {
 }
 
 async function fetchZakenByIds(
-  requestID: RequestID,
   authProfile: AuthProfile,
   zaakIds: string[]
 ): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend[] | null>> {
@@ -526,27 +513,19 @@ async function fetchZakenByIds(
     },
   };
 
-  const zakenResponse = await fetchPowerBrowserData<BBVergunningFrontend[]>(
-    requestID,
-    requestConfig
-  );
+  const zakenResponse =
+    await fetchPowerBrowserData<BBVergunningFrontend[]>(requestConfig);
 
   if (zakenResponse.status === 'OK') {
-    const zakenWithAddress = await fetchAndMergeAdressen(
-      requestID,
-      zakenResponse.content
-    );
+    const zakenWithAddress = await fetchAndMergeAdressen(zakenResponse.content);
 
     const zakenWithDocuments = await fetchAndMergeDocuments(
-      requestID,
       authProfile,
       zakenWithAddress
     );
     // Merge zaak statussen as last, some status steps need documents to be fetched first.
-    const zakenWithStatus = await fetchAndMergeZaakStatussen(
-      requestID,
-      zakenWithDocuments
-    );
+    const zakenWithStatus =
+      await fetchAndMergeZaakStatussen(zakenWithDocuments);
 
     return apiSuccessResult(zakenWithStatus);
   }
@@ -555,7 +534,6 @@ async function fetchZakenByIds(
 }
 
 export async function fetchBBVergunningen(
-  requestID: RequestID,
   authProfile: AuthProfile
 ): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend[] | null>> {
   // Set-up the options for the PowerBrowser API request based on the profile type.
@@ -582,13 +560,10 @@ export async function fetchBBVergunningen(
     return apiErrorResult('Profile type not supported', null);
   }
 
-  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(
-    requestID,
-    options
-  );
+  const persoonIdResponse = await fetchPersoonOrMaatschapIdByUid(options);
 
   if (persoonIdResponse.status === 'OK' && persoonIdResponse.content) {
-    const zakenIdsResponse = await fetchZaakIds(requestID, {
+    const zakenIdsResponse = await fetchZaakIds({
       personOrMaatschapId: persoonIdResponse.content,
       tableName: options.tableName,
     });
@@ -599,7 +574,6 @@ export async function fetchBBVergunningen(
 
     if (zakenIdsResponse.content.length) {
       const zakenResponse = await fetchZakenByIds(
-        requestID,
         authProfile,
         zakenIdsResponse.content
       );
@@ -704,7 +678,6 @@ function transformPowerbrowserLinksResponse(
 }
 
 export async function fetchBBDocumentsList(
-  requestID: RequestID,
   authProfile: AuthProfile,
   zaakId: BBVergunningFrontend['id']
 ): Promise<ApiResponse_DEPRECATED<BBVergunningFrontend['documents'] | null>> {
@@ -733,11 +706,10 @@ export async function fetchBBDocumentsList(
     },
   };
 
-  return fetchPowerBrowserData(requestID, dataRequestConfig);
+  return fetchPowerBrowserData(dataRequestConfig);
 }
 
 export async function fetchBBDocument(
-  requestID: RequestID,
   _authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ): Promise<ApiResponse<DocumentDownloadData>> {
@@ -764,10 +736,8 @@ export async function fetchBBDocument(
     },
   };
 
-  const response = await fetchPowerBrowserData<DocumentDownloadData>(
-    requestID,
-    dataRequestConfig
-  );
+  const response =
+    await fetchPowerBrowserData<DocumentDownloadData>(dataRequestConfig);
 
   return response;
 }

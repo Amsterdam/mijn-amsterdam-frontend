@@ -259,22 +259,18 @@ export function transformBRPData(
   };
 }
 
-export async function fetchBRP(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export async function fetchBRP(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('BRP', {
     transformResponse: transformBRPData,
   });
 
-  return requestData<BRPData>(config, requestID, authProfileAndToken);
+  return requestData<BRPData>(config, authProfileAndToken);
 }
 
 export async function fetchBrpNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
-  const BRP = await fetchBRP(requestID, authProfileAndToken);
+  const BRP = await fetchBRP(authProfileAndToken);
 
   if (BRP.status === 'OK') {
     return apiSuccessResult({
@@ -285,7 +281,6 @@ export async function fetchBrpNotifications(
 }
 
 export async function fetchAantalBewoners(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   addressKeyEncrypted: string
 ) {
@@ -306,7 +301,6 @@ export async function fetchAantalBewoners(
         return responseData.content;
       },
     },
-    requestID,
     authProfileAndToken
   );
 }

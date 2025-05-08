@@ -56,10 +56,7 @@ function transformSVWIResponse(
   };
 }
 
-export function fetchSVWI(
-  requestID: RequestID,
-  authProfileAndToken: AuthProfileAndToken
-) {
+export function fetchSVWI(authProfileAndToken: AuthProfileAndToken) {
   const apiConfig = getApiConfig('SVWI', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/autorisatie/tegel`;
@@ -67,15 +64,13 @@ export function fetchSVWI(
     transformResponse: transformSVWIResponse,
     postponeFetch: !featureToggle.svwiActive,
   });
-  return fetchService(requestID, apiConfig, false, authProfileAndToken);
+  return fetchService(apiConfig, false, authProfileAndToken);
 }
 
 export async function fetchSVWINotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   return await fetchTipsAndNotifications(
-    requestID,
     getApiConfig('SVWI', {
       transformResponse: transformSVWIResponse,
     }),

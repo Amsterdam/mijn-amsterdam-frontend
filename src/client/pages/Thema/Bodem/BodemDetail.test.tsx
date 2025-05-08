@@ -14,7 +14,7 @@ const metingen: LoodMetingFrontend[] = [
     datumAanvraag: '2022-12-01T09:53:11Z',
     datumAanvraagFormatted: '2022-12-01T09:53:11Z',
     decision: null,
-    status: 'Ontvangen',
+    displayStatus: 'Ontvangen',
     kenmerk: 'OL-000001',
     aanvraagNummer: 'AV-001447',
     rapportBeschikbaar: false,

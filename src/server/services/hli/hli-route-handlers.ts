@@ -22,7 +22,6 @@ export async function handleFetchTransactionsRequest(
   const authProfileAndToken = getAuth(req);
   if (authProfileAndToken) {
     const response = await fetchStadspasBudgetTransactions(
-      res.locals.requestID,
       req.params.transactionsKeyEncrypted,
       req.query.budgetCode as StadspasBudget['code'],
       authProfileAndToken.profile.sid
@@ -34,16 +33,10 @@ export async function handleFetchTransactionsRequest(
 }
 
 export async function fetchZorgnedAVDocument(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  const response = fetchDocument(
-    requestID,
-    authProfileAndToken,
-    'ZORGNED_AV',
-    documentId
-  );
+  const response = fetchDocument(authProfileAndToken, 'ZORGNED_AV', documentId);
   return response;
 }
 
@@ -58,7 +51,6 @@ export async function handleBlockStadspas(
   }
 
   const response = await blockStadspas(
-    res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     authProfileAndToken.profile.sid
   );
@@ -77,7 +69,6 @@ export async function handleUnblockStadspas(
   }
 
   const response = await unblockStadspas(
-    res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     authProfileAndToken.profile.sid
   );

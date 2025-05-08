@@ -5,7 +5,6 @@ import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 
 describe('Subsidie', () => {
   const authProfileAndToken = getAuthProfileAndToken();
-
   const content = {
     isKnown: true,
     notifications: [
@@ -25,10 +24,7 @@ describe('Subsidie', () => {
       .times(1)
       .reply(200, { content, status: 'OK' });
 
-    const result = await fetchSubsidieNotifications(
-      'xx22xx',
-      authProfileAndToken
-    );
+    const result = await fetchSubsidieNotifications(authProfileAndToken);
 
     expect(result.content).toEqual({
       notifications: [
@@ -50,7 +46,7 @@ describe('Subsidie', () => {
       .times(1)
       .reply(200, { content, status: 'OK' });
 
-    const result = await fetchSubsidieNotifications('xx22xx', {
+    const result = await fetchSubsidieNotifications({
       ...authProfileAndToken,
       profile: { ...authProfileAndToken.profile, authMethod: 'eherkenning' },
     });
@@ -74,10 +70,7 @@ describe('Subsidie', () => {
       .get(/\/subsidies\/citizen\/*/)
       .reply(500, { content: null, message: 'Error!', status: 'ERROR' });
 
-    const result = await fetchSubsidieNotifications(
-      'xx22xxNx',
-      authProfileAndToken
-    );
+    const result = await fetchSubsidieNotifications(authProfileAndToken);
 
     expect(result.content).toEqual(null);
     expect(result.status).toBe('ERROR');

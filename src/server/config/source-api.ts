@@ -11,7 +11,6 @@ import {
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
@@ -25,11 +24,18 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   // Construct an url that will be assigned to the url key in the local requestConfig.
   // Example: formatUrl: (requestConfig) => requestConfig.url + '/some/additional/path/segments/,
   formatUrl?: (requestConfig: DataRequestConfig) => string;
-
   /**
-   * The cacheKey is important if the automatically generated key doesn't suffice. For example if the url changes every request.
-   * This can be the case if an IV encrypted parameter is added (erfpacht) to the url. If the url changes everytime the cache won't be hit.
-   * In this case we can use a cacheKey. !!!!!Be sure this key is unique to the visitor.!!!!!! The for example the requestID parameter can be used.
+   * The cacheKey is important if the automatically generated key doesn't suffice.
+   * For example if the body/headers/url changes every request.
+   * This can be the case if an IV encrypted parameter is added (erfpacht) to the url.
+   * If the url changes everytime the cache won't be hit.
+   * In this case we can use a cacheKey. !!!!!
+   * Be sure this key is unique to the visitor -
+   * AND the request (or the visitor might recieve the same responses on too similar requests).!!!!!!
+   * For example the sessionID parameter in combination with a request identifier can be used -
+   *  if a request is not unique enough(this can happen when we use certificates in the -
+   *  httpsAgent config to identify an api user and we request data from that same api with different users.
+   * Alternatively you can also add a 'x-cache-key-supplement' header to make a request unique from other requests.
    */
   cacheKey?: string;
   enableCache?: boolean;
@@ -48,15 +54,15 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 }
 
 /* eslint-disable no-magic-numbers */
-export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of 45 seconds.
+export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 /* eslint-enable no-magic-numbers */
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
   method: 'get',
-  cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   enableCache: BFF_REQUEST_CACHE_ENABLED,
+  cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
   postponeFetch: false,
   passthroughOIDCToken: false,
   responseType: 'json',
@@ -135,7 +141,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': IS_DEVELOPMENT ? 'JZD' : undefined,
+      'x-cache-key-supplement': 'JZD',
     },
     httpsAgent: new https.Agent(httpsAgentConfigBFF),
   },
@@ -145,7 +151,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': IS_DEVELOPMENT ? 'AV' : undefined,
+      'x-cache-key-supplement': 'AV',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_AV_CERT'),
@@ -159,7 +165,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     headers: {
       Token: getFromEnv('BFF_ZORGNED_API_TOKEN'),
       'Content-type': 'application/json; charset=utf-8',
-      'X-Mams-Api-User': IS_DEVELOPMENT ? 'LLV' : undefined,
+      'x-cache-key-supplement': 'LLV',
     },
     httpsAgent: new https.Agent({
       cert: getCert('BFF_ZORGNED_LEERLINGENVERVOER_CERT'),

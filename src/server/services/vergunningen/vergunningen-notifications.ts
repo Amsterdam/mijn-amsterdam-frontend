@@ -163,11 +163,9 @@ export function getVergunningNotifications<
 }
 
 export async function fetchVergunningenNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const VERGUNNINGEN = await fetchVergunningen(
-    requestID,
     authProfileAndToken,
     routeConfig.detailPage.path
   );

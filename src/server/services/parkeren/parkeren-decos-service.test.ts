@@ -23,7 +23,6 @@ vi.mock('../vergunningen/vergunningen-status-steps', () => ({
 }));
 
 describe('parkeren-decos-service', () => {
-  const requestID = 'test-request-id';
   const authProfileAndToken = getAuthProfileAndToken();
 
   describe('fetchDecosParkeerVergunningen', () => {
@@ -34,13 +33,9 @@ describe('parkeren-decos-service', () => {
         apiSuccessResult(decosZaken)
       );
 
-      const result = await fetchDecosParkeerVergunningen(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchDecosParkeerVergunningen(authProfileAndToken);
 
       expect(fetchDecosZaken).toHaveBeenCalledWith(
-        requestID,
         authProfileAndToken,
         expect.anything() // decosZaakTransformers
       );
@@ -70,10 +65,7 @@ describe('parkeren-decos-service', () => {
         apiErrorResult('Error fetching Decos zaken', null)
       );
 
-      const result = await fetchDecosParkeerVergunningen(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchDecosParkeerVergunningen(authProfileAndToken);
       expect(result.status).toBe('ERROR');
     });
   });

@@ -142,17 +142,13 @@ function transformDeelbetalingenResponse(
 }
 
 async function fetchAfisFacturenDeelbetalingen(
-  requestID: RequestID,
   params: AfisFacturenParams
 ): Promise<ApiResponse_DEPRECATED<AfisFactuurDeelbetalingen | null>> {
-  const config = await getAfisApiConfig(
-    {
-      formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-      transformResponse: transformDeelbetalingenResponse,
-    },
-    requestID
-  );
-  return requestData<AfisFactuurDeelbetalingen>(config, requestID);
+  const config = await getAfisApiConfig({
+    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    transformResponse: transformDeelbetalingenResponse,
+  });
+  return requestData<AfisFactuurDeelbetalingen>(config);
 }
 
 function getFactuurnummer(
@@ -430,7 +426,6 @@ function determineFactuurStatusDescription(
 }
 
 export async function fetchAfisFacturen(
-  requestID: RequestID,
   sessionID: SessionID,
   params: AfisFacturenParams
 ): Promise<ApiResponse_DEPRECATED<AfisFacturenResponse | null>> {
@@ -438,7 +433,7 @@ export async function fetchAfisFacturen(
 
   if (params.state === 'open' || params.state === 'afgehandeld') {
     const facturenDeelbetalingenResponse =
-      await fetchAfisFacturenDeelbetalingen(requestID, {
+      await fetchAfisFacturenDeelbetalingen({
         state: 'deelbetalingen',
         businessPartnerID: params.businessPartnerID,
       });
@@ -451,35 +446,31 @@ export async function fetchAfisFacturen(
     }
   }
 
-  const config = await getAfisApiConfig(
-    {
-      formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
-      transformResponse: (responseData) =>
-        transformFacturen(responseData, sessionID, deelbetalingen),
-    },
-    requestID
-  );
+  const config = await getAfisApiConfig({
+    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    transformResponse: (responseData) =>
+      transformFacturen(responseData, sessionID, deelbetalingen),
+  });
 
-  return requestData<AfisFacturenResponse>(config, requestID);
+  return requestData<AfisFacturenResponse>(config);
 }
 
 export async function fetchAfisFacturenOverview(
-  requestID: RequestID,
   sessionID: SessionID,
   params: Omit<AfisFacturenParams, 'state' | 'top'>
 ) {
-  const facturenOpenRequest = fetchAfisFacturen(requestID, sessionID, {
+  const facturenOpenRequest = fetchAfisFacturen(sessionID, {
     state: 'open',
     businessPartnerID: params.businessPartnerID,
   });
 
-  const facturenClosedRequest = fetchAfisFacturen(requestID, sessionID, {
+  const facturenClosedRequest = fetchAfisFacturen(sessionID, {
     state: 'afgehandeld',
     businessPartnerID: params.businessPartnerID,
     top: '3',
   });
 
-  const facturenTransferredRequest = fetchAfisFacturen(requestID, sessionID, {
+  const facturenTransferredRequest = fetchAfisFacturen(sessionID, {
     state: 'overgedragen',
     businessPartnerID: params.businessPartnerID,
     top: '3',
@@ -569,15 +560,10 @@ export async function fetchAfisFacturenOverview(
 }
 
 export async function fetchAfisFacturenByState(
-  requestID: RequestID,
   sessionID: SessionID,
   params: AfisFacturenParams
 ) {
-  const facturenResponse = await fetchAfisFacturen(
-    requestID,
-    sessionID,
-    params
-  );
+  const facturenResponse = await fetchAfisFacturen(sessionID, params);
 
   if ((await facturenResponse.status) === 'OK') {
     return apiSuccessResult({

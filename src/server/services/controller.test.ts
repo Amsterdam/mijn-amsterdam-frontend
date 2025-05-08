@@ -111,10 +111,7 @@ describe('controller', () => {
       id: '9988',
     });
 
-    const results = await forTesting.getServiceResultsForTips(
-      'xx12xx',
-      reqMock
-    );
+    const results = await forTesting.getServiceResultsForTips(reqMock);
 
     expect(results).toMatchInlineSnapshot(`
       {
@@ -136,10 +133,7 @@ describe('controller', () => {
       authMethod: 'eherkenning',
       sid: '',
     });
-    const results2 = await forTesting.getServiceResultsForTips(
-      'xx12xx',
-      reqMock
-    );
+    const results2 = await forTesting.getServiceResultsForTips(reqMock);
 
     expect(results2).toMatchInlineSnapshot(`
       {
@@ -187,8 +181,6 @@ describe('controller', () => {
 
 describe('request handlers', () => {
   describe('CMS_CONTENT', async () => {
-    const reqID = 'xx-req-id-yy';
-
     test('profileType: private', async () => {
       const reqMock = await getReqMockWithOidc({
         sid: 'x123y',
@@ -197,9 +189,9 @@ describe('request handlers', () => {
         id: '9988',
       });
 
-      await forTesting.CMS_CONTENT(reqID, reqMock);
+      await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchCMSCONTENT).toHaveBeenCalledWith(reqID, {
+      expect(fetchCMSCONTENT).toHaveBeenCalledWith({
         profileType: 'private',
       });
     });
@@ -212,9 +204,9 @@ describe('request handlers', () => {
         id: '9988',
       });
 
-      await forTesting.CMS_CONTENT(reqID, reqMock);
+      await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchCMSCONTENT).toHaveBeenCalledWith(reqID, {
+      expect(fetchCMSCONTENT).toHaveBeenCalledWith({
         profileType: 'commercial',
       });
     });
@@ -229,9 +221,9 @@ describe('request handlers', () => {
 
       (reqMock as unknown as RequestMock).setQuery({ forceRenew: 'true' });
 
-      await forTesting.CMS_CONTENT(reqID, reqMock);
+      await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchCMSCONTENT).toHaveBeenCalledWith(reqID, {
+      expect(fetchCMSCONTENT).toHaveBeenCalledWith({
         profileType: 'commercial',
         forceRenew: 'true',
       });

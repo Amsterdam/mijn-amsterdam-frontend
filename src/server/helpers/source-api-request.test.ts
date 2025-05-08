@@ -58,8 +58,8 @@ describe('requestData.ts', () => {
   const SESS_ID_2 = 'y2';
   const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
-  const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
-  const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
+  const CACHE_KEY_1 = `get-${DUMMY_URL}-no-params-no-data-no-headers`;
+  const CACHE_KEY_2 = `get-${DUMMY_URL}-no-params-no-data-no-headers`;
 
   let axiosRequestSpy: MockInstance;
 
@@ -88,40 +88,30 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
     expect(rs).toStrictEqual(apiSuccessResult(DUMMY_RESPONSE));
   });
 
-  it('Should make request with passthrough headers', async () => {
-    remoteApi.get('/1').reply(200, DUMMY_RESPONSE_2);
+  it('Caches the response: Valid JSON', async () => {
+    remoteApi.get('/1').reply(200, '"whoa"');
 
     await requestData(
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(axiosRequestSpy).toHaveBeenCalledTimes(1);
-    // expect(axiosRequestSpy.mock.calls[0][0].headers).toEqual(HEADERS_FILTERED);
-  });
-
-  it('Caches the response: Valid JSON', async () => {
-    remoteApi.get('/1').reply(200, '"whoa"');
-
-    const rs = await requestData(
+    const response2 = await requestData(
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
+    expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(response2);
 
     // Should clear the cache timeout
     vi.runAllTimers();
@@ -136,7 +126,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -152,7 +141,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -161,50 +149,12 @@ describe('requestData.ts', () => {
     mocks.cacheEnabled = true;
   });
 
-  it('Caches the response per session id', async () => {
-    remoteApi.get('/1').reply(200, DUMMY_RESPONSE);
-    remoteApi.get('/1').reply(200, DUMMY_RESPONSE_2);
-
-    const rs = await requestData(
-      {
-        url: DUMMY_URL,
-      },
-      SESS_ID_1,
-      AUTH_PROFILE_AND_TOKEN
-    );
-
-    const rs2 = await requestData(
-      {
-        url: DUMMY_URL,
-      },
-      SESS_ID_2,
-      AUTH_PROFILE_AND_TOKEN
-    );
-
-    expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(
-      apiSuccessResult(DUMMY_RESPONSE)
-    );
-    expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
-    expect(await cache.get(CACHE_KEY_2).promise).toStrictEqual(
-      apiSuccessResult(DUMMY_RESPONSE_2)
-    );
-    expect(await cache.get(CACHE_KEY_2).promise).toStrictEqual(rs2);
-
-    expect(cache.keys()[0]).toBe(CACHE_KEY_1);
-    expect(cache.keys()[1]).toBe(CACHE_KEY_2);
-
-    vi.runAllTimers();
-
-    expect(cache.keys().length).toBe(0);
-  });
-
   it('A requests is postponed', async () => {
     const rs = await requestData(
       {
         url: DUMMY_URL,
         postponeFetch: true,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -219,7 +169,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL_2,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -261,7 +210,6 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -277,7 +225,6 @@ describe('requestData.ts', () => {
         url: DUMMY_URL,
         passthroughOIDCToken: true,
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -296,7 +243,6 @@ describe('requestData.ts', () => {
           Authorization: 'Bearer ababababab',
         },
       },
-      SESS_ID_1,
       AUTH_PROFILE_AND_TOKEN
     );
 
@@ -308,39 +254,37 @@ describe('requestData.ts', () => {
 
   test('getRequestConfigCacheKey', () => {
     expect(
-      getRequestConfigCacheKey('x1', {
+      getRequestConfigCacheKey({
         method: 'post',
         data: { foo: 'bar' },
       })
-    ).toMatchInlineSnapshot(`"x1-post--no-params-{"foo":"bar"}-no-headers"`);
+    ).toStrictEqual('post--no-params-{"foo":"bar"}-no-headers');
 
     expect(
-      getRequestConfigCacheKey('x2', {
+      getRequestConfigCacheKey({
         method: 'get',
         url: 'http://foo',
         params: { foo: 'bar' },
       })
-    ).toMatchInlineSnapshot(
-      `"x2-get-http://foo-{"foo":"bar"}-no-data-no-headers"`
-    );
+    ).toStrictEqual('get-http://foo-{"foo":"bar"}-no-data-no-headers');
 
     expect(
-      getRequestConfigCacheKey('x3', {
+      getRequestConfigCacheKey({
         method: 'get',
         url: 'http://foo',
       })
-    ).toMatchInlineSnapshot(`"x3-get-http://foo-no-params-no-data-no-headers"`);
+    ).toStrictEqual('get-http://foo-no-params-no-data-no-headers');
 
     expect(
-      getRequestConfigCacheKey('x4', {
+      getRequestConfigCacheKey({
         method: 'get',
         url: 'http://foo',
         headers: {
           Authorization: 'Bearer 123123123123',
         },
       })
-    ).toMatchInlineSnapshot(
-      `"x4-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}"`
+    ).toStrictEqual(
+      'get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
     );
   });
 });

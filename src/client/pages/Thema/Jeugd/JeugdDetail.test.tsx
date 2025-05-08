@@ -74,7 +74,7 @@ const besluitGenomenState: AppState['JEUGD'] = {
           datePublished: '2025-04-07T09:44:48.697',
         },
       ],
-      status: 'Besluit genomen',
+      displayStatus: 'Besluit genomen',
       statusDate: '2025-04-07T09:44:48.697',
       statusDateFormatted: '07 april 2025',
     },

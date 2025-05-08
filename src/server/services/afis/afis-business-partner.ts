@@ -52,7 +52,6 @@ function transformBusinessPartnerAddressResponse(
 }
 
 async function fetchBusinessPartnerAddress(
-  requestID: RequestID,
   businessPartnerId: string
 ): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerAddress | null>> {
   const additionalConfig: DataRequestConfig = {
@@ -62,15 +61,9 @@ async function fetchBusinessPartnerAddress(
     },
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(
-    additionalConfig,
-    requestID
-  );
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<AfisBusinessPartnerAddress>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerAddress>(businessPartnerRequestConfig);
 }
 
 function transformBusinessPartnerFullNameResponse(
@@ -89,10 +82,7 @@ function transformBusinessPartnerFullNameResponse(
   return null;
 }
 
-async function fetchBusinessPartnerFullName(
-  requestID: RequestID,
-  businessPartnerId: string
-) {
+async function fetchBusinessPartnerFullName(businessPartnerId: string) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformBusinessPartnerFullNameResponse,
     formatUrl(config) {
@@ -100,15 +90,9 @@ async function fetchBusinessPartnerFullName(
     },
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(
-    additionalConfig,
-    requestID
-  );
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<AfisBusinessPartnerDetails>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerDetails>(businessPartnerRequestConfig);
 }
 
 function transformPhoneResponse(
@@ -123,10 +107,7 @@ function transformPhoneResponse(
   return transformedResponse;
 }
 
-async function fetchPhoneNumber(
-  requestID: RequestID,
-  addressId: AfisBusinessPartnerAddress['id']
-) {
+async function fetchPhoneNumber(addressId: AfisBusinessPartnerAddress['id']) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformPhoneResponse,
     formatUrl(config) {
@@ -135,15 +116,9 @@ async function fetchPhoneNumber(
     postponeFetch: !FeatureToggle.afisBusinesspartnerPhoneActive,
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(
-    additionalConfig,
-    requestID
-  );
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<AfisBusinessPartnerPhone>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerPhone>(businessPartnerRequestConfig);
 }
 
 function transformEmailResponse(
@@ -158,10 +133,7 @@ function transformEmailResponse(
   return transformedResponse;
 }
 
-async function fetchEmail(
-  requestID: RequestID,
-  addressId: AfisBusinessPartnerAddress['id']
-) {
+async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformEmailResponse,
     formatUrl(config) {
@@ -169,30 +141,17 @@ async function fetchEmail(
     },
   };
 
-  const businessPartnerRequestConfig = await getAfisApiConfig(
-    additionalConfig,
-    requestID
-  );
+  const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<AfisBusinessPartnerEmail>(
-    businessPartnerRequestConfig,
-    requestID
-  );
+  return requestData<AfisBusinessPartnerEmail>(businessPartnerRequestConfig);
 }
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
-  requestID: RequestID,
   businessPartnerId: string
 ) {
-  const fullNameRequest = fetchBusinessPartnerFullName(
-    requestID,
-    businessPartnerId
-  );
-  const addressRequest = fetchBusinessPartnerAddress(
-    requestID,
-    businessPartnerId
-  );
+  const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
+  const addressRequest = fetchBusinessPartnerAddress(businessPartnerId);
 
   const [fullNameResult, addressResult] = await Promise.allSettled([
     fullNameRequest,
@@ -206,11 +165,8 @@ export async function fetchAfisBusinessPartnerDetails(
   let emailResponse: ApiResponse_DEPRECATED<AfisBusinessPartnerEmail | null>;
 
   if (addressResponse.status === 'OK' && addressResponse.content) {
-    const phoneRequest = fetchPhoneNumber(
-      requestID,
-      addressResponse.content.id
-    );
-    const emailRequest = fetchEmail(requestID, addressResponse.content.id);
+    const phoneRequest = fetchPhoneNumber(addressResponse.content.id);
+    const emailRequest = fetchEmail(addressResponse.content.id);
 
     const [phoneResponseSettled, emailResponseSettled] =
       await Promise.allSettled([phoneRequest, emailRequest]);

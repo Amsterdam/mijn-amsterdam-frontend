@@ -22,16 +22,11 @@ import {
 } from '../zorgned/zorgned-types';
 
 export async function fetchLeerlingenvervoer(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<LeerlingenvervoerVoorzieningFrontend[]>> {
-  const aanvragenResponse = await fetchAanvragen(
-    `LLV-${requestID}`,
-    authProfileAndToken,
-    {
-      zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
-    }
-  );
+  const aanvragenResponse = await fetchAanvragen(authProfileAndToken, {
+    zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+  });
   if (aanvragenResponse.status !== 'OK') {
     return aanvragenResponse;
   }

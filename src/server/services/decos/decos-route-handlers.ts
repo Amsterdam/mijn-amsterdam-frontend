@@ -40,7 +40,6 @@ export async function fetchDecosDocumentsList(
 
     const zaakKey: DecosZaakBase['key'] = decryptResult.content;
     const response = await fetchDecosDocumentList(
-      res.locals.requestID,
       authProfileAndToken.profile.sid,
       zaakKey
     );
@@ -118,7 +117,6 @@ export async function fetchZakenByUserIDs(
     const regexTop = /^\d+$/g;
 
     const response = await fetchDecosZakenFromSourceRaw(
-      res.locals.requestID,
       authProfileAndTokenSubject,
       selectFields,
       req.query?.filterCaseTypes?.replace(regexCaseTypeFilter, ''),

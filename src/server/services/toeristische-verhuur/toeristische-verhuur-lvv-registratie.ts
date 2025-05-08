@@ -16,7 +16,6 @@ import { requestData } from '../../helpers/source-api-request';
 import { isAmsterdamAddress } from '../buurt/helpers';
 
 export async function fetchRegistraties(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const registrationNumbersResponse = await requestData<string[]>(
@@ -34,8 +33,7 @@ export async function fetchRegistraties(
           r.registrationNumber.replaceAll(' ', '')
         );
       },
-    }),
-    requestID
+    })
   );
 
   if (registrationNumbersResponse.status !== 'OK') {
@@ -52,8 +50,7 @@ export async function fetchRegistraties(
             return `${url}/${registratienummer}`;
           },
           method: 'get',
-        }),
-        requestID
+        })
       );
     }) ?? []
   );

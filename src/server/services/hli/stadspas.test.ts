@@ -207,10 +207,7 @@ describe('stadspas services', () => {
       },
     });
 
-    const response = await fetchAdministratienummer(
-      'xyz123',
-      authProfileAndToken
-    );
+    const response = await fetchAdministratienummer(authProfileAndToken);
 
     expect(response).toMatchInlineSnapshot(`
       {
@@ -224,7 +221,7 @@ describe('stadspas services', () => {
     test('fail administratienummer endpoint', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-      const response = await fetchStadspassen_('8798712', authProfileAndToken);
+      const response = await fetchStadspassen_(authProfileAndToken);
 
       expect(response).toMatchInlineSnapshot(`
       {
@@ -246,7 +243,7 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
         .reply(401);
 
-      const response = await fetchStadspassen_('xyz123', authProfileAndToken);
+      const response = await fetchStadspassen_(authProfileAndToken);
 
       expect(response).toMatchInlineSnapshot(`
       {
@@ -285,7 +282,7 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
         .reply(200, defaultPasResponse);
 
-      const response = await fetchStadspassen_('0912039', authProfileAndToken);
+      const response = await fetchStadspassen_(authProfileAndToken);
 
       const expectedResponse = {
         content: {
@@ -318,10 +315,7 @@ describe('stadspas services', () => {
       test('Transforms pas correctly', async () => {
         setupStadspashouderRequests({ passen: [relevantPas] });
 
-        const response = await fetchStadspassen_(
-          'fake-request-id',
-          authProfileAndToken
-        );
+        const response = await fetchStadspassen_(authProfileAndToken);
         expect(response.content?.stadspassen[0]).toStrictEqual({
           actief: true,
           balance: 0,
@@ -380,10 +374,7 @@ describe('stadspas services', () => {
         const passen = [relevantPas, ...toFilterOutPasses];
         setupStadspashouderRequests({ passen });
 
-        const response = await fetchStadspassen_(
-          'fake-request-id',
-          authProfileAndToken
-        );
+        const response = await fetchStadspassen_(authProfileAndToken);
 
         expect(response.content?.stadspassen.length).toBe(
           passen.length - toFilterOutPasses.length
@@ -407,10 +398,7 @@ describe('stadspas services', () => {
           ],
         });
 
-        const response = await fetchStadspassen_(
-          'fake-request-id',
-          authProfileAndToken
-        );
+        const response = await fetchStadspassen_(authProfileAndToken);
         expect(response.content?.stadspassen.length).toBe(0);
       });
 
@@ -427,10 +415,7 @@ describe('stadspas services', () => {
           ],
         });
 
-        const response = await fetchStadspassen_(
-          'fake-request-id',
-          authProfileAndToken
-        );
+        const response = await fetchStadspassen_(authProfileAndToken);
 
         expect(response.content?.stadspassen.length).toBe(1);
       });
@@ -456,10 +441,7 @@ describe('stadspas services', () => {
         ];
         setupStadspashouderRequests({ sub_pashouders });
 
-        const response = await fetchStadspassen_(
-          'fake-request-id',
-          authProfileAndToken
-        );
+        const response = await fetchStadspassen_(authProfileAndToken);
         expect(response.content?.stadspassen.length).toBe(
           passen.length - passesToFilterOut.length
         );
@@ -493,7 +475,6 @@ describe('stadspas services', () => {
     );
 
     const response = await fetchStadspasBudgetTransactions(
-      'abc123',
       transactionsKeyEncrypted,
       undefined,
       'my-unique-session-id'
@@ -524,7 +505,6 @@ describe('stadspas services', () => {
     );
 
     const response = await fetchStadspasBudgetTransactions(
-      'xyz098',
       transactionsKeyEncrypted,
       undefined,
       'foo-bar'
@@ -542,7 +522,6 @@ describe('stadspas services', () => {
 
   test('stadspas transacties bad encrypted key', async () => {
     const response = await fetchStadspasBudgetTransactions(
-      'xyz098',
       'FOO.BAR.XYZ',
       undefined,
       'foo-bar'
@@ -559,7 +538,6 @@ describe('stadspas services', () => {
   });
 
   describe('fetchStadspasDiscountTransactions', async () => {
-    const requestID = 'xyz098';
     const administratienummer = 'administratienummer123';
     const passNumber = 123456789;
 
@@ -586,7 +564,6 @@ describe('stadspas services', () => {
         .reply(200, apiResponse);
 
       const response = await fetchGpassDiscountTransactions(
-        requestID,
         administratienummer,
         passNumber
       );
@@ -606,7 +583,7 @@ describe('stadspas services', () => {
       (mutateGpassBlockPass as Mock).mockReturnValueOnce(
         apiSuccessResult({ '6012345678901': false })
       );
-      const response = await blockStadspas('12345', transactionsKeyEncrypted);
+      const response = await blockStadspas(transactionsKeyEncrypted);
       expect(response).toMatchInlineSnapshot(
         {
           content: {

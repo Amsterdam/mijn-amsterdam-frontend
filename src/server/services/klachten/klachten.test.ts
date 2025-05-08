@@ -10,8 +10,6 @@ import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { ApiConfig } from '../../config/source-api';
 
 describe('Klachten', () => {
-  const requestId = '456';
-
   const profileAndToken = getAuthProfileAndToken();
 
   ApiConfig.ENABLEU_2_SMILE.postponeFetch = false;
@@ -26,7 +24,7 @@ describe('Klachten', () => {
       List: apiResponse.List.slice(0, 5),
     });
 
-    const res = await fetchAllKlachten(requestId, profileAndToken);
+    const res = await fetchAllKlachten(profileAndToken);
 
     expect(scope!.isDone()).toBeTruthy();
     expect(res.status).toBe('OK');
@@ -46,7 +44,7 @@ describe('Klachten', () => {
         List: apiResponse.List.slice(5, 10),
       });
 
-    const res = await fetchAllKlachten(requestId, profileAndToken);
+    const res = await fetchAllKlachten(profileAndToken);
 
     expect(scope!.isDone()).toBeTruthy();
     expect(res.status).toBe('OK');
@@ -54,12 +52,12 @@ describe('Klachten', () => {
   });
 
   it('klachtenNotifications: should generate the expected response', async () => {
-    const scope = remoteApi.post('/smile').reply(200, {
+    remoteApi.post('/smile').reply(200, {
       rowcount: 5,
       List: apiResponse.List.slice(5, 10),
     });
 
-    const res = await fetchKlachtenNotifications(requestId, profileAndToken);
+    const res = await fetchKlachtenNotifications(profileAndToken);
 
     expect(res).toStrictEqual({
       content: {
@@ -155,7 +153,7 @@ describe('Klachten', () => {
 
   it('should return data in expected format', async () => {
     remoteApi.post('/smile').reply(200, apiResponse);
-    const res = await fetchAllKlachten(requestId, profileAndToken);
+    const res = await fetchAllKlachten(profileAndToken);
     expect(res.content?.map((klacht) => klacht.id)).toStrictEqual([
       '23054',
       '250566',

@@ -51,26 +51,24 @@ import {
   fetchTozo,
 } from './wpi';
 
-// Default service call just passing requestID and query params as arguments
+// Default service call just passing query params as arguments
 function callAuthenticatedService<T>(
   fetchService: (
-    requestID: RequestID,
     authProfileAndToken: AuthProfileAndToken,
     ...args: any[]
   ) => Promise<T>
 ) {
-  return async (requestID: RequestID, req: Request) => {
+  return async (req: Request) => {
     const authProfileAndToken = getAuth(req);
     if (!authProfileAndToken) {
       return apiErrorResult('Not authorized', null);
     }
-    return fetchService(requestID, authProfileAndToken);
+    return fetchService(authProfileAndToken);
   };
 }
 
 function callPublicService<T>(fetchService: (...args: any) => Promise<T>) {
-  return async (requestID: RequestID, req: Request) =>
-    fetchService(requestID, queryParams(req));
+  return async (req: Request) => fetchService(queryParams(req));
 }
 
 function getServiceMap(profileType: ProfileType) {
@@ -108,9 +106,9 @@ export function addServiceResultHandler<
  * The service methods
  */
 // Public services
-const CMS_CONTENT = (requestID: RequestID, req: Request) => {
+const CMS_CONTENT = (req: Request) => {
   const auth = getAuth(req);
-  return fetchCMSCONTENT(requestID, {
+  return fetchCMSCONTENT({
     profileType: auth?.profile.profileType,
     ...queryParams(req),
   });
@@ -158,12 +156,11 @@ const AFVALPUNTEN = callAuthenticatedService(fetchAfvalPunten);
 const MY_LOCATION = callAuthenticatedService(fetchMyLocation);
 
 // Special services that aggregates NOTIFICATIONS from various services
-export const NOTIFICATIONS = async (requestID: RequestID, req: Request) => {
+export const NOTIFICATIONS = async (req: Request) => {
   const authProfileAndToken = getAuth(req);
-  const serviceResults = await getServiceResultsForTips(requestID, req);
+  const serviceResults = await getServiceResultsForTips(req);
   const notificationsWithTipsInserted =
     await fetchNotificationsWithTipsInserted(
-      requestID,
       serviceResults,
       authProfileAndToken
     );
@@ -336,7 +333,6 @@ export const servicesTipsByProfileType = {
 };
 
 export function loadServices(
-  requestID: RequestID,
   req: Request,
   serviceMap:
     | PrivateServices
@@ -345,7 +341,7 @@ export function loadServices(
 ) {
   return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
     // Return service result as Object like { SERVICE_ID: result }
-    return fetchService(requestID, req)
+    return fetchService(req)
       .then((result) => ({
         [serviceID]: result,
       }))
@@ -362,7 +358,6 @@ export function loadServices(
 }
 
 export async function loadServicesSSE(req: Request, res: Response) {
-  const requestID = res.locals.requestID;
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
@@ -375,7 +370,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
   // Determine the services to be loaded for certain profile types
   const serviceMap = getServiceMap(profileType);
   const serviceIds = Object.keys(serviceMap);
-  const servicePromises = loadServices(requestID, req, serviceMap);
+  const servicePromises = loadServices(req, serviceMap);
 
   // Add result handler that sends the service result via the EventSource stream
   servicePromises.forEach((servicePromise, index) =>
@@ -390,7 +385,6 @@ export async function loadServicesSSE(req: Request, res: Response) {
 }
 
 export async function loadServicesAll(req: Request, res: Response) {
-  const requestID = res.locals.requestID;
   const authProfileAndToken = getAuth(req);
 
   if (!authProfileAndToken) {
@@ -398,7 +392,7 @@ export async function loadServicesAll(req: Request, res: Response) {
   }
 
   const serviceMap = getServiceMap(authProfileAndToken.profile.profileType);
-  const servicePromises = loadServices(requestID, req, serviceMap);
+  const servicePromises = loadServices(req, serviceMap);
 
   // Combine all results into 1 object
   const serviceResults = (await Promise.all(servicePromises)).reduce(
@@ -413,14 +407,13 @@ export async function loadServicesAll(req: Request, res: Response) {
  * Services specific to TIPS
  * Retrieves service results based on profile type to generate tips.
  */
-async function getServiceResultsForTips(requestID: RequestID, req: Request) {
+async function getServiceResultsForTips(req: Request) {
   let requestData = null;
 
   const auth = getAuth(req);
 
   if (auth) {
     const servicePromises = loadServices(
-      requestID,
       req,
       getServiceTipsMap(auth.profile.profileType) as any
     );

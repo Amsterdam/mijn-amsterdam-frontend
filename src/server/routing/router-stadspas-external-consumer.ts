@@ -167,10 +167,8 @@ async function sendAdministratienummerResponse(
     authProfileAndToken?.profile.id &&
     authProfileAndToken.profile.profileType === 'private'
   ) {
-    const administratienummerResponse = await fetchAdministratienummer(
-      res.locals.requestID,
-      authProfileAndToken
-    );
+    const administratienummerResponse =
+      await fetchAdministratienummer(authProfileAndToken);
 
     // Administratienummer found, encrypt and send
     if (
@@ -190,8 +188,7 @@ async function sendAdministratienummerResponse(
 
       // Deliver the token with administratienummer to app.amsterdam.nl
       const deliveryResponse = await requestData<{ detail: 'Success' }>(
-        requestConfig,
-        res.locals.requestID
+        requestConfig
       );
 
       if (
@@ -268,10 +265,8 @@ async function sendStadspassenResponse(
   }
 
   if (administratienummer !== undefined) {
-    const stadspassenResponse = await fetchStadspassenByAdministratienummer(
-      res.locals.requestID,
-      administratienummer
-    );
+    const stadspassenResponse =
+      await fetchStadspassenByAdministratienummer(administratienummer);
 
     if (stadspassenResponse.status === 'OK') {
       // Add transactionsKey to response
@@ -309,7 +304,6 @@ async function sendDiscountTransactionsResponse(
   res: Response
 ) {
   const response = await fetchStadspasDiscountTransactions(
-    res.locals.requestID,
     req.params.transactionsKeyEncrypted
   );
 
@@ -327,7 +321,6 @@ async function sendBudgetTransactionsResponse(
   res: Response
 ) {
   const response = await fetchStadspasBudgetTransactions(
-    res.locals.requestID,
     req.params.transactionsKeyEncrypted,
     req.query?.budgetCode as StadspasBudget['code']
   );
@@ -339,10 +332,7 @@ async function sendStadspasBlockRequest(
   req: TransactionKeysEncryptedRequest,
   res: Response
 ) {
-  const response = await blockStadspas(
-    res.locals.requestID,
-    req.params.transactionsKeyEncrypted
-  );
+  const response = await blockStadspas(req.params.transactionsKeyEncrypted);
   return sendResponse(res, response);
 }
 

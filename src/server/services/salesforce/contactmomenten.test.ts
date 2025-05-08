@@ -24,9 +24,7 @@ describe('Contactmomenten service', () => {
   it('should transform the data correctly', async () => {
     remoteApi.get(/salesforce\/contactmomenten/).reply(200, responseData);
 
-    const requestID = '123';
-
-    const result = await fetchContactmomenten(requestID, profileAndToken);
+    const result = await fetchContactmomenten(profileAndToken);
     expect(result.status).toBe('OK');
     expect(result.content).toEqual([
       {

@@ -278,7 +278,6 @@ describe('vergunningen-notifications', () => {
   });
 
   describe('fetchVergunningenNotifications', () => {
-    const requestID = 'test-request-id';
     const authProfileAndToken = getAuthProfileAndToken();
 
     it('should return notifications if fetchVergunningen is successful', async () => {
@@ -295,10 +294,7 @@ describe('vergunningen-notifications', () => {
         apiSuccessResult(vergunningen)
       );
 
-      const result = await fetchVergunningenNotifications(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchVergunningenNotifications(authProfileAndToken);
       expect(result.status).toBe('OK');
       expect(result.content?.notifications).toHaveLength(1);
       expect(result.content?.notifications[0]).toHaveProperty(
@@ -312,10 +308,7 @@ describe('vergunningen-notifications', () => {
         apiErrorResult('Error fetching vergunningen', null)
       );
 
-      const result = await fetchVergunningenNotifications(
-        requestID,
-        authProfileAndToken
-      );
+      const result = await fetchVergunningenNotifications(authProfileAndToken);
       expect(result.status).toBe('DEPENDENCY_ERROR');
     });
   });

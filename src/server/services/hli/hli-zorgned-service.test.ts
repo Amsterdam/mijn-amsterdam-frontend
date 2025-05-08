@@ -22,6 +22,7 @@ describe('hli-zorgned-service', () => {
       authMethod: 'digid',
     },
     token: '',
+    expiresAtMilliseconds: 0,
   };
 
   test('transformToAdministratienummer', () => {
@@ -58,10 +59,7 @@ describe('hli-zorgned-service', () => {
         },
       } as ZorgnedPersoonsgegevensNAWResponse);
 
-      const response = await fetchAdministratienummer(
-        'x0xx',
-        authProfileAndToken
-      );
+      const response = await fetchAdministratienummer(authProfileAndToken);
 
       expect(response).toStrictEqual({
         content: '03630000567890',
@@ -72,10 +70,7 @@ describe('hli-zorgned-service', () => {
     test('No person found in system response', async () => {
       remoteApi.post(persoongegevensURL).reply(404);
 
-      const response = await fetchAdministratienummer(
-        'x2xx',
-        authProfileAndToken
-      );
+      const response = await fetchAdministratienummer(authProfileAndToken);
 
       expect(response).toStrictEqual({
         content: null,
@@ -86,10 +81,7 @@ describe('hli-zorgned-service', () => {
     test('Server error response', async () => {
       remoteApi.post(persoongegevensURL).reply(500);
 
-      const response = await fetchAdministratienummer(
-        'x2xx',
-        authProfileAndToken
-      );
+      const response = await fetchAdministratienummer(authProfileAndToken);
 
       expect(response).toStrictEqual({
         code: 500,
@@ -148,10 +140,7 @@ describe('hli-zorgned-service', () => {
       .spyOn(zorgnedService, 'fetchAanvragenWithRelatedPersons')
       .mockResolvedValueOnce({ content: [], status: 'OK' });
 
-    const result = await fetchZorgnedAanvragenHLI(
-      'xxx9xxx',
-      authProfileAndToken
-    );
+    const result = await fetchZorgnedAanvragenHLI(authProfileAndToken);
 
     expect(fetchAanvragenSpy).toHaveBeenCalled();
     expect(result).toMatchInlineSnapshot(`
@@ -178,10 +167,7 @@ describe('hli-zorgned-service', () => {
         status: 'OK',
       });
 
-    const result = await fetchZorgnedAanvragenHLI(
-      'xxx4xxx',
-      authProfileAndToken
-    );
+    const result = await fetchZorgnedAanvragenHLI(authProfileAndToken);
 
     expect(fetchAanvragenSpy).toHaveBeenCalled();
 
@@ -215,10 +201,7 @@ describe('hli-zorgned-service', () => {
         status: 'OK',
       });
 
-    const result = await fetchZorgnedAanvragenHLI(
-      'xxx1xxx',
-      authProfileAndToken
-    );
+    const result = await fetchZorgnedAanvragenHLI(authProfileAndToken);
 
     expect(fetchAanvragenSpy).toHaveBeenCalled();
     expect(result).toMatchInlineSnapshot(`

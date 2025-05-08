@@ -31,7 +31,6 @@ const REGISTRATIES_DUMMY_RESPONSE = {
 };
 
 const DUMMY_TOKEN = 'xxxxx';
-
 const authProfileAndToken = getAuthProfileAndToken();
 
 describe('Toeristische verhuur service', () => {
@@ -78,7 +77,7 @@ describe('Toeristische verhuur service', () => {
       },
     ]);
 
-    const response = await fetchToeristischeVerhuur('x1', authProfileAndToken);
+    const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
     expect(response.content.lvvRegistraties.length).toBeGreaterThan(0);
 
@@ -106,7 +105,7 @@ describe('Toeristische verhuur service', () => {
       .post((url) => url.includes('/search/books?properties=false&select=key'))
       .replyWithError('No can do!');
 
-    const response = await fetchToeristischeVerhuur('x3', authProfileAndToken);
+    const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
     expect(response.content.lvvRegistraties.length).toBeGreaterThan(0);
     expect(response.content.vakantieverhuurVergunningen.length).toBe(0);
@@ -121,7 +120,7 @@ describe('Toeristische verhuur service', () => {
 
   it('Should respond with 1 failed dependency: registrationNumbers failed', async () => {
     remoteApi.post('/lvv/bsn').replyWithError('Not Available');
-    const response = await fetchToeristischeVerhuur('x4', authProfileAndToken);
+    const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
       status: 'DEPENDENCY_ERROR',
@@ -137,7 +136,7 @@ describe('Toeristische verhuur service', () => {
       .replyWithError('No can do!');
     remoteApi.get(/lvv/).times(2).replyWithError('blap!');
 
-    const response = await fetchToeristischeVerhuur('x5', authProfileAndToken);
+    const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
     expect(response.failedDependencies?.lvvRegistraties).toStrictEqual({
       status: 'ERROR',
@@ -155,10 +154,7 @@ describe('Toeristische verhuur service', () => {
   });
 
   it('Should return only vergunningen if commercial profiletype', async () => {
-    const response = await fetchToeristischeVerhuur(
-      'x4.b',
-      authProfileAndToken
-    );
+    const response = await fetchToeristischeVerhuur(authProfileAndToken);
 
     expect(response.content.lvvRegistraties.length).toBe(0);
   });

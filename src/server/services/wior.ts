@@ -36,7 +36,6 @@ function getNotification(bbox: LatLngBoundsLiteral) {
 }
 
 export async function fetchWiorNotifications(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const datasetId = 'wior';
@@ -55,18 +54,15 @@ export async function fetchWiorNotifications(
       },
     },
   };
-  const wiorMeldingen = await fetchDataset(
-    requestID,
-    datasetId,
-    config,
-    {}
-  ).then((result) => {
-    return {
-      ...result,
-      id: datasetId,
-    };
-  });
-  const MY_LOCATION = await fetchMyLocation(requestID, authProfileAndToken);
+  const wiorMeldingen = await fetchDataset(datasetId, config, {}).then(
+    (result) => {
+      return {
+        ...result,
+        id: datasetId,
+      };
+    }
+  );
+  const MY_LOCATION = await fetchMyLocation(authProfileAndToken);
 
   if (
     MY_LOCATION.status === 'OK' &&

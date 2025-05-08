@@ -67,7 +67,7 @@ router.get(
   BffEndpoints.SERVICES_TIPS,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const response = await NOTIFICATIONS(res.locals.requestID, req);
+      const response = await NOTIFICATIONS(req);
       const tips =
         response.content?.filter((notification) => notification.isTip) ?? [];
       return res.json(tips);
@@ -119,7 +119,6 @@ router.get(
 
     if (authProfileAndToken) {
       const bewonersResponse = await fetchAantalBewoners(
-        res.locals.requestID,
         authProfileAndToken,
         req.params.addressKeyEncrypted
       );
@@ -150,7 +149,6 @@ if (!IS_PRODUCTION) {
       }
       res.send(
         await fetchDecosWorkflowDates(
-          res.locals.requestID,
           req.query.key,
           req.query.stepTitles?.split(',') ?? [],
           req.query.select?.split(',')
@@ -192,7 +190,6 @@ router.get(
     const authProfileAndToken = getAuth(req);
     if (authProfileAndToken) {
       const response = await fetchErfpachtDossiersDetail(
-        res.locals.requestID,
         authProfileAndToken,
         req.params.dossierNummerUrlParam
       );

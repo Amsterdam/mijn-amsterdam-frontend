@@ -12,11 +12,9 @@ import {
 import { getStatusSteps } from '../vergunningen/vergunningen-status-steps';
 
 export async function fetchVakantieverhuurVergunningen(
-  requestID: RequestID,
   authProfileAndToken: AuthProfileAndToken
 ) {
   const response = await fetchDecosZaken(
-    requestID,
     authProfileAndToken,
     decosZaakTransformers
   );

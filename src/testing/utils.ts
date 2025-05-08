@@ -48,11 +48,6 @@ export function getAuthProfileAndToken(
     expiresAtMilliseconds,
     token: 'tttttttttttttttttttttttttttttt',
   };
-
-  if (profileType === 'commercial') {
-    authProfileAndToken.profile.authMethod = 'eherkenning';
-  }
-
   return authProfileAndToken;
 }
 
