@@ -14,7 +14,7 @@ export function AanbiedenDienstenEnStraatartiestenContent({
   vergunning: VergunningFrontend<AanbiedenDiensten | Straatartiesten>;
 }) {
   const waarvoor = () =>
-    vergunning.caseType == 'Straatartiesten' && vergunning.category
+    vergunning.category
       ? {
           label: 'Waarvoor',
           content: vergunning.category,
