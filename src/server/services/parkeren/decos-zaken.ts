@@ -30,10 +30,6 @@ import {
   transformBoolean,
 } from '../decos/decos-helpers';
 import { DecosZaakTransformer } from '../decos/decos-types';
-import {
-  caseNotificationLabelsDefault,
-  caseNotificationLabelsExpirables,
-} from '../vergunningen/vergunningen-notification-labels';
 
 const GPP: DecosZaakTransformer<GPP> = {
   isActive: true,
@@ -52,7 +48,6 @@ const GPP: DecosZaakTransformer<GPP> = {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsDefault,
 };
 
 const GPK: DecosZaakTransformer<GPK> = {
@@ -90,7 +85,6 @@ const GPK: DecosZaakTransformer<GPK> = {
     num3: { name: 'cardNumber' },
     text7: { name: 'cardType' },
   },
-  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 const BZP: DecosZaakTransformer<BZP> = {
@@ -108,7 +102,6 @@ const BZP: DecosZaakTransformer<BZP> = {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 const BZB: DecosZaakTransformer<BZB> = {
@@ -122,7 +115,6 @@ const BZB: DecosZaakTransformer<BZB> = {
     company: { name: 'companyName' },
     num6: { name: 'numberOfPermits' },
   },
-  notificationLabels: caseNotificationLabelsDefault,
 };
 
 const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
@@ -223,7 +215,6 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
 
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffen> =
@@ -261,7 +252,6 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
         getCustomTitleForDecosZaakWithLicensePlates(vergunning);
       return vergunning;
     },
-    notificationLabels: caseNotificationLabelsDefault,
   };
 
 const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
@@ -287,7 +277,6 @@ const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsDefault,
 };
 
 const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
@@ -324,7 +313,6 @@ const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
       }
       return vergunning;
     },
-    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const decosCaseToZaakTransformers = {

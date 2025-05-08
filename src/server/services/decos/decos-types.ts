@@ -4,7 +4,6 @@ import {
   GenericDocument,
   ZaakDetail,
 } from '../../../universal/types/App.types';
-import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
   text39: string;
@@ -185,8 +184,6 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.
   isActive: boolean;
-  // Notifications for this specific
-  notificationLabels?: Partial<NotificationLabelByType>;
 };
 
 export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
