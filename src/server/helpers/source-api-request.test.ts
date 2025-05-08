@@ -111,14 +111,21 @@ describe('requestData.ts', () => {
   it('Caches the response: Valid JSON', async () => {
     remoteApi.get('/1').reply(200, '"whoa"');
 
-    const rs = await requestData(
+    await requestData(
       {
         url: DUMMY_URL,
       },
       AUTH_PROFILE_AND_TOKEN
     );
 
-    expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
+    const response2 = await requestData(
+      {
+        url: DUMMY_URL,
+      },
+      AUTH_PROFILE_AND_TOKEN
+    );
+
+    expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(response2);
 
     // Should clear the cache timeout
     vi.runAllTimers();
