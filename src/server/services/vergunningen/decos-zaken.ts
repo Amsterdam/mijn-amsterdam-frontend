@@ -464,6 +464,8 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     title: 'status',
   },
   async afterTransform(vergunning) {
+    // TODO: find out if Sloterweg zaken are still not being processed on insertion into the database.
+
     vergunning.processed = true;
 
     if (!vergunning.decision) {

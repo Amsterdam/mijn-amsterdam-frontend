@@ -11,6 +11,7 @@ import {
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
+import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
@@ -56,13 +57,14 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 /* eslint-disable no-magic-numbers */
 export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
+export const ACC_API_CACHE_TTL_MS = 45 * ONE_SECOND_MS;
 /* eslint-enable no-magic-numbers */
 
 export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
   method: 'get',
   enableCache: BFF_REQUEST_CACHE_ENABLED,
-  cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
+  cacheTimeout: IS_PRODUCTION ? DEFAULT_API_CACHE_TTL_MS : ACC_API_CACHE_TTL_MS,
   postponeFetch: false,
   passthroughOIDCToken: false,
   responseType: 'json',
