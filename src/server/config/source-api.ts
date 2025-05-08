@@ -24,11 +24,18 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   // Construct an url that will be assigned to the url key in the local requestConfig.
   // Example: formatUrl: (requestConfig) => requestConfig.url + '/some/additional/path/segments/,
   formatUrl?: (requestConfig: DataRequestConfig) => string;
-
   /**
-   * The cacheKey is important if the automatically generated key doesn't suffice. For example if the body/headers/url changes every request.
-   * This can be the case if an IV encrypted parameter is added (erfpacht) to the url. If the url changes everytime the cache won't be hit.
-   * In this case we can use a cacheKey. !!!!!Be sure this key is unique to the visitor.!!!!!! For example the sessionID parameter can be used if a request is not unique enough.
+   * The cacheKey is important if the automatically generated key doesn't suffice.
+   * For example if the body/headers/url changes every request.
+   * This can be the case if an IV encrypted parameter is added (erfpacht) to the url.
+   * If the url changes everytime the cache won't be hit.
+   * In this case we can use a cacheKey. !!!!!
+   * Be sure this key is unique to the visitor -
+   * AND the request (or the visitor might recieve the same responses on too similar requests).!!!!!!
+   * For example the sessionID parameter in combination with a request identifier can be used -
+   *  if a request is not unique enough(this can happen when we use certificates in the -
+   *  httpsAgent config to identify an api user and we request data from that same api with different users.
+   * Alternatively you can also add a 'x-cache-key-supplement' header to make a request unique from other requests.
    */
   cacheKey?: string;
   enableCache?: boolean;
