@@ -3,6 +3,7 @@ import MockDate from 'mockdate';
 import {
   isNearEndDate,
   getCustomTitleForVergunningWithLicensePlates,
+  getLifetimeTriggerDate,
 } from './vergunningen-helpers';
 import { TouringcarDagontheffing } from '../parkeren/config-and-types';
 
@@ -64,6 +65,38 @@ describe('vergunningen/helpers', () => {
           kentekens: 'AA-BB-CC | DDD-EE-F | ZZ-XX-00 | THJ-789-I',
         } as TouringcarDagontheffing)
       ).toMatchInlineSnapshot(`"blaap (AA-BB-CC... +3)"`);
+    });
+  });
+
+  describe('getLifetimeTriggerDate', () => {
+    test('Calculates trigger date with default percentage', () => {
+      expect(
+        getLifetimeTriggerDate('2023-01-01', '2023-12-31').toISOString()
+      ).toEqual('2023-10-18T23:00:00.000Z');
+    });
+
+    test('Calculates trigger date with custom percentage', () => {
+      expect(
+        getLifetimeTriggerDate('2023-01-01', '2023-12-31', 0.5).toISOString()
+      ).toEqual('2023-07-01T23:00:00.000Z');
+    });
+
+    test('Handles short date range', () => {
+      expect(getLifetimeTriggerDate('2023-01-01', '2023-01-10')).toEqual(
+        new Date('2023-01-08')
+      );
+    });
+
+    test('Handles edge case with zero percentage', () => {
+      expect(getLifetimeTriggerDate('2023-01-01', '2023-12-31', 0)).toEqual(
+        new Date('2023-01-01')
+      );
+    });
+
+    test('Handles edge case with 100% percentage', () => {
+      expect(getLifetimeTriggerDate('2023-01-01', '2023-12-31', 1)).toEqual(
+        new Date('2023-12-31')
+      );
     });
   });
 });
