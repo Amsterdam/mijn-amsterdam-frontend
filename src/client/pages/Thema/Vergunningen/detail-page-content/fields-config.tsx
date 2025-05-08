@@ -12,10 +12,7 @@ import type {
   WithTimeRange,
 } from '../../../../../server/services/decos/decos-types';
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import {
-  defaultDateFormat,
-  defaultDateTimeFormat,
-} from '../../../../../universal/helpers/date';
+import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
 import {
   Row,
   RowSet,
@@ -90,10 +87,10 @@ export const dateTimeRange: VergunningDataListRow<
     ? {
         label: 'Van',
         content: vergunning.timeStart
-          ? defaultDateTimeFormat(
+          ? dateTimeFormatYear(
               `${vergunning.dateStart.split('T')[0]}T${vergunning.timeStart}`
             )
-          : defaultDateFormat(vergunning.dateStart),
+          : vergunning.dateStartFormatted,
         span: 4,
       }
     : null;
@@ -102,10 +99,10 @@ export const dateTimeRange: VergunningDataListRow<
     ? {
         label: 'Tot en met',
         content: vergunning.timeEnd
-          ? defaultDateTimeFormat(
+          ? dateTimeFormatYear(
               `${vergunning.dateEnd.split('T')[0]}T${vergunning.timeEnd}`
             )
-          : defaultDateFormat(vergunning.dateEnd),
+          : vergunning.dateEndFormatted,
         span: 4,
       }
     : null;
