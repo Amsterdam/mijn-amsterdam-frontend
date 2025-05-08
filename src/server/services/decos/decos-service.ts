@@ -1,7 +1,6 @@
 import assert from 'assert';
 
 import createDebugger from 'debug';
-import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
@@ -59,10 +58,7 @@ import {
 } from '../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  DataRequestConfig,
-  DEFAULT_API_CACHE_TTL_MS,
-} from '../../config/source-api';
+import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -572,7 +568,7 @@ export async function fetchDecosZakenFromSource(
   return apiSuccessResult(zakenSource);
 }
 
-export async function fetchDecosZaken_<
+export async function fetchDecosZaken<
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
@@ -595,13 +591,6 @@ export async function fetchDecosZaken_<
 
   return zakenSourceResponse;
 }
-
-export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args) {
-    return JSON.stringify(args[0]) + JSON.stringify(args[1]);
-  },
-});
 
 function transformDecosWorkflowDateResponse(
   decosActionCodes: DecosWorkflowStepTitle[],

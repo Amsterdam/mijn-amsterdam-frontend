@@ -1,5 +1,4 @@
 import createDebugger from 'debug';
-import memoizee from 'memoizee';
 
 import { DecosVergunning, VergunningFrontend } from './config-and-types';
 import { decosZaakTransformers } from './decos-zaken';
@@ -8,7 +7,6 @@ import { routeConfig } from '../../../client/pages/Thema/Vergunningen/Vergunning
 import { ApiResponse, apiSuccessResult } from '../../../universal/helpers/api';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import {
   fetchDecosZaken,
   transformDecosZaakFrontend,
@@ -70,7 +68,7 @@ function transformVergunningFrontend(
   return zaakFrontend;
 }
 
-async function fetchVergunningen_(
+export async function fetchVergunningen(
   authProfileAndToken: AuthProfileAndToken,
   appRouteDetailPage: string = routeConfig.detailPage.path
 ): Promise<ApiResponse<VergunningFrontend[]>> {
@@ -79,7 +77,7 @@ async function fetchVergunningen_(
     decosZaakTransformers
   );
 
-  debug(response, 'fetchVergunningen_');
+  debug(response, 'fetchVergunningen');
 
   if (response.status === 'OK') {
     const decosZaken = response.content;
@@ -96,11 +94,6 @@ async function fetchVergunningen_(
   return response;
 }
 
-export const fetchVergunningen = memoizee(fetchVergunningen_, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-});
-
 export const forTesting = {
   transformVergunningFrontend,
-  fetchVergunningen_,
 };

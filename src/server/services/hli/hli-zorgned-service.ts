@@ -1,10 +1,6 @@
-import { HttpStatusCode } from 'axios';
-import memoizee from 'memoizee';
-
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -87,7 +83,7 @@ function transformTitle(aanvraag: ZorgnedAanvraagTransformed) {
   return aanvraag.titel;
 }
 
-async function fetchZorgnedAanvragenHLI_(
+export async function fetchZorgnedAanvragenHLI(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const aanvragenResponse = await fetchAanvragenWithRelatedPersons(
@@ -113,10 +109,6 @@ async function fetchZorgnedAanvragenHLI_(
 
   return aanvragenResponse;
 }
-
-export const fetchZorgnedAanvragenHLI = memoizee(fetchZorgnedAanvragenHLI_, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-});
 
 export const forTesting = {
   isActueel,
