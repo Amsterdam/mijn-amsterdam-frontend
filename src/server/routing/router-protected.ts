@@ -94,22 +94,17 @@ router.get(
       FeatureToggle.adHocDependencyRequestCacheTtlMs
     ) {
       let adHocCacheTtlMs = undefined;
-      try {
-        if (req.query.adHocDependencyRequestCacheTtlMs) {
-          adHocCacheTtlMs = parseInt(
-            req.query.adHocDependencyRequestCacheTtlMs,
-            10
-          );
-          if (adHocCacheTtlMs < 0) {
-            adHocCacheTtlMs = undefined;
-          }
-        }
-      } catch (error) {
-        return sendBadRequest(
-          res,
-          `adHocDependencyRequestCacheTtlMs query param is not a number: ${error}`
+
+      if (req.query.adHocDependencyRequestCacheTtlMs) {
+        adHocCacheTtlMs = parseInt(
+          req.query.adHocDependencyRequestCacheTtlMs,
+          10
         );
+        if (adHocCacheTtlMs < 0 || isNaN(adHocCacheTtlMs)) {
+          adHocCacheTtlMs = undefined;
+        }
       }
+
       setAdHocDependencyRequestCacheTtlMs(adHocCacheTtlMs);
     }
     return next();
