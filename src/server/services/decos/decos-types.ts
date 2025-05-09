@@ -164,12 +164,9 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   hasValidSourceData?: (decosZaakSource: DecosZaakSource) => boolean;
   // Indicate if the zaak requires payment to be processed and complete. This function is run before transformation of the zaak.
   requirePayment?: boolean;
-  // A functio to determine if the zaak is verleend or not.
-  // This function is run after transformation of the zaak.
-  isVerleend?: (
-    decosZaak: T,
-    decosZaakSource: DecosZaakSource
-  ) => boolean | boolean;
+  // A function to determine if the zaak is verleend or not.
+  // This function is run after the afterTransform of the zaak.
+  isVerleend?: (decosZaak: T, decosZaakSource: DecosZaakSource) => boolean;
   // Expands the selection of fields, based on the link address, with linked items as objects or array of objects
   fetchLinkedItem?: string[];
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
