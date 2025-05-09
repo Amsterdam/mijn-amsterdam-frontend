@@ -81,6 +81,7 @@ const GPK: DecosZaakTransformer<GPK> = {
         'Verleend Passagier met GPP (niet verleend Bestuurd',
       ],
     }),
+    date6: dateStart,
     date7: dateEnd,
     num3: { name: 'cardNumber' },
     text7: { name: 'cardType' },

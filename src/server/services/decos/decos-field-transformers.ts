@@ -43,8 +43,6 @@ export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
   processed: processed,
   date5: dateDecision,
   document_date: dateRequest,
-  date6: dateStart,
-  date7: dateEnd,
 };
 
 export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [

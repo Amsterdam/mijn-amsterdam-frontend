@@ -1,6 +1,8 @@
 import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
+  dateEnd,
+  dateStart,
   location,
 } from '../decos/decos-field-transformers';
 import {
@@ -81,6 +83,8 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
+      date6: dateStart,
+      date7: dateEnd,
     },
     async afterTransform(vergunning) {
       /**
