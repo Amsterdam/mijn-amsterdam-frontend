@@ -13,7 +13,7 @@ export function EvenementVergunning({
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.description,
-    commonTransformers.address,
+    commonTransformers.location,
     commonTransformers.dateTimeRange,
     commonTransformers.decision,
   ]);
