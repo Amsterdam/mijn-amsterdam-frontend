@@ -8,8 +8,11 @@ import {
   sendUnauthorized,
   type RequestWithQueryParams,
 } from './route-helpers';
+import type { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { IS_PRODUCTION } from '../../universal/config/env';
+import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { getAuth } from '../auth/auth-helpers';
+import { setAdHocDependencyRequestCacheTtlMs } from '../config/source-api';
 import { fetchAfisDocument } from '../services/afis/afis-documents';
 import {
   handleFetchAfisBusinessPartner,
@@ -79,7 +82,39 @@ router.get(
 
 router.get(
   BffEndpoints.SERVICES_STREAM,
-  (req: Request, res: Response, next: NextFunction) => {
+  (
+    req: RequestWithQueryParams<{
+      [key in keyof typeof streamEndpointQueryParamKeys]: string;
+    }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    if (
+      'adHocDependencyRequestCacheTtlMs' in req.query &&
+      FeatureToggle.adHocDependencyRequestCacheTtlMs
+    ) {
+      let adHocCacheTtlMs = undefined;
+      try {
+        if (req.query.adHocDependencyRequestCacheTtlMs) {
+          adHocCacheTtlMs = parseInt(
+            req.query.adHocDependencyRequestCacheTtlMs,
+            10
+          );
+          if (adHocCacheTtlMs < 0) {
+            adHocCacheTtlMs = undefined;
+          }
+        }
+      } catch (error) {
+        return sendBadRequest(
+          res,
+          `adHocDependencyRequestCacheTtlMs query param is not a number: ${error}`
+        );
+      }
+      setAdHocDependencyRequestCacheTtlMs(adHocCacheTtlMs);
+    }
+    return next();
+  },
+  (req: Request, res: Response) => {
     // See https://nodejs.org/api/net.html#net_socket_setnodelay_nodelay
     req.socket.setNoDelay(true);
     // Tell the client we respond with an event stream

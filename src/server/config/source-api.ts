@@ -11,11 +11,18 @@ import {
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
-import { IS_PRODUCTION } from '../../universal/config/env';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
+
+let adHocDependencyRequestCacheTtlMs: undefined | number;
+
+export function setAdHocDependencyRequestCacheTtlMs(
+  cacheTtl: typeof adHocDependencyRequestCacheTtlMs
+): void {
+  adHocDependencyRequestCacheTtlMs = cacheTtl;
+}
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -55,27 +62,25 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 }
 
 /* eslint-disable no-magic-numbers */
-export const LONG_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS;
-export const SHORT_API_CACHE_TTL_MS = 20 * ONE_SECOND_MS;
 // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
-export const DEFAULT_API_CACHE_TTL_MS = IS_PRODUCTION
-  ? LONG_API_CACHE_TTL_MS
-  : SHORT_API_CACHE_TTL_MS;
+export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS;
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 /* eslint-enable no-magic-numbers */
 
-export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
+export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
   method: 'get',
   enableCache: BFF_REQUEST_CACHE_ENABLED,
-  cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
+  get cacheTimeout() {
+    return adHocDependencyRequestCacheTtlMs ?? DEFAULT_API_CACHE_TTL_MS;
+  },
   postponeFetch: false,
   passthroughOIDCToken: false,
   responseType: 'json',
   transitional: {
     silentJSONParsing: false,
   },
-};
+});
 
 export type SourceApiKey =
   | 'AFIS'

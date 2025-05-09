@@ -64,6 +64,7 @@ export function fetchSVWI(authProfileAndToken: AuthProfileAndToken) {
     transformResponse: transformSVWIResponse,
     postponeFetch: !featureToggle.svwiActive,
   });
+  console.log('fetchSVWI', apiConfig);
   return fetchService(apiConfig, false, authProfileAndToken);
 }
 

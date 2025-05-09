@@ -1,4 +1,4 @@
-import { IS_AP, IS_OT, IS_PRODUCTION } from './env';
+import { IS_OT, IS_PRODUCTION } from './env';
 
 /**
  * @deprecated
@@ -71,7 +71,8 @@ export const FeatureToggle = {
   oidcLogoutHintActive: true,
 
   // For development purposes
-  passQueryParamsToStreamUrl: !IS_AP,
+  passQueryParamsToStreamUrl: !IS_PRODUCTION,
+  adHocDependencyRequestCacheTtlMs: !IS_PRODUCTION,
 
   // Milieuzone splitising naar Overtredingen en Boetes
   overtredingenActive: true,
