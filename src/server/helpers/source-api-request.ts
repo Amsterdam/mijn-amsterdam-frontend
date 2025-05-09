@@ -162,7 +162,7 @@ export async function requestData<T>(
   const cacheEntry = cache.get(cacheKey);
 
   if (config.enableCache && cacheEntry !== null) {
-    debug(`Cache hit! ${config.url}`);
+    debugCache(`Cache hit! ${config.url}`);
     return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;
@@ -175,7 +175,7 @@ export async function requestData<T>(
     !!config.cacheTimeout &&
     config.cacheTimeout > 0
   ) {
-    debug(`Caching ${config.url}, releases in ${config.cacheTimeout}ms`);
+    debugCache(`Caching ${config.url}, releases in ${config.cacheTimeout}ms`);
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),
@@ -213,7 +213,7 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    debug(error, config, 'response error');
+    debug(error, config.url, 'response error');
 
     captureException(error, {
       properties: {

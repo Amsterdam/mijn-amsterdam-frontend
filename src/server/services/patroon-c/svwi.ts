@@ -64,7 +64,6 @@ export function fetchSVWI(authProfileAndToken: AuthProfileAndToken) {
     transformResponse: transformSVWIResponse,
     postponeFetch: !featureToggle.svwiActive,
   });
-  console.log('fetchSVWI', apiConfig);
   return fetchService(apiConfig, false, authProfileAndToken);
 }
 
@@ -73,6 +72,9 @@ export async function fetchSVWINotifications(
 ) {
   return await fetchTipsAndNotifications(
     getApiConfig('SVWI', {
+      formatUrl(requestConfig) {
+        return `${requestConfig.url}/autorisatie/tegel`;
+      },
       transformResponse: transformSVWIResponse,
     }),
     themaId,
