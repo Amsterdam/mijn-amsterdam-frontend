@@ -18,7 +18,6 @@ export function WVOSContent({
       ? {
           label: 'Resultaat',
           content:
-            // TODO: Moeten we hier niet de decision (deels verleend / verleend?) van de vergunning gebruiken om te bepalen of we deze tekst tonen?
             vergunning.werkzaamheden.length > 1
               ? 'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.'
               : vergunning.decision,
