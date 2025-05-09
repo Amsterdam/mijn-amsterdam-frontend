@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios';
-import memoizee from 'memoizee';
 
 import {
   BeschiktProduct,
@@ -27,7 +26,6 @@ import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { hash } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
@@ -327,7 +325,7 @@ export async function fetchRelatedPersons(userIDs: string[]) {
   return apiSuccessResult(namesAndDatesOfBirth);
 }
 
-export async function fetchPersoonsgegevensNAW_(
+export async function fetchPersoonsgegevensNAW(
   userID: AuthProfileAndToken['profile']['id'],
   zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
 ) {
@@ -349,11 +347,6 @@ export async function fetchPersoonsgegevensNAW_(
 
   return response;
 }
-
-export const fetchPersoonsgegevensNAW = memoizee(fetchPersoonsgegevensNAW_, {
-  length: 3,
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-});
 
 export const forTesting = {
   transformDocumenten,

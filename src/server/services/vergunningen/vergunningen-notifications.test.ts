@@ -1,11 +1,10 @@
+import MockDate from 'mockdate';
 import { describe, it, expect, vi, Mock } from 'vitest';
 
 import { VergunningFrontend } from './config-and-types';
 import { fetchVergunningen } from './vergunningen';
-import { isNearEndDate } from './vergunningen-helpers';
 import {
-  getNotificationLabels,
-  createVergunningNotification,
+  createNotificationDefault,
   getVergunningNotifications,
   fetchVergunningenNotifications,
 } from './vergunningen-notifications';
@@ -18,158 +17,45 @@ import {
   apiSuccessResult,
   apiErrorResult,
 } from '../../../universal/helpers/api';
-import { isRecentNotification } from '../../../universal/helpers/utils';
-import { DecosZaakBase, DecosZaakTransformer } from '../decos/decos-types';
 
 vi.mock('./vergunningen', () => ({
   fetchVergunningen: vi.fn(),
 }));
 
 vi.mock('./vergunningen-helpers', () => ({
-  isNearEndDate: vi.fn(),
-}));
-
-vi.mock('../../../universal/helpers/utils', async (importOriginal) => ({
-  ...(await importOriginal()),
-  isRecentNotification: vi.fn(),
+  isExpiryNotificationDue: vi.fn(),
 }));
 
 describe('vergunningen-notifications', () => {
-  describe('getNotificationLabels', () => {
-    it('should return correct label for verlooptBinnenkort', () => {
-      const vergunning = {
-        decision: 'Verleend',
-        dateEnd: '2023-12-01',
-        steps: [
-          { status: 'Afgehandeld', isActive: true },
-          { status: 'Verlopen', isActive: false },
-        ],
-      } as VergunningFrontend;
-      (isNearEndDate as Mock).mockReturnValue(true);
-
-      const labels = getNotificationLabels(
-        { verlooptBinnenkort: 'Verloopt binnenkort' } as any,
-        vergunning
-      );
-      expect(labels).toBe('Verloopt binnenkort');
-    });
-
-    it('should return correct label for isVerlopen', () => {
-      const vergunning = {
-        decision: 'Verleend',
-        isExpired: true,
-        dateEnd: '2023-01-01',
-        steps: [{ status: 'Verlopen', isActive: true }],
-      } as VergunningFrontend;
-      (isNearEndDate as Mock).mockReturnValue(false);
-      (isRecentNotification as Mock).mockReturnValue(true);
-
-      const labels = getNotificationLabels(
-        { isVerlopen: 'Is verlopen' } as any,
-        vergunning
-      );
-      expect(labels).toBe('Is verlopen');
-    });
-
-    it('should return correct label for isIngetrokken', () => {
-      const vergunning = {
-        decision: 'Ingetrokken',
-        dateDecision: '2023-01-01',
-        steps: [{ status: 'Ingetrokken', isActive: true }],
-      } as VergunningFrontend;
-      (isRecentNotification as Mock).mockReturnValue(true);
-
-      const labels = getNotificationLabels(
-        { isIngetrokken: 'Is ingetrokken' } as any,
-        vergunning
-      );
-      expect(labels).toBe('Is ingetrokken');
-    });
-
-    it('should return correct label for statusAfgehandeld', () => {
-      const vergunning = {
-        processed: true,
-        dateDecision: '2023-01-01',
-        steps: [{ status: 'Afgehandeld', isActive: true }],
-      } as VergunningFrontend;
-      (isRecentNotification as Mock).mockReturnValue(true);
-
-      const labels = getNotificationLabels(
-        { statusAfgehandeld: 'Afgehandeld' } as any,
-        vergunning
-      );
-      expect(labels).toBe('Afgehandeld');
-    });
-
-    it('should return correct label for statusInBehandeling', () => {
-      const vergunning = {
-        processed: false,
-        steps: [{ status: 'In behandeling', isActive: true }],
-      } as VergunningFrontend;
-
-      const labels = getNotificationLabels(
-        { statusInBehandeling: 'In behandeling' } as any,
-        vergunning
-      );
-      expect(labels).toBe('In behandeling');
-    });
-
-    it('should return correct label for statusOntvangen', () => {
-      const vergunning = {
-        processed: false,
-        steps: [{ status: 'Ontvangen', isActive: true }],
-      } as VergunningFrontend;
-
-      const labels = getNotificationLabels(
-        { statusOntvangen: 'Ontvangen' } as any,
-        vergunning
-      );
-      expect(labels).toBe('Ontvangen');
-    });
-
-    it('should return null if no matching label', () => {
-      const vergunning = {
-        processed: false,
-      } as VergunningFrontend;
-
-      const labels = getNotificationLabels({}, vergunning);
-      expect(labels).toBeNull();
-    });
-  });
-
   describe('createVergunningNotification', () => {
     it('should create a notification with valid labels', () => {
       const vergunning = {
         id: '1',
         caseType: 'TestCase',
+        identifier: 'Z/123/456',
+        title: 'Test case',
         link: { to: '/test', title: 'Test' },
-        steps: [{ status: 'Ontvangen', isActive: true }],
-      } as VergunningFrontend;
+        steps: [
+          { status: 'Ontvangen', datePublished: '2023-01-10', isActive: true },
+        ],
+      } as unknown as VergunningFrontend;
 
-      const zaakTypeTransformer = {
-        caseType: 'TestCase',
-        notificationLabels: {
-          statusOntvangen: {
-            title: () => 'Test Title',
-            description: () => 'Test Description',
-            datePublished: () => '2023-01-01',
-            link: () => ({ to: '/test', title: 'Test' }),
-          },
-        },
-      } as unknown as DecosZaakTransformer<DecosZaakBase>;
-
-      const notification = createVergunningNotification(
-        vergunning,
-        zaakTypeTransformer,
-        themaId,
-        themaTitle
+      const notification = createNotificationDefault(vergunning, {
+        themaID: themaId,
+        themaTitle,
+      });
+      expect(notification).toHaveProperty(
+        'title',
+        'Aanvraag Test case ontvangen'
       );
-      expect(notification).toHaveProperty('title', 'Test Title');
-      expect(notification).toHaveProperty('description', 'Test Description');
-      expect(notification).toHaveProperty('datePublished', '2023-01-01');
+      expect(notification).toHaveProperty(
+        'description',
+        'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/123/456 ontvangen.'
+      );
+      expect(notification).toHaveProperty('datePublished', '2023-01-10');
       expect(notification).toHaveProperty('link', {
         to: '/test',
-        title: 'Test',
+        title: 'Bekijk details',
       });
     });
 
@@ -178,98 +64,126 @@ describe('vergunningen-notifications', () => {
         id: '1',
         caseType: 'TestCase',
         link: { to: '/test', title: 'Test' },
-      } as VergunningFrontend;
+        steps: [],
+      } as unknown as VergunningFrontend;
 
-      const zaakTypeTransformer = {
-        caseType: 'TestCase',
-        notificationLabels: null,
-      } as unknown as DecosZaakTransformer<DecosZaakBase>;
-
-      const notification = createVergunningNotification(
-        vergunning,
-        zaakTypeTransformer,
-        themaId,
-        themaTitle
-      );
+      const notification = createNotificationDefault(vergunning, {
+        themaID: themaId,
+        themaTitle,
+      });
       expect(notification).toBeNull();
     });
   });
 
   describe('getVergunningNotifications', () => {
+    beforeAll(() => {
+      MockDate.set('2025-01-10');
+    });
+
+    afterAll(() => {
+      MockDate.reset();
+    });
+
     it('should return notifications for valid vergunningen and transformers', () => {
       const vergunningen = [
         {
           id: '1',
-          caseType: 'TestCase',
-          steps: [{ status: 'Ontvangen', isActive: true }],
+          title: 'Test case',
+          identifier: 'Z/123/456',
+          steps: [
+            {
+              status: 'Ontvangen',
+              datePublished: '2025-01-05',
+              isActive: true,
+            },
+          ],
           link: { to: '/test', title: 'Test' },
         },
         {
           id: '2',
-          caseType: 'TestCase',
-          dateRequest: '2023-01-01',
-          steps: [{ status: 'In behandeling', isActive: true }],
+          title: 'Test case',
+          identifier: 'Z/888/999',
+          steps: [
+            {
+              status: 'In behandeling',
+              datePublished: '2025-01-07',
+              isActive: true,
+            },
+          ],
           link: { to: '/test', title: 'Test' },
         },
         {
           id: '3',
-          caseType: 'TestCase',
-          decision: 'Verleend',
-          processed: true,
-          dateDecision: '2025-01-01',
-          steps: [{ status: 'Afgehandeld', isActive: true }],
+          title: 'Test case',
+          identifier: 'Z/999/000',
+          steps: [
+            {
+              status: 'Afgehandeld',
+              datePublished: '2025-01-08',
+              isActive: true,
+            },
+          ],
           link: { to: '/test', title: 'Test' },
         },
       ] as unknown as VergunningFrontend[];
 
-      const decosZaakTransformers = [
-        {
-          caseType: 'TestCase',
-          notificationLabels: {
-            statusOntvangen: {
-              title: () => 'Aanvraag',
-              description: () => 'Test Description',
-              datePublished: () => '2023-01-01',
-              link: () => ({ to: '/test', title: 'Test' }),
-            },
-            statusInBehandeling: {
-              title: () => 'In behandeling',
-              description: () => 'Test Description',
-              datePublished: () => '2023-01-01',
-              link: () => ({ to: '/test', title: 'Test' }),
-            },
-            statusAfgehandeld: {
-              title: () => 'Afgehandeld',
-              description: () => 'Test Description',
-              datePublished: () => '2023-01-01',
-              link: () => ({ to: '/test', title: 'Test' }),
-            },
-          },
-        },
-      ] as unknown as DecosZaakTransformer<DecosZaakBase>[];
-
       const notifications = getVergunningNotifications(
         vergunningen,
-        decosZaakTransformers,
         themaId,
         themaTitle
       );
-      expect(notifications).toHaveLength(3);
-      expect(notifications[0]).toHaveProperty('title', 'Aanvraag');
-      expect(notifications[1]).toHaveProperty('title', 'In behandeling');
-      expect(notifications[2]).toHaveProperty('title', 'Afgehandeld');
+      expect(notifications).toStrictEqual([
+        {
+          datePublished: '2025-01-05',
+          description:
+            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/123/456 ontvangen.',
+          id: 'vergunning-1-notification',
+          link: {
+            title: 'Bekijk details',
+            to: '/test',
+          },
+          themaID: 'VERGUNNINGEN',
+          themaTitle: 'Vergunningen en ontheffingen',
+          title: 'Aanvraag Test case ontvangen',
+        },
+        {
+          datePublished: '2025-01-07',
+          description:
+            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/888/999 in behandeling genomen.',
+          id: 'vergunning-2-notification',
+          link: {
+            title: 'Bekijk details',
+            to: '/test',
+          },
+          themaID: 'VERGUNNINGEN',
+          themaTitle: 'Vergunningen en ontheffingen',
+          title: 'Aanvraag Test case in behandeling',
+        },
+        {
+          datePublished: '2025-01-08',
+          description:
+            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/999/000 afgehandeld.',
+          id: 'vergunning-3-notification',
+          link: {
+            title: 'Bekijk details',
+            to: '/test',
+          },
+          themaID: 'VERGUNNINGEN',
+          themaTitle: 'Vergunningen en ontheffingen',
+          title: 'Aanvraag Test case afgehandeld',
+        },
+      ]);
     });
 
     it('should return empty array if no matching transformers', () => {
       const vergunningen = [
-        { id: '1', caseType: 'TestCase', link: { to: '/test', title: 'Test' } },
-      ] as VergunningFrontend[];
-
-      const decosZaakTransformers: DecosZaakTransformer<DecosZaakBase>[] = [];
+        {
+          steps: [],
+        },
+      ] as unknown as VergunningFrontend[];
 
       const notifications = getVergunningNotifications(
         vergunningen,
-        decosZaakTransformers,
         themaId,
         themaTitle
       );

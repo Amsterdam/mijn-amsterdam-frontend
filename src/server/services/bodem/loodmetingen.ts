@@ -26,6 +26,7 @@ import {
 } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -158,7 +159,6 @@ function transformLood365Response(
 
 export async function getLoodApiHeaders() {
   const url = `${process.env.BFF_LOOD_API_URL}`;
-  const requestConfig = { ...getApiConfig('LOOD_365_OAUTH') };
 
   const data = new FormData();
   data.append('client_id', `${process.env.BFF_LOOD_USERNAME}`);
@@ -166,11 +166,17 @@ export async function getLoodApiHeaders() {
   data.append('scope', `${url.substring(0, url.indexOf('api'))}.default`);
   data.append('grant_type', 'client_credentials');
 
-  requestConfig.data = data;
   // The receiving API is very strict about the headers. Without a boundary the request fails.
-  requestConfig.headers = {
+  const headers = {
     'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
   };
+
+  const requestConfig = getApiConfig('LOOD_365_OAUTH', {
+    data,
+    headers,
+    cacheKey: `lood-365-oauth-access-token`,
+    cacheTimeout: 60 * 60 * ONE_SECOND_MS, // 1 hour
+  });
 
   const response = await requestData<{ access_token: string }>(requestConfig);
 

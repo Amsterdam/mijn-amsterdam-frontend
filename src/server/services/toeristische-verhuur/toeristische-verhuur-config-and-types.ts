@@ -1,6 +1,8 @@
 import { BBVergunningFrontend } from './toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import {
   SELECT_FIELDS_TRANSFORM_BASE,
+  dateEnd,
+  dateStart,
   location,
 } from '../decos/decos-field-transformers';
 import {
@@ -10,7 +12,6 @@ import {
   WithDateRange,
 } from '../decos/decos-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
-import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
 export const caseTypeToeristischeVerhuur = {
   VakantieverhuurVergunningaanvraag: 'Vakantieverhuur vergunningsaanvraag',
@@ -82,6 +83,8 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
     transformFields: {
       ...SELECT_FIELDS_TRANSFORM_BASE,
       text6: location,
+      date6: dateStart,
+      date7: dateEnd,
     },
     async afterTransform(vergunning) {
       /**
@@ -101,7 +104,6 @@ export const VakantieverhuurVergunningaanvraag: DecosZaakTransformer<DecosVakant
 
       return vergunning;
     },
-    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const decosZaakTransformers = [VakantieverhuurVergunningaanvraag];

@@ -1,5 +1,10 @@
-import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from './config-and-types';
-import { monthsFromNow, isDateInPast } from '../../../universal/helpers/date';
+import { addDays, differenceInDays, parseISO } from 'date-fns';
+
+import {
+  MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION,
+  PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION,
+} from './config-and-types';
+import { isDateInPast } from '../../../universal/helpers/date';
 import {
   TouringcarDagontheffing,
   TouringcarJaarontheffing,
@@ -28,17 +33,46 @@ export function getCustomTitleForVergunningWithLicensePlates(
   return vergunning.title;
 }
 
-export function isNearEndDate(dateEnd?: string | null, dateNow?: Date) {
-  if (!dateEnd) {
+export function getLifetimeTriggerDate(
+  dateStart: string,
+  dateEnd: string,
+  percentageOfLifetime = PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION
+): Date {
+  const daysInBetweenStartAndEnd = differenceInDays(
+    parseISO(dateEnd),
+    parseISO(dateStart)
+  );
+
+  return addDays(
+    dateStart,
+    Math.round(daysInBetweenStartAndEnd * percentageOfLifetime)
+  );
+}
+
+export function isExpiryNotificationDue(
+  dateStart: string | null,
+  dateEnd: string | null,
+  dateNow?: Date,
+  percentageOfLifetime = PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION
+): boolean {
+  if (!dateEnd || !dateStart || isDateInPast(dateEnd, dateNow)) {
+    return false;
+  }
+
+  const daysInBetweenStartAndEnd = differenceInDays(
+    parseISO(dateEnd),
+    parseISO(dateStart)
+  );
+
+  if (daysInBetweenStartAndEnd < MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION) {
     return false;
   }
 
   const nDateNow = dateNow || new Date();
-  const monthsTillEnd = monthsFromNow(dateEnd, nDateNow);
+  const daysUntilEnd = differenceInDays(parseISO(dateEnd), nDateNow);
 
   return (
-    !isDateInPast(dateEnd, nDateNow) &&
-    monthsTillEnd < NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END &&
-    monthsTillEnd >= 0 // Only show the notification if we have a long-running permit validity
+    daysInBetweenStartAndEnd - daysUntilEnd >=
+    Math.round(daysInBetweenStartAndEnd * percentageOfLifetime)
   );
 }

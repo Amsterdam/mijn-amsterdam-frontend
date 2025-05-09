@@ -189,6 +189,7 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
+      cacheKey: `avg-${authProfileAndToken.profile.sid}`,
       postponeFetch: !featureToggle.avgActive,
     })
   );

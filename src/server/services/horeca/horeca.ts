@@ -57,12 +57,13 @@ export async function fetchHorecaNotifications(
     });
   }
 
-  const VERGUNNINGEN = await fetchHorecaVergunningen(authProfileAndToken);
+  const horecaResponse = await fetchHorecaVergunningen(
+    authProfileAndToken
+  );
 
-  if (VERGUNNINGEN.status === 'OK') {
+  if (horecaResponse.status === 'OK') {
     const notifications = getVergunningNotifications(
-      VERGUNNINGEN.content ?? [],
-      decosZaakTransformers,
+      horecaResponse.content ?? [],
       themaId,
       themaTitle
     );
@@ -72,5 +73,5 @@ export async function fetchHorecaNotifications(
     });
   }
 
-  return apiDependencyError({ VERGUNNINGEN });
+  return apiDependencyError({ VERGUNNINGEN: horecaResponse });
 }

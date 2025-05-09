@@ -89,6 +89,7 @@ export type BBVergunningFrontend = ZaakDetail & {
   dateStart: string;
   dateStartFormatted: string | null;
   decision: BBVergunningZaakResult;
+  isVerleend: boolean;
   documents: GenericDocument[];
   heeftOvergangsRecht: boolean;
   identifier: string;

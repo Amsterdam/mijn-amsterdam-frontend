@@ -36,21 +36,21 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
 const displayPropsHuidigeVergunningenBase: VergunningFrontendExpireableDisplayProps =
   {
-    detailLinkComponent: 'Kenmerk',
+    detailLinkComponent: 'Zaaknummer',
     title: 'Omschrijving',
     dateStartFormatted: 'Startdatum',
     dateEndFormatted: 'Einddatum',
   };
 
 const displayPropsLopendeAanvragenBase: VergunningFrontendDisplayProps = {
-  detailLinkComponent: 'Kenmerk',
+  detailLinkComponent: 'Zaaknummer',
   title: 'Omschrijving',
   displayStatus: 'Status',
   dateRequestFormatted: 'Aangevraagd op',
 };
 
 const displayPropsEerdereVergunningenBase: VergunningFrontendDisplayProps = {
-  detailLinkComponent: 'Kenmerk',
+  detailLinkComponent: 'Zaaknummer',
   title: 'Omschrijving',
   displayStatus: 'Status',
 };

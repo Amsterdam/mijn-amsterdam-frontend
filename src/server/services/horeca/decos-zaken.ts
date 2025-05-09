@@ -12,7 +12,6 @@ import {
   WithLocation,
 } from '../decos/decos-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
-import { caseNotificationLabelsExpirables } from '../vergunningen/vergunningen-notification-labels';
 
 export const caseTypeHorecaVergunningen = {
   ExploitatieHorecabedrijf: 'Horeca vergunning exploitatie Horecabedrijf',
@@ -41,7 +40,7 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle:
+        decosActionCode:
           'Horeca vergunning exploitatie Horecabedrijf - In behandeling nemen',
       },
     ],
@@ -51,7 +50,6 @@ export const ExploitatieHorecabedrijf: DecosZaakTransformer<DecosZaakExploitatie
       date6: dateStart,
       text6: location,
     },
-    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const decosZaakTransformers = [ExploitatieHorecabedrijf];

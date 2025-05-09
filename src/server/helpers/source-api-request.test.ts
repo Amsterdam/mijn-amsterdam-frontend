@@ -26,7 +26,7 @@ import {
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { ApiUrlEntries } from '../config/source-api';
+import { ApiUrlEntries, DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
 const mocks = vi.hoisted(() => {
@@ -48,18 +48,14 @@ vi.mock('../services/monitoring');
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
-  const DUMMY_RESPONSE_2 = { foo: 'baz' };
 
   const DUMMY_URL = `${remoteApiHost}/1`;
   const DUMMY_ROUTE_2 = '/2';
   const DUMMY_URL_2 = `${remoteApiHost}${DUMMY_ROUTE_2}`;
 
-  const SESS_ID_1 = 'x1';
-  const SESS_ID_2 = 'y2';
   const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
-  const CACHE_KEY_1 = `get-${DUMMY_URL}-no-params-no-data-no-headers`;
-  const CACHE_KEY_2 = `get-${DUMMY_URL}-no-params-no-data-no-headers`;
+  const CACHE_KEY_1 = `${DEFAULT_API_CACHE_TTL_MS}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
 
   let axiosRequestSpy: MockInstance;
 
@@ -258,7 +254,9 @@ describe('requestData.ts', () => {
         method: 'post',
         data: { foo: 'bar' },
       })
-    ).toStrictEqual('post--no-params-{"foo":"bar"}-no-headers');
+    ).toStrictEqual(
+      'no-cache-timeout-post--no-params-{"foo":"bar"}-no-headers'
+    );
 
     expect(
       getRequestConfigCacheKey({
@@ -266,14 +264,26 @@ describe('requestData.ts', () => {
         url: 'http://foo',
         params: { foo: 'bar' },
       })
-    ).toStrictEqual('get-http://foo-{"foo":"bar"}-no-data-no-headers');
+    ).toStrictEqual(
+      'no-cache-timeout-get-http://foo-{"foo":"bar"}-no-data-no-headers'
+    );
 
     expect(
       getRequestConfigCacheKey({
         method: 'get',
         url: 'http://foo',
       })
-    ).toStrictEqual('get-http://foo-no-params-no-data-no-headers');
+    ).toStrictEqual(
+      'no-cache-timeout-get-http://foo-no-params-no-data-no-headers'
+    );
+
+    expect(
+      getRequestConfigCacheKey({
+        method: 'get',
+        url: 'http://foo',
+        cacheTimeout: 1000,
+      })
+    ).toStrictEqual('1000-get-http://foo-no-params-no-data-no-headers');
 
     expect(
       getRequestConfigCacheKey({
@@ -284,7 +294,7 @@ describe('requestData.ts', () => {
         },
       })
     ).toStrictEqual(
-      'get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
+      'no-cache-timeout-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
     );
   });
 });

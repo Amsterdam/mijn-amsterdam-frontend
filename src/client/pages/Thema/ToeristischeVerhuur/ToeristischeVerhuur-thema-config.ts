@@ -74,7 +74,7 @@ export const tableConfig = Object.fromEntries(
         displayProps:
           kind === listPageParamKindVergunningen.actual
             ? DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN
-            : tableConfig.displayProps,
+            : { ...tableConfig.displayProps, title: 'Soort vergunning' },
         title: listPageTitle[kind],
         filter: (vergunning: ToeristischeVerhuurVergunning) =>
           tableConfig.filter(vergunning),

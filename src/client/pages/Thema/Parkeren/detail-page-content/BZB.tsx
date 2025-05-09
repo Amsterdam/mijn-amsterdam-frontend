@@ -65,16 +65,26 @@ export function BZB({ vergunning }: { vergunning: VergunningFrontend<BZB> }) {
     return vergunning.processed ? dateRange(vergunning) : null;
   };
 
+  const companyName = () =>
+    vergunning.companyName
+      ? {
+          label: 'Naam bedrijf',
+          content: vergunning.companyName,
+        }
+      : null;
+
+  const numberOfPermits = () =>
+    vergunning.numberOfPermits
+      ? {
+          label: 'Aantal aangevraagde ontheffingen',
+          content: vergunning.numberOfPermits,
+        }
+      : null;
+
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
-    {
-      label: 'Naam bedrijf',
-      content: vergunning.companyName || '-',
-    },
-    {
-      label: 'Aantal aangevraagde ontheffingen',
-      content: vergunning.numberOfPermits || '-',
-    },
+    companyName,
+    numberOfPermits,
     dateRangeTransformer,
     commonTransformers.decision,
   ]);

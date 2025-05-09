@@ -8,7 +8,11 @@ import {
   type MockInstance,
 } from 'vitest';
 
-import { fetchKrefia, fetchKrefiaNotifications, fetchSource } from './krefia';
+import {
+  fetchKrefia,
+  fetchKrefiaNotifications,
+  fetchAndTransformKrefia,
+} from './krefia';
 import KrefiaData from '../../../../mocks/fixtures/krefia.json';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { omit } from '../../../universal/helpers/utils';
@@ -74,7 +78,7 @@ describe('Kredietbank & FIBU service', () => {
   it('Should respond correctly', async () => {
     remoteApi.get('/krefia/all').times(4).reply(200, KrefiaData);
 
-    const response = await fetchSource(authProfileAndToken);
+    const response = await fetchAndTransformKrefia(authProfileAndToken);
     expect(response).toEqual(KREFIA_DUMMY_RESPONSE);
 
     const responseDerived = await fetchKrefia(authProfileAndToken);

@@ -1,14 +1,9 @@
-import { differenceInMonths, parseISO } from 'date-fns';
-
-import {
-  NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED,
-  NotificationLabelByType,
-  NotificationLabels,
-  VergunningFrontend,
-} from './config-and-types';
-import { decosZaakTransformers } from './decos-zaken';
+import { VergunningFrontend } from './config-and-types';
 import { fetchVergunningen } from './vergunningen';
-import { isNearEndDate } from './vergunningen-helpers';
+import {
+  getLifetimeTriggerDate,
+  isExpiryNotificationDue,
+} from './vergunningen-helpers';
 import {
   routeConfig,
   themaId,
@@ -21,51 +16,7 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getActiveStatus } from '../decos/decos-helpers';
-import type { DecosZaakBase, DecosZaakTransformer } from '../decos/decos-types';
-
-export function getNotificationLabels(
-  notificationLabels: Partial<NotificationLabelByType>,
-  vergunning: VergunningFrontend,
-  compareToDate: Date = new Date()
-) {
-  const activeStatus = getActiveStatus(vergunning);
-  // Ignore formatting of the switch case statements for readability
-  switch (true) {
-    case notificationLabels.verlooptBinnenkort &&
-      activeStatus === 'Afgehandeld' &&
-      isNearEndDate(vergunning.dateEnd, compareToDate):
-      return notificationLabels.verlooptBinnenkort;
-
-    case notificationLabels.isVerlopen &&
-      activeStatus === 'Verlopen' &&
-      vergunning.dateEnd &&
-      differenceInMonths(parseISO(vergunning.dateEnd), compareToDate) <
-        NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED:
-      return notificationLabels.isVerlopen;
-
-    case notificationLabels.isIngetrokken &&
-      activeStatus === 'Ingetrokken' &&
-      vergunning.dateDecision &&
-      isRecentNotification(vergunning.dateDecision):
-      return notificationLabels.isIngetrokken;
-
-    case notificationLabels.statusAfgehandeld &&
-      activeStatus === 'Afgehandeld' &&
-      vergunning.dateDecision &&
-      isRecentNotification(vergunning.dateDecision):
-      return notificationLabels.statusAfgehandeld;
-
-    case notificationLabels.statusInBehandeling &&
-      activeStatus === 'In behandeling':
-      return notificationLabels.statusInBehandeling;
-
-    case notificationLabels.statusOntvangen && activeStatus === 'Ontvangen':
-      return notificationLabels.statusOntvangen;
-  }
-
-  return null;
-}
+import type { DecosZaakBase } from '../decos/decos-types';
 
 function getNotificationBase<ID extends string>(
   vergunning: VergunningFrontend,
@@ -84,49 +35,96 @@ function getNotificationBase<ID extends string>(
   return notificationBaseProperties;
 }
 
-function mergeNotificationProperties(
-  notificationBase: Pick<
-    MyNotification,
-    'themaID' | 'themaTitle' | 'id' | 'link'
-  >,
-  content: NotificationLabels,
-  vergunning: VergunningFrontend
-): MyNotification {
-  const notificationLabels: Pick<MyNotification, keyof typeof content> = {
-    title: content.title(vergunning),
-    description: content.description(vergunning),
-    datePublished: content.datePublished(vergunning),
-    link: content.link(vergunning),
-  };
+export type NotificationThemaOptions<ID extends string> = {
+  themaID: ID;
+  themaTitle: string;
+};
 
-  return { ...notificationBase, ...notificationLabels };
-}
-
-export function createVergunningNotification<
+export function createNotificationDefault<
   DZ extends DecosZaakBase,
   ID extends string = string,
 >(
-  vergunning: VergunningFrontend<DZ>,
-  zaakTypeTransformer: DecosZaakTransformer<DZ>,
-  themaID: ID,
-  themaTitle: string
+  zaak: VergunningFrontend<DZ>,
+  themaOptions: NotificationThemaOptions<ID>
 ): MyNotification | null {
-  const labels = zaakTypeTransformer.notificationLabels;
+  const activeStep = zaak.steps.find((step) => step.isActive);
 
-  if (labels) {
-    const notificationBase = getNotificationBase(
-      vergunning,
-      themaID,
-      themaTitle
-    );
-    const notificationLabels = getNotificationLabels(labels, vergunning);
-    if (notificationLabels !== null) {
-      return mergeNotificationProperties(
-        notificationBase,
-        notificationLabels,
-        vergunning
-      );
+  const isArchivedNotification = activeStep
+    ? ['Verlopen', 'Ingetrokken', 'Afgehandeld'].includes(activeStep.status) &&
+      !isRecentNotification(activeStep.datePublished, new Date())
+    : false;
+
+  if (!activeStep || isArchivedNotification) {
+    return null;
+  }
+
+  const baseNotification = getNotificationBase(
+    zaak,
+    themaOptions.themaID,
+    themaOptions.themaTitle
+  );
+
+  let documentType = 'vergunning ';
+  if (/vergunning|ontheffing/gi.test(zaak.title.toLowerCase())) {
+    documentType = '';
+  }
+
+  switch (activeStep.status) {
+    case 'Ontvangen':
+      return {
+        ...baseNotification,
+        datePublished: activeStep.datePublished,
+        title: `Aanvraag ${zaak.title} ontvangen`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} ontvangen.`,
+      };
+    case 'In behandeling':
+      return {
+        ...baseNotification,
+        datePublished: activeStep.datePublished,
+        title: `Aanvraag ${zaak.title} in behandeling`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} in behandeling genomen.`,
+      };
+    case 'Meer informatie nodig':
+      return {
+        ...baseNotification,
+        datePublished: activeStep.datePublished,
+        title: `Meer informatie omtrent uw aanvraag ${zaak.title}`,
+        description: `Er is meer informatie nodig om uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} verder te kunnen behandelen.`,
+      };
+    case 'Afgehandeld': {
+      // Verloopt binnenkort
+      if (
+        'isExpired' in zaak &&
+        zaak.dateStart &&
+        zaak.dateEnd &&
+        isExpiryNotificationDue(zaak.dateStart, zaak.dateEnd)
+      ) {
+        return {
+          ...baseNotification,
+          datePublished: getLifetimeTriggerDate(
+            zaak.dateStart,
+            zaak.dateEnd
+          ).toISOString(),
+          title: `Uw ${zaak.title} loopt af`,
+          description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} loopt binnenkort af, vraag zonodig een nieuwe aan.`,
+        };
+      }
+
+      // Afgehandeld
+      return {
+        ...baseNotification,
+        datePublished: activeStep.datePublished,
+        title: `Aanvraag ${zaak.title} afgehandeld`,
+        description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} afgehandeld.`,
+      };
     }
+    case 'Verlopen':
+      return {
+        ...baseNotification,
+        datePublished: activeStep.datePublished,
+        title: `${zaak.title} verlopen`,
+        description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} is verlopen.`,
+      };
   }
 
   return null;
@@ -137,29 +135,20 @@ export function getVergunningNotifications<
   ID extends string = string,
 >(
   vergunningen: VergunningFrontend<DZ>[],
-  decosZaakTransformers: DecosZaakTransformer<DZ>[],
   themaID: ID,
-  themaTitle: string
-) {
+  themaTitle: string,
+  createNotification?: typeof createNotificationDefault
+): MyNotification[] {
   return vergunningen
-    .map((vergunning) => {
-      const zaakTransformer = decosZaakTransformers.find(
-        (transformer) => transformer.caseType === vergunning.caseType
-      );
-      if (!zaakTransformer) {
-        return null;
-      }
-      return createVergunningNotification(
-        vergunning,
-        zaakTransformer,
-        themaID,
-        themaTitle
-      );
-    })
-    .filter(
-      (notification: MyNotification | null): notification is MyNotification =>
-        notification !== null
-    );
+    .map((vergunning) =>
+      createNotification
+        ? createNotification(vergunning, { themaID, themaTitle })
+        : createNotificationDefault(vergunning, {
+            themaID,
+            themaTitle,
+          })
+    )
+    .filter((notification: MyNotification | null) => notification !== null);
 }
 
 export async function fetchVergunningenNotifications(
@@ -173,7 +162,6 @@ export async function fetchVergunningenNotifications(
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
-      decosZaakTransformers,
       themaId,
       themaTitle
     );

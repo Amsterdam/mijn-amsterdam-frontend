@@ -176,6 +176,7 @@ describe('Toeristische verhuur service', () => {
       dateEndFormatted: '31 mei 2020',
       location: 'Amstel 1 1017AB Amsterdam',
       decision: 'Verleend',
+      isVerleend: true,
       identifier: 'Z/000/000040',
       steps: [
         {
@@ -224,11 +225,12 @@ describe('Toeristische verhuur service', () => {
       dateDecisionFormatted: '22 maart 2023',
       dateRequest: '13 februari 2023',
       dateRequestFormatted: '13 februari 2023',
-      dateStart: '22 maart 2023',
+      dateStart: '2023-03-22',
       dateStartFormatted: '22 maart 2023',
-      dateEnd: '01 juli 2028',
+      dateEnd: '2028-07-01',
       dateEndFormatted: '01 juli 2028',
       decision: 'Verleend',
+      isVerleend: true,
       id: 'Z-23-2130506',
       identifier: 'Z/23/2130506',
       heeftOvergangsRecht: false,
@@ -286,7 +288,11 @@ describe('Toeristische verhuur service', () => {
     );
 
     const notification5 = createToeristischeVerhuurNotification(
-      { ...vakantieverhuurVergunning, dateEnd: '2021-08-30' },
+      {
+        ...vakantieverhuurVergunning,
+        dateStart: '2020-08-30',
+        dateEnd: '2021-08-30',
+      },
       new Date()
     );
 
@@ -315,7 +321,7 @@ describe('Toeristische verhuur service', () => {
     );
 
     const notification8 = createToeristischeVerhuurNotification(
-      { ...bbVergunnig, dateEnd: '2021-08-30' },
+      { ...bbVergunnig, dateStart: '2020-08-30', dateEnd: '2021-08-30' },
       new Date()
     );
 

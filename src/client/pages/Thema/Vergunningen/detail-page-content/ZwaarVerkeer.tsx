@@ -10,12 +10,17 @@ export function ZwaarVerkeer({
 }: {
   vergunning: VergunningFrontend<ZwaarVerkeer>;
 }) {
+  const exemptionKind = () =>
+    vergunning.exemptionKind
+      ? {
+          label: 'Soort ontheffing',
+          content: vergunning.exemptionKind,
+        }
+      : null;
+
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
-    {
-      label: 'Soort ontheffing',
-      content: vergunning.exemptionKind || '-',
-    },
+    exemptionKind,
     commonTransformers.kentekens,
     commonTransformers.dateRange,
     commonTransformers.decision,

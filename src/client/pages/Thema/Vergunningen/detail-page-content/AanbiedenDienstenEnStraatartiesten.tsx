@@ -14,7 +14,7 @@ export function AanbiedenDienstenEnStraatartiestenContent({
   vergunning: VergunningFrontend<AanbiedenDiensten | Straatartiesten>;
 }) {
   const waarvoor = () =>
-    vergunning.caseType == 'Straatartiesten' && vergunning.category
+    vergunning.category
       ? {
           label: 'Waarvoor',
           content: vergunning.category,
@@ -22,9 +22,10 @@ export function AanbiedenDienstenEnStraatartiestenContent({
       : null;
 
   const op = () =>
-    vergunning.decision === 'Verleend' &&
-    vergunning.dateStart &&
-    (!vergunning.dateEnd || vergunning.dateStart === vergunning.dateEnd)
+    vergunning.isVerleend &&
+    vergunning.dateStartFormatted &&
+    (!vergunning.dateEndFormatted ||
+      vergunning.dateStartFormatted === vergunning.dateEndFormatted)
       ? {
           label: 'Op',
           content: vergunning.dateStartFormatted,
@@ -32,9 +33,10 @@ export function AanbiedenDienstenEnStraatartiestenContent({
       : null;
 
   const vanTot = () =>
-    vergunning.decision === 'Verleend' &&
-    vergunning.dateEnd !== null &&
-    vergunning.dateStart !== vergunning.dateEnd
+    vergunning.isVerleend &&
+    vergunning.dateEndFormatted &&
+    vergunning.dateStartFormatted &&
+    vergunning.dateStartFormatted !== vergunning.dateEndFormatted
       ? {
           rows: [
             {
@@ -57,19 +59,26 @@ export function AanbiedenDienstenEnStraatartiestenContent({
       content = location.content;
     }
 
-    return {
-      content: content ?? '-',
-      label: 'Locatie',
-    };
+    return content
+      ? {
+          content,
+          label: 'Locatie',
+        }
+      : null;
   };
+
+  const stadsdeel = () =>
+    vergunning.stadsdeel
+      ? {
+          label: 'Stadsdeel',
+          content: vergunning.stadsdeel,
+        }
+      : null;
 
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     waarvoor,
-    {
-      label: 'Stadsdeel',
-      content: vergunning.stadsdeel,
-    },
+    stadsdeel,
     location,
     op,
     vanTot,

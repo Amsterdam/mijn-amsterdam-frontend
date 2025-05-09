@@ -1,6 +1,5 @@
 import { HttpStatusCode } from 'axios';
 import { isAfter } from 'date-fns';
-import memoizee from 'memoizee';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
@@ -35,7 +34,6 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { displayAmount } from '../../../universal/helpers/text';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   cache,
@@ -232,7 +230,7 @@ function isCurrentPasYear(expiryDate: string): boolean {
   return isAfter(expiryDate, pasYearStart);
 }
 
-export async function fetchStadspassen_(
+export async function fetchStadspassen(
   authProfileAndToken: AuthProfileAndToken
 ) {
   const administratienummerResponse =
@@ -256,9 +254,6 @@ export async function fetchStadspassen_(
 
   return fetchStadspassenByAdministratienummer(administratienummer);
 }
-export const fetchStadspassen = memoizee(fetchStadspassen_, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-});
 
 function transformGpassTransactionsResponse(
   responseSource: StadspasTransactiesResponseSource

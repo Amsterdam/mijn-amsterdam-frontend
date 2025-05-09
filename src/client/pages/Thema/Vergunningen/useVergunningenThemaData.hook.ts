@@ -12,12 +12,13 @@ import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 
 export function useVergunningenThemaData() {
-  const { VERGUNNINGEN } = useAppStateGetter();
+  const { VERGUNNINGEN, PARKEREN } = useAppStateGetter();
   const vergunningen = addLinkElementToProperty<VergunningFrontend>(
     VERGUNNINGEN.content ?? [],
     'identifier',
     true
   );
+  const hasParkeervergunningen = !!PARKEREN.content?.vergunningen?.length;
   const breadcrumbs = useThemaBreadcrumbs(themaId);
 
   return {
@@ -29,5 +30,6 @@ export function useVergunningenThemaData() {
     linkListItems,
     breadcrumbs,
     routeConfig,
+    hasParkeervergunningen,
   };
 }

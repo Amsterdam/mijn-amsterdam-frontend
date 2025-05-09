@@ -8,7 +8,7 @@ import {
 export function getApiConfig(
   name: SourceApiKey,
   config: DataRequestConfig = {}
-): DataRequestConfig {
+): Readonly<DataRequestConfig> {
   const apiConfig = ApiConfig[name];
 
   // Take of the agent because it cannot be jsonCopied.

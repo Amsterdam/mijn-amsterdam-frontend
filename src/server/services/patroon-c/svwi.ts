@@ -72,6 +72,9 @@ export async function fetchSVWINotifications(
 ) {
   return await fetchTipsAndNotifications(
     getApiConfig('SVWI', {
+      formatUrl(requestConfig) {
+        return `${requestConfig.url}/autorisatie/tegel`;
+      },
       transformResponse: transformSVWIResponse,
     }),
     themaId,

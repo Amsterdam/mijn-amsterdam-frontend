@@ -26,13 +26,10 @@ import {
 } from '../decos/decos-field-transformers';
 import {
   getCustomTitleForDecosZaakWithLicensePlates,
+  isZaakDecisionVerleend,
   transformBoolean,
 } from '../decos/decos-helpers';
 import { DecosZaakTransformer } from '../decos/decos-types';
-import {
-  caseNotificationLabelsDefault,
-  caseNotificationLabelsExpirables,
-} from '../vergunningen/vergunningen-notification-labels';
 
 const GPP: DecosZaakTransformer<GPP> = {
   isActive: true,
@@ -51,13 +48,19 @@ const GPP: DecosZaakTransformer<GPP> = {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsDefault,
 };
 
 const GPK: DecosZaakTransformer<GPK> = {
   isActive: true,
   caseType: caseTypeParkeren.GPK,
   title: 'Europese gehandicaptenparkeerkaart (GPK)',
+  isVerleend(decosZaak, decosZaakSource) {
+    return isZaakDecisionVerleend(decosZaak, [
+      'Verleend',
+      'Verleend Bestuurder, niet verleend Passagier',
+      'Verleend Passagier, niet verleend Bestuurder',
+    ]);
+  },
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     dfunction: transformDecision({
@@ -78,11 +81,11 @@ const GPK: DecosZaakTransformer<GPK> = {
         'Verleend Passagier met GPP (niet verleend Bestuurd',
       ],
     }),
+    date6: dateStart,
     date7: dateEnd,
     num3: { name: 'cardNumber' },
     text7: { name: 'cardType' },
   },
-  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 const BZP: DecosZaakTransformer<BZP> = {
@@ -100,7 +103,6 @@ const BZP: DecosZaakTransformer<BZP> = {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 const BZB: DecosZaakTransformer<BZB> = {
@@ -114,7 +116,6 @@ const BZB: DecosZaakTransformer<BZB> = {
     company: { name: 'companyName' },
     num6: { name: 'numberOfPermits' },
   },
-  notificationLabels: caseNotificationLabelsDefault,
 };
 
 const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
@@ -126,7 +127,8 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'In behandeling',
-      stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+      decosActionCode:
+        'Status bijwerken en notificatie verzenden - In behandeling',
     },
   ],
   transformFields: {
@@ -214,7 +216,6 @@ const EigenParkeerplaats: DecosZaakTransformer<EigenParkeerplaats> = {
 
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsExpirables,
 };
 
 const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffen> =
@@ -227,7 +228,8 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
     fetchWorkflowStatusDatesFor: [
       {
         status: 'In behandeling',
-        stepTitle: 'Status bijwerken en notificatie verzenden - In behandeling',
+        decosActionCode:
+          'Status bijwerken en notificatie verzenden - In behandeling',
       },
     ],
     requirePayment: true,
@@ -251,7 +253,6 @@ const EigenParkeerplaatsOpheffen: DecosZaakTransformer<EigenParkeerplaatsOpheffe
         getCustomTitleForDecosZaakWithLicensePlates(vergunning);
       return vergunning;
     },
-    notificationLabels: caseNotificationLabelsDefault,
   };
 
 const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
@@ -261,7 +262,7 @@ const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
     caseTypeParkeren.TouringcarDagontheffing.toLowerCase()
   ),
   fetchWorkflowStatusDatesFor: [
-    { status: 'In behandeling', stepTitle: 'Status naar in behandeling' },
+    { status: 'In behandeling', decosActionCode: 'Status naar in behandeling' },
   ],
   requirePayment: true,
   transformFields: {
@@ -277,7 +278,6 @@ const TouringcarDagontheffing: DecosZaakTransformer<TouringcarDagontheffing> = {
     vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
     return vergunning;
   },
-  notificationLabels: caseNotificationLabelsDefault,
 };
 
 const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
@@ -288,7 +288,10 @@ const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
       caseTypeParkeren.TouringcarJaarontheffing.toLowerCase()
     ),
     fetchWorkflowStatusDatesFor: [
-      { status: 'In behandeling', stepTitle: 'Status naar In Behandeling' },
+      {
+        status: 'In behandeling',
+        decosActionCode: 'Status naar In Behandeling',
+      },
     ],
     requirePayment: true,
     transformFields: {
@@ -311,7 +314,6 @@ const TouringcarJaarontheffing: DecosZaakTransformer<TouringcarJaarontheffing> =
       }
       return vergunning;
     },
-    notificationLabels: caseNotificationLabelsExpirables,
   };
 
 export const decosCaseToZaakTransformers = {

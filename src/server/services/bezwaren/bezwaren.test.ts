@@ -127,7 +127,7 @@ describe('Bezwaren', () => {
         .post(`${endpointBase}/_zoek?page=4`)
         .reply(200, { count: 75, items: range(61, 75) });
 
-      const response = await forTesting.fetchMultiple({
+      const response = await forTesting.fetchMultiple('cache-key-zaak-id', {
         url: `${remoteApiHost}${endpointBase}/_zoek`,
         method: 'post',
         params: {
@@ -146,7 +146,7 @@ describe('Bezwaren', () => {
         .post(`${endpointBase}/_zoek?page=2`)
         .reply(500, undefined);
 
-      const response = await forTesting.fetchMultiple({
+      const response = await forTesting.fetchMultiple('cache-key-zaak-id', {
         url: `${remoteApiHost}${endpointBase}/_zoek`,
         method: 'post',
         params: {

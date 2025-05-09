@@ -1,5 +1,4 @@
 import * as jose from 'jose';
-import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 
 import {
@@ -42,9 +41,7 @@ import { DocumentDownloadData } from '../shared/document-download-route-handler'
 
 const MAX_PAGE_COUNT = 5; // Should amount to 5 * 20 (per page) = 100 bezwaren
 
-async function getBezwarenApiHeaders_(
-  authProfileAndToken: AuthProfileAndToken
-) {
+async function getBezwarenApiHeaders(authProfileAndToken: AuthProfileAndToken) {
   const now = new Date();
 
   const MINUTES_TO_EXPIRE = 5;
@@ -86,8 +83,6 @@ async function getBezwarenApiHeaders_(
   return header;
 }
 
-export const getBezwarenApiHeaders = memoizee(getBezwarenApiHeaders_);
-
 function getIdAttribute(authProfileAndToken: AuthProfileAndToken) {
   return authProfileAndToken.profile.profileType === 'commercial'
     ? 'rol__betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId'
@@ -99,9 +94,14 @@ function getZaakUrl(zaakId: BezwaarFrontend['uuid']) {
 }
 
 async function fetchMultiple<T>(
-  requestConfig: DataRequestConfig,
+  cacheKeyBase: string,
+  requestConfigBase: DataRequestConfig,
   maxPageCount: number = MAX_PAGE_COUNT
 ) {
+  const requestConfig = {
+    ...requestConfigBase,
+    cacheKey: `${cacheKeyBase}-${requestConfigBase.params.page}`,
+  };
   let response = await requestData<OctopusApiResponse<T>>(requestConfig);
   let itemsLength = response.content?.items.length ?? 0;
   const resultCount = response.content?.count ?? 0;
@@ -114,7 +114,10 @@ async function fetchMultiple<T>(
         requestConfig.params.page < maxPageCount
       ) {
         requestConfig.params.page += 1; //Fetch next page
-        response = await requestData<OctopusApiResponse<T>>(requestConfig);
+        response = await requestData<OctopusApiResponse<T>>({
+          ...requestConfig,
+          cacheKey: `${cacheKeyBase}-${requestConfigBase.params.page}`,
+        });
 
         if (response.status === 'OK') {
           items = items.concat(response.content.items);
@@ -173,6 +176,7 @@ async function fetchBezwaarStatus(
     params,
     transformResponse: transformBezwaarStatus,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
+    cacheKey: `bezwaar-status-${zaakId}`,
   });
 
   const statusResponse = await requestData<StatusLineItem[]>(
@@ -227,7 +231,7 @@ export async function fetchBezwarenDocuments(
     identifier: zaakId,
   };
 
-  const requestConfig = getApiConfig('BEZWAREN_DOCUMENTS', {
+  const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', {
     params,
     transformResponse: (responseData) => {
       return transformBezwarenDocumentsResults(
@@ -238,8 +242,10 @@ export async function fetchBezwarenDocuments(
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const bezwaarDocumentenResponse =
-    await fetchMultiple<BezwaarDocument>(requestConfig);
+  const bezwaarDocumentenResponse = await fetchMultiple<BezwaarDocument>(
+    `${zaakId}-documents`,
+    requestConfigBase
+  );
 
   return bezwaarDocumentenResponse;
 }
@@ -376,7 +382,10 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
     headers: await getBezwarenApiHeaders(authProfileAndToken),
   });
 
-  const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(requestConfig);
+  const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(
+    `${authProfileAndToken.profile.sid}-bezwaren`,
+    requestConfig
+  );
 
   if (bezwarenResponse.status === 'OK') {
     const bezwarenSorted = bezwarenResponse.content.sort(

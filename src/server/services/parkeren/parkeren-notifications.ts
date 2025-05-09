@@ -1,4 +1,3 @@
-import { decosZaakTransformers } from './decos-zaken';
 import { fetchDecosParkeerVergunningen } from './parkeren-decos-service';
 import {
   themaId,
@@ -19,7 +18,6 @@ export async function fetchParkeerVergunningenNotifications(
   if (VERGUNNINGEN.status === 'OK') {
     const notifications = getVergunningNotifications<any>(
       VERGUNNINGEN.content,
-      decosZaakTransformers,
       themaId,
       themaTitle
     );

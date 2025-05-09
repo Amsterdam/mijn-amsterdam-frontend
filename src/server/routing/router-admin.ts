@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import basicAuth from 'express-basic-auth';
 
 import { BffEndpoints } from './bff-routes';
+import { DEFAULT_REQUEST_CONFIG } from '../config/source-api';
 import { cacheOverview } from '../helpers/file-cache';
 import { loginStats, loginStatsTable } from '../services/visitors';
 
@@ -23,8 +24,12 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
   adminRouter.get(
     BffEndpoints.CACHE_OVERVIEW,
     async (req: Request, res: Response, next: NextFunction) => {
-      const overview = await cacheOverview();
-      return res.json(overview);
+      const files = await cacheOverview();
+      return res.json({
+        sourceApiRequestCacheTimeoutDefault:
+          DEFAULT_REQUEST_CONFIG.cacheTimeout,
+        files,
+      });
     }
   );
 }

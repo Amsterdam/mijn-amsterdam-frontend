@@ -5,6 +5,7 @@ import {
   WithKentekens,
   WithDateTimeRange,
   WithDateEnd,
+  type WithDateStart,
 } from '../decos/decos-types';
 import { VergunningFrontend } from '../vergunningen/config-and-types';
 
@@ -59,6 +60,7 @@ export type ClientProductDetailsSourceResponse = BaseSourceResponse<
 >;
 
 export type GPK = DecosZaakBase &
+  WithDateStart &
   WithDateEnd &
   WithLocation & {
     caseType: GetCaseType<'GPK'>;

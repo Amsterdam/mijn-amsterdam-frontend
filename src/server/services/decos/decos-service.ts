@@ -1,7 +1,6 @@
 import assert from 'assert';
 
 import createDebugger from 'debug';
-import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
@@ -18,6 +17,7 @@ import {
   getUserKeysSearchQuery,
   isExcludedFromTransformation,
   isExpired,
+  isZaakDecisionVerleend,
 } from './decos-helpers';
 import type {
   AddressBookEntry,
@@ -58,10 +58,7 @@ import {
 } from '../../../universal/helpers/utils';
 import type { StatusLineItem } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import {
-  DataRequestConfig,
-  DEFAULT_API_CACHE_TTL_MS,
-} from '../../config/source-api';
+import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -130,7 +127,7 @@ export const DECOS_ZAKEN_FETCH_TOP = '200';
  *
  */
 
-async function getUserKeys(authProfileAndToken: AuthProfileAndToken) {
+async function fetchUserKeys(authProfileAndToken: AuthProfileAndToken) {
   const apiConfig = getApiConfig('DECOS_API', {
     method: 'post',
     formatUrl: (config) => {
@@ -158,7 +155,7 @@ async function getUserKeys(authProfileAndToken: AuthProfileAndToken) {
       ...apiConfig,
       data: requestBody,
       // only need to fetch once per session
-      cacheKey: `decos-user-key-${addressBookKey}-${authProfileAndToken.profile.id}`,
+      cacheKey: `${authProfileAndToken.profile.id}-${addressBookKey}`,
     };
     const request = requestData<AddressBookEntry[]>(requestConfig).then(
       (response) => ({
@@ -250,21 +247,22 @@ async function transformDecosZaakResponse<
     ...transformedFields,
   };
 
-  if (decosZaakTransformer.fetchWorkflowStatusDatesFor) {
-    const stepTitles = decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
-      ({ stepTitle }) => stepTitle
-    );
+  if (decosZaakTransformer.fetchWorkflowStatusDatesFor?.length) {
+    const decosActionCodes =
+      decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
+        ({ decosActionCode }) => decosActionCode
+      );
     const workFlowDates = await fetchDecosWorkflowDates(
       decosZaakSource.key,
-      stepTitles
+      decosActionCodes
     );
 
     if (workFlowDates.status === 'OK') {
       decosZaak.statusDates =
         decosZaakTransformer.fetchWorkflowStatusDatesFor.map(
-          ({ status, stepTitle }) => ({
+          ({ status, decosActionCode }) => ({
             status,
-            datePublished: workFlowDates.content?.[stepTitle] ?? null,
+            datePublished: workFlowDates.content?.[decosActionCode] ?? null,
           })
         );
     }
@@ -281,7 +279,18 @@ async function transformDecosZaakResponse<
     ];
   }
 
-  if (decosZaakTransformer.fetchTermijnenFor) {
+  // A zaak is considered to immediately be "In behandeling" if no workflows for "In behandeling" are monitored
+  if (
+    !decosZaakTransformer.fetchWorkflowStatusDatesFor?.some(
+      ({ status }) => status === 'In behandeling'
+    )
+  ) {
+    decosZaak.statusDates = [
+      { datePublished: decosZaak.dateRequest, status: 'In behandeling' },
+    ];
+  }
+
+  if (decosZaakTransformer.fetchTermijnenFor?.length) {
     const termijnMap = Object.fromEntries(
       decosZaakTransformer.fetchTermijnenFor.map((termijn) => [
         termijn.type,
@@ -301,10 +310,6 @@ async function transformDecosZaakResponse<
         }))
         .filter((termijn) => termijn.status !== null);
     }
-  }
-
-  if (decosZaak.processed && !decosZaak.decision) {
-    decosZaak.decision = MA_DECISION_DEFAULT;
   }
 
   // If a zaak has both dateStart and dateEnd add formatted dates and an expiration indication.
@@ -329,6 +334,14 @@ async function transformDecosZaakResponse<
       decosZaak,
       decosZaakSource
     );
+  }
+
+  decosZaak.isVerleend = decosZaakTransformer.isVerleend
+    ? decosZaakTransformer.isVerleend(decosZaak, decosZaakSource)
+    : isZaakDecisionVerleend(decosZaak);
+
+  if (decosZaak.processed && !decosZaak.decision) {
+    decosZaak.decision = MA_DECISION_DEFAULT;
   }
 
   return decosZaak;
@@ -422,7 +435,7 @@ function getSelectFields(
   return fields;
 }
 
-async function getZakenByUserKey(
+async function fetchZakenByUserKey(
   userKey: string,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
@@ -477,7 +490,7 @@ export async function fetchDecosZakenFromSourceRaw(
   includeProperties: boolean = false,
   top: string = DECOS_ZAKEN_FETCH_TOP
 ) {
-  const userKeysResponse = await getUserKeys(authProfileAndToken);
+  const userKeysResponse = await fetchUserKeys(authProfileAndToken);
 
   const caseTypes = filterCaseTypes
     ?.split(',')
@@ -528,7 +541,7 @@ export async function fetchDecosZakenFromSource(
   authProfileAndToken: AuthProfileAndToken,
   zaakTypeTransformers: DecosZaakTransformer<DecosZaakBase>[] = []
 ) {
-  const userKeysResponse = await getUserKeys(authProfileAndToken);
+  const userKeysResponse = await fetchUserKeys(authProfileAndToken);
 
   if (userKeysResponse.status === 'ERROR') {
     return userKeysResponse;
@@ -536,7 +549,7 @@ export async function fetchDecosZakenFromSource(
 
   const zakenSourceResponses = await Promise.allSettled(
     userKeysResponse.content.map((userKey) =>
-      getZakenByUserKey(userKey, zaakTypeTransformers)
+      fetchZakenByUserKey(userKey, zaakTypeTransformers)
     )
   );
 
@@ -555,7 +568,7 @@ export async function fetchDecosZakenFromSource(
   return apiSuccessResult(zakenSource);
 }
 
-export async function fetchDecosZaken_<
+export async function fetchDecosZaken<
   T extends DecosZaakTransformer<any>,
   DZ extends DecosZaakBase = NestedType<T>,
 >(
@@ -579,15 +592,8 @@ export async function fetchDecosZaken_<
   return zakenSourceResponse;
 }
 
-export const fetchDecosZaken = memoizee(fetchDecosZaken_, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args) {
-    return JSON.stringify(args[0]) + JSON.stringify(args[1]);
-  },
-});
-
 function transformDecosWorkflowDateResponse(
-  stepTitles: DecosWorkflowStepTitle[],
+  decosActionCodes: DecosWorkflowStepTitle[],
   singleWorkflowResponseData: DecosWorkflowResponse
 ): DecosWorkflowDateByStepTitle {
   const responseStepTitleDates = singleWorkflowResponseData.content
@@ -600,10 +606,10 @@ function transformDecosWorkflowDateResponse(
       {} as Record<string, string | null>
     );
 
-  const stepTitleToDate = stepTitles.reduce(
-    (acc, stepTitle) => ({
+  const stepTitleToDate = decosActionCodes.reduce(
+    (acc, decosActionCode) => ({
       ...acc,
-      [stepTitle]: responseStepTitleDates[stepTitle] ?? null,
+      [decosActionCode]: responseStepTitleDates[decosActionCode] ?? null,
     }),
     {} as DecosWorkflowDateByStepTitle
   );
@@ -617,7 +623,7 @@ async function fetchWorkflowInstance<
   useRawResponse: B;
   key: string;
   urlParams?: URLSearchParams;
-  stepTitles?: ST;
+  decosActionCodes?: ST;
 }) {
   const apiConfigSingleWorkflow = getApiConfig('DECOS_API', {
     formatUrl: (config) =>
@@ -626,8 +632,11 @@ async function fetchWorkflowInstance<
       ? Object.fromEntries(options.urlParams)
       : undefined,
     transformResponse: (responseData: DecosWorkflowResponse) =>
-      !options.useRawResponse && options.stepTitles
-        ? transformDecosWorkflowDateResponse(options.stepTitles, responseData)
+      !options.useRawResponse && options.decosActionCodes
+        ? transformDecosWorkflowDateResponse(
+            options.decosActionCodes,
+            responseData
+          )
         : responseData.content,
   });
 
@@ -648,7 +657,7 @@ export async function fetchDecosWorkflowDates<
   ST extends DecosWorkflowStepTitle[] | undefined,
 >(
   zaakID: DecosZaakBase['key'],
-  stepTitles?: ST,
+  decosActionCodes?: ST,
   select: string[] = ['mark', 'date1', 'date2', 'text7']
 ): Promise<
   ST extends undefined
@@ -657,7 +666,7 @@ export async function fetchDecosWorkflowDates<
       >
     : ApiResponse<DecosWorkflowDateByStepTitle | any>
 > {
-  const pickLatestWorkflow = !!stepTitles?.length;
+  const pickLatestWorkflow = !!decosActionCodes?.length;
   const apiConfigWorkflows = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
@@ -683,10 +692,12 @@ export async function fetchDecosWorkflowDates<
     urlParams.append('select', select.join(','));
   }
 
-  if (stepTitles?.length) {
+  if (decosActionCodes?.length) {
     urlParams.append(
       'filter',
-      stepTitles.map((stepTitle) => `text7 eq '${stepTitle}'`).join(' or ')
+      decosActionCodes
+        .map((decosActionCode) => `text7 eq '${decosActionCode}'`)
+        .join(' or ')
     );
   }
   const lastWorkflowKey = workflowKeys.at(-1);
@@ -696,7 +707,7 @@ export async function fetchDecosWorkflowDates<
       ? fetchWorkflowInstance({
           key: lastWorkflowKey,
           urlParams,
-          stepTitles,
+          decosActionCodes,
           useRawResponse: false,
         })
       : apiSuccessResult({});
@@ -707,7 +718,7 @@ export async function fetchDecosWorkflowDates<
       fetchWorkflowInstance({
         key,
         urlParams,
-        stepTitles,
+        decosActionCodes,
         useRawResponse: true,
       }).then(({ content }) => {
         return {
@@ -981,9 +992,9 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
 
 export const forTesting = {
   filterValidDocument,
-  getUserKeys,
+  getUserKeys: fetchUserKeys,
   getSelectFields,
-  getZakenByUserKey,
+  getZakenByUserKey: fetchZakenByUserKey,
   transformDecosDocumentListResponse,
   transformDecosWorkflowDateResponse,
   transformDecosWorkflowKeysResponse,
