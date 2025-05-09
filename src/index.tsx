@@ -1,7 +1,7 @@
 import { AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js';
 import { createRoot } from 'react-dom/client';
 
-import { App } from './client/App';
+import { AppWrapper } from './client/App';
 import { reactPlugin } from './client/helpers/monitoring';
 import { ApplicationError } from './client/pages/ApplicationError/ApplicationError';
 import './client/styles/main.scss';
@@ -31,6 +31,6 @@ root.render(
     onError={ApplicationError}
     appInsights={reactPlugin}
   >
-    <App />
+    <AppWrapper />
   </AppInsightsErrorBoundary>
 );
