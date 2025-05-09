@@ -16,12 +16,20 @@ import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 
+const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
+
 let adHocDependencyRequestCacheTtlMs: undefined | number;
+let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined =
+  undefined;
 
 export function setAdHocDependencyRequestCacheTtlMs(
   cacheTtl: typeof adHocDependencyRequestCacheTtlMs
 ): void {
+  clearTimeout(resetAdHocDependencyRequestCacheTtlMsTimeout);
   adHocDependencyRequestCacheTtlMs = cacheTtl;
+  resetAdHocDependencyRequestCacheTtlMsTimeout = setTimeout(() => {
+    adHocDependencyRequestCacheTtlMs = undefined;
+  }, RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS);
 }
 
 export interface DataRequestConfig extends AxiosRequestConfig {
