@@ -13,10 +13,7 @@ import {
   apiDependencyError,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
-import {
-  isRecentNotification,
-  toDateFormatted,
-} from '../../../universal/helpers/utils';
+import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import type { DecosZaakBase } from '../decos/decos-types';
@@ -104,9 +101,10 @@ export function createNotificationDefault<
       ) {
         return {
           ...baseNotification,
-          datePublished: toDateFormatted(
-            getLifetimeTriggerDate(zaak.dateStart, zaak.dateEnd)
-          ),
+          datePublished: getLifetimeTriggerDate(
+            zaak.dateStart,
+            zaak.dateEnd
+          ).toISOString(),
           title: `Uw ${zaak.title} loopt af`,
           description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} loopt binnenkort af, vraag zonodig een nieuwe aan.`,
         };

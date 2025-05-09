@@ -168,9 +168,9 @@ export function sortNotificationsAndInsertTips(
 ): MyNotification[] {
   // sort the notifications with and without a tip
   const sorted = notifications
-    .sort(dateSort('datePublished', 'desc'))
+    .toSorted(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
-    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+    .toSorted((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
 
   const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
 
@@ -180,7 +180,7 @@ export function sortNotificationsAndInsertTips(
     // Simple randomization
     tips = tips
       .map((tip) => ({ tip, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
+      .toSorted((a, b) => a.sort - b.sort)
       .map(({ tip }) => tip);
   }
 
