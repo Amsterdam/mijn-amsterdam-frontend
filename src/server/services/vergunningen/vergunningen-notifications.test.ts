@@ -23,7 +23,7 @@ vi.mock('./vergunningen', () => ({
 }));
 
 vi.mock('./vergunningen-helpers', () => ({
-  isNearEndDate: vi.fn(),
+  isExpiryNotificationDue: vi.fn(),
 }));
 
 describe('vergunningen-notifications', () => {

@@ -49,7 +49,7 @@ export function getLifetimeTriggerDate(
   );
 }
 
-export function isNearEndDate(
+export function isExpiryNotificationDue(
   dateStart: string | null,
   dateEnd: string | null,
   dateNow?: Date,

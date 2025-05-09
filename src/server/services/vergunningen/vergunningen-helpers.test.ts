@@ -1,7 +1,7 @@
 import MockDate from 'mockdate';
 
 import {
-  isNearEndDate,
+  isExpiryNotificationDue,
   getCustomTitleForVergunningWithLicensePlates,
   getLifetimeTriggerDate,
 } from './vergunningen-helpers';
@@ -16,34 +16,56 @@ describe('vergunningen/helpers', () => {
     MockDate.reset();
   });
 
-  describe('isNearEndDate', () => {
+  describe('isExpiryNotificationDue', () => {
     test('Near', () => {
       expect(
-        isNearEndDate('2023-01-01', '2023-03-01', new Date('2023-02-24'))
+        isExpiryNotificationDue(
+          '2023-01-01',
+          '2023-03-01',
+          new Date('2023-02-24')
+        )
       ).toBe(true);
     });
 
     test('Near with custom percentage', () => {
       expect(
-        isNearEndDate('2023-01-01', '2023-04-30', new Date('2023-02-01'), 0.25)
+        isExpiryNotificationDue(
+          '2023-01-01',
+          '2023-04-30',
+          new Date('2023-02-01'),
+          0.25
+        )
       ).toBe(true);
     });
 
     test('Not near with custom percentage', () => {
       expect(
-        isNearEndDate('2023-01-01', '2023-04-30', new Date('2023-01-28'), 0.25)
+        isExpiryNotificationDue(
+          '2023-01-01',
+          '2023-04-30',
+          new Date('2023-01-28'),
+          0.25
+        )
       ).toBe(false);
     });
 
     test('Not near', () => {
       expect(
-        isNearEndDate('2023-01-01', '2023-03-01', new Date('2023-01-24'))
+        isExpiryNotificationDue(
+          '2023-01-01',
+          '2023-03-01',
+          new Date('2023-01-24')
+        )
       ).toBe(false);
     });
 
     test('In past', () => {
       expect(
-        isNearEndDate('2023-01-01', '2023-03-01', new Date('2022-12-29'))
+        isExpiryNotificationDue(
+          '2023-01-01',
+          '2023-03-01',
+          new Date('2022-12-29')
+        )
       ).toBe(false);
     });
   });

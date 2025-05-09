@@ -1,6 +1,9 @@
 import { VergunningFrontend } from './config-and-types';
 import { fetchVergunningen } from './vergunningen';
-import { getLifetimeTriggerDate, isNearEndDate } from './vergunningen-helpers';
+import {
+  getLifetimeTriggerDate,
+  isExpiryNotificationDue,
+} from './vergunningen-helpers';
 import {
   routeConfig,
   themaId,
@@ -97,7 +100,7 @@ export function createNotificationDefault<
         'isExpired' in zaak &&
         zaak.dateStart &&
         zaak.dateEnd &&
-        isNearEndDate(zaak.dateStart, zaak.dateEnd)
+        isExpiryNotificationDue(zaak.dateStart, zaak.dateEnd)
       ) {
         return {
           ...baseNotification,
