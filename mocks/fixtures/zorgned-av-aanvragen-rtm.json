@@ -15,8 +15,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -29,7 +29,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -47,8 +47,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -61,7 +61,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - afgewezen",
             "omschrijvingclientportaal": "AV-RTM1 - afgewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -79,8 +79,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -93,7 +93,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -111,8 +111,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -125,7 +125,7 @@
             "documentidentificatie": "AV-RTM-aanvrager",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -143,8 +143,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -157,7 +157,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -175,8 +175,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -189,7 +189,7 @@
             "documentidentificatie": "AV-RTM-aanvrager",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -207,11 +207,14 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -221,7 +224,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -239,11 +242,14 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -253,7 +259,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -271,11 +277,14 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": false,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -285,7 +294,7 @@
             "documentidentificatie": "AV-RTM-aanvrager",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -303,8 +312,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -317,7 +326,7 @@
             "documentidentificatie": "AV-RTM-kind",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -335,8 +344,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -349,7 +358,7 @@
             "documentidentificatie": "AV-RTM-partner",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -367,11 +376,14 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -381,7 +393,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -399,11 +411,14 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": false,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -413,7 +428,7 @@
             "documentidentificatie": "AV-RTM-aanvrager",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -431,8 +446,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -445,7 +460,7 @@
             "documentidentificatie": "AV-RTM-kind",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -463,8 +478,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -477,7 +492,7 @@
             "documentidentificatie": "AV-RTM-partner",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -495,11 +510,14 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -509,7 +527,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -527,11 +545,14 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -541,7 +562,7 @@
             "documentidentificatie": "AV-RTM-aanvrager",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -559,8 +580,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -573,7 +594,7 @@
             "documentidentificatie": "AV-RTM-kind",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -591,8 +612,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -605,7 +626,7 @@
             "documentidentificatie": "AV-RTM-partner",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -623,11 +644,13 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["partner-1"]
+                "betrokkenen": [
+                  "partner-1"
+                ]
               }
             }
           ]
@@ -637,7 +660,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -655,11 +678,13 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["partner-1"]
+                "betrokkenen": [
+                  "partner-1"
+                ]
               }
             }
           ]
@@ -669,7 +694,7 @@
             "documentidentificatie": "AV-RTM-aanvrager",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -687,8 +712,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -701,7 +726,7 @@
             "documentidentificatie": "AV-RTM-partner",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -719,11 +744,14 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -733,7 +761,7 @@
             "documentidentificatie": "AV-RTM1-aanvrager",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -751,11 +779,14 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": ["kind-1", "partner-2"]
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
               }
             }
           ]
@@ -765,7 +796,7 @@
             "documentidentificatie": "AV-RTM-aanvrager",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -783,8 +814,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -797,7 +828,7 @@
             "documentidentificatie": "AV-RTM-kind",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
@@ -815,8 +846,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2024-01-01",
-                "datumEindeGeldigheid": "2024-05-28",
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -829,7 +860,7 @@
             "documentidentificatie": "AV-RTM-partner",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
-            "datumDefinitief": "2024-06-17T11:15:35.287"
+            "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       }
