@@ -348,7 +348,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !featureToggleBodem.BodemActive,
   },
   LOOD_365_OAUTH: {
-    url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
+    url: `${getFromEnv('BFF_LOOD_OAUTH')}${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
     postponeFetch: !featureToggleBodem.BodemActive,
     // eslint-disable-next-line no-magic-numbers
