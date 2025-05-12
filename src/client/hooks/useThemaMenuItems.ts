@@ -9,6 +9,10 @@ import { sortAlpha } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { themasByProfileType } from '../config/menuItems';
 import { ThemaMenuItemTransformed } from '../config/thema-types';
+import {
+  themaIdBRP,
+  themaIdKVK,
+} from '../pages/Thema/Profile/Profile-thema-config';
 
 export interface ThemasState {
   items: ThemaMenuItemTransformed[];
@@ -19,7 +23,14 @@ export function useThemaMenuItems(): ThemasState {
   const profileType = useProfileTypeValue();
   const appState = useAppStateGetter();
   const isAppStateReady = useAppStateReady();
-  const themaItems = themasByProfileType(profileType).sort(sortAlpha('title'));
+  const allThemaItems = themasByProfileType(profileType).sort(
+    sortAlpha('title')
+  );
+  const alwaysFirstThemasIds = [themaIdKVK, themaIdBRP] as string[];
+  const themaItems = [
+    ...allThemaItems.filter(({ id }) => alwaysFirstThemasIds.includes(id)),
+    ...allThemaItems.filter(({ id }) => !alwaysFirstThemasIds.includes(id)),
+  ];
 
   const items = useMemo(() => {
     return themaItems.filter((item) => {
