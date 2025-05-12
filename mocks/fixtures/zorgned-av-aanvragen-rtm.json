@@ -2,7 +2,7 @@
   "_embedded": {
     "aanvraag": [
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-1.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -11,7 +11,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 1.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-1.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -22,11 +22,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-1.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-1.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -34,7 +35,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -43,7 +44,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 2.1 aanvrager - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-2.1 - afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -54,11 +55,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-2.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-2.1",
             "omschrijving": "AV-RTM1 - afgewezen",
             "omschrijvingclientportaal": "AV-RTM1 - afgewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -66,7 +68,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-3.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -75,7 +77,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 3.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-3.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -86,11 +88,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-3.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-3.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -98,7 +101,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-aanvrager",
+        "identificatie": "AV-RTM-AV-RTM-3.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -107,7 +110,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 3.2 aanvrager - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM-3.2 - afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -118,11 +121,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-3.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-aanvrager",
+            "documentidentificatie": "AV-RTM-AV-RTM-3.2",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -130,7 +134,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-4.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -139,7 +143,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 4.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-4.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -150,11 +154,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-4.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-4.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -162,7 +167,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-aanvrager",
+        "identificatie": "AV-RTM-AV-RTM-4.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -171,7 +176,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 4.2 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM-4.2"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -182,11 +187,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-4.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-aanvrager",
+            "documentidentificatie": "AV-RTM-AV-RTM-4.2",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -194,7 +200,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-5.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -203,7 +209,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 5.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-5.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -217,11 +223,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-5.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-5.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -229,7 +236,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-6.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -238,7 +245,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 6.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-6.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -252,11 +259,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-6.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-6.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -264,7 +272,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-aanvrager",
+        "identificatie": "AV-RTM-AV-RTM-6.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -273,141 +281,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 6.2 aanvrager - afgewezen"
-              },
-              "resultaat": "afgewezen",
-              "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-01",
-                "datumEindeGeldigheid": "2026-06-01",
-                "actueel": false,
-                "toewijzingen": [],
-                "betrokkenen": [
-                  "kind-1",
-                  "partner-2"
-                ]
-              }
-            }
-          ]
-        },
-        "documenten": [
-          {
-            "documentidentificatie": "AV-RTM-aanvrager",
-            "omschrijving": "AV-RTM - afgewezen",
-            "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2025-05-29T11:15:35.287"
-          }
-        ]
-      },
-      {
-        "identificatie": "AV-RTM-kind",
-        "datumAanvraag": "2025-05-09",
-        "beschikking": {
-          "datumAfgifte": "2025-05-17",
-          "beschikteProducten": [
-            {
-              "product": {
-                "identificatie": "AV-RTM",
-                "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 6.2.1 kind - afgewezen"
-              },
-              "resultaat": "afgewezen",
-              "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-01",
-                "datumEindeGeldigheid": "2026-06-01",
-                "actueel": false,
-                "toewijzingen": [],
-                "betrokkenen": []
-              }
-            }
-          ]
-        },
-        "documenten": [
-          {
-            "documentidentificatie": "AV-RTM-kind",
-            "omschrijving": "AV-RTM - afgewezen",
-            "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2025-05-29T11:15:35.287"
-          }
-        ]
-      },
-      {
-        "identificatie": "AV-RTM-partner",
-        "datumAanvraag": "2025-05-09",
-        "beschikking": {
-          "datumAfgifte": "2025-05-17",
-          "beschikteProducten": [
-            {
-              "product": {
-                "identificatie": "AV-RTM",
-                "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 6.2.2 partner - afgewezen"
-              },
-              "resultaat": "afgewezen",
-              "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-01",
-                "datumEindeGeldigheid": "2026-06-01",
-                "actueel": false,
-                "toewijzingen": [],
-                "betrokkenen": []
-              }
-            }
-          ]
-        },
-        "documenten": [
-          {
-            "documentidentificatie": "AV-RTM-partner",
-            "omschrijving": "AV-RTM - afgewezen",
-            "omschrijvingclientportaal": "AV-RTM - afgewezen",
-            "datumDefinitief": "2025-05-29T11:15:35.287"
-          }
-        ]
-      },
-      {
-        "identificatie": "AV-RTM1-aanvrager",
-        "datumAanvraag": "2025-05-09",
-        "beschikking": {
-          "datumAfgifte": "2025-05-17",
-          "beschikteProducten": [
-            {
-              "product": {
-                "identificatie": "AV-RTM1",
-                "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 7.1 aanvrager"
-              },
-              "resultaat": "toegewezen",
-              "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-01",
-                "datumEindeGeldigheid": "2026-06-01",
-                "actueel": true,
-                "toewijzingen": [],
-                "betrokkenen": [
-                  "kind-1",
-                  "partner-2"
-                ]
-              }
-            }
-          ]
-        },
-        "documenten": [
-          {
-            "documentidentificatie": "AV-RTM1-aanvrager",
-            "omschrijving": "AV-RTM1 - toegewezen",
-            "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
-            "datumDefinitief": "2025-05-29T11:15:35.287"
-          }
-        ]
-      },
-      {
-        "identificatie": "AV-RTM-aanvrager",
-        "datumAanvraag": "2025-05-09",
-        "beschikking": {
-          "datumAfgifte": "2025-05-17",
-          "beschikteProducten": [
-            {
-              "product": {
-                "identificatie": "AV-RTM",
-                "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 7.2 aanvrager - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM-6.2 - afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -421,11 +295,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-6.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-aanvrager",
+            "documentidentificatie": "AV-RTM-AV-RTM-6.2",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -433,7 +308,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-kind",
+        "identificatie": "AV-RTM-AV-RTM-6.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -442,30 +317,31 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 7.2.1 kind"
+                "omschrijving": "Tegemoetkoming meerkosten kind AV-RTM-6.2.1 - afgewezen"
               },
-              "resultaat": "toegewezen",
+              "resultaat": "afgewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-06-01",
                 "datumEindeGeldigheid": "2026-06-01",
-                "actueel": true,
+                "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-6.2.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-kind",
-            "omschrijving": "AV-RTM - toegewezen",
-            "omschrijvingclientportaal": "AV-RTM - toegewezen",
+            "documentidentificatie": "AV-RTM-AV-RTM-6.2.1",
+            "omschrijving": "AV-RTM - afgewezen",
+            "omschrijvingclientportaal": "AV-RTM - afgewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
       {
-        "identificatie": "AV-RTM-partner",
+        "identificatie": "AV-RTM-AV-RTM-6.2.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -474,30 +350,31 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 7.2.2 partner"
+                "omschrijving": "Tegemoetkoming meerkosten partner AV-RTM-6.2.2 - afgewezen"
               },
-              "resultaat": "toegewezen",
+              "resultaat": "afgewezen",
               "toegewezenProduct": {
                 "datumIngangGeldigheid": "2025-06-01",
                 "datumEindeGeldigheid": "2026-06-01",
-                "actueel": true,
+                "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-6.2.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-partner",
-            "omschrijving": "AV-RTM - toegewezen",
-            "omschrijvingclientportaal": "AV-RTM - toegewezen",
+            "documentidentificatie": "AV-RTM-AV-RTM-6.2.2",
+            "omschrijving": "AV-RTM - afgewezen",
+            "omschrijvingclientportaal": "AV-RTM - afgewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-7.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -506,7 +383,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 8.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-7.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -520,11 +397,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-7.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-7.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -532,7 +410,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-aanvrager",
+        "identificatie": "AV-RTM-AV-RTM-7.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -541,7 +419,109 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 8.2 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM-7.2 - afgewezen"
+              },
+              "resultaat": "afgewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
+                "actueel": false,
+                "toewijzingen": [],
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
+              }
+            }
+          ],
+          "beschikkingNummer": "AV-RTM-7.2"
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "AV-RTM-AV-RTM-7.2",
+            "omschrijving": "AV-RTM - afgewezen",
+            "omschrijvingclientportaal": "AV-RTM - afgewezen",
+            "datumDefinitief": "2025-05-29T11:15:35.287"
+          }
+        ]
+      },
+      {
+        "identificatie": "AV-RTM-AV-RTM-7.2.1",
+        "datumAanvraag": "2025-05-09",
+        "beschikking": {
+          "datumAfgifte": "2025-05-17",
+          "beschikteProducten": [
+            {
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming meerkosten kind AV-RTM-7.2.1"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
+                "actueel": true,
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ],
+          "beschikkingNummer": "AV-RTM-7.2.1"
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "AV-RTM-AV-RTM-7.2.1",
+            "omschrijving": "AV-RTM - toegewezen",
+            "omschrijvingclientportaal": "AV-RTM - toegewezen",
+            "datumDefinitief": "2025-05-29T11:15:35.287"
+          }
+        ]
+      },
+      {
+        "identificatie": "AV-RTM-AV-RTM-7.2.2",
+        "datumAanvraag": "2025-05-09",
+        "beschikking": {
+          "datumAfgifte": "2025-05-17",
+          "beschikteProducten": [
+            {
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming meerkosten partner AV-RTM-7.2.2"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
+                "actueel": true,
+                "toewijzingen": [],
+                "betrokkenen": []
+              }
+            }
+          ],
+          "beschikkingNummer": "AV-RTM-7.2.2"
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "AV-RTM-AV-RTM-7.2.2",
+            "omschrijving": "AV-RTM - toegewezen",
+            "omschrijvingclientportaal": "AV-RTM - toegewezen",
+            "datumDefinitief": "2025-05-29T11:15:35.287"
+          }
+        ]
+      },
+      {
+        "identificatie": "AV-RTM1-AV-RTM1-8.1",
+        "datumAanvraag": "2025-05-09",
+        "beschikking": {
+          "datumAfgifte": "2025-05-17",
+          "beschikteProducten": [
+            {
+              "product": {
+                "identificatie": "AV-RTM1",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-8.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -555,19 +535,20 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-8.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-aanvrager",
-            "omschrijving": "AV-RTM - toegewezen",
-            "omschrijvingclientportaal": "AV-RTM - toegewezen",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-8.1",
+            "omschrijving": "AV-RTM1 - toegewezen",
+            "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
           }
         ]
       },
       {
-        "identificatie": "AV-RTM-kind",
+        "identificatie": "AV-RTM-AV-RTM-8.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -576,7 +557,43 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 8.2.1 kind"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM-8.2"
+              },
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2025-06-01",
+                "datumEindeGeldigheid": "2026-06-01",
+                "actueel": true,
+                "toewijzingen": [],
+                "betrokkenen": [
+                  "kind-1",
+                  "partner-2"
+                ]
+              }
+            }
+          ],
+          "beschikkingNummer": "AV-RTM-8.2"
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "AV-RTM-AV-RTM-8.2",
+            "omschrijving": "AV-RTM - toegewezen",
+            "omschrijvingclientportaal": "AV-RTM - toegewezen",
+            "datumDefinitief": "2025-05-29T11:15:35.287"
+          }
+        ]
+      },
+      {
+        "identificatie": "AV-RTM-AV-RTM-8.2.1",
+        "datumAanvraag": "2025-05-09",
+        "beschikking": {
+          "datumAfgifte": "2025-05-17",
+          "beschikteProducten": [
+            {
+              "product": {
+                "identificatie": "AV-RTM",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Tegemoetkoming meerkosten kind AV-RTM-8.2.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -587,11 +604,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-8.2.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-kind",
+            "documentidentificatie": "AV-RTM-AV-RTM-8.2.1",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -599,7 +617,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-partner",
+        "identificatie": "AV-RTM-AV-RTM-8.2.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -608,7 +626,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 8.2.2 partner"
+                "omschrijving": "Tegemoetkoming meerkosten partner AV-RTM-8.2.2"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -619,11 +637,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-8.2.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-partner",
+            "documentidentificatie": "AV-RTM-AV-RTM-8.2.2",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -631,7 +650,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-9.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -640,7 +659,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 9.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-9.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -653,11 +672,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-9.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-9.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -665,7 +685,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-aanvrager",
+        "identificatie": "AV-RTM-AV-RTM-9.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -674,7 +694,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 9.2 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM-9.2"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -687,11 +707,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-9.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-aanvrager",
+            "documentidentificatie": "AV-RTM-AV-RTM-9.2",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -699,7 +720,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-partner",
+        "identificatie": "AV-RTM-AV-RTM-9.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -708,7 +729,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 9.2.1 partner - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten partner AV-RTM-9.2.1 - afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -719,11 +740,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-9.2.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-partner",
+            "documentidentificatie": "AV-RTM-AV-RTM-9.2.1",
             "omschrijving": "AV-RTM - afgewezen",
             "omschrijvingclientportaal": "AV-RTM - afgewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -731,7 +753,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM1-aanvrager",
+        "identificatie": "AV-RTM1-AV-RTM1-10.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -740,7 +762,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 10.1 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM1-10.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -754,11 +776,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM1-10.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM1-aanvrager",
+            "documentidentificatie": "AV-RTM1-AV-RTM1-10.1",
             "omschrijving": "AV-RTM1 - toegewezen",
             "omschrijvingclientportaal": "AV-RTM1 - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -766,7 +789,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-aanvrager",
+        "identificatie": "AV-RTM-AV-RTM-10.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -775,7 +798,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 10.2 aanvrager"
+                "omschrijving": "Tegemoetkoming meerkosten aanvrager AV-RTM-10.2"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -789,11 +812,12 @@
                 ]
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-10.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-aanvrager",
+            "documentidentificatie": "AV-RTM-AV-RTM-10.2",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -801,7 +825,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-kind",
+        "identificatie": "AV-RTM-AV-RTM-10.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -810,7 +834,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 10.2.1 kind"
+                "omschrijving": "Tegemoetkoming meerkosten kind AV-RTM-10.2.1"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -821,11 +845,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-10.2.1"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-kind",
+            "documentidentificatie": "AV-RTM-AV-RTM-10.2.1",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
@@ -833,7 +858,7 @@
         ]
       },
       {
-        "identificatie": "AV-RTM-partner",
+        "identificatie": "AV-RTM-AV-RTM-10.2.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
           "datumAfgifte": "2025-05-17",
@@ -842,7 +867,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten 10.2.2 partner"
+                "omschrijving": "Tegemoetkoming meerkosten partner AV-RTM-10.2.2"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -853,11 +878,12 @@
                 "betrokkenen": []
               }
             }
-          ]
+          ],
+          "beschikkingNummer": "AV-RTM-10.2.2"
         },
         "documenten": [
           {
-            "documentidentificatie": "AV-RTM-partner",
+            "documentidentificatie": "AV-RTM-AV-RTM-10.2.2",
             "omschrijving": "AV-RTM - toegewezen",
             "omschrijvingclientportaal": "AV-RTM - toegewezen",
             "datumDefinitief": "2025-05-29T11:15:35.287"
