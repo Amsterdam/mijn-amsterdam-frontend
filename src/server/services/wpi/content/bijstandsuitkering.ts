@@ -6,7 +6,7 @@ export const WpiExternalUrls = {
   BijstandsUitkeringAanvragenRechtenEnPlichten:
     'https://www.amsterdam.nl/veelgevraagd/bijstandsuitkering-rechten-regels-controle-en-boetes-e7121',
   BijstandsUitkeringAanvragen:
-    'https://www.amsterdam.nl/veelgevraagd/bijstandsuitkering-aanvragen-3d5ea',
+    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/',
   BetaalDataUitkering:
     'https://www.amsterdam.nl/veelgevraagd/wanneer-krijg-ik-de-bijstandsuitkering-op-mijn-bankrekening-gestort-48ace-kp',
 };

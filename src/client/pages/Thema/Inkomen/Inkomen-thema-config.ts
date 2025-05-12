@@ -131,7 +131,7 @@ export const wpiLinks = {
     'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
   TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   TONK: 'https://www.amsterdam.nl/tonk/',
-  BBZ: 'https://www.amsterdam.nl/bbz/',
+  BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
 };
 
 export const linkListItems: LinkProps[] = [

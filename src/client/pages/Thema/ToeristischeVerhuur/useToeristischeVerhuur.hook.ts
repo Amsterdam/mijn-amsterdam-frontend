@@ -70,7 +70,7 @@ export function useToeristischeVerhuurThemaData() {
   const linkListItems: LinkProps[] = [
     {
       title: 'Meer over toeristenbelasting',
-      to: 'https://www.amsterdam.nl/veelgevraagd/toeristenbelasting-2c7c2',
+      to: 'https://www.amsterdam.nl/belastingen/toeristenbelasting/',
     },
     {
       title: 'Vakantieverhuur melden of registratienummer aanvragen',
@@ -81,7 +81,7 @@ export function useToeristischeVerhuurThemaData() {
   if (hasVergunningBB && !hasVergunningenVakantieVerhuur) {
     linkListItems.unshift({
       title: 'Meer informatie over bed & breakfast',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
     });
   }
 
