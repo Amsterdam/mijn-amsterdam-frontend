@@ -1,5 +1,3 @@
-import memoize from 'memoizee';
-
 import { fetchAdoptableTrashContainers } from './afval/adoptable-trash-containers';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import {
@@ -9,7 +7,6 @@ import {
 import { dateSort } from '../../universal/helpers/date';
 import type { MyNotification } from '../../universal/types/App.types';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
 import { fetchAfisNotifications } from './afis/afis-notifications';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
@@ -146,7 +143,7 @@ function getTipsAndNotificationsFromApiResults(
 }
 
 // Services can return Source tips and Content tips.
-async function fetchNotificationsAndTipsFromServices_(
+async function fetchNotificationsAndTipsFromServices(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<MyNotification[]> {
   if (authProfileAndToken.profile.profileType !== 'private-attributes') {
@@ -165,26 +162,15 @@ async function fetchNotificationsAndTipsFromServices_(
   return [];
 }
 
-export const fetchNotificationsAndTipsFromServices = memoize(
-  fetchNotificationsAndTipsFromServices_,
-  {
-    maxAge: DEFAULT_API_CACHE_TTL_MS,
-    normalizer: function (args) {
-      // args is arguments object as accessible in memoized function
-      return JSON.stringify(args[0]);
-    },
-  }
-);
-
 export function sortNotificationsAndInsertTips(
   notifications: MyNotification[],
   doRandomize: boolean = true
 ): MyNotification[] {
   // sort the notifications with and without a tip
   const sorted = notifications
-    .sort(dateSort('datePublished', 'desc'))
+    .toSorted(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
-    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
+    .toSorted((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
 
   const notificationsWithoutTips = sorted.filter((n) => !n.isTip);
 
@@ -194,7 +180,7 @@ export function sortNotificationsAndInsertTips(
     // Simple randomization
     tips = tips
       .map((tip) => ({ tip, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
+      .toSorted((a, b) => a.sort - b.sort)
       .map(({ tip }) => tip);
   }
 

@@ -12,10 +12,7 @@ import type {
   WithTimeRange,
 } from '../../../../../server/services/decos/decos-types';
 import { VergunningFrontend } from '../../../../../server/services/vergunningen/config-and-types';
-import {
-  defaultDateFormat,
-  defaultDateTimeFormat,
-} from '../../../../../universal/helpers/date';
+import { dateTimeFormatYear } from '../../../../../universal/helpers/date';
 import {
   Row,
   RowSet,
@@ -39,7 +36,7 @@ export type RowTransformer<T extends VergunningFrontend = VergunningFrontend> =
 
 export const identifier: VergunningDataListRow = (vergunning) => {
   return {
-    label: 'Kenmerk',
+    label: 'Zaaknummer',
     content: vergunning.identifier,
   };
 };
@@ -50,27 +47,33 @@ export const onFromTo: VergunningDataListRow<
   if (!('timeStart' in vergunning && 'timeEnd' in vergunning)) {
     return null;
   }
-  const on: WrappedRow = {
-    label: 'Op',
-    content: vergunning.dateStart
-      ? defaultDateFormat(vergunning.dateStart)
-      : '-',
-    span: 4,
-  };
+  const on: WrappedRow | null = vergunning.dateStartFormatted
+    ? {
+        label: 'Op',
+        content: vergunning.dateStartFormatted,
+        span: 4,
+      }
+    : null;
 
-  const from: WrappedRow = {
-    label: 'Van',
-    content: vergunning.timeStart ? `${vergunning.timeStart} uur` : '-',
-    span: 4,
-  };
+  const from: WrappedRow | null = vergunning.timeStart
+    ? {
+        label: 'Van',
+        content: `${vergunning.timeStart} uur`,
+        span: 4,
+      }
+    : null;
 
-  const to: WrappedRow = {
-    label: 'Tot',
-    content: vergunning.timeEnd ? `${vergunning.timeEnd} uur` : '-',
-    span: 4,
-  };
+  const to: WrappedRow | null = vergunning.timeEnd
+    ? {
+        label: 'Tot',
+        content: `${vergunning.timeEnd} uur`,
+        span: 4,
+      }
+    : null;
 
-  return { rows: [on, from, to] };
+  const rows = [on, from, to].filter((row) => row !== null);
+
+  return rows.length ? { rows } : null;
 };
 
 export const dateTimeRange: VergunningDataListRow<
@@ -80,35 +83,33 @@ export const dateTimeRange: VergunningDataListRow<
     return null;
   }
 
-  const from: WrappedRow = {
-    label: 'Van',
-    content:
-      vergunning?.timeStart && vergunning?.dateStart
-        ? defaultDateTimeFormat(
-            `${vergunning.dateStart.split('T')[0]}T${vergunning.timeStart}`
-          )
-        : vergunning.dateStart
-          ? defaultDateFormat(vergunning.dateStart)
-          : '-',
-    span: 4,
-  };
+  const from: WrappedRow | null = vergunning.dateStart
+    ? {
+        label: 'Van',
+        content: vergunning.timeStart
+          ? dateTimeFormatYear(
+              `${vergunning.dateStart.split('T')[0]}T${vergunning.timeStart}`
+            )
+          : vergunning.dateStartFormatted,
+        span: 4,
+      }
+    : null;
 
-  const to: WrappedRow = {
-    label: 'Tot en met',
-    content:
-      vergunning?.timeEnd && vergunning?.dateEnd
-        ? defaultDateTimeFormat(
-            `${vergunning.dateEnd.split('T')[0]}T${vergunning.timeEnd}`
-          )
-        : vergunning.dateEnd
-          ? defaultDateFormat(vergunning.dateEnd)
-          : '-',
-    span: 4,
-  };
+  const to: WrappedRow | null = vergunning.dateEnd
+    ? {
+        label: 'Tot en met',
+        content: vergunning.timeEnd
+          ? dateTimeFormatYear(
+              `${vergunning.dateEnd.split('T')[0]}T${vergunning.timeEnd}`
+            )
+          : vergunning.dateEndFormatted,
+        span: 4,
+      }
+    : null;
 
-  const rowSet: RowSet = { rows: [from, to] };
+  const rows = [from, to].filter((row) => row !== null);
 
-  return rowSet;
+  return rows.length ? { rows } : null;
 };
 
 export const dateRange: VergunningDataListRow<
@@ -130,7 +131,7 @@ export const dateRange: VergunningDataListRow<
 export const dateTimeRangeBetween: VergunningDataListRow<
   VergunningFrontend<DecosZaakBase & WithDateTimeRange>
 > = (vergunning) => {
-  const dateTimeRangeRowSet = dateTimeRange(vergunning);
+  const dateTimeRangeRowSet = dateRange(vergunning);
   if (!dateTimeRangeRowSet) {
     return null;
   }

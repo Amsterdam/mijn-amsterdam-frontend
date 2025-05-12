@@ -1,20 +1,13 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-
-const pageContentTop = (
-  <PageContentCell spanWide={8}>
-    <Paragraph>
-      Hier ziet u een overzicht van uw aanvragen voor vergunningen en
-      ontheffingen bij gemeente Amsterdam.
-    </Paragraph>
-  </PageContentCell>
-);
+import { routeConfig as routeConfigParkeren } from '../Parkeren/Parkeren-thema-config';
 
 export function VergunningenThema() {
   const {
@@ -25,8 +18,25 @@ export function VergunningenThema() {
     linkListItems,
     title,
     routeConfig,
+    hasParkeervergunningen,
   } = useVergunningenThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
+
+  const pageContentTop = (
+    <PageContentCell spanWide={8}>
+      <Paragraph className={hasParkeervergunningen ? 'ams-mb--sm' : ''}>
+        Hier ziet u een overzicht van uw aanvragen voor vergunningen en
+        ontheffingen bij gemeente Amsterdam.
+      </Paragraph>
+      {hasParkeervergunningen && (
+        <Alert heading="Parkeervergunningen?" severity="info">
+          <MaRouterLink href={routeConfigParkeren.themaPage.path}>
+            Bekijk hier de vergunningen voor parkeren.
+          </MaRouterLink>
+        </Alert>
+      )}
+    </PageContentCell>
+  );
 
   const tables = Object.entries(tableConfig).map(
     ([

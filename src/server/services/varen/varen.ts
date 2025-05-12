@@ -1,4 +1,3 @@
-import memoize from 'memoizee';
 import { generatePath } from 'react-router';
 import slug from 'slugme';
 
@@ -16,7 +15,6 @@ import { routeConfig } from '../../../client/pages/Thema/Varen/Varen-thema-confi
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { omit, toDateFormatted } from '../../../universal/helpers/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { DEFAULT_API_CACHE_TTL_MS } from '../../config/source-api';
 import { fetchDecosZaken } from '../decos/decos-service';
 import { transformDecosZaakFrontend } from '../decos/decos-service';
 
@@ -81,7 +79,7 @@ function transformVarenZakenFrontend(
   return zakenFrontend;
 }
 
-async function fetchVaren_(authProfileAndToken: AuthProfileAndToken) {
+export async function fetchVaren(authProfileAndToken: AuthProfileAndToken) {
   const response = await fetchDecosZaken(
     authProfileAndToken,
     decosZaakTransformers
@@ -107,10 +105,3 @@ async function fetchVaren_(authProfileAndToken: AuthProfileAndToken) {
 
   return response;
 }
-
-export const fetchVaren = memoize(fetchVaren_, {
-  maxAge: DEFAULT_API_CACHE_TTL_MS,
-  normalizer: function (args) {
-    return JSON.stringify(args[0]);
-  },
-});

@@ -1,6 +1,7 @@
 import { UnorderedList } from '@amsterdam/design-system-react';
 
 import { commonTransformers, getRows } from './fields-config';
+import styles from './fields-config.module.scss';
 import {
   VergunningFrontend,
   WerkzaamhedenEnVervoerOpStraat,
@@ -12,6 +13,17 @@ export function WVOSContent({
 }: {
   vergunning: VergunningFrontend<WerkzaamhedenEnVervoerOpStraat>;
 }) {
+  const decision = () => {
+    return vergunning.processed
+      ? {
+          label: 'Resultaat',
+          content:
+            vergunning.werkzaamheden.length > 1
+              ? 'In het Besluit ziet u voor welke werkzaamheden u een ontheffing heeft gekregen.'
+              : vergunning.decision,
+        }
+      : null;
+  };
   const rows = getRows(vergunning, [
     commonTransformers.identifier,
     commonTransformers.location,
@@ -19,7 +31,7 @@ export function WVOSContent({
     {
       label: 'Werkzaamheden',
       content: (
-        <UnorderedList>
+        <UnorderedList className={styles.List}>
           {vergunning.werkzaamheden.map((activiteit) => (
             <UnorderedList.Item key={activiteit}>
               {activiteit}
@@ -28,7 +40,7 @@ export function WVOSContent({
         </UnorderedList>
       ),
     },
-    commonTransformers.decision,
+    decision,
   ]);
 
   return <Datalist rows={rows} />;

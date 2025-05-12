@@ -1,5 +1,3 @@
-import uid from 'uid-safe';
-
 import {
   fetchDecosDocumentList,
   fetchDecosZaken,
@@ -778,7 +776,7 @@ describe('decos-service', () => {
         jsonCopy(workflowInstance);
 
       const [instance1] = workflowInstance2.content;
-      instance1.fields.text7 = 'Status - In behandeling';
+      instance1.fields.text7 = 'Werk en vervoer op straat - Behandelen';
       instance1.fields.date1 = '2024-05-04';
 
       remoteApi
@@ -793,9 +791,7 @@ describe('decos-service', () => {
       expect(transformed).toMatchObject({
         caseType: 'Werk en vervoer op straat',
         dateDecision: null,
-        dateEnd: '2023-12-14T00:00:00',
         dateRequest: '2023-11-06T00:00:00',
-        dateStart: '2023-11-27T00:00:00',
         decision: null,
         id: 'Z-23-2230424',
         identifier: 'Z/23/2230424',

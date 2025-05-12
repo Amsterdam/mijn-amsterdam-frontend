@@ -71,6 +71,7 @@ export function clearSessionCache(cachekeyStartsWith: string) {
 
 export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
   return [
+    requestConfig.cacheTimeout ?? 'no-cache-timeout', // Cache timeout can be adjusted and we want the adjusted value to be part of the cache key so we can invalidate it immediately.
     requestConfig.method,
     requestConfig.url,
     requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
@@ -82,14 +83,14 @@ export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
 }
 
 export async function requestData<T>(
-  config: DataRequestConfig,
+  passConfig: DataRequestConfig,
   authProfileAndToken?: AuthProfileAndToken
 ) {
   const source = axios.CancelToken.source();
 
-  config = {
+  const config = {
     ...DEFAULT_REQUEST_CONFIG,
-    ...config,
+    ...passConfig,
     cancelToken: source.token,
   };
 
@@ -161,6 +162,7 @@ export async function requestData<T>(
   const cacheEntry = cache.get(cacheKey);
 
   if (config.enableCache && cacheEntry !== null) {
+    debugCache(`Cache hit! ${config.url}`);
     return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;
@@ -173,6 +175,7 @@ export async function requestData<T>(
     !!config.cacheTimeout &&
     config.cacheTimeout > 0
   ) {
+    debugCache(`Caching ${config.url}, releases in ${config.cacheTimeout}ms`);
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),
@@ -201,14 +204,8 @@ export async function requestData<T>(
 
     const responseData = apiSuccessResult<T>(response.data);
 
-    // Use the cache Deferred for resolving the response
+    // Use the cached Deferred for resolving the response
     if (config.enableCache && cache.get(cacheKey)) {
-      debugCache(
-        {
-          url: config.url,
-        },
-        'Cache hit'
-      );
       cache.get(cacheKey).resolve(responseData);
     }
 
@@ -216,7 +213,7 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    debug(error, 'response error');
+    debug(error, config.url, 'response error');
 
     captureException(error, {
       properties: {
