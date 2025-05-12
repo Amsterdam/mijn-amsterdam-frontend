@@ -1,3 +1,4 @@
+/* eslint-disable */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 
@@ -11,31 +12,37 @@ if (!process.env.BFF_API_BASE_URL) {
 import jsonpath from 'jsonpath';
 import * as XLSX from 'xlsx';
 
-/* load 'fs' for readFile and writeFile support */
-import * as fs from 'fs';
-import {
-  dateFormat,
-  defaultDateFormat,
-  getFullAddress,
-} from '../src/universal/helpers';
+import * as fs from 'node:fs';
+import { dateFormat, defaultDateFormat } from '../src/universal/helpers/date';
+import { getFullAddress } from '../src/universal/helpers/brp';
+
+import { MyNotification } from '../src/universal/types/App.types';
 import {
   Adres,
   Kind,
-  MyNotification,
   Persoon,
   Verbintenis,
-} from '../src/universal/types';
-
+} from '../src/server/services/profile/brp.types';
 import { differenceInYears, parseISO } from 'date-fns';
 
-import { PRISTINE_APPSTATE, type AppState } from '../src/client/AppState';
-import { myThemasMenuItems } from '../src/client/config/thema';
-import { isThemaActive } from '../src/client/config/themas';
-import { ServiceResults } from '../src/server/services/tips/tip-types';
-import { Thema } from '../src/universal/config';
-import { testAccounts } from '../src/universal/config/auth.development';
+import { PRISTINE_APPSTATE } from '../src/client/AppState';
+import { ServiceResults } from '../src/server/services/content-tips/tip-types';
+import {
+  testAccountsDigid,
+  testAccountsEherkenning,
+} from '../src/universal/config/auth.development';
+import { IS_PRODUCTION } from '../src/universal/config/env';
+
+if (IS_PRODUCTION) {
+  throw Error('This script cannot be run inside of production.');
+}
 
 XLSX.set_fs(fs);
+
+console.log(testAccountsDigid);
+console.log(testAccountsEherkenning);
+
+const testAccounts = {};
 
 const testAccountEntries = Object.entries(testAccounts);
 
@@ -55,7 +62,7 @@ async function getServiceResults(
   for (const [Username, userId] of testAccountEntries) {
     const url = `${process.env.BFF_API_BASE_URL}/auth/digid/login/${Username}?redirectUrl=noredirect`;
     try {
-      const serviceResults = await fetch(url).then((r) => {
+      const serviceResults = await fetch(url).then(async (r) => {
         const Cookie = r.headers.get('Set-Cookie') ?? '';
         console.time(`Fetch data for ${Username}/${userId}`);
         return fetch(`${process.env.BFF_API_BASE_URL}/services/all`, {
@@ -320,36 +327,33 @@ const paths: PathObj[] = [
   return p;
 });
 
-const themaMenuItems = myThemasMenuItems.filter((item) =>
-  item.profileTypes.includes('private')
-);
+//const themaMenuItems = myThemasMenuItems.filter((item) =>
+//  item.profileTypes.includes('private')
+//);
 
-const themasAvailable = themaMenuItems.map((menuItem) => menuItem.id);
+//const themasAvailable = themaMenuItems.map((menuItem) => menuItem.id);
 
-function getUserThemas(serviceResults: ServiceResults) {
-  const themaItems = themaMenuItems;
-  const items = themaItems.filter((item) => {
-    // Check to see if Thema has been loaded or if it is directly available
-    return (
-      item.isAlwaysVisible ||
-      isThemaActive(item, serviceResults as unknown as AppState)
-    );
-  });
+//function getUserThemas(serviceResults: ServiceResults) {
+//  const themaItems = themaMenuItems;
+//  const items = themaItems.filter((item) => {
+//    // Check to see if Thema has been loaded or if it is directly available
+//    return item.isAlwaysVisible; // || isThemaActive(item, serviceResults as unknown as AppState)
+//  });
+//
+//  return Object.fromEntries(
+//    items.map((menuItem) => [menuItem.id, menuItem.title])
+//  );
+//}
 
-  return Object.fromEntries(
-    items.map((menuItem) => [menuItem.id, menuItem.title])
-  );
-}
-
-function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
-  const rows = Object.entries(resultsByUser)
-    .map(([Username, serviceResults]) => {
-      const userThemas = getUserThemas(serviceResults);
-      return userThemas;
-    })
-    .filter((userThemas) => !!Object.keys(userThemas).length);
-  return getRows(themasAvailable, rows, false);
-}
+//function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
+//  const rows = Object.entries(resultsByUser)
+//    .map(([Username, serviceResults]) => {
+//      const userThemas = getUserThemas(serviceResults);
+//      return userThemas;
+//    })
+//    .filter((userThemas) => !!Object.keys(userThemas).length);
+//  return getRows(themasAvailable, rows, false);
+//}
 
 function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
   const rows = Object.entries(resultsByUser).flatMap(
@@ -358,7 +362,7 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
         (notification: MyNotification) => {
           return {
             Username: Username,
-            thema: notification.thema,
+            thema: notification.themaID,
             titel: notification.title,
             datum: defaultDateFormat(notification.datePublished),
           };
@@ -536,7 +540,8 @@ function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
 }
 
 function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
-  function count(thema: Thema) {
+  function count(thema: any) {
+    // any was Thema (file with all themaId's that is now per thema config defined)
     return (serviceResults: ServiceResults) =>
       serviceResults[thema]?.content?.length || '';
   }
