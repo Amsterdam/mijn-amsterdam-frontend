@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { Paragraph, Screen, SkipLink } from '@amsterdam/design-system-react';
+import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 import { RecoilRoot } from 'recoil';
 
@@ -128,11 +129,8 @@ function AppLanding() {
 }
 
 export function App() {
-  /**
-   * Visitor analytics and support
-   */
-  useAnalytics(!!import.meta.env.REACT_APP_ANALYTICS_ID);
-  useMonitoring();
+  const { enableLinkTracking } = usePiwik();
+  enableLinkTracking();
 
   return (
     <RecoilRoot>
@@ -140,5 +138,19 @@ export function App() {
         <AppLanding />
       </BrowserRouter>
     </RecoilRoot>
+  );
+}
+
+export function AppWrapper() {
+  /**
+   * Visitor analytics and support
+   */
+  const piwikInstance = useAnalytics(!!import.meta.env.REACT_APP_ANALYTICS_ID);
+  useMonitoring();
+
+  return (
+    <PiwikProvider value={piwikInstance}>
+      <App />
+    </PiwikProvider>
   );
 }
