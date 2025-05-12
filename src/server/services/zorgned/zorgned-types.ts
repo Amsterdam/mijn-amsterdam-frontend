@@ -21,24 +21,9 @@ export type ZorgnedStatusLineItemTransformerConfig<
   status: string;
   datePublished: TextPartContents<T>;
   description: TextPartContents<T>;
-  isChecked: (
-    stepIndex: number,
-    aanvraag: T,
-    today: Date,
-    allAanvragen: T[]
-  ) => boolean;
-  isActive: (
-    stepIndex: number,
-    aanvraag: T,
-    today: Date,
-    allAanvragen: T[]
-  ) => boolean;
-  isVisible?: (
-    stepIndex: number,
-    aanvraag: T,
-    today: Date,
-    allAanvragen: T[]
-  ) => boolean;
+  isChecked: (aanvraag: T, today: Date, allAanvragen: T[]) => boolean;
+  isActive: (aanvraag: T, today: Date, allAanvragen: T[]) => boolean;
+  isVisible?: (aanvraag: T, today: Date, allAanvragen: T[]) => boolean;
 };
 
 type ZorgnedLineItemsFilter = (

@@ -13,21 +13,17 @@ export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
 
-function isDeel2VanDeRegeling(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return (
-    !!aanvraag.productIdentificatie &&
-    AV_RTM_DEEL2 === aanvraag.productIdentificatie
-  );
-}
-
-function isDeel1VanDeRegeling(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
+function isRTMDeel1(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
   return (
     !!aanvraag.productIdentificatie &&
     AV_RTM_DEEL1 === aanvraag.productIdentificatie
+  );
+}
+
+function isRTMDeel2(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
+  return (
+    !!aanvraag.productIdentificatie &&
+    AV_RTM_DEEL2 === aanvraag.productIdentificatie
   );
 }
 
@@ -57,7 +53,7 @@ function getRtmDecisionDate(
   today: Date,
   allAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ) {
-  if (isDeel2VanDeRegeling(aanvraag)) {
+  if (isRTMDeel1(aanvraag)) {
     const regelingDeel1 = allAanvragen.find((compareAanvraag) =>
       isRegelingDeel1GekoppeldAanDeel2(aanvraag, compareAanvraag)
     );
@@ -78,7 +74,7 @@ export function filterCombineRtmData(
     }
 
     // Add AV_RTM_DEEL1 documenten to AV_RTM_DEEL2
-    if (isDeel2VanDeRegeling(aanvraag)) {
+    if (isRTMDeel1(aanvraag)) {
       // Find first corresponding regelingDeel1
       const regelingDeel1 = aanvragen.find((compareAanvraag) =>
         isRegelingDeel1GekoppeldAanDeel2(aanvraag, compareAanvraag)
@@ -118,8 +114,8 @@ export function heeftDeel2VanDeRegelingNietVoltooid(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
-    isDeel1VanDeRegeling(regeling) &&
-    !isDeel2VanDeRegeling(regeling) &&
+    isRTMDeel2(regeling) &&
+    !isRTMDeel1(regeling) &&
     !!(
       regeling.datumEindeGeldigheid &&
       regeling.datumIngangGeldigheid &&
@@ -137,33 +133,33 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
     {
       status: 'Besluit',
       datePublished: getRtmDecisionDate,
-      isChecked: (stepIndex, regeling) => true,
-      isActive: (stepIndex, regeling) =>
-        !isDeel2VanDeRegeling(regeling) && regeling.resultaat === 'afgewezen',
+      isChecked: (regeling) => true,
+      isActive: (regeling) =>
+        !isRTMDeel1(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
         return `<p>
         ${
-          regeling.resultaat === 'toegewezen' || isDeel2VanDeRegeling(regeling)
+          regeling.resultaat === 'toegewezen' || isRTMDeel1(regeling)
             ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
             : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
         }
         </p>
         <p>
-          ${regeling.resultaat === 'toegewezen' || isDeel2VanDeRegeling(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
+          ${regeling.resultaat === 'toegewezen' || isRTMDeel1(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
         </p>
       `;
       },
     },
     {
       status: 'Uitnodiging afspraak GGD',
-      isVisible: (stepIndex, regeling) =>
-        !isDeel2VanDeRegeling(regeling) &&
+      isVisible: (regeling) =>
+        !isRTMDeel1(regeling) &&
         regeling.resultaat === 'toegewezen' &&
         !heeftDeel2VanDeRegelingNietVoltooid(regeling),
       datePublished: '',
-      isChecked: (stepIndex, regeling) => true,
-      isActive: (stepIndex, regeling) => true,
+      isChecked: (regeling) => true,
+      isActive: (regeling) => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
         return `
@@ -175,8 +171,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
     },
     {
       status: 'Afspraak GGD afgerond',
-      isVisible: (stepIndex, regeling) =>
-        isDeel2VanDeRegeling(regeling) && regeling.resultaat === 'toegewezen',
+      isVisible: (regeling) =>
+        isRTMDeel1(regeling) && regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
       isActive: () => true,
@@ -188,8 +184,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRela
     },
     {
       status: 'Afspraak GGD niet gemaakt',
-      isVisible: (stepIndex, regeling) =>
-        heeftDeel2VanDeRegelingNietVoltooid(regeling),
+      isVisible: (regeling) => heeftDeel2VanDeRegelingNietVoltooid(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
@@ -211,6 +206,6 @@ export const forTesting = {
   getBetrokkenKinderen,
   getRtmDecisionDate,
   isRegelingDeel1GekoppeldAanDeel2,
-  isDeel2VanDeRegeling,
+  isDeel2VanDeRegeling: isRTMDeel1,
   heeftDeel2VanDeRegelingNietVoltooid,
 };

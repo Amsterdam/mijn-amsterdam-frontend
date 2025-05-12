@@ -39,8 +39,8 @@ export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWith
   {
     status: 'Besluit',
     datePublished: (regeling) => regeling.datumBesluit,
-    isChecked: (stepIndex, regeling) => true,
-    isActive: (stepIndex, regeling) =>
+    isChecked: () => true,
+    isActive: (regeling) =>
       regeling.isActueel === true || regeling.resultaat === 'afgewezen',
     description: (regeling) => {
       const hasNamenBetrokkenen = regeling.betrokkenPersonen.some(
@@ -85,10 +85,10 @@ function getEindeRechtDescription(
 export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed> =
   {
     status: 'Einde recht',
-    isVisible: (i, regeling) => regeling.resultaat === 'toegewezen',
+    isVisible: (regeling) => regeling.resultaat === 'toegewezen',
     datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
-    isChecked: (stepIndex, regeling) => regeling.isActueel === false,
-    isActive: (stepIndex, regeling) => regeling.isActueel === false,
+    isChecked: (regeling) => regeling.isActueel === false,
+    isActive: (regeling) => regeling.isActueel === false,
     description: (regeling) =>
       `<p>
       ${getEindeRechtDescription(regeling)}

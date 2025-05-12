@@ -144,8 +144,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
-      isChecked: (stepIndex, regeling) => true,
-      isActive: (stepIndex, regeling) =>
+      isChecked: (regeling) => true,
+      isActive: (regeling) =>
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
@@ -164,13 +164,13 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     },
     {
       status: 'Workshop',
-      isVisible: (stepIndex, regeling) =>
+      isVisible: (regeling) =>
         !isVerzilvering(regeling) &&
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
       datePublished: '',
-      isChecked: (stepIndex, regeling) => true,
-      isActive: (stepIndex, regeling) => true,
+      isChecked: (regeling) => true,
+      isActive: (regeling) => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenKinderen(regeling);
         return `
@@ -182,7 +182,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     },
     {
       status: 'Workshop gevolgd',
-      isVisible: (stepIndex, regeling) =>
+      isVisible: (regeling) =>
         isVerzilvering(regeling) && regeling.resultaat === 'toegewezen',
       datePublished: (regeling) => regeling.datumBesluit,
       isChecked: () => true,
@@ -195,7 +195,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     },
     {
       status: 'Workshop niet gevolgd',
-      isVisible: (stepIndex, regeling) => isWorkshopNietGevolgd(regeling),
+      isVisible: (regeling) => isWorkshopNietGevolgd(regeling),
       datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
       isChecked: () => true,
       isActive: () => true,
