@@ -1,12 +1,21 @@
-import PiwikTracker from '@amsterdam/piwik-tracker';
+import { default as PiwikTracker } from '@amsterdam/piwik-tracker';
 import {
   CustomDimension,
   TrackPageViewParams,
   UserOptions,
 } from '@amsterdam/piwik-tracker/lib/types';
+import { createInstance as createPiwikInstance } from '@amsterdam/piwik-tracker-react';
 import memoize from 'memoizee';
 
-let PiwikInstance: PiwikTracker;
+// TODO: Import type(s) from @amsterdam/piwik-tracker-react when they are available
+export interface PiwikInstance {
+  trackPageView: PiwikTracker['trackPageView'];
+  trackSiteSearch: PiwikTracker['trackSiteSearch'];
+  trackLink: PiwikTracker['trackLink'];
+  trackDownload: PiwikTracker['trackDownload'];
+  pushInstruction: PiwikTracker['pushInstruction'];
+}
+let PiwikInstance: PiwikInstance;
 
 const siteId = (import.meta.env.REACT_APP_ANALYTICS_ID ||
   -1) as unknown as string;
@@ -35,8 +44,9 @@ function profileTypeDimension(profileType: ProfileType) {
 // Initialize connection with analytics
 export function useAnalytics(isEnabled: boolean = true) {
   if (isEnabled && hasSiteId && !PiwikInstance) {
-    PiwikInstance = new PiwikTracker(PiwikTrackerConfig);
+    PiwikInstance = createPiwikInstance(PiwikTrackerConfig);
   }
+  return PiwikInstance;
 }
 
 function _trackPageView(href: string, customDimensions?: CustomDimension[]) {
@@ -53,29 +63,6 @@ export const trackPageView = memoize(_trackPageView, {
   length: 1,
   max: 1,
 });
-
-export function trackLink(
-  url: string,
-  linkTitle: string,
-  customDimensions?: CustomDimension[]
-) {
-  return (
-    PiwikInstance &&
-    PiwikInstance.trackLink({
-      href: url,
-      linkTitle,
-      customDimensions,
-    })
-  );
-}
-
-export function trackItemClick(
-  url: string,
-  linkTitle: string,
-  profileType: ProfileType
-) {
-  return trackLink(url, linkTitle, [profileTypeDimension(profileType)]);
-}
 
 export function trackDownload(
   downloadDescription: string,
