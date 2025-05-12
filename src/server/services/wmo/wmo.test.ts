@@ -2,7 +2,7 @@ import Mockdate from 'mockdate';
 
 import { fetchWmo, forTesting } from './wmo';
 import ZORGNED_AANVRAGEN_WMO from '../../../../mocks/fixtures/zorgned-jzd-aanvragen.json';
-import { remoteApi } from '../../../testing/utils';
+import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy } from '../../../universal/helpers/utils';
 import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
 import { getHulpmiddelenDisclaimer } from './status-line-items/wmo-hulpmiddelen';
@@ -29,18 +29,7 @@ describe('Transform api items', () => {
   test('fetchWmo', async () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, ZORGNED_AANVRAGEN_WMO);
 
-    expect(
-      await fetchWmo({
-        profile: {
-          id: '123123',
-          authMethod: 'digid',
-          profileType: 'private',
-          sid: '',
-        },
-        token: '',
-        expiresAtMilliseconds: 0,
-      })
-    ).toMatchSnapshot();
+    expect(await fetchWmo(getAuthProfileAndToken())).toMatchSnapshot();
   });
 
   describe('getDocuments', () => {

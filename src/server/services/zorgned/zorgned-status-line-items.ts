@@ -93,20 +93,17 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
         ),
         datePublished,
         isActive: statusItem.isActive(
-          index,
           aanvraagTransformed,
           today,
           allAanvragenTransformed
         ),
         isChecked: statusItem.isChecked(
-          index,
           aanvraagTransformed,
           today,
           allAanvragenTransformed
         ),
         isVisible: statusItem.isVisible
           ? statusItem.isVisible(
-              index,
               aanvraagTransformed,
               today,
               allAanvragenTransformed
