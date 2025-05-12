@@ -1,7 +1,16 @@
 import { transformKenteken, translateValue } from './decos-helpers';
 import { DecosFieldTransformerObject, WithKentekens } from './decos-types';
 
-export const MA_DECISION_DEFAULT = 'Zie besluit';
+export const MA_DECISION_ZIE_BESLUIT = 'Zie besluit';
+export const MA_DECISION_DEFAULT = MA_DECISION_ZIE_BESLUIT;
+
+export const MA_VERLEEND_DECISIONS_COMMOM = [
+  'Verleend',
+  'Deels verleend',
+  'Toegekend',
+  'Toegestaan',
+  // 'Vervallen', // RVV Sloterweg - Was ooit verleend maar is nu vervangen met een nieuwe ontheffing.
+];
 
 const identifier = 'identifier';
 const processed = 'processed';
@@ -34,8 +43,6 @@ export const SELECT_FIELDS_TRANSFORM_BASE: DecosFieldTransformerObject = {
   processed: processed,
   date5: dateDecision,
   document_date: dateRequest,
-  date6: dateStart,
-  date7: dateEnd,
 };
 
 export const DECOS_EXCLUDE_CASES_WITH_INVALID_DFUNCTION = [

@@ -79,13 +79,15 @@ export function MyNotification({
 
       {!isCollapsed && (
         <div className={styles.Body}>
-          <Paragraph className="ams-mb--xs">
-            {notification.description.includes('<p') ? (
-              <InnerHtml el="span">{notification.description}</InnerHtml>
-            ) : (
-              notification.description
-            )}
-          </Paragraph>
+          {notification.description && (
+            <Paragraph className="ams-mb--xs">
+              {notification.description.includes('<p') ? (
+                <InnerHtml el="span">{notification.description}</InnerHtml>
+              ) : (
+                notification.description
+              )}
+            </Paragraph>
+          )}
           {(!!notification.link || !!notification.customLink) && (
             <>
               <Paragraph className={hasTipReason ? 'ams-mb--xs' : ''}>

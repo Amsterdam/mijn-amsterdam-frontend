@@ -11,6 +11,8 @@ import {
 
 export const NOTIFICATION_MAX_MONTHS_TO_SHOW_EXPIRED = 3;
 export const NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END = 3;
+export const MINIMUM_DAYS_FOR_WILL_EXPIRE_NOTIFICATION = 14;
+export const PERCENTAGE_OF_LIFETIME_FOR_WILL_EXPIRE_NOTIFICATION = 0.8;
 
 export const caseTypeVergunningen = {
   TVMRVVObject: 'TVM - RVV - Object',

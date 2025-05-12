@@ -4,7 +4,6 @@ import {
   GenericDocument,
   ZaakDetail,
 } from '../../../universal/types/App.types';
-import { NotificationLabelByType } from '../vergunningen/config-and-types';
 
 type DecosDocumentBase = {
   text39: string;
@@ -165,10 +164,16 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   hasValidSourceData?: (decosZaakSource: DecosZaakSource) => boolean;
   // Indicate if the zaak requires payment to be processed and complete. This function is run before transformation of the zaak.
   requirePayment?: boolean;
+  // A function to determine if the zaak is verleend or not.
+  // This function is run after the afterTransform of the zaak.
+  isVerleend?: (decosZaak: T, decosZaakSource: DecosZaakSource) => boolean;
   // Expands the selection of fields, based on the link address, with linked items as objects or array of objects
   fetchLinkedItem?: string[];
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
-  fetchWorkflowStatusDatesFor?: { status: ZaakStatus; stepTitle: string }[];
+  fetchWorkflowStatusDatesFor?: {
+    status: ZaakStatus;
+    decosActionCode: string;
+  }[];
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
   fetchTermijnenFor?: {
     status: ZaakStatus;
@@ -176,8 +181,6 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   }[];
   // Indicates if the Zaak should be shown to the user / is expected to be transformed.
   isActive: boolean;
-  // Notifications for this specific
-  notificationLabels?: Partial<NotificationLabelByType>;
 };
 
 export type ZakenFilter = (zaak: DecosZaakBase) => boolean;
@@ -192,6 +195,7 @@ export type DecosZaakBase = {
   dateEnd: string | null;
 
   decision: string | null;
+  isVerleend: boolean;
 
   identifier: ZaakKenmerk;
   id: ZaakKenmerkSlug | SomeOtherString;

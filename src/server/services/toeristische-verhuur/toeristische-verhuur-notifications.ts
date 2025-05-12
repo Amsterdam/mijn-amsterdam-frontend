@@ -17,7 +17,7 @@ import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { NOTIFICATION_REMINDER_FROM_MONTHS_NEAR_END } from '../vergunningen/config-and-types';
-import { isNearEndDate } from '../vergunningen/vergunningen-helpers';
+import { isExpiryNotificationDue } from '../vergunningen/vergunningen-helpers';
 
 export function createToeristischeVerhuurNotification(
   vergunning: ToeristischeVerhuurVergunning,
@@ -55,9 +55,10 @@ export function createToeristischeVerhuurNotification(
 
     switch (true) {
       // B&B + Vakantieverhuurvergunning
-      case vergunning.decision === 'Verleend' &&
+      case vergunning.isVerleend &&
+        !!vergunning.dateStart &&
         !!vergunning.dateEnd &&
-        isNearEndDate(vergunning.dateEnd):
+        isExpiryNotificationDue(vergunning.dateStart, vergunning.dateEnd):
         title = `Uw ${vergunningTitleLower} loopt af`;
         description = `Uw ${vergunningTitleLower} met gemeentelijk zaaknummer ${vergunning.identifier} loopt binnenkort af. Vraag op tijd een nieuwe vergunning aan.`;
         cta = `Vergunning aanvragen`;
@@ -73,7 +74,7 @@ export function createToeristischeVerhuurNotification(
           : datePublished;
         break;
       // B&B + Vakantieverhuurvergunning
-      case vergunning.decision === 'Verleend' &&
+      case vergunning.isVerleend &&
         !!vergunning.dateEnd &&
         isDateInPast(vergunning.dateEnd, dateNow):
         title = `Uw ${vergunningTitleLower} is verlopen`;

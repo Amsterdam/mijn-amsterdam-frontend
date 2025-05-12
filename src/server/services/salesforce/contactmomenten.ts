@@ -70,6 +70,7 @@ export async function fetchContactmomenten(
       pageSize: 100,
     },
     transformResponse: transformContactmomentenResponse,
+    cacheKey: `contactmomenten-${authProfileAndToken.profile.sid}`,
   };
   return fetchSalesforceData<ContactMoment[]>(requestConfig);
 }

@@ -20,6 +20,7 @@ import type {
   Krefia,
   KrefiaDeepLink,
 } from '../../../server/services/krefia/krefia.types';
+import type { ParkeerVergunningFrontend } from '../../../server/services/parkeren/config-and-types';
 import type {
   BRPData,
   IdentiteitsbewijsFrontend,
@@ -246,6 +247,11 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
   },
   {
     stateKey: 'PARKEREN',
+    getApiBaseItems: (apiContent: {
+      vergunningen: ParkeerVergunningFrontend[];
+    }) => {
+      return apiContent?.vergunningen ?? [];
+    },
     displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
@@ -262,7 +268,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    stateKey: 'TOERISTISCHEVERHUUR',
+    stateKey: 'TOERISTISCHE_VERHUUR',
     profileTypes: ['private', 'commercial'],
     getApiBaseItems: (apiContent: {
       lvvRegistraties: LVVRegistratie[];

@@ -6,7 +6,7 @@ import type {
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
 export function getRowsFlyeren(vergunning: VergunningFrontend<Flyeren>) {
-  const isVerleend = vergunning.decision === 'Verleend';
+  const isVerleend = vergunning.isVerleend;
   const isSameDate =
     vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
 

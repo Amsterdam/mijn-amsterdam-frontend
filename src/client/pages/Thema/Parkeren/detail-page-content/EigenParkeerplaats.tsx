@@ -48,10 +48,12 @@ export function EigenParkeerplaats({
   const vorigeKentekens = () => {
     return vergunning.requestTypes.some(
       (type) => type === 'Kentekenwijziging'
-    ) && 'vorigeKentekens' in vergunning
+    ) &&
+      'vorigeKentekens' in vergunning &&
+      vergunning.vorigeKentekens
       ? {
           label: 'Oud kenteken',
-          content: vergunning.vorigeKentekens || '-',
+          content: vergunning.vorigeKentekens,
         }
       : null;
   };

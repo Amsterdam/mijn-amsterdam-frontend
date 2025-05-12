@@ -16,6 +16,22 @@ import { PUBLIC_API_URLS } from '../../universal/config/url';
 import { getCert } from '../helpers/cert';
 import { getFromEnv } from '../helpers/env';
 
+const RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS = ONE_HOUR_MS;
+
+let adHocDependencyRequestCacheTtlMs: undefined | number;
+let resetAdHocDependencyRequestCacheTtlMsTimeout: NodeJS.Timeout | undefined =
+  undefined;
+
+export function setAdHocDependencyRequestCacheTtlMs(
+  cacheTtl: typeof adHocDependencyRequestCacheTtlMs
+): void {
+  clearTimeout(resetAdHocDependencyRequestCacheTtlMsTimeout);
+  adHocDependencyRequestCacheTtlMs = cacheTtl;
+  resetAdHocDependencyRequestCacheTtlMsTimeout = setTimeout(() => {
+    adHocDependencyRequestCacheTtlMs = undefined;
+  }, RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS);
+}
+
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
   cancelTimeout?: number;
@@ -54,22 +70,25 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 }
 
 /* eslint-disable no-magic-numbers */
-export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS; // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
+// This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
+export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS;
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 /* eslint-enable no-magic-numbers */
 
-export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
+export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
   method: 'get',
   enableCache: BFF_REQUEST_CACHE_ENABLED,
-  cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
+  get cacheTimeout() {
+    return adHocDependencyRequestCacheTtlMs ?? DEFAULT_API_CACHE_TTL_MS;
+  },
   postponeFetch: false,
   passthroughOIDCToken: false,
   responseType: 'json',
   transitional: {
     silentJSONParsing: false,
   },
-};
+});
 
 export type SourceApiKey =
   | 'AFIS'
@@ -337,7 +356,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !featureToggleBodem.BodemActive,
   },
   LOOD_365_OAUTH: {
-    url: `${getFromEnv('BFF_LOOD_OAUTH')}/${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
+    url: `${getFromEnv('BFF_LOOD_OAUTH')}${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
     method: 'POST',
     postponeFetch: !featureToggleBodem.BodemActive,
     // eslint-disable-next-line no-magic-numbers
