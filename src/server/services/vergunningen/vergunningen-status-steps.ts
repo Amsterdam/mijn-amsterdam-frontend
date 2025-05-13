@@ -1,9 +1,12 @@
+import { dateTimeEndFormatted } from '../../../client/pages/Thema/Vergunningen/Vergunningen-helpers';
 import { StatusLineItem } from '../../../universal/types/App.types';
 import { MA_VERLEEND_DECISIONS_COMMOM } from '../decos/decos-field-transformers';
 import { getWorkflowStatusDate } from '../decos/decos-helpers';
-import { DecosZaakBase } from '../decos/decos-types';
+import { DecosZaakBase, WithDateEnd } from '../decos/decos-types';
 
-export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
+export function getStatusSteps<DZ extends DecosZaakBase & Partial<WithDateEnd>>(
+  zaak: DZ
+) {
   const isAfgehandeld = zaak.processed;
   const dateInBehandeling = getWorkflowStatusDate('In behandeling', zaak);
   const isInBehandeling = !!dateInBehandeling;
@@ -69,8 +72,8 @@ export function getStatusSteps<DZ extends DecosZaakBase>(zaak: DZ) {
     } else if (isVerlopen) {
       description = `Uw ${zaak.title} is verlopen.`;
       datePublished = zaak.dateEnd as string; // Verlopen status always has a dateEbd associated with it.
-    } else if ('dateEndFormatted' in zaak && zaak.dateEndFormatted) {
-      description = `Uw vergunning verloopt op ${zaak.dateEndFormatted}.`;
+    } else if (zaak.dateEndFormatted) {
+      description = `Uw vergunning verloopt op ${dateTimeEndFormatted(zaak)}.`;
     }
 
     const statusGewijzigd: StatusLineItem = {

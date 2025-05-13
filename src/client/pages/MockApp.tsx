@@ -39,9 +39,9 @@ export function componentCreator(conf: {
   routeEntry: string;
   routePath: string;
 }) {
-  function createComponent(state: AppState) {
+  function createComponent(state: AppState | Record<string, never>) {
     function initializeState(snapshot: MutableSnapshot) {
-      snapshot.set(appStateAtom, state);
+      snapshot.set(appStateAtom, state as AppState);
     }
 
     function Component() {
