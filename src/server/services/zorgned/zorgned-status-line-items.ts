@@ -92,22 +92,30 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
           allAanvragenTransformed
         ),
         datePublished,
-        isActive: statusItem.isActive(
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        ),
-        isChecked: statusItem.isChecked(
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        ),
+        isActive:
+          typeof statusItem.isActive === 'function'
+            ? statusItem.isActive(
+                aanvraagTransformed,
+                today,
+                allAanvragenTransformed
+              )
+            : statusItem.isActive,
+        isChecked:
+          typeof statusItem.isChecked === 'function'
+            ? statusItem.isChecked(
+                aanvraagTransformed,
+                today,
+                allAanvragenTransformed
+              )
+            : statusItem.isChecked,
         isVisible: statusItem.isVisible
-          ? statusItem.isVisible(
-              aanvraagTransformed,
-              today,
-              allAanvragenTransformed
-            )
+          ? typeof statusItem.isVisible === 'function'
+            ? statusItem.isVisible(
+                aanvraagTransformed,
+                today,
+                allAanvragenTransformed
+              )
+            : statusItem.isVisible
           : true,
         documents: [], // NOTE: Assigned in specific service transformers.
       };

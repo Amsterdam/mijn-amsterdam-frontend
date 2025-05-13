@@ -21,9 +21,15 @@ export type ZorgnedStatusLineItemTransformerConfig<
   status: string;
   datePublished: TextPartContents<T>;
   description: TextPartContents<T>;
-  isChecked: (aanvraag: T, today: Date, allAanvragen: T[]) => boolean;
-  isActive: (aanvraag: T, today: Date, allAanvragen: T[]) => boolean;
-  isVisible?: (aanvraag: T, today: Date, allAanvragen: T[]) => boolean;
+  isChecked:
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
+  isActive:
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
+  isVisible?:
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
 };
 
 type ZorgnedLineItemsFilter = (
@@ -162,6 +168,7 @@ export interface ZorgnedPersoonsgegevensNAWResponse {
     voornamen: string;
     voorvoegsel: string | null;
     geboortedatum: string | null;
+    partnernaam: string | null;
   };
 }
 
@@ -170,6 +177,7 @@ export interface ZorgnedPerson {
   name: string;
   dateOfBirth: string | null;
   dateOfBirthFormatted: string | null;
+  isPartner?: true;
 }
 
 export type ZorgnedApiConfigKey =
