@@ -1,4 +1,5 @@
 import { TextPartContents } from './zorgned-types';
+import { htmlTextContent } from '../../helpers/text';
 
 export function parseLabelContent<T>(
   text: TextPartContents<T>,
@@ -9,7 +10,7 @@ export function parseLabelContent<T>(
   const rText = text || '';
 
   if (typeof rText === 'function') {
-    return rText(aanvraag, today, allAanvragen);
+    return htmlTextContent(rText(aanvraag, today, allAanvragen));
   }
 
   return rText;
