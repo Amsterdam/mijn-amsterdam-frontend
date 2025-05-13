@@ -31,7 +31,7 @@ interface ThemaDetailPaginaProps<T> {
   showStatusSteps?: boolean;
 }
 
-export default function ThemaDetailPagina<T extends ZaakDetail>({
+export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
   zaak,
   title = 'Detailpagina',
   breadcrumbs,
