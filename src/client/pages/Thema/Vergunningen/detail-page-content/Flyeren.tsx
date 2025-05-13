@@ -1,37 +1,34 @@
 import { commonTransformers, getRows } from './fields-config';
+import {
+  DecosZaakBase,
+  WithDateRange,
+  WithDateTimeRange,
+} from '../../../../../server/services/decos/decos-types';
 import type {
   Flyeren,
   VergunningFrontend,
 } from '../../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../../components/Datalist/Datalist';
 
-export function getRowsFlyeren(vergunning: VergunningFrontend<Flyeren>) {
-  const isVerleend = vergunning.isVerleend;
-  const isSameDate =
-    vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
+const isSameDate = (vergunning: WithDateRange) =>
+  vergunning.dateStart === vergunning.dateEnd || vergunning.dateEnd === null;
 
-  const onFromTo = () => {
-    return isVerleend && isSameDate
-      ? commonTransformers.onFromTo(vergunning)
-      : null;
-  };
-
-  const dateTimeRangeBetween = () => {
-    return isVerleend && !isSameDate
-      ? commonTransformers.dateTimeRangeBetween(vergunning)
-      : null;
-  };
-
-  const rows = getRows(vergunning, [
-    commonTransformers.identifier,
-    commonTransformers.location,
-    onFromTo,
-    dateTimeRangeBetween,
-    commonTransformers.decision,
-  ]);
-
-  return rows;
+export function onFromToExceptSameDate(
+  vergunning: VergunningFrontend<DecosZaakBase & WithDateTimeRange>
+) {
+  return vergunning.isVerleend && isSameDate(vergunning)
+    ? commonTransformers.onFromTo(vergunning)
+    : null;
 }
+
+export function dateTimeRangeBetweenIfSameDate(
+  vergunning: VergunningFrontend<DecosZaakBase & WithDateTimeRange>
+) {
+  return vergunning.isVerleend && !isSameDate(vergunning)
+    ? commonTransformers.dateTimeRangeBetween(vergunning)
+    : null;
+}
+
 // Controleren of van/tot dezelfde datum is, in dat geval niet de velden van/tot tonen.
 // In dat geval allen de datum tonen.
 export function Flyeren({
@@ -39,5 +36,12 @@ export function Flyeren({
 }: {
   vergunning: VergunningFrontend<Flyeren>;
 }) {
-  return <Datalist rows={getRowsFlyeren(vergunning)} />;
+  const rows = getRows(vergunning, [
+    commonTransformers.identifier,
+    commonTransformers.location,
+    onFromToExceptSameDate,
+    dateTimeRangeBetweenIfSameDate,
+    commonTransformers.decision,
+  ]);
+  return <Datalist rows={rows} />;
 }

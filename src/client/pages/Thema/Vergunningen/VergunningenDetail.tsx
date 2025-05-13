@@ -15,7 +15,10 @@ import { WVOSContent } from './detail-page-content/WVOS';
 import { ZwaarVerkeer } from './detail-page-content/ZwaarVerkeer';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
-import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import type {
+  DecosVergunning,
+  VergunningFrontend,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
@@ -26,9 +29,9 @@ interface DetailPageContentProps<V> {
 }
 
 // TODO: Implement detailpages per case
-function DetailPageContent<V extends VergunningFrontend>({
+function DetailPageContent<T extends DecosVergunning>({
   vergunning,
-}: DetailPageContentProps<V>) {
+}: DetailPageContentProps<VergunningFrontend<T>>) {
   return (
     <PageContentCell>
       {(function VergunningDetailContent() {
@@ -107,7 +110,9 @@ export function VergunningenDetail() {
       pageContentMain={
         vergunning && (
           <>
-            <DetailPageContent vergunning={vergunning} />
+            <DetailPageContent
+              vergunning={vergunning as VergunningFrontend<DecosVergunning>}
+            />
             <PageContentCell spanWide={8}>
               <VergunningDetailDocumentsList
                 isLoading={isLoadingDocuments}
