@@ -19,20 +19,45 @@ function getNamenBetrokkenen(
   return `${names.join(', ')} en ${lastName}`;
 }
 
-export function getBetrokkenKinderen(
+export function getBetrokkenDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  const names = regeling.betrokkenPersonen
-    .filter((person) => !!person.name)
-    .map(
-      (person) =>
-        `${person.name}${person.dateOfBirthFormatted ? ` (geboren op ${person.dateOfBirthFormatted})` : ''}`
-    );
+): string | null {
+  const betrokkenen = regeling.betrokkenPersonen.filter(
+    (person) => !!person.name
+  );
+
+  if (!betrokkenen.length) {
+    return null;
+  }
+
+  const names = betrokkenen.map(
+    (person) =>
+      `${person.name}${person.dateOfBirthFormatted ? ` (geboren op ${person.dateOfBirthFormatted})` : ''}`
+  );
   if (names.length <= 1) {
     return names.join('');
   }
   const lastName = names.pop();
   return `${names.join(', ')} en ${lastName}`;
+}
+
+export function getBesluitDescription(
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+): string {
+  const hasNamenBetrokkenen = regeling.betrokkenPersonen.some(
+    (person) => !!person.name
+  );
+  return `<p>
+    ${
+      regeling.resultaat === 'toegewezen'
+        ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+        : `U krijgt geen ${regeling.titel}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+    }
+    </p>
+    <p>
+      ${regeling.resultaat === 'toegewezen' ? 'In de brief vindt u meer informatie hierover.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
+    </p>
+  `;
 }
 
 export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed> =
@@ -42,22 +67,7 @@ export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWith
     isChecked: () => true,
     isActive: (regeling) =>
       regeling.isActueel === true || regeling.resultaat === 'afgewezen',
-    description: (regeling) => {
-      const hasNamenBetrokkenen = regeling.betrokkenPersonen.some(
-        (person) => !!person.name
-      );
-      return `<p>
-        ${
-          regeling.resultaat === 'toegewezen'
-            ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
-            : `U krijgt geen ${regeling.titel}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
-        }
-        </p>
-        <p>
-          ${regeling.resultaat === 'toegewezen' ? 'In de brief vindt u meer informatie hierover.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
-        </p>
-      `;
-    },
+    description: getBesluitDescription,
   };
 
 function getEindeRechtDescription(

@@ -1,6 +1,6 @@
 import { isSameDay, parseISO } from 'date-fns';
 
-import { getBetrokkenKinderen } from './generic';
+import { getBetrokkenDescription } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -148,7 +148,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       isActive: (regeling) =>
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        const betrokkenKinderen = getBetrokkenDescription(regeling);
         return `<p>
         ${
           regeling.resultaat === 'toegewezen' || isVerzilvering(regeling)
@@ -172,7 +172,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       isChecked: (regeling) => true,
       isActive: (regeling) => true,
       description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        const betrokkenKinderen = getBetrokkenDescription(regeling);
         return `
         <p>
          Voordat u de laptop krijgt, moet uw kind ${betrokkenKinderen} een workshop volgen. Hiervoor moet u eerst een afspraak maken. In de brief staat hoe u dat doet.
@@ -188,7 +188,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       isChecked: () => true,
       isActive: () => true,
       description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        const betrokkenKinderen = getBetrokkenDescription(regeling);
         return `<p>Uw kind ${betrokkenKinderen} krijgt een ${regeling.titel}. Lees in de brief hoe u de laptop of tablet bestelt.</p>
         ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw een ${regeling.titel} aanvragen.</p>` : ''}`;
       },
@@ -200,7 +200,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
       isChecked: () => true,
       isActive: () => true,
       description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+        const betrokkenKinderen = getBetrokkenDescription(regeling);
         return `
         <p>
          Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel}. De workshop is niet op tijd gevolgd. U kunt een nieuwe aanvraag doen.
@@ -214,7 +214,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
   ];
 
 export const forTesting = {
-  getBetrokkenKinderen,
+  getBetrokkenKinderen: getBetrokkenDescription,
   getUpcPcvDecisionDate,
   isRegelingVanVerzilvering,
   isVerzilvering,
