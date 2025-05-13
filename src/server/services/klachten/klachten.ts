@@ -151,6 +151,7 @@ async function fetchKlachten(
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
+      cacheKey: `klachten-${authProfileAndToken.profile.sid}-${page}`,
     })
   );
 }
