@@ -10,7 +10,8 @@ export function parseLabelContent<T>(
   const rText = text || '';
 
   if (typeof rText === 'function') {
-    return htmlTextContent(rText(aanvraag, today, allAanvragen));
+    const value = rText(aanvraag, today, allAanvragen);
+    return typeof value === 'string' ? htmlTextContent(value) : value;
   }
 
   return rText;

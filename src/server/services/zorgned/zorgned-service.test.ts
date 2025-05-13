@@ -235,6 +235,8 @@ describe('zorgned-service', () => {
         "dateOfBirth": "2016-07-09",
         "dateOfBirthFormatted": "09 juli 2016",
         "name": "Flex",
+        "partnernaam": undefined,
+        "partnervoorvoegsel": undefined,
       }
     `);
 
@@ -254,6 +256,8 @@ describe('zorgned-service', () => {
         "dateOfBirth": "2016-07-09",
         "dateOfBirthFormatted": "09 juli 2016",
         "name": "Baron",
+        "partnernaam": undefined,
+        "partnervoorvoegsel": undefined,
       }
     `);
 
@@ -338,14 +342,7 @@ describe('zorgned-service', () => {
         {
           "content": [
             {
-              "betrokkenPersonen": [
-                {
-                  "bsn": "9999999999",
-                  "dateOfBirth": "2010-06-12",
-                  "dateOfBirthFormatted": "12 juni 2010",
-                  "name": "Flex",
-                },
-              ],
+              "betrokkenPersonen": [],
               "betrokkenen": [
                 "9999999999",
               ],
@@ -368,6 +365,13 @@ describe('zorgned-service', () => {
               "titel": "woonruimteaanpassing (in behandeling)",
             },
           ],
+          "failedDependencies": {
+            "relatedPersons": {
+              "content": null,
+              "message": "Something went wrong when retrieving related persons.",
+              "status": "ERROR",
+            },
+          },
           "status": "OK",
         }
       `);
@@ -461,7 +465,7 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons(userIDs);
+    const response = await fetchRelatedPersons('ZORGNED_AV', userIDs);
     expect(response).toStrictEqual(
       apiErrorResult(
         'Something went wrong when retrieving related persons.',
@@ -480,6 +484,8 @@ describe('fetchRelatedPersons', async () => {
           voornamen: 'Baron',
           geboortedatum: '2016-07-09',
           bsn: 'x123z',
+          partnernaam: null,
+          partnervoorvoegsel: null,
         }),
       },
     });
@@ -495,13 +501,15 @@ describe('fetchRelatedPersons', async () => {
           clientidentificatie: null,
           roepnaam: 'Alex',
           voorletters: 'A',
+          partnernaam: 'hey ho',
+          partnervoorvoegsel: null,
         }),
       },
     });
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons(userIDs);
+    const response = await fetchRelatedPersons('ZORGNED_AV', userIDs);
     const expected: ApiSuccessResponse<ZorgnedPerson[]> = {
       content: [
         {
@@ -509,12 +517,16 @@ describe('fetchRelatedPersons', async () => {
           dateOfBirth: '2016-07-09',
           dateOfBirthFormatted: '09 juli 2016',
           name: 'Baron',
+          partnernaam: null,
+          partnervoorvoegsel: null,
         },
         {
           bsn: 'x123z',
           dateOfBirth: '2016-07-09',
           dateOfBirthFormatted: '09 juli 2016',
           name: 'Flex',
+          partnernaam: 'hey ho',
+          partnervoorvoegsel: null,
         },
       ],
       status: 'OK',

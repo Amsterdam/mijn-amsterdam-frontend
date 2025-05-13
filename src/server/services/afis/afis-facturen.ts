@@ -582,7 +582,7 @@ export const forTesting = {
   determineFactuurStatusDescription,
   fetchAfisFacturenDeelbetalingen,
   isDownloadAvailable,
-  formatFactuurRequestURL: getFactuurRequestQueryParams,
+  getFactuurRequestQueryParams,
   getAccountingDocumentTypesFilter,
   getInvoiceAmount,
   getFactuurnummer,

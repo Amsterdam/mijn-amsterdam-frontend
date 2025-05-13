@@ -46,19 +46,26 @@ const SESSION_ID = '0987';
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
 
+function hasPartialQueryString(uri: string, str: string) {
+  return decodeURI(uri).includes(str.replace(/\s/g, '+'));
+}
+
 const ROUTES = {
   openstaandeFacturen: (uri: string) => {
-    return decodeURI(uri).includes(
+    return hasPartialQueryString(
+      uri,
       `IsCleared eq false and (AccountingDocumentType eq 'DR'`
     );
   },
   afgehandeldeFacturen: (uri: string) => {
-    return decodeURI(uri).includes(
+    return hasPartialQueryString(
+      uri,
       `and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
     );
   },
   overgedragenFacturen: (uri: string) => {
-    return decodeURI(uri).includes(
+    return hasPartialQueryString(
+      uri,
       `and IsCleared eq true and DunningLevel eq '3'`
     );
   },
@@ -69,7 +76,8 @@ const ROUTES = {
     return decodeURI(uri).includes('ZFI_CDS_TOA02');
   },
   deelbetalingen: (uri: string) =>
-    decodeURI(uri).includes(
+    hasPartialQueryString(
+      uri,
       `IsCleared eq false and InvoiceReference ne '' and`
     ),
 };
@@ -111,32 +119,32 @@ describe('afis-facturen', async () => {
 
     // All fields are listed here to test correct formatting.
     const openFactuur = response.content?.facturen[0];
-    expect(openFactuur).toMatchInlineSnapshot(`
-      {
-        "afzender": "Bedrijf: Ok",
-        "amountOriginal": "343.00",
-        "amountOriginalFormatted": "€ 343,00",
-        "amountPayed": "315.50",
-        "amountPayedFormatted": "€ 315,50",
-        "datePublished": "2023-11-21T00:00:00",
-        "datePublishedFormatted": "21 november 2023",
-        "debtClearingDate": null,
-        "debtClearingDateFormatted": null,
-        "documentDownloadLink": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
-        "factuurDocumentId": "1234567890",
-        "factuurNummer": "1234567890",
-        "id": "1234567890",
-        "link": {
-          "title": "Factuur 1234567890",
-          "to": "http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx",
-        },
-        "paylink": "http://localhost:3100/mocks-server/afis/paylink",
-        "paymentDueDate": "2023-12-21T00:00:00",
-        "paymentDueDateFormatted": "21 december 2023",
-        "status": "gedeeltelijke-betaling",
-        "statusDescription": "Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 315,50 over onder vermelding van de gegevens op uw factuur.",
-      }
-    `);
+    expect(openFactuur).toStrictEqual({
+      afzender: 'Bedrijf: Ok',
+      amountOriginal: '343.00',
+      amountOriginalFormatted: '€ 343,00',
+      amountPayed: '315.50',
+      amountPayedFormatted: '€ 315,50',
+      datePublished: '2023-11-21T00:00:00',
+      datePublishedFormatted: '21 november 2023',
+      debtClearingDate: null,
+      debtClearingDateFormatted: null,
+      documentDownloadLink:
+        'http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx',
+      factuurDocumentId: '1234567890',
+      factuurNummer: '1234567890',
+      id: '1234567890',
+      link: {
+        title: 'Factuur 1234567890',
+        to: 'http://bff-api-host/api/v1/services/afis/facturen/document?id=xx-encrypted-xx',
+      },
+      paylink: 'http://localhost:3100/mocks-server/afis/paylink',
+      paymentDueDate: '2023-12-21T00:00:00',
+      paymentDueDateFormatted: '21 december 2023',
+      status: 'gedeeltelijke-betaling',
+      statusDescription:
+        'Uw factuur van € 343,00 is nog niet volledig betaald. Maak het resterend bedrag van € 315,50 over onder vermelding van de gegevens op uw factuur.',
+    });
 
     const automatischeIncassoFactuur = response.content?.facturen[1];
     expect(automatischeIncassoFactuur?.status).toBe('openstaand');
@@ -274,13 +282,13 @@ describe('afis-facturen', async () => {
     expect(response.content?.filename).toStrictEqual('FACTUUR.PDF');
   });
 
-  test('formatFactuurRequestURL formats URL correctly', () => {
-    const url = forTesting.formatFactuurRequestURL('http://example.com', {
+  test('getFactuurRequestQueryParams formats URL correctly', () => {
+    const params = forTesting.getFactuurRequestQueryParams({
       state: 'open',
       businessPartnerID: GENERIC_ID,
     });
-    expect(url).toContain('IsCleared eq false');
-    expect(url).toContain(`Customer eq '${GENERIC_ID}'`);
+    expect(params.$filter).toContain('IsCleared eq false');
+    expect(params.$filter).toContain(`Customer eq '${GENERIC_ID}'`);
   });
 
   test('getAccountingDocumentTypesFilter returns correct filter', () => {
