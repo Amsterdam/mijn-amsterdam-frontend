@@ -6,10 +6,7 @@ import { HLIRegelingFrontend, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
-import {
-  filterCombineRtmData,
-  heeftDeel2VanDeRegelingNietVoltooid,
-} from './status-line-items/regeling-rtm';
+import { filterCombineRtmData } from './status-line-items/regeling-rtm';
 import { routeConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiSuccessResult,
@@ -27,10 +24,7 @@ import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { getStatusLineItems } from '../zorgned/zorgned-status-line-items';
 import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../zorgned/zorgned-types';
-import {
-  filterCombineUpcPcvData,
-  isWorkshopNietGevolgd,
-} from './status-line-items/regeling-pcvergoeding';
+import { filterCombineUpcPcvData } from './status-line-items/regeling-pcvergoeding';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { toDateFormatted } from '../../../universal/helpers/utils';
 
@@ -38,29 +32,6 @@ function getDisplayStatus(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   statusLineItems: StatusLineItem[]
 ) {
-  const hasEindeRecht = statusLineItems.some(
-    (regeling) => regeling.status === 'Einde recht'
-  );
-  switch (true) {
-    // NOTE: Special status for PCVergoedingen.
-    case isWorkshopNietGevolgd(aanvraag):
-      return 'Afgewezen';
-
-    // NOTE: Special status for RTM regelingen.
-    case heeftDeel2VanDeRegelingNietVoltooid(aanvraag):
-      return 'Afgewezen';
-
-    case (aanvraag.isActueel || !hasEindeRecht) &&
-      aanvraag.resultaat === 'toegewezen':
-      return 'Toegewezen';
-
-    case !aanvraag.isActueel && aanvraag.resultaat === 'toegewezen':
-      return 'Einde recht';
-
-    case !aanvraag.isActueel && aanvraag.resultaat !== 'toegewezen':
-      return 'Afgewezen';
-  }
-
   return statusLineItems[statusLineItems.length - 1]?.status ?? 'Onbekend';
 }
 
@@ -160,14 +131,13 @@ async function transformRegelingenForFrontend(
   );
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
-    const statusLineItems =
-      getStatusLineItems<ZorgnedAanvraagWithRelatedPersonsTransformed>(
-        'HLI',
-        hliStatusLineItemsConfig,
-        aanvraag,
-        aanvragen,
-        today
-      );
+    const statusLineItems = getStatusLineItems(
+      'HLI',
+      hliStatusLineItemsConfig,
+      aanvraag,
+      aanvragen,
+      today
+    );
 
     if (!Array.isArray(statusLineItems) || !statusLineItems.length) {
       continue;
@@ -191,6 +161,7 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
   }
 
   const aanvragenResponse = await fetchZorgnedAanvragenHLI(authProfileAndToken);
+
   if (aanvragenResponse.status === 'OK') {
     const regelingen = await transformRegelingenForFrontend(
       authProfileAndToken,

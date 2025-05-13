@@ -23,7 +23,7 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
-import { hash } from '../../../universal/helpers/utils';
+import { hash, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -176,35 +176,29 @@ export async function fetchAanvragen(
   return zorgnedAanvragenResponse;
 }
 
-export async function fetchAanvragenWithRelatedPersons(
-  authProfileAndToken: AuthProfileAndToken,
-  options: ZorgnedAanvragenServiceOptions
-) {
-  const zorgnedAanvragenResponse = await fetchAanvragen(
-    authProfileAndToken,
-    options
-  );
-
-  if (zorgnedAanvragenResponse.status === 'OK') {
-    return fetchAndMergeRelatedPersons(zorgnedAanvragenResponse);
-  }
-
-  return zorgnedAanvragenResponse;
-}
-
 export async function fetchAndMergeRelatedPersons(
-  zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>
+  zorgnedApiConfigKey: ZorgnedApiConfigKey,
+  zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>,
+  partnernaam: string | null
 ): Promise<ApiSuccessResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
   const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
 
-  const userIDs = zorgnedAanvragenTransformed.flatMap(
-    (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
+  const bsn = uniqueArray(
+    zorgnedAanvragenTransformed.flatMap(
+      (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
+    )
   );
 
-  const relatedPersonsResponse = await fetchRelatedPersons(userIDs);
+  const relatedPersonsResponse = await fetchRelatedPersons(
+    zorgnedApiConfigKey,
+    bsn
+  );
 
   const personsByUserId = relatedPersonsResponse.content?.reduce(
     (acc, person) => {
+      if (person.name === partnernaam) {
+        person.isPartner = true;
+      }
       acc[person.bsn] = person;
       return acc;
     },
@@ -233,6 +227,30 @@ export async function fetchAndMergeRelatedPersons(
       relatedPersons: relatedPersonsResponse,
     })
   );
+}
+
+export async function fetchAanvragenWithRelatedPersons(
+  authProfileAndToken: AuthProfileAndToken,
+  options: ZorgnedAanvragenServiceOptions
+) {
+  const zorgnedAanvragenResponse = await fetchAanvragen(
+    authProfileAndToken,
+    options
+  );
+
+  if (zorgnedAanvragenResponse.status === 'OK') {
+    const persoonsgegevensNAW = await fetchPersoonsgegevensNAW(
+      authProfileAndToken.profile.id,
+      options.zorgnedApiConfigKey
+    );
+    return fetchAndMergeRelatedPersons(
+      options.zorgnedApiConfigKey,
+      zorgnedAanvragenResponse,
+      persoonsgegevensNAW.content?.persoon.partnernaam ?? null
+    );
+  }
+
+  return zorgnedAanvragenResponse;
 }
 
 export async function fetchDocument(
@@ -294,14 +312,19 @@ function transformZorgnedPersonResponse(
       dateOfBirthFormatted: zorgnedResponseData.persoon.geboortedatum
         ? defaultDateFormat(zorgnedResponseData.persoon.geboortedatum)
         : null,
+      partnernaam: zorgnedResponseData.persoon.partnernaam,
+      partnervoorvoegsel: zorgnedResponseData.persoon.partnervoorvoegsel,
     };
   }
   return null;
 }
 
-export async function fetchRelatedPersons(userIDs: string[]) {
-  const requests = userIDs.map((userID) => {
-    return fetchPersoonsgegevensNAW(userID, 'ZORGNED_AV');
+export async function fetchRelatedPersons(
+  zorgnedApiConfigKey: ZorgnedApiConfigKey,
+  bsn: string[]
+) {
+  const requests = bsn.map((userID) => {
+    return fetchPersoonsgegevensNAW(userID, zorgnedApiConfigKey);
   });
 
   const results = await Promise.allSettled(requests);
@@ -326,8 +349,8 @@ export async function fetchRelatedPersons(userIDs: string[]) {
 }
 
 export async function fetchPersoonsgegevensNAW(
-  userID: AuthProfileAndToken['profile']['id'],
-  zorgnedApiConfigKey: 'ZORGNED_JZD' | 'ZORGNED_AV'
+  userID: string,
+  zorgnedApiConfigKey: ZorgnedApiConfigKey
 ) {
   const dataRequestConfig = getApiConfig(zorgnedApiConfigKey, {
     formatUrl(requestConfig) {

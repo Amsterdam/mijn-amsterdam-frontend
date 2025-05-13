@@ -181,22 +181,35 @@ const a = {
 
 const voorzieningen = [];
 
-function createVoorziening(rel, id, resultaat, code, betrokkenen) {
+function createVoorziening(
+  datumAfgifte,
+  rel,
+  id,
+  resultaat,
+  identificatie,
+  deel,
+  betrokkenen
+) {
   const voorziening = structuredClone(a);
 
-  voorziening.identificatie = `${code}-${id}`;
+  voorziening.identificatie = `${deel}-${id}`;
+  voorziening.beschikking.datumAfgifte = datumAfgifte;
+  voorziening.beschikking.beschikkingNummer = id;
 
   const beschiktProduct = voorziening.beschikking.beschikteProducten[0];
+
   beschiktProduct.resultaat = resultaat;
-  beschiktProduct.product.identificatie = code;
-
-  if (resultaat === 'toegewezen') {
-    beschiktProduct.product.omschrijving = `Tegemoetkoming meerkosten ${rel} ${id}`;
-  } else {
-    beschiktProduct.product.omschrijving = `Tegemoetkoming meerkosten ${rel} ${id} - afgewezen`;
-  }
-
+  beschiktProduct.product.identificatie = identificatie;
+  beschiktProduct.product.omschrijving = `Tegemoetkoming meerkosten ${rel}${betrokkenen.length ? ` [+${betrokkenen.length}]` : ''} ${id} - ${resultaat}`;
   beschiktProduct.toegewezenProduct.actueel = resultaat === 'toegewezen';
+
+  const datum = new Date(datumAfgifte);
+  const day = `${datum.getDate() + 1}`.padStart(2, '0');
+  const month = `${datum.getMonth() + 2}`.padStart(2, '0');
+  const year = datum.getFullYear() + 1;
+
+  beschiktProduct.toegewezenProduct.datumIngangGeldigheid = `2025-${month}-${day}`;
+  beschiktProduct.toegewezenProduct.datumEindeGeldigheid = `${year}-${month}-${day}`;
 
   beschiktProduct.toegewezenProduct.betrokkenen = betrokkenen.map(
     (betrokkene, index) => {
@@ -206,9 +219,9 @@ function createVoorziening(rel, id, resultaat, code, betrokkenen) {
 
   voorziening.documenten = [
     {
-      documentidentificatie: `${code}-${id}`,
-      omschrijving: `${code} - ${resultaat}`,
-      omschrijvingclientportaal: `${code} - ${resultaat}`,
+      documentidentificatie: `${identificatie}-${id}`,
+      omschrijving: `${identificatie} - ${resultaat}`,
+      omschrijvingclientportaal: `${identificatie} - ${resultaat}`,
       datumDefinitief: '2025-05-29T11:15:35.287',
     },
   ];
@@ -219,24 +232,35 @@ function createVoorziening(rel, id, resultaat, code, betrokkenen) {
 config.forEach((scenarios, index) => {
   scenarios.forEach((scenario, index2) => {
     const { resultaat, relaties, identificatie } = scenario;
-    const id = `${index + 1}.${index2 + 1}`;
+    const deel = identificatie === 'AV-RTM1' ? 'deel1' : 'deel2';
+    const id = `${deel}-${index + 1}.${index2 + 1}`;
 
     voorzieningen.push(
       createVoorziening(
-        id,
+        `2025-05-${`${index + 1}`.padStart(2, '0')}`,
         'aanvrager',
+        id,
         resultaat,
-        scenario.identificatie,
-        scenario.relaties
+        identificatie,
+        deel,
+        deel === 'deel1' ? relaties : []
       )
     );
 
-    if (identificatie === 'AV-RTM') {
+    if (deel === 'deel2') {
       relaties.forEach((relatie, index3) => {
         const { resultaat, relatie: rel, leeftijd } = relatie;
         const id2 = `${id}.${index3 + 1}`;
         voorzieningen.push(
-          createVoorziening(id2, rel, resultaat, scenario.identificatie, [])
+          createVoorziening(
+            `2025-05-${`${index + 1}`.padStart(2, '0')}`,
+            rel,
+            id2,
+            resultaat,
+            identificatie,
+            deel,
+            []
+          )
         );
       });
     }

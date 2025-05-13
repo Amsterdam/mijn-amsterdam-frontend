@@ -169,6 +169,7 @@ export interface ZorgnedPersoonsgegevensNAWResponse {
     voorvoegsel: string | null;
     geboortedatum: string | null;
     partnernaam: string | null;
+    partnervoorvoegsel: string | null;
   };
 }
 
@@ -178,6 +179,8 @@ export interface ZorgnedPerson {
   dateOfBirth: string | null;
   dateOfBirthFormatted: string | null;
   isPartner?: true;
+  partnernaam: string | null;
+  partnervoorvoegsel: string | null;
 }
 
 export type ZorgnedApiConfigKey =
