@@ -3,9 +3,17 @@ import {
   GenericDocument,
   ZaakDetail,
 } from '../../../universal/types/App.types';
-import { BeschikkingsResultaat } from '../zorgned/zorgned-types';
+import {
+  BeschikkingsResultaat,
+  type ZorgnedAanvraagWithRelatedPersonsTransformed,
+} from '../zorgned/zorgned-types';
 
-export interface HLIRegelingFrontend extends ZaakDetail {
+export type ZorgnedHLIRegeling =
+  ZorgnedAanvraagWithRelatedPersonsTransformed & {
+    datumInBehandeling?: string | null;
+  };
+
+export type HLIRegelingFrontend = ZaakDetail & {
   dateDecision: string;
   dateEnd: string | null;
   dateStart: string | null;
@@ -13,9 +21,9 @@ export interface HLIRegelingFrontend extends ZaakDetail {
   isActual: boolean; // Indicates if this item is designated Current or Previous
   receiver: string;
   decision: BeschikkingsResultaat;
-}
+};
 
-export interface HLIresponseData {
+export type HLIresponseData = {
   regelingen: HLIRegelingFrontend[];
   stadspas: StadspasFrontend[] | null;
-}
+};
