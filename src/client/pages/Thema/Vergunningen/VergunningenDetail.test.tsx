@@ -4,7 +4,10 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 import { useVergunningenDetailData } from './useVergunningenDetailData.hook';
 import { useVergunningenThemaData } from './useVergunningenThemaData.hook';
 import { VergunningenDetail, forTesting } from './VergunningenDetail';
-import type { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
+import type {
+  DecosVergunning,
+  VergunningFrontend,
+} from '../../../../server/services/vergunningen/config-and-types';
 import { decosCaseToZaakTransformers } from '../../../../server/services/vergunningen/decos-zaken';
 import { componentCreator } from '../../MockApp';
 
@@ -173,7 +176,9 @@ describe('DetailPageContent', () => {
   test.each(caseTypes)(
     'should render the correct component for caseType "%s"',
     (caseType) => {
-      const mockVergunning = { caseType };
+      const mockVergunning = {
+        caseType,
+      } as VergunningFrontend<DecosVergunning>;
 
       render(<DetailPageContent vergunning={mockVergunning} />);
 
@@ -182,7 +187,10 @@ describe('DetailPageContent', () => {
   );
 
   it('should render the default Datalist for an unknown caseType', () => {
-    const mockVergunning = { caseType: 'Unknown Case', key: 'value' };
+    const mockVergunning = {
+      caseType: 'Unknown Case',
+      key: 'value',
+    } as unknown as VergunningFrontend<DecosVergunning>;
 
     render(<DetailPageContent vergunning={mockVergunning} />);
 
