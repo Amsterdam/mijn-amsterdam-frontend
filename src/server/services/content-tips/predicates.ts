@@ -5,9 +5,9 @@ import {
 } from 'date-fns';
 
 import type { TipsPredicateFN } from './tip-types';
-import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
 import { isAmsterdamAddress } from '../buurt/helpers';
 import { HLIRegelingFrontend } from '../hli/hli-regelingen-types';
+import type { IdentiteitsbewijsFrontend, Kind } from '../profile/brp.types';
 import { BBVergunningFrontend } from '../toeristische-verhuur/toeristische-verhuur-powerbrowser-bb-vergunning-types';
 import { WMOVoorzieningFrontend } from '../wmo/wmo-config-and-types';
 import type { WpiRequestProcess } from '../wpi/wpi-types';
