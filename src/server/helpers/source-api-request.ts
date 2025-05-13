@@ -175,7 +175,9 @@ export async function requestData<T>(
     !!config.cacheTimeout &&
     config.cacheTimeout > 0
   ) {
-    debugCache(`Caching ${config.url}, releases in ${config.cacheTimeout}ms`);
+    debugCache(
+      `Caching ${config.url}${config.cacheKey ? ` with custom cachekey ${config.cacheKey}` : ''}, releases in ${config.cacheTimeout}ms`
+    );
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),
@@ -269,4 +271,8 @@ export function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
   const rawUrl = next.split(';')[0].trim();
   const strippedUrl = rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
   return new URL(strippedUrl);
+}
+
+export function getRequestParamsFromQueryString(queryString: string) {
+  return Object.fromEntries(new URLSearchParams(queryString));
 }
