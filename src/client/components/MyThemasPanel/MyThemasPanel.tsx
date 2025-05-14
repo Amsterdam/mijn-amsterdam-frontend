@@ -47,7 +47,7 @@ export function MyThemasPanel({
             <UnorderedList.Item key={id}>
               <LinkComponent maVariant="fatNoUnderline" href={to}>
                 <span className={styles.ThemaLink}>
-                  {IconSVG && <Icon svg={IconSVG} size="level-4" square />}{' '}
+                  {IconSVG && <Icon svg={IconSVG} size="heading-4" square />}{' '}
                   {title}
                 </span>
               </LinkComponent>
