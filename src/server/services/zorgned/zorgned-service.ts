@@ -14,7 +14,6 @@ import {
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
   type BSN,
-  type ZorgnedRelatieSource,
 } from './zorgned-types';
 import {
   apiErrorResult,
@@ -252,10 +251,7 @@ export async function fetchAanvragenWithRelatedPersons(
       bsn,
       options.zorgnedApiConfigKey
     );
-    const relatiesResponse = await fetchRelaties(
-      bsn,
-      options.zorgnedApiConfigKey
-    );
+
     return fetchAndMergeRelatedPersons(
       options.zorgnedApiConfigKey,
       zorgnedAanvragenResponse,
@@ -369,19 +365,6 @@ export async function fetchPersoonsgegevensNAW(
   >(bsn, {
     zorgnedApiConfigKey,
     path: '/persoonsgegevensNAW',
-    validateStatus: (statusCode) =>
-      // 404 means there is no record available in the ZORGNED api for the requested BSN
-      isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
-  });
-}
-
-export async function fetchRelaties(
-  bsn: BSN,
-  zorgnedApiConfigKey: ZorgnedApiConfigKey
-) {
-  return fetchZorgnedByBSN<ZorgnedRelatieSource, ZorgnedRelatieSource>(bsn, {
-    path: '/relaties',
-    zorgnedApiConfigKey,
     validateStatus: (statusCode) =>
       // 404 means there is no record available in the ZORGNED api for the requested BSN
       isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
