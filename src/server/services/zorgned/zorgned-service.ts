@@ -195,15 +195,15 @@ export async function fetchAndMergeRelatedPersons(
 ): Promise<ApiSuccessResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
   const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
 
-  const bsn = uniqueArray(
+  const bsns = uniqueArray(
     zorgnedAanvragenTransformed.flatMap(
       (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
     )
   );
 
   const relatedPersonsResponse = await fetchRelatedPersons(
-    zorgnedApiConfigKey,
-    bsn
+    bsns,
+    zorgnedApiConfigKey
   );
 
   const personsByUserId = relatedPersonsResponse.content?.reduce(
@@ -249,6 +249,10 @@ export async function fetchAanvragenWithRelatedPersons(
 
   if (zorgnedAanvragenResponse.status === 'OK') {
     const persoonsgegevensNAW = await fetchPersoonsgegevensNAW(
+      bsn,
+      options.zorgnedApiConfigKey
+    );
+    const relatiesResponse = await fetchRelaties(
       bsn,
       options.zorgnedApiConfigKey
     );
@@ -327,8 +331,8 @@ function transformZorgnedPersonResponse(
 }
 
 export async function fetchRelatedPersons(
-  zorgnedApiConfigKey: ZorgnedApiConfigKey,
-  bsn: string[]
+  bsn: string[],
+  zorgnedApiConfigKey: ZorgnedApiConfigKey
 ) {
   const requests = bsn.map((userID) => {
     return fetchPersoonsgegevensNAW(userID, zorgnedApiConfigKey);
