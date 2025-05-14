@@ -84,7 +84,7 @@ describe('vergunningen-notifications', () => {
       MockDate.reset();
     });
 
-    it.only('should return notifications for valid vergunningen and transformers', () => {
+    it('should return notifications for valid vergunningen and transformers', () => {
       const vergunningen = [
         {
           id: '1',
