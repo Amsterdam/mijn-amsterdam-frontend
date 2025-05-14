@@ -198,7 +198,9 @@ describe('stadspas services', () => {
       },
     });
 
-    const response = await fetchAdministratienummer(authProfileAndToken);
+    const response = await fetchAdministratienummer(
+      authProfileAndToken.profile.id
+    );
 
     expect(response).toStrictEqual({
       content: '0363000123-123',
