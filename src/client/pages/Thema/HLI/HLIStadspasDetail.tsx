@@ -10,7 +10,7 @@ import {
 } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
-import { routeConfig, themaId } from './HLI-thema-config';
+import { featureToggle, routeConfig, themaId } from './HLI-thema-config';
 import styles from './HLIStadspasDetail.module.scss';
 import { useBlockStadspas, useStadspassen } from './useStadspassen.hook';
 import {
@@ -18,7 +18,6 @@ import {
   StadspasBudgetTransaction,
   StadspasFrontend,
 } from '../../../../server/services/hli/stadspas-types';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import {
   apiPristineResult,
   isError,
@@ -167,11 +166,11 @@ export function HLIStadspasDetail() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {FeatureToggle.hliThemaStadspasBlokkerenActive && (
+              {featureToggle.hliThemaStadspasBlokkerenActive && (
                 <BlockStadspas stadspas={stadspas} />
               )}
             </PageContentCell>
-            {FeatureToggle.hliThemaStadspasDeblokkerenActive && (
+            {featureToggle.hliThemaStadspasDeblokkerenActive && (
               <UnblockStadspas stadspas={stadspas} />
             )}
           </>

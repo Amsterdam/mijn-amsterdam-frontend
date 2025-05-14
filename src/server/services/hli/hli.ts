@@ -7,7 +7,10 @@ import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import { filterCombineRtmData } from './status-line-items/regeling-rtm';
-import { routeConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import {
+  featureToggle,
+  routeConfig,
+} from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
@@ -28,7 +31,6 @@ import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { toDateFormatted } from '../../../universal/helpers/utils';
 
 function getDisplayStatus(
@@ -178,7 +180,7 @@ async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!FeatureToggle.hliThemaRegelingenActive) {
+  if (!featureToggle.hliThemaRegelingenActive) {
     return apiSuccessResult([]);
   }
 

@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
+import { featureToggle } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
 import { StadspasFrontend } from '../../../../server/services/hli/stadspas-types';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -112,7 +112,7 @@ export function HLIThema() {
     </PageContentCell>
   );
 
-  const regelingenTables = FeatureToggle.hliThemaRegelingenActive
+  const regelingenTables = featureToggle.hliThemaRegelingenActive
     ? entries(tableConfig).map(
         ([
           kind,

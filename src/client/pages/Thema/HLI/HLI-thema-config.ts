@@ -1,6 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
@@ -48,7 +49,13 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 export const featureToggle = {
   hliActive: true,
   hliStadspasActive: true,
-};
+  zorgnedAvApiActive: true,
+  hliThemaStadspasBlokkerenActive: true,
+  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
+  hliThemaRegelingenActive: true,
+  hliRegelingEnabledCZM: true,
+  hliRegelingEnabledRTM: !IS_PRODUCTION,
+} as const;
 
 export const themaId = 'HLI' as const;
 export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;

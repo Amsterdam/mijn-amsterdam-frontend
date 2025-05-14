@@ -19,7 +19,7 @@ import {
   AV_RTM_DEEL2,
   RTM,
 } from './status-line-items/regeling-rtm';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -31,7 +31,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   {
     productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
     lineItemTransformers: RTM,
-    isDisabled: !FeatureToggle.hliRegelingEnabledRTM,
+    isDisabled: !featureToggle.hliRegelingEnabledRTM,
   },
   {
     productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
@@ -48,6 +48,6 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   {
     productIdentificatie: [AV_CZM],
     lineItemTransformers: REGELING_CZM,
-    isDisabled: !FeatureToggle.hliRegelingEnabledCZM,
+    isDisabled: !featureToggle.hliRegelingEnabledCZM,
   },
 ];

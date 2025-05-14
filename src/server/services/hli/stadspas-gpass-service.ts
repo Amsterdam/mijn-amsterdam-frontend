@@ -22,7 +22,7 @@ import {
   StadspasTransactionQueryParams,
   PasblokkadeByPasnummer,
 } from './stadspas-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   ApiResponse_DEPRECATED,
   ApiResponse,
@@ -389,7 +389,7 @@ async function mutateGpassTogglePass(
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
     enableCache: false,
-    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
+    postponeFetch: !featureToggle.hliThemaStadspasBlokkerenActive,
     transformResponse: transformTogglePassResponse,
   });
 
