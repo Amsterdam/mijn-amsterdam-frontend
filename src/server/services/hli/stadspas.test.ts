@@ -200,28 +200,25 @@ describe('stadspas services', () => {
 
     const response = await fetchAdministratienummer(authProfileAndToken);
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": "0363000123-123",
-        "status": "OK",
-      }
-    `);
+    expect(response).toStrictEqual({
+      content: '0363000123-123',
+      status: 'OK',
+    });
   });
 
   describe('stadspas-gpass-service', () => {
     test('fail administratienummer endpoint', async () => {
       remoteApi.post('/zorgned/persoonsgegevensNAW').reply(500);
 
-      const response = await fetchStadspassen(authProfileAndToken);
+      const BSN = '123456789';
+      const response = await fetchStadspassen(BSN);
 
-      expect(response).toMatchInlineSnapshot(`
-      {
-        "code": 500,
-        "content": null,
-        "message": "Request failed with status code 500",
-        "status": "ERROR",
-      }
-    `);
+      expect(response).toStrictEqual({
+        code: 500,
+        content: null,
+        message: 'Request failed with status code 500',
+        status: 'ERROR',
+      });
     });
 
     test('fail user unknown', async () => {
@@ -234,17 +231,16 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pashouder?addsubs=true')
         .reply(401);
 
-      const response = await fetchStadspassen(authProfileAndToken);
+      const BSN = '89898989';
+      const response = await fetchStadspassen(BSN);
 
-      expect(response).toMatchInlineSnapshot(`
-      {
-        "content": {
-          "administratienummer": null,
-          "stadspassen": [],
+      expect(response).toStrictEqual({
+        content: {
+          administratienummer: null,
+          stadspassen: [],
         },
-        "status": "OK",
-      }
-    `);
+        status: 'OK',
+      });
     });
 
     test('fail only returns 1st pass', async () => {
@@ -273,7 +269,8 @@ describe('stadspas services', () => {
         .get('/stadspas/rest/sales/v1/pas/333333333333?include_balance=true')
         .reply(200, defaultPasResponse);
 
-      const response = await fetchStadspassen(authProfileAndToken);
+      const BSN = '123456789';
+      const response = await fetchStadspassen(BSN);
 
       const expectedResponse = {
         content: {
@@ -306,7 +303,8 @@ describe('stadspas services', () => {
       test('Transforms pas correctly', async () => {
         setupStadspashouderRequests({ passen: [relevantPas] });
 
-        const response = await fetchStadspassen(authProfileAndToken);
+        const BSN = '12121212';
+        const response = await fetchStadspassen(BSN);
         expect(response.content?.stadspassen[0]).toStrictEqual({
           actief: true,
           balance: 0,
@@ -365,7 +363,8 @@ describe('stadspas services', () => {
         const passen = [relevantPas, ...toFilterOutPasses];
         setupStadspashouderRequests({ passen });
 
-        const response = await fetchStadspassen(authProfileAndToken);
+        const BSN = '2323232323';
+        const response = await fetchStadspassen(BSN);
 
         expect(response.content?.stadspassen.length).toBe(
           passen.length - toFilterOutPasses.length
@@ -389,7 +388,8 @@ describe('stadspas services', () => {
           ],
         });
 
-        const response = await fetchStadspassen(authProfileAndToken);
+        const BSN = '34343434';
+        const response = await fetchStadspassen(BSN);
         expect(response.content?.stadspassen.length).toBe(0);
       });
 
@@ -406,7 +406,8 @@ describe('stadspas services', () => {
           ],
         });
 
-        const response = await fetchStadspassen(authProfileAndToken);
+        const BSN = '4545454545';
+        const response = await fetchStadspassen(BSN);
 
         expect(response.content?.stadspassen.length).toBe(1);
       });
@@ -432,7 +433,8 @@ describe('stadspas services', () => {
         ];
         setupStadspashouderRequests({ sub_pashouders });
 
-        const response = await fetchStadspassen(authProfileAndToken);
+        const BSN = '5656565656';
+        const response = await fetchStadspassen(BSN);
         expect(response.content?.stadspassen.length).toBe(
           passen.length - passesToFilterOut.length
         );
@@ -471,23 +473,21 @@ describe('stadspas services', () => {
       'my-unique-session-id'
     );
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "content": [
-          {
-            "amount": 34.5,
-            "amountFormatted": "+ €34,50",
-            "budget": "budgetje",
-            "budgetCode": "001",
-            "datePublished": "2024-04-25",
-            "datePublishedFormatted": "25 april 2024",
-            "id": "transactie-id",
-            "title": "transactie naam",
-          },
-        ],
-        "status": "OK",
-      }
-    `);
+    expect(response).toStrictEqual({
+      content: [
+        {
+          amount: 34.5,
+          amountFormatted: '+ €34,50',
+          budget: 'budgetje',
+          budgetCode: '001',
+          datePublished: '2024-04-25',
+          datePublishedFormatted: '25 april 2024',
+          id: 'transactie-id',
+          title: 'transactie naam',
+        },
+      ],
+      status: 'OK',
+    });
   });
 
   test('stadspas transacties unmatched session id', async () => {
@@ -501,14 +501,12 @@ describe('stadspas services', () => {
       'foo-bar'
     );
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "code": 401,
-        "content": null,
-        "message": "Not authorized",
-        "status": "ERROR",
-      }
-    `);
+    expect(response).toStrictEqual({
+      code: 401,
+      content: null,
+      message: 'Not authorized',
+      status: 'ERROR',
+    });
   });
 
   test('stadspas transacties bad encrypted key', async () => {
@@ -518,14 +516,12 @@ describe('stadspas services', () => {
       'foo-bar'
     );
 
-    expect(response).toMatchInlineSnapshot(`
-      {
-        "code": 400,
-        "content": null,
-        "message": "Bad request: Failed to decrypt transactions key",
-        "status": "ERROR",
-      }
-    `);
+    expect(response).toStrictEqual({
+      code: 400,
+      content: null,
+      message: 'Bad request: Failed to decrypt transactions key',
+      status: 'ERROR',
+    });
   });
 
   describe('fetchStadspasDiscountTransactions', async () => {
@@ -575,22 +571,12 @@ describe('stadspas services', () => {
         apiSuccessResult({ '6012345678901': false })
       );
       const response = await blockStadspas(transactionsKeyEncrypted);
-      expect(response).toMatchInlineSnapshot(
-        {
-          content: {
-            '6012345678901': false,
-          },
-          status: 'OK',
+      expect(response).toStrictEqual({
+        content: {
+          '6012345678901': false,
         },
-        `
-        {
-          "content": {
-            "6012345678901": false,
-          },
-          "status": "OK",
-        }
-      `
-      );
+        status: 'OK',
+      });
     });
   });
 });

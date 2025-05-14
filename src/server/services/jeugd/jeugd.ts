@@ -24,9 +24,12 @@ import {
 export async function fetchLeerlingenvervoer(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse<LeerlingenvervoerVoorzieningFrontend[]>> {
-  const aanvragenResponse = await fetchAanvragen(authProfileAndToken, {
-    zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
-  });
+  const aanvragenResponse = await fetchAanvragen(
+    authProfileAndToken.profile.id,
+    {
+      zorgnedApiConfigKey: 'ZORGNED_LEERLINGENVERVOER',
+    }
+  );
   if (aanvragenResponse.status !== 'OK') {
     return aanvragenResponse;
   }

@@ -13,6 +13,8 @@ import {
   ZorgnedPerson,
   ZorgnedPersoonsgegevensNAWResponse,
   ZorgnedResponseDataSource,
+  type BSN,
+  type ZorgnedRelatieSource,
 } from './zorgned-types';
 import {
   apiErrorResult,
@@ -20,15 +22,42 @@ import {
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { getFullName } from '../../../universal/helpers/brp';
 import { dateSort, defaultDateFormat } from '../../../universal/helpers/date';
 import { hash, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
-import { DocumentDownloadData } from '../shared/document-download-route-handler';
+
+async function fetchZorgnedByBSN<S, T>(
+  bsn: BSN,
+  options: ZorgnedAanvragenServiceOptions & {
+    path: string;
+    transform?: (response: S) => T;
+    validateStatus?: (statusCode: number) => boolean;
+  }
+): Promise<ApiResponse<T>> {
+  const postBody = {
+    ...(options.requestBodyParams ?? {}),
+    burgerservicenummer: bsn,
+    gemeentecode: ZORGNED_GEMEENTE_CODE,
+  };
+
+  const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
+  const url = dataRequestConfig.url + options.path;
+
+  const zorgnedResponse = await requestData<T>({
+    ...dataRequestConfig,
+    url,
+    data: postBody,
+    transformResponse: options.transform,
+    validateStatus: options.validateStatus,
+  });
+
+  return zorgnedResponse;
+}
 
 function transformDocumenten(documenten: ZorgnedDocument[]) {
   const documents: GenericDocument[] = [];
@@ -149,31 +178,14 @@ export function transformZorgnedAanvragen(
 }
 
 export async function fetchAanvragen(
-  authProfileAndToken: AuthProfileAndToken,
+  bsn: BSN,
   options: ZorgnedAanvragenServiceOptions
 ) {
-  const postBody = {
-    ...(options.requestBodyParams ?? {}),
-    burgerservicenummer: authProfileAndToken.profile.id,
-    gemeentecode: ZORGNED_GEMEENTE_CODE,
-  };
-
-  const dataRequestConfig = getApiConfig(options.zorgnedApiConfigKey);
-  const url = `${dataRequestConfig.url}/aanvragen`;
-
-  const zorgnedAanvragenResponse = await requestData<
-    ZorgnedAanvraagTransformed[]
-  >(
-    {
-      ...dataRequestConfig,
-      url,
-      data: postBody,
-      transformResponse: transformZorgnedAanvragen,
-    },
-    authProfileAndToken
-  );
-
-  return zorgnedAanvragenResponse;
+  return fetchZorgnedByBSN(bsn, {
+    ...options,
+    path: '/aanvragen',
+    transform: transformZorgnedAanvragen,
+  });
 }
 
 export async function fetchAndMergeRelatedPersons(
@@ -230,17 +242,14 @@ export async function fetchAndMergeRelatedPersons(
 }
 
 export async function fetchAanvragenWithRelatedPersons(
-  authProfileAndToken: AuthProfileAndToken,
+  bsn: BSN,
   options: ZorgnedAanvragenServiceOptions
 ) {
-  const zorgnedAanvragenResponse = await fetchAanvragen(
-    authProfileAndToken,
-    options
-  );
+  const zorgnedAanvragenResponse = await fetchAanvragen(bsn, options);
 
   if (zorgnedAanvragenResponse.status === 'OK') {
     const persoonsgegevensNAW = await fetchPersoonsgegevensNAW(
-      authProfileAndToken.profile.id,
+      bsn,
       options.zorgnedApiConfigKey
     );
     return fetchAndMergeRelatedPersons(
@@ -253,45 +262,42 @@ export async function fetchAanvragenWithRelatedPersons(
   return zorgnedAanvragenResponse;
 }
 
+function transformZorgnedDocumenten(
+  documentResponseData: ZorgnedDocumentResponseSource
+) {
+  if (
+    !documentResponseData ||
+    typeof documentResponseData !== 'object' ||
+    !('inhoud' in documentResponseData)
+  ) {
+    throw new Error(
+      'Zorgned document download - no valid response data provided'
+    );
+  }
+  const data = Buffer.from(documentResponseData.inhoud, 'base64');
+  return {
+    data,
+    mimetype: documentResponseData.mimetype,
+    filename:
+      documentResponseData.omschrijvingclientportaal ||
+      documentResponseData.omschrijving,
+  };
+}
+
 export async function fetchDocument(
-  authProfileAndToken: AuthProfileAndToken,
+  bsn: BSN,
   zorgnedApiConfigKey: ZorgnedApiConfigKey,
   documentId: ZorgnedDocument['documentidentificatie']
 ) {
-  const postBody = {
-    burgerservicenummer: authProfileAndToken.profile.id,
-    gemeentecode: ZORGNED_GEMEENTE_CODE,
+  const requestBodyParams = {
     documentidentificatie: documentId,
   };
 
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey);
-  const url = `${dataRequestConfig.url}/document`;
-
-  return requestData<DocumentDownloadData>({
-    ...dataRequestConfig,
-    url,
-    data: postBody,
-    transformResponse: (
-      documentResponseData: ZorgnedDocumentResponseSource
-    ) => {
-      if (
-        !documentResponseData ||
-        typeof documentResponseData !== 'object' ||
-        !('inhoud' in documentResponseData)
-      ) {
-        throw new Error(
-          'Zorgned document download - no valid response data provided'
-        );
-      }
-      const data = Buffer.from(documentResponseData.inhoud, 'base64');
-      return {
-        data,
-        mimetype: documentResponseData.mimetype,
-        filename:
-          documentResponseData.omschrijvingclientportaal ||
-          documentResponseData.omschrijving,
-      };
-    },
+  return fetchZorgnedByBSN(bsn, {
+    path: '/document',
+    zorgnedApiConfigKey,
+    transform: transformZorgnedDocumenten,
+    requestBodyParams,
   });
 }
 
@@ -312,8 +318,9 @@ function transformZorgnedPersonResponse(
       dateOfBirthFormatted: zorgnedResponseData.persoon.geboortedatum
         ? defaultDateFormat(zorgnedResponseData.persoon.geboortedatum)
         : null,
-      partnernaam: zorgnedResponseData.persoon.partnernaam,
-      partnervoorvoegsel: zorgnedResponseData.persoon.partnervoorvoegsel,
+      partnernaam: zorgnedResponseData.persoon.partnernaam ?? null,
+      partnervoorvoegsel:
+        zorgnedResponseData.persoon.partnervoorvoegsel ?? null,
     };
   }
   return null;
@@ -349,26 +356,32 @@ export async function fetchRelatedPersons(
 }
 
 export async function fetchPersoonsgegevensNAW(
-  userID: string,
+  bsn: BSN,
   zorgnedApiConfigKey: ZorgnedApiConfigKey
 ) {
-  const dataRequestConfig = getApiConfig(zorgnedApiConfigKey, {
-    formatUrl(requestConfig) {
-      return `${requestConfig.url}/persoonsgegevensNAW`;
-    },
+  return fetchZorgnedByBSN<
+    ZorgnedPersoonsgegevensNAWResponse,
+    ZorgnedPersoonsgegevensNAWResponse
+  >(bsn, {
+    zorgnedApiConfigKey,
+    path: '/persoonsgegevensNAW',
     validateStatus: (statusCode) =>
       // 404 means there is no record available in the ZORGNED api for the requested BSN
       isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
-    data: {
-      burgerservicenummer: userID,
-      gemeentecode: ZORGNED_GEMEENTE_CODE,
-    },
   });
+}
 
-  const response =
-    requestData<ZorgnedPersoonsgegevensNAWResponse>(dataRequestConfig);
-
-  return response;
+export async function fetchRelaties(
+  bsn: BSN,
+  zorgnedApiConfigKey: ZorgnedApiConfigKey
+) {
+  return fetchZorgnedByBSN<ZorgnedRelatieSource, ZorgnedRelatieSource>(bsn, {
+    path: '/relaties',
+    zorgnedApiConfigKey,
+    validateStatus: (statusCode) =>
+      // 404 means there is no record available in the ZORGNED api for the requested BSN
+      isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
+  });
 }
 
 export const forTesting = {

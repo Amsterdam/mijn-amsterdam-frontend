@@ -1,8 +1,7 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import { fetchAanvragen } from '../zorgned/zorgned-service';
-import { ZorgnedAanvraagTransformed } from '../zorgned/zorgned-types';
+import { ZorgnedAanvraagTransformed, type BSN } from '../zorgned/zorgned-types';
 import {
   FAKE_DECISION_DOCUMENT_ID,
   isAfterWCAGValidDocumentsDate,
@@ -94,15 +93,13 @@ export function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
-export async function fetchZorgnedAanvragenWMO(
-  authProfileAndToken: AuthProfileAndToken
-) {
+export async function fetchZorgnedAanvragenWMO(bsn: BSN) {
   const requestBodyParams = {
     maxeinddatum: DATE_END_NOT_OLDER_THAN,
     regeling: ZORGNED_JZD_REGELING_IDENTIFICATIE,
   };
 
-  const aanvragenResponse = await fetchAanvragen(authProfileAndToken, {
+  const aanvragenResponse = await fetchAanvragen(bsn, {
     zorgnedApiConfigKey: 'ZORGNED_JZD',
     requestBodyParams,
   });

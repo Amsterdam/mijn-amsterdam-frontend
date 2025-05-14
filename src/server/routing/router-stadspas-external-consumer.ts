@@ -25,7 +25,6 @@ import {
   blockStadspas,
   fetchStadspasBudgetTransactions,
   fetchStadspasDiscountTransactions,
-  unblockStadspas,
 } from '../services/hli/stadspas';
 import { fetchStadspassenByAdministratienummer } from '../services/hli/stadspas-gpass-service';
 import {
@@ -167,8 +166,9 @@ async function sendAdministratienummerResponse(
     authProfileAndToken?.profile.id &&
     authProfileAndToken.profile.profileType === 'private'
   ) {
-    const administratienummerResponse =
-      await fetchAdministratienummer(authProfileAndToken);
+    const administratienummerResponse = await fetchAdministratienummer(
+      authProfileAndToken.profile.id
+    );
 
     // Administratienummer found, encrypt and send
     if (

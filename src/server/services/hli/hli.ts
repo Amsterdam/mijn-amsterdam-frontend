@@ -182,7 +182,9 @@ async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
     return apiSuccessResult([]);
   }
 
-  const aanvragenResponse = await fetchZorgnedAanvragenHLI(authProfileAndToken);
+  const aanvragenResponse = await fetchZorgnedAanvragenHLI(
+    authProfileAndToken.profile.id
+  );
 
   if (aanvragenResponse.status === 'OK') {
     const regelingen = await transformRegelingenForFrontend(

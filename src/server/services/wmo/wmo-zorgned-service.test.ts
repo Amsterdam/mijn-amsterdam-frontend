@@ -3,7 +3,6 @@ import Mockdate from 'mockdate';
 import { fetchZorgnedAanvragenWMO, forTesting } from './wmo-zorgned-service';
 import { remoteApiHost } from '../../../testing/setup';
 import { remoteApi } from '../../../testing/utils';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as request from '../../helpers/source-api-request';
 import {
   ZORGNED_GEMEENTE_CODE,
@@ -12,15 +11,6 @@ import {
 
 const mocks = vi.hoisted(() => {
   return {
-    mockAuthProfileAndToken: {
-      profile: {
-        id: 'mock-burgerservicenummer',
-        profileType: 'private',
-        authMethod: 'digid',
-        sid: 'session-id',
-      },
-      token: 'mock-auth-token',
-    },
     mockDocumentIdEncrypted: 'mock-encrypted-document-id',
     mockDocumentId: 'mock-document-id',
   };
@@ -112,31 +102,26 @@ describe('wmo-zorgned-service', () => {
 
   it('should fetch voorzieningen', async () => {
     remoteApi.post('/zorgned/aanvragen').reply(200, []);
+    const BSN = '123456789';
+    const result = await fetchZorgnedAanvragenWMO(BSN);
 
-    const result = await fetchZorgnedAanvragenWMO(
-      mocks.mockAuthProfileAndToken as AuthProfileAndToken
-    );
-
-    expect(requestData).toHaveBeenCalledWith(
-      {
-        url: `${remoteApiHost}/zorgned/aanvragen`,
-        data: {
-          burgerservicenummer: mocks.mockAuthProfileAndToken.profile.id,
-          gemeentecode: ZORGNED_GEMEENTE_CODE,
-          maxeinddatum: '2018-01-01',
-          regeling: 'wmo',
-        },
-        transformResponse: expect.any(Function),
-        method: 'post',
-        headers: {
-          Token: process.env.BFF_ZORGNED_API_TOKEN,
-          'Content-type': 'application/json; charset=utf-8',
-          'x-cache-key-supplement': 'JZD',
-        },
-        httpsAgent: expect.any(Object),
+    expect(requestData).toHaveBeenCalledWith({
+      url: `${remoteApiHost}/zorgned/aanvragen`,
+      data: {
+        burgerservicenummer: BSN,
+        gemeentecode: ZORGNED_GEMEENTE_CODE,
+        maxeinddatum: '2018-01-01',
+        regeling: 'wmo',
       },
-      mocks.mockAuthProfileAndToken as AuthProfileAndToken
-    );
+      transformResponse: expect.any(Function),
+      method: 'post',
+      headers: {
+        Token: process.env.BFF_ZORGNED_API_TOKEN,
+        'Content-type': 'application/json; charset=utf-8',
+        'x-cache-key-supplement': 'JZD',
+      },
+      httpsAgent: expect.any(Object),
+    });
 
     expect(result).toMatchInlineSnapshot(`
       {
