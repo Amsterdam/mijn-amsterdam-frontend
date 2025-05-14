@@ -3,6 +3,7 @@ import React from 'react';
 import { PageHeader, Icon } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
+import { useNavigate } from 'react-router';
 
 import styles from './MainHeader.module.scss';
 import { OtapLabel } from './OtapLabel';
@@ -154,22 +155,27 @@ export interface MainHeaderProps {
 export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
   const { ref, isMainMenuOpen, closeMenuAndSearch, headerHeight } =
     useMainHeaderControl();
-
+  const navigate = useNavigate();
   return (
     <>
       <PageHeader
         ref={ref}
         className={classNames(styles.MainHeader, AmsMainMenuClassname)}
-        logoLink="https://www.amsterdam.nl/"
+        logoLink="https://mijn.amsterdam.nl/"
+        onClick={(event) => {
+          event.preventDefault();
+          if (
+            event.target.parentNode?.classList.contains(
+              'ams-page-header__logo-link'
+            )
+          ) {
+            navigate(DashboardRoute.route);
+          }
+        }}
         brandName={
           (
             <>
-              <MaRouterLink
-                className={styles.BrandNameLink}
-                href={DashboardRoute.route}
-              >
-                Mijn Amsterdam
-              </MaRouterLink>
+              Mijn Amsterdam
               <OtapLabel />
             </>
           ) as unknown as string // Hack because brandName is not typed as ReactNode
