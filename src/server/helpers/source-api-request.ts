@@ -176,6 +176,7 @@ export async function requestData<T>(
     !!config.cacheTimeout &&
     config.cacheTimeout > 0
   ) {
+    // Debug the cache key to check if the cache key is set and uses the custom cache key if provided.
     debugCacheKey(
       `Caching ${config.url}${config.cacheKey ? ` with custom cachekey ${config.cacheKey}` : ''}, releases in ${config.cacheTimeout}ms`
     );
