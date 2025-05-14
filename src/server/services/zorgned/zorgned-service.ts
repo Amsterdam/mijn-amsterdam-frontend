@@ -331,7 +331,7 @@ function transformZorgnedPersonResponse(
 }
 
 export async function fetchRelatedPersons(
-  bsn: string[],
+  bsn: BSN[],
   zorgnedApiConfigKey: ZorgnedApiConfigKey
 ) {
   const requests = bsn.map((userID) => {

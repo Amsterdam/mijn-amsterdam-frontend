@@ -2236,7 +2236,7 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons('ZORGNED_AV', userIDs);
+    const response = await fetchRelatedPersons(userIDs, 'ZORGNED_AV');
     expect(response).toStrictEqual(
       apiErrorResult(
         'Something went wrong when retrieving related persons.',
@@ -2280,7 +2280,7 @@ describe('fetchRelatedPersons', async () => {
 
     const userIDs = ['1', '2'];
 
-    const response = await fetchRelatedPersons('ZORGNED_AV', userIDs);
+    const response = await fetchRelatedPersons(userIDs, 'ZORGNED_AV');
     const expected: ApiSuccessResponse<ZorgnedPerson[]> = {
       content: [
         {
