@@ -1,5 +1,3 @@
-import { parseISO } from 'date-fns';
-
 import { BESLUIT, EINDE_RECHT, getBetrokkenDescription } from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
@@ -98,20 +96,9 @@ type RTMRelatieType =
   | 'aanvragerKinderen'
   | 'aanvragerPartnerKinderen';
 
-const AGE_18 = 18; // Consider persons under 18 as children
-
 function determineRelatieType(persons: ZorgnedPerson[]): RTMRelatieType {
-  const children = persons.filter((person) => {
-    if (!person.dateOfBirth) {
-      return false;
-    }
-    const birthdate = parseISO(person.dateOfBirth);
-    const today = new Date();
-    const age = today.getFullYear() - birthdate.getFullYear();
-    return age < AGE_18;
-  });
   const hasPartner = persons.some((person) => person.isPartner);
-  const hasChildren = children.length > 0;
+  const hasChildren = !!persons.length && !hasPartner;
 
   if (hasPartner && hasChildren) {
     return 'aanvragerPartnerKinderen';
