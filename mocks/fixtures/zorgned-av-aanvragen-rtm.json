@@ -104,7 +104,7 @@
         "identificatie": "deel2-deel2-3.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-03",
+          "datumAfgifte": "2025-05-04",
           "beschikteProducten": [
             {
               "product": {
@@ -114,8 +114,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-04",
-                "datumEindeGeldigheid": "2026-06-04",
+                "datumIngangGeldigheid": "2025-06-05",
+                "datumEindeGeldigheid": "2026-06-05",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -137,7 +137,7 @@
         "identificatie": "deel1-deel1-4.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-04",
+          "datumAfgifte": "2025-05-05",
           "beschikteProducten": [
             {
               "product": {
@@ -147,8 +147,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-05",
-                "datumEindeGeldigheid": "2026-06-05",
+                "datumIngangGeldigheid": "2025-06-06",
+                "datumEindeGeldigheid": "2026-06-06",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -170,7 +170,7 @@
         "identificatie": "deel2-deel2-4.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-04",
+          "datumAfgifte": "2025-05-06",
           "beschikteProducten": [
             {
               "product": {
@@ -180,8 +180,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-05",
-                "datumEindeGeldigheid": "2026-06-05",
+                "datumIngangGeldigheid": "2025-06-07",
+                "datumEindeGeldigheid": "2026-06-07",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -203,7 +203,7 @@
         "identificatie": "deel1-deel1-5.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-05",
+          "datumAfgifte": "2025-05-07",
           "beschikteProducten": [
             {
               "product": {
@@ -213,14 +213,11 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-06",
-                "datumEindeGeldigheid": "2026-06-06",
+                "datumIngangGeldigheid": "2025-06-08",
+                "datumEindeGeldigheid": "2026-06-08",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": [
-                  "kind-1",
-                  "partner-2"
-                ]
+                "betrokkenen": ["kind-1", "partner-2"]
               }
             }
           ],
@@ -239,7 +236,7 @@
         "identificatie": "deel1-deel1-6.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-06",
+          "datumAfgifte": "2025-05-08",
           "beschikteProducten": [
             {
               "product": {
@@ -249,14 +246,11 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-07",
-                "datumEindeGeldigheid": "2026-06-07",
+                "datumIngangGeldigheid": "2025-06-09",
+                "datumEindeGeldigheid": "2026-06-09",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": [
-                  "kind-1",
-                  "partner-2"
-                ]
+                "betrokkenen": ["kind-1", "partner-2"]
               }
             }
           ],
@@ -275,7 +269,7 @@
         "identificatie": "deel2-deel2-6.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-06",
+          "datumAfgifte": "2025-05-09",
           "beschikteProducten": [
             {
               "product": {
@@ -285,8 +279,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-07",
-                "datumEindeGeldigheid": "2026-06-07",
+                "datumIngangGeldigheid": "2025-06-10",
+                "datumEindeGeldigheid": "2026-06-10",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -308,7 +302,7 @@
         "identificatie": "deel2-deel2-6.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-06",
+          "datumAfgifte": "2025-05-10",
           "beschikteProducten": [
             {
               "product": {
@@ -318,8 +312,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-07",
-                "datumEindeGeldigheid": "2026-06-07",
+                "datumIngangGeldigheid": "2025-06-11",
+                "datumEindeGeldigheid": "2026-06-11",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -341,7 +335,7 @@
         "identificatie": "deel2-deel2-6.2.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-06",
+          "datumAfgifte": "2025-05-11",
           "beschikteProducten": [
             {
               "product": {
@@ -351,8 +345,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-07",
-                "datumEindeGeldigheid": "2026-06-07",
+                "datumIngangGeldigheid": "2025-06-12",
+                "datumEindeGeldigheid": "2026-06-12",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -374,7 +368,7 @@
         "identificatie": "deel1-deel1-7.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-07",
+          "datumAfgifte": "2025-05-12",
           "beschikteProducten": [
             {
               "product": {
@@ -384,14 +378,11 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-08",
-                "datumEindeGeldigheid": "2026-06-08",
+                "datumIngangGeldigheid": "2025-06-13",
+                "datumEindeGeldigheid": "2026-06-13",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": [
-                  "kind-1",
-                  "partner-2"
-                ]
+                "betrokkenen": ["kind-1", "partner-2"]
               }
             }
           ],
@@ -410,7 +401,7 @@
         "identificatie": "deel2-deel2-7.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-07",
+          "datumAfgifte": "2025-05-13",
           "beschikteProducten": [
             {
               "product": {
@@ -420,8 +411,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-08",
-                "datumEindeGeldigheid": "2026-06-08",
+                "datumIngangGeldigheid": "2025-06-14",
+                "datumEindeGeldigheid": "2026-06-14",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -443,7 +434,7 @@
         "identificatie": "deel2-deel2-7.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-07",
+          "datumAfgifte": "2025-05-14",
           "beschikteProducten": [
             {
               "product": {
@@ -453,8 +444,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-08",
-                "datumEindeGeldigheid": "2026-06-08",
+                "datumIngangGeldigheid": "2024-06-15",
+                "datumEindeGeldigheid": "2025-04-15",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -476,7 +467,7 @@
         "identificatie": "deel2-deel2-7.2.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-07",
+          "datumAfgifte": "2025-05-15",
           "beschikteProducten": [
             {
               "product": {
@@ -486,8 +477,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-08",
-                "datumEindeGeldigheid": "2026-06-08",
+                "datumIngangGeldigheid": "2025-06-16",
+                "datumEindeGeldigheid": "2026-06-16",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -509,7 +500,7 @@
         "identificatie": "deel1-deel1-8.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-08",
+          "datumAfgifte": "2025-05-16",
           "beschikteProducten": [
             {
               "product": {
@@ -519,14 +510,11 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-09",
-                "datumEindeGeldigheid": "2026-06-09",
+                "datumIngangGeldigheid": "2025-06-17",
+                "datumEindeGeldigheid": "2026-06-17",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": [
-                  "kind-1",
-                  "partner-2"
-                ]
+                "betrokkenen": ["kind-1", "partner-2"]
               }
             }
           ],
@@ -545,7 +533,7 @@
         "identificatie": "deel2-deel2-8.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-08",
+          "datumAfgifte": "2025-05-17",
           "beschikteProducten": [
             {
               "product": {
@@ -555,8 +543,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-09",
-                "datumEindeGeldigheid": "2026-06-09",
+                "datumIngangGeldigheid": "2025-06-18",
+                "datumEindeGeldigheid": "2026-06-18",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -578,7 +566,7 @@
         "identificatie": "deel2-deel2-8.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-08",
+          "datumAfgifte": "2025-05-18",
           "beschikteProducten": [
             {
               "product": {
@@ -588,8 +576,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-09",
-                "datumEindeGeldigheid": "2026-06-09",
+                "datumIngangGeldigheid": "2025-06-19",
+                "datumEindeGeldigheid": "2026-06-19",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -611,7 +599,7 @@
         "identificatie": "deel2-deel2-8.2.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-08",
+          "datumAfgifte": "2025-05-19",
           "beschikteProducten": [
             {
               "product": {
@@ -621,8 +609,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-09",
-                "datumEindeGeldigheid": "2026-06-09",
+                "datumIngangGeldigheid": "2025-06-20",
+                "datumEindeGeldigheid": "2026-06-20",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -644,7 +632,7 @@
         "identificatie": "deel1-deel1-9.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-09",
+          "datumAfgifte": "2025-05-20",
           "beschikteProducten": [
             {
               "product": {
@@ -654,13 +642,11 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-10",
-                "datumEindeGeldigheid": "2026-06-10",
+                "datumIngangGeldigheid": "2025-06-21",
+                "datumEindeGeldigheid": "2026-06-21",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": [
-                  "partner-1"
-                ]
+                "betrokkenen": ["partner-1"]
               }
             }
           ],
@@ -679,7 +665,7 @@
         "identificatie": "deel2-deel2-9.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-09",
+          "datumAfgifte": "2025-05-21",
           "beschikteProducten": [
             {
               "product": {
@@ -689,8 +675,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-10",
-                "datumEindeGeldigheid": "2026-06-10",
+                "datumIngangGeldigheid": "2025-06-22",
+                "datumEindeGeldigheid": "2026-06-22",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -712,7 +698,7 @@
         "identificatie": "deel2-deel2-9.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-09",
+          "datumAfgifte": "2025-05-22",
           "beschikteProducten": [
             {
               "product": {
@@ -722,8 +708,8 @@
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-10",
-                "datumEindeGeldigheid": "2026-06-10",
+                "datumIngangGeldigheid": "2025-06-23",
+                "datumEindeGeldigheid": "2026-06-23",
                 "actueel": false,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -745,7 +731,7 @@
         "identificatie": "deel1-deel1-10.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-10",
+          "datumAfgifte": "2025-05-23",
           "beschikteProducten": [
             {
               "product": {
@@ -755,14 +741,11 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-11",
-                "datumEindeGeldigheid": "2026-06-11",
+                "datumIngangGeldigheid": "2025-06-24",
+                "datumEindeGeldigheid": "2026-06-24",
                 "actueel": true,
                 "toewijzingen": [],
-                "betrokkenen": [
-                  "kind-1",
-                  "partner-2"
-                ]
+                "betrokkenen": ["kind-1", "partner-2"]
               }
             }
           ],
@@ -781,7 +764,7 @@
         "identificatie": "deel2-deel2-10.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-10",
+          "datumAfgifte": "2025-05-24",
           "beschikteProducten": [
             {
               "product": {
@@ -791,8 +774,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-11",
-                "datumEindeGeldigheid": "2026-06-11",
+                "datumIngangGeldigheid": "2025-06-25",
+                "datumEindeGeldigheid": "2026-06-25",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -814,7 +797,7 @@
         "identificatie": "deel2-deel2-10.2.1",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-10",
+          "datumAfgifte": "2025-05-25",
           "beschikteProducten": [
             {
               "product": {
@@ -824,8 +807,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-11",
-                "datumEindeGeldigheid": "2026-06-11",
+                "datumIngangGeldigheid": "2025-06-26",
+                "datumEindeGeldigheid": "2026-06-26",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []
@@ -847,7 +830,7 @@
         "identificatie": "deel2-deel2-10.2.2",
         "datumAanvraag": "2025-05-09",
         "beschikking": {
-          "datumAfgifte": "2025-05-10",
+          "datumAfgifte": "2025-05-26",
           "beschikteProducten": [
             {
               "product": {
@@ -857,8 +840,8 @@
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
-                "datumIngangGeldigheid": "2025-06-11",
-                "datumEindeGeldigheid": "2026-06-11",
+                "datumIngangGeldigheid": "2025-06-27",
+                "datumEindeGeldigheid": "2026-06-27",
                 "actueel": true,
                 "toewijzingen": [],
                 "betrokkenen": []

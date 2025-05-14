@@ -39,6 +39,7 @@ const displayPropsEerdereRegelingen = withOmitDisplayPropsForSmallScreens(
 );
 
 export const listPageParamKind = {
+  lopend: 'lopende-aanvragen',
   actual: 'huidige-regelingen',
   historic: 'eerdere-en-afgewezen-regelingen',
 } as const;
@@ -86,6 +87,7 @@ export const routeConfig = {
 } as const satisfies ThemaRoutesConfig;
 
 export const listPageTitle = {
+  [listPageParamKind.lopend]: 'Lopende aanvragen',
   [listPageParamKind.actual]: 'Huidige regelingen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
@@ -107,9 +109,22 @@ export const kindTegoedLinkListItem: LinkProps = {
 };
 
 export const tableConfig = {
+  [listPageParamKind.lopend]: {
+    title: listPageTitle[listPageParamKind.lopend],
+    filter: (regeling: HLIRegelingFrontend) =>
+      regeling.displayStatus === 'In behandeling',
+    sort: dateSort('dateDecision', 'desc'),
+    displayProps: displayPropsHuidigeRegelingen,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind: listPageParamKind.lopend,
+      page: null,
+    }),
+  },
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (regeling: HLIRegelingFrontend) => regeling.isActual,
+    filter: (regeling: HLIRegelingFrontend) =>
+      regeling.isActual && regeling.displayStatus !== 'In behandeling',
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,

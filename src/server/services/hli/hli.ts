@@ -6,7 +6,10 @@ import { HLIRegelingFrontend, HLIresponseData } from './hli-regelingen-types';
 import { hliStatusLineItemsConfig } from './hli-status-line-items';
 import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
-import { filterCombineRtmData } from './status-line-items/regeling-rtm';
+import {
+  filterCombineRtmData,
+  isRTMDeel1,
+} from './status-line-items/regeling-rtm';
 import {
   featureToggle,
   routeConfig,
@@ -44,6 +47,9 @@ function getDisplayStatus(
     // NOTE: Special status for PCVergoedingen.
     case isWorkshopNietGevolgd(aanvraag):
       return 'Afgewezen';
+
+    case isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen':
+      return 'In behandeling';
 
     case (aanvraag.isActueel || !hasEindeRecht) &&
       aanvraag.resultaat === 'toegewezen':

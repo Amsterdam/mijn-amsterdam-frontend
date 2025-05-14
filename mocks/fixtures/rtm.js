@@ -231,6 +231,8 @@ function createVoorziening(
   return voorziening;
 }
 
+let i = 1;
+
 config.forEach((scenarios, index) => {
   const scenarioID = `scenario ${index + 1}`;
   scenarios.forEach((scenario, index2) => {
@@ -241,7 +243,7 @@ config.forEach((scenarios, index) => {
     voorzieningen.push(
       createVoorziening(
         scenarioID,
-        `2025-05-${`${index + 1}`.padStart(2, '0')}`,
+        `2025-05-${`${i}`.padStart(2, '0')}`,
         'aanvrager',
         id,
         resultaat,
@@ -251,6 +253,8 @@ config.forEach((scenarios, index) => {
       )
     );
 
+    i++;
+
     if (deel === 'deel2') {
       relaties.forEach((relatie, index3) => {
         const { resultaat, relatie: rel, leeftijd } = relatie;
@@ -258,7 +262,7 @@ config.forEach((scenarios, index) => {
         voorzieningen.push(
           createVoorziening(
             scenarioID,
-            `2025-05-${`${index + 1}`.padStart(2, '0')}`,
+            `2025-05-${`${i}`.padStart(2, '0')}`,
             rel,
             id2,
             resultaat,
@@ -267,6 +271,7 @@ config.forEach((scenarios, index) => {
             []
           )
         );
+        i++;
       });
     }
   });

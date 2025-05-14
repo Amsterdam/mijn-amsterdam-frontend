@@ -2,7 +2,6 @@ import { BESLUIT, EINDE_RECHT, getBetrokkenDescription } from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
-  type ZorgnedPerson,
 } from '../../zorgned/zorgned-types';
 import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
 
@@ -12,24 +11,21 @@ export const AV_RTM_DEEL1 = 'AV-RTM1';
 export const AV_RTM_DEEL2 = 'AV-RTM';
 const avRtmRegelingen = [AV_RTM_DEEL1, AV_RTM_DEEL2];
 
-function isRTMDeel2(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
+export function isRTMDeel2(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
   return (
     !!aanvraag.productIdentificatie &&
     AV_RTM_DEEL2 === aanvraag.productIdentificatie
   );
 }
 
-function isRTMDeel1(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
+export function isRTMDeel1(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
   return (
     !!aanvraag.productIdentificatie &&
     AV_RTM_DEEL1 === aanvraag.productIdentificatie
-  );
-}
-
-function isRTMRegeling(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
-  return (
-    !!aanvraag.productIdentificatie &&
-    avRtmRegelingen.includes(aanvraag.productIdentificatie)
   );
 }
 
@@ -41,19 +37,20 @@ export function filterCombineRtmData(
 
   const aanvragenUpdated: ZorgnedHLIRegeling[] = aanvragen.map(
     (aanvraag, index, allAanvragen) => {
-      // Filter out R
       if (isRTMDeel2(aanvraag)) {
         // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
         // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
         // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
-        const regelingDeel1 = allAanvragen
-          .slice(index, allAanvragen.length - 1)
-          .find(
-            (aanvraag) =>
-              isRTMDeel1(aanvraag) &&
-              aanvraag.resultaat === 'toegewezen' &&
-              !aanvragenDeel1Combined.includes(aanvraag)
-          );
+        const precedingAanvragen = allAanvragen.slice(
+          index,
+          allAanvragen.length
+        );
+        const regelingDeel1 = precedingAanvragen.find(
+          (aanvraag) =>
+            isRTMDeel1(aanvraag) &&
+            aanvraag.resultaat === 'toegewezen' &&
+            !aanvragenDeel1Combined.includes(aanvraag)
+        );
 
         if (regelingDeel1) {
           aanvragenDeel1Combined.push(regelingDeel1);
@@ -62,6 +59,8 @@ export function filterCombineRtmData(
             datumInBehandeling: regelingDeel1?.datumBesluit,
             datumAanvraag:
               regelingDeel1?.datumAanvraag ?? aanvraag.datumAanvraag,
+            betrokkenen: [...regelingDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
+            documenten: [...aanvraag.documenten, ...regelingDeel1.documenten],
           };
         }
       }
@@ -76,81 +75,25 @@ export function filterCombineRtmData(
   return aanvragenWithoutRedundantDeel1;
 }
 
-type RTMRelatieType =
-  | 'aanvrager'
-  | 'aanvragerPartner'
-  | 'aanvragerKinderen'
-  | 'aanvragerPartnerKinderen';
-
-function determineRelatieType(persons: ZorgnedPerson[]): RTMRelatieType {
-  const hasPartner = persons.some((person) => person.isPartner);
-  const hasChildren = !!persons.length && !hasPartner;
-
-  if (hasPartner && hasChildren) {
-    return 'aanvragerPartnerKinderen';
-  } else if (hasPartner) {
-    return 'aanvragerPartner';
-  } else if (hasChildren) {
-    return 'aanvragerKinderen';
-  }
-
-  return 'aanvrager';
-}
-
-function getOntvangersText(
-  variant: 'ontvangers1' | 'ontvangers2' | 'ontvangers3',
-  relatieType:
-    | 'aanvrager'
-    | 'aanvragerPartner'
-    | 'aanvragerKinderen'
-    | 'aanvragerPartnerKinderen'
-): string {
-  const texts = {
-    ontvangers1: {
-      aanvrager: 'u',
-      aanvragerPartner: 'u en uw partner',
-      aanvragerKinderen: 'u en uw kind',
-      aanvragerPartnerKinderen: 'u en uw gezinsleden',
-    },
-    ontvangers2: {
-      aanvrager: '', // not shown
-      aanvragerPartner: 'partner',
-      aanvragerKinderen: 'kind',
-      aanvragerPartnerKinderen: 'gezinsleden',
-    },
-    ontvangers3: {
-      aanvrager: '', // not shown
-      aanvragerPartner: 'Heeft uw partner',
-      aanvragerKinderen: 'Heeft uw kind',
-      aanvragerPartnerKinderen: 'Heeft (een van) uw gezinsleden',
-    },
-  };
-
-  return texts[variant][relatieType] || '';
-}
-
 function getRtmDescriptionDeel1Toegewezen(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
-  const relatieType = determineRelatieType(aanvraag.betrokkenPersonen);
-  const ontvangers1 = getOntvangersText('ontvangers1', relatieType);
+  let description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
 
-  let description = `<p>Voordat ${ontvangers1} de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
-
-  const hasBetrokkenen = !!aanvraag.betrokkenPersonen.length;
+  const hasBetrokkenen = !!aanvraag.betrokkenen.length;
 
   if (hasBetrokkenen) {
-    const ontvangers2 = getOntvangersText('ontvangers2', relatieType);
-    const ontvangers3 = getOntvangersText('ontvangers3', relatieType);
-
     description += `
-    <p>De uitslag van de aanvraag voor ${ontvangers2} is te vinden met de DigiD login gegevens van uw ${ontvangers2}.</p>
-    <p>${ontvangers3} nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
+    <p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
+    <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
     `;
   }
 
   return description;
 }
+
+const INFO_LINK =
+  'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
 
 export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
   [
@@ -171,9 +114,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       description: '',
       isVisible(aanvraag) {
         return (
-          aanvraag.resultaat === 'toegewezen' &&
-          (isRTMDeel1(aanvraag) ||
-            (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag)) // dateInBehandeling is een property die wordt togevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
+          (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen') ||
+          (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag) // dateInBehandeling is een property die wordt togevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
         );
       },
       isActive: false,
@@ -191,9 +133,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       description: getRtmDescriptionDeel1Toegewezen,
       isVisible(aanvraag) {
         return (
-          aanvraag.resultaat === 'toegewezen' &&
-          (isRTMDeel1(aanvraag) ||
-            (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag)) // dateInBehandeling is een property die wordt togevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
+          (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen') ||
+          (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag) // dateInBehandeling is een property die wordt toegevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
         );
       },
       isActive(aanvraag) {
@@ -212,6 +153,28 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       ...BESLUIT,
       isVisible: isRTMDeel2,
     },
+    // Einde recht - voor RTM Deel 2. Voor de aanvrager.
+    {
+      ...EINDE_RECHT,
+      isVisible(regeling) {
+        return (
+          isRTMDeel2(regeling) &&
+          !!regeling.datumInBehandeling &&
+          regeling.resultaat === 'toegewezen'
+        );
+      },
+      description(regeling) {
+        return `
+        <p>
+          U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.
+          U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.
+        </p>
+        <p>
+          Als er wijzigingen zijn in uw situatie moet u die <a href="${INFO_LINK}">direct doorgeven</a>.
+        </p>`;
+      },
+    },
+    // Einde recht - voor RTM Deel 2. Voor de betrokkenen.
     {
       ...EINDE_RECHT,
       isVisible(regeling) {
@@ -219,6 +182,19 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           isRTMDeel2(regeling) &&
           regeling.resultaat === 'toegewezen' &&
           regeling.isActueel === false
+        );
+      },
+      description(regeling, today, allAanvragen) {
+        const baseDescription =
+          typeof EINDE_RECHT.description === 'function'
+            ? EINDE_RECHT.description(regeling, today, allAanvragen)
+            : EINDE_RECHT.description || '';
+        return (
+          baseDescription +
+          `<p>
+            Bent u net of binnekort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen. <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
+          </p>
+          `
         );
       },
     },

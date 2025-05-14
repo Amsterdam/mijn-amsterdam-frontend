@@ -102,7 +102,7 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraag
     description: (regeling) =>
       `<p>
       ${getEindeRechtDescription(regeling)}
-    </p>
+      </p>
     `,
   };
 
