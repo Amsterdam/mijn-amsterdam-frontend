@@ -212,8 +212,12 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     },
     {
       ...EINDE_RECHT,
-      isVisible(aanvraag) {
-        return isRTMDeel2(aanvraag) && aanvraag.resultaat === 'toegewezen';
+      isVisible(regeling) {
+        return (
+          isRTMDeel2(regeling) &&
+          regeling.resultaat === 'toegewezen' &&
+          regeling.isActueel === false
+        );
       },
     },
   ];
