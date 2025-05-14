@@ -157,7 +157,9 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     // Besluit - afgewezen - voor RTM Deel 1. Betrokkenen krijgen deze stap nooit te zien.
     {
       ...BESLUIT,
-      isActive: false,
+      isActive(aanvraag) {
+        return aanvraag.resultaat === 'afgewezen';
+      },
       isVisible(aanvraag) {
         return isRTMDeel1(aanvraag) && aanvraag.resultaat === 'afgewezen';
       },
