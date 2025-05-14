@@ -10,7 +10,7 @@ const config = [
       relaties: [],
     },
   ],
-  // scenario 1.b: fase 1 afgewezen
+  // scenario 2: fase 1 afgewezen
   [
     {
       identificatie: 'AV-RTM1',
@@ -18,7 +18,7 @@ const config = [
       relaties: [],
     },
   ],
-  // scenario 2: fase 1 toegewezen & fase 2 afgewezen
+  // scenario 3: fase 1 toegewezen & fase 2 afgewezen
   [
     {
       identificatie: 'AV-RTM1',
@@ -31,7 +31,7 @@ const config = [
       relaties: [],
     },
   ],
-  // scenario 3: fase 1 toegewezen & fase 2 toegewezen
+  // scenario 4: fase 1 toegewezen & fase 2 toegewezen
   [
     {
       identificatie: 'AV-RTM1',
@@ -44,7 +44,7 @@ const config = [
       relaties: [],
     },
   ],
-  //scenario 1: fase 1 toegewezen
+  //scenario 5: fase 1 toegewezen
   [
     {
       identificatie: 'AV-RTM1',
@@ -55,7 +55,7 @@ const config = [
       ],
     },
   ],
-  // scenario 2: fase 1 toegewezen & fase 2 afgewezen
+  // scenario 6: fase 1 toegewezen & fase 2 afgewezen
   [
     {
       identificatie: 'AV-RTM1',
@@ -74,7 +74,7 @@ const config = [
       ],
     },
   ],
-  // scenario 3: fase 1 toegewezen & fase 2 afgewezen aanvrager & toegewezen kind/ partner (of andere combi ivm teksten)
+  // scenario 7: fase 1 toegewezen & fase 2 afgewezen aanvrager & toegewezen kind/ partner (of andere combi ivm teksten)
   [
     {
       identificatie: 'AV-RTM1',
@@ -93,6 +93,7 @@ const config = [
       ],
     },
   ],
+  // scenario 8: fase 1 toegewezen & fase 2 toegwezen
   [
     {
       identificatie: 'AV-RTM1',
@@ -111,7 +112,7 @@ const config = [
       ],
     },
   ],
-  // scenario 4: fase 1 toegewezen & fase 2 toegewezen aanvrager & afgewezen partner
+  // scenario 9: fase 1 toegewezen & fase 2 toegewezen aanvrager & afgewezen partner
   [
     {
       identificatie: 'AV-RTM1',
@@ -124,7 +125,7 @@ const config = [
       relaties: [{ resultaat: 'afgewezen', relatie: 'partner' }],
     },
   ],
-  // scenario 5: fase 1 toegewezen & fase 2 toegewezen + kind dat 18 jaar wordt (einde recht)
+  // scenario 10: fase 1 toegewezen & fase 2 toegewezen + kind dat 18 jaar wordt (einde recht)
   [
     {
       identificatie: 'AV-RTM1',
@@ -182,6 +183,7 @@ const a = {
 const voorzieningen = [];
 
 function createVoorziening(
+  scenarioID,
   datumAfgifte,
   rel,
   id,
@@ -200,7 +202,7 @@ function createVoorziening(
 
   beschiktProduct.resultaat = resultaat;
   beschiktProduct.product.identificatie = identificatie;
-  beschiktProduct.product.omschrijving = `Tegemoetkoming meerkosten ${rel}${betrokkenen.length ? ` [+${betrokkenen.length}]` : ''} ${id} - ${resultaat}`;
+  beschiktProduct.product.omschrijving = `Tegemoetkoming meerkosten${betrokkenen.length ? ` [+${betrokkenen.length}]` : ''} ${scenarioID}:  ${rel}/${deel}/${resultaat}`;
   beschiktProduct.toegewezenProduct.actueel = resultaat === 'toegewezen';
 
   const datum = new Date(datumAfgifte);
@@ -230,6 +232,7 @@ function createVoorziening(
 }
 
 config.forEach((scenarios, index) => {
+  const scenarioID = `scenario ${index + 1}`;
   scenarios.forEach((scenario, index2) => {
     const { resultaat, relaties, identificatie } = scenario;
     const deel = identificatie === 'AV-RTM1' ? 'deel1' : 'deel2';
@@ -237,6 +240,7 @@ config.forEach((scenarios, index) => {
 
     voorzieningen.push(
       createVoorziening(
+        scenarioID,
         `2025-05-${`${index + 1}`.padStart(2, '0')}`,
         'aanvrager',
         id,
@@ -253,6 +257,7 @@ config.forEach((scenarios, index) => {
         const id2 = `${id}.${index3 + 1}`;
         voorzieningen.push(
           createVoorziening(
+            scenarioID,
             `2025-05-${`${index + 1}`.padStart(2, '0')}`,
             rel,
             id2,

@@ -1,7 +1,7 @@
 const { HttpStatusCode } = require('axios');
 
-// const ZORGNED_AV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-av-aanvragen.json');
-const ZORGNED_AV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-av-aanvragen-rtm.json');
+const ZORGNED_AV_AANVRAGEN_RESPONSE_RTM = require('../fixtures/zorgned-av-aanvragen-rtm.json');
+const ZORGNED_AV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-av-aanvragen.json');
 const ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE = require('../fixtures/zorgned-av-persoonsgegevensNAW.json');
 const ZORGNED_JZD_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-jzd-aanvragen.json');
 const ZORGNED_LLV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-leerlingenvervoer-aanvragen.json');
@@ -27,7 +27,15 @@ module.exports = [
             const apiUser = req.headers['x-cache-key-supplement'];
             switch (apiUser) {
               case 'AV': {
-                return res.send(ZORGNED_AV_AANVRAGEN_RESPONSE);
+                const aanvragen = {
+                  _embedded: {
+                    aanvraag: [
+                      ...ZORGNED_AV_AANVRAGEN_RESPONSE._embedded.aanvraag,
+                      ...ZORGNED_AV_AANVRAGEN_RESPONSE_RTM._embedded.aanvraag,
+                    ],
+                  },
+                };
+                return res.send(aanvragen);
               }
               case 'JZD': {
                 return res.send(ZORGNED_JZD_AANVRAGEN_RESPONSE);

@@ -11,7 +11,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel1-1.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 1:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -44,7 +44,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel1-2.1 - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 2:  aanvrager/deel1/afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -77,7 +77,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel1-3.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 3:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -110,7 +110,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel2-3.2 - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 3:  aanvrager/deel2/afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -143,7 +143,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel1-4.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 4:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -176,7 +176,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel2-4.2 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 4:  aanvrager/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -209,7 +209,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager [+2] deel1-5.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten [+2] scenario 5:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -245,7 +245,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager [+2] deel1-6.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten [+2] scenario 6:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -281,7 +281,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel2-6.2 - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 6:  aanvrager/deel2/afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -314,7 +314,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten kind deel2-6.2.1 - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 6:  kind/deel2/afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -347,7 +347,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten partner deel2-6.2.2 - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 6:  partner/deel2/afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -380,7 +380,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager [+2] deel1-7.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten [+2] scenario 7:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -416,7 +416,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel2-7.2 - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 7:  aanvrager/deel2/afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -449,7 +449,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten kind deel2-7.2.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 7:  kind/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -482,7 +482,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten partner deel2-7.2.2 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 7:  partner/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -515,7 +515,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager [+2] deel1-8.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten [+2] scenario 8:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -551,7 +551,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel2-8.2 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 8:  aanvrager/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -584,7 +584,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten kind deel2-8.2.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 8:  kind/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -617,7 +617,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten partner deel2-8.2.2 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 8:  partner/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -650,7 +650,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager [+1] deel1-9.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten [+1] scenario 9:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -685,7 +685,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel2-9.2 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 9:  aanvrager/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -718,7 +718,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten partner deel2-9.2.1 - afgewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 9:  partner/deel2/afgewezen"
               },
               "resultaat": "afgewezen",
               "toegewezenProduct": {
@@ -751,7 +751,7 @@
               "product": {
                 "identificatie": "AV-RTM1",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager [+2] deel1-10.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten [+2] scenario 10:  aanvrager/deel1/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -787,7 +787,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten aanvrager deel2-10.2 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 10:  aanvrager/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -820,7 +820,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten kind deel2-10.2.1 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 10:  kind/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {
@@ -853,7 +853,7 @@
               "product": {
                 "identificatie": "AV-RTM",
                 "productsoortCode": "AV-ALG",
-                "omschrijving": "Tegemoetkoming meerkosten partner deel2-10.2.2 - toegewezen"
+                "omschrijving": "Tegemoetkoming meerkosten scenario 10:  partner/deel2/toegewezen"
               },
               "resultaat": "toegewezen",
               "toegewezenProduct": {

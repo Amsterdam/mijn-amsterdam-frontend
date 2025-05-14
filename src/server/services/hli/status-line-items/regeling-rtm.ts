@@ -33,23 +33,9 @@ function isRTMRegeling(aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed) {
   );
 }
 
-function isToegwezenDeel1WithoutBetrokkenen(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return (
-    isRTMDeel1(aanvraag) &&
-    aanvraag.resultaat === 'toegewezen' &&
-    !aanvraag.betrokkenen.length
-  );
-}
-
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
 ): ZorgnedHLIRegeling[] {
-  const aanvragenDeel1ToegewezenNoBetrokkenen = aanvragen.filter(
-    isToegwezenDeel1WithoutBetrokkenen
-  );
-
   const aanvragenDeel1Combined: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
     [];
 
@@ -226,7 +212,9 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     },
     {
       ...EINDE_RECHT,
-      isVisible: isRTMDeel2,
+      isVisible(aanvraag) {
+        return isRTMDeel2(aanvraag) && aanvraag.resultaat === 'toegewezen';
+      },
     },
   ];
 
