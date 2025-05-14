@@ -1,6 +1,7 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 import { ServiceID, ServicesType } from '../../server/services/controller';
+import type { ZaakStatus } from '../../server/services/decos/decos-types';
 import { ApiResponse_DEPRECATED } from '../helpers/api';
 
 export type AppStateBase = {
@@ -75,7 +76,7 @@ export interface GenericDocument {
 
 export type AltDocumentContent = string | ReactNode;
 
-export interface StatusLineItem<T extends string = string> {
+export interface StatusLineItem<T extends ZaakStatus = string> {
   id: string;
   status: T;
   datePublished: string;
@@ -88,7 +89,7 @@ export interface StatusLineItem<T extends string = string> {
   actionButtonItems?: LinkProps[];
 }
 
-export interface ZaakDetail<T extends string = string> {
+export interface ZaakDetail<T extends ZaakStatus = string> {
   id: string;
   title: string;
   steps: StatusLineItem<T>[];

@@ -16,6 +16,7 @@ import {
 import { isRecentNotification } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { getStatusDate } from '../decos/decos-helpers';
 import type { DecosZaakBase } from '../decos/decos-types';
 
 function getNotificationBase<ID extends string>(
@@ -49,10 +50,20 @@ export function createNotificationDefault<
 ): MyNotification | null {
   const activeStep = zaak.steps.find((step) => step.isActive);
 
-  const isArchivedNotification = activeStep
-    ? ['Verlopen', 'Ingetrokken', 'Afgehandeld'].includes(activeStep.status) &&
-      !isRecentNotification(activeStep.datePublished, new Date())
-    : false;
+  let datePublished: string = activeStep?.datePublished ?? '';
+  let isArchivedNotification = false;
+
+  if (
+    activeStep &&
+    ['Verlopen', 'Ingetrokken', 'Afgehandeld'].includes(activeStep.status)
+  ) {
+    datePublished =
+      getStatusDate('Afgehandeld', zaak) ?? zaak.dateDecision ?? datePublished;
+
+    if (datePublished && !isRecentNotification(datePublished, new Date())) {
+      isArchivedNotification = true;
+    }
+  }
 
   if (!activeStep || isArchivedNotification) {
     return null;
@@ -73,27 +84,29 @@ export function createNotificationDefault<
     case 'Ontvangen':
       return {
         ...baseNotification,
-        datePublished: activeStep.datePublished,
+        datePublished,
         title: `Aanvraag ${zaak.title} ontvangen`,
         description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} ontvangen.`,
       };
     case 'In behandeling':
       return {
         ...baseNotification,
-        datePublished: activeStep.datePublished,
+        datePublished,
         title: `Aanvraag ${zaak.title} in behandeling`,
         description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} in behandeling genomen.`,
       };
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
-        datePublished: activeStep.datePublished,
+        datePublished,
         title: `Meer informatie omtrent uw aanvraag ${zaak.title}`,
         description: `Er is meer informatie nodig om uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} verder te kunnen behandelen.`,
       };
+    case 'Ingetrokken':
     case 'Afgehandeld': {
       // Verloopt binnenkort
       if (
+        activeStep.status !== 'Ingetrokken' &&
         'isExpired' in zaak &&
         zaak.dateStart &&
         zaak.dateEnd &&
@@ -113,7 +126,7 @@ export function createNotificationDefault<
       // Afgehandeld
       return {
         ...baseNotification,
-        datePublished: activeStep.datePublished,
+        datePublished,
         title: `Aanvraag ${zaak.title} afgehandeld`,
         description: `Wij hebben uw aanvraag ${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} afgehandeld.`,
       };
@@ -121,7 +134,7 @@ export function createNotificationDefault<
     case 'Verlopen':
       return {
         ...baseNotification,
-        datePublished: activeStep.datePublished,
+        datePublished,
         title: `${zaak.title} verlopen`,
         description: `Uw ${documentType}${zaak.title} met gemeentelijk zaaknummer ${zaak.identifier} is verlopen.`,
       };
