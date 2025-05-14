@@ -218,6 +218,7 @@ export type ZaakStatus =
   | 'In behandeling'
   | 'Afgehandeld'
   | 'Ingetrokken'
+  | 'Meer informatie nodig'
   | SomeOtherString;
 
 export type ZaakStatusDate = {
