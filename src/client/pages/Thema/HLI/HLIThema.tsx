@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
 
-import { featureToggle } from './HLI-thema-config';
+import { featureToggle, listPageParamKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
@@ -103,6 +103,10 @@ export function HLIThema() {
   } = useHliThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
+  const hasLopendeAanvragen = regelingen.some(
+    (regeling) => regeling.displayStatus === 'In behandeling'
+  );
+
   const pageContentTop = (
     <PageContentCell spanWide={8}>
       <Paragraph>
@@ -113,23 +117,27 @@ export function HLIThema() {
   );
 
   const regelingenTables = featureToggle.hliThemaRegelingenActive
-    ? entries(tableConfig).map(
-        ([
-          kind,
-          { title, displayProps, filter, sort, maxItems, listPageRoute },
-        ]) => {
-          return (
-            <ThemaPaginaTable<HLIRegelingFrontend>
-              key={kind}
-              title={title}
-              zaken={regelingen.filter(filter).sort(sort)}
-              listPageRoute={listPageRoute}
-              displayProps={displayProps}
-              maxItems={maxItems}
-            />
-          );
-        }
-      )
+    ? entries(tableConfig)
+        .filter(([kind]) => {
+          return kind === listPageParamKind.lopend ? hasLopendeAanvragen : true;
+        })
+        .map(
+          ([
+            kind,
+            { title, displayProps, filter, sort, maxItems, listPageRoute },
+          ]) => {
+            return (
+              <ThemaPaginaTable<HLIRegelingFrontend>
+                key={kind}
+                title={title}
+                zaken={regelingen.filter(filter).sort(sort)}
+                listPageRoute={listPageRoute}
+                displayProps={displayProps}
+                maxItems={maxItems}
+              />
+            );
+          }
+        )
     : [];
 
   return (
