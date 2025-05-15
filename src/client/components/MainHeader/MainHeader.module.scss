@@ -1,4 +1,8 @@
 .MainHeader {
+  --ams-page-header-padding-block: var(--ams-space-s);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    --ams-page-header-padding-block: var(--ams-space-m);
+  }
   position: relative;
   z-index: z-index(main-header);
   max-width: var(--ams-ma-max-screen-width-no-padding);
@@ -7,31 +11,35 @@
 }
 
 @media screen and (max-width: $ams-breakpoint-medium) {
-  :global(.ams-header > .ams-header__branding > .ams-header__logo-link) {
+  :global(
+    .ams-page-header > .ams-page-header__branding > .ams-page-header__logo-link
+  ) {
     width: 14px;
     overflow: hidden;
   }
 
   :global(
-    .ams-header
-      .ams-header__navigation
-      .ams-header__menu
-      .ams-header__mega-menu-button
-      .ams-header__mega-menu-button-label
+    .ams-page-header
+      .ams-page-header__navigation
+      .ams-page-header__menu
+      .ams-page-header__mega-menu-button
+      .ams-page-header__mega-menu-button-label
   ) {
     display: none;
   }
   :global(
-    .ams-header
-      .ams-header__navigation
-      .ams-header__menu
-      .ams-header__mega-menu-button
-      .ams-header__mega-menu-button-hidden-label
+    .ams-page-header
+      .ams-page-header__navigation
+      .ams-page-header__menu
+      .ams-page-header__mega-menu-button
+      .ams-page-header__mega-menu-button-hidden-label
   ) {
     display: none;
   }
 
-  :global(.ams-header .ams-header__navigation .ams-header__menu) {
+  :global(
+    .ams-page-header .ams-page-header__navigation .ams-page-header__menu
+  ) {
     position: absolute;
     right: var(--ams-space-l);
     top: 4px;
