@@ -1,5 +1,5 @@
 .App {
-  padding-bottom: 6rem;
+  padding-bottom: calc(var(--ams-space-xl) * 2);
 }
 .AppWide {
   --ams-screen-wide-max-inline-size: 100vw;
