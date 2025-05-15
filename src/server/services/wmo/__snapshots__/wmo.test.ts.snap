@@ -62,7 +62,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Als uw recht op reparatie-/verwijderopdracht   trapliften stopt, krijgt u hiervan bericht.</p>",
+          "description": "<p>Als uw recht op reparatie-/verwijderopdracht trapliften stopt, krijgt u hiervan bericht.</p>",
           "documents": [],
           "id": "status-step-6",
           "isActive": false,
@@ -218,7 +218,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> Uw recht op PGB: dagbesteding samenwerken stopt op 31 oktober 2025. p>      <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 31 oktober 2025 doen.</p>     <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
+          "description": "<p> Uw recht op PGB: dagbesteding samenwerken stopt op 31 oktober 2025. </p> <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 31 oktober 2025 doen.</p> <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -286,7 +286,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> Uw recht op PGB: dagbesteding meewerken (toegewezen) stopt op 01 augustus 2026. p>      <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 01 augustus 2026 doen.</p>     <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
+          "description": "<p> Uw recht op PGB: dagbesteding meewerken (toegewezen) stopt op 01 augustus 2026. </p> <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 01 augustus 2026 doen.</p> <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -354,7 +354,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> Uw recht op PGB: dagbesteding samenwerken stopt op 31 oktober 2024. p>      <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 31 oktober 2024 doen.</p>     <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
+          "description": "<p> Uw recht op PGB: dagbesteding samenwerken stopt op 31 oktober 2024. </p> <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 31 oktober 2024 doen.</p> <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -610,7 +610,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> Uw recht op aanvullende individuele ondersteuning stopt op 22 maart 2026. p>      <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 22 maart 2026 doen.</p>     <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
+          "description": "<p> Uw recht op aanvullende individuele ondersteuning stopt op 22 maart 2026. </p> <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 22 maart 2026 doen.</p> <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3495,7 +3495,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-12-04",
-          "description": "<p>U krijgt een antislipvloer/behandeling badkamer  (vóór 01-01-2022) per 13 november 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
+          "description": "<p>U krijgt een antislipvloer/behandeling badkamer (vóór 01-01-2022) per 13 november 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
           "documents": [],
           "id": "status-step-3",
           "isActive": false,
@@ -3525,7 +3525,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Als uw recht op antislipvloer/behandeling badkamer  (vóór 01-01-2022) stopt, krijgt u hiervan bericht.</p>",
+          "description": "<p>Als uw recht op antislipvloer/behandeling badkamer (vóór 01-01-2022) stopt, krijgt u hiervan bericht.</p>",
           "documents": [],
           "id": "status-step-6",
           "isActive": false,
@@ -3576,7 +3576,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-16",
-          "description": "<p>U krijgt dagbesteding  (vóór 01-01-2022) per 15 juni 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
+          "description": "<p>U krijgt dagbesteding (vóór 01-01-2022) per 15 juni 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
           "documents": [],
           "id": "status-step-3",
           "isActive": false,
@@ -3586,7 +3586,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-15",
-          "description": "<p>U krijgt nu dagbesteding  (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).</p>",
+          "description": "<p>U krijgt nu dagbesteding (vóór 01-01-2022) van Ons Tweede Thuis NA (vh Nieuw Amstelraede).</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3596,7 +3596,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-12-31",
-          "description": "<p>Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft ons laten weten dat u geen dagbesteding  (vóór 01-01-2022) meer krijgt.</p>",
+          "description": "<p>Ons Tweede Thuis NA (vh Nieuw Amstelraede) heeft ons laten weten dat u geen dagbesteding (vóór 01-01-2022) meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3606,7 +3606,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-12-31",
-          "description": "<p>Uw recht op dagbesteding  (vóór 01-01-2022) is beëindigd per 31 december 2020.</p>",
+          "description": "<p>Uw recht op dagbesteding (vóór 01-01-2022) is beëindigd per 31 december 2020.</p>",
           "documents": [],
           "id": "status-step-6",
           "isActive": true,
@@ -3738,7 +3738,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-12",
-          "description": "<p>U krijgt hulp bij het huishouden  (vóór 01-01-2022) per 09 maart 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
+          "description": "<p>U krijgt hulp bij het huishouden (vóór 01-01-2022) per 09 maart 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
           "documents": [],
           "id": "status-step-3",
           "isActive": false,
@@ -3748,7 +3748,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-03-09",
-          "description": "<p>U krijgt nu hulp bij het huishouden  (vóór 01-01-2022) van Emile Thuiszorg.</p>",
+          "description": "<p>U krijgt nu hulp bij het huishouden (vóór 01-01-2022) van Emile Thuiszorg.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3758,7 +3758,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-12-31",
-          "description": "<p>Emile Thuiszorg heeft ons laten weten dat u geen hulp bij het huishouden  (vóór 01-01-2022) meer krijgt.</p>",
+          "description": "<p>Emile Thuiszorg heeft ons laten weten dat u geen hulp bij het huishouden (vóór 01-01-2022) meer krijgt.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": false,
@@ -3768,7 +3768,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-12-31",
-          "description": "<p>Uw recht op hulp bij het huishouden  (vóór 01-01-2022) is beëindigd per 31 december 2020.</p>",
+          "description": "<p>Uw recht op hulp bij het huishouden (vóór 01-01-2022) is beëindigd per 31 december 2020.</p>",
           "documents": [],
           "id": "status-step-6",
           "isActive": true,
@@ -3819,7 +3819,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-18",
-          "description": "<p>U krijgt een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) per 10 juni 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
+          "description": "<p>U krijgt een douche-/toiletstoel zelfrijder (vóór 01-01-2022) per 10 juni 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
           "documents": [],
           "id": "status-step-3",
           "isActive": false,
@@ -3829,7 +3829,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-18T14:21:01",
-          "description": "<p>Wij hebben Medipoint gevraagd om een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) aan u te leveren.</p>",
+          "description": "<p>Wij hebben Medipoint gevraagd om een douche-/toiletstoel zelfrijder (vóór 01-01-2022) aan u te leveren.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -3839,7 +3839,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-09-10",
-          "description": "<p>Medipoint heeft ons laten weten dat een douche-/toiletstoel zelfrijder  (vóór 01-01-2022) bij u is afgeleverd.</p>",
+          "description": "<p>Medipoint heeft ons laten weten dat een douche-/toiletstoel zelfrijder (vóór 01-01-2022) bij u is afgeleverd.</p>",
           "documents": [],
           "id": "status-step-5",
           "isActive": true,
@@ -3849,7 +3849,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p>Als uw recht op douche-/toiletstoel zelfrijder  (vóór 01-01-2022) stopt, krijgt u hiervan bericht.</p>",
+          "description": "<p>Als uw recht op douche-/toiletstoel zelfrijder (vóór 01-01-2022) stopt, krijgt u hiervan bericht.</p>",
           "documents": [],
           "id": "status-step-6",
           "isActive": false,
@@ -3900,7 +3900,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-06-05",
-          "description": "<p>U krijgt een reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022) per 05 juni 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
+          "description": "<p>U krijgt een reparatie-/verwijderopdracht natte cel en toile (vóór 01-01-2022) per 05 juni 2020.</p> <p>In de brief leest u meer over dit besluit. De brief is per post naar u verstuurd.</p>",
           "documents": [],
           "id": "status-step-3",
           "isActive": false,
@@ -3920,7 +3920,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2020-08-05",
-          "description": "<p>Uw recht op reparatie-/verwijderopdracht natte cel en toile  (vóór 01-01-2022) is beëindigd per 05 augustus 2020.</p>",
+          "description": "<p>Uw recht op reparatie-/verwijderopdracht natte cel en toile (vóór 01-01-2022) is beëindigd per 05 augustus 2020.</p>",
           "documents": [],
           "id": "status-step-6",
           "isActive": true,

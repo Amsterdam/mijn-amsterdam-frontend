@@ -1,5 +1,5 @@
 import { TextPartContents } from './zorgned-types';
-import { htmlTextContent } from '../../helpers/text';
+import { sanitizeStringTemplate } from '../../helpers/text';
 
 export function parseLabelContent<T>(
   text: TextPartContents<T>,
@@ -11,7 +11,7 @@ export function parseLabelContent<T>(
 
   if (typeof rText === 'function') {
     const value = rText(aanvraag, today, allAanvragen);
-    return typeof value === 'string' ? htmlTextContent(value) : value;
+    return typeof value === 'string' ? sanitizeStringTemplate(value) : value;
   }
 
   return rText;
