@@ -58,7 +58,10 @@ export function Dashboard() {
           <Heading level={2} size="level-3" className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (
-              <MaRouterLink href={myNotificationsMenuItem.to}>
+              <MaRouterLink
+                className={styles.LinkToNotifications}
+                href={myNotificationsMenuItem.to}
+              >
                 Alle updates
               </MaRouterLink>
             )}

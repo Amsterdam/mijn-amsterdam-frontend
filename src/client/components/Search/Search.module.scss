@@ -14,7 +14,7 @@
   @include select(App_App) {
     display: none;
   }
-  @include select('ams-footer') {
+  @include select('ams-page-footer') {
     display: none;
   }
 }

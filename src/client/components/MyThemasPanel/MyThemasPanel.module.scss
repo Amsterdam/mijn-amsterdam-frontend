@@ -35,7 +35,10 @@
     align-items: center;
   }
 }
+.ThemaLinkIcon {
+  margin-right: calc(1rem * 0.5);
+}
 
 .LinkList {
-  --ams-unordered-list-gap: 10px;
+  --ams-unordered-list-gap: 1rem;
 }

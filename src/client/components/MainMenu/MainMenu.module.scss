@@ -1,6 +1,4 @@
 .MainMenu {
-  padding-bottom: var(--ams-space-xl);
-
   @media screen and (min-width: $ams-breakpoint-medium) {
     display: grid;
     column-gap: var(--ams-grid-column-gap);
@@ -14,6 +12,12 @@
 }
 
 .NavSection {
+  padding: var(--ams-space-xl) 0;
+  > div {
+    padding-top: var(--ams-space-l);
+    column-gap: var(--ams-space-xl);
+    column-width: 20rem;
+  }
   @media screen and (max-width: $ams-breakpoint-medium) {
     padding-bottom: var(--ams-space-xl);
   }
