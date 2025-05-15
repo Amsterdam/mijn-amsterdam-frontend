@@ -1,5 +1,5 @@
 .Steps {
-  --ams-grid-row-gap-l: 0;
+  --ams-grid-row-gap-xl: 0;
 }
 :global(.ams-ordered-list).StepsList {
   gap: 0;
@@ -123,12 +123,14 @@
   }
 }
 
-:global(.ams-icon).StatusIndicationCheckmark svg {
-  --ams-icon-size-6-font-size: 14px;
-  fill: white;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%) translateX(-50%);
+:global(.ams-icon).StatusIndicationCheckmark {
+  --ams-icon-heading-6-font-size: 14px;
+  svg {
+    fill: white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
 }
 
 .StepStatusDate {
