@@ -8,7 +8,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
-    <Paragraph className="ams-mb--sm">
+    <Paragraph className="ams-mb-m">
       Hieronder ziet u de status van uw aanvraag TONK. Als u meerdere aanvragen
       voor de TONK hebt gedaan, dan krijgt u 1 besluit als antwoord op al deze
       aanvragen. Het duurt maximaal 3 werkdagen voordat uw documenten over de

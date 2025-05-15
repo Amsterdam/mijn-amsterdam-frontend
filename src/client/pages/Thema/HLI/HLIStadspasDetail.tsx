@@ -191,7 +191,7 @@ export function HLIStadspasDetail() {
           </PageContentCell>
         )}
         <PageContentCell>
-          <Heading className="ams-mb--sm">Gekregen tegoed</Heading>
+          <Heading className="ams-mb-m">Gekregen tegoed</Heading>
           {isLoadingStadspas && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -207,7 +207,7 @@ export function HLIStadspasDetail() {
           )}
         </PageContentCell>
         <PageContentCell>
-          <Heading className="ams-mb--sm">Uw uitgaven</Heading>
+          <Heading className="ams-mb-m">Uw uitgaven</Heading>
           {(isLoadingTransacties || isLoadingStadspas) && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -294,7 +294,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
     <>
       {showError && (
         <Alert
-          className="ams-mb--sm"
+          className="ams-mb-m"
           heading="Fout bij het blokeren van de pas"
           severity="error"
         >
@@ -356,11 +356,11 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           </ActionGroup>
         }
       >
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           Blokkeer hier uw Stadspas. Dan kan niemand uw Stadspas gebruiken. Of
           het tegoed uitgeven dat erop staat.
         </Paragraph>
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           Let op: het blokkeren kan alleen worden teruggedraaid door te bellen
           met{' '}
           <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
@@ -426,7 +426,7 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
     <PageContentCell>
       {showError && (
         <Alert
-          className="ams-mb--sm"
+          className="ams-mb-m"
           heading="Fout bij het deblokkeren van de pas"
           severity="error"
         >

@@ -22,7 +22,7 @@
   display: block;
   position: relative;
   width: 100%;
-  color: var(--ams-color-primary-blue);
+  color: var(--ams-color-interactive);
   text-decoration: underline;
   cursor: pointer;
 
@@ -30,12 +30,12 @@
     display: block;
     background-color: var(
       --clampedGradientBgColor,
-      var(--ams-color-primary-white)
+      var(--ams-color-background)
     );
   }
 
   &:hover {
-    color: var(--ams-color-primary-red);
+    color: var(--ams-color-feedback-error);
   }
 
   &.isClamped {
@@ -43,7 +43,7 @@
       content: '';
       background: linear-gradient(
         to top,
-        var(--clampedGradientBgColor, var(--ams-color-primary-white)),
+        var(--clampedGradientBgColor, var(--ams-color-background)),
         rgba(255, 255, 255, 0)
       );
       display: block;

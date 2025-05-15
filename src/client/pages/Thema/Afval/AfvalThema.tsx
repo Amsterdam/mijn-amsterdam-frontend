@@ -235,14 +235,14 @@ export function AfvalThemaPagina() {
         <PageContentCell spanWide={8}>
           {profileType === 'private' && (
             <>
-              <Paragraph className="ams-mb--sm">
+              <Paragraph className="ams-mb-m">
                 Dit zijn de afvalregels voor uw adres.
               </Paragraph>
               {!!commercialLocation && !privateIsCommercial && (
                 <ErrorAlert
                   title="Bedrijfsafval informatie"
                   severity="info"
-                  className="ams-mb--sm"
+                  className="ams-mb-m"
                 >
                   Let op deze regels gaan over uw woonadres.
                   <br />
@@ -268,7 +268,7 @@ export function AfvalThemaPagina() {
           )}
           {profileType !== 'private' && (
             <>
-              <Paragraph className="ams-mb--md">
+              <Paragraph className="ams-mb-l">
                 De afvalregels hieronder gelden alleen als u maximaal 9
                 vuilniszakken afval per week heeft en reinigingsrecht betaalt.
                 Of als u ondernemer bent in de 9 straatjes of Sluisbuurt en
@@ -321,7 +321,7 @@ export function AfvalThemaPagina() {
                 label: 'Uw adres',
                 content: (
                   <>
-                    <Paragraph className="ams-mb--sm">
+                    <Paragraph className="ams-mb-m">
                       {MY_LOCATION.content?.[0]?.address ? (
                         getFullAddress(MY_LOCATION.content?.[0].address)
                       ) : isLoading(MY_LOCATION) ? (
@@ -332,7 +332,7 @@ export function AfvalThemaPagina() {
                     </Paragraph>
                     {/* NOTE: Edge case: Een (niet zakelijke) burger kan ingeschreven zijn op een pand zonder woonfunctie. */}
                     {heeftGeenWoonfunctie && profileType === 'private' && (
-                      <Paragraph className="ams-mb--sm">
+                      <Paragraph className="ams-mb-m">
                         <strong>Dit is geen woonadres.</strong> Klopt dit niet?{' '}
                         <Link
                           href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
@@ -356,7 +356,7 @@ export function AfvalThemaPagina() {
               <AfvalFractionPanels fractions={AFVAL.content} />
             )}
             <PageContentCell>
-              <Paragraph className="ams-mb--xl">
+              <Paragraph className="ams-mb-xl">
                 <MaButtonLink
                   className={styles.ContactLink}
                   href={links.AFVAL_MELDING_FORMULIER}
@@ -364,17 +364,17 @@ export function AfvalThemaPagina() {
                   Klopt de informatie niet? Geef het door
                 </MaButtonLink>
               </Paragraph>
-              <Heading level={3} className="ams-mb--sm">
+              <Heading level={3} className="ams-mb-m">
                 Afvalcontainers in de buurt
               </Heading>
-              <LinkList className="ams-mb--sm">
+              <LinkList className="ams-mb-m">
                 <LinkList.Link
                   href={`${buurtRouteConfig.themaPage.path}?datasetIds=["afvalcontainers"]&zoom=14`}
                 >
                   Kaart met containers in de buurt
                 </LinkList.Link>
               </LinkList>
-              <Heading level={3} className="ams-mb--sm">
+              <Heading level={3} className="ams-mb-m">
                 Adressen recyclepunten
               </Heading>
               <LinkList>

@@ -13,7 +13,7 @@ export function InkomenDetailTozo() {
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb--sm">
+      <Paragraph className="ams-mb-m">
         Hieronder ziet u de status van uw aanvraag voor de{' '}
         {zaak?.about || 'Tozo'}. Als u meerdere aanvragen voor de{' '}
         {zaak?.about || 'Tozo'} hebt gedaan, dan krijgt u 1 besluit als antwoord

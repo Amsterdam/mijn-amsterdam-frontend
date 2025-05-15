@@ -24,7 +24,7 @@ function PageContentTop({
 }) {
   return (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb--sm">
+      <Paragraph className="ams-mb-m">
         Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
         heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}
         <Link href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren">
@@ -117,7 +117,7 @@ export function AfisThema() {
   const pageContentSecondary = (
     <PageContentCell>
       <MaButtonRouterLink
-        className="ams-mb--sm"
+        className="ams-mb-m"
         variant="secondary"
         href={routeConfig.detailPage.path}
       >

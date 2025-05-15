@@ -69,7 +69,7 @@ function ProfilePrivateSectionPanels() {
       )}
       {isMokum(BRP.content) && (
         <PageContentCell>
-          <ParagaphSuppressed className="ams-mb--sm">
+          <ParagaphSuppressed className="ams-mb-m">
             Het is helaas niet mogelijk om de gegevens van een levenloos geboren
             kindje te tonen in Mijn Amsterdam. U kunt deze gegevens wel inzien
             in{' '}
@@ -114,14 +114,14 @@ export function MijnGegevensThema() {
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb--sm">
+      <Paragraph className="ams-mb-m">
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u
         vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw
         burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus
         dat deze gegevens kloppen.
       </Paragraph>
       {!isLoadingBrp && !isMokum(brpContent) && (
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen gegevens
           die de gemeente Amsterdam van u heeft.
         </Paragraph>

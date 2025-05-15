@@ -15,7 +15,6 @@ interface WijzigenLinkProps {
   dossierNummer?: string;
   email?: string;
   label?: string;
-  linkVariant?: 'inList';
   relatieCode?: string;
   subject?: string;
 }
@@ -27,7 +26,6 @@ export function WijzigenLink({
   label = 'Betaler aanpassen',
   email = 'debiteurenadministratie@amsterdam.nl',
   subject = 'Betaler wijzigen',
-  linkVariant,
 }: WijzigenLinkProps) {
   return (
     <Link
@@ -37,7 +35,6 @@ export function WijzigenLink({
         debiteurNummer
       )}`}
       rel="noopener noreferrer"
-      variant={linkVariant}
     >
       {label}
     </Link>

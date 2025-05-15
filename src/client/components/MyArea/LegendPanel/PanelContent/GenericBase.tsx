@@ -55,7 +55,7 @@ export default function GenericBase({
           className={classnames(
             styles.Title,
             isPhone && styles.IsPhone,
-            'ams-mb--sm'
+            'ams-mb-m'
           )}
         >
           {title}

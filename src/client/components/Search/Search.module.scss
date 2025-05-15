@@ -22,7 +22,7 @@
 .Results {
   position: absolute;
   width: 100%;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   margin-top: 0;
   border-top: 0;
   // transform: translateX(-1rem);
@@ -78,13 +78,13 @@
   &:hover {
     text-decoration: underline;
     svg {
-      fill: var(--ams-color-primary-red);
+      fill: var(--ams-color-feedback-error);
     }
   }
 }
 .ResultUrl {
   font-size: 0.8em;
-  color: var(--ams-color-neutral-grey3);
+  color: var(--ams-color-interactive-disabled);
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -106,7 +106,7 @@
   white-space: nowrap;
   margin-right: 0.5rem;
   &:not(:first-child) {
-    color: var(--ams-color-neutral-grey3);
+    color: var(--ams-color-interactive-disabled);
     font-weight: normal;
     margin-left: 0.4rem;
     font-size: 0.9em;
@@ -135,5 +135,5 @@
 
 .Input {
   width: 100%;
-  padding: 0 var(--ams-space-md);
+  padding: 0 var(--ams-space-m);
 }

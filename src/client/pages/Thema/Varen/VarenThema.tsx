@@ -130,7 +130,7 @@ export function VarenThema() {
               className={styles.VarenButton}
             >
               {title}
-              <Icon svg={ExternalLinkIcon} size="level-5" />
+              <Icon svg={ExternalLinkIcon} size="heading-5" />
             </MaButtonLink>
           ))}
         </ActionGroup>

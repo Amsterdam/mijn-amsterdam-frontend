@@ -59,7 +59,7 @@ function addIcon(type: string) {
   if (icons[type]) {
     return (
       <span className={styles.IconWithLabel}>
-        <Icon svg={icons[type]} size="level-5" /> {type}
+        <Icon svg={icons[type]} size="heading-5" /> {type}
       </span>
     );
   }

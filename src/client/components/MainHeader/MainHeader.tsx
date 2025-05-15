@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header, Icon } from '@amsterdam/design-system-react';
+import { PageHeader, Icon } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 
@@ -92,7 +92,7 @@ function MainHeaderLinks() {
             {!isPhoneScreen ? 'Zoeken' : ''}
             <Icon
               svg={isSearchActive ? CloseIcon : SearchIcon}
-              size="level-5"
+              size="heading-5"
             />
           </MaLink>
         </li>
@@ -157,7 +157,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
 
   return (
     <>
-      <Header
+      <PageHeader
         ref={ref}
         className={classNames(styles.MainHeader, AmsMainMenuClassname)}
         logoLink="https://www.amsterdam.nl/"
@@ -177,7 +177,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
         menuItems={<>{isAuthenticated && <MainHeaderLinks />}</>}
       >
         {isAuthenticated && <MainMenu />}
-      </Header>
+      </PageHeader>
       <MainHeaderMenuOverlay
         isMainMenuOpen={isMainMenuOpen}
         closeMenuAndSearch={closeMenuAndSearch}

@@ -39,7 +39,7 @@ export function MyNotification({
 
   return (
     <article>
-      <header className={!isCollapsed ? 'ams-mb--xs' : ''}>
+      <header className={!isCollapsed ? 'ams-mb-s' : ''}>
         {smallVariant ? (
           <MaLink
             aria-expanded={!isCollapsed}
@@ -80,17 +80,17 @@ export function MyNotification({
       {!isCollapsed && (
         <div className={styles.Body}>
           {notification.description && (
-            <Paragraph className="ams-mb--xs">
+            <Paragraph className="ams-mb-s">
               {notification.description.includes('<p') ? (
                 <InnerHtml el="span">{notification.description}</InnerHtml>
               ) : (
                 notification.description
               )}
-            </Paragraph>
+          </Paragraph>
           )}
           {(!!notification.link || !!notification.customLink) && (
             <>
-              <Paragraph className={hasTipReason ? 'ams-mb--xs' : ''}>
+              <Paragraph className={hasTipReason ? 'ams-mb-s' : ''}>
                 {notification.link?.download ? (
                   <DocumentLink
                     document={{

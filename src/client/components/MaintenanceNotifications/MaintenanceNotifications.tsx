@@ -35,7 +35,7 @@ export function MaintenanceNotifications({
             heading="Onderhoudsmelding"
             className={classNames(styles.MaintenanceNotification, className)}
           >
-            <InnerHtml className={classNames(styles.Description, 'ams-mb--sm')}>
+            <InnerHtml className={classNames(styles.Description, 'ams-mb-m')}>
               {notification.description}
             </InnerHtml>
 

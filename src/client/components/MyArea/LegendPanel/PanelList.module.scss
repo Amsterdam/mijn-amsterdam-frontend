@@ -1,6 +1,6 @@
 .PanelListItem {
   position: relative;
-  border-top: 0.1rem var(--ams-color-neutral-grey1) solid;
+  border-top: 0.1rem var(--ams-color-separator) solid;
   > ol > li > ol > li {
     border-top: 0;
   }

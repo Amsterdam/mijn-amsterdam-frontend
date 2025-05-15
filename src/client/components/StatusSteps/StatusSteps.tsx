@@ -92,7 +92,7 @@ export function Steps({ steps, title }: StepsProps) {
       {title && (
         <Heading
           size="level-2"
-          className={classNames(styles.StatusHeading, 'ams-mb--sm')}
+          className={classNames(styles.StatusHeading, 'ams-mb-m')}
         >
           {title}
         </Heading>
@@ -121,9 +121,7 @@ export function Steps({ steps, title }: StepsProps) {
               {item.description && (
                 <div>
                   <InnerHtml
-                    className={
-                      item.actionButtonItems?.length ? 'ams-mb--xs' : ''
-                    }
+                    className={item.actionButtonItems?.length ? 'ams-mb-s' : ''}
                   >
                     {item.description}
                   </InnerHtml>
@@ -132,7 +130,7 @@ export function Steps({ steps, title }: StepsProps) {
                       {item.actionButtonItems.map(({ to, title }) => (
                         <MaButtonLink key={to} href={to} variant="secondary">
                           {title}
-                          <Icon svg={ExternalLinkIcon} size="level-5" />
+                          <Icon svg={ExternalLinkIcon} size="heading-5" />
                         </MaButtonLink>
                       ))}
                     </ActionGroup>

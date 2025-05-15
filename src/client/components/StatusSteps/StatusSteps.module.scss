@@ -1,5 +1,5 @@
 .Steps {
-  --ams-grid-row-gap-md: 0;
+  --ams-grid-row-gap-l: 0;
 }
 :global(.ams-ordered-list).StepsList {
   gap: 0;
@@ -10,13 +10,13 @@
   }
 
   --status-circle-box-height: calc(var(--status-circle-box-width) / 2);
-  --status-circle-size: var(--ams-heading-level-5-font-size);
+  --status-circle-size: var(--ams-heading-5-font-size);
   --status-circle-size-active: calc(var(--status-circle-size) * 1.8);
   --status-circle-size-active-inner: calc(
     var(--status-circle-size-active) * 0.8
   );
-  --status-circle-color-dimmed: var(--ams-color-neutral-grey3);
-  --status-circle-color-checked: var(--ams-color-dark-green);
+  --status-circle-color-dimmed: var(--ams-color-interactive-disabled);
+  --status-circle-color-checked: var(--ams-color-highlight-green);
   --status-circle-color-active: var(--status-circle-color-checked);
 
   // padding-left: calc(
@@ -30,7 +30,7 @@
 
 .Step {
   position: relative;
-  padding-bottom: var(--ams-space-lg);
+  padding-bottom: var(--ams-space-l);
 
   p {
     margin: 0;
@@ -118,7 +118,7 @@
     }
     &:after {
       --status-circle-size: var(--status-circle-size-active-inner);
-      border: 4px solid var(--ams-color-primary-white);
+      border: 4px solid var(--ams-color-background);
     }
   }
 }

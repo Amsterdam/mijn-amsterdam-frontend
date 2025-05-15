@@ -1,6 +1,6 @@
 .DistanceToHome {
   font-size: 1.3rem;
-  color: var(--ams-color-neutral-grey3);
+  color: var(--ams-color-interactive-disabled);
   font-weight: normal;
   display: inline-block;
   margin-left: 0.5rem;
@@ -23,7 +23,7 @@
 }
 
 .AfvalFractionPanel {
-  background-color: var(--ams-color-neutral-grey1);
+  background-color: var(--ams-color-separator);
   margin-bottom: var(--ams-space-xl);
   padding: var(--ams-space-xl);
 
@@ -49,7 +49,7 @@
 
 .AfvalFractionPanelTitle {
   margin: 0;
-  // border-bottom: 0.1rem solid var(--ams-color-neutral-grey3);
+  // border-bottom: 0.1rem solid var(--ams-color-interactive-disabled);
   display: flex;
 }
 
@@ -60,14 +60,14 @@
 
 .AfvalFractionPanelOpmerking {
   border: 2px solid var(--ams-link-color);
-  padding: var(--ams-space-md);
-  margin-top: var(--ams-space-md) !important;
+  padding: var(--ams-space-m);
+  margin-top: var(--ams-space-m) !important;
 }
 
 .AfvalFractionPanelHighlight {
   border: 2px solid var(--ams-alert-warning-border-color);
-  padding: var(--ams-space-md);
-  margin-top: var(--ams-space-md) !important;
+  padding: var(--ams-space-m);
+  margin-top: var(--ams-space-m) !important;
 }
 
 .UnstyledList {

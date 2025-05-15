@@ -2,40 +2,40 @@
 
 $colors: (
   'grey': (
-    background-color: var(--ams-color-neutral-grey3),
+    background-color: var(--ams-color-interactive-disabled),
   ),
   'lightBlue': (
-    background-color: var(--ams-color-blue),
+    background-color: var(--ams-color-feedback-info),
   ),
   'yellow': (
-    background-color: var(--ams-color-yellow),
+    background-color: var(--ams-color-highlight-yellow),
   ),
   'valid': (
-    background-color: var(--ams-color-green),
+    background-color: var(--ams-color-highlight-green),
   ),
   'orange': (
-    background-color: var(--ams-color-orange),
+    background-color: var(--ams-color-highlight-orange),
   ),
   'purple': (
-    background-color: var(--ams-color-purple),
+    background-color: var(--ams-color-highlight-purple),
   ),
   'lightGreen': (
-    background-color: var(--ams-color-green),
+    background-color: var(--ams-color-highlight-lime),
   ),
   'pink': (
-    background-color: var(--ams-color-magenta),
+    background-color: var(--ams-color-highlight-magenta),
   ),
   'focus': (
-    background-color: var(--ams-color-yellow),
+    background-color: var(--ams-color-highlight-yellow),
   ),
   'black': (
-    background-color: var(--ams-color-primary-black),
+    background-color: var(--ams-color-text),
   ),
   'blue': (
-    background-color: var(--ams-color-primary-blue),
+    background-color: var(--ams-color-interactive),
   ),
   'bluePrimary': (
-    background-color: var(--ams-color-primary-blue),
+    background-color: var(--ams-color-interactive),
   ),
 );
 
@@ -56,7 +56,7 @@ $colors: (
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px var(--ams-color-primary-white) solid;
+  border: 2px var(--ams-color-background) solid;
   width: 32px;
   height: 32px;
   @include colorStyle('grey');

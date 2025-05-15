@@ -3,7 +3,7 @@
   z-index: z-index(main-header);
   max-width: var(--ams-ma-max-screen-width-no-padding);
   margin: 0 auto;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
 }
 
 @media screen and (max-width: $ams-breakpoint-medium) {
@@ -33,7 +33,7 @@
 
   :global(.ams-header .ams-header__navigation .ams-header__menu) {
     position: absolute;
-    right: var(--ams-space-lg);
+    right: var(--ams-space-l);
     top: 4px;
     column-gap: 0;
   }
@@ -55,7 +55,7 @@
   z-index: z-index(main-header-searchbar);
   left: 0;
   right: 0;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,13 +63,13 @@
 
 .SearchBar {
   width: 100%;
-  padding: var(--ams-space-lg) 0;
+  padding: var(--ams-space-l) 0;
 }
 
 :global(.ams-link).BrandNameLink {
   color: var(--ams-heading-color);
   font-weight: var(--ams-heading-font-weight);
-  font-size: var(--ams-heading-level-4-font-size);
+  font-size: var(--ams-heading-4-font-size);
   line-height: 1.35;
   text-decoration: none;
 }

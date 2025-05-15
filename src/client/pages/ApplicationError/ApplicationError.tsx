@@ -1,12 +1,12 @@
 import { ReactNode, useEffect } from 'react';
 
 import {
-  Footer,
+  PageFooter,
   Grid,
-  Header,
   Heading,
   Link,
-  Screen,
+  PageHeader,
+  Page,
   LinkList,
   Paragraph,
 } from '@amsterdam/design-system-react';
@@ -30,29 +30,29 @@ function ApplicationErrorContent({ error }: { error?: Error }) {
         <Heading level={1}>Kritieke applicatie fout</Heading>
       </PageContentCell>
       <PageContentCell>
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           Excuses, er gaat iets mis. Probeer om de pagina opnieuw te laden. Lukt
           het dan nog niet? Probeer het dan later nog eens.
         </Paragraph>
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           Gebruikt u Google Translate?
           <br />
           Deze browser extensie veroorzaakt soms problemen, mogelijk werkt de
           pagina beter wanneer u deze extensie niet gebruikt.
         </Paragraph>
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           Als het probleem zich blijft voordoen maak melding bij “Uw mening” aan
           de rechter zijkant van deze pagina.
         </Paragraph>
         {error && (
-          <Paragraph className="ams-mb--sm">
+          <Paragraph className="ams-mb-m">
             <strong>Fout:</strong> {error.toString()}
           </Paragraph>
         )}
         <Heading size="level-4" level={4}>
           Vragen over Mijn Amsterdam?
         </Heading>
-        <Paragraph className="ams-mb--xl">
+        <Paragraph className="ams-mb-xl">
           Kijk bij{' '}
           <Link
             href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
@@ -73,11 +73,11 @@ export function ApplicationError({
   useUsabilla();
   return (
     <>
-      <Screen>
+      <Page>
         <TextPageV2>
           <PageContentV2>
             <PageContentCell startWide={1} spanWide={12}>
-              <Header
+              <PageHeader
                 brandName={
                   (
                     <a
@@ -94,30 +94,30 @@ export function ApplicationError({
             <ApplicationErrorContent error={error} />
           </PageContentV2>
         </TextPageV2>
-      </Screen>
-      <Footer>
-        <Footer.Top>
-          <Grid gapVertical="large" paddingVertical="medium">
+      </Page>
+      <PageFooter>
+        <PageFooter.Spotlight>
+          <Grid gapVertical="large" paddingVertical="large">
             <Grid.Cell span="all">
-              <Heading level={3} inverseColor>
+              <Heading level={3} color="inverse">
                 Contact
               </Heading>
-              <Paragraph inverseColor className="ams-mb--sm">
+              <Paragraph color="inverse" className="ams-mb-m">
                 Hebt u een vraag en kunt u het antwoord niet vinden op deze
                 website? Neem dan contact met ons op.
               </Paragraph>
               <LinkList>
                 <LinkList.Link
-                  inverseColor
+                  color="inverse"
                   href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Contactformulier.aspx"
                 >
                   Contactformulier
                 </LinkList.Link>
                 <li>
-                  <Paragraph inverseColor>
+                  <Paragraph color="inverse">
                     <strong>
                       Bel het telefoonnummer{' '}
-                      <Link inverseColor href="tel:14020">
+                      <Link color="inverse" href="tel:14020">
                         14 020
                       </Link>
                     </strong>{' '}
@@ -125,7 +125,7 @@ export function ApplicationError({
                   </Paragraph>
                 </li>
                 <LinkList.Link
-                  inverseColor
+                  color="inverse"
                   href="https://www.amsterdam.nl/contact/"
                 >
                   Contactgegevens en openingstijden
@@ -133,13 +133,8 @@ export function ApplicationError({
               </LinkList>
             </Grid.Cell>
           </Grid>
-        </Footer.Top>
-        <Footer.Bottom>
-          <Grid paddingVertical="small">
-            <Grid.Cell span="all"></Grid.Cell>
-          </Grid>
-        </Footer.Bottom>
-      </Footer>
+        </PageFooter.Spotlight>
+      </PageFooter>
     </>
   );
 }

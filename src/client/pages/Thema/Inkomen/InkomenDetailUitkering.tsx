@@ -8,7 +8,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
-    <Paragraph className="ams-mb--sm">
+    <Paragraph className="ams-mb-m">
       Hieronder ziet u de status van uw aanvraag voor een bijstandsuitkering.
       Het duurt maximaal 3 werkdagen voordat uw documenten over de
       bijstandsuitkering in Mijn Amsterdam staan.

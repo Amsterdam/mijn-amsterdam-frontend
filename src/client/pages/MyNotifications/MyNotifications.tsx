@@ -60,7 +60,7 @@ export function MyNotificationsPage() {
         <PageHeadingV2>Actueel</PageHeadingV2>
         <PageContentCell>
           {isError(NOTIFICATIONS) && (
-            <ErrorAlert className="ams-mb--sm">
+            <ErrorAlert className="ams-mb-m">
               Niet alle updates kunnen op dit moment worden getoond.
             </ErrorAlert>
           )}
@@ -75,7 +75,7 @@ export function MyNotificationsPage() {
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className="ams-mb--sm"
+                    className="ams-mb-m"
                   >
                     <MyNotification
                       notification={notification}
