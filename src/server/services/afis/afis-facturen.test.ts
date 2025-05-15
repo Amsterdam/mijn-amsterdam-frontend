@@ -46,8 +46,8 @@ const SESSION_ID = '0987';
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
 
-function isQueryStringIncludedInUri(uri: string, str: string) {
-  return decodeURI(uri).includes(str.replace(/\s/g, '+'));
+function isQueryStringIncludedInUri(uri: string, queryString: string) {
+  return decodeURI(uri).includes(queryString.replace(/\s/g, '+'));
 }
 
 const ROUTES = {
