@@ -125,6 +125,24 @@ describe('vergunningen-notifications', () => {
           ],
           link: { to: '/test', title: 'Test' },
         },
+        {
+          id: '4',
+          title: 'Test case',
+          identifier: 'Z/111222/000',
+          steps: [
+            {
+              status: 'Afgehandeld',
+              datePublished: '2025-01-08',
+              isActive: false,
+            },
+            {
+              status: 'Ingetrokken',
+              datePublished: '',
+              isActive: true,
+            },
+          ],
+          link: { to: '/test', title: 'Test' },
+        },
       ] as unknown as VergunningFrontend[];
 
       const notifications = getVergunningNotifications(
@@ -164,6 +182,19 @@ describe('vergunningen-notifications', () => {
           description:
             'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/999/000 afgehandeld.',
           id: 'vergunning-3-notification',
+          link: {
+            title: 'Bekijk details',
+            to: '/test',
+          },
+          themaID: 'VERGUNNINGEN',
+          themaTitle: 'Vergunningen en ontheffingen',
+          title: 'Aanvraag Test case afgehandeld',
+        },
+        {
+          datePublished: '2025-01-08',
+          description:
+            'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/111222/000 afgehandeld.',
+          id: 'vergunning-4-notification',
           link: {
             title: 'Bekijk details',
             to: '/test',

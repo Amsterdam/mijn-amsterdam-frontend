@@ -83,6 +83,40 @@ describe('vergunningen-status-steps', () => {
         },
       ]);
     });
+
+    it('should return correct steps for non-RVVSloterweg case type, active step Agehandeld, with end date and time', () => {
+      const zaak = {
+        caseType: 'Other',
+        title: 'Vergunning',
+        dateRequest: '2023-01-01',
+        dateDecision: '2023-02-01',
+        dateEnd: '2023-02-02',
+        dateEndFormatted: '02 februari 2023',
+        timeEnd: '12:00',
+        decision: 'Verleend',
+        isVerleend: true,
+        processed: true,
+        isExpired: false,
+        statusDates: [],
+      } as unknown as DecosZaakBase;
+
+      const steps = getStatusSteps(zaak);
+      expect(steps).toMatchObject([
+        {},
+        {},
+        {},
+        {
+          datePublished: '',
+          description:
+            'Uw vergunning verloopt op 02 februari 2023 om 12.00 uur.',
+          id: 'step-4',
+          isActive: false,
+          isChecked: false,
+          status: 'Verlopen',
+        },
+      ]);
+    });
+
     it('should return correct steps for non-RVVSloterweg case type, active step In behandeling', () => {
       const zaak = {
         caseType: 'Other',
