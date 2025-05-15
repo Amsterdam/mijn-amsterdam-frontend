@@ -12,7 +12,6 @@ export function HorecaList() {
   const {
     vergunningen,
     tableConfig,
-    listPageRoute,
     isLoading,
     isError,
     breadcrumbs,
@@ -25,8 +24,7 @@ export function HorecaList() {
     <ListPagePaginated
       items={vergunningen.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
-      appRoute={listPageRoute}
-      appRouteParams={{ kind }}
+      appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}

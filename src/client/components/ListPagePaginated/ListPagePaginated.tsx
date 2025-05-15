@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 
 import { Paragraph } from '@amsterdam/design-system-react';
-import { generatePath, Params, useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import { LinkProps, ZaakDetail } from '../../../universal/types/App.types';
 import { usePageTypeSetting } from '../../hooks/useThemaMenuItems';
@@ -17,7 +17,6 @@ const DEFAULT_PAGE_SIZE = 20;
 interface ListPagePaginatedProps<T> {
   appRoute: string;
   breadcrumbs?: LinkProps[];
-  appRouteParams?: Record<string, string> | Readonly<Params<string>> | null;
   pageContentTop?: ReactNode;
   pageContentBottom?: ReactNode;
   displayProps: DisplayProps<T>;
@@ -35,7 +34,6 @@ interface ListPagePaginatedProps<T> {
 export function ListPagePaginated<T extends object = ZaakDetail>({
   appRoute,
   breadcrumbs,
-  appRouteParams = null,
   pageContentTop,
   pageContentBottom,
   displayProps,
@@ -50,8 +48,6 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   title,
 }: ListPagePaginatedProps<T>) {
   usePageTypeSetting('listpage');
-
-  const navigate = useNavigate();
 
   const { page = '1' } = useParams<{
     page?: string;
@@ -72,11 +68,6 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
   }, [currentPage, items, pageSize]);
 
   const total = totalCount ?? items.length;
-
-  // It's easy to pass a pre-generated path with the page param omitted so let's be kind and add it if it's missing.
-  const appRouteWithPageParam = !appRoute.includes(':page')
-    ? `${appRoute}/:page`
-    : appRoute;
 
   return (
     <OverviewPageV2>
@@ -103,6 +94,14 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
               {!isLoading && !itemsPaginated.length && !!noItemsText && (
                 <Paragraph>{noItemsText}</Paragraph>
               )}
+              {items.length > pageSize && (
+                <PaginationV2
+                  totalCount={total}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  path={appRoute}
+                />
+              )}
               {!isLoading && !!itemsPaginated.length && (
                 <TableV2<T>
                   items={itemsPaginated}
@@ -115,13 +114,7 @@ export function ListPagePaginated<T extends object = ZaakDetail>({
                   totalCount={total}
                   pageSize={pageSize}
                   currentPage={currentPage}
-                  onPageClick={(page: number) => {
-                    const path = generatePath(appRouteWithPageParam, {
-                      ...appRouteParams,
-                      page,
-                    });
-                    navigate(path);
-                  }}
+                  path={appRoute}
                 />
               )}
             </>

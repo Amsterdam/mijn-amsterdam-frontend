@@ -30,7 +30,6 @@ export function ZorgList() {
       items={voorzieningen.filter(filter)}
       title={title}
       appRoute={listPageRoute}
-      appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}

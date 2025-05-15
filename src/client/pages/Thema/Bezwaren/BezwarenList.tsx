@@ -24,8 +24,7 @@ export function BezwarenList() {
     <ListPagePaginated
       items={bezwaren.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
-      appRoute={routeConfig.listPage.path}
-      appRouteParams={{ kind }}
+      appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}

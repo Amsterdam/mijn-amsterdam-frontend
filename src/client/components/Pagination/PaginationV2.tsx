@@ -2,16 +2,16 @@ import { PropsWithChildren, useMemo } from 'react';
 
 import { Pagination } from '@amsterdam/design-system-react';
 import paginate from 'jw-paginate';
+import { useNavigate } from 'react-router';
 
 export interface PaginationPageButtonProps extends PropsWithChildren {
   page: number;
   currentPage: number;
-  onPageClick: PaginationProps['onPageClick'];
 }
 
 export interface PaginationProps {
   totalCount: number;
-  onPageClick: (page: number) => void;
+  path: string;
   pageSize: number;
   maxPages?: number;
   currentPage?: number;
@@ -24,7 +24,7 @@ export function PaginationV2({
   totalCount,
   pageSize,
   maxPages = MAX_PAGES,
-  onPageClick,
+  path,
   currentPage = 1,
   className,
 }: PaginationProps) {
@@ -32,12 +32,34 @@ export function PaginationV2({
     () => paginate(totalCount, currentPage, pageSize, maxPages),
     [currentPage, pageSize, totalCount, maxPages]
   );
+  const navigate = useNavigate();
 
   return (
     <Pagination
       className={className}
       maxVisiblePages={maxPages}
-      onPageChange={onPageClick}
+      linkComponent={function PaginationLink({ children, href, ...rest }) {
+        return (
+          <a
+            {...rest}
+            onClick={(event) => {
+              if (href) {
+                event.preventDefault();
+                navigate(href);
+              }
+            }}
+            href={href}
+          >
+            <span className="ams-visually-hidden">
+              Ga naar pagina {children}
+            </span>
+            <span aria-hidden="true">{children}</span>
+          </a>
+        );
+      }}
+      linkTemplate={function p(x) {
+        return `${path}/${x}`;
+      }}
       page={currentPage}
       totalPages={totalPages}
     />

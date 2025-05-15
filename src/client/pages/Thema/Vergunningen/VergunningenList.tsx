@@ -27,7 +27,6 @@ export function VergunningenList() {
       items={vergunningen.filter(filter).sort(sort)}
       title={title}
       appRoute={listPageRoute}
-      appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}

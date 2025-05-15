@@ -6,7 +6,7 @@ import {
   EmailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
-import { useParams } from 'react-router';
+import { generatePath, useParams } from 'react-router';
 
 import {
   contactmomentenDisplayProps,
@@ -93,5 +93,8 @@ export function useContactmomenten() {
     routeConfig,
     breadcrumbs,
     routeParams,
+    listPageRoute: generatePath(routeConfig.listPageContactmomenten.path, {
+      page: null,
+    }),
   };
 }

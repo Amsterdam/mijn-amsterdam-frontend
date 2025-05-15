@@ -12,7 +12,6 @@ export function InkomenList() {
   const {
     zaken,
     tableConfig,
-    listPageRoute,
     isLoadingWpi,
     isErrorWpi,
     breadcrumbs,
@@ -25,8 +24,7 @@ export function InkomenList() {
     <ListPagePaginated
       items={zaken.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
-      appRoute={listPageRoute}
-      appRouteParams={{ kind }}
+      appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoadingWpi}

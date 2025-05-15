@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import { OrderedList } from '@amsterdam/design-system-react';
-import { generatePath, useNavigate, useParams } from 'react-router';
+import { generatePath, useParams } from 'react-router';
 
 import { MY_NOTIFICATIONS_PAGE_DOCUMENT_TITLE } from './MyNotifications-config';
 import { MyNotificationsRoute } from './MyNotifications-routes';
@@ -30,7 +30,6 @@ export function MyNotificationsPage() {
   const { NOTIFICATIONS } = useAppStateGetter();
   const { notifications, total } = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
-  const navigate = useNavigate();
 
   const currentPage = useMemo(() => {
     if (!page) {
@@ -64,6 +63,15 @@ export function MyNotificationsPage() {
               Niet alle updates kunnen op dit moment worden getoond.
             </ErrorAlert>
           )}
+          {total > PAGE_SIZE && (
+            <PaginationV2
+              className="ams-mb-m"
+              totalCount={total}
+              pageSize={PAGE_SIZE}
+              path={generatePath(MyNotificationsRoute.route)}
+              currentPage={currentPage}
+            />
+          )}
           <OrderedList markers={false}>
             {isLoading(NOTIFICATIONS) && (
               <OrderedList.Item>
@@ -89,11 +97,12 @@ export function MyNotificationsPage() {
             <PaginationV2
               totalCount={total}
               pageSize={PAGE_SIZE}
-              onPageClick={(page) => {
-                navigate(
-                  generatePath(MyNotificationsRoute.route, { page: `${page}` })
-                );
-              }}
+              path={generatePath(MyNotificationsRoute.route)}
+              // onPageClick={(page) => {
+              //   navigate(
+              //     generatePath(MyNotificationsRoute.route, { page: `${page}` })
+              //   );
+              // }}
               currentPage={currentPage}
             />
           )}

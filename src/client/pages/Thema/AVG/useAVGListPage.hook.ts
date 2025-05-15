@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { generatePath, useParams } from 'react-router';
 
 import { ListPageParamKind, routeConfig } from './AVG-thema-config';
 import { useAVGData } from './useAVGData.hook';
@@ -23,7 +23,10 @@ export function useAVGListPageData() {
     isError,
     breadcrumbs,
     params,
-    listPageRoute: routeConfig.listPage.path,
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind,
+      page: null,
+    }),
     routeConfig,
   };
 }

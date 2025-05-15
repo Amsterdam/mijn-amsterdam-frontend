@@ -169,7 +169,6 @@ export function InkomenListSpecificaties() {
       isLoading={isLoading}
       appRoute={tableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
-      appRouteParams={params}
       pageContentTop={pageContentMain}
       displayProps={tableConfig.displayProps}
       noItemsText={noContentMessage}

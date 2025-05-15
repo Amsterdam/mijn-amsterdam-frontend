@@ -1,5 +1,9 @@
 .App {
-  padding-bottom: calc(var(--ams-space-xl) * 2);
+  --padding-bottom: calc(var(--ams-space-xl) * 2);
+  padding-bottom: var(--padding-bottom);
+  &:global(.ams-page) {
+    min-block-size: calc(100dvh - var(--padding-bottom));
+  }
 }
 .AppWide {
   --ams-screen-wide-max-inline-size: 100vw;

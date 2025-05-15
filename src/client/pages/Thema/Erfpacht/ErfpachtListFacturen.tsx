@@ -1,5 +1,5 @@
 import { Heading } from '@amsterdam/design-system-react';
-import { useParams } from 'react-router';
+import { generatePath, useParams } from 'react-router';
 
 import { themaId } from './Erfpacht-thema-config';
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
@@ -16,7 +16,7 @@ export function ErfpachtListFacturen() {
     useErfpachtThemaData();
   useHTMLDocumentTitle(routeConfig.listPageAlleFacturen);
 
-  const { dossierNummerUrlParam } = useParams<{
+  const { dossierNummerUrlParam = null } = useParams<{
     dossierNummerUrlParam: string;
   }>();
 
@@ -43,8 +43,10 @@ export function ErfpachtListFacturen() {
       }
       items={dossier?.facturen?.facturen ?? []}
       title={tableConfigFacturen?.title ?? 'Facturen'}
-      appRoute={tableConfigFacturen?.listPageRoute ?? ''}
-      appRouteParams={{ dossierNummerUrlParam }}
+      appRoute={generatePath(tableConfigFacturen?.listPageRoute ?? '', {
+        dossierNummerUrlParam,
+        page: null,
+      })}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading(dossierApiResponse)}

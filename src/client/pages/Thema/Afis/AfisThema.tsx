@@ -143,19 +143,12 @@ export function AfisThema() {
   const pageContentTables = entries(facturenTableConfig).map(
     ([
       state,
-      {
-        title,
-        subTitle,
-        displayProps,
-        maxItems,
-        listPageLinkLabel,
-        listPageRoute,
-      },
+      { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
     ]) => {
       const subTitleNode =
         state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
           ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
-          : subTitle;
+          : null;
       return (
         <ThemaPaginaTable<AfisFactuurFrontend>
           key={state}
