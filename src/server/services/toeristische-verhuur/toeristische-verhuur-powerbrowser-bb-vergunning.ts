@@ -38,7 +38,7 @@ import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { isExpired } from '../decos/decos-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
 
-// See also: https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/
+// See also: https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/
 const DATE_NEW_REGIME_BB_RULES = '2019-01-01';
 
 const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
