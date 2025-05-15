@@ -11,7 +11,7 @@
     "geboortenaam": "Alex",
     "voornamen": "Flex",
     "roepnaam": "Flexie",
-    "geboortedatum": "2010-06-12",
+    "geboortedatum": "2023-06-12",
     "burgerlijkestaat": {
       "code": "1",
       "omschrijving": "Ongehuwd en nooit gehuwd geweest"
@@ -20,7 +20,7 @@
       "code": "E",
       "omschrijving": "Geboortenaam"
     },
-    "partnernaam": null,
+    "partnernaam": "partner-2 - Flex",
     "partnervoorvoegsel": null,
     "persoontype": "P"
   },

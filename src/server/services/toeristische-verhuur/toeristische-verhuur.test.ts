@@ -231,6 +231,7 @@ describe('Toeristische verhuur service', () => {
       dateEndFormatted: '01 juli 2028',
       decision: 'Verleend',
       isVerleend: true,
+      isExpired: false,
       id: 'Z-23-2130506',
       identifier: 'Z/23/2130506',
       heeftOvergangsRecht: false,

@@ -22,9 +22,8 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
     isVisible: isOpdrachtGegevenVisible,
-    isChecked: (stepIndex, aanvraag, today) =>
-      isOpdrachtGegeven(aanvraag, today),
-    isActive: (stepIndex, aanvraag, today) =>
+    isChecked: (aanvraag, today) => isOpdrachtGegeven(aanvraag, today),
+    isActive: (aanvraag, today) =>
       aanvraag.isActueel &&
       isOpdrachtGegeven(aanvraag, today) &&
       !isDelivered(aanvraag, today),
@@ -37,10 +36,9 @@ export const WRA: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Aanpassing uitgevoerd',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
     isVisible: isDeliveryStepVisible,
-    isChecked: (stepIndex, aanvraag, today) =>
+    isChecked: (aanvraag, today) =>
       isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today),
-    isActive: (stepIndex, aanvraag, today) =>
-      isDeliveredStatusActive(aanvraag, today),
+    isActive: (aanvraag, today) => isDeliveredStatusActive(aanvraag, today),
     description: (aanvraag, today) =>
       isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today)
         ? `<p>${aanvraag.leverancier} heeft ons laten weten dat de aanpassing(en) aan uw woning klaar is/zijn.</p>`

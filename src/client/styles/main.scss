@@ -95,3 +95,32 @@ p a:not(.ams-button):not(.ams-link):not([role='button']) {
     text-underline-offset: var(--ams-link-hover-text-underline-offset);
   }
 }
+
+// In some parts of the application we have html that is set with innerHTML and isn't parsed by React.
+p a {
+  display: inline-block;
+  font-size: var(--ams-link-standalone-font-size);
+  line-height: var(--ams-link-standalone-line-height);
+  text-decoration-line: var(--ams-link-standalone-text-decoration-line);
+  text-decoration-thickness: var(
+    --ams-link-standalone-text-decoration-thickness
+  );
+  text-underline-offset: var(--ams-link-standalone-text-underline-offset);
+  color: var(--ams-link-color);
+  font-family: var(--ams-link-font-family);
+  font-weight: var(--ams-link-font-weight);
+  outline-offset: var(--ams-link-outline-offset);
+  text-rendering: optimizeLegibility;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  &:hover {
+    text-decoration-thickness: var(
+      --ams-link-standalone-hover-text-decoration-thickness
+    );
+    text-underline-offset: var(
+      --ams-link-standalone-hover-text-underline-offset
+    );
+    color: var(--ams-link-hover-color);
+  }
+}

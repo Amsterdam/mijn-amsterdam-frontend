@@ -36,7 +36,11 @@ export async function fetchZorgnedAVDocument(
   authProfileAndToken: AuthProfileAndToken,
   documentId: string
 ) {
-  const response = fetchDocument(authProfileAndToken, 'ZORGNED_AV', documentId);
+  const response = fetchDocument(
+    authProfileAndToken.profile.id,
+    'ZORGNED_AV',
+    documentId
+  );
   return response;
 }
 

@@ -61,7 +61,10 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import {
+  getRequestParamsFromQueryString,
+  requestData,
+} from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException, captureMessage } from '../monitoring';
@@ -133,9 +136,7 @@ async function fetchUserKeys(authProfileAndToken: AuthProfileAndToken) {
     formatUrl: (config) => {
       return `${config.url}/search/books`;
     },
-    params: Object.fromEntries(
-      new URLSearchParams('properties=false&select=key')
-    ),
+    params: getRequestParamsFromQueryString('properties=false&select=key'),
     transformResponse: (responseData) => {
       return responseData?.itemDataResultSet?.content ?? [];
     },
@@ -801,8 +802,8 @@ async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
     formatUrl: (config) => {
       return `${config.url}/items/${documentKey}/blob`;
     },
-    params: Object.fromEntries(
-      new URLSearchParams('select=bol10&filter=bol10 eq true')
+    params: getRequestParamsFromQueryString(
+      'select=bol10&filter=bol10 eq true'
     ),
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
@@ -877,10 +878,8 @@ export async function fetchDecosDocumentList(
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/documents`;
     },
-    params: Object.fromEntries(
-      new URLSearchParams(
-        `top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date&filter=text39 eq 'Definitief'`
-      )
+    params: getRequestParamsFromQueryString(
+      `top=50&select=subject1,sequence,mark,text39,text40,text41,itemtype_key,received_date&filter=text39 eq 'Definitief'`
     ),
   });
 
@@ -908,8 +907,8 @@ export async function fetchDecosZaakFromSource(
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}`;
     },
-    params: Object.fromEntries(
-      new URLSearchParams(includeProperties ? '?properties=true' : '')
+    params: getRequestParamsFromQueryString(
+      includeProperties ? '?properties=true' : ''
     ),
     transformResponse: (responseData: DecosZakenResponse) => {
       if (responseData.content) {

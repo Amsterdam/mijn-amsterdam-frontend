@@ -8,9 +8,12 @@ import { fetchZorgnedAanvragenHLI } from './hli-zorgned-service';
 import { fetchStadspas } from './stadspas';
 import {
   filterCombineRtmData,
-  heeftDeel2VanDeRegelingNietVoltooid,
+  isRTMDeel1,
 } from './status-line-items/regeling-rtm';
-import { routeConfig } from '../../../client/pages/Thema/HLI/HLI-thema-config';
+import {
+  featureToggle,
+  routeConfig,
+} from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   apiSuccessResult,
   getFailedDependencies,
@@ -31,7 +34,6 @@ import {
   filterCombineUpcPcvData,
   isWorkshopNietGevolgd,
 } from './status-line-items/regeling-pcvergoeding';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import { toDateFormatted } from '../../../universal/helpers/utils';
 
 function getDisplayStatus(
@@ -46,9 +48,8 @@ function getDisplayStatus(
     case isWorkshopNietGevolgd(aanvraag):
       return 'Afgewezen';
 
-    // NOTE: Special status for RTM regelingen.
-    case heeftDeel2VanDeRegelingNietVoltooid(aanvraag):
-      return 'Afgewezen';
+    case isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen':
+      return 'In behandeling';
 
     case (aanvraag.isActueel || !hasEindeRecht) &&
       aanvraag.resultaat === 'toegewezen':
@@ -160,14 +161,13 @@ async function transformRegelingenForFrontend(
   );
 
   for (const aanvraag of aanvragenWithDocumentsCombined) {
-    const statusLineItems =
-      getStatusLineItems<ZorgnedAanvraagWithRelatedPersonsTransformed>(
-        'HLI',
-        hliStatusLineItemsConfig,
-        aanvraag,
-        aanvragen,
-        today
-      );
+    const statusLineItems = getStatusLineItems(
+      'HLI',
+      hliStatusLineItemsConfig,
+      aanvraag,
+      aanvragen,
+      today
+    );
 
     if (!Array.isArray(statusLineItems) || !statusLineItems.length) {
       continue;
@@ -186,11 +186,14 @@ async function transformRegelingenForFrontend(
 }
 
 async function fetchRegelingen(authProfileAndToken: AuthProfileAndToken) {
-  if (!FeatureToggle.hliThemaRegelingenActive) {
+  if (!featureToggle.hliThemaRegelingenActive) {
     return apiSuccessResult([]);
   }
 
-  const aanvragenResponse = await fetchZorgnedAanvragenHLI(authProfileAndToken);
+  const aanvragenResponse = await fetchZorgnedAanvragenHLI(
+    authProfileAndToken.profile.id
+  );
+
   if (aanvragenResponse.status === 'OK') {
     const regelingen = await transformRegelingenForFrontend(
       authProfileAndToken,

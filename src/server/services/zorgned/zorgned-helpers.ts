@@ -1,4 +1,5 @@
 import { TextPartContents } from './zorgned-types';
+import { sanitizeStringTemplate } from '../../helpers/text';
 
 export function parseLabelContent<T>(
   text: TextPartContents<T>,
@@ -9,7 +10,8 @@ export function parseLabelContent<T>(
   const rText = text || '';
 
   if (typeof rText === 'function') {
-    return rText(aanvraag, today, allAanvragen);
+    const value = rText(aanvraag, today, allAanvragen);
+    return typeof value === 'string' ? sanitizeStringTemplate(value) : value;
   }
 
   return rText;

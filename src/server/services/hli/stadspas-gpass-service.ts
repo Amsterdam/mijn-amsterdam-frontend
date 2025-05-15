@@ -22,7 +22,7 @@ import {
   StadspasTransactionQueryParams,
   PasblokkadeByPasnummer,
 } from './stadspas-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
   ApiResponse_DEPRECATED,
   ApiResponse,
@@ -33,7 +33,6 @@ import {
 } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { displayAmount } from '../../../universal/helpers/text';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   cache,
@@ -41,6 +40,7 @@ import {
   requestData,
 } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
+import type { BSN } from '../zorgned/zorgned-types';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
   stadspassen: [],
@@ -230,11 +230,8 @@ function isCurrentPasYear(expiryDate: string): boolean {
   return isAfter(expiryDate, pasYearStart);
 }
 
-export async function fetchStadspassen(
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const administratienummerResponse =
-    await fetchAdministratienummer(authProfileAndToken);
+export async function fetchStadspassen(bsn: BSN) {
+  const administratienummerResponse = await fetchAdministratienummer(bsn);
 
   if (
     administratienummerResponse.status === 'OK' &&
@@ -392,7 +389,7 @@ async function mutateGpassTogglePass(
     formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
     headers: getHeaders(administratienummer),
     enableCache: false,
-    postponeFetch: !FeatureToggle.hliThemaStadspasBlokkerenActive,
+    postponeFetch: !featureToggle.hliThemaStadspasBlokkerenActive,
     transformResponse: transformTogglePassResponse,
   });
 

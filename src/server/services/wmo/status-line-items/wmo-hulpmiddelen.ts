@@ -24,9 +24,8 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Opdracht gegeven',
     datePublished: (aanvraag) => aanvraag.datumOpdrachtLevering ?? '',
     isVisible: isOpdrachtGegevenVisible,
-    isChecked: (stepIndex, aanvraag, today) =>
-      isOpdrachtGegeven(aanvraag, today),
-    isActive: (stepIndex, aanvraag, today) =>
+    isChecked: (aanvraag, today) => isOpdrachtGegeven(aanvraag, today),
+    isActive: (aanvraag, today) =>
       aanvraag.isActueel &&
       isOpdrachtGegeven(aanvraag, today) &&
       !isDelivered(aanvraag, today),
@@ -37,9 +36,9 @@ export const hulpmiddelen: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Product geleverd',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
     isVisible: isOpdrachtGegevenVisible,
-    isChecked: (stepIndex, aanvraag, today) =>
+    isChecked: (aanvraag, today) =>
       isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today),
-    isActive: (stepIndex, aanvraag, today: Date) =>
+    isActive: (aanvraag, today: Date) =>
       isDeliveredStatusActive(aanvraag, today),
     description: (aanvraag, today) =>
       isOpdrachtGegeven(aanvraag, today) && isDelivered(aanvraag, today)

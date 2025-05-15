@@ -11,7 +11,7 @@ import {
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { htmlTextContent } from '../../helpers/text';
+import { sanitizeStringTemplate } from '../../helpers/text';
 
 const facturenOpen: AfisFactuurStatus[] = [
   'openstaand',
@@ -38,7 +38,7 @@ export function createAfisFacturenNotification(
 
   const title = 'Betaal tijdig om extra kosten te voorkomen';
   const isMulti = openFacturenHerinneringCount > 1;
-  const description = htmlTextContent(`
+  const description = sanitizeStringTemplate(`
     U heeft ${openFacturenCount} openstaande facturen.
     ${openFacturenHerinneringCount ? `Van ${openFacturenHerinneringCount} ${isMulti ? 'facturen' : 'factuur'} heeft u inmiddels een herinnering ontvangen per e-mail of post.` : ''}
   `);

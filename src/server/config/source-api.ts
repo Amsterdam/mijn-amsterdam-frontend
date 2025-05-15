@@ -10,6 +10,7 @@ import {
 } from './app';
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
+import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
 import { featureToggle as featureToggleJeugd } from '../../client/pages/Thema/Jeugd/Jeugd-thema-config';
 import { FeatureToggle } from '../../universal/config/feature-toggles';
 import { PUBLIC_API_URLS } from '../../universal/config/url';
@@ -176,7 +177,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       cert: getCert('BFF_ZORGNED_AV_CERT'),
       key: getCert('BFF_ZORGNED_AV_KEY'),
     }),
-    postponeFetch: !FeatureToggle.hliThemaActive,
+    postponeFetch: !featureToggleHLI.zorgnedAvApiActive,
   },
   ZORGNED_LEERLINGENVERVOER: {
     method: 'post',

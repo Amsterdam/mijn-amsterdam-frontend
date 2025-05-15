@@ -1,19 +1,17 @@
-import { isSameDay, parseISO } from 'date-fns';
-
-import { getBetrokkenKinderen } from './generic';
-import { defaultDateFormat } from '../../../../universal/helpers/date';
+import { BESLUIT, EINDE_RECHT, getBetrokkenDescription } from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
 
 // Toets voorwaarden voor een afspraak GGD
 export const AV_RTM_DEEL1 = 'AV-RTM1';
-
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
+const avRtmRegelingen = [AV_RTM_DEEL1, AV_RTM_DEEL2];
 
-function isDeel2VanDeRegeling(
+export function isRTMDeel2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
@@ -22,7 +20,7 @@ function isDeel2VanDeRegeling(
   );
 }
 
-function isDeel1VanDeRegeling(
+export function isRTMDeel1(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
@@ -31,186 +29,178 @@ function isDeel1VanDeRegeling(
   );
 }
 
-// Zoek bijbehorende regelingDeel1
-function isRegelingDeel1GekoppeldAanDeel2(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  const aanvraagProductId = aanvraag.productIdentificatie;
-  let avCode;
-
-  if (aanvraagProductId === AV_RTM_DEEL2) {
-    avCode = AV_RTM_DEEL1;
-  }
-
-  return (
-    compareAanvraag.productIdentificatie === avCode &&
-    compareAanvraag.betrokkenen.some((id) =>
-      aanvraag.betrokkenen.includes(id)
-    ) &&
-    compareAanvraag.resultaat !== 'afgewezen'
-  );
-}
-
-function getRtmDecisionDate(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
-  today: Date,
-  allAanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-) {
-  if (isDeel2VanDeRegeling(aanvraag)) {
-    const regelingDeel1 = allAanvragen.find((compareAanvraag) =>
-      isRegelingDeel1GekoppeldAanDeel2(aanvraag, compareAanvraag)
-    );
-    return regelingDeel1?.datumBesluit ?? aanvraag.datumBesluit;
-  }
-  return aanvraag.datumBesluit;
-}
-
 export function filterCombineRtmData(
   aanvragen: ZorgnedAanvraagWithRelatedPersonsTransformed[]
-) {
-  const baseRegelingIdWithDeel2: string[] = [];
+): ZorgnedHLIRegeling[] {
+  const aanvragenDeel1Combined: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
+    [];
 
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
-    // Exclude baseRegelingen that have deel2
-    if (baseRegelingIdWithDeel2.includes(aanvraag.id)) {
-      return null;
-    }
+  const aanvragenUpdated: ZorgnedHLIRegeling[] = aanvragen.map(
+    (aanvraag, index, allAanvragen) => {
+      if (isRTMDeel2(aanvraag)) {
+        // Given the aanvragen are sorted by datumIngangGeldigheid/DESC we look for the first
+        // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
+        // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
+        const precedingAanvragen = allAanvragen.slice(
+          index,
+          allAanvragen.length
+        );
+        const regelingDeel1 = precedingAanvragen.find(
+          (aanvraag) =>
+            isRTMDeel1(aanvraag) &&
+            aanvraag.resultaat === 'toegewezen' &&
+            !aanvragenDeel1Combined.includes(aanvraag)
+        );
 
-    // Add AV_RTM_DEEL1 documenten to AV_RTM_DEEL2
-    if (isDeel2VanDeRegeling(aanvraag)) {
-      // Find first corresponding regelingDeel1
-      const regelingDeel1 = aanvragen.find((compareAanvraag) =>
-        isRegelingDeel1GekoppeldAanDeel2(aanvraag, compareAanvraag)
-      );
-
-      if (!regelingDeel1) {
-        return null;
-      }
-
-      baseRegelingIdWithDeel2.push(regelingDeel1.id);
-
-      const addedDocs = regelingDeel1?.documenten ?? [];
-
-      return {
-        ...aanvraag,
-        // Use Basis regeling to determine actualiteit en einde geldigheid.
-        // If deel2 is denied we treat regeling as "niet actueel"
-        isActueel:
-          aanvraag.resultaat === 'toegewezen'
-            ? (regelingDeel1?.isActueel ?? aanvraag.isActueel)
-            : false,
-        datumEindeGeldigheid: regelingDeel1?.datumEindeGeldigheid ?? null,
-        documenten: [...aanvraag.documenten, ...addedDocs],
-      };
-    }
-
-    return aanvraag;
-  });
-
-  return aanvragenWithDocumentsCombined.filter(
-    (aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed | null) =>
-      aanvraag !== null
-  );
-}
-
-export function heeftDeel2VanDeRegelingNietVoltooid(
-  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return (
-    isDeel1VanDeRegeling(regeling) &&
-    !isDeel2VanDeRegeling(regeling) &&
-    !!(
-      regeling.datumEindeGeldigheid &&
-      regeling.datumIngangGeldigheid &&
-      isSameDay(
-        parseISO(regeling.datumEindeGeldigheid),
-        parseISO(regeling.datumIngangGeldigheid)
-      )
-    ) &&
-    regeling.resultaat == 'toegewezen'
-  );
-}
-
-export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
-  [
-    {
-      status: 'Besluit',
-      datePublished: getRtmDecisionDate,
-      isChecked: (stepIndex, regeling) => true,
-      isActive: (stepIndex, regeling) =>
-        !isDeel2VanDeRegeling(regeling) && regeling.resultaat === 'afgewezen',
-      description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
-        return `<p>
-        ${
-          regeling.resultaat === 'toegewezen' || isDeel2VanDeRegeling(regeling)
-            ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
-            : `U krijgt geen ${regeling.titel} voor uw kind${betrokkenKinderen ? ` ${betrokkenKinderen}` : ''}.`
+        if (regelingDeel1) {
+          aanvragenDeel1Combined.push(regelingDeel1);
+          return {
+            ...aanvraag,
+            datumInBehandeling: regelingDeel1?.datumBesluit,
+            datumAanvraag:
+              regelingDeel1?.datumAanvraag ?? aanvraag.datumAanvraag,
+            betrokkenen: [...regelingDeel1.betrokkenen], // TODO: Will the RTM deel2 have betrokkenen?
+            documenten: [...aanvraag.documenten, ...regelingDeel1.documenten],
+          };
         }
-        </p>
-        <p>
-          ${regeling.resultaat === 'toegewezen' || isDeel2VanDeRegeling(regeling) ? '' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
-        </p>
-      `;
+      }
+      return aanvraag;
+    }
+  );
+
+  const aanvragenWithoutRedundantDeel1 = aanvragenUpdated.filter(
+    (aanvraag) => !aanvragenDeel1Combined.includes(aanvraag)
+  );
+
+  return aanvragenWithoutRedundantDeel1;
+}
+
+function getRtmDescriptionDeel1Toegewezen(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  let description = `<p>Voordat u de ${aanvraag.titel} krijgt, moet u een afspraak maken voor een medische keuring bij de GGD. In de brief staat hoe u dat doet.</p>`;
+
+  const hasBetrokkenen = !!aanvraag.betrokkenen.length;
+
+  if (hasBetrokkenen) {
+    description += `
+    <p><strong>Vraagt u de ${aanvraag.titel} (ook) voor andere gezinsleden aan?</strong><br/>De uitslag van de aanvraag is op Mijn Amsterdam te vinden met de DigiD login gegevens van uw gezinsleden.</p>
+    <p>Nog geen DigiD login gegevens? <a rel="noopener noreferrer" href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen">Ga naar DigiD aanvragen.</a></p>
+    `;
+  }
+
+  return description;
+}
+
+const INFO_LINK =
+  'https://www.amsterdam.nl/werk-en-inkomen/regelingen-bij-laag-inkomen-pak-je-kans/regelingen-alfabet/extra-geld-als-u-chronisch-ziek-of/';
+
+export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
+  [
+    // Besluit - afgewezen - voor RTM Deel 1. Betrokkenen krijgen deze stap nooit te zien.
+    {
+      ...BESLUIT,
+      isActive(aanvraag) {
+        return aanvraag.resultaat === 'afgewezen';
+      },
+      isVisible(aanvraag) {
+        return isRTMDeel1(aanvraag) && aanvraag.resultaat === 'afgewezen';
       },
     },
+    // Deel 1 is (deels) toegewezen. Alleen voor de aanvrager.
     {
-      status: 'Uitnodiging afspraak GGD',
-      isVisible: (stepIndex, regeling) =>
-        !isDeel2VanDeRegeling(regeling) &&
-        regeling.resultaat === 'toegewezen' &&
-        !heeftDeel2VanDeRegelingNietVoltooid(regeling),
-      datePublished: '',
-      isChecked: (stepIndex, regeling) => true,
-      isActive: (stepIndex, regeling) => true,
-      description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
+      status: 'Aanvraag',
+      isChecked: true,
+      description: '',
+      isVisible(aanvraag) {
+        return (
+          (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen') ||
+          (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag) // dateInBehandeling is een property die wordt togevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
+        );
+      },
+      isActive: false,
+      datePublished(regeling) {
+        return (
+          /** if Deel2 */ regeling.datumInBehandeling ||
+          /** if Deel1 */ regeling.datumBesluit
+        );
+      },
+    },
+    // In behandeling (in afwatching van uitslag GGD), alleen voor de aanvrager/ontvanger zónder betrokkenen.
+    {
+      status: 'In behandeling',
+      isChecked: true,
+      description: getRtmDescriptionDeel1Toegewezen,
+      isVisible(aanvraag) {
+        return (
+          (isRTMDeel1(aanvraag) && aanvraag.resultaat === 'toegewezen') ||
+          (isRTMDeel2(aanvraag) && 'datumInBehandeling' in aanvraag) // dateInBehandeling is een property die wordt toegevoegd aan de aanvraag indien een deel1 aanvraag is toegewezen voor de aanvrager.
+        );
+      },
+      isActive(aanvraag) {
+        return isRTMDeel1(aanvraag);
+      },
+      datePublished(regeling) {
+        return (
+          /** if Deel2 */ regeling.datumInBehandeling ||
+          /** if Deel1 */ regeling.datumBesluit
+        );
+      },
+    },
+    // Besluit - afgewezen/toegewezen - voor RTM Deel 2. Voor zowel de aanvrager als de betrokkenen.
+    // Betrokkkenen krijgen alléén deze stap (RTM Deel 2) te zien.
+    {
+      ...BESLUIT,
+      isVisible: isRTMDeel2,
+    },
+    // Einde recht - voor RTM Deel 2. Voor de aanvrager.
+    {
+      ...EINDE_RECHT,
+      isVisible(regeling) {
+        return (
+          isRTMDeel2(regeling) &&
+          !!regeling.datumInBehandeling &&
+          regeling.resultaat === 'toegewezen'
+        );
+      },
+      description(regeling) {
         return `
         <p>
-         Voordat uw kind ${betrokkenKinderen} de ${regeling.titel} krijgt, moet u een afspraak maken bij de GGD. In de brief staat hoe u dat doet.
-        </p>
-      `;
-      },
-    },
-    {
-      status: 'Afspraak GGD afgerond',
-      isVisible: (stepIndex, regeling) =>
-        isDeel2VanDeRegeling(regeling) && regeling.resultaat === 'toegewezen',
-      datePublished: (regeling) => regeling.datumBesluit,
-      isChecked: () => true,
-      isActive: () => true,
-      description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
-        return `<p>Uw kind ${betrokkenKinderen} krijgt ${regeling.titel}. Lees in de brief meer informatie over deze regeling.</p>
-        ${regeling.datumEindeGeldigheid ? `<p>U kunt per ${defaultDateFormat(regeling.datumEindeGeldigheid)} opnieuw ${regeling.titel} aanvragen.</p>` : ''}`;
-      },
-    },
-    {
-      status: 'Afspraak GGD niet gemaakt',
-      isVisible: (stepIndex, regeling) =>
-        heeftDeel2VanDeRegelingNietVoltooid(regeling),
-      datePublished: (regeling) => regeling.datumEindeGeldigheid ?? '',
-      isChecked: () => true,
-      isActive: () => true,
-      description: (regeling) => {
-        const betrokkenKinderen = getBetrokkenKinderen(regeling);
-        return `
-        <p>
-         Uw kind ${betrokkenKinderen} krijgt geen ${regeling.titel}. U heeft niet op tijd een afspraak bij de GGD gemaakt. U kunt een nieuwe aanvraag doen.
+          U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.
+          U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.
         </p>
         <p>
-          In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.
-        </p>
-      `;
+          Als er wijzigingen zijn in uw situatie moet u die <a href="${INFO_LINK}">direct doorgeven</a>.
+        </p>`;
+      },
+    },
+    // Einde recht - voor RTM Deel 2. Voor de betrokkenen.
+    {
+      ...EINDE_RECHT,
+      isVisible(regeling) {
+        return (
+          isRTMDeel2(regeling) &&
+          regeling.resultaat === 'toegewezen' &&
+          regeling.isActueel === false
+        );
+      },
+      description(regeling, today, allAanvragen) {
+        const baseDescription =
+          typeof EINDE_RECHT.description === 'function'
+            ? EINDE_RECHT.description(regeling, today, allAanvragen)
+            : EINDE_RECHT.description || '';
+        return (
+          baseDescription +
+          `<p>
+            Bent u net of binnekort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen. <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
+          </p>
+          `
+        );
       },
     },
   ];
 
 export const forTesting = {
-  getBetrokkenKinderen,
-  getRtmDecisionDate,
-  isRegelingDeel1GekoppeldAanDeel2,
-  isDeel2VanDeRegeling,
-  heeftDeel2VanDeRegelingNietVoltooid,
+  getBetrokkenDescription,
+  isRTMDeel2,
 };
