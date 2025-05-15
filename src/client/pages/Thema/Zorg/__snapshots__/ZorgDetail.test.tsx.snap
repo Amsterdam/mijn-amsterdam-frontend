@@ -56,7 +56,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (geleverd)
         </h3>
@@ -87,7 +87,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid _Steps_7a365b"
       >
         <h1
-          class="ams-heading ams-heading--level-2 _StatusHeading_7a365b ams-mb--sm"
+          class="ams-heading ams-heading--2 _StatusHeading_7a365b ams-mb-m"
         >
           Status
         </h1>
@@ -101,7 +101,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -109,7 +109,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -179,7 +179,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Huidige status"
@@ -207,7 +207,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Toekomstige status"
@@ -235,7 +235,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Toekomstige status"
@@ -322,7 +322,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (gestopt)
         </h3>
@@ -353,7 +353,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid _Steps_7a365b"
       >
         <h1
-          class="ams-heading ams-heading--level-2 _StatusHeading_7a365b ams-mb--sm"
+          class="ams-heading ams-heading--2 _StatusHeading_7a365b ams-mb-m"
         >
           Status
         </h1>
@@ -367,7 +367,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -375,7 +375,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -439,7 +439,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -447,7 +447,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -484,7 +484,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -492,7 +492,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -530,7 +530,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Huidige status"
@@ -620,7 +620,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (nog niet geleverd)
         </h3>
@@ -651,7 +651,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid _Steps_7a365b"
       >
         <h1
-          class="ams-heading ams-heading--level-2 _StatusHeading_7a365b ams-mb--sm"
+          class="ams-heading ams-heading--2 _StatusHeading_7a365b ams-mb-m"
         >
           Status
         </h1>
@@ -665,7 +665,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Huidige status"
@@ -726,7 +726,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Toekomstige status"
@@ -754,7 +754,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Toekomstige status"
@@ -782,7 +782,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Toekomstige status"
@@ -869,7 +869,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (tijdelijk gestopt)
         </h3>
@@ -900,7 +900,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
         class="ams-grid _Steps_7a365b"
       >
         <h1
-          class="ams-heading ams-heading--level-2 _StatusHeading_7a365b ams-mb--sm"
+          class="ams-heading ams-heading--2 _StatusHeading_7a365b ams-mb-m"
         >
           Status
         </h1>
@@ -914,7 +914,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -922,7 +922,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -992,7 +992,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -1000,7 +1000,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -1037,7 +1037,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Huidige status"
@@ -1065,7 +1065,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               class="ams-ordered-list__item _Step_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Toekomstige status"
@@ -1152,7 +1152,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Wmo item 1
         </h3>
@@ -1183,7 +1183,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
         class="ams-grid _Steps_7a365b"
       >
         <h1
-          class="ams-heading ams-heading--level-2 _StatusHeading_7a365b ams-mb--sm"
+          class="ams-heading ams-heading--2 _StatusHeading_7a365b ams-mb-m"
         >
           Status
         </h1>
@@ -1197,7 +1197,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
               class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Huidige status"

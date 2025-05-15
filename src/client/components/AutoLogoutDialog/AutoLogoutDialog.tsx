@@ -240,7 +240,7 @@ export function AutoLogoutDialog({
       }
     >
       <div className={styles.AutoLogoutDialogChildren}>
-        <Paragraph className={classnames(styles.TimerText, 'ams-mb--sm')}>
+        <Paragraph className={classnames(styles.TimerText, 'ams-mb-m')}>
           <CountDownTimer
             maxCount={maxCountInSeconds}
             onMaxCount={showLoginScreen}

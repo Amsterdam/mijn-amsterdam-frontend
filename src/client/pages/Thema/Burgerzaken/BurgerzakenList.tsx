@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { generatePath, useParams } from 'react-router';
 
 import {
   listPageParamKind,
@@ -27,8 +27,7 @@ export function BurgerzakenList() {
     <ListPagePaginated
       items={documents.sort(sort)}
       title={title}
-      appRoute={listPageRoute}
-      appRouteParams={params}
+      appRoute={generatePath(listPageRoute, { kind, page: null })}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}

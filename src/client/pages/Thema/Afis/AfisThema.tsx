@@ -24,7 +24,7 @@ function PageContentTop({
 }) {
   return (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb--sm">
+      <Paragraph className="ams-mb-m">
         Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of
         heeft u een vraag over één van uw facturen? Stuur een e-mail naar{' '}
         <Link href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren">
@@ -47,7 +47,7 @@ function PageContentTop({
 
 export function AfisDisclaimer() {
   return (
-    <Alert severity="warning" heading="Belangrijk om te weten">
+    <Alert severity="warning" heading="Belangrijk om te weten" headingLevel={4}>
       <UnorderedList markers={false}>
         <UnorderedList.Item>
           Het verwerken van uw betaling kan tot 4 werkdagen duren.
@@ -68,7 +68,7 @@ export function AfisDisclaimer() {
 
 export function AfisDisclaimerOvergedragenFacturen() {
   return (
-    <Alert heading="Belangrijk om te weten" severity="warning">
+    <Alert heading="Belangrijk om te weten" severity="warning" headingLevel={4}>
       <Paragraph>
         Als u niet betaalt, wordt uw factuur door Financiën overgedragen naar de
         afdeling Incasso & Invordering van directie Belastingen. Deze afdeling
@@ -117,7 +117,7 @@ export function AfisThema() {
   const pageContentSecondary = (
     <PageContentCell>
       <MaButtonRouterLink
-        className="ams-mb--sm"
+        className="ams-mb-m"
         variant="secondary"
         href={routeConfig.detailPage.path}
       >
@@ -143,19 +143,12 @@ export function AfisThema() {
   const pageContentTables = entries(facturenTableConfig).map(
     ([
       state,
-      {
-        title,
-        subTitle,
-        displayProps,
-        maxItems,
-        listPageLinkLabel,
-        listPageRoute,
-      },
+      { title, displayProps, maxItems, listPageLinkLabel, listPageRoute },
     ]) => {
       const subTitleNode =
         state === 'overgedragen' && !!facturenByState?.[state]?.facturen.length
           ? state === 'overgedragen' && <AfisDisclaimerOvergedragenFacturen />
-          : subTitle;
+          : null;
       return (
         <ThemaPaginaTable<AfisFactuurFrontend>
           key={state}

@@ -1,4 +1,4 @@
-import { Heading, MegaMenu } from '@amsterdam/design-system-react';
+import { Heading } from '@amsterdam/design-system-react';
 
 import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
@@ -14,59 +14,57 @@ export function MainMenu() {
   const isPhoneScreen = usePhoneScreen();
 
   return (
-    <>
-      <MegaMenu id={MAIN_MENU_ID} className={styles.MainMenu}>
-        <nav className={styles.NavSection}>
-          <Heading level={3} size="level-4">
-            Thema&apos;s
-          </Heading>
-          <MegaMenu.ListCategory>
-            {items.map((thema) => {
-              const LinkComponent = thema.to.startsWith('http')
-                ? MaLink
-                : MaRouterLink;
-              return (
-                <LinkComponent
-                  key={thema.id}
-                  href={thema.to}
-                  maVariant="fatNoDefaultUnderline"
-                  rel={thema.to.startsWith('http') ? 'noreferrer' : undefined}
-                  className={styles.MenuItem}
-                >
-                  {thema.title}
-                </LinkComponent>
-              );
-            })}
-          </MegaMenu.ListCategory>
-        </nav>
-        <nav className={styles.NavSection}>
-          <Heading level={3} size="level-4">
-            Categorieën
-          </Heading>
-          <MegaMenu.ListCategory>
-            {categoryMenuItems.map((item) => (
-              <MaRouterLink
-                key={item.id}
-                href={item.to}
-                maVariant="noDefaultUnderline"
+    <div id={MAIN_MENU_ID} className={styles.MainMenu}>
+      <nav className={styles.NavSection}>
+        <Heading level={3} size="level-4">
+          Thema&apos;s
+        </Heading>
+        <div>
+          {items.map((thema) => {
+            const LinkComponent = thema.to.startsWith('http')
+              ? MaLink
+              : MaRouterLink;
+            return (
+              <LinkComponent
+                key={thema.id}
+                href={thema.to}
+                maVariant="fatNoDefaultUnderline"
+                rel={thema.to.startsWith('http') ? 'noreferrer' : undefined}
                 className={styles.MenuItem}
               >
-                {item.title}
-              </MaRouterLink>
-            ))}
-          </MegaMenu.ListCategory>
+                {thema.title}
+              </LinkComponent>
+            );
+          })}
+        </div>
+      </nav>
+      <nav className={styles.NavSection}>
+        <Heading level={3} size="level-4">
+          Categorieën
+        </Heading>
+        <div>
+          {categoryMenuItems.map((item) => (
+            <MaRouterLink
+              key={item.id}
+              href={item.to}
+              maVariant="noDefaultUnderline"
+              className={styles.MenuItem}
+            >
+              {item.title}
+            </MaRouterLink>
+          ))}
+        </div>
+      </nav>
+      {isPhoneScreen && (
+        <nav>
+          <div>
+            <MainHeaderSecondaryLinks
+              wrapInListElement={false}
+              linkClassName={styles.MenuItem}
+            />
+          </div>
         </nav>
-        {isPhoneScreen && (
-          <nav>
-            <MegaMenu.ListCategory>
-              <MainHeaderSecondaryLinks
-                wrapInListElement={false}
-                linkClassName={styles.MenuItem}
-              />
-            </MegaMenu.ListCategory>
-          </nav>
-        )}
-      </MegaMenu>
-    </>
+      )}
+    </div>
   );
 }

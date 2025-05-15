@@ -1,10 +1,10 @@
 .Stadspas_owner {
   color: var(--ams-link-color);
-  font-size: var(--ams-text-level-3-font-size);
+  font-size: var(--ams-typography-heading-3-font-size);
   line-height: 1;
 
   @media screen and (min-width: $ams-breakpoint-medium) {
-    font-size: var(--ams-text-level-2-font-size);
+    font-size: var(--ams-typography-heading-2-font-size);
   }
 }
 
@@ -19,7 +19,7 @@
 }
 
 .Stadspas_secondaryInfo {
-  font-size: var(--ams-text-level-6-font-size) !important;
+  font-size: var(--ams-typography-heading-6-font-size) !important;
 }
 
 .Stadspassen {
@@ -32,8 +32,8 @@
   // Hack to align table cell content with other cells content
   &:before {
     content: '';
-    line-height: var(--ams-link-standalone-line-height);
-    font-size: var(--ams-text-level-2-font-size);
+    line-height: var(--ams-typography-heading-4-line-height);
+    font-size: var(--ams-typography-heading-2-font-size);
   }
 }
 

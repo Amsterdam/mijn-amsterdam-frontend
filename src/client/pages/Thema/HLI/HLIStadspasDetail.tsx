@@ -191,7 +191,7 @@ export function HLIStadspasDetail() {
           </PageContentCell>
         )}
         <PageContentCell>
-          <Heading className="ams-mb--sm">Gekregen tegoed</Heading>
+          <Heading className="ams-mb-m">Gekregen tegoed</Heading>
           {isLoadingStadspas && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -207,7 +207,7 @@ export function HLIStadspasDetail() {
           )}
         </PageContentCell>
         <PageContentCell>
-          <Heading className="ams-mb--sm">Uw uitgaven</Heading>
+          <Heading className="ams-mb-m">Uw uitgaven</Heading>
           {(isLoadingTransacties || isLoadingStadspas) && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -294,9 +294,10 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
     <>
       {showError && (
         <Alert
-          className="ams-mb--sm"
+          className="ams-mb-m"
           heading="Fout bij het blokeren van de pas"
           severity="error"
+          headingLevel={4}
         >
           Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
           <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
@@ -305,7 +306,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Alert>
       )}
       {isMutating ? (
-        <Alert severity="warning">
+        <Alert severity="warning" heading="Blokkeren" headingLevel={4}>
           <Paragraph>
             <Spinner /> <span>Bezig met het blokkeren van de pas...</span>
           </Paragraph>
@@ -356,11 +357,11 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           </ActionGroup>
         }
       >
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           Blokkeer hier uw Stadspas. Dan kan niemand uw Stadspas gebruiken. Of
           het tegoed uitgeven dat erop staat.
         </Paragraph>
-        <Paragraph className="ams-mb--sm">
+        <Paragraph className="ams-mb-m">
           Let op: het blokkeren kan alleen worden teruggedraaid door te bellen
           met{' '}
           <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
@@ -384,6 +385,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
 function PassBlockedAlert() {
   return (
     <Alert
+      headingLevel={4}
       heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
     >
@@ -426,15 +428,16 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
     <PageContentCell>
       {showError && (
         <Alert
-          className="ams-mb--sm"
+          className="ams-mb-m"
           heading="Fout bij het deblokkeren van de pas"
           severity="error"
+          headingLevel={4}
         >
           Probeer het nog eens.
         </Alert>
       )}
       {isMutating ? (
-        <Alert severity="warning">
+        <Alert heading="Deblokkeren" headingLevel={4} severity="warning">
           <Paragraph>
             <Spinner /> <span>Bezig met deblokkeren...</span>
           </Paragraph>

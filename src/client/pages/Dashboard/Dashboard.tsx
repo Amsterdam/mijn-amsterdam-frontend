@@ -55,10 +55,13 @@ export function Dashboard() {
       <PageContentV2>
         <WelcomeHeading />
         <PageContentCell spanWide={6}>
-          <Heading level={2} size="level-3" className="ams-mb--sm">
+          <Heading level={2} size="level-3" className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (
-              <MaRouterLink href={myNotificationsMenuItem.to}>
+              <MaRouterLink
+                className={styles.LinkToNotifications}
+                href={myNotificationsMenuItem.to}
+              >
                 Alle updates
               </MaRouterLink>
             )}
@@ -74,7 +77,7 @@ export function Dashboard() {
                 return (
                   <OrderedList.Item
                     key={`${notification.themaID}-${notification.id}-${index}`}
-                    className="ams-mb--sm"
+                    className="ams-mb-m"
                   >
                     <MyNotification
                       notification={notification}
@@ -86,7 +89,7 @@ export function Dashboard() {
           </OrderedList>
         </PageContentCell>
         <PageContentCell startWide={8} spanWide={5}>
-          <Heading level={2} size="level-3" className="ams-mb--sm">
+          <Heading level={2} size="level-3" className="ams-mb-m">
             Mijn thema&apos;s
           </Heading>
           <MyThemasPanel isLoading={isMyThemasLoading} items={myThemaItems} />

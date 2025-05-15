@@ -8,7 +8,7 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
-    <Paragraph className="ams-mb--sm">
+    <Paragraph className="ams-mb-m">
       Hieronder ziet u de status van uw aanvraag voor een uitkering of lening
       van het Bbz. Ook als u een IOAZ uitkering heeft aangevraagd ziet u de
       status hieronder. Als u meerdere aanvragen voor het Bbz hebt gedaan, dan
@@ -16,7 +16,7 @@ const pageContentTop = (
       maximaal 3 werkdagen voordat uw documenten over het Bbz in Mijn Amsterdam
       staan.
     </Paragraph>
-    <Paragraph className="ams-mb--sm">
+    <Paragraph className="ams-mb-m">
       Hebt u schuldhulp aangevraagd? Dan wordt daarover contact met u opgenomen.
     </Paragraph>
     <LinkList>

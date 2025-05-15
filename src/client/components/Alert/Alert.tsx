@@ -5,7 +5,7 @@ import { Alert as DSAlert, Paragraph } from '@amsterdam/design-system-react';
 export interface ComponentProps {
   children?: ReactNode;
   title?: string;
-  severity?: 'error' | 'warning' | 'info' | 'success';
+  severity?: 'error' | 'success' | 'warning';
   className?: string;
 }
 
@@ -16,7 +16,12 @@ export default function ErrorAlert({
   className,
 }: ComponentProps) {
   return (
-    <DSAlert heading={title} severity={severity} className={className}>
+    <DSAlert
+      headingLevel={4}
+      heading={title}
+      severity={severity}
+      className={className}
+    >
       <Paragraph>{children}</Paragraph>
     </DSAlert>
   );

@@ -2,7 +2,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   max-height: 100%;
   height: auto;
   z-index: 401;
@@ -83,14 +83,14 @@
     height: 0.9rem;
     width: 12rem;
     border-radius: 1.2rem;
-    background: var(--ams-color-primary-blue);
+    background: var(--ams-color-interactive);
   }
 }
 
 .PanelToggleDesktop {
   position: absolute;
   top: 0;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   z-index: 3;
 
   &[aria-expanded='false'] {
@@ -109,7 +109,7 @@
 }
 
 .CloseButton {
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   position: absolute;
   right: 1rem;
   top: 0;
@@ -119,7 +119,7 @@
 .LabelStyle {
   display: inline-flex;
   vertical-align: middle;
-  color: var(--ams-color-primary-black);
+  color: var(--ams-color-text);
   cursor: pointer;
   display: flex;
   align-items: center;

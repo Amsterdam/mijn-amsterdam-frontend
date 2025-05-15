@@ -34,7 +34,7 @@ export function NotFound() {
       <PageContentV2 id="skip-to-id-AppContent">
         <PageHeadingV2>404 - Pagina niet gevonden</PageHeadingV2>
         <PageContentCell>
-          <Paragraph className="ams-mb--xl">
+          <Paragraph className="ams-mb-xl">
             Helaas, de pagina waar u naar op zoek was bestaat niet (meer).
           </Paragraph>
         </PageContentCell>

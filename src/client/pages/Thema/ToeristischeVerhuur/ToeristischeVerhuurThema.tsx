@@ -110,9 +110,9 @@ export function ToeristischeVerhuurThema() {
         <>
           {(hasBothVerleend || (!hasRegistrations && hasPermits)) && (
             <PageContentCell>
-              <Alert severity="info" title="Voorwaarden en regels">
+              <Alert heading="Voorwaarden en regels" headingLevel={4}>
                 {hasBothVerleend && (
-                  <Paragraph className="ams-mb--sm">
+                  <Paragraph className="ams-mb-m">
                     U heeft een vergunning voor vakantieverhuur &eacute;n bed
                     &amp; breakfast. Het is niet toegestaan om op hetzelfde
                     adres zowel aan vakantieverhuur als bed &amp; breakfast te

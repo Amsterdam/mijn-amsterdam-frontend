@@ -1,21 +1,25 @@
 .MaRouterLink__no-underline-fat {
   --ams-link-font-weight: bold;
-  --ams-link-standalone-text-decoration-line: none;
+  text-decoration: none;
 }
 
 .MaRouterLink__no-default-underline:not(:hover) {
-  --ams-link-standalone-text-decoration-line: none;
+  text-decoration: none;
 }
 
 .MaRouterLink__no-underline {
-  --ams-link-standalone-text-decoration-line: none;
+  text-decoration: none;
 }
 
 .MaRouterLink__no-default-underline-fat {
   --ams-link-font-weight: bold;
   &:not(:hover) {
-    --ams-link-standalone-text-decoration-line: none;
+    text-decoration: none;
   }
+}
+
+.MaLink {
+  --ams-icon-heading-5-line-height: none;
 }
 
 .MaButtonLink {
@@ -27,8 +31,8 @@
     &,
     &:hover {
       background-color: transparent;
-      border: 2px solid var(--ams-color-neutral-grey3);
-      color: var(--ams-color-neutral-grey3);
+      border: 2px solid var(--ams-color-interactive-disabled);
+      color: var(--ams-color-interactive-disabled);
       box-shadow: none;
       pointer-events: none;
     }

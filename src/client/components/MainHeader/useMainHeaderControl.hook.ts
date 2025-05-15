@@ -17,7 +17,7 @@ export function useMainMenuOpen() {
 
 function getMainMenuControlButtonNode(parent: HTMLDivElement | null) {
   return parent?.querySelector(
-    '[aria-controls="ams-mega-menu"]'
+    '[aria-controls="ams-page-header-mega-menu"]'
   ) as HTMLButtonElement;
 }
 

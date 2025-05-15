@@ -18,7 +18,6 @@ export function KlachtenList() {
       items={klachten}
       title={tableConfig.title}
       appRoute={tableConfig.listPageRoute}
-      appRouteParams={{}}
       breadcrumbs={breadcrumbs}
       displayProps={tableConfig.displayProps}
       isLoading={isLoading}

@@ -33,7 +33,6 @@ export function VarenList() {
       isError={isError}
       appRoute={listPageRoute}
       breadcrumbs={breadcrumbs}
-      appRouteParams={{ kind, page }}
       displayProps={displayProps}
     />
   );

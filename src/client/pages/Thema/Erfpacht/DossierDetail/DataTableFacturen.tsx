@@ -44,7 +44,6 @@ export function DataTableFacturen({
           label: null,
           content: !isBetaler ? (
             <WijzigenLink
-              linkVariant="inList"
               debiteurNummer={dossier.facturen?.debiteurNummer}
               relatieCode={relatieCode}
               dossierNummer={dossierNummer}
@@ -62,7 +61,7 @@ export function DataTableFacturen({
       <Heading level={4} size="level-4">
         Factuur naar nieuw adres
       </Heading>
-      <Paragraph className="ams-mb--sm">
+      <Paragraph className="ams-mb-m">
         Wilt u uw facturen voor erfpacht en canon op een nieuw adres ontvangen?
         Stuur een e-mail naar{' '}
         <WijzigenLink
@@ -81,7 +80,7 @@ export function DataTableFacturen({
       <Heading level={4} size="level-4">
         Factuur via e-mail
       </Heading>
-      <Paragraph className="ams-mb--md">
+      <Paragraph className="ams-mb-l">
         U kunt uw facturen ook per e-mail krijgen. Mail hiervoor uw e-mailadres
         en debiteurennummer naar{' '}
         <WijzigenLink

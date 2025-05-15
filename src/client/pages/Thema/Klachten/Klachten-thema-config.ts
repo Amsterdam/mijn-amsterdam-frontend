@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router';
+
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
@@ -54,5 +56,5 @@ export const klachtenTableConfig = {
   title: 'Ingediende klachten',
   displayProps,
   maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
-  listPageRoute: routeConfig.listPage.path,
+  listPageRoute: generatePath(routeConfig.listPage.path, { page: null }),
 } as const;

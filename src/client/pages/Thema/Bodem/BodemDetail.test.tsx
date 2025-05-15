@@ -246,7 +246,7 @@ describe('LoodMeting', () => {
       const screen = render(<Component />);
 
       const errorMessage = screen.getByRole('heading', {
-        level: 2,
+        level: 4,
         name: 'Foutmelding',
       });
       expect(errorMessage).toBeInTheDocument();

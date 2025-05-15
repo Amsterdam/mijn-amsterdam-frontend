@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Paragraph, Screen, SkipLink } from '@amsterdam/design-system-react';
+import { Paragraph, Page, SkipLink } from '@amsterdam/design-system-react';
 import { PiwikProvider, usePiwik } from '@amsterdam/piwik-tracker-react';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router';
 import { RecoilRoot } from 'recoil';
@@ -57,9 +57,9 @@ function AppNotAuthenticated() {
   return (
     <>
       <MainHeader isAuthenticated={false} />
-      <Screen className={styles.App}>
+      <Page className={styles.App}>
         <PublicRoutes />
-      </Screen>
+      </Page>
       <MainFooter />
     </>
   );
@@ -92,9 +92,9 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated />
       <ErrorMessages />
       {isHeroVisible && <MainHeaderHero />}
-      <Screen className={!isBuurt ? styles.App : styles.AppWide}>
+      <Page className={!isBuurt ? styles.App : styles.AppWide}>
         <PrivateRoutes />
-      </Screen>
+      </Page>
       {/** Remove the footer on the Map view for better UX */}
       {!isBuurt && <MainFooter isAuthenticated />}
     </>

@@ -67,7 +67,7 @@ export function ResultSet({
   return (
     <div className={styles.ResultSet}>
       {!!title && (
-        <Heading size="level-3" level={3} className="ams-mb--sm">
+        <Heading size="level-3" level={3} className="ams-mb-m">
           {title}
         </Heading>
       )}

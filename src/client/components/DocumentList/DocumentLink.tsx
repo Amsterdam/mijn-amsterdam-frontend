@@ -142,7 +142,7 @@ export function DocumentLink({
           {!isLoading && (
             <Icon
               svg={isErrorVisible ? AlertIcon : DownloadIcon}
-              size="level-5"
+              size="heading-5"
             />
           )}
         </span>

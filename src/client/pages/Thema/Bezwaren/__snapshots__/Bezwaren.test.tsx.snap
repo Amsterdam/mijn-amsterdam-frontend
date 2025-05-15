@@ -46,7 +46,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaren
         </h3>
@@ -74,7 +74,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             rel="noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -100,10 +100,10 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         class="ams-alert ams-alert--error"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-alert__severity-indicator"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--inverse ams-icon--heading-4"
           >
             <svg
               aria-hidden="true"
@@ -123,11 +123,15 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--level-4"
+          <div
+            class="ams-row ams-row--align-between ams-row--align-vertical-start"
           >
-            Foutmelding
-          </h2>
+            <h4
+              class="ams-heading ams-heading--4"
+            >
+              Foutmelding
+            </h4>
+          </div>
           <p
             class="ams-paragraph"
           >
@@ -186,7 +190,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaren
         </h3>
@@ -214,7 +218,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             rel="noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -237,7 +241,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Lopende bezwaren
       </h3>
@@ -262,7 +266,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Afgehandelde bezwaren
       </h3>
@@ -333,7 +337,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaren
         </h3>
@@ -361,7 +365,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             rel="noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -384,7 +388,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Lopende bezwaren
       </h3>
@@ -427,7 +431,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                 class="ams-table__cell"
               >
                 <a
-                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
                   href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
                   title="Bekijk meer over BI.21.014121.001"
                 >
@@ -451,7 +455,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Afgehandelde bezwaren
       </h3>

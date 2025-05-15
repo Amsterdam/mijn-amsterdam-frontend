@@ -46,7 +46,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Zorg en ondersteuning
         </h3>
@@ -56,7 +56,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
-        class="ams-paragraph ams-mb--sm"
+        class="ams-paragraph ams-mb-m"
       >
         Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke ondersteuning (Wmo).
       </p>
@@ -67,7 +67,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
         <br />
         Bel dan gratis de Wmo Helpdesk: 
         <a
-          class="ams-link ams-link--inline"
+          class="ams-link"
           href="tel:08000643"
           rel="noreferrer"
         >
@@ -89,7 +89,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
             rel="noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -112,7 +112,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Huidige voorzieningen
       </h3>
@@ -155,7 +155,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
                 class="ams-table__cell"
               >
                 <a
-                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
                   href="http://example.org/ding"
                   title="Bekijk meer over Wmo item 1"
                 >
@@ -181,7 +181,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Eerdere en afgewezen voorzieningen
       </h3>
@@ -210,7 +210,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
       >
         U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van daarvoor? Bel dan de Wmo Helpdesk: 
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link"
           href="tel:08000643"
           rel="noreferrer"
         >

@@ -12,7 +12,6 @@ export function AVGList() {
     title,
     breadcrumbs,
     displayProps,
-    params,
     listPageRoute,
     routeConfig,
   } = useAVGListPageData();
@@ -23,7 +22,6 @@ export function AVGList() {
       items={avgVerzoeken.filter(filter).sort(sort)}
       title={title}
       appRoute={listPageRoute}
-      appRouteParams={params}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}
