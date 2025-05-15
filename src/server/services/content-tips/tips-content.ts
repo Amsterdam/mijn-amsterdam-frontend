@@ -289,7 +289,7 @@ export const tips: ContentTipSource[] = [
       'U ziet deze tip omdat u een B&B vergunning aangevraagd heeft voor 2019',
     link: {
       title: 'Lees hier de voorwaarde',
-      to: 'https://www.amsterdam.nl/wonen-leefomgeving/wonen/bedandbreakfast/oude-regels/',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/oude-regels-bed-breakfast/',
     },
   },
   {
@@ -308,7 +308,7 @@ export const tips: ContentTipSource[] = [
     reason: 'U ziet deze tip omdat u een Vergunning bed & breakfast hebt',
     link: {
       title: 'U leest hier wat de voorwaarden zijn',
-      to: 'https://www.amsterdam.nl/bedandbreakfast ',
+      to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/woonruimte-verhuren/vergunning-aanvragen-bed-breakfast/',
     },
   },
   {
@@ -348,7 +348,7 @@ export const tips: ContentTipSource[] = [
       'U ziet deze tip omdat u kinderen heeft in de leeftijd van 4 t/m 11 en woonachtig bent in Amsterdam.',
     link: {
       title: 'Hoe vraag je het aan?',
-      to: 'https://www.amsterdam.nl/nieuws/nieuwsoverzicht/gratis-ov-kinderen/',
+      to: 'https://www.amsterdam.nl/verkeer-vervoer/kinderen-gratis-openbaar-vervoer/',
     },
   },
 

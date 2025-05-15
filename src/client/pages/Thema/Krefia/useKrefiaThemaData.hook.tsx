@@ -16,7 +16,7 @@ const kredietBankLink: LinkProps = {
 
 const FIBULink: LinkProps = {
   title: 'Meer informatie over Budgetbeheer (FIBU)',
-  to: 'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/budgetbeheer',
+  to: 'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/geld-laten-beheren-team-fibu/',
 };
 
 export function useKrefiaThemaData() {
