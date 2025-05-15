@@ -163,12 +163,13 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
         className={classNames(styles.MainHeader, AmsMainMenuClassname)}
         logoLink="https://mijn.amsterdam.nl/"
         onClick={(event) => {
-          event.preventDefault();
           if (
             event.target.parentNode?.classList.contains(
               'ams-page-header__logo-link'
             )
           ) {
+            event.preventDefault();
+            event.stopPropagation();
             navigate(DashboardRoute.route);
           }
         }}
