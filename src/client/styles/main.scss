@@ -82,7 +82,7 @@ body {
   --ams-grid-wide-padding-inline: 0;
 }
 
-p a:not(.ams-button):not(.ams-link) {
+p a:not(.ams-button):not(.ams-link):not([role='button']) {
   color: var(--ams-link-color);
   text-decoration: underline;
   outline-offset: var(--ams-link-outline-offset);

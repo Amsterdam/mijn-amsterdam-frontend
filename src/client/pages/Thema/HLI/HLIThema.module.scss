@@ -32,7 +32,7 @@
   // Hack to align table cell content with other cells content
   &:before {
     content: '';
-    line-height: var(--ams-link-standalone-line-height);
+    line-height: var(--ams-typography-heading-4-line-height);
     font-size: var(--ams-typography-heading-2-font-size);
   }
 }

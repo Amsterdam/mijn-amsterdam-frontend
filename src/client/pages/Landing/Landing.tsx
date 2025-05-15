@@ -60,6 +60,7 @@ export function LandingPage() {
               rel="noopener noreferrer"
               className={classnames(
                 styles.LoginBtn,
+                styles['LoginBtn--digid'],
                 isRedirectingAny && styles.LoginBtnDisabled
               )}
             >

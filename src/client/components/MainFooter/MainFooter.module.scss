@@ -13,11 +13,6 @@
     left: -2px;
     top: -5px;
   }
-  > span:not(.ams-icon),
-  > strong {
-    font-size: var(--ams-link-standalone-font-size);
-    line-height: var(--ams-link-standalone-line-height);
-  }
   :global(.ams-icon) {
     margin-right: var(--ams-space-s);
     transform: translateY(5px);
