@@ -56,7 +56,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           AVG verzoek
         </h3>
@@ -69,10 +69,10 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
         class="ams-alert ams-alert--error"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-alert__severity-indicator"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--inverse ams-icon--heading-4"
           >
             <svg
               aria-hidden="true"
@@ -92,11 +92,15 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--level-4"
+          <div
+            class="ams-row ams-row--align-between ams-row--align-vertical-start"
           >
-            Foutmelding
-          </h2>
+            <h4
+              class="ams-heading ams-heading--4"
+            >
+              Foutmelding
+            </h4>
+          </div>
           <p
             class="ams-paragraph"
           >
@@ -165,7 +169,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           AVG verzoek
         </h3>
@@ -216,7 +220,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
         class="ams-grid _Steps_7a365b"
       >
         <h1
-          class="ams-heading ams-heading--level-2 _StatusHeading_7a365b ams-mb--sm"
+          class="ams-heading ams-heading--2 _StatusHeading_7a365b ams-mb-m"
         >
           Status
         </h1>
@@ -230,7 +234,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -238,7 +242,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -266,7 +270,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
@@ -274,7 +278,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
                 >
                   <span
                     aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--size-6 _StatusIndicationCheckmark_7a365b"
+                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                   >
                     <svg
                       aria-hidden="true"
@@ -302,7 +306,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
               class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Huidige status"
@@ -328,7 +332,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
               class="ams-ordered-list__item _Step_7a365b"
             >
               <h4
-                class="ams-heading ams-heading--level-4 _StepStatus_7a365b"
+                class="ams-heading ams-heading--4 _StepStatus_7a365b"
               >
                 <span
                   aria-label="Toekomstige status"

@@ -12,8 +12,8 @@ const mocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('./hooks/api/useSessionApi', (importOriginal) => {
-  const module = importOriginal();
+vi.mock('./hooks/api/useSessionApi', async (importOriginal) => {
+  const module: object = await importOriginal();
 
   return {
     ...module,

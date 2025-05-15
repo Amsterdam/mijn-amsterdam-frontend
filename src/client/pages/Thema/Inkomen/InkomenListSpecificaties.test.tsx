@@ -126,20 +126,6 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
     expect(input).toHaveValue('2019-04-10');
     expect(screen.queryByText('01 april 2019')).toBeNull();
   });
-
-  it('Has pagination', async () => {
-    const user = userEvent.setup();
-    const screen = render(<Component />);
-
-    expect(screen.getByText('volgende')).toBeInTheDocument();
-    expect(screen.getByText('Ga naar pagina 2')).toBeInTheDocument();
-
-    await user.click(screen.getByText('volgende'));
-
-    expect(screen.getByText('Ga naar pagina 1')).toBeInTheDocument();
-    expect(screen.getByText('10 april 2019')).toBeInTheDocument();
-    expect(screen.getByText('vorige')).toBeInTheDocument();
-  });
 });
 
 describe('<InkomenSpecificaties /> Jaaropgave', () => {

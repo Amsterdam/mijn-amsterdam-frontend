@@ -44,7 +44,6 @@ export function ErrorMessagesContent({
       )}
     >
       <Alert
-        severity="info"
         className={styles.MessageBar}
         closeable
         closeButtonLabel="Verberg bericht"

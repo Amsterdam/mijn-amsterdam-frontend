@@ -35,7 +35,7 @@ const pageContentTop = (
 
 export const VarenDisclaimerRederNotRegistered = (
   <Grid.Cell span="all">
-    <Alert severity="info" heading="Registreer uw onderneming">
+    <Alert headingLevel={4} heading="Registreer uw onderneming">
       <Paragraph>
         Uw onderneming is nog niet geregistreerd als exploitant passagiersvaart.
         U kunt hierdoor geen exploitatievergunningen wijzigen of een nieuwe

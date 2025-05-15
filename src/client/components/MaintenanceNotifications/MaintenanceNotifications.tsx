@@ -33,6 +33,7 @@ export function MaintenanceNotifications({
             key={notification.title + index}
             severity="warning"
             heading="Onderhoudsmelding"
+            headingLevel={4}
             className={classNames(styles.MaintenanceNotification, className)}
           >
             <InnerHtml className={classNames(styles.Description, 'ams-mb-m')}>

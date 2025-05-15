@@ -90,8 +90,8 @@ function determinePageContentTop(
     return (
       <PageContentCell spanWide={8}>
         <Alert
-          severity="info"
           heading={`Parkeervergunning voor ${profileTypeLabel}`}
+          headingLevel={4}
         >
           <Paragraph>
             Het inzien, aanvragen of wijzigen van een parkeervergunning voor{' '}

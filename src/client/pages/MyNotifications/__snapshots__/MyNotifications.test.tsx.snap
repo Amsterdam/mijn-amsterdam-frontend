@@ -46,7 +46,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Actueel
         </h3>
@@ -59,14 +59,14 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
         class="ams-ordered-list ams-ordered-list--no-markers"
       >
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Notification
               </h4>
@@ -91,7 +91,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 Notificatie1
               </p>
@@ -99,7 +99,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="/item-1"
                   title="Meer informatie over de melding: Notification"
                 >
@@ -110,14 +110,14 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Notification
               </h4>
@@ -142,7 +142,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 Notificatie2
               </p>
@@ -150,7 +150,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="/item-2"
                   title="Meer informatie over de melding: Notification"
                 >
@@ -161,14 +161,14 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Notification
               </h4>
@@ -193,7 +193,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 Notificatie3
               </p>
@@ -201,7 +201,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="/item-3"
                   title="Meer informatie over de melding: Notification"
                 >
@@ -212,14 +212,14 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Welkom op Mijn Amsterdam!
               </h4>
@@ -238,7 +238,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 <span>
                   
@@ -306,7 +306,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="#"
                   title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                 >

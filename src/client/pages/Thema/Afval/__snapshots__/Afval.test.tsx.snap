@@ -46,7 +46,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Afval
         </h3>
@@ -56,18 +56,18 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
-        class="ams-paragraph ams-mb--sm"
+        class="ams-paragraph ams-mb-m"
       >
         Dit zijn de afvalregels voor uw adres.
       </p>
       <section
-        class="ams-alert ams-alert--info ams-mb--sm"
+        class="ams-alert ams-mb-m"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-alert__severity-indicator"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--inverse ams-icon--heading-4"
           >
             <svg
               aria-hidden="true"
@@ -85,26 +85,26 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--level-4"
+          <div
+            class="ams-row ams-row--align-between ams-row--align-vertical-start"
           >
-            Bedrijfsafval informatie
-          </h2>
-          <p
-            class="ams-paragraph"
-          >
-            Let op deze regels gaan over uw woonadres.
-            <br />
-            Lees hier 
-            <a
-              class="ams-link ams-link--standalone"
-              href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
-              rel="noopener noreferrer"
+            <h4
+              class="ams-heading ams-heading--4"
             >
-              regels over bedrijfsafval in Amsterdam
-            </a>
-            .
-          </p>
+              Bedrijfsafval informatie
+            </h4>
+          </div>
+          Let op deze regels gaan over uw woonadres.
+          <br />
+          Lees hier 
+          <a
+            class="ams-link"
+            href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
+            rel="noopener noreferrer"
+          >
+            regels over bedrijfsafval in Amsterdam
+          </a>
+          .
         </div>
       </section>
       <ul
@@ -117,7 +117,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             rel="noopener noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -141,7 +141,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             rel="noopener noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -175,19 +175,19 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           class="_Datalist__description_08bf39"
         >
           <p
-            class="ams-paragraph ams-mb--sm"
+            class="ams-paragraph ams-mb-m"
           >
             Amstel 1
           </p>
           <p
-            class="ams-paragraph ams-mb--sm"
+            class="ams-paragraph ams-mb-m"
           >
             <strong>
               Dit is geen woonadres.
             </strong>
              Klopt dit niet? 
             <a
-              class="ams-link ams-link--standalone"
+              class="ams-link"
               href="https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie"
               rel="noopener noreferrer"
             >
@@ -205,7 +205,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         class="_AfvalFractionPanel_cc0d6a"
       >
         <h3
-          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
         >
           <span
             class="_AfvalFractionIcon_cc0d6a"
@@ -288,7 +288,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         class="_AfvalFractionPanel_cc0d6a"
       >
         <h3
-          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
         >
           <span
             class="_AfvalFractionIcon_cc0d6a"
@@ -367,7 +367,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         class="_AfvalFractionPanel_cc0d6a"
       >
         <h3
-          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
         >
           <span
             class="_AfvalFractionIcon_cc0d6a"
@@ -427,7 +427,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </dt>
           <dd>
             <a
-              class="ams-link ams-link--standalone"
+              class="ams-link"
               href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Papier"%3A1}}}}"
               rel="noopener noreferrer"
             >
@@ -444,7 +444,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         class="_AfvalFractionPanel_cc0d6a"
       >
         <h3
-          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
         >
           <span
             class="_AfvalFractionIcon_cc0d6a"
@@ -506,7 +506,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         class="_AfvalFractionPanel_cc0d6a"
       >
         <h3
-          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
         >
           <span
             class="_AfvalFractionIcon_cc0d6a"
@@ -568,7 +568,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </dt>
           <dd>
             <a
-              class="ams-link ams-link--standalone"
+              class="ams-link"
               href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Glas"%3A1}}}}"
               rel="noopener noreferrer"
             >
@@ -581,7 +581,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         class="_AfvalFractionPanel_cc0d6a"
       >
         <h3
-          class="ams-heading ams-heading--level-4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
         >
           <span
             class="_AfvalFractionIcon_cc0d6a"
@@ -637,7 +637,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </dt>
           <dd>
             <a
-              class="ams-link ams-link--standalone"
+              class="ams-link"
               href="/buurt?datasetIds=["afvalcontainers"]&zoom=14&filters={"afvalcontainers"%3A{"fractie_omschrijving"%3A{"values"%3A{"Textiel"%3A1}}}}"
               rel="noopener noreferrer"
             >
@@ -651,7 +651,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
-        class="ams-paragraph ams-mb--xl"
+        class="ams-paragraph ams-mb-xl"
       >
         <a
           aria-disabled="false"
@@ -662,12 +662,12 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         </a>
       </p>
       <h3
-        class="ams-heading ams-heading--level-3 ams-mb--sm"
+        class="ams-heading ams-heading--3 ams-mb-m"
       >
         Afvalcontainers in de buurt
       </h3>
       <ul
-        class="ams-link-list ams-mb--sm"
+        class="ams-link-list ams-mb-m"
       >
         <li>
           <a
@@ -675,7 +675,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             href="/buurt?datasetIds=["afvalcontainers"]&zoom=14"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -694,7 +694,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         </li>
       </ul>
       <h3
-        class="ams-heading ams-heading--level-3 ams-mb--sm"
+        class="ams-heading ams-heading--3 ams-mb-m"
       >
         Adressen recyclepunten
       </h3>
@@ -707,7 +707,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             href="http://example.org/afvalpunt"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"

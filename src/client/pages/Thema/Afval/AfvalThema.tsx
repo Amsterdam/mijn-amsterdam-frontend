@@ -1,4 +1,5 @@
 import {
+  Alert,
   Heading,
   Link,
   LinkList,
@@ -239,9 +240,9 @@ export function AfvalThemaPagina() {
                 Dit zijn de afvalregels voor uw adres.
               </Paragraph>
               {!!commercialLocation && !privateIsCommercial && (
-                <ErrorAlert
-                  title="Bedrijfsafval informatie"
-                  severity="info"
+                <Alert
+                  headingLevel={4}
+                  heading="Bedrijfsafval informatie"
                   className="ams-mb-m"
                 >
                   Let op deze regels gaan over uw woonadres.
@@ -251,7 +252,7 @@ export function AfvalThemaPagina() {
                     regels over bedrijfsafval in Amsterdam
                   </Link>
                   .
-                </ErrorAlert>
+                </Alert>
               )}
               <LinkList>
                 <LinkList.Link href={links.AFVAL} rel="noopener noreferrer">

@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './BezwarenDetail.module.scss';
 import { useBezwarenDetailData } from './useBezwarenDetailData.hook';
-import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
+import type { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { entries } from '../../../../universal/helpers/utils';
 import { Datalist, Row, RowSet } from '../../../components/Datalist/Datalist';
 import DocumentListV2 from '../../../components/DocumentList/DocumentListV2';

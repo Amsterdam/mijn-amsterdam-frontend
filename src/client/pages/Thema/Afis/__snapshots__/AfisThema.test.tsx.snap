@@ -46,7 +46,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Facturen en betalen
         </h3>
@@ -56,11 +56,11 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-8-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
-        class="ams-paragraph ams-mb--sm"
+        class="ams-paragraph ams-mb-m"
       >
         Hieronder ziet u een overzicht van uw facturen. Mist u een factuur of heeft u een vraag over één van uw facturen? Stuur een e-mail naar 
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link"
           href="mailto:debiteurenadministratie@amsterdam.nl?subject=Vraag over facturen en betaalvoorkeuren"
         >
           debiteurenadministratie@amsterdam.nl
@@ -72,7 +72,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
       >
         U ziet hier niet de facturen over Gemeentebelastingen. Deze vindt u terug bij 
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link"
           href="https://belastingbalie.amsterdam.nl"
           rel="noreferrer"
         >
@@ -94,7 +94,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             rel="noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -118,7 +118,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             rel="noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -141,7 +141,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <a
-        class="_MaButtonLink_aa758a ams-button ams-button--secondary ams-mb--sm"
+        class="_MaButtonLink_aa758a ams-button ams-button--secondary ams-mb-m"
         href="/facturen-en-betalen/betaalvoorkeuren"
       >
         Betaalvoorkeuren
@@ -150,10 +150,10 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-alert ams-alert--warning"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-alert__severity-indicator"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--inverse ams-icon--heading-4"
           >
             <svg
               aria-hidden="true"
@@ -173,11 +173,15 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--level-4"
+          <div
+            class="ams-row ams-row--align-between ams-row--align-vertical-start"
           >
-            Belangrijk om te weten
-          </h2>
+            <h4
+              class="ams-heading ams-heading--4"
+            >
+              Belangrijk om te weten
+            </h4>
+          </div>
           <ul
             class="ams-unordered-list ams-unordered-list--no-markers"
           >
@@ -204,7 +208,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Openstaande facturen
       </h3>
@@ -255,14 +259,14 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="https://download.example.com/F001"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -295,7 +299,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               >
                 Openstaand: 
                 <a
-                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
                   href="https://payment.example.com/F001"
                   target="_blank"
                 >
@@ -313,14 +317,14 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="https://download.example.com/F003"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -353,7 +357,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               >
                 Openstaand: 
                 <a
-                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
                   href="https://payment.example.com/F003"
                   target="_blank"
                 >
@@ -369,7 +373,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Facturen in het incasso- en invorderingstraject van directie Belastingen
       </h3>
@@ -394,7 +398,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Afgehandelde facturen
       </h3>
@@ -440,14 +444,14 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="https://download.example.com/F002"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"

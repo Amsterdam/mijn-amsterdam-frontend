@@ -9,7 +9,7 @@ type AdresInOnderzoekProps = {
 
 export function AdresInOnderzoek({ brpContent }: AdresInOnderzoekProps) {
   return (
-    <Alert severity="warning" heading="Adres in onderzoek">
+    <Alert severity="warning" heading="Adres in onderzoek" headingLevel={4}>
       <Paragraph>
         {brpContent?.persoon?.adresInOnderzoek === '080000' ? (
           <>

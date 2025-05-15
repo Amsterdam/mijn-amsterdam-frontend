@@ -56,7 +56,7 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Jaaropgaven
         </h3>
@@ -67,12 +67,12 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
     >
       <button
         aria-expanded="false"
-        class="ams-button ams-button--secondary _SearchButton_d4959d ams-mb--sm"
+        class="ams-button ams-button--secondary _SearchButton_d4959d ams-mb-m"
         type="button"
       >
         Zoeken
         <span
-          class="ams-icon ams-icon--size-5"
+          class="ams-icon"
         >
           <i
             class="_SearchButtonIcon_d4959d"
@@ -127,14 +127,14 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -168,14 +168,14 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -209,14 +209,14 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -250,14 +250,14 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -340,7 +340,7 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Uitkeringsspecificaties
         </h3>
@@ -351,12 +351,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
     >
       <button
         aria-expanded="false"
-        class="ams-button ams-button--secondary _SearchButton_d4959d ams-mb--sm"
+        class="ams-button ams-button--secondary _SearchButton_d4959d ams-mb-m"
         type="button"
       >
         Zoeken
         <span
-          class="ams-icon ams-icon--size-5"
+          class="ams-icon"
         >
           <i
             class="_SearchButtonIcon_d4959d"
@@ -369,6 +369,159 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
+      <nav
+        aria-labelledby="ams-pagination-a11y-label"
+        class="ams-pagination"
+      >
+        <span
+          class="ams-visually-hidden"
+          id="ams-pagination-a11y-label"
+        >
+          Paginering
+        </span>
+        <ol
+          class="ams-pagination__list"
+        >
+          <li>
+            <a
+              aria-current="page"
+              class="ams-pagination__link"
+              href="/inkomen/lijst/specificaties/uitkering/1"
+            >
+              <span
+                class="ams-visually-hidden"
+              >
+                Ga naar pagina 
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Pagina 1
+                </span>
+                <span
+                  aria-hidden="true"
+                >
+                  1
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Pagina 1
+                </span>
+                <span
+                  aria-hidden="true"
+                >
+                  1
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="ams-pagination__link"
+              href="/inkomen/lijst/specificaties/uitkering/2"
+            >
+              <span
+                class="ams-visually-hidden"
+              >
+                Ga naar pagina 
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Ga naar pagina 2
+                </span>
+                <span
+                  aria-hidden="true"
+                >
+                  2
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Ga naar pagina 2
+                </span>
+                <span
+                  aria-hidden="true"
+                >
+                  2
+                </span>
+              </span>
+            </a>
+          </li>
+        </ol>
+        <a
+          class="ams-pagination__link"
+          href="/inkomen/lijst/specificaties/uitkering/2"
+          rel="next"
+        >
+          <span
+            class="ams-visually-hidden"
+          >
+            Ga naar pagina 
+            <span
+              class="ams-visually-hidden"
+            >
+              Volgende pagina
+            </span>
+            <span
+              aria-hidden="true"
+            >
+              volgende
+            </span>
+            <span
+              class="ams-icon"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </span>
+          <span
+            aria-hidden="true"
+          >
+            <span
+              class="ams-visually-hidden"
+            >
+              Volgende pagina
+            </span>
+            <span
+              aria-hidden="true"
+            >
+              volgende
+            </span>
+            <span
+              class="ams-icon"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </span>
+        </a>
+      </nav>
       <div
         class="ams-table"
       >
@@ -421,14 +574,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -467,14 +620,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -513,14 +666,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -559,14 +712,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -605,14 +758,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -651,14 +804,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -697,14 +850,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -743,14 +896,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -789,14 +942,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -835,14 +988,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -881,14 +1034,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -927,14 +1080,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -973,14 +1126,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1019,14 +1172,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1065,14 +1218,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1111,14 +1264,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1157,14 +1310,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1203,14 +1356,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1249,14 +1402,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1295,14 +1448,14 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
                   class="_DocumentLinkWrap_81c3b4"
                 >
                   <a
-                    class="ams-link ams-link--standalone _DocumentLink_81c3b4 _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
                     href="http://bff-api-host/api/v1/services/wpi/document/test-encrypted-id?isBulk=false&isDms=false"
                   >
                     <span
                       class="_DocumentLinkIcon_81c3b4"
                     >
                       <span
-                        class="ams-icon ams-icon--size-5"
+                        class="ams-icon ams-icon--heading-5"
                       >
                         <svg
                           aria-hidden="true"
@@ -1325,12 +1478,12 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
         </table>
       </div>
       <nav
-        aria-labelledby=":r0:"
+        aria-labelledby="ams-pagination-a11y-label"
         class="ams-pagination"
       >
         <span
           class="ams-visually-hidden"
-          id=":r0:"
+          id="ams-pagination-a11y-label"
         >
           Paginering
         </span>
@@ -1338,108 +1491,144 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
           class="ams-pagination__list"
         >
           <li>
-            <button
-              class="ams-pagination__button"
-              disabled=""
-              type="button"
+            <a
+              aria-current="page"
+              class="ams-pagination__link"
+              href="/inkomen/lijst/specificaties/uitkering/1"
             >
               <span
-                class="ams-icon ams-icon--size-5"
+                class="ams-visually-hidden"
               >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 32 32"
-                  xmlns="http://www.w3.org/2000/svg"
+                Ga naar pagina 
+                <span
+                  class="ams-visually-hidden"
                 >
-                  <path
-                    d="m22.857 32-16-16 16-16 2.9 2.91L12.677 16l13.08 13.09z"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </span>
-              <span
-                class="ams-visually-hidden"
-              >
-                Vorige pagina
-              </span>
-              <span
-                aria-hidden="true"
-              >
-                vorige
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              aria-current="true"
-              class="ams-pagination__button ams-pagination__button--current"
-              tabindex="-1"
-              type="button"
-            >
-              <span
-                class="ams-visually-hidden"
-              >
-                Pagina 1
-              </span>
-              <span
-                aria-hidden="true"
-              >
-                1
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              class="ams-pagination__button"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="ams-visually-hidden"
-              >
-                Ga naar pagina 2
-              </span>
-              <span
-                aria-hidden="true"
-              >
-                2
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              class="ams-pagination__button"
-              type="button"
-            >
-              <span
-                class="ams-visually-hidden"
-              >
-                Volgende pagina
-              </span>
-              <span
-                aria-hidden="true"
-              >
-                volgende
-              </span>
-              <span
-                class="ams-icon ams-icon--size-5"
-              >
-                <svg
+                  Pagina 1
+                </span>
+                <span
                   aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 32 32"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
-                    fill-rule="evenodd"
-                  />
-                </svg>
+                  1
+                </span>
               </span>
-            </button>
+              <span
+                aria-hidden="true"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Pagina 1
+                </span>
+                <span
+                  aria-hidden="true"
+                >
+                  1
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="ams-pagination__link"
+              href="/inkomen/lijst/specificaties/uitkering/2"
+            >
+              <span
+                class="ams-visually-hidden"
+              >
+                Ga naar pagina 
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Ga naar pagina 2
+                </span>
+                <span
+                  aria-hidden="true"
+                >
+                  2
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+              >
+                <span
+                  class="ams-visually-hidden"
+                >
+                  Ga naar pagina 2
+                </span>
+                <span
+                  aria-hidden="true"
+                >
+                  2
+                </span>
+              </span>
+            </a>
           </li>
         </ol>
+        <a
+          class="ams-pagination__link"
+          href="/inkomen/lijst/specificaties/uitkering/2"
+          rel="next"
+        >
+          <span
+            class="ams-visually-hidden"
+          >
+            Ga naar pagina 
+            <span
+              class="ams-visually-hidden"
+            >
+              Volgende pagina
+            </span>
+            <span
+              aria-hidden="true"
+            >
+              volgende
+            </span>
+            <span
+              class="ams-icon"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </span>
+          <span
+            aria-hidden="true"
+          >
+            <span
+              class="ams-visually-hidden"
+            >
+              Volgende pagina
+            </span>
+            <span
+              aria-hidden="true"
+            >
+              volgende
+            </span>
+            <span
+              class="ams-icon"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </span>
+          </span>
+        </a>
       </nav>
     </div>
   </div>

@@ -297,6 +297,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           className="ams-mb-m"
           heading="Fout bij het blokeren van de pas"
           severity="error"
+          headingLevel={4}
         >
           Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
           <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
@@ -305,7 +306,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
         </Alert>
       )}
       {isMutating ? (
-        <Alert severity="warning">
+        <Alert severity="warning" heading="Blokkeren" headingLevel={4}>
           <Paragraph>
             <Spinner /> <span>Bezig met het blokkeren van de pas...</span>
           </Paragraph>
@@ -384,6 +385,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
 function PassBlockedAlert() {
   return (
     <Alert
+      headingLevel={4}
       heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
     >
@@ -429,12 +431,13 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           className="ams-mb-m"
           heading="Fout bij het deblokkeren van de pas"
           severity="error"
+          headingLevel={4}
         >
           Probeer het nog eens.
         </Alert>
       )}
       {isMutating ? (
-        <Alert severity="warning">
+        <Alert heading="Deblokkeren" headingLevel={4} severity="warning">
           <Paragraph>
             <Spinner /> <span>Bezig met deblokkeren...</span>
           </Paragraph>
