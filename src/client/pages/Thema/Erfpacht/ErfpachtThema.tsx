@@ -88,7 +88,7 @@ function FacturenDisclaimer() {
         <MaRouterLink href={afis.routeConfig.themaPage.path}>
           {afis.themaTitle}
         </MaRouterLink>{' '}
-        voor uw erfpacht facturen. U kunt hier alleen facturen zien van na 2025.
+        voor uw erfpacht facturen. U kunt hier alleen facturen van 2025 inzien.
       </Paragraph>
     </Alert>
   );
