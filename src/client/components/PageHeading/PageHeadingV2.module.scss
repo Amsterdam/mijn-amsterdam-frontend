@@ -9,14 +9,13 @@
 }
 
 .PageHeading {
-  --ams-hyphenation-hyphens: none;
   @media screen and (min-width: $ams-breakpoint-medium) {
     --ams-heading-3-font-size: 58px;
     --ams-heading-3-line-height: 72px;
   }
 }
 
-:global(.ams-link--standalone) {
+:global(.ams-link) {
   &.BackLink {
     display: inline-flex;
     align-items: center;

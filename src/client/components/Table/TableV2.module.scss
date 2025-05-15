@@ -10,7 +10,6 @@
     tr {
       .ams-table__cell,
       .ams-table__header-cell {
-        hyphens: var(--ams-hyphenation-hyphens);
         &:first-child {
           padding-inline-start: 0 !important;
         }

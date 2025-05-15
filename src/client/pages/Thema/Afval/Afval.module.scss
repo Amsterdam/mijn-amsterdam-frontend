@@ -12,14 +12,6 @@
 }
 
 .AfvalFractionPanel {
-  p a:not(:global(.ams-button)) {
-    color: var(--ams-link-color);
-    text-decoration-line: var(--ams-link-standalone-text-decoration-line);
-    text-decoration-thickness: var(
-      --ams-link-standalone-text-decoration-thickness
-    );
-    text-underline-offset: var(--ams-link-standalone-text-underline-offset);
-  }
 }
 
 .AfvalFractionPanel {

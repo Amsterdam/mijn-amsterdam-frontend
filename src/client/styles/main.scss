@@ -81,3 +81,17 @@ body {
 .ams-grid .ams-grid {
   --ams-grid-wide-padding-inline: 0;
 }
+
+p a:not(.ams-button):not(.ams-link) {
+  color: var(--ams-link-color);
+  text-decoration: underline;
+  outline-offset: var(--ams-link-outline-offset);
+  text-decoration-thickness: var(--ams-link-text-decoration-thickness);
+  text-underline-offset: var(--ams-link-text-underline-offset);
+
+  &:hover {
+    color: var(--ams-link-hover-color);
+    text-decoration-thickness: var(--ams-link-hover-text-decoration-thickness);
+    text-underline-offset: var(--ams-link-hover-text-underline-offset);
+  }
+}
