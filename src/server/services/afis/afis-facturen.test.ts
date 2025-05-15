@@ -46,25 +46,25 @@ const SESSION_ID = '0987';
 const FACTUUR_NUMMER = '12346789';
 const GENERIC_ID = '12346789';
 
-function hasPartialQueryString(uri: string, str: string) {
+function isQueryStringIncludedInUri(uri: string, str: string) {
   return decodeURI(uri).includes(str.replace(/\s/g, '+'));
 }
 
 const ROUTES = {
   openstaandeFacturen: (uri: string) => {
-    return hasPartialQueryString(
+    return isQueryStringIncludedInUri(
       uri,
       `IsCleared eq false and (AccountingDocumentType eq 'DR'`
     );
   },
   afgehandeldeFacturen: (uri: string) => {
-    return hasPartialQueryString(
+    return isQueryStringIncludedInUri(
       uri,
       `and IsCleared eq true and (DunningLevel ne '3' or ReverseDocument ne '')`
     );
   },
   overgedragenFacturen: (uri: string) => {
-    return hasPartialQueryString(
+    return isQueryStringIncludedInUri(
       uri,
       `and IsCleared eq true and DunningLevel eq '3'`
     );
@@ -76,7 +76,7 @@ const ROUTES = {
     return decodeURI(uri).includes('ZFI_CDS_TOA02');
   },
   deelbetalingen: (uri: string) =>
-    hasPartialQueryString(
+    isQueryStringIncludedInUri(
       uri,
       `IsCleared eq false and InvoiceReference ne '' and`
     ),
