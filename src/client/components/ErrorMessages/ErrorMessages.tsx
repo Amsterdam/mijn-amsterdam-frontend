@@ -48,6 +48,8 @@ export function ErrorMessagesContent({
         closeable
         closeButtonLabel="Verberg bericht"
         onClose={() => setDismissed(true)}
+        heading="Let op!"
+        headingLevel={2}
       >
         <Paragraph>
           {title}{' '}
