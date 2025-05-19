@@ -63,6 +63,7 @@ export function fetchSVWI(authProfileAndToken: AuthProfileAndToken) {
     },
     transformResponse: transformSVWIResponse,
     postponeFetch: !featureToggle.svwiActive,
+    cacheKey: `svwi-${authProfileAndToken.profile.sid}`,
   });
   return fetchService(apiConfig, false, authProfileAndToken);
 }
