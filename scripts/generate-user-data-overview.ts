@@ -2,12 +2,10 @@
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 
-if (!process.env.BFF_API_BASE_URL) {
-  const ENV_FILE = '.env.local';
-  console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
-  const envConfig = dotenv.config({ path: ENV_FILE });
-  dotenvExpand.expand(envConfig);
-}
+const ENV_FILE = '.env.local';
+console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
+const envConfig = dotenv.config({ path: ENV_FILE });
+dotenvExpand.expand(envConfig);
 
 import jsonpath from 'jsonpath';
 import * as XLSX from 'xlsx';
@@ -27,54 +25,227 @@ import { differenceInYears, parseISO } from 'date-fns';
 
 import { PRISTINE_APPSTATE } from '../src/client/AppState';
 import { ServiceResults } from '../src/server/services/content-tips/tip-types';
-import {
-  testAccountsDigid,
-  testAccountsEherkenning,
-} from '../src/universal/config/auth.development';
 import { IS_PRODUCTION } from '../src/universal/config/env';
+
+import {
+  themaId as themaIdInkomen,
+  themaTitle as themaTitleInkomen,
+} from '../src/client/pages/Thema/Inkomen/Inkomen-thema-config.ts';
+import {
+  themaIdBRP,
+  themaIdKVK,
+  themaTitle as profileThemaTitles,
+} from '../src/client/pages/Thema/Profile/Profile-thema-config.ts';
+import {
+  themaId as themaIdZorg,
+  themaTitle as themaTitleZorg,
+} from '../src/client/pages/Thema/Zorg/Zorg-thema-config.ts';
+import {
+  themaId as themaIdAfval,
+  themaTitle as themaTitleAfval,
+} from '../src/client/pages/Thema/Afval/Afval-thema-config.ts';
+import {
+  themaId as themaIdVergunningen,
+  themaTitle as themaTitleVergunningen,
+} from '../src/client/pages/Thema/Vergunningen/Vergunningen-thema-config.ts';
+import {
+  themaId as themaIdErfpacht,
+  themaTitle as themaTitleErfpacht,
+} from '../src/client/pages/Thema/Erfpacht/Erfpacht-thema-config.ts';
+import {
+  themaId as themaIdBezwaren,
+  themaTitle as themaTitleBezwaren,
+} from '../src/client/pages/Thema/Bezwaren/Bezwaren-thema-config.ts';
+import {
+  themaId as themaIdHoreca,
+  themaTitle as themaTitleHoreca,
+} from '../src/client/pages/Thema/Horeca/Horeca-thema-config.ts';
+import {
+  themaId as themaIdToeristischeVerhuur,
+  themaTitle as themaTitleToeristischeVerhuur,
+} from '../src/client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config.ts';
+import {
+  themaId as themaIdAVG,
+  themaTitle as themaTitleAVG,
+} from '../src/client/pages/Thema/AVG/AVG-thema-config.ts';
+import {
+  themaId as themaIdSvwi,
+  themaTitle as themaTitleSvwi,
+} from '../src/client/pages/Thema/Svwi/Svwi-thema-config.ts';
+import {
+  themaId as themaIdKlachten,
+  themaTitle as themaTitleKlachten,
+} from '../src/client/pages/Thema/Klachten/Klachten-thema-config.ts';
+import {
+  themaId as themaIdKrefia,
+  themaTitle as themaTitleKrefia,
+} from '../src/client/pages/Thema/Krefia/Krefia-thema-config.ts';
+import {
+  themaId as themaIdBurgerzaken,
+  themaTitle as themaTitleBurgerzaken,
+} from '../src/client/pages/Thema/Burgerzaken/Burgerzaken-thema-config.ts';
+import {
+  themaId as themaIdAfis,
+  themaTitle as themaTitleAfis,
+} from '../src/client/pages/Thema/Afis/Afis-thema-config.ts';
+import {
+  themaId as themaIdOvertredingen,
+  themaTitle as themaTitleOvertredingen,
+} from '../src/client/pages/Thema/Overtredingen/Overtredingen-thema-config.ts';
+import {
+  themaId as themaIdVaren,
+  themaTitle as themaTitleVaren,
+} from '../src/client/pages/Thema/Varen/Varen-thema-config.ts';
+import {
+  themaId as themaIdBodem,
+  themaTitle as themaTitleBodem,
+} from '../src/client/pages/Thema/Bodem/Bodem-thema-config.ts';
+import {
+  themaId as themaIdHLI,
+  themaTitle as themaTitleHLI,
+} from '../src/client/pages/Thema/HLI/HLI-thema-config.ts';
+import {
+  themaId as themaIdJeugd,
+  themaTitle as themaTitleJeugd,
+} from '../src/client/pages/Thema/Jeugd/Jeugd-thema-config.ts';
+import {
+  themaId as themaIdParkeren,
+  themaTitle as themaTitleParkeren,
+} from '../src/client/pages/Thema/Parkeren/Parkeren-thema-config.ts';
+import {
+  themaId as themaIdBelastingen,
+  themaTitle as themaTitleBelastingen,
+} from '../src/client/pages/Thema/Belastingen/Belastingen-thema-config.ts';
+import {
+  themaId as themaIdMilieuzone,
+  themaTitle as themaTitleMilieuzone,
+} from '../src/client/pages/Thema/Milieuzone/Milieuzone-thema-config.ts';
+import {
+  themaId as themaIdSubsidies,
+  themaTitle as themaTitleSubsidies,
+} from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+
+const { BRP, KVK } = profileThemaTitles;
+const themas = [
+  { id: themaIdBRP, title: BRP },
+  { id: themaIdKVK, title: KVK },
+  { id: themaIdInkomen, title: themaTitleInkomen },
+  { id: themaIdZorg, title: themaTitleZorg },
+  { id: themaIdAfval, title: themaTitleAfval },
+  { id: themaIdVergunningen, title: themaTitleVergunningen },
+  { id: themaIdErfpacht, title: themaTitleErfpacht },
+  { id: themaIdBezwaren, title: themaTitleBezwaren },
+  { id: themaIdHoreca, title: themaTitleHoreca },
+  { id: themaIdToeristischeVerhuur, title: themaTitleToeristischeVerhuur },
+  { id: themaIdAVG, title: themaTitleAVG },
+  { id: themaIdSvwi, title: themaTitleSvwi },
+  { id: themaIdKlachten, title: themaTitleKlachten },
+  { id: themaIdKrefia, title: themaTitleKrefia },
+  { id: themaIdBurgerzaken, title: themaTitleBurgerzaken },
+  { id: themaIdAfis, title: themaTitleAfis },
+  { id: themaIdOvertredingen, title: themaTitleOvertredingen },
+  { id: themaIdVaren, title: themaTitleVaren },
+  { id: themaIdBodem, title: themaTitleBodem },
+  { id: themaIdHLI, title: themaTitleHLI },
+  { id: themaIdJeugd, title: themaTitleJeugd },
+  { id: themaIdParkeren, title: themaTitleParkeren },
+  { id: themaIdBelastingen, title: themaTitleBelastingen },
+  { id: themaIdMilieuzone, title: themaTitleMilieuzone },
+  { id: themaIdSubsidies, title: themaTitleSubsidies },
+];
 
 if (IS_PRODUCTION) {
   throw Error('This script cannot be run inside of production.');
 }
 
+if (!process.env.MA_TEST_ACCOUNTS) {
+  throw new Error('MA_TEST_ACCOUNTS env var is empty.');
+}
+let testAccounts: any = process.env.MA_TEST_ACCOUNTS.split(',');
+
+const themasAvailable = themas.map((menuItem) => menuItem.id);
+const testAccountEntries = getTestAccountEntries();
+
 XLSX.set_fs(fs);
+// If true then get data extracted out of services from disk.
+// This greatly speeds up this script and is therefore nice for debugging.
+const FROM_DISK: boolean = true;
 
-console.log(testAccountsDigid);
-console.log(testAccountsEherkenning);
+// In which directory do we save the data coming from our services?
+const TARGET_DIRECTORY: string = '.';
 
-const testAccounts = {};
+const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
 
-const testAccountEntries = Object.entries(testAccounts);
+generateOverview();
 
-async function getServiceResults(
-  fromDisk: boolean = false,
-  targetDirectory: string
-): Promise<Record<string, ServiceResults>> {
-  if (fromDisk) {
+function getTestAccountEntries() {
+  testAccounts = testAccounts.map((accountData: any) => {
+    const keyVal = accountData.split('=');
+    return [keyVal[0], keyVal[1]];
+  });
+  return testAccounts;
+}
+
+async function generateOverview() {
+  return getServiceResults().then((resultsByUser) => {
+    if (!FROM_DISK) {
+      fs.writeFileSync(
+        TARGET_DIRECTORY + '/user-data.json',
+        JSON.stringify(resultsByUser)
+      );
+    }
+
+    const fileName =
+      TARGET_DIRECTORY +
+      `/Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
+    const workbook = XLSX.utils.book_new();
+
+    console.dir(resultsByUser);
+
+    addSheets(workbook, [
+      sheetBrpBase(resultsByUser),
+      sheetServiceErrors(resultsByUser),
+      sheetThemas(resultsByUser),
+      sheetNotifications(resultsByUser),
+      sheetThemaContent(resultsByUser),
+    ]);
+
+    XLSX.writeFile(workbook, fileName, { compression: true });
+
+    return fileName;
+  });
+}
+
+async function getServiceResults(): Promise<Record<string, ServiceResults>> {
+  if (FROM_DISK) {
     const data = JSON.parse(
-      fs.readFileSync(targetDirectory + '/user-data.json', 'utf8').toString()
+      fs.readFileSync(TARGET_DIRECTORY + '/user-data.json', 'utf8').toString()
     );
     return data;
   }
 
   const allResults: Record<string, ServiceResults> = {};
 
-  for (const [Username, userId] of testAccountEntries) {
-    const url = `${process.env.BFF_API_BASE_URL}/auth/digid/login/${Username}?redirectUrl=noredirect`;
+  for (const [username, userId] of testAccountEntries) {
+    const loginURL = `${BASE_URL}/auth/digid/login/${username}?redirectUrl=noredirect`;
     try {
-      const serviceResults = await fetch(url).then(async (r) => {
-        const Cookie = r.headers.get('Set-Cookie') ?? '';
-        console.time(`Fetch data for ${Username}/${userId}`);
-        return fetch(`${process.env.BFF_API_BASE_URL}/services/all`, {
+      const serviceResults = await fetch(loginURL).then(async (res) => {
+        const Cookie = res.headers.get('Set-Cookie');
+        if (!Cookie) {
+          throw Error(`No Set-Cookie header found for request to ${loginURL}`);
+        }
+
+        console.time(`Fetched data for ${username}/${userId}`);
+        return fetch(`${BASE_URL}/services/all`, {
           headers: {
             Cookie,
           },
-        }).then((r) => {
-          console.timeEnd(`Fetch data for ${Username}/${userId}`);
-          return r.json();
+        }).then((res) => {
+          console.timeEnd(`Fetched data for ${username}/${userId}`);
+          return res.json();
         });
       });
-      allResults[Username] = serviceResults;
+      allResults[username] = serviceResults;
     } catch (error) {
       console.error(error);
     }
@@ -327,33 +498,20 @@ const paths: PathObj[] = [
   return p;
 });
 
-//const themaMenuItems = myThemasMenuItems.filter((item) =>
-//  item.profileTypes.includes('private')
-//);
+function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
+  const rows = Object.entries(resultsByUser)
+    .map(([_username, serviceResults]) => {
+      const userThemas = getUserThemas(serviceResults);
+      return userThemas;
+    })
+    .filter((userThemas) => !!Object.keys(userThemas).length);
+  return getRows(themasAvailable, rows, false);
+}
 
-//const themasAvailable = themaMenuItems.map((menuItem) => menuItem.id);
-
-//function getUserThemas(serviceResults: ServiceResults) {
-//  const themaItems = themaMenuItems;
-//  const items = themaItems.filter((item) => {
-//    // Check to see if Thema has been loaded or if it is directly available
-//    return item.isAlwaysVisible; // || isThemaActive(item, serviceResults as unknown as AppState)
-//  });
-//
-//  return Object.fromEntries(
-//    items.map((menuItem) => [menuItem.id, menuItem.title])
-//  );
-//}
-
-//function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
-//  const rows = Object.entries(resultsByUser)
-//    .map(([Username, serviceResults]) => {
-//      const userThemas = getUserThemas(serviceResults);
-//      return userThemas;
-//    })
-//    .filter((userThemas) => !!Object.keys(userThemas).length);
-//  return getRows(themasAvailable, rows, false);
-//}
+function getUserThemas(serviceResults: ServiceResults) {
+  const themaMenuItems = Object.keys(serviceResults);
+  return Object.fromEntries(themas.map((item: any) => [item.id, item.title]));
+}
 
 function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
   const rows = Object.entries(resultsByUser).flatMap(
@@ -407,7 +565,11 @@ function getRows(
 
   results.forEach((user, index) => {
     for (const [label, value] of Object.entries(user)) {
-      rowsMap[label][index + 1] = value;
+      if (!rowsMap[label]) {
+        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+      } else {
+        rowsMap[label][index + 1] = value;
+      }
     }
   });
 
@@ -467,37 +629,45 @@ function addSheets(workbook: XLSX.WorkBook, sheets: SheetData[]) {
   }
 }
 
-function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
-  // BRP gegevens
-  const rowValues = Object.entries(resultsByUser).map(
-    ([Username, serviceResults]) => {
-      const add = {
-        Username: Username,
-      };
-      const rowObject = getRowValues(serviceResults, paths);
+function createInfoArray(elementAmount: number, info: object): object[] {
+  const items: object[] = [];
+  for (let i = 0; i < elementAmount; i++) {
+    items.push(info);
+  }
+  return items;
+}
 
-      return Object.assign(add, rowObject);
+function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
+  const rows = Object.entries(resultsByUser).map(
+    ([Username, serviceResults]) => {
+      return {
+        ...getRowValues(serviceResults, paths),
+        Username,
+      };
     }
   );
-
-  const rowInfo = Object.keys(testAccounts).map(() => ({ hpx: HPX_DEFAULT }));
-
+  const rowInfo = createInfoArray(testAccountEntries.length, {
+    hpx: HPX_DEFAULT,
+  });
   const colInfo = [
     { wch: WCH_DEFAULT }, // Username
     ...paths.map((pathObj) => ({ wch: pathObj.wch ?? WCH_DEFAULT })),
   ];
-
-  return {
+  const brpBaseSheet = {
     title: 'BRP gegevens (beknopt)',
-    rows: rowValues,
+    rows,
+    // TODO: remove columnheaders entry?
     columnHeaders: [],
     colInfo,
     rowInfo,
   };
+  return brpBaseSheet;
 }
 
 function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
-  const rowInfo = Object.keys(testAccounts).map(() => ({ hpx: HPX_DEFAULT }));
+  const rowInfo = createInfoArray(testAccountEntries.length, {
+    hpx: HPX_DEFAULT,
+  });
   return {
     title: 'Themas',
     rows: getThemaRows(resultsByUser),
@@ -511,7 +681,9 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
 }
 
 function sheetServiceErrors(resultsByUser: Record<string, ServiceResults>) {
-  const rowInfo = Object.keys(testAccounts).map(() => ({ hpx: HPX_DEFAULT }));
+  const rowInfo = createInfoArray(testAccountEntries.length, {
+    hpx: HPX_DEFAULT,
+  });
 
   return {
     title: 'Service Errors',
@@ -519,7 +691,7 @@ function sheetServiceErrors(resultsByUser: Record<string, ServiceResults>) {
     columnHeaders: ['', ...Object.keys(testAccounts)],
     colInfo: [
       { wch: WCH_DEFAULT },
-      ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
+      ...createInfoArray(testAccountEntries.length, { wch: WCH_DEFAULT }),
     ],
     rowInfo,
   };
@@ -540,12 +712,12 @@ function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
 }
 
 function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
-  function count(thema: any) {
-    // any was Thema (file with all themaId's that is now per thema config defined)
+  function count(themaId: string) {
     return (serviceResults: ServiceResults) =>
-      serviceResults[thema]?.content?.length || '';
+      serviceResults[themaId]?.content?.length || '';
   }
-  const themaContents: Record<
+
+  const themaContentGetters: Record<
     string,
     (serviceResults: ServiceResults) => string | number
   > = {
@@ -567,24 +739,39 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     Tonk: count('WPI_TONK'),
     BBZ: count('WPI_BBZ'),
     'Stadspassen (Gpass)': (serviceResults: ServiceResults) => {
-      return serviceResults.STADSPAS.content?.stadspassen.length || '';
+      if (!serviceResults.HLI.content?.stadspas) {
+        return '';
+      }
+      return serviceResults.HLI.content.stadspas.length;
     },
-    Stadspasaanvragen: (serviceResults: ServiceResults) => {
-      return serviceResults.STADSPAS.content?.aanvragen.length || '';
+    Stadspasregelingen: (serviceResults: ServiceResults) => {
+      if (!serviceResults.HLI.content?.regelingen) {
+        return '';
+      }
+      return serviceResults.HLI.content.regelingen.length;
     },
     'Zorg en ondersteuning': count('WMO'),
     Vergunningen: count('VERGUNNINGEN'),
     KVK: (serviceResults: ServiceResults) => {
       return !!serviceResults.KVK.content ? 'Ja' : '';
     },
-    'ToerVerh Registraties': (serviceResults: ServiceResults) => {
+    'ToerVerh LLV Registraties': (serviceResults: ServiceResults) => {
       return (
-        serviceResults.TOERISTISCHE_VERHUUR.content?.registraties.length || ''
+        serviceResults.TOERISTISCHE_VERHUUR.content?.lvvRegistraties.length ||
+        ''
       );
     },
-    'ToerVerh Vergunningen': (serviceResults: ServiceResults) => {
+    'ToerVerh Vakantie Vergunningen': (serviceResults: ServiceResults) => {
       return (
-        serviceResults.TOERISTISCHE_VERHUUR.content?.vergunningen.length || ''
+        serviceResults.TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen
+          .length || ''
+      );
+    },
+    'ToerVerh Bed and Breakfast Vergunningen': (
+      serviceResults: ServiceResults
+    ) => {
+      return (
+        serviceResults.TOERISTISCHE_VERHUUR.content?.bbVergunningen.length || ''
       );
     },
     // KREFIA: (serviceResults: ServiceResults) => { return},
@@ -596,7 +783,7 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       return serviceResults.AVG.content?.verzoeken.length || '';
     },
     'Bodem (Loodmeting)': (serviceResults: ServiceResults) => {
-      return serviceResults.BODEM.content?.metingen.length || '';
+      return serviceResults.BODEM.content?.length || '';
     },
   };
 
@@ -605,8 +792,8 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       const base: Record<string, string | number> = {
         Username,
       };
-      return Object.keys(themaContents).reduce((acc, thema) => {
-        acc[thema] = themaContents[thema](serviceResults);
+      return Object.keys(themaContentGetters).reduce((acc, thema) => {
+        acc[thema] = themaContentGetters[thema](serviceResults);
         return acc;
       }, base);
     }
@@ -623,35 +810,4 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       : undefined,
     rowInfo,
   };
-}
-
-export async function generateOverview(
-  fromDisk: boolean,
-  targetDirectory: string
-) {
-  return getServiceResults(fromDisk, targetDirectory).then((resultsByUser) => {
-    if (!fromDisk) {
-      fs.writeFileSync(
-        targetDirectory + '/user-data.json',
-        JSON.stringify(resultsByUser)
-      );
-    }
-
-    const fileName =
-      targetDirectory +
-      `/Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
-    const workbook = XLSX.utils.book_new();
-
-    addSheets(workbook, [
-      sheetBrpBase(resultsByUser),
-      sheetServiceErrors(resultsByUser),
-      sheetThemas(resultsByUser),
-      sheetNotifications(resultsByUser),
-      sheetThemaContent(resultsByUser),
-    ]);
-
-    XLSX.writeFile(workbook, fileName, { compression: true });
-
-    return fileName;
-  });
 }
