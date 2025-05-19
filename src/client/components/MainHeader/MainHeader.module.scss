@@ -1,39 +1,47 @@
 .MainHeader {
+  --ams-page-header-padding-block: var(--ams-space-s);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    --ams-page-header-padding-block: var(--ams-space-m);
+  }
   position: relative;
   z-index: z-index(main-header);
   max-width: var(--ams-ma-max-screen-width-no-padding);
   margin: 0 auto;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
 }
 
 @media screen and (max-width: $ams-breakpoint-medium) {
-  :global(.ams-header > .ams-header__branding > .ams-header__logo-link) {
+  :global(
+    .ams-page-header > .ams-page-header__branding > .ams-page-header__logo-link
+  ) {
     width: 14px;
     overflow: hidden;
   }
 
   :global(
-    .ams-header
-      .ams-header__navigation
-      .ams-header__menu
-      .ams-header__mega-menu-button
-      .ams-header__mega-menu-button-label
+    .ams-page-header
+      .ams-page-header__navigation
+      .ams-page-header__menu
+      .ams-page-header__mega-menu-button
+      .ams-page-header__mega-menu-button-label
   ) {
     display: none;
   }
   :global(
-    .ams-header
-      .ams-header__navigation
-      .ams-header__menu
-      .ams-header__mega-menu-button
-      .ams-header__mega-menu-button-hidden-label
+    .ams-page-header
+      .ams-page-header__navigation
+      .ams-page-header__menu
+      .ams-page-header__mega-menu-button
+      .ams-page-header__mega-menu-button-hidden-label
   ) {
     display: none;
   }
 
-  :global(.ams-header .ams-header__navigation .ams-header__menu) {
+  :global(
+    .ams-page-header .ams-page-header__navigation .ams-page-header__menu
+  ) {
     position: absolute;
-    right: var(--ams-space-lg);
+    right: var(--ams-space-l);
     top: 4px;
     column-gap: 0;
   }
@@ -47,7 +55,7 @@
 }
 
 :global(.ams-link).SearchButtonActive {
-  font-weight: var(--ams-header-mega-menu-button-label-open-font-weight);
+  font-weight: var(--ams-page-header-mega-menu-button-label-open-font-weight);
 }
 
 .SearchBarWrap {
@@ -55,7 +63,7 @@
   z-index: z-index(main-header-searchbar);
   left: 0;
   right: 0;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,13 +71,13 @@
 
 .SearchBar {
   width: 100%;
-  padding: var(--ams-space-lg) 0;
+  padding: var(--ams-space-l) 0;
 }
 
 :global(.ams-link).BrandNameLink {
   color: var(--ams-heading-color);
   font-weight: var(--ams-heading-font-weight);
-  font-size: var(--ams-heading-level-4-font-size);
+  font-size: var(--ams-heading-4-font-size);
   line-height: 1.35;
   text-decoration: none;
 }

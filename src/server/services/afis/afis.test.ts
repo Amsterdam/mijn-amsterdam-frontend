@@ -24,14 +24,14 @@ vi.mock('../../../server/helpers/encrypt-decrypt', async (importOriginal) => {
   };
 });
 
-const REQUEST_ID = '456';
 const BASE_ROUTE = '/afis/RESTAdapter';
 
 const ROUTES = {
   businesspartnerBSN: `${BASE_ROUTE}/businesspartner/BSN/`,
   businesspartnerKVK: `${BASE_ROUTE}/businesspartner/KVK/`,
   facturen: (uri: string) => {
-    return decodeURI(uri).includes(`IsCleared eq`);
+    const isFacturenEndpointMatch = uri.includes(`IsCleared+eq`);
+    return isFacturenEndpointMatch;
   },
 };
 

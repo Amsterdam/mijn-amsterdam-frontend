@@ -16,23 +16,14 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
-function isActive(
-  stepIndex: number,
-  aanvraag: ZorgnedAanvraagTransformed,
-  today: Date
-) {
+function isActive(aanvraag: ZorgnedAanvraagTransformed, today: Date) {
   return (
     aanvraag.resultaat === 'afgewezen' ||
-    (isDecisionStatusActive(stepIndex, aanvraag) &&
-      !isDelivered(aanvraag, today))
+    (isDecisionStatusActive(aanvraag) && !isDelivered(aanvraag, today))
   );
 }
 
-function isLeveringGestopt(
-  stepIndex: number,
-  aanvraag: ZorgnedAanvraagTransformed,
-  today: Date
-) {
+function isLeveringGestopt(aanvraag: ZorgnedAanvraagTransformed, today: Date) {
   return (
     isDelivered(aanvraag, today) &&
     (isDeliveryStopped(aanvraag, today) ||
@@ -49,9 +40,8 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     status: 'Levering gestart',
     datePublished: (aanvraag) => aanvraag.datumBeginLevering ?? '',
     isVisible: isDeliveryStepVisible,
-    isChecked: (stepIndex, aanvraag, today: Date) =>
-      isDelivered(aanvraag, today),
-    isActive: (stepIndex, aanvraag, today: Date) =>
+    isChecked: (aanvraag, today: Date) => isDelivered(aanvraag, today),
+    isActive: (aanvraag, today: Date) =>
       aanvraag.isActueel && isDeliveredStatusActive(aanvraag, today),
     description: (aanvraag, today) =>
       isDelivered(aanvraag, today)
@@ -63,11 +53,11 @@ export const diensten: ZorgnedStatusLineItemTransformerConfig[] = [
     datePublished: (aanvraag) => aanvraag.datumEindeLevering ?? '',
     isVisible: isDeliveryStepVisible,
     isChecked: isLeveringGestopt,
-    isActive: (stepIndex, aanvraag, today) =>
+    isActive: (aanvraag, today) =>
       isDeliveryStopped(aanvraag, today) &&
       !isEindeGeldigheidVerstreken(aanvraag.datumEindeGeldigheid, today),
     description: (aanvraag, today) =>
-      isLeveringGestopt(0, aanvraag, today)
+      isLeveringGestopt(aanvraag, today)
         ? `<p>${`${aanvraag.leverancier} heeft ons laten weten dat u geen ${aanvraag.titel} meer krijgt.`}</p>`
         : '',
   },

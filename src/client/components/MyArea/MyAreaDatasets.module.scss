@@ -2,7 +2,7 @@
   // Circle around marker cluster icon (count)
   &:before {
     content: '';
-    background-color: var(--ams-color-primary-blue);
+    background-color: var(--ams-color-interactive);
     border-radius: 50%;
     display: flex;
     height: 100%;
@@ -19,7 +19,7 @@
   right: 0;
   bottom: 0;
   font-size: 1.2rem;
-  color: var(--ams-color-primary-white);
+  color: var(--ams-color-background);
 }
 
 .MarkerIcon {
@@ -38,11 +38,11 @@
   text-align: center;
   top: 1rem;
   background-color: rgba(255, 255, 255, 0.8);
-  color: var(--ams-color-primary-blue);
+  color: var(--ams-color-interactive);
   padding: 0.2rem 1rem;
   font-weight: 500;
   box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--ams-color-primary-blue);
+  border: 1px solid var(--ams-color-interactive);
   white-space: nowrap;
 }
 
@@ -57,7 +57,7 @@
   min-height: 4rem;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
   > p {
-    background-color: var(--ams-color-primary-white);
+    background-color: var(--ams-color-background);
   }
 }
 
@@ -70,7 +70,7 @@
       height: 120%;
       position: absolute;
       display: block;
-      background-color: var(--ams-color-yellow);
+      background-color: var(--ams-color-highlight-yellow);
       // opacity: .8;
       z-index: -1;
       border-radius: 50%;
@@ -90,7 +90,7 @@
       height: 120%;
       position: absolute;
       display: block;
-      background-color: var(--ams-color-primary-red);
+      background-color: var(--ams-color-feedback-error);
       // opacity: .8;
       z-index: -1;
       border-radius: 50%;

@@ -40,18 +40,14 @@ export function ZorgThema() {
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb--sm">
+      <Paragraph className="ams-mb-m">
         Hieronder ziet u uw voorzieningen vanuit de Wet maatschappelijke
         ondersteuning (Wmo).
       </Paragraph>
       <Paragraph>
         Heeft u vragen of wilt u een wijziging doorgeven? <br />
         Bel dan gratis de Wmo Helpdesk:{' '}
-        <Link
-          rel="noreferrer"
-          href={WMO_HELPDESK_HREF_TEL_LINK}
-          variant="inline"
-        >
+        <Link rel="noreferrer" href={WMO_HELPDESK_HREF_TEL_LINK}>
           {WMO_HELPDESK_PHONENUMBER}
         </Link>{' '}
         (maandag tot en met vrijdag van 08.00 tot 18.00 uur) of ga langs bij het

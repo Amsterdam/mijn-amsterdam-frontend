@@ -184,18 +184,18 @@ export function ZaakStatus() {
         <PageContentCell>
           {/* If we have a state error, show only the error, no links to overview because that has a state error as well. */}
           {pageRoute.unResolvedState === STATE_ERROR && (
-            <ErrorAlert className="ams-mb--xs">
+            <ErrorAlert className="ams-mb-s">
               Wij kunnen nu niet alle gegevens tonen, probeer het later nog
               eens.
             </ErrorAlert>
           )}
           {pageRoute.unResolvedState === ITEM_NOT_FOUND && (
             <>
-              <Paragraph className="ams-mb--xs">
+              <Paragraph className="ams-mb-s">
                 Wij kunnen de status van uw aanvraag niet laten zien.
               </Paragraph>
               {queryParams.get('payment') && (
-                <Paragraph className="ams-mb--xs">
+                <Paragraph className="ams-mb-s">
                   U heeft betaald voor deze aanvraag. Het kan even duren voordat
                   uw aanvraag op Mijn Amsterdam te zien is.
                 </Paragraph>

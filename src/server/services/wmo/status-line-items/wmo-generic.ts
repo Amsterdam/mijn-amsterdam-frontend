@@ -1,4 +1,5 @@
 import { isAfter, isSameDay, parseISO } from 'date-fns';
+
 import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import {
   defaultDateFormat,
@@ -130,11 +131,11 @@ export const AANVRAAG: ZorgnedStatusLineItemTransformerConfig = {
 
 export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Meer informatie nodig',
-  isVisible: (_stepIndex, aanvraag) => hasMeerInformatieNodig(aanvraag),
+  isVisible: (aanvraag) => hasMeerInformatieNodig(aanvraag),
   datePublished: (aanvraag) =>
     getDocumentMeerInformatieDate(aanvraag.documenten) ?? '',
   isChecked: () => true,
-  isActive: (_stepIndex, aanvraag) =>
+  isActive: (aanvraag) =>
     hasMeerInformatieNodig(aanvraag) && !hasDecision(aanvraag),
   description: () => {
     return `<p>Wij kunnen uw aanvraag nog niet beoordelen. U moet meer informatie aanleveren. Dat kan op 2 manieren:</p>
@@ -149,8 +150,8 @@ export const MEER_INFORMATIE: ZorgnedStatusLineItemTransformerConfig = {
 export const IN_BEHANDELING: ZorgnedStatusLineItemTransformerConfig = {
   status: 'In behandeling',
   datePublished: (aanvraag) => aanvraag.datumBesluit || '', // NOTE: Zorgneds datumAfgifte is used by OJZD to set status to  "In behandeling"
-  isChecked: (_stepIndex, aanvraag) => !!aanvraag.datumBesluit,
-  isActive: (_stepIndex, aanvraag) =>
+  isChecked: (aanvraag) => !!aanvraag.datumBesluit,
+  isActive: (aanvraag) =>
     !!aanvraag.datumBesluit &&
     !hasDecision(aanvraag) &&
     !hasMeerInformatieNodig(aanvraag),
@@ -166,9 +167,9 @@ export function getTransformerConfigBesluit(
   return {
     status: 'Besluit genomen',
     datePublished: (aanvraag) => getDecisionDate(aanvraag) ?? '',
-    isChecked: (_stepIndex, aanvraag) => hasDecision(aanvraag),
+    isChecked: (aanvraag) => hasDecision(aanvraag),
     isActive: isActive,
-    isVisible: (_stepIndex, aanvraag) => {
+    isVisible: (aanvraag) => {
       return (
         getDecisionDocument(aanvraag.documenten)?.id !==
         FAKE_DECISION_DOCUMENT_ID
@@ -193,11 +194,11 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig = {
   status: 'Einde recht',
   datePublished: (aanvraag) =>
     (aanvraag.isActueel ? '' : aanvraag.datumEindeGeldigheid) || '',
-  isVisible: (_stepIndex, aanvraag, today, allAanvragen) => {
+  isVisible: (aanvraag) => {
     return hasDecision(aanvraag) && aanvraag.resultaat !== 'afgewezen';
   },
-  isChecked: (_stepIndex, aanvraag) => aanvraag.isActueel === false,
-  isActive: (_stepIndex, aanvraag, today) => aanvraag.isActueel === false,
+  isChecked: (aanvraag) => aanvraag.isActueel === false,
+  isActive: (aanvraag) => aanvraag.isActueel === false,
   description: (aanvraag) =>
     `<p>${
       aanvraag.isActueel
@@ -261,10 +262,7 @@ export function isDeliveredStatusActive(
   );
 }
 
-export function isDecisionStatusActive(
-  _stepIndex: number,
-  aanvraag: ZorgnedAanvraagTransformed
-) {
+export function isDecisionStatusActive(aanvraag: ZorgnedAanvraagTransformed) {
   if (aanvraag.resultaat === 'toegewezen') {
     return (
       hasDecision(aanvraag) &&
@@ -277,20 +275,18 @@ export function isDecisionStatusActive(
 }
 
 export function isDecisionWithDeliveryStatusActive(
-  _stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ) {
   return (
     aanvraag.resultaat === 'afgewezen' ||
-    (isDecisionStatusActive(_stepIndex, aanvraag) &&
+    (isDecisionStatusActive(aanvraag) &&
       !isOpdrachtGegeven(aanvraag, today) &&
       !isDelivered(aanvraag, today))
   );
 }
 
 export function isDeliveryStepVisible(
-  _stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ) {
@@ -315,7 +311,6 @@ export function isOpdrachtGegeven(
 }
 
 export function isOpdrachtGegevenVisible(
-  _stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ) {
@@ -330,7 +325,6 @@ export function isOpdrachtGegevenVisible(
 }
 
 export function isGeleverdVisible(
-  _stepIndex: number,
   aanvraag: ZorgnedAanvraagTransformed,
   today: Date
 ) {

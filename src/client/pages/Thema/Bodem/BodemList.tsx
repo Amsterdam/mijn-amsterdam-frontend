@@ -11,7 +11,6 @@ export function BodemList() {
     sort,
     title,
     displayProps,
-    params,
     breadcrumbs,
     listPageRoute,
     routeConfig,
@@ -23,7 +22,6 @@ export function BodemList() {
       items={items.filter(filter).sort(sort)}
       title={title}
       appRoute={listPageRoute}
-      appRouteParams={params}
       breadcrumbs={breadcrumbs}
       displayProps={displayProps}
       isLoading={isLoading}

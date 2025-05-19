@@ -46,7 +46,7 @@ exports[`ZaakStatus > No query params passed 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
         </h3>
@@ -59,7 +59,7 @@ exports[`ZaakStatus > No query params passed 1`] = `
         class="ams-paragraph"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link _MaLink_aa758a"
           href="/"
         >
           Ga naar het dashboard
@@ -116,7 +116,7 @@ exports[`ZaakStatus > should show error alert 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
         </h3>
@@ -126,13 +126,13 @@ exports[`ZaakStatus > should show error alert 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
-        class="ams-alert ams-alert--error ams-mb--xs"
+        class="ams-alert ams-alert--error ams-mb-s"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-alert__severity-indicator"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--inverse ams-icon--heading-4"
           >
             <svg
               aria-hidden="true"
@@ -152,11 +152,15 @@ exports[`ZaakStatus > should show error alert 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--level-4"
+          <div
+            class="ams-row ams-row--align-between ams-row--align-vertical-start"
           >
-            Foutmelding
-          </h2>
+            <h4
+              class="ams-heading ams-heading--4"
+            >
+              Foutmelding
+            </h4>
+          </div>
           <p
             class="ams-paragraph"
           >
@@ -168,7 +172,7 @@ exports[`ZaakStatus > should show error alert 1`] = `
         class="ams-paragraph"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link _MaLink_aa758a"
           href="/"
         >
           Ga naar het dashboard
@@ -225,7 +229,7 @@ exports[`ZaakStatus > should show not found message 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
         </h3>
@@ -235,7 +239,7 @@ exports[`ZaakStatus > should show not found message 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
-        class="ams-paragraph ams-mb--xs"
+        class="ams-paragraph ams-mb-s"
       >
         Wij kunnen de status van uw aanvraag niet laten zien.
       </p>
@@ -243,7 +247,7 @@ exports[`ZaakStatus > should show not found message 1`] = `
         class="ams-paragraph"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link _MaLink_aa758a"
           href="/vergunningen"
         >
           Bekijk het overzicht
@@ -300,7 +304,7 @@ exports[`ZaakStatus > should show wachten op betaling 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
         </h3>
@@ -310,12 +314,12 @@ exports[`ZaakStatus > should show wachten op betaling 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <p
-        class="ams-paragraph ams-mb--xs"
+        class="ams-paragraph ams-mb-s"
       >
         Wij kunnen de status van uw aanvraag niet laten zien.
       </p>
       <p
-        class="ams-paragraph ams-mb--xs"
+        class="ams-paragraph ams-mb-s"
       >
         U heeft betaald voor deze aanvraag. Het kan even duren voordat uw aanvraag op Mijn Amsterdam te zien is.
       </p>
@@ -323,7 +327,7 @@ exports[`ZaakStatus > should show wachten op betaling 1`] = `
         class="ams-paragraph"
       >
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link _MaLink_aa758a"
           href="/vergunningen"
         >
           Bekijk het overzicht

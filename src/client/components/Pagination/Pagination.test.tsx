@@ -4,39 +4,56 @@ import { describe, it, expect, vi } from 'vitest';
 
 import { PaginationV2 } from './PaginationV2';
 
+const mocks = vi.hoisted(() => {
+  return {
+    navigate: vi.fn(),
+  };
+});
+
+vi.mock('react-router', async (importOriginal) => {
+  const module: object = await importOriginal();
+  return {
+    ...module,
+    useNavigate: () => mocks.navigate,
+  };
+});
+
 describe('<Pagination />', () => {
-  const onPageClick = vi.fn();
   it('Renders without crashing', async () => {
     const user = userEvent.setup();
 
     const { rerender } = render(
       <PaginationV2
         totalCount={10}
-        onPageClick={onPageClick}
         pageSize={2}
         currentPage={1}
+        path="/thema/lijst"
       />
     );
-    expect(screen.getByText('Pagina 1')).toBeInTheDocument();
+    expect(screen.getAllByText('Pagina 1')[0]).toBeInTheDocument();
     expect(
-      screen.getByText('Pagina 1').parentElement?.getAttribute('aria-current')
-    ).toBe('true');
-    expect(screen.getByText('Ga naar pagina 2')).toBeInTheDocument();
+      screen
+        .getAllByText('Pagina 1')[0]
+        .parentElement?.parentElement?.getAttribute('aria-current')
+    ).toBe('page');
+    expect(screen.getAllByText('Ga naar pagina 2')[0]).toBeInTheDocument();
 
-    await user.click(screen.getByText('Ga naar pagina 2'));
-    expect(onPageClick).toHaveBeenCalledWith(2);
+    await user.click(screen.getAllByText('Ga naar pagina 2')[0]);
+    expect(mocks.navigate).toHaveBeenCalledWith('/thema/lijst/2');
 
     rerender(
       <PaginationV2
         totalCount={10}
-        onPageClick={onPageClick}
         pageSize={2}
         currentPage={2}
+        path="/thema/lijst"
       />
     );
-    expect(screen.getByText('Pagina 2')).toBeInTheDocument();
+    expect(screen.getAllByText('Pagina 2')[0]).toBeInTheDocument();
     expect(
-      screen.getByText('Pagina 2').parentElement?.getAttribute('aria-current')
-    ).toBe('true');
+      screen
+        .getAllByText('Pagina 2')[0]
+        .parentElement?.parentElement?.getAttribute('aria-current')
+    ).toBe('page');
   });
 });

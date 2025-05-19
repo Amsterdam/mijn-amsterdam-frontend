@@ -6,7 +6,7 @@ import {
   EmailIcon,
   PhoneIcon,
 } from '@amsterdam/design-system-react-icons';
-import { useParams } from 'react-router';
+import { generatePath, useParams } from 'react-router';
 
 import {
   contactmomentenDisplayProps,
@@ -59,7 +59,7 @@ function addIcon(type: string) {
   if (icons[type]) {
     return (
       <span className={styles.IconWithLabel}>
-        <Icon svg={icons[type]} size="level-5" /> {type}
+        <Icon svg={icons[type]} size="heading-5" /> {type}
       </span>
     );
   }
@@ -93,5 +93,8 @@ export function useContactmomenten() {
     routeConfig,
     breadcrumbs,
     routeParams,
+    listPageRoute: generatePath(routeConfig.listPageContactmomenten.path, {
+      page: null,
+    }),
   };
 }

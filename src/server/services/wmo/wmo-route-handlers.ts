@@ -6,7 +6,7 @@ export async function fetchZorgnedJZDDocument(
   documentId: string
 ) {
   const response = fetchDocument(
-    authProfileAndToken,
+    authProfileAndToken.profile.id,
     'ZORGNED_JZD',
     documentId
   );

@@ -184,7 +184,7 @@ describe('pcvergoeding', () => {
             },
           ],
         } as ZorgnedAanvraagWithRelatedPersonsTransformed)
-      ).toMatchInlineSnapshot(`""`);
+      ).toBe(null);
     });
 
     test('Name known multiple, 1 dateOfBirth', () => {

@@ -10,17 +10,17 @@ exports[`<Landing /> > Renders without crashing 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h1
-        class="ams-heading ams-heading--level-1 ams-mb--sm"
+        class="ams-heading ams-heading--1 ams-mb-m"
       >
         Welkom op Mijn Amsterdam
       </h1>
       <p
-        class="ams-paragraph ams-mb--sm"
+        class="ams-paragraph ams-mb-m"
       >
         Uw Amsterdamse zaken op 1 plek.
       </p>
       <h3
-        class="ams-heading ams-heading--level-3 ams-mb--xs"
+        class="ams-heading ams-heading--3 ams-mb-s"
       >
         Voor particulieren en eenmanszaken
       </h3>
@@ -28,7 +28,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         class="ams-paragraph"
       >
         <a
-          class="_LoginBtn_39d0ac"
+          class="_LoginBtn_39d0ac _LoginBtn--digid_39d0ac"
           href="http://bff-api-host/auth/digid/login"
           rel="noopener noreferrer"
           role="button"
@@ -62,13 +62,13 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         </a>
       </p>
       <p
-        class="ams-paragraph ams-mb--md"
+        class="ams-paragraph ams-mb-l"
       >
         Hebt u nog geen DigiD? Regel dit dan eerst.
         <br />
         Ga naar 
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link"
           href="https://www.digid.nl/aanvragen-en-activeren/digid-aanvragen"
           rel="noopener noreferrer"
         >
@@ -76,7 +76,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         </a>
       </p>
       <h3
-        class="ams-heading ams-heading--level-3 ams-mb--xs"
+        class="ams-heading ams-heading--3 ams-mb-s"
       >
         Voor ondernemers
       </h3>
@@ -140,13 +140,13 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         </a>
       </p>
       <p
-        class="ams-paragraph ams-mb--md"
+        class="ams-paragraph ams-mb-l"
       >
         U heeft eHerkenning niveau 3 nodig om in te loggen.
         <br />
         Ga naar 
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link"
           href="https://eherkenning.nl"
           rel="noopener noreferrer"
         >
@@ -155,16 +155,16 @@ exports[`<Landing /> > Renders without crashing 1`] = `
          voor meer informatie.
       </p>
       <h4
-        class="ams-heading ams-heading--level-4"
+        class="ams-heading ams-heading--4"
       >
         Vragen over Mijn Amsterdam?
       </h4>
       <p
-        class="ams-paragraph ams-mb--md"
+        class="ams-paragraph ams-mb-l"
       >
         Kijk bij 
         <a
-          class="ams-link ams-link--standalone"
+          class="ams-link"
           href="https://www.amsterdam.nl/veelgevraagd/mijn-amsterdam-b5077"
           rel="noopener noreferrer"
         >

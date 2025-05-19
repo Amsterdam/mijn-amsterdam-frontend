@@ -180,6 +180,8 @@ describe('HLI', () => {
           bsn: '',
           dateOfBirth: null,
           dateOfBirthFormatted: null,
+          partnernaam: null,
+          partnervoorvoegsel: null,
         },
       ],
       betrokkenen: [],
@@ -231,6 +233,8 @@ describe('HLI', () => {
             bsn: '',
             dateOfBirth: null,
             dateOfBirthFormatted: null,
+            partnernaam: null,
+            partnervoorvoegsel: null,
           },
         ],
         betrokkenen: [],
@@ -287,6 +291,16 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '1',
+        betrokkenen: [],
+        datumAanvraag: '',
+        datumBeginLevering: null,
+        datumBesluit: '',
+        datumEindeLevering: null,
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: '',
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -303,6 +317,16 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '2',
+        betrokkenen: [],
+        datumAanvraag: '',
+        datumBeginLevering: null,
+        datumBesluit: '',
+        datumEindeLevering: null,
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: '',
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -319,6 +343,16 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '3',
+        betrokkenen: [],
+        datumAanvraag: '',
+        datumBeginLevering: null,
+        datumBesluit: '',
+        datumEindeLevering: null,
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: '',
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -335,6 +369,16 @@ describe('HLI', () => {
         resultaat: 'toegewezen',
         isActueel: true,
         id: '4',
+        betrokkenen: [],
+        datumAanvraag: '',
+        datumBeginLevering: null,
+        datumBesluit: '',
+        datumEindeLevering: null,
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: '',
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);
@@ -351,6 +395,16 @@ describe('HLI', () => {
         resultaat: 'afgewezen',
         isActueel: true,
         id: '4',
+        betrokkenen: [],
+        datumAanvraag: '',
+        datumBeginLevering: null,
+        datumBesluit: '',
+        datumEindeLevering: null,
+        datumOpdrachtLevering: null,
+        datumToewijzing: null,
+        leverancier: '',
+        leveringsVorm: '',
+        productsoortCode: '',
       };
 
       const result = forTesting.transformRegelingTitle(aanvraag);

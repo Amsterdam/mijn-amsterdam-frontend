@@ -30,7 +30,6 @@ export function HLIList() {
         items={regelingen.filter(filter).sort(sort)}
         title={title}
         appRoute={listPageRoute}
-        appRouteParams={{ kind }}
         breadcrumbs={breadcrumbs}
         displayProps={displayProps}
         isLoading={isLoading}

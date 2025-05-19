@@ -1,13 +1,12 @@
 import { Fragment, ReactNode } from 'react';
 
 import {
-  Footer,
   Grid,
   Heading,
   Icon,
   Link,
   LinkList,
-  PageMenu,
+  PageFooter,
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
@@ -26,14 +25,14 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 function FooterBlock({ id, title, links, description }: FooterBlockProps) {
   return (
     <Grid.Cell key={title} span={4}>
-      <Heading inverseColor level={4} className="ams-mb--xs">
+      <Heading color="inverse" level={4} className="ams-mb-s">
         {title}
       </Heading>
       {!!description && getEl(id, description)}
       {!!links.length && (
         <LinkList>
           {links.map((link) => (
-            <LinkList.Link key={link.to} inverseColor href={link.to}>
+            <LinkList.Link key={link.to} color="inverse" href={link.to}>
               {link.title}
             </LinkList.Link>
           ))}
@@ -63,32 +62,28 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
     switch (astElement.name) {
       case 'a':
         return (
-          <Link
-            inverseColor
-            variant="standalone"
-            href={String(astElement.attrs?.href || '#')}
-          >
+          <Link color="inverse" href={String(astElement.attrs?.href || '#')}>
             {children}
           </Link>
         );
       case 'p':
         return (
           <Paragraph
-            inverseColor
-            className={classnames('ams-mb--md', styles.Paragraph)}
+            color="inverse"
+            className={classnames('ams-mb-l', styles.Paragraph)}
           >
             {children}
           </Paragraph>
         );
       case 'h3':
         return (
-          <Heading inverseColor level={4} className="ams-mb--xs">
+          <Heading color="inverse" level={4} className="ams-mb-s">
             {children}
           </Heading>
         );
       case 'ul':
         return (
-          <UnorderedList inverseColor markers={false}>
+          <UnorderedList color="inverse" markers={false}>
             {children}
           </UnorderedList>
         );
@@ -96,7 +91,7 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
         return (
           <UnorderedList.Item className={styles.Link}>
             <div className={styles.FakeFooterLink}>
-              <Icon svg={ChevronRightIcon} size="level-5" />
+              <Icon svg={ChevronRightIcon} size="heading-5" />
               {children}
             </div>
           </UnorderedList.Item>
@@ -126,29 +121,24 @@ export function MainFooter({
   useCMSApi(isAuthenticated);
 
   return (
-    <Footer>
-      <Footer.Top>
-        <Grid gapVertical="large" paddingVertical="medium">
+    <PageFooter>
+      <PageFooter.Spotlight>
+        <Grid gapVertical="large" paddingVertical="large">
           {footer?.blocks.map((footerItem) => (
             <FooterBlock key={footerItem.id} {...footerItem} />
           ))}
         </Grid>
-      </Footer.Top>
-      <Footer.Bottom className={styles.BottomBar}>
-        <Grid paddingVertical="small">
-          <Grid.Cell span="all">
-            <PageMenu>
-              {footer?.sub.map((link) => {
-                return (
-                  <PageMenu.Link key={link.title} href={link.to}>
-                    {link.title}
-                  </PageMenu.Link>
-                );
-              })}
-            </PageMenu>
-          </Grid.Cell>
-        </Grid>
-      </Footer.Bottom>
-    </Footer>
+      </PageFooter.Spotlight>
+
+      <PageFooter.Menu>
+        {footer?.sub.map((link) => {
+          return (
+            <PageFooter.MenuLink key={link.title} href={link.to}>
+              {link.title}
+            </PageFooter.MenuLink>
+          );
+        })}
+      </PageFooter.Menu>
+    </PageFooter>
   );
 }

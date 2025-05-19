@@ -34,20 +34,20 @@ export function LandingPage() {
         className={styles.LandingPageContent}
       >
         <PageContentCell>
-          <Heading level={1} className="ams-mb--sm">
+          <Heading level={1} className="ams-mb-m">
             Welkom op Mijn Amsterdam
           </Heading>
-          <Paragraph className="ams-mb--sm">
+          <Paragraph className="ams-mb-m">
             Uw Amsterdamse zaken op 1 plek.
           </Paragraph>
           <MaintenanceNotifications
             fromApiDirectly={true}
             page="landingspagina"
-            className="ams-mb--sm"
+            className="ams-mb-m"
           />
 
           {FeatureToggle.eherkenningActive && (
-            <Heading className="ams-mb--xs" level={3}>
+            <Heading className="ams-mb-s" level={3}>
               Voor particulieren en eenmanszaken
             </Heading>
           )}
@@ -60,6 +60,7 @@ export function LandingPage() {
               rel="noopener noreferrer"
               className={classnames(
                 styles.LoginBtn,
+                styles['LoginBtn--digid'],
                 isRedirectingAny && styles.LoginBtnDisabled
               )}
             >
@@ -71,7 +72,7 @@ export function LandingPage() {
               </span>
             </a>
           </Paragraph>
-          <Paragraph className="ams-mb--md">
+          <Paragraph className="ams-mb-l">
             Hebt u nog geen DigiD? Regel dit dan eerst.
             <br />
             Ga naar{' '}
@@ -85,7 +86,7 @@ export function LandingPage() {
 
           {FeatureToggle.eherkenningActive && (
             <>
-              <Heading className="ams-mb--xs" level={3}>
+              <Heading className="ams-mb-s" level={3}>
                 Voor ondernemers
               </Heading>
               <Paragraph>
@@ -116,7 +117,7 @@ export function LandingPage() {
                   </span>
                 </a>
               </Paragraph>
-              <Paragraph className="ams-mb--md">
+              <Paragraph className="ams-mb-l">
                 U heeft eHerkenning niveau 3 nodig om in te loggen.
                 <br />
                 Ga naar{' '}
@@ -129,7 +130,7 @@ export function LandingPage() {
           )}
 
           <Heading level={4}>Vragen over Mijn Amsterdam?</Heading>
-          <Paragraph className="ams-mb--md">
+          <Paragraph className="ams-mb-l">
             Kijk bij{' '}
             <Link
               rel="noopener noreferrer"

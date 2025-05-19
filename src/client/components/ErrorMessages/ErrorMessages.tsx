@@ -44,7 +44,6 @@ export function ErrorMessagesContent({
       )}
     >
       <Alert
-        severity="info"
         className={styles.MessageBar}
         closeable
         closeButtonLabel="Verberg bericht"
@@ -70,7 +69,7 @@ export function ErrorMessagesContent({
         pollingQuerySelector="#ok-button"
         actions={
           <div>
-            <Paragraph className="ams-mb--sm">
+            <Paragraph className="ams-mb-m">
               Probeer het later nog eens.{' '}
               {isAllErrorMessage ? (
                 <Link rel="noopener noreferrer" href={LOGOUT_URL}>

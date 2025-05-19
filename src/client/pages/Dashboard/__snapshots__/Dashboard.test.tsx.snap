@@ -32,7 +32,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h2
-        class="ams-heading ams-heading--level-3 ams-mb--sm"
+        class="ams-heading ams-heading--3 ams-mb-m"
       >
         Recente berichten 
       </h2>
@@ -40,14 +40,14 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         class="ams-ordered-list ams-ordered-list--no-markers"
       >
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Notification
               </h4>
@@ -72,7 +72,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 Notificatie1
               </p>
@@ -80,7 +80,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="/item-1"
                   title="Meer informatie over de melding: Notification"
                 >
@@ -91,14 +91,14 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Notification
               </h4>
@@ -123,7 +123,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 Notificatie2
               </p>
@@ -131,7 +131,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="/item-2"
                   title="Meer informatie over de melding: Notification"
                 >
@@ -142,14 +142,14 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Notification
               </h4>
@@ -174,7 +174,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 Notificatie3
               </p>
@@ -182,7 +182,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="/item-3"
                   title="Meer informatie over de melding: Notification"
                 >
@@ -193,14 +193,14 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           </article>
         </li>
         <li
-          class="ams-ordered-list__item ams-mb--sm"
+          class="ams-ordered-list__item ams-mb-m"
         >
           <article>
             <header
-              class="ams-mb--xs"
+              class="ams-mb-s"
             >
               <h4
-                class="ams-heading ams-heading--level-4"
+                class="ams-heading ams-heading--4"
               >
                 Welkom op Mijn Amsterdam!
               </h4>
@@ -219,7 +219,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
               class="_Body_e4b76a"
             >
               <p
-                class="ams-paragraph ams-mb--xs"
+                class="ams-paragraph ams-mb-s"
               >
                 <span>
                   
@@ -287,7 +287,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
-                  class="ams-link ams-link--standalone"
+                  class="ams-link _MaLink_aa758a"
                   href="#"
                   title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                 >
@@ -303,25 +303,25 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-5-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-8-wide"
     >
       <h2
-        class="ams-heading ams-heading--level-3 ams-mb--sm"
+        class="ams-heading ams-heading--3 ams-mb-m"
       >
         Mijn thema's
       </h2>
       <ul
-        class="ams-unordered-list ams-unordered-list--no-markers ams-mb--sm _LinkList_db9f57"
+        class="ams-unordered-list ams-unordered-list--no-markers ams-mb-m _LinkList_db9f57"
       >
         <li
           class="ams-unordered-list__item"
         >
           <a
-            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+            class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
             href="https://belastingbalie.amsterdam.nl"
           >
             <span
               class="_ThemaLink_db9f57"
             >
               <span
-                class="ams-icon ams-icon--size-4 ams-icon--square"
+                class="ams-icon ams-icon--heading-4 ams-icon--square _ThemaLinkIcon_db9f57"
               >
                 <svg
                   aria-label="belasting-icoon"
@@ -344,7 +344,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   />
                 </svg>
               </span>
-               Belastingen
+              Belastingen
             </span>
           </a>
         </li>
@@ -352,14 +352,14 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           class="ams-unordered-list__item"
         >
           <a
-            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+            class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
             href="/inkomen"
           >
             <span
               class="_ThemaLink_db9f57"
             >
               <span
-                class="ams-icon ams-icon--size-4 ams-icon--square"
+                class="ams-icon ams-icon--heading-4 ams-icon--square _ThemaLinkIcon_db9f57"
               >
                 <svg
                   aria-label="inkomen-icoon"
@@ -382,7 +382,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   />
                 </svg>
               </span>
-               Inkomen
+              Inkomen
             </span>
           </a>
         </li>
@@ -390,14 +390,14 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           class="ams-unordered-list__item"
         >
           <a
-            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+            class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
             href="https://ontheffingen.amsterdam.nl/publiek/aanvragen"
           >
             <span
               class="_ThemaLink_db9f57"
             >
               <span
-                class="ams-icon ams-icon--size-4 ams-icon--square"
+                class="ams-icon ams-icon--heading-4 ams-icon--square _ThemaLinkIcon_db9f57"
               >
                 <svg
                   aria-label="Milieuzone"
@@ -413,7 +413,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   />
                 </svg>
               </span>
-               Milieuzone
+              Milieuzone
             </span>
           </a>
         </li>
@@ -421,14 +421,14 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
           class="ams-unordered-list__item"
         >
           <a
-            class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+            class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
             href="http://remote-api-host/sso/portaal/parkeren"
           >
             <span
               class="_ThemaLink_db9f57"
             >
               <span
-                class="ams-icon ams-icon--size-4 ams-icon--square"
+                class="ams-icon ams-icon--heading-4 ams-icon--square _ThemaLinkIcon_db9f57"
               >
                 <svg
                   aria-hidden="true"
@@ -442,13 +442,13 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                   />
                 </svg>
               </span>
-               Parkeren
+              Parkeren
             </span>
           </a>
         </li>
       </ul>
       <a
-        class="ams-link ams-link--standalone"
+        class="ams-link _MaLink_aa758a"
         href="/uitleg"
       >
         Dit ziet u in Mijn Amsterdam
@@ -472,7 +472,7 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
         class="_NavLinkContentWrap_f20b21"
       >
         <h3
-          class="ams-heading ams-heading--level-3"
+          class="ams-heading ams-heading--3"
         >
           Mijn buurt
         </h3>

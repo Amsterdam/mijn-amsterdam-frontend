@@ -5,7 +5,7 @@
   // TODO: Find a way to use the h4 style without re-declaring
   &__title {
     font-family: var(--ams-heading-font-family);
-    font-weight: var(--ams-text-font-weight-bold);
+    font-weight: var(--ams-typography-body-text-bold-font-weight);
   }
 
   @media screen and (min-width: $ams-breakpoint-medium) {
@@ -20,7 +20,7 @@
   &__description {
     padding: 0;
     margin: 0;
-    margin-bottom: var(--ams-space-lg);
+    margin-bottom: var(--ams-space-l);
 
     .has-horizontal-rows & {
       margin: 0;

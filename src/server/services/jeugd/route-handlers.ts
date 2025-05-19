@@ -6,7 +6,7 @@ export async function fetchZorgnedLLVDocument(
   documentId: string
 ) {
   const response = fetchDocument(
-    authProfileAndToken,
+    authProfileAndToken.profile.id,
     'ZORGNED_LEERLINGENVERVOER',
     documentId
   );

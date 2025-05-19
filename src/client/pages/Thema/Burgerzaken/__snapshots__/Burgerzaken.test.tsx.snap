@@ -46,7 +46,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Paspoort en ID-kaart
         </h3>
@@ -74,7 +74,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
             rel="noreferrer"
           >
             <span
-              class="ams-icon ams-icon--size-5"
+              class="ams-icon"
             >
               <svg
                 aria-hidden="true"
@@ -97,7 +97,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <h3
-        class="ams-heading ams-heading--level-2"
+        class="ams-heading ams-heading--2"
       >
         Identiteitsbewijzen
       </h3>
@@ -135,7 +135,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
                 class="ams-table__cell"
               >
                 <a
-                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
                   href="/burgerzaken/paspoort/een-hash-van-documentnummer-1"
                   title="Bekijk meer over paspoort"
                 >
@@ -155,7 +155,7 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
                 class="ams-table__cell"
               >
                 <a
-                  class="ams-link ams-link--standalone _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
                   href="/burgerzaken/europese-identiteitskaart/een-hash-van-documentnummer-2"
                   title="Bekijk meer over europese identiteitskaart"
                 >

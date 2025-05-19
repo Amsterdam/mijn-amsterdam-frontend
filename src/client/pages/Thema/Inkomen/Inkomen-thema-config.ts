@@ -131,7 +131,7 @@ export const wpiLinks = {
     'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
   TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   TONK: 'https://www.amsterdam.nl/tonk/',
-  BBZ: 'https://www.amsterdam.nl/bbz/',
+  BBZ: 'https://www.amsterdam.nl/ondernemen/ondersteuning/bijstand-lening-aanvragen-ondernemers/',
 };
 
 export const linkListItems: LinkProps[] = [
@@ -157,7 +157,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.lopend,
-      page: ':page?',
+      page: null,
     }),
   },
   [listPageParamKind.eerder]: {
@@ -171,7 +171,7 @@ export const tableConfig = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.eerder,
-      page: ':page?',
+      page: null,
     }),
   },
 } as const;
@@ -183,7 +183,7 @@ export const tableConfigSpecificaties = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routeConfig.listPageSpecificaties.path, {
       kind: listPageParamKind.uitkering,
-      page: ':page?',
+      page: null,
     }),
   },
   [listPageParamKind.jaaropgaven]: {
@@ -192,7 +192,7 @@ export const tableConfigSpecificaties = {
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     listPageRoute: generatePath(routeConfig.listPageSpecificaties.path, {
       kind: listPageParamKind.jaaropgaven,
-      page: ':page?',
+      page: null,
     }),
   },
 } as const;

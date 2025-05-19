@@ -30,7 +30,7 @@ export function BFF500Error() {
       <PageContentV2 id="skip-to-id-AppContent">
         <PageHeadingV2>500 - Api Error</PageHeadingV2>
         <PageContentCell>
-          <Paragraph className="ams-mb--xl">
+          <Paragraph className="ams-mb-xl">
             Er is een fout opgetreden in de communicatie met de server.{' '}
             <MaRouterLink href="/">Ga verder naar home.</MaRouterLink>
             {!IS_PRODUCTION && (

@@ -38,10 +38,10 @@ export function MaLink({
   onClick,
   ...rest
 }: MaLinkProps) {
-  let className_ = className;
+  let className_ = classNames(className, styles.MaLink);
 
   if (maVariant) {
-    className_ = classNames(className, styles[maClassName[maVariant]]);
+    className_ = classNames(className_, styles[maClassName[maVariant]]);
   }
 
   return (

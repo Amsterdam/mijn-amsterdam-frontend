@@ -26,7 +26,7 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
         <PageContentCell>
           {voorziening?.disclaimer && (
             <ErrorAlert
-              className="ams-mb--sm"
+              className="ams-mb-m"
               severity="warning"
               title="Belangrijk om te weten"
             >

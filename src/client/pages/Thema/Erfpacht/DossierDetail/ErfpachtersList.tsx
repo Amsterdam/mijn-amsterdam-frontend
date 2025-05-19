@@ -77,7 +77,6 @@ export function ErfpachtersList({
                 {relatie.relatieNaam}{' '}
                 {hasBetalerWijzigenLink ? (
                   <WijzigenLink
-                    linkVariant="inList"
                     relatieCode={relatieCode}
                     dossierNummer={dossierNummer}
                     debiteurNummer={debiteurNummer}

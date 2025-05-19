@@ -123,7 +123,7 @@ export function AfisBetaalVoorkeuren() {
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb--sm">
+      <Paragraph className="ams-mb-m">
         Hieronder kunt u uw facturatiegegevens bekijken en een automatische
         incasso instellen per afdeling van de gemeente. Wil u uw
         facturatiegegevens wijzigen, stuur dan een email naar{' '}
@@ -139,7 +139,7 @@ export function AfisBetaalVoorkeuren() {
           <Heading level={3} size="level-5">
             Via automatische incasso betalen
           </Heading>
-          <Paragraph className="ams-mb--sm">
+          <Paragraph className="ams-mb-m">
             Download{' '}
             <Link
               rel="noreferrer noopener"
@@ -151,7 +151,7 @@ export function AfisBetaalVoorkeuren() {
             incasseren en vul uw gegevens in. Het debiteurennummer is niet
             verplicht. Onderteken het formulier en stuur het naar:
           </Paragraph>
-          <Paragraph className="ams-mb--sm">
+          <Paragraph className="ams-mb-m">
             Gemeente Amsterdam
             <br />
             Debiteurenadministratie

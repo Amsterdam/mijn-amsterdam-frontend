@@ -189,7 +189,7 @@ export function AddressDisplayAndModal({
 }: AddressDisplayAndModalProps) {
   return (
     <>
-      <span className={classNames(styles.Address, 'ams-mb--xs')}>
+      <span className={classNames(styles.Address, 'ams-mb-s')}>
         {label ?? address}
       </span>
       <LocationModal address={address} label={label ?? address} />

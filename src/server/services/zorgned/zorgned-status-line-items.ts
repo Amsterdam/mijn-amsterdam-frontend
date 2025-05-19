@@ -68,7 +68,7 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
 
   if (!lineItemTransformer) {
     logger.error(
-      `No line item formatters found for Service: ${serviceName}, leveringsVorm: ${aanvraagTransformed.leveringsVorm}, productsoortCode: ${aanvraagTransformed.productsoortCode}`
+      `No line item formatters found for Service: ${serviceName}, leveringsVorm: ${aanvraagTransformed.leveringsVorm}, productsoortCode: ${aanvraagTransformed.productsoortCode}, productIdentificatie: ${aanvraagTransformed.productIdentificatie}`
     );
     return null;
   }
@@ -92,25 +92,30 @@ export function getStatusLineItems<T extends ZorgnedAanvraagTransformed>(
           allAanvragenTransformed
         ),
         datePublished,
-        isActive: statusItem.isActive(
-          index,
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        ),
-        isChecked: statusItem.isChecked(
-          index,
-          aanvraagTransformed,
-          today,
-          allAanvragenTransformed
-        ),
+        isActive:
+          typeof statusItem.isActive === 'function'
+            ? statusItem.isActive(
+                aanvraagTransformed,
+                today,
+                allAanvragenTransformed
+              )
+            : statusItem.isActive,
+        isChecked:
+          typeof statusItem.isChecked === 'function'
+            ? statusItem.isChecked(
+                aanvraagTransformed,
+                today,
+                allAanvragenTransformed
+              )
+            : statusItem.isChecked,
         isVisible: statusItem.isVisible
-          ? statusItem.isVisible(
-              index,
-              aanvraagTransformed,
-              today,
-              allAanvragenTransformed
-            )
+          ? typeof statusItem.isVisible === 'function'
+            ? statusItem.isVisible(
+                aanvraagTransformed,
+                today,
+                allAanvragenTransformed
+              )
+            : statusItem.isVisible
           : true,
         documents: [], // NOTE: Assigned in specific service transformers.
       };
