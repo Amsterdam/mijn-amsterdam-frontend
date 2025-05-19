@@ -190,7 +190,7 @@ export function ToeristischeVerhuurDetail() {
                                 className={
                                   vergunning.title ===
                                   'Vergunning bed & breakfast'
-                                    ? 'ams-mb--sm'
+                                    ? 'ams-mb-s'
                                     : ''
                                 }
                               />
