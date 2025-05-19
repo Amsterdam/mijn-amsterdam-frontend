@@ -1,4 +1,6 @@
-import outdent from 'outdent';
-export function htmlTextContent(stringTemplate: string) {
-  return outdent.string(stringTemplate).replaceAll(/\n/g, ' ').trim();
+export function sanitizeStringTemplate(stringTemplate: string) {
+  return stringTemplate
+    .trim()
+    .replace(/[\r\n\t]+/g, '')
+    .replace(/\s\s+/g, ' ');
 }

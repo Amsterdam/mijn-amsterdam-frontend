@@ -21,8 +21,6 @@ import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
-const AFIS_TOKEN_REQUEST_ID = 'AFIS-TOKEN-REQUEST-ID';
-
 async function fetchAfisTokenHeader_() {
   const additionalConfig: DataRequestConfig = {
     method: 'post',

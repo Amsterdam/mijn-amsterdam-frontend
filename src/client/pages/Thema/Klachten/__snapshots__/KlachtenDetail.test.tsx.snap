@@ -56,7 +56,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Klacht
         </h3>
@@ -150,7 +150,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Boosterprik
         </h3>
@@ -264,7 +264,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Test voor decentrale toewijzing
         </h3>

@@ -1,6 +1,5 @@
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { isDateInPast } from '../../../universal/helpers/date';
-import { AuthProfileAndToken } from '../../auth/auth-types';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
@@ -10,6 +9,7 @@ import {
   ZorgnedAanvraagTransformed,
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
+  type BSN,
 } from '../zorgned/zorgned-types';
 import { AV_CZM } from './status-line-items/regeling-czm';
 
@@ -31,13 +31,8 @@ function transformZorgnedClientNummerResponse(
   return null;
 }
 
-export async function fetchAdministratienummer(
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const response = await fetchPersoonsgegevensNAW(
-    authProfileAndToken.profile.id,
-    'ZORGNED_AV'
-  );
+export async function fetchAdministratienummer(bsn: BSN) {
+  const response = await fetchPersoonsgegevensNAW(bsn, 'ZORGNED_AV');
 
   let administratienummer: string | null = null;
 
@@ -83,15 +78,10 @@ function transformTitle(aanvraag: ZorgnedAanvraagTransformed) {
   return aanvraag.titel;
 }
 
-export async function fetchZorgnedAanvragenHLI(
-  authProfileAndToken: AuthProfileAndToken
-) {
-  const aanvragenResponse = await fetchAanvragenWithRelatedPersons(
-    authProfileAndToken,
-    {
-      zorgnedApiConfigKey: 'ZORGNED_AV',
-    }
-  );
+export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
+  const aanvragenResponse = await fetchAanvragenWithRelatedPersons(bsn, {
+    zorgnedApiConfigKey: 'ZORGNED_AV',
+  });
 
   if (aanvragenResponse.status === 'OK') {
     const aanvragenTransformed: ZorgnedAanvraagWithRelatedPersonsTransformed[] =

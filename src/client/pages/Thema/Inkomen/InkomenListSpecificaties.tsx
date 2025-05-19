@@ -52,7 +52,7 @@ export function InkomenListSpecificaties() {
         className={classnames(
           styles.SearchButton,
           isSearchPanelActive && styles.SearchButtonActive,
-          'ams-mb--sm'
+          'ams-mb-m'
         )}
         onClick={toggleSearchPanel}
         disabled={isSearchPanelActive}
@@ -169,7 +169,6 @@ export function InkomenListSpecificaties() {
       isLoading={isLoading}
       appRoute={tableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
-      appRouteParams={params}
       pageContentTop={pageContentMain}
       displayProps={tableConfig.displayProps}
       noItemsText={noContentMessage}

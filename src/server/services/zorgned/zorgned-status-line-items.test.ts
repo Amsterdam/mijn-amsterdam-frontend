@@ -1,10 +1,10 @@
-import { logger } from '../../logging';
 import { forTesting, getStatusLineItems } from './zorgned-status-line-items';
 import {
   ZorgnedAanvraagTransformed,
   ZorgnedStatusLineItemsConfig,
   ZorgnedStatusLineItemTransformerConfig,
 } from './zorgned-types';
+import { logger } from '../../logging';
 
 function getTransformerConfig() {
   const transformerConfig: ZorgnedStatusLineItemTransformerConfig = {
@@ -139,6 +139,7 @@ describe('zorgned-status-line-items', () => {
     function getAanvraagTransformed(
       leveringsVorm: string = 'FOO',
       productsoortCode: string = 'BAR',
+      productIdentificatie: string = 'WORLD',
       datumBesluit: string = '2024-07-26',
       titel = 'Productaanvraag',
       datumIngangGeldigheid = '2024-04-12',
@@ -147,6 +148,7 @@ describe('zorgned-status-line-items', () => {
       return {
         leveringsVorm,
         productsoortCode,
+        productIdentificatie,
         datumBesluit,
         titel,
         datumEindeGeldigheid,
@@ -168,7 +170,7 @@ describe('zorgned-status-line-items', () => {
       test('Get line items', () => {
         expect(lineItems).toBe(null);
         expect(logSpy).toHaveBeenCalledWith(
-          `No line item formatters found for Service: WMO, leveringsVorm: NO, productsoortCode: MATCH`
+          `No line item formatters found for Service: WMO, leveringsVorm: NO, productsoortCode: MATCH, productIdentificatie: WORLD`
         );
       });
     });

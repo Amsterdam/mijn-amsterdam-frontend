@@ -22,7 +22,10 @@ import {
   capitalizeFirstLetter,
 } from '../../../universal/helpers/text';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { requestData } from '../../helpers/source-api-request';
+import {
+  getRequestParamsFromQueryString,
+  requestData,
+} from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureMessage, trackEvent } from '../monitoring';
@@ -45,6 +48,8 @@ import { entries } from '../../../universal/helpers/utils';
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
 const FACTUUR_DOCUMENT_ID_LENGTH = 10;
+const AFIS_FACTUUR_REQUEST_API_PATH =
+  '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
 
 export const FACTUUR_STATE_KEYS: AfisFactuurState[] = [
   'open',
@@ -86,12 +91,9 @@ function getAccountingDocumentTypesFilter(state: AfisFacturenParams['state']) {
   return ` and (${docTypeFilters})`;
 }
 
-function formatFactuurRequestURL(
-  baseUrl: string | undefined,
+function getFactuurRequestQueryParams(
   params: AfisFacturenParams
-): string {
-  const baseRoute = '/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM';
-
+): Record<string, string> {
   const filters: Record<AfisFacturenParams['state'], string> = {
     // Openstaaand (met betaallink of sepamandaat)
     open: `$filter=Customer eq '${params.businessPartnerID}' and IsCleared eq false`,
@@ -110,9 +112,8 @@ function formatFactuurRequestURL(
     ? Math.max(parseInt(params.top, 10), AFIS_MAX_FACTUREN_TOP)
     : AFIS_MAX_FACTUREN_TOP;
   const query = `?$inlinecount=allpages&${filters[params.state]}${getAccountingDocumentTypesFilter(params.state)}&${selectFieldsQueryByState[params.state]}&${orderByQueryByState[params.state]}&$top=${top}`;
-  const fullUrl = `${baseUrl}${baseRoute}${query}`;
 
-  return fullUrl;
+  return getRequestParamsFromQueryString(query);
 }
 
 function transformDeelbetalingenResponse(
@@ -145,7 +146,8 @@ async function fetchAfisFacturenDeelbetalingen(
   params: AfisFacturenParams
 ): Promise<ApiResponse_DEPRECATED<AfisFactuurDeelbetalingen | null>> {
   const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    params: getFactuurRequestQueryParams(params),
+    formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: transformDeelbetalingenResponse,
   });
   return requestData<AfisFactuurDeelbetalingen>(config);
@@ -447,7 +449,8 @@ export async function fetchAfisFacturen(
   }
 
   const config = await getAfisApiConfig({
-    formatUrl: ({ url }) => formatFactuurRequestURL(url, params),
+    params: getFactuurRequestQueryParams(params),
+    formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: (responseData) =>
       transformFacturen(responseData, sessionID, deelbetalingen),
   });
@@ -579,7 +582,7 @@ export const forTesting = {
   determineFactuurStatusDescription,
   fetchAfisFacturenDeelbetalingen,
   isDownloadAvailable,
-  formatFactuurRequestURL,
+  getFactuurRequestQueryParams,
   getAccountingDocumentTypesFilter,
   getInvoiceAmount,
   getFactuurnummer,

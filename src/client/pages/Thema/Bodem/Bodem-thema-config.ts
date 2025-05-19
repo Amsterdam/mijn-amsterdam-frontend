@@ -97,6 +97,6 @@ export const tableConfig = {
 export const linkListItems: LinkProps[] = [
   {
     title: 'Meer informatie over lood in de bodem.',
-    to: 'https://www.amsterdam.nl/wonen-leefomgeving/bodem/lood-grond/',
+    to: 'https://www.amsterdam.nl/wonen-bouwen-verbouwen/bodem/loodcheck-tuin-aanvragen',
   },
 ] as const;

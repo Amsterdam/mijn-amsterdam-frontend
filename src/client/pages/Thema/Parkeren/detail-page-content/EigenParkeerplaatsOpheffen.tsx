@@ -45,7 +45,7 @@ export function EigenParkeerplaatsOpheffen({
       {
         label: 'Parkeervak',
         content: location.url ? (
-          <Link rel="noreferrer" variant="inline" href={location.url}>
+          <Link rel="noreferrer" href={location.url}>
             Bekijk parkeervak
           </Link>
         ) : null,

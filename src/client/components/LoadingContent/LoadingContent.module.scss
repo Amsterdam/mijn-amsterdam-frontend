@@ -19,11 +19,11 @@
     animation-iteration-count: infinite;
     animation-name: placeHolderShimmer;
     animation-timing-function: linear;
-    background: var(--ams-color-neutral-grey3);
+    background: var(--ams-color-interactive-disabled);
     background: linear-gradient(
       to right,
       var(--ams-color-neutral-grey2) 8%,
-      var(--ams-color-neutral-grey3) 18%,
+      var(--ams-color-interactive-disabled) 18%,
       var(--ams-color-neutral-grey2) 33%
     );
     background-size: 1200px 104px;

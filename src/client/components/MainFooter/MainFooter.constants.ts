@@ -2,7 +2,7 @@ import { LinkProps } from '../../../universal/types/App.types';
 
 export const LinkList: LinkProps[] = [
   {
-    to: 'https://www.amsterdam.nl/nieuwsbrieven/actueel/nieuwsbrief/nieuwsbrief/',
+    to: 'https://www.amsterdam.nl/nieuws/volg-de-gemeente/nieuwsbrieven/',
     title: 'Nieuwsbrief Amsterdam.nl',
   },
   {

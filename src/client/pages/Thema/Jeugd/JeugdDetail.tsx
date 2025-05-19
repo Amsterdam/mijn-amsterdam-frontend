@@ -28,7 +28,7 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
               <DocumentListV2
                 documents={voorziening.documents}
                 columns={['Brieven', 'Verzenddatum']}
-                className="ams-mb--lg"
+                className="ams-mb-l"
               />
             )}
           </Grid.Cell>

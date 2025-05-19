@@ -25,7 +25,6 @@ export function JeugdList() {
       items={voorzieningen.filter(listPageTableConfig.filter)}
       title={listPageTableConfig.title}
       appRoute={listPageTableConfig.listPageRoute}
-      appRouteParams={{ kind }}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isLoading}

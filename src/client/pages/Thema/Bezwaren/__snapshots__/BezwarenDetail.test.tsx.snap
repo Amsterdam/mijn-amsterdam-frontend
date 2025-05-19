@@ -56,7 +56,7 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaar
         </h3>
@@ -69,10 +69,10 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
         class="ams-alert ams-alert--error"
       >
         <div
-          class="ams-alert__icon"
+          class="ams-alert__severity-indicator"
         >
           <span
-            class="ams-icon ams-icon--size-4"
+            class="ams-icon ams-icon--inverse ams-icon--heading-4"
           >
             <svg
               aria-hidden="true"
@@ -92,11 +92,15 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
         <div
           class="ams-alert__content"
         >
-          <h2
-            class="ams-heading ams-heading--level-4"
+          <div
+            class="ams-row ams-row--align-between ams-row--align-vertical-start"
           >
-            Foutmelding
-          </h2>
+            <h4
+              class="ams-heading ams-heading--4"
+            >
+              Foutmelding
+            </h4>
+          </div>
           <p
             class="ams-paragraph"
           >
@@ -165,7 +169,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h3
-          class="ams-heading ams-heading--level-1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           BI.21.014121.001
         </h3>

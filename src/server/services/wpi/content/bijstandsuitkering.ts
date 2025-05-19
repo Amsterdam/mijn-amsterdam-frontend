@@ -4,11 +4,11 @@ import { WpiRequestProcess, WpiRequestProcessLabels } from '../wpi-types';
 
 export const WpiExternalUrls = {
   BijstandsUitkeringAanvragenRechtenEnPlichten:
-    'https://www.amsterdam.nl/veelgevraagd/bijstandsuitkering-rechten-regels-controle-en-boetes-e7121',
+    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/rechten-plichten-regels/',
   BijstandsUitkeringAanvragen:
-    'https://www.amsterdam.nl/veelgevraagd/bijstandsuitkering-aanvragen-3d5ea',
+    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/bijstandsuitkering-aanvragen/',
   BetaalDataUitkering:
-    'https://www.amsterdam.nl/veelgevraagd/wanneer-krijg-ik-de-bijstandsuitkering-op-mijn-bankrekening-gestort-48ace-kp',
+    'https://www.amsterdam.nl/werk-en-inkomen/bijstandsuitkering/uitbetaling-bijstandsuitkering/',
 };
 
 export const requestProcess: WpiRequestProcessLabels = {

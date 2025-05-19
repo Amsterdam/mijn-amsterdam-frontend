@@ -1,8 +1,7 @@
 .DashboardMapContainer {
-  background-color: var(--ams-color-neutral-grey1);
+  background-color: var(--ams-color-separator);
   min-height: 50rem;
-  margin-top: 8rem;
-  margin-bottom: 10rem;
+  margin-top: var(--ams-space-xl);
   position: relative;
 }
 
@@ -28,7 +27,7 @@
 
 .NavLinkContentWrap {
   display: block;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   padding: 2rem 4rem;
   width: 46rem;
 }

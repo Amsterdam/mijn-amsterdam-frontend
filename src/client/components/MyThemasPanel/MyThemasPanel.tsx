@@ -39,7 +39,7 @@ export function MyThemasPanel({
     <>
       <UnorderedList
         markers={false}
-        className={classNames('ams-mb--sm', styles.LinkList)}
+        className={classNames('ams-mb-m', styles.LinkList)}
       >
         {items.map(({ id, to, title, IconSVG }) => {
           const LinkComponent = to.startsWith('http') ? MaLink : MaRouterLink;
@@ -47,7 +47,14 @@ export function MyThemasPanel({
             <UnorderedList.Item key={id}>
               <LinkComponent maVariant="fatNoUnderline" href={to}>
                 <span className={styles.ThemaLink}>
-                  {IconSVG && <Icon svg={IconSVG} size="level-4" square />}{' '}
+                  {IconSVG && (
+                    <Icon
+                      svg={IconSVG}
+                      size="heading-4"
+                      className={styles.ThemaLinkIcon}
+                      square
+                    />
+                  )}
                   {title}
                 </span>
               </LinkComponent>

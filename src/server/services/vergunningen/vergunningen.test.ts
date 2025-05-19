@@ -47,6 +47,7 @@ describe('vergunningen', () => {
         processed: false,
         statusDates: [],
         termijnDates: [],
+        isVerleend: false,
       };
 
       const result = transformVergunningFrontend(
@@ -68,6 +69,7 @@ describe('vergunningen', () => {
           'http://bff-api-host/api/v1/services/decos/documents?id=xxx',
         id: '1',
         identifier: 'Z/123/123',
+        isVerleend: false,
         key: '',
         link: {
           title: 'Bekijk hoe het met uw aanvraag staat',

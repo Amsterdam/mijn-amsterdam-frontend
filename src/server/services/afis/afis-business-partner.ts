@@ -21,7 +21,10 @@ import {
 } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import { DataRequestConfig } from '../../config/source-api';
-import { requestData } from '../../helpers/source-api-request';
+import {
+  getRequestParamsFromQueryString,
+  requestData,
+} from '../../helpers/source-api-request';
 
 function transformBusinessPartnerAddressResponse(
   response: AfisApiFeedResponseSource<AfisBusinessPartnerAddressSource>
@@ -55,9 +58,12 @@ async function fetchBusinessPartnerAddress(
   businessPartnerId: string
 ): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerAddress | null>> {
   const additionalConfig: DataRequestConfig = {
+    params: getRequestParamsFromQueryString(
+      `?$filter=BusinessPartner eq '${businessPartnerId}'&$select=AddressID,CityName,Country,HouseNumber,HouseNumberSupplementText,PostalCode,Region,StreetName,StreetPrefixName,StreetSuffixName`
+    ),
     transformResponse: transformBusinessPartnerAddressResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress?$filter=BusinessPartner eq '${businessPartnerId}'&$select=AddressID,CityName,Country,HouseNumber,HouseNumberSupplementText,PostalCode,Region,StreetName,StreetPrefixName,StreetSuffixName`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`;
     },
   };
 
@@ -84,9 +90,12 @@ function transformBusinessPartnerFullNameResponse(
 
 async function fetchBusinessPartnerFullName(businessPartnerId: string) {
   const additionalConfig: DataRequestConfig = {
+    params: getRequestParamsFromQueryString(
+      `?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName`
+    ),
     transformResponse: transformBusinessPartnerFullNameResponse,
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`;
     },
   };
 
@@ -110,8 +119,11 @@ function transformPhoneResponse(
 async function fetchPhoneNumber(addressId: AfisBusinessPartnerAddress['id']) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformPhoneResponse,
+    params: getRequestParamsFromQueryString(
+      `?$filter=AddressID eq '${addressId}'&$select=InternationalPhoneNumber`
+    ),
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber?$filter=AddressID eq '${addressId}'&$select=InternationalPhoneNumber`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`;
     },
     postponeFetch: !FeatureToggle.afisBusinesspartnerPhoneActive,
   };
@@ -136,8 +148,11 @@ function transformEmailResponse(
 async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
   const additionalConfig: DataRequestConfig = {
     transformResponse: transformEmailResponse,
+    params: getRequestParamsFromQueryString(
+      `?$filter=AddressID eq '${addressId}'&$select=EmailAddress`
+    ),
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress?$filter=AddressID eq '${addressId}'&$select=EmailAddress`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`;
     },
   };
 

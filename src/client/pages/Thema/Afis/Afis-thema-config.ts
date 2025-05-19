@@ -98,21 +98,7 @@ export type AfisFacturenByStateFrontend = {
   [key in AfisFactuurState]?: AfisFacturenResponseFrontend;
 };
 
-type AfisFacturenTableConfig = {
-  title: string;
-  subTitle?: ReactNode;
-  displayProps: DisplayProps<AfisFactuurFrontend>;
-  maxItems: number;
-  listPageLinkLabel: string;
-  listPageRoute: string;
-};
-
-type AfisFacturenTableConfigByState = Record<
-  AfisFactuurState,
-  AfisFacturenTableConfig
->;
-
-export const facturenTableConfig: AfisFacturenTableConfigByState = {
+export const facturenTableConfig = {
   open: {
     title: listPageTitle.open,
     displayProps: displayPropsFacturenOpen,

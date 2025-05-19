@@ -3,36 +3,27 @@
 }
 
 .FakeFooterLink {
-  color: var(--ams-link-inverse-color-color);
+  color: var(--ams-color-background);
   padding-left: calc(
-    var(--ams-icon-size-5-font-size) * var(--ams-icon-size-5-line-height) - 2px
+    var(--ams-icon-heading-5-font-size) * var(--ams-icon-heading-5-line-height)
   );
   position: relative;
   :global(span.ams-icon) {
     position: absolute;
     left: -2px;
-    top: -6px;
-  }
-  > span:not(.ams-icon),
-  > strong {
-    font-size: var(--ams-link-standalone-font-size);
-    line-height: var(--ams-link-standalone-line-height);
+    top: -5px;
   }
   :global(.ams-icon) {
-    margin-right: var(--ams-space-sm);
+    margin-right: var(--ams-space-s);
     transform: translateY(5px);
   }
   :global(.ams-link) {
     text-decoration: none;
     &:hover {
       text-decoration: underline;
-      text-decoration-line: var(--ams-link-standalone-text-decoration-line);
-      text-decoration-thickness: var(
-        --ams-link-standalone-hover-text-decoration-thickness
-      );
-      text-underline-offset: var(
-        --ams-link-standalone-hover-text-underline-offset
-      );
+      outline-offset: var(--ams-link-outline-offset);
+      text-decoration-thickness: var(--ams-link-text-decoration-thickness);
+      text-underline-offset: var(--ams-link-text-underline-offset);
     }
   }
 }

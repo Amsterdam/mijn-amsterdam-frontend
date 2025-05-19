@@ -46,15 +46,6 @@ export const FeatureToggle = {
   garbageInformationPage: true,
   adopteerbareAfvalContainerMeldingen: !IS_PRODUCTION,
 
-  // HLI Hulp bij laag inkomen //
-  hliThemaActive: true,
-  hliThemaStadspasActive: true,
-  hliThemaStadspasBlokkerenActive: true,
-  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
-  hliThemaRegelingenActive: true,
-  hliRegelingEnabledCZM: true,
-  hliRegelingEnabledRTM: !IS_PRODUCTION,
-
   // Horeca vergunningen
   horecaActive: true,
 

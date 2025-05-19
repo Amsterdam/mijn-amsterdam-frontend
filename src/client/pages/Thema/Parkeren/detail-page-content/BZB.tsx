@@ -28,7 +28,7 @@ export function ExpirationNotifications({ id }: { id: string }) {
     <>
       {!!isExpiredNotification && (
         <>
-          <Paragraph className="ams-mb--sm">
+          <Paragraph className="ams-mb-m">
             {isExpiredNotification.description}
           </Paragraph>
           <Paragraph>
@@ -43,7 +43,7 @@ export function ExpirationNotifications({ id }: { id: string }) {
       )}
       {!!willExpireSoonNotification && (
         <>
-          <Paragraph className="ams-mb--sm">
+          <Paragraph className="ams-mb-m">
             {willExpireSoonNotification.description}
           </Paragraph>
           <Paragraph>

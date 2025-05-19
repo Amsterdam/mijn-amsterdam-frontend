@@ -21,12 +21,12 @@
 
 @mixin input() {
   display: block;
-  color: var(--ams-color-primary-black);
+  color: var(--ams-color-text);
   padding: 0.6em 1.2em 0.5em 0.6em;
   width: 100%;
   max-width: 100%;
   margin: 0;
-  border: 0.1rem solid var(--ams-color-neutral-grey3);
+  border: 0.1rem solid var(--ams-color-interactive-disabled);
   border-radius: 0;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -38,7 +38,7 @@
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--ams-color-primary-white);
+  background-color: var(--ams-color-background);
   background-image: url('../../assets/icons/Chevron-Down.svg');
   background-repeat: no-repeat, repeat;
   background-position:

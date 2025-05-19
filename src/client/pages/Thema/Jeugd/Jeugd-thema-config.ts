@@ -35,7 +35,7 @@ export const routeConfig = {
 
 export const linkListItems: LinkProps[] = [
   {
-    to: 'https://www.amsterdam.nl/onderwijs-jeugd/leerlingenvervoer/?vkurl=leerlingenvervoer',
+    to: 'https://www.amsterdam.nl/onderwijs/leerlingenvervoer/leerlingenvervoer-aanvragen/',
     title: 'Lees hier meer over Leerlingenvervoer',
   },
 ];

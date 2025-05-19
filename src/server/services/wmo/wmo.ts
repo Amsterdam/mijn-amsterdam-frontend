@@ -121,8 +121,9 @@ function transformVoorzieningenForFrontend(
 }
 
 export async function fetchWmo(authProfileAndToken: AuthProfileAndToken) {
-  const voorzieningenResponse =
-    await fetchZorgnedAanvragenWMO(authProfileAndToken);
+  const voorzieningenResponse = await fetchZorgnedAanvragenWMO(
+    authProfileAndToken.profile.id
+  );
 
   if (voorzieningenResponse.status === 'OK') {
     const voorzieningenFrontend = transformVoorzieningenForFrontend(

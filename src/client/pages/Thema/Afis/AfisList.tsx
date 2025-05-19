@@ -47,8 +47,7 @@ export function AfisList() {
         </PageContentCell>
       }
       title={listPageTableConfig.title}
-      appRoute={routeConfig.listPage.path}
-      appRouteParams={{ state }}
+      appRoute={listPageTableConfig.listPageRoute}
       breadcrumbs={breadcrumbs}
       displayProps={listPageTableConfig.displayProps}
       isLoading={isThemaPaginaLoading || isListPageLoading}

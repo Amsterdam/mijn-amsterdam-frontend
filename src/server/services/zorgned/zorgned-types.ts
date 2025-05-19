@@ -1,4 +1,5 @@
 import { GenericDocument } from '../../../universal/types/App.types';
+import type { AuthProfile } from '../../auth/auth-types';
 
 export const ZORGNED_GEMEENTE_CODE = '0363';
 
@@ -21,24 +22,15 @@ export type ZorgnedStatusLineItemTransformerConfig<
   status: string;
   datePublished: TextPartContents<T>;
   description: TextPartContents<T>;
-  isChecked: (
-    stepIndex: number,
-    aanvraag: T,
-    today: Date,
-    allAanvragen: T[]
-  ) => boolean;
-  isActive: (
-    stepIndex: number,
-    aanvraag: T,
-    today: Date,
-    allAanvragen: T[]
-  ) => boolean;
-  isVisible?: (
-    stepIndex: number,
-    aanvraag: T,
-    today: Date,
-    allAanvragen: T[]
-  ) => boolean;
+  isChecked:
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
+  isActive:
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
+  isVisible?:
+    | ((aanvraag: T, today: Date, allAanvragen: T[]) => boolean)
+    | boolean;
 };
 
 type ZorgnedLineItemsFilter = (
@@ -177,6 +169,41 @@ export interface ZorgnedPersoonsgegevensNAWResponse {
     voornamen: string;
     voorvoegsel: string | null;
     geboortedatum: string | null;
+    partnernaam?: string | null;
+    partnervoorvoegsel?: string | null;
+  };
+}
+
+export interface ZorgnedRelatieSource {
+  persoon: {
+    persoontype: 'P' | 'O';
+  };
+  inschrijfadres: {
+    adrestype: 'R' | 'P' | 'A';
+    huisnummer: number;
+    huisletter: string;
+    huisnummerToevoeging: string;
+    postcode: string;
+    straatnaam: string;
+    plaats: string;
+  };
+  contactgegevens: {
+    telefoonnummer1: {
+      telefoonnummer: string;
+      landnummer: string;
+    };
+    telefoonnummer2: {
+      telefoonnummer: string;
+      landnummer: string;
+    };
+    emailadres: string;
+    correspondentieadres: {
+      adrestype: 'R' | 'P' | 'A';
+    };
+  };
+  soort: {
+    code: number;
+    omschrijving: string;
   };
 }
 
@@ -185,6 +212,9 @@ export interface ZorgnedPerson {
   name: string;
   dateOfBirth: string | null;
   dateOfBirthFormatted: string | null;
+  isPartner?: true;
+  partnernaam: string | null;
+  partnervoorvoegsel: string | null;
 }
 
 export type ZorgnedApiConfigKey =
@@ -196,3 +226,5 @@ export interface ZorgnedAanvragenServiceOptions {
   zorgnedApiConfigKey: ZorgnedApiConfigKey;
   requestBodyParams?: Record<string, string>;
 }
+
+export type BSN = AuthProfile['id'];

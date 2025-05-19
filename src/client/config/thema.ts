@@ -21,6 +21,7 @@ import { menuItem as menuItemOvertredingen } from '../pages/Thema/Overtredingen/
 import { menuItem as menuItemParkeren } from '../pages/Thema/Parkeren/Parkeren-render-config';
 import { menuItems as profileMenuItems } from '../pages/Thema/Profile/Profile-render-config';
 import { menuItem as menuItemSubsidies } from '../pages/Thema/Subsidies/Subsidies-render-config';
+import { menuItem as menuItemSVWI } from '../pages/Thema/Svwi/Svwi-render-config';
 import { menuItem as menuItemToeristischeVerhuur } from '../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-render-config';
 import { menuItem as menuItemVaren } from '../pages/Thema/Varen/Varen-render-config';
 import { menuItem as menuItemVergunningen } from '../pages/Thema/Vergunningen/Vergunningen-render-config';
@@ -46,6 +47,7 @@ export const myThemasMenuItems: ThemaMenuItem[] = [
   menuItemHoreca,
   menuItemKlachten,
   menuItemParkeren,
+  menuItemSVWI,
   menuItemToeristischeVerhuur,
   menuItemVaren,
   menuItemVergunningen,

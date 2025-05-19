@@ -29,7 +29,9 @@ import { captureException } from '../monitoring';
 export async function fetchStadspas(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<ApiResponse_DEPRECATED<StadspasFrontend[] | null>> {
-  const stadspasResponse = await fetchStadspassen(authProfileAndToken);
+  const stadspasResponse = await fetchStadspassen(
+    authProfileAndToken.profile.id
+  );
 
   if (stadspasResponse.status !== 'OK') {
     return stadspasResponse;

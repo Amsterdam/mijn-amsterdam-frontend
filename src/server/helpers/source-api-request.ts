@@ -22,8 +22,9 @@ import {
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
-const debug = createDebugger('source-api-request');
-const debugCache = createDebugger('source-api-request:cache');
+const debugRequest = createDebugger('source-api-request:request');
+const debugCacheHit = createDebugger('source-api-request:cache-hit');
+const debugCacheKey = createDebugger('source-api-request:cache-key');
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -37,14 +38,14 @@ export function isSuccessStatus(statusCode: number): boolean {
 
 function getDebugResponseData(conf: AxiosRequestConfig) {
   return (responseDataParsed: any) => {
-    debug(
+    debugRequest(
       {
         url: conf.url,
         params: conf.params,
       },
       'start:debug response data'
     );
-    debug(responseDataParsed, 'end:debug response data');
+    debugRequest(responseDataParsed, 'end:debug response data');
     return responseDataParsed;
   };
 }
@@ -52,7 +53,7 @@ function getDebugResponseData(conf: AxiosRequestConfig) {
 const debugResponseDataTerms =
   process.env.DEBUG_RESPONSE_DATA?.split(',') ?? [];
 
-debug(debugResponseDataTerms, 'debug response data terms');
+debugRequest(debugResponseDataTerms, 'debug response data terms');
 
 export const cache = new memoryCache.Cache<string, any>();
 
@@ -116,7 +117,7 @@ export async function requestData<T>(
       const isDebugTermMatch = hasTermInRequestUrl || hasTermInRequestParams;
 
       if (isDebugTermMatch) {
-        debug(
+        debugRequest(
           {
             term,
             hasTermInRequestParams,
@@ -162,7 +163,7 @@ export async function requestData<T>(
   const cacheEntry = cache.get(cacheKey);
 
   if (config.enableCache && cacheEntry !== null) {
-    debugCache(`Cache hit! ${config.url}`);
+    debugCacheHit(`Cache hit! ${config.url}`);
     return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;
@@ -175,7 +176,10 @@ export async function requestData<T>(
     !!config.cacheTimeout &&
     config.cacheTimeout > 0
   ) {
-    debugCache(`Caching ${config.url}, releases in ${config.cacheTimeout}ms`);
+    // Debug the cache key to check if the cache key is set and uses the custom cache key if provided.
+    debugCacheKey(
+      `Caching ${config.url}${config.cacheKey ? ` with custom cachekey ${config.cacheKey}` : ''}, releases in ${config.cacheTimeout}ms`
+    );
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),
@@ -213,7 +217,7 @@ export async function requestData<T>(
   } catch (error: any) {
     const errorMessage = 'message' in error ? error.message : error.toString();
 
-    debug(error, config.url, 'response error');
+    debugRequest(error, config.url, 'response error');
 
     captureException(error, {
       properties: {
@@ -269,4 +273,8 @@ export function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
   const rawUrl = next.split(';')[0].trim();
   const strippedUrl = rawUrl.substring(1, rawUrl.length - 1); // The link values should according to spec be wrapped in <> so we need to strip those.
   return new URL(strippedUrl);
+}
+
+export function getRequestParamsFromQueryString(queryString: string) {
+  return Object.fromEntries(new URLSearchParams(queryString));
 }

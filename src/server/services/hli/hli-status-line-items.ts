@@ -1,4 +1,4 @@
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import type { ZorgnedHLIRegeling } from './hli-regelingen-types';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemsConfig,
@@ -19,33 +19,35 @@ import {
   AV_RTM_DEEL2,
   RTM,
 } from './status-line-items/regeling-rtm';
+import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 
-export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<ZorgnedAanvraagWithRelatedPersonsTransformed>[] =
-  [
-    {
-      productIdentificatie: [AV_UPCC, AV_UPCZIL, AV_PCVC, AV_PCVZIL],
-      lineItemTransformers: PCVERGOEDING,
-    },
-    {
-      productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
-      lineItemTransformers: RTM,
-      isDisabled: !FeatureToggle.hliRegelingEnabledRTM,
-    },
-    {
-      productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
-      lineItemTransformers: REGELING,
-    },
-    {
-      productIdentificatie: ['AV-DECLA'],
-      lineItemTransformers: DECLARATIE,
-    },
-    {
-      productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV'],
-      lineItemTransformers: REGELING_PERIODIEK,
-    },
-    {
-      productIdentificatie: [AV_CZM],
-      lineItemTransformers: REGELING_CZM,
-      isDisabled: !FeatureToggle.hliRegelingEnabledCZM,
-    },
-  ];
+export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
+  ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed
+>[] = [
+  {
+    productIdentificatie: [AV_UPCC, AV_UPCZIL, AV_PCVC, AV_PCVZIL],
+    lineItemTransformers: PCVERGOEDING,
+  },
+  {
+    productIdentificatie: [AV_RTM_DEEL1, AV_RTM_DEEL2],
+    lineItemTransformers: RTM,
+    isDisabled: !featureToggle.hliRegelingEnabledRTM,
+  },
+  {
+    productIdentificatie: ['AV-GOV', 'AV-OVM', 'AV-RTM'],
+    lineItemTransformers: REGELING,
+  },
+  {
+    productIdentificatie: ['AV-DECLA'],
+    lineItemTransformers: DECLARATIE,
+  },
+  {
+    productIdentificatie: ['AV-IIT', 'AV-KVS', 'AV-SPM', 'AV-TAOV'],
+    lineItemTransformers: REGELING_PERIODIEK,
+  },
+  {
+    productIdentificatie: [AV_CZM],
+    lineItemTransformers: REGELING_CZM,
+    isDisabled: !featureToggle.hliRegelingEnabledCZM,
+  },
+];

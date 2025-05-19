@@ -1,6 +1,7 @@
 import { generatePath } from 'react-router';
 
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
+import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
@@ -38,6 +39,7 @@ const displayPropsEerdereRegelingen = withOmitDisplayPropsForSmallScreens(
 );
 
 export const listPageParamKind = {
+  lopend: 'lopende-aanvragen',
   actual: 'huidige-regelingen',
   historic: 'eerdere-en-afgewezen-regelingen',
 } as const;
@@ -48,7 +50,13 @@ export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 export const featureToggle = {
   hliActive: true,
   hliStadspasActive: true,
-};
+  zorgnedAvApiActive: true,
+  hliThemaStadspasBlokkerenActive: true,
+  hliThemaStadspasDeblokkerenActive: !IS_PRODUCTION,
+  hliThemaRegelingenActive: true,
+  hliRegelingEnabledCZM: true,
+  hliRegelingEnabledRTM: !IS_PRODUCTION,
+} as const;
 
 export const themaId = 'HLI' as const;
 export const themaTitle = 'Stadspas en regelingen bij laag inkomen' as const;
@@ -79,6 +87,7 @@ export const routeConfig = {
 } as const satisfies ThemaRoutesConfig;
 
 export const listPageTitle = {
+  [listPageParamKind.lopend]: 'Lopende aanvragen',
   [listPageParamKind.actual]: 'Huidige regelingen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
@@ -100,9 +109,22 @@ export const kindTegoedLinkListItem: LinkProps = {
 };
 
 export const tableConfig = {
+  [listPageParamKind.lopend]: {
+    title: listPageTitle[listPageParamKind.lopend],
+    filter: (regeling: HLIRegelingFrontend) =>
+      regeling.displayStatus === 'In behandeling',
+    sort: dateSort('dateDecision', 'desc'),
+    displayProps: displayPropsHuidigeRegelingen,
+    maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
+    listPageRoute: generatePath(routeConfig.listPage.path, {
+      kind: listPageParamKind.lopend,
+      page: null,
+    }),
+  },
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
-    filter: (regeling: HLIRegelingFrontend) => regeling.isActual,
+    filter: (regeling: HLIRegelingFrontend) =>
+      regeling.isActual && regeling.displayStatus !== 'In behandeling',
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,

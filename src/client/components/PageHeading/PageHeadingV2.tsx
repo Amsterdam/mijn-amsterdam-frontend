@@ -49,7 +49,7 @@ export function PageHeadingV2({
             onClick={goBack}
             title="Terug naar de vorige pagina"
           >
-            <Icon size="level-5" svg={ChevronLeftIcon} />
+            <Icon size="heading-5" svg={ChevronLeftIcon} />
             {label}
           </MaRouterLink>
         ) : (
