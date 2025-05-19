@@ -24,7 +24,7 @@ export function VergunningenThema() {
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <Paragraph className={hasParkeervergunningen ? 'ams-mb--sm' : ''}>
+      <Paragraph className={hasParkeervergunningen ? 'ams-mb-s' : ''}>
         Hier ziet u een overzicht van uw aanvragen voor vergunningen en
         ontheffingen bij gemeente Amsterdam.
       </Paragraph>
