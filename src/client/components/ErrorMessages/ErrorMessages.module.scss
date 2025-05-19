@@ -1,11 +1,29 @@
+.ErrorMessages {
+}
+
 .ErrorMessages.Dismissed {
   display: none;
 }
 
 .MessageBar {
-  background-color: var(--ams-color-background);
-  max-width: var(--ams-ma-max-screen-width);
+  max-width: calc(var(--ams-page-max-inline-size) - var(--ams-space-xl) * 3);
   margin: 0 auto;
+  background-color: var(--ams-color-background);
+  position: relative;
+  --ams-alert-content-padding-block: 1px;
+  --ams-alert-severity-indicator-padding-block: var(--ams-space-s);
+
+  :global(.ams-heading) {
+    left: -100vw;
+    position: absolute;
+  }
+  :global(.ams-icon-button) {
+    --ams-icon-heading-4-line-height: 2em;
+    position: absolute;
+    right: var(--ams-space-m);
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .ErrorFromServer {
