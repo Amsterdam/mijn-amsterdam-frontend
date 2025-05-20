@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { OrderedList } from '@amsterdam/design-system-react';
 import { generatePath, useParams } from 'react-router';
@@ -44,14 +44,6 @@ export function MyNotificationsPage() {
     const end = start + PAGE_SIZE;
     return notifications.slice(start, end);
   }, [currentPage, notifications]);
-
-  useEffect(() => {
-    window.scrollBy({
-      top: -document.documentElement.scrollTop,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [currentPage]);
 
   return (
     <OverviewPageV2>
