@@ -59,6 +59,7 @@ import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/K
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import { routeConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
+  featureToggle as featureToggleVaren,
   routeConfig as routeConfigVaren,
   themaTitle as themaTitleVaren,
 } from '../../pages/Thema/Varen/Varen-thema-config';
@@ -507,7 +508,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     keywordsGeneratedFromProps: ['identifier'],
   },
   {
-    isEnabled: featureToggleKrefia,
+    isEnabled: featureToggleVaren.varenActive,
     stateKey: 'VAREN',
     profileTypes: ['commercial'],
     getApiBaseItems: (apiContent: {
