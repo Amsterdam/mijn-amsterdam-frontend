@@ -22,7 +22,6 @@ if [ ! -n "$has_mijn" ]; then
   fi
 fi
 
-
 select target_branch in testen az-acceptance; do
   if [[ "$target_branch" == "testen" || "$target_branch" == "az-acceptance" ]]; then
     break
@@ -32,13 +31,16 @@ select target_branch in testen az-acceptance; do
 done
 
 echoGreen "Deploying to $target_branch"
-
 git checkout "$target_branch"
 
-set +e  # temporarily allow errors for merge
+# We only care what is on the remote target_branch
+git fetch origin "$target_branch" > /dev/null 2>&1
+git reset --hard "origin/$target_branch" > /dev/null 2>&1
+
+set +e  # Temporarily allow errors to read out merge_exit_code
 git merge --no-edit "$current_branch"
 merge_exit_code=$?
-set -e  # re-enable exit on error
+set -e  # Re-enable stop execution on errors
 
 if [ $merge_exit_code -eq 0 ]; then
   echoGreen "Pushing to $target_branch"
