@@ -63,17 +63,19 @@ export function ErfpachtThema() {
       isError={isError}
       linkListItems={linkListItems}
       pageContentTop={
-        <PageContentCell spanWide={8}>
+        <>
+          <PageContentCell spanWide={8}>
+            <Paragraph>
+              Hieronder ziet u de gegevens van uw erfpachtrechten.
+            </Paragraph>
+          </PageContentCell>
+
           {openFacturen.length && (
-            <>
-              <Paragraph>
-                Hieronder ziet u de gegevens van uw erfpachtrechten.
-              </Paragraph>
-              <br />
+            <PageContentCell spanWide={8}>
               <FacturenDisclaimer />
-            </>
+            </PageContentCell>
           )}
-        </PageContentCell>
+        </>
       }
       pageContentMain={pageContentTables}
     />
@@ -82,7 +84,7 @@ export function ErfpachtThema() {
 
 function FacturenDisclaimer() {
   return (
-    <Alert severity="info" heading="U heeft openstaande facturen">
+    <Alert headingLevel={2} heading="U heeft openstaande facturen">
       <Paragraph>
         Kijk op{' '}
         <MaRouterLink href={afis.routeConfig.themaPage.path}>
