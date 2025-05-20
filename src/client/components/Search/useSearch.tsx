@@ -35,10 +35,7 @@ import { AppState, AppStateKey } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
-import {
-  useProfileTypeSwitch,
-  useProfileTypeValue,
-} from '../../hooks/useProfileType';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
 
@@ -303,11 +300,6 @@ export function useSearchIndex() {
       fuseInstance = new Fuse(entries, options);
     }
   }, [dynamicSearchEntries, staticSearchEntries]);
-
-  useProfileTypeSwitch(() => {
-    // Reset the search index
-    fuseInstance = null;
-  });
 }
 
 export const searchTermAtom = atom<string>({
