@@ -58,7 +58,8 @@ export function createNotificationDefault<
     ['Verlopen', 'Ingetrokken', 'Afgehandeld'].includes(activeStep.status)
   ) {
     datePublished =
-      getStatusDate('Afgehandeld', zaak) ?? zaak.dateDecision ?? datePublished;
+      datePublished || // If empty string fallback to afgehandeld or decision date
+      (getStatusDate('Afgehandeld', zaak) ?? zaak.dateDecision ?? '');
 
     if (datePublished && !isRecentNotification(datePublished, new Date())) {
       isArchivedNotification = true;

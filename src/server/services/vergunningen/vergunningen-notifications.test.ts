@@ -136,6 +136,24 @@ describe('vergunningen-notifications', () => {
               isActive: false,
             },
             {
+              status: 'Verlopen',
+              datePublished: '2025-01-09',
+              isActive: true,
+            },
+          ],
+          link: { to: '/test', title: 'Test' },
+        },
+        {
+          id: '5',
+          title: 'Test case',
+          identifier: 'Z/111222/000',
+          steps: [
+            {
+              status: 'Afgehandeld',
+              datePublished: '2025-01-08',
+              isActive: false,
+            },
+            {
               status: 'Ingetrokken',
               datePublished: '',
               isActive: true,
@@ -191,10 +209,23 @@ describe('vergunningen-notifications', () => {
           title: 'Aanvraag Test case afgehandeld',
         },
         {
+          datePublished: '2025-01-09',
+          description:
+            'Uw vergunning Test case met gemeentelijk zaaknummer Z/111222/000 is verlopen.',
+          id: 'vergunning-4-notification',
+          link: {
+            title: 'Bekijk details',
+            to: '/test',
+          },
+          themaID: 'VERGUNNINGEN',
+          themaTitle: 'Vergunningen en ontheffingen',
+          title: 'Test case verlopen',
+        },
+        {
           datePublished: '2025-01-08',
           description:
             'Wij hebben uw aanvraag Test case met gemeentelijk zaaknummer Z/111222/000 afgehandeld.',
-          id: 'vergunning-4-notification',
+          id: 'vergunning-5-notification',
           link: {
             title: 'Bekijk details',
             to: '/test',
