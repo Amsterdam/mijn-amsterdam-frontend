@@ -3,7 +3,7 @@ import React from 'react';
 import { PageHeader, Icon } from '@amsterdam/design-system-react';
 import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import styles from './MainHeader.module.scss';
 import { OtapLabel } from './OtapLabel';
@@ -156,6 +156,8 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
   const { ref, isMainMenuOpen, closeMenuAndSearch, headerHeight } =
     useMainHeaderControl();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isSearchActive, setSearchActive] = useSearchActive();
   return (
     <>
       <PageHeader
@@ -171,6 +173,9 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
             event.preventDefault();
             event.stopPropagation();
             navigate(DashboardRoute.route);
+            if (isSearchActive && location.pathname === DashboardRoute.route) {
+              setSearchActive(false);
+            }
           }
         }}
         brandName={
