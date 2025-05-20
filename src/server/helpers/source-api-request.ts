@@ -83,6 +83,13 @@ export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
   ].join('-');
 }
 
+export function getSessionCacheKey(
+  sessionID: SessionID,
+  requestIdentifier: `${string}-${string}-${string}`
+) {
+  return `${requestIdentifier}-${sessionID}`;
+}
+
 export async function requestData<T>(
   passConfig: DataRequestConfig,
   authProfileAndToken?: AuthProfileAndToken

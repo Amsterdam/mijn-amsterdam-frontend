@@ -14,6 +14,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getCert } from '../../helpers/cert';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
+import { getSessionCacheKey } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
 
 const DEV_KEY = {
@@ -177,7 +178,10 @@ async function fetchCleopatra(authProfileAndToken: AuthProfileAndToken) {
 
   const requestConfig = getApiConfig('CLEOPATRA', {
     transformResponse: transformCleopatraResponse,
-    cacheKey: `cleopatra-${authProfileAndToken.profile.sid}`,
+    cacheKey: getSessionCacheKey(
+      authProfileAndToken.profile.sid,
+      `fetch-cleopatra-data`
+    ),
     data: postData,
   });
 

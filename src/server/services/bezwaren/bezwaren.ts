@@ -34,7 +34,10 @@ import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import {
+  getSessionCacheKey,
+  requestData,
+} from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
@@ -176,7 +179,10 @@ async function fetchBezwaarStatus(
     params,
     transformResponse: transformBezwaarStatus,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-    cacheKey: `bezwaar-status-${zaakId}`,
+    cacheKey: getSessionCacheKey(
+      authProfileAndToken.profile.sid,
+      `bezwaar-status-${zaakId}`
+    ),
   });
 
   const statusResponse = await requestData<StatusLineItem[]>(
@@ -231,6 +237,11 @@ export async function fetchBezwarenDocuments(
     identifier: zaakId,
   };
 
+  const cacheKeyBase = getSessionCacheKey(
+    authProfileAndToken.profile.sid,
+    `bezwaar-documents-${zaakId}`
+  );
+
   const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', {
     params,
     transformResponse: (responseData) => {
@@ -243,7 +254,7 @@ export async function fetchBezwarenDocuments(
   });
 
   const bezwaarDocumentenResponse = await fetchMultiple<BezwaarDocument>(
-    `${zaakId}-documents`,
+    cacheKeyBase,
     requestConfigBase
   );
 
@@ -374,6 +385,11 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
     page: 1,
   };
 
+  const cacheKeyBase = getSessionCacheKey(
+    authProfileAndToken.profile.sid,
+    `fetch-all-bezwaren`
+  );
+
   const requestConfig = getApiConfig('BEZWAREN_LIST', {
     data: requestBody,
     params,
@@ -383,7 +399,7 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   });
 
   const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(
-    `${authProfileAndToken.profile.sid}-bezwaren`,
+    cacheKeyBase,
     requestConfig
   );
 

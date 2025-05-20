@@ -32,7 +32,10 @@ import { ONE_HOUR_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import {
+  getSessionCacheKey,
+  requestData,
+} from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { isExpired } from '../decos/decos-helpers';
@@ -683,6 +686,10 @@ export async function fetchBBDocumentsList(
     transformResponse(responseData) {
       return transformPowerbrowserLinksResponse(authProfile.sid, responseData);
     },
+    cacheKey: getSessionCacheKey(
+      authProfile.sid,
+      `powerbrowser-documents-${zaakId}`
+    ),
   };
 
   return fetchPowerBrowserData(dataRequestConfig);

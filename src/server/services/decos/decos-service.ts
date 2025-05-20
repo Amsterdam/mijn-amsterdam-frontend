@@ -155,7 +155,7 @@ async function fetchUserKeys(authProfileAndToken: AuthProfileAndToken) {
     const requestConfig = {
       ...apiConfig,
       data: requestBody,
-      // only need to fetch once per session
+      // only need to fetch once per logged in user
       cacheKey: `${authProfileAndToken.profile.id}-${addressBookKey}`,
     };
     const request = requestData<AddressBookEntry[]>(requestConfig).then(

@@ -14,7 +14,10 @@ import {
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import {
+  getSessionCacheKey,
+  requestData,
+} from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 import { AuthProfileAndToken } from './../../auth/auth-types';
 import {
@@ -151,7 +154,10 @@ async function fetchKlachten(
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: `klachten-${authProfileAndToken.profile.sid}-${page}`,
+      cacheKey: getSessionCacheKey(
+        authProfileAndToken.profile.sid,
+        `fetch-klachten-${page}`
+      ),
     })
   );
 }

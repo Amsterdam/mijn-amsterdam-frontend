@@ -9,7 +9,10 @@ import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { SourceApiKey } from '../../config/source-api';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import {
+  getSessionCacheKey,
+  requestData,
+} from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
@@ -121,7 +124,10 @@ export async function fetchBijstandsuitkering(
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-' + authProfileAndToken.profile.sid,
+      requestCacheKey: getSessionCacheKey(
+        authProfileAndToken.profile.sid,
+        'fetch-wpi-aanvragen'
+      ),
     }
   );
 
@@ -142,7 +148,10 @@ export async function fetchEAanvragen(
     {
       apiConfigName: 'WPI_E_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-e-aanvragen-' + authProfileAndToken.profile.sid,
+      requestCacheKey: getSessionCacheKey(
+        authProfileAndToken.profile.sid,
+        'fetch-wpi-e-aanvragen'
+      ),
     }
   );
 

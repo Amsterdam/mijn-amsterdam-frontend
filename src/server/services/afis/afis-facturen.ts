@@ -24,6 +24,7 @@ import {
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import {
   getRequestParamsFromQueryString,
+  getSessionCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -453,6 +454,7 @@ export async function fetchAfisFacturen(
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: (responseData) =>
       transformFacturen(responseData, sessionID, deelbetalingen),
+    cacheKey: getSessionCacheKey(sessionID, `afis-facturen-${params.state}`),
   });
 
   return requestData<AfisFacturenResponse>(config);
