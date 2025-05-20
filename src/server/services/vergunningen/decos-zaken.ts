@@ -464,13 +464,10 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     title: 'status',
   },
   async afterTransform(vergunning) {
-    // TODO: find out if Sloterweg zaken are still not being processed on insertion into the database.
-
-    vergunning.processed = true;
-
-    if (!vergunning.decision) {
-      // This decision (verleend) is not set by decos eventhough the actual permit is granted.
-      // This is possibly some hack to have an overview of active permits in the Decos back-office.
+    // This decision (verleend) is not set by decos eventhough the actual permit is granted.
+    // This is possibly some hack to have an overview of active permits in the Decos back-office.
+    if (vergunning.status === 'Actief') {
+      vergunning.processed = true;
       vergunning.decision = 'Verleend';
     }
 

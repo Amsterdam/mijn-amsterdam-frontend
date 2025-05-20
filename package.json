@@ -57,7 +57,7 @@
     "@types/flat-cache": "^2.0.2",
     "@types/js-cookie": "^3.0.6",
     "@types/jsonpath": "^0.2.4",
-    "@types/leaflet": "^1.9.17",
+    "@types/leaflet": "^1.9.18",
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/lodash.escaperegexp": "^4.1.9",
     "@types/lodash.isequal": "^4.5.8",
@@ -65,9 +65,9 @@
     "@types/lodash.keyby": "^4.6.9",
     "@types/memoizee": "^0.4.12",
     "@types/memory-cache": "^0.2.6",
-    "@types/node": "^22.15.17",
+    "@types/node": "^22.15.19",
     "@types/node-jose": "^1.1.13",
-    "@types/pg": "^8.15.1",
+    "@types/pg": "^8.15.2",
     "@types/proj4": "^2.5.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
@@ -123,9 +123,9 @@
     "npm": "^10.9.2",
     "outdent": "^0.8.0",
     "pg": "^8.16.0",
-    "pino": "^9.6.0",
+    "pino": "^9.7.0",
     "prettier": "^3.5.3",
-    "proj4": "^2.16.2",
+    "proj4": "^2.17.0",
     "pug": "^3.0.3",
     "qs": "^6.13.1",
     "react": "^18.3.1",
@@ -137,7 +137,7 @@
     "react-test-renderer": "^18.3.1",
     "recoil": "^0.7.7",
     "sanitize-html": "^2.16.0",
-    "sass": "^1.88.0",
+    "sass": "^1.89.0",
     "slugme": "^1.1.1",
     "supercluster": "^7.1.5",
     "swr": "^2.3.3",
@@ -155,7 +155,7 @@
     "xlsx": "file:vendor/xlsx-0.20.2.tgz"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.40.2"
+    "@rollup/rollup-linux-x64-gnu": "4.41.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
