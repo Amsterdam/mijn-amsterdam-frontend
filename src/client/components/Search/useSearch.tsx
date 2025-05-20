@@ -15,6 +15,7 @@ import {
   useRecoilState,
   useRecoilValue,
   useRecoilValueLoadable,
+  useSetRecoilState,
 } from 'recoil';
 
 import {
@@ -276,9 +277,10 @@ let fuseInstance: any;
 export function useSearchIndex() {
   const staticSearchEntries = useStaticSearchEntries();
   const dynamicSearchEntries = useDynamicSearchEntries();
+  const setfuseInstanceReady = useSetRecoilState(fuseInstanceReady);
 
   useEffect(() => {
-    if (!!staticSearchEntries && !!dynamicSearchEntries) {
+    if (!!staticSearchEntries && !!dynamicSearchEntries && !fuseInstance) {
       const entries = [
         ...(staticSearchEntries || []),
         ...(dynamicSearchEntries || []),
@@ -296,8 +298,8 @@ export function useSearchIndex() {
         }
         return searchEntry;
       });
-
       fuseInstance = new Fuse(entries, options);
+      setfuseInstanceReady(true);
     }
   }, [dynamicSearchEntries, staticSearchEntries]);
 }
@@ -326,16 +328,16 @@ const amsterdamNLQuery = selectorFamily({
     },
 });
 
-export const requestID = atom<number>({
-  key: 'searchTermrequestID',
-  default: 0,
+export const fuseInstanceReady = atom<boolean>({
+  key: 'fuseInstanceReady',
+  default: false,
 });
 
 export const searchConfigRemote = selector<SearchConfigRemote | null>({
   key: 'SearchConfigRemote',
   get: async ({ get }) => {
-    // Subscribe to updates from requestID to re-evaluate selector to reload the SEARCH_CONFIG
-    get(requestID);
+    // Subscribe to updates from fuseInstanceReady to re-evaluate selector to reload the SEARCH_CONFIG
+    get(fuseInstanceReady);
     const response: AxiosResponse<ApiResponse_DEPRECATED<SearchConfigRemote>> =
       await axios.get(BFFApiUrls.SEARCH_CONFIGURATION, {
         responseType: 'json',
@@ -350,7 +352,7 @@ const mijnQuery = selector({
   key: 'mijnQuery',
   get: ({ get }) => {
     const term = get(searchTermAtom);
-
+    get(fuseInstanceReady);
     if (fuseInstance && !!term) {
       const rawResults = fuseInstance.search(term);
       return rawResults.map((result: any) => result.item);
