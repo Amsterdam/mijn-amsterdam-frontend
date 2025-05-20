@@ -246,6 +246,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
     stateKey: 'PARKEREN',
@@ -254,9 +255,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     }) => {
       return apiContent?.vergunningen ?? [];
     },
-    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+    displayTitle: (vergunning: ParkeerVergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
     stateKey: 'ERFPACHT',
@@ -321,6 +323,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         ]);
       };
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
     stateKey: 'WMO',
@@ -501,6 +504,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     displayTitle: (vergunning: HorecaVergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
     isEnabled: featureToggleKrefia,
