@@ -29,6 +29,7 @@ async function fetchAfisTokenHeader_() {
       client_secret: getFromEnv('BFF_AFIS_CLIENT_SECRET'),
       grant_type: 'client_credentials',
     }),
+    cacheKey: `no-key-needed`,
     transformResponse: (response: {
       access_token: string;
       token_type: string;
@@ -135,6 +136,7 @@ export async function fetchIsKnownInAFIS(
     data: {
       [profileIdentifierType]: authProfileAndToken.profile.id,
     },
+    cacheKey: authProfileAndToken.profile.sid,
     transformResponse: (response) =>
       transformBusinessPartnerisKnownResponse(
         response,

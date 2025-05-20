@@ -113,6 +113,7 @@ describe('wmo-zorgned-service', () => {
         maxeinddatum: '2018-01-01',
         regeling: 'wmo',
       },
+      cacheKey: 'no-key-needed',
       transformResponse: expect.any(Function),
       method: 'post',
       headers: {

@@ -36,6 +36,7 @@ async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN', {
     method: 'POST',
     formatUrl: (config) => `${config.url}/v1/jwe/create`,
+    cacheKey: 'no-key-needed',
     transformResponse: (response: JWETokenSourceResponse): string => {
       return response.token;
     },

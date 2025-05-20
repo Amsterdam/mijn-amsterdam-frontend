@@ -219,6 +219,7 @@ export async function fetchAfvalwijzer(
   const garbageData = await requestData<AfvalFractionInformationTransformed[]>(
     getApiConfig('AFVAL', {
       params,
+      cacheKey: JSON.stringify(latlng),
       transformResponse: (afvalSourceData: AFVALSourceData) =>
         transformAfvalDataResponse(afvalSourceData, latlng),
     })

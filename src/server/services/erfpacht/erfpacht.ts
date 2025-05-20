@@ -147,6 +147,7 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
     {
       ...config,
       url: `${config.url}/vernise/api/erfpachter`,
+      cacheKey: authProfileAndToken.profile.profileType,
       transformResponse: (responseData) =>
         transformIsErfpachterResponseSource(
           responseData,
@@ -165,6 +166,7 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
       {
         ...config,
         url: `${config.url}/vernise/api/dossierinfo`,
+        cacheKey: erfpachterResponse.content.relatieCode,
         transformResponse: (responseData) =>
           transformDossierResponse(
             responseData,
@@ -189,6 +191,7 @@ export async function fetchErfpachtDossiersDetail(
       url: new URL(
         `${config.url}/vernise/api/dossierinfo/${dossierNummerUrlParam}`
       ).toString(),
+      cacheKey: 'no-key-needed',
       transformResponse: transformErfpachtDossierProperties,
     },
     authProfileAndToken

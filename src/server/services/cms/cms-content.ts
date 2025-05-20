@@ -198,6 +198,7 @@ async function getGeneralPage(
     return Promise.resolve(apiData);
   }
   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
+    cacheKey: 'no-key-needed',
     transformResponse: (responseData: {
       applicatie: {
         title: string;
@@ -254,6 +255,7 @@ async function getFooter(
   }
 
   const requestConfig = getApiConfig('CMS_CONTENT_FOOTER', {
+    cacheKey: 'no-key-needed',
     transformResponse: transformFooterResponse,
   });
 

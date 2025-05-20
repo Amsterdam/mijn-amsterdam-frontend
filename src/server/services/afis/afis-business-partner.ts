@@ -61,6 +61,7 @@ async function fetchBusinessPartnerAddress(
     params: getRequestParamsFromQueryString(
       `?$filter=BusinessPartner eq '${businessPartnerId}'&$select=AddressID,CityName,Country,HouseNumber,HouseNumberSupplementText,PostalCode,Region,StreetName,StreetPrefixName,StreetSuffixName`
     ),
+    cacheKey: businessPartnerId,
     transformResponse: transformBusinessPartnerAddressResponse,
     formatUrl(config) {
       return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`;
@@ -93,6 +94,7 @@ async function fetchBusinessPartnerFullName(businessPartnerId: string) {
     params: getRequestParamsFromQueryString(
       `?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName`
     ),
+    cacheKey: 'no-key-needed',
     transformResponse: transformBusinessPartnerFullNameResponse,
     formatUrl(config) {
       return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`;
@@ -118,6 +120,7 @@ function transformPhoneResponse(
 
 async function fetchPhoneNumber(addressId: AfisBusinessPartnerAddress['id']) {
   const additionalConfig: DataRequestConfig = {
+    cacheKey: 'no-key-needed',
     transformResponse: transformPhoneResponse,
     params: getRequestParamsFromQueryString(
       `?$filter=AddressID eq '${addressId}'&$select=InternationalPhoneNumber`
@@ -147,6 +150,7 @@ function transformEmailResponse(
 
 async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
   const additionalConfig: DataRequestConfig = {
+    cacheKey: 'no-key-needed',
     transformResponse: transformEmailResponse,
     params: getRequestParamsFromQueryString(
       `?$filter=AddressID eq '${addressId}'&$select=EmailAddress`

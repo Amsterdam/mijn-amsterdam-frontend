@@ -148,6 +148,7 @@ async function fetchAfisFacturenDeelbetalingen(
   const config = await getAfisApiConfig({
     params: getFactuurRequestQueryParams(params),
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
+    cacheKey: 'no-key-needed',
     transformResponse: transformDeelbetalingenResponse,
   });
   return requestData<AfisFactuurDeelbetalingen>(config);
@@ -448,9 +449,11 @@ export async function fetchAfisFacturen(
     }
   }
 
+  const requestParams = getFactuurRequestQueryParams(params);
   const config = await getAfisApiConfig({
-    params: getFactuurRequestQueryParams(params),
+    params: requestParams,
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
+    cacheKey: sessionID,
     transformResponse: (responseData) =>
       transformFacturen(responseData, sessionID, deelbetalingen),
   });

@@ -111,6 +111,7 @@ function getConfig(
       Authorization: `Bearer ${process.env.BFF_BELASTINGEN_BEARER_TOKEN}`,
       subjid: getBsnTranslation(authProfileAndToken.profile.id),
     },
+    cacheKey: authProfileAndToken.profile.profileType,
     transformResponse(response: BelastingenSourceContent) {
       return transformBelastingResponse(
         response,

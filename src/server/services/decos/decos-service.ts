@@ -137,6 +137,7 @@ async function fetchUserKeys(authProfileAndToken: AuthProfileAndToken) {
       return `${config.url}/search/books`;
     },
     params: getRequestParamsFromQueryString('properties=false&select=key'),
+    cacheKey: 'no-key-needed',
     transformResponse: (responseData) => {
       return responseData?.itemDataResultSet?.content ?? [];
     },
@@ -464,6 +465,7 @@ async function fetchZakenByUserKey(
       return `${config.url}/items/${userKey}/folders`;
     },
     params: Object.fromEntries(decosUrlParams),
+    cacheKey: 'no-key-needed',
     transformResponse: (responseData: DecosZakenResponse) => {
       if (!Array.isArray(responseData?.content)) {
         return [];
@@ -511,6 +513,7 @@ export async function fetchDecosZakenFromSourceRaw(
         return `${config.url}/items/${userKey}/folders`;
       },
       params: Object.fromEntries(queryParams),
+      cacheKey: 'no-key-needed',
       transformResponse: (responseData: DecosZakenResponse) => {
         if (!Array.isArray(responseData?.content)) {
           return [];
@@ -632,6 +635,7 @@ async function fetchWorkflowInstance<
     params: options.urlParams
       ? Object.fromEntries(options.urlParams)
       : undefined,
+    cacheKey: (options.decosActionCodes || []).join('-'),
     transformResponse: (responseData: DecosWorkflowResponse) =>
       !options.useRawResponse && options.decosActionCodes
         ? transformDecosWorkflowDateResponse(
@@ -672,6 +676,7 @@ export async function fetchDecosWorkflowDates<
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/workflows`;
     },
+    cacheKey: 'no-key-needed',
     transformResponse: transformDecosWorkflowKeysResponse,
   });
 
@@ -766,6 +771,7 @@ export async function fetchDecosTermijnen(
       return `${config.url}/items/${zaakID}/termijnens`;
     },
     params: Object.fromEntries(urlParams),
+    cacheKey: 'no-key-needed',
     transformResponse: transformDecosTermijnenResponse,
   });
 
@@ -790,6 +796,7 @@ export async function fetchDecosLinkedField(
     formatUrl: (config) => {
       return `${config.url}/items/${zaakID}/${field}`;
     },
+    cacheKey: 'no-key-needed',
     transformResponse: extractContentList,
   });
 
@@ -805,6 +812,7 @@ async function fetchIsPdfDocument(documentKey: DecosZaakDocument['key']) {
     params: getRequestParamsFromQueryString(
       'select=bol10&filter=bol10 eq true'
     ),
+    cacheKey: 'no-key-needed',
     transformResponse: (
       responseDataSource: DecosZakenResponse<DecosDocumentBlobSource[]>
     ) => {
@@ -910,6 +918,7 @@ export async function fetchDecosZaakFromSource(
     params: getRequestParamsFromQueryString(
       includeProperties ? '?properties=true' : ''
     ),
+    cacheKey: 'no-key-needed',
     transformResponse: (responseData: DecosZakenResponse) => {
       if (responseData.content) {
         return responseData.content[0];
@@ -940,6 +949,7 @@ export async function fetchDecosDocument(
       Authorization: apiConfigDocument.headers?.Authorization,
       Accept: 'application/octet-stream',
     },
+    cacheKey: 'no-key-needed',
     transformResponse: (documentResponseData) => {
       return {
         data: documentResponseData,

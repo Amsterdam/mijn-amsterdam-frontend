@@ -1,11 +1,11 @@
 import { LatLngLiteral } from 'leaflet';
 
+import { BAGQueryParams } from './bag.types';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
 } from '../../../universal/helpers/api';
 import { getLatLngCoordinates } from '../../../universal/helpers/bag';
-import { BAGQueryParams } from './bag.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import type { Adres } from '../profile/brp.types';
@@ -32,6 +32,7 @@ export async function fetchBAG(
 
   const config = getApiConfig('BAG', {
     params,
+    cacheKey: 'no-key-needed',
     transformResponse: (responseData) => {
       const data = responseData._embedded?.adresseerbareobjecten;
       if (!data || data.length < 1) {

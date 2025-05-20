@@ -135,6 +135,7 @@ async function fetchCMSMaintenanceNotifications(
   function fetchCMSEventData(url: string) {
     return requestData<CMSMaintenanceNotification>({
       url: url + '?Appidt=app-pagetype&reload=true',
+      cacheKey: 'no-key-needed',
       transformResponse: transformCMSEventResponse,
       cacheTimeout: 0,
     });

@@ -25,6 +25,7 @@ export async function fetchRegistraties(
       },
       method: 'POST',
       data: JSON.stringify(authProfileAndToken.profile.id),
+      cacheKey: 'no-key-needed',
       transformResponse: (response) => {
         if (!Array.isArray(response)) {
           return [];

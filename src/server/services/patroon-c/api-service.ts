@@ -40,6 +40,7 @@ export async function fetchService<T extends ApiPatternResponseA>(
     apiConfig.transformResponse ?? []
   );
   const apiConfigMerged: DataRequestConfig = {
+    cacheKey: `${authProfileAndToken}`,
     ...apiConfig,
     transformResponse,
   };

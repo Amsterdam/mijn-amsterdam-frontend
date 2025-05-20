@@ -1911,6 +1911,7 @@ describe('zorgned-service', () => {
         burgerservicenummer: BSN,
         gemeentecode: ZORGNED_GEMEENTE_CODE,
       },
+      cacheKey: 'no-key-needed',
       transformResponse: expect.any(Function),
       method: 'post',
       headers: {
@@ -1978,6 +1979,7 @@ describe('zorgned-service', () => {
         gemeentecode: ZORGNED_GEMEENTE_CODE,
         documentidentificatie: mocks.mockDocumentId,
       },
+      cacheKey: 'no-key-needed',
       transformResponse: expect.any(Function),
       method: 'post',
       headers: {

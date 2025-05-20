@@ -299,22 +299,25 @@ export async function loadFeatureDetail(datasetId: string, id: string) {
     ? `${detailUrl}?${config.idKeyDetail}=${id}`
     : `${detailUrl}${id}`;
 
-  const requestConfig: DataRequestConfig = {
+  let requestConfig: DataRequestConfig = {
     url,
     cacheTimeout: 0,
+    headers: ACCEPT_CRS_4326,
   };
-
-  requestConfig.headers = ACCEPT_CRS_4326;
 
   if (typeof config.transformDetail === 'function') {
     const transformDetail = config.transformDetail;
-    requestConfig.transformResponse = (responseData: DsoApiResponse) =>
-      transformDetail(responseData, {
-        datasetId,
-        config,
-        id,
-        datasetCache: fileCache,
-      });
+    requestConfig = {
+      ...requestConfig,
+      cacheKey: [datasetId, id].join('-'),
+      transformResponse: (responseData: DsoApiResponse) =>
+        transformDetail(responseData, {
+          datasetId,
+          config,
+          id,
+          datasetCache: fileCache,
+        }),
+    };
   }
 
   if (config.requestConfig?.request) {

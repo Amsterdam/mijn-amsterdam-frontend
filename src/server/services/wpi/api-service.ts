@@ -203,6 +203,7 @@ export async function fetchSpecificaties(
   const response =
     await requestData<WpiIncomeSpecificationResponseDataTransformed>(
       getApiConfig('WPI_SPECIFICATIES', {
+        cacheKey: authProfileAndToken.profile.sid,
         transformResponse: (responseData) =>
           transformIncomSpecificationResponse(
             authProfileAndToken.profile.sid,
@@ -303,6 +304,7 @@ export async function fetchWpiDocument(
       headers: {
         Authorization: `Bearer ${authProfileAndToken.token}`,
       },
+      cacheKey: '',
       transformResponse: (documentResponseData) => {
         return {
           filename: 'Brief.pdf',

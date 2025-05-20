@@ -196,14 +196,16 @@ export async function fetchLoodmetingen(
 ) {
   const data = getDataForLood365(authProfileAndToken);
 
+  const requestHeaders = await getLoodApiHeaders();
   const requestConfig = getApiConfig('LOOD_365', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/be_getrequestdetails`;
     },
-    headers: await getLoodApiHeaders(),
+    headers: requestHeaders,
     data,
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
+    cacheKey: `${JSON.stringify(requestHeaders)}-${authProfileAndToken.profile.sid}`,
   });
 
   return requestData<LoodMetingen>(requestConfig);
@@ -221,6 +223,7 @@ export async function fetchLoodMetingDocument(
     formatUrl(requestConfig) {
       return `${requestConfig.url}/be_downloadleadreport`;
     },
+    cacheKey: _authProfileAndToken.profile.sid,
     transformResponse: (documentResponseData: LoodMetingDocument) => {
       const data = Buffer.from(documentResponseData.documentbody, 'base64');
       return {

@@ -96,6 +96,7 @@ async function fetchPersoonOrMaatschapIdByUid(
     formatUrl({ url }) {
       return `${url}/SearchRequest`;
     },
+    cacheKey: 'no-key-needed',
     transformResponse(
       responseData: SearchRequestResponse<typeof options.tableName>
     ) {
@@ -128,6 +129,7 @@ async function fetchZaakIds(
     formatUrl({ url }) {
       return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
     },
+    cacheKey: 'no-key-needed',
     transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
       return responseData.records?.map((record) => record.id) ?? [];
     },
@@ -293,6 +295,7 @@ async function fetchZaakAdres(
       return `${url}/Link/GFO_ZAKEN/ADRESSEN/Table`;
     },
     data: [zaakId],
+    cacheKey: 'no-key-needed',
     transformResponse(
       data: SearchRequestResponse<'ADRESSEN', PBRecordField<'FMT_CAPTION'>[]>
     ) {
@@ -324,6 +327,7 @@ async function fetchZaakStatussen(
     formatUrl({ url }) {
       return `${url}/Report/RunSavedReport`;
     },
+    cacheKey: zaak.id,
     transformResponse(responseData) {
       return transformZaakStatusResponse(zaak, responseData);
     },
@@ -486,6 +490,7 @@ async function fetchZakenByIds(
     formatUrl({ url }) {
       return `${url}/record/GFO_ZAKEN/${zaakIds.join(',')}`;
     },
+    cacheKey: authProfile.sid,
     transformResponse(responseData: PBZaakRecord[]) {
       return responseData?.map(transformZaak) ?? [];
     },
@@ -680,6 +685,7 @@ export async function fetchBBDocumentsList(
         ],
       },
     },
+    cacheKey: authProfile.sid,
     transformResponse(responseData) {
       return transformPowerbrowserLinksResponse(authProfile.sid, responseData);
     },
@@ -707,6 +713,7 @@ export async function fetchBBDocument(
       })}`;
       return fullUrl;
     },
+    cacheKey: 'no-key-needed',
     transformResponse: (documentResponseData): DocumentDownloadData => {
       return {
         data: documentResponseData,

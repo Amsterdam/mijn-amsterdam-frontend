@@ -9,6 +9,7 @@ import {
 } from './afis-types';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
 import { requestData } from '../../helpers/source-api-request';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
@@ -34,6 +35,34 @@ export async function fetchAfisDocument(
     );
   }
 
+  const requestConfig: DataRequestConfig = {
+    formatUrl: ({ url }) => {
+      return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
+    },
+    method: 'post',
+    data: {
+      Record: {
+        ArchiveDocumentID: ArchiveDocumentIDResponse.content,
+        BusinessObjectTypeName: 'BKPF',
+      },
+    },
+    cacheKey: _authProfileAndToken.profile.sid,
+    transformResponse: (
+      data: AfisDocumentDownloadSource
+    ): DocumentDownloadData => {
+      if (typeof data?.Record?.attachment !== 'string') {
+        throw new Error(
+          'Afis document download - no valid response data provided'
+        );
+      }
+      const decodedDocument = Buffer.from(data.Record.attachment, 'base64');
+      return {
+        data: decodedDocument,
+        mimetype: DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
+        filename: data.Record.attachmentname ?? 'factuur.pdf',
+      };
+    },
+  };
   const config = await getAfisApiConfig({
     formatUrl: ({ url }) => {
       return `${url}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`;
@@ -45,6 +74,7 @@ export async function fetchAfisDocument(
         BusinessObjectTypeName: 'BKPF',
       },
     },
+    cacheKey: _authProfileAndToken.profile.sid,
     transformResponse: (
       data: AfisDocumentDownloadSource
     ): DocumentDownloadData => {
@@ -79,6 +109,7 @@ async function fetchAfisDocumentID(
     formatUrl: ({ url }) => {
       return `${url}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02?$filter=AccountNumber eq '${factuurDocumentId}'&$select=ArcDocId&$orderby=ArDate desc`;
     },
+    cacheKey: 'no-key-needed',
     transformResponse: (data: AfisDocumentIDSource) => {
       const entryProperties = getFeedEntryProperties(data);
       if (entryProperties.length) {

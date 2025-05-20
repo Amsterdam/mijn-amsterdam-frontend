@@ -51,6 +51,7 @@ async function fetchZorgnedByBSN<S, T>(
     ...dataRequestConfig,
     url,
     data: postBody,
+    cacheKey: 'no-key-needed',
     transformResponse: options.transform,
     validateStatus: options.validateStatus,
   });

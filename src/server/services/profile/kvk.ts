@@ -180,6 +180,7 @@ export async function fetchKVK(authProfileAndToken: AuthProfileAndToken) {
   if (FeatureToggle.kvkActive) {
     return requestData<KVKData>(
       getApiConfig(SERVICE_NAME, {
+        cacheKey: 'no-key-needed',
         transformResponse: transformKVKData,
       }),
       authProfileAndToken

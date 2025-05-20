@@ -299,6 +299,7 @@ export async function fetchGpassBudgetTransactions(
 
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
+    cacheKey: 'no-key-needed',
     transformResponse: transformGpassTransactionsResponse,
     headers: getHeaders(administratienummer),
     params: requestParams,
@@ -347,6 +348,7 @@ export async function fetchGpassDiscountTransactions(
 
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/transacties/v1/aanbiedingen`,
+    cacheKey: 'no-key-needed',
     transformResponse: transformGpassAanbiedingenResponse,
     headers: getHeaders(administratienummer),
     params: requestParams,
@@ -390,6 +392,7 @@ async function mutateGpassTogglePass(
     headers: getHeaders(administratienummer),
     enableCache: false,
     postponeFetch: !featureToggle.hliThemaStadspasBlokkerenActive,
+    cacheKey: 'no-key-needed',
     transformResponse: transformTogglePassResponse,
   });
 

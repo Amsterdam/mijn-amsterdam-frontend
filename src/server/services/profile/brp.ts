@@ -261,6 +261,7 @@ export function transformBRPData(
 
 export async function fetchBRP(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('BRP', {
+    cacheKey: 'no-key-needed',
     transformResponse: transformBRPData,
   });
 
@@ -294,6 +295,7 @@ export async function fetchAantalBewoners(
       data: {
         addressKey: addressKeyEncrypted,
       },
+      cacheKey: 'no-key-needed',
       transformResponse: (responseData: ApiResponse_DEPRECATED<string>) => {
         if (responseData.status === 'OK') {
           return responseData.content;

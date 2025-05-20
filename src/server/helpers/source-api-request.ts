@@ -72,6 +72,7 @@ export function clearSessionCache(cachekeyStartsWith: string) {
 
 export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
   return [
+    requestConfig.cacheKey ?? 'no-cache-key',
     requestConfig.cacheTimeout ?? 'no-cache-timeout', // Cache timeout can be adjusted and we want the adjusted value to be part of the cache key so we can invalidate it immediately.
     requestConfig.method,
     requestConfig.url,
@@ -80,7 +81,7 @@ export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
     requestConfig.headers
       ? JSON.stringify(requestConfig.headers)
       : 'no-headers',
-  ].join('-');
+  ].join('_');
 }
 
 export async function requestData<T>(
@@ -157,7 +158,7 @@ export async function requestData<T>(
   }
 
   // Construct a cache key based on unique properties of a request
-  const cacheKey = config.cacheKey || getRequestConfigCacheKey(config);
+  const cacheKey = getRequestConfigCacheKey(config);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);

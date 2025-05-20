@@ -61,6 +61,7 @@ export function fetchSVWI(authProfileAndToken: AuthProfileAndToken) {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/autorisatie/tegel`;
     },
+    cacheKey: 'no-key-needed',
     transformResponse: transformSVWIResponse,
     postponeFetch: !featureToggle.svwiActive,
   });
@@ -75,6 +76,7 @@ export async function fetchSVWINotifications(
       formatUrl(requestConfig) {
         return `${requestConfig.url}/autorisatie/tegel`;
       },
+      cacheKey: 'no-key-needed',
       transformResponse: transformSVWIResponse,
     }),
     themaId,

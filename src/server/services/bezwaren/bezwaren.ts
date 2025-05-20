@@ -176,7 +176,7 @@ async function fetchBezwaarStatus(
     params,
     transformResponse: transformBezwaarStatus,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-    cacheKey: `bezwaar-status-${zaakId}`,
+    cacheKey: `bezwaar-status-${zaakId}-${authProfileAndToken.profile.sid}`,
   });
 
   const statusResponse = await requestData<StatusLineItem[]>(
@@ -233,6 +233,7 @@ export async function fetchBezwarenDocuments(
 
   const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', {
     params,
+    cacheKey: authProfileAndToken.profile.sid,
     transformResponse: (responseData) => {
       return transformBezwarenDocumentsResults(
         authProfileAndToken.profile.sid,
@@ -377,6 +378,7 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   const requestConfig = getApiConfig('BEZWAREN_LIST', {
     data: requestBody,
     params,
+    cacheKey: authProfileAndToken.profile.sid,
     transformResponse: (responseData) =>
       transformBezwarenResults(authProfileAndToken.profile.sid, responseData),
     headers: await getBezwarenApiHeaders(authProfileAndToken),
@@ -505,6 +507,7 @@ export async function fetchBezwaarDocument(
       url,
       responseType: 'stream',
       headers: await getBezwarenApiHeaders(authProfileAndToken),
+      cacheKey: authProfileAndToken.profile.sid,
       transformResponse: (documentResponseData) => {
         return {
           data: documentResponseData,

@@ -55,7 +55,7 @@ describe('requestData.ts', () => {
 
   const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
-  const CACHE_KEY_1 = `${DEFAULT_API_CACHE_TTL_MS}-get-${DUMMY_URL}-no-params-no-data-no-headers`;
+  const CACHE_KEY_1 = `no-cache-key_${DEFAULT_API_CACHE_TTL_MS}_get_${DUMMY_URL}_no-params_no-data_no-headers`;
 
   let axiosRequestSpy: MockInstance;
 
@@ -255,7 +255,7 @@ describe('requestData.ts', () => {
         data: { foo: 'bar' },
       })
     ).toStrictEqual(
-      'no-cache-timeout-post--no-params-{"foo":"bar"}-no-headers'
+      'no-cache-key_no-cache-timeout_post__no-params_{"foo":"bar"}_no-headers'
     );
 
     expect(
@@ -265,7 +265,7 @@ describe('requestData.ts', () => {
         params: { foo: 'bar' },
       })
     ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-{"foo":"bar"}-no-data-no-headers'
+      'no-cache-key_no-cache-timeout_get_http://foo_{"foo":"bar"}_no-data_no-headers'
     );
 
     expect(
@@ -274,7 +274,7 @@ describe('requestData.ts', () => {
         url: 'http://foo',
       })
     ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-no-params-no-data-no-headers'
+      'no-cache-key_no-cache-timeout_get_http://foo_no-params_no-data_no-headers'
     );
 
     expect(
@@ -283,7 +283,9 @@ describe('requestData.ts', () => {
         url: 'http://foo',
         cacheTimeout: 1000,
       })
-    ).toStrictEqual('1000-get-http://foo-no-params-no-data-no-headers');
+    ).toStrictEqual(
+      'no-cache-key_1000_get_http://foo_no-params_no-data_no-headers'
+    );
 
     expect(
       getRequestConfigCacheKey({
@@ -294,7 +296,7 @@ describe('requestData.ts', () => {
         },
       })
     ).toStrictEqual(
-      'no-cache-timeout-get-http://foo-no-params-no-data-{"Authorization":"Bearer 123123123123"}'
+      'no-cache-key_no-cache-timeout_get_http://foo_no-params_no-data_{"Authorization":"Bearer 123123123123"}'
     );
   });
 });
