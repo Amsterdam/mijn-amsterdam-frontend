@@ -26,7 +26,10 @@ import {
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
-import { ApiUrlEntries, DEFAULT_API_CACHE_TTL_MS } from '../config/source-api';
+import {
+  ApiUrlEntries,
+  DEFAULT_REQUEST_CACHE_TTL_MS,
+} from '../config/source-api';
 import { captureException } from '../services/monitoring';
 
 const mocks = vi.hoisted(() => {
@@ -55,7 +58,7 @@ describe('requestData.ts', () => {
 
   const AUTH_PROFILE_AND_TOKEN = getAuthProfileAndToken();
 
-  const CACHE_KEY_1 = `no-cache-key_${DEFAULT_API_CACHE_TTL_MS}_get_${DUMMY_URL}_no-params_no-data_no-headers`;
+  const CACHE_KEY_1 = `no-cache-key_${DEFAULT_REQUEST_CACHE_TTL_MS}_get_${DUMMY_URL}_no-params_no-data_no-headers`;
 
   let axiosRequestSpy: MockInstance;
 

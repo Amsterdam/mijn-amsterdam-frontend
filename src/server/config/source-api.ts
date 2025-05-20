@@ -85,7 +85,13 @@ export type DataRequestConfig =
 
 /* eslint-disable no-magic-numbers */
 // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
-export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS;
+const apiCacheTTLMs = parseInt(
+  getFromEnv('BFF_REQUEST_CACHE_TTL_MS', false)!,
+  10
+);
+export const DEFAULT_REQUEST_CACHE_TTL_MS = isNaN(apiCacheTTLMs)
+  ? 5 * ONE_MINUTE_MS // Default is 5 minutes
+  : apiCacheTTLMs;
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 /* eslint-enable no-magic-numbers */
 
@@ -94,7 +100,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   method: 'get',
   enableCache: BFF_REQUEST_CACHE_ENABLED,
   get cacheTimeout() {
-    return adHocDependencyRequestCacheTtlMs ?? DEFAULT_API_CACHE_TTL_MS;
+    return adHocDependencyRequestCacheTtlMs ?? DEFAULT_REQUEST_CACHE_TTL_MS;
   },
   postponeFetch: false,
   passthroughOIDCToken: false,
