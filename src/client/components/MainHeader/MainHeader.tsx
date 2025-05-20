@@ -163,7 +163,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
       <PageHeader
         ref={ref}
         className={classNames(styles.MainHeader, AmsMainMenuClassname)}
-        logoLink="https://mijn.amsterdam.nl/"
+        logoLink="https://www.amsterdam.nl/"
         onClick={(event) => {
           if (
             event.target.parentNode?.classList.contains(
