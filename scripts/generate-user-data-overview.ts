@@ -23,7 +23,6 @@ import {
 } from '../src/server/services/profile/brp.types';
 import { differenceInYears, parseISO } from 'date-fns';
 
-import { PRISTINE_APPSTATE } from '../src/client/AppState';
 import { ServiceResults } from '../src/server/services/content-tips/tip-types';
 import { IS_PRODUCTION } from '../src/universal/config/env';
 
@@ -163,6 +162,10 @@ if (!process.env.MA_TEST_ACCOUNTS) {
 }
 let testAccounts: any = process.env.MA_TEST_ACCOUNTS.split(',');
 
+const themaToTitle = themas.reduce((acc, { id, title }) => {
+  acc[id] = title;
+  return acc;
+}, {});
 const themasAvailable = themas.map((menuItem) => menuItem.id);
 const testAccountEntries = getTestAccountEntries();
 
@@ -200,11 +203,12 @@ async function generateOverview() {
       `/Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
     const workbook = XLSX.utils.book_new();
 
-    console.dir(resultsByUser);
+    const serviceNames = getAllServiceNames(resultsByUser);
+    const serviceKeys = Object.keys(serviceNames);
 
     addSheets(workbook, [
       sheetBrpBase(resultsByUser),
-      sheetServiceErrors(resultsByUser),
+      sheetServiceErrors(resultsByUser, serviceKeys),
       sheetThemas(resultsByUser),
       sheetNotifications(resultsByUser),
       sheetThemaContent(resultsByUser),
@@ -501,16 +505,56 @@ const paths: PathObj[] = [
 function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
   const rows = Object.entries(resultsByUser)
     .map(([_username, serviceResults]) => {
-      const userThemas = getUserThemas(serviceResults);
+      const userThemas = getAvailableUserThemas(serviceResults);
       return userThemas;
     })
     .filter((userThemas) => !!Object.keys(userThemas).length);
   return getRows(themasAvailable, rows, false);
 }
 
-function getUserThemas(serviceResults: ServiceResults) {
-  const themaMenuItems = Object.keys(serviceResults);
-  return Object.fromEntries(themas.map((item: any) => [item.id, item.title]));
+function getAvailableUserThemas(serviceResults: ServiceResults) {
+  const availableThemas = Object.entries(serviceResults)
+    .filter(([, sResult]) => {
+      if (sResult.status === 'ERROR' || sResult.status === 'POSTPONE') {
+        return false;
+      }
+      return isThemaAvailableForUser(sResult.content);
+    })
+    .map(([themaName]) => themaName);
+
+  for (const themaID of availableThemas) {
+    availableThemas[themaID] = themaToTitle[themaID];
+  }
+
+  return availableThemas;
+}
+
+type PartialContentObject = {
+  isKnown?: boolean;
+} & object;
+
+function isThemaAvailableForUser(
+  content: any[] | PartialContentObject
+): boolean {
+  if (!content) {
+    return false;
+  }
+  if (Array.isArray(content)) {
+    return content.length > 0;
+  }
+  if (content.isKnown) {
+    return true;
+  }
+  const entries = Object.entries(content);
+  for (const [, val] of entries) {
+    if (
+      val &&
+      ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
@@ -520,9 +564,9 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
         (notification: MyNotification) => {
           return {
             Username: Username,
-            thema: notification.themaID,
-            titel: notification.title,
-            datum: defaultDateFormat(notification.datePublished),
+            Thema: themaToTitle[notification.thema],
+            Titel: notification.title,
+            Datum: defaultDateFormat(notification.datePublished),
           };
         }
       );
@@ -531,22 +575,42 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
   return rows;
 }
 
-function getServiceErrors(resultsByUser: Record<string, ServiceResults>) {
-  return getRows(
-    Object.keys(PRISTINE_APPSTATE),
-    Object.entries(resultsByUser).map(([user, results]) => {
+function getServiceErrors(
+  resultsByUser: Record<string, ServiceResults>,
+  serviceKeys: string[]
+) {
+  const serviceStatusResults = Object.entries(resultsByUser).map(
+    ([_user, results]) => {
       return Object.fromEntries(
         Object.entries(results).map(([appStateKey, response]) => {
           return [
             appStateKey,
-            response.status +
-              (response.status === 'ERROR' ? ` - ${response.message}` : ''),
+            `${response.status}${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
           ];
         })
       );
-    }),
-    true
+    }
   );
+  const rows = getRows(serviceKeys, serviceStatusResults, true);
+  return rows;
+}
+
+function getAllServiceNames(resultsByUser: Record<string, ServiceResults>) {
+  const entries = Object.entries(resultsByUser);
+  const serviceNames = entries
+    .map(([_, serviceResults]) => serviceResults)
+    .reduce(addAvailableThemas, {});
+  return serviceNames;
+}
+
+function addAvailableThemas(
+  serviceLabelAcc: object,
+  serviceResults: ServiceResults
+): object {
+  Object.keys(serviceResults).forEach((serviceName) => {
+    serviceLabelAcc[serviceName] = serviceName;
+  });
+  return serviceLabelAcc;
 }
 
 function getRows(
@@ -671,7 +735,7 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
   return {
     title: 'Themas',
     rows: getThemaRows(resultsByUser),
-    columnHeaders: Object.keys(testAccounts),
+    columnHeaders: getUsernameColumnHeaders(),
     colInfo: [
       { wch: WCH_DEFAULT },
       ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
@@ -680,15 +744,18 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
   };
 }
 
-function sheetServiceErrors(resultsByUser: Record<string, ServiceResults>) {
+function sheetServiceErrors(
+  resultsByUser: Record<string, ServiceResults>,
+  serviceKeys: string[]
+) {
   const rowInfo = createInfoArray(testAccountEntries.length, {
     hpx: HPX_DEFAULT,
   });
 
   return {
     title: 'Service Errors',
-    rows: getServiceErrors(resultsByUser),
-    columnHeaders: ['', ...Object.keys(testAccounts)],
+    rows: getServiceErrors(resultsByUser, serviceKeys),
+    columnHeaders: ['', getUsernameColumnHeaders()],
     colInfo: [
       { wch: WCH_DEFAULT },
       ...createInfoArray(testAccountEntries.length, { wch: WCH_DEFAULT }),
@@ -810,4 +877,8 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       : undefined,
     rowInfo,
   };
+}
+
+function getUsernameColumnHeaders() {
+  return testAccounts.map(([username]) => username);
 }
