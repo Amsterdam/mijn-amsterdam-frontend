@@ -125,7 +125,7 @@ describe('source-api-request caching', () => {
     expect(rs2.content?.[1]).not.toBe(rs1.content?.[1]);
   });
 
-  test('Not correct: Mistakenly caches transformed response with previousley encrypted sessionID', async () => {
+  test('Warning!: Mistakenly caches transformed response with previousley encrypted sessionID', async () => {
     remoteApi.get('/1').reply(200, '"foo"');
 
     const SESSION_ID_1 = '123';
