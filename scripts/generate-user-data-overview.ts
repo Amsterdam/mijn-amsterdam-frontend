@@ -521,10 +521,10 @@ function getBRPRows(
   paths: any[]
 ): Record<string, string | number> {
   const user = paths.reduce(
-    (acc, { path, label, transform }) => {
+    (acc, { extractContentValue, label, transform }) => {
       let value = null;
-      if (path) {
-        value = path(serviceResults.BRP.content);
+      if (extractContentValue) {
+        value = extractContentValue(serviceResults.BRP.content);
       }
       if (transform) {
         value = transform(value, serviceResults);
@@ -540,7 +540,7 @@ function getBRPRows(
 
 type BrpSheetLayout = {
   label: string;
-  path: string;
+  extractContentValue: string;
   transform?: (value: any, serviceResults: ServiceResults) => string | null;
   wch?: number;
   hpx?: number;
@@ -549,16 +549,16 @@ type BrpSheetLayout = {
 const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'BSN',
-    path: (brpContent: any) => brpContent.persoon.bsn,
+    extractContentValue: (brpContent: any) => brpContent.persoon.bsn,
   },
   {
     label: 'Voornamen',
-    path: (brpContent: any) => brpContent.persoon.voornamen,
+    extractContentValue: (brpContent: any) => brpContent.persoon.voornamen,
     wch: 40,
   },
   {
     label: 'Achternaam (Titel)',
-    path: (brpContent: any) => brpContent.persoon,
+    extractContentValue: (brpContent: any) => brpContent.persoon,
     transform: (persoon: Persoon) => {
       if (!persoon) {
         return 'onbekend';
@@ -578,7 +578,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Geboortedatum (Geboorteland)',
-    path: (brpContent: any) => brpContent.persoon,
+    extractContentValue: (brpContent: any) => brpContent.persoon,
     transform: (persoon: Persoon) => {
       if (!persoon) {
         return 'onbekend';
@@ -591,7 +591,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Leeftijd',
-    path: (brpContent: any) => brpContent.persoon.geboortedatum,
+    extractContentValue: (brpContent: any) => brpContent.persoon.geboortedatum,
     transform: (value: string | null, serviceResults: ServiceResults) => {
       const age =
         value !== null
@@ -602,7 +602,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Geslacht (Nationaliteit)',
-    path: (brpContent: any) => brpContent.persoon,
+    extractContentValue: (brpContent: any) => brpContent.persoon,
     transform: (persoon: Persoon) => {
       if (!persoon) {
         return 'onbekend';
@@ -619,7 +619,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Adres (In onderzoek / VOW / Geheim)',
-    path: (brpContent: any) => brpContent.adres,
+    extractContentValue: (brpContent: any) => brpContent.adres,
     wch: WCH_DEFAULT * 2,
     transform: (value: Adres, serviceResults: ServiceResults) => {
       return (
@@ -644,7 +644,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Postcode (Woonplaats)',
-    path: (brpContent: any) => brpContent.adres.postcode,
+    extractContentValue: (brpContent: any) => brpContent.adres.postcode,
     transform: (postcode: string, serviceResults: ServiceResults) => {
       return `${postcode ? postcode : ''} ${woonplaatsNaamBuitenAmsterdam(
         serviceResults.BRP.content?.adres
@@ -653,7 +653,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Verbintenis (Partner)',
-    path: (brpContent: any) => brpContent.verbintenis,
+    extractContentValue: (brpContent: any) => brpContent.verbintenis,
     wch: 50,
     transform: (verbintenis: Verbintenis) => {
       if (!verbintenis) {
@@ -673,19 +673,19 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Kinderen',
-    path: (brpContent: any) => brpContent.kinderen,
+    extractContentValue: (brpContent: any) => brpContent.kinderen,
     wch: 60,
     transform: oudersOfKinderen,
   },
   {
     label: 'Ouders',
-    path: (brpContent: any) => brpContent.ouders,
+    extractContentValue: (brpContent: any) => brpContent.ouders,
     wch: 60,
     transform: oudersOfKinderen,
   },
   {
     label: 'Voormalige verbintenis',
-    path: (brpContent: any) => brpContent.verbintenisHistorisch,
+    extractContentValue: (brpContent: any) => brpContent.verbintenisHistorisch,
     wch: 50,
     transform: (verbintenisHistorisch: Verbintenis[]) => {
       if (!verbintenisHistorisch) {
@@ -707,7 +707,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   },
   {
     label: 'Voormalige adressen',
-    path: (brpContent: any) => brpContent.adresHistorisch,
+    extractContentValue: (brpContent: any) => brpContent.adresHistorisch,
     transform: (adressen: Adres[], serviceResults: ServiceResults) => {
       return adressen
         ?.map((adres) => {
