@@ -820,7 +820,7 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     'Zorg en ondersteuning': count('WMO'),
     Vergunningen: count('VERGUNNINGEN'),
     KVK: (serviceResults: ServiceResults) => {
-      return !!serviceResults.KVK.content ? 'Ja' : '';
+      return serviceResults.KVK?.content ? 'Ja' : '';
     },
     'ToerVerh LLV Registraties': (serviceResults: ServiceResults) => {
       return (
@@ -850,7 +850,7 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       return serviceResults.AVG.content?.verzoeken.length || '';
     },
     'Bodem (Loodmeting)': (serviceResults: ServiceResults) => {
-      return serviceResults.BODEM.content?.length || '';
+      return serviceResults.BODEM.content?.metingen.length || '';
     },
   };
 
