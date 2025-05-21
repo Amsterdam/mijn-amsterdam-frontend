@@ -134,6 +134,7 @@ describe('source-api-request caching', () => {
     const rs1 = await fetchThings(SESSION_ID_1);
     expect(rs1.content?.[0]).toEqual('foo');
 
+    // User initiates a new session.
     const rs2 = await fetchThings(SESSION_ID_2);
     expect(rs2.content?.[0]).toEqual('foo');
 
