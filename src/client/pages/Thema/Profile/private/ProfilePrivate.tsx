@@ -110,7 +110,7 @@ export function MijnGegevensThema() {
     </>
   );
   const isThemaPaginaError = isErrorBrp && isErrorContactmomenten;
-  const isThemaPaginaLoading = isLoadingBrp && isLoadingContactmomenten;
+  const isThemaPaginaLoading = isLoadingBrp || isLoadingContactmomenten;
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>

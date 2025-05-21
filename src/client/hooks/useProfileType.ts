@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 
@@ -49,16 +49,4 @@ export function useProfileType() {
 
 export function useProfileTypeValue(): ProfileType {
   return useRecoilValue(profileTypeState);
-}
-
-export function useProfileTypeSwitch(callback: (...args: any) => void) {
-  const profileType = useProfileTypeValue();
-  const currentProfile = useRef<ProfileType>(profileType);
-
-  useEffect(() => {
-    if (callback && profileType !== currentProfile.current) {
-      callback();
-      currentProfile.current = profileType;
-    }
-  }, [profileType, callback, currentProfile]);
 }

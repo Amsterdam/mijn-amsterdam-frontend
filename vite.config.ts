@@ -45,7 +45,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@use "./src/client/styles/_global.scss" as *;',
+        additionalData: '@use "/src/client/styles/_global.scss" as *;',
         silenceDeprecations: ['import', 'legacy-js-api'],
       },
     },

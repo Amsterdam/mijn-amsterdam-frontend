@@ -17,7 +17,6 @@ import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppState';
 import { useKeyDown } from '../../hooks/useKey';
-import { useProfileTypeSwitch } from '../../hooks/useProfileType';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { MaButtonLink, MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Spinner } from '../Spinner/Spinner';
@@ -169,8 +168,6 @@ export function Search({
     },
     [onFinishCallback]
   );
-
-  useProfileTypeSwitch(() => onFinish('Profiel toggle'));
 
   const SET_TERM_DELAY_MS = 300;
   const setTermDebounced = useDebouncedCallback((term: string) => {

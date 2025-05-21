@@ -16,6 +16,7 @@ import type {
 } from '../../../server/services/erfpacht/erfpacht-types';
 import { HLIresponseData } from '../../../server/services/hli/hli-regelingen-types';
 import type { HorecaVergunningFrontend } from '../../../server/services/horeca/decos-zaken';
+import type { KlachtFrontend } from '../../../server/services/klachten/types';
 import type {
   Krefia,
   KrefiaDeepLink,
@@ -53,10 +54,12 @@ import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-the
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleHoreca } from '../../pages/Thema/Horeca/Horeca-thema-config';
-import { featureToggle } from '../../pages/Thema/Krefia/Krefia-thema-config';
+import { featureToggle as featureToggleKlachten } from '../../pages/Thema/Klachten/Klachten-thema-config';
+import { featureToggle as featureToggleKrefia } from '../../pages/Thema/Krefia/Krefia-thema-config';
 import { routeConfig as routeConfigProfile } from '../../pages/Thema/Profile/Profile-thema-config';
 import { routeConfig as routeConfigToeristischeVerhuur } from '../../pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
 import {
+  featureToggle as featureToggleVaren,
   routeConfig as routeConfigVaren,
   themaTitle as themaTitleVaren,
 } from '../../pages/Thema/Varen/Varen-thema-config';
@@ -244,6 +247,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
     stateKey: 'PARKEREN',
@@ -252,9 +256,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     }) => {
       return apiContent?.vergunningen ?? [];
     },
-    displayTitle: (vergunning: VergunningFrontend) => (term: string) => {
+    displayTitle: (vergunning: ParkeerVergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
     stateKey: 'ERFPACHT',
@@ -319,6 +324,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
         ]);
       };
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
     stateKey: 'WMO',
@@ -426,7 +432,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     },
   },
   {
-    isEnabled: featureToggle.krefiaActive,
+    isEnabled: featureToggleKrefia.krefiaActive,
     stateKey: 'KREFIA',
     getApiBaseItems: (apiContent: Omit<Krefia, 'notificationTriggers'>) => {
       const deepLinks =
@@ -451,6 +457,23 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
       return (term: string) =>
         displayPath(term, [`Bezwaar ${item.identificatie}`]);
     },
+  },
+  {
+    isEnabled: featureToggleKlachten.klachtenActive,
+    stateKey: 'KLACHTEN',
+    profileTypes: ['private', 'commercial'],
+    displayTitle(item: KlachtFrontend) {
+      return (term: string) =>
+        displayPath(term, [
+          `Klacht ${item.id}${item.onderwerp ? ` - ${item.onderwerp}` : ''}`,
+        ]);
+    },
+    keywordsGeneratedFromProps: [
+      'onderwerp',
+      'omschrijving',
+      'gewensteOplossing',
+      'locatie',
+    ],
   },
   {
     isEnabled: true,
@@ -482,9 +505,10 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     displayTitle: (vergunning: HorecaVergunningFrontend) => (term: string) => {
       return displayPath(term, [vergunning.title, vergunning.identifier]);
     },
+    keywordsGeneratedFromProps: ['identifier'],
   },
   {
-    isEnabled: featureToggle,
+    isEnabled: featureToggleVaren.varenActive,
     stateKey: 'VAREN',
     profileTypes: ['commercial'],
     getApiBaseItems: (apiContent: {
