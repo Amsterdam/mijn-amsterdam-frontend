@@ -705,8 +705,8 @@ function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
   const rows = Object.entries(resultsByUser).map(
     ([Username, serviceResults]) => {
       return {
-        ...getRowValues(serviceResults, paths),
         Username,
+        ...getRowValues(serviceResults, paths),
       };
     }
   );
@@ -720,8 +720,6 @@ function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
   const brpBaseSheet = {
     title: 'BRP gegevens (beknopt)',
     rows,
-    // TODO: remove columnheaders entry?
-    columnHeaders: [],
     colInfo,
     rowInfo,
   };
