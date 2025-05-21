@@ -7,7 +7,6 @@ console.debug(`[UserDataOverview] trying env file ${ENV_FILE}`);
 const envConfig = dotenv.config({ path: ENV_FILE });
 dotenvExpand.expand(envConfig);
 
-import jsonpath from 'jsonpath';
 import * as XLSX from 'xlsx';
 
 import * as fs from 'node:fs';
@@ -179,6 +178,10 @@ const TARGET_DIRECTORY: string = '.';
 
 const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
 
+// Configuartion for row/columns.
+const HPX_DEFAULT = 22;
+const WCH_DEFAULT = 25;
+
 generateOverview();
 
 function getTestAccountEntries() {
@@ -310,197 +313,6 @@ function woonplaatsNaamBuitenAmsterdam(adres: Adres) {
     ? ''
     : `(${woonplaatsNaam})`;
 }
-
-const HPX_DEFAULT = 22;
-const WCH_DEFAULT = 25;
-
-interface PathObj {
-  label: string;
-  path: string;
-  transform?: (value: any, serviceResults: ServiceResults) => string | null;
-  wch?: number;
-  hpx?: number;
-}
-
-const paths: PathObj[] = [
-  {
-    label: 'BSN',
-    path: '$.BRP.content.persoon.bsn',
-  },
-  {
-    label: 'Voornamen',
-    path: '$.BRP.content.persoon.voornamen',
-    wch: 40,
-  },
-  {
-    label: 'Achternaam (Titel)',
-    path: '$.BRP.content.persoon',
-    transform: (persoon: Persoon) => {
-      if (!persoon) {
-        return 'onbekend';
-      }
-      return (
-        `${
-          persoon?.voorvoegselGeslachtsnaam
-            ? persoon.voorvoegselGeslachtsnaam + ' '
-            : ''
-        }${persoon?.geslachtsnaam}` +
-        (persoon?.omschrijvingAdellijkeTitel
-          ? ` (${persoon.omschrijvingAdellijkeTitel})`
-          : '')
-      );
-    },
-    wch: 40,
-  },
-  {
-    label: 'Geboortedatum (Geboorteland)',
-    path: '$.BRP.content.persoon',
-    transform: (persoon: Persoon) => {
-      if (!persoon) {
-        return 'onbekend';
-      }
-      const { geboortedatum, geboortelandnaam } = persoon;
-      return `${
-        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'onbekend'
-      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'onbekend'})` : ''}`;
-    },
-  },
-  {
-    label: 'Leeftijd',
-    path: '$.BRP.content.persoon.geboortedatum',
-    transform: (value: string | null, serviceResults: ServiceResults) => {
-      const age =
-        value !== null
-          ? differenceInYears(new Date(), parseISO(value)) + ''
-          : 'onbekend';
-      return age;
-    },
-  },
-  {
-    label: 'Geslacht (Nationaliteit)',
-    path: '$.BRP.content.persoon',
-    transform: (persoon: Persoon) => {
-      if (!persoon) {
-        return 'onbekend';
-      }
-      const nationaleiten = persoon.nationaliteiten
-        ?.map(({ omschrijving }) => omschrijving)
-        .join(', ');
-      return `${persoon.omschrijvingGeslachtsaanduiding} ${
-        nationaleiten !== 'Nederlandse' && nationaleiten
-          ? `(${nationaleiten})`
-          : ''
-      }`;
-    },
-  },
-  {
-    label: 'Adres (In onderzoek / VOW / Geheim)',
-    path: '$.BRP.content.adres',
-    wch: WCH_DEFAULT * 2,
-    transform: (value: Adres, serviceResults: ServiceResults) => {
-      return (
-        getFullAddress(value) +
-        `${
-          serviceResults.BRP.content?.persoon?.adresInOnderzoek
-            ? ' (In onderzoek)'
-            : ''
-        }` +
-        `${
-          serviceResults.BRP.content?.persoon?.vertrokkenOnbekendWaarheen
-            ? ' (VOW)'
-            : ''
-        }` +
-        `${
-          serviceResults.BRP.content?.persoon?.indicatieGeheim
-            ? ' (Geheim)'
-            : ''
-        }`
-      );
-    },
-  },
-  {
-    label: 'Postcode (Woonplaats)',
-    path: '$.BRP.content.adres.postcode',
-    transform: (postcode: string, serviceResults: ServiceResults) => {
-      return `${postcode ? postcode : ''} ${woonplaatsNaamBuitenAmsterdam(
-        serviceResults.BRP.content?.adres
-      )}`;
-    },
-  },
-  {
-    label: 'Verbintenis (Partner)',
-    path: '$.BRP.content.verbintenis',
-    wch: 50,
-    transform: (verbintenis: Verbintenis) => {
-      if (!verbintenis) {
-        return '';
-      }
-      return verbintenis.persoon
-        ? `${
-            (verbintenis.soortVerbintenisOmschrijving ||
-              verbintenis.soortVerbintenis) ??
-            ''
-          } met ${relatedUser(verbintenis.persoon as Persoon)}`
-        : Object.keys(verbintenis).length
-          ? JSON.stringify(verbintenis)
-          : '';
-    },
-    hpx: 30,
-  },
-  {
-    label: 'Kinderen',
-    path: '$.BRP.content.kinderen',
-    wch: 60,
-    transform: oudersOfKinderen,
-  },
-  {
-    label: 'Ouders',
-    path: '$.BRP.content.ouders',
-    wch: 60,
-    transform: oudersOfKinderen,
-  },
-  {
-    label: 'Voormalige verbintenis',
-    path: '$.BRP.content.verbintenisHistorisch',
-    wch: 50,
-    transform: (verbintenisHistorisch: Verbintenis[]) => {
-      if (!verbintenisHistorisch) {
-        return '';
-      }
-      return verbintenisHistorisch
-        .map((verbintenis) => {
-          return verbintenis.persoon
-            ? `${
-                verbintenis.soortVerbintenisOmschrijving ?? ''
-              } met ${relatedUser(verbintenis.persoon as Persoon)}`
-            : Object.keys(verbintenis).length
-              ? JSON.stringify(verbintenis)
-              : '';
-        })
-        .join(', ');
-    },
-    hpx: 30,
-  },
-  {
-    label: 'Voormalige adressen',
-    path: '$.BRP.content.adresHistorisch',
-    transform: (adressen: Adres[], serviceResults: ServiceResults) => {
-      return adressen
-        ?.map((adres) => {
-          return `${getFullAddress(adres)} ${woonplaatsNaamBuitenAmsterdam(
-            adres
-          )}`;
-        })
-        .join(', ');
-    },
-    wch: 80,
-  },
-].map((p) => {
-  if (!p.hpx) {
-    p.hpx = HPX_DEFAULT;
-  }
-  return p;
-});
 
 function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
   const rows = Object.entries(resultsByUser)
@@ -640,28 +452,6 @@ function getRows(
   return Object.values(rowsMap);
 }
 
-function getRowValues(
-  serviceResults: ServiceResults,
-  paths: any[]
-): Record<string, string | number> {
-  const user = paths.reduce(
-    (acc, { path, label, transform }) => {
-      let value = null;
-      if (path) {
-        [value] = jsonpath.query(serviceResults, path);
-      }
-      if (transform) {
-        value = transform(value, serviceResults);
-      }
-      acc[label] = value;
-      return acc;
-    },
-    {} as Record<string, string | number>
-  );
-
-  return user;
-}
-
 interface SheetData {
   title: string;
   rows: any[];
@@ -706,7 +496,7 @@ function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
     ([Username, serviceResults]) => {
       return {
         Username,
-        ...getRowValues(serviceResults, paths),
+        ...getBRPRows(serviceResults, brpSheetLayout),
       };
     }
   );
@@ -715,7 +505,7 @@ function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
   });
   const colInfo = [
     { wch: WCH_DEFAULT }, // Username
-    ...paths.map((pathObj) => ({ wch: pathObj.wch ?? WCH_DEFAULT })),
+    ...brpSheetLayout.map((pathObj) => ({ wch: pathObj.wch ?? WCH_DEFAULT })),
   ];
   const brpBaseSheet = {
     title: 'BRP gegevens (beknopt)',
@@ -725,6 +515,216 @@ function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
   };
   return brpBaseSheet;
 }
+
+function getBRPRows(
+  serviceResults: ServiceResults,
+  paths: any[]
+): Record<string, string | number> {
+  const user = paths.reduce(
+    (acc, { path, label, transform }) => {
+      let value = null;
+      if (path) {
+        value = path(serviceResults.BRP.content);
+      }
+      if (transform) {
+        value = transform(value, serviceResults);
+      }
+      acc[label] = value;
+      return acc;
+    },
+    {} as Record<string, string | number>
+  );
+
+  return user;
+}
+
+type BrpSheetLayout = {
+  label: string;
+  path: string;
+  transform?: (value: any, serviceResults: ServiceResults) => string | null;
+  wch?: number;
+  hpx?: number;
+};
+
+const brpSheetLayout: BrpSheetLayout[] = [
+  {
+    label: 'BSN',
+    path: (brpContent: any) => brpContent.persoon.bsn,
+  },
+  {
+    label: 'Voornamen',
+    path: (brpContent: any) => brpContent.persoon.voornamen,
+    wch: 40,
+  },
+  {
+    label: 'Achternaam (Titel)',
+    path: (brpContent: any) => brpContent.persoon,
+    transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
+      return (
+        `${
+          persoon?.voorvoegselGeslachtsnaam
+            ? persoon.voorvoegselGeslachtsnaam + ' '
+            : ''
+        }${persoon?.geslachtsnaam}` +
+        (persoon?.omschrijvingAdellijkeTitel
+          ? ` (${persoon.omschrijvingAdellijkeTitel})`
+          : '')
+      );
+    },
+    wch: 40,
+  },
+  {
+    label: 'Geboortedatum (Geboorteland)',
+    path: (brpContent: any) => brpContent.persoon,
+    transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
+      const { geboortedatum, geboortelandnaam } = persoon;
+      return `${
+        geboortedatum !== null ? defaultDateFormat(geboortedatum) : 'onbekend'
+      } ${geboortelandnaam !== 'Nederland' ? `(${geboortelandnaam ?? 'onbekend'})` : ''}`;
+    },
+  },
+  {
+    label: 'Leeftijd',
+    path: (brpContent: any) => brpContent.persoon.geboortedatum,
+    transform: (value: string | null, serviceResults: ServiceResults) => {
+      const age =
+        value !== null
+          ? differenceInYears(new Date(), parseISO(value)) + ''
+          : 'onbekend';
+      return age;
+    },
+  },
+  {
+    label: 'Geslacht (Nationaliteit)',
+    path: (brpContent: any) => brpContent.persoon,
+    transform: (persoon: Persoon) => {
+      if (!persoon) {
+        return 'onbekend';
+      }
+      const nationaleiten = persoon.nationaliteiten
+        ?.map(({ omschrijving }) => omschrijving)
+        .join(', ');
+      return `${persoon.omschrijvingGeslachtsaanduiding} ${
+        nationaleiten !== 'Nederlandse' && nationaleiten
+          ? `(${nationaleiten})`
+          : ''
+      }`;
+    },
+  },
+  {
+    label: 'Adres (In onderzoek / VOW / Geheim)',
+    path: (brpContent: any) => brpContent.adres,
+    wch: WCH_DEFAULT * 2,
+    transform: (value: Adres, serviceResults: ServiceResults) => {
+      return (
+        getFullAddress(value) +
+        `${
+          serviceResults.BRP.content?.persoon?.adresInOnderzoek
+            ? ' (In onderzoek)'
+            : ''
+        }` +
+        `${
+          serviceResults.BRP.content?.persoon?.vertrokkenOnbekendWaarheen
+            ? ' (VOW)'
+            : ''
+        }` +
+        `${
+          serviceResults.BRP.content?.persoon?.indicatieGeheim
+            ? ' (Geheim)'
+            : ''
+        }`
+      );
+    },
+  },
+  {
+    label: 'Postcode (Woonplaats)',
+    path: (brpContent: any) => brpContent.adres.postcode,
+    transform: (postcode: string, serviceResults: ServiceResults) => {
+      return `${postcode ? postcode : ''} ${woonplaatsNaamBuitenAmsterdam(
+        serviceResults.BRP.content?.adres
+      )}`;
+    },
+  },
+  {
+    label: 'Verbintenis (Partner)',
+    path: (brpContent: any) => brpContent.verbintenis,
+    wch: 50,
+    transform: (verbintenis: Verbintenis) => {
+      if (!verbintenis) {
+        return '';
+      }
+      return verbintenis.persoon
+        ? `${
+            (verbintenis.soortVerbintenisOmschrijving ||
+              verbintenis.soortVerbintenis) ??
+            ''
+          } met ${relatedUser(verbintenis.persoon as Persoon)}`
+        : Object.keys(verbintenis).length
+          ? JSON.stringify(verbintenis)
+          : '';
+    },
+    hpx: 30,
+  },
+  {
+    label: 'Kinderen',
+    path: (brpContent: any) => brpContent.kinderen,
+    wch: 60,
+    transform: oudersOfKinderen,
+  },
+  {
+    label: 'Ouders',
+    path: (brpContent: any) => brpContent.ouders,
+    wch: 60,
+    transform: oudersOfKinderen,
+  },
+  {
+    label: 'Voormalige verbintenis',
+    path: (brpContent: any) => brpContent.verbintenisHistorisch,
+    wch: 50,
+    transform: (verbintenisHistorisch: Verbintenis[]) => {
+      if (!verbintenisHistorisch) {
+        return '';
+      }
+      return verbintenisHistorisch
+        .map((verbintenis) => {
+          return verbintenis.persoon
+            ? `${
+                verbintenis.soortVerbintenisOmschrijving ?? ''
+              } met ${relatedUser(verbintenis.persoon as Persoon)}`
+            : Object.keys(verbintenis).length
+              ? JSON.stringify(verbintenis)
+              : '';
+        })
+        .join(', ');
+    },
+    hpx: 30,
+  },
+  {
+    label: 'Voormalige adressen',
+    path: (brpContent: any) => brpContent.adresHistorisch,
+    transform: (adressen: Adres[], serviceResults: ServiceResults) => {
+      return adressen
+        ?.map((adres) => {
+          return `${getFullAddress(adres)} ${woonplaatsNaamBuitenAmsterdam(
+            adres
+          )}`;
+        })
+        .join(', ');
+    },
+    wch: 80,
+  },
+].map((p) => {
+  if (!p.hpx) {
+    p.hpx = HPX_DEFAULT;
+  }
+  return p;
+});
 
 function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
   const rowInfo = createInfoArray(testAccountEntries.length, {
