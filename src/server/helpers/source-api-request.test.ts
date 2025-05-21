@@ -125,14 +125,16 @@ describe('source-api-request caching', () => {
     expect(rs2.content?.[1]).not.toBe(rs1.content?.[1]);
   });
 
-  test('Warning!: Mistakenly caches transformed response with previousley encrypted sessionID', async () => {
+  test('Warning!: Mistakenly caches transformed response with previously encrypted sessionID', async () => {
     remoteApi.get('/1').reply(200, '"foo"');
 
     const SESSION_ID_1 = '123';
     const SESSION_ID_2 = '321';
 
     const rs1 = await fetchThings(SESSION_ID_1);
-    expect(rs1.content?.[0]).toEqual('foo');
+    const rs1b = await fetchThings(SESSION_ID_1);
+
+    expect(rs1b.content?.[1] === rs1.content?.[1]).toBe(true);
 
     // User initiates a new session.
     const rs2 = await fetchThings(SESSION_ID_2);
