@@ -608,7 +608,7 @@ function transformDecosWorkflowKeysResponse(
 
 export async function fetchDecosWorkflows(
   zaakID: DecosZaakBase['key'],
-  fetchWorkflowStatusDatesFor?: DecosZaakTransformer['fetchWorkflowStatusDatesFor'],
+  workflowInstanceFilterProperties?: DecosZaakTransformer['fetchWorkflowStatusDatesFor'],
   select: string[] = ['mark', 'date1', 'date2', 'text7']
 ): Promise<
   ApiResponse<Array<{ key: string; instances: DecosWorkflowSource[] | null }>>
@@ -629,7 +629,7 @@ export async function fetchDecosWorkflows(
   }
 
   const urlParams = new URLSearchParams({
-    top: fetchWorkflowStatusDatesFor?.length ? '1' : '50', // 50 is an arbitrary number, it's very unlikely to have even more than 1 workflow instances.
+    top: '50', // 50 is an arbitrary number, it's likely that the number of workflow instances is much lower.
     properties: 'false',
     fetchParents: 'false',
   });
@@ -638,10 +638,10 @@ export async function fetchDecosWorkflows(
     urlParams.append('select', select.join(','));
   }
 
-  if (fetchWorkflowStatusDatesFor?.length) {
+  if (workflowInstanceFilterProperties?.length) {
     urlParams.append(
       'filter',
-      fetchWorkflowStatusDatesFor
+      workflowInstanceFilterProperties
         .map(
           // Use text7 as default field name for action code.
           ({ actionCodeFieldName = 'text7', decosActionCode }) =>

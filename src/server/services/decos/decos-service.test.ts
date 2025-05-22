@@ -311,7 +311,7 @@ describe('decos-service', () => {
         filter: "text7 eq 'Zaak - afhandelen'",
         properties: 'false',
         select: 'mark,date1,date2,text7',
-        top: '1',
+        top: '50',
       });
     });
   });
