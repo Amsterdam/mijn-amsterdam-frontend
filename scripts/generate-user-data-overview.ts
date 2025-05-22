@@ -577,6 +577,16 @@ const brpSheetLayout: BrpSheetLayout[] = [
     wch: 40,
   },
   {
+    label: 'Woonplaats',
+    extractContentValue: (brpContent: any) => brpContent.adres.woonplaatsNaam,
+    transform: (woonplaatsnaam: string) => {
+      if (!woonplaatsnaam) {
+        return 'Onbekend';
+      }
+      return woonplaatsnaam;
+    },
+  },
+  {
     label: 'Geboortedatum (Geboorteland)',
     extractContentValue: (brpContent: any) => brpContent.persoon,
     transform: (persoon: Persoon) => {
