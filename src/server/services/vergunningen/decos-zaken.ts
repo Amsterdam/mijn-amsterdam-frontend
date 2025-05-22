@@ -455,7 +455,11 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
   fetchWorkflowStatusDatesFor: [
     {
       status: 'Afgehandeld',
-      decosActionCode: 'Status naar actief',
+      decosActionCode: 'Afgehandeld',
+    },
+    {
+      status: 'Actief',
+      decosActionCode: 'Actief',
     },
   ],
   transformFields: {
@@ -477,7 +481,9 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     if (decosZaak.status === 'Actief') {
       decosZaak.processed = true;
       decosZaak.decision = 'Verleend';
-      decosZaak.dateDecision = getStatusDate('Afgehandeld', decosZaak);
+      decosZaak.dateDecision =
+        getStatusDate('Afgehandeld', decosZaak) ||
+        getStatusDate('Actief', decosZaak);
     }
 
     // Add zone to title
