@@ -85,13 +85,13 @@ export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
 
 export function createSessionBasedCacheKey(
   sessionID: SessionID,
-  requestIdentifierProperties: {
+  cacheKeyProperties: {
     sourceName: string;
     operationName: string;
     identifier: string;
   }
 ) {
-  const { sourceName, operationName, identifier } = requestIdentifierProperties;
+  const { sourceName, operationName, identifier } = cacheKeyProperties;
   const requestIdentifier = `${sourceName}-${operationName}-${identifier}`;
   return `${requestIdentifier}-${sessionID}`;
 }
