@@ -456,10 +456,12 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     {
       status: 'Afgehandeld',
       decosActionCode: 'Afgehandeld',
+      actionCodeFieldName: 'mark',
     },
     {
       status: 'Actief',
       decosActionCode: 'Actief',
+      actionCodeFieldName: 'mark',
     },
   ],
   transformFields: {
