@@ -17,7 +17,7 @@ import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { getSessionCacheKey } from '../../helpers/source-api-request';
+import { createSessionBasedCacheKey } from '../../helpers/source-api-request';
 
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);
@@ -70,10 +70,11 @@ async function getConfig(authProfileAndToken: AuthProfileAndToken) {
 
   return getApiConfig('SUBSIDIES', {
     url,
-    cacheKey: getSessionCacheKey(
-      authProfileAndToken.profile.sid,
-      `fetch-subsidies-${apiEndpointUrl}`
-    ),
+    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
+      sourceName: 'subsidies',
+      operationName: 'fetch',
+      identifier: apiEndpointUrl,
+    }),
     headers: {
       Authorization: `Bearer ${jwt}`,
     },

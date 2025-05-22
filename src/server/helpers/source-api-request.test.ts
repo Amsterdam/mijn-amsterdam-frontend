@@ -18,7 +18,7 @@ import {
   cache,
   findApiByRequestUrl,
   getRequestConfigCacheKey,
-  getSessionCacheKey,
+  createSessionBasedCacheKey,
   requestData,
 } from './source-api-request';
 import { remoteApiHost } from '../../testing/setup';
@@ -84,11 +84,19 @@ describe('source-api-request caching', () => {
 
     const rs1 = await fetchThings(
       SESSION_ID_1,
-      getSessionCacheKey(SESSION_ID_1, 'fetch-these-things')
+      createSessionBasedCacheKey(SESSION_ID_1, {
+        sourceName: 'testcache',
+        operationName: 'fetch',
+        identifier: 'things',
+      })
     );
     const rs2 = await fetchThings(
       SESSION_ID_1,
-      getSessionCacheKey(SESSION_ID_1, 'fetch-these-things')
+      createSessionBasedCacheKey(SESSION_ID_1, {
+        sourceName: 'testcache',
+        operationName: 'fetch',
+        identifier: 'things',
+      })
     );
 
     expect(rs2.content?.[1] === rs1.content?.[1]).toBe(true);
@@ -98,7 +106,11 @@ describe('source-api-request caching', () => {
 
     const rs3 = await fetchThings(
       SESSION_ID_1,
-      getSessionCacheKey(SESSION_ID_1, 'fetch-these-things')
+      createSessionBasedCacheKey(SESSION_ID_1, {
+        sourceName: 'testcache',
+        operationName: 'fetch',
+        identifier: 'things',
+      })
     );
 
     // Because the cache expired, we should get a new value for the encrypted sessionID.
@@ -113,13 +125,21 @@ describe('source-api-request caching', () => {
 
     const rs1 = await fetchThings(
       SESSION_ID_1,
-      getSessionCacheKey(SESSION_ID_1, 'fetch-these-things')
+      createSessionBasedCacheKey(SESSION_ID_1, {
+        sourceName: 'testcache',
+        operationName: 'fetch',
+        identifier: 'things',
+      })
     );
     expect(rs1.content?.[0]).toEqual('foo');
 
     const rs2 = await fetchThings(
       SESSION_ID_2,
-      getSessionCacheKey(SESSION_ID_2, 'fetch-these-things')
+      createSessionBasedCacheKey(SESSION_ID_2, {
+        sourceName: 'testcache',
+        operationName: 'fetch',
+        identifier: 'things',
+      })
     );
     expect(rs2.content?.[0]).toEqual('foo');
     expect(rs2.content?.[1]).not.toBe(rs1.content?.[1]);

@@ -33,7 +33,7 @@ import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
-  getSessionCacheKey,
+  createSessionBasedCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -686,10 +686,11 @@ export async function fetchBBDocumentsList(
     transformResponse(responseData) {
       return transformPowerbrowserLinksResponse(authProfile.sid, responseData);
     },
-    cacheKey: getSessionCacheKey(
-      authProfile.sid,
-      `powerbrowser-documents-${zaakId}`
-    ),
+    cacheKey: createSessionBasedCacheKey(authProfile.sid, {
+      sourceName: 'powerbrowser',
+      operationName: 'documents',
+      identifier: zaakId,
+    }),
   };
 
   return fetchPowerBrowserData(dataRequestConfig);

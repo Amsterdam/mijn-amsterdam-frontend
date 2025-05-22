@@ -11,7 +11,7 @@ import { encrypt } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
-  getSessionCacheKey,
+  createSessionBasedCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 
@@ -73,10 +73,11 @@ export async function fetchContactmomenten(
       pageSize: 100,
     },
     transformResponse: transformContactmomentenResponse,
-    cacheKey: getSessionCacheKey(
-      authProfileAndToken.profile.sid,
-      `fetch-all-contactmomenten`
-    ),
+    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
+      sourceName: 'contactmomenten',
+      operationName: 'fetch',
+      identifier: 'response',
+    }),
   };
   return fetchSalesforceData<ContactMoment[]>(requestConfig);
 }

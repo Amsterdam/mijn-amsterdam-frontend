@@ -25,7 +25,7 @@ import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
-  getSessionCacheKey,
+  createSessionBasedCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
@@ -192,10 +192,11 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: getSessionCacheKey(
-        authProfileAndToken.profile.sid,
-        `fetch-avg-zaken`
-      ),
+      cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
+        sourceName: 'avg',
+        operationName: 'fetch',
+        identifier: 'zaken',
+      }),
       postponeFetch: !featureToggle.avgActive,
     })
   );

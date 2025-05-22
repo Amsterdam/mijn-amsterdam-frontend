@@ -20,7 +20,7 @@ import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt'
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
-  getSessionCacheKey,
+  createSessionBasedCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 
@@ -143,10 +143,11 @@ export async function fetchIsKnownInAFIS(
         response,
         authProfileAndToken.profile.sid
       ),
-    cacheKey: getSessionCacheKey(
-      authProfileAndToken.profile.sid,
-      `afis-isKnown-${profileIdentifierType}`
-    ),
+    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
+      sourceName: 'afis',
+      operationName: 'isKnown',
+      identifier: profileIdentifierType,
+    }),
     formatUrl(config) {
       return `${config.url}/businesspartner/${profileIdentifierType}/`;
     },

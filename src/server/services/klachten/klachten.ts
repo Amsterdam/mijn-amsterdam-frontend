@@ -15,7 +15,7 @@ import {
 import { MyNotification } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
-  getSessionCacheKey,
+  createSessionBasedCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
@@ -154,10 +154,11 @@ async function fetchKlachten(
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: getSessionCacheKey(
-        authProfileAndToken.profile.sid,
-        `fetch-klachten-${page}`
-      ),
+      cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
+        sourceName: 'smile',
+        operationName: 'fetchKlachten',
+        identifier: `${page}`,
+      }),
     })
   );
 }

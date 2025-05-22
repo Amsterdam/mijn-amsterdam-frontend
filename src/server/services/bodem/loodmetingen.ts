@@ -30,7 +30,7 @@ import { ONE_SECOND_MS } from '../../config/app';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
-  getSessionCacheKey,
+  createSessionBasedCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
@@ -207,10 +207,11 @@ export async function fetchLoodmetingen(
     data,
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
-    cacheKey: getSessionCacheKey(
-      authProfileAndToken.profile.sid,
-      `fetch-user-loodmetingen`
-    ),
+    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
+      sourceName: 'lood365',
+      operationName: 'fetch',
+      identifier: 'loodmetingen',
+    }),
   });
 
   return requestData<LoodMetingen>(requestConfig);
