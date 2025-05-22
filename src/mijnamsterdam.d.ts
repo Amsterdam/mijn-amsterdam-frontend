@@ -54,14 +54,17 @@ declare const MA_GIT_SHA: string;
 
 // The ID of current build
 declare const MA_BUILD_ID: string;
+ 
+declare namespace e {
+   interface Router extends core.Router {}
+}
 
 declare global {
   declare module 'express-serve-static-core' {
     interface Locals {
       requestID: string;
     }
-    interface Router {
-      BFF_ID: string;
-    }
+    interface Router extends any { }
   }
 }
+

@@ -41,7 +41,7 @@ const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
 export const routerInternet = express.Router();
-routerInternet.BFF_ID = 'external-consumer-public';
+(routerInternet as any).BFF_ID = 'external-consumer-public';
 
 routerInternet.get(
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
@@ -66,7 +66,7 @@ routerInternet.get(
 // PRIVATE NETWORK ROUTER
 // ======================
 export const routerPrivateNetwork = express.Router();
-routerPrivateNetwork.BFF_ID = 'external-consumer-private-network';
+(routerPrivateNetwork as any).BFF_ID = 'external-consumer-private-network';
 
 export const stadspasExternalConsumerRouter = {
   internet: routerInternet,

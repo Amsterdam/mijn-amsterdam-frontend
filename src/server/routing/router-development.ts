@@ -28,7 +28,7 @@ import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
 
 export const authRouterDevelopment = express.Router();
-authRouterDevelopment.BFF_ID = 'router-dev';
+(authRouterDevelopment as any).BFF_ID = 'router-dev';
 
 export async function createOIDCStub(
   req: Request,

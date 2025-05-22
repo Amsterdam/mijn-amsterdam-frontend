@@ -1,6 +1,7 @@
-import express, { Request, RequestHandler, Response } from 'express';
+
+import express, { NextFunction, Request, RequestHandler, Response } from 'express';
 import { ConfigParams, requiresAuth } from 'express-openid-connect';
-import { NextFunction } from 'express-serve-static-core';
+// import { NextFunction } from 'express-serve-static-core';
 
 import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
@@ -30,7 +31,7 @@ import { countLoggedInVisit } from '../services/visitors';
 
 export const oidcRouter = express.Router();
 
-oidcRouter.BFF_ID = 'router-oidc';
+(oidcRouter as any).BFF_ID = 'router-oidc';
 
 // Prevent caching the responses from this oidcRouter.
 oidcRouter.use(nocache);

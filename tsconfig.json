@@ -23,6 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "importsNotUsedAsValues": "remove",
     "types": [
+      "jest",
       "vitest/globals"
     ]
   },
