@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build-bff",
-    "target": "esnext",
+    "target": "ES2024",
     "lib": [
       "esnext"
     ],
@@ -10,15 +10,13 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "useUnknownInCatchVariables": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noEmit": false,
-    "downlevelIteration": false,
+    "downlevelIteration": true,
     "importsNotUsedAsValues": "remove"
   },
   "exclude": [

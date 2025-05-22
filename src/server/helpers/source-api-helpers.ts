@@ -14,6 +14,7 @@ const EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY = [
   'allSettled',
   'processTicksAndRejections',
   'getApiConfig',
+  'getApiConfiBasedCacheKey',
 ];
 // To keep the cache key small, we only take the last 3 function names from the stack trace.
 const SLICE_FUNCTION_NAMES = 3;
