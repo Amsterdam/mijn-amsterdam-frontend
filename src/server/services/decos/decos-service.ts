@@ -400,7 +400,6 @@ async function transformDecosZakenResponse<
       })
     );
   } catch (err) {
-    console.log('errrrrr', err);
     captureException(err);
   }
 
