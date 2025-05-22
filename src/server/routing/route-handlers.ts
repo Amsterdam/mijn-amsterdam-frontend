@@ -10,7 +10,6 @@ import {
   isRequestAuthenticated,
 } from '../auth/auth-helpers';
 import { AuthenticatedRequest } from '../auth/auth-types';
-import { clearSessionCache } from '../helpers/source-api-request';
 
 export function handleCheckProtectedRoute(
   req: Request,
@@ -88,9 +87,4 @@ export function requestID(_req: Request, res: Response, next: NextFunction) {
   const REQUEST_ID_BYTE_LENGTH = 18;
   res.locals.requestID = uid.sync(REQUEST_ID_BYTE_LENGTH);
   next();
-}
-
-export function clearRequestCache(_req: Request, res: Response) {
-  const requestID = res.locals.requestID!;
-  clearSessionCache(requestID);
 }

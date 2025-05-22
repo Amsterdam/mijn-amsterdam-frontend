@@ -12,11 +12,11 @@ type DBAdapter = {
 
 const db_: () => Promise<DBAdapter> = () => {
   if (!IS_DB_ENABLED) {
-    return import('./fake-db').finally(() => {
+    return import('./fake-db.ts').finally(() => {
       logger.info('Using Fake DB');
     });
   }
-  return import('./postgres').finally(() => {
+  return import('./postgres.ts').finally(() => {
     logger.info('Using Postgres DB');
   });
 };

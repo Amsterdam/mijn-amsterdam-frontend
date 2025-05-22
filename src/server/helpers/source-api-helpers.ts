@@ -1,9 +1,48 @@
+import { get } from 'stack-trace';
+
 import { jsonCopy } from '../../universal/helpers/utils';
 import {
   ApiConfig,
   DataRequestConfig,
   SourceApiKey,
 } from '../config/source-api';
+
+// To keep the cache key small, we exclude some generic function names.
+const EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY = [
+  'all',
+  'map',
+  'allSettled',
+  'processTicksAndRejections',
+  'getApiConfig',
+];
+// To keep the cache key small, we only take the last 3 function names from the stack trace.
+const SLICE_FUNCTION_NAMES = 3;
+
+function getApiConfiBasedCacheKey(
+  name: SourceApiKey,
+  cacheKey_UNSAFE?: string
+): string | null {
+  if (!cacheKey_UNSAFE) {
+    return null;
+  }
+
+  const trace = get();
+  const traceFiltered = trace
+    .toReversed()
+    .map((frame) => frame.getFunctionName())
+    .filter(
+      (name) =>
+        name && !EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY.includes(name)
+    );
+  const stackSimple = traceFiltered
+    .slice(
+      Math.max(0, traceFiltered.length - SLICE_FUNCTION_NAMES),
+      traceFiltered.length
+    )
+    .join('.');
+
+  return `${name}-${stackSimple}-${cacheKey_UNSAFE}`;
+}
 
 export function getApiConfig(
   name: SourceApiKey,
@@ -39,10 +78,33 @@ export function getApiConfig(
     Object.assign(headers, config.headers);
   }
 
+  const cacheKey = getApiConfiBasedCacheKey(name, config.cacheKey_UNSAFE);
+
   return Object.assign(
     apiConfigCopy,
     config,
     customUrl ? { url: customUrl } : null,
-    { headers }
+    { headers },
+    cacheKey ? { cacheKey } : null
   );
+}
+
+export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
+  return [
+    requestConfig.cacheTimeout ?? 'no-cache-timeout', // Cache timeout can be adjusted and we want the adjusted value to be part of the cache key so we can invalidate it immediately.
+    requestConfig.method,
+    requestConfig.url,
+    requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
+    requestConfig.data ? JSON.stringify(requestConfig.data) : 'no-data',
+    requestConfig.headers
+      ? JSON.stringify(requestConfig.headers)
+      : 'no-headers',
+  ].join('-');
+}
+
+export function createSessionBasedCacheKey(
+  sessionID: SessionID,
+  identifier?: string
+) {
+  return `${identifier ? `${identifier}-` : ''}${sessionID}`;
 }

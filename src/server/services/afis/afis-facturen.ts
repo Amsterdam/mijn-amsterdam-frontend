@@ -3,6 +3,7 @@ import { parseISO } from 'date-fns/parseISO';
 import Decimal from 'decimal.js';
 import { firstBy } from 'thenby';
 
+import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
@@ -21,30 +22,29 @@ import {
   displayAmount,
   capitalizeFirstLetter,
 } from '../../../universal/helpers/text';
+import { entries } from '../../../universal/helpers/utils';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { createSessionBasedCacheKey } from '../../helpers/source-api-helpers';
 import {
   getRequestParamsFromQueryString,
-  createSessionBasedCacheKey,
   requestData,
 } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureMessage, trackEvent } from '../monitoring';
-import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
-import {
-  AccountingDocumentType,
-  AfisFacturenByStateResponse,
+import type {
+  AfisFactuurState,
   AfisFacturenParams,
-  AfisFacturenResponse,
-  AfisFactuur,
+  AccountingDocumentType,
+  AfisInvoicesPartialPaymentsSource,
   AfisFactuurDeelbetalingen,
   AfisFactuurPropertiesSource,
-  AfisFactuurState,
-  AfisInvoicesPartialPaymentsSource,
-  AfisInvoicesSource,
   XmlNullable,
+  AfisFactuur,
+  AfisInvoicesSource,
+  AfisFacturenResponse,
+  AfisFacturenByStateResponse,
 } from './afis-types';
-import { entries } from '../../../universal/helpers/utils';
 
 const DEFAULT_PROFIT_CENTER_NAME = 'Gemeente Amsterdam';
 const AFIS_MAX_FACTUREN_TOP = 2000;
@@ -454,11 +454,7 @@ export async function fetchAfisFacturen(
     formatUrl: ({ url }) => url + AFIS_FACTUUR_REQUEST_API_PATH,
     transformResponse: (responseData) =>
       transformFacturen(responseData, sessionID, deelbetalingen),
-    cacheKey: createSessionBasedCacheKey(sessionID, {
-      sourceName: 'afis',
-      operationName: 'facturen',
-      identifier: params.state,
-    }),
+    cacheKey_UNSAFE: createSessionBasedCacheKey(sessionID, params.state),
   });
 
   return requestData<AfisFacturenResponse>(config);

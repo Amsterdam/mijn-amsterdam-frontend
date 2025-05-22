@@ -1,6 +1,5 @@
 import Mockdate from 'mockdate';
 
-import { clearRequestCache } from './route-handlers';
 import {
   generateFullApiUrlBFF,
   isProtectedRoute,
@@ -19,7 +18,6 @@ import {
   apiErrorResult,
 } from '../../universal/helpers/api';
 import { oidcConfigDigid, oidcConfigEherkenning } from '../auth/auth-config';
-import { cache } from '../helpers/source-api-request';
 
 describe('route-helpers', () => {
   const digidClientId = oidcConfigDigid.clientID;
@@ -89,36 +87,6 @@ describe('route-helpers', () => {
     expect(resMock.send).toHaveBeenCalledWith(
       apiErrorResult('Unauthorized', null, 401)
     );
-  });
-
-  test('clearRequestCache', () => {
-    const requestID = '11223300xx';
-    const resMock = ResponseMock.new();
-    resMock.locals = { requestID };
-
-    cache.put(requestID, { foo: 'bar' });
-
-    expect(cache.get(requestID)).toEqual({ foo: 'bar' });
-
-    clearRequestCache(RequestMock.new().get(), resMock);
-
-    expect(cache.get(requestID)).toBe(null);
-    expect(cache.keys()).toEqual([]);
-  });
-
-  test('clearRequestCache.unknown.key', () => {
-    const requestID = '11223300xx';
-    cache.put(requestID, { foo: 'bar' });
-
-    expect(cache.get(requestID)).toEqual({ foo: 'bar' });
-
-    const resMock = ResponseMock.new();
-    resMock.locals = { requestID: 'some_other_key' };
-
-    clearRequestCache(RequestMock.new().get(), resMock);
-
-    expect(cache.get(requestID)).toEqual({ foo: 'bar' });
-    expect(cache.keys()).toEqual([requestID]);
   });
 
   test('sendMessage', () => {

@@ -13,11 +13,11 @@ import {
   type ApiResponse,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   createSessionBasedCacheKey,
-  requestData,
-} from '../../helpers/source-api-request';
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 import { AuthProfileAndToken } from './../../auth/auth-types';
 import {
@@ -154,11 +154,10 @@ async function fetchKlachten(
       transformResponse: transformKlachtenResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
-        sourceName: 'smile',
-        operationName: 'fetchKlachten',
-        identifier: `${page}`,
-      }),
+      cacheKey_UNSAFE: createSessionBasedCacheKey(
+        authProfileAndToken.profile.sid,
+        `page${page}`
+      ),
     })
   );
 }

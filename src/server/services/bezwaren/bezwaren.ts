@@ -33,11 +33,11 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   createSessionBasedCacheKey,
-  requestData,
-} from '../../helpers/source-api-request';
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { DocumentDownloadData } from '../shared/document-download-route-handler';
@@ -119,7 +119,7 @@ async function fetchMultiple<T>(
         requestConfig.params.page += 1; //Fetch next page
         response = await requestData<OctopusApiResponse<T>>({
           ...requestConfig,
-          cacheKey: `${cacheKeyBase}-${requestConfigBase.params.page}`,
+          cacheKey_UNSAFE: `${cacheKeyBase}-${requestConfigBase.params.page}`,
         });
 
         if (response.status === 'OK') {
@@ -179,11 +179,7 @@ async function fetchBezwaarStatus(
     params,
     transformResponse: transformBezwaarStatus,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
-      sourceName: 'bezwaren',
-      operationName: 'status',
-      identifier: zaakId,
-    }),
+    cacheKey_UNSAFE: zaakId,
   });
 
   const statusResponse = await requestData<StatusLineItem[]>(
@@ -240,11 +236,7 @@ export async function fetchBezwarenDocuments(
 
   const cacheKeyBase = createSessionBasedCacheKey(
     authProfileAndToken.profile.sid,
-    {
-      sourceName: 'bezwaren',
-      operationName: 'documents',
-      identifier: zaakId,
-    }
+    zaakId
   );
 
   const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', {
@@ -391,12 +383,7 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   };
 
   const cacheKeyBase = createSessionBasedCacheKey(
-    authProfileAndToken.profile.sid,
-    {
-      sourceName: 'octopus',
-      operationName: 'fetch',
-      identifier: 'bezwaren',
-    }
+    authProfileAndToken.profile.sid
   );
 
   const requestConfig = getApiConfig('BEZWAREN_LIST', {

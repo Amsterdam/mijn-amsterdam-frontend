@@ -9,11 +9,11 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { encrypt } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   createSessionBasedCacheKey,
-  requestData,
-} from '../../helpers/source-api-request';
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 
 async function fetchSalesforceData<T>(
   dataRequestConfigSpecific: DataRequestConfig
@@ -73,11 +73,9 @@ export async function fetchContactmomenten(
       pageSize: 100,
     },
     transformResponse: transformContactmomentenResponse,
-    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
-      sourceName: 'contactmomenten',
-      operationName: 'fetch',
-      identifier: 'response',
-    }),
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid
+    ),
   };
   return fetchSalesforceData<ContactMoment[]>(requestConfig);
 }

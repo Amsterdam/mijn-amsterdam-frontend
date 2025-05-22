@@ -13,8 +13,10 @@ import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getCert } from '../../helpers/cert';
 import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { createSessionBasedCacheKey } from '../../helpers/source-api-request';
+import {
+  createSessionBasedCacheKey,
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
 import { logger } from '../../logging';
 
 const DEV_KEY = {
@@ -178,11 +180,9 @@ async function fetchCleopatra(authProfileAndToken: AuthProfileAndToken) {
 
   const requestConfig = getApiConfig('CLEOPATRA', {
     transformResponse: transformCleopatraResponse,
-    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
-      sourceName: 'cleopatra',
-      operationName: 'fetch',
-      identifier: 'response',
-    }),
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid
+    ),
     data: postData,
   });
 

@@ -1,8 +1,4 @@
-import {
-  clearRequestCache,
-  isAuthenticated,
-  requestID,
-} from './route-handlers';
+import { isAuthenticated, requestID } from './route-handlers';
 import {
   getAuthProfileAndToken,
   getReqMockWithOidc,
@@ -10,7 +6,6 @@ import {
   ResponseMock,
 } from '../../testing/utils';
 import { OIDC_SESSION_COOKIE_NAME } from '../auth/auth-config';
-import { cache } from '../helpers/source-api-request';
 
 describe('routing.route-handlers', () => {
   const resMock = ResponseMock.new();
@@ -18,39 +13,6 @@ describe('routing.route-handlers', () => {
 
   afterEach(() => {
     vi.resetAllMocks();
-  });
-
-  describe('clearRequestCache', () => {
-    test('Clears cache for corresponding request', () => {
-      const requestID = '11223300xx';
-      cache.put(requestID, { foo: 'bar' });
-
-      expect(cache.get(requestID)).toEqual({ foo: 'bar' });
-
-      const resMock = ResponseMock.new();
-      resMock.locals.requestID = requestID;
-
-      clearRequestCache(RequestMock.new().get(), resMock);
-
-      expect(cache.get(requestID)).toBe(null);
-      expect(cache.keys()).toEqual([]);
-    });
-
-    test('Does not clear cache for other requests', () => {
-      const requestID = '11223300xx';
-
-      cache.put(requestID, { foo: 'bar' });
-
-      expect(cache.get(requestID)).toEqual({ foo: 'bar' });
-
-      const resMock = ResponseMock.new();
-      resMock.locals.requestID = 'some_other_key';
-
-      clearRequestCache(RequestMock.new().get(), resMock);
-
-      expect(cache.get(requestID)).toEqual({ foo: 'bar' });
-      expect(cache.keys()).toEqual([requestID]);
-    });
   });
 
   test('verifyAuthenticated', async () => {});

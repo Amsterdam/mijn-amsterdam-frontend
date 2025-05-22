@@ -23,11 +23,11 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   createSessionBasedCacheKey,
-  requestData,
-} from '../../helpers/source-api-request';
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 
 const DEFAULT_PAGE_SIZE = 25;
@@ -192,11 +192,9 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
-        sourceName: 'avg',
-        operationName: 'fetch',
-        identifier: 'zaken',
-      }),
+      cacheKey_UNSAFE: createSessionBasedCacheKey(
+        authProfileAndToken.profile.sid
+      ),
       postponeFetch: !featureToggle.avgActive,
     })
   );
@@ -234,7 +232,7 @@ export async function fetchAVGRequestThemes(avgIds: string[]) {
       transformResponse: transformAVGThemeResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: `avg-themes-${avgIds.join('-')}`,
+      cacheKey_UNSAFE: `avg-themes-${avgIds.join('-')}`,
       postponeFetch: !featureToggle.avgActive,
     })
   );

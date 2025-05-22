@@ -126,7 +126,10 @@ export async function fetchStadspasSource(
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
     headers: getHeaders(administratienummer),
-    cacheKey: createStadspasSourceCacheKey(passNumber, administratienummer),
+    cacheKey_UNSAFE: createStadspasSourceCacheKey(
+      passNumber,
+      administratienummer
+    ),
     params: {
       include_balance: true,
     },

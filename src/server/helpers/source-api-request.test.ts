@@ -14,11 +14,13 @@ import {
 
 import { encrypt } from './encrypt-decrypt';
 import {
+  createSessionBasedCacheKey,
+  getRequestConfigCacheKey,
+} from './source-api-helpers';
+import {
   axiosRequest,
   cache,
   findApiByRequestUrl,
-  getRequestConfigCacheKey,
-  createSessionBasedCacheKey,
   requestData,
 } from './source-api-request';
 import { remoteApiHost } from '../../testing/setup';
@@ -61,7 +63,7 @@ describe('source-api-request caching', () => {
         const [value] = encrypt(sessionID);
         return [data, value];
       },
-      cacheKey,
+      cacheKey_UNSAFE: cacheKey,
     });
   }
 
@@ -84,19 +86,11 @@ describe('source-api-request caching', () => {
 
     const rs1 = await fetchThings(
       SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, {
-        sourceName: 'testcache',
-        operationName: 'fetch',
-        identifier: 'things',
-      })
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
     const rs2 = await fetchThings(
       SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, {
-        sourceName: 'testcache',
-        operationName: 'fetch',
-        identifier: 'things',
-      })
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
 
     expect(rs2.content?.[1] === rs1.content?.[1]).toBe(true);
@@ -106,11 +100,7 @@ describe('source-api-request caching', () => {
 
     const rs3 = await fetchThings(
       SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, {
-        sourceName: 'testcache',
-        operationName: 'fetch',
-        identifier: 'things',
-      })
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
 
     // Because the cache expired, we should get a new value for the encrypted sessionID.
@@ -125,21 +115,13 @@ describe('source-api-request caching', () => {
 
     const rs1 = await fetchThings(
       SESSION_ID_1,
-      createSessionBasedCacheKey(SESSION_ID_1, {
-        sourceName: 'testcache',
-        operationName: 'fetch',
-        identifier: 'things',
-      })
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
     expect(rs1.content?.[0]).toEqual('foo');
 
     const rs2 = await fetchThings(
       SESSION_ID_2,
-      createSessionBasedCacheKey(SESSION_ID_2, {
-        sourceName: 'testcache',
-        operationName: 'fetch',
-        identifier: 'things',
-      })
+      createSessionBasedCacheKey(SESSION_ID_2, 'things')
     );
     expect(rs2.content?.[0]).toEqual('foo');
     expect(rs2.content?.[1]).not.toBe(rs1.content?.[1]);

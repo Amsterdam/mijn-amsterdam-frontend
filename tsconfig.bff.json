@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build-bff",
-    "target": "es6",
+    "target": "esnext",
     "lib": [
       "esnext"
     ],
@@ -10,13 +10,15 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "useUnknownInCatchVariables": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "noEmit": false,
-    "downlevelIteration": true,
+    "downlevelIteration": false,
     "importsNotUsedAsValues": "remove"
   },
   "exclude": [

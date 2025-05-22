@@ -28,11 +28,11 @@ import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
   createSessionBasedCacheKey,
-  requestData,
-} from '../../helpers/source-api-request';
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
+import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
@@ -177,7 +177,7 @@ export async function getLoodApiHeaders() {
   const requestConfig = getApiConfig('LOOD_365_OAUTH', {
     data,
     headers,
-    cacheKey: `lood-365-oauth-access-token`,
+    cacheKey_UNSAFE: `lood-365-oauth-access-token`,
     cacheTimeout: 60 * 60 * ONE_SECOND_MS, // 1 hour
   });
 
@@ -207,11 +207,9 @@ export async function fetchLoodmetingen(
     data,
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
-    cacheKey: createSessionBasedCacheKey(authProfileAndToken.profile.sid, {
-      sourceName: 'lood365',
-      operationName: 'fetch',
-      identifier: 'loodmetingen',
-    }),
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid
+    ),
   });
 
   return requestData<LoodMetingen>(requestConfig);
