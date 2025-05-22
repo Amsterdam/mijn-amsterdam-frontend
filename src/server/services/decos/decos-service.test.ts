@@ -644,7 +644,7 @@ describe('decos-service', () => {
 
       expect(responseData).toStrictEqual({
         content: null,
-        message: 'Unexpected token \'a\', "abc" is not valid JSON',
+        message: `Unexpected token 'a', "abc" is not valid JSON`,
         status: 'ERROR',
       });
     });
