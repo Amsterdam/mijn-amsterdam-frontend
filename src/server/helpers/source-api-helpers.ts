@@ -78,14 +78,17 @@ export function getApiConfig(
     Object.assign(headers, config.headers);
   }
 
-  const cacheKey = getApiConfiBasedCacheKey(name, config.cacheKey_UNSAFE);
+  const cacheKey_UNSAFE = getApiConfiBasedCacheKey(
+    name,
+    config.cacheKey_UNSAFE
+  );
 
   return Object.assign(
     apiConfigCopy,
     config,
     customUrl ? { url: customUrl } : null,
     { headers },
-    cacheKey ? { cacheKey } : null
+    cacheKey_UNSAFE ? { cacheKey_UNSAFE } : null
   );
 }
 
