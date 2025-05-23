@@ -115,7 +115,8 @@ export type DecosZaakFieldsSource = {
   text12?: string | null;
 };
 type DecosWorkflowFieldsSource = {
-  text7: string;
+  text7?: string;
+  mark?: string;
   date1?: string;
 };
 type DecosTermijnFieldsSource = {
@@ -173,6 +174,7 @@ export type DecosZaakTransformer<T extends DecosZaakBase = DecosZaakBase> = {
   fetchWorkflowStatusDatesFor?: {
     status: ZaakStatus;
     decosActionCode: string;
+    actionCodeFieldName?: 'mark' | 'text7';
   }[];
   // The titles of the workflow steps that are used to find a corresponding date like the InBehandeling status.
   fetchTermijnenFor?: {
