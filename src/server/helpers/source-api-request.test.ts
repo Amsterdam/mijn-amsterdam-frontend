@@ -81,6 +81,7 @@ describe('source-api-request caching', () => {
 
   test('Correct: Uses cache with same sessionID within timeout period.', async () => {
     remoteApi.get('/1').reply(200, '"foo"');
+    remoteApi.get('/1').reply(200, '"notfoo"');
 
     const SESSION_ID_1 = '123';
 
@@ -104,7 +105,9 @@ describe('source-api-request caching', () => {
     );
 
     // Because the cache expired, we should get a new value for the encrypted sessionID.
-    expect(rs2.content?.[1] === rs3.content?.[1]).toBe(false);
+    expect(rs2.content?.[1]).not.toBe(rs3.content?.[1]);
+    expect(rs2.content?.[0]).not.toBe(rs3.content?.[0]);
+    expect(rs3.content?.[0]).toBe('notfoo');
   });
 
   test("Correct: Doesn't use cache with different sessionID", async () => {
