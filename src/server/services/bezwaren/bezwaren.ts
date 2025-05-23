@@ -179,7 +179,7 @@ async function fetchBezwaarStatus(
     params,
     transformResponse: transformBezwaarStatus,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-    cacheKey_UNSAFE: zaakId,
+    cacheKey_UNSAFE: zaakId, // zaakId is a UUID, no need to specify additional uniqueness.
   });
 
   const statusResponse = await requestData<StatusLineItem[]>(
