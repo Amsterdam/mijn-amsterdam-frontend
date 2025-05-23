@@ -224,7 +224,9 @@ export function transformAVGThemeResponse(
   };
 }
 
-export async function fetchAVGRequestThemes(avgIds: string[]) {
+export async function fetchAVGRequestThemes(
+  avgIds: AVGRequestFrontend['id'][]
+) {
   const data = getDataForAvgThemas(avgIds);
 
   const res = await requestData<AvgThemesResponse>(
@@ -232,7 +234,7 @@ export async function fetchAVGRequestThemes(avgIds: string[]) {
       transformResponse: transformAVGThemeResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey_UNSAFE: `avg-themes-${avgIds.join('-')}`,
+      cacheKey_UNSAFE: avgIds.join(), // These are unique per user.
       postponeFetch: !featureToggle.avgActive,
     })
   );
