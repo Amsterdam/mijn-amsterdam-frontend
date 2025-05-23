@@ -2,11 +2,13 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosResponseHeaders,
+  type AxiosResponseTransformer,
 } from 'axios';
 import createDebugger from 'debug';
 import memoryCache from 'memory-cache';
 
 import { Deferred } from './deferred';
+import { getRequestConfigCacheKey } from './source-api-helpers';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
@@ -62,27 +64,6 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export function clearSessionCache(cachekeyStartsWith: string) {
-  for (const cacheKey of cache.keys()) {
-    if (cacheKey.startsWith(cachekeyStartsWith)) {
-      cache.del(cacheKey);
-    }
-  }
-}
-
-export function getRequestConfigCacheKey(requestConfig: DataRequestConfig) {
-  return [
-    requestConfig.cacheTimeout ?? 'no-cache-timeout', // Cache timeout can be adjusted and we want the adjusted value to be part of the cache key so we can invalidate it immediately.
-    requestConfig.method,
-    requestConfig.url,
-    requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
-    requestConfig.data ? JSON.stringify(requestConfig.data) : 'no-data',
-    requestConfig.headers
-      ? JSON.stringify(requestConfig.headers)
-      : 'no-headers',
-  ].join('-');
-}
-
 export async function requestData<T>(
   passConfig: DataRequestConfig,
   authProfileAndToken?: AuthProfileAndToken
@@ -100,9 +81,10 @@ export async function requestData<T>(
   }
 
   if (config.transformResponse) {
-    config.transformResponse = [].concat(
-      axios.defaults.transformResponse as any,
-      config.transformResponse as any
+    const transformers: AxiosResponseTransformer[] = [];
+    config.transformResponse = transformers.concat(
+      axios.defaults.transformResponse ?? [],
+      config.transformResponse ?? []
     );
   }
 
@@ -135,8 +117,9 @@ export async function requestData<T>(
   ) {
     // Add default transformer if no transformers are defined
     if (!config.transformResponse) {
-      config.transformResponse = [].concat(
-        axios.defaults.transformResponse as any
+      const transformers: AxiosResponseTransformer[] = [];
+      config.transformResponse = transformers.concat(
+        axios.defaults.transformResponse ?? []
       );
     }
     // Insert the debug transformer after the default transformer
@@ -157,7 +140,7 @@ export async function requestData<T>(
   }
 
   // Construct a cache key based on unique properties of a request
-  const cacheKey = config.cacheKey || getRequestConfigCacheKey(config);
+  const cacheKey = config.cacheKey_UNSAFE || getRequestConfigCacheKey(config);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
@@ -178,7 +161,7 @@ export async function requestData<T>(
   ) {
     // Debug the cache key to check if the cache key is set and uses the custom cache key if provided.
     debugCacheKey(
-      `Caching ${config.url}${config.cacheKey ? ` with custom cachekey ${config.cacheKey}` : ''}, releases in ${config.cacheTimeout}ms`
+      `Caching ${config.url}${config.cacheKey_UNSAFE ? ` with custom cachekey ${config.cacheKey_UNSAFE}` : ''}, releases in ${config.cacheTimeout}ms`
     );
     cache.put(
       cacheKey,

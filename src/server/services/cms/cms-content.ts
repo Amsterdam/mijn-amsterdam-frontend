@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 
 import { parse } from 'html-to-ast';
-import { Attr } from 'html-to-ast/dist/types';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
 
 import { IS_TAP } from '../../../universal/config/env';
@@ -69,7 +68,7 @@ interface CMSPageContent {
   title: string;
   content: string;
 }
-
+type Attr = Record<string, string | boolean | number>;
 export interface AstNode {
   type?: string;
   text?: string;

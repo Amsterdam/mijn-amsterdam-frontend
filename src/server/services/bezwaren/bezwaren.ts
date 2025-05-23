@@ -33,7 +33,10 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+import {
+  createSessionBasedCacheKey,
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
@@ -98,38 +101,31 @@ async function fetchMultiple<T>(
   requestConfigBase: DataRequestConfig,
   maxPageCount: number = MAX_PAGE_COUNT
 ) {
-  const requestConfig = {
-    ...requestConfigBase,
-    cacheKey: `${cacheKeyBase}-${requestConfigBase.params.page}`,
-  };
-  let response = await requestData<OctopusApiResponse<T>>(requestConfig);
-  let itemsLength = response.content?.items.length ?? 0;
-  const resultCount = response.content?.count ?? 0;
+  const { params } = requestConfigBase;
+  let page = params.page;
+  let items: T[] = [];
 
-  if (response.status === 'OK') {
-    let items: T[] = response.content.items;
-    if (resultCount > itemsLength) {
-      while (
-        itemsLength < resultCount &&
-        requestConfig.params.page < maxPageCount
-      ) {
-        requestConfig.params.page += 1; //Fetch next page
-        response = await requestData<OctopusApiResponse<T>>({
-          ...requestConfig,
-          cacheKey: `${cacheKeyBase}-${requestConfigBase.params.page}`,
-        });
+  while (page < maxPageCount) {
+    const cacheKey = `${cacheKeyBase}-${page}`;
+    const response = await requestData<OctopusApiResponse<T>>({
+      ...requestConfigBase,
+      params: { ...params, page },
+      cacheKey_UNSAFE: cacheKey,
+    });
 
-        if (response.status === 'OK') {
-          items = items.concat(response.content.items);
-          itemsLength += response.content.items.length;
-        } else {
-          return response;
-        }
-      }
+    if (response.status !== 'OK') {
+      return response;
     }
-    return apiSuccessResult(items);
+
+    items = items.concat(response.content.items);
+    if (items.length >= (response.content.count ?? 0)) {
+      break;
+    }
+
+    page += 1;
   }
-  return response;
+
+  return apiSuccessResult(items);
 }
 
 const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
@@ -176,7 +172,7 @@ async function fetchBezwaarStatus(
     params,
     transformResponse: transformBezwaarStatus,
     headers: await getBezwarenApiHeaders(authProfileAndToken),
-    cacheKey: `bezwaar-status-${zaakId}`,
+    cacheKey_UNSAFE: zaakId, // zaakId is a UUID, no need to specify additional uniqueness.
   });
 
   const statusResponse = await requestData<StatusLineItem[]>(
@@ -231,6 +227,11 @@ export async function fetchBezwarenDocuments(
     identifier: zaakId,
   };
 
+  const cacheKeyBase = createSessionBasedCacheKey(
+    authProfileAndToken.profile.sid,
+    zaakId
+  );
+
   const requestConfigBase = getApiConfig('BEZWAREN_DOCUMENTS', {
     params,
     transformResponse: (responseData) => {
@@ -243,7 +244,7 @@ export async function fetchBezwarenDocuments(
   });
 
   const bezwaarDocumentenResponse = await fetchMultiple<BezwaarDocument>(
-    `${zaakId}-documents`,
+    cacheKeyBase,
     requestConfigBase
   );
 
@@ -374,6 +375,10 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
     page: 1,
   };
 
+  const cacheKeyBase = createSessionBasedCacheKey(
+    authProfileAndToken.profile.sid
+  );
+
   const requestConfig = getApiConfig('BEZWAREN_LIST', {
     data: requestBody,
     params,
@@ -383,7 +388,7 @@ export async function fetchBezwaren(authProfileAndToken: AuthProfileAndToken) {
   });
 
   const bezwarenResponse = await fetchMultiple<BezwaarFrontend>(
-    `${authProfileAndToken.profile.sid}-bezwaren`,
+    cacheKeyBase,
     requestConfig
   );
 

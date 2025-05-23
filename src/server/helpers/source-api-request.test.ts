@@ -12,11 +12,15 @@ import {
   vi,
 } from 'vitest';
 
+import { encrypt } from './encrypt-decrypt';
+import {
+  createSessionBasedCacheKey,
+  getRequestConfigCacheKey,
+} from './source-api-helpers';
 import {
   axiosRequest,
   cache,
   findApiByRequestUrl,
-  getRequestConfigCacheKey,
   requestData,
 } from './source-api-request';
 import { remoteApiHost } from '../../testing/setup';
@@ -26,6 +30,7 @@ import {
   apiPostponeResult,
   apiSuccessResult,
 } from '../../universal/helpers/api';
+import type { AuthProfile } from '../auth/auth-types';
 import {
   ApiUrlEntries,
   DEFAULT_REQUEST_CACHE_TTL_MS,
@@ -48,6 +53,102 @@ vi.mock('../config/app.ts', async (importOrigModule) => {
 });
 
 vi.mock('../services/monitoring');
+
+describe('source-api-request caching', () => {
+  function fetchThings(sessionID: AuthProfile['sid'], cacheKey?: string) {
+    return requestData<[string, string]>({
+      url: `${remoteApiHost}/1`,
+      method: 'get',
+      transformResponse: (data) => {
+        const [value] = encrypt(sessionID);
+        return [data, value];
+      },
+      cacheKey_UNSAFE: cacheKey,
+    });
+  }
+
+  beforeAll(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.runAllTimers();
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
+  test('Correct: Uses cache with same sessionID within timeout period.', async () => {
+    remoteApi.get('/1').reply(200, '"foo"');
+    remoteApi.get('/1').reply(200, '"notfoo"');
+
+    const SESSION_ID_1 = '123';
+
+    const rs1 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+    const rs2 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
+    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
+
+    // Expire the cache
+    vi.runAllTimers();
+
+    const rs3 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+
+    // Because the cache expired, we should get a new value for the encrypted sessionID.
+    expect(rs2.content?.[1]).not.toBe(rs3.content?.[1]);
+    expect(rs2.content?.[0]).not.toBe(rs3.content?.[0]);
+    expect(rs3.content?.[0]).toBe('notfoo');
+  });
+
+  test("Correct: Doesn't use cache with different sessionID", async () => {
+    remoteApi.get('/1').times(2).reply(200, '"foo"');
+
+    const SESSION_ID_1 = '123';
+    const SESSION_ID_2 = '321';
+
+    const rs1 = await fetchThings(
+      SESSION_ID_1,
+      createSessionBasedCacheKey(SESSION_ID_1, 'things')
+    );
+    expect(rs1.content?.[0]).toEqual('foo');
+
+    const rs2 = await fetchThings(
+      SESSION_ID_2,
+      createSessionBasedCacheKey(SESSION_ID_2, 'things')
+    );
+    expect(rs2.content?.[0]).toEqual('foo');
+    expect(rs2.content?.[1]).not.toBe(rs1.content?.[1]);
+  });
+
+  test('Warning!: Use cachekey_UNSAFE instead. Mistakenly caches transformed response with previously encrypted sessionID', async () => {
+    remoteApi.get('/1').reply(200, '"foo"');
+
+    const SESSION_ID_1 = '123';
+    const SESSION_ID_2 = '321';
+
+    const rs1 = await fetchThings(SESSION_ID_1);
+    const rs1b = await fetchThings(SESSION_ID_1);
+
+    expect(rs1b.content?.[1]).toBe(rs1.content?.[1]);
+
+    // User initiates a new session.
+    const rs2 = await fetchThings(SESSION_ID_2);
+    expect(rs2.content?.[0]).toEqual('foo');
+
+    // Still has the old sessionID because the cacheKey is the same.
+    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
+  });
+});
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };

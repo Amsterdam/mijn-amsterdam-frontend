@@ -28,7 +28,10 @@ import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+import {
+  createSessionBasedCacheKey,
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
@@ -174,7 +177,7 @@ export async function getLoodApiHeaders() {
   const requestConfig = getApiConfig('LOOD_365_OAUTH', {
     data,
     headers,
-    cacheKey: `lood-365-oauth-access-token`,
+    cacheKey_UNSAFE: `lood-365-oauth-access-token`, // Every request to the Lood api will use the same access_token so we cache it with a static key.
     cacheTimeout: 60 * 60 * ONE_SECOND_MS, // 1 hour
   });
 
@@ -204,6 +207,9 @@ export async function fetchLoodmetingen(
     data,
     transformResponse: (responseData) =>
       transformLood365Response(authProfileAndToken.profile.sid, responseData),
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid
+    ),
   });
 
   return requestData<LoodMetingen>(requestConfig);

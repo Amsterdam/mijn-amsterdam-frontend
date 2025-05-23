@@ -23,7 +23,10 @@ import {
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+import {
+  createSessionBasedCacheKey,
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
 
@@ -189,7 +192,9 @@ export async function fetchAVG(authProfileAndToken: AuthProfileAndToken) {
       transformResponse: transformAVGResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: `avg-${authProfileAndToken.profile.sid}`,
+      cacheKey_UNSAFE: createSessionBasedCacheKey(
+        authProfileAndToken.profile.sid
+      ),
       postponeFetch: !featureToggle.avgActive,
     })
   );
@@ -219,16 +224,17 @@ export function transformAVGThemeResponse(
   };
 }
 
-export async function fetchAVGRequestThemes(avgIds: string[]) {
+export async function fetchAVGRequestThemes(
+  avgIds: AVGRequestFrontend['id'][]
+) {
   const data = getDataForAvgThemas(avgIds);
-  const cacheKey = avgIds.join('-');
 
   const res = await requestData<AvgThemesResponse>(
     getApiConfig('ENABLEU_2_SMILE', {
       transformResponse: transformAVGThemeResponse,
       data,
       headers: data.getHeaders(),
-      cacheKey: `avg-themes-${cacheKey}`,
+      cacheKey_UNSAFE: avgIds.join(), // These are unique per user.
       postponeFetch: !featureToggle.avgActive,
     })
   );
