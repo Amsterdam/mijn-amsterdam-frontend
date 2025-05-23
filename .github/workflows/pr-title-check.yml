@@ -1,5 +1,8 @@
 # Taken from: https://levelup.gitconnected.com/enforcing-jira-ticket-formatting-in-github-pr-titles-and-commit-messages-78d9755568df
 name: 'PR Title Check'
+permissions:
+  contents: read
+  pull-requests: read
 on:
   pull_request:
     types: [opened, edited, synchronize]
