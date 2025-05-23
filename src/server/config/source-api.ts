@@ -47,7 +47,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * TOO STRONG:
    * For example if the body/headers/url changes every request (This can be the case if an IV encrypted parameter is added (erfpacht) to the url.),
    * we need a less unique key to be able to utilize the cache. In this case we can use a cacheKey_UNSAFE. !!!!!
-   * Be sure this key is UNIQUE TO THE VISITOR - and TYPE OF REQUEST.
+   * Be sure this key is UNIQUE TO THE VISITOR (e.g a uuid related to the user or the SessionID) - and TYPE OF REQUEST (e.g fetchDocuments, fetchZaken, fetchZakenOfTypeA, fetchZakenOfTypeB).
    * For example the sessionID parameter in combination with a request identifier can be used.
    *
    * TOO WEAK:
@@ -55,6 +55,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
    * This can happen when we use client certificates in the httpsAgent config to identify an api user and we request data from the same api endpoint with different clients.
    * In this case you can add a { "x-cache-key-supplement": `${apiUserName}` } header to make a request unique from other requests.
    * Another way is to use the createSessionBasedCacheKey(sessionID, apiUserName) function to create a cacheKey that is unique to the session.
+   * Be sure this key is UNIQUE TO THE VISITOR (e.g a uuid related to the user or the SessionID) - and TYPE OF REQUEST (e.g fetchDocuments, fetchZaken, fetchZakenOfTypeA, fetchZakenOfTypeB).
    */
   cacheKey_UNSAFE?: string;
   enableCache?: boolean;
