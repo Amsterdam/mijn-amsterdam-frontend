@@ -52,10 +52,6 @@ describe('<Erfpacht />', () => {
     expect(
       screen.getByText('U heeft (nog) geen erfpachtrechten')
     ).toBeInTheDocument();
-    expect(screen.getByText('Openstaande facturen')).toBeInTheDocument();
-    expect(
-      screen.getByText('U heeft (nog) geen openstaande facturen')
-    ).toBeInTheDocument();
   });
 
   test('Renders Overviewpage with error', () => {
@@ -85,7 +81,6 @@ describe('<Erfpacht />', () => {
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
     ).not.toBeInTheDocument();
-    expect(screen.queryByText('Openstaande facturen')).not.toBeInTheDocument();
     expect(
       screen.queryByText('U heeft geen openstaande facturen.')
     ).not.toBeInTheDocument();
@@ -108,13 +103,15 @@ describe('<Erfpacht />', () => {
     );
 
     expect(
+      screen.getByRole('heading', { name: 'U heeft openstaande facturen' })
+    ).toBeInTheDocument();
+    expect(
       screen.getByText('Hieronder ziet u de gegevens van uw erfpachtrechten.')
     ).toBeInTheDocument();
     expect(screen.getByText('Erfpachtrechten')).toBeInTheDocument();
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
     ).not.toBeInTheDocument();
-    expect(screen.getByText('Openstaande facturen')).toBeInTheDocument();
     expect(
       screen.queryByText('U heeft geen openstaande facturen.')
     ).not.toBeInTheDocument();
@@ -124,11 +121,5 @@ describe('<Erfpacht />', () => {
     expect(screen.getByText('E900/33')).toBeInTheDocument();
     expect(screen.getByText('E123/456')).toBeInTheDocument();
     expect(screen.getByText('E6470/243')).toBeInTheDocument();
-
-    expect(screen.getAllByText('Toon meer').length).toBe(1);
-
-    expect(screen.getByText('Bijkehuim 44 H')).toBeInTheDocument();
-    expect(screen.getByText('Dit en Dat plein 66')).toBeInTheDocument();
-    expect(screen.queryByText('Kweikade 33 H')).not.toBeInTheDocument();
   });
 });

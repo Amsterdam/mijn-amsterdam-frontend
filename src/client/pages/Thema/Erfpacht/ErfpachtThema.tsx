@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
 
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import {
@@ -6,10 +6,12 @@ import {
   ErfpachtDossierFactuurFrontend,
 } from '../../../../server/services/erfpacht/erfpacht-types';
 import { entries } from '../../../../universal/helpers/utils';
+import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import * as afis from '../Afis/Afis-thema-config';
 
 export function ErfpachtThema() {
   const {
@@ -25,9 +27,15 @@ export function ErfpachtThema() {
   } = useErfpachtThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
+  const excludedTables: string[] = [
+    listPageParamKind.alleFacturen,
+    // At the moment this table will show up with items such as 'Factuurinformatie is niet beschikbaar' in az/prod.
+    listPageParamKind.openFacturen,
+  ];
+
   const pageContentTables = tableConfig
     ? entries(tableConfig)
-        .filter(([kind]) => kind !== listPageParamKind.alleFacturen)
+        .filter(([kind]) => !excludedTables.includes(kind))
         .map(([kind, { title, displayProps, listPageRoute, maxItems }]) => {
           return (
             <ThemaPaginaTable<
@@ -55,13 +63,35 @@ export function ErfpachtThema() {
       isError={isError}
       linkListItems={linkListItems}
       pageContentTop={
-        <PageContentCell spanWide={8}>
-          <Paragraph>
-            Hieronder ziet u de gegevens van uw erfpachtrechten.
-          </Paragraph>
-        </PageContentCell>
+        <>
+          <PageContentCell spanWide={8}>
+            <Paragraph>
+              Hieronder ziet u de gegevens van uw erfpachtrechten.
+            </Paragraph>
+          </PageContentCell>
+
+          {openFacturen.length && (
+            <PageContentCell spanWide={8}>
+              <FacturenDisclaimer />
+            </PageContentCell>
+          )}
+        </>
       }
       pageContentMain={pageContentTables}
     />
+  );
+}
+
+function FacturenDisclaimer() {
+  return (
+    <Alert headingLevel={2} heading="U heeft openstaande facturen">
+      <Paragraph>
+        Kijk op{' '}
+        <MaRouterLink href={afis.routeConfig.themaPage.path}>
+          {afis.themaTitle}
+        </MaRouterLink>{' '}
+        voor uw erfpacht facturen. U kunt hier alleen facturen van 2025 inzien.
+      </Paragraph>
+    </Alert>
   );
 }
