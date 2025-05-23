@@ -177,7 +177,7 @@ export async function getLoodApiHeaders() {
   const requestConfig = getApiConfig('LOOD_365_OAUTH', {
     data,
     headers,
-    cacheKey_UNSAFE: `lood-365-oauth-access-token`,
+    cacheKey_UNSAFE: `lood-365-oauth-access-token`, // Every request to the Lood api will use the same access_token so we cache it with a static key.
     cacheTimeout: 60 * 60 * ONE_SECOND_MS, // 1 hour
   });
 
