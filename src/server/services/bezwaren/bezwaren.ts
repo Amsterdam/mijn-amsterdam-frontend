@@ -101,38 +101,31 @@ async function fetchMultiple<T>(
   requestConfigBase: DataRequestConfig,
   maxPageCount: number = MAX_PAGE_COUNT
 ) {
-  const requestConfig = {
-    ...requestConfigBase,
-    cacheKey: `${cacheKeyBase}-${requestConfigBase.params.page}`,
-  };
-  let response = await requestData<OctopusApiResponse<T>>(requestConfig);
-  let itemsLength = response.content?.items.length ?? 0;
-  const resultCount = response.content?.count ?? 0;
+  const { params } = requestConfigBase;
+  let page = params.page;
+  let items: T[] = [];
 
-  if (response.status === 'OK') {
-    let items: T[] = response.content.items;
-    if (resultCount > itemsLength) {
-      while (
-        itemsLength < resultCount &&
-        requestConfig.params.page < maxPageCount
-      ) {
-        requestConfig.params.page += 1; //Fetch next page
-        response = await requestData<OctopusApiResponse<T>>({
-          ...requestConfig,
-          cacheKey_UNSAFE: `${cacheKeyBase}-${requestConfigBase.params.page}`,
-        });
+  while (page < maxPageCount) {
+    const cacheKey = `${cacheKeyBase}-${page}`;
+    const response = await requestData<OctopusApiResponse<T>>({
+      ...requestConfigBase,
+      params: { ...params, page },
+      cacheKey_UNSAFE: cacheKey,
+    });
 
-        if (response.status === 'OK') {
-          items = items.concat(response.content.items);
-          itemsLength += response.content.items.length;
-        } else {
-          return response;
-        }
-      }
+    if (response.status !== 'OK') {
+      return response;
     }
-    return apiSuccessResult(items);
+
+    items = items.concat(response.content.items);
+    if (items.length >= (response.content.count ?? 0)) {
+      break;
+    }
+
+    page += 1;
   }
-  return response;
+
+  return apiSuccessResult(items);
 }
 
 const EMPTY_UUID = '00000000-0000-0000-0000-000000000000';
