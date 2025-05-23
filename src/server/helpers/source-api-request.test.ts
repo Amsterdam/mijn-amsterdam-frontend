@@ -94,7 +94,7 @@ describe('source-api-request caching', () => {
       createSessionBasedCacheKey(SESSION_ID_1, 'things')
     );
 
-    expect(rs2.content?.[1] === rs1.content?.[1]).toBe(true);
+    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
 
     // Expire the cache
     vi.runAllTimers();
@@ -139,14 +139,14 @@ describe('source-api-request caching', () => {
     const rs1 = await fetchThings(SESSION_ID_1);
     const rs1b = await fetchThings(SESSION_ID_1);
 
-    expect(rs1b.content?.[1] === rs1.content?.[1]).toBe(true);
+    expect(rs1b.content?.[1]).toBe(rs1.content?.[1]);
 
     // User initiates a new session.
     const rs2 = await fetchThings(SESSION_ID_2);
     expect(rs2.content?.[0]).toEqual('foo');
 
     // Still has the old sessionID because the cacheKey is the same.
-    expect(rs2.content?.[1] === rs1.content?.[1]).toBe(true);
+    expect(rs2.content?.[1]).toBe(rs1.content?.[1]);
   });
 });
 
