@@ -1,7 +1,7 @@
 import {
   fetchDecosDocumentList,
   fetchDecosZaken,
-  fetchDecosWorkflowDates,
+  fetchDecosWorkflows,
   fetchDecosZakenFromSource,
   forTesting,
   fetchDecosTermijnen,
@@ -17,7 +17,7 @@ import {
 } from './decos-types';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { jsonCopy, range } from '../../../universal/helpers/utils';
-import { axiosRequest } from '../../helpers/source-api-request';
+import * as sourceApiRequest from '../../helpers/source-api-request';
 import type { WerkzaamhedenEnVervoerOpStraat } from '../vergunningen/config-and-types';
 import {
   decosCaseToZaakTransformers,
@@ -153,6 +153,14 @@ describe('decos-service', () => {
   const numberOfAddressBooksToSearch =
     process.env.BFF_DECOS_API_ADRES_BOEKEN_BSN?.split(',').length ?? 0;
 
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterAll(() => {
+    vi.restoreAllMocks();
+  });
+
   /**
    * Testing Exported service methods
    */
@@ -208,36 +216,51 @@ describe('decos-service', () => {
         .reply(200);
 
       const responseData = await fetchDecosZakenFromSource(authProfileAndToken);
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": null,
-          "message": "bad request",
-          "status": "ERROR",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: null,
+        message: 'bad request',
+        status: 'ERROR',
+      });
     });
   });
 
-  describe('fetchDecosWorkflowDate', async () => {
+  describe('fetchDecosWorkflows', async () => {
     test('No content', async () => {
       remoteApi.get(/\/decos\/items\/zaak-id-1\/workflows/).reply(200);
       remoteApi
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200);
 
-      const responseData = await fetchDecosWorkflowDates('zaak-id-1', [
-        'zaak - behandelen',
-      ]);
+      const responseData = await fetchDecosWorkflows('zaak-id-1');
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": {},
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: [],
+        status: 'OK',
+      });
     });
 
-    test('With date', async () => {
+    test('Fetches all workflows', async () => {
+      const requestDataSpy = vi.spyOn(sourceApiRequest, 'requestData');
+
+      const workflows = {
+        count: 2,
+        content: [
+          {
+            worklfowType: 'FOLDER',
+            workflowType: 'FOLDER',
+            mainItemBookKey: 'IETS_VAN_EEN_ID',
+            key: '123-abc-000',
+            workflowName: 'Zaak-workflow-naam - vergunning Versie 77899',
+          },
+          {
+            worklfowType: 'FOLDER',
+            workflowType: 'FOLDER',
+            mainItemBookKey: 'IETS_VAN_EEN_ID',
+            key: '789-xyz-000',
+            workflowName: 'Zaak-workflow-naam - vergunning Versie 23456',
+          },
+        ],
+      };
       remoteApi
         .get(/\/decos\/items\/zaak-id-1\/workflows/)
         .reply(200, workflows);
@@ -246,38 +269,49 @@ describe('decos-service', () => {
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
         .reply(200, workflowInstance);
 
-      const responseData = await fetchDecosWorkflowDates('zaak-id-1', [
-        'Zaak - behandelen',
-      ]);
+      remoteApi
+        .get(/\/decos\/items\/789-xyz-000\/workflowlinkinstances/)
+        .reply(200, workflowInstance);
+
+      const responseData = await fetchDecosWorkflows('zaak-id-1');
 
       expect(responseData).toMatchObject({
-        content: { 'Zaak - behandelen': '2021-09-13T17:09:00' },
+        content: [
+          { key: '123-abc-000', instances: workflowInstance.content },
+          { key: '789-xyz-000', instances: workflowInstance.content },
+        ],
         status: 'OK',
+      });
+
+      expect(requestDataSpy.mock.calls[1][0].params).toStrictEqual({
+        fetchParents: 'false',
+        properties: 'false',
+        select: 'mark,date1,date2,text7',
+        top: '50',
       });
     });
 
-    test('Without date', async () => {
+    test('Fetches only top 1 workflow', async () => {
+      const requestDataSpy = vi.spyOn(sourceApiRequest, 'requestData');
+
       remoteApi
         .get(/\/decos\/items\/zaak-id-1\/workflows/)
         .reply(200, workflows);
 
-      const workflowInstance2: typeof workflowInstance =
-        jsonCopy(workflowInstance);
-      const instance1 = workflowInstance2.content[0];
-      const fields = instance1.fields as Partial<typeof instance1.fields>;
-      delete fields.text7;
-
       remoteApi
         .get(/\/decos\/items\/123-abc-000\/workflowlinkinstances/)
-        .reply(200, workflowInstance2);
+        .reply(200, workflowInstance);
 
-      const responseData = await fetchDecosWorkflowDates('zaak-id-1', [
-        'Zaak - behandelen',
+      await fetchDecosWorkflows('zaak-id-1', [
+        { status: 'Afgehandeld', decosActionCode: 'Zaak - afhandelen' },
       ]);
 
-      expect(responseData).toMatchObject({
-        content: { 'Zaak - behandelen': null },
-        status: 'OK',
+      expect(requestDataSpy.mock.calls[1][0].params).toStrictEqual({
+        fetchParents: 'false',
+        filter: "text7 eq 'Zaak - afhandelen'",
+        properties: 'false',
+        select: 'mark,date1,date2,text7',
+        top: '50',
       });
     });
   });
@@ -288,7 +322,9 @@ describe('decos-service', () => {
 
       const responseData = await fetchDecosTermijnen('zaak-id-1', ['Termijn']);
 
-      expect(responseData).toMatchObject({
+      expect(responseData).toStrictEqual({
+        code: 404,
+        message: 'Request failed with status code 404',
         content: null,
         status: 'ERROR',
       });
@@ -299,12 +335,10 @@ describe('decos-service', () => {
 
       const responseData = await fetchDecosTermijnen('zaak-id-1', ['Termijn']);
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": [],
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: [],
+        status: 'OK',
+      });
     });
 
     test('Has termijn', async () => {
@@ -314,18 +348,16 @@ describe('decos-service', () => {
 
       const responseData = await fetchDecosTermijnen('zaak-id-1', ['Termijn']);
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": [
-            {
-              "dateEnd": "2025-02-20T00:00:00",
-              "dateStart": "2025-02-17T00:00:00",
-              "type": "Verzoek aanvullende gegevens",
-            },
-          ],
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: [
+          {
+            dateEnd: '2025-02-20T00:00:00',
+            dateStart: '2025-02-17T00:00:00',
+            type: 'Verzoek aanvullende gegevens',
+          },
+        ],
+        status: 'OK',
+      });
     });
   });
 
@@ -386,12 +418,10 @@ describe('decos-service', () => {
       remoteApi.get(/\/decos\/items\/zaak-id-2\/documents/).reply(200, []);
 
       const responseData = await fetchDecosDocumentList('xx', 'zaak-id-2');
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": [],
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: [],
+        status: 'OK',
+      });
     });
 
     test('With valid pdf docs', async () => {
@@ -401,20 +431,18 @@ describe('decos-service', () => {
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob);
 
       const responseData = await fetchDecosDocumentList('xx', 'zaak-id-2');
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": [
-            {
-              "datePublished": "2024-06-06",
-              "id": "D/4379600",
-              "key": "blob-key",
-              "title": "Systeem - Factuurregel Stadsloket automatisch",
-              "url": "http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id",
-            },
-          ],
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: [
+          {
+            datePublished: '2024-06-06',
+            id: 'D/4379600',
+            key: 'blob-key',
+            title: 'Systeem - Factuurregel Stadsloket automatisch',
+            url: 'http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id',
+          },
+        ],
+        status: 'OK',
+      });
     });
 
     test('Without valid PDF docs', async () => {
@@ -427,12 +455,10 @@ describe('decos-service', () => {
       remoteApi.get(/\/decos\/items\/doc-key\/blob/).reply(200, blob2);
 
       const responseData = await fetchDecosDocumentList('xx', 'zaak-id-2');
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": [],
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: [],
+        status: 'OK',
+      });
     });
   });
 
@@ -448,13 +474,11 @@ describe('decos-service', () => {
         decosZaakTransformers
       );
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": null,
-          "message": "Booksearch failed",
-          "status": "ERROR",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: null,
+        message: 'Booksearch failed',
+        status: 'ERROR',
+      });
     });
 
     test('Success response', async () => {
@@ -472,14 +496,14 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
-      const axiosSpy = vi.spyOn(axiosRequest, 'request');
+      const requestDataSpy = vi.spyOn(sourceApiRequest, 'requestData');
 
       const responseData = await fetchDecosZaken(
         authProfileAndToken,
         decosZaakTransformers
       );
 
-      const calls = axiosSpy.mock.calls.map((call) => {
+      const calls = requestDataSpy.mock.calls.map((call) => {
         return call[0].url;
       });
 
@@ -513,8 +537,6 @@ describe('decos-service', () => {
 
       expect(responseData.status).toBe('OK');
       expect(responseData.content?.length).toBe(4);
-
-      axiosSpy.mockRestore();
     });
   });
 
@@ -605,13 +627,11 @@ describe('decos-service', () => {
 
       const responseData = await forTesting.getZakenByUserKey('123456789');
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": null,
-          "message": "De api geeft een error.",
-          "status": "ERROR",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: null,
+        message: 'De api geeft een error.',
+        status: 'ERROR',
+      });
     });
 
     test('Bad content: bad json', async () => {
@@ -622,13 +642,11 @@ describe('decos-service', () => {
 
       const responseData = await forTesting.getZakenByUserKey('123456789');
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": null,
-          "message": "Unexpected token 'a', "abc" is not valid JSON",
-          "status": "ERROR",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: null,
+        message: `Unexpected token 'a', "abc" is not valid JSON`,
+        status: 'ERROR',
+      });
     });
 
     test('Bad content: valid json', async () => {
@@ -639,12 +657,10 @@ describe('decos-service', () => {
 
       const responseData = await forTesting.getZakenByUserKey('123456789');
 
-      expect(responseData).toMatchInlineSnapshot(`
-        {
-          "content": [],
-          "status": "OK",
-        }
-      `);
+      expect(responseData).toStrictEqual({
+        content: [],
+        status: 'OK',
+      });
     });
 
     test('Called with filter based on caseTypes', async () => {
@@ -659,7 +675,7 @@ describe('decos-service', () => {
         .times(numberOfAddressBooksToSearch)
         .reply(200, zakenSource);
 
-      const axiosSpy = vi.spyOn(axiosRequest, 'request');
+      const axiosSpy = vi.spyOn(sourceApiRequest.axiosRequest, 'request');
 
       const dienstenTransformer =
         decosCaseToZaakTransformers['Aanbieden van diensten'];
@@ -711,40 +727,6 @@ describe('decos-service', () => {
           url: 'http://bff-api-host/api/v1/services/decos/documents/download?id=test-encrypted-id',
         },
       ]);
-    });
-  });
-
-  describe('transformDecosWorkflowDateResponse', () => {
-    test('No date', () => {
-      const workflowInstance2: typeof workflowInstance =
-        jsonCopy(workflowInstance);
-      const fields = workflowInstance2.content[0].fields;
-      delete (fields as Partial<typeof fields>).date1;
-
-      const date = forTesting.transformDecosWorkflowDateResponse(
-        ['Zaak - behandelen'],
-        workflowInstance2
-      );
-
-      expect(date).toMatchObject({ 'Zaak - behandelen': null });
-    });
-
-    test('Has date', () => {
-      const date = forTesting.transformDecosWorkflowDateResponse(
-        ['Zaak - behandelen'],
-        workflowInstance
-      );
-      expect(date).toMatchObject({
-        'Zaak - behandelen': workflowInstance.content[0].fields.date1,
-      });
-    });
-
-    test('Wrong step title', () => {
-      const date = forTesting.transformDecosWorkflowDateResponse(
-        ['Zaak - in behandeling'],
-        workflowInstance
-      );
-      expect(date).toMatchObject({ 'Zaak - in behandeling': null });
     });
   });
 
