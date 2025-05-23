@@ -42,17 +42,18 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   // Example: formatUrl: (requestConfig) => requestConfig.url + '/some/additional/path/segments/,
   formatUrl?: (requestConfig: DataRequestConfig) => string;
   /**
-   * The cacheKey is important if the automatically generated key doesn't suffice.
-   * For example if the body/headers/url changes every request.
-   * This can be the case if an IV encrypted parameter is added (erfpacht) to the url.
-   * If the url changes everytime the cache won't be hit.
-   * In this case we can use a cacheKey_UNSAFE. !!!!!
-   * Be sure this key is unique to the visitor - and type of request. One function with cache key can be used to get multiple requests.
-   * AND the request (or the visitor might recieve the same responses on 2 similar requests).!!!!!!
-   * For example the sessionID parameter in combination with a request identifier can be used -
-   * if a request is not unique enough (this can happen when we use certificates in the -
-   * httpsAgent config to identify an api user and we request data from that same api with different users.
-   * Alternatively you can also add a 'x-cache-key-supplement' header to make a request unique from other requests.
+   * The cacheKey is important if the automatically generated key doesn't suffice. It might be too weak or too strong.
+   *
+   * TOO STRONG:
+   * For example if the body/headers/url changes every request (This can be the case if an IV encrypted parameter is added (erfpacht) to the url.),
+   * we need a less unique key to be able to utilize the cache.  In this case we can use a cacheKey_UNSAFE. !!!!!
+   * Be sure this key is UNIQUE TO THE VISITOR - and TYPE OF REQUEST.
+   * For example the sessionID parameter in combination with a request identifier can be used.
+   *
+   * TOO WEAK:
+   * If a request is not unique enough.
+   * This can happen when we use client certificates in the httpsAgent config to identify an api user and we request data from the same api endpoint with different clients.
+   * In this case you can add a { "x-cache-key-supplement": `${apiUserName}` } header to make a request unique from other requests.
    */
   cacheKey_UNSAFE?: string;
   enableCache?: boolean;
