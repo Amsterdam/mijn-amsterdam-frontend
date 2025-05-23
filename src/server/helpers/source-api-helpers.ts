@@ -19,7 +19,7 @@ const EXCLUDE_GENERIC_FUNCTION_NAMES_FROM_CACHE_KEY = [
 // To keep the cache key small, we only take the last 3 function names from the stack trace.
 const SLICE_FUNCTION_NAMES = 3;
 
-function getApiConfiBasedCacheKey(
+function getApiConfigBasedCacheKey(
   name: SourceApiKey,
   cacheKey_UNSAFE?: string
 ): string | null {
@@ -79,7 +79,7 @@ export function getApiConfig(
     Object.assign(headers, config.headers);
   }
 
-  const cacheKey_UNSAFE = getApiConfiBasedCacheKey(
+  const cacheKey_UNSAFE = getApiConfigBasedCacheKey(
     name,
     config.cacheKey_UNSAFE
   );
