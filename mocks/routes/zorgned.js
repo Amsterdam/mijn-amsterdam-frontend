@@ -67,8 +67,10 @@ module.exports = [
             const nawResponse = structuredClone(
               ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE
             );
-            nawResponse.persoon.bsn = req.body.burgerservicenummer;
-            nawResponse.persoon.voornamen = `${req.body.burgerservicenummer} - ${nawResponse.persoon.voornamen}`;
+            if (nawResponse) {
+              nawResponse.persoon.bsn = req.body.burgerservicenummer;
+              nawResponse.persoon.voornamen = `${req.body.burgerservicenummer} - ${nawResponse.persoon.voornamen}`;
+            }
             return res.status(HttpStatusCode.Ok).send(nawResponse);
           },
         },
