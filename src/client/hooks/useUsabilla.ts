@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import { usePhoneScreen } from './media.hook';
 import { useScript } from './useScript';
-import { IS_AP } from '../../universal/config/env';
 import { captureException } from '../helpers/monitoring';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
@@ -36,7 +35,7 @@ export function useUsabilla(profileType?: ProfileType) {
     src: '/js/usabilla-2021-10-05.js',
     defer: false,
     async: true,
-    isEnabled: IS_AP,
+    isEnabled: true,
   });
   useEffect(() => {
     if (isUsabillaLoaded) {
@@ -49,6 +48,17 @@ export function useUsabilla(profileType?: ProfileType) {
           'usabilla_live',
           `https://w.usabilla.com/${usabillaID}.js`
         );
+
+        // The usabilla script uses a relative href to the image.
+        // Because of csp we do not allow the iframe to set the base href
+        // The absolute url to a local replacement image is injected
+        const iframe = document.querySelector('iframe.usabilla-live-button');
+        iframe?.contentDocument
+          ?.querySelector?.('img')
+          ?.setAttribute(
+            'src',
+            '/resources/buttons/feedback_button_gemamsterdam_desktop_right_new.png'
+          );
       }
       waitForUsabillaLiveInWindow()
         .then(() => {
