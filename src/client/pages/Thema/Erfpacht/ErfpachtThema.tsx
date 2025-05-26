@@ -70,7 +70,7 @@ export function ErfpachtThema() {
             </Paragraph>
           </PageContentCell>
 
-          {openFacturen.length && (
+          {!!openFacturen.length && (
             <PageContentCell spanWide={8}>
               <FacturenDisclaimer />
             </PageContentCell>
