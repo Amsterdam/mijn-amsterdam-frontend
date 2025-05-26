@@ -4,6 +4,7 @@ import { usePhoneScreen } from './media.hook';
 import { useScript } from './useScript';
 import { IS_AP } from '../../universal/config/env';
 import { captureException } from '../helpers/monitoring';
+import { getElementOnPageAsync } from '../helpers/utils';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 const USABILLA_ID_MOBILE = '9fd5da44aa5b';
@@ -17,7 +18,7 @@ export function waitForUsabillaLiveInWindow() {
       if ((window as any).usabilla_live) {
         return resolve(true);
       }
-      const timeoutMs = 30;
+      const timeoutMs = 20;
       if (!timeoutReached) {
         polling = setTimeout(waitForFoo, timeoutMs);
       }
@@ -70,6 +71,18 @@ export function useUsabilla(profileType?: ProfileType) {
             },
           });
         });
+
+      getElementOnPageAsync('iframe.usabilla-live-button').then((iframe) => {
+        // The usabilla script uses a relative href to the image.
+        // Because of csp we do not allow the iframe to set the base href to their domain
+        // The absolute url to a local replacement image is injected
+        iframe?.contentDocument
+          ?.querySelector?.('img')
+          ?.setAttribute(
+            'src',
+            '/resources/buttons/feedback_button_gemamsterdam_desktop_right_new.png'
+          );
+      });
     }
   }, [isUsabillaLoaded, isPhoneScreen, profileType]);
 }

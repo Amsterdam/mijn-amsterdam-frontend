@@ -4,31 +4,8 @@ import { Dialog } from '@amsterdam/design-system-react';
 import classnames from 'classnames';
 
 import styles from './Modal.module.scss';
+import { getElementOnPageAsync } from '../../helpers/utils';
 import { useKeyUp } from '../../hooks/useKey';
-
-const POLL_INTERVAL_MS = 10;
-const FAIL_TIMEOUT_MS = 1000;
-
-function isElementOnPage(
-  query: string,
-  timeout: number = FAIL_TIMEOUT_MS,
-  interval: number = POLL_INTERVAL_MS
-): Promise<Element | null> {
-  return new Promise((resolve) => {
-    const startTime = Date.now();
-    function checkIfElementIsInDOM() {
-      const elem = document?.querySelector(query);
-      if (elem) {
-        resolve(elem); // Found the element
-      } else if (Date.now() - startTime > timeout) {
-        resolve(null); // Give up eventually
-      } else {
-        setTimeout(checkIfElementIsInDOM, interval); // check again every interval ms
-      }
-    }
-    checkIfElementIsInDOM(); // Initial check
-  });
-}
 
 function FocusTrapInner() {
   const element = document.getElementById('modal-dialog');
@@ -89,11 +66,12 @@ function FocusTrap({
   useEffect(() => {
     if (!isReady && pollingQuerySelector) {
       // Delays the initialization of the focus trap. This is necessary because some dialog content is not yet rendered when the dialog is opened.
-      isElementOnPage(pollingQuerySelector, giveUpOnReadyPollingAfterMs).then(
-        () => {
-          setIsReady(true);
-        }
-      );
+      getElementOnPageAsync(
+        pollingQuerySelector,
+        giveUpOnReadyPollingAfterMs
+      ).then(() => {
+        setIsReady(true);
+      });
     }
   }, []);
 
