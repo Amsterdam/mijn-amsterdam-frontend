@@ -76,6 +76,7 @@ export async function fetchSVWINotifications(
         return `${requestConfig.url}/autorisatie/tegel`;
       },
       transformResponse: transformSVWIResponse,
+      postponeFetch: !featureToggle.svwiActive,
     }),
     themaId,
     authProfileAndToken
