@@ -32,6 +32,7 @@ describe('<MyNotification />', () => {
       },
       hideDatePublished: false,
       isAlert: false,
+      themaTitle: '',
     },
     {
       id: 'test-notification2',
@@ -45,6 +46,7 @@ describe('<MyNotification />', () => {
         callback,
         title: 'Custom test link',
       },
+      themaTitle: '',
     },
   ];
 
@@ -85,8 +87,8 @@ describe('<MyNotification />', () => {
         routePath="/"
         component={() => (
           <>
-            <MyNotification smallVariant notification={NOTIFICATIONS[0]} />
-            <MyNotification smallVariant notification={NOTIFICATIONS[1]} />
+            <MyNotification notification={NOTIFICATIONS[0]} />
+            <MyNotification notification={NOTIFICATIONS[1]} />
           </>
         )}
         initializeState={initializeState({} as unknown as AppState)}
