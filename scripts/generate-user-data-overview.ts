@@ -171,9 +171,9 @@ const testAccountEntries = getTestAccountEntries();
 XLSX.set_fs(fs);
 // If true then get data extracted out of services from disk.
 // This greatly speeds up this script and is therefore nice for debugging.
-const FROM_DISK: boolean = false;
+const FROM_DISK: boolean = true;
 
-// In which directory do we save the data coming from our services?
+// Describes where we should save the transformed data from our services.
 const TARGET_DIRECTORY: string = '.';
 
 const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
@@ -765,7 +765,7 @@ function sheetServiceErrors(
   return {
     title: 'Service Errors',
     rows: getServiceErrors(resultsByUser, serviceKeys),
-    columnHeaders: ['', getUsernameColumnHeaders()],
+    columnHeaders: getUsernameColumnHeaders(),
     colInfo: [
       { wch: WCH_DEFAULT },
       ...createInfoArray(testAccountEntries.length, { wch: WCH_DEFAULT }),
@@ -892,5 +892,5 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
 }
 
 function getUsernameColumnHeaders() {
-  return testAccounts.map(([username]) => username);
+  return testAccountEntries.map(([username]) => username);
 }
