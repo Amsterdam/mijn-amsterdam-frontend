@@ -13,10 +13,11 @@ export function waitForUsabillaLiveInWindow() {
   let timeoutReached = false;
   return new Promise(function (resolve, reject) {
     (function waitForFoo() {
-      if ((window as any).usabilla_live) {
+      const iframe = document.querySelector('iframe.usabilla-live-button');
+      if ((window as any).usabilla_live && iframe?.contentDocument) {
         return resolve(true);
       }
-      const timeoutMs = 30;
+      const timeoutMs = 20;
       if (!timeoutReached) {
         polling = setTimeout(waitForFoo, timeoutMs);
       }
@@ -48,21 +49,6 @@ export function useUsabilla(profileType?: ProfileType) {
           'usabilla_live',
           `https://w.usabilla.com/${usabillaID}.js`
         );
-
-        // The usabilla script uses a relative href to the image.
-        // Because of csp we do not allow the iframe to set the base href
-        // The absolute url to a local replacement image is injected
-        const iframe = document.querySelector('iframe.usabilla-live-button');
-        iframe?.contentDocument
-          ?.querySelector?.('base')
-          ?.setAttribute('href', 'https://az-acc.mijn.amsterdam.nl');
-        iframe?.contentDocument
-          ?.querySelector?.('img')
-          ?.setAttribute(
-            'src',
-            '/resources/buttons/feedback_button_gemamsterdam_desktop_right_new.png'
-          );
-        console.log('Set iframe usabilla image');
       }
       waitForUsabillaLiveInWindow()
         .then(() => {
@@ -76,6 +62,17 @@ export function useUsabilla(profileType?: ProfileType) {
               profileType: profileType ?? 'unknown',
             },
           });
+
+          // The usabilla script uses a relative href to the image.
+          // Because of csp we do not allow the iframe to set the base href to their domain
+          // The absolute url to a local replacement image is injected
+          const iframe = document.querySelector('iframe.usabilla-live-button');
+          iframe?.contentDocument
+            ?.querySelector?.('img')
+            ?.setAttribute(
+              'src',
+              '/resources/buttons/feedback_button_gemamsterdam_desktop_right_new.png'
+            );
         })
         .catch((error) => {
           captureException(error, {
