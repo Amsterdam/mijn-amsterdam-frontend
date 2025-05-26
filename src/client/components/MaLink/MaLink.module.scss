@@ -26,6 +26,9 @@
   -webkit-appearance: button;
   appearance: button;
   text-decoration: none;
+  &:hover {
+    color: var(--ams-color-background);
+  }
 
   &[aria-disabled='true'] {
     &,

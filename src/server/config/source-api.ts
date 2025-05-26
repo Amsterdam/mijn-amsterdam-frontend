@@ -42,19 +42,22 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   // Example: formatUrl: (requestConfig) => requestConfig.url + '/some/additional/path/segments/,
   formatUrl?: (requestConfig: DataRequestConfig) => string;
   /**
-   * The cacheKey is important if the automatically generated key doesn't suffice.
-   * For example if the body/headers/url changes every request.
-   * This can be the case if an IV encrypted parameter is added (erfpacht) to the url.
-   * If the url changes everytime the cache won't be hit.
-   * In this case we can use a cacheKey. !!!!!
-   * Be sure this key is unique to the visitor -
-   * AND the request (or the visitor might recieve the same responses on too similar requests).!!!!!!
-   * For example the sessionID parameter in combination with a request identifier can be used -
-   *  if a request is not unique enough(this can happen when we use certificates in the -
-   *  httpsAgent config to identify an api user and we request data from that same api with different users.
-   * Alternatively you can also add a 'x-cache-key-supplement' header to make a request unique from other requests.
+   * The cacheKey is important if the automatically generated key doesn't suffice. It might be too weak or too strong.
+   *
+   * TOO STRONG:
+   * For example if the body/headers/url changes every request (This can be the case if an IV encrypted parameter is added (erfpacht) to the url.),
+   * we need a less unique key to be able to utilize the cache. In this case we can use a cacheKey_UNSAFE. !!!!!
+   * Be sure this key is UNIQUE TO THE VISITOR (e.g a uuid related to the user or the SessionID) - and TYPE OF REQUEST (e.g fetchDocuments, fetchZaken, fetchZakenOfTypeA, fetchZakenOfTypeB).
+   * For example the sessionID parameter in combination with a request identifier can be used.
+   *
+   * TOO WEAK:
+   * If a request is not unique enough.
+   * This can happen when we use client certificates in the httpsAgent config to identify an api user and we request data from the same api endpoint with different clients.
+   * In this case you can add a { "x-cache-key-supplement": `${apiUserName}` } header to make a request unique from other requests.
+   * Another way is to use the createSessionBasedCacheKey(sessionID, apiUserName) function to create a cacheKey that is unique to the session.
+   * Be sure this key is UNIQUE TO THE VISITOR (e.g a uuid related to the user or the SessionID) - and TYPE OF REQUEST (e.g fetchDocuments, fetchZaken, fetchZakenOfTypeA, fetchZakenOfTypeB).
    */
-  cacheKey?: string;
+  cacheKey_UNSAFE?: string;
   enableCache?: boolean;
   /**
    * If true the token passed via `authProfileAndToken` will be sent via { Authorization: `Bearer ${authProfileAndToken.token}` } with the request.
@@ -72,7 +75,13 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 
 /* eslint-disable no-magic-numbers */
 // This means that every request that depends on the response of another will use the cached version of the response for a maximum of the given value.
-export const DEFAULT_API_CACHE_TTL_MS = 5 * ONE_MINUTE_MS;
+const apiCacheTTLMs = parseInt(
+  getFromEnv('BFF_REQUEST_CACHE_TTL_MS', false)!,
+  10
+);
+export const DEFAULT_REQUEST_CACHE_TTL_MS = isNaN(apiCacheTTLMs)
+  ? 5 * ONE_MINUTE_MS // Default is 5 minutes
+  : apiCacheTTLMs;
 export const DEFAULT_CANCEL_TIMEOUT_MS = 30 * ONE_SECOND_MS; // This means a request will be aborted after 30 seconds without a response.
 /* eslint-enable no-magic-numbers */
 
@@ -81,7 +90,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   method: 'get',
   enableCache: BFF_REQUEST_CACHE_ENABLED,
   get cacheTimeout() {
-    return adHocDependencyRequestCacheTtlMs ?? DEFAULT_API_CACHE_TTL_MS;
+    return adHocDependencyRequestCacheTtlMs ?? DEFAULT_REQUEST_CACHE_TTL_MS;
   },
   postponeFetch: false,
   passthroughOIDCToken: false,
@@ -372,7 +381,7 @@ export const ApiConfig: ApiDataRequestConfig = {
       'Content-Type': 'application/json',
     },
   },
-};
+} as const;
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];

@@ -18,7 +18,10 @@ import { ONE_MINUTE_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+import {
+  getApiConfig,
+  createSessionBasedCacheKey,
+} from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
 async function fetchAfisTokenHeader_() {
@@ -140,6 +143,9 @@ export async function fetchIsKnownInAFIS(
         response,
         authProfileAndToken.profile.sid
       ),
+    cacheKey_UNSAFE: createSessionBasedCacheKey(
+      authProfileAndToken.profile.sid
+    ),
     formatUrl(config) {
       return `${config.url}/businesspartner/${profileIdentifierType}/`;
     },

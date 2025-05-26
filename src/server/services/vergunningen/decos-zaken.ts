@@ -34,7 +34,10 @@ import {
   location,
   MA_DECISION_ZIE_BESLUIT,
 } from '../decos/decos-field-transformers';
-import { getCustomTitleForDecosZaakWithLicensePlates } from '../decos/decos-helpers';
+import {
+  getCustomTitleForDecosZaakWithLicensePlates,
+  getStatusDate,
+} from '../decos/decos-helpers';
 import {
   DecosZaakTransformer,
   DecosFieldNameSource,
@@ -62,18 +65,18 @@ const TVMRVVObject: DecosZaakTransformer<TVMRVVObject> = {
     text13: timeEnd,
     text9: kentekens,
   },
-  async afterTransform(vergunning) {
+  async afterTransform(decosZaak) {
     if (
-      'dateEnd' in vergunning &&
-      'dateStart' in vergunning &&
-      !vergunning.dateEnd
+      'dateEnd' in decosZaak &&
+      'dateStart' in decosZaak &&
+      !decosZaak.dateEnd
     ) {
-      vergunning.dateEnd = vergunning.dateStart;
+      decosZaak.dateEnd = decosZaak.dateStart;
     }
 
-    vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
+    decosZaak.title = getCustomTitleForDecosZaakWithLicensePlates(decosZaak);
 
-    return vergunning;
+    return decosZaak;
   },
 };
 
@@ -313,9 +316,9 @@ const ZwaarVerkeer: DecosZaakTransformer<ZwaarVerkeer> = {
       },
     },
   },
-  async afterTransform(vergunning, decosZaakSource) {
-    vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
-    return vergunning;
+  async afterTransform(decosZaak) {
+    decosZaak.title = getCustomTitleForDecosZaakWithLicensePlates(decosZaak);
+    return decosZaak;
   },
 };
 
@@ -439,9 +442,9 @@ const RVVHeleStad: DecosZaakTransformer<RVVHeleStad> = {
     date7: dateEnd,
     text49: kentekens,
   },
-  async afterTransform(vergunning, decosZaakSource) {
-    vergunning.title = getCustomTitleForDecosZaakWithLicensePlates(vergunning);
-    return vergunning;
+  async afterTransform(decosZaak) {
+    decosZaak.title = getCustomTitleForDecosZaakWithLicensePlates(decosZaak);
+    return decosZaak;
   },
 };
 
@@ -449,7 +452,18 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
   isActive: true,
   caseType: caseTypeVergunningen.RVVSloterweg,
   title: 'RVV ontheffing Sloterweg',
-  fetchWorkflowStatusDatesFor: [],
+  fetchWorkflowStatusDatesFor: [
+    {
+      status: 'Afgehandeld',
+      decosActionCode: 'Afgehandeld',
+      actionCodeFieldName: 'mark',
+    },
+    {
+      status: 'Actief',
+      decosActionCode: 'Actief',
+      actionCodeFieldName: 'mark',
+    },
+  ],
   transformFields: {
     ...SELECT_FIELDS_TRANSFORM_BASE,
     dfunction: transformDecision({
@@ -463,24 +477,24 @@ const RVVSloterweg: DecosZaakTransformer<RVVSloterweg> = {
     text15: { ...kentekens, name: 'vorigeKentekens' },
     title: 'status',
   },
-  async afterTransform(vergunning) {
-    // TODO: find out if Sloterweg zaken are still not being processed on insertion into the database.
-
-    vergunning.processed = true;
-
-    if (!vergunning.decision) {
-      // This decision (verleend) is not set by decos eventhough the actual permit is granted.
-      // This is possibly some hack to have an overview of active permits in the Decos back-office.
-      vergunning.decision = 'Verleend';
+  async afterTransform(decosZaak) {
+    // This decision (verleend) is not set by decos eventhough the actual permit is granted.
+    // This is possibly some hack to have an overview of active permits in the Decos back-office.
+    if (decosZaak.status === 'Actief') {
+      decosZaak.processed = true;
+      decosZaak.decision = 'Verleend';
+      decosZaak.dateDecision =
+        getStatusDate('Afgehandeld', decosZaak) ||
+        getStatusDate('Actief', decosZaak);
     }
 
     // Add zone to title
-    const kentekens = vergunning.kentekens || vergunning.vorigeKentekens;
-    if (vergunning.area && kentekens) {
-      vergunning.title = `RVV ontheffing ${vergunning.area} (${kentekens})`;
+    const kentekens = decosZaak.kentekens || decosZaak.vorigeKentekens;
+    if (decosZaak.area && kentekens) {
+      decosZaak.title = `RVV ontheffing ${decosZaak.area} (${kentekens})`;
     }
 
-    return vergunning;
+    return decosZaak;
   },
 };
 
@@ -522,7 +536,7 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
         !zaak.decision.toLowerCase().includes('Niet Verleend')
       );
     },
-    async afterTransform(vergunning, zaakSource) {
+    async afterTransform(decosZaak, zaakSource) {
       const wvosActiviteiten: Record<WVOSActiviteit, DecosFieldNameSource[]> = {
         'Rijden of een voertuig neerzetten waar dat normaal niet mag': [
           'bol23',
@@ -540,20 +554,19 @@ const WerkEnVervoerOpStraat: DecosZaakTransformer<WerkzaamhedenEnVervoerOpStraat
         Filmen: ['bol16'],
       };
 
-      vergunning.werkzaamheden = Object.entries(wvosActiviteiten)
+      decosZaak.werkzaamheden = Object.entries(wvosActiviteiten)
         .filter(([, sourceAttr]) => {
           return sourceAttr.some((attr) => !!zaakSource.fields[attr]);
         })
         .map(([activiteit]) => activiteit as WVOSActiviteit);
 
-      if (vergunning.werkzaamheden.length > 1 && vergunning.processed) {
-        vergunning.decision = MA_DECISION_ZIE_BESLUIT;
+      if (decosZaak.werkzaamheden.length > 1 && decosZaak.processed) {
+        decosZaak.decision = MA_DECISION_ZIE_BESLUIT;
       }
 
-      vergunning.title =
-        getCustomTitleForDecosZaakWithLicensePlates(vergunning);
+      decosZaak.title = getCustomTitleForDecosZaakWithLicensePlates(decosZaak);
 
-      return vergunning;
+      return decosZaak;
     },
   };
 

@@ -52,3 +52,11 @@ export const id = 'postgres';
 process.on('beforeExit', () => {
   pool?.end();
 });
+
+export default {
+  id,
+  query,
+  queryGET,
+  queryALL,
+  getPool,
+};

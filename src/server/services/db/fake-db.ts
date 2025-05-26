@@ -11,3 +11,10 @@ export async function queryALL(queryString: string, values?: any[]) {
 }
 
 export const id = 'fake-db';
+
+export default {
+  id,
+  query,
+  queryGET,
+  queryALL,
+};

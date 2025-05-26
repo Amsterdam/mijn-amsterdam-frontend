@@ -24,6 +24,7 @@ import {
   useSetDeeplinkEntry,
 } from './hooks/useDeeplink.hook';
 import { useProfileTypeValue } from './hooks/useProfileType';
+import { useScrollToTop } from './hooks/useScrollToTop';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
 import { DashboardRoute } from './pages/Dashboard/Dashboard-routes';
@@ -104,6 +105,8 @@ function AppAuthenticated() {
 function AppLanding() {
   const session = useSessionApi();
   const { isPristine, isAuthenticated } = session;
+
+  useScrollToTop();
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
