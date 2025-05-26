@@ -255,7 +255,7 @@ export async function fetchAanvragenWithRelatedPersons(
     return fetchAndMergeRelatedPersons(
       options.zorgnedApiConfigKey,
       zorgnedAanvragenResponse,
-      persoonsgegevensNAW.content?.persoon.partnernaam ?? null
+      persoonsgegevensNAW.content?.persoon?.partnernaam ?? null
     );
   }
 
@@ -318,7 +318,7 @@ function transformZorgnedPersonResponse(
       dateOfBirthFormatted: zorgnedResponseData.persoon.geboortedatum
         ? defaultDateFormat(zorgnedResponseData.persoon.geboortedatum)
         : null,
-      partnernaam: zorgnedResponseData.persoon.partnernaam ?? null,
+      partnernaam: zorgnedResponseData.persoon?.partnernaam ?? null,
       partnervoorvoegsel:
         zorgnedResponseData.persoon.partnervoorvoegsel ?? null,
     };
@@ -340,7 +340,7 @@ export async function fetchRelatedPersons(
   for (const result of results) {
     const response = getSettledResult(result);
     const person =
-      response.status === 'OK'
+      response.status === 'OK' && response.content
         ? transformZorgnedPersonResponse(response.content)
         : null;
     if (!person) {
@@ -358,16 +358,22 @@ export async function fetchRelatedPersons(
 export async function fetchPersoonsgegevensNAW(
   bsn: BSN,
   zorgnedApiConfigKey: ZorgnedApiConfigKey
-) {
+): Promise<ApiResponse<ZorgnedPersoonsgegevensNAWResponse | null>> {
   return fetchZorgnedByBSN<
     ZorgnedPersoonsgegevensNAWResponse,
-    ZorgnedPersoonsgegevensNAWResponse
+    ZorgnedPersoonsgegevensNAWResponse | null
   >(bsn, {
     zorgnedApiConfigKey,
     path: '/persoonsgegevensNAW',
     validateStatus: (statusCode) =>
       // 404 means there is no record available in the ZORGNED api for the requested BSN
       isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
+    transform: (response: ZorgnedPersoonsgegevensNAWResponse) => {
+      if (response?.persoon) {
+        return response;
+      }
+      return null;
+    },
   });
 }
 
