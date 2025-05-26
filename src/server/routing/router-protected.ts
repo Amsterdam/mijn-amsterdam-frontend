@@ -32,7 +32,7 @@ import {
 } from '../services/decos/decos-route-handlers';
 import {
   fetchDecosDocument,
-  fetchDecosWorkflowDates,
+  fetchDecosWorkflows,
 } from '../services/decos/decos-service';
 import { fetchErfpachtDossiersDetail as fetchErfpachtDossiersDetail } from '../services/erfpacht/erfpacht';
 import {
@@ -169,21 +169,13 @@ if (!IS_PRODUCTION) {
     async (
       req: RequestWithQueryParams<{
         key: string;
-        decosActionCodes?: string;
-        select?: string;
       }>,
       res: Response
     ) => {
       if (!req.query.key) {
         return sendBadRequest(res, 'no zaak.key found in query');
       }
-      res.send(
-        await fetchDecosWorkflowDates(
-          req.query.key,
-          req.query.decosActionCodes?.split(',') ?? [],
-          req.query.select?.split(',')
-        )
-      );
+      res.send(await fetchDecosWorkflows(req.query.key));
     }
   );
 }

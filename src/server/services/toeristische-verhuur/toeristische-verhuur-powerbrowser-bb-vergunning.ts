@@ -683,6 +683,7 @@ export async function fetchBBDocumentsList(
     transformResponse(responseData) {
       return transformPowerbrowserLinksResponse(authProfile.sid, responseData);
     },
+    cacheKey_UNSAFE: zaakId,
   };
 
   return fetchPowerBrowserData(dataRequestConfig);

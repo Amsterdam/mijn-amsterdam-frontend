@@ -160,7 +160,7 @@ export interface ZorgnedDocumentResponseSource {
 }
 
 export interface ZorgnedPersoonsgegevensNAWResponse {
-  persoon: {
+  persoon?: {
     bsn: string;
     clientidentificatie: number | null;
     geboortenaam: string;

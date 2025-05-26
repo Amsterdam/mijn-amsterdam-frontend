@@ -8,7 +8,10 @@ import { pick } from '../../../universal/helpers/utils';
 import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { SourceApiKey } from '../../config/source-api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
+import {
+  createSessionBasedCacheKey,
+  getApiConfig,
+} from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { captureMessage } from '../monitoring';
 import {
@@ -80,7 +83,7 @@ export async function fetchRequestProcess(
   fetchConfig: FetchConfig
 ): Promise<ApiResponse_DEPRECATED<WpiRequestProcess[] | null>> {
   const apiConfig = getApiConfig(fetchConfig.apiConfigName, {
-    cacheKey: fetchConfig.requestCacheKey,
+    cacheKey_UNSAFE: fetchConfig.requestCacheKey,
     transformResponse: [
       (response: ApiSuccessResponse<WpiRequestProcess[]>) => response.content,
     ],
@@ -121,7 +124,10 @@ export async function fetchBijstandsuitkering(
     {
       apiConfigName: 'WPI_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-aanvragen-' + authProfileAndToken.profile.sid,
+      requestCacheKey: createSessionBasedCacheKey(
+        authProfileAndToken.profile.sid,
+        'wpi-aanvragen'
+      ),
     }
   );
 
@@ -142,7 +148,10 @@ export async function fetchEAanvragen(
     {
       apiConfigName: 'WPI_E_AANVRAGEN',
       filterResponse,
-      requestCacheKey: 'fetch-e-aanvragen-' + authProfileAndToken.profile.sid,
+      requestCacheKey: createSessionBasedCacheKey(
+        authProfileAndToken.profile.sid,
+        'e-aanvragen'
+      ),
     }
   );
 

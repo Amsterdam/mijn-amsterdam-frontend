@@ -13,9 +13,9 @@ import {
 } from './search-config';
 import * as remoteConfig from './search-config.json';
 import {
+  fuseInstanceReady,
   generateSearchIndexPageEntries,
   generateSearchIndexPageEntry,
-  requestID,
   useSearchIndex,
 } from './useSearch';
 import { VergunningFrontend } from '../../../server/services/vergunningen/config-and-types';
@@ -162,7 +162,7 @@ describe('Search hooks and helpers', () => {
       'private',
       {
         VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
-      } as AppState,
+      } as unknown as AppState,
       [
         {
           ...API_SEARCH_CONFIG_DEFAULT,
@@ -319,9 +319,9 @@ describe('Search hooks and helpers', () => {
         initializeState={(snapshot) => {
           snapshot.set(appStateAtom, {
             VERGUNNINGEN: { content: vergunningenData, status: 'OK' },
-          } as AppState);
+          } as unknown as AppState);
 
-          snapshot.set(requestID, 1);
+          snapshot.set(fuseInstanceReady, true);
         }}
       >
         {children}
