@@ -171,7 +171,7 @@ const testAccountEntries = getTestAccountEntries();
 XLSX.set_fs(fs);
 // If true then get data extracted out of services from disk.
 // This greatly speeds up this script and is therefore nice for debugging.
-const FROM_DISK: boolean = true;
+const FROM_DISK: boolean = false;
 
 // In which directory do we save the data coming from our services?
 const TARGET_DIRECTORY: string = '.';
