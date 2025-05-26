@@ -46,7 +46,11 @@ export function MyAreaCollapsiblePanelHeading({
           className={styles.CollapsibleButton}
           onClick={onClick}
           aria-expanded={isExpanded(state)}
-          aria-label={isExpanded(state) ? 'Sluit' : 'Open'}
+          aria-label={
+            isExpanded(state)
+              ? `Sluit filters voor ${title}`
+              : `Open filters voor ${title}`
+          }
           icon={isExpanded(state) ? ChevronDownIcon : ChevronRightIcon}
           variant="tertiary"
         />
