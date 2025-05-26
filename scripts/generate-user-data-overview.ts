@@ -522,6 +522,10 @@ function getBRPRows(
 ): Record<string, string | number> {
   const user = paths.reduce(
     (acc, { extractContentValue, label, transform }) => {
+      if (!serviceResults.BRP.content) {
+        acc[label] = 'No content';
+        return acc;
+      }
       let value = null;
       if (extractContentValue) {
         value = extractContentValue(serviceResults.BRP.content);
@@ -797,12 +801,14 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     (serviceResults: ServiceResults) => string | number
   > = {
     Burgerzaken: (serviceResults: ServiceResults) => {
-      return serviceResults.BRP.content?.identiteitsbewijzen.length || '';
+      return serviceResults.BRP.content?.identiteitsbewijzen?.length || '';
     },
     Bezwaren: count('BEZWAREN'),
     Bijstandaanvragen: count('WPI_AANVRAGEN'),
     Jaaropgaves: (serviceResults: ServiceResults) => {
-      return serviceResults.WPI_SPECIFICATIES.content?.jaaropgaven.length || '';
+      return (
+        serviceResults.WPI_SPECIFICATIES.content?.jaaropgaven?.length || ''
+      );
     },
     Uitkeringsspecificaties: (serviceResults: ServiceResults) => {
       return (
@@ -817,13 +823,13 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       if (!serviceResults.HLI.content?.stadspas) {
         return '';
       }
-      return serviceResults.HLI.content.stadspas.length;
+      return serviceResults.HLI.content.stadspas?.length;
     },
     Stadspasregelingen: (serviceResults: ServiceResults) => {
       if (!serviceResults.HLI.content?.regelingen) {
         return '';
       }
-      return serviceResults.HLI.content.regelingen.length;
+      return serviceResults.HLI.content.regelingen?.length;
     },
     'Zorg en ondersteuning': count('WMO'),
     Vergunningen: count('VERGUNNINGEN'),
@@ -832,14 +838,14 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     },
     'ToerVerh LLV Registraties': (serviceResults: ServiceResults) => {
       return (
-        serviceResults.TOERISTISCHE_VERHUUR.content?.lvvRegistraties.length ||
+        serviceResults.TOERISTISCHE_VERHUUR.content?.lvvRegistraties?.length ||
         ''
       );
     },
     'ToerVerh Vakantie Vergunningen': (serviceResults: ServiceResults) => {
       return (
         serviceResults.TOERISTISCHE_VERHUUR.content?.vakantieverhuurVergunningen
-          .length || ''
+          ?.length || ''
       );
     },
     'ToerVerh Bed and Breakfast Vergunningen': (
@@ -855,10 +861,10 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     },
     Horeca: count('HORECA'),
     AVG: (serviceResults: ServiceResults) => {
-      return serviceResults.AVG.content?.verzoeken.length || '';
+      return serviceResults.AVG.content?.verzoeken?.length || '';
     },
     'Bodem (Loodmeting)': (serviceResults: ServiceResults) => {
-      return serviceResults.BODEM.content?.metingen.length || '';
+      return serviceResults.BODEM.content?.metingen?.length || '';
     },
   };
 
