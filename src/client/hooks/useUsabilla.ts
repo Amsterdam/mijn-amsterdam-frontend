@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { usePhoneScreen } from './media.hook';
 import { useScript } from './useScript';
 import { captureException } from '../helpers/monitoring';
+import { getAsyncElementOnPage } from '../helpers/utils';
 
 const MAX_WAIT_FOR_USABILA_LIVE_MS = 5000; // 5 seconds
 const USABILLA_ID_MOBILE = '9fd5da44aa5b';
@@ -81,6 +82,18 @@ export function useUsabilla(profileType?: ProfileType) {
             },
           });
         });
+
+      getAsyncElementOnPage('iframe.usabilla-live-button').then((iframe) => {
+        // The usabilla script uses a relative href to the image.
+        // Because of csp we do not allow the iframe to set the base href to their domain
+        // The absolute url to a local replacement image is injected
+        iframe?.contentDocument
+          ?.querySelector?.('img')
+          ?.setAttribute(
+            'src',
+            '/resources/buttons/feedback_button_gemamsterdam_desktop_right_new.png'
+          );
+      });
     }
   }, [isUsabillaLoaded, isPhoneScreen, profileType]);
 }
