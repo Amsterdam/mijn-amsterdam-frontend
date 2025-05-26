@@ -201,9 +201,7 @@ async function generateOverview() {
       );
     }
 
-    const fileName =
-      TARGET_DIRECTORY +
-      `/Test-Data-ACC-${dateFormat(new Date(), 'yyyy-MM-dd')}.xlsx`;
+    const fileName = `${TARGET_DIRECTORY}/userdata-overview.xlsx`;
     const workbook = XLSX.utils.book_new();
 
     const serviceNames = getAllServiceNames(resultsByUser);
