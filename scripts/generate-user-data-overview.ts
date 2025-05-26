@@ -374,7 +374,7 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
         (notification: MyNotification) => {
           return {
             Username: Username,
-            Thema: themaToTitle[notification.thema],
+            Thema: themaToTitle[notification.themaID],
             Titel: notification.title,
             Datum: defaultDateFormat(notification.datePublished),
           };
