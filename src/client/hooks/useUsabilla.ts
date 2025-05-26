@@ -54,11 +54,15 @@ export function useUsabilla(profileType?: ProfileType) {
         // The absolute url to a local replacement image is injected
         const iframe = document.querySelector('iframe.usabilla-live-button');
         iframe?.contentDocument
+          ?.querySelector?.('base')
+          ?.setAttribute('href', 'https://az-acc.mijn.amsterdam.nl');
+        iframe?.contentDocument
           ?.querySelector?.('img')
           ?.setAttribute(
             'src',
             '/resources/buttons/feedback_button_gemamsterdam_desktop_right_new.png'
           );
+        console.log('Set iframe usabilla image');
       }
       waitForUsabillaLiveInWindow()
         .then(() => {
