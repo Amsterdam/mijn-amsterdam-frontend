@@ -40,6 +40,42 @@ describe('B&B Vergunningen service', () => {
   });
 
   describe('fetchBBVergunningen', () => {
+    test('should filter only bed and breakfast zaken', async () => {
+      remoteApi
+        .post(/\/powerbrowser/)
+        .times(3)
+        .reply((uri) => {
+          if (uri.includes('SearchRequest')) {
+            return [200, { records: [{ id: 'test-person-id' }] }];
+          }
+
+          if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
+            return [
+              200,
+              {
+                records: [
+                  {
+                    id: 'test-zaak-id',
+                    fields: [
+                      {
+                        fieldName: 'FMT_CAPTION',
+                        text: 'Een ander type zaak',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ];
+          }
+
+          return [200, null];
+        });
+
+      const result = await fetchBBVergunningen(authProfile);
+      expect(result.status).toBe('OK');
+      expect(result.content).toHaveLength(0);
+    });
+
     test('should return vergunningen if all fetches are successful', async () => {
       remoteApi
         .post(/\/powerbrowser/)
@@ -50,7 +86,22 @@ describe('B&B Vergunningen service', () => {
           }
 
           if (uri.includes('Link/PERSONEN/GFO_ZAKEN/Table')) {
-            return [200, { records: [{ id: 'test-zaak-id' }] }];
+            return [
+              200,
+              {
+                records: [
+                  {
+                    id: 'test-zaak-id',
+                    fields: [
+                      {
+                        fieldName: 'FMT_CAPTION',
+                        text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ];
           }
 
           return [200, null];
@@ -293,12 +344,38 @@ describe('B&B Vergunningen service', () => {
   describe('fetchZaakIds', () => {
     test('should fetch zaak IDs successfully', async () => {
       remoteApi.post('/powerbrowser/Link/PERSONEN/GFO_ZAKEN/Table').reply(200, {
-        records: [{ id: 'test-zaak-id' }],
+        records: [
+          {
+            id: 'test-zaak-id',
+            fields: [
+              {
+                fieldName: 'FMT_CAPTION',
+                text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
+              },
+            ],
+          },
+          {
+            id: 'test-zaak-id-2',
+            fields: [
+              {
+                fieldName: 'FMT_CAPTION',
+                text: 'Een ander type zaak',
+              },
+            ],
+          },
+        ],
       });
 
       const result = await forTesting.fetchZaakIds({
         personOrMaatschapId: 'test-person-id',
         tableName: 'PERSONEN',
+        filter(zaak) {
+          return zaak.fields.some(
+            (field) =>
+              field.fieldName === 'FMT_CAPTION' &&
+              field.text?.includes('Bed en breakfast')
+          );
+        },
       });
       expect(result.status).toBe('OK');
       expect(result.content).toEqual(['test-zaak-id']);
@@ -312,6 +389,13 @@ describe('B&B Vergunningen service', () => {
       const result = await forTesting.fetchZaakIds({
         personOrMaatschapId: 'test-person-id',
         tableName: 'PERSONEN',
+        filter(zaak) {
+          return zaak.fields.some(
+            (field) =>
+              field.fieldName === 'FMT_CAPTION' &&
+              field.text?.includes('Bed en breakfast')
+          );
+        },
       });
       expect(result.status).toBe('ERROR');
     });
