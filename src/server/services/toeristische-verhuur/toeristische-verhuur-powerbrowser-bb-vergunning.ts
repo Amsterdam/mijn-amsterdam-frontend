@@ -136,7 +136,7 @@ async function fetchZaakIds(
       return (
         responseData.records
           ?.filter(options.filter)
-          ?.map((record) => record.id) ?? []
+          .map((record) => record.id) ?? []
       );
     },
     data: [options.personOrMaatschapId],
@@ -556,8 +556,8 @@ export async function fetchBBVergunningen(
       filter(pbRecord) {
         return pbRecord.fields.some((field) => {
           return (
-            field.fieldName === 'ZAAKPRODUCT_ID' &&
-            field.text === POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING
+            field.fieldName === 'FMT_CAPTION' &&
+            field.text?.includes(POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING)
           );
         });
       },
