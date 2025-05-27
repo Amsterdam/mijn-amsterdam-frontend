@@ -76,7 +76,7 @@ describe('B&B Vergunningen service', () => {
       expect(result.content).toHaveLength(0);
     });
 
-    test.only('should return vergunningen if all fetches are successful', async () => {
+    test('should return vergunningen if all fetches are successful', async () => {
       remoteApi
         .post(/\/powerbrowser/)
         .times(3)
