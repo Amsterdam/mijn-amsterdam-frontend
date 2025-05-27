@@ -58,7 +58,7 @@ describe('B&B Vergunningen service', () => {
                     id: 'test-zaak-id',
                     fields: [
                       {
-                        fieldName: 'ZAAKPRODUCT_ID',
+                        fieldName: 'FMT_CAPTION',
                         text: 'Een ander type zaak',
                       },
                     ],
@@ -94,8 +94,8 @@ describe('B&B Vergunningen service', () => {
                     id: 'test-zaak-id',
                     fields: [
                       {
-                        fieldName: 'ZAAKPRODUCT_ID',
-                        text: 'Bed en breakfast',
+                        fieldName: 'FMT_CAPTION',
+                        text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
                       },
                     ],
                   },
@@ -349,8 +349,8 @@ describe('B&B Vergunningen service', () => {
             id: 'test-zaak-id',
             fields: [
               {
-                fieldName: 'ZAAKPRODUCT_ID',
-                text: 'Bed en breakfast',
+                fieldName: 'FMT_CAPTION',
+                text: 'Z/123/123 aanvraag Bed en breakfast behandelen',
               },
             ],
           },
@@ -358,7 +358,7 @@ describe('B&B Vergunningen service', () => {
             id: 'test-zaak-id-2',
             fields: [
               {
-                fieldName: 'ZAAKPRODUCT_ID',
+                fieldName: 'FMT_CAPTION',
                 text: 'Een ander type zaak',
               },
             ],
@@ -372,8 +372,8 @@ describe('B&B Vergunningen service', () => {
         filter(zaak) {
           return zaak.fields.some(
             (field) =>
-              field.fieldName === 'ZAAKPRODUCT_ID' &&
-              field.text === 'Bed en breakfast'
+              field.fieldName === 'FMT_CAPTION' &&
+              field.text?.includes('Bed en breakfast')
           );
         },
       });
@@ -392,8 +392,8 @@ describe('B&B Vergunningen service', () => {
         filter(zaak) {
           return zaak.fields.some(
             (field) =>
-              field.fieldName === 'ZAAKPRODUCT_ID' &&
-              field.text === 'Bed en breakfast'
+              field.fieldName === 'FMT_CAPTION' &&
+              field.text?.includes('Bed en breakfast')
           );
         },
       });
