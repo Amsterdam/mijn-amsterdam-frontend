@@ -32,6 +32,7 @@ describe('<MyNotification />', () => {
       },
       hideDatePublished: false,
       isAlert: false,
+      themaTitle: '',
     },
     {
       id: 'test-notification2',
@@ -45,6 +46,7 @@ describe('<MyNotification />', () => {
         callback,
         title: 'Custom test link',
       },
+      themaTitle: '',
     },
   ];
 
@@ -85,8 +87,8 @@ describe('<MyNotification />', () => {
         routePath="/"
         component={() => (
           <>
-            <MyNotification smallVariant notification={NOTIFICATIONS[0]} />
-            <MyNotification smallVariant notification={NOTIFICATIONS[1]} />
+            <MyNotification notification={NOTIFICATIONS[0]} />
+            <MyNotification notification={NOTIFICATIONS[1]} />
           </>
         )}
         initializeState={initializeState({} as unknown as AppState)}
@@ -94,31 +96,23 @@ describe('<MyNotification />', () => {
     );
   }
 
-  test('Small variant', async () => {
+  test('MyNotification', async () => {
     const user = userEvent.setup();
 
     render(<ComponentSmall />);
 
-    const title = /Bekijk inhoud van de melding Second Test notification/;
+    const ariaLabel =
+      /Meer informatie over de melding: Second Test notification/;
     const description = /A second text related to this notification/;
 
-    expect(screen.getByTitle(title).getAttribute('aria-expanded')).toBe(
-      'false'
-    );
+    expect(screen.getByLabelText(ariaLabel)).toBeInTheDocument();
+    expect(screen.queryByText(description)).toBeInTheDocument();
 
-    expect(screen.queryByText(description)).not.toBeInTheDocument();
-
-    expect(
-      await screen.queryByText(/Custom test link/)
-    ).not.toBeInTheDocument();
-
-    await user.click(screen.getByTitle(title));
+    expect(screen.queryByText(/Custom test link/)).toBeInTheDocument();
 
     await user.click(screen.getByText(/Custom test link/));
 
     expect(callback).toHaveBeenCalled();
-
-    expect(screen.getByTitle(title).getAttribute('aria-expanded')).toBe('true');
 
     expect(
       screen.getByText(/A second text related to this notification/)

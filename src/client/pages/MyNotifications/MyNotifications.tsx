@@ -90,11 +90,6 @@ export function MyNotificationsPage() {
               totalCount={total}
               pageSize={PAGE_SIZE}
               path={generatePath(MyNotificationsRoute.route)}
-              // onPageClick={(page) => {
-              //   navigate(
-              //     generatePath(MyNotificationsRoute.route, { page: `${page}` })
-              //   );
-              // }}
               currentPage={currentPage}
             />
           )}
