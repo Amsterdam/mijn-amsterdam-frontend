@@ -8,7 +8,7 @@
 }
 
 :global(.is-typeAheadActive) {
-  @include select(MainHeaderHero_MainHeaderHero) {
+  @include select(Dashboard_Header) {
     display: none;
   }
   @include select(App_App) {

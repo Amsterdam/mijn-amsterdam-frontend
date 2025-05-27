@@ -93,7 +93,12 @@ export function useMainHeaderControl() {
 
   // Open the search when the 'z' key is pressed
   useKeyUp((event) => {
-    if (event.key === 'z' && !isSearchActive && isDisplayLiveSearch) {
+    if (
+      event.key === 'z' &&
+      !isSearchActive &&
+      isDisplayLiveSearch &&
+      !(event.target instanceof HTMLInputElement)
+    ) {
       setSearchActive(true);
     }
   });
