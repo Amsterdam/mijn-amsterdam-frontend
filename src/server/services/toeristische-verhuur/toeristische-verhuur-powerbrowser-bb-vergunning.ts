@@ -555,7 +555,6 @@ export async function fetchBBVergunningen(
       tableName: options.tableName,
       filter(pbRecord) {
         return pbRecord.fields.some((field) => {
-          console.log(field);
           return (
             field.fieldName === 'ZAAKPRODUCT_ID' &&
             field.text === POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING
