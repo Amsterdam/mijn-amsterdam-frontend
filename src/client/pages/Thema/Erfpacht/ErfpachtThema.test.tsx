@@ -35,7 +35,25 @@ describe('<Erfpacht />', () => {
         status: 'OK',
         content: null,
       },
-    } as AppState;
+      AFIS: {
+        status: 'OK',
+        content: {
+          isKnown: true,
+          businessPartnerIdEncrypted: 'bpIDEncrypted-555',
+          facturen: {
+            open: {
+              count: 0,
+              facturen: [],
+            },
+            afgehandeld: {
+              count: 0,
+              facturen: [],
+            },
+            overgedragen: { count: 0, facturen: [] },
+          },
+        },
+      },
+    } as unknown as AppState;
 
     const screen = render(
       <Component
@@ -60,7 +78,25 @@ describe('<Erfpacht />', () => {
         status: 'ERROR',
         content: null,
       },
-    } as AppState;
+      AFIS: {
+        status: 'OK',
+        content: {
+          isKnown: true,
+          businessPartnerIdEncrypted: 'bpIDEncrypted-555',
+          facturen: {
+            open: {
+              count: 0,
+              facturen: [],
+            },
+            afgehandeld: {
+              count: 0,
+              facturen: [],
+            },
+            overgedragen: { count: 0, facturen: [] },
+          },
+        },
+      },
+    } as unknown as AppState;
 
     const screen = render(
       <Component
@@ -92,7 +128,50 @@ describe('<Erfpacht />', () => {
         status: 'OK',
         content: transformDossierResponse(ERFPACHT_DOSSIERS, '123-abc'),
       },
-    } as AppState;
+      AFIS: {
+        status: 'OK',
+        content: {
+          isKnown: true,
+          businessPartnerIdEncrypted: 'bpIDEncrypted-555',
+          facturen: {
+            open: {
+              count: 1,
+              facturen: [
+                {
+                  id: '1',
+                  afzender: 'GO Erfpacht en Uitgi',
+                  datePublished: '2023-01-15',
+                  datePublishedFormatted: '15 januari 2023',
+                  paymentDueDate: '2023-02-15',
+                  paymentDueDateFormatted: '15 februari 2023',
+                  debtClearingDate: null,
+                  debtClearingDateFormatted: null,
+                  amountOriginal: '1000.00',
+                  amountOriginalFormatted: '€ 1.000,00',
+                  factuurNummer: 'F001',
+                  status: 'openstaand',
+                  statusDescription: 'openstaand',
+                  paylink: 'https://payment.example.com/F001',
+                  documentDownloadLink: 'https://download.example.com/F001',
+                  factuurDocumentId: '1',
+                  link: {
+                    to: routeConfig.themaPage.path,
+                    title: 'Bekijk uw openstaande facturen',
+                  },
+                  amountPayed: '',
+                  amountPayedFormatted: '',
+                },
+              ],
+            },
+            afgehandeld: {
+              count: 0,
+              facturen: [],
+            },
+            overgedragen: { count: 0, facturen: [] },
+          },
+        },
+      },
+    } as unknown as AppState;
 
     const screen = render(
       <Component
