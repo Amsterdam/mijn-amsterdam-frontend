@@ -14,6 +14,7 @@ export type PowerBrowserStatusResponse = PowerBrowserStatus[];
 export type FetchZaakIdsOptions = {
   personOrMaatschapId: string;
   tableName: 'PERSONEN' | 'MAATSCHAP';
+  filter: (zaak: PBRecord<'GFO_ZAKEN'>) => boolean;
 };
 
 export type FetchPersoonOrMaatschapIdByUidOptions = {

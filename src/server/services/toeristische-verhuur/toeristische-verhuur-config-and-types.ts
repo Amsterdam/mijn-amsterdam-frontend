@@ -111,3 +111,5 @@ export const decosZaakTransformersByCaseType = {
   [VakantieverhuurVergunningaanvraag.caseType]:
     VakantieverhuurVergunningaanvraag,
 };
+
+export const POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING = 'Bed en breakfast';

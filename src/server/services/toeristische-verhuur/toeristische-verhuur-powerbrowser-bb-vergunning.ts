@@ -2,6 +2,7 @@ import { isBefore } from 'date-fns/isBefore';
 import memoizee from 'memoizee';
 import { generatePath } from 'react-router';
 
+import { POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING } from './toeristische-verhuur-config-and-types';
 import {
   BBVergunningFrontend,
   FetchPersoonOrMaatschapIdByUidOptions,
@@ -132,7 +133,11 @@ async function fetchZaakIds(
       return `${url}/Link/${options.tableName}/GFO_ZAKEN/Table`;
     },
     transformResponse(responseData: SearchRequestResponse<'GFO_ZAKEN'>) {
-      return responseData.records?.map((record) => record.id) ?? [];
+      return (
+        responseData.records
+          ?.filter(options.filter)
+          ?.map((record) => record.id) ?? []
+      );
     },
     data: [options.personOrMaatschapId],
   };
@@ -548,6 +553,14 @@ export async function fetchBBVergunningen(
     const zakenIdsResponse = await fetchZaakIds({
       personOrMaatschapId: persoonIdResponse.content,
       tableName: options.tableName,
+      filter(pbRecord) {
+        return pbRecord.fields.some((field) => {
+          return (
+            field.fieldName === 'ZAAKPRODUCT_ID' &&
+            field.text === POWERBROWSER_ZAAK_PRODUCT_ID_BB_VERGUNNING
+          );
+        });
+      },
     });
 
     if (zakenIdsResponse.status !== 'OK') {
