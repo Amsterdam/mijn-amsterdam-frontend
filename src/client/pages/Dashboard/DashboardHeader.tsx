@@ -23,6 +23,7 @@ const STADSDELEN = [
 
 function useStadsdeelFoto() {
   const { MY_LOCATION } = useAppStateGetter();
+  const isPhoneScreen = usePhoneScreen();
   const [primaryLocation = null] = MY_LOCATION.content ?? [];
   const profileType = useProfileTypeValue();
 
@@ -33,55 +34,48 @@ function useStadsdeelFoto() {
     stadsdeel = `buiten-amsterdam-${profileType}`;
   }
 
+  const size = isPhoneScreen ? 'small' : 'large';
+
   return {
-    small: `/img/stadsdeel-foto/small/${stadsdeel}.jpg`,
-    large: `/img/stadsdeel-foto/large/${stadsdeel}.jpg`,
-    defaultImg: `/img/stadsdeel-foto/buiten-amsterdam-default-${profileType}.jpg`,
+    srcDefault: `/img/stadsdeel-foto/${size}/buiten-amsterdam-${profileType}.jpg`,
+    src: stadsdeel ? `/img/stadsdeel-foto/${size}/${stadsdeel}.jpg` : null,
   };
 }
 
 export function DashboardHeader() {
-  const { MY_LOCATION } = useAppStateGetter();
-  const { large, small, defaultImg } = useStadsdeelFoto();
+  const { src, srcDefault } = useStadsdeelFoto();
   const [isLoading, setIsLoading] = useState(true);
-  const isPhoneScreen = usePhoneScreen();
   const imgRef = useRef<HTMLImageElement | null>(null);
-  const hasLocation = !!MY_LOCATION?.content?.length;
 
   useEffect(() => {
-    if (!hasLocation) {
+    if (!src) {
       return;
     }
     if (!imgRef.current) {
       const img = new Image();
-      console.log('Loading image:', isPhoneScreen ? small : large);
       imgRef.current = img;
-      img.src = isPhoneScreen ? small : large;
+      img.src = src;
       img.onload = () => setIsLoading(false);
       img.onerror = () => setIsLoading(false);
-    } else {
-      if (imgRef.current.src !== (isPhoneScreen ? small : large)) {
-        imgRef.current.src = isPhoneScreen ? small : large;
-      }
-
+    } else if (imgRef.current.src !== src) {
+      imgRef.current.src = src;
       setIsLoading(true);
-      console.log(imgRef.current);
     }
-  }, [hasLocation, isPhoneScreen, imgRef.current, small, large]);
+  }, [src]);
 
   return (
     <header className={styles.DashboardHeader}>
       <div className={styles.DashboardHeaderInner}>
-        {!isLoading && (
+        {!!imgRef.current?.src && !isLoading && (
           <img
             className={classNames(styles.DashboardHeaderImg, styles.fadeIn)}
-            src={imgRef.current?.src}
+            src={imgRef.current.src}
             alt=""
           />
         )}
         <img
           className={classNames(styles.DashboardHeaderImg, styles.default)}
-          src={defaultImg}
+          src={srcDefault}
           alt=""
         />
         <div className={styles.DashboardHeaderSearch}>
