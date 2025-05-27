@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import styles from './DashboardHeader.module.scss';
+import { isLoading } from '../../../universal/helpers/api';
 import { Search } from '../../components/Search/Search';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const STADSDELEN = [
@@ -36,14 +37,14 @@ function useStadsdeelFoto() {
 
   const size = isPhoneScreen ? 'small' : 'large';
 
-  return {
-    srcDefault: `/img/stadsdeel-foto/${size}/buiten-amsterdam-${profileType}.jpg`,
-    src: stadsdeel ? `/img/stadsdeel-foto/${size}/${stadsdeel}.jpg` : null,
-  };
+  return !isLoading(MY_LOCATION)
+    ? `/img/stadsdeel-foto/${size}/${stadsdeel}.jpg`
+    : null;
 }
 
 export function DashboardHeader() {
-  const { src, srcDefault } = useStadsdeelFoto();
+  const src = useStadsdeelFoto();
+  const isAppStateReady = useAppStateReady();
   const [isLoading, setIsLoading] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
@@ -56,28 +57,27 @@ export function DashboardHeader() {
       imgRef.current = img;
       img.src = src;
       img.onload = () => setIsLoading(false);
-      img.onerror = () => setIsLoading(false);
     } else if (imgRef.current.src !== src) {
       imgRef.current.src = src;
       setIsLoading(true);
     }
   }, [src]);
 
+  const [hasFade] = useState(!isAppStateReady);
+
   return (
     <header className={styles.DashboardHeader}>
       <div className={styles.DashboardHeaderInner}>
         {!!imgRef.current?.src && !isLoading && (
           <img
-            className={classNames(styles.DashboardHeaderImg, styles.fadeIn)}
+            className={classNames(
+              styles.DashboardHeaderImg,
+              hasFade && styles.fadeIn
+            )}
             src={imgRef.current.src}
             alt=""
           />
         )}
-        <img
-          className={classNames(styles.DashboardHeaderImg, styles.default)}
-          src={srcDefault}
-          alt=""
-        />
         <div className={styles.DashboardHeaderSearch}>
           <Search />
         </div>
