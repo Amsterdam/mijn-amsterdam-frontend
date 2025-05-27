@@ -80,9 +80,9 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
+                  aria-label="Meer informatie over de melding: Notification"
                   class="ams-link _MaLink_aa758a"
                   href="/item-1"
-                  title="Meer informatie over de melding: Notification"
                 >
                   Linkje!
                 </a>
@@ -131,9 +131,9 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
+                  aria-label="Meer informatie over de melding: Notification"
                   class="ams-link _MaLink_aa758a"
                   href="/item-2"
-                  title="Meer informatie over de melding: Notification"
                 >
                   Linkje!
                 </a>
@@ -182,9 +182,9 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
+                  aria-label="Meer informatie over de melding: Notification"
                   class="ams-link _MaLink_aa758a"
                   href="/item-3"
-                  title="Meer informatie over de melding: Notification"
                 >
                   Linkje!
                 </a>
@@ -287,9 +287,9 @@ exports[`<Dashboard /> > Matches the Full Page snapshot 1`] = `
                 class="ams-paragraph"
               >
                 <a
+                  aria-label="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                   class="ams-link _MaLink_aa758a"
                   href="#"
-                  title="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
                 >
                   Laat ons weten wat u ervan vindt
                 </a>

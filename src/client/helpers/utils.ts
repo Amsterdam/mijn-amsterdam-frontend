@@ -16,7 +16,7 @@ export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
  */
 export function isInteralUrl(url: string) {
   return (
-    url.match(/mijn\.(acc\.)?amsterdam.nl/) !== null ||
+    url.includes('mijn.amsterdam.nl') ||
     url.startsWith('/') ||
     !url.startsWith('http')
   );
