@@ -1,6 +1,6 @@
-import express, { Request, RequestHandler, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import { ConfigParams, requiresAuth } from 'express-openid-connect';
-import { NextFunction } from 'express-serve-static-core';
+import { NextFunction } from 'express';
 
 import { nocache, verifyAuthenticated } from './route-handlers';
 import { sendUnauthorized } from './route-helpers';
@@ -13,6 +13,7 @@ import {
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
 } from '../auth/auth-config';
+import { createBFFRouter } from './route-helpers';
 import {
   createLogoutHandler,
   getAuth,
@@ -28,9 +29,7 @@ import { AuthenticatedRequest } from '../auth/auth-types';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
 
-export const oidcRouter = express.Router();
-
-oidcRouter.BFF_ID = 'router-oidc';
+export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
 
 // Prevent caching the responses from this oidcRouter.
 oidcRouter.use(nocache);

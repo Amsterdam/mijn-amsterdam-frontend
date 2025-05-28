@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import basicAuth from 'express-basic-auth';
 
 import { BffEndpoints } from './bff-routes';
@@ -23,7 +23,7 @@ if (process.env.BFF_LOGIN_COUNT_ADMIN_PW) {
 
   adminRouter.get(
     BffEndpoints.CACHE_OVERVIEW,
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (_req: Request, res: Response) => {
       const files = await cacheOverview();
       return res.json({
         sourceApiRequestCacheTimeoutDefault:
