@@ -10,6 +10,7 @@ import {
 import {
   SUBSIDIES_ROUTE_DEFAULT,
   themaId,
+  themaTitle,
 } from '../../../client/pages/Thema/Subsidies/Subsidies-thema-config';
 import { apiSuccessResult } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types/App.types';
@@ -32,7 +33,7 @@ async function getJWT() {
   return jwt;
 }
 
-function addAuthMethodToNotificationLinks(
+function transformSubsidieNotifications(
   notifications: MyNotification[],
   authMethod: AuthProfile['authMethod']
 ): MyNotification[] {
@@ -47,6 +48,7 @@ function addAuthMethodToNotificationLinks(
     const url = `${urlTo.origin}${urlTo.pathname}?${params.toString()}`;
 
     return Object.assign(notification, {
+      themaTitle,
       link: {
         ...notification.link,
         to: new URL(url).toString(),
@@ -104,7 +106,7 @@ export async function fetchSubsidieNotifications(
   if (response.status === 'OK' && response.content?.notifications) {
     return apiSuccessResult({
       ...response.content,
-      notifications: addAuthMethodToNotificationLinks(
+      notifications: transformSubsidieNotifications(
         response.content.notifications,
         authProfileAndToken.profile.authMethod
       ),
