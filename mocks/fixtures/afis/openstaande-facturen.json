@@ -57,6 +57,24 @@
         "content": {
           "@type": "application/xml",
           "properties": {
+            "DunningLevel": 0,
+            "DunningBlockingReason": "D",
+            "ProfitCenterName": "GO Erfpacht en Uitgi",
+            "SEPAMandate": "",
+            "PostingDate": "2023-12-12T00:00:00",
+            "NetDueDate": "2023-12-12T00:00:00",
+            "NetPaymentAmount": "0.01",
+            "AmountInBalanceTransacCrcy": "-0.01",
+            "DocumentReferenceID": "5658555",
+            "AccountingDocument": "5658555",
+            "Paylink": "http://localhost:3100/mocks-api/afis/paylink"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
             "DunningLevel": 5,
             "DunningBlockingReason": "Z",
             "ProfitCenterName": "Nana Co",
