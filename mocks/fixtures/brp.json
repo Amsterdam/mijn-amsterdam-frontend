@@ -46,7 +46,7 @@
       "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
       "omschrijvingAdellijkeTitel": "Hertogin",
       "bsn": "129095205",
-      "geboortedatum": "1992-09-22",
+      "geboortedatum": "1976-01-01",
       "indicatieGeboortedatum": "J",
       "geboortelandnaam": "Nederland",
       "geboorteplaatsnaam": "Lochem",
@@ -183,7 +183,7 @@
     "kinderen": [
       {
         "bsn": "123456780",
-        "geboortedatum": "2016-07-08",
+        "geboortedatum": "2006-05-29",
         "geslachtsaanduiding": "M",
         "geslachtsnaam": "Kosterijk",
         "overlijdensdatum": null,

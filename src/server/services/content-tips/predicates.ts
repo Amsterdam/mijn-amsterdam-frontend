@@ -151,11 +151,25 @@ export const hasKidsBetweenAges = (
       kind.geboortedatum &&
       !kind.overlijdensdatum &&
       differenceInYears(today, new Date(kind.geboortedatum)) >= ageFrom &&
-      differenceInYears(today, new Date(kind.geboortedatum)) <= ageTo
+      differenceInYears(today, new Date(kind.geboortedatum)) < ageTo
   );
 };
 
-export const hasKidsBetweenAges2And18: TipsPredicateFN = (
+export const hasKidsBetweenAges17And18Included18: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  const AGE_FROM = 17;
+  const AGE_TO = 19;
+  return hasKidsBetweenAges(
+    appState.BRP?.content?.kinderen,
+    AGE_FROM,
+    AGE_TO,
+    today
+  );
+};
+
+export const hasKidsBetweenAges2And17Included17: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
@@ -169,12 +183,12 @@ export const hasKidsBetweenAges2And18: TipsPredicateFN = (
   );
 };
 
-export const hasKidsBetweenAges4And11: TipsPredicateFN = (
+export const hasKidsBetweenAges4And11Included11: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
   const AGE_FROM = 4;
-  const AGE_TO = 11;
+  const AGE_TO = 12;
   return hasKidsBetweenAges(
     appState.BRP?.content?.kinderen,
     AGE_FROM,
@@ -185,7 +199,7 @@ export const hasKidsBetweenAges4And11: TipsPredicateFN = (
 
 export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
   const yearFrom = 2016;
-  const yearTo = 2024;
+  const yearTo = 2024; // moet hier ook niet even naar gekeken worden?
   const oldestKid = appState.BRP?.content?.kinderen?.sort((a, b) =>
     a.geboortedatum && b.geboortedatum
       ? new Date(a.geboortedatum).getTime() -
@@ -208,7 +222,7 @@ export const hasDutchNationality: TipsPredicateFN = (appState) => {
   );
 };
 
-export const isBetween17and18: TipsPredicateFN = (
+export const isBetween17and18Included18: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
@@ -219,14 +233,14 @@ export const isBetween17and18: TipsPredicateFN = (
   }
 
   const ageFrom = 17;
-  const ageTo = 18;
+  const ageTo = 19;
   return (
     differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
-    differenceInYears(today, new Date(geboortedatum)) <= ageTo
+    differenceInYears(today, new Date(geboortedatum)) < ageTo
   );
 };
 
-export const isBetween4and12: TipsPredicateFN = (
+export const isBetween4and12Included12: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
@@ -237,10 +251,10 @@ export const isBetween4and12: TipsPredicateFN = (
   }
 
   const ageFrom = 4;
-  const ageTo = 12;
+  const ageTo = 13;
   return (
     differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
-    differenceInYears(today, new Date(geboortedatum)) <= ageTo
+    differenceInYears(today, new Date(geboortedatum)) < ageTo
   );
 };
 
