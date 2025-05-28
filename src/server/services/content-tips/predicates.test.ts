@@ -5,7 +5,7 @@ import {
   hasBnBVergunning,
   hasBudget,
   hasDutchNationality,
-  hasKidsBetweenAges2And18,
+  hasKidsBetweenAges2And17Included17,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -14,7 +14,7 @@ import {
   hasValidIdForVoting,
   hasValidRecentStadspasRequest,
   is18OrOlder,
-  isBetween17and18,
+  isBetween17and18Included18,
   isLivingInAmsterdamLessThanNumberOfDays,
   isMarriedOrLivingTogether,
   isReceivingSubsidy,
@@ -227,7 +227,9 @@ describe('predicates', () => {
         'should return %s for kids with birthdays at %s and %s',
         (expected, birthdate1, birthdate2) => {
           expect(
-            hasKidsBetweenAges2And18(getMockAppState(birthdate1, birthdate2))
+            hasKidsBetweenAges2And17Included17(
+              getMockAppState(birthdate1, birthdate2)
+            )
           ).toBe(expected);
         }
       );
@@ -320,7 +322,9 @@ describe('predicates', () => {
         [false, '2005-07-26'],
         [false, '2000-03-29'],
       ])('should return %s for birthday %s', (expected, birthdate) => {
-        expect(isBetween17and18(getMockAppState(birthdate))).toBe(expected);
+        expect(isBetween17and18Included18(getMockAppState(birthdate))).toBe(
+          expected
+        );
       });
     });
   });
