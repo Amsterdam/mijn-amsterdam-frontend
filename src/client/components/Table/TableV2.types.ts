@@ -13,6 +13,10 @@ export type DisplayProps<T> =
   | DisplayPropsBase<T>
   | {
       props: DisplayPropsBase<T>;
+      // colwidths can be used to set the width of each column in the table.
+      // the array always has the size of the number of keys in the props object. e.g. if props has 4 keys, colWidths will have 4 values.
+      // if a colWidth value is '0', the column will not be displayed and prop at entries(props) will be discarded. e.g.
+      // props={ foo: 'bar', baz: 'world' } colWidths={{ large: ['50%', '50%'], small: ['100%', '0'] }} will only display the foo column on small screens and both columns on large screens.
       colWidths?: TableV2ColWidths;
     };
 
