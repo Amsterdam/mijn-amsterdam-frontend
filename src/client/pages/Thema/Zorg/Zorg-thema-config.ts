@@ -50,7 +50,7 @@ export const linkListItems: LinkProps[] = [
 
 const displayProps: DisplayProps<WMOVoorzieningFrontend> = {
   props: {
-    detailLinkComponent: 'Voorziening',
+    detailLinkComponent: 'Naam',
     displayStatus: 'Status',
     statusDateFormatted: 'Datum',
   },
