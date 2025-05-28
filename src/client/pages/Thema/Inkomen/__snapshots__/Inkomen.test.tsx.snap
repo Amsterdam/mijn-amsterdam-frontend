@@ -142,11 +142,13 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
               />
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Datum aanvraag
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Status
               </th>
@@ -223,11 +225,13 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
               />
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Datum aanvraag
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Datum besluit
               </th>
@@ -308,18 +312,21 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
             >
               <th
                 class="ams-table__header-cell"
-              >
-                Regeling
-              </th>
-              <th
-                class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Datum
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
-                Documenten
+                Regeling
+              </th>
+              <th
+                class="ams-table__header-cell"
+                style="width: 25%;"
+              >
+                Document
               </th>
             </tr>
           </thead>
@@ -331,12 +338,12 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
             >
               <td
                 class="ams-table__cell"
-              />
-              <td
-                class="ams-table__cell"
               >
                 14 Mei 2020
               </td>
+              <td
+                class="ams-table__cell"
+              />
               <td
                 class="ams-table__cell"
               >
@@ -396,13 +403,15 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 75%;"
               >
                 Datum
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
-                Documenten
+                Document
               </th>
             </tr>
           </thead>
@@ -647,18 +656,21 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
             >
               <th
                 class="ams-table__header-cell"
-              >
-                Regeling
-              </th>
-              <th
-                class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Datum
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
-                Documenten
+                Regeling
+              </th>
+              <th
+                class="ams-table__header-cell"
+                style="width: 25%;"
+              >
+                Document
               </th>
             </tr>
           </thead>
@@ -670,12 +682,12 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
             >
               <td
                 class="ams-table__cell"
-              />
-              <td
-                class="ams-table__cell"
               >
                 14 Mei 2020
               </td>
+              <td
+                class="ams-table__cell"
+              />
               <td
                 class="ams-table__cell"
               >
@@ -735,13 +747,15 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 75%;"
               >
                 Datum
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
-                Documenten
+                Document
               </th>
             </tr>
           </thead>

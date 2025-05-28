@@ -30,7 +30,7 @@ const displayPropsHuidigeVergunningen: VergunningFrontendExpireableDisplayProps 
   {
     props: {
       detailLinkComponent: 'Zaaknummer',
-      title: 'Omschrijving',
+      title: 'Soort vergunning',
       dateStartFormatted: 'Startdatum',
       dateEndFormatted: 'Einddatum',
     },
@@ -43,7 +43,7 @@ const displayPropsHuidigeVergunningen: VergunningFrontendExpireableDisplayProps 
 const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
   props: {
     detailLinkComponent: 'Zaaknummer',
-    title: 'Omschrijving',
+    title: 'Soort vergunning',
     displayStatus: 'Status',
     dateRequestFormatted: 'Aangevraagd op',
   },
@@ -56,7 +56,7 @@ const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
 const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
   props: {
     detailLinkComponent: 'Zaaknummer',
-    title: 'Omschrijving',
+    title: 'Soort vergunning',
     displayStatus: 'Status',
   },
   colWidths: {
