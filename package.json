@@ -8,16 +8,6 @@
     "pnpm": ">=10.11.0",
     "node": ">=22.4"
   },
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "onFail": "error"
-    },
-    "packageManager": {
-      "name": "pnpm",
-      "onFail": "error"
-    }
-  },
   "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
