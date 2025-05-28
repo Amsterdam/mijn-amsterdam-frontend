@@ -37,7 +37,7 @@ COPY vendor /build-space/vendor
 COPY mocks/fixtures /build-space/mocks/fixtures
 
 # Install the dependencies
-RUN npm ci --prefer-offline --no-audit --progress=false
+RUN pnpm ci --prefer-offline --no-audit --progress=false
 
 # Typescript configs
 COPY tsconfig.json /build-space/
@@ -86,12 +86,12 @@ ENV REACT_APP_MONITORING_CONNECTION_STRING=$REACT_APP_MONITORING_CONNECTION_STRI
 COPY public /build-space/public
 
 # Build FE
-RUN npm run build
+RUN pnpm build
 
 # Build BFF
 FROM build-deps AS build-app-bff
 
-RUN npm run bff-api:build
+RUN pnpm bff-api:build
 
 
 ########################################################################################################################
