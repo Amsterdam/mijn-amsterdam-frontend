@@ -8,17 +8,27 @@
     "pnpm": ">=10.11.0",
     "node": ">=22.4"
   },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "onFail": "error"
+    }
+  },
   "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "source-map-explorer 'build/assets/*.js'",
     "mock-server": "mocks-server",
     "mock-server:serve": "mocks-server --no-plugins.inquirerCli.enabled",
-    "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\" \"npm:mock-server:serve\"",
+    "serve-dev": "concurrently \"pnpm:bff-api:watch\" \"pnpm:start\" \"pnpm:mock-server:serve\"",
     "start": "cross-env MA_APP_MODE=development vite",
     "build": "cross-env MA_APP_MODE=production vite build",
     "serve": "vite preview",
     "test": "cross-env MA_APP_MODE=unittest vitest src/client",
-    "bff-api:watch": "nodemon -e ts -w ./src/server -w ./src/universal -w ./.env.local -x npm run bff-api:serve-dev",
+    "bff-api:watch": "nodemon -e ts -w ./src/server -w ./src/universal -w ./.env.local -x pnpm run bff-api:serve-dev",
     "bff-api:test": "cross-env MA_APP_MODE=unittest vitest --environment=node src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "cross-env NODE_OPTS=--inspect ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
@@ -121,7 +131,6 @@
     "mockdate": "^3.0.5",
     "nock": "^13.5.6",
     "node-jose": "^2.2.0",
-    "npm": "^10.9.2",
     "outdent": "^0.8.0",
     "pg": "^8.16.0",
     "pino": "^9.7.0",
