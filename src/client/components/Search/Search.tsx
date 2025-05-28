@@ -275,6 +275,8 @@ export function Search({
         >
           <input
             ref={searchBarRef}
+            name="searchinput"
+            type="text"
             className={styles.Input}
             autoComplete="none"
             autoCorrect="none"
