@@ -71,18 +71,8 @@ export function useMediaLayout(query: MediaQueryObject): boolean {
   return matches;
 }
 
-export function useDesktopScreen(): boolean {
-  return useMediaLayout({ minWidth: Breakpoints.tablet + 1 });
-}
-
-export function useTabletScreen(): boolean {
-  return useMediaLayout({
-    maxWidth: Breakpoints.tablet,
-  });
-}
-
-export function usePhoneScreen(): boolean {
-  return useMediaLayout({ maxWidth: Breakpoints.phone });
+export function useSmallScreen(): boolean {
+  return useMediaLayout({ maxWidth: Breakpoints.small });
 }
 
 export function useLandScape(): boolean {

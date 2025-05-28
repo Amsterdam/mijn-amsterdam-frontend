@@ -5,10 +5,7 @@ import type { VarenZakenFrontend } from '../../../../server/services/varen/confi
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA = 5;
@@ -61,9 +58,7 @@ type TableConfig<T> = {
 
 type TableConfigByKind<T> = Record<ListPageParamKind, TableConfig<T>>;
 
-export const tableConfig: TableConfigByKind<
-  WithDetailLinkComponent<VarenZakenFrontend>
-> = {
+export const tableConfig: TableConfigByKind<VarenZakenFrontend> = {
   [listPageParamKind.inProgress]: {
     title: 'Lopende aanvragen',
     filter: (vergunning: VarenZakenFrontend) => !vergunning.processed,
@@ -72,10 +67,16 @@ export const tableConfig: TableConfigByKind<
       page: null,
     }),
     displayProps: {
-      detailLinkComponent: 'Naam vaartuig',
-      title: 'Omschrijving',
-      dateRequestFormatted: 'Aangevraagd',
-      displayStatus: 'Status',
+      props: {
+        detailLinkComponent: 'Naam vaartuig',
+        title: 'Omschrijving',
+        dateRequestFormatted: 'Aangevraagd',
+        displayStatus: 'Status',
+      },
+      colWidths: {
+        large: ['25%', '35%', '20%', '20%'],
+        small: ['50%', '50%', '0', '0'],
+      },
     },
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     ...tableConfigSort,
@@ -88,10 +89,16 @@ export const tableConfig: TableConfigByKind<
       page: null,
     }),
     displayProps: {
-      detailLinkComponent: 'Naam vaartuig',
-      title: 'Omschrijving',
-      dateDecisionFormatted: 'Datum besluit',
-      decision: 'Resultaat',
+      props: {
+        detailLinkComponent: 'Naam vaartuig',
+        title: 'Omschrijving',
+        dateDecisionFormatted: 'Datum besluit',
+        decision: 'Resultaat',
+      },
+      colWidths: {
+        large: ['25%', '35%', '20%', '20%'],
+        small: ['50%', '50%', '0', '0'],
+      },
     },
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
     ...tableConfigSort,

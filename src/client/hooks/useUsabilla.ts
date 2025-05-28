@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { usePhoneScreen } from './media.hook';
+import { useSmallScreen } from './media.hook';
 import { useScript } from './useScript';
 import { IS_AP } from '../../universal/config/env';
 import { captureException } from '../helpers/monitoring';
@@ -32,7 +32,7 @@ export function waitForUsabillaLiveInWindow() {
 }
 
 export function useUsabilla(profileType?: ProfileType) {
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
   const [isUsabillaLoaded] = useScript({
     src: '/js/usabilla-2021-10-05.js',
     defer: false,

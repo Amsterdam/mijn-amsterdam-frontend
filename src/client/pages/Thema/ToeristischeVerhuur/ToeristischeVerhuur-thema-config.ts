@@ -6,10 +6,7 @@ import {
   ToeristischeVerhuurVergunning,
 } from '../../../../server/services/toeristische-verhuur/toeristische-verhuur-config-and-types';
 import { entries } from '../../../../universal/helpers/utils';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 import {
   ListPageParamKind as ListPageParamKindVergunningen,
@@ -42,19 +39,27 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<
-  WithDetailLinkComponent<ToeristischeVerhuurVergunning>
-> = {
-  detailLinkComponent: 'Zaaknummer',
-  title: 'Soort vergunning',
-  dateStartFormatted: 'Vanaf',
-  dateEndFormatted: 'Tot',
-};
+const DISPLAY_PROPS_HUIDIGE_VERGUNNINGEN: DisplayProps<ToeristischeVerhuurVergunning> =
+  {
+    props: {
+      detailLinkComponent: 'Zaaknummer',
+      title: 'Soort vergunning',
+      dateStartFormatted: 'Vanaf',
+      dateEndFormatted: 'Tot',
+    },
+    colWidths: {
+      large: ['30%', '40%', '15%', '15%'],
+      small: ['100%', '0', '0', '0'],
+    },
+    displayStatus: 'Status',
+  };
 
 const DISPLAY_PROPS_LVV_REGISTRATIES: DisplayProps<LVVRegistratie> = {
-  registrationNumber: 'Registratienummer',
-  address: 'Adres',
-  agreementDateFormatted: 'Geregistreerd op',
+  props: {
+    registrationNumber: 'Registratienummer',
+    address: 'Adres',
+    agreementDateFormatted: 'Geregistreerd op',
+  },
 };
 
 export type ListPageParamKind = ListPageParamKindVergunningen;

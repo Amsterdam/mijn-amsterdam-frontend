@@ -13,63 +13,57 @@ import {
 import { VergunningFrontend } from '../../../../server/services/vergunningen/config-and-types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
-type VergunningFrontendDisplayProps = DisplayProps<
-  WithDetailLinkComponent<VergunningFrontend>
->;
+type VergunningFrontendDisplayProps = DisplayProps<VergunningFrontend>;
 
 type VergunningFrontendExpireableDisplayProps = DisplayProps<
-  WithDetailLinkComponent<
-    VergunningFrontend & VergunningFrontend<DecosZaakBase & WithDateRange>
-  >
+  VergunningFrontend & VergunningFrontend<DecosZaakBase & WithDateRange>
 >;
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG = 5;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsHuidigeVergunningenBase: VergunningFrontendExpireableDisplayProps =
+const displayPropsHuidigeVergunningen: VergunningFrontendExpireableDisplayProps =
   {
-    detailLinkComponent: 'Zaaknummer',
-    title: 'Omschrijving',
-    dateStartFormatted: 'Startdatum',
-    dateEndFormatted: 'Einddatum',
+    props: {
+      detailLinkComponent: 'Zaaknummer',
+      title: 'Omschrijving',
+      dateStartFormatted: 'Startdatum',
+      dateEndFormatted: 'Einddatum',
+    },
+    colWidths: {
+      large: ['20%', '45%', '15%', '15%'],
+      small: ['50%', '50%', '0', '0'],
+    },
   };
 
-const displayPropsLopendeAanvragenBase: VergunningFrontendDisplayProps = {
-  detailLinkComponent: 'Zaaknummer',
-  title: 'Omschrijving',
-  displayStatus: 'Status',
-  dateRequestFormatted: 'Aangevraagd op',
+const displayPropsLopendeAanvragen: VergunningFrontendDisplayProps = {
+  props: {
+    detailLinkComponent: 'Zaaknummer',
+    title: 'Omschrijving',
+    displayStatus: 'Status',
+    dateRequestFormatted: 'Aangevraagd op',
+  },
+  colWidths: {
+    large: ['20%', '45%', '15%', '15%'],
+    small: ['50%', '50%', '0', '0'],
+  },
 };
 
-const displayPropsEerdereVergunningenBase: VergunningFrontendDisplayProps = {
-  detailLinkComponent: 'Zaaknummer',
-  title: 'Omschrijving',
-  displayStatus: 'Status',
+const displayPropsEerdereVergunningen: VergunningFrontendDisplayProps = {
+  props: {
+    detailLinkComponent: 'Zaaknummer',
+    title: 'Omschrijving',
+    displayStatus: 'Status',
+  },
+  colWidths: {
+    large: ['20%', '45%', '35%'],
+    small: ['50%', '50%', '0'],
+  },
 };
-
-export const displayPropsHuidigeVergunningen =
-  withOmitDisplayPropsForSmallScreens(displayPropsHuidigeVergunningenBase, [
-    'dateStartFormatted',
-    'dateEndFormatted',
-  ]);
-
-export const displayPropsLopendeAanvragen = withOmitDisplayPropsForSmallScreens(
-  displayPropsLopendeAanvragenBase,
-  ['displayStatus', 'dateRequestFormatted']
-);
-
-export const displayPropsEerdereVergunningen =
-  withOmitDisplayPropsForSmallScreens(displayPropsEerdereVergunningenBase, [
-    'decision',
-  ]);
 
 export const listPageParamKind = {
   actual: 'huidige-vergunningen-en-ontheffingen',

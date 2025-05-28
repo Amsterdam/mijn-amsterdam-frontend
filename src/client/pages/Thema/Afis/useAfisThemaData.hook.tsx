@@ -29,7 +29,7 @@ import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
 import { MaLink } from '../../../components/MaLink/MaLink';
 import { BFFApiUrls } from '../../../config/api';
-import { usePhoneScreen } from '../../../hooks/media.hook';
+import { useSmallScreen } from '../../../hooks/media.hook';
 import {
   useAppStateBagApi,
   useAppStateGetter,
@@ -89,7 +89,7 @@ function mapFactuur(factuur: AfisFactuur, isPhoneScreen: boolean) {
 function useTransformFacturen(
   facturenByState: AfisFacturenByStateResponse | null
 ): AfisFacturenByStateFrontend | null {
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
   const facturenByStateTransformed: AfisFacturenByStateFrontend | null =
     useMemo(() => {
       if (facturenByState) {

@@ -2,11 +2,22 @@ import { ReactNode } from 'react';
 
 import { Unshaped, type LinkProps } from '../../../universal/types/App.types';
 
-export type DisplayProps<T> = Readonly<
-  {
-    [Property in keyof T]+?: string | number | ReactNode;
-  } & { smallscreen?: Omit<DisplayProps<T>, 'smallscreen'> }
->;
+export type DisplayPropsBase<
+  T,
+  T2 = { detailLinkComponent: string } & T,
+> = Readonly<{
+  [Property in keyof T2]+?: string | number | ReactNode;
+}>;
+
+export type DisplayProps<T> =
+  | DisplayPropsBase<T>
+  | {
+      props: DisplayPropsBase<T>;
+      colWidths?: TableV2ColWidths;
+    };
+
+export type ScreenSize = 'small' | 'large';
+export type TableV2ColWidths = Record<ScreenSize, string[]>;
 
 export interface TableV2Props<T> {
   displayProps: DisplayProps<T>;

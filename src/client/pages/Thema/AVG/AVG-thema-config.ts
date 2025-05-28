@@ -4,11 +4,7 @@ import { AVGRequestFrontend } from '../../../../server/services/avg/types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  type DisplayProps,
-  type WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { type DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
@@ -46,18 +42,17 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-const displayPropsAanvragenBase: DisplayProps<
-  WithDetailLinkComponent<AVGRequestFrontend>
-> = {
-  detailLinkComponent: 'Nummer',
-  ontvangstDatumFormatted: 'Ontvangen op',
-  themas: 'Onderwerp(en)',
+const displayPropsAanvragen: DisplayProps<AVGRequestFrontend> = {
+  props: {
+    detailLinkComponent: 'Nummer',
+    ontvangstDatumFormatted: 'Ontvangen op',
+    themas: 'Onderwerp(en)',
+  },
+  colWidths: {
+    large: ['15%', '35%', '50%'],
+    small: ['20%', '80%', '0'],
+  },
 };
-
-const displayPropsAanvragen = withOmitDisplayPropsForSmallScreens(
-  displayPropsAanvragenBase,
-  ['themas']
-);
 
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
