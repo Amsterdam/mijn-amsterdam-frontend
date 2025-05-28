@@ -18,6 +18,10 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   nano
 
+# PNPM Setup
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 ########################################################################################################################
 ########################################################################################################################
@@ -29,7 +33,7 @@ FROM updated-local AS build-deps
 WORKDIR /build-space
 
 # Copy packages + Install
-COPY package-lock.json /build-space/
+COPY pnpm-lock.yaml /build-space/
 COPY package.json /build-space/
 COPY vite.config.ts /build-space/
 COPY .env.local.template /build-space/
@@ -37,7 +41,7 @@ COPY vendor /build-space/vendor
 COPY mocks/fixtures /build-space/mocks/fixtures
 
 # Install the dependencies
-RUN pnpm ci --prefer-offline --no-audit --progress=false
+RUN pnpm install --prod --prefer-offline --reporter=append-only
 
 # Typescript configs
 COPY tsconfig.json /build-space/
