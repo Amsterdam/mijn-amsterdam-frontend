@@ -10,12 +10,12 @@ import { logger } from '../../../logging';
 
 export const AV_UPCC = 'AV-UPCC';
 // Verzilverings codes for line above.
-export const AV_UPCZIL = 'AV-UPCZIL';
+export const AV_UPCZIL = 'AV-UPCZIL'; // <- Historic code
 export const AV_UPCTG = 'AV-UPCTG';
 
 export const AV_PCVC = 'AV-PCVC';
 // Verzilverings codes for line above.
-export const AV_PCVZIL = 'AV-PCVZIL';
+export const AV_PCVZIL = 'AV-PCVZIL'; // <- Historic code
 export const AV_PCVTG = 'AV-PCVTG';
 
 function isVerzilvering(
