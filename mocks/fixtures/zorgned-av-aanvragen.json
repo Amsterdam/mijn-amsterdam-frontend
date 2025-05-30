@@ -597,9 +597,14 @@
         },
         "hulpvraag": {
           "datumRegistratie": "2025-01-06",
-          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2025-01-06",
@@ -623,7 +628,10 @@
                 "actueel": false,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -671,9 +679,14 @@
         },
         "hulpvraag": {
           "datumRegistratie": "2024-01-06",
-          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2024-01-06",
@@ -697,7 +710,10 @@
                 "actueel": false,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -745,9 +761,14 @@
         },
         "hulpvraag": {
           "datumRegistratie": "2024-06-17",
-          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2024-06-17",
@@ -771,7 +792,10 @@
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -815,9 +839,14 @@
         },
         "hulpvraag": {
           "datumRegistratie": "2024-01-06",
-          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2024-01-06",
@@ -841,7 +870,10 @@
                 "actueel": false,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -876,9 +908,14 @@
         },
         "hulpvraag": {
           "datumRegistratie": "2024-01-06",
-          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2024-01-06",
@@ -902,7 +939,10 @@
                 "actueel": false,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -951,7 +991,10 @@
         "hulpvraag": {
           "datumRegistratie": "2022-02-18",
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2022-02-18",
@@ -975,7 +1018,10 @@
                 "actueel": false,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -1011,7 +1057,10 @@
         "hulpvraag": {
           "datumRegistratie": "2022-06-07",
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2022-06-07",
@@ -1035,7 +1084,10 @@
                 "actueel": false,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -1057,9 +1109,14 @@
         },
         "hulpvraag": {
           "datumRegistratie": "2022-10-25",
-          "aanmeldwijze": { "omschrijving": "AV-Papier" },
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" },
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            },
             "naam": "Butter"
           }
         },
@@ -1110,7 +1167,10 @@
         "hulpvraag": {
           "datumRegistratie": "2022-11-30",
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2022-11-30",
@@ -1134,7 +1194,10 @@
                 "actueel": false,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -1165,7 +1228,10 @@
         "hulpvraag": {
           "datumRegistratie": "2023-06-01",
           "verwijzer": {
-            "soort": { "identificatie": "3AV", "omschrijving": "AV-Cliënt" }
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
           }
         },
         "datumAanmelding": "2023-06-01",
@@ -1189,7 +1255,10 @@
                 "actueel": true,
                 "omvang": {
                   "volume": 1,
-                  "eenheid": { "code": "82", "omschrijving": "Stuks (output)" },
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
                   "frequentie": {
                     "code": "6",
                     "omschrijving": "Per beschikking"
@@ -1292,6 +1361,125 @@
         },
         "datumAanmelding": "2024-05-31",
         "datumAanvraag": "2024-06-19"
+      },
+      {
+        "identificatie": "3160512",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-04-29",
+          "aanmeldwijze": {
+            "omschrijving": "AV-Papier"
+          },
+          "verwijzer": {
+            "soort": {
+              "identificatie": "3AV",
+              "omschrijving": "AV-Cliënt"
+            }
+          }
+        },
+        "datumAanmelding": "2025-04-29",
+        "datumAanvraag": "2025-04-29",
+        "beschikking": {
+          "beschikkingNummer": 301142210,
+          "datumAfgifte": "2025-04-29",
+          "beschikteProducten": [
+            {
+              "identificatie": "1514849",
+              "product": {
+                "identificatie": "AV-UPCTG",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Gratis laptop of tablet"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-08-01",
+                "datumEindeGeldigheid": "2025-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["999990512", "999994104"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3394993",
+            "omschrijving": "AV-PCV UPC Toekenning + Verzilvering device",
+            "datumDefinitief": "2025-04-29T11:55:22.227",
+            "bestandsnaam": "BR3394993.pdf"
+          }
+        ]
+      },
+      {
+        "identificatie": "3155056",
+        "regeling": {
+          "identificatie": "Armoedevrz",
+          "omschrijving": "Armoedevoorzieningen"
+        },
+        "hulpvraag": {
+          "datumRegistratie": "2025-02-25"
+        },
+        "datumAanmelding": "2025-02-25",
+        "datumAanvraag": "2025-02-25",
+        "beschikking": {
+          "beschikkingNummer": 301137576,
+          "datumAfgifte": "2025-02-25",
+          "beschikteProducten": [
+            {
+              "identificatie": "1509960",
+              "product": {
+                "identificatie": "AV-PCVTG",
+                "productsoortCode": "AV-ALG",
+                "omschrijving": "Gratis laptop of tablet"
+              },
+              "productCategorie": {},
+              "resultaat": "toegewezen",
+              "toegewezenProduct": {
+                "datumIngangGeldigheid": "2024-08-01",
+                "datumEindeGeldigheid": "2025-07-31",
+                "actueel": true,
+                "omvang": {
+                  "volume": 1,
+                  "eenheid": {
+                    "code": "82",
+                    "omschrijving": "Stuks (output)"
+                  },
+                  "frequentie": {
+                    "code": "6",
+                    "omschrijving": "Per beschikking"
+                  },
+                  "omschrijving": "1 stuks (output) per beschikking"
+                },
+                "toewijzingen": [],
+                "betrokkenen": ["231733616", "999994104"]
+              }
+            }
+          ]
+        },
+        "documenten": [
+          {
+            "documentidentificatie": "B3383931",
+            "omschrijving": "AV-PCV UPC Toekenning + Verzilvering device",
+            "datumDefinitief": "2025-02-25T20:03:44.797",
+            "bestandsnaam": "BR3383931.pdf"
+          }
+        ]
       }
     ]
   }
