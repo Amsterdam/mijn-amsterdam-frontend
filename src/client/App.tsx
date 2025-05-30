@@ -11,7 +11,6 @@ import { AutoLogoutDialog } from './components/AutoLogoutDialog/AutoLogoutDialog
 import { ErrorMessages } from './components/ErrorMessages/ErrorMessages';
 import { MainFooter } from './components/MainFooter/MainFooter';
 import { MainHeader } from './components/MainHeader/MainHeader';
-import { MainHeaderHero } from './components/MainHeaderHero/MainHeaderHero';
 import { routeConfig as buurtRouteConfig } from './components/MyArea/MyArea-thema-config';
 import { loginUrlByAuthMethod } from './config/api';
 import { useMonitoring } from './helpers/monitoring';
@@ -27,7 +26,6 @@ import { useProfileTypeValue } from './hooks/useProfileType';
 import { useScrollToTop } from './hooks/useScrollToTop';
 import { useTrackThemas } from './hooks/useTrackThemas.hook';
 import { useUsabilla } from './hooks/useUsabilla';
-import { DashboardRoute } from './pages/Dashboard/Dashboard-routes';
 
 function AppNotAuthenticated() {
   useSetDeeplinkEntry(['sso', 'authMethod']);
@@ -84,7 +82,6 @@ function AppAuthenticated() {
     }
   }, [redirectAfterLogin]);
 
-  const isHeroVisible = location.pathname === DashboardRoute.route;
   const isBuurt = location.pathname === buurtRouteConfig.themaPage.path;
 
   return (
@@ -92,7 +89,6 @@ function AppAuthenticated() {
       <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
       <MainHeader isAuthenticated />
       <ErrorMessages />
-      {isHeroVisible && <MainHeaderHero />}
       <Page className={!isBuurt ? styles.App : styles.AppWide}>
         <PrivateRoutes />
       </Page>

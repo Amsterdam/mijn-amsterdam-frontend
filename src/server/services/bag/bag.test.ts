@@ -1,32 +1,31 @@
 import nock from 'nock';
 
 import { fetchBAG } from './bag';
-import { Adres } from '../../../universal/types/App.types';
+import type { Adres } from '../profile/brp.types';
 
-const REQUEST_ID = 'x';
 const ADDRESS = {
   straatnaam: 'straatje',
   huisnummer: 25,
   woonplaatsNaam: 'Amsterdam',
 } as unknown as Adres;
 
+const bagAddress = {
+  identificatie: '0363200012145295',
+  huisnummer: 1,
+  huisletter: null,
+  huisnummertoevoeging: null,
+  postcode: '1011PN',
+  woonplaatsNaam: 'Amsterdam',
+  adresseerbaarObjectPuntGeometrieWgs84: {
+    type: 'Point',
+    coordinates: [4.9001655, 52.3676456],
+  },
+};
+
 // This is only a section of the mock data from the source.
 const BAG_MOCK_DATA = {
   _embedded: {
-    adresseerbareobjecten: [
-      {
-        identificatie: '0363200012145295',
-        huisnummer: 1,
-        huisletter: null,
-        huisnummertoevoeging: null,
-        postcode: '1011PN',
-        woonplaatsNaam: 'Amsterdam',
-        adresseerbaarObjectPuntGeometrieWgs84: {
-          type: 'Point',
-          coordinates: [4.9001655, 52.3676456],
-        },
-      },
-    ],
+    adresseerbareobjecten: [bagAddress],
   },
 };
 
@@ -48,6 +47,7 @@ describe('BAG service', () => {
       status: 'OK',
       content: {
         address: ADDRESS,
+        bagAddress,
         bagNummeraanduidingId: '0363200012145295',
         latlng: {
           lat: 52.3676456,

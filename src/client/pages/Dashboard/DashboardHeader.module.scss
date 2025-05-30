@@ -1,0 +1,32 @@
+.DashboardHeaderInner {
+  position: relative;
+  padding-top: 31.25%;
+  background-color: var(--ams-color-separator);
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.DashboardHeaderImg {
+  top: 0;
+  width: 100%;
+  display: block;
+  position: absolute;
+}
+.fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+.DashboardHeaderSearch {
+  position: absolute;
+  bottom: var(--ams-space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - var(--ams-space-l) * 2);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    width: 63%;
+  }
+}

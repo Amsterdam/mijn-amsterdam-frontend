@@ -25,7 +25,7 @@ export function ProfileName({
 
   if (opgemaakteNaam) {
     const parts = opgemaakteNaam.split(/\./);
-    opgemaakteNaam = `${parts[0]}. ${parts[parts.length - 1]}`;
+    opgemaakteNaam = `${parts[0].trim()}. ${parts[parts.length - 1].trim()}`;
   }
 
   const labelPrivate =

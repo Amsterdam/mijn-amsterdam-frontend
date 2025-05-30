@@ -1,6 +1,5 @@
 import styles from './WelcomeHeading.module.scss';
 import { ProfileName } from '../../components/MainHeader/ProfileName';
-import { PageContentCell } from '../../components/Page/Page';
 
 const HELLO = 'Welkom,';
 const NOON = 12;
@@ -32,23 +31,13 @@ export function WelcomeHeading() {
   }
 
   return (
-    <PageContentCell
-      startWide={1}
-      spanWide={7}
-      className={styles.WelcomeHeadingWrap}
-    >
-      <div className={styles.WelcomeHeadingSizer} id="skip-to-id-AppContent">
-        <h2 className={styles.WelcomeHeading}>
-          <span className={styles.ProfileNameHello}>{hello} </span>
-          <span className={styles.ProfileNameWrap}>
-            <ProfileName
-              fallbackName="Bezoeker"
-              loaderBarConfig={[['400px', '40px', '0']]}
-              preferVoornaam
-            />
-          </span>
-        </h2>
-      </div>
-    </PageContentCell>
+    <h2 className={styles.WelcomeHeading}>
+      {hello}{' '}
+      <ProfileName
+        fallbackName="Bezoeker"
+        loaderBarConfig={[['400px', '40px', '0']]}
+        preferVoornaam
+      />
+    </h2>
   );
 }

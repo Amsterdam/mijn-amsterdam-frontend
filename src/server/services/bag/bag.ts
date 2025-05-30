@@ -1,25 +1,40 @@
-import { LatLngLiteral } from 'leaflet';
-
+import { BAGQueryParams, type BAGData, type BAGSourceData } from './bag.types';
 import {
   apiErrorResult,
-  ApiResponse_DEPRECATED,
+  type ApiResponse,
 } from '../../../universal/helpers/api';
 import { getLatLngCoordinates } from '../../../universal/helpers/bag';
-import { BAGQueryParams } from './bag.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import type { Adres } from '../profile/brp.types';
 
-export interface BAGData {
-  latlng: LatLngLiteral | null;
-  address?: Adres | null;
-  bagNummeraanduidingId?: string | null;
-  profileType: ProfileType;
+function transformBagResponse(
+  sourceAddress: Adres,
+  responseData: BAGSourceData
+): BAGData | null {
+  const data = responseData._embedded?.adresseerbareobjecten;
+  if (!data?.length) {
+    return null;
+  }
+
+  // Multiple items can be found, but only the first we take as relevant.
+  const firstItem = data[0];
+
+  const latlng = getLatLngCoordinates(
+    firstItem.adresseerbaarObjectPuntGeometrieWgs84.coordinates
+  );
+
+  return {
+    latlng,
+    address: sourceAddress,
+    bagAddress: firstItem,
+    bagNummeraanduidingId: firstItem.identificatie,
+  };
 }
 
 export async function fetchBAG(
   sourceAddress: Adres | null
-): Promise<ApiResponse_DEPRECATED<BAGData | null>> {
+): Promise<ApiResponse<BAGData>> {
   if (!sourceAddress?.straatnaam || !sourceAddress.huisnummer) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
   }
@@ -32,23 +47,8 @@ export async function fetchBAG(
 
   const config = getApiConfig('BAG', {
     params,
-    transformResponse: (responseData) => {
-      const data = responseData._embedded?.adresseerbareobjecten;
-      if (!data || data.length < 1) {
-        return null;
-      }
-
-      // Multiple items can be found, but only the first we take as relevant.
-      const firstItem = data[0];
-
-      const latlng = getLatLngCoordinates(
-        firstItem.adresseerbaarObjectPuntGeometrieWgs84.coordinates
-      );
-      return {
-        latlng,
-        address: sourceAddress,
-        bagNummeraanduidingId: firstItem.identificatie,
-      };
+    transformResponse(responseData: BAGSourceData): BAGData | null {
+      return transformBagResponse(sourceAddress, responseData);
     },
   });
   return requestData<BAGData>(config);

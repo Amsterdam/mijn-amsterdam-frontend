@@ -8,7 +8,7 @@
 }
 
 :global(.is-typeAheadActive) {
-  @include select(MainHeaderHero_MainHeaderHero) {
+  @include select(Dashboard_Header) {
     display: none;
   }
   @include select(App_App) {
@@ -25,13 +25,14 @@
   background-color: var(--ams-color-background);
   margin-top: 0;
   border-top: 0;
-  // transform: translateX(-1rem);
+  border: 1px solid var(--ams-color-text);
 }
 
 .SearchBar.in-page .Results {
   position: relative;
   border: 0;
   width: auto;
+  border: 0;
 }
 
 .NoResults:first-child {
