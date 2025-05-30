@@ -18,7 +18,6 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   nano
 
-
 ########################################################################################################################
 ########################################################################################################################
 # Start with a node image for build dependencies
@@ -26,10 +25,15 @@ RUN apt-get update \
 ########################################################################################################################
 FROM updated-local AS build-deps
 
+# PNPM Setup
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
 WORKDIR /build-space
 
 # Copy packages + Install
-COPY package-lock.json /build-space/
+COPY pnpm-lock.yaml /build-space/
 COPY package.json /build-space/
 COPY vite.config.ts /build-space/
 COPY .env.local.template /build-space/
@@ -37,7 +41,7 @@ COPY vendor /build-space/vendor
 COPY mocks/fixtures /build-space/mocks/fixtures
 
 # Install the dependencies
-RUN npm ci --prefer-offline --no-audit --progress=false
+RUN pnpm install --frozen-lockfile --prefer-offline --reporter=append-only
 
 # Typescript configs
 COPY tsconfig.json /build-space/
@@ -86,12 +90,12 @@ ENV REACT_APP_MONITORING_CONNECTION_STRING=$REACT_APP_MONITORING_CONNECTION_STRI
 COPY public /build-space/public
 
 # Build FE
-RUN npm run build
+RUN pnpm build
 
 # Build BFF
 FROM build-deps AS build-app-bff
 
-RUN npm run bff-api:build
+RUN pnpm bff-api:build
 
 
 ########################################################################################################################

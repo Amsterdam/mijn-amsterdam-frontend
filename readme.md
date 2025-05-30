@@ -18,8 +18,7 @@ Then execute the following commands in a bash terminal to install it and the res
 ```bash
 cp -i .env.local.template .env.local
 nvm install
-npm install -g ts-node nodemon
-npm install
+pnpm install
 ```
 
 ## Running locally
@@ -27,16 +26,16 @@ npm install
 Put the following commands in your terminal after all dependencies are installed:
 
 ```bash
-npm run serve-dev
-npm start
+pnpm serve-dev
+pnpm start
 ```
 
 It's also possible to run both the mocks server and bff seperately with:
 
 ```bash
-npm run start
-npm run mock-server
-npm run bff-api:watch
+pnpm start
+pnpm mock-server
+pnpm bff-api:watch
 ```
 
 ## Accessibility + Targeted browsers
@@ -90,13 +89,13 @@ It's basically an additional development server integrated in the BFF api.
 - All filenames in src/server should be `kebab-cased.ts`
 - React component Filenames in src/client are `PascalCased.tsx`
 - If you have a `TODO:`, provide  a ticket number
-- `TODO:` ES-Lint will be configured in the future.
 
 ## Tooling
 
 #### System
 
 - `node`
+- `pnpm`
 - `typescript`
 - `vite`
 

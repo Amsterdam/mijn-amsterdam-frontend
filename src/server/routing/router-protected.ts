@@ -4,6 +4,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import {
+  createBFFRouter,
   sendBadRequest,
   sendUnauthorized,
   type RequestWithQueryParams,
@@ -48,9 +49,7 @@ import { fetchBBDocument } from '../services/toeristische-verhuur/toeristische-v
 import { fetchZorgnedJZDDocument } from '../services/wmo/wmo-route-handlers';
 import { fetchWpiDocument } from '../services/wpi/api-service';
 
-export const router = express.Router();
-
-router.BFF_ID = 'router-protected';
+export const router = createBFFRouter({ id: 'router-protected' });
 
 router.use(handleCheckProtectedRoute, isAuthenticated);
 

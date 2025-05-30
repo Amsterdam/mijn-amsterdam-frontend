@@ -5,7 +5,6 @@
 /* tslint:disable:no-submodule-imports */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
-import { logger } from './logging';
 import {
   IS_AP,
   IS_DEVELOPMENT,
@@ -22,6 +21,8 @@ if (IS_DEVELOPMENT) {
   const envConfig = dotenv.config({ path: ENV_FILE });
   dotenvExpand.expand(envConfig);
 }
+// Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
+import { logger } from './logging';
 
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
@@ -159,8 +160,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 async function startServerBFF() {
   if (
     getFromEnv('LOG_THAT_HTTP_HEADERS') === 'true' ||
-    getFromEnv('LOG_THAT_HTTP_BODY') === 'true' ||
-    getFromEnv('LOG_THAT_HTTP') === 'true'
+    getFromEnv('LOG_THAT_HTTP_BODY') === 'true'
   ) {
     await import('log-that-http');
   }

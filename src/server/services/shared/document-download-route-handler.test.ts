@@ -14,7 +14,8 @@ vi.mock('./decrypt-route-param', () => ({
   decryptEncryptedRouteParamAndValidateSessionID: vi.fn(),
 }));
 
-vi.mock('../../routing/route-helpers', () => ({
+vi.mock('../../routing/route-helpers', async (importOriginal) => ({
+  ...(await importOriginal()),
   sendResponse: vi.fn(),
   sendUnauthorized: vi.fn(),
 }));
