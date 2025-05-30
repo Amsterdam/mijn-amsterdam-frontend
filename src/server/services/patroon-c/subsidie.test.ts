@@ -31,6 +31,7 @@ describe('Subsidie', () => {
         {
           title: 'Test title',
           themaID: 'SUBSIDIES',
+          themaTitle: 'Subsidies',
           link: {
             to: 'http://localhost/to/subsidies?authMethod=digid',
             title: 'More about this',
@@ -56,6 +57,7 @@ describe('Subsidie', () => {
         {
           title: 'Test title',
           themaID: 'SUBSIDIES',
+          themaTitle: 'Subsidies',
           link: {
             to: 'http://localhost/to/subsidies?authMethod=eherkenning',
             title: 'More about this',
