@@ -6,18 +6,26 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import { logger } from '../../../logging';
 
 export const AV_UPCC = 'AV-UPCC';
+// Verzilverings codes for line above.
 export const AV_UPCZIL = 'AV-UPCZIL';
+export const AV_UPCTG = 'AV-UPCTG';
+
 export const AV_PCVC = 'AV-PCVC';
+// Verzilverings codes for line above.
 export const AV_PCVZIL = 'AV-PCVZIL';
+export const AV_PCVTG = 'AV-PCVTG';
 
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
     !!aanvraag.productIdentificatie &&
-    [AV_PCVZIL, AV_UPCZIL].includes(aanvraag.productIdentificatie)
+    [AV_PCVZIL, AV_UPCZIL, AV_UPCTG, AV_PCVTG].includes(
+      aanvraag.productIdentificatie
+    )
   );
 }
 
@@ -34,16 +42,22 @@ function isRegelingVanVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
-  const aanvraagProductId = aanvraag.productIdentificatie;
   let avCode;
-
-  if (aanvraagProductId === AV_PCVZIL) {
-    avCode = AV_PCVC;
+  switch (aanvraag.productIdentificatie) {
+    case AV_PCVTG:
+    case AV_PCVZIL: {
+      avCode = AV_PCVC;
+      break;
+    }
+    case AV_UPCTG:
+    case AV_UPCZIL: {
+      avCode = AV_UPCC;
+      break;
+    }
+    default: {
+      logger.error(`Unknown avCode; avCode = ${avCode}`);
+    }
   }
-  if (aanvraagProductId === AV_UPCZIL) {
-    avCode = AV_UPCC;
-  }
-
   return (
     compareAanvraag.productIdentificatie === avCode &&
     compareAanvraag.betrokkenen.some((id) =>
@@ -72,7 +86,7 @@ export function filterCombineUpcPcvData(
 ) {
   const baseRegelingIdWithVerzilvering: string[] = [];
 
-  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag, index) => {
+  const aanvragenWithDocumentsCombined = aanvragen.map((aanvraag) => {
     // Exclude baseRegelingen that have verzilvering
     if (baseRegelingIdWithVerzilvering.includes(aanvraag.id)) {
       return null;
@@ -144,7 +158,7 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
     {
       status: 'Besluit',
       datePublished: getUpcPcvDecisionDate,
-      isChecked: (regeling) => true,
+      isChecked: () => true,
       isActive: (regeling) =>
         !isVerzilvering(regeling) && regeling.resultaat === 'afgewezen',
       description: (regeling) => {
@@ -169,8 +183,8 @@ export const PCVERGOEDING: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraa
         regeling.resultaat === 'toegewezen' &&
         !isWorkshopNietGevolgd(regeling),
       datePublished: '',
-      isChecked: (regeling) => true,
-      isActive: (regeling) => true,
+      isChecked: () => true,
+      isActive: () => true,
       description: (regeling) => {
         const betrokkenKinderen = getBetrokkenDescription(regeling);
         return `

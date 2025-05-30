@@ -1,7 +1,9 @@
 import {
   AV_PCVC,
+  AV_PCVTG,
   AV_PCVZIL,
   AV_UPCC,
+  AV_UPCTG,
   AV_UPCZIL,
   forTesting,
 } from './regeling-pcvergoeding';
@@ -27,6 +29,18 @@ describe('pcvergoeding', () => {
         productIdentificatie: AV_UPCZIL,
         betrokkenen: ['B'],
       },
+      {
+        productIdentificatie: AV_PCVC,
+        betrokkenen: ['B'],
+      },
+      {
+        productIdentificatie: AV_UPCTG,
+        betrokkenen: ['A'],
+      },
+      {
+        productIdentificatie: AV_PCVTG,
+        betrokkenen: ['B'],
+      },
     ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
     test('isRegelingVanVerzilvering', () => {
@@ -41,6 +55,14 @@ describe('pcvergoeding', () => {
       expect(
         forTesting.isRegelingVanVerzilvering(testData[3], testData[0])
       ).toBe(false);
+
+      expect(
+        forTesting.isRegelingVanVerzilvering(testData[5], testData[0])
+      ).toBe(true);
+
+      expect(
+        forTesting.isRegelingVanVerzilvering(testData[6], testData[4])
+      ).toBe(true);
     });
   });
 
@@ -288,6 +310,42 @@ describe('pcvergoeding', () => {
         {
           id: '2',
           productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          resultaat: 'toegewezen',
+          isActueel: true,
+          datumEindeGeldigheid: null,
+          documenten: ['doc2', 'doc1'],
+        },
+      ]);
+    });
+
+    test('Nieuwe verzilverings codes combines documents', () => {
+      const testData = [
+        {
+          id: '2',
+          productIdentificatie: AV_PCVTG,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          resultaat: 'toegewezen',
+          documenten: ['doc2'],
+        },
+        {
+          id: '1',
+          productIdentificatie: AV_PCVC,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-05-18',
+          isActueel: true,
+          documenten: ['doc1'],
+        },
+      ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      const result = forTesting.filterCombineUpcPcvData(testData);
+
+      expect(result).toEqual([
+        {
+          id: '2',
+          productIdentificatie: AV_PCVTG,
           betrokkenen: ['A'],
           datumBesluit: '2024-06-18',
           resultaat: 'toegewezen',
