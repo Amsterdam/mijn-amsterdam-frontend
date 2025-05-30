@@ -1,3 +1,7 @@
+import type { LatLngLiteral } from 'leaflet';
+
+import type { Adres } from '../profile/brp.types';
+
 /** An incomplete slice of a BAG adresseerbaar object.
  *  That is because not all fields are used.
  */
@@ -9,6 +13,7 @@ export type BAGAdreseerbaarObject = {
   postcode: string;
   woonplaatsNaam: string;
   openbareruimteNaam: string; // Also know as straatnaam.
+  gebiedenStadsdeelNaam: string | null; // Stadsdeel name, e.g. 'Centrum'.
   adresseerbaarObjectPuntGeometrieWgs84: {
     type: 'Point';
     coordinates: [number, number]; // In long lat order. (lowest number first)
@@ -32,3 +37,11 @@ export type BAGQueryParams = {
   huisletter?: string;
   huisnummertoevoeging?: string;
 };
+
+export interface BAGData {
+  latlng: LatLngLiteral | null;
+  address: Adres | null;
+  bagAddress: BAGAdreseerbaarObject | null;
+  bagNummeraanduidingId?: string | null;
+  profileType?: ProfileType;
+}

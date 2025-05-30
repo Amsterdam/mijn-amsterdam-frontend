@@ -51,7 +51,7 @@ export function MainHeaderSecondaryLinks({
           title="Ga naar persoonlijke gegevens"
         >
           <span className={styles.ProfileNameInner}>
-            <ProfileName fallbackName="Profiel" />
+            <ProfileName fallbackName="Mijn gegevens" />
           </span>
         </MaRouterLink>
       </Wrap>
