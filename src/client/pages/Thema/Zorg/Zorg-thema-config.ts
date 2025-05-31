@@ -2,11 +2,7 @@ import { generatePath } from 'react-router';
 
 import { WMOVoorzieningFrontend } from '../../../../server/services/wmo/wmo-config-and-types';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
@@ -52,18 +48,17 @@ export const linkListItems: LinkProps[] = [
   },
 ];
 
-const displayPropsBase: DisplayProps<
-  WithDetailLinkComponent<WMOVoorzieningFrontend>
-> = {
-  detailLinkComponent: 'Naam',
-  displayStatus: 'Status',
-  statusDateFormatted: 'Datum',
+const displayProps: DisplayProps<WMOVoorzieningFrontend> = {
+  props: {
+    detailLinkComponent: 'Naam',
+    displayStatus: 'Status',
+    statusDateFormatted: 'Datum',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['75%', '25%', '0'],
+  },
 };
-
-const displayProps = withOmitDisplayPropsForSmallScreens(displayPropsBase, [
-  'displayStatus',
-  'statusDateFormatted',
-]);
 
 export const listPageTitle = {
   [listPageParamKind.actual]: 'Huidige voorzieningen',
@@ -74,7 +69,7 @@ export const tableConfig = {
   [listPageParamKind.actual]: {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: WMOVoorzieningFrontend) => regeling.isActual,
-    displayProps: displayProps,
+    displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_HUIDIG,
     textNoContent: 'U heeft geen huidige voorzieningen.',
     listPageRoute: generatePath(routeConfig.listPage.path, {
@@ -85,7 +80,7 @@ export const tableConfig = {
   [listPageParamKind.historic]: {
     title: listPageTitle[listPageParamKind.historic],
     filter: (regeling: WMOVoorzieningFrontend) => !regeling.isActual,
-    displayProps: displayProps,
+    displayProps,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER,
     textNoContent:
       'U heeft geen eerdere en/of afgewezen voorzieningen. U ziet hier niet alle gegevens uit het verleden. De gegevens die u hier niet ziet, heeft u eerder per post ontvangen.',

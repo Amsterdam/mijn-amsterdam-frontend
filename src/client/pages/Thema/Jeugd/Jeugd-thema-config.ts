@@ -3,8 +3,6 @@ import { generatePath } from 'react-router';
 import { LeerlingenvervoerVoorzieningFrontend } from '../../../../server/services/jeugd/jeugd';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import { WithDetailLinkComponent } from '../../../components/Table/TableV2.types';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
@@ -40,20 +38,17 @@ export const linkListItems: LinkProps[] = [
   },
 ];
 
-type DisplayPropsLeerlingenVervoer = DisplayProps<
-  WithDetailLinkComponent<LeerlingenvervoerVoorzieningFrontend>
->;
-
-const displayProps: DisplayPropsLeerlingenVervoer = {
-  detailLinkComponent: 'Voorziening',
-  displayStatus: 'Status',
-  statusDateFormatted: 'Datum',
+const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
+  props: {
+    detailLinkComponent: 'Voorziening',
+    displayStatus: 'Status',
+    statusDateFormatted: 'Datum',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['75%', '0', '0'],
+  },
 };
-
-const responsiveDisplayProps = withOmitDisplayPropsForSmallScreens(
-  displayProps,
-  ['statusDateFormatted']
-);
 
 export const listPageParamKind = {
   actual: 'huidige-voorzieningen',
@@ -73,7 +68,7 @@ export const tableConfig = {
     title: listPageTitle[listPageParamKind.actual],
     filter: (regeling: LeerlingenvervoerVoorzieningFrontend) =>
       regeling.isActual,
-    displayProps: responsiveDisplayProps,
+    displayProps,
     listPageRoute: generatePath(routeConfig.listPage.path, {
       kind: listPageParamKind.actual,
       page: null,
@@ -89,7 +84,7 @@ export const tableConfig = {
       kind: listPageParamKind.historic,
       page: null,
     }),
-    displayProps: responsiveDisplayProps,
+    displayProps,
     maxItems: 5,
     textNoContent: 'U heeft geen eerdere en/of afgewezen voorzieningen.',
   },

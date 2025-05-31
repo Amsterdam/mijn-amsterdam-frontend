@@ -2,7 +2,7 @@ import { Heading } from '@amsterdam/design-system-react';
 
 import { categoryMenuItems } from './MainMenu.constants';
 import styles from './MainMenu.module.scss';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { MainHeaderSecondaryLinks } from '../MainHeader/MainHeader';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
@@ -11,7 +11,7 @@ export const MAIN_MENU_ID = 'main-menu';
 
 export function MainMenu() {
   const { items } = useThemaMenuItems();
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
 
   return (
     <div id={MAIN_MENU_ID} className={styles.MainMenu}>

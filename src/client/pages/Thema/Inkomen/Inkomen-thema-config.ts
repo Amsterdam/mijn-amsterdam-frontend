@@ -5,11 +5,7 @@ import {
   WpiRequestProcess,
 } from '../../../../server/services/wpi/wpi-types';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
@@ -74,57 +70,56 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-const lopendeAanvragenDisplayPropsBase: DisplayProps<
-  WithDetailLinkComponent<WpiRequestProcess>
-> = {
-  detailLinkComponent: '',
-  dateStartFormatted: 'Datum aanvraag',
-  displayStatus: 'Status',
+const lopendeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
+  props: {
+    detailLinkComponent: '',
+    dateStartFormatted: 'Datum aanvraag',
+    displayStatus: 'Status',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['100%', '0', '0'],
+  },
 };
 
-const afgehandeldeAanvragenDisplayPropsBase: DisplayProps<
-  WithDetailLinkComponent<WpiRequestProcess>
-> = {
-  detailLinkComponent: '',
-  dateStartFormatted: 'Datum aanvraag',
-  dateEndFormatted: 'Datum besluit',
+const afgehandeldeAanvragenDisplayProps: DisplayProps<WpiRequestProcess> = {
+  props: {
+    detailLinkComponent: '',
+    dateStartFormatted: 'Datum aanvraag',
+    dateEndFormatted: 'Datum besluit',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['100%', '0', '0'],
+  },
 };
 
-const specificatiesTableDisplayPropsBase: DisplayProps<
-  WithDetailLinkComponent<
-    WpiIncomeSpecificationTransformed & { documentUrl: string }
-  >
+const specificatiesTableDisplayProps: DisplayProps<
+  WpiIncomeSpecificationTransformed & { documentUrl: string }
 > = {
-  category: 'Regeling',
-  datePublishedFormatted: 'Datum',
-  documentUrl: 'Documenten',
+  props: {
+    datePublishedFormatted: 'Datum',
+    category: 'Regeling',
+    documentUrl: 'Document',
+  },
+  colWidths: {
+    large: ['50%', '25%', '25%'],
+    small: ['0', '75%', '25%'],
+  },
 };
 
-const jaaropgavenTableDisplayPropsBase: DisplayProps<
-  WithDetailLinkComponent<
-    WpiIncomeSpecificationTransformed & { documentUrl: string }
-  >
+const jaaropgavenTableDisplayProps: DisplayProps<
+  WpiIncomeSpecificationTransformed & { documentUrl: string }
 > = {
-  datePublishedFormatted: 'Datum',
-  documentUrl: 'Documenten',
+  props: {
+    datePublishedFormatted: 'Datum',
+    documentUrl: 'Document',
+  },
+  colWidths: {
+    large: ['75%', '25%'],
+    small: ['75%', '25%'],
+  },
 };
-
-const lopendeAanvragenDisplayProps = withOmitDisplayPropsForSmallScreens(
-  lopendeAanvragenDisplayPropsBase,
-  ['statusId', 'dateStartFormatted']
-);
-const afgehandeldeAanvragenDisplayProps = withOmitDisplayPropsForSmallScreens(
-  afgehandeldeAanvragenDisplayPropsBase,
-  ['statusId', 'dateStartFormatted', 'dateEndFormatted']
-);
-const specificatiesTableDisplayProps = withOmitDisplayPropsForSmallScreens(
-  specificatiesTableDisplayPropsBase,
-  ['category']
-);
-const jaaropgavenTableDisplayProps = withOmitDisplayPropsForSmallScreens(
-  jaaropgavenTableDisplayPropsBase,
-  []
-);
 
 export const wpiLinks = {
   BIJSTANDSUITKERING:

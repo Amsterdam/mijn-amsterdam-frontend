@@ -2,11 +2,7 @@ import { generatePath } from 'react-router';
 
 import { KlachtFrontend } from '../../../../server/services/klachten/types';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
@@ -40,17 +36,17 @@ export const LinkListItems: LinkProps[] = [
   },
 ];
 
-const displayPropsDefault: DisplayProps<
-  WithDetailLinkComponent<KlachtFrontend>
-> = {
-  detailLinkComponent: 'Nummer van uw klacht',
-  ontvangstDatumFormatted: 'Ontvangen op',
-  onderwerp: 'Onderwerp',
+const displayProps: DisplayProps<KlachtFrontend> = {
+  props: {
+    detailLinkComponent: 'Nummer van uw klacht',
+    ontvangstDatumFormatted: 'Ontvangen op',
+    onderwerp: 'Onderwerp',
+  },
+  colWidths: {
+    large: ['25%', '25%', '50%'],
+    small: ['50%', '50%', '0'],
+  },
 };
-
-const displayProps = withOmitDisplayPropsForSmallScreens(displayPropsDefault, [
-  'onderwerp',
-]);
 
 export const klachtenTableConfig = {
   title: 'Ingediende klachten',

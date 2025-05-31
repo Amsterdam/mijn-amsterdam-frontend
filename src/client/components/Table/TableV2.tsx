@@ -3,17 +3,19 @@ import { ReactNode } from 'react';
 import { Heading, Table } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
-import { getDisplayPropsForScreenSize } from './helpers';
+import { getDisplayProps, getDisplayPropsColWidths } from './helpers';
 import styles from './TableV2.module.scss';
 import {
   ObjectWithOptionalLinkAttr,
   TableV2Props,
   WithDetailLinkComponent,
+  type ScreenSize,
+  type TableV2ColWidths,
 } from './TableV2.types';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { entries } from '../../../universal/helpers/utils';
 import { ZaakDetail } from '../../../universal/types/App.types';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { MaRouterLink } from '../MaLink/MaLink';
 
 /**
@@ -60,6 +62,14 @@ export function addLinkElementToProperty<T extends ObjectWithOptionalLinkAttr>(
   });
 }
 
+function getColWidth(
+  colWidths: TableV2ColWidths,
+  size: ScreenSize,
+  index: number
+) {
+  return colWidths[size]?.filter((value) => parseInt(value, 10) !== 0)[index];
+}
+
 export function TableV2<T extends object = ZaakDetail>({
   caption,
   subTitle,
@@ -68,9 +78,16 @@ export function TableV2<T extends object = ZaakDetail>({
   className,
   showTHead = true,
 }: TableV2Props<T>) {
-  const isPhoneScreen = usePhoneScreen();
-  const props = getDisplayPropsForScreenSize(displayProps, isPhoneScreen);
-  const displayPropEntries = entries(props);
+  const isSmallScreen = useSmallScreen();
+  const colWidths = getDisplayPropsColWidths(displayProps);
+  const colWidthsForScreenSize = colWidths?.[isSmallScreen ? 'small' : 'large'];
+  let displayPropEntries = entries(getDisplayProps(displayProps));
+  // Filter out display properties that are not defined for the current screen size
+  displayPropEntries = Array.isArray(colWidthsForScreenSize)
+    ? displayPropEntries.filter(
+        (_entry, index) => parseInt(colWidthsForScreenSize[index], 10) !== 0
+      )
+    : displayPropEntries;
 
   return (
     <>
@@ -84,10 +101,21 @@ export function TableV2<T extends object = ZaakDetail>({
         {showTHead && (
           <Table.Header>
             <Table.Row>
-              {displayPropEntries.map(([key, label]) => {
+              {displayPropEntries.map(([key, label], index) => {
                 if (label) {
                   return (
-                    <Table.HeaderCell key={`th-${key}`}>
+                    <Table.HeaderCell
+                      key={`th-${key}`}
+                      style={{
+                        width: colWidths
+                          ? getColWidth(
+                              colWidths,
+                              isSmallScreen ? 'small' : 'large',
+                              index
+                            )
+                          : undefined,
+                      }}
+                    >
                       {label}
                     </Table.HeaderCell>
                   );

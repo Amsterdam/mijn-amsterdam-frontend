@@ -226,21 +226,25 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Factuurnummer
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 20%;"
               >
                 Afzender
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 20%;"
               >
                 Vervaldatum
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 35%;"
               >
                 Status
               </th>
@@ -416,16 +420,19 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Factuurnummer
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Afzender
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Status
               </th>

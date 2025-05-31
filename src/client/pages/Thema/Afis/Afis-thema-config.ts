@@ -9,7 +9,6 @@ import {
   AfisFactuurState,
 } from '../../../../server/services/afis/afis-types';
 import { LinkProps, ZaakDetail } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
 import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
@@ -42,40 +41,31 @@ const MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED =
   MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsFacturenOpenBase: DisplayProps<AfisFactuurFrontend> = {
-  factuurNummerEl: 'Factuurnummer',
-  afzender: 'Afzender',
-  paymentDueDateFormatted: 'Vervaldatum',
-  statusDescription: 'Status',
-};
-
-const displayPropsFacturenOpen = withOmitDisplayPropsForSmallScreens(
-  displayPropsFacturenOpenBase,
-  ['statusDescription', 'paymentDueDateFormatted', 'afzender']
-);
-
-const displayPropsFacturenAfgehandeldBase: DisplayProps<AfisFactuurFrontend> = {
-  factuurNummerEl: 'Factuurnummer',
-  afzender: 'Afzender',
-  statusDescription: 'Status',
-};
-
-const displayPropsFacturenAfgehandeld = withOmitDisplayPropsForSmallScreens(
-  displayPropsFacturenAfgehandeldBase,
-  ['statusDescription', 'afzender']
-);
-
-const displayPropsFacturenOvergedragenBase: DisplayProps<AfisFactuurFrontend> =
-  {
+const displayPropsFacturenOpen: DisplayProps<AfisFactuurFrontend> = {
+  props: {
     factuurNummerEl: 'Factuurnummer',
     afzender: 'Afzender',
+    paymentDueDateFormatted: 'Vervaldatum',
     statusDescription: 'Status',
-  };
+  },
+  colWidths: {
+    large: ['25%', '20%', '20%', '35%'],
+    small: ['100%', '0', '0', '0'],
+  },
+};
 
-const displayPropsFacturenOvergedragen = withOmitDisplayPropsForSmallScreens(
-  displayPropsFacturenOvergedragenBase,
-  ['statusDescription', 'afzender']
-);
+const displayPropsFacturenAfgehandeldOfOvergedragen: DisplayProps<AfisFactuurFrontend> =
+  {
+    props: {
+      factuurNummerEl: 'Factuurnummer',
+      afzender: 'Afzender',
+      statusDescription: 'Status',
+    },
+    colWidths: {
+      large: ['25%', '25%', '50%'],
+      small: ['100%', '0', '0'],
+    },
+  };
 
 export const listPageTitle: Record<AfisFactuurState, string> = {
   open: 'Openstaande facturen',
@@ -111,7 +101,7 @@ export const facturenTableConfig = {
   },
   overgedragen: {
     title: listPageTitle.overgedragen,
-    displayProps: displayPropsFacturenOvergedragen,
+    displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_TRANSFERRED,
     listPageLinkLabel:
       'Alle facturen in het incasso- en invorderingstraject van directie Belastingen',
@@ -122,7 +112,7 @@ export const facturenTableConfig = {
   },
   afgehandeld: {
     title: listPageTitle.afgehandeld,
-    displayProps: displayPropsFacturenAfgehandeld,
+    displayProps: displayPropsFacturenAfgehandeldOfOvergedragen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_CLOSED,
     listPageLinkLabel: 'Alle afgehandelde facturen',
     listPageRoute: generatePath(routeConfig.listPage.path, {

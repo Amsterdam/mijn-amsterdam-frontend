@@ -3,8 +3,8 @@ export { Colors } from '../../universal/config/colors';
 
 // NOTE: Keep up-to-date with _breakpoints.scss
 export const Breakpoints = {
-  tablet: 1024,
-  phone: 640,
+  medium: 1024,
+  small: 640,
   minWidthMediumScreen: 576,
   minWidthWideScreen: 1088,
 };

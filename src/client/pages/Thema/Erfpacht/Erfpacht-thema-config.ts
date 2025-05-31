@@ -6,11 +6,7 @@ import {
 } from '../../../../server/services/erfpacht/erfpacht-types';
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 // Themapagina
@@ -87,12 +83,8 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-type DisplayPropsDossiers = DisplayProps<
-  WithDetailLinkComponent<ErfpachtDossierFrontend>
->;
-export type DisplayPropsFacturen = DisplayProps<
-  WithDetailLinkComponent<ErfpachtDossierFactuurFrontend>
->;
+type DisplayPropsDossiers = DisplayProps<ErfpachtDossierFrontend>;
+export type DisplayPropsFacturen = DisplayProps<ErfpachtDossierFactuurFrontend>;
 
 export function getTableConfig({
   erfpachtData,
@@ -113,18 +105,30 @@ export function getTableConfig({
   const titleOpenFacturen = erfpachtData?.titelOpenFacturenKop;
 
   const displayPropsOpenFacturen: DisplayPropsFacturen = {
-    dossierAdres: openFacturenBase?.titelFacturenDossierAdres,
-    factuurNummer: openFacturenBase?.titelFacturenNummer,
-    formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
-    status: openFacturenBase?.titelFacturenStatus,
-    vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
+    props: {
+      dossierAdres: openFacturenBase?.titelFacturenDossierAdres,
+      factuurNummer: openFacturenBase?.titelFacturenNummer,
+      formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
+      status: openFacturenBase?.titelFacturenStatus,
+      vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
+    },
+    colWidths: {
+      large: ['20%', '20%', '20%', '20%', '20%'],
+      small: ['0', '50%', '0', '0', '50%'],
+    },
   };
 
   const displayPropsAlleFacturen: DisplayPropsFacturen = {
-    factuurNummer: openFacturenBase?.titelFacturenNummer,
-    formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
-    status: openFacturenBase?.titelFacturenStatus,
-    vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
+    props: {
+      factuurNummer: openFacturenBase?.titelFacturenNummer,
+      formattedFactuurBedrag: openFacturenBase?.titelFacturenFactuurBedrag,
+      status: openFacturenBase?.titelFacturenStatus,
+      vervalDatum: openFacturenBase?.titelFacturenVervaldatum,
+    },
+    colWidths: {
+      large: ['25%', '25%', '25%', '25%'],
+      small: ['50%', '0', '50%', '0'],
+    },
   };
 
   const tableConfig = {
@@ -137,19 +141,13 @@ export function getTableConfig({
     [listPageParamKind.openFacturen]: {
       title: titleOpenFacturen ?? 'Openstaande facturen',
       listPageRoute: routeConfig.listPageOpenFacturen.path,
-      displayProps: withOmitDisplayPropsForSmallScreens(
-        displayPropsOpenFacturen,
-        ['dossierAdres', 'status', 'formattedFactuurBedrag']
-      ),
+      displayProps: displayPropsOpenFacturen,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN,
     },
     [listPageParamKind.alleFacturen]: {
       title: dossier?.facturen.titelFacturen?.toLocaleLowerCase() ?? 'Facturen',
       listPageRoute: routeConfig.listPageAlleFacturen.path,
-      displayProps: withOmitDisplayPropsForSmallScreens(
-        displayPropsAlleFacturen,
-        ['formattedFactuurBedrag', 'vervalDatum']
-      ),
+      displayProps: displayPropsAlleFacturen,
       maxItems: MAX_TABLE_ROWS_ON_DETAIL_PAGINA_FACTUREN,
     },
   } as const;

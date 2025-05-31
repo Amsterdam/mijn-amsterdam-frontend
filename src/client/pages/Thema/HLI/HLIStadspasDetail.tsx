@@ -41,7 +41,7 @@ import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { TableV2 } from '../../../components/Table/TableV2';
 import { useDataApi } from '../../../hooks/api/useDataApi';
-import { usePhoneScreen } from '../../../hooks/media.hook';
+import { useSmallScreen } from '../../../hooks/media.hook';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
@@ -86,7 +86,7 @@ const PHONENUMBERS = {
 } as const;
 
 export function HLIStadspasDetail() {
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
   const appState = useAppStateGetter();
   useHTMLDocumentTitle(routeConfig.detailPageStadspas);
 

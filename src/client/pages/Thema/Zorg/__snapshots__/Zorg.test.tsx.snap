@@ -130,16 +130,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot 1`] = `
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Naam
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Status
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Datum
               </th>

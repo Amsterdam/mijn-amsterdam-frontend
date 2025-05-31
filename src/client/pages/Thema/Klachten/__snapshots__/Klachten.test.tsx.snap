@@ -259,16 +259,19 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Nummer van uw klacht
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Ontvangen op
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Onderwerp
               </th>

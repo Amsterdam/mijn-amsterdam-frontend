@@ -6,7 +6,7 @@ import styles from './ProfileSectionPanel.module.scss';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
-import { usePhoneScreen } from '../../../hooks/media.hook';
+import { useSmallScreen } from '../../../hooks/media.hook';
 
 export interface ActionLink {
   title: string;
@@ -76,7 +76,7 @@ export function ProfileSectionPanel({
   startCollapsed = true,
 }: ProfilePanelProps) {
   const sections = Array.isArray(sectionData) ? sectionData : [sectionData];
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
   return (
     <PageContentCell>
       <CollapsiblePanel title={title ?? ''} startCollapsed={startCollapsed}>

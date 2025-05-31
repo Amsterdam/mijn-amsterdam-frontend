@@ -406,16 +406,19 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 15%;"
               >
                 Nummer
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 35%;"
               >
                 Ontvangen op
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Onderwerp(en)
               </th>
@@ -475,16 +478,19 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 15%;"
               >
                 Nummer
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 35%;"
               >
                 Ontvangen op
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Onderwerp(en)
               </th>

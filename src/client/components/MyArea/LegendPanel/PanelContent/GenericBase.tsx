@@ -9,7 +9,7 @@ import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../../../../universal/config/myarea-datasets';
-import { usePhoneScreen } from '../../../../hooks/media.hook';
+import { useSmallScreen } from '../../../../hooks/media.hook';
 
 type GenericBaseProps = PropsWithChildren<{
   title?: string;
@@ -40,7 +40,7 @@ export default function GenericBase({
   supTitle,
   children,
 }: GenericBaseProps) {
-  const isPhone = usePhoneScreen();
+  const isPhone = useSmallScreen();
   return (
     <div className={styles.GenericBase}>
       {!!supTitle && (

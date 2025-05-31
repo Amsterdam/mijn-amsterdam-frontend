@@ -4,39 +4,33 @@ import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelin
 import { IS_PRODUCTION } from '../../../../universal/config/env';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import { MAX_TABLE_ROWS_ON_THEMA_PAGINA } from '../../../config/app';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 const MAX_TABLE_ROWS_ON_THEMA_PAGINA_EERDER = MAX_TABLE_ROWS_ON_THEMA_PAGINA;
 
-const displayPropsHuidigeRegelingenBase: DisplayProps<
-  WithDetailLinkComponent<HLIRegelingFrontend>
-> = {
-  detailLinkComponent: 'Regeling',
-  receiver: 'Naam ontvanger',
+const displayPropsHuidigeRegelingen: DisplayProps<HLIRegelingFrontend> = {
+  props: {
+    detailLinkComponent: 'Regeling',
+    receiver: 'Naam ontvanger',
+  },
+  colWidths: {
+    large: ['80%', '20%'],
+    small: ['100%', '0'],
+  },
 };
 
-const displayPropsHuidigeRegelingen = withOmitDisplayPropsForSmallScreens(
-  displayPropsHuidigeRegelingenBase,
-  ['receiver']
-);
-
-const displayPropsEerdereRegelingenBase: DisplayProps<
-  WithDetailLinkComponent<HLIRegelingFrontend>
-> = {
-  detailLinkComponent: displayPropsHuidigeRegelingen.detailLinkComponent,
-  displayStatus: 'Status',
+const displayPropsEerdereRegelingen: DisplayProps<HLIRegelingFrontend> = {
+  props: {
+    detailLinkComponent: 'Regeling',
+    displayStatus: 'Status',
+  },
+  colWidths: {
+    large: ['80%', '20%'],
+    small: ['100%', '0'],
+  },
 };
-
-const displayPropsEerdereRegelingen = withOmitDisplayPropsForSmallScreens(
-  displayPropsEerdereRegelingenBase,
-  ['displayStatus']
-);
 
 export const listPageParamKind = {
   lopend: 'lopende-aanvragen',

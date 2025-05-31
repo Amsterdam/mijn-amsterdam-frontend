@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import styles from './DashboardHeader.module.scss';
 import { isLoading } from '../../../universal/helpers/api';
 import { Search } from '../../components/Search/Search';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
@@ -24,7 +24,7 @@ const STADSDELEN = [
 
 function useStadsdeelFoto() {
   const { MY_LOCATION } = useAppStateGetter();
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
   const [primaryLocation = null] = MY_LOCATION.content ?? [];
   const profileType = useProfileTypeValue();
 

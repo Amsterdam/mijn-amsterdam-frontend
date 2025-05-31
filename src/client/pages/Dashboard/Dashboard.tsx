@@ -18,7 +18,7 @@ import {
   PageContentV2,
   PageV2,
 } from '../../components/Page/Page';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
@@ -40,7 +40,7 @@ export function Dashboard() {
     MAX_NOTIFICATIONS_VISIBLE
   );
 
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useThemaMenuItems();
