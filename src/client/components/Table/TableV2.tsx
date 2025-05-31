@@ -80,19 +80,14 @@ export function TableV2<T extends object = ZaakDetail>({
 }: TableV2Props<T>) {
   const isSmallScreen = useSmallScreen();
   const colWidths = getDisplayPropsColWidths(displayProps);
+  const colWidthsForScreenSize = colWidths?.[isSmallScreen ? 'small' : 'large'];
+  let displayPropEntries = entries(getDisplayProps(displayProps));
   // Filter out display properties that are not defined for the current screen size
-  const displayPropEntries = entries(getDisplayProps(displayProps)).filter(
-    (_entry, index) => {
-      const colWidthsForScreenSize =
-        colWidths?.[isSmallScreen ? 'small' : 'large'];
-
-      if (Array.isArray(colWidthsForScreenSize)) {
-        return parseInt(colWidthsForScreenSize[index], 10) !== 0;
-      }
-
-      return true;
-    }
-  );
+  displayPropEntries = Array.isArray(colWidthsForScreenSize)
+    ? displayPropEntries.filter(
+        (_entry, index) => parseInt(colWidthsForScreenSize[index], 10) !== 0
+      )
+    : displayPropEntries;
 
   return (
     <>
