@@ -68,7 +68,7 @@ export async function fetchZaakByKey(
     key: string;
     includeProperties?: '1';
     selectFields?: string;
-    subType: (typeof ZAAK_SUB_TYPE)[number];
+    subType?: (typeof ZAAK_SUB_TYPE)[number];
   }>,
   res: Response
 ) {
@@ -96,7 +96,8 @@ export async function fetchZaakByKey(
   const response = await fetchDecosZaakByKeyFromSourceRaw(
     key,
     selectFields,
-    req.query.includeProperties === '1'
+    req.query.includeProperties === '1',
+    req.query.subType
   );
 
   return sendResponse(res, response);
