@@ -472,10 +472,19 @@ async function fetchZakenByUserKey(
   return responseSource;
 }
 
+export const ZAAK_SUB_TYPE = [
+  'documents',
+  'workflows',
+  'addresses',
+  'cobjects',
+  'casetype',
+] as const;
+
 export async function fetchDecosZaakByKeyFromSourceRaw(
   key: DecosZaakBase['key'],
   selectFields?: string,
-  includeProperties: boolean = false
+  includeProperties: boolean = false,
+  subType?: (typeof ZAAK_SUB_TYPE)[number]
 ) {
   const queryParams = new URLSearchParams({
     properties: includeProperties ? 'true' : 'false',
@@ -484,7 +493,7 @@ export async function fetchDecosZaakByKeyFromSourceRaw(
 
   const apiConfig = getApiConfig('DECOS_API', {
     formatUrl: (config) => {
-      return `${config.url}/items/${key}`;
+      return `${config.url}/items/${key}${subType ? `/${subType}` : ''}`;
     },
     params: Object.fromEntries(queryParams),
   });

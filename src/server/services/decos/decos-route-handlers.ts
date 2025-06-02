@@ -5,6 +5,7 @@ import {
   fetchDecosDocumentList,
   fetchDecosZaakByKeyFromSourceRaw,
   fetchDecosZakenFromSourceRaw,
+  ZAAK_SUB_TYPE,
 } from './decos-service';
 import { DecosZaakBase } from './decos-types';
 import {
@@ -67,6 +68,7 @@ export async function fetchZaakByKey(
     key: string;
     includeProperties?: '1';
     selectFields?: string;
+    subType: (typeof ZAAK_SUB_TYPE)[number];
   }>,
   res: Response
 ) {
@@ -80,6 +82,10 @@ export async function fetchZaakByKey(
 
   if (!key) {
     return sendBadRequest(res, 'Invalid key');
+  }
+
+  if (req.query.subType && !ZAAK_SUB_TYPE.includes(req.query.subType)) {
+    return sendBadRequest(res, 'Invalid subType');
   }
 
   const selectFields =
