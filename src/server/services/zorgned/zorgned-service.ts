@@ -199,12 +199,11 @@ export async function fetchAndMergeRelatedPersons(
     zorgnedAanvragenTransformed.flatMap(
       (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
     )
-    // Betrokkenen includes the BSN of the one requesting.
-    // This makes no sense, so we filter it out.
-  ).filter((bsnBetrokkene) => bsnBetrokkene !== bsnAanvrager);
+  );
 
   const relatedPersonsResponse = await fetchRelatedPersons(
-    bsns,
+    // The one requesting is not a related person, so we filter this out.
+    bsns.filter((bsnBetrokkene) => bsnBetrokkene !== bsnAanvrager),
     zorgnedApiConfigKey
   );
 
