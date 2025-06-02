@@ -43,7 +43,7 @@ describe('vergunningen', () => {
         decision: null,
         identifier: 'Z/123/123',
         title: '',
-        key: '',
+        key: 'x1',
         processed: false,
         statusDates: [],
         termijnDates: [],
@@ -67,10 +67,12 @@ describe('vergunningen', () => {
         displayStatus: 'FooBar',
         fetchDocumentsUrl:
           'http://bff-api-host/api/v1/services/decos/documents?id=xxx',
+        fetchSourceRaw:
+          'http://bff-api-host/api/v1/services/decos/zaak-raw?key=x1',
         id: '1',
         identifier: 'Z/123/123',
         isVerleend: false,
-        key: '',
+        key: 'x1',
         link: {
           title: 'Bekijk hoe het met uw aanvraag staat',
           to: '/vergunningen/1',
