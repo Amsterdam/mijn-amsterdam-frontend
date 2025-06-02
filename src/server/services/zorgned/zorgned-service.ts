@@ -188,6 +188,7 @@ export async function fetchAanvragen(
 }
 
 export async function fetchAndMergeRelatedPersons(
+  bsnAanvrager: BSN,
   zorgnedApiConfigKey: ZorgnedApiConfigKey,
   zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>,
   partnernaam: string | null
@@ -198,7 +199,7 @@ export async function fetchAndMergeRelatedPersons(
     zorgnedAanvragenTransformed.flatMap(
       (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
     )
-  );
+  ).filter((bsnBetrokkene) => bsnBetrokkene !== bsnAanvrager);
 
   const relatedPersonsResponse = await fetchRelatedPersons(
     bsns,
@@ -241,18 +242,19 @@ export async function fetchAndMergeRelatedPersons(
 }
 
 export async function fetchAanvragenWithRelatedPersons(
-  bsn: BSN,
+  bsnAanvrager: BSN,
   options: ZorgnedAanvragenServiceOptions
 ) {
-  const zorgnedAanvragenResponse = await fetchAanvragen(bsn, options);
+  const zorgnedAanvragenResponse = await fetchAanvragen(bsnAanvrager, options);
 
   if (zorgnedAanvragenResponse.status === 'OK') {
     const persoonsgegevensNAW = await fetchPersoonsgegevensNAW(
-      bsn,
+      bsnAanvrager,
       options.zorgnedApiConfigKey
     );
 
     return fetchAndMergeRelatedPersons(
+      bsnAanvrager,
       options.zorgnedApiConfigKey,
       zorgnedAanvragenResponse,
       persoonsgegevensNAW.content?.persoon?.partnernaam ?? null
