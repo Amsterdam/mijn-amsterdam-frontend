@@ -115,11 +115,13 @@ exports[`<Burgerzaken /> > Renders without crashing 1`] = `
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Type
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Geldig tot
               </th>

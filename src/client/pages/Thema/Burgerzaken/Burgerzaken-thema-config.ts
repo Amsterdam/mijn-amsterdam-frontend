@@ -3,18 +3,18 @@ import { generatePath } from 'react-router';
 import type { IdentiteitsbewijsFrontend } from '../../../../server/services/profile/brp.types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
-const displayPropsBase: DisplayProps<
-  WithDetailLinkComponent<IdentiteitsbewijsFrontend>
-> = {
-  detailLinkComponent: 'Type',
-  datumAfloopFormatted: 'Geldig tot',
+const displayProps: DisplayProps<IdentiteitsbewijsFrontend> = {
+  props: {
+    detailLinkComponent: 'Type',
+    datumAfloopFormatted: 'Geldig tot',
+  },
+  colWidths: {
+    large: ['50%', '50%'],
+    small: ['100%', '0'],
+  },
 };
 
 export const listPageParamKind = {
@@ -47,10 +47,6 @@ export const routeConfig = {
     documentTitle: `${themaTitle} | overzicht`,
   },
 } as const satisfies ThemaRoutesConfig;
-
-const displayProps = withOmitDisplayPropsForSmallScreens(displayPropsBase, [
-  'datumAfloopFormatted',
-]);
 
 export const tableConfig = {
   [listPageParamKind.identiteitsbewijzen]: {

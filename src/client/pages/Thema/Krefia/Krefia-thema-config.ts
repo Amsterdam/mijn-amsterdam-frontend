@@ -1,8 +1,5 @@
 import type { KrefiaDeepLink } from '../../../../server/services/krefia/krefia.types';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import type { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const featureToggle = {
@@ -19,9 +16,7 @@ export const routeConfig = {
   },
 } as const satisfies ThemaRoutesConfig;
 
-const displayPropsDeeplink: DisplayProps<
-  WithDetailLinkComponent<KrefiaDeepLink>
-> = {
+const displayPropsDeeplink: DisplayProps<KrefiaDeepLink> = {
   displayStatus: 'Status',
   detailLinkComponent: 'Bekijk op Krefia',
 };

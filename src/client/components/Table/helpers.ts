@@ -1,20 +1,19 @@
-import { DisplayProps } from './TableV2.types';
-import { omit } from '../../../universal/helpers/utils';
+import {
+  DisplayProps,
+  type DisplayPropsBase,
+  type TableV2ColWidths,
+} from './TableV2.types';
 
-export function withOmitDisplayPropsForSmallScreens<
-  T extends DisplayProps<object>,
->(displayProps: T, omitKeysForSmallScreens: Array<keyof T>) {
-  return {
-    ...displayProps,
-    smallscreen: omit(displayProps, omitKeysForSmallScreens),
-  };
+export function getDisplayProps<T extends DisplayProps<object>>(
+  displayProps: T
+): DisplayPropsBase<T> {
+  return 'props' in displayProps
+    ? displayProps.props
+    : (displayProps as DisplayPropsBase<T>);
 }
 
-export function getDisplayPropsForScreenSize<T extends DisplayProps<object>>(
-  displayProps: T,
-  isSmallScreen: boolean
-) {
-  return 'smallscreen' in displayProps && isSmallScreen
-    ? displayProps.smallscreen
-    : omit(displayProps, ['smallscreen']);
+export function getDisplayPropsColWidths<T extends DisplayProps<object>>(
+  displayProps: T
+): TableV2ColWidths | undefined {
+  return 'colWidths' in displayProps ? displayProps.colWidths : undefined;
 }

@@ -242,11 +242,13 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 80%;"
               >
                 Regeling
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 20%;"
               >
                 Naam ontvanger
               </th>
