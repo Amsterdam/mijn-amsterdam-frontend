@@ -12,6 +12,12 @@ export function useVergunningenDetailData<T extends VergunningFrontend>(
   const { documents, isError, isLoading } =
     useVergunningDocumentList(fetchDocumentsUrl);
 
+  if (vergunning?.fetchSourceRaw) {
+    // Utility url
+    // eslint-disable-next-line no-console
+    console.info(`Decos data: ${vergunning.fetchSourceRaw}`);
+  }
+
   return {
     vergunning,
     isErrorDocuments: isError,

@@ -39,6 +39,7 @@ import type {
   DecosZaakFrontend,
   WithDateRange,
 } from './decos-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   ApiErrorResponse,
   apiErrorResult,
@@ -931,6 +932,13 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
   };
+
+  if (!IS_PRODUCTION) {
+    zaakFrontend.fetchSourceRaw = generateFullApiUrlBFF(
+      BffEndpoints.DECOS_ZAAK_BY_KEY_RAW,
+      [{ key: zaak.key }]
+    );
+  }
 
   if (options.includeFetchDocumentsUrl) {
     const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
