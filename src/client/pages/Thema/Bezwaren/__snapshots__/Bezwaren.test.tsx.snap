@@ -406,16 +406,19 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             >
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Zaaknummer
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 25%;"
               >
                 Ontvangen op
               </th>
               <th
                 class="ams-table__header-cell"
+                style="width: 50%;"
               >
                 Onderwerp
               </th>

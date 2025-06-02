@@ -3,11 +3,7 @@ import { generatePath } from 'react-router';
 import { LoodMetingFrontend } from '../../../../server/services/bodem/types';
 import { dateSort } from '../../../../universal/helpers/date';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
@@ -47,27 +43,29 @@ export const routeConfig = {
 export type ListPageParamKey = keyof typeof listPageParamKind;
 export type ListPageParamKind = (typeof listPageParamKind)[ListPageParamKey];
 
-const displayPropsLopend = withOmitDisplayPropsForSmallScreens<
-  DisplayProps<WithDetailLinkComponent<LoodMetingFrontend>>
->(
-  {
+const displayPropsLopend: DisplayProps<LoodMetingFrontend> = {
+  props: {
     detailLinkComponent: 'Adres',
     datumAanvraagFormatted: 'Aangevraagd op',
     displayStatus: 'Status',
   },
-  ['displayStatus', 'datumAanvraagFormatted']
-);
+  colWidths: {
+    large: ['25%', '25%', '50%'],
+    small: ['100%', '0', '0'],
+  },
+};
 
-const displayPropsEerder = withOmitDisplayPropsForSmallScreens<
-  DisplayProps<WithDetailLinkComponent<LoodMetingFrontend>>
->(
-  {
+const displayPropsEerder: DisplayProps<LoodMetingFrontend> = {
+  props: {
     detailLinkComponent: 'Adres',
     datumAfgehandeldFormatted: 'Afgehandeld op',
     decision: 'Resultaat',
   },
-  ['decision', 'datumAfgehandeldFormatted']
-);
+  colWidths: {
+    large: ['25%', '25%', '50%'],
+    small: ['100%', '0', '0'],
+  },
+};
 
 export const tableConfig = {
   [listPageParamKind.inProgress]: {

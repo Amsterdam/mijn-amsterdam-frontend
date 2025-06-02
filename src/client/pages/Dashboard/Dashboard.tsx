@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router';
 
 import { DASHBOARD_PAGE_DOCUMENT_TITLE } from './Dashboard-config';
 import styles from './Dashboard.module.scss';
+import { DashboardHeader } from './DashboardHeader';
 import { WelcomeHeading } from './WelcomHeading';
 import { isLoading } from '../../../universal/helpers/api';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
@@ -17,7 +18,7 @@ import {
   PageContentV2,
   PageV2,
 } from '../../components/Page/Page';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
@@ -39,7 +40,7 @@ export function Dashboard() {
     MAX_NOTIFICATIONS_VISIBLE
   );
 
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
 
   const { items: myThemaItems, isLoading: isMyThemasLoading } =
     useThemaMenuItems();
@@ -52,9 +53,12 @@ export function Dashboard() {
 
   return (
     <PageV2 className={styles.Dashboard}>
-      <PageContentV2>
-        <WelcomeHeading />
-        <PageContentCell spanWide={6}>
+      {!isPhoneScreen && <DashboardHeader />}
+      <PageContentV2 id="skip-to-id-AppContent">
+        <PageContentCell startWide={2} spanWide={10}>
+          <WelcomeHeading />
+        </PageContentCell>
+        <PageContentCell startWide={2} spanWide={5}>
           <Heading level={2} size="level-3" className="ams-mb-m">
             Recente berichten{' '}
             {total > notifications.length && (
@@ -62,7 +66,7 @@ export function Dashboard() {
                 className={styles.LinkToNotifications}
                 href={myNotificationsMenuItem.to}
               >
-                Alle updates
+                Toon alle
               </MaRouterLink>
             )}
           </Heading>

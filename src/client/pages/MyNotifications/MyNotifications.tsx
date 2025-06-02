@@ -52,7 +52,7 @@ export function MyNotificationsPage() {
         <PageContentCell>
           {isError(NOTIFICATIONS) && (
             <ErrorAlert className="ams-mb-m">
-              Niet alle updates kunnen op dit moment worden getoond.
+              Niet alle berichten kunnen op dit moment worden getoond.
             </ErrorAlert>
           )}
           {total > PAGE_SIZE && (

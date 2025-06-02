@@ -102,9 +102,9 @@ describe('predicates', () => {
         [false, '2004-07-26'],
         [false, '2005-05-01'],
         [false, '2022-08-27'],
-      ])('should return %s for birthday %s', (expexted, birthday) => {
+      ])('should return %s for birthday %s', (expected, birthday) => {
         const appState = getMockAppState(birthday);
-        expect(is18OrOlder(appState)).toBe(expexted);
+        expect(is18OrOlder(appState)).toBe(expected);
       });
     });
 

@@ -6,7 +6,7 @@ import Map from './Map/Map';
 import styles from './MyAreaDashboard.module.scss';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import { BAGData } from '../../../server/services/bag/bag';
+import { BAGData } from '../../../server/services/bag/bag.types';
 import { HOOD_ZOOM } from '../../../universal/config/myarea-datasets';
 import { isLoading } from '../../../universal/helpers/api';
 import { getFullAddress } from '../../../universal/helpers/brp';

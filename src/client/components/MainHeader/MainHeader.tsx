@@ -11,7 +11,7 @@ import { ProfileName } from './ProfileName';
 import { SearchBar } from './SearchBar';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { LOGOUT_URL } from '../../config/api';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
@@ -51,7 +51,7 @@ export function MainHeaderSecondaryLinks({
           title="Ga naar persoonlijke gegevens"
         >
           <span className={styles.ProfileNameInner}>
-            <ProfileName fallbackName="Profiel" />
+            <ProfileName fallbackName="Mijn gegevens" />
           </span>
         </MaRouterLink>
       </Wrap>
@@ -72,7 +72,7 @@ export function MainHeaderSecondaryLinks({
 function MainHeaderLinks() {
   const [isSearchActive, setSearchActive] = useSearchActive();
   const isDisplayLiveSearch = useDisplayLiveSearch();
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
 
   return (
     <>

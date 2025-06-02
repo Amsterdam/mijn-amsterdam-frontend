@@ -69,10 +69,10 @@ export function generateSearchIndexPageEntry(
     }
 
     if (prop === 'keywords' || prop === 'generateKeywords') {
-      // @ts-expect-error
+      // @ts-expect-error TODO: properly type this
       searchEntry.keywords = [...(searchEntry.keywords || []), ...value];
     } else if (prop === 'keywordsGeneratedFromProps') {
-      // @ts-expect-error
+      // @ts-expect-error TODO: properly type this
       const generatedKeywordValues = Object.values(pick(item, value));
       searchEntry.keywords = [
         ...(searchEntry.keywords || []),
@@ -80,7 +80,7 @@ export function generateSearchIndexPageEntry(
       ] as string[];
     } else {
       const key: keyof SearchEntry = prop;
-      // @ts-expect-error
+      // @ts-expect-error TODO: properly type this
       searchEntry[key] = value;
     }
   }

@@ -131,7 +131,7 @@ describe('<Erfpacht/DossierDetail />', () => {
       }
       expect(screen.queryAllByText('Toon').length).toBe(3);
 
-      userEvent.click(screen.queryAllByText('Toon')[3]);
+      await userEvent.click(screen.queryAllByText('Toon')[3]);
     });
 
     test('Financien', async () => {

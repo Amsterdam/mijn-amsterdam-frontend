@@ -1,4 +1,5 @@
-import { BAGData, fetchBAG } from './bag';
+import { fetchBAG } from './bag';
+import { BAGData } from './bag.types';
 import {
   DEFAULT_LAT,
   DEFAULT_LNG,
@@ -32,6 +33,7 @@ async function fetchPrivate(
               lng: DEFAULT_LNG,
             },
             address: null,
+            bagAddress: null,
             profileType: 'private',
           },
         ]);
@@ -44,6 +46,7 @@ async function fetchPrivate(
       {
         latlng: null,
         address: null,
+        bagAddress: null,
         profileType: 'private',
       },
     ]);

@@ -2,11 +2,7 @@ import { generatePath } from 'react-router';
 
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
 import { LinkProps } from '../../../../universal/types/App.types';
-import { withOmitDisplayPropsForSmallScreens } from '../../../components/Table/helpers';
-import type {
-  DisplayProps,
-  WithDetailLinkComponent,
-} from '../../../components/Table/TableV2.types';
+import type { DisplayProps } from '../../../components/Table/TableV2.types';
 import {
   MAX_TABLE_ROWS_ON_THEMA_PAGINA,
   MAX_TABLE_ROWS_ON_THEMA_PAGINA_LOPEND,
@@ -44,18 +40,17 @@ export const LinkListItems: LinkProps[] = [
   },
 ];
 
-const displayPropsBezwarenBase: DisplayProps<
-  WithDetailLinkComponent<BezwaarFrontend>
-> = {
-  detailLinkComponent: 'Zaaknummer',
-  ontvangstdatumFormatted: 'Ontvangen op',
-  omschrijving: 'Onderwerp',
+const displayPropsBezwaren: DisplayProps<BezwaarFrontend> = {
+  props: {
+    detailLinkComponent: 'Zaaknummer',
+    ontvangstdatumFormatted: 'Ontvangen op',
+    omschrijving: 'Onderwerp',
+  },
+  colWidths: {
+    large: ['25%', '25%', '50%'],
+    small: ['50%', '0', '0'],
+  },
 };
-
-const displayPropsBezwaren = withOmitDisplayPropsForSmallScreens(
-  displayPropsBezwarenBase,
-  ['omschrijving', 'ontvangstdatumFormatted']
-);
 
 export const listPageParamKind = {
   lopend: 'lopende-bezwaren',

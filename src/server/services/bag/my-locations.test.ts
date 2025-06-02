@@ -79,6 +79,7 @@ describe('fetchPrivate', () => {
       content: [
         {
           address: null,
+          bagAddress: null,
           latlng: {
             lat: 52.3676842478192,
             lng: 4.90022569871861,
@@ -102,6 +103,7 @@ describe('fetchPrivate', () => {
     expect(result.content).toEqual([
       {
         address: null,
+        bagAddress: null,
         latlng: null,
         profileType: 'private',
       },

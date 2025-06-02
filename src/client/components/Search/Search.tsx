@@ -14,7 +14,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { SearchEntry, displayPath } from './search-config';
 import styles from './Search.module.scss';
 import { useSearchIndex, useSearchResults, useSearchTerm } from './useSearch';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateReady } from '../../hooks/useAppState';
 import { useKeyDown } from '../../hooks/useKey';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
@@ -159,7 +159,7 @@ export function Search({
   );
 
   const navigate = useNavigate();
-  const isPhoneScreen = usePhoneScreen();
+  const isPhoneScreen = useSmallScreen();
   const isAppStateReady = useAppStateReady();
 
   const onFinish = useCallback(
@@ -275,6 +275,8 @@ export function Search({
         >
           <input
             ref={searchBarRef}
+            name="searchinput"
+            type="text"
             className={styles.Input}
             autoComplete="none"
             autoCorrect="none"
