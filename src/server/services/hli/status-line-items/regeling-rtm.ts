@@ -42,7 +42,7 @@ export function filterCombineRtmData(
         // deel1 aanvraag that is not already in the $aanvragenDeel1Combined list.
         // This is ___MOST_LIKELY___ the deel1 aanvraag that is related to the current deel2 aanvraag.
         const precedingAanvragen = allAanvragen.slice(
-          index,
+          index + 1,
           allAanvragen.length
         );
         const regelingDeel1 = precedingAanvragen.find(
