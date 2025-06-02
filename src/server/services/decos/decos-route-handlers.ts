@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { SELECT_FIELDS_TRANSFORM_BASE } from './decos-field-transformers';
 import {
   fetchDecosDocumentList,
+  fetchDecosZaakByKeyFromSourceRaw,
   fetchDecosZakenFromSourceRaw,
 } from './decos-service';
 import { DecosZaakBase } from './decos-types';
@@ -59,6 +60,40 @@ function getUserIdsByUsernames(
         .filter(([username_]) => !username || username_ === username)
         .map(([_username, userID]) => userID)
     : [];
+}
+
+export async function fetchZaakByKey(
+  req: RequestWithQueryParams<{
+    key: string;
+    includeProperties?: '1';
+    selectFields?: string;
+  }>,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const key = req.query.key.replace(/[^A-Z0-9]/g, '');
+
+  if (!key) {
+    return sendBadRequest(res, 'Invalid key');
+  }
+
+  const selectFields =
+    req.query.selectFields === 'core'
+      ? Object.keys(SELECT_FIELDS_TRANSFORM_BASE).join(',')
+      : req.query.selectFields;
+
+  const response = await fetchDecosZaakByKeyFromSourceRaw(
+    key,
+    selectFields,
+    req.query.includeProperties === '1'
+  );
+
+  return sendResponse(res, response);
 }
 
 export async function fetchZakenByUserIDs(

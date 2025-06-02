@@ -471,6 +471,26 @@ async function fetchZakenByUserKey(
   return responseSource;
 }
 
+export async function fetchDecosZaakByKeyFromSourceRaw(
+  key: DecosZaakBase['key'],
+  selectFields?: string,
+  includeProperties: boolean = false
+) {
+  const queryParams = new URLSearchParams({
+    properties: includeProperties ? 'true' : 'false',
+    ...(selectFields && { select: selectFields }),
+  });
+
+  const apiConfig = getApiConfig('DECOS_API', {
+    formatUrl: (config) => {
+      return `${config.url}/items/${key}`;
+    },
+    params: Object.fromEntries(queryParams),
+  });
+
+  return requestData<DecosZaakSource>(apiConfig);
+}
+
 export async function fetchDecosZakenFromSourceRaw(
   authProfileAndToken: AuthProfileAndToken,
   selectFields?: string,
