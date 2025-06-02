@@ -193,6 +193,7 @@ export async function fetchAndMergeRelatedPersons(
   zorgnedAanvragenResponse: ApiSuccessResponse<ZorgnedAanvraagTransformed[]>,
   partnernaam: string | null
 ): Promise<ApiSuccessResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
+  console.log(`bsnAanvrager = ${bsnAanvrager}\n========`);
   const zorgnedAanvragenTransformed = zorgnedAanvragenResponse.content;
 
   const bsns = uniqueArray(
@@ -200,6 +201,9 @@ export async function fetchAndMergeRelatedPersons(
       (zorgnedAanvraagTransformed) => zorgnedAanvraagTransformed.betrokkenen
     )
   ).filter((bsnBetrokkene) => bsnBetrokkene !== bsnAanvrager);
+
+  console.log('bsns for fetchRelatedPersons\n==========');
+  console.log(bsns);
 
   const relatedPersonsResponse = await fetchRelatedPersons(
     bsns,
