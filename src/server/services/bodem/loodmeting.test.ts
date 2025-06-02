@@ -12,7 +12,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 
 vi.mock('../../routing/route-helpers.ts', async (importOriginal) => {
   return {
-    ...importOriginal,
+    ...(await importOriginal()),
     generateFullApiUrlBFF: () => 'https://document.doc',
   };
 });

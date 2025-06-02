@@ -8,6 +8,15 @@ import {
   apiErrorResult,
 } from '../../universal/helpers/api';
 import { BFF_API_BASE_URL } from '../config/app';
+import express from 'express';
+
+type BFFRouter = express.Router & { BFF_ID: string };
+
+export function createBFFRouter({ id: id }: { id: string }): BFFRouter {
+  const authRouterDevelopment = express.Router() as BFFRouter;
+  authRouterDevelopment.BFF_ID = id;
+  return authRouterDevelopment;
+}
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 export type RequestWithQueryParams<T extends Record<string, string>> = Request<

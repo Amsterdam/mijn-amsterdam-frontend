@@ -4,7 +4,11 @@ import { AccessToken } from 'express-openid-connect';
 import UID from 'uid-safe';
 
 import { DevelopmentRoutes, PREDEFINED_REDIRECT_URLS } from './bff-routes';
-import { sendBadRequest, sendUnauthorized } from './route-helpers';
+import {
+  createBFFRouter,
+  sendBadRequest,
+  sendUnauthorized,
+} from './route-helpers';
 import {
   testAccountsDigid,
   testAccountsEherkenning,
@@ -27,8 +31,7 @@ import { ONE_SECOND_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
 
-export const authRouterDevelopment = express.Router();
-authRouterDevelopment.BFF_ID = 'router-dev';
+export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 
 export async function createOIDCStub(
   req: Request,
