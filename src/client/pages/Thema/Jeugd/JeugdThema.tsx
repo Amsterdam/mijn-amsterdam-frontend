@@ -11,7 +11,19 @@ import {
   WMO_HELPDESK_HREF_TEL_LINK,
   WMO_HELPDESK_PHONENUMBER,
 } from '../Zorg/ZorgThema';
+import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/ParagraphSuppressed';
 
+export function HistoricItemsMention() {
+  return (
+    <ParagaphSuppressed>
+      U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van
+      daarvoor? Bel dan de Wmo Helpdesk:{' '}
+      <Link href={WMO_HELPDESK_HREF_TEL_LINK} rel="noreferrer">
+        {WMO_HELPDESK_PHONENUMBER}
+      </Link>
+    </ParagaphSuppressed>
+  );
+}
 export function JeugdThemaPagina() {
   const { isError, isLoading, voorzieningen, title, tableConfig, routeConfig } =
     useJeugdThemaData();
@@ -51,7 +63,14 @@ export function JeugdThemaPagina() {
       title={title}
       pageContentTop={pageContentTop}
       linkListItems={linkListItems}
-      pageContentMain={tables}
+      pageContentMain={
+        <>
+          {tables}
+          <PageContentCell spanWide={8} startWide={3}>
+            <HistoricItemsMention />
+          </PageContentCell>
+        </>
+      }
       isError={isError}
       isLoading={isLoading}
     />
