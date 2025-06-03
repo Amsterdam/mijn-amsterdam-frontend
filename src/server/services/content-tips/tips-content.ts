@@ -430,7 +430,7 @@ export const tips: ContentTipSource[] = [
       'Wanneer je kind 18 wordt, verandert er veel in zijn of haar leven. Er komt wat organisatie bij kijken.',
     predicates: [hasKidsBetweenAges17And19],
     reason:
-      'U ziet deze tip omdat u in Amsterdam woont en een kind heeft dat binnenkort 18 jaar wordt of net 18 is geworden.',
+      'U ziet deze tip omdat u een kind heeft dat binnenkort 18 jaar wordt of 18 jaar is.',
     link: {
       title: 'Bekijk hier een overzicht van de belangrijkste dingen',
       to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
@@ -449,8 +449,7 @@ export const tips: ContentTipSource[] = [
     description:
       'Er verandert veel als je 18 wordt. Je moet een aantal dingen regelen.',
     predicates: [isBetween17and19],
-    reason:
-      'Je ziet deze tip omdat je in Amsterdam woont en binnenkort 18 jaar wordt of net 18 bent geworden.',
+    reason: 'Je ziet deze tip omdat je 18 jaar wordt of  18 jaar bent.',
     link: {
       title:
         'Bekijk hier een lijst van de belangrijkste dingen die je zelf kunt regelen',
