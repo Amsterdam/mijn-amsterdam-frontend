@@ -75,12 +75,16 @@ const options: HTMLReactParserOptions = {
           </Heading>
         );
       }
-      case 'li':
+      case 'li': {
+        const parentTag = (domNode.parent as Element)?.name;
+        const ListItem =
+          parentTag === 'ol' ? OrderedList.Item : UnorderedList.Item;
         return (
-          <UnorderedList.Item {...attributesToProps(attribs)}>
+          <ListItem {...attributesToProps(attribs)}>
             {domToReact(children_, options)}
-          </UnorderedList.Item>
+          </ListItem>
         );
+      }
       case 'ul':
       case 'ol': {
         const List =
