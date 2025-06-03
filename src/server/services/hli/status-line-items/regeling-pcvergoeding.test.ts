@@ -365,6 +365,103 @@ describe('pcvergoeding', () => {
       ]);
     });
 
+    test('older aanvragen with zil codes do not conflict with new ones', () => {
+      const testData = [
+        {
+          id: 'new-2',
+          productIdentificatie: AV_PCVTG,
+          betrokkenen: ['B'],
+          datumBesluit: '2025-06-18',
+          datumAanvraag: '2025-04-18',
+          resultaat: 'toegewezen',
+          documenten: ['new-doc-2'],
+        },
+        {
+          id: 'historic-4',
+          productIdentificatie: AV_UPCZIL,
+          betrokkenen: ['C'],
+          datumBesluit: '2024-06-18',
+          datumAanvraag: '2024-04-18',
+          resultaat: 'toegewezen',
+          documenten: ['historic-doc-4'],
+        },
+        {
+          id: 'historic-3',
+          productIdentificatie: AV_UPCC,
+          betrokkenen: ['C'],
+          datumBesluit: '2024-05-18',
+          datumAanvraag: '2024-04-18',
+          isActueel: true,
+          documenten: ['historic-doc-3'],
+        },
+        {
+          id: 'new-1',
+          productIdentificatie: AV_PCVC,
+          betrokkenen: ['B'],
+          datumBesluit: '2025-05-18',
+          datumAanvraag: '2025-04-18',
+          isActueel: true,
+          documenten: ['new-doc-1'],
+        },
+        {
+          id: 'historic-2',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          datumAanvraag: '2024-04-18',
+          resultaat: 'toegewezen',
+          documenten: ['historic-doc-2'],
+        },
+        {
+          id: 'historic-1',
+          productIdentificatie: AV_PCVC,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-05-18',
+          datumAanvraag: '2024-04-18',
+          isActueel: true,
+          documenten: ['historic-doc-1'],
+        },
+      ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+      const result = forTesting.filterCombineUpcPcvData(testData);
+
+      expect(result).toStrictEqual([
+        {
+          id: 'new-2',
+          productIdentificatie: AV_PCVTG,
+          betrokkenen: ['B'],
+          datumBesluit: '2025-06-18',
+          datumEindeGeldigheid: null,
+          datumAanvraag: '2025-04-18',
+          resultaat: 'toegewezen',
+          isActueel: true,
+          documenten: ['new-doc-2', 'new-doc-1'],
+        },
+        {
+          id: 'historic-4',
+          productIdentificatie: AV_UPCZIL,
+          betrokkenen: ['C'],
+          datumBesluit: '2024-06-18',
+          datumAanvraag: '2024-04-18',
+          datumEindeGeldigheid: null,
+          isActueel: true,
+          resultaat: 'toegewezen',
+          documenten: ['historic-doc-4', 'historic-doc-3'],
+        },
+        {
+          id: 'historic-2',
+          productIdentificatie: AV_PCVZIL,
+          betrokkenen: ['A'],
+          datumBesluit: '2024-06-18',
+          datumAanvraag: '2024-04-18',
+          resultaat: 'toegewezen',
+          isActueel: true,
+          datumEindeGeldigheid: null,
+          documenten: ['historic-doc-2', 'historic-doc-1'],
+        },
+      ]);
+    });
+
     test('excludes baseRegelingen that have verzilvering', () => {
       const testData = [
         {
