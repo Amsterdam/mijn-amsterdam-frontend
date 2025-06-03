@@ -122,7 +122,7 @@ const besluitLabels: WpiRequestStatusLabels = {
         </p><p>${LINK_MEER_INFO}</p>`;
 
       case 'beschikking':
-        return '<p>Wij hebben uw Bbz uitkering definitief berekend. Bekijk het besluit om te zien of u de uitkering mag houden of (voor een deel) moet terugbetalen.</p><p>${LINK_MEER_INFO}</p>';
+        return `<p>Wij hebben uw Bbz uitkering definitief berekend. Bekijk het besluit om te zien of u de uitkering mag houden of (voor een deel) moet terugbetalen.</p><p>${LINK_MEER_INFO}</p>`;
 
       default:
         return tozoRequestProcess.besluit.description(

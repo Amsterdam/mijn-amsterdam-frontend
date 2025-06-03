@@ -50,7 +50,6 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
-import { parseHTML } from '../../helpers/html-react-parse';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
@@ -171,7 +170,15 @@ export function displayPath(
               }
             });
           }
-          return parseHTML(segmentReplaced);
+          return (
+            <span
+              key={segment}
+              className={styles.DisplayPathSegment}
+              dangerouslySetInnerHTML={{
+                __html: segmentReplaced,
+              }}
+            />
+          );
         })}
       </span>
     </>

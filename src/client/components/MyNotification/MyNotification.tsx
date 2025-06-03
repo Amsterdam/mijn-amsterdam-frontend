@@ -53,7 +53,9 @@ export function MyNotification({
         </div>
       </header>
       <div className={styles.Body}>
-        {notification.description && (
+        {notification.description?.includes('<p') ? (
+          parseHTML(notification.description)
+        ) : (
           <Paragraph className="ams-mb-s">
             {parseHTML(notification.description)}
           </Paragraph>

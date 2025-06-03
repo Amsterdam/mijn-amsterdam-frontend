@@ -58,7 +58,7 @@ const options: HTMLReactParserOptions = {
       }
       case 'p':
         return (
-          <Paragraph {...withClassNames(attribs, 'ams-mb-m')}>
+          <Paragraph {...withClassNames(attribs, 'ams-mb-s')}>
             {domToReact(children_, options)}
           </Paragraph>
         );
