@@ -54,7 +54,8 @@
 }
 
 .AfvalFractionPanelHighlight {
-  border: 2px solid var(--ams-alert-warning-border-color);
+  border: 2px solid var(--ams-color-feedback-warning);
   padding: var(--ams-space-m);
   margin-top: var(--ams-space-m) !important;
+  font-weight: var(--ams-typography-body-text-bold-font-weight);
 }
