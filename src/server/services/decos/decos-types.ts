@@ -267,4 +267,6 @@ export type DecosZaakFrontend<T extends DecosZaakBase = DecosZaakBase> =
     isExpired?: boolean;
     // Url to fetch documents for a specific Zaak.
     fetchDocumentsUrl?: string;
+    // Url to fetch the raw data for a specific Zaak.
+    fetchSourceRaw?: string;
   } & ZaakDetail;

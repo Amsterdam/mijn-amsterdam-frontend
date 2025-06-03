@@ -39,6 +39,7 @@ import type {
   DecosZaakFrontend,
   WithDateRange,
 } from './decos-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import {
   ApiErrorResponse,
   apiErrorResult,
@@ -469,6 +470,35 @@ async function fetchZakenByUserKey(
   });
 
   return responseSource;
+}
+
+export const ZAAK_SUB_TYPE = [
+  'documents',
+  'workflows',
+  'addresses',
+  'cobjects',
+  'casetype',
+] as const;
+
+export async function fetchDecosZaakByKeyFromSourceRaw(
+  key: DecosZaakBase['key'],
+  selectFields?: string,
+  includeProperties: boolean = false,
+  subType?: (typeof ZAAK_SUB_TYPE)[number]
+) {
+  const queryParams = new URLSearchParams({
+    properties: includeProperties ? 'true' : 'false',
+    ...(selectFields && { select: selectFields }),
+  });
+
+  const apiConfig = getApiConfig('DECOS_API', {
+    formatUrl: (config) => {
+      return `${config.url}/items/${key}${subType ? `/${subType}` : ''}`;
+    },
+    params: Object.fromEntries(queryParams),
+  });
+
+  return requestData<DecosZaakSource>(apiConfig);
 }
 
 export async function fetchDecosZakenFromSourceRaw(
@@ -911,6 +941,13 @@ export function transformDecosZaakFrontend<T extends DecosZaakBase>(
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
   };
+
+  if (!IS_PRODUCTION) {
+    zaakFrontend.fetchSourceRaw = generateFullApiUrlBFF(
+      BffEndpoints.DECOS_ZAAK_BY_KEY_RAW,
+      [{ key: zaak.key }]
+    );
+  }
 
   if (options.includeFetchDocumentsUrl) {
     const idEncrypted = encryptSessionIdWithRouteIdParam(sessionID, zaak.key);
