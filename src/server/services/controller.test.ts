@@ -9,7 +9,7 @@ import {
   vi,
 } from 'vitest';
 
-import { fetchCMSCONTENT } from './cms/cms-content';
+import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
 import {
   addServiceResultHandler,
   forTesting,
@@ -41,7 +41,7 @@ const mocks = vi.hoisted(() => {
 
 vi.mock('./cms/cms-content', () => {
   return {
-    fetchCMSCONTENT: vi.fn(),
+    fetchMijnAmsterdamUitlegPage: vi.fn(),
   };
 });
 
@@ -191,9 +191,7 @@ describe('request handlers', () => {
 
       await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchCMSCONTENT).toHaveBeenCalledWith({
-        profileType: 'private',
-      });
+      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith('private');
     });
 
     test('profileType: commercial', async () => {
@@ -206,9 +204,7 @@ describe('request handlers', () => {
 
       await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchCMSCONTENT).toHaveBeenCalledWith({
-        profileType: 'commercial',
-      });
+      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith('commercial');
     });
 
     test('arbitrary query params are passed', async () => {
@@ -223,10 +219,7 @@ describe('request handlers', () => {
 
       await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchCMSCONTENT).toHaveBeenCalledWith({
-        profileType: 'commercial',
-        forceRenew: 'true',
-      });
+      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith('commercial');
     });
   });
 });
