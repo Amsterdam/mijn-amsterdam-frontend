@@ -9,8 +9,6 @@ export const BffEndpoints = {
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
-  CMS_CONTENT: '/services/cms',
-  FOOTER: '/services/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/admin/cache',
   LOGIN_STATS: '/admin/visitors/:authMethod?',
@@ -99,9 +97,7 @@ export const PUBLIC_BFF_ENDPOINTS: string[] = [
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
   ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   BffEndpoints.STATUS_HEALTH,
-  BffEndpoints.CMS_CONTENT,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
-  BffEndpoints.FOOTER,
   BffEndpoints.TELEMETRY_PROXY,
 ];
 

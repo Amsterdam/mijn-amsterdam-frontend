@@ -112,7 +112,6 @@ export type SourceApiKey =
   | 'BEZWAREN_STATUS'
   | 'BRP'
   | 'CLEOPATRA'
-  | 'CMS_CONTENT_FOOTER'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'DECOS_API'
@@ -280,12 +279,6 @@ export const ApiConfig: ApiDataRequestConfig = {
     // eslint-disable-next-line no-magic-numbers
     cacheTimeout: 4 * ONE_HOUR_MS,
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen`,
-  },
-  CMS_CONTENT_FOOTER: {
-    url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
-    // eslint-disable-next-line no-magic-numbers
-    cacheTimeout: 4 * ONE_HOUR_MS,
-    postponeFetch: !FeatureToggle.useCMSFooterStaticDataBackup,
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,

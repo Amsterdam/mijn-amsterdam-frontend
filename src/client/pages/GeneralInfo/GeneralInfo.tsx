@@ -18,7 +18,7 @@ export function GeneralInfo() {
   });
 
   const { CMS_CONTENT } = useAppStateGetter();
-  const generalInfo = CMS_CONTENT.content?.generalInfo;
+  const generalInfo = CMS_CONTENT.content;
 
   return (
     <TextPageV2>

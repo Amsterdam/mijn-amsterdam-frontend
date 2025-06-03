@@ -13,16 +13,24 @@ import {
 import { ChevronRightIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 
+import footerData from './amsterdam-nl-footer-data.json';
 import styles from './MainFooter.module.scss';
-import type {
-  AstNode,
-  CMSFooterContent,
-  FooterBlock as FooterBlockProps,
-} from '../../../server/services/cms/cms-content';
-import { useCMSApi } from '../../hooks/api/useCmsApi';
-import { useAppStateGetter } from '../../hooks/useAppState';
+import type { AstNode } from '../../../server/services/cms/cms-content';
+import type { LinkProps } from '../../../universal/types/App.types';
 
-function FooterBlock({ id, title, links, description }: FooterBlockProps) {
+type FooterBlock = {
+  id: string;
+  title: string;
+  description: AstNode[] | null;
+  links: LinkProps[];
+};
+
+type CMSFooterContent = {
+  blocks: FooterBlock[];
+  sub: LinkProps[];
+};
+
+function FooterBlock({ id, title, links, description }: FooterBlock) {
   return (
     <Grid.Cell key={title} span={4}>
       <Heading color="inverse" level={4} className="ams-mb-s">
@@ -108,17 +116,8 @@ function getEl(baseId: string, astElement: AstNode | AstNode[]): ReactNode {
   }
 }
 
-export function MainFooter({
-  isAuthenticated = false,
-}: {
-  isAuthenticated?: boolean;
-}) {
-  const appState = useAppStateGetter();
-  const { CMS_CONTENT } = appState;
-  const footer: CMSFooterContent | null = CMS_CONTENT.content?.footer || null;
-
-  // Calls CMS service for non-authenticated users, doesn't call the service for authenticated users, footer data will come from the services/stream endpoint in this case.
-  useCMSApi(isAuthenticated);
+export function MainFooter() {
+  const footer: CMSFooterContent | null = footerData;
 
   return (
     <PageFooter>

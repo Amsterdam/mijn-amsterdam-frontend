@@ -17,7 +17,7 @@ import { fetchAVG } from './avg/avg';
 import { fetchMyLocation } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchCMSCONTENT } from './cms/cms-content';
+import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
 import { fetchHLI } from './hli/hli';
@@ -108,10 +108,7 @@ export function addServiceResultHandler<
 // Public services
 const CMS_CONTENT = (req: Request) => {
   const auth = getAuth(req);
-  return fetchCMSCONTENT({
-    profileType: auth?.profile.profileType,
-    ...queryParams(req),
-  });
+  return fetchMijnAmsterdamUitlegPage(auth?.profile.profileType);
 };
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual

@@ -29,47 +29,13 @@ import {
 } from '../services/buurt/buurt';
 import { getDatasetEndpointConfig } from '../services/buurt/helpers';
 import { loadClusterDatasets } from '../services/buurt/supercluster';
-import {
-  fetchCMSCONTENT,
-  QueryParamsCMSFooter,
-  fetchCmsFooter,
-  fetchSearchConfig,
-} from '../services/cms/cms-content';
+import { fetchSearchConfig } from '../services/cms/cms-content';
 import {
   fetchMaintenanceNotificationsActual,
   QueryParamsMaintenanceNotifications,
 } from '../services/cms/cms-maintenance-notifications';
 
 export const router = express.Router();
-
-/**
- * Endpoint that serves CMS related content like Footer link/test content and Page data.
- */
-router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
-  try {
-    const response = await fetchCMSCONTENT(
-      queryParams<QueryParamsCMSFooter>(req)
-    );
-    return res.json(response);
-  } catch (error) {
-    next(error);
-  }
-});
-/**
- * This endpoint serves the Footer content, transformed to AST, only.
- * A query parameters
- * - forceRenew=true Forces the underlying service cache to be renewed
- */
-router.get(BffEndpoints.FOOTER, async (req, res, next) => {
-  try {
-    const response = await fetchCmsFooter(
-      queryParams<QueryParamsCMSFooter>(req)
-    );
-    return res.json(response);
-  } catch (error) {
-    next(error);
-  }
-});
 
 /**
  * Serves the maintenance and outage notifications.
@@ -92,7 +58,7 @@ router.get(
   BffEndpoints.SEARCH_CONFIG,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const response = await fetchSearchConfig(queryParams(req));
+      const response = await fetchSearchConfig();
       return res.json(response);
     } catch (error) {
       next(error);

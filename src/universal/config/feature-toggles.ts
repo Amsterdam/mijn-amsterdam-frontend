@@ -29,8 +29,6 @@ export const FeatureToggle = {
   // Loodmetingen
   bodemActive: true,
 
-  useCMSFooterStaticDataBackup: true,
-
   // Database
   dbSessionsEnabled: true,
 
