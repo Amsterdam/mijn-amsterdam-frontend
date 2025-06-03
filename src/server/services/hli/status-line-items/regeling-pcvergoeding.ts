@@ -35,25 +35,35 @@ function isPcVergoeding(
   );
 }
 
+const verzilveringToRegelingCodeMap: {
+  actual: Record<string, string>;
+  historic: Record<string, string>;
+} = {
+  actual: {
+    [AV_PCVTG]: AV_PCVC,
+    [AV_UPCTG]: AV_UPCC,
+  },
+  historic: {
+    [AV_PCVZIL]: AV_PCVC,
+    [AV_UPCZIL]: AV_UPCC,
+  },
+};
+
 function isRegelingVanVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   const aanvraagProductId = aanvraag.productIdentificatie;
+  if (!aanvraagProductId) {
+    return false;
+  }
+
   let avCode;
 
   if (isAfter(new Date(aanvraag.datumAanvraag), new Date('2024-12-31'))) {
-    if (aanvraagProductId === AV_PCVTG) {
-      avCode = AV_PCVC;
-    } else if (aanvraagProductId === AV_UPCTG) {
-      avCode = AV_UPCC;
-    }
+    avCode = verzilveringToRegelingCodeMap.actual[aanvraagProductId];
   } else {
-    if (aanvraagProductId === AV_PCVZIL) {
-      avCode = AV_PCVC;
-    } else if (aanvraagProductId === AV_UPCZIL) {
-      avCode = AV_UPCC;
-    }
+    avCode = verzilveringToRegelingCodeMap.historic[aanvraagProductId];
   }
 
   return (
