@@ -298,10 +298,12 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           severity="error"
           headingLevel={4}
         >
-          Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
-          <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
-            {PHONENUMBERS.WerkEnInkomen}
-          </Link>
+          <Paragraph>
+            Probeer het later nog eens. Als dit niet lukt bel dan naar{' '}
+            <Link href={`tel:${PHONENUMBERS.WerkEnInkomen}`}>
+              {PHONENUMBERS.WerkEnInkomen}
+            </Link>
+          </Paragraph>
         </Alert>
       )}
       {isMutating ? (
@@ -432,7 +434,7 @@ function UnblockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
           severity="error"
           headingLevel={4}
         >
-          Probeer het nog eens.
+          <Paragraph>Probeer het nog eens.</Paragraph>
         </Alert>
       )}
       {isMutating ? (

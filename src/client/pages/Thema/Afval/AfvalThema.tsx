@@ -241,13 +241,18 @@ export function AfvalThemaPagina() {
                   heading="Bedrijfsafval informatie"
                   className="ams-mb-m"
                 >
-                  Let op deze regels gaan over uw woonadres.
-                  <br />
-                  Lees hier{' '}
-                  <Link href={links.AFVAL_COMMERCIAL} rel="noopener noreferrer">
-                    regels over bedrijfsafval in Amsterdam
-                  </Link>
-                  .
+                  <Paragraph>
+                    Let op deze regels gaan over uw woonadres.
+                    <br />
+                    Lees hier{' '}
+                    <Link
+                      href={links.AFVAL_COMMERCIAL}
+                      rel="noopener noreferrer"
+                    >
+                      regels over bedrijfsafval in Amsterdam
+                    </Link>
+                    .
+                  </Paragraph>
                 </Alert>
               )}
               <LinkList>
