@@ -144,16 +144,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CacheResponse'
-  /services/cms:
-    get:
-      description: Endpoint used to retrieve data from the CMS.
-      responses:
-        '200':
-          description: Returns an object with CMS data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CmsResponse'
   /services/cms/maintenance-notifications:
     get:
       description: Endpoint used to retrieve maintenance notifications.
@@ -382,39 +372,6 @@ components:
           type: array
           items:
             type: string
-    CmsResponse:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/CmsData'
-        status:
-          type: string
-          enum:
-            - 'OK'
-            - 'ERROR'
-        id:
-          type: string
-        failedDependencies:
-          $ref: '#/components/schemas/FailedDependencies'
-    CmsData:
-      type: object
-      properties:
-        generalInfo:
-          type: object
-          properties:
-            title:
-              type: string
-            content:
-              type: string
-        footer:
-          type: object
-          properties:
-            blocks:
-              type: array
-              items: {}
-            sub:
-              type: array
-              items: {}
     CmsMaintenanceResponse:
       type: object
       properties:

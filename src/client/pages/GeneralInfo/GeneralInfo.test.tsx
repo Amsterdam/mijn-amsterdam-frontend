@@ -12,10 +12,8 @@ const testState = {
   CMS_CONTENT: {
     status: 'OK',
     content: {
-      generalInfo: {
-        content: '<p>Dingen! <a href="http://example.org">Linkje</a></p>',
-        title: 'Algemene info',
-      },
+      content: '<p>Dingen! <a href="http://example.org">Linkje</a></p>',
+      title: 'Algemene info',
     },
   },
 };

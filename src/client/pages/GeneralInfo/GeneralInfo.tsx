@@ -18,24 +18,24 @@ export function GeneralInfo() {
   });
 
   const { CMS_CONTENT } = useAppStateGetter();
-  const generalInfo = CMS_CONTENT.content;
+  const pageContent = CMS_CONTENT.content;
 
   return (
     <TextPageV2>
       <PageContentV2>
         <PageHeadingV2>
-          {generalInfo?.title || 'Over Mijn Amsterdam'}
+          {pageContent?.title || 'Over Mijn Amsterdam'}
         </PageHeadingV2>
         <PageContentCell>
           {(isError(CMS_CONTENT) ||
-            (generalInfo === null && !isLoading(CMS_CONTENT))) && (
+            (pageContent === null && !isLoading(CMS_CONTENT))) && (
             <ErrorAlert>
               We kunnen de inhoud van deze pagina nu niet weergeven.
             </ErrorAlert>
           )}
           {isLoading(CMS_CONTENT) && <LoadingContent />}
-          {generalInfo?.content && (
-            <InnerHtml>{generalInfo?.content}</InnerHtml>
+          {pageContent?.content && (
+            <InnerHtml>{pageContent?.content}</InnerHtml>
           )}
         </PageContentCell>
       </PageContentV2>
