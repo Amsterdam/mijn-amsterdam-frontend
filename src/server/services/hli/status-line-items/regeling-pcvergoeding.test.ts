@@ -1,7 +1,9 @@
 import {
   AV_PCVC,
+  AV_PCVTG,
   AV_PCVZIL,
   AV_UPCC,
+  AV_UPCTG,
   AV_UPCZIL,
   forTesting,
 } from './regeling-pcvergoeding';
@@ -9,38 +11,155 @@ import { ZorgnedAanvraagWithRelatedPersonsTransformed } from '../../zorgned/zorg
 
 describe('pcvergoeding', () => {
   describe('isRegelingVanVerzilvering', () => {
-    const testData = [
-      {
-        productIdentificatie: AV_UPCC,
-        betrokkenen: ['A'],
-      },
-      {
-        productIdentificatie: AV_UPCC,
-        betrokkenen: ['A'],
-        resultaat: 'afgewezen',
-      },
-      {
-        productIdentificatie: AV_UPCZIL,
-        betrokkenen: ['A'],
-      },
-      {
-        productIdentificatie: AV_UPCZIL,
-        betrokkenen: ['B'],
-      },
-    ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+    describe('Historic', () => {
+      test('AV_UPCZIL', () => {
+        const testData = [
+          {
+            productIdentificatie: AV_UPCC,
+            betrokkenen: ['A'],
+            datumAanvraag: '2024-01-01',
+          },
+          {
+            productIdentificatie: AV_UPCC,
+            betrokkenen: ['A'],
+            resultaat: 'afgewezen',
+            datumAanvraag: '2024-01-01',
+          },
+          {
+            productIdentificatie: AV_UPCZIL,
+            betrokkenen: ['A'],
+            datumAanvraag: '2024-01-01',
+          },
+          {
+            productIdentificatie: AV_UPCZIL,
+            betrokkenen: ['B'],
+            datumAanvraag: '2024-01-01',
+          },
+        ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
 
-    test('isRegelingVanVerzilvering', () => {
-      expect(
-        forTesting.isRegelingVanVerzilvering(testData[2], testData[0])
-      ).toBe(true);
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[0])
+        ).toBe(true);
 
-      expect(
-        forTesting.isRegelingVanVerzilvering(testData[2], testData[1])
-      ).toBe(false);
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[1])
+        ).toBe(false);
 
-      expect(
-        forTesting.isRegelingVanVerzilvering(testData[3], testData[0])
-      ).toBe(false);
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[3], testData[0])
+        ).toBe(false);
+      });
+      test('AV_PCVZIL', () => {
+        const testData = [
+          {
+            productIdentificatie: AV_PCVC,
+            betrokkenen: ['A'],
+            datumAanvraag: '2024-01-01',
+          },
+          {
+            productIdentificatie: AV_PCVC,
+            betrokkenen: ['A'],
+            resultaat: 'afgewezen',
+            datumAanvraag: '2024-01-01',
+          },
+          {
+            productIdentificatie: AV_PCVZIL,
+            betrokkenen: ['A'],
+            datumAanvraag: '2024-01-01',
+          },
+          {
+            productIdentificatie: AV_PCVZIL,
+            betrokkenen: ['B'],
+            datumAanvraag: '2024-01-01',
+          },
+        ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[0])
+        ).toBe(true);
+
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[1])
+        ).toBe(false);
+
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[3], testData[0])
+        ).toBe(false);
+      });
+    });
+    describe('Actual', () => {
+      test('AV_UPCTG', () => {
+        const testData = [
+          {
+            productIdentificatie: AV_UPCC,
+            betrokkenen: ['A'],
+            datumAanvraag: '2025-01-01',
+          },
+          {
+            productIdentificatie: AV_UPCC,
+            betrokkenen: ['A'],
+            resultaat: 'afgewezen',
+            datumAanvraag: '2025-01-01',
+          },
+          {
+            productIdentificatie: AV_UPCTG,
+            betrokkenen: ['A'],
+            datumAanvraag: '2025-01-01',
+          },
+          {
+            productIdentificatie: AV_UPCTG,
+            betrokkenen: ['B'],
+            datumAanvraag: '2025-01-01',
+          },
+        ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[0])
+        ).toBe(true);
+
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[1])
+        ).toBe(false);
+
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[3], testData[0])
+        ).toBe(false);
+      });
+      test('AV_PCVTG', () => {
+        const testData = [
+          {
+            productIdentificatie: AV_PCVC,
+            betrokkenen: ['A'],
+            datumAanvraag: '2025-01-01',
+          },
+          {
+            productIdentificatie: AV_PCVC,
+            betrokkenen: ['A'],
+            resultaat: 'afgewezen',
+            datumAanvraag: '2025-01-01',
+          },
+          {
+            productIdentificatie: AV_PCVTG,
+            betrokkenen: ['A'],
+            datumAanvraag: '2025-01-01',
+          },
+          {
+            productIdentificatie: AV_PCVTG,
+            betrokkenen: ['B'],
+            datumAanvraag: '2025-01-01',
+          },
+        ] as unknown as ZorgnedAanvraagWithRelatedPersonsTransformed[];
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[0])
+        ).toBe(true);
+
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[2], testData[1])
+        ).toBe(false);
+
+        expect(
+          forTesting.isRegelingVanVerzilvering(testData[3], testData[0])
+        ).toBe(false);
+      });
     });
   });
 

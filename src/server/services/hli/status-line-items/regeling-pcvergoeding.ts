@@ -1,4 +1,4 @@
-import { isSameDay, parseISO } from 'date-fns';
+import { isAfter, isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenDescription } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
@@ -9,15 +9,20 @@ import {
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
+export const AV_UPCTG = 'AV-UPCTG';
+
 export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
+export const AV_PCVTG = 'AV-PCVTG';
 
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
     !!aanvraag.productIdentificatie &&
-    [AV_PCVZIL, AV_UPCZIL].includes(aanvraag.productIdentificatie)
+    [AV_PCVZIL, AV_UPCZIL, AV_PCVTG, AV_UPCTG].includes(
+      aanvraag.productIdentificatie
+    )
   );
 }
 
@@ -37,11 +42,18 @@ function isRegelingVanVerzilvering(
   const aanvraagProductId = aanvraag.productIdentificatie;
   let avCode;
 
-  if (aanvraagProductId === AV_PCVZIL) {
-    avCode = AV_PCVC;
-  }
-  if (aanvraagProductId === AV_UPCZIL) {
-    avCode = AV_UPCC;
+  if (isAfter(new Date(aanvraag.datumAanvraag), new Date('2024-12-31'))) {
+    if (aanvraagProductId === AV_PCVTG) {
+      avCode = AV_PCVC;
+    } else if (aanvraagProductId === AV_UPCTG) {
+      avCode = AV_UPCC;
+    }
+  } else {
+    if (aanvraagProductId === AV_PCVZIL) {
+      avCode = AV_PCVC;
+    } else if (aanvraagProductId === AV_UPCZIL) {
+      avCode = AV_UPCC;
+    }
   }
 
   return (
@@ -78,7 +90,7 @@ export function filterCombineUpcPcvData(
       return null;
     }
 
-    // Add AV_PCVC / AV_UPCC documenten to AV_PCVZIL / AV_UPCZIL
+    // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
     if (isVerzilvering(aanvraag)) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
