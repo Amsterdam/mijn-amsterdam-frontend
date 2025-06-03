@@ -24,6 +24,8 @@ import {
   or,
   previouslyLivingInAmsterdam,
   hasBudget,
+  isBetween17and19,
+  hasKidsBetweenAges17And19,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
@@ -34,6 +36,7 @@ import {
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
 const DAYS = 90;
 
@@ -411,6 +414,47 @@ export const tips: ContentTipSource[] = [
     link: {
       title: 'Meer informatie en aanvraagformulier',
       to: 'https://www.amsterdam.nl/stadspas/stadspasacties/korting-energiezuinige-wasmachine/',
+    },
+  },
+  {
+    id: 'mijn-65',
+    owner: '',
+    dateActiveStart: null,
+    dateActiveEnd: null,
+    active: !IS_PRODUCTION,
+    datePublished: '2025-01-01',
+    title: 'Uw kind wordt of is 18 jaar',
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
+    description:
+      'Wanneer je kind 18 wordt, verandert er veel in zijn of haar leven. Er komt wat organisatie bij kijken.',
+    predicates: [hasKidsBetweenAges17And19],
+    reason:
+      'U ziet deze tip omdat u in Amsterdam woont en een kind heeft dat binnenkort 18 jaar wordt of net 18 is geworden.',
+    link: {
+      title: 'Bekijk hier een overzicht van de belangrijkste dingen',
+      to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
+    },
+  },
+  {
+    id: 'mijn-66',
+    owner: '',
+    dateActiveStart: null,
+    dateActiveEnd: null,
+    active: !IS_PRODUCTION,
+    datePublished: '2025-01-01',
+    title: 'Je wordt of bent 18 jaar',
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
+    description:
+      'Er verandert veel als je 18 wordt. Je moet een aantal dingen regelen.',
+    predicates: [isBetween17and19],
+    reason:
+      'Je ziet deze tip omdat je in Amsterdam woont en binnenkort 18 jaar wordt of net 18 bent geworden.',
+    link: {
+      title:
+        'Bekijk hier een lijst van de belangrijkste dingen die je zelf kunt regelen',
+      to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
     },
   },
 ];

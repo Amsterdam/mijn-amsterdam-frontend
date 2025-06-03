@@ -155,6 +155,20 @@ export const hasKidsBetweenAges = (
   );
 };
 
+export const hasKidsBetweenAges17And19: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  const AGE_FROM = 17;
+  const AGE_TO = 18;
+  return hasKidsBetweenAges(
+    appState.BRP?.content?.kinderen,
+    AGE_FROM,
+    AGE_TO,
+    today
+  );
+};
+
 export const hasKidsBetweenAges2And18: TipsPredicateFN = (
   appState,
   today: Date = new Date()
@@ -205,6 +219,24 @@ export const hasOldestKidBornFrom2016: TipsPredicateFN = (appState) => {
 export const hasDutchNationality: TipsPredicateFN = (appState) => {
   return !!appState.BRP?.content?.persoon?.nationaliteiten.some(
     (n: { omschrijving: string }) => n.omschrijving === 'Nederlandse'
+  );
+};
+
+export const isBetween17and19: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
+
+  if (!geboortedatum) {
+    return false;
+  }
+
+  const ageFrom = 17;
+  const ageTo = 18;
+  return (
+    differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
+    differenceInYears(today, new Date(geboortedatum)) <= ageTo
   );
 };
 
