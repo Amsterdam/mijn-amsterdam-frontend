@@ -116,7 +116,7 @@ export type ErfpachtDossierDetailBijzondereBepaling = {
 };
 
 export type ErfpachtDossiersDetailSource = {
-  dossierNummer: string;
+  dossierNummer: string | undefined;
   titelDossierNummer: string;
   eersteUitgifte: string;
   titelEersteUitgifte: string;
@@ -164,7 +164,7 @@ export type ErfpachtDossierPropsFrontend<
   T extends ErfpachtDossierSource | ErfpachtDossiersDetailSource,
 > = T &
   Omit<ZaakDetail, 'displayStatus' | 'steps'> & {
-    dossierNummerUrlParam: string;
+    dossierNummerUrlParam: string | null;
   };
 
 export type ErfpachtDossiersDetail =
@@ -231,7 +231,7 @@ export type ErfpachtDossierFrontend =
   ErfpachtDossierPropsFrontend<ErfpachtDossierSource>;
 
 export type ErfpachtDossierFactuurFrontend = ErfpachtDossierFactuur & {
-  dossierNummerUrlParam: string;
+  dossierNummerUrlParam: string | null;
 };
 
 export type ErfpachtDossiersResponse = ErfpachtDossiersResponseSource & {

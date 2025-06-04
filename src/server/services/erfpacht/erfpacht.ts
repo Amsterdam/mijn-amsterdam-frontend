@@ -36,8 +36,10 @@ function transformIsErfpachterResponseSource(
   return response;
 }
 
-function getDossierNummerUrlParam(dossierNummer: string) {
-  return `E${dossierNummer.split(/E|\//).join('.')}`;
+function getDossierNummerUrlParam(
+  dossierNummer: string | undefined
+): string | null {
+  return dossierNummer ? `E${dossierNummer.split(/E|\//).join('.')}` : null;
 }
 
 export function transformErfpachtDossierProperties<
@@ -94,10 +96,11 @@ export function transformErfpachtDossierProperties<
 
     dossier.facturen.facturen = facturen;
   }
+
   const zaak: ErfpachtDossierPropsFrontend<T> = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
-    id: dossierNummerUrlParam,
+    id: dossierNummerUrlParam ?? dossier.voorkeursadres,
     link: {
       to: generatePath(routeConfig.detailPage.path, {
         dossierNummerUrlParam,
