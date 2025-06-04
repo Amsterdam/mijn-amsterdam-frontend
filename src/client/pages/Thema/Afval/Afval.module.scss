@@ -43,11 +43,13 @@
   margin: 0;
   // border-bottom: 0.1rem solid var(--ams-color-interactive-disabled);
   display: flex;
+  align-items: center;
 }
 
 .AfvalFractionIcon {
   display: inline-block;
-  margin-right: 2rem;
+  margin-right: var(--ams-space-s);
+  transform: translateY(4px);
 }
 
 .AfvalFractionPanelOpmerking {
