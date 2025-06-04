@@ -6,6 +6,7 @@ import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
 import {
   createBFFRouter,
   sendBadRequest,
+  sendResponse,
   sendUnauthorized,
   type RequestWithQueryParams,
 } from './route-helpers';
@@ -153,7 +154,7 @@ router.get(
         req.params.addressKeyEncrypted
       );
 
-      return res.send(bewonersResponse);
+      return sendResponse(res, bewonersResponse);
     }
     return sendUnauthorized(res);
   }
@@ -176,7 +177,7 @@ if (!IS_PRODUCTION) {
       if (!req.query.key) {
         return sendBadRequest(res, 'no zaak.key found in query');
       }
-      res.send(await fetchDecosWorkflows(req.query.key));
+      sendResponse(res, await fetchDecosWorkflows(req.query.key));
     }
   );
 }
@@ -217,15 +218,7 @@ router.get(
         req.params.dossierNummerUrlParam
       );
 
-      if (response.status === 'ERROR') {
-        res.status(
-          typeof response.code === 'number'
-            ? response.code
-            : HttpStatusCode.InternalServerError
-        );
-      }
-
-      return res.send(response);
+      return sendResponse(res, response);
     }
     return sendUnauthorized(res);
   }
