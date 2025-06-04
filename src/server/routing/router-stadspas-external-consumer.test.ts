@@ -1,8 +1,11 @@
+import { HttpStatusCode } from 'axios';
+
 import { forTesting } from './router-stadspas-external-consumer';
 import { remoteApi, RequestMock, ResponseMock } from '../../testing/utils';
-import { apiSuccessResult } from '../../universal/helpers/api';
+import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
 import { AuthProfile } from '../auth/auth-types';
 import * as stadspas from '../services/hli/stadspas';
+import * as gpass from '../services/hli/stadspas-gpass-service';
 
 vi.mock('../helpers/encrypt-decrypt', async (requireActual) => {
   return {
@@ -177,25 +180,47 @@ describe('hli/router-external-consumer', async () => {
   });
 
   describe('Stadspassen endpoint', async () => {
-    vi.mock('../services/hli/stadspas-gpass-service', async (requireActual) => {
-      const mod: object = await requireActual();
-      return {
-        ...mod,
-        fetchStadspassenByAdministratienummer: () => {
-          return {
-            status: 'OK',
-            content: {
-              administratienummer: '123456789',
-              stadspassen: [{ foo: 'bar' }],
-            },
-          };
-        },
+    test('Returns error when fetching administratieNummer fails', async () => {
+      vi.spyOn(
+        gpass,
+        'fetchStadspassenByAdministratienummer'
+      ).mockResolvedValueOnce(
+        apiErrorResult('oops', null, HttpStatusCode.ImATeapot)
+      );
+
+      const resMock = ResponseMock.new();
+
+      const params = {
+        administratienummerEncrypted: 'ADMINISTRATIENUMMER',
       };
+      const reqMock = RequestMock.new().setParams(params).get<typeof params>();
+
+      await forTesting.sendStadspassenResponse(reqMock, resMock);
+
+      expect(resMock.send).toHaveBeenCalledOnce();
+      expect(resMock.send).toHaveBeenCalledWith({
+        status: 'ERROR',
+        content: null,
+        message: 'oops',
+        code: 418,
+      });
+      expect(resMock.status).toHaveBeenCalledWith(HttpStatusCode.ImATeapot);
     });
 
-    const resMock = ResponseMock.new();
-
     test('Returns stadpassen when supplied with encrypted administratieNummer', async () => {
+      const resMock = ResponseMock.new();
+
+      vi.spyOn(
+        gpass,
+        'fetchStadspassenByAdministratienummer'
+      ).mockResolvedValueOnce({
+        status: 'OK',
+        content: {
+          administratienummer: '123456789',
+          stadspassen: [{ foo: 'bar' }],
+        },
+      });
+
       const params = {
         administratienummerEncrypted: 'ADMINISTRATIENUMMER',
       };
