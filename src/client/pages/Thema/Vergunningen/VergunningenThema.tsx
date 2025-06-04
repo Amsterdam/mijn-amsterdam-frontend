@@ -30,9 +30,11 @@ export function VergunningenThema() {
       </Paragraph>
       {hasParkeervergunningen && (
         <Alert heading="Parkeervergunningen?" headingLevel={4}>
-          <MaRouterLink href={routeConfigParkeren.themaPage.path}>
-            Bekijk hier de vergunningen voor parkeren.
-          </MaRouterLink>
+          <Paragraph>
+            <MaRouterLink href={routeConfigParkeren.themaPage.path}>
+              Bekijk hier de vergunningen voor parkeren.
+            </MaRouterLink>
+          </Paragraph>
         </Alert>
       )}
     </PageContentCell>

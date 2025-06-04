@@ -12,9 +12,6 @@
 }
 
 .AfvalFractionPanel {
-}
-
-.AfvalFractionPanel {
   background-color: #efefef;
   margin-bottom: var(--ams-space-xl);
   padding: var(--ams-space-xl);
@@ -33,7 +30,7 @@
     width: 80%;
     p {
       + p {
-        margin-top: 1rem;
+        margin-top: var(--ams-space-m);
       }
     }
   }
@@ -57,11 +54,8 @@
 }
 
 .AfvalFractionPanelHighlight {
-  border: 2px solid var(--ams-alert-warning-border-color);
+  border: 2px solid var(--ams-color-feedback-warning);
   padding: var(--ams-space-m);
   margin-top: var(--ams-space-m) !important;
-}
-
-.UnstyledList {
-  @include reset-list-style();
+  font-weight: var(--ams-typography-body-text-bold-font-weight);
 }
