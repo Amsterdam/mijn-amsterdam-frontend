@@ -9,6 +9,7 @@ export const BffEndpoints = {
   SERVICES_STREAM: '/services/stream',
   MAP_DATASETS: '/map/datasets/:datasetId?/:id?',
   SEARCH_CONFIG: '/services/search-config',
+  CMS_FOOTER: '/services/cms/footer',
   CMS_MAINTENANCE_NOTIFICATIONS: '/services/cms/maintenance-notifications',
   CACHE_OVERVIEW: '/admin/cache',
   LOGIN_STATS: '/admin/visitors/:authMethod?',
@@ -72,7 +73,7 @@ export const BffEndpoints = {
 
   // Bodem / loodmetingen
   LOODMETING_DOCUMENT_DOWNLOAD: '/services/lood/document/:id',
-};
+} as const;
 
 const AMSAPP_BASE = '/services/amsapp';
 
@@ -90,19 +91,23 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
     STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
   },
-};
+} as const;
 
 // Accessible without authentication
-export const PUBLIC_BFF_ENDPOINTS: string[] = [
+export const PUBLIC_BFF_ENDPOINTS = [
   ExternalConsumerEndpoints.public.STADSPAS_AMSAPP_LOGIN,
   ExternalConsumerEndpoints.public.STADSPAS_ADMINISTRATIENUMMER,
   BffEndpoints.STATUS_HEALTH,
   BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
+  BffEndpoints.CMS_FOOTER,
   BffEndpoints.TELEMETRY_PROXY,
-];
+] as const;
 
 export const DevelopmentRoutes = {
   DEV_LOGIN: '/api/v1/auth/:authMethod/login/:user?',
-};
+} as const;
 
-export const PREDEFINED_REDIRECT_URLS = ['noredirect', '/api/v1/services/all'];
+export const PREDEFINED_REDIRECT_URLS = [
+  'noredirect',
+  '/api/v1/services/all',
+] as const;

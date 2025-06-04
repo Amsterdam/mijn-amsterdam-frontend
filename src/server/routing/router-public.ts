@@ -29,7 +29,7 @@ import {
 } from '../services/buurt/buurt';
 import { getDatasetEndpointConfig } from '../services/buurt/helpers';
 import { loadClusterDatasets } from '../services/buurt/supercluster';
-import { fetchSearchConfig } from '../services/cms/cms-content';
+import { fetchCmsFooter, fetchSearchConfig } from '../services/cms/cms-content';
 import {
   fetchMaintenanceNotificationsActual,
   QueryParamsMaintenanceNotifications,
@@ -53,6 +53,18 @@ router.get(
     }
   }
 );
+
+/**
+ * This endpoint serves the Footer content (html in json).
+ */
+router.get(BffEndpoints.CMS_FOOTER, async (req, res, next) => {
+  try {
+    const response = await fetchCmsFooter();
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get(
   BffEndpoints.SEARCH_CONFIG,

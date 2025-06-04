@@ -1,5 +1,5 @@
 import { differenceInSeconds } from 'date-fns';
-import express, { CookieOptions, Request, Response } from 'express';
+import { CookieOptions, Request, Response } from 'express';
 import { AccessToken } from 'express-openid-connect';
 import UID from 'uid-safe';
 
@@ -169,7 +169,7 @@ authRouterDevelopment.get(
     );
 
     const isValidRedirectOption = PREDEFINED_REDIRECT_URLS.includes(
-      String(req.query.redirectUrl)
+      String(req.query.redirectUrl) as (typeof PREDEFINED_REDIRECT_URLS)[number]
     );
 
     if (isValidRedirectOption && req.query.redirectUrl === 'noredirect') {

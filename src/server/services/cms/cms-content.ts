@@ -147,3 +147,84 @@ export async function fetchSearchConfig() {
     })
   );
 }
+
+type CMSFooterLink = {
+  label: string;
+  url: string;
+};
+
+type CMSFooterLinkSource = {
+  link: CMSFooterLink;
+};
+
+type CMSFooterSectionSource = {
+  omschrijving?: { titel: string };
+  verwijzing: [
+    {
+      extern?: CMSFooterLinkSource | CMSFooterLinkSource[];
+      intern?: CMSFooterLinkSource | CMSFooterLinkSource[];
+    },
+  ];
+};
+
+type CMSFooterSource = {
+  applicatie: {
+    blok: {
+      zijbalk: [
+        {
+          lijst: CMSFooterSectionSource[];
+        },
+      ];
+    };
+  };
+};
+
+export type CMSFooterSection = {
+  title?: string;
+  links: CMSFooterLink[];
+};
+
+export type CMSFooter = {
+  sections: CMSFooterSection[];
+  bottomLinks: CMSFooterLink[];
+};
+
+function getLinks(links: CMSFooterLinkSource | CMSFooterLinkSource[]) {
+  return Array.isArray(links) ? links.map((link) => link.link) : [links.link];
+}
+
+const EXCLUDE_BOTTOM_LINKS = ['Cookies op deze site'];
+
+export async function fetchCmsFooter() {
+  return requestData<CMSFooter>(
+    getApiConfig('CMS_CONTENT_FOOTER', {
+      transformResponse: (responseData: CMSFooterSource | null) => {
+        if (!responseData?.applicatie) {
+          return {
+            sections: [],
+            bottomLinks: [],
+          };
+        }
+        const sections: CMSFooterSection[] =
+          responseData.applicatie.blok.zijbalk[0].lijst.map((section) => {
+            const title = section.omschrijving?.titel;
+            const links = section.verwijzing.flatMap((ref) => {
+              const externLinks = ref.extern ? getLinks(ref.extern) : [];
+              const internLinks = ref.intern ? getLinks(ref.intern) : [];
+              return [...externLinks, ...internLinks];
+            });
+            return {
+              title,
+              links: links.filter((link) => link.url && link.label),
+            };
+          });
+        return {
+          sections: sections.filter((section) => !!section.title),
+          bottomLinks: (
+            sections.find((section) => !section.title)?.links ?? []
+          ).filter((link) => !EXCLUDE_BOTTOM_LINKS.includes(link.label)),
+        };
+      },
+    })
+  );
+}

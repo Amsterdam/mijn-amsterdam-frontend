@@ -7,7 +7,7 @@ const ALLE_RESPONSE = loadFixtureAndReplaceBaseUrl(
 const DASHBOARD_RESPONSE = require('../fixtures/cms-maintenance-notifications-dashboard.json');
 const LANDINGSPAGE_RESPONSE = require('../fixtures/cms-maintenance-notifications-landingspagina.json');
 const PRODUCTEN_OP_MA = require('../fixtures/cms-producten.json');
-
+const FOOTER = require('../fixtures/cms-footer.json');
 // The BFF Caches the responses to these requests in root/src/server/cache/
 module.exports = [
   {
@@ -75,6 +75,21 @@ module.exports = [
             }
             return res.send(PRODUCTEN_OP_MA);
           },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-cms-footer',
+    url: `${settings.MOCK_BASE_PATH}/cms/algemene_onderdelen/xxv/footer-xxv/`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'json',
+        options: {
+          status: 200,
+          body: FOOTER,
         },
       },
     ],
