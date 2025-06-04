@@ -18,32 +18,26 @@ export function ProfileName({
   const { BRP, KVK } = useAppStateGetter();
   const profileType = useProfileTypeValue();
 
-  const persoon = BRP.content?.persoon;
-
-  const labelCommercial = KVK.content?.onderneming.handelsnaam || fallbackName;
-  let opgemaakteNaam = persoon?.opgemaakteNaam;
-
-  if (opgemaakteNaam) {
-    const parts = opgemaakteNaam.split(/\./);
-    opgemaakteNaam = `${parts[0].trim()}. ${parts[parts.length - 1].trim()}`;
+  if (
+    (profileType === 'private' && isLoading(BRP)) ||
+    (profileType === 'commercial' && isLoading(KVK))
+  ) {
+    return <LoadingContent barConfig={loaderBarConfig} />;
   }
 
-  const labelPrivate =
-    preferVoornaam && persoon?.voornamen
-      ? persoon?.voornamen
-      : opgemaakteNaam
-        ? opgemaakteNaam
-        : persoon?.voornamen
-          ? getFullName(persoon)
-          : fallbackName;
-  return (
-    <>
-      {profileType === 'private' && !isLoading(BRP) && labelPrivate}
-      {profileType === 'commercial' && !isLoading(KVK) && labelCommercial}
-      {((profileType === 'commercial' && isLoading(KVK)) ||
-        (profileType === 'private' && isLoading(BRP))) && (
-        <LoadingContent barConfig={loaderBarConfig} />
-      )}
-    </>
-  );
+  if (BRP.content?.persoon) {
+    const persoon = BRP.content.persoon;
+
+    if (preferVoornaam && persoon.voornamen) {
+      return persoon.voornamen;
+    } else if (persoon.opgemaakteNaam) {
+      const parts = persoon.opgemaakteNaam.split(/\./);
+      return `${parts[0].trim()}. ${parts[parts.length - 1].trim()}`;
+    } else if (persoon.voornamen) {
+      return getFullName(persoon);
+    }
+  } else if (KVK.content?.onderneming.handelsnaam) {
+    return KVK.content.onderneming.handelsnaam;
+  }
+  return fallbackName;
 }
