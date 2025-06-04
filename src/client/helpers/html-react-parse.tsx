@@ -37,10 +37,6 @@ const options: HTMLReactParserOptions = {
     const { attribs, children } = domNode as Element;
     const children_ = (children || []) as DOMNode[];
 
-    if (!domNode || !domNode.name) {
-      return domNode;
-    }
-
     switch (domNode.name) {
       case 'a': {
         if (attribs.href?.startsWith('/')) {
