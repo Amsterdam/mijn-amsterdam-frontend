@@ -61,10 +61,7 @@ const options: HTMLReactParserOptions = {
       case 'h2':
       case 'h3':
       case 'h4': {
-        const level = parseInt(domNode.name.replace(/[^\d]/g, ''), 10) as
-          | 2
-          | 3
-          | 4;
+        const level = parseInt(domNode.name[1], 10) as 2 | 3 | 4;
         return (
           <Heading level={level} {...withClassNames(attribs, 'ams-mb-s')}>
             {domToReact(children_, options)}
