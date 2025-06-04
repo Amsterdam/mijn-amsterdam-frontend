@@ -183,11 +183,20 @@
     "kinderen": [
       {
         "bsn": "123456780",
-        "geboortedatum": "2008-06-05",
+        "geboortedatum": "2016-07-08",
         "geslachtsaanduiding": "M",
         "geslachtsnaam": "Kosterijk",
         "overlijdensdatum": null,
         "voornamen": "Yassine",
+        "voorvoegselGeslachtsnaam": null
+      },
+      {
+        "bsn": "999992399",
+        "geboortedatum": "2008-06-05",
+        "geslachtsaanduiding": "P",
+        "geslachtsnaam": "de Clown",
+        "overlijdensdatum": null,
+        "voornamen": "Pipo",
         "voorvoegselGeslachtsnaam": null
       },
       {
