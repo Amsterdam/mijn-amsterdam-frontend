@@ -125,7 +125,7 @@ describe('<Dashboard />', () => {
   });
 
   it('Renders dashboard correctly', async () => {
-    await act(() => {
+    act(() => {
       render(<Component />);
     });
     expect(
