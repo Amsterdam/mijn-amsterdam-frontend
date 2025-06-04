@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
@@ -288,7 +288,7 @@ async function sendStadspassenResponse(
     }
 
     // Return the error response
-    return res.send(stadspassenResponse);
+    return sendResponse(res, stadspassenResponse);
   }
 
   return sendBadRequest(
