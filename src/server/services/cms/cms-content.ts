@@ -1,22 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-
-import { parse } from 'html-to-ast';
 import sanitizeHtml, { IOptions } from 'sanitize-html';
 
-import { IS_TAP } from '../../../universal/config/env';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
-import {
-  ApiResponse_DEPRECATED,
-  ApiSuccessResponse,
-  apiErrorResult,
-  getSettledResult,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { hash } from '../../../universal/helpers/utils';
-import type { LinkProps } from '../../../universal/types/App.types';
-import { isValidProfileType } from '../../auth/auth-helpers';
-import FileCache from '../../helpers/file-cache';
+import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
+import { ONE_HOUR_MS, ONE_MINUTE_MS } from '../../config/app';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -55,7 +40,7 @@ export function sanitizeCmsContent(
     allowedAttributes: ATTR_ALLOWED,
 
     // Filter out empty tags
-    exclusiveFilter: function (frame: any) {
+    exclusiveFilter: function (frame: { text: string }) {
       return !frame.text.trim();
     },
   }
@@ -81,122 +66,13 @@ export interface AstNode {
   comment?: string;
 }
 
-export interface FooterBlock {
-  id: string;
-  title: string;
-  description: AstNode[] | null;
-  links: LinkProps[];
-}
+const CACHE_TIME_MS = 24 * ONE_MINUTE_MS; // 24 hours
 
-export interface CMSFooterContent {
-  blocks: FooterBlock[];
-  sub: LinkProps[];
-}
-
-interface FooterLink {
-  link: { label: string; url: string };
-}
-
-function linkArray(input: FooterLink[] | FooterLink) {
-  return Array.isArray(input) ? input : input ? [input] : [];
-}
-
-function transformFooterResponse(responseData: any) {
-  const items = responseData?.applicatie?.blok?.zijbalk[0]?.lijst;
-
-  if (!Array.isArray(items)) {
-    return [];
-  }
-
-  const footer: CMSFooterContent = {
-    blocks: [],
-    sub: [],
-  };
-
-  let currentBlock: FooterBlock | null = null;
-
-  for (const [index, item] of items.entries()) {
-    if (index === 0) {
-      // We don't need the first item in this list.
-      continue;
-    }
-
-    if (item.omschrijving) {
-      if (currentBlock) {
-        footer.blocks.push(currentBlock);
-      }
-      currentBlock = {
-        id: hash(item.omschrijving.titel),
-        title: item.omschrijving.titel,
-        description: item.omschrijving.tekst
-          ? parse(sanitizeCmsContent(item.omschrijving.tekst).trim())
-          : null,
-        links: [],
-      };
-
-      if (item.verwijzing && item.verwijzing[0]) {
-        const verwijzing = item.verwijzing[0];
-        const intern = linkArray(verwijzing.intern);
-        const extern = linkArray(verwijzing.extern);
-        const links = [...extern, ...intern]
-          .filter((item) => !!item.link)
-          .map((item) => {
-            const { link } = item;
-            return {
-              to: link.url,
-              title: link.label,
-            };
-          });
-        currentBlock.links = links;
-      }
-    } else if (item.verwijzing?.length) {
-      const otherLinks = item.verwijzing.flatMap(
-        (verwijzing: {
-          intern: FooterLink[] | FooterLink;
-          extern: FooterLink[] | FooterLink;
-        }) => {
-          const intern = linkArray(verwijzing.intern);
-          const extern = linkArray(verwijzing.extern);
-          const links = [...intern, ...extern];
-          return links
-            .filter(({ link }) => !!link && !link.url.match(/(cookies)/g))
-            .map(({ link }) => {
-              const title = link.label;
-              return {
-                to: link.url,
-                title,
-              };
-            });
-        }
-      );
-      footer.sub.push(...otherLinks);
-    }
-  }
-
-  if (currentBlock) {
-    footer.blocks.push(currentBlock);
-  }
-
-  return footer;
-}
-
-const CACHE_TIME_MINUTES = 24 * 60;
-const fileCache = new FileCache({
-  name: 'cms-content',
-  cacheTimeMinutes: IS_TAP ? CACHE_TIME_MINUTES : -1,
-});
-
-async function getGeneralPage(
-  profileType: ProfileType = 'private',
-  forceRenew: boolean = false
+export async function fetchMijnAmsterdamUitlegPage(
+  profileType: ProfileType = 'private'
 ): Promise<ApiResponse_DEPRECATED<CMSPageContent | null>> {
-  const apiData = fileCache.getKey<ApiSuccessResponse<CMSPageContent>>(
-    'CMS_CONTENT_GENERAL_INFO_' + profileType
-  );
-  if (apiData && !forceRenew) {
-    return Promise.resolve(apiData);
-  }
   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
+    cacheTimeout: CACHE_TIME_MS,
     transformResponse: (responseData: {
       applicatie: {
         title: string;
@@ -217,132 +93,8 @@ async function getGeneralPage(
     },
   });
 
-  return requestData<CMSPageContent>(requestConfig).then((apiData) => {
-    if (
-      apiData.status === 'OK' &&
-      apiData.content?.content &&
-      apiData.content?.title
-    ) {
-      fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
-      fileCache.save();
-      return apiData;
-    }
-    // Try to get stale cache instead.
-    const staleApiData = fileCache.getKeyStale<
-      ApiSuccessResponse<CMSPageContent>
-    >('CMS_CONTENT_GENERAL_INFO_' + profileType);
-
-    if (staleApiData) {
-      return Promise.resolve(staleApiData);
-    }
-
-    return apiErrorResult('Unexpected page data from iProx CMS', null);
-  });
+  return requestData<CMSPageContent>(requestConfig);
 }
-
-async function getFooter(
-  forceRenew: boolean = false
-): Promise<ApiResponse_DEPRECATED<CMSFooterContent | null>> {
-  const apiData =
-    fileCache.getKey<ApiResponse_DEPRECATED<CMSFooterContent>>(
-      'CMS_CONTENT_FOOTER'
-    ) ?? null;
-
-  if (apiData && !forceRenew) {
-    return Promise.resolve(apiData);
-  }
-
-  const requestConfig = getApiConfig('CMS_CONTENT_FOOTER', {
-    transformResponse: transformFooterResponse,
-  });
-
-  async function saveCacheAndSend(
-    apiData: any
-  ): Promise<ApiResponse_DEPRECATED<CMSFooterContent | null>> {
-    if (apiData.content?.blocks.length) {
-      fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
-      fileCache.save();
-      return apiData;
-    }
-    // Try to get stale cache instead.
-    const staleApiData =
-      fileCache.getKeyStale<ApiResponse_DEPRECATED<CMSFooterContent>>(
-        'CMS_CONTENT_FOOTER'
-      );
-
-    if (staleApiData) {
-      return staleApiData;
-    }
-
-    return apiErrorResult('Could not fetch Footer data', null);
-  }
-
-  if (FeatureToggle.useCMSFooterStaticDataBackup) {
-    return new Promise((resolve) => {
-      fs.readFile(path.join(__dirname, './cms-footer.json'), (err, content) => {
-        if (err) {
-          resolve(
-            apiErrorResult('could not read static footer data from file.', null)
-          );
-        }
-        resolve(
-          saveCacheAndSend(
-            apiSuccessResult(
-              transformFooterResponse(JSON.parse(content.toString()))
-            )
-          )
-        );
-      });
-    });
-  }
-
-  return requestData<CMSFooterContent>(requestConfig).then(saveCacheAndSend);
-}
-
-async function fetchCmsBase(query?: QueryParamsCMSFooter) {
-  const forceRenew = query?.forceRenew === 'true';
-  const profileType =
-    query?.profileType && isValidProfileType(query?.profileType)
-      ? query.profileType
-      : undefined;
-  const generalInfoPageRequest = getGeneralPage(profileType, forceRenew);
-
-  const footerInfoPageRequest = getFooter(forceRenew);
-
-  const requests: Promise<
-    ApiResponse_DEPRECATED<CMSPageContent | CMSFooterContent | null>
-  >[] = [generalInfoPageRequest, footerInfoPageRequest];
-
-  const [generalInfo, footer] = await Promise.allSettled(requests);
-
-  const generalInfoContent = getSettledResult(generalInfo).content;
-  const footerContent = getSettledResult(footer).content as CMSFooterContent;
-
-  return {
-    generalInfo: generalInfoContent as CMSPageContent | null,
-    footer: footerContent as CMSFooterContent | null,
-  };
-}
-
-export type QueryParamsCMSFooter = {
-  forceRenew?: 'true';
-  profileType?: ProfileType;
-};
-
-export async function fetchCmsFooter(query?: QueryParamsCMSFooter) {
-  const response = await fetchCmsBase(query);
-  return apiSuccessResult(response.footer);
-}
-
-export async function fetchCMSCONTENT(query?: QueryParamsCMSFooter) {
-  const response = await fetchCmsBase(query);
-  return apiSuccessResult(response);
-}
-
-const searchFileCache = new FileCache({
-  name: 'search-config',
-  cacheTimeMinutes: IS_TAP ? 24 * 60 : -1, // 24 hours
-});
 
 type StaticSearchEntry = {
   url: string;
@@ -385,54 +137,94 @@ const config: SearchConfigRemote = {
 };
 */
 
-export async function fetchSearchConfig(query?: Record<string, string>) {
-  const config =
-    searchFileCache.getKey<ApiSuccessResponse<SearchConfigRemote>>('CONFIG');
+// eslint-disable-next-line no-magic-numbers
+const SEARCH_CONFIG_CACHE_TIMEOUT_MS = 7 * 24 * ONE_HOUR_MS; // 7 days
 
-  if (IS_TAP && config?.content && query?.cache !== 'renew') {
-    return Promise.resolve(config);
-  }
-
-  let dataRequest;
-
-  if (!IS_TAP) {
-    dataRequest = new Promise((resolve, reject) => {
-      fs.readFile(
-        path.join(
-          __dirname,
-          '../../../client/components/Search/search-config.json'
-        ),
-        (err, content) => {
-          if (err) {
-            reject(err);
-          }
-          try {
-            resolve(apiSuccessResult(JSON.parse(content.toString())));
-          } catch (e) {
-            reject(e);
-          }
-        }
-      );
-    });
-  } else {
-    dataRequest = requestData<SearchConfigRemote>(
-      getApiConfig('SEARCH_CONFIG')
-    );
-  }
-
-  return dataRequest
-    .then((apiData) => {
-      searchFileCache.setKey('CONFIG', apiData);
-      searchFileCache.save();
-      return apiData;
+export async function fetchSearchConfig() {
+  return requestData<SearchConfigRemote>(
+    getApiConfig('SEARCH_CONFIG', {
+      cacheTimeout: SEARCH_CONFIG_CACHE_TIMEOUT_MS,
     })
-    .catch((error) => {
-      const staleApiData = searchFileCache.getKeyStale('CONFIG');
+  );
+}
 
-      if (staleApiData) {
-        return Promise.resolve(staleApiData);
-      }
+type CMSFooterLink = {
+  label: string;
+  url: string;
+};
 
-      throw error;
-    });
+type CMSFooterLinkSource = {
+  link: CMSFooterLink;
+};
+
+type CMSFooterSectionSource = {
+  omschrijving?: { titel: string };
+  verwijzing: [
+    {
+      extern?: CMSFooterLinkSource | CMSFooterLinkSource[];
+      intern?: CMSFooterLinkSource | CMSFooterLinkSource[];
+    },
+  ];
+};
+
+type CMSFooterSource = {
+  applicatie: {
+    blok: {
+      zijbalk: [
+        {
+          lijst: CMSFooterSectionSource[];
+        },
+      ];
+    };
+  };
+};
+
+export type CMSFooterSection = {
+  title?: string;
+  links: CMSFooterLink[];
+};
+
+export type CMSFooter = {
+  sections: CMSFooterSection[];
+  bottomLinks: CMSFooterLink[];
+};
+
+function getLinks(links: CMSFooterLinkSource | CMSFooterLinkSource[]) {
+  return Array.isArray(links) ? links.map((link) => link.link) : [links.link];
+}
+
+const EXCLUDE_BOTTOM_LINKS = ['Cookies op deze site'];
+
+export async function fetchCmsFooter() {
+  return requestData<CMSFooter>(
+    getApiConfig('CMS_CONTENT_FOOTER', {
+      transformResponse: (responseData: CMSFooterSource | null) => {
+        if (!responseData?.applicatie) {
+          return {
+            sections: [],
+            bottomLinks: [],
+          };
+        }
+        const sections: CMSFooterSection[] =
+          responseData.applicatie.blok.zijbalk[0].lijst.map((section) => {
+            const title = section.omschrijving?.titel;
+            const links = section.verwijzing.flatMap((ref) => {
+              const externLinks = ref.extern ? getLinks(ref.extern) : [];
+              const internLinks = ref.intern ? getLinks(ref.intern) : [];
+              return [...externLinks, ...internLinks];
+            });
+            return {
+              title,
+              links: links.filter((link) => link.url && link.label),
+            };
+          });
+        return {
+          sections: sections.filter((section) => !!section.title),
+          bottomLinks: (
+            sections.find((section) => !section.title)?.links ?? []
+          ).filter((link) => !EXCLUDE_BOTTOM_LINKS.includes(link.label)),
+        };
+      },
+    })
+  );
 }

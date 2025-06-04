@@ -27,7 +27,6 @@ describe('App', () => {
     .get('/services/cms/maintenance-notifications?page=landingspagina')
     .reply(200);
   bffApi.get('/services/all').reply(200);
-  bffApi.get('/services/cms').reply(200);
 
   it('Renders pristine App', () => {
     mocks.useSessionApi.mockReturnValue({
@@ -42,7 +41,6 @@ describe('App', () => {
     bffApi
       .get('/services/cms/maintenance-notifications?page=landingspagina')
       .reply(200);
-    bffApi.get('/services/cms').reply(200);
 
     mocks.useSessionApi.mockReturnValue({
       isPristine: false,

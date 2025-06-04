@@ -93,7 +93,7 @@ function AppAuthenticated() {
         <PrivateRoutes />
       </Page>
       {/** Remove the footer on the Map view for better UX */}
-      {!isBuurt && <MainFooter isAuthenticated />}
+      {!isBuurt && <MainFooter />}
     </>
   );
 }

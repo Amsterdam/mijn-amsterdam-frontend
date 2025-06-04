@@ -136,9 +136,6 @@ describe('route-helpers', () => {
   });
 
   test('isPublicEndpoint', () => {
-    const value = isPublicEndpoint('/services/cms');
-    expect(value).toBe(true);
-
     const value2 = isPublicEndpoint('/services/stream');
     expect(value2).toBe(false);
 
@@ -149,9 +146,6 @@ describe('route-helpers', () => {
   test('isProtectedRoute', () => {
     const value = isProtectedRoute('/services/stream');
     expect(value).toBe(true);
-
-    const value2 = isProtectedRoute('/services/cms');
-    expect(value2).toBe(false);
 
     const value3 = isPublicEndpoint('/services/auth/anything');
     expect(value3).toBe(false);
