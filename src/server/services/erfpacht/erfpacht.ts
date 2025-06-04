@@ -112,11 +112,15 @@ export function transformErfpachtDossierProperties<
 export function transformDossierResponse(
   responseDataSource: ErfpachtDossiersResponseSource,
   relatieCode: ErfpachtErpachterResponseSource['relationCode']
-): ErfpachtDossiersResponse {
+): ErfpachtDossiersResponse | null {
   const responseData: ErfpachtDossiersResponse = responseDataSource
     ? jsonCopy(responseDataSource)
     : {};
   const hasDossiers = !!responseData?.dossiers?.dossiers?.length;
+
+  if (!hasDossiers) {
+    return null;
+  }
 
   responseData.dossiers.dossiers =
     responseData.dossiers?.dossiers
@@ -161,7 +165,7 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
     authProfileAndToken.profile.profileType !== 'commercial';
 
   if (!!erfpachterResponse.content?.isKnown && isNotCommercial) {
-    return requestData<ErfpachtDossiersResponse>(
+    return requestData<ErfpachtDossiersResponse | null>(
       {
         ...config,
         url: `${config.url}/vernise/api/dossierinfo`,
