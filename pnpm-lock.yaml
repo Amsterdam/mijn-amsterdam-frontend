@@ -215,9 +215,6 @@ importers:
       html-react-parser:
         specifier: ^5.2.5
         version: 5.2.5(@types/react@18.3.23)(react@18.3.1)
-      html-to-ast:
-        specifier: ^0.0.6
-        version: 0.0.6
       install:
         specifier: ^0.13.0
         version: 0.13.0
@@ -2971,10 +2968,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  html-to-ast@0.0.6:
-    resolution: {integrity: sha512-gAq/8l6laJ8cTufIhh9lMvonShc8xBzAth+t7yK6oDla8rMVGKyYqToa7HgZyPKyi1KTX+HBTvQg2uQ3wc7Q9w==}
-    engines: {node: '>=10'}
 
   htmlparser2@10.0.0:
     resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
@@ -8098,8 +8091,6 @@ snapshots:
       style-to-js: 1.1.16
     optionalDependencies:
       '@types/react': 18.3.23
-
-  html-to-ast@0.0.6: {}
 
   htmlparser2@10.0.0:
     dependencies:
