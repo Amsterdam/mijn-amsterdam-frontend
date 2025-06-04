@@ -16,20 +16,23 @@
   margin-bottom: var(--ams-space-xl);
   padding: var(--ams-space-xl);
 
-  dl {
-    display: flex;
-    flex-direction: row;
-  }
-
   dt {
-    min-width: 22%;
+    display: inline;
     font-weight: bold;
+    padding-right: 10px;
+    &:after {
+      content: ':';
+    }
   }
 
   dd {
-    width: 80%;
+    display: inline;
+    padding: 0;
+    margin: 0;
     p {
+      display: inline;
       + p {
+        display: block;
         margin-top: var(--ams-space-m);
       }
     }
