@@ -1,29 +1,4 @@
-.FooterLoader {
-  width: 100%;
-}
-
-.FakeFooterLink {
-  color: var(--ams-color-background);
-  padding-left: calc(
-    var(--ams-icon-heading-5-font-size) * var(--ams-icon-heading-5-line-height)
-  );
-  position: relative;
-  :global(span.ams-icon) {
-    position: absolute;
-    left: -2px;
-    top: -5px;
-  }
-  :global(.ams-icon) {
-    margin-right: var(--ams-space-s);
-    transform: translateY(5px);
-  }
-  :global(.ams-link) {
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-      outline-offset: var(--ams-link-outline-offset);
-      text-decoration-thickness: var(--ams-link-text-decoration-thickness);
-      text-underline-offset: var(--ams-link-text-underline-offset);
-    }
-  }
+.MainFooter {
+  margin-inline: auto;
+  max-inline-size: var(--ams-page-max-inline-size);
 }

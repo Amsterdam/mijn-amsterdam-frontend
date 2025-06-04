@@ -1,141 +1,86 @@
 {
   "applicatie": {
-    "url": "https://www.amsterdam.nl/algemene_onderdelen/overige/footer/",
-    "publicatiedatum": "20151221",
-    "title": "Footer nieuw",
-    "label": "Footer",
-    "meta": {
-      "meta": {
-        "gegevens": { "samenvatting": "<div><p>Gemeente Amsterdam</p></div>" },
-        "typering": { "opnemen-in-amsterdammail": "0" }
-      }
-    },
-    "standaardopties": {
-      "feedback": "1",
-      "mail-de-redactie": "1",
-      "mail-dit-artikel": "0",
-      "print": "1",
-      "spreek": "0",
-      "naar-boven": "1",
-      "toevoegen-aan-mijn-applicaties": "0"
-    },
-    "uitgebreide-opties": {
-      "voeg-toe-aan-mijn-links": "0",
-      "feeds-op-deze-pagina": "1",
-      "deel-deze-pagina": "1",
-      "deel-deze-pagina-facebook": "1",
-      "deel-deze-pagina-twitter": "1",
-      "deel-deze-pagina-googleplus": "0",
-      "deel-deze-pagina-linkedin": "1",
-      "deel-deze-pagina-whatsapp": "1",
-      "deel-deze-pagina-mastodon": "1"
-    },
     "blok": {
       "zijbalk": [
         {
           "lijst": [
             {
               "omschrijving": {
-                "titel": "Uit in Amsterdam",
-                "tekst": "<div><p>Benieuwd wat er allemaal te doen is in de stad? Op <a href=\"https://www.iamsterdam.com\" class=externLink>Iamsterdam.com</a> vindt u de beste tips op het gebied van cultuur, uitgaan en evenementen.</p></div>"
-              }
-            },
-            {
-              "omschrijving": {
-                "titel": "Contact",
-                "tekst": "<div><p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p><ul><li><a href=\"https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/contactformulier.aspx/\" class=externLink>Contactformulier</a><li>Bel <strong><a href=\"tel:14020\">14 020</a><br></strong>maandag tot en met vrijdag van 08.00 tot 18.00 uur<li><a itemtype=1 pagetype=subhome class=\"siteLink ptsubhome\" resolved=true href=\"https://www.amsterdam.nl/contact/\">Adressen en openingstijden</a></ul></div>"
-              }
-            },
-            {
-              "omschrijving": { "titel": "Volg de gemeente" },
+                "titel": "Contact"
+              },
               "verwijzing": [
                 {
-                  "intern": {
-                    "link": {
-                      "label": "Nieuwsbrief Amsterdam",
-                      "url": "https://www.amsterdam.nl/nieuws/volg-de-gemeente/nieuwsbrief-amsterdam/"
-                    }
-                  },
                   "extern": [
                     {
                       "link": {
-                        "label": "X (Twitter)",
-                        "url": "https://twitter.com/AmsterdamNL"
-                      },
-                      "openen-in": {
-                        "label": "Huidig venster",
-                        "value": "self"
+                        "label": "Contactformulier",
+                        "url": "https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/contactformulier.aspx/"
                       }
                     },
                     {
                       "link": {
+                        "label": "14 020",
+                        "url": "http:////tel:14020"
+                      }
+                    }
+                  ],
+                  "intern": {
+                    "link": {
+                      "label": "Adressen en openingstijden",
+                      "url": "https://www.amsterdam.nl/contact/adressen-openingstijden-stadsloketten/"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "omschrijving": {
+                "titel": "Volg ons"
+              },
+              "verwijzing": [
+                {
+                  "intern": [
+                    {
+                      "link": {
+                        "label": "De Amsterdam App",
+                        "url": "https://www.amsterdam.nl/contact/amsterdam-app/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Nieuwsbrieven",
+                        "url": "https://www.amsterdam.nl/nieuws/volg-de-gemeente/nieuwsbrief-amsterdam/"
+                      }
+                    }
+                  ],
+                  "extern": [
+                    {
+                      "link": {
                         "label": "Facebook",
                         "url": "https://www.facebook.com/gemeenteamsterdam"
-                      },
-                      "openen-in": {
-                        "label": "Huidig venster",
-                        "value": "self"
                       }
                     },
                     {
                       "link": {
                         "label": "Instagram",
                         "url": "https://www.instagram.com/gemeenteamsterdam/"
-                      },
-                      "openen-in": {
-                        "label": "Huidig venster",
-                        "value": "self"
                       }
                     },
                     {
                       "link": {
                         "label": "LinkedIn",
                         "url": "https://www.linkedin.com/company/gemeente-amsterdam"
-                      },
-                      "openen-in": {
-                        "label": "Huidig venster",
-                        "value": "self"
                       }
                     },
                     {
                       "link": {
                         "label": "Mastodon",
                         "url": "https://social.amsterdam.nl/@gemeenteamsterdam"
-                      },
-                      "openen-in": {
-                        "label": "Huidig venster",
-                        "value": "self"
-                      }
-                    },
-                    {
-                      "link": {
-                        "label": "YouTube",
-                        "url": "https://www.youtube.com/channel/UCEiYFPFR5jGhFakHhbswlig"
-                      },
-                      "openen-in": {
-                        "label": "Huidig venster",
-                        "value": "self"
-                      }
-                    },
-                    {
-                      "link": {
-                        "label": "Werkenbij",
-                        "url": "https://werkenbij.amsterdam.nl/"
-                      },
-                      "openen-in": {
-                        "label": "Huidig venster",
-                        "value": "self"
                       }
                     }
                   ]
                 }
               ]
-            },
-            {
-              "omschrijving": {
-                "titel": "Kalender",
-                "tekst": "<div><p>Van buurtactiviteiten tot inspraakavonden. Wat organiseert de gemeente voor u? Kijk op <a href=\"https://activiteiten.amsterdam.nl/\" class=externLink>Kalender Amsterdam</a></p><h3 id=\"h328b962b-92e8-42d2-92dc-f749a2c492e0\">Uit in Amsterdam</h3><p>Benieuwd wat er allemaal te doen is in de stad? Op <a href=\"https://www.iamsterdam.com\" class=externLink>Iamsterdam.com</a> vindt u de beste tips op het gebied van cultuur, uitgaan en evenementen.</p></div>"
-              }
             },
             {
               "verwijzing": [
@@ -164,8 +109,48 @@
                     "link": {
                       "label": "Webarchief",
                       "url": "https://amsterdam.archiefweb.eu/"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "omschrijving": {
+                "titel": "Doen in de stad"
+              },
+              "verwijzing": [
+                {
+                  "extern": [
+                    {
+                      "link": {
+                        "label": "Bijeenkomsten en activiteiten",
+                        "url": "https://activiteiten.amsterdam.nl/"
+                      }
                     },
-                    "openen-in": { "label": "Huidig venster", "value": "self" }
+                    {
+                      "link": {
+                        "label": "Uit in Amsterdam",
+                        "url": "https://www.iamsterdam.com/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Amsterdam 750 jaar",
+                        "url": "https://amsterdam750.nl/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "verwijzing": [
+                {
+                  "extern": {
+                    "link": {
+                      "label": "Vacatures",
+                      "url": "https://werkenbij.amsterdam.nl/"
+                    }
                   }
                 }
               ]
