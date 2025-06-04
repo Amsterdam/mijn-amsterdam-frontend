@@ -19,8 +19,8 @@ import {
   GenericDocument,
   StatusLineItem,
 } from '../../../universal/types/App.types';
+import { parseHTML } from '../../helpers/html-react-parse';
 import { DocumentLink } from '../DocumentList/DocumentLink';
-import InnerHtml from '../InnerHtml/InnerHtml';
 import { MaButtonLink } from '../MaLink/MaLink';
 
 interface StatusStepDocumentsProps {
@@ -34,11 +34,9 @@ export function StatusStepDocuments({
 }: StatusStepDocumentsProps) {
   return (
     <>
-      {!!altDocumentContent && typeof altDocumentContent === 'string' ? (
-        <InnerHtml el="span">{altDocumentContent}</InnerHtml>
-      ) : (
-        altDocumentContent
-      )}
+      {!!altDocumentContent && typeof altDocumentContent === 'string'
+        ? parseHTML(altDocumentContent)
+        : altDocumentContent}
       {!!documents?.length && (
         <OrderedList className={styles.StepDocumentsList} markers={false}>
           {documents.map((document) => (
@@ -120,11 +118,7 @@ export function Steps({ steps, title }: StepsProps) {
               </time>
               {item.description && (
                 <div>
-                  <InnerHtml
-                    className={item.actionButtonItems?.length ? 'ams-mb-s' : ''}
-                  >
-                    {item.description}
-                  </InnerHtml>
+                  {parseHTML(item.description)}
                   {!!item.actionButtonItems?.length && (
                     <ActionGroup className={styles.PanelActionGroup}>
                       {item.actionButtonItems.map(({ to, title }) => (

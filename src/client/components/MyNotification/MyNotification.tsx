@@ -6,11 +6,11 @@ import styles from './MyNotification.module.scss';
 import { MIJN_AMSTERDAM } from '../../../universal/config/app';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import type { MyNotification } from '../../../universal/types/App.types';
+import { parseHTML } from '../../helpers/html-react-parse';
 import { trackEvent } from '../../helpers/monitoring';
 import { isInteralUrl } from '../../helpers/utils';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DocumentLink } from '../DocumentList/DocumentLink';
-import InnerHtml from '../InnerHtml/InnerHtml';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 
 type MyNotificationProps = {
@@ -55,11 +55,7 @@ export function MyNotification({
       <div className={styles.Body}>
         {notification.description && (
           <Paragraph className="ams-mb-s">
-            {notification.description.includes('<p') ? (
-              <InnerHtml el="span">{notification.description}</InnerHtml>
-            ) : (
-              notification.description
-            )}
+            {parseHTML(notification.description)}
           </Paragraph>
         )}
         {(!!notification.link || !!notification.customLink) && (

@@ -50,6 +50,7 @@ import {
   LinkProps,
   StatusLineItem,
 } from '../../../universal/types/App.types';
+import { parseHTML } from '../../helpers/html-react-parse';
 import { featureToggle as featureToggleAVG } from '../../pages/Thema/AVG/AVG-thema-config';
 import { featureToggle as featureToggleBezwaren } from '../../pages/Thema/Bezwaren/Bezwaren-thema-config';
 import { featureToggle as featureToggleBodem } from '../../pages/Thema/Bodem/Bodem-thema-config';
@@ -63,7 +64,6 @@ import {
   routeConfig as routeConfigVaren,
   themaTitle as themaTitleVaren,
 } from '../../pages/Thema/Varen/Varen-thema-config';
-import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
   url: string;
@@ -171,15 +171,7 @@ export function displayPath(
               }
             });
           }
-          return (
-            <InnerHtml
-              key={segment}
-              el="span"
-              className={styles.DisplayPathSegment}
-            >
-              {segmentReplaced}
-            </InnerHtml>
-          );
+          return parseHTML(segmentReplaced);
         })}
       </span>
     </>
