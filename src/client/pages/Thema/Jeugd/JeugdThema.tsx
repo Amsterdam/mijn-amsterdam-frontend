@@ -16,7 +16,7 @@ import { ParagaphSuppressed } from '../../../components/ParagraphSuppressed/Para
 export function HistoricItemsMention() {
   return (
     <ParagaphSuppressed>
-      U ziet hier informatie vanaf 1 januari 2018. Wilt u iets weten van
+      U ziet hier informatie vanaf 1 januari 2019. Wilt u iets weten van
       daarvoor? Bel dan de Wmo Helpdesk:{' '}
       <Link href={WMO_HELPDESK_HREF_TEL_LINK} rel="noreferrer">
         {WMO_HELPDESK_PHONENUMBER}
