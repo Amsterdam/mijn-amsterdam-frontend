@@ -208,7 +208,7 @@ test('Static elements', async () => {
   screen.getByText(/Bel dan gratis de Wmo Helpdesk/);
 
   // Finds phonenumber
-  screen.getByText(/\d{4} \d{4}/);
+  screen.getAllByText(/\d{4} \d{4}/);
 
   const mustHaveHeaders = ['Voorziening', 'Status', 'Datum'];
 
@@ -218,4 +218,6 @@ test('Static elements', async () => {
     'Eerdere en afgewezen voorzieningen',
     mustHaveHeaders
   );
+
+  screen.getByText(/U ziet hier informatie vanaf.+Bel dan de Wmo Helpdesk.*/);
 });

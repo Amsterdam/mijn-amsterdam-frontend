@@ -36,6 +36,7 @@ export const BffEndpoints = {
   DECOS_DOCUMENTS_LIST: `/services/decos/documents`,
   DECOS_DOCUMENT_DOWNLOAD: '/services/decos/documents/download',
   DECOS_ZAKEN_BY_USERIDS_RAW: '/services/decos/zaken-raw',
+  DECOS_ZAAK_BY_KEY_RAW: '/services/decos/zaak-raw',
   DECOS_WORKFLOW_BY_KEY_RAW: '/services/decos/zaak-workflows-raw',
 
   // MKS bewoners

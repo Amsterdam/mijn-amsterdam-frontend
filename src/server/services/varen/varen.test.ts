@@ -41,7 +41,6 @@ const zakenContent = [
     key: 'ABCDEF0123456789ABCDEF0123456789',
     caseType: 'Varen vergunning exploitatie',
     title: 'Varen vergunning exploitatie',
-    status: 'Afgehandeld',
     decision: 'Verleend',
     processed: true,
     linkDataRequest: 'https://test.test',
@@ -111,6 +110,8 @@ describe('Varen service', () => {
           'vergunningen',
         ]),
         displayStatus: 'Verleend',
+        fetchSourceRaw:
+          'http://bff-api-host/api/v1/services/decos/zaak-raw?key=ABCDEF0123456789ABCDEF0123456789',
         id: 'Z-25-0000001-10001',
         identifier: 'Z/24/0000001',
         dateRequestFormatted: '01 januari 2025',

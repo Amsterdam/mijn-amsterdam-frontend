@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import express, { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import { BffEndpoints } from './bff-routes';
 import { handleCheckProtectedRoute, isAuthenticated } from './route-handlers';
@@ -29,6 +29,7 @@ import {
 } from '../services/controller';
 import {
   fetchDecosDocumentsList,
+  fetchZaakByKey,
   fetchZakenByUserIDs,
 } from '../services/decos/decos-route-handlers';
 import {
@@ -163,6 +164,7 @@ router.get(BffEndpoints.DECOS_DOCUMENTS_LIST, fetchDecosDocumentsList);
 
 if (!IS_PRODUCTION) {
   router.get(BffEndpoints.DECOS_ZAKEN_BY_USERIDS_RAW, fetchZakenByUserIDs);
+  router.get(BffEndpoints.DECOS_ZAAK_BY_KEY_RAW, fetchZaakByKey);
   router.get(
     BffEndpoints.DECOS_WORKFLOW_BY_KEY_RAW,
     async (
