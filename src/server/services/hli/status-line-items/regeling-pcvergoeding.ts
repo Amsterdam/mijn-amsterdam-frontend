@@ -6,6 +6,7 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
@@ -14,26 +15,6 @@ export const AV_UPCTG = 'AV-UPCTG';
 export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
-
-function isVerzilvering(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return (
-    !!aanvraag.productIdentificatie &&
-    [AV_PCVZIL, AV_UPCZIL, AV_PCVTG, AV_UPCTG].includes(
-      aanvraag.productIdentificatie
-    )
-  );
-}
-
-function isPcVergoeding(
-  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  return (
-    !!aanvraag.productIdentificatie &&
-    [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
-  );
-}
 
 const verzilveringToRegelingCodeMap: {
   actual: Record<string, string>;
@@ -49,6 +30,31 @@ const verzilveringToRegelingCodeMap: {
   },
 };
 
+export const verzilveringCodes = featureToggle.hliRegelingEnabledNewZilCodes
+  ? [
+      ...Object.keys(verzilveringToRegelingCodeMap.actual),
+      ...Object.keys(verzilveringToRegelingCodeMap.historic),
+    ]
+  : Object.keys(verzilveringToRegelingCodeMap.historic);
+
+function isVerzilvering(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return (
+    !!aanvraag.productIdentificatie &&
+    verzilveringCodes.includes(aanvraag.productIdentificatie)
+  );
+}
+
+function isPcVergoeding(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  return (
+    !!aanvraag.productIdentificatie &&
+    [AV_PCVC, AV_UPCC].includes(aanvraag.productIdentificatie)
+  );
+}
+
 function isRegelingVanVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed,
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -60,7 +66,10 @@ function isRegelingVanVerzilvering(
 
   let avCode;
 
-  if (isAfter(new Date(aanvraag.datumAanvraag), new Date('2024-12-31'))) {
+  if (
+    featureToggle.hliRegelingEnabledNewZilCodes &&
+    isAfter(new Date(aanvraag.datumAanvraag), new Date('2024-12-31'))
+  ) {
     avCode = verzilveringToRegelingCodeMap.actual[aanvraagProductId];
   } else {
     avCode = verzilveringToRegelingCodeMap.historic[aanvraagProductId];
