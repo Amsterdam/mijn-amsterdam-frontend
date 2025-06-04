@@ -100,46 +100,6 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = Object.freeze({
   },
 });
 
-export type SourceApiKey =
-  | 'AFIS'
-  | 'AFVAL'
-  | 'AMSAPP'
-  | 'BAG'
-  | 'BELASTINGEN'
-  | 'BEZWAREN_DOCUMENT'
-  | 'BEZWAREN_DOCUMENTS'
-  | 'BEZWAREN_LIST'
-  | 'BEZWAREN_STATUS'
-  | 'BRP'
-  | 'CLEOPATRA'
-  | 'CMS_CONTENT_FOOTER'
-  | 'CMS_CONTENT_GENERAL_INFO'
-  | 'CMS_MAINTENANCE_NOTIFICATIONS'
-  | 'DECOS_API'
-  | 'ENABLEU_2_SMILE'
-  | 'ERFPACHT'
-  | 'GPASS'
-  | 'KREFIA'
-  | 'KVK'
-  | 'LOOD_365'
-  | 'LOOD_365_OAUTH'
-  | 'PARKEREN'
-  | 'PARKEREN_FRONTOFFICE'
-  | 'POWERBROWSER'
-  | 'SEARCH_CONFIG'
-  | 'CONTACTMOMENTEN'
-  | 'SUBSIDIES'
-  | 'SVWI'
-  | 'TOERISTISCHE_VERHUUR_REGISTRATIES'
-  | 'WPI_AANVRAGEN'
-  | 'WPI_E_AANVRAGEN'
-  | 'WPI_SPECIFICATIES'
-  | 'ZORGNED_AV'
-  | 'ZORGNED_JZD'
-  | 'ZORGNED_LEERLINGENVERVOER';
-
-type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
-
 const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
   typeof afisFeatureToggle !== 'undefined'
@@ -159,7 +119,7 @@ const httpsAgentConfigBFF = {
   key: getCert('BFF_SERVER_CLIENT_KEY'),
 };
 
-export const ApiConfig: ApiDataRequestConfig = {
+const ApiConfig_ = {
   AFIS: {
     postponeFetch: postponeFetchAfis,
     url: `${getFromEnv('BFF_AFIS_API_BASE_URL')}`,
@@ -278,18 +238,16 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   CMS_CONTENT_GENERAL_INFO: {
     // eslint-disable-next-line no-magic-numbers
-    cacheTimeout: 4 * ONE_HOUR_MS,
+    cacheTimeout: 4 * ONE_HOUR_MS, // 4 hours
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/mijn-content/artikelen`,
   },
   CMS_CONTENT_FOOTER: {
-    url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
-    // eslint-disable-next-line no-magic-numbers
-    cacheTimeout: 4 * ONE_HOUR_MS,
-    postponeFetch: !FeatureToggle.useCMSFooterStaticDataBackup,
+    url: `${getFromEnv('BFF_CMS_BASE_URL')}/algemene_onderdelen/xxv/footer-xxv/?AppIdt=app-data`,
+    cacheTimeout: 24 * ONE_HOUR_MS, // 24 hours
   },
   CMS_MAINTENANCE_NOTIFICATIONS: {
     url: `${getFromEnv('BFF_CMS_BASE_URL')}/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true&reload=true`,
-    cacheTimeout: ONE_HOUR_MS,
+    cacheTimeout: ONE_HOUR_MS, // 1 hour
   },
   BRP: {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
@@ -382,6 +340,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     },
   },
 } as const;
+
+export const ApiConfig: Record<SourceApiKey, DataRequestConfig> = ApiConfig_;
+
+export type SourceApiKey = keyof typeof ApiConfig_;
 
 type ApiUrlObject = string | Partial<Record<ProfileType, string>>;
 type ApiUrlEntry = [apiKey: SourceApiKey, apiUrl: ApiUrlObject];

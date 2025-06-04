@@ -78,16 +78,7 @@ export function ApplicationError({
           <PageContentV2>
             <PageContentCell startWide={1} spanWide={12}>
               <PageHeader
-                brandName={
-                  (
-                    <a
-                      href="/"
-                      style={{ color: '#000', textDecoration: 'none' }}
-                    >
-                      Mijn Amsterdam
-                    </a>
-                  ) as ReactNode as string
-                }
+                brandName="Mijn Amsterdam"
                 logoLink="https://www.amsterdam.nl"
               />
             </PageContentCell>
