@@ -2,8 +2,8 @@ import GenericBase, { GenericContent } from './GenericBase';
 import Url from './Url';
 import { capitalizeFirstLetter } from '../../../../../universal/helpers/text';
 import { Unshaped } from '../../../../../universal/types/App.types';
+import { parseHTML } from '../../../../helpers/html-react-parse';
 import { Datalist } from '../../../Datalist/Datalist';
-import InnerHtml from '../../../InnerHtml/InnerHtml';
 
 interface MyArePanelContentSportProps {
   panelItem: Unshaped;
@@ -77,7 +77,7 @@ export default function MyArePanelContentSport({
             rows={[
               {
                 label: 'Omschrijving',
-                content: <InnerHtml>{panelItem.omschrijving}</InnerHtml>,
+                content: parseHTML(panelItem.omschrijving),
               },
               { label: 'Adres', content: panelItem.adres },
               {
@@ -168,7 +168,7 @@ export default function MyArePanelContentSport({
               },
               {
                 label: 'Omschrijving',
-                content: <InnerHtml>{panelItem.omschrijving}</InnerHtml>,
+                content: parseHTML(panelItem.omschrijving),
                 isVisible: !!panelItem.omschrijving,
               },
               {

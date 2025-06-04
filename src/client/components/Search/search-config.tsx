@@ -63,7 +63,6 @@ import {
   routeConfig as routeConfigVaren,
   themaTitle as themaTitleVaren,
 } from '../../pages/Thema/Varen/Varen-thema-config';
-import InnerHtml from '../InnerHtml/InnerHtml';
 
 export interface SearchEntry {
   url: string;
@@ -172,13 +171,13 @@ export function displayPath(
             });
           }
           return (
-            <InnerHtml
+            <span
               key={segment}
-              el="span"
               className={styles.DisplayPathSegment}
-            >
-              {segmentReplaced}
-            </InnerHtml>
+              dangerouslySetInnerHTML={{
+                __html: segmentReplaced,
+              }}
+            />
           );
         })}
       </span>

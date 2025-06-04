@@ -54,16 +54,14 @@ export const requestProcess: WpiRequestProcessLabels = {
             )} ons besluit.
           </p>
           <p>
-            Lees meer over uw
-            <br />
+
             <a
               href=${
                 WpiExternalUrls.BijstandsUitkeringAanvragenRechtenEnPlichten
               }
-              class="ams-link
               rel="external noopener noreferrer"
             >
-              rechten en plichten
+              Lees meer over uw rechten en plichten
             </a>
           </p>
         `,
@@ -137,7 +135,6 @@ export const requestProcess: WpiRequestProcessLabels = {
             <p>
               <a
                 href=${WpiExternalUrls.BetaalDataUitkering}
-                class="ams-link"
                 rel="external noopener noreferrer"
               >
                 Bekijk hier de betaaldata van de uitkering

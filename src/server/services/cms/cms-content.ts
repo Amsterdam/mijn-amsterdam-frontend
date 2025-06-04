@@ -53,18 +53,6 @@ interface CMSPageContent {
   title: string;
   content: string;
 }
-type Attr = Record<string, string | boolean | number>;
-export interface AstNode {
-  type?: string;
-  text?: string;
-  content?: string;
-  voidElement?: boolean;
-  name?: string;
-  style?: string[];
-  attrs?: Attr;
-  children?: AstNode[];
-  comment?: string;
-}
 
 const CACHE_TIME_MS = 24 * ONE_MINUTE_MS; // 24 hours
 
