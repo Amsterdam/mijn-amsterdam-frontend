@@ -422,7 +422,7 @@ export const tips: ContentTipSource[] = [
     dateActiveStart: null,
     dateActiveEnd: null,
     active: true,
-    datePublished: '2025-01-01',
+    datePublished: '2025-06-05',
     title: 'Uw kind wordt of is 18 jaar',
     themaID: themaIdBRP,
     profileTypes: ['private'],
