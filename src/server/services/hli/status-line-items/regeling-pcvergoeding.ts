@@ -1,4 +1,4 @@
-import { isSameDay, parseISO } from 'date-fns';
+import { isAfter, isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenDescription } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
@@ -6,18 +6,43 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
+export const AV_UPCTG = 'AV-UPCTG';
+
 export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
+export const AV_PCVTG = 'AV-PCVTG';
+
+const verzilveringToRegelingCodeMap: {
+  actual: Record<string, string>;
+  historic: Record<string, string>;
+} = {
+  actual: {
+    [AV_PCVTG]: AV_PCVC,
+    [AV_UPCTG]: AV_UPCC,
+  },
+  historic: {
+    [AV_PCVZIL]: AV_PCVC,
+    [AV_UPCZIL]: AV_UPCC,
+  },
+};
+
+export const verzilveringCodes = featureToggle.hliRegelingEnabledNewZilCodes
+  ? [
+      ...Object.keys(verzilveringToRegelingCodeMap.actual),
+      ...Object.keys(verzilveringToRegelingCodeMap.historic),
+    ]
+  : Object.keys(verzilveringToRegelingCodeMap.historic);
 
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
     !!aanvraag.productIdentificatie &&
-    [AV_PCVZIL, AV_UPCZIL].includes(aanvraag.productIdentificatie)
+    verzilveringCodes.includes(aanvraag.productIdentificatie)
   );
 }
 
@@ -35,13 +60,19 @@ function isRegelingVanVerzilvering(
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   const aanvraagProductId = aanvraag.productIdentificatie;
+  if (!aanvraagProductId) {
+    return false;
+  }
+
   let avCode;
 
-  if (aanvraagProductId === AV_PCVZIL) {
-    avCode = AV_PCVC;
-  }
-  if (aanvraagProductId === AV_UPCZIL) {
-    avCode = AV_UPCC;
+  if (
+    featureToggle.hliRegelingEnabledNewZilCodes &&
+    isAfter(new Date(aanvraag.datumAanvraag), new Date('2024-12-31'))
+  ) {
+    avCode = verzilveringToRegelingCodeMap.actual[aanvraagProductId];
+  } else {
+    avCode = verzilveringToRegelingCodeMap.historic[aanvraagProductId];
   }
 
   return (
@@ -78,7 +109,7 @@ export function filterCombineUpcPcvData(
       return null;
     }
 
-    // Add AV_PCVC / AV_UPCC documenten to AV_PCVZIL / AV_UPCZIL
+    // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
     if (isVerzilvering(aanvraag)) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>

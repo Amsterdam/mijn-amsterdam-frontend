@@ -7,10 +7,9 @@ import { DECLARATIE } from './status-line-items/declaratie';
 import { REGELING } from './status-line-items/regeling';
 import { AV_CZM, REGELING_CZM } from './status-line-items/regeling-czm';
 import {
+  verzilveringCodes,
   AV_PCVC,
-  AV_PCVZIL,
   AV_UPCC,
-  AV_UPCZIL,
   PCVERGOEDING,
 } from './status-line-items/regeling-pcvergoeding';
 import { REGELING_PERIODIEK } from './status-line-items/regeling-periodiek';
@@ -25,7 +24,7 @@ export const hliStatusLineItemsConfig: ZorgnedStatusLineItemsConfig<
   ZorgnedHLIRegeling | ZorgnedAanvraagWithRelatedPersonsTransformed
 >[] = [
   {
-    productIdentificatie: [AV_UPCC, AV_UPCZIL, AV_PCVC, AV_PCVZIL],
+    productIdentificatie: [AV_UPCC, AV_PCVC, ...verzilveringCodes],
     lineItemTransformers: PCVERGOEDING,
   },
   {
