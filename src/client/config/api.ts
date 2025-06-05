@@ -12,7 +12,6 @@ export const BFFApiUrls = {
   MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
   SEARCH_CONFIGURATION: `${BFF_API_BASE_URL}/services/search-config`,
   SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_BASE_URL}/services/cms/maintenance-notifications`,
-  SERVICES_CMS_URL: `${BFF_API_BASE_URL}/services/cms`,
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
   ERFPACHT_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpacht/dossier`,

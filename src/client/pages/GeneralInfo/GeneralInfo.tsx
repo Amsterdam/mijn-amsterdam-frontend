@@ -1,7 +1,6 @@
 import { GENERAL_INFO_PAGE_DOCUMENT_TITLE } from './GeneralInfo-routes';
 import { isError, isLoading } from '../../../universal/helpers/api';
 import ErrorAlert from '../../components/Alert/Alert';
-import InnerHtml from '../../components/InnerHtml/InnerHtml';
 import LoadingContent from '../../components/LoadingContent/LoadingContent';
 import {
   PageContentCell,
@@ -9,6 +8,7 @@ import {
   TextPageV2,
 } from '../../components/Page/Page';
 import { PageHeadingV2 } from '../../components/PageHeading/PageHeadingV2';
+import { parseHTML } from '../../helpers/html-react-parse';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 
@@ -18,7 +18,7 @@ export function GeneralInfo() {
   });
 
   const { CMS_CONTENT } = useAppStateGetter();
-  const generalInfo = CMS_CONTENT.content?.generalInfo;
+  const generalInfo = CMS_CONTENT.content;
 
   return (
     <TextPageV2>
@@ -34,9 +34,7 @@ export function GeneralInfo() {
             </ErrorAlert>
           )}
           {isLoading(CMS_CONTENT) && <LoadingContent />}
-          {generalInfo?.content && (
-            <InnerHtml>{generalInfo?.content}</InnerHtml>
-          )}
+          {parseHTML(generalInfo?.content)}
         </PageContentCell>
       </PageContentV2>
     </TextPageV2>

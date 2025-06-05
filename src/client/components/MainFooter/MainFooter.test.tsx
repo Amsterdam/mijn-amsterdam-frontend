@@ -1,47 +1,45 @@
-import { render, screen } from '@testing-library/react';
-import { generatePath } from 'react-router';
-import { MutableSnapshot } from 'recoil';
-import { describe, expect, it, vi } from 'vitest';
+import { act, render, screen } from '@testing-library/react';
+import { describe, expect } from 'vitest';
 
-import footer from './amsterdam-nl-footer-data.json';
 import { MainFooter } from './MainFooter';
-import { bffApi } from '../../../testing/utils';
-import type { AppState } from '../../../universal/types/App.types';
-import { appStateAtom } from '../../hooks/useAppState';
-import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
-import MockApp from '../../pages/MockApp';
-
-vi.mock('../../hooks/media.hook');
-
-const testState = {
-  CMS_CONTENT: { status: 'OK', content: { footer } },
-};
-
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState as AppState);
-}
+import { createFetchResponse } from '../../../testing/utils';
 
 describe('<MainFooter />', () => {
-  bffApi.get('/services/cms').reply(200);
+  const fetch_ = global.fetch;
 
-  const routeEntry = generatePath(DashboardRoute.route);
-  const routePath = DashboardRoute.route;
+  afterAll(() => {
+    global.fetch = fetch_;
+  });
 
-  function Component() {
-    return (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={MainFooter}
-        initializeState={initializeState}
-      />
+  test('Renders without crashing', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce(
+      createFetchResponse({
+        content: {
+          sections: [
+            {
+              title: 'Test Section',
+              links: [{ label: 'Test Link', url: '/test' }],
+            },
+            {
+              title: 'Another Section',
+              links: [{ label: 'Test Link 2', url: '/test' }],
+            },
+          ],
+          bottomLinks: [
+            {
+              label: 'Test Link 3',
+              url: '/test',
+            },
+          ],
+        },
+        status: 'OK',
+      })
     );
-  }
-
-  it('Renders without crashing', () => {
-    render(<Component />);
-    expect(screen.getByText('Contact')).toBeInTheDocument();
-    expect(screen.getByText('Uit in Amsterdam')).toBeInTheDocument();
-    expect(screen.getByText('Volg de gemeente')).toBeInTheDocument();
+    await act(() => render(<MainFooter />));
+    expect(screen.getByText('Test Section')).toBeInTheDocument();
+    expect(screen.getByText('Another Section')).toBeInTheDocument();
+    expect(screen.getByText('Test Link')).toBeInTheDocument();
+    expect(screen.getByText('Test Link 2')).toBeInTheDocument();
+    expect(screen.getByText('Test Link 3')).toBeInTheDocument();
   });
 });

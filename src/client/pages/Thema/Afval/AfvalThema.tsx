@@ -24,7 +24,6 @@ import {
 } from '../../../assets/icons/map';
 import ErrorAlert from '../../../components/Alert/Alert';
 import { Datalist } from '../../../components/Datalist/Datalist';
-import InnerHtml from '../../../components/InnerHtml/InnerHtml';
 import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { MaintenanceNotifications } from '../../../components/MaintenanceNotifications/MaintenanceNotifications';
 import { MaButtonLink } from '../../../components/MaLink/MaLink';
@@ -35,6 +34,7 @@ import {
   PageContentV2,
 } from '../../../components/Page/Page';
 import { PageHeadingV2 } from '../../../components/PageHeading/PageHeadingV2';
+import { parseHTML } from '../../../helpers/html-react-parse';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import { useProfileTypeValue } from '../../../hooks/useProfileType';
@@ -56,17 +56,13 @@ function InstructionCTA({ fraction }: InstructionCTAProps) {
           </MaButtonLink>
         </Paragraph>
         {fraction.instructie ? (
-          <Paragraph>
-            <InnerHtml el="span">{fraction.instructie}</InnerHtml>
-          </Paragraph>
+          <Paragraph>{parseHTML(fraction.instructie)}</Paragraph>
         ) : null}
       </>
     );
   }
   return fraction.instructie ? (
-    <Paragraph>
-      <InnerHtml el="span">{fraction.instructie}</InnerHtml>
-    </Paragraph>
+    <Paragraph>{parseHTML(fraction.instructie)}</Paragraph>
   ) : null;
 }
 
@@ -117,7 +113,7 @@ function AfvalFractionPanel({ fraction }: AfvalFractionPanelProps) {
       </Heading>
       {!!fraction.kalendermelding && (
         <Paragraph className={styles.AfvalFractionPanelHighlight}>
-          <InnerHtml el="span">{fraction.kalendermelding}</InnerHtml>
+          {parseHTML(fraction.kalendermelding)}
         </Paragraph>
       )}
       {(fraction.instructieCTA || fraction.instructie) && (
@@ -156,7 +152,7 @@ function AfvalFractionPanel({ fraction }: AfvalFractionPanelProps) {
       )}
       {!!fraction.opmerking && (
         <Paragraph className={styles.AfvalFractionPanelOpmerking}>
-          <InnerHtml el="span">{fraction.opmerking}</InnerHtml>
+          {parseHTML(fraction.opmerking)}
         </Paragraph>
       )}
     </article>
@@ -245,13 +241,18 @@ export function AfvalThemaPagina() {
                   heading="Bedrijfsafval informatie"
                   className="ams-mb-m"
                 >
-                  Let op deze regels gaan over uw woonadres.
-                  <br />
-                  Lees hier{' '}
-                  <Link href={links.AFVAL_COMMERCIAL} rel="noopener noreferrer">
-                    regels over bedrijfsafval in Amsterdam
-                  </Link>
-                  .
+                  <Paragraph>
+                    Let op deze regels gaan over uw woonadres.
+                    <br />
+                    Lees hier{' '}
+                    <Link
+                      href={links.AFVAL_COMMERCIAL}
+                      rel="noopener noreferrer"
+                    >
+                      regels over bedrijfsafval in Amsterdam
+                    </Link>
+                    .
+                  </Paragraph>
                 </Alert>
               )}
               <LinkList>

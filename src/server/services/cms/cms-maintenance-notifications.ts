@@ -5,22 +5,14 @@ import {
   themaId,
   themaTitle,
 } from '../../../client/pages/MyNotifications/MyNotifications-config';
-import { IS_TAP } from '../../../universal/config/env';
 import {
   ApiResponse_DEPRECATED,
-  ApiSuccessResponse,
   apiSuccessResult,
 } from '../../../universal/helpers/api';
 import { LinkProps, MyNotification } from '../../../universal/types/App.types';
-import FileCache from '../../helpers/file-cache';
+import { ONE_HOUR_MS } from '../../config/app';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-
-const fileCache = new FileCache({
-  name: 'cms-maintenance-notifications',
-  // eslint-disable-next-line no-magic-numbers
-  cacheTimeMinutes: IS_TAP ? 45 / 60 : -1,
-});
 
 interface Tyd {
   Nam: 'Starttijd' | 'Eindtijd';
@@ -121,22 +113,16 @@ function transformCMSEventResponse(
   return item;
 }
 
-async function fetchCMSMaintenanceNotifications(
-  useCache: boolean = true
-): Promise<ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>> {
-  const cachedData = fileCache.getKey<
-    ApiSuccessResponse<CMSMaintenanceNotification[]>
-  >('CMS_MAINTENANCE_NOTIFICATIONS');
+const CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS = 24 * ONE_HOUR_MS; // 24 hours
 
-  if (useCache && cachedData) {
-    return Promise.resolve(cachedData);
-  }
-
+async function fetchCMSMaintenanceNotifications(): Promise<
+  ApiResponse_DEPRECATED<CMSMaintenanceNotification[]>
+> {
   function fetchCMSEventData(url: string) {
     return requestData<CMSMaintenanceNotification>({
       url: url + '?Appidt=app-pagetype&reload=true',
       transformResponse: transformCMSEventResponse,
-      cacheTimeout: 0,
+      cacheTimeout: CMS_MAINTENANCE_NOTIFICATIONS_CACHE_TIMEOUT_MS,
     });
   }
 
@@ -182,26 +168,18 @@ async function fetchCMSMaintenanceNotifications(
     )
   );
 
-  if (eventItemsResponse.content) {
-    fileCache.setKey('CMS_MAINTENANCE_NOTIFICATIONS', eventItemsResponse);
-    fileCache.save();
-  }
-
   return eventItemsResponse;
 }
 
 export interface QueryParamsMaintenanceNotifications
   extends Record<string, string | undefined> {
-  cache?: 'false' | string;
   page?: string;
 }
 
 export async function fetchMaintenanceNotificationsActual(
   queryParams: QueryParamsMaintenanceNotifications
 ) {
-  const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
-    queryParams?.cache !== 'false'
-  );
+  const maintenanceNotifications = await fetchCMSMaintenanceNotifications();
 
   if (!maintenanceNotifications.content?.length) {
     return maintenanceNotifications;
@@ -233,22 +211,5 @@ export async function fetchMaintenanceNotificationsDashboard() {
     return maintenanceNotifications;
   }
 
-  const [notification] = maintenanceNotifications.content;
-
-  const item: MyNotification = {
-    id: `maintenance-${notification.title}`,
-    themaID: themaId,
-    themaTitle: themaTitle,
-    isAlert: true,
-    datePublished: notification.datePublished,
-    hideDatePublished: true,
-    title: notification.title,
-    description: notification.description,
-  };
-
-  if (notification.link) {
-    item.link = notification.link;
-  }
-
-  return apiSuccessResult({ notifications: [notification] });
+  return apiSuccessResult({ notifications: maintenanceNotifications.content });
 }

@@ -97,7 +97,7 @@ export interface BeschiktProduct {
 interface Beschikking {
   beschikkingNummer: number;
   beschikteProducten: BeschiktProduct[];
-  datumAfgifte: string;
+  datumAfgifte?: string;
 }
 
 export interface ZorgnedDocument {

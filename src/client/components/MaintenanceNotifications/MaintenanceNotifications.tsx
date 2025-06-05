@@ -2,8 +2,8 @@ import { Alert, Link, Paragraph } from '@amsterdam/design-system-react';
 import classNames from 'classnames';
 
 import styles from './MaintenanceNotifications.module.scss';
+import { parseHTML } from '../../helpers/html-react-parse';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
-import InnerHtml from '../InnerHtml/InnerHtml';
 
 interface MaintenanceNotificationsProps {
   page?: string;
@@ -36,10 +36,7 @@ export function MaintenanceNotifications({
             headingLevel={4}
             className={classNames(styles.MaintenanceNotification, className)}
           >
-            <InnerHtml className={classNames(styles.Description, 'ams-mb-m')}>
-              {notification.description}
-            </InnerHtml>
-
+            {parseHTML(notification.description)}
             {notification.link?.to && (
               <Paragraph>
                 <Link href={notification.link.to}>
