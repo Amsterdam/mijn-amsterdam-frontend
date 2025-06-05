@@ -191,21 +191,21 @@
         "voorvoegselGeslachtsnaam": null
       },
       {
-        "bsn": "999992399",
-        "geboortedatum": "2008-06-05",
-        "geslachtsaanduiding": "P",
-        "geslachtsnaam": "de Clown",
-        "overlijdensdatum": null,
-        "voornamen": "Pipo",
-        "voorvoegselGeslachtsnaam": null
-      },
-      {
         "bsn": "123456780",
         "geboortedatum": "2019-07-08",
         "geslachtsaanduiding": "M",
         "geslachtsnaam": "Kosterijk",
         "overlijdensdatum": null,
         "voornamen": "Marwan",
+        "voorvoegselGeslachtsnaam": null
+      },
+      {
+        "bsn": "999992399",
+        "geboortedatum": "2008-06-05",
+        "geslachtsaanduiding": "P",
+        "geslachtsnaam": "de Clown",
+        "overlijdensdatum": null,
+        "voornamen": "Pipo",
         "voorvoegselGeslachtsnaam": null
       }
     ],
