@@ -155,11 +155,11 @@ export const hasKidsBetweenAges = (
   );
 };
 
-export const hasKidsBetweenAges2And18: TipsPredicateFN = (
+export const hasKidsBetweenAges17And19: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
-  const AGE_FROM = 2;
+  const AGE_FROM = 17;
   const AGE_TO = 18;
   return hasKidsBetweenAges(
     appState.BRP?.content?.kinderen,
@@ -169,7 +169,21 @@ export const hasKidsBetweenAges2And18: TipsPredicateFN = (
   );
 };
 
-export const hasKidsBetweenAges4And11: TipsPredicateFN = (
+export const hasKidsBetweenAges2And18: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  const AGE_FROM = 2;
+  const AGE_TO = 17;
+  return hasKidsBetweenAges(
+    appState.BRP?.content?.kinderen,
+    AGE_FROM,
+    AGE_TO,
+    today
+  );
+};
+
+export const hasKidsBetweenAges4And12: TipsPredicateFN = (
   appState,
   today: Date = new Date()
 ) => {
@@ -208,6 +222,25 @@ export const hasDutchNationality: TipsPredicateFN = (appState) => {
   );
 };
 
+export const isBetween17and19: TipsPredicateFN = (
+  appState,
+  today: Date = new Date()
+) => {
+  const geboortedatum = appState.BRP?.content?.persoon?.geboortedatum;
+
+  if (!geboortedatum) {
+    return false;
+  }
+
+  const ageFrom = 17;
+  const ageTo = 18;
+  return (
+    differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
+    differenceInYears(today, new Date(geboortedatum)) <= ageTo
+  );
+};
+
+// is deze hieronder niet overbodig en wordt daar niet hetzelfde mee bedoelt als "isBetween17and19"? > MIJN-11812
 export const isBetween17and18: TipsPredicateFN = (
   appState,
   today: Date = new Date()
@@ -237,7 +270,7 @@ export const isBetween4and12: TipsPredicateFN = (
   }
 
   const ageFrom = 4;
-  const ageTo = 12;
+  const ageTo = 11;
   return (
     differenceInYears(today, new Date(geboortedatum)) >= ageFrom &&
     differenceInYears(today, new Date(geboortedatum)) <= ageTo
