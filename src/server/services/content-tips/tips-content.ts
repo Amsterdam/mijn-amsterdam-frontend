@@ -4,7 +4,7 @@ import {
   hasBnBVergunning,
   hasDutchNationality,
   hasKidsBetweenAges2And18,
-  hasKidsBetweenAges4And11,
+  hasKidsBetweenAges4And12,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -341,7 +341,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-07-28',
     title: 'Tip: Gratis openbaar vervoer voor kinderen',
-    predicates: [hasKidsBetweenAges4And11, isMokum],
+    predicates: [hasKidsBetweenAges4And12, isMokum],
     profileTypes: ['private'],
     isNotification: true,
     themaID: themaIdInkomen,
@@ -367,7 +367,7 @@ export const tips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
-    predicates: [hasKidsBetweenAges4And11, isMokum],
+    predicates: [hasKidsBetweenAges4And12, isMokum],
     reason:
       'U ziet deze tip omdat u kinderen heeft in de leeftijd van 4 tot en met 11 en in Amsterdam woont.',
     link: {
@@ -421,7 +421,7 @@ export const tips: ContentTipSource[] = [
     owner: '',
     dateActiveStart: null,
     dateActiveEnd: null,
-    active: !IS_PRODUCTION,
+    active: true,
     datePublished: '2025-01-01',
     title: 'Uw kind wordt of is 18 jaar',
     themaID: themaIdBRP,
@@ -430,7 +430,7 @@ export const tips: ContentTipSource[] = [
       'Wanneer je kind 18 wordt, verandert er veel in zijn of haar leven. Er komt wat organisatie bij kijken.',
     predicates: [hasKidsBetweenAges17And19],
     reason:
-      'U ziet deze tip omdat u een kind heeft dat binnenkort 18 jaar wordt of 18 jaar is.',
+      'U ziet deze tip omdat u een kind heeft dat 18 jaar is of binnenkort 18 jaar wordt.',
     link: {
       title: 'Bekijk hier een overzicht van de belangrijkste dingen',
       to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
@@ -441,7 +441,7 @@ export const tips: ContentTipSource[] = [
     owner: '',
     dateActiveStart: null,
     dateActiveEnd: null,
-    active: !IS_PRODUCTION,
+    active: true,
     datePublished: '2025-01-01',
     title: 'Je wordt of bent 18 jaar',
     themaID: themaIdBRP,
@@ -449,7 +449,8 @@ export const tips: ContentTipSource[] = [
     description:
       'Er verandert veel als je 18 wordt. Je moet een aantal dingen regelen.',
     predicates: [isBetween17and19],
-    reason: 'Je ziet deze tip omdat je 18 jaar wordt of  18 jaar bent.',
+    reason:
+      'Je ziet deze tip omdat je 18 jaar bent of binnenkort 18 jaar wordt.',
     link: {
       title:
         'Bekijk hier een lijst van de belangrijkste dingen die je zelf kunt regelen',
