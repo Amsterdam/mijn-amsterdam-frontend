@@ -32,7 +32,28 @@ export function ProfileName({
       return persoon.voornamen;
     } else if (persoon.opgemaakteNaam) {
       const parts = persoon.opgemaakteNaam.split(/\./);
-      return `${parts[0].trim()}. ${parts[parts.length - 1].trim()}`;
+      const voornamen = parts.slice(0, parts.length - 1).join('.');
+      const achternaam = parts[parts.length - 1];
+
+      let result = `${voornamen}. ${achternaam}`;
+
+      // Balance this with .ProfileNameInner CSS attribute in MainHeader.module.scss:
+      const MAX_CHAR_LENGTH = 33;
+
+      if (result.length > MAX_CHAR_LENGTH) {
+        const OVERFLOW_AMOUNT = result.length - MAX_CHAR_LENGTH;
+        const cutOffAmount = voornamen.length - OVERFLOW_AMOUNT;
+
+        let shortened = voornamen.slice(0, cutOffAmount < 2 ? 2 : cutOffAmount);
+
+        // Chop off trailing letter like 'W. B' -> 'W.'.
+        if (shortened[shortened.length - 1] !== '.') {
+          shortened = shortened.slice(0, shortened.length - 1);
+        }
+
+        result = `${shortened}${achternaam}`;
+      }
+      return result;
     } else if (persoon.voornamen) {
       return getFullName(persoon);
     }
