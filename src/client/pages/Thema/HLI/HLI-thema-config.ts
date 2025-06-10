@@ -50,7 +50,7 @@ export const featureToggle = {
   hliThemaRegelingenActive: true,
   hliRegelingEnabledCZM: true,
   hliRegelingEnabledRTM: !IS_PRODUCTION,
-  hliRegelingEnabledNewZilCodes: !IS_PRODUCTION,
+  hli2025PCTegoedCodesEnabled: !IS_PRODUCTION,
 } as const;
 
 export const themaId = 'HLI' as const;

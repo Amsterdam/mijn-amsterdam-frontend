@@ -30,7 +30,7 @@ const verzilveringToRegelingCodeMap: {
   },
 };
 
-export const verzilveringCodes = featureToggle.hliRegelingEnabledNewZilCodes
+export const verzilveringCodes = featureToggle.hli2025PCTegoedCodesEnabled
   ? [
       ...Object.keys(verzilveringToRegelingCodeMap.actual),
       ...Object.keys(verzilveringToRegelingCodeMap.historic),
@@ -67,7 +67,7 @@ function isRegelingVanVerzilvering(
   let avCode;
 
   if (
-    featureToggle.hliRegelingEnabledNewZilCodes &&
+    featureToggle.hli2025PCTegoedCodesEnabled &&
     isAfter(new Date(aanvraag.datumAanvraag), new Date('2024-12-31'))
   ) {
     avCode = verzilveringToRegelingCodeMap.actual[aanvraagProductId];
