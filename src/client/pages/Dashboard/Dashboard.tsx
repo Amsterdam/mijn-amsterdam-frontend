@@ -67,7 +67,7 @@ export function Dashboard() {
                 className={styles.LinkToNotifications}
                 href={myNotificationsMenuItem.to}
               >
-                {notificationsThemaTitle}
+                Toon alle
               </MaRouterLink>
             )}
           </Heading>
