@@ -39,30 +39,12 @@ interface ResultSetProps {
 
 export function ResultSet({
   results,
-  totalAmountOfResults,
   title,
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
   term,
   extendedResults = false,
-  onClickResult: onClickResultCallback,
 }: ResultSetProps) {
-  const onClickResult = useCallback(
-    (
-      result: SearchEntry,
-      resultNumber: number,
-      amountOfResultsShown: number
-    ) => {
-      onClickResultCallback?.(
-        result,
-        resultNumber,
-        totalAmountOfResults,
-        amountOfResultsShown
-      );
-    },
-    [onClickResultCallback, totalAmountOfResults]
-  );
-
   return (
     <div className={styles.ResultSet}>
       {!!title && (
@@ -85,14 +67,7 @@ export function ResultSet({
             : MaRouterLink;
           return (
             <UnorderedList.Item key={result.url + index} className="Result">
-              <LinkComponent
-                maVariant="fatNoUnderline"
-                href={result.url}
-                onClick={(event) => {
-                  event.preventDefault();
-                  onClickResult(result, index + 1, results.length);
-                }}
-              >
+              <LinkComponent maVariant="fatNoUnderline" href={result.url}>
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
                   : typeof result.displayTitle === 'string'
@@ -192,20 +167,6 @@ export function Search({
       }
     },
     [typeAhead, isResultsVisible, onFinish, term]
-  );
-
-  const onClickResult = useCallback(
-    (result: SearchEntry) => {
-      setResultsVisible(false);
-      onFinish('Click result');
-
-      if (result.url.startsWith('http')) {
-        window.location.href = result.url;
-        return;
-      }
-      navigate(result.url, { replace: !!replaceResultUrl?.(result) });
-    },
-    [replaceResultUrl, setResultsVisible, onFinish, term]
   );
 
   useKeyDown(keyHandler);
@@ -315,7 +276,6 @@ export function Search({
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
               totalAmountOfResults={results?.ma?.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              onClickResult={onClickResult}
             />
 
             <ResultSet
@@ -324,7 +284,6 @@ export function Search({
               title="Overige informatie op Amsterdam.nl"
               noResultsMessage="Niets gevonden op Amsterdam.nl"
               extendedResults={extendedAMResults}
-              onClickResult={onClickResult}
               results={
                 results.am?.state === 'hasValue' && results.am.contents !== null
                   ? results.am.contents.slice(0, maxResultCountDisplay / 2)
