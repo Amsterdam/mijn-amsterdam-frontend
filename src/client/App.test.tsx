@@ -58,6 +58,7 @@ describe('App', () => {
 
   it('Renders Dashboard', async () => {
     bffApi.get('/services/all').reply(200);
+    bffApi.get('/services/search-config').reply(200);
 
     const session = {
       isPristine: false,
@@ -71,10 +72,10 @@ describe('App', () => {
     const screen = render(<App />);
 
     expect(screen.getAllByText(MIJN_AMSTERDAM).length).toBe(2);
-    await screen.findByRole('heading', { name: /Alle berichten/i });
+    await screen.findByRole('heading', { name: /Recente berichten/i });
 
     expect(
-      screen.getByRole('heading', { name: /Alle berichten/i })
+      screen.getByRole('heading', { name: /Recente berichten/i })
     ).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: /mijn thema's/i })

@@ -132,7 +132,7 @@ describe('<Dashboard />', () => {
       screen.getByRole('heading', { name: 'Goedemorgen, J. Jansen' })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', { name: /Alle berichten/i })
+      screen.getByRole('heading', { name: /Recente berichten/i })
     ).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: `Mijn thema's` })

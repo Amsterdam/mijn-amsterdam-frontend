@@ -61,13 +61,13 @@ export function Dashboard() {
         </PageContentCell>
         <PageContentCell startWide={2} spanWide={5}>
           <Heading level={2} size="level-3" className="ams-mb-m">
-            {notificationsThemaTitle}{' '}
+            Recente berichten{' '}
             {total > notifications.length && (
               <MaRouterLink
                 className={styles.LinkToNotifications}
                 href={myNotificationsMenuItem.to}
               >
-                Toon alle
+                {notificationsThemaTitle}
               </MaRouterLink>
             )}
           </Heading>
