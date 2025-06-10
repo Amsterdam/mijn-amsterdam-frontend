@@ -1,4 +1,4 @@
-import { isAfter, isSameDay, parseISO } from 'date-fns';
+import { isSameDay, parseISO } from 'date-fns';
 
 import { getBetrokkenDescription } from './generic';
 import { defaultDateFormat } from '../../../../universal/helpers/date';
