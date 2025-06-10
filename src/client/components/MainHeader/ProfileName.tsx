@@ -31,29 +31,7 @@ export function ProfileName({
     if (preferVoornaam && persoon.voornamen) {
       return persoon.voornamen;
     } else if (persoon.opgemaakteNaam) {
-      const parts = persoon.opgemaakteNaam.split(/\./);
-      const voornamen = parts.slice(0, parts.length - 1).join('.');
-      const achternaam = parts[parts.length - 1];
-
-      let result = `${voornamen}. ${achternaam}`;
-
-      // Balance this with .ProfileNameInner CSS attribute in MainHeader.module.scss:
-      const MAX_CHAR_LENGTH = 33;
-
-      if (result.length > MAX_CHAR_LENGTH) {
-        const OVERFLOW_AMOUNT = result.length - MAX_CHAR_LENGTH;
-        const cutOffAmount = voornamen.length - OVERFLOW_AMOUNT;
-
-        let shortened = voornamen.slice(0, cutOffAmount < 2 ? 2 : cutOffAmount);
-
-        // Chop off trailing letter like 'W. B' -> 'W.'.
-        if (shortened[shortened.length - 1] !== '.') {
-          shortened = shortened.slice(0, shortened.length - 1);
-        }
-
-        result = `${shortened}${achternaam}`;
-      }
-      return result;
+      return resizeOpgemaaktNaam(persoon.opgemaakteNaam);
     } else if (persoon.voornamen) {
       return getFullName(persoon);
     }
@@ -61,4 +39,33 @@ export function ProfileName({
     return KVK.content.onderneming.handelsnaam;
   }
   return fallbackName;
+}
+
+/** Resize the `opgemaakteNaam` to give the maximum amount of
+ * voorletters while showing as much of the achternaam as possible.
+ */
+function resizeOpgemaaktNaam(opgemaakteNaam: string): string {
+  const parts = opgemaakteNaam.split(/\./);
+  const voornamen = parts.slice(0, parts.length - 1).join('.');
+  const achternaam = parts[parts.length - 1];
+
+  let result = `${voornamen}. ${achternaam}`;
+
+  // Balance this with .ProfileNameInner CSS attribute in MainHeader.module.scss:
+  const MAX_CHAR_LENGTH = 33;
+
+  if (result.length > MAX_CHAR_LENGTH) {
+    const OVERFLOW_AMOUNT = result.length - MAX_CHAR_LENGTH;
+    const cutOffAmount = voornamen.length - OVERFLOW_AMOUNT;
+
+    let shortened = voornamen.slice(0, cutOffAmount < 2 ? 2 : cutOffAmount);
+
+    // Chop off trailing letter (because of a missing dot after it) like 'W. B' -> 'W.'.
+    if (shortened[shortened.length - 1] !== '.') {
+      shortened = shortened.slice(0, shortened.length - 1);
+    }
+
+    result = `${shortened}${achternaam}`;
+  }
+  return result;
 }
