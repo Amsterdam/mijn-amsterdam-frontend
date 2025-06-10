@@ -37,7 +37,7 @@ export const verzilveringCodes = [
 
 function toVerzilveringCodes(codes: Record<string, boolean>): string[] {
   return Object.entries(codes)
-    .filter(([_code, enabled]) => !!enabled)
+    .filter(([_code, enabled]) => enabled)
     .map(([code]) => code);
 }
 
