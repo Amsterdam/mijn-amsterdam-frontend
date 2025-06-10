@@ -71,13 +71,13 @@ describe('App', () => {
     const screen = render(<App />);
 
     expect(screen.getAllByText(MIJN_AMSTERDAM).length).toBe(2);
-    await screen.findByRole('heading', { name: /Recente berichten/i });
+    await screen.findByRole('heading', { name: /Alle berichten/i });
 
     expect(
-      screen.getByRole('heading', { name: /Recente berichten/i })
-    ).toHaveTextContent('Recente berichten');
+      screen.getByRole('heading', { name: /Alle berichten/i })
+    ).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: /mijn thema's/i })
-    ).toHaveTextContent(/Mijn thema's/gi);
+    ).toBeInTheDocument();
   });
 });

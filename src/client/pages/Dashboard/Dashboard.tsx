@@ -24,6 +24,7 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes';
+import { themaTitle as notificationsThemaTitle } from '../MyNotifications/MyNotifications-config';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
@@ -60,7 +61,7 @@ export function Dashboard() {
         </PageContentCell>
         <PageContentCell startWide={2} spanWide={5}>
           <Heading level={2} size="level-3" className="ams-mb-m">
-            Recente berichten{' '}
+            {notificationsThemaTitle}{' '}
             {total > notifications.length && (
               <MaRouterLink
                 className={styles.LinkToNotifications}
