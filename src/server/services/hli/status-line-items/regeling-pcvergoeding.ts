@@ -16,26 +16,17 @@ export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
 
-const verzilveringToRegelingCodeMap: {
-  actual: Record<string, string>;
-  historic: Record<string, string>;
-} = {
-  actual: {
-    [AV_PCVTG]: AV_PCVC,
-    [AV_UPCTG]: AV_UPCC,
-  },
-  historic: {
-    [AV_PCVZIL]: AV_PCVC,
-    [AV_UPCZIL]: AV_UPCC,
-  },
+const verzilveringToRegelingCodeMap: Record<string, string> = {
+  [AV_PCVZIL]: AV_PCVC,
+  [AV_UPCZIL]: AV_UPCC,
 };
 
-export const verzilveringCodes = featureToggle.hli2025PCTegoedCodesEnabled
-  ? [
-      ...Object.keys(verzilveringToRegelingCodeMap.actual),
-      ...Object.keys(verzilveringToRegelingCodeMap.historic),
-    ]
-  : Object.keys(verzilveringToRegelingCodeMap.historic);
+if (featureToggle.hli2025PCTegoedCodesEnabled) {
+  verzilveringToRegelingCodeMap[AV_PCVTG] = AV_PCVC;
+  verzilveringToRegelingCodeMap[AV_UPCTG] = AV_UPCC;
+}
+
+export const verzilveringCodes = Object.keys(verzilveringToRegelingCodeMap);
 
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -64,16 +55,7 @@ function isRegelingVanVerzilvering(
     return false;
   }
 
-  let avCode;
-
-  if (
-    featureToggle.hli2025PCTegoedCodesEnabled &&
-    isAfter(new Date(aanvraag.datumAanvraag), new Date('2024-12-31'))
-  ) {
-    avCode = verzilveringToRegelingCodeMap.actual[aanvraagProductId];
-  } else {
-    avCode = verzilveringToRegelingCodeMap.historic[aanvraagProductId];
-  }
+  const avCode = verzilveringToRegelingCodeMap[aanvraagProductId];
 
   return (
     compareAanvraag.productIdentificatie === avCode &&
