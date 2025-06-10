@@ -1,3 +1,6 @@
+.MainHeaderSecondaryLink:hover {
+  --ams-button-tertiary-hover-border-color: transparent;
+}
 .MainHeader {
   --ams-page-header-padding-block: var(--ams-space-s);
   @media screen and (min-width: $ams-breakpoint-medium) {
