@@ -4,7 +4,7 @@ import {
   hasBnBVergunning,
   hasDutchNationality,
   hasKidsBetweenAges2And18,
-  hasKidsBetweenAges4And11,
+  hasKidsBetweenAges4And12,
   hasOldestKidBornFrom2016,
   hasStadspasGroeneStip,
   hasToeristicheVerhuurVergunningen,
@@ -24,6 +24,8 @@ import {
   or,
   previouslyLivingInAmsterdam,
   hasBudget,
+  isBetween17and19,
+  hasKidsBetweenAges17And19,
 } from './predicates';
 import { ContentTipSource } from './tip-types';
 import { themaId as themaIdAfval } from '../../../client/pages/Thema/Afval/Afval-thema-config';
@@ -34,6 +36,7 @@ import {
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
 import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
 const DAYS = 90;
 
@@ -338,7 +341,7 @@ export const tips: ContentTipSource[] = [
     active: true,
     datePublished: '2023-07-28',
     title: 'Tip: Gratis openbaar vervoer voor kinderen',
-    predicates: [hasKidsBetweenAges4And11, isMokum],
+    predicates: [hasKidsBetweenAges4And12, isMokum],
     profileTypes: ['private'],
     isNotification: true,
     themaID: themaIdInkomen,
@@ -364,7 +367,7 @@ export const tips: ContentTipSource[] = [
     profileTypes: ['private'],
     description:
       'Amsterdamse kinderen van 4 tot en met 11 jaar kunnen van 20 juli 2024 tot en met 4 januari 2025 gratis reizen met het openbaar vervoer van GVB in Amsterdam. U kunt het gratis reizen voor uw kind vanaf 1 juli 2024 aanvragen.',
-    predicates: [hasKidsBetweenAges4And11, isMokum],
+    predicates: [hasKidsBetweenAges4And12, isMokum],
     reason:
       'U ziet deze tip omdat u kinderen heeft in de leeftijd van 4 tot en met 11 en in Amsterdam woont.',
     link: {
@@ -411,6 +414,47 @@ export const tips: ContentTipSource[] = [
     link: {
       title: 'Meer informatie en aanvraagformulier',
       to: 'https://www.amsterdam.nl/stadspas/stadspasacties/korting-energiezuinige-wasmachine/',
+    },
+  },
+  {
+    id: 'mijn-65',
+    owner: '',
+    dateActiveStart: null,
+    dateActiveEnd: null,
+    active: true,
+    datePublished: '2025-06-05',
+    title: 'Uw kind wordt of is 18 jaar',
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
+    description:
+      'Wanneer je kind 18 wordt, verandert er veel in zijn of haar leven. Er komt wat organisatie bij kijken.',
+    predicates: [hasKidsBetweenAges17And19],
+    reason:
+      'U ziet deze tip omdat u een kind heeft dat 18 jaar is of binnenkort 18 jaar wordt.',
+    link: {
+      title: 'Bekijk hier een overzicht van de belangrijkste dingen',
+      to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
+    },
+  },
+  {
+    id: 'mijn-66',
+    owner: '',
+    dateActiveStart: null,
+    dateActiveEnd: null,
+    active: true,
+    datePublished: '2025-06-05',
+    title: 'Je wordt of bent 18 jaar',
+    themaID: themaIdBRP,
+    profileTypes: ['private'],
+    description:
+      'Er verandert veel als je 18 wordt. Je moet een aantal dingen regelen.',
+    predicates: [isBetween17and19],
+    reason:
+      'Je ziet deze tip omdat je 18 jaar bent of binnenkort 18 jaar wordt.',
+    link: {
+      title:
+        'Bekijk hier een lijst van de belangrijkste dingen die je zelf kunt regelen',
+      to: 'https://www.amsterdam.nl/jeugdhulp/word-18/',
     },
   },
 ];

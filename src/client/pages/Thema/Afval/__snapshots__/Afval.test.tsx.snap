@@ -94,17 +94,21 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
               Bedrijfsafval informatie
             </h4>
           </div>
-          Let op deze regels gaan over uw woonadres.
-          <br />
-          Lees hier 
-          <a
-            class="ams-link"
-            href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
-            rel="noopener noreferrer"
+          <p
+            class="ams-paragraph"
           >
-            regels over bedrijfsafval in Amsterdam
-          </a>
-          .
+            Let op deze regels gaan over uw woonadres.
+            <br />
+            Lees hier 
+            <a
+              class="ams-link"
+              href="https://www.amsterdam.nl/afval-hergebruik/bedrijfsafval/"
+              rel="noopener noreferrer"
+            >
+              regels over bedrijfsafval in Amsterdam
+            </a>
+            .
+          </p>
         </div>
       </section>
       <ul
@@ -253,9 +257,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             <p
               class="ams-paragraph"
             >
-              <span>
-                In vuilniszak
-              </span>
+              In vuilniszak
             </p>
           </dd>
         </dl>
@@ -344,23 +346,20 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             <p
               class="ams-paragraph"
             >
-              <span>
-                Laat uw grof afval ophalen door een erkend bedrijf
-              </span>
+              Laat uw grof afval ophalen door een erkend bedrijf
             </p>
           </dd>
         </dl>
         <p
           class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
         >
-          <span>
-            Of breng het naar 
-            <a
-              href="https://kaart.amsterdam.nl/afvalpunten"
-            >
-              een Afvalpunt
-            </a>
-          </span>
+          Of breng het naar 
+          <a
+            class="ams-link"
+            href="https://kaart.amsterdam.nl/afvalpunten"
+          >
+            een Afvalpunt
+          </a>
         </p>
       </article>
       <article
@@ -415,9 +414,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             <p
               class="ams-paragraph"
             >
-              <span>
-                In de container voor papier
-              </span>
+              In de container voor papier
             </p>
           </dd>
         </dl>
@@ -488,18 +485,14 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             <p
               class="ams-paragraph"
             >
-              <span>
-                Bij het restafval
-              </span>
+              Bij het restafval
             </p>
           </dd>
         </dl>
         <p
           class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
         >
-          <span>
-            Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
-          </span>
+          Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
         </p>
       </article>
       <article
@@ -556,9 +549,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             <p
               class="ams-paragraph"
             >
-              <span>
-                In de container voor glas
-              </span>
+              In de container voor glas
             </p>
           </dd>
         </dl>
@@ -625,9 +616,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             <p
               class="ams-paragraph"
             >
-              <span>
-                In de container voor textiel
-              </span>
+              In de container voor textiel
             </p>
           </dd>
         </dl>

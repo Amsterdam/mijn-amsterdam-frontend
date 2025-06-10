@@ -133,47 +133,47 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 15 januari 2022
               </time>
               <div>
-                <div
-                  class=""
+                
+              
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
                   
-              
-                  <p>
-                    
                 U heeft recht op hulp bij het huishouden (geleverd) per 15 december 2021.
               
-                  </p>
-                  
+                </p>
+                
               
-                  <p>
-                    
+                <p
+                  class="ams-paragraph ams-mb-s"
+                >
+                  
                 
                     In de brief leest u ook hoe u bezwaar kunt maken, een klacht
                     kan indienen of 
-                    <u>
-                      hoe u van aanbieder kunt wisselen.
-                    </u>
-                    
+                  <u>
+                    hoe u van aanbieder kunt wisselen.
+                  </u>
+                  
                   
               
-                  </p>
-                  
+                </p>
+                
             
-                </div>
               </div>
-              <span>
-                <p>
-                  
+              <p
+                class="ams-paragraph ams-mb-s"
+              >
+                
             
-                  <strong>
-                    
+                <strong>
+                  
               U krijgt dit besluit per post.
             
-                  </strong>
-                  
+                </strong>
+                
           
-                </p>
-              </span>
+              </p>
             </li>
             <li
               class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
@@ -192,15 +192,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (geleverd).
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -220,15 +218,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Niet van toepassing.
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -247,15 +243,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 class="_StepStatusDate_7a365b"
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Uw recht op hulp bij het huishouden (geleverd) is beëindigd per 
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
           </ol>
@@ -399,41 +393,41 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 15 januari 2022
               </time>
               <div>
-                <div
-                  class=""
+                
+              
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
                   
-              
-                  <p>
-                    
                 U heeft recht op hulp bij het huishouden (gestopt) per 15 december 2021.
               
-                  </p>
-                  
+                </p>
+                
               
-                  <p>
-                    
+                <p
+                  class="ams-paragraph ams-mb-s"
+                >
+                  
                 In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
               indienen.
               
-                  </p>
-                  
+                </p>
+                
             
-                </div>
               </div>
-              <span>
-                <p>
-                  
+              <p
+                class="ams-paragraph ams-mb-s"
+              >
+                
             
-                  <strong>
-                    
+                <strong>
+                  
               U heeft dit besluit per post ontvangen.
             
-                  </strong>
-                  
+                </strong>
+                
           
-                </p>
-              </span>
+              </p>
             </li>
             <li
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
@@ -469,15 +463,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -514,16 +506,14 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (gestopt)
             meer krijgt.
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -545,15 +535,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 22 januari 2022
               </time>
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Uw recht op hulp bij het huishouden (gestopt) is beëindigd per 22 januari 2022
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
           </ol>
@@ -680,47 +668,47 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 15 januari 2022
               </time>
               <div>
-                <div
-                  class=""
+                
+              
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
                   
-              
-                  <p>
-                    
                 U heeft recht op hulp bij het huishouden (nog niet geleverd) per 15 januari 2022.
               
-                  </p>
-                  
+                </p>
+                
               
-                  <p>
-                    
+                <p
+                  class="ams-paragraph ams-mb-s"
+                >
+                  
                 
                     In de brief leest u ook hoe u bezwaar kunt maken, een klacht
                     kan indienen of 
-                    <u>
-                      hoe u van aanbieder kunt wisselen.
-                    </u>
-                    
+                  <u>
+                    hoe u van aanbieder kunt wisselen.
+                  </u>
+                  
                   
               
-                  </p>
-                  
+                </p>
+                
             
-                </div>
               </div>
-              <span>
-                <p>
-                  
+              <p
+                class="ams-paragraph ams-mb-s"
+              >
+                
             
-                  <strong>
-                    
+                <strong>
+                  
               U krijgt dit besluit per post.
             
-                  </strong>
-                  
+                </strong>
+                
           
-                </p>
-              </span>
+              </p>
             </li>
             <li
               class="ams-ordered-list__item _Step_7a365b"
@@ -739,15 +727,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -767,15 +753,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Niet van toepassing.
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -794,15 +778,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 class="_StepStatusDate_7a365b"
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Uw recht op hulp bij het huishouden (nog niet geleverd) is beëindigd per 
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
           </ol>
@@ -946,47 +928,47 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 15 januari 2022
               </time>
               <div>
-                <div
-                  class=""
+                
+              
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
                   
-              
-                  <p>
-                    
                 U heeft recht op hulp bij het huishouden (tijdelijk gestopt) per 15 december 2021.
               
-                  </p>
-                  
+                </p>
+                
               
-                  <p>
-                    
+                <p
+                  class="ams-paragraph ams-mb-s"
+                >
+                  
                 
                     In de brief leest u ook hoe u bezwaar kunt maken, een klacht
                     kan indienen of 
-                    <u>
-                      hoe u van aanbieder kunt wisselen.
-                    </u>
-                    
+                  <u>
+                    hoe u van aanbieder kunt wisselen.
+                  </u>
+                  
                   
               
-                  </p>
-                  
+                </p>
+                
             
-                </div>
               </div>
-              <span>
-                <p>
-                  
+              <p
+                class="ams-paragraph ams-mb-s"
+              >
+                
             
-                  <strong>
-                    
+                <strong>
+                  
               U krijgt dit besluit per post.
             
-                  </strong>
-                  
+                </strong>
+                
           
-                </p>
-              </span>
+              </p>
             </li>
             <li
               class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
@@ -1022,15 +1004,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (tijdelijk gestopt).
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -1050,15 +1030,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 datetime=""
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Niet van toepassing.
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
             <li
@@ -1077,15 +1055,13 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
                 class="_StepStatusDate_7a365b"
               />
               <div>
-                <div
-                  class=""
+                <p
+                  class="ams-paragraph ams-mb-s"
                 >
-                  <p>
-                    
+                  
             Uw recht op hulp bij het huishouden (tijdelijk gestopt) is beëindigd per 
           
-                  </p>
-                </div>
+                </p>
               </div>
             </li>
           </ol>
@@ -1212,11 +1188,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
                 24 juli 2020
               </time>
               <div>
-                <div
-                  class=""
-                >
-                  De levering van uw thuizorg is gestart
-                </div>
+                De levering van uw thuizorg is gestart
               </div>
             </li>
           </ol>

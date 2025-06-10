@@ -141,7 +141,7 @@ export function transformZorgnedAanvragen(
       continue;
     }
 
-    const datumBesluit = beschikking.datumAfgifte;
+    const datumBesluit = beschikking.datumAfgifte ?? ''; // See bug: MIJN-11809
     const datumAanvraag = aanvraagSource.datumAanvraag;
     const beschikteProducten = beschikking.beschikteProducten;
 

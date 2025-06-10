@@ -36,8 +36,10 @@ function transformIsErfpachterResponseSource(
   return response;
 }
 
-function getDossierNummerUrlParam(dossierNummer: string) {
-  return `E${dossierNummer.split(/E|\//).join('.')}`;
+function getDossierNummerUrlParam(
+  dossierNummer: string | undefined
+): string | null {
+  return dossierNummer ? `E${dossierNummer.split(/E|\//).join('.')}` : null;
 }
 
 export function transformErfpachtDossierProperties<
@@ -94,10 +96,11 @@ export function transformErfpachtDossierProperties<
 
     dossier.facturen.facturen = facturen;
   }
+
   const zaak: ErfpachtDossierPropsFrontend<T> = Object.assign(dossier, {
     dossierNummerUrlParam,
     title,
-    id: dossierNummerUrlParam,
+    id: dossierNummerUrlParam ?? dossier.voorkeursadres,
     link: {
       to: generatePath(routeConfig.detailPage.path, {
         dossierNummerUrlParam,
@@ -112,11 +115,15 @@ export function transformErfpachtDossierProperties<
 export function transformDossierResponse(
   responseDataSource: ErfpachtDossiersResponseSource,
   relatieCode: ErfpachtErpachterResponseSource['relationCode']
-): ErfpachtDossiersResponse {
+): ErfpachtDossiersResponse | null {
   const responseData: ErfpachtDossiersResponse = responseDataSource
     ? jsonCopy(responseDataSource)
     : {};
   const hasDossiers = !!responseData?.dossiers?.dossiers?.length;
+
+  if (!hasDossiers) {
+    return null;
+  }
 
   responseData.dossiers.dossiers =
     responseData.dossiers?.dossiers
@@ -161,7 +168,7 @@ export async function fetchErfpacht(authProfileAndToken: AuthProfileAndToken) {
     authProfileAndToken.profile.profileType !== 'commercial';
 
   if (!!erfpachterResponse.content?.isKnown && isNotCommercial) {
-    return requestData<ErfpachtDossiersResponse>(
+    return requestData<ErfpachtDossiersResponse | null>(
       {
         ...config,
         url: `${config.url}/vernise/api/dossierinfo`,
