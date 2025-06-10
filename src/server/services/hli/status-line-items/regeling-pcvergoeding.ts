@@ -16,17 +16,17 @@ export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
 
-const verzilveringToRegelingCodeMap: Record<string, string> = {
-  [AV_PCVZIL]: AV_PCVC,
-  [AV_UPCZIL]: AV_UPCC,
-};
-
+const verzilveringsCodesPC = [AV_PCVZIL];
+const verzilveringsCodesUPC = [AV_UPCZIL];
 if (featureToggle.hli2025PCTegoedCodesEnabled) {
-  verzilveringToRegelingCodeMap[AV_PCVTG] = AV_PCVC;
-  verzilveringToRegelingCodeMap[AV_UPCTG] = AV_UPCC;
+  verzilveringsCodesPC.push(AV_PCVTG);
+  verzilveringsCodesUPC.push(AV_UPCTG);
 }
 
-export const verzilveringCodes = Object.keys(verzilveringToRegelingCodeMap);
+export const verzilveringCodes = [
+  ...verzilveringsCodesUPC,
+  ...verzilveringsCodesPC,
+];
 
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -55,7 +55,13 @@ function isRegelingVanVerzilvering(
     return false;
   }
 
-  const avCode = verzilveringToRegelingCodeMap[aanvraagProductId];
+  let avCode;
+
+  if (verzilveringsCodesPC.includes(aanvraagProductId)) {
+    avCode = AV_PCVC;
+  } else if (verzilveringsCodesUPC.includes(aanvraagProductId)) {
+    avCode = AV_UPCC;
+  }
 
   return (
     compareAanvraag.productIdentificatie === avCode &&
