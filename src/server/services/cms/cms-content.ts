@@ -1,7 +1,10 @@
 import sanitizeHtml, { IOptions } from 'sanitize-html';
 
-import { ApiResponse_DEPRECATED } from '../../../universal/helpers/api';
-import { ONE_HOUR_MS, ONE_MINUTE_MS } from '../../config/app';
+import {
+  ApiResponse_DEPRECATED,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
+import { ONE_HOUR_MS } from '../../config/app';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 
@@ -54,13 +57,23 @@ interface CMSPageContent {
   content: string;
 }
 
-const CACHE_TIME_MS = 24 * ONE_MINUTE_MS; // 24 hours
+type CMSPart = 'footer' | 'info-page';
+
+function getCmsCacheKey(part: CMSPart): `cms-${CMSPart}-${string}` {
+  return `cms-${part}-${Date.now()}`;
+}
+
+let infoPageCacheKey = getCmsCacheKey('info-page');
 
 export async function fetchMijnAmsterdamUitlegPage(
-  profileType: ProfileType = 'private'
+  profileType: ProfileType = 'private',
+  renewCache: boolean = false
 ): Promise<ApiResponse_DEPRECATED<CMSPageContent | null>> {
+  if (renewCache) {
+    infoPageCacheKey = getCmsCacheKey('info-page');
+  }
   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
-    cacheTimeout: CACHE_TIME_MS,
+    cacheKey_UNSAFE: infoPageCacheKey,
     transformResponse: (responseData: {
       applicatie: {
         title: string;
@@ -183,9 +196,17 @@ function getLinks(links: CMSFooterLinkSource | CMSFooterLinkSource[]) {
 
 const EXCLUDE_BOTTOM_LINKS = ['Cookies op deze site'];
 
-export async function fetchCmsFooter() {
+let cmsFooterCacheKey = getCmsCacheKey('footer');
+
+export async function fetchCmsFooter(
+  renewCache: boolean = false
+): Promise<ApiResponse<CMSFooter>> {
+  if (renewCache) {
+    cmsFooterCacheKey = getCmsCacheKey('footer');
+  }
   return requestData<CMSFooter>(
     getApiConfig('CMS_CONTENT_FOOTER', {
+      cacheKey_UNSAFE: cmsFooterCacheKey,
       transformResponse: (responseData: CMSFooterSource | null) => {
         if (!responseData?.applicatie) {
           return {
