@@ -16,17 +16,30 @@ export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
 export const AV_PCVTG = 'AV-PCVTG';
 
-const verzilveringsCodesPC = [AV_PCVZIL];
-const verzilveringsCodesUPC = [AV_UPCZIL];
-if (featureToggle.hli2025PCTegoedCodesEnabled) {
-  verzilveringsCodesPC.push(AV_PCVTG);
-  verzilveringsCodesUPC.push(AV_UPCTG);
-}
+const avCodes = {
+  PC: {
+    [AV_PCVZIL]: true,
+    [AV_PCVTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+  },
+  UPC: {
+    [AV_UPCZIL]: true,
+    [AV_UPCTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+  },
+};
+
+const verzilveringsCodesPC = toVerzilveringCodes(avCodes.PC);
+const verzilveringsCodesUPC = toVerzilveringCodes(avCodes.UPC);
 
 export const verzilveringCodes = [
   ...verzilveringsCodesUPC,
   ...verzilveringsCodesPC,
 ];
+
+function toVerzilveringCodes(codes: Record<string, boolean>): string[] {
+  return Object.entries(codes)
+    .filter(([_code, enabled]) => !!enabled)
+    .map(([code]) => code);
+}
 
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
