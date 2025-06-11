@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 
 import { BffEndpoints } from './bff-routes';
-import { queryParams } from './route-helpers';
+import { queryParams, type RequestWithQueryParams } from './route-helpers';
 import { ZAAK_STATUS_ROUTE } from '../../client/pages/ZaakStatus/ZaakStatus-config';
 import { OTAP_ENV } from '../../universal/config/env';
 import {
@@ -57,14 +57,17 @@ router.get(
 /**
  * This endpoint serves the Footer content (html in json).
  */
-router.get(BffEndpoints.CMS_FOOTER, async (req, res, next) => {
-  try {
-    const response = await fetchCmsFooter();
-    return res.json(response);
-  } catch (error) {
-    next(error);
+router.get(
+  BffEndpoints.CMS_FOOTER,
+  async (req: RequestWithQueryParams<{ renewCache?: 'true' }>, res, next) => {
+    try {
+      const response = await fetchCmsFooter(req.query.renewCache === 'true');
+      return res.json(response);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get(
   BffEndpoints.SEARCH_CONFIG,
