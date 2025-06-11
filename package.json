@@ -155,7 +155,7 @@
     "xlsx": "file:vendor/xlsx-0.20.2.tgz"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.41.1"
+    "@rollup/rollup-linux-x64-gnu": "4.43.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
