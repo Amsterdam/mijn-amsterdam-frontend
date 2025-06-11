@@ -216,7 +216,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
           (
             <>
               Mijn Amsterdam
-              <OtapLabel />
+              <OtapLabel isAuthenticated={isAuthenticated} />
             </>
           ) as unknown as string // Hack because brandName is not typed as ReactNode
         }
