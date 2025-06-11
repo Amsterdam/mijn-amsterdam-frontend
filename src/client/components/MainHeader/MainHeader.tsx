@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router';
 
 import styles from './MainHeader.module.scss';
 import { EnvLabel } from './OtapLabel';
-import { SearchBar } from './SearchBar';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { LOGOUT_URL } from '../../config/api';
 import { useSmallScreen } from '../../hooks/media.hook';
@@ -21,6 +20,7 @@ import {
 } from '../../pages/Thema/Profile/Profile-thema-config';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { Search } from '../Search/Search';
 import {
   useDisplayLiveSearch,
   useSearchActive,
@@ -93,7 +93,7 @@ function MainHeaderLinks() {
   const [isSearchActive, setSearchActive] = useSearchActive();
   const isDisplayLiveSearch = useDisplayLiveSearch();
   const isPhoneScreen = useSmallScreen();
-
+  const label = isSearchActive ? 'Zoeken sluiten' : 'Zoeken';
   return (
     <>
       {isDisplayLiveSearch && (
@@ -112,7 +112,7 @@ function MainHeaderLinks() {
             }}
             href={SearchPageRoute.route}
           >
-            {!isPhoneScreen ? 'Zoeken' : ''}
+            {!isPhoneScreen ? label : ''}
             <Icon
               svg={isSearchActive ? CloseIcon : SearchIcon}
               size="heading-5"
@@ -138,9 +138,10 @@ function MainHeaderSearch() {
     isDisplayLiveSearch &&
     isSearchActive && (
       <div className={styles.SearchBarWrap}>
-        <SearchBar
+        <Search
           onFinish={() => setSearchActive(false)}
           className={styles.SearchBar}
+          inPage={true}
         />
       </div>
     )
