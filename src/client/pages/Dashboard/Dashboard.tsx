@@ -24,6 +24,7 @@ import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useThemaMenuItems } from '../../hooks/useThemaMenuItems';
 import { myNotificationsMenuItem } from '../MyNotifications/MyNotifications-routes';
+import { themaTitle as notificationsThemaTitle } from '../MyNotifications/MyNotifications-config';
 
 const MAX_NOTIFICATIONS_VISIBLE = 6;
 
