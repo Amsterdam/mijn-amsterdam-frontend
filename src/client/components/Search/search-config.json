@@ -348,7 +348,13 @@
       "url": "/parkeren",
       "displayTitle": "Parkeren",
       "description": "Parkeren in de gemeente Amsterdam.",
-      "keywords": ["Parkeren", "private", "commercial", "vergunningen"]
+      "keywords": [
+        "Parkeervergunning",
+        "Parkeren",
+        "private",
+        "commercial",
+        "vergunningen"
+      ]
     },
     {
       "url": "/toeristische-verhuur",
