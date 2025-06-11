@@ -39,7 +39,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 <span
                   class="ams-visually-hidden"
                 >
-                  Actueel
+                  Alle berichten
                 </span>
               </a>
             </li>
@@ -48,7 +48,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
         <h3
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
-          Actueel
+          Alle berichten
         </h3>
       </div>
     </div>
