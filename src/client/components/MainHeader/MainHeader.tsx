@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './MainHeader.module.scss';
-import { OtapLabel } from './OtapLabel';
+import { EnvLabel } from './OtapLabel';
 import { SearchBar } from './SearchBar';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { LOGOUT_URL } from '../../config/api';
@@ -216,7 +216,7 @@ export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
           (
             <>
               Mijn Amsterdam
-              <OtapLabel isAuthenticated={isAuthenticated} />
+              <EnvLabel isAuthenticated={isAuthenticated} />
             </>
           ) as unknown as string // Hack because brandName is not typed as ReactNode
         }

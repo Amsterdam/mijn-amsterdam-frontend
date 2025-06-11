@@ -4,7 +4,7 @@ import styles from './OtapLabel.module.scss';
 import { OTAP_ENV } from '../../../universal/config/env';
 import { ProfileName } from './ProfileName';
 
-export function OtapLabel({ isAuthenticated }: { isAuthenticated: boolean }) {
+export function EnvLabel({ isAuthenticated }: { isAuthenticated: boolean }) {
   return ['test', 'development', 'acceptance'].includes(OTAP_ENV) ? (
     <small
       style={{ maxWidth: '300px', overflow: 'hidden' }}
