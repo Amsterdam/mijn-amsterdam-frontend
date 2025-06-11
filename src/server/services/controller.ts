@@ -10,7 +10,11 @@ import { omit } from '../../universal/helpers/utils';
 import { getAuth } from '../auth/auth-helpers';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { logger } from '../logging';
-import { queryParams, sendMessage } from '../routing/route-helpers';
+import {
+  queryParams,
+  sendMessage,
+  type RequestWithQueryParams,
+} from '../routing/route-helpers';
 import { fetchIsKnownInAFIS } from './afis/afis';
 import { fetchAfval, fetchAfvalPunten } from './afval/afval';
 import { fetchAVG } from './avg/avg';
@@ -106,9 +110,12 @@ export function addServiceResultHandler<
  * The service methods
  */
 // Public services
-const CMS_CONTENT = (req: Request) => {
+const CMS_CONTENT = (req: RequestWithQueryParams<{ renewCache?: 'true' }>) => {
   const auth = getAuth(req);
-  return fetchMijnAmsterdamUitlegPage(auth?.profile.profileType);
+  return fetchMijnAmsterdamUitlegPage(
+    auth?.profile.profileType,
+    req.query.renewCache === 'true'
+  );
 };
 const CMS_MAINTENANCE_NOTIFICATIONS = callPublicService(
   fetchMaintenanceNotificationsActual
