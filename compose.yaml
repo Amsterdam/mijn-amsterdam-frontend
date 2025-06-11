@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: mijnadam_db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: "mijnadam"
+      POSTGRES_USER: "mijnadam"
+      POSTGRES_DB: "mijnadam"
+    restart: always
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pg@local.nl"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    links:
+      - db:postgres
+    restart: always
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pg_data:
+  pgadmin_data:

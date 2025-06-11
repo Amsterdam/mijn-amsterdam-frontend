@@ -1,10 +1,11 @@
 import { PoolConfig, Pool } from 'pg';
 
+import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { captureException } from '../monitoring';
 
 // Connection params are taken from env variables.
 export const pgDbConfig: PoolConfig = {
-  ssl: { rejectUnauthorized: false },
+  ssl: IS_DEVELOPMENT ? false : { rejectUnauthorized: false },
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
@@ -26,7 +27,6 @@ export function getPool() {
 
 export async function query(queryString: string, values?: unknown[]) {
   let result = null;
-
   try {
     const pool = getPool();
     result = await pool.query(queryString, values);
