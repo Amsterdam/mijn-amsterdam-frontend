@@ -81,7 +81,7 @@ export function DashboardHeader() {
           )}
         </div>
         <div className={styles.DashboardHeaderSearch}>
-          <Search />
+          <Search inPage={false} />
         </div>
       </div>
     </header>
