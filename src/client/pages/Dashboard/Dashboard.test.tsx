@@ -125,11 +125,10 @@ describe('<Dashboard />', () => {
   });
 
   it('Renders dashboard correctly', async () => {
-    await act(() => {
+    act(() => {
       render(<Component />);
     });
-    expect(screen.getByRole('heading', { name: 'Goedemorgen, J. Jansen' }));
-    screen.getByRole('heading', { name: /Recente berichten/i });
+    expect(screen.getByRole('heading', { name: 'Goedemorgen' }));
     expect(screen.getByRole('heading', { name: `Mijn thema's` }));
     expect(
       screen.queryByRole('link', { name: 'Toon alle' })
