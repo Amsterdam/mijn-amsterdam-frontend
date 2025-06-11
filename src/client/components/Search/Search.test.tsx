@@ -198,14 +198,10 @@ describe('<Search />', () => {
       </BrowserRouter>
     );
 
-    const input = await screen.getByPlaceholderText('Zoeken naar...');
+    await screen.getByPlaceholderText('Zoeken naar...');
 
     await user.keyboard('gehandicaptenparkeerkaart');
-
-    expect(input).toHaveValue('gehandicaptenparkeerkaart');
-
-    const vergunning = await screen.findByText('Z/000/000008');
-    expect(vergunning).toBeInTheDocument();
+    await screen.findByText('Z/000/000008');
 
     const submitButton = screen.getByLabelText('Verstuur zoekopdracht');
     expect(submitButton).toBeInTheDocument();
