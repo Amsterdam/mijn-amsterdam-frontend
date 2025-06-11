@@ -17,6 +17,24 @@ import parse, {
 
 import { MaRouterLink } from '../components/MaLink/MaLink';
 
+function getNextNonTextNode(domNode: Element): Element | null {
+  if (!domNode) {
+    return null;
+  }
+  const nextNode = domNode.next;
+  if (!nextNode && domNode.type === 'tag') {
+    return domNode;
+  }
+  if (nextNode && nextNode?.type !== 'tag') {
+    // If the next node is not a tag, we skip it and look for the next one.
+    if (!nextNode.next) {
+      return null;
+    }
+    return getNextNonTextNode(nextNode.next as Element);
+  }
+  return nextNode;
+}
+
 function withClassNames(
   attribs: { [name: string]: string },
   className: string
@@ -52,12 +70,19 @@ const options: HTMLReactParserOptions = {
           </Link>
         );
       }
-      case 'p':
+      case 'p': {
+        const nextNode = getNextNonTextNode(domNode as Element);
+        let bottomSpacing = '';
+        // Adds an extra margin if the next sibling is not a paragraph to visually separate different sections.
+        if (nextNode) {
+          bottomSpacing = nextNode?.name !== 'p' ? 'ams-mb-xl' : 'ams-mb-m';
+        }
         return (
-          <Paragraph {...withClassNames(attribs, 'ams-mb-s')}>
+          <Paragraph {...withClassNames(attribs, bottomSpacing)}>
             {domToReact(children_, options)}
           </Paragraph>
         );
+      }
       case 'h2':
       case 'h3':
       case 'h4': {
