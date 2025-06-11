@@ -1,6 +1,7 @@
 .DashboardHeaderInner {
   position: relative;
   padding-top: 31.25%;
+  overflow: hidden;
   background-color: var(--ams-color-separator);
 }
 @keyframes fadeIn {
@@ -13,9 +14,11 @@
 }
 .DashboardHeaderImg {
   top: 0;
-  width: 100%;
+  height: 100%;
   display: block;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .fadeIn {
   animation: fadeIn 0.3s ease-out;
