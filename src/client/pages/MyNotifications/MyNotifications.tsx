@@ -19,6 +19,7 @@ import { PaginationV2 } from '../../components/Pagination/PaginationV2';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useHTMLDocumentTitle } from '../../hooks/useHTMLDocumentTitle';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
+import { themaTitle } from './MyNotifications-config';
 
 const PAGE_SIZE = 12;
 
@@ -48,7 +49,7 @@ export function MyNotificationsPage() {
   return (
     <OverviewPageV2>
       <PageContentV2>
-        <PageHeadingV2>Actueel</PageHeadingV2>
+        <PageHeadingV2>{themaTitle}</PageHeadingV2>
         <PageContentCell>
           {isError(NOTIFICATIONS) && (
             <ErrorAlert className="ams-mb-m">

@@ -3,10 +3,10 @@
 }
 :global(.ams-ordered-list).StepsList {
   gap: 0;
-  --status-circle-box-width: calc(var(--ams-grid-column-gap) * 2);
+  --status-circle-box-width: calc(var(--ams-space-m) * 1.5);
 
   @media screen and (min-width: $ams-breakpoint-medium) {
-    --status-circle-box-width: calc(var(--ams-grid-column-gap) * 1.6);
+    --status-circle-box-width: calc(var(--ams-space-xl) * 1.6);
   }
 
   --status-circle-box-height: calc(var(--status-circle-box-width) / 2);

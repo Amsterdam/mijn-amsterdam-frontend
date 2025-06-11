@@ -191,7 +191,10 @@ describe('request handlers', () => {
 
       await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith('private');
+      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith(
+        'private',
+        false
+      );
     });
 
     test('profileType: commercial', async () => {
@@ -204,7 +207,10 @@ describe('request handlers', () => {
 
       await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith('commercial');
+      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith(
+        'commercial',
+        false
+      );
     });
 
     test('arbitrary query params are passed', async () => {
@@ -215,11 +221,14 @@ describe('request handlers', () => {
         id: '9988',
       });
 
-      (reqMock as unknown as RequestMock).setQuery({ forceRenew: 'true' });
+      (reqMock as unknown as RequestMock).setQuery({ renewCache: 'true' });
 
       await forTesting.CMS_CONTENT(reqMock);
 
-      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith('commercial');
+      expect(fetchMijnAmsterdamUitlegPage).toHaveBeenCalledWith(
+        'commercial',
+        true
+      );
     });
   });
 });
