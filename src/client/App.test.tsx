@@ -58,6 +58,7 @@ describe('App', () => {
 
   it('Renders Dashboard', async () => {
     bffApi.get('/services/all').reply(200);
+    bffApi.get('/services/search-config').reply(200);
 
     const session = {
       isPristine: false,
@@ -75,9 +76,9 @@ describe('App', () => {
 
     expect(
       screen.getByRole('heading', { name: /Recente berichten/i })
-    ).toHaveTextContent('Recente berichten');
+    ).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: /mijn thema's/i })
-    ).toHaveTextContent(/Mijn thema's/gi);
+    ).toBeInTheDocument();
   });
 });
