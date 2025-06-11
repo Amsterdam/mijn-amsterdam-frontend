@@ -52,12 +52,18 @@ const options: HTMLReactParserOptions = {
           </Link>
         );
       }
-      case 'p':
+      case 'p': {
+        let bottomSpacing = 'ams-mb-m';
+        // Adds an extra margin if the next sibling is not a paragraph to visually separate different sections.
+        if ((domNode.nextSibling as Element)?.name !== 'p') {
+          bottomSpacing = 'ams-mb-xl';
+        }
         return (
-          <Paragraph {...withClassNames(attribs, 'ams-mb-s')}>
+          <Paragraph {...withClassNames(attribs, bottomSpacing)}>
             {domToReact(children_, options)}
           </Paragraph>
         );
+      }
       case 'h2':
       case 'h3':
       case 'h4': {
