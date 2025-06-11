@@ -3,6 +3,14 @@
   padding-top: 31.25%;
   background-color: var(--ams-color-separator);
 }
+.DashboardHeaderImgWrap {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -13,9 +21,11 @@
 }
 .DashboardHeaderImg {
   top: 0;
-  width: 100%;
+  height: 100%;
   display: block;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .fadeIn {
   animation: fadeIn 0.3s ease-out;

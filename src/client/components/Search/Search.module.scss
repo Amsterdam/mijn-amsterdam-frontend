@@ -74,9 +74,9 @@
   }
 }
 .ResultSet {
-  margin: 1rem 0;
+  margin: var(--ams-space-m) 0;
   @media screen and (min-width: $ams-breakpoint-medium) {
-    margin: 1rem;
+    margin: var(--ams-space-m);
   }
   margin-bottom: 2rem;
 }
@@ -146,4 +146,11 @@
 .Input {
   width: 100%;
   padding: 0 var(--ams-space-m);
+}
+
+.ClearButton {
+  --ams-button-tertiary-hover-border-color: transparent;
+  position: absolute;
+  right: 0;
+  transform: translateX(calc(100% * -1));
 }

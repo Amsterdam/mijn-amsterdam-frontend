@@ -64,14 +64,14 @@
 }
 
 .SearchBarWrap {
-  position: absolute;
-  z-index: z-index(main-header-searchbar);
-  left: 0;
-  right: 0;
   background-color: var(--ams-color-background);
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: calc(
+    var(--ams-page-max-inline-size) - calc(var(--ams-space-xl) * 3)
+  );
+  margin: 0 auto;
 }
 
 .SearchBar {

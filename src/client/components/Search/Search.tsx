@@ -6,7 +6,7 @@ import {
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
-import { SearchIcon } from '@amsterdam/design-system-react-icons';
+import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 import { useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
@@ -23,7 +23,7 @@ import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {
   results: SearchEntry[];
-  totalAmountOfResults: number;
+  totalResultsCount: number;
   title?: string;
   noResultsMessage?: string;
   isLoading?: boolean;
@@ -32,8 +32,8 @@ interface ResultSetProps {
   onClickResult?: (
     result: SearchEntry,
     resultNumber: number,
-    amountOfResults: number,
-    amountOfResultsShown: number
+    resultCountVisible: number,
+    totalResultsCount: number
   ) => void;
 }
 
@@ -44,6 +44,8 @@ export function ResultSet({
   noResultsMessage = 'Geen resultaten',
   term,
   extendedResults = false,
+  totalResultsCount,
+  onClickResult,
 }: ResultSetProps) {
   return (
     <div className={styles.ResultSet}>
@@ -67,7 +69,18 @@ export function ResultSet({
             : MaRouterLink;
           return (
             <UnorderedList.Item key={result.url + index} className="Result">
-              <LinkComponent maVariant="fatNoUnderline" href={result.url}>
+              <LinkComponent
+                maVariant="fatNoUnderline"
+                href={result.url}
+                onClick={() =>
+                  onClickResult?.(
+                    result,
+                    index,
+                    results.length,
+                    totalResultsCount
+                  )
+                }
+              >
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
                   : typeof result.displayTitle === 'string'
@@ -94,8 +107,8 @@ interface SearchProps {
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
   typeAhead?: boolean;
+  inPage?: boolean;
   extendedAMResults?: boolean;
-  replaceResultUrl?: (result: SearchEntry) => boolean;
   className?: string;
 }
 
@@ -107,9 +120,9 @@ export function Search({
   maxResultCountDisplay = MAX_RESULT_COUNT_DISPLAY,
   autoFocus = true,
   typeAhead = true,
+  inPage = false,
   extendedAMResults = false,
   className,
-  replaceResultUrl,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -189,6 +202,7 @@ export function Search({
     const checkIfClickedOutside = (e: MouseEvent) => {
       if (
         typeAhead &&
+        !inPage &&
         isResultsVisible &&
         resultsRef.current &&
         !resultsRef.current.contains(e.target as Node)
@@ -217,7 +231,7 @@ export function Search({
     <div
       className={classnames(
         styles.SearchBar,
-        !typeAhead && styles['in-page'],
+        inPage && styles['in-page'],
         className
       )}
     >
@@ -239,9 +253,9 @@ export function Search({
             name="searchinput"
             type="text"
             className={styles.Input}
-            autoComplete="none"
-            autoCorrect="none"
-            autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
             spellCheck="false"
             placeholder={
               isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
@@ -259,6 +273,21 @@ export function Search({
             }}
           />
 
+          {!!searchBarRef.current?.value && (
+            <Button
+              iconOnly
+              variant="tertiary"
+              className={styles.ClearButton}
+              onClick={() => {
+                setTerm('');
+                setResultsVisible(false);
+                searchBarRef.current?.focus();
+              }}
+              aria-label="Verwijder zoekopdracht"
+              icon={CloseIcon}
+              color="contrast"
+            />
+          )}
           <Button
             iconOnly
             className={styles.SubmitButton}
@@ -274,8 +303,9 @@ export function Search({
               term={term}
               isLoading={isTyping || !isAppStateReady}
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
-              totalAmountOfResults={results?.ma?.length || 0}
+              totalResultsCount={results?.ma?.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
+              onClickResult={() => onFinish('Resultaat geklikt')}
             />
 
             <ResultSet
@@ -289,7 +319,7 @@ export function Search({
                   ? results.am.contents.slice(0, maxResultCountDisplay / 2)
                   : []
               }
-              totalAmountOfResults={
+              totalResultsCount={
                 results?.am?.state === 'hasValue' &&
                 results.am.contents !== null
                   ? results.am.contents.length
