@@ -281,6 +281,7 @@ export function Search({
               onClick={() => {
                 setTerm('');
                 setResultsVisible(false);
+                searchBarRef.current?.focus();
               }}
               aria-label="Verwijder zoekopdracht"
               icon={CloseIcon}
