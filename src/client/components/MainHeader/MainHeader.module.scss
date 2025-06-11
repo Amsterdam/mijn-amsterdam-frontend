@@ -51,9 +51,6 @@
 }
 
 .ProfileNameInner {
-  @media screen and (min-width: $ams-breakpoint-medium) {
-    max-width: 190px;
-  }
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
