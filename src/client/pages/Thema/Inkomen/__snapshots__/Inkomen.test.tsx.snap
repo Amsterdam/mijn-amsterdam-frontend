@@ -79,11 +79,12 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -103,11 +104,12 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -546,11 +548,12 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -570,11 +573,12 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>

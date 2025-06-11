@@ -17,8 +17,9 @@ describe('<MainHeader />', () => {
       </RecoilRoot>
     );
 
-    expect(screen.getAllByText(/Mijn Amsterdam/).length).toBe(2);
-    expect(screen.getByText('Ga naar de homepage')).toBeInTheDocument();
+    expect(
+      screen.getByText('Ga naar de homepage van Mijn Amsterdam')
+    ).toBeInTheDocument();
   });
 
   it('Renders authenticated header', () => {
