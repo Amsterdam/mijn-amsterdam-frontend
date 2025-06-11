@@ -6,18 +6,47 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
+import { featureToggle } from '../../../../client/pages/Thema/HLI/HLI-thema-config';
 
 export const AV_UPCC = 'AV-UPCC';
 export const AV_UPCZIL = 'AV-UPCZIL';
+export const AV_UPCTG = 'AV-UPCTG';
+
 export const AV_PCVC = 'AV-PCVC';
 export const AV_PCVZIL = 'AV-PCVZIL';
+export const AV_PCVTG = 'AV-PCVTG';
+
+const avCodes = {
+  PC: {
+    [AV_PCVZIL]: true,
+    [AV_PCVTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+  },
+  UPC: {
+    [AV_UPCZIL]: true,
+    [AV_UPCTG]: featureToggle.hli2025PCTegoedCodesEnabled,
+  },
+};
+
+const verzilveringsCodesPC = toVerzilveringCodes(avCodes.PC);
+const verzilveringsCodesUPC = toVerzilveringCodes(avCodes.UPC);
+
+export const verzilveringCodes = [
+  ...verzilveringsCodesUPC,
+  ...verzilveringsCodesPC,
+];
+
+function toVerzilveringCodes(codes: Record<string, boolean>): string[] {
+  return Object.entries(codes)
+    .filter(([_code, enabled]) => enabled)
+    .map(([code]) => code);
+}
 
 function isVerzilvering(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   return (
     !!aanvraag.productIdentificatie &&
-    [AV_PCVZIL, AV_UPCZIL].includes(aanvraag.productIdentificatie)
+    verzilveringCodes.includes(aanvraag.productIdentificatie)
   );
 }
 
@@ -35,12 +64,15 @@ function isRegelingVanVerzilvering(
   compareAanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
 ) {
   const aanvraagProductId = aanvraag.productIdentificatie;
+  if (!aanvraagProductId) {
+    return false;
+  }
+
   let avCode;
 
-  if (aanvraagProductId === AV_PCVZIL) {
+  if (verzilveringsCodesPC.includes(aanvraagProductId)) {
     avCode = AV_PCVC;
-  }
-  if (aanvraagProductId === AV_UPCZIL) {
+  } else if (verzilveringsCodesUPC.includes(aanvraagProductId)) {
     avCode = AV_UPCC;
   }
 
@@ -78,7 +110,7 @@ export function filterCombineUpcPcvData(
       return null;
     }
 
-    // Add AV_PCVC / AV_UPCC documenten to AV_PCVZIL / AV_UPCZIL
+    // Add documenten to Verzilvering, e.g, (AV_PC{ZIL|TG})
     if (isVerzilvering(aanvraag)) {
       // Find first corresponding baseRegeling
       const baseRegeling = aanvragen.find((compareAanvraag) =>
