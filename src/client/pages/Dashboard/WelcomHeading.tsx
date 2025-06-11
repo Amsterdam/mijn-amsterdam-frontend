@@ -1,6 +1,4 @@
 import styles from './WelcomeHeading.module.scss';
-import { ProfileName } from '../../components/MainHeader/ProfileName';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const NOON = 12;
 const EVENING = 18;
@@ -13,40 +11,22 @@ export function WelcomeHeading() {
   const isNight = hours < NIGHT;
   const isAfternoon = hours >= NOON && hours < EVENING;
 
-  let greetingMsgStart = 'Welkom';
+  let greetingMsg = 'Welkom';
 
   switch (true) {
     case isMorning:
-      greetingMsgStart = 'Goedemorgen';
+      greetingMsg = 'Goedemorgen';
       break;
     case isAfternoon:
-      greetingMsgStart = 'Goedemiddag';
+      greetingMsg = 'Goedemiddag';
       break;
     case isEvening:
-      greetingMsgStart = 'Goedenavond';
+      greetingMsg = 'Goedenavond';
       break;
     case isNight:
-      greetingMsgStart = 'Goedenacht';
+      greetingMsg = 'Goedenacht';
       break;
   }
 
-  const profileType = useProfileTypeValue();
-
-  return (
-    <h2 className={styles.WelcomeHeading}>
-      {greetingMsgStart}
-      {profileType === 'commercial' ? (
-        ''
-      ) : (
-        <>
-          {', '}
-          <ProfileName
-            fallbackName="Bezoeker"
-            loaderBarConfig={[['400px', '40px', '0']]}
-            preferVoornaam
-          />
-        </>
-      )}
-    </h2>
-  );
+  return <h2 className={styles.WelcomeHeading}>{greetingMsg}</h2>;
 }
