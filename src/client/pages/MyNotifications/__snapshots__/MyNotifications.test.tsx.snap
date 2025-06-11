@@ -240,7 +240,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               
       
               <p
-                class="ams-paragraph ams-mb-s"
+                class="ams-paragraph ams-mb-xl"
               >
                 
         De persoonlijke digitale pagina voor burgers en ondernemers bij de
@@ -296,7 +296,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               
       
               <p
-                class="ams-paragraph ams-mb-s"
+                class="ams-paragraph ams-mb-xl"
               >
                 
         
