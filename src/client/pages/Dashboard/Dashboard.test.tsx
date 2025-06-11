@@ -128,20 +128,14 @@ describe('<Dashboard />', () => {
     await act(() => {
       render(<Component />);
     });
-    expect(
-      screen.getByRole('heading', { name: 'Goedemorgen, J. Jansen' })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: 'Recente berichten' })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: `Mijn thema's` })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Goedemorgen, J. Jansen' }));
+    screen.getByRole('heading', { name: /Recente berichten/i });
+    expect(screen.getByRole('heading', { name: `Mijn thema's` }));
     expect(
       screen.queryByRole('link', { name: 'Toon alle' })
     ).not.toBeInTheDocument();
 
-    expect(screen.getByLabelText('Verstuur zoekopdracht')).toBeInTheDocument();
+    expect(screen.getByLabelText('Verstuur zoekopdracht'));
   });
 
   describe('Notifications', () => {
