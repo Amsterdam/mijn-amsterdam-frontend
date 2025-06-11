@@ -75,7 +75,6 @@ const options: HTMLReactParserOptions = {
         let bottomSpacing = '';
         // Adds an extra margin if the next sibling is not a paragraph to visually separate different sections.
         if (nextNode) {
-          console.log(nextNode);
           bottomSpacing = nextNode?.name !== 'p' ? 'ams-mb-xl' : 'ams-mb-m';
         }
         return (
