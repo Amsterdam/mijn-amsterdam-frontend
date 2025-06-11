@@ -18,7 +18,7 @@ describe('<MainHeader />', () => {
     );
 
     expect(
-      screen.getByText('Ga naar de homepage van Mijn Amsterdam')
+      screen.queryByText('Ga naar de homepage van Mijn Amsterdam')
     ).toBeInTheDocument();
   });
 
