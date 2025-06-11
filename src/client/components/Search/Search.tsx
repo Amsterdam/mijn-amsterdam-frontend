@@ -258,9 +258,7 @@ export function Search({
             autoCapitalize="off"
             spellCheck="false"
             placeholder={
-              isAppStateReady
-                ? 'Zoeken naar...'
-                : 'Gegevens worden opgehaald...'
+              isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
             }
             onClick={() => {
               if (term) {

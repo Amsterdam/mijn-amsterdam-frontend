@@ -102,7 +102,7 @@ describe('<Search />', () => {
       </BrowserRouter>
     );
 
-    const input = screen.getByPlaceholderText('Zoeken naar...');
+    const input = await screen.getByPlaceholderText('Zoeken naar...');
 
     await user.keyboard('gehandicaptenparkeerkaart');
 
