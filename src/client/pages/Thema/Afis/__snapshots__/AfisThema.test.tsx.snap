@@ -99,11 +99,12 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -123,11 +124,12 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -158,14 +160,13 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
             <svg
               aria-hidden="true"
               focusable="false"
-              viewBox="0 0 36 36"
+              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                clip-rule="evenodd"
+                d="M12.283 3 22.75 21H1.25zm-.555 12.283-.604-5.12h2.284l-.603 5.12zm-.444 1.848c0-.483.351-.98.987-.98.624 0 .986.494.986.98 0 .497-.364.98-.986.98a.97.97 0 0 1-.987-.98"
+                fill-rule="evenodd"
               />
             </svg>
           </span>

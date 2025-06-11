@@ -1,6 +1,10 @@
 .SearchBar {
   position: relative;
-  max-width: 60rem;
+  max-width: 24rem;
+
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    max-width: 60rem;
+  }
 
   &.in-page {
     max-width: none;
@@ -25,7 +29,9 @@
   background-color: var(--ams-color-background);
   margin-top: 0;
   border-top: 0;
-  border: 1px solid var(--ams-color-text);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    border: 1px solid var(--ams-color-text);
+  }
 }
 
 .SearchBar.in-page .Results {
@@ -68,7 +74,10 @@
   }
 }
 .ResultSet {
-  margin: 1rem;
+  margin: 1rem 0;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    margin: 1rem;
+  }
   margin-bottom: 2rem;
 }
 .ResultSetLink {

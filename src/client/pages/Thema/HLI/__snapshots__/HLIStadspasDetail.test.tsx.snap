@@ -133,7 +133,7 @@ exports[`With basic request where data returned does not matter > Matches snapsh
         class="_LoadingContent_16e37c"
       >
         <span
-          style="width: 60rem; height: 2rem; margin-bottom: .5rem;"
+          style="width: 60rem; height: 2rem; margin-bottom: 0.5rem;"
         />
         <span
           style="width: 60rem; height: 2rem; margin-bottom: 4rem;"

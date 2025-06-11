@@ -82,6 +82,8 @@ function MainHeaderLinks() {
             maVariant="noUnderline"
             className={classNames(
               'ams-button',
+              'ams-button--tertiary',
+              styles.MainHeaderSecondaryLink,
               isSearchActive && styles.SearchButtonActive
             )}
             onClick={(e) => {
@@ -101,7 +103,7 @@ function MainHeaderLinks() {
       {!isPhoneScreen && (
         <MainHeaderSecondaryLinks
           wrapInListElement
-          linkClassName="ams-button"
+          linkClassName={`ams-button ams-button--tertiary ${styles.MainHeaderSecondaryLink}`}
         />
       )}
     </>
@@ -153,30 +155,42 @@ export interface MainHeaderProps {
 }
 
 export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
-  const { ref, isMainMenuOpen, closeMenuAndSearch, headerHeight } =
-    useMainHeaderControl();
+  const {
+    ref,
+    isMainMenuOpen,
+    isSearchActive,
+    closeMenuAndSearch,
+    headerHeight,
+  } = useMainHeaderControl();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSearchActive, setSearchActive] = useSearchActive();
   return (
     <>
       <PageHeader
         ref={ref}
         className={classNames(styles.MainHeader, AmsMainMenuClassname)}
-        logoLink="https://www.amsterdam.nl/"
-        onClick={(event) => {
-          if (
-            event.target.parentNode?.classList.contains(
-              'ams-page-header__logo-link'
-            )
-          ) {
-            event.preventDefault();
-            event.stopPropagation();
-            navigate(DashboardRoute.route);
-            if (isSearchActive && location.pathname === DashboardRoute.route) {
-              setSearchActive(false);
-            }
-          }
+        logoLink={DashboardRoute.route}
+        logoAccessibleName="Logo van de gemeente Amsterdam"
+        logoLinkTitle="Ga naar de homepage van Mijn Amsterdam"
+        logoLinkComponent={function LogoLinkComponent({ children, ...props }) {
+          return (
+            <a
+              {...props}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                navigate(DashboardRoute.route);
+                if (
+                  (isSearchActive || isMainMenuOpen) &&
+                  location.pathname === DashboardRoute.route
+                ) {
+                  closeMenuAndSearch();
+                }
+              }}
+            >
+              {children}
+            </a>
+          );
         }}
         brandName={
           (
