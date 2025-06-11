@@ -68,16 +68,18 @@ export function DashboardHeader() {
   return (
     <header className={styles.DashboardHeader}>
       <div className={styles.DashboardHeaderInner}>
-        {!!imgRef.current?.src && !isLoading && (
-          <img
-            className={classNames(
-              styles.DashboardHeaderImg,
-              hasFade && styles.fadeIn
-            )}
-            src={imgRef.current.src}
-            alt=""
-          />
-        )}
+        <div className={styles.DashboardHeaderImgWrap}>
+          {!!imgRef.current?.src && !isLoading && (
+            <img
+              className={classNames(
+                styles.DashboardHeaderImg,
+                hasFade && styles.fadeIn
+              )}
+              src={imgRef.current.src}
+              alt=""
+            />
+          )}
+        </div>
         <div className={styles.DashboardHeaderSearch}>
           <Search />
         </div>

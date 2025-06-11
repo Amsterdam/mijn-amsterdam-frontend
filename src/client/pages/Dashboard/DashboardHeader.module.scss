@@ -1,8 +1,15 @@
 .DashboardHeaderInner {
   position: relative;
   padding-top: 31.25%;
-  overflow: hidden;
   background-color: var(--ams-color-separator);
+}
+.DashboardHeaderImgWrap {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
 }
 @keyframes fadeIn {
   0% {
