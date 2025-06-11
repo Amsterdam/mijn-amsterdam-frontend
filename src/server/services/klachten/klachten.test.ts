@@ -64,7 +64,8 @@ describe('Klachten', () => {
         notifications: [
           {
             datePublished: '2022-04-05T00:00:00.000Z',
-            description: 'Uw klacht is ontvangen.',
+            description:
+              'Wij hebben uw klacht met gemeentelijk zaaknummer 230541 ontvangen',
             id: 'klacht-230541-notification',
             link: {
               title: 'Bekijk details',
@@ -76,7 +77,8 @@ describe('Klachten', () => {
           },
           {
             datePublished: '2022-05-05T00:00:00.000Z',
-            description: 'Uw klacht is ontvangen.',
+            description:
+              'Wij hebben uw klacht met gemeentelijk zaaknummer 2505661 ontvangen',
             id: 'klacht-2505661-notification',
             link: {
               title: 'Bekijk details',
@@ -88,7 +90,8 @@ describe('Klachten', () => {
           },
           {
             datePublished: '2022-06-13T00:00:00.000Z',
-            description: 'Uw klacht is ontvangen.',
+            description:
+              'Wij hebben uw klacht met gemeentelijk zaaknummer 280321 ontvangen',
             id: 'klacht-280321-notification',
             link: {
               title: 'Bekijk details',
@@ -100,7 +103,8 @@ describe('Klachten', () => {
           },
           {
             datePublished: '2022-02-13T00:00:00.000Z',
-            description: 'Uw klacht is ontvangen.',
+            description:
+              'Wij hebben uw klacht met gemeentelijk zaaknummer 237821 ontvangen',
             id: 'klacht-237821-notification',
             link: {
               title: 'Bekijk details',
@@ -112,7 +116,8 @@ describe('Klachten', () => {
           },
           {
             datePublished: '2022-01-12T00:00:00.000Z',
-            description: 'Uw klacht is ontvangen.',
+            description:
+              'Wij hebben uw klacht met gemeentelijk zaaknummer 438001 ontvangen',
             id: 'klacht-438001-notification',
             link: {
               title: 'Bekijk details',
