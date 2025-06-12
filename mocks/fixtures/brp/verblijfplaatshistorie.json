@@ -1,0 +1,60 @@
+{
+  "verblijfplaatsen": [
+    {
+      "type": "Adres",
+      "verblijfadres": {
+        "korteStraatnaam": "Ampèrestraat",
+        "huisnummer": 4,
+        "postcode": "1098NK",
+        "woonplaats": "Amsterdam"
+      },
+      "functieAdres": {
+        "code": "W",
+        "omschrijving": "woonadres"
+      },
+      "gemeenteVanInschrijving": {
+        "code": "0363",
+        "omschrijving": "Amsterdam"
+      },
+      "datumVan": {
+        "type": "Datum",
+        "datum": "1995-10-20",
+        "langFormaat": "20 oktober 1995"
+      },
+      "adressering": {
+        "adresregel1": "Ampèrestraat 4",
+        "adresregel2": "1098 NK  AMSTERDAM"
+      }
+    },
+    {
+      "type": "Adres",
+      "verblijfadres": {
+        "korteStraatnaam": "Prins Hendrikkade",
+        "huisnummer": 100,
+        "postcode": "1011AH"
+      },
+      "functieAdres": {
+        "code": "W",
+        "omschrijving": "woonadres"
+      },
+      "gemeenteVanInschrijving": {
+        "code": "0363",
+        "omschrijving": "Amsterdam"
+      },
+      "datumVan": {
+        "type": "Datum",
+        "datum": "1995-04-12",
+        "langFormaat": "12 april 1995"
+      },
+      "datumTot": {
+        "type": "Datum",
+        "datum": "1995-10-20",
+        "langFormaat": "20 oktober 1995"
+      },
+      "adressering": {
+        "adresregel1": "Prins Hendrikkade 100",
+        "adresregel2": "1011 AH  AMSTERDAM"
+      }
+    }
+  ]
+}
