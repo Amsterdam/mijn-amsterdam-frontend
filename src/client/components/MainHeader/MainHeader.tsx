@@ -5,8 +5,8 @@ import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
-import styles from './MainHeader.module.scss';
 import { EnvLabel } from './EnvLabel';
+import styles from './MainHeader.module.scss';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { LOGOUT_URL } from '../../config/api';
 import { useSmallScreen } from '../../hooks/media.hook';
@@ -18,6 +18,7 @@ import {
   themaIdBRP,
   themaIdKVK,
 } from '../../pages/Thema/Profile/Profile-thema-config';
+import { themaTitle } from '../../pages/Thema/Profile/Profile-thema-config';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
 import { Search } from '../Search/Search';
@@ -26,7 +27,6 @@ import {
   useSearchActive,
   useSearchOnPage,
 } from '../Search/useSearch';
-import { themaTitle } from '../../pages/Thema/Profile/Profile-thema-config';
 
 export const AmsMainMenuClassname = 'ma-main-header';
 
