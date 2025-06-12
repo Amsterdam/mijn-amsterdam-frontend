@@ -391,15 +391,16 @@ export function useDisplayLiveSearch() {
   const location = useLocation();
   const isSmallScreen = useSmallScreen();
 
-  const ROUTES_EXCLUDED = [
-    // Only exclude livesearch on dashboard large screen
-    !isSmallScreen ? DashboardRoute.route : null,
-    SearchPageRoute.route,
-  ];
+  const ROUTES_EXCLUDED = [SearchPageRoute.route];
+
+  // Only exclude livesearch on dashboard large screen
+  if (!isSmallScreen) {
+    ROUTES_EXCLUDED.push(DashboardRoute.route);
+  }
 
   // Does not mach an excluded route
-  const isNotExcluded = !ROUTES_EXCLUDED.filter((path) => path !== null).some(
-    (route) => matchPath(route, location.pathname)
+  const isNotExcluded = !ROUTES_EXCLUDED.some((route) =>
+    matchPath(route, location.pathname)
   );
   return isNotExcluded;
 }
