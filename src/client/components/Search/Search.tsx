@@ -6,7 +6,7 @@ import {
   Paragraph,
   UnorderedList,
 } from '@amsterdam/design-system-react';
-import { SearchIcon } from '@amsterdam/design-system-react-icons';
+import { CloseIcon, SearchIcon } from '@amsterdam/design-system-react-icons';
 import classnames from 'classnames';
 import { useNavigate } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
@@ -23,7 +23,7 @@ import { Spinner } from '../Spinner/Spinner';
 
 interface ResultSetProps {
   results: SearchEntry[];
-  totalAmountOfResults: number;
+  totalResultsCount: number;
   title?: string;
   noResultsMessage?: string;
   isLoading?: boolean;
@@ -32,37 +32,21 @@ interface ResultSetProps {
   onClickResult?: (
     result: SearchEntry,
     resultNumber: number,
-    amountOfResults: number,
-    amountOfResultsShown: number
+    resultCountVisible: number,
+    totalResultsCount: number
   ) => void;
 }
 
 export function ResultSet({
   results,
-  totalAmountOfResults,
   title,
   isLoading = false,
   noResultsMessage = 'Geen resultaten',
   term,
   extendedResults = false,
-  onClickResult: onClickResultCallback,
+  totalResultsCount,
+  onClickResult,
 }: ResultSetProps) {
-  const onClickResult = useCallback(
-    (
-      result: SearchEntry,
-      resultNumber: number,
-      amountOfResultsShown: number
-    ) => {
-      onClickResultCallback?.(
-        result,
-        resultNumber,
-        totalAmountOfResults,
-        amountOfResultsShown
-      );
-    },
-    [onClickResultCallback, totalAmountOfResults]
-  );
-
   return (
     <div className={styles.ResultSet}>
       {!!title && (
@@ -88,10 +72,14 @@ export function ResultSet({
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
-                onClick={(event) => {
-                  event.preventDefault();
-                  onClickResult(result, index + 1, results.length);
-                }}
+                onClick={() =>
+                  onClickResult?.(
+                    result,
+                    index,
+                    results.length,
+                    totalResultsCount
+                  )
+                }
               >
                 {typeof result.displayTitle === 'function'
                   ? result.displayTitle(term)
@@ -119,8 +107,8 @@ interface SearchProps {
   maxResultCountDisplay?: number;
   autoFocus?: boolean;
   typeAhead?: boolean;
+  inPage?: boolean;
   extendedAMResults?: boolean;
-  replaceResultUrl?: (result: SearchEntry) => boolean;
   className?: string;
 }
 
@@ -132,9 +120,9 @@ export function Search({
   maxResultCountDisplay = MAX_RESULT_COUNT_DISPLAY,
   autoFocus = true,
   typeAhead = true,
+  inPage = false,
   extendedAMResults = false,
   className,
-  replaceResultUrl,
 }: SearchProps) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -194,20 +182,6 @@ export function Search({
     [typeAhead, isResultsVisible, onFinish, term]
   );
 
-  const onClickResult = useCallback(
-    (result: SearchEntry) => {
-      setResultsVisible(false);
-      onFinish('Click result');
-
-      if (result.url.startsWith('http')) {
-        window.location.href = result.url;
-        return;
-      }
-      navigate(result.url, { replace: !!replaceResultUrl?.(result) });
-    },
-    [replaceResultUrl, setResultsVisible, onFinish, term]
-  );
-
   useKeyDown(keyHandler);
 
   useEffect(() => {
@@ -228,6 +202,7 @@ export function Search({
     const checkIfClickedOutside = (e: MouseEvent) => {
       if (
         typeAhead &&
+        !inPage &&
         isResultsVisible &&
         resultsRef.current &&
         !resultsRef.current.contains(e.target as Node)
@@ -256,7 +231,7 @@ export function Search({
     <div
       className={classnames(
         styles.SearchBar,
-        !typeAhead && styles['in-page'],
+        inPage && styles['in-page'],
         className
       )}
     >
@@ -278,9 +253,9 @@ export function Search({
             name="searchinput"
             type="text"
             className={styles.Input}
-            autoComplete="none"
-            autoCorrect="none"
-            autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
             spellCheck="false"
             placeholder={
               isAppStateReady ? 'Zoeken naar...' : 'Zoeken voorbereiden...'
@@ -298,6 +273,21 @@ export function Search({
             }}
           />
 
+          {!!searchBarRef.current?.value && (
+            <Button
+              iconOnly
+              variant="tertiary"
+              className={styles.ClearButton}
+              onClick={() => {
+                setTerm('');
+                setResultsVisible(false);
+                searchBarRef.current?.focus();
+              }}
+              aria-label="Verwijder zoekopdracht"
+              icon={CloseIcon}
+              color="contrast"
+            />
+          )}
           <Button
             iconOnly
             className={styles.SubmitButton}
@@ -313,9 +303,9 @@ export function Search({
               term={term}
               isLoading={isTyping || !isAppStateReady}
               results={results?.ma?.slice(0, maxResultCountDisplay / 2) || []}
-              totalAmountOfResults={results?.ma?.length || 0}
+              totalResultsCount={results?.ma?.length || 0}
               noResultsMessage="Niets gevonden op Mijn Amsterdam"
-              onClickResult={onClickResult}
+              onClickResult={() => onFinish('Resultaat geklikt')}
             />
 
             <ResultSet
@@ -324,13 +314,12 @@ export function Search({
               title="Overige informatie op Amsterdam.nl"
               noResultsMessage="Niets gevonden op Amsterdam.nl"
               extendedResults={extendedAMResults}
-              onClickResult={onClickResult}
               results={
                 results.am?.state === 'hasValue' && results.am.contents !== null
                   ? results.am.contents.slice(0, maxResultCountDisplay / 2)
                   : []
               }
-              totalAmountOfResults={
+              totalResultsCount={
                 results?.am?.state === 'hasValue' &&
                 results.am.contents !== null
                   ? results.am.contents.length

@@ -116,6 +116,7 @@ export function useMainHeaderControl() {
   return {
     ref,
     isMainMenuOpen,
+    isSearchActive,
     headerHeight,
     closeMenuAndSearch,
   };

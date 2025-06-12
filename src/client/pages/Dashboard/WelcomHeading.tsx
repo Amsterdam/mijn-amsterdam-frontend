@@ -1,7 +1,5 @@
 import styles from './WelcomeHeading.module.scss';
-import { ProfileName } from '../../components/MainHeader/ProfileName';
 
-const HELLO = 'Welkom,';
 const NOON = 12;
 const EVENING = 18;
 const NIGHT = 5;
@@ -13,31 +11,22 @@ export function WelcomeHeading() {
   const isNight = hours < NIGHT;
   const isAfternoon = hours >= NOON && hours < EVENING;
 
-  let hello = HELLO;
+  let greetingMsg = 'Welkom';
 
   switch (true) {
     case isMorning:
-      hello = 'Goedemorgen,';
+      greetingMsg = 'Goedemorgen';
       break;
     case isAfternoon:
-      hello = 'Goedemiddag,';
+      greetingMsg = 'Goedemiddag';
       break;
     case isEvening:
-      hello = 'Goedenavond,';
+      greetingMsg = 'Goedenavond';
       break;
     case isNight:
-      hello = 'Goedenacht,';
+      greetingMsg = 'Goedenacht';
       break;
   }
 
-  return (
-    <h2 className={styles.WelcomeHeading}>
-      {hello}{' '}
-      <ProfileName
-        fallbackName="Bezoeker"
-        loaderBarConfig={[['400px', '40px', '0']]}
-        preferVoornaam
-      />
-    </h2>
-  );
+  return <h2 className={styles.WelcomeHeading}>{greetingMsg}</h2>;
 }

@@ -30,6 +30,7 @@ export function SearchPage() {
               term={termParam}
               extendedAMResults={true}
               typeAhead={false}
+              inPage={true}
               maxResultCountDisplay={20}
             />
           ) : (

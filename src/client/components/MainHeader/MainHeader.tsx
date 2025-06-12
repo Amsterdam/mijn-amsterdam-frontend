@@ -6,23 +6,27 @@ import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router';
 
 import styles from './MainHeader.module.scss';
-import { OtapLabel } from './OtapLabel';
-import { ProfileName } from './ProfileName';
-import { SearchBar } from './SearchBar';
+import { EnvLabel } from './EnvLabel';
 import { useMainHeaderControl } from './useMainHeaderControl.hook';
 import { LOGOUT_URL } from '../../config/api';
 import { useSmallScreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
-import { routeConfig as profileRouteConfig } from '../../pages/Thema/Profile/Profile-thema-config';
+import {
+  routeConfig as profileRouteConfig,
+  themaIdBRP,
+  themaIdKVK,
+} from '../../pages/Thema/Profile/Profile-thema-config';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { MaLink, MaRouterLink } from '../MaLink/MaLink';
+import { Search } from '../Search/Search';
 import {
   useDisplayLiveSearch,
   useSearchActive,
   useSearchOnPage,
 } from '../Search/useSearch';
+import { themaTitle } from '../../pages/Thema/Profile/Profile-thema-config';
 
 export const AmsMainMenuClassname = 'ma-main-header';
 
@@ -31,27 +35,43 @@ type MainHeaderSecondaryLinksProps = {
   wrapInListElement: boolean;
 };
 
+type ProfileData = {
+  displayName: string;
+  title: string;
+  path: string;
+};
+
 export function MainHeaderSecondaryLinks({
   linkClassName,
   wrapInListElement = false,
 }: MainHeaderSecondaryLinksProps) {
   const Wrap = wrapInListElement ? 'li' : React.Fragment;
   const profileType = useProfileTypeValue();
+
+  const profileData: ProfileData =
+    profileType === 'private'
+      ? {
+          displayName: themaTitle[themaIdBRP],
+          title: 'Ga naar persoonlijke gegevens',
+          path: profileRouteConfig.themaPageBRP.path,
+        }
+      : {
+          displayName: themaTitle[themaIdKVK],
+          title: 'Ga naar zakelijke gegevens',
+          path: profileRouteConfig.themaPageKVK.path,
+        };
+
   return (
     <>
       <Wrap>
         <MaRouterLink
           maVariant="noUnderline"
-          href={
-            profileType === 'private'
-              ? profileRouteConfig.themaPageBRP.path
-              : profileRouteConfig.themaPageKVK.path
-          }
+          href={profileData.path}
           className={linkClassName}
-          title="Ga naar persoonlijke gegevens"
+          title={profileData.title}
         >
           <span className={styles.ProfileNameInner}>
-            <ProfileName fallbackName="Mijn gegevens" />
+            {profileData.displayName}
           </span>
         </MaRouterLink>
       </Wrap>
@@ -73,7 +93,7 @@ function MainHeaderLinks() {
   const [isSearchActive, setSearchActive] = useSearchActive();
   const isDisplayLiveSearch = useDisplayLiveSearch();
   const isPhoneScreen = useSmallScreen();
-
+  const label = isSearchActive ? 'Zoeken sluiten' : 'Zoeken';
   return (
     <>
       {isDisplayLiveSearch && (
@@ -82,6 +102,8 @@ function MainHeaderLinks() {
             maVariant="noUnderline"
             className={classNames(
               'ams-button',
+              'ams-button--tertiary',
+              styles.MainHeaderSecondaryLink,
               isSearchActive && styles.SearchButtonActive
             )}
             onClick={(e) => {
@@ -90,7 +112,7 @@ function MainHeaderLinks() {
             }}
             href={SearchPageRoute.route}
           >
-            {!isPhoneScreen ? 'Zoeken' : ''}
+            {!isPhoneScreen ? label : ''}
             <Icon
               svg={isSearchActive ? CloseIcon : SearchIcon}
               size="heading-5"
@@ -101,7 +123,7 @@ function MainHeaderLinks() {
       {!isPhoneScreen && (
         <MainHeaderSecondaryLinks
           wrapInListElement
-          linkClassName="ams-button"
+          linkClassName={`ams-button ams-button--tertiary ${styles.MainHeaderSecondaryLink}`}
         />
       )}
     </>
@@ -116,9 +138,10 @@ function MainHeaderSearch() {
     isDisplayLiveSearch &&
     isSearchActive && (
       <div className={styles.SearchBarWrap}>
-        <SearchBar
+        <Search
           onFinish={() => setSearchActive(false)}
           className={styles.SearchBar}
+          inPage={true}
         />
       </div>
     )
@@ -153,36 +176,48 @@ export interface MainHeaderProps {
 }
 
 export function MainHeader({ isAuthenticated = false }: MainHeaderProps) {
-  const { ref, isMainMenuOpen, closeMenuAndSearch, headerHeight } =
-    useMainHeaderControl();
+  const {
+    ref,
+    isMainMenuOpen,
+    isSearchActive,
+    closeMenuAndSearch,
+    headerHeight,
+  } = useMainHeaderControl();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSearchActive, setSearchActive] = useSearchActive();
   return (
     <>
       <PageHeader
         ref={ref}
         className={classNames(styles.MainHeader, AmsMainMenuClassname)}
-        logoLink="https://www.amsterdam.nl/"
-        onClick={(event) => {
-          if (
-            event.target.parentNode?.classList.contains(
-              'ams-page-header__logo-link'
-            )
-          ) {
-            event.preventDefault();
-            event.stopPropagation();
-            navigate(DashboardRoute.route);
-            if (isSearchActive && location.pathname === DashboardRoute.route) {
-              setSearchActive(false);
-            }
-          }
+        logoLink={DashboardRoute.route}
+        logoAccessibleName="Logo van de gemeente Amsterdam"
+        logoLinkTitle="Ga naar de homepage van Mijn Amsterdam"
+        logoLinkComponent={function LogoLinkComponent({ children, ...props }) {
+          return (
+            <a
+              {...props}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                navigate(DashboardRoute.route);
+                if (
+                  (isSearchActive || isMainMenuOpen) &&
+                  location.pathname === DashboardRoute.route
+                ) {
+                  closeMenuAndSearch();
+                }
+              }}
+            >
+              {children}
+            </a>
+          );
         }}
         brandName={
           (
             <>
               Mijn Amsterdam
-              <OtapLabel />
+              <EnvLabel showProfileName={isAuthenticated} />
             </>
           ) as unknown as string // Hack because brandName is not typed as ReactNode
         }
