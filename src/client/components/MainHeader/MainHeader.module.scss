@@ -73,7 +73,10 @@
 
 .SearchBar {
   width: 100%;
-  padding: var(--ams-space-l) 0;
+  padding: var(--ams-space-l);
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    padding: var(--ams-space-l) 0;
+  }
 }
 
 :global(.ams-link).BrandNameLink {
