@@ -79,11 +79,12 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -108,14 +109,13 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
             <svg
               aria-hidden="true"
               focusable="false"
-              viewBox="0 0 36 36"
+              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                clip-rule="evenodd"
+                d="m22.879 12-5.44 9.422-10.877-.001L1.122 12 6.56 2.58h10.878zM12 10.586 8.856 7.442 7.442 8.856 10.586 12l-3.144 3.145 1.414 1.414L12 13.414l3.145 3.145 1.414-1.415L13.414 12l3.145-3.145-1.415-1.413z"
+                fill-rule="evenodd"
               />
             </svg>
           </span>
@@ -223,11 +223,12 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -370,11 +371,12 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -609,14 +611,13 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
             <svg
               aria-hidden="true"
               focusable="false"
-              viewBox="0 0 36 36"
+              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M33.63 30.9H2.37L18 3zm-24.44-4h17.62L18 11.19z"
-              />
-              <path
-                d="M17 16.99h2v4.95h-2zm0 5.95h2v1.95h-2z"
+                clip-rule="evenodd"
+                d="m22.879 12-5.44 9.422-10.877-.001L1.122 12 6.56 2.58h10.878zM12 10.586 8.856 7.442 7.442 8.856 10.586 12l-3.144 3.145 1.414 1.414L12 13.414l3.145 3.145 1.414-1.415L13.414 12l3.145-3.145-1.415-1.413z"
+                fill-rule="evenodd"
               />
             </svg>
           </span>

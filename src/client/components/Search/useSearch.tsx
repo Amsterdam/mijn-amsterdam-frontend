@@ -37,6 +37,7 @@ import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
 import { SearchPageRoute } from '../../pages/Search/Search-routes';
 import { routeConfig as buurtRouteConfig } from '../MyArea/MyArea-thema-config';
 
@@ -387,10 +388,11 @@ export function useSearchActive() {
 
 export function useDisplayLiveSearch() {
   const location = useLocation();
-  const isDisplayLiveSearch = !matchPath(
+
+  const isDisplayLiveSearch = ![
+    DashboardRoute.route,
     SearchPageRoute.route,
-    location.pathname
-  );
+  ].some((route) => matchPath(route, location.pathname));
   return isDisplayLiveSearch;
 }
 

@@ -1,3 +1,6 @@
+.MainHeaderSecondaryLink:hover {
+  --ams-button-tertiary-hover-border-color: transparent;
+}
 .MainHeader {
   --ams-page-header-padding-block: var(--ams-space-s);
   @media screen and (min-width: $ams-breakpoint-medium) {
@@ -48,9 +51,6 @@
 }
 
 .ProfileNameInner {
-  @media screen and (min-width: $ams-breakpoint-medium) {
-    max-width: 190px;
-  }
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -61,14 +61,14 @@
 }
 
 .SearchBarWrap {
-  position: absolute;
-  z-index: z-index(main-header-searchbar);
-  left: 0;
-  right: 0;
   background-color: var(--ams-color-background);
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: calc(
+    var(--ams-page-max-inline-size) - calc(var(--ams-space-xl) * 3)
+  );
+  margin: 0 auto;
 }
 
 .SearchBar {
