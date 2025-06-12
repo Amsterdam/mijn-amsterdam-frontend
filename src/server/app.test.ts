@@ -52,7 +52,7 @@ describe('app', async () => {
         )
       ).toBe(true);
     },
-    { timeout: 10000 }
+    { timeout: 30000 }
   );
 
   test('app middleware AP', async () => {

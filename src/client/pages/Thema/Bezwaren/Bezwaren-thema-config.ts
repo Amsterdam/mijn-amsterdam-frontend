@@ -87,3 +87,8 @@ export const tableConfig = {
     }),
   },
 } as const;
+
+export const links = {
+  BEZWAREN_FORMULIER:
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx',
+};
