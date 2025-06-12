@@ -132,7 +132,7 @@ function createKlachtNotification(klacht: KlachtFrontend): MyNotification {
     themaTitle: themaTitle,
     id: `klacht-${klacht.id}-notification`,
     title: 'Klacht ontvangen',
-    description: 'Uw klacht is ontvangen.',
+    description: `Wij hebben uw klacht met gemeentelijk zaaknummer ${klacht.title} ontvangen.`,
     datePublished: klacht.ontvangstDatum,
     link: {
       to: klacht.link.to,
