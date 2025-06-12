@@ -24,7 +24,7 @@ html(lang="nl")
       if promptOpenApp
         a(href=appHref id='protocol-link-button') Open Amsterdam App
 
-    if !promptOpenApp
+    if !promptOpenApp && logoutUrl
       script(type='text/javascript' nonce=nonce).
         window.sessionStorage.setItem('amsapphref','#{appHref}');
         window.location.href = '#{logoutUrl}';
