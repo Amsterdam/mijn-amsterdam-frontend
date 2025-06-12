@@ -72,11 +72,12 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             <svg
               aria-hidden="true"
               focusable="false"
-              viewBox="0 0 28 28"
+              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M14 0C6.3 0 0 6.3 0 14s6.3 14 14 14 14-6.3 14-14S21.7 0 14 0m0 24C8.5 24 4 19.5 4 14S8.5 4 14 4s10 4.5 10 10-4.5 10-10 10M13 9h2V7h-2zm0 12h2V11h-2z"
+                clip-rule="evenodd"
+                d="M21.5 21.5h-19v-19h19zM11 10.177v6.922h2v-6.922zm1-3.275c-.69 0-1.19.48-1.19 1.16s.5 1.16 1.19 1.16 1.19-.48 1.19-1.16-.5-1.16-1.19-1.16"
                 fill-rule="evenodd"
               />
             </svg>
@@ -126,11 +127,12 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -150,11 +152,12 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -669,11 +672,12 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
@@ -701,11 +705,12 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
               <svg
                 aria-hidden="true"
                 focusable="false"
-                viewBox="0 0 32 32"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="m9.757 32-2.9-2.91L19.937 16 6.857 2.91 9.757 0l16 16z"
+                  clip-rule="evenodd"
+                  d="M7.911 2.5 17.5 12l-9.589 9.5L6.5 20.102 14.677 12 6.5 3.898z"
                   fill-rule="evenodd"
                 />
               </svg>
