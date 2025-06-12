@@ -35,6 +35,7 @@ import { pick, uniqueArray } from '../../../universal/helpers/utils';
 import { AppState, AppStateKey } from '../../../universal/types/App.types';
 import { BFFApiUrls } from '../../config/api';
 import { addAxiosResponseTransform } from '../../hooks/api/useDataApi';
+import { useSmallScreen } from '../../hooks/media.hook';
 import { useAppStateGetter, useAppStateReady } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { DashboardRoute } from '../../pages/Dashboard/Dashboard-routes';
@@ -388,12 +389,20 @@ export function useSearchActive() {
 
 export function useDisplayLiveSearch() {
   const location = useLocation();
+  const isSmallScreen = useSmallScreen();
 
-  const isDisplayLiveSearch = ![
-    DashboardRoute.route,
-    SearchPageRoute.route,
-  ].some((route) => matchPath(route, location.pathname));
-  return isDisplayLiveSearch;
+  const ROUTES_EXCLUDED = [SearchPageRoute.route];
+
+  // Only exclude livesearch on dashboard large screen
+  if (!isSmallScreen) {
+    ROUTES_EXCLUDED.push(DashboardRoute.route);
+  }
+
+  // Does not mach an excluded route
+  const isNotExcluded = !ROUTES_EXCLUDED.some((route) =>
+    matchPath(route, location.pathname)
+  );
+  return isNotExcluded;
 }
 
 export function useSearchOnPage(): {

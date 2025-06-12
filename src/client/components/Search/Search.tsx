@@ -68,7 +68,7 @@ export function ResultSet({
             ? MaLink
             : MaRouterLink;
           return (
-            <UnorderedList.Item key={result.url + index} className="Result">
+            <UnorderedList.Item key={result.url + index}>
               <LinkComponent
                 maVariant="fatNoUnderline"
                 href={result.url}
