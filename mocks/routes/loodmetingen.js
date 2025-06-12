@@ -1,6 +1,6 @@
-const settings = require('../settings');
-const LOODMETINGEN_RESPONSE = require('../fixtures/loodmetingen.json');
 const LOODMETINGEN_RAPPORT_RESPONSE = require('../fixtures/loodmeting-rapport.json');
+const LOODMETINGEN_RESPONSE = require('../fixtures/loodmetingen.json');
+const settings = require('../settings');
 
 module.exports = [
   {
@@ -29,21 +29,6 @@ module.exports = [
         options: {
           status: 200,
           body: LOODMETINGEN_RAPPORT_RESPONSE,
-        },
-      },
-    ],
-  },
-  {
-    id: 'post-loodmetingen-auth',
-    url: `${settings.MOCK_BASE_PATH}/loodmetingen/auth/tenant123/oauth2/v2.0/token`,
-    method: 'POST',
-    variants: [
-      {
-        id: 'standard',
-        type: 'json',
-        options: {
-          status: 200,
-          body: { access_token: 'foo-bar' },
         },
       },
     ],

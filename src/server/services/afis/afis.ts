@@ -1,6 +1,3 @@
-import memoizee from 'memoizee';
-import qs from 'qs';
-
 import { fetchAfisFacturenOverview } from './afis-facturen';
 import { getAfisApiConfig } from './afis-helpers';
 import {
@@ -23,39 +20,21 @@ import {
   createSessionBasedCacheKey,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 
-async function fetchAfisTokenHeader_() {
-  const additionalConfig: DataRequestConfig = {
-    method: 'post',
-    data: qs.stringify({
-      client_id: getFromEnv('BFF_AFIS_CLIENT_ID'),
-      client_secret: getFromEnv('BFF_AFIS_CLIENT_SECRET'),
-      grant_type: 'client_credentials',
-    }),
-    transformResponse: (response: {
-      access_token: string;
-      token_type: string;
-    }) => {
-      if (response?.access_token) {
-        return {
-          Authorization: `${response.token_type} ${response.access_token}`,
-        };
-      }
-      throw new Error('AFIS: Invalid token response');
+export async function fetchAfisTokenHeader() {
+  const tokenHeaderResponse = await fetchAuthTokenHeader(
+    {
+      url: getApiConfig('AFIS').url,
+      serviceID: 'AFIS',
+      // eslint-disable-next-line no-magic-numbers
+      tokenValidityMS: ONE_MINUTE_MS * 55, // Token is valid for 1 hour, expire it 5 minutes before.
     },
-    formatUrl(config) {
-      return `${config.url}/OAuthServer`;
-    },
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  };
-
-  const dataRequestConfig = getApiConfig('AFIS', additionalConfig);
-
-  const tokenHeaderResponse = await requestData<{
-    Authorization: string;
-  } | null>(dataRequestConfig);
+    {
+      clientID: getFromEnv('BFF_AFIS_CLIENT_ID') ?? '',
+      clientSecret: getFromEnv('BFF_AFIS_CLIENT_SECRET') ?? '',
+    }
+  );
 
   if (tokenHeaderResponse.status === 'ERROR') {
     throw new Error('AFIS: Could not fetch token');
@@ -63,13 +42,6 @@ async function fetchAfisTokenHeader_() {
 
   return tokenHeaderResponse.content;
 }
-
-// The token is validity is 1 hour, to be on the safe side we release the memoized token after 55 minutes before fetching again.
-export const fetchAfisTokenHeader = memoizee(fetchAfisTokenHeader_, {
-  promise: true,
-  // eslint-disable-next-line no-magic-numbers
-  maxAge: 55 * ONE_MINUTE_MS,
-});
 
 function transformBusinessPartnerisKnownResponse(
   response:

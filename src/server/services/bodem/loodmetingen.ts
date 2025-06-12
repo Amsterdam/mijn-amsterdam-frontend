@@ -1,4 +1,3 @@
-import FormData from 'form-data';
 import { generatePath } from 'react-router';
 
 import { getBodemStatusSteps } from './loodmeting-status-line-items';
@@ -28,6 +27,7 @@ import { MyNotification } from '../../../universal/types/App.types';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_SECOND_MS } from '../../config/app';
 import { encryptSessionIdWithRouteIdParam } from '../../helpers/encrypt-decrypt';
+import { getFromEnv } from '../../helpers/env';
 import {
   createSessionBasedCacheKey,
   getApiConfig,
@@ -36,6 +36,7 @@ import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
+import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
@@ -161,37 +162,22 @@ function transformLood365Response(
 }
 
 export async function getLoodApiHeaders() {
-  const url = `${process.env.BFF_LOOD_API_URL}`;
+  const url = `${getFromEnv('BFF_LOOD_API_URL')}`;
 
-  const data = new FormData();
-  data.append('client_id', `${process.env.BFF_LOOD_USERNAME}`);
-  data.append('client_secret', `${process.env.BFF_LOOD_PWD}`);
-  data.append('scope', `${url.substring(0, url.indexOf('api'))}.default`);
-  data.append('grant_type', 'client_credentials');
+  const tokenResponse = await fetchAuthTokenHeader(
+    {
+      serviceID: 'BODEM',
+      tokenValidityMS: 60 * 60 * ONE_SECOND_MS, // 1 hour
+    },
+    {
+      clientID: process.env.BFF_LOOD_USERNAME ?? '',
+      clientSecret: process.env.BFF_LOOD_PWD ?? '',
+      tenantID: getFromEnv('BFF_LOOD_TENANT'),
+      scope: `${url.substring(0, url.indexOf('api'))}.default`,
+    }
+  );
 
-  // The receiving API is very strict about the headers. Without a boundary the request fails.
-  const headers = {
-    'Content-Type': `multipart/form-data; boundary=${data.getBoundary()}`,
-  };
-
-  const requestConfig = getApiConfig('LOOD_365_OAUTH', {
-    data,
-    headers,
-    cacheKey_UNSAFE: `lood-365-oauth-access-token`, // Every request to the Lood api will use the same access_token so we cache it with a static key.
-    cacheTimeout: 60 * 60 * ONE_SECOND_MS, // 1 hour
-  });
-
-  const response = await requestData<{ access_token: string }>(requestConfig);
-
-  if (response.status === 'OK') {
-    const { access_token } = response.content;
-
-    return {
-      Authorization: `Bearer ${access_token}`,
-    };
-  }
-
-  return undefined;
+  return tokenResponse.status === 'OK' ? tokenResponse.content : undefined;
 }
 
 export async function fetchLoodmetingen(
