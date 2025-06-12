@@ -1,0 +1,232 @@
+{
+  "type": "RaadpleegMetBurgerservicenummer",
+  "personen": [
+    {
+      "aNummer": "9301935851",
+      "burgerservicenummer": "999990202",
+      "geslacht": {
+        "code": "M",
+        "omschrijving": "man"
+      },
+      "leeftijd": 91,
+      "naam": {
+        "aanduidingNaamgebruik": {
+          "code": "E",
+          "omschrijving": "eigen geslachtsnaam"
+        },
+        "voornamen": "Valentijn",
+        "voorvoegsel": "van",
+        "geslachtsnaam": "Urquhart",
+        "voorletters": "V.",
+        "volledigeNaam": "Valentijn van Urquhart"
+      },
+      "nationaliteiten": [
+        {
+          "type": "Nationaliteit",
+          "datumIngangGeldigheid": {
+            "type": "Datum",
+            "datum": "1933-09-11",
+            "langFormaat": "11 september 1933"
+          },
+          "nationaliteit": {
+            "code": "0001",
+            "omschrijving": "Nederlandse"
+          },
+          "redenOpname": {
+            "code": "001",
+            "omschrijving": "Wet op het Nederlanderschap 1892, art.1, lid 1a"
+          }
+        }
+      ],
+      "geboorte": {
+        "land": {
+          "code": "6030",
+          "omschrijving": "Nederland"
+        },
+        "plaats": {
+          "code": "0772",
+          "omschrijving": "Eindhoven"
+        },
+        "datum": {
+          "type": "Datum",
+          "datum": "1933-09-11",
+          "langFormaat": "11 september 1933"
+        }
+      },
+      "verblijfplaats": {
+        "type": "Adres",
+        "verblijfadres": {
+          "officieleStraatnaam": "Amsterdam",
+          "korteStraatnaam": "Koningsstraat",
+          "huisnummer": 1,
+          "huisletter": "H",
+          "postcode": "1011ES",
+          "woonplaats": "Amsterdam"
+        },
+        "functieAdres": {
+          "code": "W",
+          "omschrijving": "woonadres"
+        },
+        "adresseerbaarObjectIdentificatie": "0363010000959554",
+        "nummeraanduidingIdentificatie": "0363200000171271",
+        "datumVan": {
+          "type": "Datum",
+          "datum": "1994-10-03",
+          "langFormaat": "3 oktober 1994"
+        }
+      },
+      "immigratie": {
+        "landVanwaarIngeschreven": {
+          "code": "5001",
+          "omschrijving": "Canada"
+        }
+      },
+      "gemeenteVanInschrijving": {
+        "code": "0363",
+        "omschrijving": "Amsterdam"
+      },
+      "datumInschrijvingInGemeente": {
+        "type": "Datum",
+        "datum": "1994-10-03",
+        "langFormaat": "3 oktober 1994"
+      },
+      "adressering": {
+        "aanhef": "Geachte heer Van Urquhart",
+        "aanschrijfwijze": {
+          "naam": "V. van Urquhart"
+        },
+        "gebruikInLopendeTekst": "de heer Van Urquhart",
+        "adresregel1": "Koningsstraat 1 H",
+        "adresregel2": "1011 ES  AMSTERDAM"
+      },
+      "kinderen": [
+        {
+          "burgerservicenummer": "999995807",
+          "naam": {
+            "voornamen": "Zoey",
+            "voorvoegsel": "den",
+            "geslachtsnaam": "Braber",
+            "voorletters": "Z."
+          },
+          "geboorte": {
+            "land": {
+              "code": "6030",
+              "omschrijving": "Nederland"
+            },
+            "plaats": {
+              "code": "0363",
+              "omschrijving": "Amsterdam"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "2018-11-14",
+              "langFormaat": "14 november 2018"
+            }
+          }
+        },
+        {
+          "burgerservicenummer": "999995832",
+          "naam": {
+            "voornamen": "Alexander",
+            "voorvoegsel": "den",
+            "geslachtsnaam": "Braber",
+            "voorletters": "A."
+          },
+          "geboorte": {
+            "land": {
+              "code": "6030",
+              "omschrijving": "Nederland"
+            },
+            "plaats": {
+              "code": "0363",
+              "omschrijving": "Amsterdam"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "2009-05-29",
+              "langFormaat": "29 mei 2009"
+            }
+          }
+        }
+      ],
+      "ouders": [
+        {
+          "burgerservicenummer": "999990809",
+          "ouderAanduiding": "1",
+          "naam": {
+            "voornamen": "Zahra",
+            "geslachtsnaam": "Sohrabi",
+            "voorletters": "Z."
+          },
+          "geboorte": {
+            "land": {
+              "code": "5012",
+              "omschrijving": "Iran"
+            },
+            "plaats": {
+              "omschrijving": "Teheran"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "1961-10-14",
+              "langFormaat": "14 oktober 1961"
+            }
+          }
+        },
+        {
+          "ouderAanduiding": "2",
+          "naam": {
+            "voornamen": "Valiallah",
+            "geslachtsnaam": "Kumari",
+            "voorletters": "V."
+          },
+          "geboorte": {
+            "land": {
+              "code": "5012",
+              "omschrijving": "Iran"
+            },
+            "plaats": {
+              "omschrijving": "Teheran"
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "1953-09-19",
+              "langFormaat": "19 september 1953"
+            }
+          }
+        }
+      ],
+      "partners": [
+        {
+          "naam": {
+            "voornamen": "Ellen",
+            "voorvoegsel": "van",
+            "geslachtsnaam": "Dammé",
+            "voorletters": "E."
+          },
+          "geboorte": {
+            "land": {
+              "code": "5010",
+              "omschrijving": "België"
+            },
+            "plaats": {
+              "omschrijving": "Meslin-l'Évêque "
+            },
+            "datum": {
+              "type": "Datum",
+              "datum": "1938-12-05",
+              "langFormaat": "5 december 1938"
+            }
+          },
+          "aangaanHuwelijkPartnerschap": {
+            "datum": {
+              "type": "Datum",
+              "datum": "1996-03-27",
+              "langFormaat": "27 maart 1996"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

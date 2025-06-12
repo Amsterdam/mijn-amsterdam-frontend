@@ -8,6 +8,8 @@
       "get-bezwaren-download-document:standard",
       "post-bezwaren-list:standard",
       "get-bezwaren-status:standard",
+      "post-brp-persoonsgegevens:standard",
+      "post-brp-verblijfplaatshistorie:standard",
       "get-brp:standard",
       "post-brp-aantal-bewoners:standard",
       "post-cleopatra:standard",
