@@ -6,6 +6,7 @@ import {
   ClientProductDetailsSourceResponse,
 } from './config-and-types';
 import { IS_PRODUCTION } from '../../../universal/config/env';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -28,7 +29,9 @@ type JWETokenSourceResponse = {
   token: string;
 };
 
-async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
+async function fetchJWEToken(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<string>> {
   const idNumberType =
     authProfileAndToken.profile.profileType === 'private'
       ? 'bsn'
@@ -46,7 +49,7 @@ async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
     data: formData,
   });
 
-  return requestData<JWETokenSourceResponse>(config);
+  return requestData<string>(config);
 }
 
 /**
@@ -57,29 +60,16 @@ async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
  */
 export async function hasPermitsOrPermitRequests(
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<boolean> {
+  const JWT = await getJWEToken(authProfileAndToken);
+  if (!JWT) {
+    return true;
+  }
+
   const userType =
     authProfileAndToken.profile.profileType === 'private'
       ? 'private'
       : 'company';
-
-  let JWT;
-  if (IS_PRODUCTION) {
-    const token = await createJWEToken(
-      authProfileAndToken.profile.id,
-      authProfileAndToken.profile.profileType
-    );
-    if (!token) {
-      return true;
-    }
-    JWT = token;
-  } else {
-    const jweTokenResponse = await fetchJWEToken(authProfileAndToken);
-    if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
-      return true;
-    }
-    JWT = jweTokenResponse.content;
-  }
 
   const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
     requestData<ClientProductDetailsSourceResponse>(
@@ -112,9 +102,26 @@ export async function hasPermitsOrPermitRequests(
   );
 }
 
+async function getJWEToken(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<string | null> {
+  if (IS_PRODUCTION) {
+    const token = await createJWEToken(authProfileAndToken);
+    if (!token) {
+      return null;
+    }
+    return token;
+  }
+
+  const jweTokenResponse = await fetchJWEToken(authProfileAndToken);
+  if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
+    return null;
+  }
+  return jweTokenResponse.content;
+}
+
 async function createJWEToken(
-  userID: AuthProfileAndToken['profile']['id'],
-  profileType: ProfileType
+  authProfileAndToken: AuthProfileAndToken
 ): Promise<string | null> {
   const sharedKey = {
     kty: 'oct',
@@ -132,10 +139,10 @@ async function createJWEToken(
     iss: getFromEnv('BFF_API_BASE_URL', true)!,
     aud: getFromEnv('BFF_PARKEREN_JWT_AUDIENCE', true)!,
   };
-  if (profileType === 'private') {
-    payload.bsn = userID;
+  if (authProfileAndToken.profile.profileType === 'private') {
+    payload.bsn = authProfileAndToken.profile.id;
   } else {
-    payload.kvk_number = userID;
+    payload.kvk_number = authProfileAndToken.profile.id;
   }
 
   try {
