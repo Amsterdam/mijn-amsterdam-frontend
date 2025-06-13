@@ -5,13 +5,12 @@ import {
   ActivePermitSourceResponse,
   ClientProductDetailsSourceResponse,
 } from './config-and-types';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { ONE_MINUTE_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
@@ -66,7 +65,10 @@ export async function hasPermitsOrPermitRequests(
 
   let JWT;
   if (IS_PRODUCTION) {
-    const token = await createJWEToken(authProfileAndToken.profile.id);
+    const token = await createJWEToken(
+      authProfileAndToken.profile.id,
+      authProfileAndToken.profile.profileType
+    );
     if (!token) {
       return true;
     }
@@ -110,35 +112,46 @@ export async function hasPermitsOrPermitRequests(
   );
 }
 
-async function createJWEToken(bsn: string): Promise<string | null> {
-  const JWK_SharedKey = Buffer.from(
-    getFromEnv('TODO_BFF_PARKEREN_JWTKEY', true)!
-  ).toString('base64');
+async function createJWEToken(
+  userID: AuthProfileAndToken['profile']['id'],
+  profileType: ProfileType
+): Promise<string | null> {
+  const sharedKey = {
+    kty: 'oct',
+    k: getFromEnv('BFF_PARKEREN_JWT_KEY', true)!,
+  };
+  const JWK = await jose.importJWK(sharedKey);
 
-  const EXPIRY = ONE_MINUTE_MS * 60;
+  // eslint-disable-next-line no-magic-numbers
+  const unixEpochInSeconds = Math.floor(Date.now() / 1000);
+
+  const ONE_HOUR_IN_SECONDS = 3600;
+  const payload: Record<string, string> = {
+    iat: unixEpochInSeconds.toString(),
+    exp: (unixEpochInSeconds + ONE_HOUR_IN_SECONDS).toString(),
+    iss: getFromEnv('BFF_API_BASE_URL', true)!,
+    aud: getFromEnv('BFF_PARKEREN_JWT_AUDIENCE', true)!,
+  };
+  if (profileType === 'private') {
+    payload.bsn = userID;
+  } else {
+    payload.kvk_number = userID;
+  }
 
   try {
-    const accessToken = await new jose.SignJWT({
-      iat: Date.now(),
-      exp: Date.now() + EXPIRY,
-      iss: 'mijn.amsterdam.nl',
-      aud: 'TODO: parkeren audience??',
-      bsn,
-    })
+    const jweToken = await new jose.CompactEncrypt(
+      new TextEncoder().encode(JSON.stringify(payload))
+    )
       .setProtectedHeader({
         alg: 'A256GCMKW',
         enc: 'A256CBC-HS512',
-        zip: 'DEF',
       })
-      .setIssuedAt()
-      .setExpirationTime('2h')
-      .sign(Uint8Array.from(JWK_SharedKey));
-    return accessToken;
+      .encrypt(JWK);
+    return jweToken;
   } catch (err) {
     logger.error(err);
+    return null;
   }
-
-  return null;
 }
 
 export const forTesting = { fetchJWEToken };
