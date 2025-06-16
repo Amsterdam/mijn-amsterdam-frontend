@@ -41,6 +41,7 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
+import { afisExternalConsumerRouter } from './services/afis/afis-router-external-consumer';
 
 import { getFromEnv } from './helpers/env';
 
@@ -114,7 +115,7 @@ app.use(
 // Stadspas
 app.use(nocache, stadspasExternalConsumerRouter.privateNetwork);
 // Afis
-app.use(nocache, stadspasExternalConsumerRouter.privateNetwork);
+app.use(nocache, afisExternalConsumerRouter.privateNetwork);
 
 app.get(BffEndpoints.ROOT, (_req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
