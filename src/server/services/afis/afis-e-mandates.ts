@@ -19,13 +19,13 @@ import {
   EMandateStatusChangePayload,
   EMandateSignRequestStatusPayload,
   BusinessPartnerIdPayload,
+  POMSignRequestUrlResponseSource,
+  POMSignRequestStatusResponseSource,
+  signRequestStatusCodes,
+  AfisEMandateSignRequestStatusResponse,
 } from './afis-types';
 import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
-import {
-  apiErrorResult,
-  ApiResponse,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
+import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { AuthProfile } from '../../auth/auth-types';
 import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
@@ -281,17 +281,30 @@ export async function fetchAfisEMandates(
   return requestData<AfisEMandateFrontend[] | null>(config, requestID);
 }
 
-type POMSignRequestUrlResponseSource = { url: string };
-
 function transformEMandatesRedirectUrlResponse(
+  sessionID: SessionID,
   responseData: POMSignRequestUrlResponseSource
-) {
-  return { redirectUrl: responseData.url };
+): AfisEMandateSignRequestResponse | null {
+  if (responseData?.mpid) {
+    const urlQueryParams = new URLSearchParams({
+      payload: encryptPayloadAndSessionID(sessionID, {
+        mpid: responseData.mpid,
+      }),
+    });
+
+    const statusCheckUrl = `${generateFullApiUrlBFF(
+      BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_STATUS
+    )}?${urlQueryParams}`;
+
+    return { redirectUrl: responseData.paylink, statusCheckUrl };
+  }
+  return null;
 }
 
 export async function fetchEmandateRedirectUrlFromProvider(
   requestID: RequestID,
-  eMandateSignRequestPayload: EMandateSignRequestPayload
+  eMandateSignRequestPayload: EMandateSignRequestPayload,
+  authProfile: AuthProfile
 ) {
   const acceptant = EMandateAcceptantenGemeenteAmsterdam.find(
     (acceptant) => acceptant.iban === eMandateSignRequestPayload.acceptantIBAN
@@ -323,9 +336,10 @@ export async function fetchEmandateRedirectUrlFromProvider(
   const config = await getApiConfig('POM', {
     method: 'POST',
     formatUrl: ({ url }) => {
-      return `${url}/sign-request-url`; // TODO: implement correct url, see POM documentation
+      return `${url}/paylinks`;
     },
-    transformResponse: transformEMandatesRedirectUrlResponse,
+    transformResponse: (responseData) =>
+      transformEMandatesRedirectUrlResponse(authProfile.sid, responseData),
     data: eMandateProviderPayload,
   });
 
@@ -338,11 +352,34 @@ export async function fetchEmandateRedirectUrlFromProvider(
   return eMandateSignUrlResponse;
 }
 
+function transformEmandateSignRequestStatus(
+  responseDataSource: POMSignRequestStatusResponseSource
+): AfisEMandateSignRequestStatusResponse {
+  return {
+    status: signRequestStatusCodes[responseDataSource.status_code] ?? 'unknown',
+    code: responseDataSource.status_code,
+  };
+}
+
 export async function fetchEmandateSignRequestStatus(
   requestID: RequestID,
-  eMandateTransactionKey: EMandateSignRequestStatusPayload
+  eMandateSignRequestStatusPayload: EMandateSignRequestStatusPayload
 ) {
-  return apiSuccessResult({ signRequestStatus: 'SUCCESS' });
+  const config = await getApiConfig('POM', {
+    method: 'GET',
+    formatUrl: ({ url }) => {
+      return `${url}/paylinks/${eMandateSignRequestStatusPayload.mpid}`;
+    },
+    transformResponse: transformEmandateSignRequestStatus,
+  });
+
+  const eMandateSignRequestStatusResponse =
+    await requestData<AfisEMandateSignRequestResponse | null>(
+      config,
+      requestID
+    );
+
+  return eMandateSignRequestStatusResponse;
 }
 
 export async function changeEMandateStatus(

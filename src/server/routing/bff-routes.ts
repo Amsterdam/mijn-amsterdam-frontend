@@ -24,6 +24,8 @@ export const BffEndpoints = {
   AFIS_EMANDATES: '/services/afis/e-mandates',
   AFIS_EMANDATES_STATUS_CHANGE: '/services/afis/e-mandates/change-status',
   AFIS_EMANDATES_SIGN_REQUEST_URL: '/services/afis/e-mandates/sign-request-url',
+  AFIS_EMANDATES_SIGN_REQUEST_STATUS:
+    '/services/afis/e-mandates/sign-request-status',
   AFIS_FACTUREN:
     '/services/afis/facturen/:state(open|afgehandeld|overgedragen)',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
