@@ -18,6 +18,7 @@
  * How to use
  * ==========
  * pnpx tsx generate-user-data-overview.ts
+ * add --from-disk or -d to use cached data. To refresh the cache remove this flag.
  *
  * Tips
  * =========
@@ -201,7 +202,8 @@ const testAccountEntries = getTestAccountEntries();
 XLSX.set_fs(fs);
 // If true then get data extracted out of services from disk.
 // This greatly speeds up this script and is therefore nice for debugging.
-const FROM_DISK: boolean = false;
+const firstArg = process.argv[2];
+const FROM_DISK: boolean = firstArg === '--from-disk' || firstArg === '-d';
 
 // Describes where we should save the transformed data from our services.
 const TARGET_DIRECTORY: string = '.';
@@ -224,9 +226,10 @@ function getTestAccountEntries() {
 
 async function generateOverview() {
   return getServiceResults().then((resultsByUser) => {
-    if (!FROM_DISK) {
+    const cachePath = './user-data.json';
+    if (!fs.existsSync(cachePath) || !FROM_DISK) {
       fs.writeFileSync(
-        TARGET_DIRECTORY + '/user-data.json',
+        TARGET_DIRECTORY + cachePath,
         JSON.stringify(resultsByUser)
       );
     }
