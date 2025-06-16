@@ -244,62 +244,68 @@ export type AfisEMandateSource = {
 export type AfisEMandatesResponseDataSource =
   AfisApiFeedResponseSource<AfisEMandateSource>;
 
-export type AfisEMandateFrontend = {
-  id: AfisEMandateSource['ABC'];
-  dateCreated: string;
-  dateCreatedFormatted: string;
-  incassantName: string;
-  incassantIBAN: string;
+// Static fixed values, loaded from ENV
+export type AfisEMandatePayloadBase = {
+  PayType: string;
+  SndType: string;
+  RefType: string;
+  RecType: string;
+  RecId: string;
+  Status: string;
 };
 
-export type AfisEMandatesResponseFrontend = AfisEMandateFrontend[];
+export type AfisEMandatePayloadCreate = AfisEMandatePayloadBase & {
+  // Sender
+  SndId: AfisBusinessPartnerDetailsTransformed['businessPartnerId']; // Business partner ID
+  SndPostal: string;
+  SndCountry: string; // Country code
+  SndIban: string;
+  SndBic: string;
+  SndStreet: string;
+  SndHouse: string; // House number
+  SndCity: string;
+  SndName2: string; // Lastname
+  SndName1: string; // Firstname
+  SndDebtorId: string; // Mandaat type e.g Parkin Permit ?!?!?!?!
 
-export type AfisEMandatePayloadBase = Readonly<{
-  SEPAMandateApplication: string;
-  Recipient: string;
-  RecipientType: string;
-  SenderType: string;
-  Creditor: string;
-}>;
-
-export type AfisEMandatePayloadCreate = {
-  // Business partner
-  SenderExternalID: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+  // Recipient
+  RecName1: 'Name1';
+  RecPostal: '533';
+  RecStreet: 'Ran';
+  RecHouse: 'Sur';
+  RecCity: 'Kk';
+  RecCountry: 'NL';
 
   // Mandate
-  SEPAMandateReferenceType: string;
-  SEPAMandateReference: string;
-  SEPAMandateStatus: string;
-  ValidityStartDate: string;
-  ValidityEndDate: string;
-  SEPASignatureCityName: string;
-  SEPASignatureDate: string;
+  LifetimeFrom: string;
+  LifetimeTo: '9999-12-31T00:00:00'; // Far in the future, Gem. Amsterdam only uses indefinite mandates.
+  SignDate: string;
+  SignCity: string;
 
-  // Debtor
-  // SenderType: string;
-  Sender: string;
-  SenderLastName: string;
-  SenderFirstName: string;
-  SenderStreetName: string;
-  SenderHouseNumber: string;
-  SenderPostalCode: string;
-  SenderCityName: string;
-  SenderCountry: string;
-  SenderIBAN: string;
-  SenderBankSWIFTCode?: string;
-
-  // Creditor
-  // RecipientType: string;
-  Recipient: string;
-  RecipientName1: string;
-  // RecipientName2: string;
-  RecipientStreetName: string;
-  RecipientHouseNumber: string;
-  RecipientPostalCode: string;
-  RecipientCityName: string;
-  RecipientCountry: string;
+  // ID of the mandate in AFIS
+  IMandateId: string;
 };
 
-export type AfisEMandatePayloadUpdate = {
-  SenderExternalID: AfisBusinessPartnerDetailsTransformed['businessPartnerId'];
+export type AfisEMandatePayloadUpdate = AfisEMandatePayloadCreate;
+
+export type AfisEMandate = {
+  name: string;
+  iban: string;
+  subId: string;
+  IMandateId: string;
+  dateValidFrom: string;
+  dateValidFromFormatted: string;
+};
+
+export type AfisEMandateAcceptant = Pick<
+  AfisEMandate,
+  'name' | 'iban' | 'subId'
+>;
+
+type EMandateSubId = AfisEMandate['subId'];
+export type EMandateTransactionKey =
+  `${EMandateSubId}-${AfisBusinessPartnerDetailsTransformed['businessPartnerId']}`;
+
+export type AfisEMandateSignRequestResponse = {
+  redirectUrl: string;
 };

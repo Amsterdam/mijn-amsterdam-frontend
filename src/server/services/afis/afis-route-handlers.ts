@@ -1,8 +1,13 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 import { fetchAfisBusinessPartnerDetails } from './afis-business-partner';
+import {
+  fetchAfisEMandates,
+  fetchEmandateRedirectUrlFromProvider,
+  fetchEmandateSignRequestStatus,
+} from './afis-e-mandates';
 import { FACTUUR_STATE_KEYS, fetchAfisFacturenByState } from './afis-facturen';
-import { AfisFactuurState } from './afis-types';
+import { AfisFactuurState, EMandateTransactionKey } from './afis-types';
 import { getAuth } from '../../auth/auth-helpers';
 import {
   RequestWithQueryParams,
@@ -17,7 +22,7 @@ export async function handleFetchAfisBusinessPartner(
   req: RequestWithQueryParams<{ id: string }>,
   res: Response
 ) {
-  const authProfileAndToken = getAuth(req);
+  const authProfileAndToken = getAuth(req as Request);
 
   if (!authProfileAndToken) {
     return sendUnauthorized(res);
@@ -90,4 +95,95 @@ export async function handleFetchAfisFacturen(
   );
 
   return sendResponse(res, response);
+}
+
+export async function handleFetchAfisEMandates(
+  req: RequestWithQueryParams<{ id: string }>,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req as Request);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const decryptResult = decryptEncryptedRouteParamAndValidateSessionID(
+    req.query.id,
+    authProfileAndToken
+  );
+
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
+  }
+
+  const businessPartnerId = decryptResult.content;
+
+  const response = await fetchAfisEMandates(
+    res.locals.requestID,
+    businessPartnerId
+  );
+
+  return sendResponse(res, response);
+}
+// Returns a redirect URL to the eMandate provider.
+export async function handleEMandateSignRequest(
+  req: RequestWithRouteAndQueryParams<{ transactionKeyEncrypted: string }>,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const decryptResult =
+    decryptEncryptedRouteParamAndValidateSessionID<EMandateTransactionKey>(
+      req.query.transactionKeyEncrypted,
+      authProfileAndToken
+    );
+
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
+  }
+
+  const transactionKey = decryptResult.content;
+
+  const eMandateSignRequestResponse =
+    await fetchEmandateRedirectUrlFromProvider(
+      res.locals.requestID,
+      transactionKey
+    );
+
+  return sendResponse(res, eMandateSignRequestResponse);
+}
+
+// Fetches the status of an eMandate sign request.
+export async function handleEMandateSignRequestStatus(
+  req: RequestWithRouteAndQueryParams<{ transactionKeyEncrypted: string }>,
+  res: Response
+) {
+  const authProfileAndToken = getAuth(req);
+
+  if (!authProfileAndToken) {
+    return sendUnauthorized(res);
+  }
+
+  const decryptResult =
+    decryptEncryptedRouteParamAndValidateSessionID<EMandateTransactionKey>(
+      req.query.transactionKeyEncrypted,
+      authProfileAndToken
+    );
+
+  if (decryptResult.status === 'ERROR') {
+    return sendResponse(res, decryptResult);
+  }
+
+  const transactionKey = decryptResult.content;
+
+  const signRequestStatusResponse = fetchEmandateSignRequestStatus(
+    res.locals.requestID,
+    transactionKey
+  );
+
+  return signRequestStatusResponse;
 }
