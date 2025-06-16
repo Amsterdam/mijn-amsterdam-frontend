@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { add, isSameDay, parseISO, subDays } from 'date-fns';
 import { firstBy } from 'thenby';
 
@@ -33,7 +34,6 @@ import {
   EMandateSignRequestNotificationPayload,
   AfisBusinessPartnerBankPayload,
 } from './afis-types';
-import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
 import {
   defaultDateFormat,
@@ -73,7 +73,6 @@ const afisEMandatePostbodyStatic: AfisEMandateSourceStatic = {
 };
 
 export async function createAfisEMandate(
-  requestID: RequestID,
   payload: EMandateSignRequestPayload & EMandateSignRequestNotificationPayload
 ) {
   const acceptant = EMandateAcceptantenGemeenteAmsterdam.find(
@@ -84,16 +83,13 @@ export async function createAfisEMandate(
     return apiErrorResult(
       'Invalid acceptant IBAN',
       null,
-      HTTP_STATUS_CODES.BAD_REQUEST
+      HttpStatusCode.BadRequest
     );
   }
 
-  const businessPartnerResponse = await fetchAfisBusinessPartnerDetails(
-    requestID,
-    {
-      businessPartnerId: payload.businessPartnerId,
-    }
-  );
+  const businessPartnerResponse = await fetchAfisBusinessPartnerDetails({
+    businessPartnerId: payload.businessPartnerId,
+  });
 
   if (businessPartnerResponse.status !== 'OK') {
     return businessPartnerResponse;
@@ -106,7 +102,6 @@ export async function createAfisEMandate(
   // TODO: Check if this bank account exists in the sender's bank account list.
   // If not add it to the list.
   const bankAccountResponse = await fetchBusinessPartnerBankAccounts(
-    requestID,
     payload.businessPartnerId
   );
 
@@ -128,10 +123,8 @@ export async function createAfisEMandate(
       senderName: payload.senderName,
     };
 
-    const createBankAccountResponse = await createBusinessPartnerBankAccount(
-      requestID,
-      bankAccountPayload
-    );
+    const createBankAccountResponse =
+      await createBusinessPartnerBankAccount(bankAccountPayload);
 
     if (createBankAccountResponse.status !== 'OK') {
       return createBankAccountResponse;
@@ -168,47 +161,38 @@ export async function createAfisEMandate(
     SndDebtorId: getSndDebtorId(acceptant),
   };
 
-  const config = await getAfisApiConfig(
-    {
-      method: 'POST',
-      data: payloadFinal,
-      formatUrl: ({ url }) => {
-        return `${url}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`;
-      },
-      transformResponse: transformCreateEMandatesResponse,
+  const config = await getAfisApiConfig({
+    method: 'POST',
+    data: payloadFinal,
+    formatUrl: ({ url }) => {
+      return `${url}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`;
     },
-    requestID
-  );
+    transformResponse: transformCreateEMandatesResponse,
+  });
 
-  return requestData<unknown>(config, requestID);
+  return requestData<unknown>(config);
 }
 
 function transformUpdateEMandatesResponse(response: unknown) {
   return response;
 }
 
-async function updateAfisEMandate(
-  requestID: RequestID,
-  payload: AfisEMandateUpdatePayload
-) {
+async function updateAfisEMandate(payload: AfisEMandateUpdatePayload) {
   const payloadFinal: AfisEMandateUpdatePayload = {
     // ...afisEMandatePostbodyStatic, // TODO: Check if this is needed
     ...payload,
   };
 
-  const config = await getAfisApiConfig(
-    {
-      method: 'PUT',
-      data: payloadFinal,
-      formatUrl: ({ url }) => {
-        return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payloadFinal.IMandateId}')`;
-      },
-      transformResponse: transformUpdateEMandatesResponse,
+  const config = await getAfisApiConfig({
+    method: 'PUT',
+    data: payloadFinal,
+    formatUrl: ({ url }) => {
+      return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payloadFinal.IMandateId}')`;
     },
-    requestID
-  );
+    transformResponse: transformUpdateEMandatesResponse,
+  });
 
-  return requestData<unknown>(config, requestID);
+  return requestData<unknown>(config);
 }
 
 function isEmandateActive(afisEMandateSource?: AfisEMandateSource) {
@@ -398,26 +382,22 @@ function transformEMandatesResponse(
 }
 
 export async function fetchAfisEMandates(
-  requestID: RequestID,
   payload: BusinessPartnerIdPayload,
   authProfile: AuthProfile
 ): Promise<ApiResponse<AfisEMandateFrontend[] | null>> {
-  const config = await getAfisApiConfig(
-    {
-      formatUrl: ({ url }) => {
-        return `${url}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '${payload.businessPartnerId}'`;
-      },
-      transformResponse: (responseData) =>
-        transformEMandatesResponse(
-          responseData,
-          authProfile.sid,
-          payload.businessPartnerId
-        ),
+  const config = await getAfisApiConfig({
+    formatUrl: ({ url }) => {
+      return `${url}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet?$filter=SndId eq '${payload.businessPartnerId}'`;
     },
-    requestID
-  );
+    transformResponse: (responseData) =>
+      transformEMandatesResponse(
+        responseData,
+        authProfile.sid,
+        payload.businessPartnerId
+      ),
+  });
 
-  return requestData<AfisEMandateFrontend[] | null>(config, requestID);
+  return requestData<AfisEMandateFrontend[] | null>(config);
 }
 
 function transformEMandatesRedirectUrlResponse(
@@ -500,7 +480,6 @@ function createEMandateProviderPayload(
 }
 
 export async function fetchEmandateRedirectUrlFromProvider(
-  requestID: RequestID,
   eMandateSignRequestPayload: EMandateSignRequestPayload,
   authProfile: AuthProfile
 ) {
@@ -512,12 +491,11 @@ export async function fetchEmandateRedirectUrlFromProvider(
     return apiErrorResult(
       'Acceptant not found',
       null,
-      HTTP_STATUS_CODES.BAD_REQUEST
+      HttpStatusCode.BadRequest
     );
   }
 
   const businessPartnerResponse = await fetchAfisBusinessPartnerDetails(
-    requestID,
     eMandateSignRequestPayload
   );
 
@@ -540,10 +518,7 @@ export async function fetchEmandateRedirectUrlFromProvider(
   });
 
   const eMandateSignUrlResponse =
-    await requestData<AfisEMandateSignRequestResponse | null>(
-      config,
-      requestID
-    );
+    await requestData<AfisEMandateSignRequestResponse | null>(config);
 
   return eMandateSignUrlResponse;
 }
@@ -558,7 +533,6 @@ function transformEmandateSignRequestStatus(
 }
 
 export async function fetchEmandateSignRequestStatus(
-  requestID: RequestID,
   eMandateSignRequestStatusPayload: EMandateSignRequestStatusPayload
 ) {
   const config = await getApiConfig('POM', {
@@ -570,19 +544,15 @@ export async function fetchEmandateSignRequestStatus(
   });
 
   const eMandateSignRequestStatusResponse =
-    await requestData<AfisEMandateSignRequestResponse | null>(
-      config,
-      requestID
-    );
+    await requestData<AfisEMandateSignRequestResponse | null>(config);
 
   return eMandateSignRequestStatusResponse;
 }
 
 export async function changeEMandateStatus(
-  requestID: RequestID,
   eMandateStatusChangePayload: EMandateStatusChangePayload
 ) {
-  return updateAfisEMandate(requestID, eMandateStatusChangePayload);
+  return updateAfisEMandate(eMandateStatusChangePayload);
 }
 
 export const forTesting = {
