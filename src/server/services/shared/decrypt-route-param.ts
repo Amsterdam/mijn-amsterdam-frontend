@@ -69,7 +69,7 @@ export function decryptPayloadAndValidateSessionID<
     return apiErrorResult(
       'Bad request: failed to process encrypted param',
       null,
-      HTTP_STATUS_CODES.BAD_REQUEST
+      HttpStatusCode.BadRequest
     );
   }
 
