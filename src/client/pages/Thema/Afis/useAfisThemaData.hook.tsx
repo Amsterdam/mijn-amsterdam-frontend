@@ -138,9 +138,11 @@ function useAfisFacturenApi(
       state !== 'open'
     ) {
       fetchFacturen({
-        url: `${generateBffApiUrl('AFIS_FACTUREN', {
-          state,
-        })}?id=${businessPartnerIdEncrypted}`,
+        url: generateBffApiUrlWithEncryptedPayloadQuery(
+          'AFIS_FACTUREN',
+          businessPartnerIdEncrypted,
+          { state }
+        ),
       });
     }
   }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
