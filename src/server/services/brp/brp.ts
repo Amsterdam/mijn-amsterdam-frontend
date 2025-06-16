@@ -8,7 +8,7 @@ const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
 function fetchBenkBrpTokenHeader() {
   return fetchAuthTokenHeader(
     {
-      serviceID: 'BRP',
+      apiKey: 'BRP',
       tokenValidityMS:
         TOKEN_VALIDITY_PERIOD * (1 - PERCENTAGE_DISTANCE_FROM_EXPIRY),
     },
