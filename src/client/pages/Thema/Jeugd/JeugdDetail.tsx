@@ -1,4 +1,3 @@
-import { Grid } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 
 import { useJeugdThemaData } from './useJeugdThemaData';
@@ -19,22 +18,16 @@ function JeugdDetailContent({ voorziening }: ContentProps) {
     rows.push({ content: voorziening?.decision, label: 'Resultaat' });
   }
   return (
-    <>
-      {!!rows.length && (
-        <PageContentCell>
-          <Grid.Cell span="all">
-            <Datalist rows={rows} />
-            {voorziening?.documents.length > 0 && (
-              <DocumentListV2
-                documents={voorziening.documents}
-                columns={['Brieven', 'Verzenddatum']}
-                className="ams-mb-l"
-              />
-            )}
-          </Grid.Cell>
-        </PageContentCell>
+    <PageContentCell>
+      {!!rows.length && <Datalist rows={rows} />}
+      {voorziening?.documents.length > 0 && (
+        <DocumentListV2
+          documents={voorziening.documents}
+          columns={['Brieven', 'Verzenddatum']}
+          className="ams-mb-l"
+        />
       )}
-    </>
+    </PageContentCell>
   );
 }
 
