@@ -290,7 +290,7 @@ module.exports = [
   },
   {
     id: 'get-afis-emandates',
-    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
     method: 'GET',
     variants: [
       {
@@ -306,7 +306,7 @@ module.exports = [
   },
   {
     id: 'post-afis-emandates',
-    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`,
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`,
     method: 'POST',
     variants: [
       {
@@ -336,7 +336,7 @@ module.exports = [
   },
   {
     id: 'put-afis-emandates',
-    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/ChangeMandate/ZGW_FI_MANDATE_SRV_01/:changeSetParam`,
+    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/RESTAdapter/ChangeMandate/ZGW_FI_MANDATE_SRV_01/:changeSetParam`,
     method: 'PUT',
     variants: [
       {
