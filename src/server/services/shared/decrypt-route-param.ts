@@ -51,3 +51,41 @@ export function decryptEncryptedRouteParamAndValidateSessionID<
 
   return apiSuccessResult<T>(id as T);
 }
+
+export function decryptPayloadAndValidateSessionID<
+  T extends Record<string, unknown> = Record<string, unknown>,
+>(
+  payloadEncrypted: EncryptedPayloadAndSessionID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  let payload: DecryptedPayloadAndSessionID<T> | null = null;
+
+  try {
+    payload = JSON.parse(decrypt(payloadEncrypted));
+  } catch (error) {
+    console.error(error);
+    captureException(error);
+    return apiErrorResult(
+      'Bad request: failed to process encrypted param',
+      null,
+      HTTP_STATUS_CODES.BAD_REQUEST
+    );
+  }
+
+  if (
+    !payload ||
+    !payload.sessionID ||
+    authProfileAndToken.profile.sid !== payload.sessionID
+  ) {
+    if (IS_DEBUG) {
+      console.debug('Incomplete session validation');
+    }
+    return apiErrorResult(
+      'Not authorized: incomplete session validation or missing payload',
+      null,
+      HTTP_STATUS_CODES.UNAUTHORIZED
+    );
+  }
+
+  return apiSuccessResult<T>(payload);
+}
