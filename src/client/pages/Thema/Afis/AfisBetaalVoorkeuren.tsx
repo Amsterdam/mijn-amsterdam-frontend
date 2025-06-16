@@ -88,12 +88,12 @@ export function AfisBetaalVoorkeuren() {
     eMandates,
     eMandateTableConfig,
     hasBusinessPartnerDetailsError,
-    hasEmandatesError,
+    hasEMandatesError,
     hasFailedEmailDependency,
     hasFailedPhoneDependency,
     hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
-    isLoadingEmandates,
+    isLoadingEMandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
   useHTMLDocumentTitle(routeConfig.detailPage);
@@ -101,23 +101,17 @@ export function AfisBetaalVoorkeuren() {
   const isLoadingAllAPis =
     isThemaPaginaLoading &&
     isLoadingBusinessPartnerDetails &&
-    isLoadingEmandates;
+    isLoadingEMandates;
 
-  const eMandateTables =
-    FeatureToggle.afisEmandatesActive &&
-    entries(eMandateTableConfig).map(
-      ([kind, { title, displayProps, filter }]) => {
-        return (
-          <ThemaPaginaTable<AfisEmandateStub>
-            key={kind}
-            title={title}
-            zaken={eMandates.filter(filter)}
-            displayProps={displayProps}
-            maxItems={-1}
-          />
-        );
-      }
-    );
+  const eMandateTables = FeatureToggle.afisEMandatesActive && (
+    <ThemaPaginaTable<AfisEMandateFrontend>
+      className={eMandateTableConfig.className}
+      displayProps={eMandateTableConfig.displayProps}
+      maxItems={-1}
+      title={eMandateTableConfig.title}
+      zaken={eMandates}
+    />
+  );
 
   const mailBody = `Debiteurnaam: ${businesspartnerDetails?.fullName ?? '-'}%0D%0ADebiteurnummer: ${businesspartnerDetails?.businessPartnerId ?? '-'}`;
 
@@ -172,7 +166,7 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={FeatureToggle.afisEmandatesActive}
+        startCollapsed={FeatureToggle.afisEMandatesActive}
       />
       {eMandateTables}
     </>
@@ -211,7 +205,7 @@ export function AfisBetaalVoorkeuren() {
           <br />
         </>
       )}
-      {hasEmandatesError && (
+      {hasEMandatesError && (
         <>Wij kunnen nu geen automatische incasso&apos;s laten zien.</>
       )}
     </>
