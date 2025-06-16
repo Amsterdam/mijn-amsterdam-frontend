@@ -6,14 +6,47 @@
         "content": {
           "@type": "application/xml",
           "properties": {
-            "IsCleared": true,
-            "DunningLevel": 0,
-            "ProfitCenterName": "Lisan al Gaib inc.",
-            "NetDueDate": "2023-12-21T00:00:00",
-            "ClearingDate": "2024-05-01",
-            "ReverseDocument": "someReverseDocument123",
-            "DocumentReferenceID": "INV-2023-010",
-            "AccountingDocument": "INV-2023-010"
+            "IMandateId": 100001,
+            "SndDebtorId": "AFVAL",
+            "SndId": "8888888888",
+            "LifetimeFrom": "2024-05-01",
+            "LifetimeTo": "9999-05-01",
+            "Status": "1",
+            "SndName1": "Foo",
+            "SndName2": "van der Bar",
+            "SndIban": "NL99AMS1234567890"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IMandateId": 100002,
+            "SndDebtorId": "VERGUNNINGEN",
+            "SndId": "8888888888",
+            "LifetimeFrom": "2024-05-01",
+            "LifetimeTo": "9999-05-01",
+            "Status": "1",
+            "SndName1": "Schnizz",
+            "SndName2": "Fizzle",
+            "SndIban": "NL99AMS098765432"
+          }
+        }
+      },
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IMandateId": 100003,
+            "SndDebtorId": "MARKTZAKEN",
+            "SndId": "8888888888",
+            "LifetimeFrom": "2024-05-01",
+            "LifetimeTo": "2024-12-06",
+            "Status": "1",
+            "SndName1": "Schnizz",
+            "SndName2": "Fizzle",
+            "SndIban": "NL99AMS7777888888"
           }
         }
       }
