@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import { add, isSameDay, parseISO, subDays } from 'date-fns';
+import slug from 'slugme';
 import { firstBy } from 'thenby';
 
 import {
@@ -39,6 +40,7 @@ import {
   defaultDateFormat,
   isoDateFormat,
 } from '../../../universal/helpers/date';
+import type { LinkProps } from '../../../universal/types/App.types';
 import { AuthProfile } from '../../auth/auth-types';
 import {
   encrypt,
@@ -306,9 +308,11 @@ function transformEMandateSource(
     ? defaultDateFormat(dateValidFrom)
     : null;
   const isActive = isEmandateActive(afisEMandateSource);
-
-  const eMandate: AfisEMandateFrontend = {
-    acceptant: `${acceptant.name}\n${acceptant.iban}`,
+  const id = slug(acceptant.name);
+  const eMandate: AfisEMandateFrontend & { link: LinkProps } = {
+    id,
+    acceptant: acceptant.name,
+    acceptantIBAN: acceptant.iban,
     senderIBAN: (isActive ? afisEMandateSource?.SndIban : null) ?? null,
     senderName: isActive
       ? [(afisEMandateSource?.SndName1, afisEMandateSource?.SndName2)]
@@ -323,6 +327,10 @@ function transformEMandateSource(
     displayStatus: isEmandateActive(afisEMandateSource)
       ? `Actief sinds ${dateValidFromFormatted}`
       : 'Niet actief',
+    link: {
+      to: `/facturen-en-betalen/betaalvoorkeuren/emandate/${id}`,
+      title: acceptant.name,
+    },
   };
 
   addEmandateApiUrls(
