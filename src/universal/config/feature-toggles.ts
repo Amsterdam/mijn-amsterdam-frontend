@@ -8,6 +8,7 @@ export const FeatureToggle = {
   // AFIS
   afisActive: true,
   afisEmandatesActive: false,
+  // Display of phone number is not needed atm.
   afisBusinesspartnerPhoneActive: false,
   // We don't filter out the undownloadable facturen for testing purposes.
   // We want to be able to test immediately and not wait until the evening.
