@@ -16,9 +16,13 @@ export const BFFApiUrls = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
   ERFPACHT_DOSSIER_DETAILS: `${BFF_API_BASE_URL}/services/erfpacht/dossier`,
+  // AFIS
   AFIS_BUSINESSPARTNER: `${BFF_API_BASE_URL}/services/afis/businesspartner`,
-  AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen`,
-};
+  AFIS_EMANDATES: `${BFF_API_BASE_URL}/services/afis/e-mandates`,
+  AFIS_EMANDATES_SIGN_REQUEST_URL: `${BFF_API_BASE_URL}/services/afis/e-mandates/sign-request-url`,
+  AFIS_EMANDATES_DEACTIVATE: `${BFF_API_BASE_URL}/services/afis/e-mandates/deactivate`,
+  AFIS_FACTUREN: `${BFF_API_BASE_URL}/services/afis/facturen/:state`,
+} as const;
 
 // Urls directly used from front-end
 export const LOGIN_URL_DIGID = `${BFF_API_BASE_URL}/auth/digid/login`;
