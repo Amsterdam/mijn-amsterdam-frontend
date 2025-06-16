@@ -750,132 +750,128 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <div
-        class="ams-grid _Steps_7a365b"
+        class="_Steps_7a365b"
       >
-        <h1
-          class="ams-heading ams-heading--2 _StatusHeading_7a365b ams-mb-m"
+        <h3
+          class="ams-heading ams-heading--2 ams-mb-m"
         >
           Status
-        </h1>
-        <div
-          class="ams-grid__cell ams-grid__cell--span-10 ams-grid__cell--start-2"
+        </h3>
+        <ol
+          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
         >
-          <ol
-            class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
+          <li
+            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
           >
-            <li
-              class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            <h4
+              class="ams-heading ams-heading--4 _StepStatus_7a365b"
             >
-              <h4
-                class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              <span
+                aria-label="Status Afgerond"
+                class="_StepStatusIndication_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="_StepStatusIndication_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 32 32"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
-                        fill-rule="evenodd"
-                      />
-                    </svg>
-                  </span>
+                    <path
+                      d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
                 </span>
-                Ontvangen
-              </h4>
-              <time
-                class="_StepStatusDate_7a365b"
-                datetime="2023-03-18T00:00:00.000Z"
-              >
-                18 maart 2023
-              </time>
-            </li>
-            <li
-              class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+              </span>
+              Ontvangen
+            </h4>
+            <time
+              class="_StepStatusDate_7a365b"
+              datetime="2023-03-18T00:00:00.000Z"
             >
-              <h4
-                class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              18 maart 2023
+            </time>
+          </li>
+          <li
+            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+          >
+            <h4
+              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+            >
+              <span
+                aria-label="Status Afgerond"
+                class="_StepStatusIndication_7a365b"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="_StepStatusIndication_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
                 >
-                  <span
-                    aria-label="Status Afgerond"
-                    class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 32 32"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
-                        fill-rule="evenodd"
-                      />
-                    </svg>
-                  </span>
+                    <path
+                      d="M12.216 27.016 0 14.168l2.91-2.77 9.346 9.837L29.129 4 32 6.8z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
                 </span>
-                In behandeling
-              </h4>
-              <time
-                class="_StepStatusDate_7a365b"
-                datetime="2023-05-30T00:00:00.000Z"
-              >
-                30 mei 2023
-              </time>
-            </li>
-            <li
-              class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+              </span>
+              In behandeling
+            </h4>
+            <time
+              class="_StepStatusDate_7a365b"
+              datetime="2023-05-30T00:00:00.000Z"
             >
-              <h4
-                class="ams-heading ams-heading--4 _StepStatus_7a365b"
-              >
-                <span
-                  aria-label="Huidige status"
-                  class="_StepStatusIndication_7a365b"
-                />
-                Extra informatie nodig
-              </h4>
-              <time
-                class="_StepStatusDate_7a365b"
-                datetime="2023-06-03T00:00:00.000Z"
-              >
-                03 juni 2023
-              </time>
-              <div>
-                Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
-              </div>
-            </li>
-            <li
-              class="ams-ordered-list__item _Step_7a365b"
+              30 mei 2023
+            </time>
+          </li>
+          <li
+            class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+          >
+            <h4
+              class="ams-heading ams-heading--4 _StepStatus_7a365b"
             >
-              <h4
-                class="ams-heading ams-heading--4 _StepStatus_7a365b"
-              >
-                <span
-                  aria-label="Toekomstige status"
-                  class="_StepStatusIndication_7a365b"
-                />
-                Afgehandeld
-              </h4>
-              <time
-                class="_StepStatusDate_7a365b"
-                datetime=""
+              <span
+                aria-label="Huidige status"
+                class="_StepStatusIndication_7a365b"
               />
-            </li>
-          </ol>
-        </div>
+              Extra informatie nodig
+            </h4>
+            <time
+              class="_StepStatusDate_7a365b"
+              datetime="2023-06-03T00:00:00.000Z"
+            >
+              03 juni 2023
+            </time>
+            <div>
+              Wij hebben meer informatie nodig om uw verzoek in behandeling te nemen. U krijgt een brief waarin staat welke informatie wij nodig hebben.
+            </div>
+          </li>
+          <li
+            class="ams-ordered-list__item _Step_7a365b"
+          >
+            <h4
+              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+            >
+              <span
+                aria-label="Toekomstige status"
+                class="_StepStatusIndication_7a365b"
+              />
+              Afgehandeld
+            </h4>
+            <time
+              class="_StepStatusDate_7a365b"
+              datetime=""
+            />
+          </li>
+        </ol>
       </div>
     </div>
   </div>
