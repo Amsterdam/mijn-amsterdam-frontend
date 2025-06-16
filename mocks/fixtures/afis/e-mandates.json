@@ -1,0 +1,22 @@
+{
+  "feed": {
+    "count": 10,
+    "entry": [
+      {
+        "content": {
+          "@type": "application/xml",
+          "properties": {
+            "IsCleared": true,
+            "DunningLevel": 0,
+            "ProfitCenterName": "Lisan al Gaib inc.",
+            "NetDueDate": "2023-12-21T00:00:00",
+            "ClearingDate": "2024-05-01",
+            "ReverseDocument": "someReverseDocument123",
+            "DocumentReferenceID": "INV-2023-010",
+            "AccountingDocument": "INV-2023-010"
+          }
+        }
+      }
+    ]
+  }
+}
