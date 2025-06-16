@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 import {
   ActionGroup,
-  Grid,
   Heading,
   Icon,
   OrderedList,
@@ -86,61 +85,56 @@ type StepsProps = {
 
 export function Steps({ steps, title }: StepsProps) {
   return (
-    <Grid className={styles.Steps}>
+    <div className={styles.Steps}>
       {title && (
-        <Heading
-          size="level-2"
-          className={classNames(styles.StatusHeading, 'ams-mb-m')}
-        >
+        <Heading size="level-2" level={3} className="ams-mb-m">
           {title}
         </Heading>
       )}
-      <Grid.Cell start={2} span={10}>
-        <OrderedList className={styles.StepsList} markers={false}>
-          {steps.map((item) => (
-            <OrderedList.Item
-              className={classNames(
-                styles.Step,
-                item.isChecked && !item.isActive && styles['Step--checked'],
-                item.isActive && styles['Step--active']
-              )}
-              key={item.id + item.datePublished}
+      <OrderedList className={styles.StepsList} markers={false}>
+        {steps.map((item) => (
+          <OrderedList.Item
+            className={classNames(
+              styles.Step,
+              item.isChecked && !item.isActive && styles['Step--checked'],
+              item.isActive && styles['Step--active']
+            )}
+            key={item.id + item.datePublished}
+          >
+            <Heading className={styles.StepStatus} level={4}>
+              <StatusIndication step={item} />
+              {item.status}
+            </Heading>
+            <time
+              className={styles.StepStatusDate}
+              dateTime={item.datePublished}
             >
-              <Heading className={styles.StepStatus} level={4}>
-                <StatusIndication step={item} />
-                {item.status}
-              </Heading>
-              <time
-                className={styles.StepStatusDate}
-                dateTime={item.datePublished}
-              >
-                {defaultDateFormat(item.datePublished)}
-              </time>
-              {item.description && (
-                <div>
-                  {parseHTML(item.description)}
-                  {!!item.actionButtonItems?.length && (
-                    <ActionGroup className={styles.PanelActionGroup}>
-                      {item.actionButtonItems.map(({ to, title }) => (
-                        <MaButtonLink key={to} href={to} variant="secondary">
-                          {title}
-                          <Icon svg={ExternalLinkIcon} size="heading-5" />
-                        </MaButtonLink>
-                      ))}
-                    </ActionGroup>
-                  )}
-                </div>
-              )}
-              {!!(item.altDocumentContent || item.documents?.length) && (
-                <StatusStepDocuments
-                  documents={item.documents}
-                  altDocumentContent={item.altDocumentContent}
-                />
-              )}
-            </OrderedList.Item>
-          ))}
-        </OrderedList>
-      </Grid.Cell>
-    </Grid>
+              {defaultDateFormat(item.datePublished)}
+            </time>
+            {item.description && (
+              <div>
+                {parseHTML(item.description)}
+                {!!item.actionButtonItems?.length && (
+                  <ActionGroup className={styles.PanelActionGroup}>
+                    {item.actionButtonItems.map(({ to, title }) => (
+                      <MaButtonLink key={to} href={to} variant="secondary">
+                        {title}
+                        <Icon svg={ExternalLinkIcon} size="heading-5" />
+                      </MaButtonLink>
+                    ))}
+                  </ActionGroup>
+                )}
+              </div>
+            )}
+            {!!(item.altDocumentContent || item.documents?.length) && (
+              <StatusStepDocuments
+                documents={item.documents}
+                altDocumentContent={item.altDocumentContent}
+              />
+            )}
+          </OrderedList.Item>
+        ))}
+      </OrderedList>
+    </div>
   );
 }
