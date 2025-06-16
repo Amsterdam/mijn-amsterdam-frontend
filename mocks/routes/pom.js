@@ -3,7 +3,7 @@ const settings = require('../settings');
 module.exports = [
   {
     id: 'post-pom-emandate-sign-request-url',
-    url: `${settings.MOCK_BASE_PATH}/pom/sign-request-url`,
+    url: `${settings.MOCK_BASE_PATH}/pom/paylinks`,
     method: 'POST',
     variants: [
       {
@@ -12,7 +12,8 @@ module.exports = [
         options: {
           status: 200,
           body: {
-            url: `${settings.MOCK_API_BASE_URL}/sso/portaal/pom-emandates`,
+            paylink: `${settings.MOCK_API_BASE_URL}/sso/portaal/pom-emandates`,
+            mpid: '1234567890',
           },
         },
       },
@@ -20,7 +21,7 @@ module.exports = [
   },
   {
     id: 'post-pom-emandate-sign-request-status',
-    url: `${settings.MOCK_BASE_PATH}/pom/sign-request-status`,
+    url: `${settings.MOCK_BASE_PATH}/pom/paylinks/:mpid`,
     method: 'POST',
     variants: [
       {
@@ -29,7 +30,7 @@ module.exports = [
         options: {
           status: 200,
           body: {
-            status: 'OK',
+            status_code: 900,
           },
         },
       },
