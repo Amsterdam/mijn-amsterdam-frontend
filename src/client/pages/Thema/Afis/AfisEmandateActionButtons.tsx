@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 
 import { Button, Icon } from '@amsterdam/design-system-react';
+import { AlertIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './AfisEmandateActionButtons.module.scss';
-import {
+import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
-} from '../../../server/services/afis/afis-types';
-import { ApiResponse } from '../../../universal/helpers/api';
-import { IconAlert } from '../../assets/icons';
-import { Spinner } from '../../components/Spinner/Spinner';
-import { ApiState, useDataApi } from '../../hooks/api/useDataApi';
+} from '../../../../server/services/afis/afis-types';
+import type { ApiResponse } from '../../../../universal/helpers/api';
+import { Spinner } from '../../../components/Spinner/Spinner';
+import { type ApiState, useDataApi } from '../../../hooks/api/useDataApi';
 
 type AfisEMandateActionUrlProps = {
   eMandate: AfisEMandateFrontend;
@@ -34,7 +34,7 @@ function ApiActionButton<T>({
       <Button variant="tertiary" onClick={() => fetch()}>
         {api.isLoading && <Spinner />}
         {!api.isLoading && api.isError && (
-          <Icon className={styles.Icon} svg={IconAlert} size="level-5" />
+          <Icon className={styles.Icon} svg={AlertIcon} size="heading-5" />
         )}
         {label}
       </Button>
