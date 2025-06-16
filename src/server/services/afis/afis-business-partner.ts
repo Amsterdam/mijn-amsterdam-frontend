@@ -10,11 +10,14 @@ import {
   AfisBusinessPartnerEmailSource,
   AfisBusinessPartnerPhone,
   AfisBusinessPartnerPhoneSource,
+  BusinessPartnerId,
+  BusinessPartnerIdPayload,
 } from './afis-types';
 import { FeatureToggle } from '../../../universal/config/feature-toggles';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
+  ApiSuccessResponse,
   apiSuccessResult,
   getFailedDependencies,
   getSettledResult,
@@ -55,7 +58,7 @@ function transformBusinessPartnerAddressResponse(
 }
 
 async function fetchBusinessPartnerAddress(
-  businessPartnerId: string
+  businessPartnerId: BusinessPartnerId
 ): Promise<ApiResponse_DEPRECATED<AfisBusinessPartnerAddress | null>> {
   const additionalConfig: DataRequestConfig = {
     params: getRequestParamsFromQueryString(
@@ -80,6 +83,8 @@ function transformBusinessPartnerFullNameResponse(
   if (businessPartnerEntry) {
     const transformedResponse: AfisBusinessPartnerDetails = {
       fullName: businessPartnerEntry.BusinessPartnerFullName ?? null,
+      firstName: businessPartnerEntry.FirstName ?? null,
+      lastName: businessPartnerEntry.LastName ?? null,
     };
 
     return transformedResponse;
@@ -88,7 +93,7 @@ function transformBusinessPartnerFullNameResponse(
   return null;
 }
 
-async function fetchBusinessPartnerFullName(businessPartnerId: string) {
+async function fetchBusinessPartnerFullName(businessPartnerId: BusinessPartnerId): Promise<ApiResponse<AfisBusinessPartnerDetails | null>> {
   const additionalConfig: DataRequestConfig = {
     params: getRequestParamsFromQueryString(
       `?$filter=BusinessPartner eq '${businessPartnerId}'&$select=BusinessPartnerFullName`
@@ -165,7 +170,7 @@ async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
 export async function fetchAfisBusinessPartnerDetails(
   payload: BusinessPartnerIdPayload
 ): Promise<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>> {
-  const businessPartnerId = payload.businessPartnerId;
+  const businessPartnerId:BusinessPartnerId = payload.businessPartnerId;
   const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
   const addressRequest = fetchBusinessPartnerAddress(businessPartnerId);
 
