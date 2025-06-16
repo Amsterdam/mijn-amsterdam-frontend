@@ -20,9 +20,11 @@ import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 type AfisBusinessPartnerProps = {
   businesspartner: AfisBusinessPartnerDetailsTransformed | null;
-  labels: Omit<
-    DisplayProps<AfisBusinessPartnerDetailsTransformed>,
-    'smallscreen'
+  labels: DisplayProps<
+    Omit<
+      AfisBusinessPartnerDetailsTransformed,
+      'address' | 'firstName' | 'lastName'
+    >
   >;
   isLoading: boolean;
   startCollapsed: boolean;
