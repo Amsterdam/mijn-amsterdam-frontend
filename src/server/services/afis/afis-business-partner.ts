@@ -163,8 +163,9 @@ async function fetchEmail(addressId: AfisBusinessPartnerAddress['id']) {
 
 /** Fetches the business partner details, phonenumber and emailaddress from the AFIS source API and combines then into a single response */
 export async function fetchAfisBusinessPartnerDetails(
-  businessPartnerId: string
+  payload: BusinessPartnerIdPayload
 ): Promise<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>> {
+  const businessPartnerId = payload.businessPartnerId;
   const fullNameRequest = fetchBusinessPartnerFullName(businessPartnerId);
   const addressRequest = fetchBusinessPartnerAddress(businessPartnerId);
 
@@ -200,7 +201,7 @@ export async function fetchAfisBusinessPartnerDetails(
   }
 
   const detailsCombined: AfisBusinessPartnerDetailsTransformed = {
-    businessPartnerId: businessPartnerId,
+    businessPartnerId,
     ...addressResponse.content,
     ...fullNameResponse.content,
     ...phoneResponse.content,
