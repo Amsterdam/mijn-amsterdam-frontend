@@ -290,15 +290,61 @@ module.exports = [
   },
   {
     id: 'get-afis-emandates',
-    url: `${settings.MOCK_BASE_PATH}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
     method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (_req, res) => {
+            return res.send(eMandates);
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'post-afis-emandates',
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/CreateMandate/ZGW_FI_MANDATE_SRV_01/Mandate_createSet`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (_req, res) => {
+            const body = req.body;
+            const mandate = eMandates.find(
+              (eMandate) => eMandate.IMandateId === body.IMandateId
+            );
+            const lastID =
+              eMandates.feed.entry[eMandates.feed.entry.length - 1].IMandateId;
+            const newMandete = {
+              ...mandate,
+              ...body,
+              id: lastID + 1,
+            };
+
+            eMandates.feed.entry.push(newMandete);
+
+            return res.send(newMandete);
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'put-afis-emandates',
+    url: `${settings.MOCK_BASE_PATH}/afis/RESTAdapter/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId=':mandateId')`,
+    method: 'PUT',
     variants: [
       {
         id: 'standard',
         type: 'json',
         options: {
           status: 200,
-          body: require('../fixtures/afis/e-mandates.json'),
+          body: {},
         },
       },
     ],
