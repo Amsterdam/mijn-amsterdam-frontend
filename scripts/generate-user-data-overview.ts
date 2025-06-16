@@ -190,14 +190,22 @@ if (IS_PRODUCTION) {
 if (!process.env.MA_TEST_ACCOUNTS) {
   throw new Error('MA_TEST_ACCOUNTS env var is empty.');
 }
-let testAccounts: any = process.env.MA_TEST_ACCOUNTS.split(',');
 
-const themaToTitle = themas.reduce((acc, { id, title }) => {
-  acc[id] = title;
-  return acc;
-}, {});
+const themaToTitle: Record<string, string> = themas.reduce(
+  (acc, { id, title }) => {
+    acc[id] = title;
+    return acc;
+  },
+  {}
+);
 const themasAvailable = themas.map((menuItem) => menuItem.id);
-const testAccountEntries = getTestAccountEntries();
+const testAccountEntries: any = process.env.MA_TEST_ACCOUNTS.split(',').map(
+  (accountData: any) => {
+    const keyVal = accountData.split('=');
+    return [keyVal[0], keyVal[1]];
+  }
+);
+const testAccountNames = testAccountEntries.map(([username]) => username);
 
 XLSX.set_fs(fs);
 // If true then get data extracted out of services from disk.
@@ -215,14 +223,6 @@ const HPX_DEFAULT = 22;
 const WCH_DEFAULT = 25;
 
 generateOverview();
-
-function getTestAccountEntries() {
-  testAccounts = testAccounts.map((accountData: any) => {
-    const keyVal = accountData.split('=');
-    return [keyVal[0], keyVal[1]];
-  });
-  return testAccounts;
-}
 
 async function generateOverview() {
   return getServiceResults().then((resultsByUser) => {
@@ -778,10 +778,10 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
   return {
     title: 'Themas',
     rows: getThemaRows(resultsByUser),
-    columnHeaders: getUsernameColumnHeaders(),
+    columnHeaders: testAccountNames,
     colInfo: [
       { wch: WCH_DEFAULT },
-      ...Object.keys(testAccounts).map(() => ({ wch: WCH_DEFAULT })),
+      testAccountNames.map(() => ({ wch: WCH_DEFAULT })),
     ],
     rowInfo,
   };
@@ -798,7 +798,7 @@ function sheetServiceErrors(
   return {
     title: 'Service Errors',
     rows: getServiceErrors(resultsByUser, serviceKeys),
-    columnHeaders: getUsernameColumnHeaders(),
+    columnHeaders: ['', ...testAccountEntries.map(([username]) => username)],
     colInfo: [
       { wch: WCH_DEFAULT },
       ...createInfoArray(testAccountEntries.length, { wch: WCH_DEFAULT }),
@@ -922,8 +922,4 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       : undefined,
     rowInfo,
   };
-}
-
-function getUsernameColumnHeaders() {
-  return testAccountEntries.map(([username]) => username);
 }
