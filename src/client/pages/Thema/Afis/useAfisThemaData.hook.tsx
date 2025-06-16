@@ -138,7 +138,9 @@ function useAfisFacturenApi(
       state !== 'open'
     ) {
       fetchFacturen({
-        url: `${BFFApiUrls.AFIS_FACTUREN}/${state}?id=${businessPartnerIdEncrypted}`,
+        url: `${generateBffApiUrl('AFIS_FACTUREN', {
+          state,
+        })}?id=${businessPartnerIdEncrypted}`,
       });
     }
   }, [businessPartnerIdEncrypted, fetchFacturen, isApiDataCached, state]);
@@ -239,10 +241,19 @@ export function useAfisBetaalVoorkeurenData(
     key: `afis-betaalvoorkeuren`,
   });
 
+  const [eMandatesApiResponse, fetchEMandates, isEMandatesApiDataCached] =
+    useAppStateBagApi<AfisEMandateFrontend[] | null>({
+      bagThema: BagThemas.AFIS,
+      key: `afis-emandates`,
+    });
+
   useEffect(() => {
     if (businessPartnerIdEncrypted && !isApiDataCached) {
       fetchBusinessPartnerDetails({
-        url: `${BFFApiUrls.AFIS_BUSINESSPARTNER}?id=${businessPartnerIdEncrypted}`,
+        url: generateBffApiUrlWithEncryptedPayloadQuery(
+          'AFIS_BUSINESSPARTNER',
+          businessPartnerIdEncrypted
+        ),
       });
     }
   }, [
@@ -250,6 +261,24 @@ export function useAfisBetaalVoorkeurenData(
     fetchBusinessPartnerDetails,
     isApiDataCached,
   ]);
+
+  useEffect(() => {
+    if (businessPartnerIdEncrypted && !isEMandatesApiDataCached) {
+      fetchEMandates({
+        url: generateBffApiUrlWithEncryptedPayloadQuery(
+          'AFIS_EMANDATES',
+          businessPartnerIdEncrypted
+        ),
+      });
+    }
+  }, [businessPartnerIdEncrypted, fetchEMandates, isEMandatesApiDataCached]);
+
+  const eMandates = (eMandatesApiResponse.content ?? []).map((eMandate) => {
+    return {
+      ...eMandate,
+      action: <AfisEMandateActionUrls eMandate={eMandate} />,
+    };
+  });
 
   return {
     title: 'Betaalvoorkeuren',
@@ -262,7 +291,7 @@ export function useAfisBetaalVoorkeurenData(
       businesspartnerDetailsApiResponse,
       false
     ),
-    hasEmandatesError: false,
+    hasEMandatesError: isError(eMandatesApiResponse, false),
     hasFailedEmailDependency: hasFailedDependency(
       businesspartnerDetailsApiResponse,
       'email'
@@ -276,7 +305,7 @@ export function useAfisBetaalVoorkeurenData(
       'fullName'
     ),
     eMandateTableConfig,
-    eMandates: [],
-    isLoadingEmandates: false,
+    eMandates,
+    isLoadingEMandates: false,
   };
 }
