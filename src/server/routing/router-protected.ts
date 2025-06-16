@@ -295,6 +295,17 @@ attachDocumentDownloadRoute(
 }
 
 {
+  // TODO: This is a temporary solution to redirect the user back to the frontend after signing the mandate.
+  // This should be replaced with a proper solution.
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_RETURNTO,
+    (req: Request, res: Response, next: NextFunction) => {
+      return res.redirect(getFromEnv('MA_FRONTEND_URL') ?? '/');
+    }
+  );
+}
+
+{
   type QueryPayload = BusinessPartnerIdPayload;
   type ServiceReturnType = ReturnType<typeof handleFetchAfisFacturen>;
 
