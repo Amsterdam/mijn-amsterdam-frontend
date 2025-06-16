@@ -13,7 +13,9 @@ export type SessionIDAndROuteParamIdEncrypted = string;
 
 /** Decrypt an encrypted 'sessionid:id' and validate it.
  */
-export function decryptEncryptedRouteParamAndValidateSessionID(
+export function decryptEncryptedRouteParamAndValidateSessionID<
+  T extends string = string,
+>(
   sessionIDAndRouteParamIdEncrypted: SessionIDAndROuteParamIdEncrypted,
   authProfileAndToken: AuthProfileAndToken
 ) {
@@ -48,5 +50,5 @@ export function decryptEncryptedRouteParamAndValidateSessionID(
     );
   }
 
-  return apiSuccessResult(id);
+  return apiSuccessResult<T>(id as T);
 }
