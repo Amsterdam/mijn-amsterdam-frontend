@@ -1,3 +1,33 @@
+/**
+ * Script to fetch, transform and save testdata for every accounts -
+ * in the MA_TEST_ACCOUNTS environment variable to a excel file.
+ * This is used for quikly looking up what user has which themas/data -
+ * without needing to login to every single one and manually looking this up.
+ *
+ * When debugging locally
+ * ======================
+ *
+ * Make sure MA_TEST_ACCOUNTS is filled with testaccounts like so:
+ *   {account_name}={bsn},{account_name}={bsn},...
+ * Put that in your .env.local file
+ *
+ * Also fill BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
+ * `https://{azure_default_domain}/api/v1` where azure_default_domain is found -
+ * on our test appservice in Azure Portal.
+ *
+ * How to use
+ * ==========
+ * pnpx tsx generate-user-data-overview.ts
+ *
+ * Tips
+ * =========
+ * - The script can be run from disk see `FROM_DISK` in this file.
+ * - Use a tool like watchexec for rerunning the script when debugging
+ * ```sh
+ * watchexec -c -e ts pnpx tsx ./scripts/generate-user-data-overview.ts
+ * ```
+ */
+
 /* eslint-disable */
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
@@ -10,7 +40,7 @@ dotenvExpand.expand(envConfig);
 import * as XLSX from 'xlsx';
 
 import * as fs from 'node:fs';
-import { dateFormat, defaultDateFormat } from '../src/universal/helpers/date';
+import { defaultDateFormat } from '../src/universal/helpers/date';
 import { getFullAddress } from '../src/universal/helpers/brp';
 
 import { MyNotification } from '../src/universal/types/App.types';
