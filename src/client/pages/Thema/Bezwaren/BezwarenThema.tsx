@@ -1,4 +1,4 @@
-import { Paragraph } from '@amsterdam/design-system-react';
+import { Link, Paragraph } from '@amsterdam/design-system-react';
 
 import { useBezwarenThemaData } from './useBezwarenThemaData.hook';
 import { BezwaarFrontend } from '../../../../server/services/bezwaren/types';
@@ -6,10 +6,16 @@ import { PageContentCell } from '../../../components/Page/Page';
 import ThemaPagina from '../../../components/Thema/ThemaPagina';
 import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
+import { links } from './Bezwaren-thema-config';
 
 const pageContentTop = (
   <PageContentCell spanWide={8}>
-    <Paragraph>Hier ziet u een overzicht van uw ingediende bezwaren.</Paragraph>
+    <Paragraph>
+      U ziet hier alle bezwaren die zijn ingediend via ons{' '}
+      <Link href={links.BEZWAREN_FORMULIER} rel="noopener noreferrer">
+        bezwaarformulier.
+      </Link>{' '}
+    </Paragraph>
   </PageContentCell>
 );
 

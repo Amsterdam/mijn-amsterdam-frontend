@@ -58,7 +58,15 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
       <p
         class="ams-paragraph"
       >
-        Hier ziet u een overzicht van uw ingediende bezwaren.
+        U ziet hier alle bezwaren die zijn ingediend via ons 
+        <a
+          class="ams-link"
+          href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx"
+          rel="noopener noreferrer"
+        >
+          bezwaarformulier.
+        </a>
+         
       </p>
     </div>
     <div
@@ -202,7 +210,15 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
       <p
         class="ams-paragraph"
       >
-        Hier ziet u een overzicht van uw ingediende bezwaren.
+        U ziet hier alle bezwaren die zijn ingediend via ons 
+        <a
+          class="ams-link"
+          href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx"
+          rel="noopener noreferrer"
+        >
+          bezwaarformulier.
+        </a>
+         
       </p>
     </div>
     <div
@@ -350,7 +366,15 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
       <p
         class="ams-paragraph"
       >
-        Hier ziet u een overzicht van uw ingediende bezwaren.
+        U ziet hier alle bezwaren die zijn ingediend via ons 
+        <a
+          class="ams-link"
+          href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/BezwaarEnBeroep.aspx"
+          rel="noopener noreferrer"
+        >
+          bezwaarformulier.
+        </a>
+         
       </p>
     </div>
     <div
