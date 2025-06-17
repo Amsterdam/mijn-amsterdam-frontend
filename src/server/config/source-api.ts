@@ -255,6 +255,7 @@ const ApiConfig_ = {
   },
   BENK_BRP: {
     url: `${getFromEnv('BFF_BENK_BRP_API_BASE_URL')}`,
+    method: 'POST',
   },
   BAG: {
     url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,

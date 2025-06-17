@@ -92,7 +92,7 @@ export function captureException(error: unknown, properties?: Properties) {
   };
 
   if (IS_DEVELOPMENT) {
-    logger.error(payload, 'Capture Exception');
+    logger.error(error, 'Capture Exception');
   } else {
     client?.trackException(payload);
   }

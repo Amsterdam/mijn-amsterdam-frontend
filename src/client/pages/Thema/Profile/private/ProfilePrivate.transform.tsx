@@ -58,10 +58,12 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
       return '';
     },
   ],
+  geboortedatumFormatted: 'Geboortedatum',
   overlijdensdatum: [
     'Datum overlijden',
     (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
+  overlijdensdatumFormatted: 'Datum overlijden',
   geboorteplaatsnaam: [
     'Geboorteplaats',
     (value, _item, BRPData) =>
@@ -86,12 +88,7 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
         .join(', ');
     },
   ],
-  omschrijvingBurgerlijkeStaat: [
-    'Burgerlijke staat',
-    (_value, _item, BRPData) => {
-      return !BRPData?.verbintenis ? 'Ongehuwd' : undefined;
-    },
-  ],
+  omschrijvingBurgerlijkeStaat: 'Burgerlijke staat',
   indicatieGeheim: [
     'Geheimhouding',
     (value, _item) =>
@@ -114,16 +111,18 @@ const persoonSecundair: ProfileLabels<
   AppState['BRP']['content']
 > = {
   ...persoon,
+  geboorteplaatsnaam: 'Geboorteplaats',
+  geboortelandnaam: 'Geboorteland',
 };
-persoonSecundair.geboorteplaatsnaam = 'Geboorteplaats';
-persoonSecundair.geboortelandnaam = 'Geboorteland';
 
 // Remove specific fields we don't want to show
 delete persoonSecundair.omschrijvingGeslachtsaanduiding;
 delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
+// TODO: Maybe add Location thing here.
 const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
+  locatiebeschrijving: 'Locatie',
   straatnaam: [
     'Straat',
     (_value, adres) => {
@@ -142,6 +141,7 @@ const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
     'Vanaf',
     (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
+  begindatumVerblijfFormatted: 'Vanaf',
   einddatumVerblijf: [
     'Tot',
     (value) => (value ? defaultDateFormat(value) : null),
@@ -187,6 +187,7 @@ const verbintenis: ProfileLabels<
         : value,
   ],
   datumSluiting: ['Vanaf', (value) => !!value && defaultDateFormat(value)],
+  datumSluitingFormatted: 'Vanaf',
   datumOntbinding: [
     'Einddatum',
     (dateValue, verbintenis) => {
@@ -199,6 +200,7 @@ const verbintenis: ProfileLabels<
       return null;
     },
   ],
+  datumOntbindingFormatted: 'Einddatum',
   plaatsnaamSluitingOmschrijving: 'Plaats',
   landnaamSluiting: 'Land',
 };
@@ -240,9 +242,10 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       brpData?.persoon,
       brpData
     ),
-    adres: brpData.adres
-      ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
-      : { '': 'Adres onbekend' },
+    adres:
+      brpData.adres?.straatnaam || brpData.adres?.locatiebeschrijving
+        ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
+        : { Gegevens: 'Onbekend' },
   };
 
   // Exclude below profile data for non-mokum residents.

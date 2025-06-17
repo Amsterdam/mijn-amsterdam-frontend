@@ -1,8 +1,11 @@
 const BRP_PERSONEN_OP_ADRES = require('../fixtures/brp/personen-op-adres.json');
-const BRP_PERSOONSGEGEVENS = require('../fixtures/brp/persoonsgegevens.json');
+// const BRP_PERSOONSGEGEVENS = require('../fixtures/brp/persoonsgegevens.json');
+const BRP_PERSOONSGEGEVENS = require('../fixtures/brp/test-personen.json');
 const BRP_VERBLIJFPLAATSHISTORIE = require('../fixtures/brp/verblijfplaatshistorie.json');
 const BRP_RESPONSE = require('../fixtures/brp.json');
 const settings = require('../settings.js');
+
+const httpConstants = require('http2').constants;
 
 module.exports = [
   {
@@ -15,13 +18,26 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res, next, core) => {
-            const { type } = req.body;
+            const { type, burgerservicenummer } = req.body;
 
-            return res.send(
-              type === 'RaadpleegMetBurgerservicenummer'
-                ? BRP_PERSOONSGEGEVENS
-                : BRP_PERSONEN_OP_ADRES
+            const persoonsgegevens = BRP_PERSOONSGEGEVENS.personen.filter(
+              (persoon) =>
+                burgerservicenummer.includes(persoon.burgerservicenummer)
             );
+
+            switch (type) {
+              case 'RaadpleegMetBurgerservicenummer':
+                return res.send({
+                  ...BRP_PERSOONSGEGEVENS,
+                  personen: persoonsgegevens,
+                });
+              case 'ZoekMetAdresseerbaarObjectIdentificatie':
+                return res.send(BRP_PERSONEN_OP_ADRES);
+              default:
+                return res.status(httpConstants.HTTP_STATUS_UNAUTHORIZED).send({
+                  message: 'Niet geauthoriseerd verzoek',
+                });
+            }
           },
         },
       },
