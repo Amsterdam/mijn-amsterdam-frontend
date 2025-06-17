@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import uid from 'uid-safe';
 
 import { isProtectedRoute, sendUnauthorized } from './route-helpers';
@@ -81,6 +81,19 @@ export function nocache(_req: Request, res: Response, next: NextFunction) {
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
   next();
+}
+
+export function withConditionalMiddleware(
+  middleware: RequestHandler,
+  isEnabled: boolean
+) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (isEnabled) {
+      middleware(req, res, next);
+    } else {
+      next();
+    }
+  };
 }
 
 export function requestID(_req: Request, res: Response, next: NextFunction) {

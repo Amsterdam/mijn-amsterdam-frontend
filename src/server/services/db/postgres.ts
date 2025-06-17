@@ -42,7 +42,10 @@ export async function queryGET(queryString: string, values?: unknown[]) {
   return result?.rows[0] ?? null;
 }
 
-export async function queryALL(queryString: string, values?: unknown[]) {
+export async function queryALL(
+  queryString: string,
+  values?: unknown[]
+): Promise<unknown[]> {
   const result = await query(queryString, values);
   return result?.rows ?? [];
 }

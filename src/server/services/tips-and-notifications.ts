@@ -56,7 +56,7 @@ type NotificationServicesByProfileType = Record<
   NotificationServices
 >;
 
-const notificationServices: NotificationServicesByProfileType = {
+export const notificationServices = {
   commercial: {
     afis: fetchAfisNotifications,
     milieuzone: fetchMilieuzoneNotifications,
@@ -95,7 +95,7 @@ const notificationServices: NotificationServicesByProfileType = {
     vergunningen: fetchVergunningenNotifications,
     parkeren: fetchParkeerVergunningenNotifications,
   },
-};
+} satisfies NotificationServicesByProfileType;
 
 function getTipsAndNotificationsFromApiResults(
   responses: Array<ApiResponse_DEPRECATED<unknown>>

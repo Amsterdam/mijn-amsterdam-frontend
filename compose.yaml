@@ -18,7 +18,7 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin_container
     environment:
-      PGADMIN_DEFAULT_EMAIL: "pg@local.nl"
+      PGADMIN_DEFAULT_EMAIL: "pg@localhost.nl"
       PGADMIN_DEFAULT_PASSWORD: "password"
     ports:
       - 8080:80

@@ -91,6 +91,8 @@ export function captureException(error: unknown, properties?: Properties) {
     severity,
   };
 
+  logger.error(error);
+
   if (IS_DEVELOPMENT) {
     logger.error(payload, 'Capture Exception');
   } else {

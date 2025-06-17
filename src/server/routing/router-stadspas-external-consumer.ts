@@ -41,7 +41,7 @@ const AMSAPP_STADSPAS_DEEP_LINK = `${AMSAPP_PROTOCOl}stadspas`;
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
 export const routerInternet = createBFFRouter({
-  id: 'external-consumer-public',
+  id: 'external-consumer-public-stadspas',
 });
 
 routerInternet.get(
@@ -71,8 +71,8 @@ export const routerPrivateNetwork = createBFFRouter({
 });
 
 export const stadspasExternalConsumerRouter = {
-  internet: routerInternet,
-  privateNetwork: routerPrivateNetwork,
+  public: routerInternet,
+  private: routerPrivateNetwork,
 };
 
 routerPrivateNetwork.get(
