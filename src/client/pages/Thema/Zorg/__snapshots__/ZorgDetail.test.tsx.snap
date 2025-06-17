@@ -55,11 +55,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (geleverd)
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -311,11 +311,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (gestopt)
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -599,11 +599,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (nog niet geleverd)
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -838,11 +838,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Hulp bij het huishouden (tijdelijk gestopt)
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -1111,11 +1111,11 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Wmo item 1
-        </h3>
+        </h1>
       </div>
     </div>
     <div

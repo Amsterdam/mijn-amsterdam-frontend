@@ -55,11 +55,11 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaar
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -167,11 +167,11 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           BI.21.014121.001
-        </h3>
+        </h1>
       </div>
     </div>
     <div

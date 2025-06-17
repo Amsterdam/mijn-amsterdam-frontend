@@ -45,11 +45,11 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when API gives no res
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           AVG persoonsgegevens
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -189,11 +189,11 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are no req
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           AVG persoonsgegevens
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -337,11 +337,11 @@ exports[`AVG thema pagina > Matches the Full Page snapshot when there are reques
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           AVG persoonsgegevens
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -589,11 +589,11 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           AVG verzoek
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -701,11 +701,11 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           AVG verzoek
-        </h3>
+        </h1>
       </div>
     </div>
     <div

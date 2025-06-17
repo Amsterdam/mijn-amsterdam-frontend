@@ -45,11 +45,11 @@ exports[`ZaakStatus > No query params passed 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -115,11 +115,11 @@ exports[`ZaakStatus > should show error alert 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -227,11 +227,11 @@ exports[`ZaakStatus > should show not found message 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -302,11 +302,11 @@ exports[`ZaakStatus > should show wachten op betaling 1`] = `
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Status van uw aanvraag
-        </h3>
+        </h1>
       </div>
     </div>
     <div

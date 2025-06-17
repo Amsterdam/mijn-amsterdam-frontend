@@ -45,11 +45,11 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaren
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -197,11 +197,11 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaren
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -353,11 +353,11 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Bezwaren
-        </h3>
+        </h1>
       </div>
     </div>
     <div
