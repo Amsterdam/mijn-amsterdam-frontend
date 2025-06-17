@@ -215,7 +215,13 @@ const FROM_DISK: boolean = firstArg === '--from-disk' || firstArg === '-d';
 
 // Describes where we should save the transformed data from our services.
 const TARGET_DIRECTORY: string = '.';
+if (!TARGET_DIRECTORY) {
+  throw new Error(
+    `(TARGET_DIRECTORY = '${TARGET_DIRECTORY}') may not be empty`
+  );
+}
 
+const CACHE_PATH = `${TARGET_DIRECTORY}/user-data.json`;
 const BASE_URL = process.env.BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL;
 
 // Configuartion for row/columns.
@@ -226,12 +232,8 @@ generateOverview();
 
 async function generateOverview() {
   return getServiceResults().then((resultsByUser) => {
-    const cachePath = './user-data.json';
-    if (!fs.existsSync(cachePath) || !FROM_DISK) {
-      fs.writeFileSync(
-        TARGET_DIRECTORY + cachePath,
-        JSON.stringify(resultsByUser)
-      );
+    if (!fs.existsSync(CACHE_PATH) || !FROM_DISK) {
+      fs.writeFileSync(CACHE_PATH, JSON.stringify(resultsByUser));
     }
 
     const fileName = `${TARGET_DIRECTORY}/userdata-overview.xlsx`;
@@ -255,10 +257,8 @@ async function generateOverview() {
 }
 
 async function getServiceResults(): Promise<Record<string, ServiceResults>> {
-  if (FROM_DISK) {
-    const data = JSON.parse(
-      fs.readFileSync(TARGET_DIRECTORY + '/user-data.json', 'utf8').toString()
-    );
+  if (fs.existsSync(CACHE_PATH) && FROM_DISK) {
+    const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
     return data;
   }
 
