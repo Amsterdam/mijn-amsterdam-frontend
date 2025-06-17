@@ -352,7 +352,7 @@ function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
       return userThemas;
     })
     .filter((userThemas) => !!Object.keys(userThemas).length);
-  return getRows(themasAvailable, rows, false);
+  return getRows(themasAvailable, rows, true);
 }
 
 function getAvailableUserThemas(serviceResults: ServiceResults) {
@@ -775,13 +775,15 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
   const rowInfo = createInfoArray(testAccountEntries.length, {
     hpx: HPX_DEFAULT,
   });
+
+  const columnHeaders = ['', ...testAccountNames];
   return {
     title: 'Themas',
     rows: getThemaRows(resultsByUser),
-    columnHeaders: testAccountNames,
+    columnHeaders,
     colInfo: [
       { wch: WCH_DEFAULT },
-      testAccountNames.map(() => ({ wch: WCH_DEFAULT })),
+      ...createInfoArray(columnHeaders.length, { wch: WCH_DEFAULT }),
     ],
     rowInfo,
   };
