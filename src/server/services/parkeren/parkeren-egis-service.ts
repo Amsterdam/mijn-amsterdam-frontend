@@ -14,6 +14,7 @@ import { requestData } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
+  console.dir(await createJWEToken(authProfileAndToken));
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
@@ -120,6 +121,15 @@ async function getJWEToken(
   return jweTokenResponse.content;
 }
 
+type JWEPayload = {
+  iat: number;
+  exp: number;
+  iss: string;
+  aud: string;
+  bsn?: string;
+  kvk_number?: string;
+};
+
 async function createJWEToken(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<string | null> {
@@ -133,9 +143,9 @@ async function createJWEToken(
   const unixEpochInSeconds = Math.floor(Date.now() / 1000);
 
   const ONE_HOUR_IN_SECONDS = 3600;
-  const payload: Record<string, string> = {
-    iat: unixEpochInSeconds.toString(),
-    exp: (unixEpochInSeconds + ONE_HOUR_IN_SECONDS).toString(),
+  const payload: JWEPayload = {
+    iat: unixEpochInSeconds,
+    exp: unixEpochInSeconds + ONE_HOUR_IN_SECONDS,
     iss: getFromEnv('BFF_API_BASE_URL', true)!,
     aud: getFromEnv('BFF_PARKEREN_JWT_AUDIENCE', true)!,
   };
