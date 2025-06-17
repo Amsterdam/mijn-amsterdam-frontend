@@ -83,7 +83,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <div
+      <section
         class="_Steps_7a365b"
       >
         <h3
@@ -250,7 +250,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
         </ol>
-      </div>
+      </section>
     </div>
   </div>
 </DocumentFragment>
@@ -339,7 +339,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <div
+      <section
         class="_Steps_7a365b"
       >
         <h3
@@ -538,7 +538,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
         </ol>
-      </div>
+      </section>
     </div>
   </div>
 </DocumentFragment>
@@ -627,7 +627,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <div
+      <section
         class="_Steps_7a365b"
       >
         <h3
@@ -777,7 +777,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
         </ol>
-      </div>
+      </section>
     </div>
   </div>
 </DocumentFragment>
@@ -866,7 +866,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <div
+      <section
         class="_Steps_7a365b"
       >
         <h3
@@ -1050,7 +1050,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
         </ol>
-      </div>
+      </section>
     </div>
   </div>
 </DocumentFragment>
@@ -1139,7 +1139,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <div
+      <section
         class="_Steps_7a365b"
       >
         <h3
@@ -1173,7 +1173,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
             </div>
           </li>
         </ol>
-      </div>
+      </section>
     </div>
   </div>
 </DocumentFragment>

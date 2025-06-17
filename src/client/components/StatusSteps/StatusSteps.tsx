@@ -85,7 +85,7 @@ type StepsProps = {
 
 export function Steps({ steps, title }: StepsProps) {
   return (
-    <div className={styles.Steps}>
+    <section className={styles.Steps}>
       {title && (
         <Heading size="level-2" level={3} className="ams-mb-m">
           {title}
@@ -135,6 +135,6 @@ export function Steps({ steps, title }: StepsProps) {
           </OrderedList.Item>
         ))}
       </OrderedList>
-    </div>
+    </section>
   );
 }
