@@ -160,6 +160,7 @@ const themas = [
   { id: themaIdKVK, title: KVK },
   { id: themaIdInkomen, title: themaTitleInkomen },
   { id: themaIdZorg, title: themaTitleZorg },
+  { id: 'WMO', title: themaTitleZorg },
   { id: themaIdAfval, title: themaTitleAfval },
   { id: themaIdVergunningen, title: themaTitleVergunningen },
   { id: themaIdErfpacht, title: themaTitleErfpacht },
@@ -198,7 +199,8 @@ const themaToTitle: Record<string, string> = themas.reduce(
   },
   {}
 );
-const themasAvailable = themas.map((menuItem) => menuItem.id);
+
+const themaIDs = themas.map((menuItem) => menuItem.id);
 const testAccountEntries: any = process.env.MA_TEST_ACCOUNTS.split(',').map(
   (accountData: any) => {
     const keyVal = accountData.split('=');
@@ -352,7 +354,7 @@ function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
       return userThemas;
     })
     .filter((userThemas) => !!Object.keys(userThemas).length);
-  return getRows(themasAvailable, rows, true);
+  return getRows(themaIDs, rows, true);
 }
 
 function getAvailableUserThemas(serviceResults: ServiceResults) {
