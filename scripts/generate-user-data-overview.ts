@@ -155,10 +155,18 @@ import {
 } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
 
 const { BRP, KVK } = profileThemaTitles;
+
+/** Extra hardcoded additions are for extra mappings
+ * because sometimes we have multiple services for one thema. */
 const themas = [
   { id: themaIdBRP, title: BRP },
   { id: themaIdKVK, title: KVK },
   { id: themaIdInkomen, title: themaTitleInkomen },
+  { id: 'WPI_AANVRAGEN', title: themaTitleInkomen },
+  { id: 'WPI_BBZ', title: themaTitleInkomen },
+  { id: 'WPI_SPECIFICATIES', title: themaTitleInkomen },
+  { id: 'WPI_TONK', title: themaTitleInkomen },
+  { id: 'WPI_TOZO', title: themaTitleInkomen },
   { id: themaIdZorg, title: themaTitleZorg },
   { id: 'WMO', title: themaTitleZorg },
   { id: themaIdAfval, title: themaTitleAfval },
@@ -475,7 +483,7 @@ function getRows(
   results.forEach((user, index) => {
     for (const [label, value] of Object.entries(user)) {
       if (!rowsMap[label]) {
-        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+        console.warn(`[WARN]: No rowsMap with label: ${label}`);
       } else {
         rowsMap[label][index + 1] = value;
       }
