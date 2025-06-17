@@ -161,14 +161,9 @@ const { BRP, KVK } = profileThemaTitles;
 const themas = [
   { id: themaIdBRP, title: BRP },
   { id: themaIdKVK, title: KVK },
+  { id: 'KLANT_CONTACT', title: 'Contactmomenten' },
   { id: themaIdInkomen, title: themaTitleInkomen },
-  { id: 'WPI_AANVRAGEN', title: themaTitleInkomen },
-  { id: 'WPI_BBZ', title: themaTitleInkomen },
-  { id: 'WPI_SPECIFICATIES', title: themaTitleInkomen },
-  { id: 'WPI_TONK', title: themaTitleInkomen },
-  { id: 'WPI_TOZO', title: themaTitleInkomen },
   { id: themaIdZorg, title: themaTitleZorg },
-  { id: 'WMO', title: themaTitleZorg },
   { id: themaIdAfval, title: themaTitleAfval },
   { id: themaIdVergunningen, title: themaTitleVergunningen },
   { id: themaIdErfpacht, title: themaTitleErfpacht },
@@ -368,46 +363,50 @@ function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
 function getAvailableUserThemas(serviceResults: ServiceResults) {
   const availableThemas = Object.entries(serviceResults)
     .filter(([, sResult]) => {
-      if (sResult.status === 'ERROR' || sResult.status === 'POSTPONE') {
+      if (
+        sResult.status === 'ERROR' ||
+        sResult.status === 'POSTPONE' ||
+        !sResult.content ||
+        (Array.isArray(sResult.content) && sResult.content.length <= 0)
+      ) {
         return false;
       }
-      return isThemaAvailableForUser(sResult.content);
+      if (sResult.content.isKnown) {
+        return true;
+      }
+      const entries = Object.entries(sResult.content);
+      for (const [, val] of entries) {
+        if (
+          val &&
+          ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
+        ) {
+          return true;
+        }
+      }
+      return false;
     })
     .map(([themaName]) => themaName);
 
-  for (const themaID of availableThemas) {
-    availableThemas[themaID] = themaToTitle[themaID];
+  const aThemas = {};
+
+  // Add manually since, BRP is already checked above for thema 'Mijn gegevens'
+  if (serviceResults.BRP.content?.identiteitsbewijzen?.length) {
+    aThemas[themaIdBurgerzaken] = themaTitleBurgerzaken;
   }
 
-  return availableThemas;
-}
-
-type PartialContentObject = {
-  isKnown?: boolean;
-} & object;
-
-function isThemaAvailableForUser(
-  content: any[] | PartialContentObject
-): boolean {
-  if (!content) {
-    return false;
-  }
-  if (Array.isArray(content)) {
-    return content.length > 0;
-  }
-  if (content.isKnown) {
-    return true;
-  }
-  const entries = Object.entries(content);
-  for (const [, val] of entries) {
-    if (
-      val &&
-      ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
-    ) {
-      return true;
+  for (let themaID of availableThemas) {
+    // Prevent setting a key to undefined if already set.
+    if (aThemas[themaID]) {
+      continue;
+    } else if (themaID.startsWith('WPI')) {
+      themaID = 'INKOMEN';
+    } else if (themaID === 'WMO') {
+      themaID = 'ZORG';
     }
+    aThemas[themaID] = themaToTitle[themaID];
   }
-  return false;
+
+  return aThemas;
 }
 
 function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
@@ -483,7 +482,7 @@ function getRows(
   results.forEach((user, index) => {
     for (const [label, value] of Object.entries(user)) {
       if (!rowsMap[label]) {
-        console.warn(`[WARN]: No rowsMap with label: ${label}`);
+        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
       } else {
         rowsMap[label][index + 1] = value;
       }
