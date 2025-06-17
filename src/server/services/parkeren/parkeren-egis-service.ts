@@ -14,7 +14,6 @@ import { requestData } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
-  console.dir(await createJWEToken(authProfileAndToken));
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/sso/get_authentication_url?service=${authProfileAndToken.profile.authMethod}`;
