@@ -61,7 +61,7 @@ function getDatum(datum?: DatumSource): string | null {
 function transformBenkBrpResponse(
   responseData: PersonenResponseSource
 ): BrpFrontend | null {
-  const [persoon] = responseData.personen;
+  const [persoon] = responseData.personen ?? [];
   if (!persoon) {
     throw new Error('No person found in Benk BRP response');
   }
