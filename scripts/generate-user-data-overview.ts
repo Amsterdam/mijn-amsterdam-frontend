@@ -195,7 +195,7 @@ if (!process.env.MA_TEST_ACCOUNTS) {
   throw new Error('MA_TEST_ACCOUNTS env var is empty.');
 }
 
-const themaToTitle: Record<string, string> = themas.reduce(
+const themaIDtoTitle: Record<string, string> = themas.reduce(
   (acc, { id, title }) => {
     acc[id] = title;
     return acc;
@@ -357,7 +357,7 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
         (notification: MyNotification) => {
           return {
             Username: Username,
-            Thema: themaToTitle[notification.themaID],
+            Thema: themaIDtoTitle[notification.themaID],
             Titel: notification.title,
             Datum: defaultDateFormat(notification.datePublished),
           };
@@ -690,9 +690,9 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
 
   const rowsMap: any = {};
 
-  for (const label of themaIDs) {
-    rowsMap[label] = {};
-    rowsMap[label]['0'] = label;
+  for (const themaID of themaIDs) {
+    rowsMap[themaID] = {};
+    rowsMap[themaID]['0'] = themaIDtoTitle[themaID];
   }
 
   availableThemaMaps.forEach((availableThemaMap, index) => {
@@ -705,7 +705,7 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
     }
   });
 
-  const columnHeaders = ['', ...testAccountNames];
+  const columnHeaders = ['Themas', ...testAccountNames];
   return {
     title: 'Themas',
     rows: Object.values(rowsMap),
@@ -761,7 +761,7 @@ function getAvailableUserThemas(serviceResults: ServiceResults) {
     } else if (themaID === 'WMO') {
       themaID = 'ZORG';
     }
-    aThemas[themaID] = themaToTitle[themaID];
+    aThemas[themaID] = themaIDtoTitle[themaID];
   }
 
   return aThemas;
