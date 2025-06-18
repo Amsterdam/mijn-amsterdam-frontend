@@ -51,7 +51,7 @@ routerPrivate.get(
 routerPrivate.get(
   ExternalConsumerEndpoints.private.NOTIFICATIONS,
   apiKeyVerificationHandler,
-  fetchNotificationsResponse
+  sendNotificationsResponse
 );
 
 type ApiError = {
@@ -60,7 +60,7 @@ type ApiError = {
 };
 const apiResponseErrors: Record<string, ApiError> = {
   DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },
-  CONSUMER_ID_ERROR: {
+  ERROR_PARAM_CONSUMER_ID: {
     code: '002',
     message: 'Parameter consumer_id ontbreekt',
   },
@@ -81,7 +81,7 @@ async function sendConsumerIdResponse(
   }
 
   if (!req.params.consumer_id) {
-    const apiResponseError = apiResponseErrors.CONSUMER_ID_ERROR;
+    const apiResponseError = apiResponseErrors.ERROR_PARAM_CONSUMER_ID;
     return sendBadRequest(
       res,
       `ApiError ${apiResponseError.code} - ${apiResponseError.message}`,
@@ -104,7 +104,7 @@ function fetchAndStoreNotifications(req: Request, res: Response) {
   res.send(apiSuccessResult(null));
 }
 
-async function fetchNotificationsResponse(req: Request, res: Response) {
+async function sendNotificationsResponse(req: Request, res: Response) {
   const response = await batchFetchNotifications();
   res.send(apiSuccessResult(response));
 }
@@ -116,4 +116,6 @@ export const notificationsExternalConsumerRouter = {
 
 export const forTesting = {
   sendConsumerIdResponse,
+  fetchAndStoreNotifications,
+  sendNotificationsResponse,
 };
