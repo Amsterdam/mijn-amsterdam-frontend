@@ -53,7 +53,7 @@ async function fetchNotificationsForService(
   service_id: SERVICE_ID
 ): Promise<NOTIFICATION_LEAN[]> {
   const authProfileAndToken: AuthProfileAndToken = {
-    // TODO: Make notificationServices accept a leaner AuthProfileAndToken with only profile.id and profile.profileType
+    // TODO: Update notificationServices to accept a leaner AuthProfileAndToken with only profile.id and profile.profileType
     profile: {
       authMethod: 'digid',
       profileType: 'private',
@@ -78,6 +78,7 @@ async function fetchNotificationsForService(
     title: notification.title,
     isTip: notification.isTip,
     isAlert: notification.isAlert,
+    link: notification.link,
     datePublished: notification.hideDatePublished
       ? undefined
       : notification.datePublished,
