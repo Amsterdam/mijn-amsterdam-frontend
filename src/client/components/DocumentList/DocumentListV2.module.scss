@@ -11,8 +11,7 @@
     }
   }
   thead th {
-    font-family: var(--ams-heading-font-family);
-    font-weight: var(--ams-text-font-weight-bold);
+    font-weight: var(--ams-typography-body-text-bold-font-weight);
   }
 
   @media screen and (max-width: $ams-breakpoint-medium) {
