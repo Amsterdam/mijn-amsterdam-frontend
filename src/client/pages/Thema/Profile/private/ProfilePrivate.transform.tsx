@@ -94,7 +94,7 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
     (value, _item) =>
       value ? (
         <>
-          Voor dit adres geldt{' '}
+          Voor deze persoonsgegevens geldt{' '}
           <Link
             rel="noopener noreferrer"
             href="https://www.amsterdam.nl/burgerzaken/geheimhouding-persoonsgegevens-aanvragen/"
