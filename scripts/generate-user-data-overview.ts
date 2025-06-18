@@ -487,7 +487,42 @@ type BrpSheetLayout = {
 const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'BSN',
-    extractContentValue: (brpContent: any) => brpContent.persoon.bsn,
+    extractContentValue: (brpContent: any) => brpContent?.persoon.bsn,
+  },
+  {
+    label: 'Adres',
+    extractContentValue: (brpContent: any) => brpContent?.adres,
+    wch: WCH_DEFAULT,
+    transform: (value: Adres) => {
+      return getFullAddress(value);
+    },
+  },
+  {
+    label: 'In onderzoek',
+    extractContentValue: (brpContent: any) =>
+      brpContent?.persoon.adresInOnderzoek,
+    wch: WCH_DEFAULT,
+    transform: (inOnderzoek: any) => {
+      return inOnderzoek ? 'In onderzoek' : '';
+    },
+  },
+  {
+    label: 'VOW',
+    extractContentValue: (brpContent: any) =>
+      brpContent?.persoon?.vertrokkenOnbekendWaarheen,
+    wch: WCH_DEFAULT,
+    transform: (vertrokkenOnbekendWaarheen: any) => {
+      return vertrokkenOnbekendWaarheen ? 'VOW' : '';
+    },
+  },
+  {
+    label: 'Geheim',
+    extractContentValue: (brpContent: any) =>
+      brpContent?.persoon.indicatieGeheim,
+    wch: WCH_DEFAULT,
+    transform: (indicatieGeheim: boolean) => {
+      return indicatieGeheim ? 'Geheim' : '';
+    },
   },
   {
     label: 'Voornamen',
@@ -571,31 +606,6 @@ const brpSheetLayout: BrpSheetLayout[] = [
       return nationaleiten !== 'Nederlandse' && nationaleiten
         ? `${nationaleiten}`
         : '';
-    },
-  },
-  {
-    label: 'Adres (In onderzoek / VOW / Geheim)',
-    extractContentValue: (brpContent: any) => brpContent.adres,
-    wch: WCH_DEFAULT * 2,
-    transform: (value: Adres, serviceResults: ServiceResults) => {
-      return (
-        getFullAddress(value) +
-        `${
-          serviceResults.BRP.content?.persoon?.adresInOnderzoek
-            ? ' (In onderzoek)'
-            : ''
-        }` +
-        `${
-          serviceResults.BRP.content?.persoon?.vertrokkenOnbekendWaarheen
-            ? ' (VOW)'
-            : ''
-        }` +
-        `${
-          serviceResults.BRP.content?.persoon?.indicatieGeheim
-            ? ' (Geheim)'
-            : ''
-        }`
-      );
     },
   },
   {
