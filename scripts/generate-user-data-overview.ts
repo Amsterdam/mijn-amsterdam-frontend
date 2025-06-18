@@ -350,65 +350,6 @@ function woonplaatsNaamBuitenAmsterdam(adres: Adres) {
     : `(${woonplaatsNaam})`;
 }
 
-function getThemaRows(resultsByUser: Record<string, ServiceResults>) {
-  const rows = Object.entries(resultsByUser)
-    .map(([_username, serviceResults]) => {
-      const userThemas = getAvailableUserThemas(serviceResults);
-      return userThemas;
-    })
-    .filter((userThemas) => !!Object.keys(userThemas).length);
-  return getRows(themaIDs, rows, true);
-}
-
-function getAvailableUserThemas(serviceResults: ServiceResults) {
-  const availableThemas = Object.entries(serviceResults)
-    .filter(([, sResult]) => {
-      if (
-        sResult.status === 'ERROR' ||
-        sResult.status === 'POSTPONE' ||
-        !sResult.content ||
-        (Array.isArray(sResult.content) && sResult.content.length <= 0)
-      ) {
-        return false;
-      }
-      if (sResult.content.isKnown) {
-        return true;
-      }
-      const entries = Object.entries(sResult.content);
-      for (const [, val] of entries) {
-        if (
-          val &&
-          ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
-        ) {
-          return true;
-        }
-      }
-      return false;
-    })
-    .map(([themaName]) => themaName);
-
-  const aThemas = {};
-
-  // Add manually since, BRP is already checked above for thema 'Mijn gegevens'
-  if (serviceResults.BRP.content?.identiteitsbewijzen?.length) {
-    aThemas[themaIdBurgerzaken] = themaTitleBurgerzaken;
-  }
-
-  for (let themaID of availableThemas) {
-    // Prevent setting a key to undefined if already set.
-    if (aThemas[themaID]) {
-      continue;
-    } else if (themaID.startsWith('WPI')) {
-      themaID = 'INKOMEN';
-    } else if (themaID === 'WMO') {
-      themaID = 'ZORG';
-    }
-    aThemas[themaID] = themaToTitle[themaID];
-  }
-
-  return aThemas;
-}
-
 function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
   const rows = Object.entries(resultsByUser).flatMap(
     ([Username, serviceResults]) => {
@@ -424,26 +365,6 @@ function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
       );
     }
   );
-  return rows;
-}
-
-function getServiceErrors(
-  resultsByUser: Record<string, ServiceResults>,
-  serviceKeys: string[]
-) {
-  const serviceStatusResults = Object.entries(resultsByUser).map(
-    ([_user, results]) => {
-      return Object.fromEntries(
-        Object.entries(results).map(([appStateKey, response]) => {
-          return [
-            appStateKey,
-            `${response.status}${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
-          ];
-        })
-      );
-    }
-  );
-  const rows = getRows(serviceKeys, serviceStatusResults, true);
   return rows;
 }
 
@@ -463,33 +384,6 @@ function addAvailableThemas(
     serviceLabelAcc[serviceName] = serviceName;
   });
   return serviceLabelAcc;
-}
-
-function getRows(
-  labels: string[],
-  results: Array<Record<string, string | number | Function>>,
-  addRowLabel: boolean = true
-) {
-  const rowsMap: any = {};
-
-  for (const label of labels) {
-    rowsMap[label] = {};
-    if (addRowLabel) {
-      rowsMap[label]['0'] = label;
-    }
-  }
-
-  results.forEach((user, index) => {
-    for (const [label, value] of Object.entries(user)) {
-      if (!rowsMap[label]) {
-        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
-      } else {
-        rowsMap[label][index + 1] = value;
-      }
-    }
-  });
-
-  return Object.values(rowsMap);
 }
 
 interface SheetData {
@@ -785,10 +679,36 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
     hpx: HPX_DEFAULT,
   });
 
+  // A undefined field equals means an unavailable thema.
+  const availableThemaMaps: Record<string, string | undefined>[] =
+    Object.entries(resultsByUser)
+      .map(([_username, serviceResults]) => {
+        const userThemas = getAvailableUserThemas(serviceResults);
+        return userThemas;
+      })
+      .filter((userThemas) => !!Object.keys(userThemas).length);
+
+  const rowsMap: any = {};
+
+  for (const label of themaIDs) {
+    rowsMap[label] = {};
+    rowsMap[label]['0'] = label;
+  }
+
+  availableThemaMaps.forEach((availableThemaMap, index) => {
+    for (const [label, value] of Object.entries(availableThemaMap)) {
+      if (rowsMap[label]) {
+        rowsMap[label][index + 1] = value;
+      } else {
+        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+      }
+    }
+  });
+
   const columnHeaders = ['', ...testAccountNames];
   return {
     title: 'Themas',
-    rows: getThemaRows(resultsByUser),
+    rows: Object.values(rowsMap),
     columnHeaders,
     colInfo: [
       { wch: WCH_DEFAULT },
@@ -796,6 +716,55 @@ function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
     ],
     rowInfo,
   };
+}
+
+function getAvailableUserThemas(serviceResults: ServiceResults) {
+  const availableThemas = Object.entries(serviceResults)
+    .filter(([, sResult]) => {
+      if (
+        sResult.status === 'ERROR' ||
+        sResult.status === 'POSTPONE' ||
+        !sResult.content ||
+        (Array.isArray(sResult.content) && sResult.content.length <= 0)
+      ) {
+        return false;
+      }
+      if (sResult.content.isKnown) {
+        return true;
+      }
+      const entries = Object.entries(sResult.content);
+      for (const [, val] of entries) {
+        if (
+          val &&
+          ((Array.isArray(val) && val.length > 0) || Object.keys(val).length)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    })
+    .map(([themaName]) => themaName);
+
+  const aThemas = {};
+
+  // Add manually since, BRP is already checked above for thema 'Mijn gegevens'
+  if (serviceResults.BRP.content?.identiteitsbewijzen?.length) {
+    aThemas[themaIdBurgerzaken] = themaTitleBurgerzaken;
+  }
+
+  for (let themaID of availableThemas) {
+    // Prevent setting a key to undefined if already set.
+    if (aThemas[themaID]) {
+      continue;
+    } else if (themaID.startsWith('WPI')) {
+      themaID = 'INKOMEN';
+    } else if (themaID === 'WMO') {
+      themaID = 'ZORG';
+    }
+    aThemas[themaID] = themaToTitle[themaID];
+  }
+
+  return aThemas;
 }
 
 function sheetServiceErrors(
@@ -806,9 +775,39 @@ function sheetServiceErrors(
     hpx: HPX_DEFAULT,
   });
 
+  const serviceStatusResults = Object.entries(resultsByUser).map(
+    ([_user, results]) => {
+      return Object.fromEntries(
+        Object.entries(results).map(([appStateKey, response]) => {
+          return [
+            appStateKey,
+            `${response.status}${response.status === 'ERROR' ? ` - ${response.message}` : ''}`,
+          ];
+        })
+      );
+    }
+  );
+
+  const rowsMap: any = {};
+
+  for (const label of serviceKeys) {
+    rowsMap[label] = {};
+    rowsMap[label]['0'] = label;
+  }
+
+  serviceStatusResults.forEach((res, index) => {
+    for (const [label, value] of Object.entries(res)) {
+      if (!rowsMap[label]) {
+        // console.warn(`[WARN]: No rowsMap with label: ${label}`);
+      } else {
+        rowsMap[label][index + 1] = value;
+      }
+    }
+  });
+
   return {
     title: 'Service Errors',
-    rows: getServiceErrors(resultsByUser, serviceKeys),
+    rows: Object.values(rowsMap),
     columnHeaders: ['', ...testAccountEntries.map(([username]) => username)],
     colInfo: [
       { wch: WCH_DEFAULT },
