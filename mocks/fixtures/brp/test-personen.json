@@ -5782,6 +5782,11 @@
           "code": "P",
           "omschrijving": "geslachtsnaam echtgenoot/geregistreerd partner"
         },
+        "adellijkeTitelPredicaat": {
+          "soort": "titel",
+          "code": "G",
+          "omschrijving": "graaf"
+        },
         "voornamen": "Guðrún Sigríður",
         "geslachtsnaam": "Sigurðardóttir",
         "voorletters": "G.S.",

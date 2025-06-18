@@ -195,7 +195,6 @@ function transformBenkBrpResponse(
       begindatumVerblijfFormatted:
         persoon.verblijfplaats?.datumVan?.langFormaat ?? null,
       adresType: persoon.verblijfplaats?.functieAdres?.omschrijving || null,
-      mokum: persoon.gemeenteVanInschrijving?.code === GEMEENTE_CODE_AMSTERDAM,
     },
   };
 
