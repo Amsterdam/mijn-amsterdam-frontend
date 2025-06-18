@@ -126,12 +126,21 @@ const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
   straatnaam: [
     'Straat',
     (_value, adres) => {
+      if (!adres?.straatnaam && adres?.locatiebeschrijving) {
+        return null;
+      }
       return adres?.straatnaam ? getFullAddress(adres as Adres) : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
     (_value, adres) => {
+      if (
+        !(adres?.postcode || adres?.woonplaatsNaam) &&
+        adres?.locatiebeschrijving
+      ) {
+        return null;
+      }
       return adres
         ? `${adres.postcode || ''} ${adres.woonplaatsNaam || 'Onbekend'}`
         : 'Onbekend';
