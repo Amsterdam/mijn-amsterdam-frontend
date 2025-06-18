@@ -21,28 +21,24 @@ function WMODetailContent({ voorziening }: WMODetailContentProps) {
   }
 
   return (
-    <>
-      {!!rows.length && (
-        <PageContentCell>
-          {voorziening?.disclaimer && (
-            <ErrorAlert
-              className="ams-mb-m"
-              severity="warning"
-              title="Belangrijk om te weten"
-            >
-              {voorziening.disclaimer}
-            </ErrorAlert>
-          )}
-          <Datalist rows={rows} />
-          {voorziening?.documents.length > 0 && (
-            <DocumentListV2
-              documents={voorziening.documents}
-              columns={['Brieven', 'Verzenddatum']}
-            />
-          )}
-        </PageContentCell>
+    <PageContentCell>
+      {voorziening?.disclaimer && (
+        <ErrorAlert
+          className="ams-mb-m"
+          severity="warning"
+          title="Belangrijk om te weten"
+        >
+          {voorziening.disclaimer}
+        </ErrorAlert>
       )}
-    </>
+      <Datalist rows={rows} />
+      {voorziening?.documents.length > 0 && (
+        <DocumentListV2
+          documents={voorziening.documents}
+          columns={['Brieven', 'Verzenddatum']}
+        />
+      )}
+    </PageContentCell>
   );
 }
 
