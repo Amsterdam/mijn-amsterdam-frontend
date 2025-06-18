@@ -549,20 +549,28 @@ const brpSheetLayout: BrpSheetLayout[] = [
     },
   },
   {
-    label: 'Geslacht (Nationaliteit)',
+    label: 'Geslacht',
     extractContentValue: (brpContent: any) => brpContent.persoon,
     transform: (persoon: Persoon) => {
-      if (!persoon) {
+      if (!persoon.omschrijvingGeslachtsaanduiding) {
+        return 'onbekend';
+      }
+      return persoon.omschrijvingGeslachtsaanduiding;
+    },
+  },
+  {
+    label: 'Nationaliteit',
+    extractContentValue: (brpContent: any) => brpContent.persoon,
+    transform: (persoon: Persoon) => {
+      if (!persoon.nationaliteiten) {
         return 'onbekend';
       }
       const nationaleiten = persoon.nationaliteiten
         ?.map(({ omschrijving }) => omschrijving)
         .join(', ');
-      return `${persoon.omschrijvingGeslachtsaanduiding} ${
-        nationaleiten !== 'Nederlandse' && nationaleiten
-          ? `(${nationaleiten})`
-          : ''
-      }`;
+      return nationaleiten !== 'Nederlandse' && nationaleiten
+        ? `${nationaleiten}`
+        : '';
     },
   },
   {
