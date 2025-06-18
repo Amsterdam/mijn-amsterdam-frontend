@@ -39,6 +39,7 @@
   --ams-ma-max-screen-width: calc(
     var(--ams-page-max-inline-size) - calc(var(--ams-grid-padding-inline) * 2)
   );
+  --ams-typography-hyphenate-limit-chars: 12 6;
 }
 
 *,

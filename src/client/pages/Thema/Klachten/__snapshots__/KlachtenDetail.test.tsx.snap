@@ -55,11 +55,11 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Klacht
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -149,11 +149,11 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Boosterprik
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -263,11 +263,11 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Test voor decentrale toewijzing
-        </h3>
+        </h1>
       </div>
     </div>
     <div

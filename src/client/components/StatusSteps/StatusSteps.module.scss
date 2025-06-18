@@ -5,10 +5,6 @@
   gap: 0;
   --status-circle-box-width: calc(var(--ams-space-m) * 1.5);
 
-  @media screen and (min-width: $ams-breakpoint-medium) {
-    --status-circle-box-width: calc(var(--ams-space-xl) * 1.6);
-  }
-
   --status-circle-box-height: calc(var(--status-circle-box-width) / 2);
   --status-circle-size: var(--ams-heading-5-font-size);
   --status-circle-size-active: calc(var(--status-circle-size) * 1.8);
@@ -19,13 +15,12 @@
   --status-circle-color-checked: var(--ams-color-highlight-green);
   --status-circle-color-active: var(--status-circle-color-checked);
 
-  // padding-left: calc(
-  //   var(--status-circle-box-width) * 1.4
-  // ); // A space relative to the circle
-}
+  padding-left: calc(var(--status-circle-box-width) * 1.8);
 
-.StatusHeading {
-  grid-column-end: span 12;
+  @media screen and (min-width: $ams-breakpoint-medium) {
+    --status-circle-box-width: calc(var(--ams-space-xl) * 1.6);
+    padding-left: calc(var(--status-circle-box-width) * 1.4);
+  }
 }
 
 .Step {

@@ -55,11 +55,11 @@ exports[`With basic request where data returned does not matter > Matches snapsh
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Overzicht Stadspas  van Kerub
-        </h3>
+        </h1>
       </div>
     </div>
     <div

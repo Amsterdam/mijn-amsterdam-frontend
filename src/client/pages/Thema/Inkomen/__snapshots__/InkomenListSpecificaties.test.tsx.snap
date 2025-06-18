@@ -55,11 +55,11 @@ exports[`<InkomenSpecificaties /> Jaaropgave > Matches the Full Page snapshot 1`
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Jaaropgaven
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -341,11 +341,11 @@ exports[`<InkomenSpecificaties /> Uitkering > Matches the Full Page snapshot 1`]
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Uitkeringsspecificaties
-        </h3>
+        </h1>
       </div>
     </div>
     <div

@@ -45,11 +45,11 @@ exports[`<HLI /> > Matches the Full Page snapshot with an active and a blocked p
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Stadspas en regelingen bij laag inkomen
-        </h3>
+        </h1>
       </div>
     </div>
     <div

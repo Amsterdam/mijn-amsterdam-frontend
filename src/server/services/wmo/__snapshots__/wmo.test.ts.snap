@@ -208,7 +208,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "2024-08-29T16:48:11.997",
-          "description": "<p>U krijgt PGB: dagbesteding meewerken (toegewezen) per 01 augustus 2024.</p> <p>In de brief leest u meer over dit besluit. De brief staat bovenaan deze pagina.</p>",
+          "description": "<p>U krijgt PGB: dagbestedingaccumulatievergoeding meewerken (toegewezen) per 01 augustus 2024.</p> <p>In de brief leest u meer over dit besluit. De brief staat bovenaan deze pagina.</p>",
           "documents": [],
           "id": "status-step-3",
           "isActive": true,
@@ -218,7 +218,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
         {
           "datePublished": "",
-          "description": "<p> Uw recht op PGB: dagbesteding meewerken (toegewezen) stopt op 01 augustus 2026. </p> <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 01 augustus 2026 doen.</p> <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
+          "description": "<p> Uw recht op PGB: dagbestedingaccumulatievergoeding meewerken (toegewezen) stopt op 01 augustus 2026. </p> <p>Wilt u verlenging aanvragen, dan moet u dat 8 weken voor 01 augustus 2026 doen.</p> <p>Kijk in uw besluit of op <a rel="noreferrer" class="ams-link ams-link--inline" href="https://www.amsterdam.nl/zorg-ondersteuning/hulp-zorg-betalen/persoonsgebonden/?vkurl=pgb">amsterdam.nl/pgb</a> voor meer informatie.</p>",
           "documents": [],
           "id": "status-step-4",
           "isActive": false,
@@ -228,7 +228,7 @@ exports[`Transform api items > fetchWmo 1`] = `
         },
       ],
       "supplier": "Carehouse - Leveo Care",
-      "title": "PGB: dagbesteding meewerken (toegewezen)",
+      "title": "PGB: dagbestedingaccumulatievergoeding meewerken (toegewezen)",
     },
     {
       "dateDecision": "2024-08-29T16:48:11.997",

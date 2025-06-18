@@ -46,7 +46,7 @@ const displayProps: DisplayProps<LeerlingenvervoerVoorzieningFrontend> = {
   },
   colWidths: {
     large: ['50%', '25%', '25%'],
-    small: ['75%', '0', '0'],
+    small: ['100%', '0', '0'],
   },
 };
 
