@@ -135,7 +135,7 @@ type RenderProps = {
   urlToImage: string;
   urlToCSS: string;
   error?: ApiError;
-  administratienummerEncrypted?: string; // Only included in debug build.
+  identifier?: string; // Only included in debug build.
   appHref?: `${typeof AMSAPP_STADSPAS_DEEP_LINK}/${'gelukt' | 'mislukt'}${string}`;
 };
 
@@ -202,11 +202,9 @@ async function sendAdministratienummerResponse(
           ...baseRenderProps,
           promptOpenApp: false,
           appHref: `${AMSAPP_STADSPAS_DEEP_LINK}/gelukt`,
-          administratienummerEncrypted: !IS_PRODUCTION
-            ? administratienummerEncrypted
-            : '',
+          identifier: !IS_PRODUCTION ? administratienummerEncrypted : '',
         };
-        return res.render('amsapp-stadspas-administratienummer', renderProps);
+        return res.render('amsapp-open-app', renderProps);
       }
 
       if (
@@ -239,7 +237,7 @@ async function sendAdministratienummerResponse(
     promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
   };
 
-  return res.render('amsapp-stadspas-administratienummer', renderProps);
+  return res.render('amsapp-open-app', renderProps);
 }
 
 function sendAppLandingResponse(_req: Request, res: Response) {
@@ -247,7 +245,7 @@ function sendAppLandingResponse(_req: Request, res: Response) {
     ...baseRenderProps,
     promptOpenApp: true,
   };
-  return res.render('amsapp-stadspas-administratienummer', renderProps);
+  return res.render('amsapp-open-app', renderProps);
 }
 
 async function sendStadspassenResponse(

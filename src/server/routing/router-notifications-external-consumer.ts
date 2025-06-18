@@ -2,18 +2,23 @@ import { Request, Response } from 'express';
 
 import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
-import { createBFFRouter, sendBadRequest } from './route-helpers';
+import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
+import { IS_PRODUCTION } from '../../universal/config/env';
 import { apiSuccessResult } from '../../universal/helpers/api';
 import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../auth/auth-config';
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
-import { logger } from '../logging';
+import { getFromEnv } from '../helpers/env';
+import { captureMessage } from '../services/monitoring';
 import {
   batchFetchAndStoreNotifications,
   batchFetchNotifications,
   registerConsumer,
 } from '../services/notifications/notifications';
+
+const AMSAPP_PROTOCOl = 'amsterdam://';
+const AMSAPP_NOTIFICATIONS_DEEP_LINK = `${AMSAPP_PROTOCOl}notifications`;
 
 // PUBLIC INTERNET NETWORK ROUTER
 // ==============================
@@ -64,8 +69,50 @@ const apiResponseErrors: Record<string, ApiError> = {
     code: '002',
     message: 'Parameter consumer_id ontbreekt',
   },
+  UNKNOWN: {
+    code: '000',
+    message: 'Onbekende fout',
+  },
 } as const;
 
+type RenderProps = {
+  nonce: string;
+  promptOpenApp: boolean;
+  urlToImage: string;
+  urlToCSS: string;
+  error?: ApiError;
+  identifier?: string; // Only included in debug build.
+  appHref?: `${typeof AMSAPP_NOTIFICATIONS_DEEP_LINK}/${'gelukt' | 'mislukt'}${string}`;
+};
+
+const maFrontendUrl = getFromEnv('MA_FRONTEND_URL')!;
+const nonce = getFromEnv('BFF_AMSAPP_NONCE')!;
+const logoutUrl = `${generateFullApiUrlBFF(
+  authRoutes.AUTH_LOGOUT_DIGID,
+  {},
+  getFromEnv('BFF_OIDC_BASE_URL')
+)}?returnTo=${AMSAPP_NOTIFICATIONS_DEEP_LINK}`;
+
+const baseRenderProps = {
+  nonce,
+  urlToImage: `${maFrontendUrl}/img/logo-amsterdam.svg`,
+  urlToCSS: `${maFrontendUrl}/css/amsapp-landing.css`,
+  logoutUrl,
+};
+
+const getRenderPropsOnApiError = (
+  identifier: string,
+  apiResponseError: ApiError
+) => ({
+  ...baseRenderProps,
+  error: apiResponseError,
+  appHref: `${AMSAPP_NOTIFICATIONS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
+  identifier: !IS_PRODUCTION ? identifier : '',
+  // No need to redirect to logout as DIGID_AUTH 001 error code means user is not logged in with Digid.
+  promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
+});
+
+// TODO: Also use res.render for error code!
 async function sendConsumerIdResponse(
   req: Request<{ consumer_id: string }>,
   res: Response
@@ -73,28 +120,53 @@ async function sendConsumerIdResponse(
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
   if (!authProfileAndToken) {
     const apiResponseError = apiResponseErrors.DIGID_AUTH;
-    return sendBadRequest(
-      res,
-      `ApiError ${apiResponseError.code} - ${apiResponseError.message}`,
-      null
+    const renderProps = getRenderPropsOnApiError(
+      req.params.consumer_id,
+      apiResponseError
     );
+    captureMessage(
+      `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
+    );
+    return res.render('amsapp-open-app', renderProps);
   }
 
   if (!req.params.consumer_id) {
     const apiResponseError = apiResponseErrors.ERROR_PARAM_CONSUMER_ID;
-    return sendBadRequest(
-      res,
-      `ApiError ${apiResponseError.code} - ${apiResponseError.message}`,
-      null
+    const renderProps = getRenderPropsOnApiError(
+      req.params.consumer_id,
+      apiResponseError
     );
+    captureMessage(
+      `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
+    );
+    return res.render('amsapp-open-app', renderProps);
   }
-  const result = await registerConsumer(
-    authProfileAndToken?.profile.id,
-    req.params.consumer_id,
-    ['belasting']
-  );
-  logger.info(result);
-  res.render('amsapp-stadspas-administratienummer', {}); // TODO: What should we show the user?
+
+  try {
+    await registerConsumer(
+      authProfileAndToken?.profile.id,
+      req.params.consumer_id,
+      ['belasting']
+    );
+  } catch (error) {
+    const apiResponseError = apiResponseErrors.UNKNOWN;
+    const renderProps = getRenderPropsOnApiError(
+      req.params.consumer_id,
+      apiResponseError
+    );
+    captureMessage(
+      `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message} ${error}`
+    );
+    return res.render('amsapp-open-app', renderProps);
+  }
+
+  const renderProps = {
+    ...baseRenderProps,
+    appHref: `${AMSAPP_NOTIFICATIONS_DEEP_LINK}/gelukt`,
+    promptOpenApp: true,
+    identifier: !IS_PRODUCTION ? req.params.consumer_id : '',
+  };
+  return res.render('amsapp-open-app', renderProps);
 }
 
 // This endpoint has a long execution time, making it impractical to await.
