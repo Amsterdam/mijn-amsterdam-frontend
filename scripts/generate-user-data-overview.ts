@@ -350,24 +350,6 @@ function woonplaatsNaamBuitenAmsterdam(adres: Adres) {
     : `(${woonplaatsNaam})`;
 }
 
-function getNotificationRows(resultsByUser: Record<string, ServiceResults>) {
-  const rows = Object.entries(resultsByUser).flatMap(
-    ([Username, serviceResults]) => {
-      return serviceResults.NOTIFICATIONS.content.map(
-        (notification: MyNotification) => {
-          return {
-            Username: Username,
-            Thema: themaIDtoTitle[notification.themaID],
-            Titel: notification.title,
-            Datum: defaultDateFormat(notification.datePublished),
-          };
-        }
-      );
-    }
-  );
-  return rows;
-}
-
 function getAllServiceNames(resultsByUser: Record<string, ServiceResults>) {
   const entries = Object.entries(resultsByUser);
   const serviceNames = entries
@@ -837,9 +819,43 @@ function sheetServiceErrors(
 }
 
 function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
-  const rows = getNotificationRows(resultsByUser);
+  const rowShape = {
+    Username: (data: any) => data.username,
+    Thema: (data: any) => themaIDtoTitle[data.themaID],
+    Titel: (data: any) => data.title,
+    Datum: (data: any) => defaultDateFormat(data.datePublished),
+    Description: (data: any) => data.description,
+  };
+
+  const rows = Object.entries(resultsByUser).flatMap(
+    ([Username, serviceResults]) => {
+      return serviceResults.NOTIFICATIONS.content.map(
+        (notification: MyNotification) => {
+          const data = { ...notification, username: Username };
+          const row = {};
+          for (const [k, fn] of Object.entries(rowShape)) {
+            row[k] = fn(data);
+          }
+          return row;
+        }
+      );
+    }
+  );
+
   const rowInfo = rows.map(() => ({ hpx: HPX_DEFAULT }));
-  const columnWidths = [WCH_DEFAULT, WCH_DEFAULT, WCH_DEFAULT * 3, WCH_DEFAULT];
+  const columnWidths = [
+    WCH_DEFAULT,
+    WCH_DEFAULT,
+    WCH_DEFAULT * 3,
+    WCH_DEFAULT,
+    WCH_DEFAULT,
+  ];
+  if (columnWidths.length !== Object.keys(rowShape).length) {
+    throw new Error(
+      'Should have the same size, align columnWidths appropriately'
+    );
+  }
+
   return {
     title: 'Actueel',
     rows,
