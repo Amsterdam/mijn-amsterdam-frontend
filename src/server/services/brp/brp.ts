@@ -215,6 +215,9 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/personen`;
     },
+    params: {
+      inclusiefOverleden: true,
+    },
     headers: {
       ...response.content,
       'X-Correlation-ID': `fetch-brp-${sessionID}`, // Required for tracing
