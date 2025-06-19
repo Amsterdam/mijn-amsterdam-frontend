@@ -1,3 +1,5 @@
+import UID from 'uid-safe';
+
 import {
   listProfileIds,
   upsertConsumer,
@@ -52,12 +54,13 @@ async function fetchNotificationsForService(
   profileId: BSN,
   service_id: SERVICE_ID
 ): Promise<NOTIFICATION_LEAN[]> {
+  const BYTE_LENGTH = 16;
   const authProfileAndToken: AuthProfileAndToken = {
     // TODO: Update notificationServices to accept a leaner AuthProfileAndToken with only profile.id and profile.profileType
     profile: {
       authMethod: 'digid',
       profileType: 'private',
-      sid: 'overridden',
+      sid: `overridden-${UID.sync(BYTE_LENGTH)}}`,
       id: profileId,
     } as const,
     token: 'notprovided',
@@ -78,7 +81,6 @@ async function fetchNotificationsForService(
     title: notification.title,
     isTip: notification.isTip,
     isAlert: notification.isAlert,
-    link: notification.link,
     datePublished: notification.hideDatePublished
       ? undefined
       : notification.datePublished,
