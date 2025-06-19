@@ -12,6 +12,7 @@ import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
+import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
@@ -105,7 +106,7 @@ export async function hasPermitsOrPermitRequests(
 async function getJWEToken(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<string | null> {
-  if (IS_PRODUCTION) {
+  if (featureToggle.parkerenJWETokenCreationActive) {
     const token = await createJWEToken(authProfileAndToken);
     if (!token) {
       return null;
