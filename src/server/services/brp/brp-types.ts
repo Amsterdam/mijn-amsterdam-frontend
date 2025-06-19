@@ -223,8 +223,8 @@ type Ouder = Partial<Persoon>;
 
 export type BrpFrontend = {
   persoon: Persoon;
-  verbintenis?: Verbintenis;
-  kinderen?: Kind[];
+  verbintenis: Verbintenis | null;
+  kinderen: Kind[];
   ouders: Ouder[];
   adres: Adres;
 };

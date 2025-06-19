@@ -154,7 +154,7 @@ function transformBenkBrpResponse(
             geboorteplaatsnaam: partner.geboorte?.plaats?.omschrijving ?? null,
           },
         }
-      : undefined,
+      : null,
     ouders:
       persoon.ouders
         ?.filter(
