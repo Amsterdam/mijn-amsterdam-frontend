@@ -71,6 +71,10 @@ const apiResponseErrors: Record<string, ApiError> = {
     code: '002',
     message: 'Parameter consumer_id ontbreekt',
   },
+  AMSAPP_DELIVERY_FAILED: {
+    code: '003',
+    message: 'Verzenden van consumer_id naar de Amsterdam app niet gelukt',
+  },
   UNKNOWN: {
     code: '000',
     message: 'Onbekende fout',
@@ -114,7 +118,6 @@ const getRenderPropsForApiError = (
   promptOpenApp: apiResponseError.code === apiResponseErrors.DIGID_AUTH.code,
 });
 
-// TODO: Also use res.render for error code!
 async function sendConsumerIdResponse(
   req: Request<{ consumer_id: string }>,
   res: Response
