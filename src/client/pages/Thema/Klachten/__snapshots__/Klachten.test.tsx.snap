@@ -45,11 +45,11 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Klachten
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -189,11 +189,11 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Klachten
-        </h3>
+        </h1>
       </div>
     </div>
     <div
@@ -382,11 +382,11 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
             </li>
           </ol>
         </nav>
-        <h3
+        <h1
           class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
         >
           Klachten
-        </h3>
+        </h1>
       </div>
     </div>
     <div

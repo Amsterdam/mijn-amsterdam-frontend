@@ -25,18 +25,12 @@ function DetailPageContent({ hliRegeling }: DetailPageContentProps) {
   }
 
   return (
-    <>
-      {!!rows.length && (
-        <PageContentCell>
-          <Datalist rows={rows} />
-        </PageContentCell>
-      )}
+    <PageContentCell>
+      {!!rows.length && <Datalist rows={rows} />}
       {!!hliRegeling.documents.length && (
-        <PageContentCell>
-          <DocumentListV2 documents={hliRegeling.documents} />
-        </PageContentCell>
+        <DocumentListV2 documents={hliRegeling.documents} />
       )}
-    </>
+    </PageContentCell>
   );
 }
 

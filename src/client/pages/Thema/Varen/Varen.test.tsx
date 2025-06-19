@@ -162,7 +162,7 @@ describe('<Varen />', () => {
 
   it('Shows the expected title on the page', () => {
     const screen = render(<Component state={getTestState([])} />);
-    expect(screen.getAllByRole('heading', { level: 3 })[0]).toHaveTextContent(
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'Passagiers- en beroepsvaart'
     );
   });

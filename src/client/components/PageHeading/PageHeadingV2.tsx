@@ -68,7 +68,7 @@ export function PageHeadingV2({
           </Breadcrumb>
         )}
 
-        <Heading className={styles.PageHeading} level={3} size="level-1">
+        <Heading className={styles.PageHeading} level={1} size="level-1">
           {children}
         </Heading>
       </div>

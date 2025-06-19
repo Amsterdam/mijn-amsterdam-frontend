@@ -89,9 +89,11 @@ function AppAuthenticated() {
       <SkipLink href="#skip-to-id-AppContent">Direct naar inhoud</SkipLink>
       <MainHeader isAuthenticated />
       <ErrorMessages />
-      <Page className={!isBuurt ? styles.App : styles.AppWide}>
-        <PrivateRoutes />
-      </Page>
+      <main>
+        <Page className={!isBuurt ? styles.App : styles.AppWide}>
+          <PrivateRoutes />
+        </Page>
+      </main>
       {/** Remove the footer on the Map view for better UX */}
       {!isBuurt && <MainFooter />}
     </>

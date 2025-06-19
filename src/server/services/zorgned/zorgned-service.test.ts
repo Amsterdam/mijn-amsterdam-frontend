@@ -485,7 +485,7 @@ describe('zorgned-service', () => {
           "productIdentificatie": "07A09",
           "productsoortCode": "DBS",
           "resultaat": "toegewezen",
-          "titel": "PGB: dagbesteding meewerken (toegewezen)",
+          "titel": "PGB: dagbestedingaccumulatievergoeding meewerken (toegewezen)",
         },
         {
           "betrokkenen": [],
