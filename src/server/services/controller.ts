@@ -21,7 +21,7 @@ import { fetchAVG } from './avg/avg';
 import { fetchMyLocation } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
-import { fetchBenkBrp } from './brp/brp';
+import { fetchBrpV2 } from './brp/brp';
 import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
@@ -132,7 +132,7 @@ const AVG = callAuthenticatedService(fetchAVG);
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
 const BRP = callAuthenticatedService(
-  featureToggleBrp[themaIdBRP].benkBrpServiceActive ? fetchBenkBrp : fetchBRP
+  featureToggleBrp[themaIdBRP].benkBrpServiceActive ? fetchBrpV2 : fetchBRP
 );
 const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const HLI = callAuthenticatedService(fetchHLI);
