@@ -122,13 +122,15 @@ authRouterDevelopment.get(
         : allUsernames[0];
 
     if (!req.params.user && allUsernames.length > 1) {
-      const list = Object.keys(testAccounts).map((userName) => {
-        const queryEntries = Object.entries(req.query);
-        const queryString = queryEntries.length
-          ? `?${queryEntries.map(([key, val]) => `${key}=${val}`).join('&')}`
-          : '';
-        return `<li><a href=${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${userName}${queryString}>${userName}</a>`;
-      });
+      const list = Object.keys(testAccounts)
+        .map((userName) => {
+          const queryEntries = Object.entries(req.query);
+          const queryString = queryEntries.length
+            ? `?${queryEntries.map(([key, val]) => `${key}=${val}`).join('&')}`
+            : '';
+          return `<li><a href="${authMethod === 'digid' ? authRoutes.AUTH_LOGIN_DIGID : authRoutes.AUTH_LOGIN_EHERKENNING}/${userName}${queryString}">${userName}</a>`;
+        })
+        .join('');
       return res.send(
         `<div style="height:100vh;width:100vw;display:flex;justify-content:center;"><div><h1>Selecteer ${authMethod} test account.</h1><ul>${list}</ul></div></div>`
       );

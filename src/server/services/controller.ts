@@ -21,6 +21,7 @@ import { fetchAVG } from './avg/avg';
 import { fetchMyLocation } from './bag/my-locations';
 import { fetchBezwaren } from './bezwaren/bezwaren';
 import { fetchLoodmetingen } from './bodem/loodmetingen';
+import { fetchBrpV2 } from './brp/brp';
 import { fetchMijnAmsterdamUitlegPage } from './cms/cms-content';
 import { fetchMaintenanceNotificationsActual } from './cms/cms-maintenance-notifications';
 import { fetchErfpacht } from './erfpacht/erfpacht';
@@ -54,6 +55,10 @@ import {
   fetchTonk,
   fetchTozo,
 } from './wpi';
+import {
+  featureToggle as featureToggleBrp,
+  themaIdBRP,
+} from '../../client/pages/Thema/Profile/Profile-thema-config';
 
 // Default service call just passing query params as arguments
 function callAuthenticatedService<T>(
@@ -126,7 +131,9 @@ const AFIS = callAuthenticatedService(fetchIsKnownInAFIS);
 const AVG = callAuthenticatedService(fetchAVG);
 const BEZWAREN = callAuthenticatedService(fetchBezwaren);
 const BODEM = callAuthenticatedService(fetchLoodmetingen); // For now bodem only consists of loodmetingen.
-const BRP = callAuthenticatedService(fetchBRP);
+const BRP = callAuthenticatedService(
+  featureToggleBrp[themaIdBRP].benkBrpServiceActive ? fetchBrpV2 : fetchBRP
+);
 const ERFPACHT = callAuthenticatedService(fetchErfpacht);
 const HLI = callAuthenticatedService(fetchHLI);
 const HORECA = callAuthenticatedService(fetchHorecaVergunningen);

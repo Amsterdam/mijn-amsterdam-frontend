@@ -17,12 +17,15 @@ import parse, {
 
 import { MaRouterLink } from '../components/MaLink/MaLink';
 
-function getNextNonTextNode(domNode: Element): Element | null {
+function getNextNonTextNode(
+  domNode: Element,
+  level: number = 0
+): Element | null {
   if (!domNode) {
     return null;
   }
   const nextNode = domNode.next;
-  if (!nextNode && domNode.type === 'tag') {
+  if (!nextNode && domNode.type === 'tag' && level > 0) {
     return domNode;
   }
   if (nextNode && nextNode?.type !== 'tag') {
@@ -30,7 +33,7 @@ function getNextNonTextNode(domNode: Element): Element | null {
     if (!nextNode.next) {
       return null;
     }
-    return getNextNonTextNode(nextNode.next as Element);
+    return getNextNonTextNode(nextNode.next as Element, level + 1);
   }
   return nextNode;
 }

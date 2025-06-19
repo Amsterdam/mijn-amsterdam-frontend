@@ -14,13 +14,10 @@ if (
   window.location.replace('/no-support');
 }
 
-const release = `mijnamsterdam-frontend@${MA_APP_VERSION}`;
 // eslint-disable-next-line no-console
 console.info(
-  'App version: %s, Commit sha: %s, Build id:, %s',
-  release,
-  MA_GIT_SHA ?? '-1',
-  `Current commit: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${MA_GIT_SHA}`,
+  'Commit: %s Build: %s',
+  `https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${MA_GIT_SHA}`,
   MA_BUILD_ID ?? '-1'
 );
 

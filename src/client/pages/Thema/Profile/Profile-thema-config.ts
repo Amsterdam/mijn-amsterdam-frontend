@@ -1,3 +1,4 @@
+import { IS_AP } from '../../../../universal/config/env';
 import { ThemaRoutesConfig } from '../../../config/thema-types';
 
 export const themaIdKVK = 'KVK' as const;
@@ -6,6 +7,7 @@ export const themaIdBRP = 'BRP' as const;
 export const featureToggle = {
   [themaIdBRP]: {
     themaActive: true,
+    benkBrpServiceActive: !IS_AP,
   },
   [themaIdKVK]: {
     themaActive: true,

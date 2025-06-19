@@ -34,13 +34,15 @@ import {
   themaTitle as themaTitleHLI,
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { themaId as themaIdInkomen } from '../../../client/pages/Thema/Inkomen/Inkomen-thema-config';
-import { themaIdBRP } from '../../../client/pages/Thema/Profile/Profile-thema-config';
+import {
+  featureToggle as featureToggleProfile,
+  themaIdBRP,
+} from '../../../client/pages/Thema/Profile/Profile-thema-config';
 import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/Thema/ToeristischeVerhuur/ToeristischeVerhuur-thema-config';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 
 const DAYS = 90;
 
-export const tips: ContentTipSource[] = [
+export const contentTips: ContentTipSource[] = [
   {
     id: 'mijn-10',
     active: true,
@@ -146,7 +148,8 @@ export const tips: ContentTipSource[] = [
     owner: '',
     dateActiveStart: '2023-10-16',
     dateActiveEnd: '2023-11-20',
-    active: true,
+    // TODO: Enable if we have access to Identiteitsbewijzen data.
+    active: !featureToggleProfile[themaIdBRP].benkBrpServiceActive,
     datePublished: '2023-10-16',
     title: 'Tip: Gratis ID-kaart om te stemmen',
     themaID: themaIdBRP,
@@ -193,7 +196,8 @@ export const tips: ContentTipSource[] = [
     owner: '',
     dateActiveStart: '2023-11-23',
     dateActiveEnd: null,
-    active: true,
+    // TODO: Enable if we have access to Identiteitsbewijzen data.
+    active: !featureToggleProfile[themaIdBRP].benkBrpServiceActive,
     datePublished: '2023-11-23',
     title: 'Vraag een gratis ID-kaart aan',
     themaID: themaIdBRP,

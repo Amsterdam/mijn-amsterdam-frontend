@@ -3,6 +3,7 @@
   "personen": [
     {
       "aNummer": "9301935851",
+      "geheimhoudingPersoonsgegevens": true,
       "burgerservicenummer": "999990202",
       "geslacht": {
         "code": "M",
