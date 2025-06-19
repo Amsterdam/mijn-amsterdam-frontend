@@ -150,7 +150,7 @@ export function MijnGegevensThema() {
       pageContentTop={pageContentTop}
       pageContentMain={
         <>
-          {brpContent?.persoon.vertrokkenOnbekendWaarheen && (
+          {brpContent?.persoon?.vertrokkenOnbekendWaarheen && (
             <PageContentCell>
               <VertrokkenOnbekendWaarheen brpContent={brpContent} />
             </PageContentCell>

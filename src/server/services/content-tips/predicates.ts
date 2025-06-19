@@ -18,14 +18,13 @@ export const is18OrOlder: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const AGE_18 = 18;
-  return (
-    differenceInYears(
-      today,
-      appState.BRP?.content?.persoon.geboortedatum
-        ? new Date(appState.BRP.content.persoon.geboortedatum)
-        : today
-    ) >= AGE_18
+  const age = differenceInYears(
+    today,
+    appState.BRP?.content?.persoon.geboortedatum
+      ? new Date(appState.BRP.content.persoon.geboortedatum)
+      : today
   );
+  return age >= AGE_18;
 };
 
 export const hasValidId: TipsPredicateFN = (
@@ -33,9 +32,10 @@ export const hasValidId: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
-  return ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
+  const expiredIds = ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
     return today <= new Date(idBewijs.datumAfloop);
   });
+  return expiredIds;
 };
 
 // To use an ID for voting it needs an expiration date with a maximum of five years ago.

@@ -162,7 +162,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             
               </div>
               <p
-                class="ams-paragraph ams-mb-m"
+                class="ams-paragraph"
               >
                 
             
@@ -193,7 +193,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (geleverd).
@@ -219,7 +219,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Niet van toepassing.
@@ -244,7 +244,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Uw recht op hulp bij het huishouden (geleverd) is beëindigd per 
@@ -416,7 +416,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             
               </div>
               <p
-                class="ams-paragraph ams-mb-m"
+                class="ams-paragraph"
               >
                 
             
@@ -464,7 +464,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (gestopt).
@@ -507,7 +507,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Emile Thuiszorg heeft aan ons doorgegeven dat u geen hulp bij het huishouden (gestopt)
@@ -536,7 +536,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               </time>
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Uw recht op hulp bij het huishouden (gestopt) is beëindigd per 22 januari 2022
@@ -697,7 +697,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             
               </div>
               <p
-                class="ams-paragraph ams-mb-m"
+                class="ams-paragraph"
               >
                 
             
@@ -728,7 +728,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (nog niet geleverd).
@@ -754,7 +754,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Niet van toepassing.
@@ -779,7 +779,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Uw recht op hulp bij het huishouden (nog niet geleverd) is beëindigd per 
@@ -957,7 +957,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             
               </div>
               <p
-                class="ams-paragraph ams-mb-m"
+                class="ams-paragraph"
               >
                 
             
@@ -1005,7 +1005,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Emile Thuiszorg is gestart met het leveren van hulp bij het huishouden (tijdelijk gestopt).
@@ -1031,7 +1031,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Niet van toepassing.
@@ -1056,7 +1056,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               />
               <div>
                 <p
-                  class="ams-paragraph ams-mb-m"
+                  class="ams-paragraph"
                 >
                   
             Uw recht op hulp bij het huishouden (tijdelijk gestopt) is beëindigd per 

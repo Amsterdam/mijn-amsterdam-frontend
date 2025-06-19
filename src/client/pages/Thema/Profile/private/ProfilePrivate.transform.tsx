@@ -275,7 +275,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     adres:
       brpData.adres?.straatnaam || brpData.adres?.locatiebeschrijving
         ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
-        : { Gegevens: 'Onbekend' },
+        : { Gegevens: 'onbekend' },
   };
 
   // Exclude below profile data for non-mokum residents.

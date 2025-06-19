@@ -42,7 +42,7 @@ import { themaId as themaIdToeristischeVerhuur } from '../../../client/pages/The
 
 const DAYS = 90;
 
-export const tips: ContentTipSource[] = [
+export const contentTips: ContentTipSource[] = [
   {
     id: 'mijn-10',
     active: true,
