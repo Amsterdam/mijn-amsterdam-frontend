@@ -285,7 +285,10 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
 };
 
 export const isMarriedOrLivingTogether: TipsPredicateFN = (appState) => {
-  return !!appState.BRP?.content?.verbintenis?.soortVerbintenis;
+  return (
+    !!appState.BRP?.content?.verbintenis?.datumSluiting &&
+    !appState.BRP?.content?.verbintenis?.datumOntbindingFormatted
+  );
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {
