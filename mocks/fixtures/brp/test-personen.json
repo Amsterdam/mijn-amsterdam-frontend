@@ -53,16 +53,7 @@
         }
       },
       "verblijfplaats": {
-        "type": "Adres",
-        "verblijfadres": {
-          "korteStraatnaam": "J.C.Schröderstraat",
-          "huisnummer": 1,
-          "postcode": "1068JT"
-        },
-        "functieAdres": {
-          "code": "W",
-          "omschrijving": "woonadres"
-        },
+        "type": "VerblijfplaatsOnbekend",
         "datumVan": {
           "type": "Datum",
           "datum": "1997-02-03",
@@ -206,7 +197,8 @@
           "type": "Datum",
           "datum": "1994-12-09",
           "langFormaat": "9 december 1994"
-        }
+        },
+        "inOnderzoek": {}
       },
       "immigratie": {
         "landVanwaarIngeschreven": {
@@ -365,6 +357,7 @@
       },
       "verblijfplaats": {
         "type": "Adres",
+        "indicatieVastgesteldVerblijftNietOpAdres": true,
         "verblijfadres": {
           "korteStraatnaam": "Berkelstraat",
           "huisnummer": 1,
