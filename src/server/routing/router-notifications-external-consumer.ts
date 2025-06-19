@@ -67,12 +67,8 @@ type ApiError = {
 };
 const apiResponseErrors: Record<string, ApiError> = {
   DIGID_AUTH: { code: '001', message: 'Niet ingelogd met Digid' },
-  ERROR_PARAM_CONSUMER_ID: {
-    code: '002',
-    message: 'Parameter consumer_id ontbreekt',
-  },
   AMSAPP_DELIVERY_FAILED: {
-    code: '003',
+    code: '002',
     message: 'Verzenden van consumer_id naar de Amsterdam app niet gelukt',
   },
   UNKNOWN: {
