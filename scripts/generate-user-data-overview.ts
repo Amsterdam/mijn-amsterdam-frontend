@@ -261,13 +261,15 @@ async function generateOverview() {
   });
 }
 
-async function getServiceResults(): Promise<Record<string, ServiceResults>> {
+type ResultsByUser = Record<string, ServiceResults>;
+
+async function getServiceResults(): Promise<ResultsByUser> {
   if (fs.existsSync(CACHE_PATH) && FROM_DISK) {
     const data = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8').toString());
     return data;
   }
 
-  const allResults: Record<string, ServiceResults> = {};
+  const allResults: ResultsByUser = {};
 
   for (const [username, userId] of testAccountEntries) {
     const loginURL = `${BASE_URL}/auth/digid/login/${username}?redirectUrl=noredirect`;
@@ -350,7 +352,7 @@ function woonplaatsNaamBuitenAmsterdam(adres: Adres) {
     : `(${woonplaatsNaam})`;
 }
 
-function getAllServiceNames(resultsByUser: Record<string, ServiceResults>) {
+function getAllServiceNames(resultsByUser: ResultsByUser) {
   const entries = Object.entries(resultsByUser);
   const serviceNames = entries
     .map(([_, serviceResults]) => serviceResults)
@@ -407,7 +409,7 @@ function createInfoArray(elementAmount: number, info: object): object[] {
   return items;
 }
 
-function sheetBrpBase(resultsByUser: Record<string, ServiceResults>) {
+function sheetBrpBase(resultsByUser: ResultsByUser) {
   const rows = Object.entries(resultsByUser).map(
     ([Username, serviceResults]) => {
       return {
@@ -675,7 +677,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   return p;
 });
 
-function sheetThemas(resultsByUser: Record<string, ServiceResults>) {
+function sheetThemas(resultsByUser: ResultsByUser) {
   const rowInfo = createInfoArray(testAccountEntries.length, {
     hpx: HPX_DEFAULT,
   });
@@ -769,7 +771,7 @@ function getAvailableUserThemas(serviceResults: ServiceResults) {
 }
 
 function sheetServiceErrors(
-  resultsByUser: Record<string, ServiceResults>,
+  resultsByUser: ResultsByUser,
   serviceKeys: string[]
 ) {
   const rowInfo = createInfoArray(testAccountEntries.length, {
@@ -818,7 +820,7 @@ function sheetServiceErrors(
   };
 }
 
-function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
+function sheetNotifications(resultsByUser: ResultsByUser) {
   const rowShape = {
     Username: (data: any) => data.username,
     Thema: (data: any) => themaIDtoTitle[data.themaID],
@@ -866,7 +868,7 @@ function sheetNotifications(resultsByUser: Record<string, ServiceResults>) {
   };
 }
 
-function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
+function sheetThemaContent(resultsByUser: ResultsByUser) {
   function count(themaId: string) {
     return (serviceResults: ServiceResults) =>
       serviceResults[themaId]?.content?.length || '';
