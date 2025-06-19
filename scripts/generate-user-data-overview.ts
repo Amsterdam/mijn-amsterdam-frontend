@@ -253,6 +253,7 @@ async function generateOverview() {
       sheetThemas(resultsByUser),
       sheetNotifications(resultsByUser),
       sheetThemaContent(resultsByUser),
+      sheetZaken(resultsByUser),
     ]);
 
     XLSX.writeFile(workbook, fileName, { compression: true });
@@ -262,6 +263,42 @@ async function generateOverview() {
 }
 
 type ResultsByUser = Record<string, ServiceResults>;
+
+interface SheetData {
+  title: string;
+  rows: any[];
+  columnHeaders?: string[];
+  colInfo?: XLSX.ColInfo[];
+  rowInfo?: XLSX.RowInfo[];
+}
+
+function sheetZaken(resultsByUser: ResultsByUser): SheetData {
+  const results = Object.entries(resultsByUser);
+
+  const decosZaakThemas = [
+    'VERGUNNINGEN',
+    'HORECA',
+    'TOERISTISCHE_VERHUUR',
+    'PARKEREN',
+  ];
+
+  const rows = results.map(([username, data]) => {
+    return {
+      zaaknummer: '',
+      thema: '',
+      Username: username,
+    };
+  });
+
+  return {
+    title: 'Zaken',
+    rows,
+    colInfo: Array(50).fill({
+      wch: 15,
+    }),
+    rowInfo: rows.map(() => ({ hpx: HPX_DEFAULT })),
+  };
+}
 
 async function getServiceResults(): Promise<ResultsByUser> {
   if (fs.existsSync(CACHE_PATH) && FROM_DISK) {
@@ -370,14 +407,6 @@ function addAvailableThemas(
   return serviceLabelAcc;
 }
 
-interface SheetData {
-  title: string;
-  rows: any[];
-  columnHeaders?: string[];
-  colInfo?: XLSX.ColInfo[];
-  rowInfo?: XLSX.RowInfo[];
-}
-
 function addSheets(workbook: XLSX.WorkBook, sheets: SheetData[]) {
   for (const sheet of sheets) {
     const { colInfo, rowInfo, rows, columnHeaders, title } = sheet;
@@ -409,7 +438,7 @@ function createInfoArray(elementAmount: number, info: object): object[] {
   return items;
 }
 
-function sheetBrpBase(resultsByUser: ResultsByUser) {
+function sheetBrpBase(resultsByUser: ResultsByUser): SheetData {
   const rows = Object.entries(resultsByUser).map(
     ([Username, serviceResults]) => {
       return {
@@ -677,7 +706,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
   return p;
 });
 
-function sheetThemas(resultsByUser: ResultsByUser) {
+function sheetThemas(resultsByUser: ResultsByUser): SheetData {
   const rowInfo = createInfoArray(testAccountEntries.length, {
     hpx: HPX_DEFAULT,
   });
@@ -773,7 +802,7 @@ function getAvailableUserThemas(serviceResults: ServiceResults) {
 function sheetServiceErrors(
   resultsByUser: ResultsByUser,
   serviceKeys: string[]
-) {
+): SheetData {
   const rowInfo = createInfoArray(testAccountEntries.length, {
     hpx: HPX_DEFAULT,
   });
@@ -820,7 +849,7 @@ function sheetServiceErrors(
   };
 }
 
-function sheetNotifications(resultsByUser: ResultsByUser) {
+function sheetNotifications(resultsByUser: ResultsByUser): SheetData {
   const rowShape = {
     Username: (data: any) => data.username,
     Thema: (data: any) => themaIDtoTitle[data.themaID],
@@ -868,7 +897,7 @@ function sheetNotifications(resultsByUser: ResultsByUser) {
   };
 }
 
-function sheetThemaContent(resultsByUser: ResultsByUser) {
+function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
   function count(themaId: string) {
     return (serviceResults: ServiceResults) =>
       serviceResults[themaId]?.content?.length || '';
