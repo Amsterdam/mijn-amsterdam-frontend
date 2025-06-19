@@ -108,6 +108,11 @@ It's basically an additional development server integrated in the BFF api.
 
 - `vitest` for BFF development
 
+
+#### Database
+
+Postgres is used. By default the database connection is not used in local development and faked programatically. To develop/test the database locally, a dockerized postgress instance can be started by running: `docker compose up` and setting the env `BFF_DB_ENABLED` to `true`
+
 ### Branch naming + PR
 
 - When creating a new branch, preferably, branch off `main`

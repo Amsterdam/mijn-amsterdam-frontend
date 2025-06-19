@@ -7,7 +7,10 @@ type DBAdapter = {
   id: string;
   query: (query: string, values?: unknown[] | undefined) => Promise<unknown>;
   queryGET: (query: string, values?: unknown[] | undefined) => Promise<unknown>;
-  queryALL: (query: string, values?: unknown[] | undefined) => Promise<unknown>;
+  queryALL: (
+    query: string,
+    values?: unknown[] | undefined
+  ) => Promise<unknown[]>;
 };
 
 const db_: () => Promise<DBAdapter> = () => {

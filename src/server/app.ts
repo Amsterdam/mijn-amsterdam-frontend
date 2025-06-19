@@ -32,7 +32,11 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import { nocache, requestID } from './routing/route-handlers';
+import {
+  nocache,
+  requestID,
+  withConditionalMiddleware,
+} from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
@@ -43,6 +47,8 @@ import { stadspasExternalConsumerRouter } from './routing/router-stadspas-extern
 import { captureException } from './services/monitoring';
 
 import { getFromEnv } from './helpers/env';
+import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
+import { FeatureToggle } from '../universal/config/feature-toggles';
 
 const app = express();
 
@@ -101,16 +107,23 @@ if (IS_OT && !IS_AP) {
 ///// Generic Router Method for All environments
 ////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
-
 app.use(
   BFF_BASE_PATH,
   nocache,
-  stadspasExternalConsumerRouter.internet,
+  withConditionalMiddleware(
+    notificationsExternalConsumerRouter.public,
+    FeatureToggle.amsNotificationsIsActive
+  ),
+  stadspasExternalConsumerRouter.public,
   protectedRouter,
   adminRouter
 );
 
-app.use(nocache, stadspasExternalConsumerRouter.privateNetwork);
+if (FeatureToggle.amsNotificationsIsActive) {
+  app.use(nocache, notificationsExternalConsumerRouter.private);
+}
+
+app.use(nocache, stadspasExternalConsumerRouter.private);
 
 app.get(BffEndpoints.ROOT, (_req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
