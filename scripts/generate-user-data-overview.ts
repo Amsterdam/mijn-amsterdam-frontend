@@ -487,6 +487,7 @@ type BrpSheetLayout = {
 const brpSheetLayout: BrpSheetLayout[] = [
   {
     label: 'BSN',
+    wch: WCH_DEFAULT / 2,
     extractContentValue: (brpContent: any) => brpContent?.persoon.bsn,
   },
   {
@@ -501,7 +502,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
     label: 'In onderzoek',
     extractContentValue: (brpContent: any) =>
       brpContent?.persoon.adresInOnderzoek,
-    wch: WCH_DEFAULT,
+    wch: WCH_DEFAULT / 2,
     transform: (inOnderzoek: any) => {
       return inOnderzoek ? 'In onderzoek' : '';
     },
@@ -510,7 +511,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
     label: 'VOW',
     extractContentValue: (brpContent: any) =>
       brpContent?.persoon?.vertrokkenOnbekendWaarheen,
-    wch: WCH_DEFAULT,
+    wch: WCH_DEFAULT / 3,
     transform: (vertrokkenOnbekendWaarheen: any) => {
       return vertrokkenOnbekendWaarheen ? 'VOW' : '';
     },
@@ -519,7 +520,7 @@ const brpSheetLayout: BrpSheetLayout[] = [
     label: 'Geheim',
     extractContentValue: (brpContent: any) =>
       brpContent?.persoon.indicatieGeheim,
-    wch: WCH_DEFAULT,
+    wch: WCH_DEFAULT / 2,
     transform: (indicatieGeheim: boolean) => {
       return indicatieGeheim ? 'Geheim' : '';
     },
