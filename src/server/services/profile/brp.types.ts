@@ -46,7 +46,7 @@ export type Persoon = {
   gemeentenaamInschrijving: string | null;
   voorvoegselGeslachtsnaam: string | null;
   geslachtsnaam: string | null;
-  omschrijvingBurgerlijkeStaat: 'Gehuwd' | null;
+  omschrijvingBurgerlijkeStaat: 'Ongehuwd' | null;
   omschrijvingGeslachtsaanduiding: string | null;
   omschrijvingAdellijkeTitel: string | null;
   opgemaakteNaam: string | null;
