@@ -892,7 +892,6 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       return serviceResults.HLI.content.regelingen?.length;
     },
     'Zorg en ondersteuning': count('WMO'),
-    Vergunningen: count('VERGUNNINGEN'),
     KVK: (serviceResults: ServiceResults) => {
       return serviceResults.KVK?.content ? 'Ja' : '';
     },
@@ -915,7 +914,6 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
         serviceResults.TOERISTISCHE_VERHUUR.content?.bbVergunningen.length || ''
       );
     },
-    // KREFIA: (serviceResults: ServiceResults) => { return},
     Klachten: (serviceResults: ServiceResults) => {
       return serviceResults.KLACHTEN.content?.aantal || '';
     },
@@ -926,6 +924,8 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
     'Bodem (Loodmeting)': (serviceResults: ServiceResults) => {
       return serviceResults.BODEM.content?.metingen?.length || '';
     },
+    // The different types of vergunningen are added dynamicaly later.
+    Vergunningen: count('VERGUNNINGEN'),
   };
 
   const results = Object.entries(resultsByUser).map(
@@ -933,10 +933,23 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
       const base: Record<string, string | number> = {
         Username,
       };
-      return Object.keys(themaContentGetters).reduce((acc, thema) => {
+
+      const resVal = Object.keys(themaContentGetters).reduce((acc, thema) => {
         acc[thema] = themaContentGetters[thema](serviceResults);
         return acc;
       }, base);
+
+      // Add the count of all the different kinds of verguninngen.
+      for (const vergunning of serviceResults.VERGUNNINGEN.content) {
+        const id = vergunning.caseType;
+        if (!resVal[id]) {
+          resVal[id] = 1;
+        } else {
+          (resVal[id] as number)++;
+        }
+      }
+
+      return resVal;
     }
   );
 
@@ -944,11 +957,10 @@ function sheetThemaContent(resultsByUser: Record<string, ServiceResults>) {
   return {
     title: 'Content',
     rows: results,
-    colInfo: results[0]
-      ? Object.keys(results[0]).map((_x, index) => ({
-          wch: 15,
-        }))
-      : undefined,
+    // Do it for 50 columns assuming this will be way more then we even need.
+    colInfo: Array(50).fill({
+      wch: 15,
+    }),
     rowInfo,
   };
 }
