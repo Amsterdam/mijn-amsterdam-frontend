@@ -156,69 +156,6 @@ export type PersonenResponseSource = {
   personen: PersoonSource[];
 };
 
-// // The following types are used in the frontend to display BRP data.
-// export type Adres = {
-//   straatnaam: string | null;
-//   postcode: string | null;
-//   woonplaatsNaam: string | null;
-//   landnaam: string | null;
-//   huisnummer: number | null;
-//   huisnummertoevoeging: string | null;
-//   huisletter: string | null;
-//   begindatumVerblijf: string | null;
-//   adresType: 'correspondentie' | 'woon' | SomeOtherString | null;
-//   // wozWaarde?: ReactNode | null; / TODO: add to fe type
-//   mokum?: boolean;
-// };
-
-// export type Persoon = {
-//   aanduidingNaamgebruikOmschrijving: string | null;
-//   bsn: string | null;
-//   geboortedatum: string | null;
-//   overlijdensdatum: string | null;
-//   geboortelandnaam: string | null;
-//   geboorteplaatsnaam: string | null;
-//   gemeentenaamInschrijving: string | null;
-//   voorvoegselGeslachtsnaam: string | null;
-//   geslachtsnaam: string | null;
-//   omschrijvingBurgerlijkeStaat: string | null;
-//   omschrijvingGeslachtsaanduiding: string | null;
-//   omschrijvingAdellijkeTitel: string | null;
-//   opgemaakteNaam: string | null;
-//   voornamen: string | null;
-//   nationaliteiten: Array<{ omschrijving: string }>;
-//   mokum: boolean;
-//   vertrokkenOnbekendWaarheen: boolean;
-//   datumVertrekUitNederland: string | null;
-//   indicatieGeheim: boolean;
-//   adresInOnderzoek: '080000' | '089999' | null;
-// };
-
-// type Verbintenis = {
-//   datumOntbinding: string | null;
-//   datumSluiting: string | null;
-//   landnaamSluiting: string | null;
-//   plaatsnaamSluitingOmschrijving: string | null;
-//   soortVerbintenis: string | null;
-//   soortVerbintenisOmschrijving: string | null;
-//   persoon: {
-//     volledigeNaam: string | null;
-//     geboortelandnaam: string | null;
-//     geboorteplaatsnaam: string | null;
-//   };
-// };
-
-// type Kind = {
-//   geboortedatum: string | null;
-//   volledigeNaam: string | null;
-// };
-
-// type Ouder = {
-//   geboortedatum: string | null;
-//   overlijdensdatum?: string | null;
-//   volledigeNaam: string | null;
-// };
-
 type Ouder = Partial<Persoon>;
 
 export type BrpFrontend = {

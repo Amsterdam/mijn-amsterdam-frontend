@@ -140,11 +140,6 @@ function transformBenkBrpResponse(
           datumSluiting: getDatum(partner.aangaanHuwelijkPartnerschap?.datum),
           datumSluitingFormatted:
             partner.aangaanHuwelijkPartnerschap?.datum?.langFormaat ?? null,
-          plaatsnaamSluitingOmschrijving:
-            partner.aangaanHuwelijkPartnerschap?.plaats?.omschrijving ?? null,
-          soortVerbintenis: partner.soortVerbintenis?.code ?? null,
-          soortVerbintenisOmschrijving:
-            partner.soortVerbintenis?.omschrijving ?? null,
           persoon: {
             voornamen: partner.naam?.voornamen ?? null,
             geslachtsnaam: partner.naam?.geslachtsnaam ?? null,
@@ -194,7 +189,6 @@ function transformBenkBrpResponse(
       begindatumVerblijf: getDatum(persoon.verblijfplaats?.datumVan) ?? null,
       begindatumVerblijfFormatted:
         persoon.verblijfplaats?.datumVan?.langFormaat ?? null,
-      adresType: persoon.verblijfplaats?.functieAdres?.omschrijving || null,
     },
   };
 

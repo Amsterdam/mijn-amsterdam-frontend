@@ -17,7 +17,7 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
-import { profileLinks } from '../Profile-thema-config';
+import { featureToggle, profileLinks } from '../Profile-thema-config';
 import {
   ProfileLabels,
   formatProfileSectionData,
@@ -41,12 +41,12 @@ type BRPPanelKey = keyof Omit<
 >;
 
 const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
+  bsn: 'BSN',
   voornamen: 'Voornamen',
   omschrijvingAdellijkeTitel: 'Titel',
   voorvoegselGeslachtsnaam: 'Voorvoegsel',
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
-  bsn: 'BSN',
   geboortedatum: [
     'Geboortedatum',
     (geboorteDatum, persoon) => {
@@ -195,8 +195,16 @@ const verbintenis: ProfileLabels<
         ? transformVerbintenisStatus(value)
         : value,
   ],
-  datumSluiting: ['Vanaf', (value) => !!value && defaultDateFormat(value)],
-  datumSluitingFormatted: 'Vanaf',
+  datumSluiting: [
+    'Vanaf',
+    (value) => {
+      if (featureToggle.BRP.benkBrpServiceActive) {
+        return null;
+      }
+      return !!value && defaultDateFormat(value);
+    },
+  ],
+  datumSluitingFormatted: 'Geregistreerd op',
   datumOntbinding: [
     'Einddatum',
     (dateValue, verbintenis) => {
@@ -258,21 +266,19 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   };
 
   // Exclude below profile data for non-mokum residents.
-  if (brpData.persoon.mokum) {
-    if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
-      profileData.verbintenis = {
-        ...formatProfileSectionData(
-          labelConfig.verbintenis,
-          brpData.verbintenis,
-          brpData
-        ),
-        ...formatProfileSectionData(
-          labelConfig.persoonSecundair,
-          brpData.verbintenis.persoon,
-          brpData
-        ),
-      };
-    }
+  if (brpData.persoon.mokum && brpData.verbintenis) {
+    profileData.verbintenis = {
+      ...formatProfileSectionData(
+        labelConfig.verbintenis,
+        brpData.verbintenis,
+        brpData
+      ),
+      ...formatProfileSectionData(
+        labelConfig.persoonSecundair,
+        brpData.verbintenis.persoon,
+        brpData
+      ),
+    };
 
     if (
       Array.isArray(brpData.verbintenisHistorisch) &&
@@ -371,7 +377,9 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
     };
   },
   verbintenis: (BRP) => ({
-    title: 'Burgerlijke staat',
+    title: featureToggle.BRP.benkBrpServiceActive
+      ? 'Partner'
+      : 'Burgerlijke staat',
     actionLinks: isMokum(BRP.content)
       ? [
           {

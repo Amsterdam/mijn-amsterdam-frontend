@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-import type { SomeOtherString } from '../../../universal/helpers/types';
 import { ZaakDetail } from '../../../universal/types/App.types';
 
 export type IdentiteitsbewijsFromSource = {
@@ -28,7 +27,6 @@ export type Adres = {
   begindatumVerblijf: string | null;
   begindatumVerblijfFormatted?: string | null;
   einddatumVerblijf?: string | null;
-  adresType: 'correspondentie' | 'woon' | SomeOtherString | null;
   aantalBewoners?: number;
   wozWaarde?: ReactNode | null;
   _adresSleutel?: string;
@@ -68,9 +66,9 @@ export type Verbintenis = {
   datumOntbindingFormatted?: string | null;
   datumSluiting: string | null;
   datumSluitingFormatted?: string | null;
-  plaatsnaamSluitingOmschrijving: string | null;
-  soortVerbintenis: string | null;
-  soortVerbintenisOmschrijving: string | null;
+  plaatsnaamSluitingOmschrijving?: string | null;
+  soortVerbintenis?: string | null;
+  soortVerbintenisOmschrijving?: string | null;
   persoon: Partial<Persoon>;
 };
 
