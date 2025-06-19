@@ -35,7 +35,11 @@ type OverlijdenSource = {
 type InOnderzoek = Record<string, boolean>;
 
 type VerblijfplaatsSource = {
-  type: 'Adres' | 'Locatie';
+  type:
+    | 'Adres'
+    | 'Locatie'
+    | 'VerblijfplaatsBuitenland'
+    | 'VerblijfplaatsOnbekend';
   verblijfadres: VerblijfadresSource;
   functieAdres: TyperingSource;
   indicatieVastgesteldVerblijftNietOpAdres: boolean;

@@ -119,7 +119,7 @@ function transformBenkBrpResponse(
           .filter((n) => !!n.omschrijving) ?? [],
       mokum: persoon.gemeenteVanInschrijving?.code === GEMEENTE_CODE_AMSTERDAM,
       vertrokkenOnbekendWaarheen:
-        verblijfplaats?.verblijfadres?.land?.code === LANDCODE_ONBEKEND,
+        verblijfplaats?.type === 'VerblijfplaatsOnbekend',
       datumVertrekUitNederlandFormatted: isVerblijfAdresBuitenland
         ? verblijfplaats.datumVan?.langFormaat
         : null,
