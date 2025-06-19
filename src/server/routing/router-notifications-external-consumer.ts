@@ -39,7 +39,7 @@ routerPublic.get(
 );
 
 routerPublic.get(
-  ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER_ID,
+  ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
   sendConsumerIdResponse
 );
 
