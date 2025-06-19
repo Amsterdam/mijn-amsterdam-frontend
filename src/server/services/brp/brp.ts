@@ -10,7 +10,7 @@ import {
   PersonenResponseSource,
   type DatumSource,
 } from './brp-types';
-import type { AuthProfileAndToken } from '../../auth/auth-types';
+import type { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import { ONE_HOUR_MS } from '../../config/app';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -19,7 +19,7 @@ import { fetchAuthTokenHeader } from '../ms-oauth/oauth-token';
 import type { BRPData, Persoon } from '../profile/brp.types';
 import { type BSN } from '../zorgned/zorgned-types';
 
-const TOKEN_VALIDITY_PERIOD = 24 * ONE_HOUR_MS;
+const TOKEN_VALIDITY_PERIOD = 1 * ONE_HOUR_MS;
 const PERCENTAGE_DISTANCE_FROM_EXPIRY = 0.1;
 
 function fetchBenkBrpTokenHeader() {
@@ -201,7 +201,7 @@ function transformBenkBrpResponse(
   return b;
 }
 
-export async function fetchBrpByBsn(bsn: BSN[]) {
+export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
   const response = await fetchBenkBrpTokenHeader();
   if (response.status !== 'OK') {
     return response;
@@ -210,7 +210,10 @@ export async function fetchBrpByBsn(bsn: BSN[]) {
     formatUrl(requestConfig) {
       return `${requestConfig.url}/personen`;
     },
-    headers: response.content,
+    headers: {
+      ...response.content,
+      'X-Correlation-ID': `fetch-brp-${sessionID}`,
+    },
     data: {
       type: 'RaadpleegMetBurgerservicenummer',
       gemeenteVanInschrijving: GEMEENTE_CODE_AMSTERDAM,
@@ -223,5 +226,7 @@ export async function fetchBrpByBsn(bsn: BSN[]) {
 }
 
 export async function fetchBenkBrp(authProfileAndToken: AuthProfileAndToken) {
-  return fetchBrpByBsn([authProfileAndToken.profile.id]);
+  return fetchBrpByBsn(authProfileAndToken.profile.sid, [
+    authProfileAndToken.profile.id,
+  ]);
 }
