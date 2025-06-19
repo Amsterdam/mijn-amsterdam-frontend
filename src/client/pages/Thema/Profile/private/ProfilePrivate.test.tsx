@@ -191,7 +191,6 @@ const testState = (
   BRP: { status: 'OK', content: responseBRP },
   KVK: { status: 'OK', content: null },
   KLANT_CONTACT: { status: 'OK', content: responseSF },
-  // PARKEREN: { status: 'OK', content: null },
 });
 
 function initializeState(testState: unknown) {

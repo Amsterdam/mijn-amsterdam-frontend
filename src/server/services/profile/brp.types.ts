@@ -1,7 +1,6 @@
-import { ReactNode } from 'react';
-
 import { ZaakDetail } from '../../../universal/types/App.types';
 
+/** @deprecated */
 export type IdentiteitsbewijsFromSource = {
   id: string;
   documentNummer: string;
@@ -10,6 +9,7 @@ export type IdentiteitsbewijsFromSource = {
   datumAfloop: string;
 };
 
+/** @deprecated */
 export type IdentiteitsbewijsFrontend = ZaakDetail &
   IdentiteitsbewijsFromSource & {
     datumUitgifteFormatted: string;
@@ -26,20 +26,19 @@ export type Adres = {
   huisletter: string | null;
   begindatumVerblijf: string | null;
   begindatumVerblijfFormatted?: string | null;
-  einddatumVerblijf?: string | null;
-  aantalBewoners?: number;
-  wozWaarde?: ReactNode | null;
-  _adresSleutel?: string;
-  mokum?: boolean;
   locatiebeschrijving?: string | null;
+  /** @deprecated Onderstaande gegevens worden niet meer gebruikt. */
+  einddatumVerblijf?: string | null;
+  /** @deprecated */
+  mokum?: boolean;
+  /** @deprecated */
+  _adresSleutel?: string;
 };
 
 export type Persoon = {
-  aanduidingNaamgebruikOmschrijving: string | null;
   bsn: string | null;
   geboortedatum: string | null;
   geboortedatumFormatted?: string | null;
-  indicatieGeboortedatum?: 'J' | 'M' | 'D' | 'V' | null;
   overlijdensdatum: string | null;
   overlijdensdatumFormatted?: string | null;
   geboortelandnaam: string | null;
@@ -47,7 +46,7 @@ export type Persoon = {
   gemeentenaamInschrijving: string | null;
   voorvoegselGeslachtsnaam: string | null;
   geslachtsnaam: string | null;
-  omschrijvingBurgerlijkeStaat: string | null;
+  omschrijvingBurgerlijkeStaat: 'Gehuwd' | null;
   omschrijvingGeslachtsaanduiding: string | null;
   omschrijvingAdellijkeTitel: string | null;
   opgemaakteNaam: string | null;
@@ -59,6 +58,9 @@ export type Persoon = {
   datumVertrekUitNederlandFormatted?: string | null;
   indicatieGeheim: boolean;
   adresInOnderzoek: '080000' | '089999' | null;
+  /** @deprecated Deze gegevens worden niet meer gebruikt. */
+  aanduidingNaamgebruikOmschrijving: string | null;
+  indicatieGeboortedatum?: 'J' | 'M' | 'D' | 'V' | null;
 };
 
 export type Verbintenis = {
@@ -66,10 +68,11 @@ export type Verbintenis = {
   datumOntbindingFormatted?: string | null;
   datumSluiting: string | null;
   datumSluitingFormatted?: string | null;
+  persoon: Partial<Persoon>; // TODO: Pick, voornamen, geslachtsnaam, voorvoegselGeslachtsnaam, opgemaakteNaam, geboortelandnaam, geboorteplaatsnaam
+  /** @deprecated Deze gegevens worden in de BENK-BRP niet meer gebruikt. */
   plaatsnaamSluitingOmschrijving?: string | null;
   soortVerbintenis?: string | null;
   soortVerbintenisOmschrijving?: string | null;
-  persoon: Partial<Persoon>;
 };
 
 export type VerbintenisHistorisch = Verbintenis & {
@@ -91,12 +94,16 @@ export type BRPDataFromSource = {
   kvkNummer?: string;
   persoon: Persoon;
   verbintenis?: Verbintenis;
-  verbintenisHistorisch?: VerbintenisHistorisch[];
   kinderen?: Kind[];
   ouders: Partial<Persoon>[];
   adres: Adres;
+  /** @deprecated Deze gegevens worden in de BENK-BRP niet meer voorzien. */
+  verbintenisHistorisch?: VerbintenisHistorisch[];
+  /** @deprecated */
   adresHistorisch?: Adres[];
+  /** @deprecated */
   identiteitsbewijzen?: IdentiteitsbewijsFromSource[];
+  /** @deprecated */
   fetchUrlAantalBewoners?: string;
 };
 

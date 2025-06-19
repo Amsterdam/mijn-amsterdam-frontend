@@ -31,8 +31,8 @@ import {
 } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types/App.types';
 import { transformBRPData } from '../profile/brp';
-import { WpiRequestProcess } from '../wpi/wpi-types';
 import { BRPData, BRPDataFromSource } from '../profile/brp.types';
+import { WpiRequestProcess } from '../wpi/wpi-types';
 
 const BRP = {
   content: {

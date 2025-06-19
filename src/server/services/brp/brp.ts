@@ -88,7 +88,7 @@ function transformBenkBrpResponse(
     adres?.land?.code !== LANDCODE_NEDERLAND &&
     adres?.land?.code !== LANDCODE_ONBEKEND;
 
-  const b: BrpFrontend = {
+  const responseContent: BrpFrontend = {
     persoon: {
       aanduidingNaamgebruikOmschrijving:
         persoon.naam?.aanduidingNaamgebruik?.omschrijving ?? null,
@@ -192,7 +192,7 @@ function transformBenkBrpResponse(
     },
   };
 
-  return b;
+  return responseContent;
 }
 
 export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
@@ -206,7 +206,7 @@ export async function fetchBrpByBsn(sessionID: AuthProfile['sid'], bsn: BSN[]) {
     },
     headers: {
       ...response.content,
-      'X-Correlation-ID': `fetch-brp-${sessionID}`,
+      'X-Correlation-ID': `fetch-brp-${sessionID}`, // Required for tracing
     },
     data: {
       type: 'RaadpleegMetBurgerservicenummer',

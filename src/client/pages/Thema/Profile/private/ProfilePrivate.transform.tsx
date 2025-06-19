@@ -121,7 +121,10 @@ delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
 // TODO: Maybe add Location thing here.
-const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
+const adres: ProfileLabels<
+  Partial<Adres> & { aantalBewoners: number; wozWaarde: string },
+  AppState['BRP']['content']
+> = {
   locatiebeschrijving: 'Locatie',
   straatnaam: [
     'Straat',
@@ -151,10 +154,12 @@ const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
     (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
   begindatumVerblijfFormatted: 'Vanaf',
+  /** @deprecated */
   einddatumVerblijf: [
     'Tot',
     (value) => (value ? defaultDateFormat(value) : null),
   ],
+  /** @deprecated */
   aantalBewoners: [
     'Aantal bewoners',
     (value, _item, brpData) => {
@@ -174,6 +179,7 @@ const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
   wozWaarde: 'WOZ-waarde',
 };
 
+/** @deprecated */
 function transformVerbintenisStatus(value: string) {
   const status: { [value: string]: string } = {
     Huwelijk: 'Gehuwd',
@@ -185,6 +191,7 @@ const verbintenis: ProfileLabels<
   Partial<VerbintenisHistorisch>,
   AppState['BRP']['content']
 > = {
+  /** @deprecated */
   soortVerbintenisOmschrijving: [
     (verbintenis) =>
       !verbintenis.datumOntbinding && !verbintenis.redenOntbindingOmschrijving
@@ -195,6 +202,7 @@ const verbintenis: ProfileLabels<
         ? transformVerbintenisStatus(value)
         : value,
   ],
+  /** @deprecated */
   datumSluiting: [
     'Vanaf',
     (value) => {
@@ -218,10 +226,13 @@ const verbintenis: ProfileLabels<
     },
   ],
   datumOntbindingFormatted: 'Einddatum',
+  /** @deprecated */
   plaatsnaamSluitingOmschrijving: 'Plaats',
+  /** @deprecated */
   landnaamSluiting: 'Land',
 };
 
+/** @deprecated */
 const verbintenisHistorisch: ProfileLabels<
   Partial<VerbintenisHistorisch>,
   AppState['BRP']['content']
@@ -245,11 +256,13 @@ const labelConfig = {
 export interface BrpProfileData {
   persoon: ProfileSectionData | null;
   adres: ProfileSectionData | null;
-  adresHistorisch?: ProfileSectionData[];
   verbintenis?: ProfileSectionData;
-  verbintenisHistorisch?: ProfileSectionData[];
   ouders?: ProfileSectionData[];
   kinderen?: ProfileSectionData[];
+  /** @deprecated */
+  adresHistorisch?: ProfileSectionData[];
+  /** @deprecated */
+  verbintenisHistorisch?: ProfileSectionData[];
 }
 
 export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
@@ -280,6 +293,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       ),
     };
 
+    /** @deprecated */
     if (
       Array.isArray(brpData.verbintenisHistorisch) &&
       brpData.verbintenisHistorisch.length
@@ -315,6 +329,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       );
     }
 
+    /** @deprecated */
     if (
       Array.isArray(brpData.adresHistorisch) &&
       brpData.adresHistorisch.length
