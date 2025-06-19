@@ -10,6 +10,8 @@ import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
 import { AuthProfileAndToken } from '../auth/auth-types';
 import { getFromEnv } from '../helpers/env';
+import { getApiConfig } from '../helpers/source-api-helpers';
+import { requestData } from '../helpers/source-api-request';
 import { captureMessage } from '../services/monitoring';
 import {
   batchFetchAndStoreNotifications,
@@ -100,10 +102,10 @@ const baseRenderProps = {
   logoutUrl,
 };
 
-const getRenderPropsOnApiError = (
+const getRenderPropsForApiError = (
   identifier: string,
   apiResponseError: ApiError
-) => ({
+): RenderProps => ({
   ...baseRenderProps,
   error: apiResponseError,
   appHref: `${AMSAPP_NOTIFICATIONS_DEEP_LINK}/mislukt?errorMessage=${encodeURIComponent(apiResponseError.message)}&errorCode=${apiResponseError.code}`,
@@ -120,26 +122,24 @@ async function sendConsumerIdResponse(
   const authProfileAndToken: AuthProfileAndToken | null = getAuth(req);
   if (!authProfileAndToken) {
     const apiResponseError = apiResponseErrors.DIGID_AUTH;
-    const renderProps = getRenderPropsOnApiError(
-      req.params.consumer_id,
-      apiResponseError
-    );
     captureMessage(
       `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
     );
-    return res.render('amsapp-open-app', renderProps);
+    return res.render(
+      'amsapp-open-app',
+      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+    );
   }
 
   if (!req.params.consumer_id) {
     const apiResponseError = apiResponseErrors.ERROR_PARAM_CONSUMER_ID;
-    const renderProps = getRenderPropsOnApiError(
-      req.params.consumer_id,
-      apiResponseError
-    );
     captureMessage(
       `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
     );
-    return res.render('amsapp-open-app', renderProps);
+    return res.render(
+      'amsapp-open-app',
+      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+    );
   }
 
   try {
@@ -150,14 +150,36 @@ async function sendConsumerIdResponse(
     );
   } catch (error) {
     const apiResponseError = apiResponseErrors.UNKNOWN;
-    const renderProps = getRenderPropsOnApiError(
-      req.params.consumer_id,
-      apiResponseError
-    );
     captureMessage(
       `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message} ${error}`
     );
-    return res.render('amsapp-open-app', renderProps);
+    return res.render(
+      'amsapp-open-app',
+      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+    );
+  }
+
+  const requestConfig = getApiConfig('AMSAPP', {
+    data: {
+      consumer_id: req.params.consumer_id,
+    },
+  });
+  const deliveryResponse = await requestData<{ detail: 'Success' }>(
+    requestConfig
+  );
+
+  if (
+    deliveryResponse.status === 'ERROR' ||
+    deliveryResponse.content?.detail !== 'Success'
+  ) {
+    const apiResponseError = apiResponseErrors.AMSAPP_DELIVERY_FAILED;
+    captureMessage(
+      `AMSAPP Notificaties sendConsumerIdResponse: ${apiResponseError.message}`
+    );
+    return res.render(
+      'amsapp-open-app',
+      getRenderPropsForApiError(req.params.consumer_id, apiResponseError)
+    );
   }
 
   const renderProps = {
@@ -173,7 +195,7 @@ async function sendConsumerIdResponse(
 // A success response is send to indicate it has started.
 function fetchAndStoreNotifications(req: Request, res: Response) {
   batchFetchAndStoreNotifications();
-  res.send(apiSuccessResult(null));
+  res.send(apiSuccessResult('success'));
 }
 
 async function sendNotificationsResponse(req: Request, res: Response) {
