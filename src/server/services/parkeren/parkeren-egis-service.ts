@@ -5,14 +5,13 @@ import {
   ActivePermitSourceResponse,
   ClientProductDetailsSourceResponse,
 } from './config-and-types';
-import { IS_PRODUCTION } from '../../../universal/config/env';
+import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
-import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
