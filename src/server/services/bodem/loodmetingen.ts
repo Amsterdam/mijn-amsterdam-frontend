@@ -170,7 +170,7 @@ export async function getLoodApiHeaders() {
       tokenValidityMS: 60 * 60 * ONE_SECOND_MS, // 1 hour
     },
     {
-      clientID: process.env.BFF_LOOD_USERNAME ?? '',
+      clientID: getFromEnv('BFF_LOOD_USERNAME') ?? '',
       clientSecret: process.env.BFF_LOOD_PWD ?? '',
       tenantID: getFromEnv('BFF_LOOD_TENANT'),
       scope: `${url.substring(0, url.indexOf('api'))}.default`,
