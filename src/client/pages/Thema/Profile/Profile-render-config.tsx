@@ -38,7 +38,11 @@ export const menuItems: [
     to: routeConfig.themaPageBRP.path,
     profileTypes: ['private'],
     isActive(appState: AppState) {
-      return !isLoading(appState.BRP) && !!appState.BRP.content?.persoon;
+      return (
+        (!isLoading(appState.BRP) && !!appState.BRP.content?.persoon) ||
+        (!isLoading(appState.KLANT_CONTACT) &&
+          !!appState.KLANT_CONTACT.content?.length)
+      );
     },
     IconSVG: ProfilePrivateIcon,
   } as const,
