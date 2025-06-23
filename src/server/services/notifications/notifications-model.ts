@@ -51,7 +51,13 @@ SET \
   updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
   getProfiles: `SELECT * FROM ${TABLE_NAME}`,
   getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${TABLE_NAME}`,
+  truncate: `TRUNCATE TABLE ${TABLE_NAME}`,
 };
+
+export async function truncate() {
+  const { query } = await db();
+  return query(queries.truncate);
+}
 
 export async function upsertConsumer(
   profile_id: BSN,

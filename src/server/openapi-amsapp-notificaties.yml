@@ -94,7 +94,6 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApplicationError'
-
   /private/api/v1/services/amsapp/job/notifications:
     get:
       security:
@@ -110,6 +109,17 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ConsumerNotificationsResponse'
+  /private/api/v1/services/amsapp/notifications:
+    delete:
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Truncate all notifications data\
+        Note: This is a temporary endpoint for the PoC
+      responses:
+        '200':
+          description: Returns success text
+
 components:
   securitySchemes:
     ApiKeyAuth:

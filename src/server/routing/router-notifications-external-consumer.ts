@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 
 import { ExternalConsumerEndpoints } from './bff-routes';
@@ -14,6 +15,7 @@ import { getApiConfig } from '../helpers/source-api-helpers';
 import { requestData } from '../helpers/source-api-request';
 import { captureMessage } from '../services/monitoring';
 import {
+  batchDeleteNotifications,
   batchFetchAndStoreNotifications,
   batchFetchNotifications,
   registerConsumer,
@@ -48,6 +50,15 @@ routerPublic.get(
 export const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
 });
+
+// We never want to enable this route in production
+if (!IS_PRODUCTION) {
+  routerPrivate.delete(
+    ExternalConsumerEndpoints.private.NOTIFICATIONS,
+    apiKeyVerificationHandler,
+    truncateNotifications
+  );
+}
 
 routerPrivate.get(
   ExternalConsumerEndpoints.private.NOTIFICATIONS_JOB,
@@ -194,6 +205,21 @@ async function sendConsumerIdResponse(
 // A success response is send to indicate it has started.
 function fetchAndStoreNotifications(req: Request, res: Response) {
   batchFetchAndStoreNotifications();
+  res.send(apiSuccessResult('success'));
+}
+
+// This is a temporary endpoint
+async function truncateNotifications(req: Request, res: Response) {
+  try {
+    await batchDeleteNotifications();
+  } catch (error) {
+    const apiResponseError = apiResponseErrors.UNKNOWN;
+    captureMessage(
+      `AMSAPP Notificaties truncateNotifications: ${apiResponseError.message} ${error}`
+    );
+    return res.status(HttpStatusCode.InternalServerError).send('failed');
+  }
+
   res.send(apiSuccessResult('success'));
 }
 

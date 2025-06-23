@@ -5,6 +5,7 @@ import {
   upsertConsumer,
   storeNotifications,
   listProfiles,
+  truncate,
 } from './notifications-model';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { notificationServices } from '../tips-and-notifications';
@@ -26,6 +27,10 @@ export async function registerConsumer(
   service_ids: SERVICE_ID[] = []
 ) {
   return upsertConsumer(profileId, consumerId, service_ids);
+}
+
+export async function batchDeleteNotifications() {
+  return truncate();
 }
 
 export async function batchFetchAndStoreNotifications() {
