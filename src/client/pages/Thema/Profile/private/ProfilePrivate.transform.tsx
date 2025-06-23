@@ -120,7 +120,6 @@ delete persoonSecundair.omschrijvingGeslachtsaanduiding;
 delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
-// TODO: Maybe add Location thing here.
 const adres: ProfileLabels<
   Partial<Adres> & { aantalBewoners: number; wozWaarde: string },
   AppState['BRP']['content']
