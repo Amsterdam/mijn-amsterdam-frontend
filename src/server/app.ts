@@ -32,11 +32,7 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { BFF_PORT, ONE_MINUTE_SECONDS, ONE_SECOND_MS } from './config/app';
 import { BFF_BASE_PATH, BffEndpoints } from './routing/bff-routes';
-import {
-  nocache,
-  requestID,
-  withConditionalMiddleware,
-} from './routing/route-handlers';
+import { nocache, requestID } from './routing/route-handlers';
 import { send404 } from './routing/route-helpers';
 import { adminRouter } from './routing/router-admin';
 import { authRouterDevelopment } from './routing/router-development';
@@ -107,19 +103,12 @@ if (IS_OT && !IS_AP) {
 ///// Generic Router Method for All environments
 ////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
-app.use(
-  BFF_BASE_PATH,
-  nocache,
-  withConditionalMiddleware(
-    notificationsExternalConsumerRouter.public,
-    FeatureToggle.amsNotificationsIsActive
-  ),
-  stadspasExternalConsumerRouter.public,
-  protectedRouter,
-  adminRouter
-);
+app.use(BFF_BASE_PATH, nocache, stadspasExternalConsumerRouter.public);
+app.use(BFF_BASE_PATH, nocache, protectedRouter);
+app.use(BFF_BASE_PATH, nocache, adminRouter);
 
 if (FeatureToggle.amsNotificationsIsActive) {
+  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
   app.use(nocache, notificationsExternalConsumerRouter.private);
 }
 
