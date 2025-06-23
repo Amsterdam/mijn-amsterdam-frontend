@@ -33,7 +33,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
             >
               <a
                 class="ams-breadcrumb__link"
-                href="/overzicht-updates"
+                href="/alle-berichten"
                 tabindex="-1"
               >
                 <span
