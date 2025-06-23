@@ -298,12 +298,16 @@ function sheetZaken(resultsByUser: ResultsByUser): SheetData {
     }));
   });
 
+  const firstRow = rows[0];
+
   return {
     title: 'Zaken',
     rows: rows.flat(),
-    colInfo: Array(50).fill({
-      wch: 30,
-    }),
+    colInfo:
+      firstRow &&
+      Object.values(firstRow).map(() => ({
+        wch: 30,
+      })),
     rowInfo: rows.map(() => ({ hpx: HPX_DEFAULT })),
   };
 }
