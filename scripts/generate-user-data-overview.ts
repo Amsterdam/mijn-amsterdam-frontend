@@ -275,7 +275,7 @@ interface SheetData {
 function sheetZaken(resultsByUser: ResultsByUser): SheetData {
   const results = Object.entries(resultsByUser);
 
-  const decosZaakThemas = [
+  const decosZaakServices = [
     'VERGUNNINGEN',
     'HORECA',
     'TOERISTISCHE_VERHUUR',
@@ -283,21 +283,43 @@ function sheetZaken(resultsByUser: ResultsByUser): SheetData {
   ];
 
   const rows = results.map(([username, data]) => {
-    return {
-      zaaknummer: '',
-      thema: '',
+    let zaken: any = [];
+    for (const serviceName of decosZaakServices) {
+      const cont = data[serviceName].content;
+      const unpacked = unpackContent(cont);
+      for (const zaak of unpacked) {
+        zaken.push({ ...zaak, serviceName });
+      }
+    }
+    return zaken.map((zaak: any) => ({
+      Zaaknummer: zaak.identifier,
+      Thema: themaIDtoTitle[zaak.serviceName],
       Username: username,
-    };
+    }));
   });
 
   return {
     title: 'Zaken',
-    rows,
+    rows: rows.flat(),
     colInfo: Array(50).fill({
-      wch: 15,
+      wch: 30,
     }),
     rowInfo: rows.map(() => ({ hpx: HPX_DEFAULT })),
   };
+}
+
+function unpackContent(content: object): object[] {
+  if (Array.isArray(content) && content.some((v) => !!v.identifier)) {
+    return content;
+  }
+  const arrays = Object.values(content).filter((v) => Array.isArray(v));
+  if (arrays) {
+    return arrays.flat();
+  }
+  if (!(typeof content !== 'object')) {
+    return [];
+  }
+  return unpackContent(Object.values(content));
 }
 
 async function getServiceResults(): Promise<ResultsByUser> {
