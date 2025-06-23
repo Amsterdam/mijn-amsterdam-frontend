@@ -16,7 +16,7 @@ export function useProfileData() {
     if (
       FeatureToggle.residentCountActive &&
       typeof residentCount === 'number' &&
-      BRP.content?.adres // quick fix for https://datapunt.atlassian.net/browse/MIJN-4022
+      BRP.content?.adres
     ) {
       const brpContent = {
         ...BRP.content,
