@@ -8,13 +8,13 @@ import { logger } from '../../logging';
 import { IS_DB_ENABLED } from '../db/config';
 import { db } from '../db/db';
 
-const TABLE_NOTIFICATIONS = 'bff_notifications';
+const TABLE_NAME = 'bff_notifications';
 async function setupTables() {
   const { query } = await db();
 
   const createTableQuery = `
     -- Table Definition
-    CREATE TABLE IF NOT EXISTS "public"."${TABLE_NOTIFICATIONS}" (
+    CREATE TABLE IF NOT EXISTS "public"."${TABLE_NAME}" (
       "profile_id" varchar(100) NOT NULL,
       "consumer_ids" varchar(100)[] DEFAULT '{}',
       "service_ids" varchar(50)[] DEFAULT '{}',
@@ -27,9 +27,9 @@ async function setupTables() {
 
   try {
     await query(createTableQuery);
-    logger.info(`setupTable: ${TABLE_NOTIFICATIONS} succeeded.`);
+    logger.info(`setupTable: ${TABLE_NAME} succeeded.`);
   } catch (error) {
-    logger.error(error, `setupTable: ${TABLE_NOTIFICATIONS} failed.`);
+    logger.error(error, `setupTable: ${TABLE_NAME} failed.`);
   }
 }
 
@@ -37,20 +37,21 @@ if (IS_DB_ENABLED) {
   setupTables();
 }
 
-const queries = ((tableName: string = TABLE_NOTIFICATIONS) => ({
+const queries = {
   upsertConsumer: `\
-INSERT INTO ${tableName} (profile_id, consumer_ids, service_ids, date_updated) \
+INSERT INTO ${TABLE_NAME} (profile_id, consumer_ids, service_ids, date_updated) \
 VALUES ($1, ARRAY[$2], $3, now()) \
 ON CONFLICT (profile_id) DO UPDATE \
 SET \
   profile_id = EXCLUDED.profile_id, \
-  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${tableName}.consumer_ids, $2)) ) ), \
+  consumer_ids = ( SELECT ARRAY( SELECT DISTINCT unnest(array_append(${TABLE_NAME}.consumer_ids, $2)) ) ), \
   service_ids = EXCLUDED.service_ids, \
-  date_updated = EXCLUDED.date_updated;`,
-  updateNotifications: `UPDATE ${tableName} SET content = $2 WHERE profile_id = $1`,
-  getProfiles: `SELECT * FROM ${tableName}`,
-  getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${tableName}`,
-}))();
+  date_updated = EXCLUDED.date_updated; \
+`,
+  updateNotifications: `UPDATE ${TABLE_NAME} SET content = $2 WHERE profile_id = $1`,
+  getProfiles: `SELECT * FROM ${TABLE_NAME}`,
+  getProfileIds: `SELECT profile_id, consumer_ids, service_ids FROM ${TABLE_NAME}`,
+};
 
 export async function upsertConsumer(
   profile_id: BSN,
