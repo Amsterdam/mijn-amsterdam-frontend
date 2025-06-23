@@ -1,5 +1,5 @@
 import { ServiceResults, ContentTipSource } from './tip-types';
-import { tips } from './tips-content';
+import { contentTips } from './tips-content';
 import { MIJN_AMSTERDAM } from '../../../universal/config/app';
 import { MyNotification } from '../../../universal/types/App.types';
 
@@ -57,7 +57,7 @@ export function fetchContentTips(
    *   ...
    */
 
-  let filteredTips = tips;
+  let filteredTips = contentTips;
 
   // If a profileType is provided, use it to filter the tips.
   if (profileType) {

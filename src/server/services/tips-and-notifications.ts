@@ -11,6 +11,7 @@ import { fetchAfisNotifications } from './afis/afis-notifications';
 import { fetchAVGNotifications } from './avg/avg';
 import { fetchBezwarenNotifications } from './bezwaren/bezwaren';
 import { fetchLoodMetingNotifications } from './bodem/loodmetingen';
+import { fetchBrpNotificationsV2 } from './brp/brp-notifications';
 import { sanitizeCmsContent } from './cms/cms-content';
 import { fetchMaintenanceNotificationsDashboard } from './cms/cms-maintenance-notifications';
 import { ServiceResults } from './content-tips/tip-types';
@@ -35,6 +36,7 @@ import { fetchVarenNotifications } from './varen/varen-notifications';
 import { fetchVergunningenNotifications } from './vergunningen/vergunningen-notifications';
 import { fetchWiorNotifications } from './wior';
 import { fetchWpiNotifications } from './wpi';
+import { featureToggle } from '../../client/pages/Thema/Profile/Profile-thema-config';
 import { streamEndpointQueryParamKeys } from '../../universal/config/app';
 import { getFromEnv } from '../helpers/env';
 
@@ -80,7 +82,9 @@ const notificationServices: NotificationServicesByProfileType = {
     belasting: fetchBelastingNotifications,
     bezwaren: fetchBezwarenNotifications,
     bodem: fetchLoodMetingNotifications,
-    brp: fetchBrpNotifications,
+    brp: featureToggle.BRP.benkBrpServiceActive
+      ? fetchBrpNotificationsV2
+      : fetchBrpNotifications,
     fetchKrefia: fetchKrefiaNotifications,
     fetchSVWI: fetchSVWINotifications,
     fetchWior: fetchWiorNotifications,

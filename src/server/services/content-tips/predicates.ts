@@ -18,14 +18,13 @@ export const is18OrOlder: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const AGE_18 = 18;
-  return (
-    differenceInYears(
-      today,
-      appState.BRP?.content?.persoon.geboortedatum
-        ? new Date(appState.BRP.content.persoon.geboortedatum)
-        : today
-    ) >= AGE_18
+  const age = differenceInYears(
+    today,
+    appState.BRP?.content?.persoon.geboortedatum
+      ? new Date(appState.BRP.content.persoon.geboortedatum)
+      : today
   );
+  return age >= AGE_18;
 };
 
 export const hasValidId: TipsPredicateFN = (
@@ -33,9 +32,10 @@ export const hasValidId: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
-  return ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
+  const validIds = ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
     return today <= new Date(idBewijs.datumAfloop);
   });
+  return validIds;
 };
 
 // To use an ID for voting it needs an expiration date with a maximum of five years ago.
@@ -285,7 +285,10 @@ export const hasToeristicheVerhuurVergunningen: TipsPredicateFN = (
 };
 
 export const isMarriedOrLivingTogether: TipsPredicateFN = (appState) => {
-  return !!appState.BRP?.content?.verbintenis?.soortVerbintenis;
+  return (
+    !!appState.BRP?.content?.verbintenis?.datumSluiting &&
+    !appState.BRP?.content?.verbintenis?.datumOntbindingFormatted
+  );
 };
 
 export const hasBnBVergunning: TipsPredicateFN = (appState) => {
