@@ -32,10 +32,10 @@ export const hasValidId: TipsPredicateFN = (
   today: Date = new Date()
 ) => {
   const ids = appState.BRP?.content?.identiteitsbewijzen ?? [];
-  const expiredIds = ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
+  const validIds = ids.some((idBewijs: IdentiteitsbewijsFrontend) => {
     return today <= new Date(idBewijs.datumAfloop);
   });
-  return expiredIds;
+  return validIds;
 };
 
 // To use an ID for voting it needs an expiration date with a maximum of five years ago.
