@@ -104,11 +104,15 @@ if (IS_OT && !IS_AP) {
 ////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
 app.use(BFF_BASE_PATH, nocache, stadspasExternalConsumerRouter.public);
+
+if (FeatureToggle.amsNotificationsIsActive) {
+  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
+}
+
 app.use(BFF_BASE_PATH, nocache, protectedRouter);
 app.use(BFF_BASE_PATH, nocache, adminRouter);
 
 if (FeatureToggle.amsNotificationsIsActive) {
-  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
   app.use(nocache, notificationsExternalConsumerRouter.private);
 }
 
