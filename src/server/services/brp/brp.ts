@@ -168,7 +168,7 @@ function transformBenkBrpResponse(
         })) ?? [],
     kinderen:
       persoon.kinderen
-        ?.filter((kind) => typeof kind !== 'undefined')
+        ?.filter((kind) => typeof kind !== 'undefined' && !!kind.naam.voornamen)
         ?.map((kind) => ({
           geboortedatum: getDatum(kind.geboorte?.datum) ?? null,
           geboortedatumFormatted: kind.geboorte?.datum?.langFormaat ?? null,
