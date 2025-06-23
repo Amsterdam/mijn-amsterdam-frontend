@@ -93,7 +93,7 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_BUDGET_TRANSACTIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/budget/transactions/:transactionsKeyEncrypted`,
     STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
     NOTIFICATIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/notifications`,
-    NOTIFICATIONS_CRON: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/cron/notifications`,
+    NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
   },
 } as const;
 

@@ -95,12 +95,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApplicationError'
 
-  /private/api/v1/services/amsapp/cron/notifications:
+  /private/api/v1/services/amsapp/job/notifications:
     get:
       security:
         - ApiKeyAuth: []
       description: |
-        Triggers cronlike job that fetches all notification data of all consumers\
+        Triggers job that fetches all notification data of all consumers\
         Note: This endpoint has a long execution time, making it impractical to await.\
         A success response is send to indicate it has started.
       responses:

@@ -50,7 +50,7 @@ export const routerPrivate = createBFFRouter({
 });
 
 routerPrivate.get(
-  ExternalConsumerEndpoints.private.NOTIFICATIONS_CRON,
+  ExternalConsumerEndpoints.private.NOTIFICATIONS_JOB,
   apiKeyVerificationHandler,
   fetchAndStoreNotifications
 );
