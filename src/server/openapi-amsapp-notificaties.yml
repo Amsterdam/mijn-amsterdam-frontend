@@ -46,8 +46,8 @@ paths:
       responses:
         '200':
           description: |
-            Always returns html page with link that opens the Amsterdam App automatically with Javascript.
-            If the consumerId is retrieved succesfully, no query parameters are passed to the app link.
+            Always returns html page with link that opens the Amsterdam App automatically with Javascript.\
+            If the consumerId is retrieved succesfully, no query parameters are passed to the app link.\
             If an error occurred an ApiErrorNotificatieConsumerId will be passed as query parameters to the app link.
           content:
             'text/html':
@@ -80,7 +80,6 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorBadRequest'
-
         '401':
           description: Returns unauthorized error (invalid api key)
           content:
@@ -94,31 +93,40 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ApplicationError'
-  /private/api/v1/services/amsapp/job/notifications:
-    get:
-      security:
-        - ApiKeyAuth: []
-      description: |
-        Triggers job that fetches all notification data of all consumers\
-        Note: This endpoint has a long execution time, making it impractical to await.\
-        A success response is send to indicate it has started.
-      responses:
-        '200':
-          description: Returns consumer notifications data
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/ConsumerNotificationsResponse'
-  /private/api/v1/services/amsapp/notifications:
     delete:
       security:
         - ApiKeyAuth: []
       description: |
-        Truncate all notifications data\
+        Truncate all notifications data.\
         Note: This is a temporary endpoint for the PoC
       responses:
         '200':
-          description: Returns success text
+          description: Returns an application success response
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiSuccessResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+  /private/api/v1/services/amsapp/job/notifications:
+    post:
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Triggers job that fetches all notification data of all consumers.\
+        Note: This endpoint has a long execution time, making it impractical to await.\
+        A success response is send to indicate it has started.
+      responses:
+        '200':
+          description: Returns an application success response
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiSuccessResponse'
 
 components:
   securitySchemes:
@@ -167,10 +175,51 @@ components:
       properties:
         content:
           type: array
+          items:
+            type: object
+            properties:
+              service_ids:
+                type: array
+                items:
+                  type: string
+              consumer_ids:
+                type: array
+                items:
+                  type: string
+              date_updated:
+                type: string
+                format: date-time
+              notifications:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    datePublished:
+                      type: string
+                      format: date-time
+                    isTip:
+                      type: boolean
+                  required:
+                    - id
+                    - title
+                    - datePublished
         status:
           type: string
           enum:
-            - 'SUCCESS'
+            - 'OK'
+    ApiSuccessResponse:
+      type: object
+      properties:
+        content:
+          type: string
+          example: success
+        status:
+          type: string
+          example: OK
     ErrorNotFound:
       type: object
       properties:

@@ -5,7 +5,7 @@ import { ExternalConsumerEndpoints } from './bff-routes';
 import { apiKeyVerificationHandler } from './route-handlers';
 import { createBFFRouter, generateFullApiUrlBFF } from './route-helpers';
 import { IS_PRODUCTION } from '../../universal/config/env';
-import { apiSuccessResult } from '../../universal/helpers/api';
+import { apiErrorResult, apiSuccessResult } from '../../universal/helpers/api';
 import { RETURNTO_NOTIFICATIES_CONSUMER_ID } from '../auth/auth-config';
 import { getAuth } from '../auth/auth-helpers';
 import { authRoutes } from '../auth/auth-routes';
@@ -205,7 +205,7 @@ async function sendConsumerIdResponse(
 // A success response is send to indicate it has started.
 function fetchAndStoreNotifications(req: Request, res: Response) {
   batchFetchAndStoreNotifications();
-  res.send(apiSuccessResult('success'));
+  return res.send(apiSuccessResult('success'));
 }
 
 async function truncateNotifications(req: Request, res: Response) {
@@ -216,15 +216,23 @@ async function truncateNotifications(req: Request, res: Response) {
     captureMessage(
       `AMSAPP Notificaties truncateNotifications: ${apiResponseError.message} ${error}`
     );
-    return res.status(HttpStatusCode.InternalServerError).send('failed');
+    return res
+      .status(HttpStatusCode.InternalServerError)
+      .send(
+        apiErrorResult(
+          apiResponseError.message,
+          null,
+          HttpStatusCode.InternalServerError
+        )
+      );
   }
 
-  res.send(apiSuccessResult('success'));
+  return res.send(apiSuccessResult('success'));
 }
 
 async function sendNotificationsResponse(req: Request, res: Response) {
   const response = await batchFetchNotifications();
-  res.send(apiSuccessResult(response));
+  return res.send(apiSuccessResult(response));
 }
 
 export const notificationsExternalConsumerRouter = {
