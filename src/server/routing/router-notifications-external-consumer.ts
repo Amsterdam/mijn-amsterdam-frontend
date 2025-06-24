@@ -51,7 +51,7 @@ export const routerPrivate = createBFFRouter({
   id: 'external-consumer-private-notifications',
 });
 
-// We never want to enable this route in production
+// This route will never be enabled in production
 if (!IS_PRODUCTION) {
   routerPrivate.delete(
     ExternalConsumerEndpoints.private.NOTIFICATIONS,
@@ -208,7 +208,6 @@ function fetchAndStoreNotifications(req: Request, res: Response) {
   res.send(apiSuccessResult('success'));
 }
 
-// This is a temporary endpoint
 async function truncateNotifications(req: Request, res: Response) {
   try {
     await batchDeleteNotifications();
