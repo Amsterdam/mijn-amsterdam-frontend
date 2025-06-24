@@ -319,7 +319,7 @@ describe('predicates', () => {
       const appState = {
         HLI: {
           status: 'OK',
-          content: { stadspas: [{ passType: 'kind' }] },
+          content: { stadspas: { stadspassen: [{ passType: 'kind' }] } },
         },
       } as unknown as AppState;
 
