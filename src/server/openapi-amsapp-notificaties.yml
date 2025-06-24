@@ -67,6 +67,8 @@ paths:
         - ApiKeyAuth: []
       description: |
         Retrieves all notification data of all consumers.
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Returns consumer notifications data
@@ -99,6 +101,8 @@ paths:
       description: |
         Truncate all notifications data.\
         Note: This is a temporary endpoint for the PoC
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Returns an application success response
@@ -120,6 +124,8 @@ paths:
         Triggers job that fetches all notification data of all consumers.\
         Note: This endpoint has a long execution time, making it impractical to await.\
         A success response is send to indicate it has started.
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Returns an application success response
@@ -271,3 +277,10 @@ components:
           type: string
           enum:
             - 'Bad request: ApiError 000 - Onbekende fout'
+  parameters:
+    xApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
