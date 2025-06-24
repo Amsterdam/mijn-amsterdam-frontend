@@ -11,7 +11,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
-import { logger } from '../../logging';
 import { captureException } from '../monitoring';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
@@ -107,11 +106,7 @@ async function getJWEToken(
   authProfileAndToken: AuthProfileAndToken
 ): Promise<string | null> {
   if (featureToggle.parkerenJWETokenCreationActive) {
-    const token = await createJWEToken(authProfileAndToken);
-    if (!token) {
-      return null;
-    }
-    return token;
+    return createJWEToken(authProfileAndToken);
   }
 
   const jweTokenResponse = await fetchJWEToken(authProfileAndToken);
