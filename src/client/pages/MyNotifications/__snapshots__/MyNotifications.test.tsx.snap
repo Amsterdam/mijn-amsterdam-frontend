@@ -6,10 +6,10 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -46,7 +46,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Alle berichten
         </h1>
@@ -71,16 +71,16 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 Notification
               </h4>
               <div
-                class="_MetaInfoSecondary_e4b76a"
+                class="_MetaInfoSecondary_577c09"
               >
                 <em
-                  class="_ThemaIndication_e4b76a"
+                  class="_ThemaIndication_577c09"
                 >
                   Home
                 </em>
                  
                 <time
-                  class="_Datum_e4b76a"
+                  class="_Datum_577c09"
                   datetime="2020-07-24"
                 >
                   24 juli 2020
@@ -88,7 +88,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </div>
             </header>
             <div
-              class="_Body_e4b76a"
+              class="_Body_577c09"
             >
               <p
                 class="ams-paragraph ams-mb-s"
@@ -100,7 +100,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               >
                 <a
                   aria-label="Meer informatie over de melding: Notification"
-                  class="ams-link _MaLink_aa758a"
+                  class="ams-link _MaLink_10c0a4"
                   href="/item-1"
                 >
                   Linkje!
@@ -122,16 +122,16 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 Notification
               </h4>
               <div
-                class="_MetaInfoSecondary_e4b76a"
+                class="_MetaInfoSecondary_577c09"
               >
                 <em
-                  class="_ThemaIndication_e4b76a"
+                  class="_ThemaIndication_577c09"
                 >
                   Mijn gegevens
                 </em>
                  
                 <time
-                  class="_Datum_e4b76a"
+                  class="_Datum_577c09"
                   datetime="2020-07-24"
                 >
                   24 juli 2020
@@ -139,7 +139,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </div>
             </header>
             <div
-              class="_Body_e4b76a"
+              class="_Body_577c09"
             >
               <p
                 class="ams-paragraph ams-mb-s"
@@ -151,7 +151,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               >
                 <a
                   aria-label="Meer informatie over de melding: Notification"
-                  class="ams-link _MaLink_aa758a"
+                  class="ams-link _MaLink_10c0a4"
                   href="/item-2"
                 >
                   Linkje!
@@ -173,16 +173,16 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 Notification
               </h4>
               <div
-                class="_MetaInfoSecondary_e4b76a"
+                class="_MetaInfoSecondary_577c09"
               >
                 <em
-                  class="_ThemaIndication_e4b76a"
+                  class="_ThemaIndication_577c09"
                 >
                   Inkomen
                 </em>
                  
                 <time
-                  class="_Datum_e4b76a"
+                  class="_Datum_577c09"
                   datetime="2020-07-24"
                 >
                   24 juli 2020
@@ -190,7 +190,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </div>
             </header>
             <div
-              class="_Body_e4b76a"
+              class="_Body_577c09"
             >
               <p
                 class="ams-paragraph ams-mb-s"
@@ -202,7 +202,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               >
                 <a
                   aria-label="Meer informatie over de melding: Notification"
-                  class="ams-link _MaLink_aa758a"
+                  class="ams-link _MaLink_10c0a4"
                   href="/item-3"
                 >
                   Linkje!
@@ -224,10 +224,10 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 Welkom op Mijn Amsterdam!
               </h4>
               <div
-                class="_MetaInfoSecondary_e4b76a"
+                class="_MetaInfoSecondary_577c09"
               >
                 <em
-                  class="_ThemaIndication_e4b76a"
+                  class="_ThemaIndication_577c09"
                 >
                   Mijn Amsterdam
                 </em>
@@ -235,7 +235,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               </div>
             </header>
             <div
-              class="_Body_e4b76a"
+              class="_Body_577c09"
             >
               
       
@@ -282,7 +282,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
           informatie over uw buurt op een overzichtelijke
           
                   <a
-                    class="ams-link _MaLink_aa758a"
+                    class="ams-link _MaLink_10c0a4"
                     href="/buurt"
                   >
                     kaart
@@ -301,7 +301,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
                 
         
                 <a
-                  class="ams-link _MaLink_aa758a"
+                  class="ams-link _MaLink_10c0a4"
                   href="/uitleg"
                 >
                   Hier
@@ -316,7 +316,7 @@ exports[`<MyNotifications /> > Matches the Full Page snapshot 1`] = `
               >
                 <a
                   aria-label="Meer informatie over de melding: Welkom op Mijn Amsterdam!"
-                  class="ams-link _MaLink_aa758a"
+                  class="ams-link _MaLink_10c0a4"
                   href="#"
                 >
                   Laat ons weten wat u ervan vindt

@@ -3,7 +3,7 @@
 exports[`<Landing /> > Renders without crashing 1`] = `
 <DocumentFragment>
   <div
-    class="ams-grid _LandingPageContent_39d0ac"
+    class="ams-grid _LandingPageContent_f54033"
     id="skip-to-id-AppContent"
   >
     <div
@@ -28,13 +28,13 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         class="ams-paragraph"
       >
         <a
-          class="_LoginBtn_39d0ac _LoginBtn--digid_39d0ac"
+          class="_LoginBtn_f54033 _LoginBtn--digid_f54033"
           href="http://bff-api-host/auth/digid/login"
           rel="noopener noreferrer"
           role="button"
         >
           <span
-            class="_LoginLogoWrap_39d0ac"
+            class="_LoginLogoWrap_f54033"
           >
             <svg
               aria-label="DigiD"
@@ -55,7 +55,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
             </svg>
           </span>
           <span
-            class="_LoginButtonText_39d0ac"
+            class="_LoginButtonText_f54033"
           >
             Inloggen met DigiD
           </span>
@@ -84,13 +84,13 @@ exports[`<Landing /> > Renders without crashing 1`] = `
         class="ams-paragraph"
       >
         <a
-          class="_LoginBtn_39d0ac _LoginBtn--eherkenning_39d0ac"
+          class="_LoginBtn_f54033 _LoginBtn--eherkenning_f54033"
           href="http://bff-api-host/auth/eherkenning/login"
           rel="noopener noreferrer"
           role="button"
         >
           <span
-            class="_LoginLogoWrap_39d0ac _LogoEherkenning_39d0ac"
+            class="_LoginLogoWrap_f54033 _LogoEherkenning_f54033"
           >
             <svg
               height="28px"
@@ -133,7 +133,7 @@ exports[`<Landing /> > Renders without crashing 1`] = `
             </svg>
           </span>
           <span
-            class="_LoginButtonText_39d0ac"
+            class="_LoginButtonText_f54033"
           >
             Inloggen met eHerkenning
           </span>

@@ -6,10 +6,10 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -46,7 +46,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when API gives no result 
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Klachten
         </h1>
@@ -150,10 +150,10 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -190,7 +190,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Klachten
         </h1>
@@ -250,7 +250,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -288,7 +288,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
                 class="ams-table__cell"
               >
                 <a
-                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                   href="/klachten/klacht/36049"
                   title="Bekijk meer over klacht 36049"
                 >
@@ -313,7 +313,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are complaints
                 class="ams-table__cell"
               >
                 <a
-                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                   href="/klachten/klacht/36046"
                   title="Bekijk meer over klacht 36046"
                 >
@@ -343,10 +343,10 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -383,7 +383,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Klachten
         </h1>
@@ -443,7 +443,7 @@ exports[`<Klachten /> > Matches the Full Page snapshot when there are no complai
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <tbody
             class="ams-table__body"
