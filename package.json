@@ -94,7 +94,7 @@
     "decimal.js": "^10.5.0",
     "dotenv": "^16.5.0",
     "dotenv-expand": "^11.0.7",
-    "express": "^4.21.2",
+    "express": "^5.0.0",
     "express-basic-auth": "^1.2.1",
     "express-http-proxy": "^2.1.1",
     "express-openid-connect": "^2.18.1",
@@ -149,10 +149,10 @@
     "typescript": "^5.8.3",
     "uid-safe": "^2.1.5",
     "use-debounce": "^10.0.5",
-    "vite": "^5.4.19",
+    "vite": "^7.0.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^2.1.9",
+    "vitest": "^3.2.4",
     "xlsx": "file:vendor/xlsx-0.20.2.tgz"
   },
   "optionalDependencies": {
