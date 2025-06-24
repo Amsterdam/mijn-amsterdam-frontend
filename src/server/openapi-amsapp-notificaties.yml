@@ -16,7 +16,7 @@ servers:
   - url: http://localhost:5000
 
 paths:
-  /api/v1/services/amsapp/notificaties/login/{consumerId}:
+  /api/v1/services/amsapp/notifications/login/{consumerId}:
     get:
       description: Redirects to Digid login, initiates as OIDC session on callback.
       parameters:
@@ -34,7 +34,7 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
-  /api/v1/services/amsapp/notificaties/consumer/{consumerId}:
+  /api/v1/services/amsapp/notifications/consumer/{consumerId}:
     get:
       description: Retrieves consumerId based on BSN found in OIDC session.
       parameters:
