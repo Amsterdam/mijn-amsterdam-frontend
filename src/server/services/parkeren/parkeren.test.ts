@@ -5,7 +5,6 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 
 const mocks = vi.hoisted(() => {
   return {
-    IS_PRODUCTION: false,
     JWETokenCreationActive: false,
   };
 });
@@ -23,13 +22,6 @@ vi.mock(
     };
   }
 );
-
-vi.mock('../../../universal/config/env', async (importOriginal) => {
-  return {
-    ...(await importOriginal()),
-    IS_PRODUCTION: mocks.IS_PRODUCTION,
-  };
-});
 
 const STATUS_OK_200 = 200;
 const SUCCESS_URL = 'https://parkeren.nl/sso-login';
@@ -190,16 +182,17 @@ describe('hasPermitsOrPermitRequests', () => {
   const authProfileAndToken = getAuthProfileAndToken('private');
 
   afterEach(() => {
-    mocks.IS_PRODUCTION = false;
+    mocks.JWETokenCreationActive = true;
   });
 
   test('Doing a request with a created JWE token', async () => {
-    mocks.IS_PRODUCTION = true;
+    mocks.JWETokenCreationActive = true;
     const response = await hasPermitsOrPermitRequests(authProfileAndToken);
     expect(response).toBe(true);
   });
 
   test('Doing a request while fetching a JWT', async () => {
+    mocks.JWETokenCreationActive = false;
     const response = await hasPermitsOrPermitRequests(authProfileAndToken);
     expect(response).toBe(true);
   });
