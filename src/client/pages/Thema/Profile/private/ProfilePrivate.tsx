@@ -111,22 +111,24 @@ export function MijnGegevensThema() {
   );
   const isThemaPaginaError = isErrorBrp && isErrorContactmomenten;
   const isThemaPaginaLoading = isLoadingBrp || isLoadingContactmomenten;
+  const nonMokum = !isLoadingBrp && !isMokum(brpContent);
+  const hasOtherNationality = hasDutchAndOtherNationalities(brpContent);
 
   const pageContentTop = (
     <PageContentCell spanWide={8}>
-      <Paragraph className="ams-mb-m">
+      <Paragraph className={hasOtherNationality || nonMokum ? 'ams-mb-m' : ''}>
         In de Basisregistratie Personen legt de gemeente persoonsgegevens over u
         vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of uw
         burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk dus
         dat deze gegevens kloppen.
       </Paragraph>
-      {!isLoadingBrp && !isMokum(brpContent) && (
-        <Paragraph className="ams-mb-m">
+      {nonMokum && (
+        <Paragraph className={hasOtherNationality ? 'ams-mb-m' : ''}>
           U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen gegevens
           die de gemeente Amsterdam van u heeft.
         </Paragraph>
       )}
-      {hasDutchAndOtherNationalities(brpContent) && (
+      {hasOtherNationality && (
         <Paragraph>
           Als u een andere nationaliteit hebt of hebt gehad naast de
           Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet
@@ -148,7 +150,7 @@ export function MijnGegevensThema() {
       pageContentTop={pageContentTop}
       pageContentMain={
         <>
-          {brpContent?.persoon.vertrokkenOnbekendWaarheen && (
+          {brpContent?.persoon?.vertrokkenOnbekendWaarheen && (
             <PageContentCell>
               <VertrokkenOnbekendWaarheen brpContent={brpContent} />
             </PageContentCell>

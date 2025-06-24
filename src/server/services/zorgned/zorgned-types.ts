@@ -1,7 +1,8 @@
 import { GenericDocument } from '../../../universal/types/App.types';
 import type { AuthProfile } from '../../auth/auth-types';
+import { GEMEENTE_CODE_AMSTERDAM } from '../brp/brp-config';
 
-export const ZORGNED_GEMEENTE_CODE = '0363';
+export const ZORGNED_GEMEENTE_CODE = GEMEENTE_CODE_AMSTERDAM;
 
 export type TextPartContent = string;
 export type TextPartContentTransformer<T> = (

@@ -4,7 +4,7 @@ import { MyNotificationsPage } from './MyNotifications';
 import { themaId, themaTitle } from './MyNotifications-config';
 
 export const MyNotificationsRoute = {
-  route: '/overzicht-updates/:page?',
+  route: '/alle-berichten/:page?',
   Component: MyNotificationsPage,
 };
 

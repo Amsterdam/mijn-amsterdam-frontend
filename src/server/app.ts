@@ -43,6 +43,8 @@ import { stadspasExternalConsumerRouter } from './routing/router-stadspas-extern
 import { captureException } from './services/monitoring';
 
 import { getFromEnv } from './helpers/env';
+import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
+import { FeatureToggle } from '../universal/config/feature-toggles';
 
 const app = express();
 
@@ -101,16 +103,20 @@ if (IS_OT && !IS_AP) {
 ///// Generic Router Method for All environments
 ////////////////////////////////////////////////////////////////////////
 // Mount the routers at the base path
+app.use(BFF_BASE_PATH, nocache, stadspasExternalConsumerRouter.public);
 
-app.use(
-  BFF_BASE_PATH,
-  nocache,
-  stadspasExternalConsumerRouter.internet,
-  protectedRouter,
-  adminRouter
-);
+if (FeatureToggle.amsNotificationsIsActive) {
+  app.use(BFF_BASE_PATH, nocache, notificationsExternalConsumerRouter.public);
+}
 
-app.use(nocache, stadspasExternalConsumerRouter.privateNetwork);
+app.use(BFF_BASE_PATH, nocache, protectedRouter);
+app.use(BFF_BASE_PATH, nocache, adminRouter);
+
+if (FeatureToggle.amsNotificationsIsActive) {
+  app.use(nocache, notificationsExternalConsumerRouter.private);
+}
+
+app.use(nocache, stadspasExternalConsumerRouter.private);
 
 app.get(BffEndpoints.ROOT, (_req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
@@ -159,6 +165,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 async function startServerBFF() {
   if (
+    getFromEnv('LOG_THAT_HTTP') === 'true' ||
     getFromEnv('LOG_THAT_HTTP_HEADERS') === 'true' ||
     getFromEnv('LOG_THAT_HTTP_BODY') === 'true'
   ) {
