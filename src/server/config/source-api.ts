@@ -253,6 +253,14 @@ const ApiConfig_ = {
     url: `${getFromEnv('BFF_MKS_API_BASE_URL')}/brp/brp`,
     passthroughOIDCToken: true,
   },
+  BENK_BRP: {
+    url: `${getFromEnv('BFF_BENK_BRP_API_BASE_URL')}`,
+    method: 'POST',
+    headers: {
+      'X-User': getFromEnv('BFF_BENK_BRP_X_USER'),
+      'X-Task-Description': getFromEnv('BFF_BENK_BRP_X_TASK_DESCRIPTION'),
+    },
+  },
   BAG: {
     url: PUBLIC_API_URLS.BAG_ADRESSEERBARE_OBJECTEN,
   },
@@ -323,12 +331,9 @@ const ApiConfig_ = {
     method: 'POST',
     postponeFetch: !featureToggleBodem.BodemActive,
   },
-  LOOD_365_OAUTH: {
-    url: `${getFromEnv('BFF_LOOD_OAUTH')}${getFromEnv('BFF_LOOD_TENANT')}/oauth2/v2.0/token`,
+  MS_OAUTH: {
+    url: `${getFromEnv('BFF_MS_OAUTH_ENDPOINT')}:tenant/oauth2/v2.0/token`,
     method: 'POST',
-    postponeFetch: !featureToggleBodem.BodemActive,
-    // eslint-disable-next-line no-magic-numbers
-    cacheTimeout: 59 * ONE_MINUTE_MS,
   },
   AMSAPP: {
     url: `${process.env.BFF_AMSAPP_ADMINISTRATIENUMMER_DELIVERY_ENDPOINT}`,

@@ -165,6 +165,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 async function startServerBFF() {
   if (
+    getFromEnv('LOG_THAT_HTTP') === 'true' ||
     getFromEnv('LOG_THAT_HTTP_HEADERS') === 'true' ||
     getFromEnv('LOG_THAT_HTTP_BODY') === 'true'
   ) {

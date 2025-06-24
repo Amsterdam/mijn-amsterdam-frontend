@@ -17,7 +17,7 @@ import {
 import { defaultDateFormat } from '../../../../../universal/helpers/date';
 import type { AppState } from '../../../../../universal/types/App.types';
 import LoadingContent from '../../../../components/LoadingContent/LoadingContent';
-import { profileLinks } from '../Profile-thema-config';
+import { featureToggle, profileLinks } from '../Profile-thema-config';
 import {
   ProfileLabels,
   formatProfileSectionData,
@@ -41,12 +41,12 @@ type BRPPanelKey = keyof Omit<
 >;
 
 const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
+  bsn: 'BSN',
   voornamen: 'Voornamen',
   omschrijvingAdellijkeTitel: 'Titel',
   voorvoegselGeslachtsnaam: 'Voorvoegsel',
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
-  bsn: 'BSN',
   geboortedatum: [
     'Geboortedatum',
     (geboorteDatum, persoon) => {
@@ -58,10 +58,12 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
       return '';
     },
   ],
+  geboortedatumFormatted: 'Geboortedatum',
   overlijdensdatum: [
     'Datum overlijden',
     (value) => (typeof value === 'string' ? defaultDateFormat(value) : null),
   ],
+  overlijdensdatumFormatted: 'Datum overlijden',
   geboorteplaatsnaam: [
     'Geboorteplaats',
     (value, _item, BRPData) =>
@@ -86,18 +88,13 @@ const persoon: ProfileLabels<Partial<Persoon>, AppState['BRP']['content']> = {
         .join(', ');
     },
   ],
-  omschrijvingBurgerlijkeStaat: [
-    'Burgerlijke staat',
-    (_value, _item, BRPData) => {
-      return !BRPData?.verbintenis ? 'Ongehuwd' : undefined;
-    },
-  ],
+  omschrijvingBurgerlijkeStaat: 'Burgerlijke staat',
   indicatieGeheim: [
     'Geheimhouding',
     (value, _item) =>
       value ? (
         <>
-          Voor dit adres geldt{' '}
+          Voor deze persoonsgegevens geldt{' '}
           <Link
             rel="noopener noreferrer"
             href="https://www.amsterdam.nl/burgerzaken/geheimhouding-persoonsgegevens-aanvragen/"
@@ -114,25 +111,38 @@ const persoonSecundair: ProfileLabels<
   AppState['BRP']['content']
 > = {
   ...persoon,
+  geboorteplaatsnaam: 'Geboorteplaats',
+  geboortelandnaam: 'Geboorteland',
 };
-persoonSecundair.geboorteplaatsnaam = 'Geboorteplaats';
-persoonSecundair.geboortelandnaam = 'Geboorteland';
 
 // Remove specific fields we don't want to show
 delete persoonSecundair.omschrijvingGeslachtsaanduiding;
 delete persoonSecundair.nationaliteiten;
 delete persoonSecundair.indicatieGeheim;
 
-const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
+const adres: ProfileLabels<
+  Partial<Adres> & { aantalBewoners: number; wozWaarde: string },
+  AppState['BRP']['content']
+> = {
+  locatiebeschrijving: 'Locatie',
   straatnaam: [
     'Straat',
     (_value, adres) => {
+      if (!adres?.straatnaam && adres?.locatiebeschrijving) {
+        return null;
+      }
       return adres?.straatnaam ? getFullAddress(adres as Adres) : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
     (_value, adres) => {
+      if (
+        !(adres?.postcode || adres?.woonplaatsNaam) &&
+        adres?.locatiebeschrijving
+      ) {
+        return null;
+      }
       return adres
         ? `${adres.postcode || ''} ${adres.woonplaatsNaam || 'Onbekend'}`
         : 'Onbekend';
@@ -142,10 +152,13 @@ const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
     'Vanaf',
     (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
+  begindatumVerblijfFormatted: 'Vanaf',
+  /** @deprecated */
   einddatumVerblijf: [
     'Tot',
     (value) => (value ? defaultDateFormat(value) : null),
   ],
+  /** @deprecated */
   aantalBewoners: [
     'Aantal bewoners',
     (value, _item, brpData) => {
@@ -165,6 +178,7 @@ const adres: ProfileLabels<Partial<Adres>, AppState['BRP']['content']> = {
   wozWaarde: 'WOZ-waarde',
 };
 
+/** @deprecated */
 function transformVerbintenisStatus(value: string) {
   const status: { [value: string]: string } = {
     Huwelijk: 'Gehuwd',
@@ -176,6 +190,7 @@ const verbintenis: ProfileLabels<
   Partial<VerbintenisHistorisch>,
   AppState['BRP']['content']
 > = {
+  /** @deprecated */
   soortVerbintenisOmschrijving: [
     (verbintenis) =>
       !verbintenis.datumOntbinding && !verbintenis.redenOntbindingOmschrijving
@@ -186,7 +201,17 @@ const verbintenis: ProfileLabels<
         ? transformVerbintenisStatus(value)
         : value,
   ],
-  datumSluiting: ['Vanaf', (value) => !!value && defaultDateFormat(value)],
+  /** @deprecated */
+  datumSluiting: [
+    'Vanaf',
+    (value) => {
+      if (featureToggle.BRP.benkBrpServiceActive) {
+        return null;
+      }
+      return !!value && defaultDateFormat(value);
+    },
+  ],
+  datumSluitingFormatted: 'Geregistreerd op',
   datumOntbinding: [
     'Einddatum',
     (dateValue, verbintenis) => {
@@ -199,10 +224,14 @@ const verbintenis: ProfileLabels<
       return null;
     },
   ],
+  datumOntbindingFormatted: 'Einddatum',
+  /** @deprecated */
   plaatsnaamSluitingOmschrijving: 'Plaats',
+  /** @deprecated */
   landnaamSluiting: 'Land',
 };
 
+/** @deprecated */
 const verbintenisHistorisch: ProfileLabels<
   Partial<VerbintenisHistorisch>,
   AppState['BRP']['content']
@@ -226,11 +255,13 @@ const labelConfig = {
 export interface BrpProfileData {
   persoon: ProfileSectionData | null;
   adres: ProfileSectionData | null;
-  adresHistorisch?: ProfileSectionData[];
   verbintenis?: ProfileSectionData;
-  verbintenisHistorisch?: ProfileSectionData[];
   ouders?: ProfileSectionData[];
   kinderen?: ProfileSectionData[];
+  /** @deprecated */
+  adresHistorisch?: ProfileSectionData[];
+  /** @deprecated */
+  verbintenisHistorisch?: ProfileSectionData[];
 }
 
 export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
@@ -240,28 +271,28 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       brpData?.persoon,
       brpData
     ),
-    adres: brpData.adres
-      ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
-      : { '': 'Adres onbekend' },
+    adres:
+      brpData.adres?.straatnaam || brpData.adres?.locatiebeschrijving
+        ? formatProfileSectionData(labelConfig.adres, brpData.adres, brpData)
+        : { Gegevens: 'onbekend' },
   };
 
   // Exclude below profile data for non-mokum residents.
-  if (brpData.persoon.mokum) {
-    if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
-      profileData.verbintenis = {
-        ...formatProfileSectionData(
-          labelConfig.verbintenis,
-          brpData.verbintenis,
-          brpData
-        ),
-        ...formatProfileSectionData(
-          labelConfig.persoonSecundair,
-          brpData.verbintenis.persoon,
-          brpData
-        ),
-      };
-    }
+  if (brpData.persoon.mokum && brpData.verbintenis) {
+    profileData.verbintenis = {
+      ...formatProfileSectionData(
+        labelConfig.verbintenis,
+        brpData.verbintenis,
+        brpData
+      ),
+      ...formatProfileSectionData(
+        labelConfig.persoonSecundair,
+        brpData.verbintenis.persoon,
+        brpData
+      ),
+    };
 
+    /** @deprecated */
     if (
       Array.isArray(brpData.verbintenisHistorisch) &&
       brpData.verbintenisHistorisch.length
@@ -297,6 +328,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       );
     }
 
+    /** @deprecated */
     if (
       Array.isArray(brpData.adresHistorisch) &&
       brpData.adresHistorisch.length
@@ -359,7 +391,9 @@ export const panelConfig: PanelConfig<BRPPanelKey, AppState['BRP']> = {
     };
   },
   verbintenis: (BRP) => ({
-    title: 'Burgerlijke staat',
+    title: featureToggle.BRP.benkBrpServiceActive
+      ? 'Partner'
+      : 'Burgerlijke staat',
     actionLinks: isMokum(BRP.content)
       ? [
           {
