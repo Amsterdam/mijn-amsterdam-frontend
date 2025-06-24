@@ -2,13 +2,27 @@ import { fetchParkeren } from './parkeren';
 import { hasPermitsOrPermitRequests } from './parkeren-egis-service';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
-import { mock } from 'node:test';
 
 const mocks = vi.hoisted(() => {
   return {
     IS_PRODUCTION: false,
+    JWETokenCreationActive: false,
   };
 });
+
+vi.mock(
+  '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts',
+  async (importOriginal) => {
+    return {
+      ...(await importOriginal()),
+      featureToggle: {
+        parkerenActive: true,
+        parkerenCheckForProductAndPermitsActive: true,
+        parkerenJWETokenCreationActive: mocks.JWETokenCreationActive,
+      },
+    };
+  }
+);
 
 vi.mock('../../../universal/config/env', async (importOriginal) => {
   return {
