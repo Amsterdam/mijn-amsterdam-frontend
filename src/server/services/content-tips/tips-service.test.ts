@@ -326,7 +326,7 @@ describe('createTipsFromServiceResults', () => {
         HLI: {
           content: {
             regelingen: [],
-            stadspas: [{ foo: 'bar' }],
+            stadspas: { stadspassen: [{ foo: 'bar' }] },
           },
           status: 'OK',
         },
@@ -348,6 +348,7 @@ describe('createTipsFromServiceResults', () => {
       isTip: true,
       isAlert: false,
       tipReason: 'test',
+      themaTitle: '',
     };
 
     it('should prefix a tip notification with "Tip: "', async () => {

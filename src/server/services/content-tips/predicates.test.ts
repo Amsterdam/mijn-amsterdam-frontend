@@ -31,8 +31,8 @@ import {
 } from '../../../universal/helpers/api';
 import { AppState } from '../../../universal/types/App.types';
 import { transformBRPData } from '../profile/brp';
-import { WpiRequestProcess } from '../wpi/wpi-types';
 import { BRPData, BRPDataFromSource } from '../profile/brp.types';
+import { WpiRequestProcess } from '../wpi/wpi-types';
 
 const BRP = {
   content: {
@@ -548,7 +548,7 @@ describe('predicates', () => {
       const appState = {
         HLI: {
           status: 'OK',
-          content: { stadspas: [{ passType: 'kind' }] },
+          content: { stadspas: { stadspassen: [{ passType: 'kind' }] } },
         },
       } as unknown as AppState;
 
@@ -745,14 +745,17 @@ describe('predicates', () => {
       HLI: {
         status: 'OK',
         content: {
-          stadspas: [
-            {
-              budgets: [{ title: 'Witgoed regeling' }],
-            },
-          ],
+          stadspas: {
+            stadspassen: [
+              {
+                budgets: [{ title: 'Witgoed regeling' }],
+              },
+            ],
+          },
         },
       },
     };
+
     test('hasBudget with correct name', () => {
       expect(hasBudget('witgoed')(state as unknown as AppState)).toBe(true);
     });

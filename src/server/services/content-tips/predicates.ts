@@ -51,7 +51,7 @@ export const hasValidIdForVoting: TipsPredicateFN = (appState) => {
 // rule 12
 export const hasStadspasGroeneStip: TipsPredicateFN = (appState) => {
   if (appState.HLI?.status === 'OK') {
-    const stadspassen = appState.HLI?.content?.stadspas ?? [];
+    const stadspassen = appState.HLI?.content?.stadspas?.stadspassen ?? [];
     return !!stadspassen.length;
   }
   return false;
@@ -62,7 +62,7 @@ export function hasBudget(
 ): TipsPredicateFN {
   const predicate: TipsPredicateFN = (appState) => {
     if (appState.HLI?.status === 'OK') {
-      const stadspassen = appState.HLI?.content?.stadspas ?? [];
+      const stadspassen = appState.HLI?.content?.stadspas?.stadspassen ?? [];
       return stadspassen.some((stadspas) => {
         return stadspas.budgets.some((budget) => {
           return budget.title

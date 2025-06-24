@@ -57,7 +57,17 @@ const debugResponseDataTerms =
 
 debugRequest(debugResponseDataTerms, 'debug response data terms');
 
-export const cache = new memoryCache.Cache<string, any>();
+const cache = new memoryCache.Cache<string, any>();
+
+export function deleteCacheEntry(cacheKey: string) {
+  const success = cache.del(cacheKey);
+  if (success) {
+    debugCacheKey(`Cache entry deleted for ${cacheKey}`);
+  } else {
+    debugCacheKey(`No cache entry found for ${cacheKey}`);
+  }
+  return success;
+}
 
 export interface RequestConfig<Source, Transformed> {
   url: string;
@@ -261,3 +271,7 @@ export function getNextUrlFromLinkHeader(headers: AxiosResponseHeaders) {
 export function getRequestParamsFromQueryString(queryString: string) {
   return Object.fromEntries(new URLSearchParams(queryString));
 }
+
+export const forTesting = {
+  cache,
+};
