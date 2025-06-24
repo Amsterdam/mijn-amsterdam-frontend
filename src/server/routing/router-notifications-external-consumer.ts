@@ -60,7 +60,7 @@ if (!IS_PRODUCTION) {
   );
 }
 
-routerPrivate.get(
+routerPrivate.post(
   ExternalConsumerEndpoints.private.NOTIFICATIONS_JOB,
   apiKeyVerificationHandler,
   fetchAndStoreNotifications
