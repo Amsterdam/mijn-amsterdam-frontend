@@ -12,6 +12,7 @@ import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { logger } from '../../logging';
+import { captureException } from '../monitoring';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
@@ -165,7 +166,7 @@ async function createJWEToken(
       .encrypt(JWK);
     return jweToken;
   } catch (err) {
-    logger.error(err);
+    captureException(err);
     return null;
   }
 }
