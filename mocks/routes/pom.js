@@ -14,11 +14,12 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
-            axios({
-              method: 'POST',
-              url: 'http://localhost:5000/private/api/v1/services/afis/e-mandates/sign-request-status-notify',
-              data: `<?xml version="1.0"?>
+          middleware: async (req, res, next, core) => {
+            try {
+              await axios({
+                method: 'POST',
+                url: 'http://localhost:5000/private/api/v1/services/afis/e-mandates/sign-request-status-notify',
+                data: `<?xml version="1.0"?>
             <response>
               <id_client>1000</id_client>
               <debtornumber>123456</debtornumber>
@@ -34,11 +35,15 @@ module.exports = [
               <account_owner>John Doe</account_owner>
               <event_date>2024-01-05</event_date>
               <event_time>11:27</event_time>
+              <variable2>NL90RABO0110055993</variable2>
             </response>`,
-              headers: {
-                'Content-Type': 'text/xml',
-              },
-            });
+                headers: {
+                  'Content-Type': 'text/xml',
+                },
+              });
+            } catch (error) {
+              console.error('Error sending POST request:', error.message);
+            }
             const htmlResponse = `
                 <h1>POM E-mandaat scherm</h1>
                  <a href="${process.env.MA_FRONTEND_URL}">
