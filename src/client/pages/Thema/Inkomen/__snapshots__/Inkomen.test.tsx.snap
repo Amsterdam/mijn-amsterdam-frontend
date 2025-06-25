@@ -6,10 +6,10 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -46,7 +46,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Inkomen
         </h1>
@@ -131,7 +131,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -214,7 +214,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -285,7 +285,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         </table>
       </div>
       <a
-        class="ams-link _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+        class="ams-link _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
         href="/inkomen/lijst/eerdere-aanvragen"
         title="Bekijk meer eerdere aanvragen"
       >
@@ -304,7 +304,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -350,14 +350,14 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 class="ams-table__cell"
               >
                 <span
-                  class="_DocumentLinkWrap_81c3b4"
+                  class="_DocumentLinkWrap_4ce874"
                 >
                   <a
-                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
                     href="/wpi/document/id"
                   >
                     <span
-                      class="_DocumentLinkIcon_81c3b4"
+                      class="_DocumentLinkIcon_4ce874"
                     >
                       <span
                         class="ams-icon ams-icon--heading-5"
@@ -395,7 +395,7 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -432,14 +432,14 @@ exports[`<Inkomen /> > with items from BBZ, TONK, TOZO > Matches the Full Page s
                 class="ams-table__cell"
               >
                 <span
-                  class="_DocumentLinkWrap_81c3b4"
+                  class="_DocumentLinkWrap_4ce874"
                 >
                   <a
-                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
                     href="/wpi/document/id"
                   >
                     <span
-                      class="_DocumentLinkIcon_81c3b4"
+                      class="_DocumentLinkIcon_4ce874"
                     >
                       <span
                         class="ams-icon ams-icon--heading-5"
@@ -475,10 +475,10 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -515,7 +515,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Inkomen
         </h1>
@@ -600,7 +600,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <tbody
             class="ams-table__body"
@@ -625,7 +625,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <tbody
             class="ams-table__body"
@@ -650,7 +650,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -696,14 +696,14 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                 class="ams-table__cell"
               >
                 <span
-                  class="_DocumentLinkWrap_81c3b4"
+                  class="_DocumentLinkWrap_4ce874"
                 >
                   <a
-                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
                     href="/wpi/document/id"
                   >
                     <span
-                      class="_DocumentLinkIcon_81c3b4"
+                      class="_DocumentLinkIcon_4ce874"
                     >
                       <span
                         class="ams-icon ams-icon--heading-5"
@@ -741,7 +741,7 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -778,14 +778,14 @@ exports[`<Inkomen /> > without items from BBZ, TONK, TOZO > Matches the Full Pag
                 class="ams-table__cell"
               >
                 <span
-                  class="_DocumentLinkWrap_81c3b4"
+                  class="_DocumentLinkWrap_4ce874"
                 >
                   <a
-                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
                     href="/wpi/document/id"
                   >
                     <span
-                      class="_DocumentLinkIcon_81c3b4"
+                      class="_DocumentLinkIcon_4ce874"
                     >
                       <span
                         class="ams-icon ams-icon--heading-5"

@@ -6,10 +6,10 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -56,7 +56,7 @@ exports[`AVGDetail > No result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           AVG verzoek
         </h1>
@@ -118,10 +118,10 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -168,7 +168,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           AVG verzoek
         </h1>
@@ -178,35 +178,35 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Nummer
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           223
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Type verzoek
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Verwijderen gegevens
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Onderwerp(en)
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Vergunningen, Enzo
         </dd>
@@ -216,7 +216,7 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
-        class="_Steps_7a365b"
+        class="_Steps_5b0b8a"
       >
         <h3
           class="ams-heading ams-heading--2 ams-mb-m"
@@ -224,21 +224,21 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
           Status
         </h3>
         <ol
-          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
+          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
         >
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -256,25 +256,25 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
               Ontvangen
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2023-03-18T00:00:00.000Z"
             >
               18 maart 2023
             </time>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -292,26 +292,26 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
               In behandeling
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2023-05-30T00:00:00.000Z"
             >
               30 mei 2023
             </time>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Huidige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Extra informatie nodig
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2023-06-03T00:00:00.000Z"
             >
               03 juni 2023
@@ -321,19 +321,19 @@ exports[`AVGDetail > With result > Matches the Full Page snapshot 1`] = `
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Toekomstige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Afgehandeld
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
           </li>

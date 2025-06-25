@@ -6,10 +6,10 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -56,7 +56,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Hulp bij het huishouden (geleverd)
         </h1>
@@ -66,15 +66,15 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Aanbieder
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Emile Thuiszorg
         </dd>
@@ -84,7 +84,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
-        class="_Steps_7a365b"
+        class="_Steps_5b0b8a"
       >
         <h3
           class="ams-heading ams-heading--2 ams-mb-m"
@@ -92,21 +92,21 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Status
         </h3>
         <ol
-          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
+          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
         >
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -124,7 +124,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               Besluit
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2022-01-15"
             >
               15 januari 2022
@@ -173,19 +173,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </p>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Huidige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Levering gestart
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -199,19 +199,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Toekomstige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Levering gestopt
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -225,19 +225,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Toekomstige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Einde recht
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
             />
             <div>
               <p
@@ -262,10 +262,10 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -312,7 +312,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Hulp bij het huishouden (gestopt)
         </h1>
@@ -322,15 +322,15 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Aanbieder
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Emile Thuiszorg
         </dd>
@@ -340,7 +340,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
-        class="_Steps_7a365b"
+        class="_Steps_5b0b8a"
       >
         <h3
           class="ams-heading ams-heading--2 ams-mb-m"
@@ -348,21 +348,21 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Status
         </h3>
         <ol
-          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
+          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
         >
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -380,7 +380,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               Besluit
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2022-01-15"
             >
               15 januari 2022
@@ -423,18 +423,18 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </p>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -452,7 +452,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               Levering gestart
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -466,18 +466,18 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -495,7 +495,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               Levering gestopt
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -510,19 +510,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Huidige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Einde recht
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2022-01-22"
             >
               22 januari 2022
@@ -550,10 +550,10 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -600,7 +600,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Hulp bij het huishouden (nog niet geleverd)
         </h1>
@@ -610,15 +610,15 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Aanbieder
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Emile Thuiszorg
         </dd>
@@ -628,7 +628,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
-        class="_Steps_7a365b"
+        class="_Steps_5b0b8a"
       >
         <h3
           class="ams-heading ams-heading--2 ams-mb-m"
@@ -636,22 +636,22 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Status
         </h3>
         <ol
-          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
+          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
         >
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Huidige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Besluit
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2022-01-15"
             >
               15 januari 2022
@@ -700,19 +700,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </p>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Toekomstige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Levering gestart
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -726,19 +726,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Toekomstige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Levering gestopt
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -752,19 +752,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Toekomstige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Einde recht
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
             />
             <div>
               <p
@@ -789,10 +789,10 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -839,7 +839,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Hulp bij het huishouden (tijdelijk gestopt)
         </h1>
@@ -849,15 +849,15 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Aanbieder
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Emile Thuiszorg
         </dd>
@@ -867,7 +867,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
-        class="_Steps_7a365b"
+        class="_Steps_5b0b8a"
       >
         <h3
           class="ams-heading ams-heading--2 ams-mb-m"
@@ -875,21 +875,21 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
           Status
         </h3>
         <ol
-          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
+          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
         >
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -907,7 +907,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               Besluit
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2022-01-15"
             >
               15 januari 2022
@@ -956,18 +956,18 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </p>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--checked_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--checked_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Status Afgerond"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               >
                 <span
                   aria-label="Status Afgerond"
-                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_7a365b"
+                  class="ams-icon ams-icon--heading-6 _StatusIndicationCheckmark_5b0b8a"
                 >
                   <svg
                     aria-hidden="true"
@@ -985,7 +985,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
               Levering gestart
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -999,19 +999,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Huidige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Levering gestopt
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime=""
             />
             <div>
@@ -1025,19 +1025,19 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Hulp bij het huishou
             </div>
           </li>
           <li
-            class="ams-ordered-list__item _Step_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Toekomstige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Einde recht
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
             />
             <div>
               <p
@@ -1062,10 +1062,10 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -1112,7 +1112,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Wmo item 1
         </h1>
@@ -1122,15 +1122,15 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Aanbieder
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Mantelzorg B.V
         </dd>
@@ -1140,7 +1140,7 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <section
-        class="_Steps_7a365b"
+        class="_Steps_5b0b8a"
       >
         <h3
           class="ams-heading ams-heading--2 ams-mb-m"
@@ -1148,22 +1148,22 @@ exports[`<Zorg /> > Matches the Full Page snapshot for item Wmo item 1 1`] = `
           Status
         </h3>
         <ol
-          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_7a365b"
+          class="ams-ordered-list ams-ordered-list--no-markers _StepsList_5b0b8a"
         >
           <li
-            class="ams-ordered-list__item _Step_7a365b _Step--active_7a365b"
+            class="ams-ordered-list__item _Step_5b0b8a _Step--active_5b0b8a"
           >
             <h4
-              class="ams-heading ams-heading--4 _StepStatus_7a365b"
+              class="ams-heading ams-heading--4 _StepStatus_5b0b8a"
             >
               <span
                 aria-label="Huidige status"
-                class="_StepStatusIndication_7a365b"
+                class="_StepStatusIndication_5b0b8a"
               />
               Levering gestart
             </h4>
             <time
-              class="_StepStatusDate_7a365b"
+              class="_StepStatusDate_5b0b8a"
               datetime="2020-07-24"
             >
               24 juli 2020

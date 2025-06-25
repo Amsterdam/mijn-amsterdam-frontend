@@ -6,10 +6,10 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -46,7 +46,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when API gives n
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Bezwaren
         </h1>
@@ -158,10 +158,10 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -198,7 +198,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Bezwaren
         </h1>
@@ -266,7 +266,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <tbody
             class="ams-table__body"
@@ -291,7 +291,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are n
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <tbody
             class="ams-table__body"
@@ -314,10 +314,10 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -354,7 +354,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Bezwaren
         </h1>
@@ -422,7 +422,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -460,7 +460,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
                 class="ams-table__cell"
               >
                 <a
-                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                   href="/bezwaren/68cdd171-b4fd-44cc-a4d3-06b77341f20a"
                   title="Bekijk meer over BI.21.014121.001"
                 >
@@ -492,7 +492,7 @@ exports[`Bezwaren thema pagina > Matches the Full Page snapshot when there are r
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <tbody
             class="ams-table__body"
