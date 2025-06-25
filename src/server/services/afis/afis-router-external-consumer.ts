@@ -9,7 +9,7 @@ import { HTTP_STATUS_CODES } from '../../../universal/constants/errorCodes';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import { captureMessage } from '../monitoring';
 
-export const routerPrivateNetwork = express.Router();
+const routerPrivateNetwork = express.Router();
 routerPrivateNetwork.BFF_ID = 'afis-external-consumer-private-network';
 
 function validateAndExtractPayload(xmlPayload: string) {
@@ -81,3 +81,7 @@ routerPrivateNetwork.post(
     return res.send(isOK ? 'OK' : 'ERROR');
   }
 );
+
+export const afisExternalConsumerRouter = {
+  privateNetwork: routerPrivateNetwork,
+};
