@@ -32,7 +32,7 @@ describe('helpers', () => {
       const appState = {
         HLI: {
           content: {
-            stadspas: [{ id: '' }],
+            stadspas: { stadspassen: [{ id: '' }] },
             regelingen: [{ displayStatus: '' }],
           },
         },
@@ -45,7 +45,7 @@ describe('helpers', () => {
       const appState = {
         HLI: {
           content: {
-            stadspas: [{ id: '' }],
+            stadspas: { stadspassen: [{ id: '' }] },
             regelingen: [],
           },
         },
@@ -58,7 +58,7 @@ describe('helpers', () => {
       const appState = {
         HLI: {
           content: {
-            stadspas: [],
+            stadspas: { stadspassen: [] },
             regelingen: [{ displayStatus: '' }],
           },
         },

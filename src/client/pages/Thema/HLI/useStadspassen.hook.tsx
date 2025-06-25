@@ -2,20 +2,20 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import {
-  PasblokkadeByPasnummer,
   StadspasFrontend,
+  type PasblokkadeByPasnummer,
 } from '../../../../server/services/hli/stadspas-types';
-import { ApiResponse_DEPRECATED } from '../../../../universal/helpers/api';
 import { useAppStateGetter } from '../../../hooks/useAppState';
 
 export function useStadspassen() {
   const { HLI } = useAppStateGetter();
   const { data: passBlokkadeByPasnummer } = useBlockStadspas();
-  const stadspassen = (HLI.content?.stadspas || []).map((pas) => {
+  const stadspassen = (HLI.content?.stadspas?.stadspassen || []).map((pas) => {
     const isGeblokkeerd = passBlokkadeByPasnummer?.[pas.passNumber];
     const stadspas: StadspasFrontend = {
       ...pas,
-      actief: isGeblokkeerd ?? pas.actief,
+      actief:
+        typeof isGeblokkeerd !== 'undefined' ? !isGeblokkeerd : pas.actief,
     };
 
     return stadspas;
@@ -29,15 +29,14 @@ type BlokkeerURL = string;
 export function useBlockStadspas() {
   const { data } = useSWR<PasblokkadeByPasnummer>('pasblokkades');
   const mutation = useSWRMutation<
-    | PasblokkadeByPasnummer
-    | ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>,
+    PasblokkadeByPasnummer,
     Error,
     'pasblokkades',
     BlokkeerURL
   >(
     'pasblokkades',
-    async (_key, { arg }) => {
-      const response = await fetch(arg, {
+    async (_key, { arg: url }) => {
+      const response = await fetch(url, {
         credentials: 'include',
       }).then((response) => response.json());
 
@@ -45,14 +44,14 @@ export function useBlockStadspas() {
         throw new Error(response.message);
       }
 
-      return response;
+      return response.content;
     },
     {
       revalidate: false,
-      populateCache: (response, pasBlokkadeByPasnummer) => {
+      populateCache: (responseContent, pasBlokkadeByPasnummer) => {
         const newState = {
           ...pasBlokkadeByPasnummer,
-          ...('content' in response ? response.content : {}),
+          ...responseContent,
         };
         return newState;
       },

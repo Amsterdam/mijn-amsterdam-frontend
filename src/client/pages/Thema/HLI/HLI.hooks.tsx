@@ -18,15 +18,15 @@ export function useStadspassen() {
   const [stadspasActief, setStadspassenActiefStatus] =
     useRecoilState(stadspasActiefAtom);
 
-  const stadspassen: StadspasFrontend[] = (HLI.content?.stadspas || []).map(
-    (pas) => {
-      const stadspas = {
-        ...pas,
-        actief: stadspasActief[pas.id] ?? true,
-      };
-      return stadspas;
-    }
-  );
+  const stadspassen: StadspasFrontend[] = (
+    HLI.content?.stadspas?.stadspassen || []
+  ).map((pas) => {
+    const stadspas = {
+      ...pas,
+      actief: stadspasActief[pas.id] ?? true,
+    };
+    return stadspas;
+  });
 
   return [stadspassen, setStadspassenActiefStatus] as const;
 }

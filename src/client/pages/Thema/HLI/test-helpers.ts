@@ -15,7 +15,10 @@ export function createHLIState(withData: {
       status: withData.status || 'OK',
       content: {
         regelingen: withData.regelingen || [],
-        stadspas: withData.stadspas || [],
+        stadspas: {
+          stadspassen: withData.stadspas || [],
+          dateExpiryFormatted: '31 juli 2025',
+        },
       },
     },
   } as unknown as AppState;
