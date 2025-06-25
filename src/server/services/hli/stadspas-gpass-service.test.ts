@@ -1,17 +1,16 @@
 import { HttpStatusCode } from 'axios';
-import { describe, expect, Mock } from 'vitest';
+import Mockdate from 'mockdate';
+import { describe, expect } from 'vitest';
 
 import { blockStadspas } from './stadspas';
 import { GPASS_API_TOKEN } from './stadspas-config-and-content';
 import {
   fetchGpassDiscountTransactions,
+  fetchStadspassenByAdministratienummer,
   forTesting,
-  mutateGpassBlockPass,
-  mutateGpassUnblockPass,
+  mutateGpassSetPasIsBlockedState,
 } from './stadspas-gpass-service';
-import { fetchStadspassenByAdministratienummer } from './stadspas-gpass-service';
-import {
-  StadspasPasHouderResponse,
+import type {
   StadspasAanbiedingSource,
   StadspasDetailBudgetSource,
   StadspasDetailSource,
@@ -19,19 +18,23 @@ import {
   StadspasHouderSource,
   StadspasTransactiesResponseSource,
 } from './stadspas-types';
-import { remoteApi } from '../../../testing/utils';
 import {
-  ApiErrorResponse,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
-import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
-import { BffEndpoints } from '../../routing/bff-routes';
-
-vi.mock('../../helpers/source-api-request');
-vi.mock('../../helpers/source-api-helpers');
+  createPas,
+  setupStadspashouderRequests,
+  setupPassenRequests,
+} from './stadspas.test';
+import { remoteApi } from '../../../testing/utils';
+import { ApiErrorResponse } from '../../../universal/helpers/api';
 
 describe('stadspas-gpass-service', () => {
+  afterEach(() => {
+    Mockdate.reset();
+    vi.restoreAllMocks();
+    vi.resetAllMocks();
+  });
+  beforeEach(() => {
+    Mockdate.set('2025-01-01');
+  });
   describe('getHeaders', () => {
     test('should return correct headers', () => {
       const administratienummer = '12345';
@@ -305,13 +308,13 @@ describe('stadspas-gpass-service', () => {
       ]);
     });
 
-    test('should return input if not an array of transactions', () => {
+    test('should return default response data if we encounter unsable data', () => {
       const responseSource = {
         someOtherProperty: 'value',
       } as unknown as StadspasTransactiesResponseSource;
       const transformedResponse =
         forTesting.transformGpassTransactionsResponse(responseSource);
-      expect(transformedResponse).toEqual(responseSource);
+      expect(transformedResponse).toEqual([]);
     });
   });
 
@@ -378,15 +381,6 @@ describe('stadspas-gpass-service', () => {
           },
         ],
       });
-    });
-
-    test('should return input if not an array of transactions', () => {
-      const responseSource = {
-        someOtherProperty: 'value',
-      } as unknown as StadspasDiscountTransactionsResponseSource;
-      const transformedResponse =
-        forTesting.transformGpassAanbiedingenResponse(responseSource);
-      expect(transformedResponse).toEqual(responseSource);
     });
   });
 
@@ -473,52 +467,49 @@ describe('stadspas-gpass-service', () => {
 
   describe('fetchStadspassenByAdministratienummer', () => {
     const administratienummer = '12345';
-    const dataRequestConfig = { url: 'http://example.com' };
 
-    beforeEach(() => {
-      vi.clearAllMocks();
-      (getApiConfig as Mock).mockReturnValue(dataRequestConfig);
-    });
+    const errorResponse = {
+      status: 'ERROR',
+      content: null,
+      message: 'Request failed with status code 500',
+      code: HttpStatusCode.InternalServerError,
+    };
 
     test('User not found or has no passen/pashouders', async () => {
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        code: HttpStatusCode.Unauthorized,
-      });
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pashouder?addsubs=true`)
+        .reply(401);
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pashouder?addsubs=true`)
+        .reply(200, { passen: [] });
 
       const result =
         await fetchStadspassenByAdministratienummer(administratienummer);
 
-      expect(result).toStrictEqual(
-        apiSuccessResult({
-          stadspassen: [],
+      expect(result).toStrictEqual({
+        content: {
           administratienummer: null,
-        })
-      );
-
-      (requestData as Mock).mockResolvedValueOnce({
+          stadspassen: [],
+        },
         status: 'OK',
-        code: HttpStatusCode.Unauthorized,
-        content: { message: 'API key invalid' },
       });
 
       const result2 =
         await fetchStadspassenByAdministratienummer(administratienummer);
 
-      expect(result2).toStrictEqual(
-        apiSuccessResult({
-          stadspassen: [],
+      expect(result2).toStrictEqual({
+        content: {
           administratienummer: '12345',
-        })
-      );
+          stadspassen: [],
+        },
+        status: 'OK',
+      });
     });
 
     test('Internal server error is passed through', async () => {
-      const errorResponse = {
-        status: 'ERROR',
-        code: HttpStatusCode.InternalServerError,
-      };
-      (requestData as Mock).mockResolvedValueOnce(errorResponse);
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pashouder?addsubs=true`)
+        .reply(500, errorResponse);
 
       const result =
         await fetchStadspassenByAdministratienummer(administratienummer);
@@ -527,147 +518,55 @@ describe('stadspas-gpass-service', () => {
     });
 
     test('should return transformed stadspassen if stadspasHouderResponse status is OK', async () => {
-      const pashouder = {
-        voornaam: 'John',
-        achternaam: 'Doe',
-        tussenvoegsel: 'van',
-        initialen: 'J.D.',
-        passen: [
-          {
-            actief: true,
-            budgetten: [],
-            categorie: '',
-            categorie_code: '',
-            expiry_date: '',
-            heeft_budget: false,
-            id: 1,
-            pasnummer: 999999999,
-            pasnummer_volledig: '',
-            passoort: { id: 1, naam: '' },
-            securitycode: '0123456',
-            vervangen: false,
-          },
-        ],
-      };
+      Mockdate.set('2025-01-01');
 
-      const stadspasHouderResponse: StadspasPasHouderResponse = {
-        ...pashouder,
-        sub_pashouders: [],
-      };
+      const relevantPas = createPas({
+        actief: true,
+        pasnummer: 111111111111,
+        expiry_date: '2025-07-31',
+      });
+      setupStadspashouderRequests({ passen: [relevantPas] });
+      setupPassenRequests([relevantPas]);
 
-      const stadspasDetail: StadspasDetailSource = {
-        id: 1,
-        pasnummer: 999999999,
-        pasnummer_volledig: '12345-67890',
-        expiry_date: '2023-12-31',
-        budgetten: [
-          {
-            naam: 'Budget Name',
-            omschrijving: 'Description',
-            code: '123',
-            budget_assigned: 1000,
-            budget_balance: 500,
-            expiry_date: '2023-12-31',
-          },
-        ],
-        actief: false,
-        balance_update_time: '',
-        budgetten_actief: false,
-        categorie: '',
-        categorie_code: '',
-        originele_pas: {
-          categorie: '',
-          categorie_code: '',
-          id: 0,
-          pasnummer: 0,
-          pasnummer_volledig: '',
-          passoort: {
-            id: 0,
-            naam: '',
-          },
-        },
-        passoort: {
-          id: 0,
-          naam: '',
-        },
-        pashouder: {
-          initialen: '',
-          achternaam: '',
-          tussenvoegsel: '',
-          voornaam: '',
-          passen: [],
-          volledige_naam: '',
-        },
-      };
-
-      (requestData as Mock)
-        .mockResolvedValueOnce({
-          status: 'OK',
-          content: stadspasHouderResponse,
-        })
-        .mockResolvedValueOnce({
-          status: 'OK',
-          content: [
-            forTesting.transformStadspasResponse(
-              stadspasDetail,
-              pashouder,
-              '0123456'
-            ),
-          ],
-        });
-
-      const result =
+      const response =
         await fetchStadspassenByAdministratienummer(administratienummer);
 
-      expect(result).toStrictEqual(
-        apiSuccessResult({
-          stadspassen: [
-            {
-              id: '1',
-              owner: {
-                firstname: 'John',
-                lastname: 'Doe',
-                infix: 'van',
-                initials: 'J.D.',
-              },
-              actief: false,
-              dateEnd: '2023-12-31',
-              dateEndFormatted: '31 december 2023',
-              budgets: [
-                {
-                  title: 'Budget Name',
-                  description: 'Description',
-                  code: '123',
-                  budgetAssigned: 1000,
-                  budgetAssignedFormatted: '€1.000,00',
-                  budgetBalance: 500,
-                  budgetBalanceFormatted: '€500,00',
-                  dateEnd: '2023-12-31',
-                  dateEndFormatted: '31 december 2023',
-                },
-              ],
-              balance: 500,
-              balanceFormatted: '€500,00',
-              passNumber: 999999999,
-              passNumberComplete: '12345-67890',
-              securityCode: '0123456',
-            },
-          ],
-          administratienummer: '12345',
-        })
-      );
+      expect(response.content?.stadspassen[0]).toStrictEqual({
+        actief: true,
+        balance: 0,
+        balanceFormatted: '€0,00',
+        budgets: [
+          {
+            budgetAssigned: 150,
+            budgetAssignedFormatted: '€150,00',
+            budgetBalance: 0,
+            budgetBalanceFormatted: '€0,00',
+            code: 'AMSTEG_10-14',
+            dateEnd: '2080-08-31T21:59:59.000Z',
+            dateEndFormatted: '31 augustus 2080',
+            description: 'Kindtegoed',
+            title: 'Kindtegoed 10-14',
+          },
+        ],
+        dateEnd: '2025-07-31',
+        dateEndFormatted: '31 juli 2025',
+        id: '999999',
+        owner: {
+          firstname: 'Vadertje',
+          infix: undefined,
+          initials: 'A',
+          lastname: 'Achternaam',
+        },
+        passNumber: 111111111111,
+        passNumberComplete: '6666666666666666666',
+        securityCode: '012345',
+      });
     });
   });
 
   describe('fetchGpassDiscountTransactions', () => {
     const administratienummer = '12345';
     const pasnummer = 999999999;
-    const dataRequestConfig = { url: 'http://example.com' };
-
-    beforeEach(() => {
-      vi.clearAllMocks();
-      (getApiConfig as Mock).mockReturnValue(dataRequestConfig);
-    });
 
     test('should return transformed discount transactions if response status is OK', async () => {
       const responseSource: StadspasDiscountTransactionsResponseSource = {
@@ -712,10 +611,11 @@ describe('stadspas-gpass-service', () => {
         number_of_items: 0,
       };
 
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: forTesting.transformGpassAanbiedingenResponse(responseSource),
-      });
+      remoteApi
+        .get(
+          `/stadspas/rest/transacties/v1/aanbiedingen?pasnummer=${pasnummer}&sub_transactions=true`
+        )
+        .reply(200, responseSource);
 
       const result = await fetchGpassDiscountTransactions(
         administratienummer,
@@ -743,15 +643,16 @@ describe('stadspas-gpass-service', () => {
       });
     });
 
-    test('should return input if not an array of transactions', async () => {
+    test('should return default response if we encounter unusable data.', async () => {
       const responseSource = {
         someOtherProperty: 'value',
       } as unknown as StadspasDiscountTransactionsResponseSource;
 
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: responseSource,
-      });
+      remoteApi
+        .get(
+          `/stadspas/rest/transacties/v1/aanbiedingen?pasnummer=${pasnummer}&sub_transactions=true`
+        )
+        .reply(200, responseSource);
 
       const result = await fetchGpassDiscountTransactions(
         administratienummer,
@@ -759,18 +660,28 @@ describe('stadspas-gpass-service', () => {
       );
 
       expect(result).toStrictEqual({
+        content: {
+          discountAmountTotal: 0,
+          discountAmountTotalFormatted: '€0,00',
+          transactions: [],
+        },
         status: 'OK',
-        content: responseSource,
       });
     });
 
     test('should return error response if request fails', async () => {
+      remoteApi
+        .get(
+          `/stadspas/rest/transacties/v1/aanbiedingen?pasnummer=${pasnummer}&sub_transactions=true`
+        )
+        .reply(500);
+
       const errorResponse = {
         status: 'ERROR',
+        content: null,
+        message: 'Request failed with status code 500',
         code: HttpStatusCode.InternalServerError,
       };
-
-      (requestData as Mock).mockResolvedValueOnce(errorResponse);
 
       const result = await fetchGpassDiscountTransactions(
         administratienummer,
@@ -782,72 +693,80 @@ describe('stadspas-gpass-service', () => {
   });
 
   describe('blockStadspass', async () => {
-    const passBlockedSuccessfulResponse = {
-      content: {
-        '123': false,
-      },
-      status: 'OK',
-    };
-
     const transactionKeysEncrypted = '123';
 
     test('Uses decrypt and fetcher', async () => {
-      remoteApi.post(
-        BffEndpoints.STADSPAS_BLOCK_PASS,
-        passBlockedSuccessfulResponse
-      );
-
       const response = (await blockStadspas(
         // This cannot be decrypted so we expect an error response.
         transactionKeysEncrypted
       )) as ApiErrorResponse<null>;
+
       expect(response.message).toContain('Failed to decrypt');
-    });
-
-    test('Will block a pass that is active', async () => {
-      const PASSNUMBER = 123;
-
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: { pasnummer: PASSNUMBER, actief: true },
-      });
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: { pasnummer: PASSNUMBER, actief: false },
-      });
-
-      const response = await mutateGpassBlockPass(123, '123');
-      expect(response).toStrictEqual({
-        content: {
-          actief: false,
-          pasnummer: 123,
-        },
-        status: 'OK',
-      });
     });
 
     test('Can only block and not toggle the stadspas', async () => {
       const PASSNUMBER = 123;
-      (requestData as Mock).mockResolvedValueOnce({
+      const IS_BLOCKED = true;
+
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pas/${PASSNUMBER}?include_balance=true`)
+        .reply(200, {
+          pasnummer: PASSNUMBER,
+          actief: true,
+        });
+
+      remoteApi
+        .post(`/stadspas/rest/sales/v1/togglepas/${PASSNUMBER}`)
+        .reply(200, {
+          pasnummer: PASSNUMBER,
+          actief: false,
+        });
+
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pas/${PASSNUMBER}?include_balance=true`)
+        .reply(200, {
+          pasnummer: PASSNUMBER,
+          actief: false,
+        });
+
+      const response = await mutateGpassSetPasIsBlockedState(
+        PASSNUMBER,
+        '123',
+        IS_BLOCKED
+      );
+
+      expect(response).toStrictEqual({
+        content: { isBlocked: true },
         status: 'OK',
-        content: { pasnummer: PASSNUMBER, actief: false },
       });
 
-      const response = await mutateGpassBlockPass(PASSNUMBER, '123456789');
-      expect(response).toStrictEqual({
-        content: { [PASSNUMBER]: false },
+      // Returns without going through the toggle request again.
+      const response2 = await mutateGpassSetPasIsBlockedState(
+        PASSNUMBER,
+        '123',
+        IS_BLOCKED
+      );
+
+      expect(response2).toStrictEqual({
+        content: { isBlocked: true },
         status: 'OK',
       });
     });
 
     test('Returns error status if invalid response from source API', async () => {
       const PASSNUMBER = 123;
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: { pasnummer: PASSNUMBER, actief: 'INVALID' },
-      });
+      const IS_BLOCKED = true;
 
-      const response = await mutateGpassBlockPass(PASSNUMBER, '123456789');
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pas/${PASSNUMBER}?include_balance=true`)
+        .reply(200, { pasnummer: PASSNUMBER, actief: 'INVALID' });
+
+      const response = await mutateGpassSetPasIsBlockedState(
+        PASSNUMBER,
+        '123456789',
+        IS_BLOCKED
+      );
+
       expect(response).toStrictEqual({
         code: 500,
         content: null,
@@ -857,25 +776,94 @@ describe('stadspas-gpass-service', () => {
       });
     });
 
-    test('Unblock Stadspas unblocks', async () => {
+    test('Unblocks the stadspas', async () => {
       const PASSNUMBER = 123;
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: { pasnummer: PASSNUMBER, actief: false },
-      });
-      (requestData as Mock).mockResolvedValueOnce({
-        status: 'OK',
-        content: { [PASSNUMBER]: true },
-      });
+      const IS_BLOCKED = false;
 
-      const response = await mutateGpassUnblockPass(PASSNUMBER, '123456789');
+      remoteApi
+        .get(`/stadspas/rest/sales/v1/pas/${PASSNUMBER}?include_balance=true`)
+        .reply(200, {
+          pasnummer: PASSNUMBER,
+          actief: false,
+        });
+
+      remoteApi
+        .post(`/stadspas/rest/sales/v1/togglepas/${PASSNUMBER}`)
+        .reply(200, {
+          pasnummer: PASSNUMBER,
+          actief: true,
+        });
+
+      const response = await mutateGpassSetPasIsBlockedState(
+        PASSNUMBER,
+        '123',
+        IS_BLOCKED
+      );
 
       expect(response).toStrictEqual({
-        content: {
-          '123': true,
-        },
+        content: { isBlocked: false },
         status: 'OK',
       });
+    });
+  });
+
+  describe('filtering', () => {
+    test('getDefaultExpiryDate', () => {
+      expect(forTesting.getDefaultExpiryDate().toISOString()).toBe(
+        '2025-07-31T00:00:00.000Z'
+      );
+      expect(forTesting.getDefaultExpiryDate(-5).toISOString()).toBe(
+        '2020-07-31T00:00:00.000Z'
+      );
+      expect(forTesting.getDefaultExpiryDate(5).toISOString()).toBe(
+        '2030-07-31T00:00:00.000Z'
+      );
+    });
+
+    test('getThisYearsDefaultExpiryDate', () => {
+      expect(forTesting.getThisYearsDefaultExpiryDate().toISOString()).toBe(
+        '2025-07-31T00:00:00.000Z'
+      );
+    });
+
+    test('getNextYearsDefaultExpiryDate', () => {
+      expect(forTesting.getNextYearsDefaultExpiryDate().toISOString()).toBe(
+        '2026-07-31T00:00:00.000Z'
+      );
+    });
+
+    test('getPreviousYearsDefaultExpiryDate', () => {
+      expect(forTesting.getPreviousYearsDefaultExpiryDate().toISOString()).toBe(
+        '2024-07-31T00:00:00.000Z'
+      );
+    });
+
+    test('getCurrentPasYearExpiryDate', () => {
+      expect(forTesting.getCurrentPasYearExpiryDate().toISOString()).toBe(
+        '2025-07-31T00:00:00.000Z'
+      );
+    });
+
+    test('expiresInCurrentPasYear', () => {
+      expect(forTesting.expiresInCurrentPasYear('2025-07-31')).toBe(false);
+      expect(forTesting.expiresInCurrentPasYear('2025-01-01')).toBe(true);
+      expect(forTesting.expiresInCurrentPasYear('2024-01-01')).toBe(false);
+      expect(forTesting.expiresInCurrentPasYear('2024-12-10')).toBe(true);
+    });
+
+    test('expiresInNextPasYear', () => {
+      expect(forTesting.expiresInNextPasYear('2025-07-31')).toBe(true);
+    });
+
+    test('hasValidExpiryDate', () => {
+      expect(forTesting.hasValidExpiryDate('2024-08-01')).toBe(true);
+      expect(forTesting.hasValidExpiryDate('2024-07-31')).toBe(false);
+      expect(forTesting.hasValidExpiryDate('2025-07-31')).toBe(true);
+      expect(forTesting.hasValidExpiryDate('2025-01-01')).toBe(true);
+      expect(forTesting.hasValidExpiryDate('2024-01-01')).toBe(false);
+      expect(forTesting.hasValidExpiryDate('2024-12-10')).toBe(true);
+      expect(forTesting.hasValidExpiryDate('2026-08-01')).toBe(false);
+      expect(forTesting.hasValidExpiryDate('invalid-date')).toBe(false);
     });
   });
 });

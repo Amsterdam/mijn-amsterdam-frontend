@@ -6,7 +6,7 @@ import { featureToggle, listPageParamKind } from './HLI-thema-config';
 import styles from './HLIThema.module.scss';
 import { useHliThemaData } from './useHliThemaData';
 import { HLIRegelingFrontend } from '../../../../server/services/hli/hli-regelingen-types';
-import { StadspasFrontend } from '../../../../server/services/hli/stadspas-types';
+import { type StadspasResponseFrontend } from '../../../../server/services/hli/stadspas-types';
 import { entries } from '../../../../universal/helpers/utils';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { PageContentCell } from '../../../components/Page/Page';
@@ -30,16 +30,15 @@ type StadspasDisplayProps = {
   actief: ReactNode;
 };
 
-type StadspassenProps = {
-  stadspassen: StadspasFrontend[];
-};
-
 const displayProps: DisplayProps<StadspasDisplayProps> = {
   owner: '',
   actief: 'Status',
 };
 
-function Stadspassen({ stadspassen }: StadspassenProps) {
+function Stadspassen({
+  stadspassen,
+  dateExpiryFormatted,
+}: StadspasResponseFrontend) {
   const passen = stadspassen.map((pas) => {
     return {
       owner: (
@@ -70,18 +69,14 @@ function Stadspassen({ stadspassen }: StadspassenProps) {
         className={styles.Stadspassen}
       />
 
-      {!!stadspassen?.length && (
+      {!!stadspassen?.length && dateExpiryFormatted && (
         <Paragraph size="small">
           {stadspassen.length > 1 ? (
             <>
-              Voor alle stadspassen geldt de einddatum van{' '}
-              {stadspassen[0].dateEndFormatted}
+              Voor alle stadspassen geldt de einddatum van {dateExpiryFormatted}
             </>
           ) : (
-            <>
-              De stadspas heeft een einddatum van{' '}
-              {stadspassen[0].dateEndFormatted}
-            </>
+            <>De stadspas heeft een einddatum van {dateExpiryFormatted}</>
           )}
         </Paragraph>
       )}
@@ -98,6 +93,7 @@ export function HLIThema() {
     tableConfig,
     dependencyError,
     stadspassen,
+    dateExpiryFormatted,
     linkListItems,
     routeConfig,
   } = useHliThemaData();
@@ -148,7 +144,12 @@ export function HLIThema() {
         linkListItems={linkListItems}
         pageContentMain={
           <>
-            {!!stadspassen?.length && <Stadspassen stadspassen={stadspassen} />}
+            {!!stadspassen?.length && (
+              <Stadspassen
+                stadspassen={stadspassen}
+                dateExpiryFormatted={dateExpiryFormatted}
+              />
+            )}
             {!!regelingen?.length && regelingenTables}
             <PageContentCell startWide={3} spanWide={8}>
               <HistoricItemsMention />

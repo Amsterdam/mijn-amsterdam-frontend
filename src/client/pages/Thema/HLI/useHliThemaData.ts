@@ -22,7 +22,7 @@ import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
 export function useHliThemaData() {
   const { HLI } = useAppStateGetter();
   const stadspassen = useStadspassen();
-  const hasStadspas = !!HLI.content?.stadspas?.length;
+  const hasStadspas = !!HLI.content?.stadspas?.stadspassen?.length;
   const regelingen = addLinkElementToProperty<HLIRegelingFrontend>(
     HLI.content?.regelingen ?? [],
     'title',
@@ -51,6 +51,7 @@ export function useHliThemaData() {
 
   return {
     stadspassen,
+    dateExpiryFormatted: HLI.content?.stadspas?.dateExpiryFormatted ?? null,
     regelingen,
     title,
     hasKindtegoed,

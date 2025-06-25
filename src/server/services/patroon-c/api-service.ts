@@ -13,7 +13,7 @@ import { requestData } from '../../helpers/source-api-request';
 export interface ApiPatternResponseA {
   tips?: MyNotification[];
   isKnown: boolean;
-  url: string;
+  url: string | null;
   notifications?: MyNotification[];
 }
 
