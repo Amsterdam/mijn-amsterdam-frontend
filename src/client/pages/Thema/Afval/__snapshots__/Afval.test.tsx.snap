@@ -6,10 +6,10 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -46,7 +46,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Afval
         </h1>
@@ -171,15 +171,15 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Uw adres
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           <p
             class="ams-paragraph ams-mb-m"
@@ -209,13 +209,13 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <article
-        class="_AfvalFractionPanel_cc0d6a"
+        class="_AfvalFractionPanel_69f4ae"
       >
         <h3
-          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_69f4ae"
         >
           <span
-            class="_AfvalFractionIcon_cc0d6a"
+            class="_AfvalFractionIcon_69f4ae"
           >
             <svg
               height="28"
@@ -290,13 +290,13 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         </dl>
       </article>
       <article
-        class="_AfvalFractionPanel_cc0d6a"
+        class="_AfvalFractionPanel_69f4ae"
       >
         <h3
-          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_69f4ae"
         >
           <span
-            class="_AfvalFractionIcon_cc0d6a"
+            class="_AfvalFractionIcon_69f4ae"
           >
             <svg
               height="28"
@@ -354,7 +354,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </dd>
         </dl>
         <p
-          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+          class="ams-paragraph _AfvalFractionPanelOpmerking_69f4ae"
         >
           Of breng het naar 
           <a
@@ -366,13 +366,13 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         </p>
       </article>
       <article
-        class="_AfvalFractionPanel_cc0d6a"
+        class="_AfvalFractionPanel_69f4ae"
       >
         <h3
-          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_69f4ae"
         >
           <span
-            class="_AfvalFractionIcon_cc0d6a"
+            class="_AfvalFractionIcon_69f4ae"
           >
             <svg
               height="28"
@@ -441,13 +441,13 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-1 ams-grid__cell--span-1-medium ams-grid__cell--span-6-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-7-wide"
     >
       <article
-        class="_AfvalFractionPanel_cc0d6a"
+        class="_AfvalFractionPanel_69f4ae"
       >
         <h3
-          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_69f4ae"
         >
           <span
-            class="_AfvalFractionIcon_cc0d6a"
+            class="_AfvalFractionIcon_69f4ae"
           >
             <svg
               height="28"
@@ -493,19 +493,19 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
           </dd>
         </dl>
         <p
-          class="ams-paragraph _AfvalFractionPanelOpmerking_cc0d6a"
+          class="ams-paragraph _AfvalFractionPanelOpmerking_69f4ae"
         >
           Tuinafval dat niet in een vuilniszak past, mag u als grof afval weg doen
         </p>
       </article>
       <article
-        class="_AfvalFractionPanel_cc0d6a"
+        class="_AfvalFractionPanel_69f4ae"
       >
         <h3
-          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_69f4ae"
         >
           <span
-            class="_AfvalFractionIcon_cc0d6a"
+            class="_AfvalFractionIcon_69f4ae"
           >
             <svg
               height="28"
@@ -572,13 +572,13 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
         </dl>
       </article>
       <article
-        class="_AfvalFractionPanel_cc0d6a"
+        class="_AfvalFractionPanel_69f4ae"
       >
         <h3
-          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_cc0d6a"
+          class="ams-heading ams-heading--4 _AfvalFractionPanelTitle_69f4ae"
         >
           <span
-            class="_AfvalFractionIcon_cc0d6a"
+            class="_AfvalFractionIcon_69f4ae"
           >
             <svg
               height="28"
@@ -647,7 +647,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
       >
         <a
           aria-disabled="false"
-          class="_MaButtonLink_aa758a ams-button ams-button--primary _ContactLink_cc0d6a"
+          class="_MaButtonLink_10c0a4 ams-button ams-button--primary _ContactLink_69f4ae"
           href="https://formulier.amsterdam.nl/mail/afval/afvalwijzer/"
         >
           Klopt de informatie niet? Geef het door
@@ -717,7 +717,7 @@ exports[`<AfvalThemaPagina /> > Matches the Full Page snapshot 1`] = `
             </span>
             De afvalpuntenweg
             <span
-              class="_DistanceToHome_cc0d6a"
+              class="_DistanceToHome_69f4ae"
             >
               +/-34KM
             </span>

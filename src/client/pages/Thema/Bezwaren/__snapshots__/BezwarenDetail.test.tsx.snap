@@ -6,10 +6,10 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -56,7 +56,7 @@ exports[`BezwarenDetail > No result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Bezwaar
         </h1>
@@ -118,10 +118,10 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -168,7 +168,7 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           BI.21.014121.001
         </h1>
@@ -178,41 +178,41 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Onderwerp
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Korte omschrijving van het bezwaar
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Reden bezwaar
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Lange uitleg over het bezwaar. Kan dus veel tekst hebben want is vrije invoer.
         </dd>
         <div
-          class="ams-grid _Datalist__row-wrapper_08bf39"
+          class="ams-grid _Datalist__row-wrapper_240c86"
         >
           <div
             class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
           >
             <dt
-              class="_Datalist__title_08bf39"
+              class="_Datalist__title_240c86"
             >
               Besluit waartegen u bezwaar maakt
             </dt>
             <dd
-              class="_Datalist__description_08bf39"
+              class="_Datalist__description_240c86"
             >
               F2021.0008
             </dd>
@@ -221,28 +221,28 @@ exports[`BezwarenDetail > With result > Matches the Full Page snapshot 1`] = `
             class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
           >
             <dt
-              class="_Datalist__title_08bf39"
+              class="_Datalist__title_240c86"
             >
               Datum
             </dt>
             <dd
-              class="_Datalist__description_08bf39"
+              class="_Datalist__description_240c86"
             />
           </div>
         </div>
         <div
-          class="ams-grid _Datalist__row-wrapper_08bf39"
+          class="ams-grid _Datalist__row-wrapper_240c86"
         >
           <div
             class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-3-medium ams-grid__cell--span-4-wide"
           >
             <dt
-              class="_Datalist__title_08bf39"
+              class="_Datalist__title_240c86"
             >
               Resultaat bezwaar
             </dt>
             <dd
-              class="_Datalist__description_08bf39"
+              class="_Datalist__description_240c86"
             >
               Niet-ontvankelijk
             </dd>

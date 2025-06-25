@@ -6,10 +6,10 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -56,7 +56,7 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Klacht
         </h1>
@@ -66,25 +66,25 @@ exports[`KlachtenDetail > No subject or location > Matches the Full Page snapsho
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Nummer van uw klacht
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           36046
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Wat is de klacht?
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Dear Amsterdam Municipality
         </dd>
@@ -100,10 +100,10 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -150,7 +150,7 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Boosterprik
         </h1>
@@ -160,45 +160,45 @@ exports[`KlachtenDetail > Subject and location > Matches the Full Page snapshot 
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Nummer van uw klacht
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           34994
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Wat is de klacht?
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Een klacht.
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Wat is de locatie waar de klacht is ontstaan?
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           RAI
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Wat wilt u dat de gemeente gaat doen naar aanleiding van uw klacht?
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Boosterprik
         </dd>
@@ -214,10 +214,10 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -264,7 +264,7 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Test voor decentrale toewijzing
         </h1>
@@ -274,25 +274,25 @@ exports[`KlachtenDetail > Subject no location > Matches the Full Page snapshot 1
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <dl
-        class="_Datalist_08bf39"
+        class="_Datalist_240c86"
       >
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Nummer van uw klacht
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           36049
         </dd>
         <dt
-          class="_Datalist__title_08bf39"
+          class="_Datalist__title_240c86"
         >
           Wat is de klacht?
         </dt>
         <dd
-          class="_Datalist__description_08bf39"
+          class="_Datalist__description_240c86"
         >
           Dit is de omschrijving van de klacht
         </dd>
