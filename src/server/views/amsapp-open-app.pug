@@ -4,7 +4,7 @@ html(lang="nl")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1")
 
-    title Stadspas
+    title Mijn Amsterdam
     link(href=urlToCSS rel="stylesheet")
 
   body
@@ -15,8 +15,8 @@ html(lang="nl")
       h1 Inloggen
       p Open de Amsterdam App om verder te gaan.
 
-      if administratienummerEncrypted
-        pre #{administratienummerEncrypted}
+      if identifier
+        pre #{identifier}
 
       if error
         p Foutmelding: #{error.code} - #{error.message}
@@ -24,7 +24,7 @@ html(lang="nl")
       if promptOpenApp
         a(href=appHref id='protocol-link-button') Open Amsterdam App
 
-    if !promptOpenApp
+    if !promptOpenApp && logoutUrl
       script(type='text/javascript' nonce=nonce).
         window.sessionStorage.setItem('amsapphref','#{appHref}');
         window.location.href = '#{logoutUrl}';

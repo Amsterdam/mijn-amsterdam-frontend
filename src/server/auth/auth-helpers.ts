@@ -10,6 +10,7 @@ import {
   RETURNTO_MAMS_FRONTEND_ROUTE,
   RETURNTO_MAMS_LANDING_DIGID,
   RETURNTO_MAMS_LANDING_EHERKENNING,
+  RETURNTO_NOTIFICATIES_CONSUMER_ID,
 } from './auth-config';
 import { authRoutes } from './auth-routes';
 import {
@@ -45,11 +46,17 @@ export function getReturnToUrl(
           token: queryParams['amsapp-session-token'] as string,
         }
       );
-    case RETURNTO_AMSAPP_STADSPAS_APP_LANDING: {
+    case RETURNTO_AMSAPP_STADSPAS_APP_LANDING:
       return generateFullApiUrlBFF(
         ExternalConsumerEndpoints.public.STADSPAS_APP_LANDING
       );
-    }
+    case RETURNTO_NOTIFICATIES_CONSUMER_ID:
+      return generateFullApiUrlBFF(
+        ExternalConsumerEndpoints.public.NOTIFICATIONS_CONSUMER,
+        {
+          consumer_id: queryParams['consumer-id'] as string,
+        }
+      );
     case ZAAK_STATUS_ROUTE:
       return getReturnToUrlZaakStatus(queryParams);
     case RETURNTO_MAMS_LANDING_EHERKENNING:

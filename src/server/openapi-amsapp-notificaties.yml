@@ -1,0 +1,286 @@
+openapi: 3.0.3
+info:
+  version: '1.0'
+  title: Mijn Amsterdam api spec for external consumers (Amsterdam App)
+  description: |
+    We're providing a set of endpoints that can be used to retrieve data from source api's. These api's are intended for users other than Mijn Amsterdam
+    Note: the paths that start with /private are only accessible in development mode (localhost) or via our private-network resources.
+  contact:
+    name: Mijn Amsterdam
+    url: https://mijn.amsterdam.nl/
+    email: mijnAmsterdam@amsterdam.nl
+servers:
+  - url: https://mijn.amsterdam.nl
+  - url: https://az-acc.mijn.amsterdam.nl
+  - url: https://test.mijn.amsterdam.nl
+  - url: http://localhost:5000
+
+paths:
+  /api/v1/services/amsapp/notifications/login/{consumerId}:
+    get:
+      description: Redirects to Digid login, initiates as OIDC session on callback.
+      parameters:
+        - name: consumerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Found. Valid redirect to Digid login
+        '404':
+          description: Not Found. (Missing path parameter)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /api/v1/services/amsapp/notifications/consumer/{consumerId}:
+    get:
+      description: Retrieves consumerId based on BSN found in OIDC session.
+      parameters:
+        - name: consumerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |
+            Always returns html page with link that opens the Amsterdam App automatically with Javascript.\
+            If the consumerId is retrieved succesfully, no query parameters are passed to the app link.\
+            If an error occurred an ApiErrorNotificatieConsumerId will be passed as query parameters to the app link.
+          content:
+            'text/html':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ApiErrorNotificatieConsumerId'
+                  - type: string
+        '404':
+          description: Missing path parameter
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+  /private/api/v1/services/amsapp/notifications:
+    get:
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Retrieves all notification data of all consumers.
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
+      responses:
+        '200':
+          description: Returns consumer notifications data
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ConsumerNotificationsResponse'
+        '400':
+          description: Returns bad request error
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Returns unauthorized error (invalid api key)
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '500':
+          description: |
+            Returns Application error, any error in code or from failed requests.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+    delete:
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Truncate all notifications data.\
+        Note: This is a temporary endpoint for the PoC
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
+      responses:
+        '200':
+          description: Returns an application success response
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiSuccessResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationError'
+  /private/api/v1/services/amsapp/job/notifications:
+    post:
+      security:
+        - ApiKeyAuth: []
+      description: |
+        Triggers job that fetches all notification data of all consumers.\
+        Note: This endpoint has a long execution time, making it impractical to await.\
+        A success response is send to indicate it has started.
+      parameters:
+        - $ref: '#/components/parameters/xApiKeyHeader'
+      responses:
+        '200':
+          description: Returns an application success response
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ApiSuccessResponse'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  schemas:
+    ApplicationError:
+      type: object
+      description: |
+        Error if a part of the application returns an error, mostly dependency errors to remote systems.
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 500
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+
+    ApiErrorNotificatieConsumerId:
+      type: object
+      description: |
+        * 001: Niet ingelogd met Digid
+        * 002: Parameter consumer_id ontbreekt
+        * 003: Verzenden van consumer_id naar de Amsterdam app niet gelukt
+        * 000: Onbekende error
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+          enum:
+            - '000'
+            - '001'
+            - '002'
+            - '003'
+    ConsumerNotificationsResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object
+            properties:
+              service_ids:
+                type: array
+                items:
+                  type: string
+              consumer_ids:
+                type: array
+                items:
+                  type: string
+              date_updated:
+                type: string
+                format: date-time
+              notifications:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    datePublished:
+                      type: string
+                      format: date-time
+                    isTip:
+                      type: boolean
+                  required:
+                    - id
+                    - title
+                    - datePublished
+        status:
+          type: string
+          enum:
+            - 'OK'
+    ApiSuccessResponse:
+      type: object
+      properties:
+        content:
+          type: string
+          example: success
+        status:
+          type: string
+          example: OK
+    ErrorNotFound:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 404
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Not Found'
+    ErrorUnauthorized:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 401
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Api key ongeldig'
+    ErrorBadRequest:
+      type: object
+      properties:
+        content:
+          nullable: true
+        code:
+          type: number
+          enum:
+            - 400
+        status:
+          type: string
+          enum:
+            - 'ERROR'
+        message:
+          type: string
+          enum:
+            - 'Bad request: ApiError 000 - Onbekende fout'
+  parameters:
+    xApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
