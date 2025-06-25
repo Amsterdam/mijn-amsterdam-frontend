@@ -13,7 +13,7 @@
  *
  * Also fill BFF_TESTDATA_EXPORT_SCRIPT_API_BASE_URL with
  * `https://{azure_default_domain}/api/v1` where azure_default_domain is found -
- * on our test appservice in Azure Portal.
+ * on our test environment Appservice in Azure Portal.
  *
  * How to use
  * ==========
