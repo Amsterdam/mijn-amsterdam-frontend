@@ -953,13 +953,13 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
     Tonk: count('WPI_TONK'),
     BBZ: count('WPI_BBZ'),
     'Stadspassen (Gpass)': (serviceResults: ServiceResults) => {
-      if (!serviceResults.HLI.content?.stadspas) {
+      if (!serviceResults.HLI.content?.stadspas?.length) {
         return '';
       }
       return serviceResults.HLI.content.stadspas?.length;
     },
     Stadspasregelingen: (serviceResults: ServiceResults) => {
-      if (!serviceResults.HLI.content?.regelingen) {
+      if (!serviceResults.HLI.content?.regelingen?.length) {
         return '';
       }
       return serviceResults.HLI.content.regelingen?.length;
@@ -986,6 +986,10 @@ function sheetThemaContent(resultsByUser: ResultsByUser): SheetData {
       return (
         serviceResults.TOERISTISCHE_VERHUUR.content?.bbVergunningen.length || ''
       );
+    },
+    KREFIA: (serviceResults: ServiceResults) => {
+      const deeplinks = serviceResults.KREFIA?.content.deepLinks;
+      return !!deeplinks.length ? deeplinks.length : '';
     },
     Klachten: (serviceResults: ServiceResults) => {
       return serviceResults.KLACHTEN.content?.aantal || '';
