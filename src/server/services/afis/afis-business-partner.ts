@@ -258,14 +258,16 @@ export async function createBusinessPartnerBankAccount(
   const additionalConfig: DataRequestConfig = {
     method: 'POST',
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
+      return `${config.url}/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`;
     },
     data: createBankAccountPayload,
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<AfisBusinessPartnerEmail>(businessPartnerRequestConfig);
+  return requestData<AfisBusinessPartnerBankAccount>(
+    businessPartnerRequestConfig
+  );
 }
 
 export async function fetchCheckIfIBANexists(
