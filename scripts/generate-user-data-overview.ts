@@ -2,7 +2,7 @@
  * Script to fetch, transform and save testdata for every account -
  * in the MA_TEST_ACCOUNTS environment variable to a excel file.
  * This is used for quickly looking up what user has, which thema's/data -
- * without needing to login to every single one and manually looking this up.
+ * without needing to separately login to every account.
  *
  * When debugging locally
  * ======================
