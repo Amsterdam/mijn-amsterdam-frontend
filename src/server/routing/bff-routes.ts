@@ -26,6 +26,8 @@ export const BffEndpoints = {
   AFIS_EMANDATES_SIGN_REQUEST_URL: '/services/afis/e-mandates/sign-request-url',
   AFIS_EMANDATES_SIGN_REQUEST_STATUS:
     '/services/afis/e-mandates/sign-request-status',
+  AFIS_EMANDATES_SIGN_REQUEST_RETURNTO:
+    '/services/afis/e-mandates/sign-request-callback',
   AFIS_FACTUREN:
     '/services/afis/facturen/:state(open|afgehandeld|overgedragen)',
   AFIS_DOCUMENT_DOWNLOAD: '/services/afis/facturen/document',
@@ -99,6 +101,10 @@ export const ExternalConsumerEndpoints = {
     STADSPAS_BLOCK_PAS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/stadspas/block/:transactionsKeyEncrypted`,
     NOTIFICATIONS: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/notifications`,
     NOTIFICATIONS_JOB: `${BFF_BASE_PATH_PRIVATE}${AMSAPP_BASE}/job/notifications`,
+
+    // Afis E-Mandates
+    AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY: `${BFF_BASE_PATH_PRIVATE}/services/afis/e-mandates/sign-request-status-notify`,
+  
   },
 } as const;
 
