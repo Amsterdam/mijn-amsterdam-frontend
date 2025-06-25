@@ -315,22 +315,85 @@ module.exports = [
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (_req, res) => {
+          middleware: (req, res) => {
             const body = req.body;
-            const mandate = eMandates.find(
-              (eMandate) => eMandate.IMandateId === body.IMandateId
-            );
-            const lastID =
-              eMandates.feed.entry[eMandates.feed.entry.length - 1].IMandateId;
-            const newMandete = {
-              ...mandate,
-              ...body,
-              id: lastID + 1,
+            const lastMandate =
+              eMandates.feed.entry[eMandates.feed.entry.length - 1];
+            const lastID = lastMandate.content.properties.IMandateId;
+
+            const newMandate = {
+              ...lastMandate,
+              content: {
+                ...lastMandate.content,
+                properties: {
+                  ...lastMandate.content.properties,
+                  ...body,
+                  IMandateId: lastID + 1,
+                },
+              },
             };
 
-            eMandates.feed.entry.push(newMandete);
+            console.log('Creating new eMandate:', newMandate);
 
-            return res.send(newMandete);
+            eMandates.feed.entry.push(newMandate);
+
+            return res.send(newMandate);
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-bank-account',
+    url: `${BASE_URL}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`,
+    method: 'GET',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (_req, res) => {
+            return res.send({
+              feed: {
+                entry: [
+                  {
+                    content: {
+                      '@type': 'application/xml',
+                      properties: {
+                        BusinessPartner: '0001500091',
+                        BankIdentification: '0004',
+                        BankCountryKey: 'NL',
+                        BankName: 'BANKAMS',
+                        BankNumber: 'BANKAMS',
+                        SWIFTCode: 'BANKANL5',
+                        BankAccountHolderName: 'I.M Mokum',
+                        ValidityStartDate: new Date().toISOString(),
+                        ValidityEndDate: '9999-12-31T23:59:59Z',
+                        IBAN: 'NL35BOOG9343513650',
+                        IBANValidityStartDate: new Date().toISOString(),
+                        BankAccount: '9343513650',
+                      },
+                    },
+                  },
+                ],
+              },
+            });
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'post-bank-account',
+    url: `${BASE_URL}/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank`,
+    method: 'POST',
+    variants: [
+      {
+        id: 'standard',
+        type: 'middleware',
+        options: {
+          middleware: (_req, res) => {
+            return res.send('OK');
           },
         },
       },
