@@ -156,8 +156,8 @@ import {
 
 const { BRP, KVK } = profileThemaTitles;
 
-/** Extra hardcoded additions are for extra mappings
- * because sometimes we have multiple services for one thema. */
+/** Extra hardcoded additions are to display certain services like they're their own thema.
+ */
 const themas = [
   { id: themaIdBRP, title: BRP },
   { id: themaIdKVK, title: KVK },
