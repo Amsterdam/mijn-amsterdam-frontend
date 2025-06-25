@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 
 import { createAfisEMandate } from './afis-e-mandates';
 import {
@@ -46,8 +46,10 @@ function validateAndExtractPayload(xmlPayload: string) {
 // TODO: this endpoint should be made available to the EnableU network. Find out if this is possible and how to do it.
 routerPrivateNetwork.post(
   ExternalConsumerEndpoints.private.AFIS_EMANDATE_SIGN_REQUEST_STATUS_NOTIFY,
+  express.raw({ type: 'text/xml' }),
   async (req: Request, res: Response) => {
-    const eventPayload = validateAndExtractPayload(req.body);
+    const requestBody = req.body.toString('utf-8');
+    const eventPayload = validateAndExtractPayload(requestBody);
 
     const signRequestPayload: EMandateSignRequestPayload &
       EMandateSignRequestNotificationPayload = {
@@ -80,5 +82,5 @@ routerPrivateNetwork.post(
 );
 
 export const afisExternalConsumerRouter = {
-  privateNetwork: routerPrivateNetwork,
+  private: routerPrivateNetwork,
 };
