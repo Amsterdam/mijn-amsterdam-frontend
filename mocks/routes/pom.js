@@ -17,7 +17,7 @@ module.exports = [
           middleware: (req, res, next, core) => {
             axios({
               method: 'POST',
-              url: 'http://localhost:5000/api/v1/services/afis/e-mandates/sign-request-status-notify',
+              url: 'http://localhost:5000/private/api/v1/services/afis/e-mandates/sign-request-status-notify',
               data: `<?xml version="1.0"?>
             <response>
               <id_client>1000</id_client>
