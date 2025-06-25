@@ -234,31 +234,25 @@ export async function fetchAfisBusinessPartnerDetails(
 export async function createBusinessPartnerBankAccount(
   payload: AfisBusinessPartnerBankPayload
 ) {
+  if (!ibantools.isValidIBAN(payload.iban)) {
+    throw new Error('Invalid IBAN');
+  }
+
   const iban = ibantools.extractIBAN(payload.iban);
 
+  // It's unlikely this will happen because of the IBAN validation above.
   if (!iban.accountNumber) {
-    throw new Error('Invalid IBAN');
+    throw new Error('Invalid IBAN Account Number');
   }
 
   const createBankAccountPayload: AfisBusinessPartnerBankAccount = {
     BusinessPartner: payload.businessPartnerId,
-    BankIdentification: '0001', // How to?
-    BankCountryKey: iban.countryCode ?? '',
-    BankName: 'ING', // iban.bankIdentifier // TODO: What is this?
+    BankName: iban.bankIdentifier ?? '',
     BankNumber: iban.bankIdentifier ?? '',
-    SWIFTCode: payload.swiftCode, //
-    BankControlKey: '', // TODO: What is this?
+    SWIFTCode: payload.swiftCode,
     BankAccountHolderName: payload.senderName,
-    BankAccountName: '', // TODO: What is this?
-    ValidityStartDate: 'Date(1680825600000+0000)', // TODO: check if this is required, we can't possibly know this
-    ValidityEndDate: 'Date(253402300799000+0000)', // TODO: check if this is required, we can't possibly know this
     IBAN: payload.iban,
-    IBANValidityStartDate: 'Date(1680825600000)', // TODO: What is this?
     BankAccount: iban.accountNumber,
-    BankAccountReferenceText: '', // TODO: What is this?
-    CollectionAuthInd: false, // TODO: What is this?
-    CityName: 'amsterdam', // TODO: What is this?
-    AuthorizationGroup: '', // TODO: What is this?
   };
 
   const additionalConfig: DataRequestConfig = {
@@ -274,25 +268,21 @@ export async function createBusinessPartnerBankAccount(
   return requestData<AfisBusinessPartnerEmail>(businessPartnerRequestConfig);
 }
 
-function transformBusinessPartnerBankAccounts(
-  responseData: AfisApiFeedResponseSource<AfisBusinessPartnerBankAccount>
-) {
-  return [];
-}
-
-export async function fetchBusinessPartnerBankAccounts(
-  businessPartnerId: BusinessPartnerId
-) {
+export async function fetchCheckIfIBANexists(
+  IBAN: AfisBusinessPartnerBankAccount['IBAN']
+): Promise<ApiResponse<boolean>> {
   const additionalConfig: DataRequestConfig = {
     formatUrl(config) {
-      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=BusinessPartner eq '${businessPartnerId}'`;
+      return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerBank?$filter=IBAN eq '${IBAN}'`;
     },
-    transformResponse: transformBusinessPartnerBankAccounts,
+    transformResponse(
+      response: AfisApiFeedResponseSource<AfisBusinessPartnerBankAccount>
+    ) {
+      return !!getFeedEntryProperties(response).length;
+    },
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
 
-  return requestData<AfisBusinessPartnerBankAccount[]>(
-    businessPartnerRequestConfig
-  );
+  return requestData<boolean>(businessPartnerRequestConfig);
 }

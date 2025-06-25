@@ -9,9 +9,10 @@ import type {
   POMEMandateSignRequestPayloadTransformed,
   POMEMandateSignRequestPayloadFromXML,
 } from './afis-types';
+import type { ApiResponse } from '../../../universal/helpers/api';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import { createBFFRouter } from '../../routing/route-helpers';
-import { captureMessage } from '../monitoring';
+import { captureException } from '../monitoring';
 
 const routerPrivateNetwork = createBFFRouter({
   id: 'afis-external-consumer-private-network',
@@ -37,6 +38,7 @@ function validateAndExtractPayload(
   <account_owner>John Doe</account_owner>
   <event_date>2024-01-05</event_date>
   <event_time>11:27</event_time>
+
   <variable2>NL21RABO0110055004</variable2> // Acceptant IBAN (Gemeente Amsterdam Afval) --> UNKNOWN, find out how to get this.
 </response>
    */
@@ -70,20 +72,20 @@ async function handleAfisEMandateSignRequestStatusNotify(
     senderName: notificationPayload.debtorAccountOwner,
   };
 
-  // TODO: Figure out if we can actually create the eMandate from this event.
-  const createEmandateResponse = await createAfisEMandate(signRequestPayload);
+  let createEmandateResponse: ApiResponse<unknown> | null = null;
 
-  const isOK = createEmandateResponse.status === 'OK';
+  // TODO: Figure out if we can actually create the eMandate from this event.
+  try {
+    createEmandateResponse = await createAfisEMandate(signRequestPayload);
+  } catch (error) {
+    // If the eMandate creation fails, we should log the error and return an error response.
+    // This is important for observability and debugging.
+    captureException(error);
+  }
+
+  const isOK = createEmandateResponse !== null;
 
   res.status(isOK ? HttpStatusCode.Ok : HttpStatusCode.InternalServerError);
-
-  if (!isOK && createEmandateResponse.status === 'ERROR') {
-    // TODO: Add this message to observability. We need to know be notified when this happens.
-    // Maybe send an email to FB?
-    captureMessage(
-      `Error in sign request status notify endpoint: ${createEmandateResponse.message}`
-    );
-  }
 
   // TODO: Maybe POM needs a specific request status text?
   return res.send(isOK ? 'OK' : 'ERROR');
