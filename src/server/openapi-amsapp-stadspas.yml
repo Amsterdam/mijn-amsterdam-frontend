@@ -74,6 +74,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Returns stadspas data
@@ -115,6 +116,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Returns transactions data
@@ -161,6 +163,7 @@ paths:
           required: false
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: Returns transactions data
@@ -200,11 +203,12 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/xApiKeyHeader'
       responses:
         '200':
           description: |
-             Blocking stadspas was successful or an attempt was made to block a pass that is not active.
-             This returns the state of the pass after this request.
+            Blocking stadspas was successful or an attempt was made to block a pass that is not active.
+            This returns the state of the pass after this request.
           content:
             'application/json':
               schema:
@@ -389,7 +393,7 @@ components:
         content:
           type: object
           properties:
-            "<passnumber>":
+            '<passnumber>':
               type: boolean
               description: |
                 The passnumber key is the number itself and the value is the new active state. So false will mean that the pass is now blocked while true will mean it is still active.
@@ -398,7 +402,7 @@ components:
           type: string
           enum:
             - 'SUCCESS'
-          example: "OK"
+          example: 'OK'
 
     StadspassenResponse:
       type: object
@@ -503,3 +507,10 @@ components:
             - "Bad request: ApiError 005 - Could not decrypt url parameter administratienummerEncrypted'"
             - 'Bad request: ApiError 000 - Onbekende fout'
             - 'Bad request: Bad request: Failed to decrypt transactions key'
+  parameters:
+    xApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
