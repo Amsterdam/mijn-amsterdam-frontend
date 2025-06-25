@@ -127,7 +127,7 @@ describe('createTipsFromServiceResults', () => {
       HLI: {
         content: {
           regelingen: [],
-          stadspas: [{ foo: 'bar' }],
+          stadspas: { stadspassen: [{ foo: 'bar' }] },
         },
         status: 'OK',
       },

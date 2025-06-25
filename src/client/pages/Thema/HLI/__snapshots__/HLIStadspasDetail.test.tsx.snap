@@ -110,11 +110,11 @@ exports[`With basic request where data returned does not matter > Matches snapsh
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <h1
-        class="ams-heading ams-heading--undefined ams-mb-m"
+      <h3
+        class="ams-heading ams-heading--3 ams-mb-m"
       >
         Gekregen tegoed
-      </h1>
+      </h3>
       <p
         class="ams-paragraph"
       >
@@ -124,11 +124,11 @@ exports[`With basic request where data returned does not matter > Matches snapsh
     <div
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
-      <h1
-        class="ams-heading ams-heading--undefined ams-mb-m"
+      <h3
+        class="ams-heading ams-heading--3 ams-mb-m"
       >
         Uw uitgaven
-      </h1>
+      </h3>
       <span
         class="_LoadingContent_ac4eb5"
       >

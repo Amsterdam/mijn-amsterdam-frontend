@@ -51,7 +51,7 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   HLI: apiPristineResult(
     {
-      stadspas: [],
+      stadspas: { stadspassen: [], dateExpiryFormatted: null },
       regelingen: [],
     },
     {
@@ -70,16 +70,20 @@ export const PRISTINE_APPSTATE: AppState = {
   ERFPACHT: apiPristineResult(null, {
     profileTypes: ['private', 'commercial'],
   }),
-  SUBSIDIES: apiPristineResult({ isKnown: false, notifications: [] }),
+  SUBSIDIES: apiPristineResult({
+    isKnown: false,
+    notifications: [],
+    url: null,
+  }),
   BELASTINGEN: apiPristineResult(
-    { isKnown: true },
+    { isKnown: true, url: null },
     { profileTypes: ['private'] }
   ),
   BEZWAREN: apiPristineResult([], {
     profileTypes: ['private'],
   }),
-  MILIEUZONE: apiPristineResult({ isKnown: false }),
-  OVERTREDINGEN: apiPristineResult({ isKnown: false }),
+  MILIEUZONE: apiPristineResult({ isKnown: false, url: null }),
+  OVERTREDINGEN: apiPristineResult({ isKnown: false, url: null }),
   PARKEREN: apiPristineResult(
     { isKnown: true, url: undefined, vergunningen: [] },
     {
