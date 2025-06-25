@@ -19,8 +19,8 @@ import {
 } from './source-api-helpers';
 import {
   axiosRequest,
-  cache,
   findApiByRequestUrl,
+  forTesting,
   requestData,
 } from './source-api-request';
 import { remoteApiHost } from '../../testing/setup';
@@ -150,7 +150,8 @@ describe('source-api-request caching', () => {
   });
 });
 
-describe('requestData.ts', () => {
+describe('requestData', () => {
+  const { cache } = forTesting;
   const DUMMY_RESPONSE = { foo: 'bar' };
 
   const DUMMY_URL = `${remoteApiHost}/1`;

@@ -5,10 +5,106 @@ const RESPONSES = {
   TRANSACTIES: require('../fixtures/gpass-transacties.json'),
 };
 
-const subPassen = RESPONSES.PASHOUDERS.sub_pashouders.flatMap(
+function createPas({
+  pasnummer = 1234567890,
+  actief = true,
+  vervangen = false,
+  expiry_date = '2090-07-31T21:59:59.000Z',
+}) {
+  return {
+    id: `123-${pasnummer}`,
+    pasnummer: pasnummer,
+    pasnummer_volledig: `60643660${pasnummer}`,
+    categorie: 'Minima stadspas',
+    categorie_code: 'M',
+    actief,
+    expiry_date,
+    heeft_budget: true,
+    vervangen,
+    securitycode: '012346',
+    passoort: {
+      id: 11,
+      naam: 'Digitale Stadspas',
+    },
+    budgetten: RESPONSES.STADSPAS.budgetten,
+  };
+}
+
+function createSubPashouder({
+  id = '03630000316910',
+  voornaam = 'Jan',
+  passen = [],
+}) {
+  const achternaam = `${voornaam}sma`;
+  return {
+    id,
+    voornaam,
+    initialen: voornaam[0],
+    achternaam,
+    volledige_naam: `${voornaam} ${achternaam}`,
+    geslacht: 'M',
+    geboortedatum: '1979-01-23T00:00:00.000Z',
+    heeft_budget: true,
+    passen,
+  };
+}
+
+const thisYear = new Date().getFullYear();
+const nextYear = thisYear + 1;
+const expiryDateThisYear = `${thisYear}-07-31T00:00:00.000Z`;
+const expiryDateNextYear = `${nextYear}-07-31T00:00:00.000Z`;
+
+const pashoudersResponse = {
+  ...RESPONSES.PASHOUDERS,
+  passen: [
+    createPas({
+      pasnummer: 1234567891,
+      expiry_date: expiryDateThisYear,
+    }),
+    createPas({
+      pasnummer: 1234567892,
+      expiry_date: expiryDateNextYear,
+    }),
+    createPas({
+      pasnummer: 1234567893,
+      actief: false,
+      expiry_date: expiryDateThisYear,
+    }),
+    createPas({
+      pasnummer: 1234567894,
+      vervangen: true,
+      actief: false,
+      expiry_date: expiryDateThisYear,
+    }),
+  ],
+  sub_pashouders: [
+    createSubPashouder({
+      id: '0363077880316910',
+      voornaam: 'Mike',
+      passen: [
+        createPas({
+          pasnummer: 1234567895,
+          actief: false,
+          vervangen: true,
+          expiry_date: expiryDateThisYear,
+        }),
+        createPas({
+          pasnummer: 1234567896,
+          expiry_date: expiryDateThisYear,
+        }),
+        createPas({
+          pasnummer: 1234567897,
+          expiry_date: expiryDateNextYear,
+        }),
+      ],
+    }),
+  ],
+};
+
+const subPassen = pashoudersResponse.sub_pashouders.flatMap(
   (pashouder) => pashouder.passen
 );
-const allPasses = RESPONSES.PASHOUDERS.passen.concat(subPassen);
+const allPasses = pashoudersResponse.passen.concat(subPassen);
 
 module.exports = [
   {
@@ -21,7 +117,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: RESPONSES.PASHOUDERS,
+          body: pashoudersResponse,
         },
       },
     ],
@@ -99,7 +195,7 @@ module.exports = [
             // Mutate pas in memory to simulate a stateful API.
             pas.actief = !pas.actief;
             // Blocking a pass sets it `expiry_date` to now.
-            pas.expiry_date = new Date().toString();
+            pas.expiry_date = new Date().toISOString();
 
             res.send({
               ...RESPONSES.STADSPAS,

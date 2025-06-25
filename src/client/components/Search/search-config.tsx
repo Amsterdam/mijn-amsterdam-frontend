@@ -345,7 +345,7 @@ export const apiSearchConfigs: ApiSearchConfig[] = [
     stateKey: 'HLI',
     getApiBaseItems: (apiContent: HLIresponseData) => {
       const stadspassen =
-        apiContent?.stadspas?.map((stadspas) => {
+        apiContent?.stadspas?.stadspassen?.map((stadspas) => {
           return {
             ...stadspas,
             title: `Stadspas van ${stadspas.owner.firstname}`,

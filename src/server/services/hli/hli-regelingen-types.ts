@@ -1,4 +1,4 @@
-import { StadspasFrontend } from './stadspas-types';
+import { type StadspasResponseFrontend } from './stadspas-types';
 import {
   GenericDocument,
   ZaakDetail,
@@ -25,5 +25,5 @@ export type HLIRegelingFrontend = ZaakDetail & {
 
 export type HLIresponseData = {
   regelingen: HLIRegelingFrontend[];
-  stadspas: StadspasFrontend[] | null;
+  stadspas: StadspasResponseFrontend | null;
 };

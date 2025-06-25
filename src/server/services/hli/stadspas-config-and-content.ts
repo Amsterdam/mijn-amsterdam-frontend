@@ -9,6 +9,11 @@ import {
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
 
+// The 31st of July is the default yearly expiry date for stadspassen.
+// This date is chosen to active all new passes that are given out by Amsterdam.
+export const DEFAULT_EXPIRY_DAY = '31';
+export const DEFAULT_EXPIRY_MONTH = '07';
+
 export const GPASS_API_TOKEN = process.env.BFF_GPASS_API_TOKEN;
 export const GPASS_BUDGET_ONLY_FOR_CHILDREN = true;
 
