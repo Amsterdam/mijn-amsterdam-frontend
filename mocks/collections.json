@@ -69,6 +69,8 @@
       "get-afis-emandates:standard",
       "post-afis-emandates:standard",
       "put-afis-emandates:standard",
+      "get-bank-account:standard",
+      "post-bank-account:standard",
       "get-powerbrowser-bb-zaak-adres:standard",
       "post-powerbrowser-search-requests:standard",
       "post-powerbrowser-zaak-status:standard",

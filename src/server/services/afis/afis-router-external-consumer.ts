@@ -1,5 +1,5 @@
 import { HttpStatusCode } from 'axios';
-import express, { Request, Response } from 'express';
+import express, { Request, Response, type NextFunction } from 'express';
 import { XMLParser } from 'fast-xml-parser';
 
 import { createAfisEMandate } from './afis-e-mandates';
@@ -12,7 +12,6 @@ import type {
 import type { ApiResponse } from '../../../universal/helpers/api';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import { createBFFRouter } from '../../routing/route-helpers';
-import { captureException } from '../monitoring';
 
 const routerPrivateNetwork = createBFFRouter({
   id: 'afis-external-consumer-private-network',
@@ -58,7 +57,8 @@ function validateAndExtractPayload(
 
 async function handleAfisEMandateSignRequestStatusNotify(
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) {
   const notificationPayload = validateAndExtractPayload(req.body);
 
@@ -80,7 +80,9 @@ async function handleAfisEMandateSignRequestStatusNotify(
   } catch (error) {
     // If the eMandate creation fails, we should log the error and return an error response.
     // This is important for observability and debugging.
-    captureException(error);
+    // captureException(error);
+    res.status(HttpStatusCode.InternalServerError);
+    return res.send('ERROR');
   }
 
   const isOK = createEmandateResponse !== null;
