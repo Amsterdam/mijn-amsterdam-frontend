@@ -1,8 +1,12 @@
 import { HttpStatusCode } from 'axios';
-import { isAfter } from 'date-fns';
+import { isAfter, isBefore, isSameDay, parseISO } from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
-import { GPASS_API_TOKEN } from './stadspas-config-and-content';
+import {
+  DEFAULT_EXPIRY_DAY,
+  DEFAULT_EXPIRY_MONTH,
+  GPASS_API_TOKEN,
+} from './stadspas-config-and-content';
 import {
   SecurityCode,
   Stadspas,
@@ -20,11 +24,9 @@ import {
   StadspasTransactieSource,
   StadspasTransactiesResponseSource,
   StadspasTransactionQueryParams,
-  PasblokkadeByPasnummer,
 } from './stadspas-types';
 import { featureToggle } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import {
-  ApiResponse_DEPRECATED,
   ApiResponse,
   ApiSuccessResponse,
   apiSuccessResult,
@@ -35,11 +37,10 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import { displayAmount } from '../../../universal/helpers/text';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import {
-  cache,
+  deleteCacheEntry,
   isSuccessStatus,
   requestData,
 } from '../../helpers/source-api-request';
-import { logger } from '../../logging';
 import type { BSN } from '../zorgned/zorgned-types';
 
 const NO_PASHOUDER_CONTENT_RESPONSE = apiSuccessResult({
@@ -121,20 +122,39 @@ function transformStadspasResponse(
 
 export async function fetchStadspasSource(
   passNumber: number,
-  administratienummer: string
+  administratienummer: string,
+  enableCache: boolean = true
 ): Promise<ApiResponse<StadspasDetailSource>> {
   const dataRequestConfig = getApiConfig('GPASS', {
     formatUrl: ({ url }) => `${url}/rest/sales/v1/pas/${passNumber}`,
     headers: getHeaders(administratienummer),
-    cacheKey_UNSAFE: createStadspasSourceCacheKey(
-      passNumber,
-      administratienummer
-    ),
+    enableCache,
     params: {
       include_balance: true,
     },
   });
-  return requestData<StadspasDetailSource>(dataRequestConfig);
+  return requestData<StadspasDetailSource>({
+    ...dataRequestConfig,
+    // Warning! Setting cacheKey_UNSAFE like this bypasses the transformation by getApiConfigBasedCacheKey in getApiConfig.
+    // Only do this if you are absolutely sure you this cacheKey is unique to the user.
+    // In this case, the passNumber and administratienummer are unique to the user.
+    // NOTE: will not be used if enableCache is false.
+    cacheKey_UNSAFE: createStadspasSourceCacheKey(
+      passNumber,
+      administratienummer
+    ),
+  });
+}
+
+function releaseStadspasSourceCache(
+  passNumber: number,
+  administratienummer: string
+): void {
+  const cacheKey = createStadspasSourceCacheKey(
+    passNumber,
+    administratienummer
+  );
+  deleteCacheEntry(cacheKey);
 }
 
 export function createStadspasSourceCacheKey(
@@ -147,14 +167,11 @@ export function createStadspasSourceCacheKey(
 export async function fetchStadspassenByAdministratienummer(
   administratienummer: string
 ) {
-  const dataRequestConfig = getApiConfig('GPASS');
-
-  const GPASS_ENDPOINT_PASHOUDER = `${dataRequestConfig.url}/rest/sales/v1/pashouder`;
-
   const headers = getHeaders(administratienummer);
-  const stadspasHouderResponse = await requestData<StadspasPasHouderResponse>({
-    ...dataRequestConfig,
-    url: GPASS_ENDPOINT_PASHOUDER,
+  const dataRequestConfig = getApiConfig('GPASS', {
+    formatUrl({ url }) {
+      return `${url}/rest/sales/v1/pashouder`;
+    },
     validateStatus: (statusCode) =>
       isSuccessStatus(statusCode) ||
       // 401 means there is no record available in the GPASS api for the requested administratienummer.
@@ -165,22 +182,28 @@ export async function fetchStadspassenByAdministratienummer(
     },
   });
 
+  const stadspasHouderResponse =
+    await requestData<StadspasPasHouderResponse>(dataRequestConfig);
+
   if (stadspasHouderResponse.status === 'ERROR') {
     return stadspasHouderResponse;
   }
 
-  const pashouder = stadspasHouderResponse.content;
-  if (!pashouder) {
+  const pashouderMain = stadspasHouderResponse.content;
+  if (!pashouderMain) {
     return NO_PASHOUDER_CONTENT_RESPONSE;
   }
 
-  const pashouders = [pashouder, ...(pashouder.sub_pashouders ?? [])];
+  const allPashouders = [
+    pashouderMain,
+    ...(pashouderMain.sub_pashouders ?? []),
+  ];
   const pasRequests = [];
 
-  for (const pashouder of pashouders) {
-    for (const pas of pashouder.passen ?? []) {
-      if (pas.actief || (!pas.vervangen && isCurrentPasYear(pas.expiry_date))) {
-        const response = fetchStadspasSource(
+  for (const pashouder of allPashouders) {
+    for (const pas of pashouder.passen) {
+      if (hasValidExpiryDate(pas.expiry_date) && !pas.vervangen) {
+        const request = fetchStadspasSource(
           pas.pasnummer,
           administratienummer
         ).then((response) => {
@@ -200,7 +223,7 @@ export async function fetchStadspassenByAdministratienummer(
           return response;
         });
 
-        pasRequests.push(response);
+        pasRequests.push(request);
       }
     }
   }
@@ -214,23 +237,85 @@ export async function fetchStadspassenByAdministratienummer(
   return apiSuccessResult({ stadspassen, administratienummer });
 }
 
-function isCurrentPasYear(expiryDate: string): boolean {
-  const pasYearStart = new Date();
-  const DEFAULT_EXPIRY_DAY = 31;
-  pasYearStart.setDate(DEFAULT_EXPIRY_DAY);
-  const DEFAULT_EXPIRY_MONTH = 7;
-  pasYearStart.setMonth(DEFAULT_EXPIRY_MONTH);
+function getDefaultExpiryDate(addYear: number = 0): Date {
+  const thisYearsExpiryDate = new Date(
+    `${new Date().getFullYear() + addYear}-${DEFAULT_EXPIRY_MONTH}-${DEFAULT_EXPIRY_DAY}`
+  );
+  return thisYearsExpiryDate;
+}
 
+function getThisYearsDefaultExpiryDate(): Date {
+  return getDefaultExpiryDate();
+}
+
+function getNextYearsDefaultExpiryDate(): Date {
+  return getDefaultExpiryDate(1);
+}
+
+function getPreviousYearsDefaultExpiryDate(): Date {
+  return getDefaultExpiryDate(-1);
+}
+
+export function getCurrentPasYearExpiryDate(): Date {
   const now = new Date();
-
+  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
+  const nextYearsExpiryDate = getNextYearsDefaultExpiryDate();
   if (
-    now.getDay() <= DEFAULT_EXPIRY_DAY &&
-    now.getMonth() <= DEFAULT_EXPIRY_MONTH
+    isAfter(now, thisYearsExpiryDate) ||
+    isSameDay(now, thisYearsExpiryDate)
   ) {
-    pasYearStart.setFullYear(pasYearStart.getFullYear() - 1);
+    return nextYearsExpiryDate;
+  }
+  return thisYearsExpiryDate;
+}
+
+function parseExpiryDate(expiryDate: string): Date {
+  const parsedDate = parseISO(`${expiryDate.split('T')[0]}T00:00.000Z`);
+  return parsedDate;
+}
+
+function expiresInCurrentPasYear(expiryDate: string): boolean {
+  const previousYearsExpiryDate = getPreviousYearsDefaultExpiryDate();
+  const expiry = parseExpiryDate(`${expiryDate}`);
+
+  return (
+    isAfter(expiry, previousYearsExpiryDate) &&
+    isBefore(expiry, getThisYearsDefaultExpiryDate())
+  );
+}
+
+function expiresInNextPasYear(expiryDate: string): boolean {
+  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
+  const expiry = parseExpiryDate(expiryDate);
+
+  return (
+    (isSameDay(expiry, thisYearsExpiryDate) ||
+      isAfter(expiry, thisYearsExpiryDate)) &&
+    isBefore(expiry, getNextYearsDefaultExpiryDate())
+  );
+}
+
+function hasValidExpiryDate(expiryDate: string): boolean {
+  const now = new Date();
+  const thisYearsExpiryDate = getThisYearsDefaultExpiryDate();
+  const expiry = parseExpiryDate(expiryDate);
+
+  if (isSameDay(expiry, thisYearsExpiryDate)) {
+    return true;
   }
 
-  return isAfter(expiryDate, pasYearStart);
+  if (isBefore(expiry, thisYearsExpiryDate)) {
+    return expiresInCurrentPasYear(expiryDate);
+  }
+
+  if (
+    isAfter(now, thisYearsExpiryDate) ||
+    isSameDay(now, thisYearsExpiryDate)
+  ) {
+    return expiresInNextPasYear(expiryDate);
+  }
+
+  return false;
 }
 
 export async function fetchStadspassen(bsn: BSN) {
@@ -257,7 +342,7 @@ export async function fetchStadspassen(bsn: BSN) {
 
 function transformGpassTransactionsResponse(
   responseSource: StadspasTransactiesResponseSource
-) {
+): StadspasBudgetTransaction[] {
   if (Array.isArray(responseSource.transacties)) {
     return responseSource.transacties.map(
       (transactie: StadspasTransactieSource) => {
@@ -283,7 +368,7 @@ function transformGpassTransactionsResponse(
       }
     );
   }
-  return responseSource;
+  return [];
 }
 
 export async function fetchGpassBudgetTransactions(
@@ -313,15 +398,14 @@ export async function fetchGpassBudgetTransactions(
 function transformGpassAanbiedingenResponse(
   responseSource: StadspasDiscountTransactionsResponseSource
 ): StadspasDiscountTransactions | StadspasDiscountTransactionsResponseSource {
-  if (Array.isArray(responseSource?.transacties)) {
-    const discountAmountTotal = responseSource.totale_korting ?? 0;
-    return {
-      discountAmountTotal,
-      discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
-      transactions: transformTransactions(responseSource.transacties),
-    };
-  }
-  return responseSource;
+  const discountAmountTotal = responseSource.totale_korting ?? 0;
+  return {
+    discountAmountTotal,
+    discountAmountTotalFormatted: `€${displayAmount(Math.abs(discountAmountTotal))}`,
+    transactions: Array.isArray(responseSource.transacties)
+      ? transformTransactions(responseSource.transacties)
+      : [],
+  };
 }
 
 function transformTransactions(
@@ -358,71 +442,26 @@ export async function fetchGpassDiscountTransactions(
   return requestData<StadspasDiscountTransaction[]>(dataRequestConfig);
 }
 
-type PasblokkadeResponse =
-  ApiResponse_DEPRECATED<PasblokkadeByPasnummer | null>;
+type PasBlockedResponse = { isBlocked: boolean };
 
-export async function mutateGpassBlockPass(
+export async function fetchPasIsBlocked(
   passNumber: number,
   administratienummer: string
-): Promise<PasblokkadeResponse> {
-  return mutateGpassTogglePassChecked(
-    passNumber,
-    administratienummer,
-    (pass) => !pass.actief
-  );
-}
-
-export async function mutateGpassUnblockPass(
-  passNumber: number,
-  administratienummer: string
-): Promise<PasblokkadeResponse> {
-  return mutateGpassTogglePassChecked(
-    passNumber,
-    administratienummer,
-    (pas) => pas.actief
-  );
-}
-
-async function mutateGpassTogglePass(
-  passNumber: number,
-  administratienummer: string
-): Promise<PasblokkadeResponse> {
-  const config = getApiConfig('GPASS', {
-    method: 'POST',
-    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
-    headers: getHeaders(administratienummer),
-    enableCache: false,
-    postponeFetch: !featureToggle.hliThemaStadspasBlokkerenActive,
-    transformResponse: transformTogglePassResponse,
-  });
-
-  return requestData<PasblokkadeByPasnummer>(config);
-}
-
-async function mutateGpassTogglePassChecked(
-  passNumber: number,
-  administratienummer: string,
-  sendMutatingRequestPredicate: (pas: StadspasDetailSource) => boolean
-): Promise<PasblokkadeResponse> {
-  const cacheKey = createStadspasSourceCacheKey(
-    passNumber,
-    administratienummer
-  );
-  if (!cache.del(cacheKey)) {
-    logger.warn(
-      'Cache free failed for stadspas-source while calling mutateGpassTogglePassChecked'
-    );
-  }
+): Promise<ApiResponse<PasBlockedResponse>> {
+  // Always fetch the latest state of the pass.
+  const USE_CACHE = false;
 
   const passResponse = await fetchStadspasSource(
     passNumber,
-    administratienummer
+    administratienummer,
+    USE_CACHE
   );
+
   if (passResponse.status !== 'OK') {
     return passResponse;
   }
 
-  // This may not give unexpected results so we do extra typechecking on the source input.
+  // The passResponse may give unexpected results so we do extra typechecking on the source input.
   if (typeof passResponse.content?.actief !== 'boolean') {
     return apiErrorResult(
       "Could not determine 'actief' state of pass because of an invalid response",
@@ -431,25 +470,70 @@ async function mutateGpassTogglePassChecked(
     );
   }
 
-  if (sendMutatingRequestPredicate(passResponse.content)) {
-    return apiSuccessResult(transformTogglePassResponse(passResponse.content));
-  }
-
-  return mutateGpassTogglePass(passNumber, administratienummer);
+  return apiSuccessResult(transformPassIsBlockedResponse(passResponse.content));
 }
 
-function transformTogglePassResponse(
+function transformPassIsBlockedResponse(
   pas: StadspasDetailSource
-): PasblokkadeByPasnummer {
-  return { [pas.pasnummer]: pas.actief };
+): PasBlockedResponse {
+  // If the pass is not active, it is considered blocked.
+  const isBlocked = !pas.actief;
+  return { isBlocked };
+}
+
+export async function mutateGpassSetPasIsBlockedState(
+  passNumber: number,
+  administratienummer: string,
+  isBlocked: boolean
+): Promise<ApiResponse<PasBlockedResponse>> {
+  const pasIsBlockedResponse = await fetchPasIsBlocked(
+    passNumber,
+    administratienummer
+  );
+
+  if (
+    pasIsBlockedResponse.status !== 'OK' ||
+    // No need to toggle if the pass is already in the desired state.
+    pasIsBlockedResponse.content.isBlocked === isBlocked
+  ) {
+    return pasIsBlockedResponse;
+  }
+
+  // Only toggle the pass if it is currently active.
+  const config = getApiConfig('GPASS', {
+    method: 'POST',
+    formatUrl: ({ url }) => `${url}/rest/sales/v1/togglepas/${passNumber}`,
+    headers: getHeaders(administratienummer),
+    enableCache: false,
+    postponeFetch: !featureToggle.hliThemaStadspasBlokkerenActive,
+    transformResponse: transformPassIsBlockedResponse,
+  });
+
+  const response = await requestData<PasBlockedResponse>(config);
+
+  if (response.status === 'OK') {
+    // If the pass is successfully toggled, we can delete the cache entry.
+    // On reload, the pass will be fetched again with the new state.
+    releaseStadspasSourceCache(passNumber, administratienummer);
+  }
+
+  return response;
 }
 
 export const forTesting = {
-  transformTransactions,
+  expiresInCurrentPasYear,
+  expiresInNextPasYear,
+  getCurrentPasYearExpiryDate,
+  getDefaultExpiryDate,
+  getHeaders,
+  getNextYearsDefaultExpiryDate,
+  getOwner,
+  getPreviousYearsDefaultExpiryDate,
+  getThisYearsDefaultExpiryDate,
+  hasValidExpiryDate,
+  transformBudget,
   transformGpassAanbiedingenResponse,
   transformGpassTransactionsResponse,
-  getHeaders,
-  getOwner,
-  transformBudget,
   transformStadspasResponse,
+  transformTransactions,
 };

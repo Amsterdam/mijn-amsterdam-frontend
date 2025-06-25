@@ -44,7 +44,7 @@ export const menuItem: ThemaMenuItem<typeof themaId> = {
   profileTypes: ['private'],
   isActive(appState: AppState) {
     const hasStadspas =
-      !!appState.HLI?.content?.stadspas?.length &&
+      !!appState.HLI?.content?.stadspas?.stadspassen?.length &&
       featureToggle.hliStadspasActive;
     const hasRegelingen =
       !!appState.HLI?.content?.regelingen?.length && featureToggle.hliActive;

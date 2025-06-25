@@ -319,7 +319,7 @@ describe('predicates', () => {
       const appState = {
         HLI: {
           status: 'OK',
-          content: { stadspas: [{ passType: 'kind' }] },
+          content: { stadspas: { stadspassen: [{ passType: 'kind' }] } },
         },
       } as unknown as AppState;
 
@@ -516,11 +516,13 @@ describe('predicates', () => {
       HLI: {
         status: 'OK',
         content: {
-          stadspas: [
-            {
-              budgets: [{ title: 'Witgoed regeling' }],
-            },
-          ],
+          stadspas: {
+            stadspassen: [
+              {
+                budgets: [{ title: 'Witgoed regeling' }],
+              },
+            ],
+          },
         },
       },
     };

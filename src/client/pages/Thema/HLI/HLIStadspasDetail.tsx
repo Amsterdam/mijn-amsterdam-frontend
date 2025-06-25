@@ -166,13 +166,11 @@ export function HLIStadspasDetail() {
               </Paragraph>
               <Datalist rows={[NUMBER]} />
               {!!stadspas.budgets.length && <Datalist rows={[BALANCE]} />}
-              {featureToggle.hliThemaStadspasBlokkerenActive && (
-                <BlockStadspas stadspas={stadspas} />
+              {stadspas.blockPassURL && <BlockStadspas stadspas={stadspas} />}
+              {stadspas.unblockPassURL && (
+                <UnblockStadspas stadspas={stadspas} />
               )}
             </PageContentCell>
-            {featureToggle.hliThemaStadspasDeblokkerenActive && (
-              <UnblockStadspas stadspas={stadspas} />
-            )}
           </>
         ) : (
           <PageContentCell>
@@ -190,7 +188,9 @@ export function HLIStadspasDetail() {
           </PageContentCell>
         )}
         <PageContentCell>
-          <Heading className="ams-mb-m">Gekregen tegoed</Heading>
+          <Heading size="level-3" level={3} className="ams-mb-m">
+            Gekregen tegoed
+          </Heading>
           {isLoadingStadspas && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -206,7 +206,9 @@ export function HLIStadspasDetail() {
           )}
         </PageContentCell>
         <PageContentCell>
-          <Heading className="ams-mb-m">Uw uitgaven</Heading>
+          <Heading size="level-3" level={3} className="ams-mb-m">
+            Uw uitgaven
+          </Heading>
           {(isLoadingTransacties || isLoadingStadspas) && (
             <LoadingContent barConfig={loadingContentBarConfigList} />
           )}
@@ -285,7 +287,7 @@ function BlockStadspas({ stadspas }: { stadspas: StadspasFrontend }) {
     }
   }, [error, showError, isMutating]);
 
-  if (!stadspas.actief) {
+  if (!stadspas.actief && !isMutating) {
     return <PassBlockedAlert />;
   }
 
@@ -389,6 +391,9 @@ function PassBlockedAlert() {
       headingLevel={4}
       heading="Deze pas heeft u geblokkeerd, hoe nu verder?"
       severity="warning"
+      className={
+        featureToggle.hliThemaStadspasDeblokkerenActive ? 'ams-mb-l' : ''
+      }
     >
       <Paragraph>
         Wilt u uw pas deblokkeren of wilt u een nieuwe pas aanvragen? Bel dan
