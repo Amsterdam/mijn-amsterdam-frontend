@@ -103,7 +103,7 @@ export interface StadspasHouderSource {
   achternaam: string;
   tussenvoegsel?: string;
   voornaam: string;
-  passen: StadspasHouderPasSource[];
+  passen?: StadspasHouderPasSource[];
   volledige_naam?: string;
 }
 
