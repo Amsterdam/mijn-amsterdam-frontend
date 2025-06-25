@@ -6,7 +6,7 @@ import { CollapsiblePanel } from '../../../../components/CollapsiblePanel/Collap
 import ThemaPaginaTable from '../../../../components/Thema/ThemaPaginaTable';
 
 export function ContactMomenten() {
-  const { contactmomenten, displayProps, title, routeConfig } =
+  const { contactmomenten, displayProps, title, listPageRoute } =
     useContactmomenten();
 
   if (!contactmomenten.length) {
@@ -33,7 +33,7 @@ export function ContactMomenten() {
         zaken={contactmomenten}
         displayProps={displayProps}
         listPageLinkTitle="Bekijk alle contactmomenten"
-        listPageRoute={routeConfig.themaPageBRP.path}
+        listPageRoute={listPageRoute}
       />
     </CollapsiblePanel>
   );
