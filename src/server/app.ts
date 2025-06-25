@@ -127,7 +127,7 @@ if (FeatureToggle.amsNotificationsIsActive) {
 app.use(nocache, stadspasExternalConsumerRouter.private);
 
 // Afis
-app.use(nocache, afisExternalConsumerRouter.privateNetwork);
+app.use(nocache, afisExternalConsumerRouter.private);
 
 // Misc middleware
 app.get(BffEndpoints.ROOT, (_req, res) => {
