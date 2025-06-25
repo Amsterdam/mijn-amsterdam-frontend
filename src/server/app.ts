@@ -46,6 +46,7 @@ import { router as protectedRouter } from './routing/router-protected';
 import { legacyRouter, router as publicRouter } from './routing/router-public';
 import { stadspasExternalConsumerRouter } from './routing/router-stadspas-external-consumer';
 import { captureException } from './services/monitoring';
+import { afisExternalConsumerRouter } from './services/afis/afis-router-external-consumer';
 
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
@@ -118,12 +119,17 @@ if (FeatureToggle.amsNotificationsIsActive) {
 app.use(BFF_BASE_PATH, nocache, protectedRouter);
 app.use(BFF_BASE_PATH, nocache, adminRouter);
 
+// Routers that are only accessible from the hub/spoke private network on azure.
 if (FeatureToggle.amsNotificationsIsActive) {
   app.use(nocache, notificationsExternalConsumerRouter.private);
 }
 
 app.use(nocache, stadspasExternalConsumerRouter.private);
 
+// Afis
+app.use(nocache, afisExternalConsumerRouter.privateNetwork);
+
+// Misc middleware
 app.get(BffEndpoints.ROOT, (_req, res) => {
   return res.redirect(`${BFF_BASE_PATH + BffEndpoints.ROOT}`);
 });
