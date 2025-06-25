@@ -6,7 +6,7 @@ import { firstBy } from 'thenby';
 import {
   createBusinessPartnerBankAccount,
   fetchAfisBusinessPartnerDetails,
-  fetchBusinessPartnerBankAccounts,
+  fetchCheckIfIBANexists,
 } from './afis-business-partner';
 import {
   EMandateAcceptantenGemeenteAmsterdam,
@@ -82,11 +82,7 @@ export async function createAfisEMandate(
   );
 
   if (!acceptant) {
-    return apiErrorResult(
-      'Invalid acceptant IBAN',
-      null,
-      HttpStatusCode.BadRequest
-    );
+    throw new Error(`Invalid acceptant IBAN: ${payload.acceptantIBAN}.`);
   }
 
   const businessPartnerResponse = await fetchAfisBusinessPartnerDetails({
@@ -94,7 +90,9 @@ export async function createAfisEMandate(
   });
 
   if (businessPartnerResponse.status !== 'OK') {
-    return businessPartnerResponse;
+    throw new Error(
+      `Error fetching business partner details - ${'message' in businessPartnerResponse ? businessPartnerResponse.message : ''}`
+    );
   }
 
   const sender = businessPartnerResponse.content;
@@ -103,25 +101,22 @@ export async function createAfisEMandate(
 
   // TODO: Check if this bank account exists in the sender's bank account list.
   // If not add it to the list.
-  const bankAccountResponse = await fetchBusinessPartnerBankAccounts(
-    payload.businessPartnerId
-  );
+  const bankAccountResponse = await fetchCheckIfIBANexists(senderIBAN);
+  const bankAccountExists = bankAccountResponse.content === true;
 
   // TODO: Should we try to add the bank account if we cannnot check if it exists?
   if (bankAccountResponse.status !== 'OK') {
-    return bankAccountResponse;
+    throw new Error(
+      `Error checking if bank account exists - ${'message' in bankAccountResponse ? bankAccountResponse.message : ''}`
+    );
   }
-
-  const bankAccountExists = !!bankAccountResponse.content.find(
-    (account) => account.IBAN === senderIBAN
-  );
 
   if (!bankAccountExists) {
     const bankAccountPayload: AfisBusinessPartnerBankPayload = {
       businessPartnerId: payload.businessPartnerId,
       iban: senderIBAN,
       bic: senderBIC,
-      swiftCode: '',
+      swiftCode: senderBIC,
       senderName: payload.senderName,
     };
 
@@ -129,7 +124,9 @@ export async function createAfisEMandate(
       await createBusinessPartnerBankAccount(bankAccountPayload);
 
     if (createBankAccountResponse.status !== 'OK') {
-      return createBankAccountResponse;
+      throw new Error(
+        `Error creating bank account - ${'message' in createBankAccountResponse ? createBankAccountResponse.message : ''}`
+      );
     }
   }
 
@@ -172,7 +169,15 @@ export async function createAfisEMandate(
     transformResponse: transformCreateEMandatesResponse,
   });
 
-  return requestData<unknown>(config);
+  const response = await requestData<unknown>(config);
+
+  if (response.status !== 'OK') {
+    throw new Error(
+      `Error creating e-mandate - ${'message' in response ? response.message : ''}`
+    );
+  }
+
+  return response;
 }
 
 function transformUpdateEMandatesResponse(response: unknown) {

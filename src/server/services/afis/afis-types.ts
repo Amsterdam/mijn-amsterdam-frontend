@@ -118,26 +118,14 @@ export type AfisBusinessPartnerDetailsTransformed = {
   address?: AfisBusinessPartnerAddress['address'];
 };
 
-// TODO: Check which properties are optional
 export type AfisBusinessPartnerBankAccount = {
   BusinessPartner: BusinessPartnerId;
-  BankIdentification: string;
-  BankCountryKey: string;
   BankName: string;
   BankNumber: string;
   SWIFTCode: string;
-  BankControlKey: string;
   BankAccountHolderName: string;
-  BankAccountName: string;
-  ValidityStartDate: string;
-  ValidityEndDate: string;
   IBAN: string;
-  IBANValidityStartDate: string;
   BankAccount: string;
-  BankAccountReferenceText: string;
-  CollectionAuthInd: boolean;
-  CityName: string;
-  AuthorizationGroup: string;
 };
 
 export type AfisBusinessPartnerBankPayload = {
