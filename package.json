@@ -98,6 +98,7 @@
     "express-http-proxy": "^2.1.1",
     "express-openid-connect": "^2.18.1",
     "express-session": "^1.18.1",
+    "fast-xml-parser": "^5.2.5",
     "flat-cache": "^6.1.10",
     "form-data": "^4.0.3",
     "fuse.js": "^7.1.0",
