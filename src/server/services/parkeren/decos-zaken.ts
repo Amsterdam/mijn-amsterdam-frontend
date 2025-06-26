@@ -42,6 +42,7 @@ const GPP: DecosZaakTransformer<GPP> = {
       '': ['Nog niet bekend'],
     }),
     text7: kentekens,
+    text14: 'kentekenNieuw',
     text8: location,
   },
   async afterTransform(vergunning) {
