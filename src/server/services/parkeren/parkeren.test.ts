@@ -1,8 +1,28 @@
 import { fetchParkeren } from './parkeren';
+import { hasPermitsOrPermitRequests } from './parkeren-egis-service';
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 
-const REQUEST_ID = '123';
+const mocks = vi.hoisted(() => {
+  return {
+    JWETokenCreationActive: false,
+  };
+});
+
+vi.mock(
+  '../../../client/pages/Thema/Parkeren/Parkeren-thema-config.ts',
+  async (importOriginal) => {
+    return {
+      ...(await importOriginal()),
+      featureToggle: {
+        parkerenActive: true,
+        parkerenCheckForProductAndPermitsActive: true,
+        parkerenJWETokenCreationActive: mocks.JWETokenCreationActive,
+      },
+    };
+  }
+);
+
 const STATUS_OK_200 = 200;
 const SUCCESS_URL = 'https://parkeren.nl/sso-login';
 
@@ -155,6 +175,26 @@ describe('fetchParkeren', () => {
 
     const response = await fetchParkeren(authProfileAndToken);
     expect(response.content.isKnown).toBe(false);
+  });
+});
+
+describe('hasPermitsOrPermitRequests', () => {
+  const authProfileAndToken = getAuthProfileAndToken('private');
+
+  afterEach(() => {
+    mocks.JWETokenCreationActive = true;
+  });
+
+  test('Doing a request with a created JWE token', async () => {
+    mocks.JWETokenCreationActive = true;
+    const response = await hasPermitsOrPermitRequests(authProfileAndToken);
+    expect(response).toBe(true);
+  });
+
+  test('Doing a request while fetching a JWT', async () => {
+    mocks.JWETokenCreationActive = false;
+    const response = await hasPermitsOrPermitRequests(authProfileAndToken);
+    expect(response).toBe(true);
   });
 });
 
