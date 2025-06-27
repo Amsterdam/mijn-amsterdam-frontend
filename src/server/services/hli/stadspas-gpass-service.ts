@@ -201,7 +201,7 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of allPashouders) {
-    for (const pas of (pashouder.passen ?? [])) {
+    for (const pas of pashouder.passen ?? []) {
       if (hasValidExpiryDate(pas.expiry_date) && !pas.vervangen) {
         const request = fetchStadspasSource(
           pas.pasnummer,
@@ -376,9 +376,10 @@ export async function fetchGpassBudgetTransactions(
   pasnummer: Stadspas['passNumber'],
   budgetCode?: StadspasBudget['code']
 ) {
-  const requestParams: StadspasTransactionQueryParams = {
+  const requestParams: StadspasTransactionQueryParams & { limit: number } = {
     pasnummer,
     sub_transactions: true,
+    limit: 50,
   };
 
   if (budgetCode) {
@@ -386,7 +387,7 @@ export async function fetchGpassBudgetTransactions(
   }
 
   const dataRequestConfig = getApiConfig('GPASS', {
-    formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget`,
+    formatUrl: ({ url }) => `${url}/rest/transacties/v1/budget?limit=25`,
     transformResponse: transformGpassTransactionsResponse,
     headers: getHeaders(administratienummer),
     params: requestParams,
