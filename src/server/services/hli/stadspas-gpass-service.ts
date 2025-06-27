@@ -201,7 +201,7 @@ export async function fetchStadspassenByAdministratienummer(
   const pasRequests = [];
 
   for (const pashouder of allPashouders) {
-    for (const pas of pashouder.passen) {
+    for (const pas of (pashouder.passen ?? [])) {
       if (hasValidExpiryDate(pas.expiry_date) && !pas.vervangen) {
         const request = fetchStadspasSource(
           pas.pasnummer,
