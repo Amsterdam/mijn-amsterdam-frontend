@@ -72,28 +72,28 @@ function createVarenNotification(
         ...baseNotification,
         id: `varen-${zaak.id}-ontvangen-notification`,
         title: `Aanvraag ${zaak.caseType} ontvangen`,
-        description: `Wij hebben uw aanvraag ontvangen.`,
+        description: `Wij hebben uw aanvraag ${zaak.caseType} voor vaartuig ${zaak.vesselName} ontvangen`,
       };
     case 'In behandeling':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-inbehandeling-notification`,
         title: `Aanvraag ${zaak.caseType} in behandeling`,
-        description: `Wij hebben uw aanvraag in behandeling genomen.`,
+        description: `Wij hebben uw aanvraag ${zaak.caseType} voor vaartuig ${zaak.vesselName} in behandeling genomen.`,
       };
     case 'Meer informatie nodig':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-meerinformatienodig-notification`,
         title: `Meer informatie nodig omtrent uw ${zaak.caseType} aanvraag`,
-        description: `Er is meer informatie nodig om de aanvraag verder te kunnen verwerken.`,
+        description: `Wij hebben meer informatie nodig om uw aanvraag ${zaak.caseType} voor vaartuig ${zaak.vesselName} verder te kunnen verwerken.`,
       };
     case 'Afgehandeld':
       return {
         ...baseNotification,
         id: `varen-${zaak.id}-afgehandeld-notification`,
         title: `Aanvraag ${zaak.caseType} afgehandeld`,
-        description: `Wij hebben uw aanvraag afgehandeld.`,
+        description: `Wij hebben uw aanvraag ${zaak.caseType} voor vaartuig ${zaak.vesselName} afgehandeld.`,
       };
   }
   return null;
