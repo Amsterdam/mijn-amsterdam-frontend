@@ -225,7 +225,7 @@ describe('<Varen />', () => {
       expect(bsnKvk).toBeInTheDocument();
       expect(bsnKvk.nextElementSibling).toHaveTextContent('012345678');
 
-      const adres = screen.getByText('Adres');
+      const adres = screen.getByText('Correspondentieadres');
       expect(adres.nextElementSibling).toHaveTextContent(
         'Correspondence 1, 1011 PN Amsterdam'
       );

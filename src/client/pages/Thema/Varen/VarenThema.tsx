@@ -77,7 +77,9 @@ export function VarenPageContentRederRegistratie({
     {
       rows: [
         {
-          label: 'Adres',
+          label: registratie.correspondenceAddress
+            ? 'Correspondentieadres'
+            : 'Adres',
           content:
             registratie.correspondenceAddress ||
             `${registratie.address}${registratie.postalCode ? `, ${registratie.postalCode}` : ''}${registratie.city ? ` ${registratie.city}` : ''}`,
