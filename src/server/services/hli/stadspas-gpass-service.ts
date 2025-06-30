@@ -1,5 +1,13 @@
 import { HttpStatusCode } from 'axios';
-import { isAfter, isBefore, isSameDay, parseISO, isValid } from 'date-fns';
+import {
+  differenceInMonths,
+  isAfter,
+  isBefore,
+  isSameDay,
+  parseISO,
+  subMonths,
+  isValid
+} from 'date-fns';
 
 import { fetchAdministratienummer } from './hli-zorgned-service';
 import {
@@ -350,13 +358,23 @@ function transformGpassTransactionsResponse(
   return [];
 }
 
+const MONTHS_BACK_IN_PREVIOUS_YEAR = 6;
+
 export async function fetchGpassBudgetTransactions(
   administratienummer: string,
   pasnummer: Stadspas['passNumber'],
   budgetCode?: StadspasBudget['code']
 ) {
+  const prev = getPreviousYearsDefaultExpiryDate();
+  const monthsAgo = differenceInMonths(new Date(), prev);
+  const from = subMonths(
+    prev,
+    Math.max(0, MONTHS_BACK_IN_PREVIOUS_YEAR - monthsAgo)
+  );
   const requestParams: StadspasTransactionQueryParams = {
     pasnummer,
+    date_from: from.toISOString().split('T')[0], // Format to YYYY-MM-DD
+    date_until: new Date().toISOString().split('T')[0], // Format to YYYY-MM-DD
     sub_transactions: true,
   };
 
