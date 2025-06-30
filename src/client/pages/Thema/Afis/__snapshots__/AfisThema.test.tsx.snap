@@ -6,10 +6,10 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
     class="ams-grid"
   >
     <div
-      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_c5a3f1"
+      class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide _PageHeadingWrap_4650bd"
     >
       <div
-        class="_PageHeadingInner_c5a3f1"
+        class="_PageHeadingInner_4650bd"
         id="skip-to-id-AppContent"
       >
         <nav
@@ -46,7 +46,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
           </ol>
         </nav>
         <h1
-          class="ams-heading ams-heading--1 _PageHeading_c5a3f1"
+          class="ams-heading ams-heading--1 _PageHeading_4650bd"
         >
           Facturen en betalen
         </h1>
@@ -143,7 +143,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
       class="ams-grid__cell ams-grid__cell--span-4 ams-grid__cell--span-8-medium ams-grid__cell--span-12-wide ams-grid__cell--start-1 ams-grid__cell--start-1-medium ams-grid__cell--start-1-wide"
     >
       <a
-        class="_MaButtonLink_aa758a ams-button ams-button--secondary ams-mb-m"
+        class="_MaButtonLink_10c0a4 ams-button ams-button--secondary ams-mb-m"
         href="/facturen-en-betalen/betaalvoorkeuren"
       >
         Betaalvoorkeuren
@@ -217,7 +217,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -261,14 +261,14 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                 class="ams-table__cell"
               >
                 <span
-                  class="_DocumentLinkWrap_81c3b4"
+                  class="_DocumentLinkWrap_4ce874"
                 >
                   <a
-                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
                     href="https://download.example.com/F001"
                   >
                     <span
-                      class="_DocumentLinkIcon_81c3b4"
+                      class="_DocumentLinkIcon_4ce874"
                     >
                       <span
                         class="ams-icon ams-icon--heading-5"
@@ -304,7 +304,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               >
                 Openstaand: 
                 <a
-                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                   href="https://payment.example.com/F001"
                   target="_blank"
                 >
@@ -319,14 +319,14 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                 class="ams-table__cell"
               >
                 <span
-                  class="_DocumentLinkWrap_81c3b4"
+                  class="_DocumentLinkWrap_4ce874"
                 >
                   <a
-                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
                     href="https://download.example.com/F003"
                   >
                     <span
-                      class="_DocumentLinkIcon_81c3b4"
+                      class="_DocumentLinkIcon_4ce874"
                     >
                       <span
                         class="ams-icon ams-icon--heading-5"
@@ -362,7 +362,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
               >
                 Openstaand: 
                 <a
-                  class="ams-link _MaLink_aa758a _MaRouterLink__no-underline-fat_aa758a"
+                  class="ams-link _MaLink_10c0a4 _MaRouterLink__no-underline-fat_10c0a4"
                   href="https://payment.example.com/F003"
                   target="_blank"
                 >
@@ -386,7 +386,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <tbody
             class="ams-table__body"
@@ -411,7 +411,7 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
         class="ams-table"
       >
         <table
-          class="ams-table__table _TableV2_4c6825"
+          class="ams-table__table _TableV2_1fc147"
         >
           <thead
             class="ams-table__header"
@@ -449,14 +449,14 @@ exports[`<Afis /> > Matches the Full Page snapshot 1`] = `
                 class="ams-table__cell"
               >
                 <span
-                  class="_DocumentLinkWrap_81c3b4"
+                  class="_DocumentLinkWrap_4ce874"
                 >
                   <a
-                    class="ams-link _DocumentLink_81c3b4 _MaLink_aa758a _MaRouterLink__no-default-underline_aa758a"
+                    class="ams-link _DocumentLink_4ce874 _MaLink_10c0a4 _MaRouterLink__no-default-underline_10c0a4"
                     href="https://download.example.com/F002"
                   >
                     <span
-                      class="_DocumentLinkIcon_81c3b4"
+                      class="_DocumentLinkIcon_4ce874"
                     >
                       <span
                         class="ams-icon ams-icon--heading-5"
