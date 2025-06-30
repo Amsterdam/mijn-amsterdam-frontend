@@ -34,6 +34,7 @@ import {
   fetchMaintenanceNotificationsActual,
   QueryParamsMaintenanceNotifications,
 } from '../services/cms/cms-maintenance-notifications';
+import { db } from '../services/db/db';
 
 export const router = express.Router();
 
@@ -207,6 +208,13 @@ router.all(
     },
   })
 );
+
+router.all('/test-db', async (req, res) => {
+  const { queryGET } = await db();
+
+  const result = await queryGET('SELECT NOW() AS current_time');
+  return res.send(result);
+});
 
 export const legacyRouter = express.Router();
 

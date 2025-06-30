@@ -17,7 +17,14 @@ export function getPool() {
   if (pool) {
     return pool;
   }
+
   pool = new Pool(pgDbConfig);
+
+  pool.on('error', (err) => {
+    captureException(err);
+    process.exit(-1);
+  });
+
   return pool;
 }
 
@@ -27,9 +34,11 @@ export function getPool() {
 
 export async function query(queryString: string, values?: unknown[]) {
   let result = null;
+
+  const cpool = getPool();
+
   try {
-    const pool = getPool();
-    result = await pool.query(queryString, values);
+    result = await cpool.query(queryString, values);
   } catch (error) {
     captureException(error);
   }
