@@ -10,8 +10,9 @@ import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
 import { captureException } from '../monitoring';
+import { HttpStatusCode } from 'axios';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
@@ -71,11 +72,14 @@ export async function hasPermitsOrPermitRequests(
       ? 'private'
       : 'company';
 
+  // 404s here mean the client has no data in the system.
   const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
     requestData<ClientProductDetailsSourceResponse>(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/client_product_details`,
+        validateStatus: (statusCode) =>
+          isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
         method: 'POST',
         data: {
           token: JWT,
@@ -86,6 +90,8 @@ export async function hasPermitsOrPermitRequests(
       getApiConfig('PARKEREN', {
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/active_permit_request`,
+        validateStatus: (statusCode) =>
+          isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
         method: 'POST',
         data: {
           token: JWT,
@@ -97,8 +103,8 @@ export async function hasPermitsOrPermitRequests(
   return (
     clientProductsResponse.status !== 'OK' ||
     permitRequestsResponse.status !== 'OK' ||
-    !!clientProductsResponse.content.data.length ||
-    !!permitRequestsResponse.content.data.length
+    !!clientProductsResponse?.content?.data?.length ||
+    !!permitRequestsResponse?.content?.data?.length
   );
 }
 
