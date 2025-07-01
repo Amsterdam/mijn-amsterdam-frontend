@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router';
+
 import {
   ErfpachtDossierFrontend,
   ErfpachtDossierFactuurFrontend,
@@ -134,13 +136,17 @@ export function getTableConfig({
   const tableConfig = {
     [listPageParamKind.erfpachtDossiers]: {
       title: titleDossiers ?? 'Erfpachtrechten',
-      listPageRoute: routeConfig.listPage.path,
+      listPageRoute: generatePath(routeConfig.listPage.path, {
+        page: null,
+      }),
       displayProps: displayPropsDossiers,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_DOSSIERS,
     },
     [listPageParamKind.openFacturen]: {
       title: titleOpenFacturen ?? 'Openstaande facturen',
-      listPageRoute: routeConfig.listPageOpenFacturen.path,
+      listPageRoute: generatePath(routeConfig.listPageOpenFacturen.path, {
+        page: null,
+      }),
       displayProps: displayPropsOpenFacturen,
       maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA_FACTUREN,
     },
