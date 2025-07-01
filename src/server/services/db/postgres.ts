@@ -23,7 +23,7 @@ export function getPool() {
   pool.on('error', (err) => {
     captureException(err);
     // See also: https://node-postgres.com/features/pooling#checkout-use-and-return
-    process.exit(-1); // Exit the process on pool error. I'ts unlikely we can recover. Let the process manager restart the app in a clean state.
+    process.exit(-1); // Exit the process on pool error. It's unlikely we can recover. Let the process manager restart the app in a clean state.
   });
 
   return pool;
