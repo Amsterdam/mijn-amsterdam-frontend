@@ -525,7 +525,7 @@ export const forTesting = {
   getOwner,
   getPreviousYearsDefaultExpiryDate,
   getThisYearsDefaultExpiryDate,
-  hasValidExpiryDate: isVisiblePass,
+  isVisiblePass,
   transformBudget,
   transformGpassAanbiedingenResponse,
   transformGpassTransactionsResponse,

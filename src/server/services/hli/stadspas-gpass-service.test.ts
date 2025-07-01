@@ -862,11 +862,9 @@ describe('stadspas-gpass-service', () => {
       [true, '2026-08-01', true],
       [false, '2026-08-01', false],
     ])(
-      'has valid expiry date with pas.actief = %s and epiry date %s',
+      'Shoud pass be visible if pas.actief = %s and epiry date %s ?',
       (isActief, expiryDate, isValid) => {
-        expect(forTesting.hasValidExpiryDate(isActief, expiryDate)).toBe(
-          isValid
-        );
+        expect(forTesting.isVisiblePass(isActief, expiryDate)).toBe(isValid);
       }
     );
   });
