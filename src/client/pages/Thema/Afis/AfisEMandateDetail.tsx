@@ -37,7 +37,7 @@ function DateAdjustModal({
 
   return (
     <Modal
-      title="E-Mandaat Einddatum aanpassen naar"
+      title="E-Mandaat einddatum aanpassen"
       isOpen={isDateAdjustModalActive}
       showCloseButton
       closeOnEscape
@@ -67,7 +67,12 @@ function DateAdjustModal({
         </ActionGroup>
       }
     >
-      <DateInput type="date" min={minDate} value={currentDate} />
+      <>
+        <Paragraph className="ams-mb-s">
+          Nieuwe einddatum E-mandaat {eMandate.acceptant}
+        </Paragraph>
+        <DateInput type="date" min={minDate} value={currentDate} />
+      </>
     </Modal>
   );
 }
