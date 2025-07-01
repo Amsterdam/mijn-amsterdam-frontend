@@ -1,15 +1,16 @@
 import { Grid, Heading, Link, Paragraph } from '@amsterdam/design-system-react';
 
+import { featureToggle } from './Afis-thema-config';
 import styles from './AfisBetaalVoorkeuren.module.scss';
 import {
   useAfisBetaalVoorkeurenData,
+  useAfisEMandatesData,
   useAfisThemaData,
 } from './useAfisThemaData.hook';
 import {
   AfisBusinessPartnerDetailsTransformed,
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
-import { FeatureToggle } from '../../../../universal/config/feature-toggles';
 import { entries } from '../../../../universal/helpers/utils';
 import { CollapsiblePanel } from '../../../components/CollapsiblePanel/CollapsiblePanel';
 import { Datalist } from '../../../components/Datalist/Datalist';
@@ -85,29 +86,32 @@ export function AfisBetaalVoorkeuren() {
     routeConfig,
   } = useAfisThemaData();
 
+  useHTMLDocumentTitle(routeConfig.detailPage);
+
   const {
     title,
     businesspartnerDetails,
     businessPartnerDetailsLabels,
-    eMandates,
-    eMandateTableConfig,
     hasBusinessPartnerDetailsError,
-    hasEMandatesError,
     hasFailedEmailDependency,
     hasFailedPhoneDependency,
     hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
-    isLoadingEMandates,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  const {
+    eMandates,
+    eMandateTableConfig,
+    hasEMandatesError,
+    isLoadingEMandates,
+  } = useAfisEMandatesData();
 
   const isLoadingAllAPis =
-    isThemaPaginaLoading &&
-    isLoadingBusinessPartnerDetails &&
+    isThemaPaginaLoading ||
+    isLoadingBusinessPartnerDetails ||
     isLoadingEMandates;
 
-  const eMandateTables = FeatureToggle.afisEMandatesActive && (
+  const eMandatesTable = featureToggle.afisEMandatesActive && (
     <ThemaPaginaTable<AfisEMandateFrontend>
       displayProps={eMandateTableConfig.displayProps}
       maxItems={-1}
@@ -131,7 +135,7 @@ export function AfisBetaalVoorkeuren() {
         </Link>
         .
       </Paragraph>
-      {!FeatureToggle.afisEMandatesActive && (
+      {!featureToggle.afisEMandatesActive && (
         <>
           <Heading level={3} size="level-5">
             Via automatische incasso betalen
@@ -169,9 +173,9 @@ export function AfisBetaalVoorkeuren() {
         businesspartner={businesspartnerDetails}
         labels={businessPartnerDetailsLabels}
         isLoading={!!(isLoadingBusinessPartnerDetails || isThemaPaginaLoading)}
-        startCollapsed={FeatureToggle.afisEMandatesActive}
+        startCollapsed={featureToggle.afisEMandatesActive}
       />
-      {eMandateTables}
+      {eMandatesTable}
     </>
   );
 
@@ -223,7 +227,6 @@ export function AfisBetaalVoorkeuren() {
       }
       isPartialError={
         hasFailedFullNameDependency ||
-        hasFailedPhoneDependency ||
         hasFailedPhoneDependency ||
         hasBusinessPartnerDetailsError ||
         hasEMandatesError
