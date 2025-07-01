@@ -152,7 +152,7 @@ describe('fetchParkeren', () => {
       expect(response.content.isKnown).toBe(true);
     });
 
-    test('Liven in Amsterdam with digid login', async () => {
+    test('Living in Amsterdam with digid login', async () => {
       setupMocks('digid', { data: [] }, { data: [] });
       const authProfileAndToken = getAuthProfileAndToken('private');
 
