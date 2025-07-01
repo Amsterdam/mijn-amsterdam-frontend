@@ -6,7 +6,7 @@
         "content": {
           "@type": "application/xml",
           "properties": {
-            "IMandateId": 100001,
+            "IMandateId": "100001",
             "SndDebtorId": "AFVAL",
             "SndId": "8888888888",
             "LifetimeFrom": "2024-05-01",
@@ -22,7 +22,7 @@
         "content": {
           "@type": "application/xml",
           "properties": {
-            "IMandateId": 100002,
+            "IMandateId": "100002",
             "SndDebtorId": "VERGUNNINGEN",
             "SndId": "8888888888",
             "LifetimeFrom": "2024-05-01",
@@ -38,7 +38,7 @@
         "content": {
           "@type": "application/xml",
           "properties": {
-            "IMandateId": 100003,
+            "IMandateId": "100003",
             "SndDebtorId": "MARKTZAKEN",
             "SndId": "8888888888",
             "LifetimeFrom": "2024-05-01",

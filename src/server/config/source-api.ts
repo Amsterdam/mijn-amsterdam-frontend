@@ -8,6 +8,7 @@ import {
   ONE_MINUTE_MS,
   ONE_SECOND_MS,
 } from './app';
+import { featureToggle as featureToggleAfis } from '../../client/pages/Thema/Afis/Afis-thema-config';
 import { featureToggle as featureToggleBodem } from '../../client/pages/Thema/Bodem/Bodem-thema-config';
 import { featureToggle as featureToggleErfpacht } from '../../client/pages/Thema/Erfpacht/Erfpacht-thema-config';
 import { featureToggle as featureToggleHLI } from '../../client/pages/Thema/HLI/HLI-thema-config';
@@ -33,6 +34,13 @@ export function setAdHocDependencyRequestCacheTtlMs(
     adHocDependencyRequestCacheTtlMs = undefined;
   }, RESET_AD_HOC_DEPENDENCY_REQUEST_CACHE_TTL_TIMEOUT_MS);
 }
+
+export type ApiConfigOptions = {
+  /** If true the callstack function names and api config name be
+   * will be added to cacheKey_UNSAFE for extra security.
+   * If set to `false` you have to be EXTRA CAREFUL with the choice for a cacheKey_UNSAFE unique to the visitor!!! */
+  useApiConfigBasedCallstackCacheKeyTransform?: boolean;
+};
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -105,7 +113,7 @@ const afisFeatureToggle = getFromEnv('BFF_AFIS_FEATURE_TOGGLE_ACTIVE');
 const postponeFetchAfis =
   typeof afisFeatureToggle !== 'undefined'
     ? afisFeatureToggle === 'false'
-    : !FeatureToggle.afisActive;
+    : !featureToggleAfis.AfisActive;
 
 const contactmomentenFeatureToggle = getFromEnv(
   'BFF_CONTACTMOMENTEN_FEATURE_TOGGLE_ACTIVE'

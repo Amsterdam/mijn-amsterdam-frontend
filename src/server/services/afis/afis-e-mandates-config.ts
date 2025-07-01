@@ -37,12 +37,6 @@ export const EMandateAcceptantenGemeenteAmsterdam: AfisEMandateAcceptant[] = [
     refId: 'VASTGOED',
   },
   {
-    name: 'Kunstuitleen Oost',
-    iban: 'NL65RABO0110055667',
-    subId: '5',
-    refId: 'KUNSTUITLEEN',
-  },
-  {
     name: 'Markten',
     iban: 'NL55RABO0110099885',
     subId: '6',
@@ -53,6 +47,8 @@ export const EMandateAcceptantenGemeenteAmsterdam: AfisEMandateAcceptant[] = [
     iban: 'NL78RABO0110011880',
     subId: '7',
     refId: 'OVERIG',
+    description:
+      'Dit is een algemene rekening voor overige betalingen aan de gemeente Amsterdam.',
   },
   {
     name: 'Parkeren',

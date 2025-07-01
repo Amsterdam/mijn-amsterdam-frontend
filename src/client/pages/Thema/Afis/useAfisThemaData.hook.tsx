@@ -1,5 +1,9 @@
 import { ReactNode, useEffect, useMemo } from 'react';
 
+import { Paragraph } from '@amsterdam/design-system-react';
+import { useParams } from 'react-router';
+import useSWR from 'swr';
+
 import {
   AfisFacturenByStateFrontend,
   businessPartnerDetailsLabels,
@@ -10,6 +14,7 @@ import {
   themaTitle,
   themaId,
   routeConfig,
+  type WithActionButtons,
 } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import {
@@ -20,17 +25,19 @@ import {
   AfisFactuurState,
   type AfisEMandateFrontend,
 } from '../../../../server/services/afis/afis-types';
+import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app';
 import {
   hasFailedDependency,
   isError,
   isLoading,
+  type ApiSuccessResponse,
 } from '../../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { entries } from '../../../../universal/helpers/utils';
 import { LinkProps } from '../../../../universal/types/App.types';
 import { DocumentLink } from '../../../components/DocumentList/DocumentLink';
-import { MaLink } from '../../../components/MaLink/MaLink';
-import { addLinkElementToProperty } from '../../../components/Table/TableV2';
+import { MaLink, MaRouterLink } from '../../../components/MaLink/MaLink';
+import type { BFFApiUrls } from '../../../config/api';
 import { generateBffApiUrlWithEncryptedPayloadQuery } from '../../../helpers/api';
 import { useSmallScreen } from '../../../hooks/media.hook';
 import {
@@ -232,89 +239,111 @@ export function useAfisThemaData() {
   };
 }
 
+function fetchAfisApi(url: string) {
+  return fetch(url, { credentials: 'include' }).then((response) =>
+    response.json()
+  );
+}
+
+function generateApiUrl(
+  businessPartnerIdEncrypted: string | null,
+  route: keyof typeof BFFApiUrls
+) {
+  return businessPartnerIdEncrypted
+    ? generateBffApiUrlWithEncryptedPayloadQuery(
+        route,
+        businessPartnerIdEncrypted
+      )
+    : null;
+}
+
+export function useAfisEMandatesData() {
+  const isSmallScreen = useSmallScreen();
+
+  const { businessPartnerIdEncrypted } = useAfisThemaData();
+  const { title: betaalVoorkeurenTitle } = useAfisBetaalVoorkeurenData(
+    businessPartnerIdEncrypted
+  );
+
+  const {
+    data: eMandatesApiResponse,
+    isLoading: isLoadingEMandates,
+    error: hasEMandatesError,
+    mutate: refetchEMandates,
+  } = useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
+    fetchAfisApi,
+    { dedupingInterval: FIFTEEN_MINUTES_MS }
+  );
+
+  const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
+    return {
+      ...eMandate,
+      action: <AfisEMandateActionUrls eMandate={eMandate} />,
+      detailLinkComponent: (
+        <>
+          <MaRouterLink maVariant="fatNoUnderline" href={eMandate.link.to}>
+            {eMandate.link.title}
+          </MaRouterLink>
+          {!isSmallScreen && eMandate.acceptantDescription && (
+            <Paragraph size="small">{eMandate.acceptantDescription}</Paragraph>
+          )}
+        </>
+      ),
+    };
+  });
+
+  const title = 'E-Mandaat';
+  const breadcrumbs = [
+    ...useThemaBreadcrumbs(themaId),
+    { to: routeConfig.detailPage.path, title: betaalVoorkeurenTitle },
+  ];
+  const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
+  const eMandate = eMandates.find((mandate) => mandate.id === id);
+
+  return {
+    title,
+    eMandate: eMandate as WithActionButtons<AfisEMandateFrontend>,
+    breadcrumbs,
+    hasEMandatesError,
+    isLoadingEMandates,
+    eMandateTableConfig,
+    eMandates,
+    refetchEMandates,
+  };
+}
+
 export function useAfisBetaalVoorkeurenData(
   businessPartnerIdEncrypted:
     | AfisThemaResponse['businessPartnerIdEncrypted']
     | undefined
 ) {
-  const [
-    businesspartnerDetailsApiResponse,
-    fetchBusinessPartnerDetails,
-    isApiDataCached,
-  ] = useAppStateBagApi<AfisBusinessPartnerDetailsTransformed | null>({
-    bagThema: `${themaId}_BAG`,
-    key: `afis-betaalvoorkeuren`,
-  });
+  const {
+    data: businesspartnerDetailsApiResponse,
+    isLoading: isLoadingBusinessPartnerDetails,
+    error: hasBusinessPartnerDetailsError,
+  } = useSWR<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>>(
+    generateApiUrl(businessPartnerIdEncrypted ?? null, 'AFIS_BUSINESSPARTNER'),
+    fetchAfisApi,
+    { dedupingInterval: FIFTEEN_MINUTES_MS }
+  );
 
-  const [eMandatesApiResponse, fetchEMandates, isEMandatesApiDataCached] =
-    useAppStateBagApi<AfisEMandateFrontend[] | null>({
-      bagThema: `${themaId}_BAG`,
-      key: `afis-emandates`,
-    });
-
-  useEffect(() => {
-    if (businessPartnerIdEncrypted && !isApiDataCached) {
-      fetchBusinessPartnerDetails({
-        url: generateBffApiUrlWithEncryptedPayloadQuery(
-          'AFIS_BUSINESSPARTNER',
-          businessPartnerIdEncrypted
-        ),
-      });
-    }
-  }, [
-    businessPartnerIdEncrypted,
-    fetchBusinessPartnerDetails,
-    isApiDataCached,
-  ]);
-
-  useEffect(() => {
-    if (businessPartnerIdEncrypted && !isEMandatesApiDataCached) {
-      fetchEMandates({
-        url: generateBffApiUrlWithEncryptedPayloadQuery(
-          'AFIS_EMANDATES',
-          businessPartnerIdEncrypted
-        ),
-      });
-    }
-  }, [businessPartnerIdEncrypted, fetchEMandates, isEMandatesApiDataCached]);
-
-  const eMandates = addLinkElementToProperty(
-    eMandatesApiResponse.content ?? [],
-    'acceptant',
-    true
-  ).map((eMandate) => {
-    return {
-      ...eMandate,
-      action: <AfisEMandateActionUrls eMandate={eMandate} />,
-    };
-  });
+  function hasFailedBusinesspartnerDependency(
+    dependency: keyof AfisBusinessPartnerDetailsTransformed
+  ): boolean {
+    return businesspartnerDetailsApiResponse
+      ? hasFailedDependency(businesspartnerDetailsApiResponse, dependency)
+      : false;
+  }
 
   return {
     title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse.content,
+    businesspartnerDetails: businesspartnerDetailsApiResponse?.content ?? null,
     businessPartnerDetailsLabels,
-    isLoadingBusinessPartnerDetails: isLoading(
-      businesspartnerDetailsApiResponse
-    ),
-    hasBusinessPartnerDetailsError: isError(
-      businesspartnerDetailsApiResponse,
-      false
-    ),
-    hasFailedEmailDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'email'
-    ),
-    hasFailedPhoneDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'phone'
-    ),
-    hasFailedFullNameDependency: hasFailedDependency(
-      businesspartnerDetailsApiResponse,
-      'fullName'
-    ),
-    eMandateTableConfig,
-    eMandates,
-    hasEMandatesError: isError(eMandatesApiResponse, false),
-    isLoadingEMandates: isLoading(eMandatesApiResponse),
+    isLoadingBusinessPartnerDetails,
+    hasBusinessPartnerDetailsError,
+    hasFailedEmailDependency: hasFailedBusinesspartnerDependency('email'),
+    hasFailedPhoneDependency: hasFailedBusinesspartnerDependency('phone'),
+    hasFailedFullNameDependency: hasFailedBusinesspartnerDependency('fullName'),
   };
 }

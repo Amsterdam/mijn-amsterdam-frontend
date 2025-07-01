@@ -4,6 +4,7 @@ import { Button, Icon } from '@amsterdam/design-system-react';
 import { AlertIcon } from '@amsterdam/design-system-react-icons';
 
 import styles from './AfisEmandateActionButtons.module.scss';
+import { useAfisEMandatesData } from './useAfisThemaData.hook';
 import type {
   AfisEMandateFrontend,
   AfisEMandateSignRequestResponse,
@@ -47,6 +48,8 @@ function ApiActionButton<T>({
 export function AfisEMandateActionUrls({
   eMandate,
 }: AfisEMandateActionUrlProps) {
+  const { refetchEMandates } = useAfisEMandatesData();
+
   const [redirectUrlApi, fetchRedirectUrl] =
     useDataApi<ApiResponse<AfisEMandateSignRequestResponse> | null>(
       {
@@ -71,7 +74,7 @@ export function AfisEMandateActionUrls({
 
   useEffect(() => {
     if (statusChangeApi.data?.status === 'OK') {
-      alert('Update eMandate');
+      refetchEMandates();
     }
   }, [statusChangeApi.data]);
 
@@ -82,15 +85,15 @@ export function AfisEMandateActionUrls({
           api={redirectUrlApi}
           fetch={() => fetchRedirectUrl({ url: eMandate.signRequestUrl })}
           label={eMandate.status === '1' ? 'Wijzigen' : 'Activeren'}
-          errorMessage="Er is iets misgegaan bij het ophalen van de link"
+          errorMessage="Er is iets misgegaan bij het ophalen van de link naar het volgende scherm"
         />
       )}
       &nbsp;
-      {eMandate.statusChangeUrl && (
+      {eMandate.statusChangeUrl && eMandate.status === '1' && (
         <ApiActionButton
           api={statusChangeApi}
           fetch={() => fetchStatusChange({ url: eMandate.statusChangeUrl })}
-          label={eMandate.status === '1' ? 'Stopzetten' : 'Activeren'}
+          label="Stopzetten"
           errorMessage="Er is iets misgegaan bij het veranderen van de status"
         />
       )}
