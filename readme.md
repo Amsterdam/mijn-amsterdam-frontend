@@ -128,7 +128,6 @@ Every release to production is accompanied with a release tag in the from of: `r
 ### Debugging
 To log all debug or higher severity levels of logs.
 `export LOG_LEVEL=debug`
-Debug includes logging response bodies at the moment.
 See all log levels at https://getpino.io/#/docs/api?id=loggerlevels-object
 
 To log outgoing request urls, headers or bodies set these to true:
