@@ -19,7 +19,8 @@ export function getFeedEntryProperties<T>(
 }
 
 export async function getAfisApiConfig(
-  additionalConfig?: DataRequestConfig
+  additionalConfig?: DataRequestConfig,
+  useApiConfigBasedCallstackCacheKeyTransform: boolean = true
 ): Promise<DataRequestConfig> {
   // If Afis EnableU is active, token fetching is taken care of by EnableU Gateway.
   const authHeader =
@@ -34,5 +35,8 @@ export async function getAfisApiConfig(
       ...authHeader,
     },
   };
-  return getApiConfig('AFIS', additionalConfigWithHeader);
+  return getApiConfig('AFIS', additionalConfigWithHeader, {
+    useApiConfigBasedCallstackCacheKeyTransform:
+      useApiConfigBasedCallstackCacheKeyTransform,
+  });
 }
