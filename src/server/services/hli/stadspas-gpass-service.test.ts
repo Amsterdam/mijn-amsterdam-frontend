@@ -844,26 +844,28 @@ describe('stadspas-gpass-service', () => {
       );
     });
 
-    test('expiresInCurrentPasYear', () => {
-      expect(forTesting.expiresInCurrentPasYear('2025-07-31')).toBe(false);
-      expect(forTesting.expiresInCurrentPasYear('2025-01-01')).toBe(true);
-      expect(forTesting.expiresInCurrentPasYear('2024-01-01')).toBe(false);
-      expect(forTesting.expiresInCurrentPasYear('2024-12-10')).toBe(true);
-    });
-
-    test('expiresInNextPasYear', () => {
-      expect(forTesting.expiresInNextPasYear('2025-07-31')).toBe(true);
-    });
-
-    test('hasValidExpiryDate', () => {
-      expect(forTesting.hasValidExpiryDate('2024-08-01')).toBe(true);
-      expect(forTesting.hasValidExpiryDate('2024-07-31')).toBe(false);
-      expect(forTesting.hasValidExpiryDate('2025-07-31')).toBe(true);
-      expect(forTesting.hasValidExpiryDate('2025-01-01')).toBe(true);
-      expect(forTesting.hasValidExpiryDate('2024-01-01')).toBe(false);
-      expect(forTesting.hasValidExpiryDate('2024-12-10')).toBe(true);
-      expect(forTesting.hasValidExpiryDate('2026-08-01')).toBe(false);
-      expect(forTesting.hasValidExpiryDate('invalid-date')).toBe(false);
-    });
+    test.each([
+      [true, '2024-08-01', true],
+      [false, '2024-08-01', true],
+      [true, '2024-07-31', false],
+      [false, '2024-07-31', false],
+      [true, '2025-07-31', true],
+      [false, '2025-07-31', true],
+      [true, '2025-01-01', true],
+      [false, '2025-01-01', true],
+      [true, '2024-01-01', false],
+      [false, '2024-01-01', false],
+      [true, '2024-12-10', true],
+      [false, '2024-12-10', true],
+      [true, 'invalid-date', false],
+      [false, 'invalid-date', false],
+      [true, '2026-08-01', true],
+      [false, '2026-08-01', false],
+    ])(
+      'Shoud pass be visible if pas.actief = %s and epiry date %s ?',
+      (isActief, expiryDate, isValid) => {
+        expect(forTesting.isVisiblePass(isActief, expiryDate)).toBe(isValid);
+      }
+    );
   });
 });
