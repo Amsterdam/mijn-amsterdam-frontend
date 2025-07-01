@@ -34,18 +34,16 @@ import {
   BusinessPartnerId,
   EMandateSignRequestNotificationPayload,
   AfisBusinessPartnerBankPayload,
+  type POMSignRequestUrlPayload,
 } from './afis-types';
+import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
 import {
   defaultDateFormat,
   isoDateFormat,
 } from '../../../universal/helpers/date';
-import type { LinkProps } from '../../../universal/types/App.types';
 import { AuthProfile } from '../../auth/auth-types';
-import {
-  encrypt,
-  encryptPayloadAndSessionID,
-} from '../../helpers/encrypt-decrypt';
+import { encryptPayloadAndSessionID } from '../../helpers/encrypt-decrypt';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
@@ -130,6 +128,9 @@ export async function createAfisEMandate(
     }
   }
 
+  // TODO: Also allow this date to be set by the user.
+  const lifetimeTo = AFIS_EMANDATE_RECURRING_DATE_END;
+
   const payloadFinal: AfisEMandateCreatePayload = {
     // Fixed values needed for API (black box)
     ...afisEMandatePostbodyStatic,
@@ -156,7 +157,7 @@ export async function createAfisEMandate(
     SignDate: payload.eMandateSignDate,
     SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam?
     LifetimeFrom: new Date().toISOString(),
-    LifetimeTo: AFIS_EMANDATE_RECURRING_DATE_END,
+    LifetimeTo: lifetimeTo,
     SndDebtorId: getSndDebtorId(acceptant),
   };
 
@@ -185,14 +186,15 @@ function transformUpdateEMandatesResponse(response: unknown) {
 }
 
 async function updateAfisEMandate(payload: AfisEMandateUpdatePayload) {
+  // TODO: Sanitize payload, check if all required fields are present.
   const payloadFinal: AfisEMandateUpdatePayload = {
-    // ...afisEMandatePostbodyStatic, // TODO: Check if this is needed
     ...payload,
   };
 
   const config = await getAfisApiConfig({
     method: 'PUT',
     data: payloadFinal,
+    enableCache: false,
     formatUrl: ({ url }) => {
       return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payloadFinal.IMandateId}')`;
     },
@@ -248,13 +250,11 @@ function getStatusChangeApiUrl(
     statusChangePayloadData.LifetimeFrom = today;
   }
 
-  const urlQueryParams = new URLSearchParams({
-    payload: encryptPayloadAndSessionID(sessionID, statusChangePayloadData),
-  });
-
-  return `${generateFullApiUrlBFF(
-    BffEndpoints.AFIS_EMANDATES_STATUS_CHANGE
-  )}?${urlQueryParams}`;
+  return generateFullApiUrlBFF(BffEndpoints.AFIS_EMANDATES_STATUS_CHANGE, [
+    {
+      payload: encryptPayloadAndSessionID(sessionID, statusChangePayloadData),
+    },
+  ]);
 }
 
 function getSignRequestApiUrl(
@@ -262,21 +262,22 @@ function getSignRequestApiUrl(
   businessPartnerId: BusinessPartnerId,
   acceptant: AfisEMandateAcceptant
 ) {
-  const signRequestPayloadData: EMandateSignRequestPayload = {
+  const signRequestPayload: EMandateSignRequestPayload = {
     acceptantIBAN: acceptant.iban,
     businessPartnerId: businessPartnerId,
     eMandateSignDate: new Date().toISOString(),
   };
 
-  const urlQueryParams = new URLSearchParams({
-    payload: encryptPayloadAndSessionID(sessionID, signRequestPayloadData),
-  });
-
   const url = generateFullApiUrlBFF(
-    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_URL
+    BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_URL,
+    [
+      {
+        payload: encryptPayloadAndSessionID(sessionID, signRequestPayload),
+      },
+    ]
   );
 
-  return `${url}?${urlQueryParams}`;
+  return url;
 }
 
 function addEmandateApiUrls(
@@ -293,13 +294,11 @@ function addEmandateApiUrls(
     );
   }
 
-  if (!afisEMandateSource?.IMandateId || isEmandateActive(afisEMandateSource)) {
-    eMandate.signRequestUrl = getSignRequestApiUrl(
-      sessionID,
-      businessPartnerId,
-      acceptant
-    );
-  }
+  eMandate.signRequestUrl = getSignRequestApiUrl(
+    sessionID,
+    businessPartnerId,
+    acceptant
+  );
 }
 
 function transformEMandateSource(
@@ -312,12 +311,19 @@ function transformEMandateSource(
   const dateValidFromFormatted = dateValidFrom
     ? defaultDateFormat(dateValidFrom)
     : null;
+
+  const dateValidTo = afisEMandateSource?.LifetimeTo || null;
+  const dateValidToFormatted = dateValidTo
+    ? defaultDateFormat(dateValidTo)
+    : null;
+
   const isActive = isEmandateActive(afisEMandateSource);
   const id = slug(acceptant.name);
-  const eMandate: AfisEMandateFrontend & { link: LinkProps } = {
+  const eMandate: AfisEMandateFrontend = {
     id,
     acceptant: acceptant.name,
     acceptantIBAN: acceptant.iban,
+    acceptantDescription: acceptant.description,
     senderIBAN: (isActive ? afisEMandateSource?.SndIban : null) ?? null,
     senderName: isActive
       ? [(afisEMandateSource?.SndName1, afisEMandateSource?.SndName2)]
@@ -326,6 +332,8 @@ function transformEMandateSource(
       : null, // Firstname + Lastname
     dateValidFrom,
     dateValidFromFormatted,
+    dateValidTo,
+    dateValidToFormatted,
     status: isEmandateActive(afisEMandateSource)
       ? EMANDATE_STATUS.ON
       : EMANDATE_STATUS.OFF,
@@ -408,6 +416,12 @@ export async function fetchAfisEMandates(
         authProfile.sid,
         payload.businessPartnerId
       ),
+    /**
+     * We do not want to cache this request, because the e-mandates are updated without direct
+     * user interaction.
+     * If we would cache this request, the user would not see the latest e-mandates.
+     */
+    enableCache: false,
   });
 
   return requestData<AfisEMandateFrontend[] | null>(config);
@@ -438,23 +452,26 @@ function createEMandateProviderPayload(
   businessPartner: AfisBusinessPartnerDetailsTransformed,
   acceptant: AfisEMandateAcceptant,
   signRequestPayload: EMandateSignRequestPayload
-) {
-  const [payloadEncrypted] = encrypt(JSON.stringify(signRequestPayload));
-  const queryParams = new URLSearchParams({ payload: payloadEncrypted });
+): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
-    `${BffEndpoints.AFIS_EMANDATES_SIGN_REQUEST_RETURNTO}?${queryParams}`
+    routeConfig.detailPage.path,
+    [
+      {
+        iban: acceptant.iban,
+      },
+    ],
+    getFromEnv('MA_FRONTEND_URL')
   );
 
   const today = new Date();
   const isoDateString = today.toISOString();
   const invoiceDate = isoDateFormat(today);
   const invoiceNumber = `EMandaat-${acceptant.refId}-${invoiceDate}`;
-  const invoiceDescription = `EMandaat voor Gemeente Amsterdam - ${acceptant.name}`;
-  const invoiceAmount = '0';
 
   // TODO: Moet dit met een gegeven uit AFIS te koppelen zijn?
   const paymentReference = `${acceptant.refId}-${businessPartner.businessPartnerId}`;
   const idBatch = `batch-${paymentReference}`;
+
   // TODO: Generate encrypted number
   const idRequestClient = `${acceptant.refId}-${businessPartner.businessPartnerId}-${isoDateString}`;
 
@@ -465,31 +482,32 @@ function createEMandateProviderPayload(
     .toISOString()
     .split('T')[0];
 
-  return `<?xml version="1.0" encoding="utf-8" ?>
-<request>
-  <firstname>${businessPartner.firstName}</firstname>
-  <lastname>${businessPartner.lastName}</lastname>
-  <debtornumber>${businessPartner.businessPartnerId}</debtornumber>
-  <payment_reference>${paymentReference}</payment_reference>
-  <concerning>Automatische incasso ${acceptant.name}</concerning>
-  <id_batch>${idBatch}</id_batch>
-  <id_request_client>${idRequestClient}</id_request_client>
-  <company_name>${AFIS_EMANDATE_COMPANY_NAME}</company_name>
-  <module_ideal>0</module_ideal>
-  <module_emandate>1</module_emandate>
-  <due_date>${dueDate}</due_date>
-  <return_url>${returnUrl}</return_url>
-  <variable1>${signRequestPayload.acceptantIBAN}</variable1>
-  <invoices>
-    <invoice>
-      <invoice_number>${invoiceNumber}</invoice_number>
-      <invoice_description>${invoiceDescription}</invoice_description>
-      <invoice_amount>${invoiceAmount}</invoice_amount>
-      <invoice_date>${invoiceDate}</invoice_date>
-      <invoice_date_due>${AFIS_EMANDATE_RECURRING_DATE_END}</invoice_date_due>
-    </invoice>
-  </invoices>
-</request>`;
+  const concerning = `Automatische incasso ${acceptant.name}`;
+
+  return {
+    first_name: businessPartner.firstName ?? 'Naam',
+    last_name: businessPartner.lastName ?? 'Achternaam',
+    debtor_number: businessPartner.businessPartnerId,
+    payment_reference: paymentReference,
+    concerning,
+    batch_name: idBatch,
+    request_id: idRequestClient,
+    company_name: AFIS_EMANDATE_COMPANY_NAME,
+    variable1: signRequestPayload.acceptantIBAN,
+    due_date: dueDate,
+    return_url: returnUrl,
+    cid: null,
+    payment_modules: ['emandate_recurring'],
+    invoices: [
+      {
+        invoice_number: invoiceNumber,
+        invoice_date: invoiceDate,
+        invoice_description: concerning,
+        invoice_amount: 0,
+        invoice_due_date: dueDate,
+      },
+    ],
+  };
 }
 
 export async function fetchEmandateRedirectUrlFromProvider(
@@ -519,7 +537,7 @@ export async function fetchEmandateRedirectUrlFromProvider(
   const config = await getApiConfig('POM', {
     method: 'POST',
     formatUrl: ({ url }) => {
-      return `${url}/paylinks`;
+      return `${url}/v3/paylinks`;
     },
     transformResponse: (responseData) =>
       transformEMandatesRedirectUrlResponse(authProfile.sid, responseData),
@@ -551,7 +569,7 @@ export async function fetchEmandateSignRequestStatus(
   const config = await getApiConfig('POM', {
     method: 'GET',
     formatUrl: ({ url }) => {
-      return `${url}/paylinks/${eMandateSignRequestStatusPayload.mpid}`;
+      return `${url}/v3/paylinks/${eMandateSignRequestStatusPayload.mpid}`;
     },
     transformResponse: transformEmandateSignRequestStatus,
   });

@@ -18,4 +18,25 @@ describe('Config', () => {
 
     expect('Accept' in config2.headers!).toBe(false);
   });
+  test('getApiConfig with custom headers', () => {
+    const config = getApiConfig('ERFPACHT', {
+      headers: {
+        'X-Custom-Header': 'CustomValue',
+      },
+    });
+    expect(config.headers!['X-Custom-Header']).toBe('CustomValue');
+  });
+  test('getApiConfig without cache key wrapper', () => {
+    const config = getApiConfig(
+      'ERFPACHT',
+      {
+        cacheKey_UNSAFE: 'foo',
+      },
+      {
+        useApiConfigBasedCallstackCacheKeyTransform: false,
+      }
+    );
+
+    expect(config.cacheKey_UNSAFE).toBe('foo');
+  });
 });

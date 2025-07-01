@@ -12,6 +12,7 @@ import type {
 import type { ApiResponse } from '../../../universal/helpers/api';
 import { ExternalConsumerEndpoints } from '../../routing/bff-routes';
 import { createBFFRouter } from '../../routing/route-helpers';
+import { captureException } from '../monitoring';
 
 const routerPrivateNetwork = createBFFRouter({
   id: 'afis-external-consumer-private-network',
@@ -38,7 +39,7 @@ function validateAndExtractPayload(
   <event_date>2024-01-05</event_date>
   <event_time>11:27</event_time>
 
-  <variable2>NL21RABO0110055004</variable2> // Acceptant IBAN (Gemeente Amsterdam Afval) --> UNKNOWN, find out how to get this.
+  <variable1>NL21RABO0110055004</variable1> // Acceptant IBAN (Gemeente Amsterdam Afval) --> UNKNOWN, find out how to get this.
 </response>
    */
   const parser = new XMLParser();
@@ -51,7 +52,7 @@ function validateAndExtractPayload(
     debtorBIC: payload.bic,
     debtorAccountOwner: payload.account_owner,
     eMandateSignDate: `${payload.event_date}T${payload.event_time}:00Z`, // ISO 8601 format
-    acceptantIBAN: payload.variable2,
+    acceptantIBAN: payload.variable1,
   };
 }
 
@@ -64,7 +65,7 @@ async function handleAfisEMandateSignRequestStatusNotify(
 
   const signRequestPayload: EMandateSignRequestPayload &
     EMandateSignRequestNotificationPayload = {
-    acceptantIBAN: notificationPayload.acceptantIBAN, // TODO: Figure out where to get this from. Maybe in a value from the eventPayload? From a <variable2/> tag?
+    acceptantIBAN: notificationPayload.acceptantIBAN, // TODO: Figure out where to get this from. Maybe in a value from the eventPayload? From a <variable1/> tag?
     businessPartnerId: notificationPayload.debtornumber,
     eMandateSignDate: notificationPayload.eMandateSignDate,
     senderIBAN: notificationPayload.debtorIBAN,
@@ -80,7 +81,7 @@ async function handleAfisEMandateSignRequestStatusNotify(
   } catch (error) {
     // If the eMandate creation fails, we should log the error and return an error response.
     // This is important for observability and debugging.
-    // captureException(error);
+    captureException(error);
     res.status(HttpStatusCode.InternalServerError);
     return res.send('ERROR');
   }

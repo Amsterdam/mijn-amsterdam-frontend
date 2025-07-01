@@ -5,6 +5,7 @@ import {
   ApiConfig,
   DataRequestConfig,
   SourceApiKey,
+  type ApiConfigOptions,
 } from '../config/source-api';
 
 // To keep the cache key small, we exclude some generic function names.
@@ -47,7 +48,10 @@ function getApiConfigBasedCacheKey(
 
 export function getApiConfig(
   name: SourceApiKey,
-  config: DataRequestConfig = {}
+  config: DataRequestConfig = {},
+  options: ApiConfigOptions = {
+    useApiConfigBasedCallstackCacheKeyTransform: true,
+  }
 ): Readonly<DataRequestConfig> {
   const apiConfig = ApiConfig[name];
 
@@ -79,10 +83,9 @@ export function getApiConfig(
     Object.assign(headers, config.headers);
   }
 
-  const cacheKey_UNSAFE = getApiConfigBasedCacheKey(
-    name,
-    config.cacheKey_UNSAFE
-  );
+  const cacheKey_UNSAFE = options.useApiConfigBasedCallstackCacheKeyTransform
+    ? getApiConfigBasedCacheKey(name, config.cacheKey_UNSAFE)
+    : config.cacheKey_UNSAFE;
 
   return Object.assign(
     apiConfigCopy,

@@ -1,3 +1,5 @@
+const { randomUUID } = require('crypto');
+
 const axios = require('axios');
 
 const settings = require('../settings');
@@ -15,7 +17,22 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: async (req, res, next, core) => {
+            const queryIban = new URL(req.query.returnUrl).searchParams.get(
+              'iban'
+            );
+            const acceptantIBAN = queryIban || 'NL91ABNA0417164300';
+
+            const htmlResponse = `
+                <h1>POM E-mandaat scherm</h1>
+                 <a href="${req.query.returnUrl || process.env.MA_FRONTEND_URL}">
+                  Mijn Amsterdam
+                </a>`;
+            res.send(htmlResponse);
+
+            // A mock push notification to simulate a real-world scenario.
+            // Simulate a delay to mimic real-world processing time
             try {
+              await new Promise((resolve) => setTimeout(resolve, 4000));
               await axios({
                 method: 'POST',
                 url: 'http://localhost:5000/private/api/v1/services/afis/e-mandates/sign-request-status-notify',
@@ -35,7 +52,7 @@ module.exports = [
               <account_owner>John Doe</account_owner>
               <event_date>2024-01-05</event_date>
               <event_time>11:27</event_time>
-              <variable2>NL90RABO0110055993</variable2>
+              <variable1>${acceptantIBAN}</variable1>
             </response>`,
                 headers: {
                   'Content-Type': 'text/xml',
@@ -44,12 +61,6 @@ module.exports = [
             } catch (error) {
               console.error('Error sending POST request:', error.message);
             }
-            const htmlResponse = `
-                <h1>POM E-mandaat scherm</h1>
-                 <a href="${process.env.MA_FRONTEND_URL}">
-                  Mijn Amsterdam
-                </a>`;
-            res.send(htmlResponse);
           },
         },
       },
@@ -57,17 +68,19 @@ module.exports = [
   },
   {
     id: 'post-pom-emandate-sign-request-url',
-    url: `${settings.MOCK_BASE_PATH}/pom/paylinks`,
+    url: `${settings.MOCK_BASE_PATH}/pom/v3/paylinks`,
     method: 'POST',
     variants: [
       {
         id: 'standard',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: {
-            paylink: getPomPortaalUrlMock(settings.MOCK_API_BASE_URL),
-            mpid: '1234567890',
+          middleware: async (req, res, next, core) => {
+            const mpid = randomUUID();
+            return res.send({
+              paylink: `${getPomPortaalUrlMock(settings.MOCK_API_BASE_URL)}?returnUrl=${req.body.return_url}`,
+              mpid,
+            });
           },
         },
       },
@@ -76,7 +89,7 @@ module.exports = [
   {
     id: 'post-pom-emandate-sign-request-status',
     url: `${settings.MOCK_BASE_PATH}/pom/paylinks/:mpid`,
-    method: 'POST',
+    method: 'GET',
     variants: [
       {
         id: 'standard',

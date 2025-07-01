@@ -1,21 +1,10 @@
-import { IS_OT, IS_PRODUCTION } from './env';
+import { IS_PRODUCTION } from './env';
 
 /**
  * @deprecated
  * Use the new thema config in the client instead.
  */
 export const FeatureToggle = {
-  // AFIS
-  afisActive: true,
-  afisEMandatesActive: !IS_PRODUCTION,
-  // Display of phone number is not needed atm.
-  afisBusinesspartnerPhoneActive: false,
-  // We don't filter out the undownloadable facturen for testing purposes.
-  // We want to be able to test immediately and not wait until the evening.
-  afisFilterOutUndownloadableFacturenActive: IS_OT || IS_PRODUCTION,
-  // See also MIJN-10042: Bug where migrated documents "$year < 2025" do not have PDF downloads available.
-  afisMigratedFacturenDownloadActive: !IS_PRODUCTION,
-
   // AVG (Smile)
   avgActive: true,
   // Klachten (Smile)

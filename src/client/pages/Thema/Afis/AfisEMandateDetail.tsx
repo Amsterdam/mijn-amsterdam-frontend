@@ -1,27 +1,83 @@
-import { useParams } from 'react-router';
+import { useState } from 'react';
 
 import {
-  routeConfig,
-  themaId,
-  type WithActionButtons,
-} from './Afis-thema-config';
-import {
-  useAfisBetaalVoorkeurenData,
-  useAfisThemaData,
-} from './useAfisThemaData.hook';
+  ActionGroup,
+  Button,
+  Paragraph,
+  DateInput,
+} from '@amsterdam/design-system-react';
+import { addDays, addYears } from 'date-fns';
+
+import { routeConfig, type WithActionButtons } from './Afis-thema-config';
+import { useAfisEMandatesData } from './useAfisThemaData.hook';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
-import { MaLink } from '../../../components/MaLink/MaLink';
+import { MaButtonLink } from '../../../components/MaLink/MaLink';
+import { Modal } from '../../../components/Modal/Modal';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-import { useThemaBreadcrumbs } from '../../../hooks/useThemaMenuItems';
+
+type DateAdjustModalProps = {
+  eMandate: AfisEMandateFrontend;
+  isDateAdjustModalActive: boolean;
+  setDateAdjustModal: (isActive: boolean) => void;
+};
+
+function DateAdjustModal({
+  eMandate,
+  isDateAdjustModalActive,
+  setDateAdjustModal,
+}: DateAdjustModalProps) {
+  const minDate = addDays(new Date(), 1).toISOString().split('T')[0]; // Set minimum date to tomorrow.
+  const currentDate =
+    eMandate.dateValidTo?.includes('9999') || !eMandate.dateValidTo
+      ? addYears(new Date(), 1).toISOString().split('T')[0]
+      : eMandate.dateValidTo;
+
+  return (
+    <Modal
+      title="E-Mandaat Einddatum aanpassen naar"
+      isOpen={isDateAdjustModalActive}
+      showCloseButton
+      closeOnEscape
+      onClose={() => setDateAdjustModal(false)}
+      pollingQuerySelector="#date-adjust-action"
+      actions={
+        <ActionGroup>
+          <Button
+            id="date-adjust-action"
+            type="submit"
+            variant="primary"
+            onClick={() => {
+              setDateAdjustModal(false);
+              // TODO: Send new date to backend
+            }}
+          >
+            Nu aanpassen
+          </Button>
+          <Button
+            variant="tertiary"
+            onClick={() => {
+              setDateAdjustModal(false);
+            }}
+          >
+            terug
+          </Button>
+        </ActionGroup>
+      }
+    >
+      <DateInput type="date" min={minDate} value={currentDate} />
+    </Modal>
+  );
+}
 
 type EMandateProps = {
   eMandate: WithActionButtons<AfisEMandateFrontend>;
 };
 
 function EMandate({ eMandate }: EMandateProps) {
+  const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
   return (
     <PageContentCell>
       <Datalist
@@ -30,7 +86,16 @@ function EMandate({ eMandate }: EMandateProps) {
             rows: [
               {
                 label: 'Afdeling gemeente',
-                content: eMandate.acceptant,
+                content: (
+                  <>
+                    <div className="ams-mb-s">{eMandate.acceptant}</div>
+                    {eMandate.acceptantDescription && (
+                      <Paragraph size="small">
+                        {eMandate.acceptantDescription}
+                      </Paragraph>
+                    )}
+                  </>
+                ),
               },
               {
                 label: 'IBAN gemeente',
@@ -49,8 +114,23 @@ function EMandate({ eMandate }: EMandateProps) {
                 isVisible: !!eMandate.senderName,
                 content: (
                   <>
-                    doorlopend &nbsp;
-                    <MaLink href="/">einddatum aanpassen</MaLink>
+                    {eMandate.dateValidTo?.includes('9999')
+                      ? 'doorlopend'
+                      : eMandate.dateValidToFormatted}{' '}
+                    &nbsp;
+                    <>
+                      <MaButtonLink
+                        variant="secondary"
+                        onClick={() => setDateAdjustModal(true)}
+                      >
+                        einddatum aanpassen
+                      </MaButtonLink>
+                      <DateAdjustModal
+                        eMandate={eMandate}
+                        isDateAdjustModalActive={isDateAdjustModalActive}
+                        setDateAdjustModal={setDateAdjustModal}
+                      />
+                    </>
                   </>
                 ),
               },
@@ -84,22 +164,21 @@ function EMandate({ eMandate }: EMandateProps) {
 
 export function AfisEMandateDetail() {
   useHTMLDocumentTitle(routeConfig.detailPageEMandate);
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
-  const { eMandates } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
-  const title = 'E-Mandaat';
-  const isError = false;
-  const isLoading = false;
-  const breadcrumbs = useThemaBreadcrumbs(themaId);
-  const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
-  const eMandate = eMandates.find((mandate) => mandate.id === id);
+  const {
+    title,
+    eMandate,
+    breadcrumbs,
+    hasEMandatesError,
+    isLoadingEMandates,
+  } = useAfisEMandatesData();
 
   return (
     <ThemaDetailPagina
       title={title}
       zaak={eMandate}
-      isError={isError}
-      isLoading={isLoading}
+      isError={hasEMandatesError}
+      isLoading={isLoadingEMandates}
       pageContentMain={!!eMandate && <EMandate eMandate={eMandate} />}
       breadcrumbs={breadcrumbs}
     />

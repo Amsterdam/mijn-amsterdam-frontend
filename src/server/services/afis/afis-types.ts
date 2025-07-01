@@ -31,7 +31,7 @@ type JaOfNee = 'Ja' | 'Nee';
 export type AfisBusinessPartnerPrivateResponseSource = {
   BSN: number | string;
   Gevonden: JaOfNee;
-  Zakenpartnernummer?: string;
+  Zakenpartnernummer: string;
   Blokkade?: JaOfNee;
 };
 
@@ -43,7 +43,7 @@ export type AfisBusinessPartnerPrivateResponseSource = {
  */
 type AfisBusinessPartnerRecordCommercial = {
   KVK: number | string;
-  Zakenpartnernummer?: string;
+  Zakenpartnernummer: string;
   Vestigingsnummer?: string;
   Blokkade: JaOfNee;
   Gevonden: JaOfNee;
@@ -328,6 +328,7 @@ export type AfisEMandateFrontend = {
   id: string;
   acceptant: string;
   acceptantIBAN?: string;
+  acceptantDescription?: string;
   status: string;
   displayStatus: string;
 
@@ -338,10 +339,14 @@ export type AfisEMandateFrontend = {
   // Properties from existing Afis mandates
   dateValidFrom: string | null;
   dateValidFromFormatted: string | null;
+  dateValidTo: string | null;
+  dateValidToFormatted: string | null;
 
   // Urls to interact with the mandate state
   statusChangeUrl?: string;
   signRequestUrl?: string;
+
+  link: LinkProps;
 };
 
 export type AfisEMandateAcceptant = {
@@ -349,6 +354,7 @@ export type AfisEMandateAcceptant = {
   name: string;
   subId: string;
   refId: string;
+  description?: string;
 };
 
 export type POMEMandateSignRequestPayloadFromXML = {
@@ -367,7 +373,7 @@ export type POMEMandateSignRequestPayloadFromXML = {
   event_date: string;
   event_time: string;
 
-  variable2: string; // Optional, used for acceptant (Gemeente Amsterdam) IBAN
+  variable1: string; // Optional, used for acceptant (Gemeente Amsterdam) IBAN
 };
 
 export type POMEMandateSignRequestPayloadTransformed = {
@@ -431,7 +437,30 @@ export type POMSignRequestStatusResponseSource = {
   status_code: POMSignRequestStatusCode;
   status_date: string; // e.g 2015-03-01T12:23:44
 };
-
+export type POMSignRequestUrlPayload = {
+  first_name: string;
+  last_name: string;
+  debtor_number: string;
+  payment_reference: string;
+  concerning: string;
+  batch_name: string;
+  request_id: string;
+  company_name: string;
+  variable1: string;
+  due_date: string;
+  return_url: string;
+  cid: null;
+  payment_modules: ['emandate_recurring'];
+  invoices: [
+    {
+      invoice_number: string;
+      invoice_date: string;
+      invoice_description: string;
+      invoice_amount: 0;
+      invoice_due_date: string;
+    },
+  ];
+};
 export type AfisEMandateSignRequestStatusResponse = {
   status: string;
   code: POMSignRequestStatusCode;

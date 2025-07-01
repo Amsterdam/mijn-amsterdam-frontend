@@ -320,24 +320,38 @@ module.exports = [
             const lastMandate =
               eMandates.feed.entry[eMandates.feed.entry.length - 1];
             const lastID = lastMandate.content.properties.IMandateId;
+            const existingMandate = eMandates.feed.entry.find(
+              (eMandate) =>
+                eMandate.content.properties.SndDebtorId === body.SndDebtorId
+            );
 
-            const newMandate = {
-              ...lastMandate,
+            const eMandateBase = existingMandate ?? lastMandate;
+
+            const mandate = {
+              ...eMandateBase,
               content: {
-                ...lastMandate.content,
+                ...eMandateBase.content,
                 properties: {
-                  ...lastMandate.content.properties,
+                  ...eMandateBase.content.properties,
                   ...body,
-                  IMandateId: lastID + 1,
+                  IMandateId: existingMandate
+                    ? existingMandate.content.properties.IMandateId
+                    : String(parseInt(lastID, 10) + 1),
+                  Status: '1',
                 },
               },
             };
 
-            console.log('Creating new eMandate:', newMandate);
+            if (!existingMandate) {
+              eMandates.feed.entry.push(mandate);
+            } else {
+              Object.assign(
+                existingMandate.content.properties,
+                mandate.content.properties
+              );
+            }
 
-            eMandates.feed.entry.push(newMandate);
-
-            return res.send(newMandate);
+            return res.send(mandate);
           },
         },
       },

@@ -16,7 +16,8 @@ export type DecryptedPayloadAndSessionID<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = {
   sessionID: string;
-} & T;
+  payload: T;
+};
 
 /** Decrypt an encrypted 'sessionid:id' and validate it.
  */
@@ -60,17 +61,12 @@ export function decryptEncryptedRouteParamAndValidateSessionID<
   return apiSuccessResult<T>(id as T);
 }
 
-export function decryptPayloadAndValidateSessionID<
-  T extends Record<string, unknown> = Record<string, unknown>,
->(
-  payloadEncrypted: EncryptedPayloadAndSessionID,
-  authProfileAndToken: AuthProfileAndToken
+export function getDecryptedPayload<T extends Record<string, unknown>>(
+  payloadEncrypted: EncryptedPayloadAndSessionID
 ) {
-  let payload: DecryptedPayloadAndSessionID<T> | null = null;
-
   try {
-    payload = JSON.parse(decrypt(payloadEncrypted));
-  } catch (error) {
+    return apiSuccessResult<T>(JSON.parse(decrypt(payloadEncrypted)));
+  } catch (error: unknown) {
     logger.error(error);
     captureException(error);
     return apiErrorResult(
@@ -79,11 +75,24 @@ export function decryptPayloadAndValidateSessionID<
       HttpStatusCode.BadRequest
     );
   }
+}
+
+export function decryptPayloadAndValidateSessionID<
+  T extends Record<string, unknown> = Record<string, unknown>,
+>(
+  payloadEncrypted: EncryptedPayloadAndSessionID,
+  authProfileAndToken: AuthProfileAndToken
+) {
+  const decryptResult = getDecryptedPayload<T>(payloadEncrypted);
+  if (decryptResult.status === 'ERROR') {
+    return decryptResult;
+  }
+  const content = decryptResult.content;
 
   if (
-    !payload ||
-    !payload.sessionID ||
-    authProfileAndToken.profile.sid !== payload.sessionID
+    !content ||
+    !content.sessionID ||
+    authProfileAndToken.profile.sid !== content.sessionID
   ) {
     logger.debug('Incomplete session validation');
     return apiErrorResult(
@@ -93,5 +102,5 @@ export function decryptPayloadAndValidateSessionID<
     );
   }
 
-  return apiSuccessResult<T>(payload);
+  return decryptResult;
 }

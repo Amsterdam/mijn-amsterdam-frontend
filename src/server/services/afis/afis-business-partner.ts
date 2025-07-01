@@ -17,7 +17,7 @@ import {
   BusinessPartnerId,
   BusinessPartnerIdPayload,
 } from './afis-types';
-import { FeatureToggle } from '../../../universal/config/feature-toggles';
+import { featureToggle } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import {
   apiErrorResult,
   ApiResponse_DEPRECATED,
@@ -138,7 +138,7 @@ async function fetchPhoneNumber(addressId: AfisBusinessPartnerAddress['id']) {
     formatUrl(config) {
       return `${config.url}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`;
     },
-    postponeFetch: !FeatureToggle.afisBusinesspartnerPhoneActive,
+    postponeFetch: !featureToggle.afisBusinesspartnerPhoneActive,
   };
 
   const businessPartnerRequestConfig = await getAfisApiConfig(additionalConfig);
