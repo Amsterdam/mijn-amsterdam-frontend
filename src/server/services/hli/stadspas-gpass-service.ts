@@ -373,6 +373,7 @@ export async function fetchGpassBudgetTransactions(
   );
   const requestParams: StadspasTransactionQueryParams = {
     pasnummer,
+    sub_transactions: true, // Includes transactions from linked passes.
     date_from: from.toISOString().split('T')[0], // Format to YYYY-MM-DD
     date_until: new Date().toISOString().split('T')[0], // Format to YYYY-MM-DD
     sub_transactions: true,
