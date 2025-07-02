@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { Paragraph } from '@amsterdam/design-system-react';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
 
 import {
   AfisFacturenByStateFrontend,
@@ -257,6 +258,48 @@ function generateApiUrl(
     : null;
 }
 
+export function useAfisEMandateSWR(businessPartnerIdEncrypted: string | null) {
+  return useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
+    fetchAfisApi,
+    { dedupingInterval: FIFTEEN_MINUTES_MS }
+  );
+}
+
+export function useAfisEmandateUpdate(
+  businessPartnerIdEncrypted: string | null
+) {
+  async function sendRequest(
+    url: string,
+    { arg: eMandateUpdatePayload }: { arg: { dateValidTo: string } }
+  ) {
+    return fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(eMandateUpdatePayload),
+      credentials: 'include',
+    }).then((res) => res.json());
+  }
+
+  const { trigger, isMutating } = useSWRMutation(
+    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES_UPDATE'),
+    sendRequest /* options */
+  );
+
+  return {
+    update: async (dateValidTo: string) => {
+      try {
+        const result = await trigger({ dateValidTo } /* options */);
+        return result;
+      } catch (e) {
+        // error handling
+        alert('errro!' + e);
+      }
+      return;
+    },
+    isMutating,
+  };
+}
+
 export function useAfisEMandatesData() {
   const isSmallScreen = useSmallScreen();
 
@@ -267,14 +310,10 @@ export function useAfisEMandatesData() {
 
   const {
     data: eMandatesApiResponse,
-    isLoading: isLoadingEMandates,
-    error: hasEMandatesError,
+    isLoading,
+    error,
     mutate: refetchEMandates,
-  } = useSWR<ApiSuccessResponse<AfisEMandateFrontend[]>>(
-    generateApiUrl(businessPartnerIdEncrypted, 'AFIS_EMANDATES'),
-    fetchAfisApi,
-    { dedupingInterval: FIFTEEN_MINUTES_MS }
-  );
+  } = useAfisEMandateSWR(businessPartnerIdEncrypted);
 
   const eMandates = (eMandatesApiResponse?.content ?? []).map((eMandate) => {
     return {
@@ -296,7 +335,7 @@ export function useAfisEMandatesData() {
   const title = 'E-Mandaat';
   const breadcrumbs = [
     ...useThemaBreadcrumbs(themaId),
-    { to: routeConfig.detailPage.path, title: betaalVoorkeurenTitle },
+    { to: routeConfig.betaalVoorkeuren.path, title: betaalVoorkeurenTitle },
   ];
   const { id } = useParams<{ id: AfisEMandateFrontend['id'] }>();
   const eMandate = eMandates.find((mandate) => mandate.id === id);
@@ -305,8 +344,8 @@ export function useAfisEMandatesData() {
     title,
     eMandate: eMandate as WithActionButtons<AfisEMandateFrontend>,
     breadcrumbs,
-    hasEMandatesError,
-    isLoadingEMandates,
+    hasEMandatesError: !!error,
+    isLoadingEMandates: isLoading || !eMandatesApiResponse,
     eMandateTableConfig,
     eMandates,
     refetchEMandates,
