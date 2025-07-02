@@ -141,7 +141,7 @@ We also make use of the debug npm packages. For now the following debug settings
 
 To log response data from incoming responses before any transformation.
 A comma separated list of keywords / pathsegments can be used to log specific requests. For example: zorgned/aanvragen,gpass
-`export DEBUG_RESPONSE_DATA=term1,term2` this setting only works in conjunction with `DEBUG=source-api-request:request`
+`export DEBUG_RESPONSE_DATA=term1,term2` this setting only works in conjunction with `DEBUG=source-api-request:request` and is turned on or added **automatically** when DEBUG_RESPONSE_DATA is defined.
 
 #### React Autologout timer
 To debug the autologout timer you can add a localstorage item `AUTO_LOGOUT_TIMER_LOGGING` with value `true`. This enables some logging in the console
