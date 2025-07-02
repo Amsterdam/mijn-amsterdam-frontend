@@ -152,7 +152,7 @@ async function createJWEToken(
   const JWK = await jose.importJWK(sharedKey);
 
   // eslint-disable-next-line no-magic-numbers
-  const unixEpochInSeconds = Math.floor(Date.now() / 1000);
+  const unixEpochInSeconds = Math.floor(Date.now() / ONE_SECOND_MS);
 
   const ONE_HOUR_IN_SECONDS = 3600;
   const payload: JWEPayload = {
