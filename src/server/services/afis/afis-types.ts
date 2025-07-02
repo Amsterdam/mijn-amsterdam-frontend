@@ -371,7 +371,7 @@ export type AfisEMandateFrontend = {
   acceptant: string;
   acceptantIBAN?: string;
   acceptantDescription?: string;
-  status: string;
+  status: '1' | '0';
   displayStatus: string;
 
   // Sender properties
@@ -457,6 +457,10 @@ export type EMandateStatusChangePayload = {
 export type AfisEMandateSignRequestResponse = {
   redirectUrl: string;
   statusCheckUrl: string;
+};
+
+export type AfisEMandateStatusChangeResponse = {
+  status: AfisEMandateFrontend['status'];
 };
 
 // POM payment api status codes
