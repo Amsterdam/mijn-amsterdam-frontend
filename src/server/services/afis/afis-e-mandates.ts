@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import { add, isSameDay, parseISO, subDays } from 'date-fns';
+import { Request } from 'express';
 import slug from 'slugme';
 import { firstBy } from 'thenby';
 
@@ -35,6 +36,8 @@ import {
   EMandateSignRequestNotificationPayload,
   AfisBusinessPartnerBankPayload,
   type POMSignRequestUrlPayload,
+  type AfisEMandateUpdatePayloadFrontend,
+  type EMandateUpdatePayload,
 } from './afis-types';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
@@ -49,7 +52,6 @@ import { getApiConfig } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
-
 const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
 const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
 const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
@@ -57,7 +59,7 @@ const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
 const EMANDATE_STATUS = {
   ON: '1',
   OFF: '0',
-};
+} as const;
 
 function transformCreateEMandatesResponse(response: unknown) {
   return response;
@@ -146,13 +148,13 @@ export async function createAfisEMandate(
     SndBic: senderBIC,
 
     // NOTE: These fields are always the same as BusinessPartnerDetails, not coupled to the bankaccount (IBAN) holder.
-    SndCity: sender?.address?.CityName ?? '',
-    SndCountry: sender?.address?.Country ?? '',
-    SndHouse: `${sender?.address?.HouseNumber ?? ''} ${sender?.address?.HouseNumberSupplementText ?? ''}`,
-    SndName1: sender?.firstName ?? '',
-    SndName2: sender?.lastName ?? '',
-    SndPostal: sender?.address?.PostalCode ?? '',
-    SndStreet: sender?.address?.StreetName ?? '',
+    SndCity: sender.address?.CityName ?? '',
+    SndCountry: sender.address?.Country ?? '',
+    SndHouse: `${sender.address?.HouseNumber ?? ''} ${sender.address?.HouseNumberSupplementText ?? ''}`,
+    SndName1: sender.firstName || sender.fullName || '',
+    SndName2: sender.lastName ?? '',
+    SndPostal: sender.address?.PostalCode ?? '',
+    SndStreet: sender.address?.StreetName ?? '',
 
     SignDate: payload.eMandateSignDate,
     SignCity: eMandateReceiver.RecCity, // TODO: Hoe komen we aan dit gegeven, altijd Amsterdam?
@@ -326,7 +328,7 @@ function transformEMandateSource(
     acceptantDescription: acceptant.description,
     senderIBAN: (isActive ? afisEMandateSource?.SndIban : null) ?? null,
     senderName: isActive
-      ? [(afisEMandateSource?.SndName1, afisEMandateSource?.SndName2)]
+      ? [afisEMandateSource?.SndName1, afisEMandateSource?.SndName2]
           .filter(Boolean)
           .join(' ')
       : null, // Firstname + Lastname
@@ -454,12 +456,8 @@ function createEMandateProviderPayload(
   signRequestPayload: EMandateSignRequestPayload
 ): POMSignRequestUrlPayload {
   const returnUrl = generateFullApiUrlBFF(
-    routeConfig.detailPage.path,
-    [
-      {
-        iban: acceptant.iban,
-      },
-    ],
+    routeConfig.detailPageEMandate.path,
+    [{ iban: acceptant.iban }, { id: slug(acceptant.name) }],
     getFromEnv('MA_FRONTEND_URL')
   );
 
@@ -485,8 +483,8 @@ function createEMandateProviderPayload(
   const concerning = `Automatische incasso ${acceptant.name}`;
 
   return {
-    first_name: businessPartner.firstName ?? 'Naam',
-    last_name: businessPartner.lastName ?? 'Achternaam',
+    first_name: businessPartner.firstName || 'Naam',
+    last_name: businessPartner.lastName || 'Achternaam',
     debtor_number: businessPartner.businessPartnerId,
     payment_reference: paymentReference,
     concerning,
@@ -583,6 +581,15 @@ export async function fetchEmandateSignRequestStatus(
 export async function changeEMandateStatus(
   eMandateStatusChangePayload: EMandateStatusChangePayload
 ) {
+  return updateAfisEMandate(eMandateStatusChangePayload);
+}
+
+export async function handleEmandateUpdate(
+  eMandateStatusChangePayload: EMandateUpdatePayload,
+  authProfile: AuthProfile,
+  req: Request
+) {
+  const payload: AfisEMandateUpdatePayloadFrontend = req.body;
   return updateAfisEMandate(eMandateStatusChangePayload);
 }
 

@@ -22,6 +22,7 @@ import {
   changeEMandateStatus,
   fetchEmandateRedirectUrlFromProvider,
   fetchEmandateSignRequestStatus,
+  handleEmandateUpdate,
 } from '../services/afis/afis-e-mandates';
 import {
   handleAfisRequestWithEncryptedPayloadQueryParam,
@@ -33,6 +34,7 @@ import type {
   EMandateStatusChangePayload,
   EMandateSignRequestPayload,
   EMandateSignRequestStatusPayload,
+  EMandateUpdatePayload,
 } from '../services/afis/afis-types';
 import { fetchBezwaarDocument } from '../services/bezwaren/bezwaren';
 import { handleFetchBezwaarDetail } from '../services/bezwaren/bezwaren-route-handlers';
@@ -295,6 +297,19 @@ attachDocumentDownloadRoute(
       QueryPayload,
       ServiceReturnType
     >(changeEMandateStatus)
+  );
+}
+
+{
+  type QueryPayload = EMandateUpdatePayload;
+  type ServiceReturnType = ReturnType<typeof handleEmandateUpdate>;
+
+  router.get(
+    BffEndpoints.AFIS_EMANDATES_UPDATE,
+    handleAfisRequestWithEncryptedPayloadQueryParam<
+      QueryPayload,
+      ServiceReturnType
+    >(handleEmandateUpdate)
   );
 }
 
