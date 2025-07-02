@@ -60,7 +60,7 @@ describe('<AfisBetaalVoorkeuren />', () => {
       status: 'OK',
     });
 
-  const routePath = routeConfig.detailPage.path;
+  const routePath = routeConfig.betaalVoorkeuren.path;
   const routeEntry = generatePath(routePath);
 
   function Component() {

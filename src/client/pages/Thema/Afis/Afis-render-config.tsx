@@ -23,7 +23,7 @@ export const AfisRoutes = [
     isActive: featureToggle.AfisActive,
   },
   {
-    route: routeConfig.detailPage.path,
+    route: routeConfig.betaalVoorkeuren.path,
     Component: AfisBetaalVoorkeuren,
     isActive: featureToggle.AfisActive,
   },
