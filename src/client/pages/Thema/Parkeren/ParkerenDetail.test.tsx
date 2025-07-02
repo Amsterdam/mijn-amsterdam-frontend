@@ -38,7 +38,7 @@ const GPPbaseVergunning: ParkeerVergunningFrontend = {
   displayStatus: 'Verleend',
 };
 
-function createParkerenState(opts: {
+function createParkerenState(fields: {
   vergunningen: ParkeerVergunningFrontend[];
 }): AppState {
   const parkerenState: AppState['PARKEREN'] = {
@@ -46,7 +46,7 @@ function createParkerenState(opts: {
     content: {
       url: 'https://parkeervergunningen.amsterdam.nl/',
       isKnown: true,
-      vergunningen: opts.vergunningen,
+      vergunningen: fields.vergunningen,
     },
   };
 
