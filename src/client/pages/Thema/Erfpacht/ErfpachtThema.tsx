@@ -1,4 +1,9 @@
-import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import {
+  Alert,
+  Paragraph,
+  Link,
+  Heading,
+} from '@amsterdam/design-system-react';
 
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import {
@@ -13,6 +18,8 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
 import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
+import { ErfpachtDetail } from './ErfpachtDetail';
+import { useState } from 'react';
 
 export function ErfpachtThema() {
   const {
@@ -26,6 +33,8 @@ export function ErfpachtThema() {
     routeConfig,
     listPageParamKind,
   } = useErfpachtThemaData();
+
+  const [relatieCode, setRelatieCode] = useState<string | null>(null);
 
   const afisData = useAfisThemaData();
   const hasOpenstaandeErfpachtFacturen =
@@ -74,32 +83,77 @@ export function ErfpachtThema() {
         <>
           <PageContentCell spanWide={8}>
             <Paragraph>
-              Hieronder ziet u de gegevens van uw erfpachtrechten.
+              Hieronder ziet u de gegevens van uw erfpachtrechten. Wij
+              vernieuwen dit portaal. Daarom kunt u op dit moment de status van
+              uw wijzigingsaanvraag helaas niet inzien. Als u een
+              ontvangstbevestiging van ons heeft gehad, kunt u ervan uitgaan dat
+              wij uw aanvraag hebben ontvangen. Heeft u een toch nog een vraag,
+              stuur dan een e-mail naar{' '}
+              <Link rel="noreferrer" href="mailto:erfpacht@amsterdam.nl">
+                erfpacht@amsterdam.nl
+              </Link>
+              .
             </Paragraph>
           </PageContentCell>
-
+        </>
+      }
+      pageContentMain={
+        <>
+          {pageContentTables}
           {hasOpenstaandeErfpachtFacturen && (
             <PageContentCell spanWide={8}>
-              <FacturenDisclaimer />
+              <FacturenErfpacht />
             </PageContentCell>
           )}
         </>
       }
-      pageContentMain={pageContentTables}
     />
   );
 }
 
-function FacturenDisclaimer() {
+function FacturenErfpacht() {
   return (
-    <Alert headingLevel={2} heading="U heeft openstaande facturen">
-      <Paragraph>
-        Kijk op{' '}
+    <>
+      <Heading size="level-3" level={3}>
+        Facturen
+      </Heading>
+      <Paragraph className="ams-mb-m">
+        Facturen vanaf 1 januari 2025 en nog niet betaalde facturen kunt u
+        inzien onder{' '}
         <MaRouterLink href={afis.routeConfig.themaPage.path}>
-          {afis.themaTitle}
+          {afis.themaTitle}.
         </MaRouterLink>{' '}
-        voor uw erfpacht facturen. U kunt hier alleen facturen van 2025 inzien.
+        Zoekt u een oudere factuur, stuur dan een e-mail naar{' '}
+        <Link
+          rel="noreferrer"
+          href="mailto:debiteurenadministratie@amsterdam.nl"
+        >
+          debiteurenadministratie@amsterdam.nl
+        </Link>
+        .
       </Paragraph>
-    </Alert>
+      <Heading size="level-4" level={4}>
+        Factuur naar ander adres
+      </Heading>
+      <Paragraph className="ams-mb-m">
+        Facturen sturen wij altijd naar het adres waar u ingeschreven staat in
+        de Basis Registratie Personen (BRP). Het is niet mogelijk dit aan te
+        passen.
+      </Paragraph>
+      <Heading size="level-4" level={4}>
+        U woont of verhuist naar het buitenland
+      </Heading>
+      <Paragraph>
+        Geef bij een verhuizing naar het buitenland altijd uw nieuwe woonadres
+        aan ons door. Stuur daarvoor een e-mail naar{' '}
+        <Link
+          rel="noreferrer"
+          href="mailto:debiteurenadministratie@amsterdam.nl"
+        >
+          debiteurenadministratie@amsterdam.nl
+        </Link>
+        . Zet hierin altijd uw debiteurennummer.
+      </Paragraph>
+    </>
   );
 }
