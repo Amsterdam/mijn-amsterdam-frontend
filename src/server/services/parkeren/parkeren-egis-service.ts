@@ -9,6 +9,7 @@ import {
 import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
@@ -151,7 +152,6 @@ async function createJWEToken(
   };
   const JWK = await jose.importJWK(sharedKey);
 
-  // eslint-disable-next-line no-magic-numbers
   const unixEpochInSeconds = Math.floor(Date.now() / ONE_SECOND_MS);
 
   const ONE_HOUR_IN_SECONDS = 3600;
