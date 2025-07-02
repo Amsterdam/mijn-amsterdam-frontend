@@ -86,7 +86,7 @@ export function AfisBetaalVoorkeuren() {
     routeConfig,
   } = useAfisThemaData();
 
-  useHTMLDocumentTitle(routeConfig.detailPage);
+  useHTMLDocumentTitle(routeConfig.betaalVoorkeuren);
 
   const {
     title,
