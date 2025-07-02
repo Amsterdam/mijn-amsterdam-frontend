@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 
 import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
+import useSWR, { type SWRResponse } from 'swr';
 
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types/App.types';
@@ -215,4 +216,87 @@ export function addAxiosResponseTransform(
         : []),
     ...(Array.isArray(transformer) ? transformer : [transformer]),
   ];
+}
+
+//// V2 ////
+
+export type ApiStateV2<T> = {
+  isLoading: boolean;
+  isError: boolean;
+  data: T | null;
+  fetch: () => void;
+  mutate: SWRResponse['mutate'];
+};
+
+export function fetchDefault(url: string) {
+  return fetch(url, {
+    credentials: 'include',
+  }).then((response) => response.json());
+}
+
+type UseDataApiOptions = Readonly<{
+  postpone?: boolean;
+  fetcher?: <T>(url: string) => Promise<T>;
+}>;
+
+const DEFAULT_DATA_API_OPTIONS: Required<UseDataApiOptions> = {
+  postpone: false,
+  fetcher: fetchDefault,
+};
+
+export function useDataApiV2<T>(
+  url?: string,
+  options: UseDataApiOptions = DEFAULT_DATA_API_OPTIONS
+): ApiStateV2<T> {
+  const optionsWithDefaults: Required<UseDataApiOptions> = {
+    ...DEFAULT_DATA_API_OPTIONS,
+    ...options,
+  };
+
+  const [shouldFetch, setShouldFetch] = useState(
+    optionsWithDefaults.postpone !== true
+  );
+
+  const swr = useSWR<T>(shouldFetch ? url : null, optionsWithDefaults.fetcher, {
+    dedupingInterval: 0, // Disable deduping to allow immediate re-fetching
+    revalidateOnFocus: false, // Disable revalidation on focus
+    revalidateOnReconnect: false, // Disable revalidation on reconnect
+    keepPreviousData: true, // Keep previous data while fetching new data
+    onSuccess: () => {
+      // Sets shouldFetch to false after a successful fetch
+      // This prevents immediate re-fetching if the url changes in the meantime.
+      if (optionsWithDefaults.postpone) {
+        setShouldFetch(false);
+      }
+    },
+    onError: (error) => {
+      if (optionsWithDefaults.postpone) {
+        setShouldFetch(false);
+      }
+      captureException(error, {
+        properties: {
+          url,
+          postpone: optionsWithDefaults.postpone,
+        },
+      });
+    },
+  });
+
+  // If the hook should fetch data as soons as it's mounted, we consider it as loading.
+  const shouldFetchImmediately = !optionsWithDefaults.postpone && !swr.data;
+
+  return {
+    data: swr.data ?? null,
+    isLoading: swr.isLoading || shouldFetchImmediately,
+    isError: !!swr.error,
+    mutate: swr.mutate,
+    fetch: () => {
+      setShouldFetch(true);
+
+      // Trigger a re-fetch for all subsequent calls.
+      if (shouldFetch) {
+        swr.mutate();
+      }
+    },
+  };
 }
