@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEventHandler } from 'react';
 
 import {
   ActionGroup,
@@ -9,10 +9,14 @@ import {
 import { addDays, addYears } from 'date-fns';
 
 import { routeConfig, type WithActionButtons } from './Afis-thema-config';
-import { useAfisEMandatesData } from './useAfisThemaData.hook';
+import {
+  useAfisEMandatesData,
+  useAfisEmandateUpdate,
+  useAfisThemaData,
+} from './useAfisThemaData.hook';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
-import { MaButtonLink } from '../../../components/MaLink/MaLink';
+import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { Modal } from '../../../components/Modal/Modal';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
@@ -22,19 +26,20 @@ type DateAdjustModalProps = {
   eMandate: AfisEMandateFrontend;
   isDateAdjustModalActive: boolean;
   setDateAdjustModal: (isActive: boolean) => void;
+  onSubmit: FormEventHandler<HTMLFormElement>;
 };
 
 function DateAdjustModal({
   eMandate,
   isDateAdjustModalActive,
   setDateAdjustModal,
+  onSubmit,
 }: DateAdjustModalProps) {
   const minDate = addDays(new Date(), 1).toISOString().split('T')[0]; // Set minimum date to tomorrow.
   const currentDate =
     eMandate.dateValidTo?.includes('9999') || !eMandate.dateValidTo
       ? addYears(new Date(), 1).toISOString().split('T')[0]
       : eMandate.dateValidTo;
-
   return (
     <Modal
       title="E-Mandaat einddatum aanpassen"
@@ -48,11 +53,8 @@ function DateAdjustModal({
           <Button
             id="date-adjust-action"
             type="submit"
+            form="date-adjust-form"
             variant="primary"
-            onClick={() => {
-              setDateAdjustModal(false);
-              // TODO: Send new date to backend
-            }}
           >
             Nu aanpassen
           </Button>
@@ -71,7 +73,14 @@ function DateAdjustModal({
         <Paragraph className="ams-mb-s">
           Nieuwe einddatum E-mandaat {eMandate.acceptant}
         </Paragraph>
-        <DateInput type="date" min={minDate} value={currentDate} />
+        <form id="date-adjust-form" onSubmit={onSubmit}>
+          <DateInput
+            name="endDate"
+            type="date"
+            min={minDate}
+            defaultValue={currentDate}
+          />
+        </form>
       </>
     </Modal>
   );
@@ -82,7 +91,12 @@ type EMandateProps = {
 };
 
 function EMandate({ eMandate }: EMandateProps) {
+  const { businessPartnerIdEncrypted } = useAfisThemaData();
   const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
+  const { isMutating, update } = useAfisEmandateUpdate(
+    businessPartnerIdEncrypted
+  );
+
   return (
     <PageContentCell>
       <Datalist
@@ -116,7 +130,7 @@ function EMandate({ eMandate }: EMandateProps) {
               },
               {
                 label: 'Einddatum',
-                isVisible: !!eMandate.senderName,
+                isVisible: eMandate.status === '1',
                 content: (
                   <>
                     {eMandate.dateValidTo?.includes('9999')
@@ -124,16 +138,26 @@ function EMandate({ eMandate }: EMandateProps) {
                       : eMandate.dateValidToFormatted}{' '}
                     &nbsp;
                     <>
-                      <MaButtonLink
-                        variant="secondary"
-                        onClick={() => setDateAdjustModal(true)}
+                      <MaRouterLink
+                        href={window.location.pathname}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setDateAdjustModal(true);
+                        }}
                       >
                         einddatum aanpassen
-                      </MaButtonLink>
+                      </MaRouterLink>
                       <DateAdjustModal
                         eMandate={eMandate}
                         isDateAdjustModalActive={isDateAdjustModalActive}
                         setDateAdjustModal={setDateAdjustModal}
+                        onSubmit={(event) => {
+                          const formdata = new FormData(event.currentTarget);
+                          console.log('formdata', formdata);
+                          event.preventDefault();
+                          setDateAdjustModal(false);
+                          update(formdata.get('endDate') as string);
+                        }}
                       />
                     </>
                   </>
@@ -141,17 +165,17 @@ function EMandate({ eMandate }: EMandateProps) {
               },
             ],
           },
-          ...(eMandate.senderName
+          ...(eMandate.status === '1'
             ? [
                 {
                   rows: [
                     {
                       label: 'Naam rekeninghouder',
-                      content: eMandate.senderName ?? '-',
+                      content: eMandate.senderName || 'Onbekend',
                     },
                     {
                       label: 'IBAN rekeninghouder',
-                      content: eMandate.senderIBAN ?? '-',
+                      content: eMandate.senderIBAN || 'Onbekend',
                     },
                   ],
                 },
