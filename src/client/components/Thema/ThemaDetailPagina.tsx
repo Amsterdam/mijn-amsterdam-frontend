@@ -54,7 +54,6 @@ export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
     statusItemSteps = [...statusItemSteps];
     statusItemSteps.reverse();
   }
-
   return (
     <DetailPageV2>
       <PageContentV2 className={getRedactedClass(themaId)}>
@@ -62,7 +61,12 @@ export default function ThemaDetailPagina<T extends Partial<ZaakDetail>>({
 
         {!isLoading && (isError || !zaak) && (
           <PageContentCell>
-            <ErrorAlert>{errorAlertContent}</ErrorAlert>
+            <ErrorAlert
+              title={isError ? 'Foutmelding' : 'Geen gegevens gevonden'}
+              severity={isError ? 'error' : 'info'}
+            >
+              {errorAlertContent}
+            </ErrorAlert>
           </PageContentCell>
         )}
 
