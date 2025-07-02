@@ -31,7 +31,7 @@ type BaseSourceResponse<T> = {
 };
 
 export type ActivePermitSourceResponse = BaseSourceResponse<
-  ActivePermitRequestProps[] | undefined
+  ActivePermitRequestProps[]
 >;
 
 type ActivePermitRequestProps = {
@@ -56,7 +56,7 @@ type ClientProductDetailsProps = {
 };
 
 export type ClientProductDetailsSourceResponse = BaseSourceResponse<
-  ClientProductDetailsProps[] | undefined
+  ClientProductDetailsProps[]
 >;
 
 export type GPK = DecosZaakBase &

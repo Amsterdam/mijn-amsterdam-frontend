@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import FormData from 'form-data';
 import * as jose from 'jose';
 
@@ -8,11 +9,11 @@ import {
 import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
 import { captureException } from '../monitoring';
-import { HttpStatusCode } from 'axios';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
@@ -72,30 +73,40 @@ export async function hasPermitsOrPermitRequests(
       ? 'private'
       : 'company';
 
-  // 404s here mean the client has no data in the system.
+  const sharedConfig: DataRequestConfig = {
+    method: 'POST',
+    data: {
+      token: JWT,
+    },
+    validateStatus: (statusCode) =>
+      isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
+    transformResponse(
+      responseData:
+        | ClientProductDetailsSourceResponse
+        | ActivePermitSourceResponse,
+      _headers,
+      statusCode
+    ) {
+      if (statusCode === HttpStatusCode.NotFound) {
+        return false;
+      }
+      return !!responseData.data.length;
+    },
+  };
+
   const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
-    requestData<ClientProductDetailsSourceResponse>(
+    requestData<boolean>(
       getApiConfig('PARKEREN', {
+        ...sharedConfig,
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/client_product_details`,
-        validateStatus: (statusCode) =>
-          isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
-        method: 'POST',
-        data: {
-          token: JWT,
-        },
       })
     ),
-    requestData<ActivePermitSourceResponse>(
+    requestData<boolean>(
       getApiConfig('PARKEREN', {
+        ...sharedConfig,
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/active_permit_request`,
-        validateStatus: (statusCode) =>
-          isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
-        method: 'POST',
-        data: {
-          token: JWT,
-        },
       })
     ),
   ]);
@@ -103,8 +114,8 @@ export async function hasPermitsOrPermitRequests(
   return (
     clientProductsResponse.status !== 'OK' ||
     permitRequestsResponse.status !== 'OK' ||
-    !!clientProductsResponse?.content?.data?.length ||
-    !!permitRequestsResponse?.content?.data?.length
+    clientProductsResponse.content ||
+    permitRequestsResponse.content
   );
 }
 
