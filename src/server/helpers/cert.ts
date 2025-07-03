@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 import { getFromEnv } from './env';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
