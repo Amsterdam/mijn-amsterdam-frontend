@@ -5,7 +5,7 @@ import { Breakpoints } from '../config/app';
 
 export type MediaQueryObject = { [key: string]: string | number | boolean };
 
-const ua = window.navigator.userAgent;
+const ua = globalThis.navigator.userAgent;
 export const isIE = /MSIE|Trident/.test(ua);
 
 function queryObjectToString(query: string | MediaQueryObject) {
@@ -39,11 +39,11 @@ function queryObjectToString(query: string | MediaQueryObject) {
 export function useMediaLayout(query: MediaQueryObject): boolean {
   const queryString = queryObjectToString(query);
   const [matches, setMatches] = useState(() => {
-    return !!window.matchMedia(queryString).matches;
+    return !!globalThis.matchMedia(queryString).matches;
   });
 
   useLayoutEffect(() => {
-    const mediaQuery = window.matchMedia(queryString);
+    const mediaQuery = globalThis.matchMedia(queryString);
 
     if (mediaQuery.matches !== matches) {
       setMatches(!!mediaQuery.matches);

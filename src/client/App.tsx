@@ -42,7 +42,7 @@ function AppNotAuthenticated() {
   // NOTE: Instantly redirecting users client side may lead to suboptimal UX. See also: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#sect2 and https://en.wikipedia.org/wiki/Meta_refresh
   useEffect(() => {
     if (shouldRedirectSSO) {
-      window.location.href = loginUrlByAuthMethod[authMethod];
+      globalThis.location.href = loginUrlByAuthMethod[authMethod];
     }
   }, [shouldRedirectSSO, authMethod]);
 

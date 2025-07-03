@@ -115,7 +115,7 @@ describe('AutoLogoutDialog', () => {
       <AutoLogoutDialog
         expiresAtMilliseconds={Date.now() + 2000}
         lastChanceBeforeAutoLogoutSeconds={1}
-        asynRefreshEnabled={true}
+        asynRefreshEnabled
       />
     );
 

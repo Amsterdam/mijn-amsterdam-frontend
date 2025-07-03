@@ -11,7 +11,7 @@ if (
   navigator.userAgent.indexOf('Trident/') > -1 ||
   !('Map' in window && 'Set' in window)
 ) {
-  window.location.replace('/no-support');
+  globalThis.location.replace('/no-support');
 }
 
 // eslint-disable-next-line no-console

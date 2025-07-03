@@ -19,7 +19,7 @@ function FocusTrapInner() {
   }
 
   const focusableEls = Array.from(elements).filter(
-    (element) => window.getComputedStyle(element)?.display !== 'none'
+    (element) => globalThis.getComputedStyle(element)?.display !== 'none'
   );
 
   const firstFocusableEl = focusableEls[0] as HTMLElement;
@@ -45,11 +45,11 @@ function FocusTrapInner() {
     }
   }
 
-  window.addEventListener('keydown', handleTabKey);
+  globalThis.addEventListener('keydown', handleTabKey);
 
   useEffect(() => {
     return () => {
-      window.removeEventListener('keydown', handleTabKey);
+      globalThis.removeEventListener('keydown', handleTabKey);
     };
   }, []);
 }

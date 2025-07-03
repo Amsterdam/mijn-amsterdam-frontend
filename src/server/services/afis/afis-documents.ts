@@ -15,6 +15,7 @@ import {
   DocumentDownloadData,
   DocumentDownloadResponse,
 } from '../shared/document-download-route-handler';
+import { Buffer } from "node:buffer";
 
 export async function fetchAfisDocument(
   _authProfileAndToken: AuthProfileAndToken,

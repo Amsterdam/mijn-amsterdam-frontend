@@ -69,7 +69,7 @@ function CountDownTimer({
 }
 
 const autoLogoutLoggingEnabled =
-  window.localStorage.getItem('AUTO_LOGOUT_TIMER_LOGGING') === 'true';
+  globalThis.localStorage.getItem('AUTO_LOGOUT_TIMER_LOGGING') === 'true';
 
 function getExpiresInMilliseconds(expiresAtMilliseconds: number): number {
   return differenceInMilliseconds(new Date(expiresAtMilliseconds), new Date());
@@ -138,13 +138,13 @@ export function AutoLogoutDialog({
     if (autoLogoutLoggingEnabled) {
       logtime();
 
-      intervalId.current = window.setInterval(() => {
+      intervalId.current = globalThis.setInterval(() => {
         logtime();
       }, ONE_SECOND_MS);
     }
 
     // Open the dialog when the time is up.
-    timeoutId.current = window.setTimeout(
+    timeoutId.current = globalThis.setTimeout(
       () => {
         clearInterval(intervalId.current);
         clearTimeout(timeoutId.current);
@@ -188,7 +188,7 @@ export function AutoLogoutDialog({
     return null;
   }
 
-  const continueLink = `${profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING}?returnTo=mams-frontend-route&route=${encodeURIComponent(window.location.pathname)}`;
+  const continueLink = `${profileType === 'private' ? LOGIN_URL_DIGID : LOGIN_URL_EHERKENNING}?returnTo=mams-frontend-route&route=${encodeURIComponent(globalThis.location.pathname)}`;
   const logoutLink = LOGOUT_URL;
   const logoutLabel = continueButtonIsVisible
     ? 'Nu uitloggen'

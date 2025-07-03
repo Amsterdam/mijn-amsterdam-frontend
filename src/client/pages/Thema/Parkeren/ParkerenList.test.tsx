@@ -73,7 +73,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('ParkerenList', () => {
   beforeAll(() => {
-    window.scrollTo = vi.fn();
+    globalThis.scrollTo = vi.fn();
   });
 
   const routeEntry = generatePath(routeConfig.listPage.path, {

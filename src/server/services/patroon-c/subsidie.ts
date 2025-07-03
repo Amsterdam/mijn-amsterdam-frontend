@@ -21,6 +21,7 @@ import {
   createSessionBasedCacheKey,
   getApiConfig,
 } from '../../helpers/source-api-helpers';
+import process from "node:process";
 
 async function getJWT() {
   const secret = new TextEncoder().encode(process.env.BFF_SISA_CLIENT_SECRET);

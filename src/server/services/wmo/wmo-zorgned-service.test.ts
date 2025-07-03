@@ -8,6 +8,7 @@ import {
   ZORGNED_GEMEENTE_CODE,
   ZorgnedAanvraagTransformed,
 } from '../zorgned/zorgned-types';
+import process from "node:process";
 
 const mocks = vi.hoisted(() => {
   return {

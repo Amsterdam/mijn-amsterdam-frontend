@@ -5,6 +5,7 @@
 // Third step: node get-change-log.js --from=$first --to=$last
 // A file called changelog-$year.html is created
 
+import process from "node:process";
 const { exec } = require('child_process');
 const fs = require('fs');
 const { parseArgs } = require('node:util');

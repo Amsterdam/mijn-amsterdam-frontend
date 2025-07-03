@@ -1,4 +1,4 @@
-window.lightningjs ||
+globalThis.lightningjs ||
   (function (n) {
     var e = 'lightningjs';
     function t(e, t) {
@@ -118,6 +118,6 @@ window.lightningjs ||
         n[e]
       );
     }
-    var r = (window.lightningjs = t(e));
+    var r = (globalThis.lightningjs = t(e));
     (r.require = t), (r.modules = n);
   })({});

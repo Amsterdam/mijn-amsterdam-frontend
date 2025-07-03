@@ -3,6 +3,7 @@ import fs from 'fs';
 import { getFromEnv } from './env';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
+import { Buffer } from "node:buffer";
 
 export function getCertificateSync(envVarName: string | undefined) {
   const path = envVarName && getFromEnv(envVarName, false);

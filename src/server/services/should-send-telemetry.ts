@@ -3,6 +3,7 @@ import {
   ExceptionData,
   RequestData,
 } from 'applicationinsights/out/Declarations/Contracts';
+import process from "node:process";
 
 // Example: ["GET /api/users", ...]. This is how a 'name' is represented in telemetry data
 const excludedRequests: string[] = JSON.parse(

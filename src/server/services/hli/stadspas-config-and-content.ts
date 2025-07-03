@@ -8,6 +8,7 @@ import {
 } from '../../../client/pages/Thema/HLI/HLI-thema-config';
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers/date';
 import { MyNotification } from '../../../universal/types/App.types';
+import process from "node:process";
 
 // The 31st of July is the default yearly expiry date for stadspassen.
 // This date is chosen to active all new passes that are given out by Amsterdam.

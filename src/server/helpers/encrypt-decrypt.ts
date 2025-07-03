@@ -1,5 +1,6 @@
 import { Buffer } from 'buffer';
 import crypto from 'crypto';
+import process from "node:process";
 
 type Base64IvEncryptedValue = string;
 type EncryptedValue = Buffer;

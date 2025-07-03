@@ -1,6 +1,7 @@
 import { LoggerOptions, pino } from 'pino';
 
 import { IS_DEVELOPMENT } from '../universal/config/env';
+import process from "node:process";
 
 const LOG_LEVEL = process.env.LOG_LEVEL;
 

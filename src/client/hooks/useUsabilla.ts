@@ -24,7 +24,7 @@ export function waitForUsabillaLiveInWindow() {
       }
     })();
     setTimeout(() => {
-      window.clearTimeout(polling);
+      globalThis.clearTimeout(polling);
       timeoutReached = true;
       reject();
     }, MAX_WAIT_FOR_USABILA_LIVE_MS);

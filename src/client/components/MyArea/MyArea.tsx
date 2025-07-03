@@ -81,7 +81,7 @@ function updateViewportHeight() {
       .height ?? HEADERHEIGHT;
   document.documentElement.style.setProperty(
     '--map-container-height',
-    `${window.innerHeight - headerHeight}px`
+    `${globalThis.innerHeight - headerHeight}px`
   );
 }
 
@@ -151,8 +151,8 @@ export default function MyArea({
   const ariaLabel = `Kaart van de buurt`;
 
   useEffect(() => {
-    window.addEventListener('resize', updateViewportHeight);
-    return () => window.removeEventListener('resize', updateViewportHeight);
+    globalThis.addEventListener('resize', updateViewportHeight);
+    return () => globalThis.removeEventListener('resize', updateViewportHeight);
   }, []);
 
   const [isReadyToRender, setIsReadyToRender] = useState(false);
@@ -169,7 +169,7 @@ export default function MyArea({
         <div className={styles.MapOffset} id="skip-to-id-Map">
           {isReadyToRender && (
             <Map
-              fullScreen={true}
+              fullScreen
               aria-label={ariaLabel}
               options={mapOptions}
               setInstance={(mapInstance) => setMapInstance(mapInstance)}

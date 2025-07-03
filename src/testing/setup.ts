@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 import nock from 'nock';
 import { afterAll, afterEach, expect, vi } from 'vitest';
+import process from "node:process";
 
 const ENV_FILE = '.env.local.template';
 const envConfig = dotenv.config({ path: ENV_FILE });
@@ -52,8 +53,8 @@ vi.mock('../universal/config/feature-toggles.ts', async (importOriginal) => {
   };
 });
 
-global.matchMedia =
-  global.matchMedia ||
+globalThis.matchMedia =
+  globalThis.matchMedia ||
   function () {
     return {
       matches: false,
@@ -63,9 +64,9 @@ global.matchMedia =
   };
 
 (() => {
-  if (global.window) {
-    (global.window as typeof global.window).scrollTo = vi.fn();
-    (global.window as typeof global.window).scrollBy = vi.fn();
+  if (globalThis.window) {
+    (globalThis.window as typeof globalThis.window).scrollTo = vi.fn();
+    (globalThis.window as typeof globalThis.window).scrollBy = vi.fn();
   }
 })();
 

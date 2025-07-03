@@ -22,7 +22,7 @@ export function MyAreaDashboard() {
   const isLoadingBrpKvk = isLoading(BRP) || isLoading(KVK);
   return (
     <div ref={ref} className={styles.DashboardMapContainer}>
-      <MyAreaLoader isDashboard={true} />
+      <MyAreaLoader isDashboard />
       <NavLink className={styles.NavLink} to={routeConfig.themaPage.path}>
         <span className={styles.NavLinkContentWrap}>
           <Heading level={3}>{themaTitle}</Heading>

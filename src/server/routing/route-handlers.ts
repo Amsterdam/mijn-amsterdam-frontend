@@ -10,6 +10,7 @@ import {
   isRequestAuthenticated,
 } from '../auth/auth-helpers';
 import { AuthenticatedRequest } from '../auth/auth-types';
+import process from "node:process";
 
 export function handleCheckProtectedRoute(
   req: Request,

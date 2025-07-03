@@ -23,6 +23,7 @@ import {
   decosCaseToZaakTransformers,
   decosZaakTransformers,
 } from '../vergunningen/decos-zaken';
+import process from "node:process";
 
 vi.mock('../../../server/helpers/encrypt-decrypt', async (requireActual) => {
   return {

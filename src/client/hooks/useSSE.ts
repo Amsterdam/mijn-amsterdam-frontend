@@ -18,7 +18,7 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
   const connectionCounter = useRef(0);
 
   const connect = useCallback((path: string) => {
-    const es = new window.EventSource(path, { withCredentials: true });
+    const es = new globalThis.EventSource(path, { withCredentials: true });
     setEs(es);
   }, []);
 
@@ -106,14 +106,14 @@ export function useSSE({ path, eventName, callback, postpone }: useSSEProps) {
     function closeOnUnload() {
       closeEventSource(SSE_UNLOAD_MESSAGE);
     }
-    window.addEventListener('beforeunload', closeOnUnload);
+    globalThis.addEventListener('beforeunload', closeOnUnload);
 
     return () => {
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
       es.removeEventListener(eventName, onMessageEvent);
 
-      window.removeEventListener('beforeunload', closeOnUnload);
+      globalThis.removeEventListener('beforeunload', closeOnUnload);
 
       // Close the EventSource when cleaning up this hook.
       closeEventSource(SSE_UNMOUNT_MESSAGE);

@@ -28,6 +28,7 @@ import {
 import { AuthenticatedRequest } from '../auth/auth-types';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
+import process from "node:process";
 
 export const oidcRouter = createBFFRouter({ id: 'router-oidc' });
 

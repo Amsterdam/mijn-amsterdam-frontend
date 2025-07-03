@@ -39,6 +39,7 @@ import {
   WpiRequestProcess,
   WpiRequestProcessLabels,
 } from './wpi-types';
+import process from "node:process";
 
 type FilterResponse = (
   response: ApiSuccessResponse<WpiRequestProcess[]>

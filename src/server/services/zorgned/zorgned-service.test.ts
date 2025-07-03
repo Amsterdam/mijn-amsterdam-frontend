@@ -21,6 +21,8 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import * as request from '../../helpers/source-api-request';
+import process from "node:process";
+import { Buffer } from "node:buffer";
 
 const mocks = vi.hoisted(() => {
   return {

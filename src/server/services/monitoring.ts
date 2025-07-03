@@ -13,6 +13,7 @@ import {
 } from './should-send-telemetry';
 import { IS_DEVELOPMENT } from '../../universal/config/env';
 import { logger } from '../logging';
+import process from "node:process";
 if (!IS_DEVELOPMENT && process.env.NODE_ENV !== 'test') {
   appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)

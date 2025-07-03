@@ -14,10 +14,10 @@ export function useKey(
     const eventListener = (event: KeyboardEvent) =>
       savedHandler.current && savedHandler.current(event);
 
-    window.addEventListener(eventName, eventListener);
+    globalThis.addEventListener(eventName, eventListener);
 
     return () => {
-      window.removeEventListener(eventName, eventListener);
+      globalThis.removeEventListener(eventName, eventListener);
     };
   }, []);
 }

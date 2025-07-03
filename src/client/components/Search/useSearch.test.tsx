@@ -312,7 +312,7 @@ describe('Search hooks and helpers', () => {
   });
 
   test('useSearchIndex <failure>', async () => {
-    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject());
+    vi.spyOn(globalThis, 'fetch').mockImplementation(() => Promise.reject());
 
     const wrapper = ({ children }: { children: ReactNode }) => (
       <RecoilRoot

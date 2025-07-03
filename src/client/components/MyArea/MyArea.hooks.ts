@@ -48,7 +48,7 @@ const NO_DATA_ERROR_RESPONSE = {
 const activeDatasetIdsDefaultValue = selector({
   key: 'activeDatasetIds/Default',
   get: () => {
-    const queryConfig = getQueryConfig(window.location.search);
+    const queryConfig = getQueryConfig(globalThis.location.search);
     const defaultValue = queryConfig?.datasetIds?.length
       ? queryConfig.datasetIds
       : ACTIVE_DATASET_IDS_INITIAL;
@@ -68,7 +68,7 @@ export function useActiveDatasetIds() {
 const activeDatasetFiltersDefaultValue = selector({
   key: 'activeDatasetIdsDefaultValue',
   get: () => {
-    const queryConfig = getQueryConfig(window.location.search);
+    const queryConfig = getQueryConfig(globalThis.location.search);
     return queryConfig?.filters || {};
   },
 });
@@ -102,7 +102,7 @@ interface LoadingFeature {
 const loadingFeatureDefaultValue = selector({
   key: 'loadingFeature/Default',
   get: () => {
-    const queryConfig = getQueryConfig(window.location.search);
+    const queryConfig = getQueryConfig(globalThis.location.search);
     const defaultValue = queryConfig?.loadingFeature
       ? queryConfig?.loadingFeature
       : null;

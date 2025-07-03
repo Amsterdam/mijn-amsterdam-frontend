@@ -26,6 +26,7 @@ import {
   SmileKlachtenReponse,
 } from './types';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import process from "node:process";
 
 const DEFAULT_PAGE_SIZE = 250;
 

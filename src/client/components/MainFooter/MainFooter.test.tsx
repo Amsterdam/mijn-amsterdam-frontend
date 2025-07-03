@@ -5,14 +5,14 @@ import { MainFooter } from './MainFooter';
 import { createFetchResponse } from '../../../testing/utils';
 
 describe('<MainFooter />', () => {
-  const fetch_ = global.fetch;
+  const fetch_ = globalThis.fetch;
 
   afterAll(() => {
-    global.fetch = fetch_;
+    globalThis.fetch = fetch_;
   });
 
   test('Renders without crashing', async () => {
-    global.fetch = vi.fn().mockResolvedValueOnce(
+    globalThis.fetch = vi.fn().mockResolvedValueOnce(
       createFetchResponse({
         content: {
           sections: [

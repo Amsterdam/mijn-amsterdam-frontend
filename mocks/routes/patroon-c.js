@@ -1,3 +1,4 @@
+import process from "node:process";
 const { register } = require('module');
 const settings = require('../settings');
 

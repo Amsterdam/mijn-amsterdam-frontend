@@ -90,7 +90,7 @@ describe('Parkeren', () => {
   }
 
   beforeAll(() => {
-    window.scrollTo = vi.fn();
+    globalThis.scrollTo = vi.fn();
   });
 
   it('should render the component and show the correct title', () => {

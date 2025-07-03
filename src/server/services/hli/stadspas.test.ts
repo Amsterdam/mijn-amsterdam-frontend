@@ -17,6 +17,7 @@ import type {
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+import { Buffer } from "node:buffer";
 
 const FAKE_API_KEY = '22222xx22222';
 

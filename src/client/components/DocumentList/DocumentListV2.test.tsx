@@ -30,7 +30,7 @@ const ITEMS: GenericDocument[] = [
 describe('DocumentListV2', () => {
   Object.defineProperty(window, 'location', {
     value: {
-      ...window.location,
+      ...globalThis.location,
     },
     writable: true,
   });
@@ -41,7 +41,7 @@ describe('DocumentListV2', () => {
     const originalFn = console.error;
     console.error = vi.fn(); // Hide warnings about navigation not implemented exceptions.
 
-    const fetch = ((global as any).fetch = vi
+    const fetch = ((globalThis as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null }));
 
@@ -81,7 +81,7 @@ describe('DocumentListV2', () => {
     const originalFn = console.error;
     console.error = vi.fn(); // Hide warnings about navigation not implemented exceptions.
 
-    (global as any).fetch = vi
+    (globalThis as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 200, blob: () => null });
 
@@ -118,7 +118,7 @@ describe('DocumentListV2', () => {
   it('Clicking a link does not fire a tracking call when the link returns a 404 status', async () => {
     const user = userEvent.setup();
 
-    const fetch = ((global as any).fetch = vi
+    const fetch = ((globalThis as any).fetch = vi
       .fn()
       .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
     const track = ((analytics as any).trackDownload = vi.fn());

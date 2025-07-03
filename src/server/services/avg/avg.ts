@@ -29,6 +29,7 @@ import {
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
 import { smileDateParser } from '../smile/smile-helpers';
+import process from "node:process";
 
 const DEFAULT_PAGE_SIZE = 25;
 

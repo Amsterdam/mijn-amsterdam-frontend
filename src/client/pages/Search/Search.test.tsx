@@ -66,7 +66,7 @@ describe('<Search />', () => {
     await screen.findByText('Zoeken voorbereiden...');
     cleanup();
 
-    render(<Component isAppStateReady={true} />);
+    render(<Component isAppStateReady />);
     await screen.findByPlaceholderText('Zoeken naar...');
   });
 });

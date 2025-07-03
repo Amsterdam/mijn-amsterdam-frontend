@@ -23,6 +23,7 @@ import {
   DataRequestConfig,
 } from '../config/source-api';
 import { captureException } from '../services/monitoring';
+import process from "node:process";
 
 const debugRequest = createDebugger('source-api-request:request');
 const debugCacheHit = createDebugger('source-api-request:cache-hit');

@@ -55,7 +55,7 @@ describe('<Profile />', () => {
   }
 
   beforeAll(() => {
-    (window.matchMedia as unknown) = vi.fn(() => {
+    (globalThis.matchMedia as unknown) = vi.fn(() => {
       return {
         addListener: vi.fn(),
         removeListener: vi.fn(),

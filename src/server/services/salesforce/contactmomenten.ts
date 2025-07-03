@@ -14,6 +14,7 @@ import {
   getApiConfig,
 } from '../../helpers/source-api-helpers';
 import { requestData } from '../../helpers/source-api-request';
+import { Buffer } from "node:buffer";
 
 async function fetchSalesforceData<T>(
   dataRequestConfigSpecific: DataRequestConfig

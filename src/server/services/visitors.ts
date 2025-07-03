@@ -20,6 +20,7 @@ import { captureException } from './monitoring';
 import { IS_TAP } from '../../universal/config/env';
 import { defaultDateFormat } from '../../universal/helpers/date';
 import { logger } from '../logging';
+import process from "node:process";
 
 /**
  * This service gives us the ability to count the exact amount of visitors that logged in into Mijn Amsterdam over start - end period.

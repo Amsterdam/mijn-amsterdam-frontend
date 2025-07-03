@@ -80,7 +80,7 @@ export function DocumentLink({
         .then((blob) => {
           const trackingUrl = trackPath
             ? trackPath(document)
-            : window.location.pathname +
+            : globalThis.location.pathname +
               addFileType(`/downloads/${document.download || documentTitle}`);
 
           const fileType = trackingUrl.split('.').pop();
@@ -90,13 +90,13 @@ export function DocumentLink({
           if (!blob) {
             downloadFile(document);
           } else if (
-            window.navigator &&
-            (window.navigator as any).msSaveOrOpenBlob
+            globalThis.navigator &&
+            (globalThis.navigator as any).msSaveOrOpenBlob
           ) {
-            (window.navigator as any).msSaveOrOpenBlob(blob, documentTitle);
+            (globalThis.navigator as any).msSaveOrOpenBlob(blob, documentTitle);
           } else {
             try {
-              const fileUrl = window.URL.createObjectURL(blob);
+              const fileUrl = globalThis.URL.createObjectURL(blob);
               downloadFile({
                 ...document,
                 url: fileUrl,

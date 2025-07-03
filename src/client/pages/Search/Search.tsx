@@ -17,7 +17,7 @@ export function SearchPage() {
   });
 
   const termParam =
-    new URLSearchParams(window.location.search).get('term') || '';
+    new URLSearchParams(globalThis.location.search).get('term') || '';
   const isReady = useAppStateReady();
   return (
     <PageV2>
@@ -26,11 +26,11 @@ export function SearchPage() {
         <PageContentCell>
           {isReady ? (
             <Search
-              autoFocus={true}
+              autoFocus
               term={termParam}
-              extendedAMResults={true}
+              extendedAMResults
               typeAhead={false}
-              inPage={true}
+              inPage
               maxResultCountDisplay={20}
             />
           ) : (

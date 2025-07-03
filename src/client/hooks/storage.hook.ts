@@ -130,9 +130,9 @@ function useWindowStorage(
 
   useEffect(() => {
     if (hasLocalStorage) {
-      window.addEventListener('storage', onStorageEvent);
+      globalThis.addEventListener('storage', onStorageEvent);
       return () => {
-        window.removeEventListener('storage', onStorageEvent);
+        globalThis.removeEventListener('storage', onStorageEvent);
       };
     }
   });

@@ -81,7 +81,7 @@ export function useSessionApi(): SessionState {
   const logoutSession = useCallback(() => {
     clearSessionStorage();
     clearDeeplinkEntry();
-    window.location.href = `${LOGOUT_URL}?authMethod=${sessionData?.authMethod}`;
+    globalThis.location.href = `${LOGOUT_URL}?authMethod=${sessionData?.authMethod}`;
   }, [sessionData?.authMethod]);
 
   const isAuthenticated = sessionData?.isAuthenticated;
@@ -105,12 +105,12 @@ export function useSessionApi(): SessionState {
       document.body.classList.add('is-away');
     };
 
-    window.addEventListener('focus', checkAway);
-    window.addEventListener('blur', addAway);
+    globalThis.addEventListener('focus', checkAway);
+    globalThis.addEventListener('blur', addAway);
 
     return () => {
-      window.removeEventListener('focus', checkAway);
-      window.removeEventListener('blur', addAway);
+      globalThis.removeEventListener('focus', checkAway);
+      globalThis.removeEventListener('blur', addAway);
     };
   }, []);
 

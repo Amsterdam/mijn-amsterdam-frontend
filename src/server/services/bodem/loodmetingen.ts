@@ -41,6 +41,8 @@ import {
   DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE,
   DocumentDownloadData,
 } from '../shared/document-download-route-handler';
+import process from "node:process";
+import { Buffer } from "node:buffer";
 
 export function getDataForLood365(authProfileAndToken: AuthProfileAndToken) {
   if (authProfileAndToken.profile.authMethod === 'digid') {

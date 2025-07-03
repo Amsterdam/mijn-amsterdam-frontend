@@ -153,6 +153,7 @@ import {
   themaId as themaIdSubsidies,
   themaTitle as themaTitleSubsidies,
 } from '../src/client/pages/Thema/Subsidies/Subsidies-thema-config.ts';
+import process from "node:process";
 
 const { BRP, KVK } = profileThemaTitles;
 

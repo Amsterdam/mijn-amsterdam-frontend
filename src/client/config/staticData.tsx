@@ -41,7 +41,7 @@ export const WelcomeNotification: MyNotification = {
       if (usabilla) {
         usabilla('click');
       } else {
-        window.location.href = CONTACT_FORM_URL;
+        globalThis.location.href = CONTACT_FORM_URL;
       }
     },
     title: 'Laat ons weten wat u ervan vindt',

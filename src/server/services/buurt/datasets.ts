@@ -33,6 +33,7 @@ import {
   axiosRequest,
   getNextUrlFromLinkHeader,
 } from '../../helpers/source-api-request';
+import process from "node:process";
 
 enum zIndexPane {
   PARKEERZONES = '650',

@@ -31,7 +31,7 @@ describe('Modal test', () => {
 
   it('Places the Modal content top/10px left/10px width/100px', () => {
     const { rerender } = render(
-      <Modal isOpen={true} onClose={() => void 0}>
+      <Modal isOpen onClose={() => void 0}>
         Testje
       </Modal>
     );
@@ -80,7 +80,7 @@ describe('Modal test', () => {
 
     rerender(
       <Modal
-        isOpen={true}
+        isOpen
         onClose={close}
         title={title}
         closeButtonLabel="Overlay sluiten"

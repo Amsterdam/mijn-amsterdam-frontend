@@ -5,6 +5,7 @@ import { downloadDocumentRouteHandler } from './document-download-route-handler'
 import { RequestMock, ResponseMock } from '../../../testing/utils';
 import { getAuth } from '../../auth/auth-helpers';
 import { sendResponse, sendUnauthorized } from '../../routing/route-helpers';
+import { Buffer } from "node:buffer";
 
 vi.mock('../../auth/auth-helpers', () => ({
   getAuth: vi.fn(),

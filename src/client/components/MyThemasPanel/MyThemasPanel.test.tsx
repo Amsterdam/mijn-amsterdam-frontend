@@ -33,7 +33,7 @@ describe('Thema panel display', () => {
     const { container } = render(
       <RecoilRoot>
         <BrowserRouter>
-          <MyThemasPanel items={items} isLoading={true} />
+          <MyThemasPanel items={items} isLoading />
         </BrowserRouter>
       </RecoilRoot>
     );

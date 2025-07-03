@@ -20,6 +20,7 @@ import {
 import { getAuthProfileAndToken, remoteApi } from '../../../testing/utils';
 import { AuthProfile, AuthProfileAndToken } from '../../auth/auth-types';
 import * as encryptDecrypt from '../../helpers/encrypt-decrypt';
+import { Buffer } from "node:buffer";
 
 describe('B&B Vergunningen service', () => {
   const authProfile: AuthProfile = {

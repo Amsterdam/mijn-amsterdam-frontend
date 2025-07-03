@@ -14,6 +14,7 @@ import {
   sendResponse,
   sendUnauthorized,
 } from '../../routing/route-helpers';
+import { Buffer } from "node:buffer";
 
 export const DEFAULT_DOCUMENT_DOWNLOAD_MIME_TYPE = 'application/pdf';
 export const DEFAULT_DOCUMENT_DOWNLOAD_FILENAME = 'zaak-document.pdf';

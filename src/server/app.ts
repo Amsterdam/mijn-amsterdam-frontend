@@ -10,7 +10,7 @@ import {
   IS_DEVELOPMENT,
   IS_OT,
   IS_PRODUCTION,
-} from '../universal/config/env';
+} from '../universal/config/env.ts';
 
 if (IS_DEVELOPMENT) {
   const ENV_FILE = '.env.local';
@@ -27,7 +27,7 @@ if (process.env.DEBUG_RESPONSE_DATA) {
 }
 
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
-import { logger } from './logging';
+import { logger } from './logging.ts';
 
 import { HttpStatusCode } from 'axios';
 import compression from 'compression';
@@ -50,6 +50,7 @@ import { captureException } from './services/monitoring';
 import { getFromEnv } from './helpers/env';
 import { notificationsExternalConsumerRouter } from './routing/router-notifications-external-consumer';
 import { FeatureToggle } from '../universal/config/feature-toggles';
+import process from 'node:process';
 
 const app = express();
 

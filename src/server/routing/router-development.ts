@@ -30,6 +30,8 @@ import { AuthProfile, MaSession } from '../auth/auth-types';
 import { ONE_SECOND_MS } from '../config/app';
 import { getFromEnv } from '../helpers/env';
 import { countLoggedInVisit } from '../services/visitors';
+import { Buffer } from "node:buffer";
+import process from "node:process";
 
 export const authRouterDevelopment = createBFFRouter({ id: 'router-dev' });
 

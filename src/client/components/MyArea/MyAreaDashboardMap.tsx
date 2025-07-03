@@ -26,7 +26,7 @@ export function MyAreaDashboardMap() {
   return (
     <Map
       className={styles.DashboardMap}
-      fullScreen={true}
+      fullScreen
       aria-label="Kaart van de buurt"
       options={{
         ...DEFAULT_MAP_OPTIONS,
@@ -44,7 +44,7 @@ export function MyAreaDashboardMap() {
           }
           center={center}
           zoom={HOOD_ZOOM}
-          autCenterOnLocationChange={true}
+          autCenterOnLocationChange
         />
       )}
       {!!secondaryLocations?.length &&

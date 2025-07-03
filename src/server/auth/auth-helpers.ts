@@ -28,6 +28,7 @@ import { logger } from '../logging';
 import { ExternalConsumerEndpoints } from '../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../routing/route-helpers';
 import { captureException } from '../services/monitoring';
+import process from "node:process";
 
 export function getReturnToUrl(
   queryParams?: ParsedQs,

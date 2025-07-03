@@ -2,6 +2,7 @@ import { PoolConfig, Pool } from 'pg';
 
 import { IS_DEVELOPMENT } from '../../../universal/config/env';
 import { captureException } from '../monitoring';
+import process from "node:process";
 
 // Connection params are taken from env variables.
 export const pgDbConfig: PoolConfig = {

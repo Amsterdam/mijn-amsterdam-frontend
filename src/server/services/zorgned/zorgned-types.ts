@@ -1,6 +1,7 @@
 import { GenericDocument } from '../../../universal/types/App.types';
 import type { AuthProfile } from '../../auth/auth-types';
 import { GEMEENTE_CODE_AMSTERDAM } from '../brp/brp-config';
+import { Buffer } from "node:buffer";
 
 export const ZORGNED_GEMEENTE_CODE = GEMEENTE_CODE_AMSTERDAM;
 

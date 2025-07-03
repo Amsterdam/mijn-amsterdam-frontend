@@ -26,7 +26,7 @@ describe('<MainHeader />', () => {
     render(
       <RecoilRoot>
         <BrowserRouter>
-          <MainHeader isAuthenticated={true} />
+          <MainHeader isAuthenticated />
         </BrowserRouter>
       </RecoilRoot>
     );
@@ -40,7 +40,7 @@ describe('<MainHeader />', () => {
     render(
       <RecoilRoot>
         <MemoryRouter initialEntries={['/other']}>
-          <MainHeader isAuthenticated={true} />
+          <MainHeader isAuthenticated />
         </MemoryRouter>
       </RecoilRoot>
     );

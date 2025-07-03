@@ -14,7 +14,7 @@ export function ContactMomenten() {
   }
 
   return (
-    <CollapsiblePanel title={title} startCollapsed={true}>
+    <CollapsiblePanel title={title} startCollapsed>
       <Paragraph className="ams-mb-m">
         De lijst met contactmomenten wordt alleen bijgehouden met telefonische
         gesprekken naar telefoonnummer 14 020 of chatberichten met een

@@ -41,7 +41,7 @@ export function LandingPage() {
             Uw Amsterdamse zaken op 1 plek.
           </Paragraph>
           <MaintenanceNotifications
-            fromApiDirectly={true}
+            fromApiDirectly
             page="landingspagina"
             className="ams-mb-m"
           />

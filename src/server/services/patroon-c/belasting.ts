@@ -13,6 +13,7 @@ import { AuthProfileAndToken } from '../../auth/auth-types';
 import { DataRequestConfig } from '../../config/source-api';
 import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
+import process from "node:process";
 
 const translationsJson = process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS
   ? JSON.parse(process.env.BFF_BELASTINGEN_BSN_TRANSLATIONS)

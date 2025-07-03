@@ -5,6 +5,7 @@ import { BffEndpoints } from './bff-routes';
 import { DEFAULT_REQUEST_CONFIG } from '../config/source-api';
 import { cacheOverview } from '../helpers/file-cache';
 import { loginStats, loginStatsTable } from '../services/visitors';
+import process from "node:process";
 
 export const adminRouter = express.Router();
 

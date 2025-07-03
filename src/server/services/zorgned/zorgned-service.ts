@@ -29,6 +29,7 @@ import { hash, sortAlpha, uniqueArray } from '../../../universal/helpers/utils';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../helpers/source-api-helpers';
 import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
+import { Buffer } from "node:buffer";
 
 async function fetchZorgnedByBSN<S, T>(
   bsn: BSN,

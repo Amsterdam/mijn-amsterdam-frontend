@@ -141,7 +141,7 @@ function MainHeaderSearch() {
         <Search
           onFinish={() => setSearchActive(false)}
           className={styles.SearchBar}
-          inPage={true}
+          inPage
         />
       </div>
     )

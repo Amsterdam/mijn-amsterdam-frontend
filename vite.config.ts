@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
+import process from "node:process";
 
 export default defineConfig({
   server: {
