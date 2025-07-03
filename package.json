@@ -21,7 +21,7 @@
     "bff-api:watch": "deno --watch ./src/server -w ./src/universal -w ./.env.local -x pnpm run bff-api:serve-dev",
     "bff-api:test": "cross-env MA_APP_MODE=unittest vitest --environment=node src/server src/universal",
     "bff-api:serve-build": "node build-bff/server/app",
-    "bff-api:serve-dev": "cross-env NODE_OPTS=--inspect deno --config ./tsconfig.bff.json --unstable-sloppy-imports  ./src/bffserver.ts",
+    "bff-api:serve-dev": "cross-env NODE_OPTS=--inspect deno --config ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json",
     "lint": "eslint src --max-warnings 0 --quiet",
     "lint:fix": "eslint src --fix"
