@@ -91,18 +91,17 @@ export function ErfpachtThema() {
       pageContentMain={
         <>
           {pageContentTables}
-          {hasOpenstaandeErfpachtFacturen && (
-            <PageContentCell spanWide={8}>
-              <FacturenErfpacht />
-            </PageContentCell>
-          )}
+
+          <PageContentCell spanWide={8}>
+            <MissingFacturenDescription />
+          </PageContentCell>
         </>
       }
     />
   );
 }
 
-function FacturenErfpacht() {
+function MissingFacturenDescription() {
   return (
     <>
       <Heading size="level-3" level={3}>
