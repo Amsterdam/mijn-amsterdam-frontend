@@ -3,7 +3,10 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponseTransformer } from 'axios';
 import useSWR, { type SWRResponse } from 'swr';
 
-import { apiErrorResult } from '../../../universal/helpers/api';
+import {
+  apiErrorResult,
+  type ApiResponse,
+} from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types/App.types';
 import { captureException } from '../../helpers/monitoring';
 
@@ -299,4 +302,61 @@ export function useDataApiV2<T>(
       }
     },
   };
+}
+
+export async function sendGetRequest<T extends ApiResponse<any>>(
+  url: string
+): Promise<T['content']> {
+  return fetch(url, { credentials: 'include' }).then(
+    async (response: Response) => {
+      const responseJson = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          responseJson.status === 'ERROR'
+            ? responseJson.message
+            : `Get request to ${url} failed with status ${response.status}.`
+        );
+      }
+
+      return responseJson.content;
+    }
+  );
+}
+
+export async function sendFormPostRequest<
+  T extends ApiResponse<any>,
+  F extends Record<string, string>,
+>(url: string, payload: F): Promise<T['content']> {
+  return fetch(url, {
+    method: 'POST',
+    body: new URLSearchParams(payload),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    credentials: 'include',
+  }).then(async (response: Response) => {
+    const responseJson = (await response.json()) as T;
+    if (!response.ok) {
+      throw new Error(
+        responseJson.status === 'ERROR'
+          ? responseJson.message
+          : `Post request to ${url} failed with status ${response.status}.`
+      );
+    }
+
+    return responseJson.content;
+  });
+}
+
+export function swrPostRequest<
+  R extends ApiResponse<any>,
+  F extends Record<string, string>,
+>(fn: typeof sendFormPostRequest<R, F>) {
+  return async (url: string, { arg }: { arg: F }) => {
+    return fn(url, arg);
+  };
+}
+
+export function swrPostRequestDefault() {
+  return swrPostRequest(sendFormPostRequest);
 }
