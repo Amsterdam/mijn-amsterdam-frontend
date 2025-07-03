@@ -1,9 +1,4 @@
-import {
-  Alert,
-  Paragraph,
-  Link,
-  Heading,
-} from '@amsterdam/design-system-react';
+import { Paragraph, Link, Heading } from '@amsterdam/design-system-react';
 
 import { useErfpachtThemaData } from './useErfpachtThemaData.hook';
 import {
@@ -18,8 +13,6 @@ import ThemaPaginaTable from '../../../components/Thema/ThemaPaginaTable';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 import * as afis from '../Afis/Afis-thema-config';
 import { useAfisThemaData } from '../Afis/useAfisThemaData.hook';
-import { ErfpachtDetail } from './ErfpachtDetail';
-import { useState } from 'react';
 
 export function ErfpachtThema() {
   const {
@@ -33,8 +26,6 @@ export function ErfpachtThema() {
     routeConfig,
     listPageParamKind,
   } = useErfpachtThemaData();
-
-  const [relatieCode, setRelatieCode] = useState<string | null>(null);
 
   const afisData = useAfisThemaData();
   const hasOpenstaandeErfpachtFacturen =

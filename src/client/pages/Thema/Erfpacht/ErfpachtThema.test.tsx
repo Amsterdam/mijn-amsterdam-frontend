@@ -153,21 +153,9 @@ describe('<Erfpacht />', () => {
                   statusDescription: 'openstaand',
                   paylink: 'https://payment.example.com/F001',
                   documentDownloadLink: 'https://download.example.com/F001',
-                  // factuurDocumentId: '1',
-                  // link: {
-                  //   to: routeConfig.themaPage.path,
-                  //   title: 'Bekijk uw openstaande facturen',
-                  // },
-                  // amountPayed: '',
-                  // amountPayedFormatted: '',
                 },
               ],
             },
-            // afgehandeld: {
-            //   count: 0,
-            //   facturen: [],
-            // },
-            // overgedragen: { count: 0, facturen: [] },
           },
         },
       },
@@ -181,9 +169,6 @@ describe('<Erfpacht />', () => {
       />
     );
 
-    // expect(
-    //   screen.getByRole('heading', { name: 'U heeft openstaande facturen' })
-    // ).toBeInTheDocument();
     expect(
       screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
     ).toBeInTheDocument();
@@ -191,14 +176,11 @@ describe('<Erfpacht />', () => {
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
     ).not.toBeInTheDocument();
-    // expect(
-    //   screen.queryByText('U heeft geen openstaande facturen.')
-    // ).not.toBeInTheDocument();
 
-    // expect(screen.getByText('E477/48')).toBeInTheDocument();
-    // expect(screen.getByText('E7418/35')).toBeInTheDocument();
-    // expect(screen.getByText('E900/33')).toBeInTheDocument();
-    // expect(screen.getByText('E123/456')).toBeInTheDocument();
-    // expect(screen.getByText('E6470/243')).toBeInTheDocument();
+    expect(screen.getByText('E477/48')).toBeInTheDocument();
+    expect(screen.getByText('E7418/35')).toBeInTheDocument();
+    expect(screen.getByText('E900/33')).toBeInTheDocument();
+    expect(screen.getByText('E123/456')).toBeInTheDocument();
+    expect(screen.getByText('E6470/243')).toBeInTheDocument();
   });
 });
