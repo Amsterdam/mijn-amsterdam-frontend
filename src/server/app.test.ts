@@ -25,35 +25,27 @@ describe('app', async () => {
     vi.resetModules();
   });
 
-  test(
-    'app middleware OT',
-    async () => {
-      const appModule = await import('./app');
-      const app = appModule.forTesting.app;
-      expect(
-        app._router.stack.some((layer: ILayer) =>
-          'BFF_ID' in layer.handle
-            ? layer.handle.BFF_ID === 'router-dev'
-            : false
-        )
-      ).toBe(true);
-      expect(
-        app._router.stack.some((layer: ILayer) =>
-          'BFF_ID' in layer.handle
-            ? layer.handle.BFF_ID === 'router-oidc'
-            : false
-        )
-      ).toBe(false);
-      expect(
-        app._router.stack.some((layer: ILayer) =>
-          'BFF_ID' in layer.handle
-            ? layer.handle.BFF_ID === 'router-protected'
-            : false
-        )
-      ).toBe(true);
-    },
-    { timeout: 30000 }
-  );
+  test('app middleware OT', async () => {
+    const appModule = await import('./app');
+    const app = appModule.forTesting.app;
+    expect(
+      app._router.stack.some((layer: ILayer) =>
+        'BFF_ID' in layer.handle ? layer.handle.BFF_ID === 'router-dev' : false
+      )
+    ).toBe(true);
+    expect(
+      app._router.stack.some((layer: ILayer) =>
+        'BFF_ID' in layer.handle ? layer.handle.BFF_ID === 'router-oidc' : false
+      )
+    ).toBe(false);
+    expect(
+      app._router.stack.some((layer: ILayer) =>
+        'BFF_ID' in layer.handle
+          ? layer.handle.BFF_ID === 'router-protected'
+          : false
+      )
+    ).toBe(true);
+  }, 30000);
 
   test('app middleware AP', async () => {
     mocks.IS_AP = true;

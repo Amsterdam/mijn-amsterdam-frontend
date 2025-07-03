@@ -21,6 +21,11 @@ if (IS_DEVELOPMENT) {
   const envConfig = dotenv.config({ path: ENV_FILE });
   dotenvExpand.expand(envConfig);
 }
+
+if (process.env.DEBUG_RESPONSE_DATA) {
+    process.env.DEBUG = `source-api-request:request,${process.env.DEBUG ?? ''}`;
+}
+
 // Note: Keep this line after loading in env files or LOG_LEVEL will be undefined.
 import { logger } from './logging';
 

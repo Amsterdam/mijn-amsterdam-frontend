@@ -28,6 +28,7 @@ import {
   getCustomTitleForDecosZaakWithLicensePlates,
   isZaakDecisionVerleend,
   transformBoolean,
+  transformKenteken,
 } from '../decos/decos-helpers';
 import { DecosZaakTransformer } from '../decos/decos-types';
 
@@ -42,6 +43,10 @@ const GPP: DecosZaakTransformer<GPP> = {
       '': ['Nog niet bekend'],
     }),
     text7: kentekens,
+    text14: {
+      name: 'kentekenNieuw',
+      transform: transformKenteken,
+    },
     text8: location,
   },
   async afterTransform(vergunning) {
@@ -54,7 +59,7 @@ const GPK: DecosZaakTransformer<GPK> = {
   isActive: true,
   caseType: caseTypeParkeren.GPK,
   title: 'Europese gehandicaptenparkeerkaart (GPK)',
-  isVerleend(decosZaak, decosZaakSource) {
+  isVerleend(decosZaak) {
     return isZaakDecisionVerleend(decosZaak, [
       'Verleend',
       'Verleend Bestuurder, niet verleend Passagier',

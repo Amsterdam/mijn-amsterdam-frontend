@@ -15,6 +15,13 @@ export function GPPContent({
     commonTransformers.identifier,
     commonTransformers.location,
     commonTransformers.kentekens,
+    (vergunning) =>
+      vergunning.kentekenNieuw
+        ? {
+            label: 'Nieuw kenteken',
+            content: vergunning.kentekenNieuw,
+          }
+        : null,
     commonTransformers.decision,
   ]);
 

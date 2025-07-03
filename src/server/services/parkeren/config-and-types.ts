@@ -73,6 +73,7 @@ export type GPP = DecosZaakBase &
   WithLocation & {
     caseType: GetCaseType<'GPP'>;
     kentekens: string | null;
+    kentekenNieuw: string | null;
   };
 
 // BZB is short for Parkeerontheffingen Blauwe zone bedrijven
