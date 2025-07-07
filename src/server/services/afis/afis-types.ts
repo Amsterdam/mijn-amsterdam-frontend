@@ -359,7 +359,7 @@ export type AfisEMandateAcceptant = {
   description?: string;
 };
 
-export type POMEMandateSignRequestPayloadFromXML = {
+export type POMEMandateSignRequestPayload = {
   id_client: number;
   debtornumber: number;
   cid: number;
