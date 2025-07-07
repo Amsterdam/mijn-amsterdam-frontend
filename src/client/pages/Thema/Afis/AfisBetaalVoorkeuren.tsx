@@ -94,9 +94,6 @@ export function AfisBetaalVoorkeuren() {
     businesspartnerDetails,
     businessPartnerDetailsLabels,
     hasBusinessPartnerDetailsError,
-    hasFailedEmailDependency,
-    hasFailedPhoneDependency,
-    hasFailedFullNameDependency,
     isLoadingBusinessPartnerDetails,
   } = useAfisBetaalVoorkeurenData(businessPartnerIdEncrypted);
 
@@ -184,29 +181,6 @@ export function AfisBetaalVoorkeuren() {
     <>Wij kunnen nu niet alle gegevens laten zien.</>
   ) : (
     <>
-      {!hasBusinessPartnerDetailsError &&
-        (hasFailedEmailDependency ||
-          hasFailedPhoneDependency ||
-          hasFailedFullNameDependency) && (
-          <>
-            De volgende gegevens konden niet worden opgehaald:
-            {hasFailedFullNameDependency && (
-              <>
-                <br />- Debiteurnaam
-              </>
-            )}
-            {hasFailedEmailDependency && (
-              <>
-                <br />- E-mailadres
-              </>
-            )}
-            {hasFailedPhoneDependency && (
-              <>
-                <br />- Telefoonnummer
-              </>
-            )}
-          </>
-        )}
       {hasBusinessPartnerDetailsError && (
         <>
           Wij kunnen nu geen facturatiegegevens laten zien.
@@ -227,12 +201,7 @@ export function AfisBetaalVoorkeuren() {
         isThemaPaginaError ||
         (hasBusinessPartnerDetailsError && hasEMandatesError)
       }
-      isPartialError={
-        hasFailedFullNameDependency ||
-        hasFailedPhoneDependency ||
-        hasBusinessPartnerDetailsError ||
-        hasEMandatesError
-      }
+      isPartialError={hasBusinessPartnerDetailsError || hasEMandatesError}
       errorAlertContent={errorAlertContent}
       isLoading={isLoadingAllAPis}
       breadcrumbs={breadcrumbs}
