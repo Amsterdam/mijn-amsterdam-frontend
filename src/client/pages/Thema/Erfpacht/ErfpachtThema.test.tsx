@@ -10,8 +10,6 @@ import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
 
-// I have left the test data regarding invoices in it, as it will come back again MIJN-11703 but in a future stoty it will come back
-
 describe('<Erfpacht />', () => {
   const routeEntry = generatePath(routeConfig.themaPage.path);
   const routePath = routeConfig.themaPage.path;
@@ -42,6 +40,7 @@ describe('<Erfpacht />', () => {
         content: {
           isKnown: true,
           businessPartnerIdEncrypted: 'bpIDEncrypted-555',
+          // I have left the test data regarding invoices in it, as it will come back again MIJN-11703 but in a future stoty it will come back
           facturen: {
             open: {
               count: 0,
