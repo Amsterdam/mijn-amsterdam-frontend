@@ -14,7 +14,15 @@ import {
   EMandateAcceptantenGemeenteAmsterdam,
   eMandateReceiver,
 } from './afis-e-mandates-config';
-import { getAfisApiConfig, getFeedEntryProperties } from './afis-helpers';
+import {
+  EMANDATE_STATUS,
+  getAfisApiConfig,
+  getEmandateDisplayStatus,
+  getEmandateStatus,
+  getEmandateValidityDateFormatted,
+  getFeedEntryProperties,
+  isEmandateActive,
+} from './afis-helpers';
 import {
   AfisBusinessPartnerDetailsTransformed,
   AfisEMandateCreatePayload,
@@ -41,11 +49,7 @@ import {
 } from './afis-types';
 import { routeConfig } from '../../../client/pages/Thema/Afis/Afis-thema-config';
 import { IS_AP } from '../../../universal/config/env';
-import {
-  apiErrorResult,
-  ApiResponse,
-  apiSuccessResult,
-} from '../../../universal/helpers/api';
+import { apiErrorResult, ApiResponse } from '../../../universal/helpers/api';
 import {
   defaultDateFormat,
   isoDateFormat,
@@ -58,14 +62,10 @@ import { requestData } from '../../helpers/source-api-request';
 import { BffEndpoints } from '../../routing/bff-routes';
 import { generateFullApiUrlBFF } from '../../routing/route-helpers';
 import { captureException } from '../monitoring';
+
 const AFIS_EMANDATE_RECURRING_DATE_END = '9999-12-31T00:00:00';
 const AFIS_EMANDATE_COMPANY_NAME = 'Gemeente Amsterdam';
 const AFIS_EMANDATE_SIGN_REQUEST_URL_VALIDITY_IN_DAYS = 1;
-
-const EMANDATE_STATUS = {
-  ON: '1',
-  OFF: '0',
-} as const;
 
 function transformCreateEMandatesResponse(response: unknown) {
   return response;
@@ -189,11 +189,10 @@ export async function createAfisEMandate(
   return response;
 }
 
-function transformUpdateEMandatesResponse(response: unknown) {
-  return response;
-}
-
-async function updateAfisEMandate(payload: AfisEMandateUpdatePayload) {
+async function updateAfisEMandate(
+  payload: AfisEMandateUpdatePayload,
+  transform?: (data: unknown) => Partial<AfisEMandateFrontend>
+) {
   // TODO: Sanitize payload, check if all required fields are present.
   const payloadFinal: AfisEMandateUpdatePayload = {
     ...payload,
@@ -206,26 +205,17 @@ async function updateAfisEMandate(payload: AfisEMandateUpdatePayload) {
     formatUrl: ({ url }) => {
       return `${url}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/Mandate_changeSet(IMandateId='${payloadFinal.IMandateId}')`;
     },
-    transformResponse: transformUpdateEMandatesResponse,
+    transformResponse: transform,
   });
 
   return requestData<unknown>(config);
-}
-
-function isEmandateActive(afisEMandateSource?: AfisEMandateSource) {
-  const lifetimeTo = afisEMandateSource?.LifetimeTo;
-  if (!lifetimeTo) {
-    return false;
-  }
-  // Active if date is in the future.
-  return parseISO(lifetimeTo) > new Date();
 }
 
 function getStatusChangeApiUrl(
   sessionID: SessionID,
   afisEMandateSource: AfisEMandateSource
 ) {
-  const changeToStatus = isEmandateActive(afisEMandateSource)
+  const changeToStatus = isEmandateActive(afisEMandateSource.LifetimeTo)
     ? EMANDATE_STATUS.OFF
     : EMANDATE_STATUS.ON;
 
@@ -337,11 +327,9 @@ function transformEMandateSource(
     : null;
 
   const dateValidTo = afisEMandateSource?.LifetimeTo || null;
-  const dateValidToFormatted = dateValidTo
-    ? defaultDateFormat(dateValidTo)
-    : null;
+  const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
 
-  const isActive = isEmandateActive(afisEMandateSource);
+  const isActive = isEmandateActive(dateValidTo);
   const id = slug(acceptant.name);
   const eMandate: AfisEMandateFrontend = {
     id,
@@ -358,12 +346,11 @@ function transformEMandateSource(
     dateValidFromFormatted,
     dateValidTo,
     dateValidToFormatted,
-    status: isEmandateActive(afisEMandateSource)
-      ? EMANDATE_STATUS.ON
-      : EMANDATE_STATUS.OFF,
-    displayStatus: isEmandateActive(afisEMandateSource)
-      ? `Actief sinds ${dateValidFromFormatted}`
-      : 'Niet actief',
+    status: getEmandateStatus(dateValidTo),
+    displayStatus: getEmandateDisplayStatus(
+      dateValidTo,
+      dateValidFromFormatted
+    ),
     link: {
       to: `/facturen-en-betalen/betaalvoorkeuren/emandate/${id}`,
       title: acceptant.name,
@@ -603,7 +590,23 @@ export async function fetchEmandateSignRequestStatus(
 export async function changeEMandateStatus(
   eMandateStatusChangePayload: EMandateStatusChangePayload
 ) {
-  return updateAfisEMandate(eMandateStatusChangePayload);
+  function transformResponse() {
+    const dateValidTo = eMandateStatusChangePayload?.LifetimeTo || null;
+    const dateValidToFormatted = getEmandateValidityDateFormatted(dateValidTo);
+    const dateValidFromFormatted = getEmandateValidityDateFormatted(
+      eMandateStatusChangePayload?.LifetimeFrom || null
+    );
+    return {
+      dateValidTo,
+      dateValidToFormatted,
+      status: getEmandateStatus(dateValidTo),
+      displayStatus: getEmandateDisplayStatus(
+        dateValidTo,
+        dateValidFromFormatted
+      ),
+    };
+  }
+  return updateAfisEMandate(eMandateStatusChangePayload, transformResponse);
 }
 
 const X = z.object({
@@ -633,16 +636,14 @@ export async function handleEmandateUpdate(
       HttpStatusCode.BadRequest
     );
   }
-  return updateAfisEMandate(payload).then((response) => {
-    return response.status === 'OK'
-      ? apiSuccessResult({
-          dateValidTo: payload.LifetimeTo ?? null,
-          dateValidToFormatted: payload.LifetimeTo
-            ? defaultDateFormat(payload.LifetimeTo)
-            : null,
-        })
-      : response;
-  });
+  function transformResponse() {
+    const dateValidTo = payload.LifetimeTo || null;
+    return {
+      dateValidTo,
+      dateValidToFormatted: getEmandateValidityDateFormatted(dateValidTo),
+    };
+  }
+  return updateAfisEMandate(payload, transformResponse);
 }
 
 export const forTesting = {
