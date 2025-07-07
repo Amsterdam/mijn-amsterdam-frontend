@@ -201,11 +201,11 @@ export function AfisEMandateActionUrls({
           errorMessage="Er is iets misgegaan bij het veranderen van de status"
           doConfirm
           confirmationModal={{
-            title: 'Bevestig stopzetten E-Mandaat',
+            title: 'Stopzetten E-Mandaat',
             confirmationText: (
               <>
                 <Paragraph className="ams-mb-s">
-                  Weet je zeker dat je dit e-mandaat wilt stopzetten?
+                  Weet je zeker dat je dit E-mandaat wilt stopzetten?
                 </Paragraph>
                 <Paragraph className="ams-mb-s">
                   Het E-mandaat wordt dan niet meer gebruikt voor automatische
