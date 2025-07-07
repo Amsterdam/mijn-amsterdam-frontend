@@ -16,6 +16,7 @@ import { jsonCopy } from '../../../../universal/helpers/utils';
 import { AppState } from '../../../../universal/types/App.types';
 import { appStateAtom } from '../../../hooks/useAppState';
 import MockApp from '../../MockApp';
+import { EMANDATE_ENDDATE_INDICATOR } from '../Afis/Afis-thema-config';
 
 describe('<Erfpacht/DossierDetail />', () => {
   const routeEntry = generatePath(routeConfig.detailPage.path, {
@@ -248,7 +249,10 @@ describe('<Erfpacht/DossierDetail />', () => {
     const testState = {
       ERFPACHT: {
         status: 'OK',
-        content: transformDossierResponse(ERFPACHT_DOSSIERS as any, '999999'),
+        content: transformDossierResponse(
+          ERFPACHT_DOSSIERS as any,
+          EMANDATE_ENDDATE_INDICATOR
+        ),
       },
     } as AppState;
 
