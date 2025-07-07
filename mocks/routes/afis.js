@@ -296,7 +296,7 @@ module.exports = [
     id: 'get-afis-emandates',
     url: `${BASE_URL}/Mandate/ZGW_FI_MANDATE_SRV_01/Mandate_readSet`,
     method: 'GET',
-    delay: 4000,
+    // delay: 4000,
     variants: [
       {
         id: 'standard',
@@ -420,7 +420,7 @@ module.exports = [
     id: 'put-afis-emandates',
     url: `${BASE_URL}/ChangeMandate/ZGW_FI_MANDATE_SRV_01/:changeSetParam`,
     method: 'PUT',
-    delay: 2000,
+    // delay: 2000,
     variants: [
       {
         id: 'standard',
