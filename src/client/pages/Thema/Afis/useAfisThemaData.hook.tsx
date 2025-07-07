@@ -25,6 +25,7 @@ import {
   AfisFactuur,
   AfisFactuurState,
   type AfisEMandateFrontend,
+  type AfisEMandateUpdatePayloadFrontend,
 } from '../../../../server/services/afis/afis-types';
 import { FIFTEEN_MINUTES_MS } from '../../../../universal/config/app';
 import {
@@ -264,6 +265,26 @@ export function useAfisEMandateSWR(businessPartnerIdEncrypted: string | null) {
   );
 }
 
+export function optimisticEmandatesUpdate(
+  eMandate: AfisEMandateFrontend,
+  payload: Record<string, string>
+) {
+  return (eMandates: AfisEMandateFrontend[] | undefined) => {
+    if (!eMandates) {
+      return eMandates;
+    }
+    return eMandates.map((mandate) => {
+      if (mandate.id === eMandate?.id) {
+        return {
+          ...mandate,
+          ...payload,
+        };
+      }
+      return mandate;
+    });
+  };
+}
+
 export function useAfisEmandateUpdate(
   businessPartnerIdEncrypted: string | null,
   eMandate: AfisEMandateFrontend | null
@@ -271,31 +292,20 @@ export function useAfisEmandateUpdate(
   const { mutate, isLoading, isValidating } = useAfisEMandateSWR(
     businessPartnerIdEncrypted
   );
-  const { trigger, isMutating, ...rest } = useSWRMutation(
-    eMandate?.updateUrl,
-    swrPostRequestDefault(),
-    {
-      onSuccess(eMandateUpdatePayload) {
-        mutate(
-          (eMandates) => {
-            if (!eMandates) {
-              return eMandates;
-            }
-            return eMandates.map((mandate) => {
-              if (mandate.id === eMandate?.id) {
-                return {
-                  ...mandate,
-                  ...eMandateUpdatePayload,
-                };
-              }
-              return mandate;
+  const { trigger, isMutating, ...rest } =
+    useSWRMutation<AfisEMandateUpdatePayloadFrontend>(
+      eMandate?.updateUrl,
+      swrPostRequestDefault(),
+      {
+        onSuccess(eMandateUpdatePayload) {
+          if (eMandate && eMandateUpdatePayload) {
+            mutate(optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload), {
+              revalidate: false,
             });
-          },
-          { revalidate: false }
-        );
-      },
-    }
-  );
+          }
+        },
+      }
+    );
 
   return {
     update: async (dateValidTo: string) => {
@@ -318,7 +328,7 @@ export function useAfisEMandatesData() {
     data: eMandatesApiResponse,
     isLoading,
     error,
-    mutate: refetchEMandates,
+    mutate,
   } = useAfisEMandateSWR(businessPartnerIdEncrypted);
 
   const eMandates = (eMandatesApiResponse ?? []).map((eMandate) => {
@@ -354,7 +364,8 @@ export function useAfisEMandatesData() {
     isLoadingEMandates: isLoading || !eMandatesApiResponse,
     eMandateTableConfig,
     eMandates,
-    refetchEMandates,
+    refetchEMandates: mutate,
+    mutate,
   };
 }
 

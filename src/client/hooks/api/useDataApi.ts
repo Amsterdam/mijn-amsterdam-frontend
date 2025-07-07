@@ -231,27 +231,21 @@ export type ApiStateV2<T> = {
   mutate: SWRResponse['mutate'];
 };
 
-export function fetchDefault(url: string) {
-  return fetch(url, {
-    credentials: 'include',
-  }).then((response) => response.json());
-}
-
-type UseDataApiOptions = Readonly<{
+type UseDataApiOptions<T> = Readonly<{
   postpone?: boolean;
-  fetcher?: <T>(url: string) => Promise<T>;
+  fetcher(url: string): Promise<T>;
 }>;
 
-const DEFAULT_DATA_API_OPTIONS: Required<UseDataApiOptions> = {
+const DEFAULT_DATA_API_OPTIONS: Required<UseDataApiOptions<any>> = {
   postpone: false,
-  fetcher: fetchDefault,
+  fetcher: sendGetRequest,
 };
 
-export function useDataApiV2<T>(
+export function useDataApiV2<T extends any>(
   url?: string,
-  options: UseDataApiOptions = DEFAULT_DATA_API_OPTIONS
+  options: UseDataApiOptions<T> = DEFAULT_DATA_API_OPTIONS
 ): ApiStateV2<T> {
-  const optionsWithDefaults: Required<UseDataApiOptions> = {
+  const optionsWithDefaults: Required<UseDataApiOptions<T>> = {
     ...DEFAULT_DATA_API_OPTIONS,
     ...options,
   };
@@ -304,13 +298,11 @@ export function useDataApiV2<T>(
   };
 }
 
-export async function sendGetRequest<T extends ApiResponse<any>>(
-  url: string
-): Promise<T['content']> {
+export async function sendGetRequest<T extends any>(url: string): Promise<T> {
   return fetch(url, { credentials: 'include' }).then(
     async (response: Response) => {
-      const responseJson = await response.json();
-      if (!response.ok) {
+      const responseJson = (await response.json()) as ApiResponse<T>;
+      if (responseJson.status !== 'OK' || !response.ok) {
         throw new Error(
           responseJson.status === 'ERROR'
             ? responseJson.message
@@ -324,9 +316,9 @@ export async function sendGetRequest<T extends ApiResponse<any>>(
 }
 
 export async function sendFormPostRequest<
-  T extends ApiResponse<any>,
+  T extends any,
   F extends Record<string, string>,
->(url: string, payload: F): Promise<T['content']> {
+>(url: string, payload: F): Promise<T> {
   return fetch(url, {
     method: 'POST',
     body: new URLSearchParams(payload),
@@ -335,8 +327,8 @@ export async function sendFormPostRequest<
     },
     credentials: 'include',
   }).then(async (response: Response) => {
-    const responseJson = (await response.json()) as T;
-    if (!response.ok) {
+    const responseJson = (await response.json()) as ApiResponse<T>;
+    if (responseJson.status !== 'OK' || !response.ok) {
       throw new Error(
         responseJson.status === 'ERROR'
           ? responseJson.message
@@ -348,10 +340,9 @@ export async function sendFormPostRequest<
   });
 }
 
-export function swrPostRequest<
-  R extends ApiResponse<any>,
-  F extends Record<string, string>,
->(fn: typeof sendFormPostRequest<R, F>) {
+export function swrPostRequest<R extends any, F extends Record<string, string>>(
+  fn: typeof sendFormPostRequest<R, F>
+) {
   return async (url: string, { arg }: { arg: F }) => {
     return fn(url, arg);
   };

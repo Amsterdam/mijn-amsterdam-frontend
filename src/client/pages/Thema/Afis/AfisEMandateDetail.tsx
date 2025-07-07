@@ -1,144 +1,25 @@
-import { useState, type FormEventHandler } from 'react';
+import { useEffect } from 'react';
 
-import {
-  ActionGroup,
-  Button,
-  Paragraph,
-  DateInput,
-} from '@amsterdam/design-system-react';
-import { addDays, addYears } from 'date-fns';
+import { Alert, Paragraph } from '@amsterdam/design-system-react';
+import { useNavigate } from 'react-router';
+import { useThrottledCallback } from 'use-debounce';
 
 import { routeConfig, type WithActionButtons } from './Afis-thema-config';
-import {
-  useAfisEMandatesData,
-  useAfisEmandateUpdate,
-  useAfisThemaData,
-} from './useAfisThemaData.hook';
+import { DateAdjust } from './AfisEmandateDateAdjust';
+import { useAfisEMandatesData } from './useAfisThemaData.hook';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
 import { Datalist } from '../../../components/Datalist/Datalist';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
-import { MaRouterLink } from '../../../components/MaLink/MaLink';
-import { Modal } from '../../../components/Modal/Modal';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
+import { ONE_SECOND_MS } from '../../../hooks/api/useSessionApi';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
-
-type DateAdjustModalProps = {
-  eMandate: AfisEMandateFrontend;
-  isDateAdjustModalActive: boolean;
-  setDateAdjustModal: (isActive: boolean) => void;
-  onSubmit: FormEventHandler<HTMLFormElement>;
-};
-
-function DateAdjustModal({
-  eMandate,
-  isDateAdjustModalActive,
-  setDateAdjustModal,
-  onSubmit,
-}: DateAdjustModalProps) {
-  const minDate = addDays(new Date(), 1).toISOString().split('T')[0]; // Set minimum date to tomorrow.
-  const currentDate =
-    eMandate.dateValidTo?.includes('9999') || !eMandate.dateValidTo
-      ? addYears(new Date(), 1).toISOString().split('T')[0]
-      : eMandate.dateValidTo;
-  return (
-    <Modal
-      title="E-Mandaat einddatum aanpassen"
-      isOpen={isDateAdjustModalActive}
-      showCloseButton
-      closeOnEscape
-      onClose={() => setDateAdjustModal(false)}
-      pollingQuerySelector="#date-adjust-action"
-      actions={
-        <ActionGroup>
-          <Button
-            id="date-adjust-action"
-            type="submit"
-            form="date-adjust-form"
-            variant="primary"
-          >
-            Nu aanpassen
-          </Button>
-          <Button
-            variant="tertiary"
-            onClick={() => {
-              setDateAdjustModal(false);
-            }}
-          >
-            terug
-          </Button>
-        </ActionGroup>
-      }
-    >
-      <>
-        <Paragraph className="ams-mb-s">
-          Nieuwe einddatum E-mandaat {eMandate.acceptant}
-        </Paragraph>
-        <form id="date-adjust-form" onSubmit={onSubmit}>
-          <DateInput
-            name="endDate"
-            type="date"
-            min={minDate}
-            defaultValue={currentDate}
-          />
-        </form>
-      </>
-    </Modal>
-  );
-}
-
-function DateAdjust({ eMandate }: { eMandate: AfisEMandateFrontend }) {
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
-  const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
-  const { isMutating, update, error } = useAfisEmandateUpdate(
-    businessPartnerIdEncrypted,
-    eMandate
-  );
-
-  const dateContent = eMandate.dateValidTo?.includes('9999')
-    ? 'doorlopend'
-    : eMandate.dateValidToFormatted;
-
-  console.log('error', error);
-
-  return (
-    <div>
-      {isMutating ? (
-        <LoadingContent inline barConfig={[['140px', '2rem', '0']]} />
-      ) : (
-        dateContent
-      )}
-      &nbsp;&nbsp;
-      <MaRouterLink
-        href={window.location.pathname}
-        onClick={(event) => {
-          event.preventDefault();
-          setDateAdjustModal(true);
-        }}
-      >
-        einddatum aanpassen
-      </MaRouterLink>
-      {error && <Paragraph size="small">{error.message}</Paragraph>}
-      <DateAdjustModal
-        eMandate={eMandate}
-        isDateAdjustModalActive={isDateAdjustModalActive}
-        setDateAdjustModal={setDateAdjustModal}
-        onSubmit={(event) => {
-          event.preventDefault();
-          const formdata = new FormData(event.currentTarget);
-          setDateAdjustModal(false);
-          update(formdata.get('endDate') as string);
-        }}
-      />
-    </div>
-  );
-}
 
 type EMandateProps = {
   eMandate: WithActionButtons<AfisEMandateFrontend>;
+  isPendingActivation: boolean;
 };
 
-function EMandate({ eMandate }: EMandateProps) {
+function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
   return (
     <PageContentCell>
       <Datalist
@@ -169,6 +50,7 @@ function EMandate({ eMandate }: EMandateProps) {
               {
                 label: 'Status',
                 content: eMandate.displayStatus,
+                isVisible: !isPendingActivation,
               },
               {
                 label: 'Einddatum',
@@ -193,15 +75,57 @@ function EMandate({ eMandate }: EMandateProps) {
                 },
               ]
             : []),
-          {
-            label: '',
-            content: eMandate.action,
-          },
         ]}
       />
+      {isPendingActivation ? (
+        <Alert headingLevel={4} heading="Status">
+          <Paragraph>
+            Wachten op bevestiging van het E-Mandaat voor {eMandate.acceptant}.
+          </Paragraph>
+        </Alert>
+      ) : (
+        <Paragraph>{eMandate.action}</Paragraph>
+      )}
     </PageContentCell>
   );
 }
+
+function EmandatePoller({
+  status,
+  isPendingActivation,
+  fetch,
+}: {
+  status: AfisEMandateFrontend['status'];
+  isPendingActivation: boolean;
+  fetch: () => void;
+}) {
+  const isPendingActivation_ = isPendingActivation && status === '0';
+
+  const doPolling = useThrottledCallback(fetch, POLLING_INTERVAL_MS, {
+    trailing: true,
+  });
+
+  if (isPendingActivation_) {
+    doPolling();
+  }
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isPendingActivation_) {
+      doPolling.cancel();
+      navigate(window.location.pathname, {
+        replace: true,
+      });
+
+      return;
+    }
+  }, [isPendingActivation_]);
+
+  return null;
+}
+
+const POLLING_INTERVAL_MS = 4 * ONE_SECOND_MS;
 
 export function AfisEMandateDetail() {
   useHTMLDocumentTitle(routeConfig.detailPageEMandate);
@@ -212,7 +136,11 @@ export function AfisEMandateDetail() {
     breadcrumbs,
     hasEMandatesError,
     isLoadingEMandates,
+    refetchEMandates,
   } = useAfisEMandatesData();
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const isPendingActivation = !!queryParams.get('iban');
 
   return (
     <ThemaDetailPagina
@@ -220,7 +148,21 @@ export function AfisEMandateDetail() {
       zaak={eMandate}
       isError={hasEMandatesError}
       isLoading={isLoadingEMandates}
-      pageContentMain={!!eMandate && <EMandate eMandate={eMandate} />}
+      pageContentMain={
+        !!eMandate && (
+          <>
+            <EmandatePoller
+              status={eMandate.status}
+              isPendingActivation={isPendingActivation}
+              fetch={refetchEMandates}
+            />
+            <EMandate
+              isPendingActivation={isPendingActivation}
+              eMandate={eMandate}
+            />
+          </>
+        )
+      }
       breadcrumbs={breadcrumbs}
     />
   );
