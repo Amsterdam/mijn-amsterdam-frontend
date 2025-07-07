@@ -40,6 +40,7 @@ describe('<Erfpacht />', () => {
         content: {
           isKnown: true,
           businessPartnerIdEncrypted: 'bpIDEncrypted-555',
+          // I have left the test data regarding invoices in it, as it will come back again MIJN-11703 but in a future stoty it will come back
           facturen: {
             open: {
               count: 0,
@@ -64,7 +65,7 @@ describe('<Erfpacht />', () => {
     );
 
     expect(
-      screen.getByText('Hieronder ziet u de gegevens van uw erfpachtrechten.')
+      screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
     ).toBeInTheDocument();
     expect(screen.getByText('Erfpachtrechten')).toBeInTheDocument();
     expect(
@@ -111,7 +112,7 @@ describe('<Erfpacht />', () => {
       screen.getByText('We kunnen op dit moment niet alle gegevens tonen.')
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Hieronder ziet u de gegevens van uw erfpachtrechten.')
+      screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
     ).toBeInTheDocument();
     expect(screen.queryByText('Erfpachtrechten')).not.toBeInTheDocument();
     expect(
@@ -153,21 +154,9 @@ describe('<Erfpacht />', () => {
                   statusDescription: 'openstaand',
                   paylink: 'https://payment.example.com/F001',
                   documentDownloadLink: 'https://download.example.com/F001',
-                  factuurDocumentId: '1',
-                  link: {
-                    to: routeConfig.themaPage.path,
-                    title: 'Bekijk uw openstaande facturen',
-                  },
-                  amountPayed: '',
-                  amountPayedFormatted: '',
                 },
               ],
             },
-            afgehandeld: {
-              count: 0,
-              facturen: [],
-            },
-            overgedragen: { count: 0, facturen: [] },
           },
         },
       },
@@ -182,17 +171,11 @@ describe('<Erfpacht />', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'U heeft openstaande facturen' })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('Hieronder ziet u de gegevens van uw erfpachtrechten.')
+      screen.getByText(/Hieronder ziet u de gegevens van uw erfpachtrechten/i)
     ).toBeInTheDocument();
     expect(screen.getByText('Erfpachtrechten')).toBeInTheDocument();
     expect(
       screen.queryByText('U heeft geen erfpachtrechten.')
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText('U heeft geen openstaande facturen.')
     ).not.toBeInTheDocument();
 
     expect(screen.getByText('E477/48')).toBeInTheDocument();

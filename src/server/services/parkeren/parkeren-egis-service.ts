@@ -1,12 +1,20 @@
+import { HttpStatusCode } from 'axios';
 import FormData from 'form-data';
+import * as jose from 'jose';
 
 import {
   ActivePermitSourceResponse,
   ClientProductDetailsSourceResponse,
 } from './config-and-types';
+import { featureToggle } from '../../../client/pages/Thema/Parkeren/Parkeren-thema-config';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { AuthProfileAndToken } from '../../auth/auth-types';
+import { ONE_SECOND_MS } from '../../config/app';
+import { DataRequestConfig } from '../../config/source-api';
+import { getFromEnv } from '../../helpers/env';
 import { getApiConfig } from '../../helpers/source-api-helpers';
-import { requestData } from '../../helpers/source-api-request';
+import { isSuccessStatus, requestData } from '../../helpers/source-api-request';
+import { captureException } from '../monitoring';
 
 export async function fetchSSOURL(authProfileAndToken: AuthProfileAndToken) {
   const config = getApiConfig('PARKEREN_FRONTOFFICE', {
@@ -24,7 +32,9 @@ type JWETokenSourceResponse = {
   token: string;
 };
 
-async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
+async function fetchJWEToken(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<ApiResponse<string>> {
   const idNumberType =
     authProfileAndToken.profile.profileType === 'private'
       ? 'bsn'
@@ -42,7 +52,7 @@ async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
     data: formData,
   });
 
-  return requestData<JWETokenSourceResponse>(config);
+  return requestData<string>(config);
 }
 
 /**
@@ -53,36 +63,51 @@ async function fetchJWEToken(authProfileAndToken: AuthProfileAndToken) {
  */
 export async function hasPermitsOrPermitRequests(
   authProfileAndToken: AuthProfileAndToken
-) {
+): Promise<boolean> {
+  const JWT = await getJWEToken(authProfileAndToken);
+  if (!JWT) {
+    return true;
+  }
+
   const userType =
     authProfileAndToken.profile.profileType === 'private'
       ? 'private'
       : 'company';
 
-  const jweTokenResponse = await fetchJWEToken(authProfileAndToken);
-  if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
-    return true;
-  }
+  const sharedConfig: DataRequestConfig = {
+    method: 'POST',
+    data: {
+      token: JWT,
+    },
+    validateStatus: (statusCode) =>
+      isSuccessStatus(statusCode) || statusCode === HttpStatusCode.NotFound,
+    transformResponse(
+      responseData:
+        | ClientProductDetailsSourceResponse
+        | ActivePermitSourceResponse,
+      _headers,
+      statusCode
+    ) {
+      if (statusCode === HttpStatusCode.NotFound) {
+        return false;
+      }
+      return !!responseData.data.length;
+    },
+  };
 
   const [clientProductsResponse, permitRequestsResponse] = await Promise.all([
-    requestData<ClientProductDetailsSourceResponse>(
+    requestData<boolean>(
       getApiConfig('PARKEREN', {
+        ...sharedConfig,
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/client_product_details`,
-        method: 'POST',
-        data: {
-          token: jweTokenResponse.content,
-        },
       })
     ),
-    requestData<ActivePermitSourceResponse>(
+    requestData<boolean>(
       getApiConfig('PARKEREN', {
+        ...sharedConfig,
         formatUrl: (config) =>
           `${config.url}/v1/${userType}/active_permit_request`,
-        method: 'POST',
-        data: {
-          token: jweTokenResponse.content,
-        },
       })
     ),
   ]);
@@ -90,9 +115,72 @@ export async function hasPermitsOrPermitRequests(
   return (
     clientProductsResponse.status !== 'OK' ||
     permitRequestsResponse.status !== 'OK' ||
-    !!clientProductsResponse.content.data.length ||
-    !!permitRequestsResponse.content.data.length
+    clientProductsResponse.content ||
+    permitRequestsResponse.content
   );
+}
+
+async function getJWEToken(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<string | null> {
+  if (featureToggle.parkerenJWETokenCreationActive) {
+    return createJWEToken(authProfileAndToken);
+  }
+
+  const jweTokenResponse = await fetchJWEToken(authProfileAndToken);
+  if (jweTokenResponse.status !== 'OK' || !jweTokenResponse.content) {
+    return null;
+  }
+  return jweTokenResponse.content;
+}
+
+type JWEPayload = {
+  iat: number;
+  exp: number;
+  iss: string;
+  aud: string;
+  bsn?: string;
+  kvk_number?: string;
+};
+
+async function createJWEToken(
+  authProfileAndToken: AuthProfileAndToken
+): Promise<string | null> {
+  const sharedKey = {
+    kty: 'oct',
+    k: getFromEnv('BFF_PARKEREN_JWT_KEY', true)!,
+  };
+  const JWK = await jose.importJWK(sharedKey);
+
+  const unixEpochInSeconds = Math.floor(Date.now() / ONE_SECOND_MS);
+
+  const ONE_HOUR_IN_SECONDS = 3600;
+  const payload: JWEPayload = {
+    iat: unixEpochInSeconds,
+    exp: unixEpochInSeconds + ONE_HOUR_IN_SECONDS,
+    iss: getFromEnv('BFF_API_BASE_URL', true)!,
+    aud: getFromEnv('BFF_PARKEREN_JWT_AUDIENCE', true)!,
+  };
+  if (authProfileAndToken.profile.profileType === 'private') {
+    payload.bsn = authProfileAndToken.profile.id;
+  } else {
+    payload.kvk_number = authProfileAndToken.profile.id;
+  }
+
+  try {
+    const jweToken = await new jose.CompactEncrypt(
+      new TextEncoder().encode(JSON.stringify(payload))
+    )
+      .setProtectedHeader({
+        alg: 'A256GCMKW',
+        enc: 'A256CBC-HS512',
+      })
+      .encrypt(JWK);
+    return jweToken;
+  } catch (err) {
+    captureException(err);
+    return null;
+  }
 }
 
 export const forTesting = { fetchJWEToken };
