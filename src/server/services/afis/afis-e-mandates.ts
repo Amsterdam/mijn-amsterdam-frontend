@@ -178,7 +178,7 @@ export async function createAfisEMandate(
     transformResponse: transformCreateEMandatesResponse,
   });
 
-  const response = await requestData<unknown>(config);
+  const response = await requestData<AfisEMandateSource>(config);
 
   if (response.status !== 'OK') {
     throw new Error(
@@ -609,7 +609,7 @@ export async function changeEMandateStatus(
   return updateAfisEMandate(eMandateStatusChangePayload, transformResponse);
 }
 
-const X = z.object({
+const eMandateUploadPayload = z.object({
   LifetimeTo: z.iso.date(),
   IMandateId: z.string(),
 });
@@ -622,7 +622,7 @@ export async function handleEmandateUpdate(
   let payload: AfisEMandateUpdatePayload;
 
   try {
-    payload = X.parse({
+    payload = eMandateUploadPayload.parse({
       LifetimeTo: req.body.dateValidTo,
       ...eMandateStatusChangePayload,
     });
