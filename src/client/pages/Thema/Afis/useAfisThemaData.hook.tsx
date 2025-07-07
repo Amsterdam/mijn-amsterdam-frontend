@@ -32,7 +32,6 @@ import {
   hasFailedDependency,
   isError,
   isLoading,
-  type ApiSuccessResponse,
 } from '../../../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import { entries } from '../../../../universal/helpers/utils';
@@ -375,31 +374,20 @@ export function useAfisBetaalVoorkeurenData(
     | undefined
 ) {
   const {
-    data: businesspartnerDetailsApiResponse,
+    data: businesspartnerDetails,
     isLoading: isLoadingBusinessPartnerDetails,
     error: hasBusinessPartnerDetailsError,
-  } = useSWR<ApiSuccessResponse<AfisBusinessPartnerDetailsTransformed>>(
+  } = useSWR<AfisBusinessPartnerDetailsTransformed>(
     generateApiUrl(businessPartnerIdEncrypted ?? null, 'AFIS_BUSINESSPARTNER'),
     sendGetRequest,
     { dedupingInterval: FIFTEEN_MINUTES_MS }
   );
 
-  function hasFailedBusinesspartnerDependency(
-    dependency: keyof AfisBusinessPartnerDetailsTransformed
-  ): boolean {
-    return businesspartnerDetailsApiResponse
-      ? hasFailedDependency(businesspartnerDetailsApiResponse, dependency)
-      : false;
-  }
-
   return {
     title: 'Betaalvoorkeuren',
-    businesspartnerDetails: businesspartnerDetailsApiResponse?.content ?? null,
+    businesspartnerDetails: businesspartnerDetails ?? null,
     businessPartnerDetailsLabels,
     isLoadingBusinessPartnerDetails,
     hasBusinessPartnerDetailsError,
-    hasFailedEmailDependency: hasFailedBusinesspartnerDependency('email'),
-    hasFailedPhoneDependency: hasFailedBusinesspartnerDependency('phone'),
-    hasFailedFullNameDependency: hasFailedBusinesspartnerDependency('fullName'),
   };
 }
