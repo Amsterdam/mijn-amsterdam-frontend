@@ -25,7 +25,7 @@ module.exports = [
             const htmlResponse = `
                 <h1>POM E-mandaat scherm</h1>
                  <a href="${req.query.returnUrl || process.env.MA_FRONTEND_URL}">
-                  Mijn Amsterdam
+                  terug naar Mijn Amsterdam
                 </a>`;
             res.send(htmlResponse);
 
@@ -36,26 +36,25 @@ module.exports = [
               await axios({
                 method: 'POST',
                 url: 'http://localhost:5000/private/api/v1/services/afis/e-mandates/sign-request-status-notify',
-                data: `<?xml version="1.0"?>
-            <response>
-              <id_client>1000</id_client>
-              <debtornumber>123456</debtornumber>
-              <cid>2345678910</cid>
-              <mpid>1234567890</mpid>
-              <payment_reference>123456789</payment_reference>
-              <id_request_client>test</id_request_client>
-              <event_type>payment</event_type>
-              <amount_total>45500</amount_total>
-              <id_bank>ABNANL2A</id_bank>
-              <iban>GB33BUKB20201555555555</iban>
-              <bic>INGBNL2A</bic>
-              <account_owner>John Doe</account_owner>
-              <event_date>2024-01-05</event_date>
-              <event_time>11:27</event_time>
-              <variable1>${acceptantIBAN}</variable1>
-            </response>`,
+                data: {
+                  id_client: '1000',
+                  debtornumber: '123456',
+                  cid: '2345678910',
+                  mpid: '1234567890',
+                  payment_reference: '123456789',
+                  id_request_client: 'test',
+                  event_type: 'payment',
+                  amount_total: '45500',
+                  id_bank: 'ABNANL2A',
+                  iban: 'GB33BUKB20201555555555',
+                  bic: 'INGBNL2A',
+                  account_owner: 'John Doe',
+                  event_date: '2024-01-05',
+                  event_time: '11:27',
+                  variable1: `${acceptantIBAN}`,
+                },
                 headers: {
-                  'Content-Type': 'text/xml',
+                  'Content-Type': 'application/json',
                 },
               });
             } catch (error) {
