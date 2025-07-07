@@ -61,7 +61,7 @@ function DateAdjustModal({
               setDateAdjustModal(false);
             }}
           >
-            terug
+            Terug
           </Button>
         </ActionGroup>
       }
