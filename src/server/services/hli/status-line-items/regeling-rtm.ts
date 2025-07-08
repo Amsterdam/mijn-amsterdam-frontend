@@ -1,4 +1,9 @@
-import { BESLUIT, EINDE_RECHT, getBetrokkenDescription } from './generic';
+import {
+  BESLUIT,
+  EINDE_RECHT,
+  getBesluitDescription,
+  getBetrokkenDescription,
+} from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -9,7 +14,6 @@ import type { ZorgnedHLIRegeling } from '../hli-regelingen-types';
 export const AV_RTM_DEEL1 = 'AV-RTM1';
 // Afhandeling afspraak GGD
 export const AV_RTM_DEEL2 = 'AV-RTM';
-const avRtmRegelingen = [AV_RTM_DEEL1, AV_RTM_DEEL2];
 
 export function isRTMDeel2(
   aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
@@ -151,6 +155,12 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     // Betrokkkenen krijgen alléén deze stap (RTM Deel 2) te zien.
     {
       ...BESLUIT,
+      description(regeling) {
+        return getBesluitDescription(regeling, {
+          withToegewezenBriefInformatie: false,
+          withAfgewezenBriefInformatie: true,
+        });
+      },
       isVisible: isRTMDeel2,
     },
     // Einde recht - voor RTM Deel 2. Voor de aanvrager.
@@ -170,7 +180,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.
         </p>
         <p>
-          Als er wijzigingen zijn in uw situatie moet u die <a href="${INFO_LINK}">direct doorgeven</a>.
+          <a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.
         </p>`;
       },
     },

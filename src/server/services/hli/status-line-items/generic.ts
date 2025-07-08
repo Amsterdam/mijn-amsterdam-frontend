@@ -42,11 +42,25 @@ export function getBetrokkenDescription(
 }
 
 export function getBesluitDescription(
-  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed,
+  options: {
+    withToegewezenBriefInformatie: boolean;
+    withAfgewezenBriefInformatie: boolean;
+  } = {
+    withToegewezenBriefInformatie: true,
+    withAfgewezenBriefInformatie: true,
+  }
 ): string {
   const hasNamenBetrokkenen = regeling.betrokkenPersonen.some(
     (person) => !!person.name
   );
+  const toegewezenBriefInformatie = options?.withToegewezenBriefInformatie
+    ? '<p>In de brief vindt u meer informatie hierover.</p>'
+    : '';
+  const afgewezenBriefInformatie = options?.withAfgewezenBriefInformatie
+    ? '<p>In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.</p>'
+    : '';
+
   return `<p>
     ${
       regeling.resultaat === 'toegewezen'
@@ -54,9 +68,7 @@ export function getBesluitDescription(
         : `U krijgt geen ${regeling.titel}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
     }
     </p>
-    <p>
-      ${regeling.resultaat === 'toegewezen' ? 'In de brief vindt u meer informatie hierover.' : 'In de brief vindt u meer informatie hierover en leest u hoe u bezwaar kunt maken.'}
-    </p>
+    ${regeling.resultaat === 'toegewezen' ? toegewezenBriefInformatie : afgewezenBriefInformatie}
   `;
 }
 
@@ -67,7 +79,7 @@ export const BESLUIT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraagWith
     isChecked: () => true,
     isActive: (regeling) =>
       regeling.isActueel === true || regeling.resultaat === 'afgewezen',
-    description: getBesluitDescription,
+    description: (regeling) => getBesluitDescription(regeling),
   };
 
 function getEindeRechtDescription(
