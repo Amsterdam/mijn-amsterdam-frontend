@@ -156,13 +156,10 @@ export const businessPartnerDetailsLabels: DisplayProps<AfisBusinessPartnerDetai
   };
 
 // Betaalvoorkeuren
+
 const displayPropsEMandates: DisplayProps<AfisEMandateFrontend> = {
   detailLinkComponent: 'Afdeling gemeente',
-  // acceptantIBAN: 'IBAN gemeente',
-  // senderName: 'Naam rekeninghouder',
-  // senderIBAN: 'Van bankrekeningnummer',
   displayStatus: 'Status',
-  // action: 'Actie',
 };
 
 export const eMandateTableConfig = {
