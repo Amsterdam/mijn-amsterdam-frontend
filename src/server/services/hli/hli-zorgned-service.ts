@@ -3,6 +3,7 @@ import { isDateInPast } from '../../../universal/helpers/date';
 import {
   fetchAanvragenWithRelatedPersons,
   fetchPersoonsgegevensNAW,
+  fetchRelatedPersons,
 } from '../zorgned/zorgned-service';
 import {
   ZORGNED_GEMEENTE_CODE,
@@ -10,8 +11,10 @@ import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedPersoonsgegevensNAWResponse,
   type BSN,
+  type ZorgnedPerson,
 } from '../zorgned/zorgned-types';
 import { AV_CZM } from './status-line-items/regeling-czm';
+import { AV_UPC_PCV_CODES } from './status-line-items/regeling-pcvergoeding';
 
 function transformToAdministratienummer(identificatie: number): string {
   const padLength = 10;
@@ -71,11 +74,30 @@ function isActueel(aanvraagTransformed: ZorgnedAanvraagTransformed) {
   return isActueel;
 }
 
-function transformTitle(aanvraag: ZorgnedAanvraagTransformed) {
+function transformTitle(
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
   if (aanvraag.productIdentificatie === AV_CZM) {
     return 'Collectieve zorgverzekering';
   }
   return aanvraag.titel;
+}
+
+function transformBetrokkenPersonen(
+  aanvrager: ZorgnedPerson,
+  aanvraag: ZorgnedAanvraagWithRelatedPersonsTransformed
+) {
+  if (
+    aanvraag.productIdentificatie &&
+    AV_UPC_PCV_CODES.includes(aanvraag.productIdentificatie)
+  ) {
+    // UPC/PCV aanvragen can only be requested for kids.
+    return aanvraag.betrokkenPersonen.filter((persoon) => {
+      return persoon.bsn !== aanvrager.bsn && !persoon.isPartner;
+    });
+  }
+
+  return [];
 }
 
 export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
@@ -84,6 +106,7 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
   });
 
   if (aanvragenResponse.status === 'OK') {
+    const aanvragerResponse = await fetchRelatedPersons([bsn], 'ZORGNED_AV');
     const aanvragenTransformed: ZorgnedAanvraagWithRelatedPersonsTransformed[] =
       aanvragenResponse.content.map((aanvraagTransformed) => {
         // Override isActueel for front-end.
@@ -91,6 +114,12 @@ export async function fetchZorgnedAanvragenHLI(bsn: BSN) {
           ...aanvraagTransformed,
           titel: transformTitle(aanvraagTransformed),
           isActueel: isActueel(aanvraagTransformed),
+          betrokkenPersonen: aanvragerResponse.content?.length
+            ? transformBetrokkenPersonen(
+                aanvragerResponse.content[0],
+                aanvraagTransformed
+              )
+            : aanvraagTransformed.betrokkenPersonen,
         };
       });
 

@@ -245,7 +245,7 @@ export async function fetchAndMergeRelatedPersons(
 export async function fetchAanvragenWithRelatedPersons(
   bsnAanvrager: BSN,
   options: ZorgnedAanvragenServiceOptions
-) {
+): Promise<ApiResponse<ZorgnedAanvraagWithRelatedPersonsTransformed[]>> {
   const zorgnedAanvragenResponse = await fetchAanvragen(bsnAanvrager, options);
 
   if (zorgnedAanvragenResponse.status === 'OK') {
