@@ -202,8 +202,7 @@ export async function fetchAndMergeRelatedPersons(
   );
 
   const relatedPersonsResponse = await fetchRelatedPersons(
-    // The one requesting is not a related person, so we filter this out.
-    bsns.filter((bsnBetrokkene) => bsnBetrokkene !== bsnAanvrager),
+    bsns,
     zorgnedApiConfigKey
   );
 
@@ -211,6 +210,9 @@ export async function fetchAndMergeRelatedPersons(
     (acc, person) => {
       if (person.name === partnernaam) {
         person.isPartner = true;
+      }
+      if (person.bsn === bsnAanvrager) {
+        person.isAanvrager = true;
       }
       acc[person.bsn] = person;
       return acc;

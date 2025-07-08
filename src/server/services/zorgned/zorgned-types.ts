@@ -214,6 +214,7 @@ export interface ZorgnedPerson {
   dateOfBirth: string | null;
   dateOfBirthFormatted: string | null;
   isPartner?: true;
+  isAanvrager?: true;
   partnernaam: string | null;
   partnervoorvoegsel: string | null;
 }
