@@ -19,12 +19,14 @@ function getNamenBetrokkenen(
   return `${names.join(', ')} en ${lastName}`;
 }
 
-export function getBetrokkenDescription(
+export function getBetrokkenKinderenDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string | null {
-  const betrokkenen = regeling.betrokkenPersonen.filter(
-    (person) => !!person.name
-  );
+  const betrokkenen = regeling.betrokkenPersonen
+    .filter((person) => !!person.name)
+    .filter((persoon) => {
+      return !persoon.isAanvrager && !persoon.isPartner;
+    });
 
   if (!betrokkenen.length) {
     return null;
@@ -51,9 +53,6 @@ export function getBesluitDescription(
     withAfgewezenBriefInformatie: true,
   }
 ): string {
-  const hasNamenBetrokkenen = regeling.betrokkenPersonen.some(
-    (person) => !!person.name
-  );
   const toegewezenBriefInformatie = options?.withToegewezenBriefInformatie
     ? '<p>In de brief vindt u meer informatie hierover.</p>'
     : '';
@@ -64,8 +63,8 @@ export function getBesluitDescription(
   return `<p>
     ${
       regeling.resultaat === 'toegewezen'
-        ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
-        : `U krijgt geen ${regeling.titel}${hasNamenBetrokkenen ? ` voor ${getNamenBetrokkenen(regeling)}` : ''}.`
+        ? `U krijgt ${regeling.titel} per ${regeling.datumIngangGeldigheid ? defaultDateFormat(regeling.datumIngangGeldigheid) : ''}.`
+        : `U krijgt geen ${regeling.titel}.`
     }
     </p>
     ${regeling.resultaat === 'toegewezen' ? toegewezenBriefInformatie : afgewezenBriefInformatie}

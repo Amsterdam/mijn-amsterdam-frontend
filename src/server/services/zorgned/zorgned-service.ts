@@ -233,6 +233,7 @@ export async function fetchAndMergeRelatedPersons(
       return {
         ...zorgnedAanvraagTransformed,
         betrokkenPersonen,
+        bsnAanvrager,
       };
     });
 

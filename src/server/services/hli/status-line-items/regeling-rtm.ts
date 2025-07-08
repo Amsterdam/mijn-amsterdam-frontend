@@ -1,9 +1,4 @@
-import {
-  BESLUIT,
-  EINDE_RECHT,
-  getBesluitDescription,
-  getBetrokkenDescription,
-} from './generic';
+import { BESLUIT, EINDE_RECHT, getBesluitDescription } from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -132,7 +127,7 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
     },
     // In behandeling (in afwatching van uitslag GGD), alleen voor de aanvrager/ontvanger zónder betrokkenen.
     {
-      status: 'In behandeling',
+      status: 'In behandeling genomen',
       isChecked: true,
       description: getRtmDescriptionDeel1Toegewezen,
       isVisible(aanvraag) {
@@ -199,18 +194,24 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
           typeof EINDE_RECHT.description === 'function'
             ? EINDE_RECHT.description(regeling, today, allAanvragen)
             : EINDE_RECHT.description || '';
+        const hasBetrokkenen = regeling.betrokkenen.length > 1;
+        const isAanvrager = regeling.betrokkenPersonen.some(
+          (betrokkene) =>
+            betrokkene.isAanvrager && betrokkene.bsn === regeling.bsnAanvrager
+        );
         return (
           baseDescription +
-          `<p>
-            Bent u net of binnekort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen. <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
+          (hasBetrokkenen
+            ? `<p>
+            ${isAanvrager ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
           </p>
           `
+            : '')
         );
       },
     },
   ];
 
 export const forTesting = {
-  getBetrokkenDescription,
   isRTMDeel2,
 };

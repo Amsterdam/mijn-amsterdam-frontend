@@ -150,6 +150,7 @@ export interface ZorgnedAanvraagTransformed {
 export interface ZorgnedAanvraagWithRelatedPersonsTransformed
   extends ZorgnedAanvraagTransformed {
   betrokkenPersonen: ZorgnedPerson[];
+  bsnAanvrager: BSN;
 }
 
 export interface ZorgnedDocumentResponseSource {

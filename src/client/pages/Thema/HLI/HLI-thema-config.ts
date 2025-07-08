@@ -81,7 +81,7 @@ export const routeConfig = {
 } as const satisfies ThemaRoutesConfig;
 
 export const listPageTitle = {
-  [listPageParamKind.lopend]: 'Lopende aanvragen',
+  [listPageParamKind.lopend]: 'Aanvragen',
   [listPageParamKind.actual]: 'Huidige regelingen',
   [listPageParamKind.historic]: 'Eerdere en afgewezen regelingen',
 } as const;
