@@ -176,13 +176,9 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
       },
       description(regeling) {
         return `
-        <p>
-          U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.
-          U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.
-        </p>
-        <p>
-          <a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.
-        </p>`;
+        <p>U hoeft de ${regeling.titel} niet elk jaar opnieuw aan te vragen. De gemeente verlengt de regeling stilzwijgend, maar controleert wel elk jaar of u nog in aanmerking komt.</p>
+        <p>U kunt dan ook een brief krijgen met het verzoek om extra informatie te geven.</p>
+        <p><a href="${INFO_LINK}">Als er wijzigingen zijn in uw situatie moet u die direct doorgeven</a>.</p>`;
       },
     },
     // Einde recht - voor RTM Deel 2. Voor de betrokkenen.
