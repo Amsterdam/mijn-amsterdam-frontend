@@ -1,11 +1,10 @@
-const settings = require('../settings');
-const RESPONSES = {
-  PASHOUDERS: require('../fixtures/gpass-pashouders.json'),
-  STADSPAS: require('../fixtures/gpass-stadspas.json'),
-  TRANSACTIES: require('../fixtures/gpass-transacties.json'),
-};
+import PASHOUDERS from '../fixtures/gpass-pashouders.json' with { type: 'json' };
+import STADSPAS from '../fixtures/gpass-stadspas.json' with { type: 'json' };
+import TRANSACTIES from '../fixtures/gpass-transacties.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
 function createPas({
+  // eslint-disable-next-line no-magic-numbers
   pasnummer = 1234567890,
   actief = true,
   vervangen = false,
@@ -26,7 +25,7 @@ function createPas({
       id: 11,
       naam: 'Digitale Stadspas',
     },
-    budgetten: RESPONSES.STADSPAS.budgetten,
+    budgetten: STADSPAS.budgetten,
   };
 }
 
@@ -55,7 +54,7 @@ const expiryDateThisYear = `${thisYear}-07-31T00:00:00.000Z`;
 const expiryDateNextYear = `${nextYear}-07-31T00:00:00.000Z`;
 
 const pashoudersResponse = {
-  ...RESPONSES.PASHOUDERS,
+  ...PASHOUDERS,
   passen: [
     createPas({
       pasnummer: 1234567891,
@@ -106,10 +105,10 @@ const subPassen = pashoudersResponse.sub_pashouders.flatMap(
 );
 const allPasses = pashoudersResponse.passen.concat(subPassen);
 
-module.exports = [
+export default [
   {
     id: 'get-gpass-pashouders',
-    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pashouder`,
+    url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/pashouder`,
     method: 'GET',
     variants: [
       {
@@ -124,7 +123,7 @@ module.exports = [
   },
   {
     id: 'get-gpass-stadspas',
-    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/:pasnummer`,
+    url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/pas/:pasnummer`,
     method: 'GET',
     variants: [
       {
@@ -137,10 +136,10 @@ module.exports = [
             });
             res.send({
               // Because we want to be able to mutate a stadspas, We mutate a pashouder pas.
-              // But RESPONSES.STADSPAS is static, so we overwrite this.
+              // But STADSPAS is static, so we overwrite this.
               ...correspondingPashouderPass,
-              // ...RESPONSES.STADSPAS,
-              budgetten: RESPONSES.STADSPAS.budgetten,
+              // ...STADSPAS,
+              budgetten: STADSPAS.budgetten,
             });
           },
         },
@@ -149,7 +148,7 @@ module.exports = [
   },
   {
     id: 'get-gpass-transacties',
-    url: `${settings.MOCK_BASE_PATH}/gpass/rest/transacties/v1/budget*`,
+    url: `${MOCK_BASE_PATH}/gpass/rest/transacties/v1/budget*`,
     method: 'GET',
     variants: [
       {
@@ -157,14 +156,14 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: RESPONSES.TRANSACTIES,
+          body: TRANSACTIES,
         },
       },
     ],
   },
   {
     id: 'get-gpass-aanbiedingen-transacties',
-    url: `${settings.MOCK_BASE_PATH}/gpass/rest/transacties/v1/aanbiedingen*`,
+    url: `${MOCK_BASE_PATH}/gpass/rest/transacties/v1/aanbiedingen*`,
     method: 'GET',
     variants: [
       {
@@ -179,7 +178,7 @@ module.exports = [
   },
   {
     id: 'post-toggle-stadspas',
-    url: `${settings.MOCK_BASE_PATH}/gpass/rest/sales/v1/togglepas/:pasnummer`,
+    url: `${MOCK_BASE_PATH}/gpass/rest/sales/v1/togglepas/:pasnummer`,
     method: 'POST',
     // Add delay to make loading icon visibile in the front end when pressing the block button.
     delay: 2500,
@@ -198,7 +197,7 @@ module.exports = [
             pas.expiry_date = new Date().toISOString();
 
             res.send({
-              ...RESPONSES.STADSPAS,
+              ...STADSPAS,
               pasnummer,
               expiry_date: pas.expiry_date,
               actief: pas.actief,

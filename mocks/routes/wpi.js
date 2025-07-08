@@ -1,15 +1,12 @@
-const settings = require('../settings.js');
+import AANVRAGEN from '../fixtures/wpi-aanvragen.json' with { type: 'json' };
+import E_AANVRAGEN from '../fixtures/wpi-e-aanvragen.json' with { type: 'json' };
+import SPECIFICATIES from '../fixtures/wpi-specificaties.json' with { type: 'json' };
+import { MOCK_BASE_PATH, MOCK_DOCUMENT_PATH } from '../settings.js';
 
-const RESPONSES = {
-  AANVRAGEN: require('../fixtures/wpi-aanvragen.json'),
-  E_AANVRAGEN: require('../fixtures/wpi-e-aanvragen.json'),
-  SPECIFICATIES: require('../fixtures/wpi-specificaties.json'),
-};
-
-module.exports = [
+export default [
   {
     id: 'get-wpi-aanvragen',
-    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/aanvragen`,
+    url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/aanvragen`,
     method: 'GET',
     variants: [
       {
@@ -17,7 +14,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: RESPONSES.AANVRAGEN,
+          body: AANVRAGEN,
         },
       },
     ],
@@ -25,21 +22,21 @@ module.exports = [
   {
     id: 'get-wpi-e-aanvragen',
     method: 'GET',
-    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/e-aanvragen`,
+    url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/e-aanvragen`,
     variants: [
       {
         id: 'standard',
         type: 'json',
         options: {
           status: 200,
-          body: RESPONSES.E_AANVRAGEN,
+          body: E_AANVRAGEN,
         },
       },
     ],
   },
   {
     id: 'get-wpi-specificaties',
-    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/specificaties-en-jaaropgaven`,
+    url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/uitkering/specificaties-en-jaaropgaven`,
     method: 'GET',
     variants: [
       {
@@ -47,14 +44,14 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: RESPONSES.SPECIFICATIES,
+          body: SPECIFICATIES,
         },
       },
     ],
   },
   {
     id: 'get-wpi-document-download',
-    url: `${settings.MOCK_BASE_PATH}/wpi-koppel-api/wpi/document`,
+    url: `${MOCK_BASE_PATH}/wpi-koppel-api/wpi/document`,
     method: 'GET',
     variants: [
       {
@@ -62,7 +59,7 @@ module.exports = [
         type: 'file',
         options: {
           status: 200,
-          path: settings.MOCK_DOCUMENT_PATH,
+          path: MOCK_DOCUMENT_PATH,
         },
       },
     ],

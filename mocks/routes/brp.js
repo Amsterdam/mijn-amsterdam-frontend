@@ -1,23 +1,23 @@
-const BRP_PERSONEN_OP_ADRES = require('../fixtures/brp/personen-op-adres.json');
+import { constants as httpConstants } from 'node:http2';
+
+import BRP_PERSONEN_OP_ADRES from '../fixtures/brp/personen-op-adres.json' with { type: 'json' };
 // const BRP_PERSOONSGEGEVENS = require('../fixtures/brp/persoonsgegevens.json');
-const BRP_PERSOONSGEGEVENS = require('../fixtures/brp/test-personen.json');
-const BRP_VERBLIJFPLAATSHISTORIE = require('../fixtures/brp/verblijfplaatshistorie.json');
-const BRP_RESPONSE = require('../fixtures/brp.json');
-const settings = require('../settings.js');
+import BRP_PERSOONSGEGEVENS from '../fixtures/brp/test-personen.json' with { type: 'json' };
+import BRP_VERBLIJFPLAATSHISTORIE from '../fixtures/brp/verblijfplaatshistorie.json' with { type: 'json' };
+import BRP_RESPONSE from '../fixtures/brp.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-const httpConstants = require('http2').constants;
-
-module.exports = [
+export default [
   {
     id: 'post-brp-persoonsgegevens',
-    url: `${settings.MOCK_BASE_PATH}/benk-brp/personen`,
+    url: `${MOCK_BASE_PATH}/benk-brp/personen`,
     method: 'POST',
     variants: [
       {
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
+          middleware: (req, res, _next, _core) => {
             const { type, burgerservicenummer } = req.body;
 
             const persoonsgegevens = BRP_PERSOONSGEGEVENS.personen.filter(
@@ -45,7 +45,7 @@ module.exports = [
   },
   {
     id: 'post-brp-verblijfplaatshistorie',
-    url: `${settings.MOCK_BASE_PATH}/benk-brp/verblijfplaatshistorie`,
+    url: `${MOCK_BASE_PATH}/benk-brp/verblijfplaatshistorie`,
     method: 'POST',
     variants: [
       {
@@ -61,7 +61,7 @@ module.exports = [
   // Legacy MKS / Koppel API endpoints
   {
     id: 'get-brp',
-    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/brp`,
+    url: `${MOCK_BASE_PATH}/mks-koppel-api/brp/brp`,
     method: 'GET',
     variants: [
       {
@@ -76,7 +76,7 @@ module.exports = [
   },
   {
     id: 'post-brp-aantal-bewoners',
-    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/aantal_bewoners`,
+    url: `${MOCK_BASE_PATH}/mks-koppel-api/brp/aantal_bewoners`,
     method: 'POST',
     variants: [
       {

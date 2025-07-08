@@ -1,18 +1,18 @@
-const loadFixtureAndReplaceBaseUrl = require('../loadFixtureAndReplaceBaseUrl');
-const settings = require('../settings');
+import FOOTER from '../fixtures/cms-footer.json' with { type: 'json' };
+import DASHBOARD_RESPONSE from '../fixtures/cms-maintenance-notifications-dashboard.json' with { type: 'json' };
+import LANDINGSPAGE_RESPONSE from '../fixtures/cms-maintenance-notifications-landingspagina.json' with { type: 'json' };
+import PRODUCTEN_OP_MA from '../fixtures/cms-producten.json' with { type: 'json' };
+import { loadFixtureAndReplaceBaseUrl } from '../loadFixtureAndReplaceBaseUrl.js';
+import { MOCK_BASE_PATH } from '../settings.js';
 
 const ALLE_RESPONSE = loadFixtureAndReplaceBaseUrl(
   'cms-maintenance-notifications-alle.json'
 );
-const DASHBOARD_RESPONSE = require('../fixtures/cms-maintenance-notifications-dashboard.json');
-const LANDINGSPAGE_RESPONSE = require('../fixtures/cms-maintenance-notifications-landingspagina.json');
-const PRODUCTEN_OP_MA = require('../fixtures/cms-producten.json');
-const FOOTER = require('../fixtures/cms-footer.json');
 // The BFF Caches the responses to these requests in root/src/server/cache/
-module.exports = [
+export default [
   {
     id: 'get-cms-maintainance-notifications-alle',
-    url: `${settings.MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam`,
+    url: `${MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam`,
     method: 'GET',
     variants: [
       {
@@ -28,7 +28,7 @@ module.exports = [
   // The first URL will get the endpoint of this one by reading maintenance-notifications-dashboard.json, the property 'feedid' will contain the URL.
   {
     id: 'get-cms-maintainance-notifications-dashboard',
-    url: `${settings.MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard`,
+    url: `${MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam/dashboard`,
     method: 'GET',
     variants: [
       {
@@ -44,7 +44,7 @@ module.exports = [
   // Same comment as above
   {
     id: 'get-cms-maintainance-notifications-landingspagina',
-    url: `${settings.MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina`,
+    url: `${MOCK_BASE_PATH}/cms/storingsmeldingen/alle-meldingen-mijn-amsterdam/landingspagina`,
     method: 'GET',
     variants: [
       {
@@ -59,7 +59,7 @@ module.exports = [
   },
   {
     id: 'get-cms-productenlijst',
-    url: `${settings.MOCK_BASE_PATH}/cms/mijn-content/artikelen/:articleslug/`,
+    url: `${MOCK_BASE_PATH}/cms/mijn-content/artikelen/:articleslug/`,
     method: 'GET',
     variants: [
       {
@@ -81,7 +81,7 @@ module.exports = [
   },
   {
     id: 'get-cms-footer',
-    url: `${settings.MOCK_BASE_PATH}/cms/algemene_onderdelen/xxv/footer-xxv/`,
+    url: `${MOCK_BASE_PATH}/cms/algemene_onderdelen/xxv/footer-xxv/`,
     method: 'GET',
     variants: [
       {

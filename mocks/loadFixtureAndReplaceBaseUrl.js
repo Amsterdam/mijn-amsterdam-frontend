@@ -1,6 +1,7 @@
-const fs = require('node:fs');
-const settings = require('./settings.js');
-const path = require('node:path');
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+import { MOCK_API_BASE_URL } from './settings.js';
 
 /** Load in a fixture and replace all occurences of '{{BFF_MOCK_API_BASE_URL}}' with Mocks localhost.
  *
@@ -9,18 +10,16 @@ const path = require('node:path');
  *
  *  @returns {Object} A JSON object.
  */
-function loadFixtureAndReplaceBaseUrl(jsonFilePath) {
-  let jsonFile = fs.readFileSync(
-    path.join(__dirname, 'fixtures', jsonFilePath),
+export function loadFixtureAndReplaceBaseUrl(jsonFilePath) {
+  let jsonFile = readFileSync(
+    join(import.meta.dirname, 'fixtures', jsonFilePath),
     {
       encoding: 'utf8',
     }
   );
   jsonFile = jsonFile.replaceAll(
     '{{BFF_MOCK_API_BASE_URL}}',
-    settings.MOCK_API_BASE_URL
+    MOCK_API_BASE_URL
   );
   return JSON.parse(jsonFile);
 }
-
-module.exports = loadFixtureAndReplaceBaseUrl;

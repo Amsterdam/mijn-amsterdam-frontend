@@ -1,9 +1,9 @@
-const settings = require('../settings');
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'post-amsapp-administratienummer',
-    url: `${settings.MOCK_BASE_PATH}/amsapp/session/credentials`,
+    url: `${MOCK_BASE_PATH}/amsapp/session/credentials`,
     method: 'POST',
     variants: [
       {

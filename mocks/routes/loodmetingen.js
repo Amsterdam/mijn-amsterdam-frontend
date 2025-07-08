@@ -1,11 +1,11 @@
-const LOODMETINGEN_RAPPORT_RESPONSE = require('../fixtures/loodmeting-rapport.json');
-const LOODMETINGEN_RESPONSE = require('../fixtures/loodmetingen.json');
-const settings = require('../settings');
+import LOODMETINGEN_RAPPORT_RESPONSE from '../fixtures/loodmeting-rapport.json' with { type: 'json' };
+import LOODMETINGEN_RESPONSE from '../fixtures/loodmetingen.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'post-loodmetingen-details',
-    url: `${settings.MOCK_BASE_PATH}/loodmetingen/be_getrequestdetails`,
+    url: `${MOCK_BASE_PATH}/loodmetingen/be_getrequestdetails`,
     method: 'POST',
     variants: [
       {
@@ -20,7 +20,7 @@ module.exports = [
   },
   {
     id: 'post-loodmetingen-rapport',
-    url: `${settings.MOCK_BASE_PATH}/loodmetingen/be_downloadleadreport`,
+    url: `${MOCK_BASE_PATH}/loodmetingen/be_downloadleadreport`,
     method: 'POST',
     variants: [
       {

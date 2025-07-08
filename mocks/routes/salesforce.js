@@ -1,10 +1,10 @@
-const SALESFORCE_RESPONSE = require('../fixtures/salesforce-contactmomenten.json');
-const settings = require('../settings.js');
+import SALESFORCE_RESPONSE from '../fixtures/salesforce-contactmomenten.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'get-salesforce',
-    url: `${settings.MOCK_BASE_PATH}/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`,
+    url: `${MOCK_BASE_PATH}/salesforce/contactmomenten/services/apexrest/klantinteracties/v1.0/klantcontacten/`,
     method: 'GET',
     variants: [
       {

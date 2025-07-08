@@ -1,4 +1,4 @@
-const jose = require('jose');
+import { decodeJwt } from 'jose';
 
 class ProfileTypeHandler {
   static get id() {
@@ -74,7 +74,7 @@ function isCommercialUser(req) {
   }
 
   const jwtToken = auth.split(' ')[1];
-  const jwtDecoded = jwtToken ? jose.decodeJwt(jwtToken) : jwtToken;
+  const jwtDecoded = jwtToken ? decodeJwt(jwtToken) : jwtToken;
 
   if (!jwtDecoded) {
     return false;
@@ -87,4 +87,4 @@ function isCommercialUser(req) {
   );
 }
 
-module.exports = ProfileTypeHandler;
+export default ProfileTypeHandler;

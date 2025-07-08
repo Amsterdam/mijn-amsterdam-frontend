@@ -1,9 +1,9 @@
-const settings = require('../settings');
+import { MOCK_BASE_PATH } from '../settings.js';
 //http://localhost:3100/mocks-api/ms-oauth/tenant123/oauth2/v2.0/token
-module.exports = [
+export default [
   {
     id: 'post-ms-oauth',
-    url: `${settings.MOCK_BASE_PATH}/ms-oauth/:tenant/oauth2/v2.0/token`,
+    url: `${MOCK_BASE_PATH}/ms-oauth/:tenant/oauth2/v2.0/token`,
     method: 'POST',
     variants: [
       {

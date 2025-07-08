@@ -1,10 +1,10 @@
-const settings = require('../settings');
-const BELASTINGEN = require('../fixtures/belastingen.json');
+import BELASTINGEN from '../fixtures/belastingen.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'get-belastingen',
-    url: `${settings.MOCK_BASE_PATH}/belastingen`,
+    url: `${MOCK_BASE_PATH}/belastingen`,
     method: 'GET',
     variants: [
       {

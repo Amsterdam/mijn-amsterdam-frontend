@@ -1,15 +1,12 @@
-const settings = require('../settings');
+import DOSSIER_INFO_DETAILS from '../fixtures/erfpacht-v2-dossierinfo-bsn.json' with { type: 'json' };
+import DOSSIERS from '../fixtures/erfpacht-v2-dossiers.json' with { type: 'json' };
+import ERFPACHTER from '../fixtures/erfpacht-v2-erfpachter.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-const ERFPACHT_V2_RESPONSES = {
-  ERFPACHTER: require('../fixtures/erfpacht-v2-erfpachter.json'),
-  DOSSIERS: require('../fixtures/erfpacht-v2-dossiers.json'),
-  DOSSIER_INFO_DETAILS: require('../fixtures/erfpacht-v2-dossierinfo-bsn.json'),
-};
-
-module.exports = [
+export default [
   {
     id: 'get-erfpacht-v2-erfpachter',
-    url: `${settings.MOCK_BASE_PATH}/erfpachtv2/vernise/api/erfpachter`,
+    url: `${MOCK_BASE_PATH}/erfpachtv2/vernise/api/erfpachter`,
     method: 'GET',
     variants: [
       {
@@ -17,14 +14,14 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: ERFPACHT_V2_RESPONSES.ERFPACHTER,
+          body: ERFPACHTER,
         },
       },
     ],
   },
   {
     id: 'get-erfpacht-v2-dossiers',
-    url: `${settings.MOCK_BASE_PATH}/erfpachtv2/vernise/api/dossierinfo`,
+    url: `${MOCK_BASE_PATH}/erfpachtv2/vernise/api/dossierinfo`,
     method: 'GET',
     variants: [
       {
@@ -32,14 +29,14 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: ERFPACHT_V2_RESPONSES.DOSSIERS,
+          body: DOSSIERS,
         },
       },
     ],
   },
   {
     id: 'get-erfpacht-v2-dossier-info-details',
-    url: `${settings.MOCK_BASE_PATH}/erfpachtv2/vernise/api/dossierinfo/*`,
+    url: `${MOCK_BASE_PATH}/erfpachtv2/vernise/api/dossierinfo/*`,
     method: 'GET',
     variants: [
       {
@@ -47,7 +44,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: ERFPACHT_V2_RESPONSES.DOSSIER_INFO_DETAILS,
+          body: DOSSIER_INFO_DETAILS,
         },
       },
     ],

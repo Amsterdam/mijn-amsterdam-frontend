@@ -1,4 +1,4 @@
-const settings = require('../settings');
+import { MOCK_BASE_PATH, MOCK_API_BASE_URL } from '../settings.js';
 
 const NO_DATA_VARIANT = {
   id: 'no-data',
@@ -13,10 +13,10 @@ const NO_DATA_VARIANT = {
   },
 };
 
-module.exports = [
+export default [
   {
     id: 'get-parkeren-external-sso-url',
-    url: `${settings.MOCK_BASE_PATH}/parkeren-frontoffice/sso/get_authentication_url`,
+    url: `${MOCK_BASE_PATH}/parkeren-frontoffice/sso/get_authentication_url`,
     method: 'GET',
     variants: [
       {
@@ -24,14 +24,14 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: { url: `${settings.MOCK_API_BASE_URL}/sso/portaal/parkeren` },
+          body: { url: `${MOCK_API_BASE_URL}/sso/portaal/parkeren` },
         },
       },
     ],
   },
   {
     id: 'get-parkeren-create-jwe-token',
-    url: `${settings.MOCK_BASE_PATH}/parkeren-api/v1/jwe/create`,
+    url: `${MOCK_BASE_PATH}/parkeren-api/v1/jwe/create`,
     method: 'POST',
     variants: [
       {
@@ -48,7 +48,7 @@ module.exports = [
   },
   {
     id: 'get-parkeren-active-permit-request',
-    url: `${settings.MOCK_BASE_PATH}/parkeren-api/v1/:profileType/active_permit_request`,
+    url: `${MOCK_BASE_PATH}/parkeren-api/v1/:profileType/active_permit_request`,
     method: 'POST',
     variants: [
       {
@@ -77,7 +77,7 @@ module.exports = [
   },
   {
     id: 'get-parkeren-client-product-details',
-    url: `${settings.MOCK_BASE_PATH}/parkeren-api/v1/:profileType/client_product_details`,
+    url: `${MOCK_BASE_PATH}/parkeren-api/v1/:profileType/client_product_details`,
     method: 'POST',
     variants: [
       {

@@ -1,18 +1,18 @@
-import process from "node:process";
-const { register } = require('module');
-const settings = require('../settings');
+import process from 'node:process';
 
-module.exports = [
+import { MOCK_BASE_PATH } from '../settings.js';
+
+export default [
   {
     id: 'get-patroon-c',
-    url: `${settings.MOCK_BASE_PATH}/sso/portaal/:naamportaal?`,
+    url: `${MOCK_BASE_PATH}/sso/portaal/:naamportaal?`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res, next, core) => {
+          middleware: (req, res, _next, _core) => {
             const htmlResponse = `
             <h1>${req.params.naamportaal}</h1>
              <a href="${process.env.MA_FRONTEND_URL}">

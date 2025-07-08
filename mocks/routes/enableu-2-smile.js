@@ -1,7 +1,7 @@
-const AVG_THEMAS_RESPONSE = require('../fixtures/avg-themas.json');
-const AVG_RESPONSE = require('../fixtures/avg.json');
-const KLACHTEN_RESPONSE = require('../fixtures/klachten.json');
-const settings = require('../settings');
+import AVG_THEMAS_RESPONSE from '../fixtures/avg-themas.json' with { type: 'json' };
+import AVG_RESPONSE from '../fixtures/avg.json' with { type: 'json' };
+import KLACHTEN_RESPONSE from '../fixtures/klachten.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
 function isIncomingFormFunction(identifier) {
   return (fields, core) => {
@@ -16,10 +16,10 @@ function isIncomingFormFunction(identifier) {
   };
 }
 
-module.exports = [
+export default [
   {
     id: 'post-enableu2smile-klachten',
-    url: `${settings.MOCK_BASE_PATH}/smile`,
+    url: `${MOCK_BASE_PATH}/smile`,
     method: 'POST',
     variants: [
       {

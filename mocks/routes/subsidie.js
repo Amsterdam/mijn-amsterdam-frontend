@@ -1,10 +1,10 @@
-const settings = require('../settings');
-const SUBSIDIE_RESPONSE = require('../fixtures/subsidie.json');
+import SUBSIDIE_RESPONSE from '../fixtures/subsidie.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'get-subsidie',
-    url: `${settings.MOCK_BASE_PATH}/subsidies/:type(citizen|company)/:token`,
+    url: `${MOCK_BASE_PATH}/subsidies/:type(citizen|company)/:token`,
     method: 'GET',
     variants: [
       {

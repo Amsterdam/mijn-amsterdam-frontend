@@ -1,6 +1,6 @@
-const formidable = require('formidable');
+import { constants as httpConstants } from 'node:http2';
 
-const httpConstants = require('http2').constants;
+import { IncomingForm } from 'formidable';
 
 /** A middleware type handler to inspect a multipart form to determine what json body to send.
  *
@@ -46,7 +46,7 @@ class IntermediateAPIHandler {
   }
 
   middleware(req, res, next) {
-    const form = new formidable.IncomingForm();
+    const form = new IncomingForm();
 
     form.parse(req, async (err, fields, _files) => {
       if (err) {
@@ -80,4 +80,4 @@ class IntermediateAPIHandler {
   }
 }
 
-module.exports = IntermediateAPIHandler;
+export default IntermediateAPIHandler;

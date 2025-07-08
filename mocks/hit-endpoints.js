@@ -1,6 +1,6 @@
-const axios = require('axios').default;
+import axios from 'axios';
 
-const settings = require('./settings');
+import { MOCK_ORIGIN, MOCK_API_BASE_URL } from './settings.js';
 
 sendRequestToAllEndpoints();
 
@@ -19,7 +19,7 @@ async function sendRequestToAllEndpoints() {
     const urlParameterPattern = new RegExp('(?<=\/):.+?(?=\/|$)', 'g'); // prettier-ignore
     // reason prettier-ignore: It will remove all escape sequences in the regular expression which is undesired.
 
-    const requestUrl = `${settings.MOCK_ORIGIN}${entry.url.replaceAll(urlParameterPattern, '1')}`;
+    const requestUrl = `${MOCK_ORIGIN}${entry.url.replaceAll(urlParameterPattern, '1')}`;
 
     if (entry.method === 'get') {
       axios.get(requestUrl);
@@ -33,7 +33,7 @@ async function sendRequestToAllEndpoints() {
   });
 }
 
-const ORIGIN = settings.MOCK_API_BASE_URL;
+const ORIGIN = MOCK_API_BASE_URL;
 
 /** Add handlers here that need custom behavior.
  * In the form of `[route-id]: [function]`.

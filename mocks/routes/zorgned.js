@@ -1,16 +1,16 @@
-const { HttpStatusCode } = require('axios');
+import { HttpStatusCode } from 'axios';
 
-const ZORGNED_AV_AANVRAGEN_RESPONSE_RTM = require('../fixtures/zorgned-av-aanvragen-rtm.json');
-const ZORGNED_AV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-av-aanvragen.json');
-const ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE = require('../fixtures/zorgned-av-persoonsgegevensNAW.json');
-const ZORGNED_JZD_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-jzd-aanvragen.json');
-const ZORGNED_LLV_AANVRAGEN_RESPONSE = require('../fixtures/zorgned-leerlingenvervoer-aanvragen.json');
-const settings = require('../settings.js');
+import AV_RTM_AANVRAGEN from '../fixtures/zorgned-av-aanvragen-rtm.json' with { type: 'json' };
+import AV_AANVRAGEN from '../fixtures/zorgned-av-aanvragen.json' with { type: 'json' };
+import AV_PERSOONSGEGEVENSNAW_RESPONSE from '../fixtures/zorgned-av-persoonsgegevensNAW.json' with { type: 'json' };
+import JZD_AANVRAGEN_RESPONSE from '../fixtures/zorgned-jzd-aanvragen.json' with { type: 'json' };
+import LLV_AANVRAGEN_RESPONSE from '../fixtures/zorgned-leerlingenvervoer-aanvragen.json' with { type: 'json' };
+import { MOCK_BASE_PATH, MOCK_DOCUMENT_B64 } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'post-zorgned-aanvragen',
-    url: `${settings.MOCK_BASE_PATH}/zorgned/aanvragen`,
+    url: `${MOCK_BASE_PATH}/zorgned/aanvragen`,
     method: 'POST',
     variants: [
       {
@@ -30,18 +30,18 @@ module.exports = [
                 const aanvragen = {
                   _embedded: {
                     aanvraag: [
-                      ...ZORGNED_AV_AANVRAGEN_RESPONSE._embedded.aanvraag,
-                      ...ZORGNED_AV_AANVRAGEN_RESPONSE_RTM._embedded.aanvraag,
+                      ...AV_AANVRAGEN._embedded.aanvraag,
+                      ...AV_RTM_AANVRAGEN._embedded.aanvraag,
                     ],
                   },
                 };
                 return res.send(aanvragen);
               }
               case 'JZD': {
-                return res.send(ZORGNED_JZD_AANVRAGEN_RESPONSE);
+                return res.send(JZD_AANVRAGEN_RESPONSE);
               }
               case 'LLV': {
-                return res.send(ZORGNED_LLV_AANVRAGEN_RESPONSE);
+                return res.send(LLV_AANVRAGEN_RESPONSE);
               }
               default: {
                 const msg = `No fixture response found for ${apiUser}`;
@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     id: 'post-zorgned-persoonsgegevens',
-    url: `${settings.MOCK_BASE_PATH}/zorgned/persoonsgegevensNAW`,
+    url: `${MOCK_BASE_PATH}/zorgned/persoonsgegevensNAW`,
     method: 'POST',
     variants: [
       {
@@ -65,7 +65,7 @@ module.exports = [
         options: {
           middleware(req, res, _next) {
             const nawResponse = structuredClone(
-              ZORGNED_AV_PERSOONSGEGEVENSNAW_RESPONSE
+              AV_PERSOONSGEGEVENSNAW_RESPONSE
             );
             if (nawResponse) {
               nawResponse.persoon.bsn = req.body.burgerservicenummer;
@@ -79,7 +79,7 @@ module.exports = [
   },
   {
     id: 'post-zorgned-document',
-    url: `${settings.MOCK_BASE_PATH}/zorgned/document`,
+    url: `${MOCK_BASE_PATH}/zorgned/document`,
     method: 'POST',
     variants: [
       {
@@ -87,7 +87,7 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: { inhoud: settings.MOCK_DOCUMENT_B64 },
+          body: { inhoud: MOCK_DOCUMENT_B64 },
         },
       },
     ],

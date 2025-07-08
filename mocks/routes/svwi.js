@@ -1,11 +1,11 @@
-const SVWI_RESPONSE = require('../fixtures/svwi.json');
-const settings = require('../settings');
+import SVWI_RESPONSE from '../fixtures/svwi.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
 // https://gemeente-amsterdam.atlassian.net/wiki/spaces/ma/pages/780927155/svwi+werk+en+inkomen (nog niet geimplementeerd?)
-module.exports = [
+export default [
   {
     id: 'get-svwi-tegel',
-    url: `${settings.MOCK_BASE_PATH}/svwi/autorisatie/tegel`,
+    url: `${MOCK_BASE_PATH}/svwi/autorisatie/tegel`,
     method: 'get',
     variants: [
       {

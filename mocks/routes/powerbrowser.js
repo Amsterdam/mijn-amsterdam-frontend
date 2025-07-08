@@ -1,15 +1,15 @@
-const BB_SEARCH_DOCUMENTS = require('../fixtures/powerbrowser-bb-attachments.json');
-const BB_PERSONEN_ZAKEN = require('../fixtures/powerbrowser-bb-personen-zaken.json');
-const BB_SEARCH_PERSON = require('../fixtures/powerbrowser-bb-search-person.json');
-const BB_LINK_ZAAK_ADRES = require('../fixtures/powerbrowser-bb-zaak-adres.json');
-const BB_ZAAK_STATUS = require('../fixtures/powerbrowser-bb-zaak-status.json');
-const BB_ZAKEN = require('../fixtures/powerbrowser-bb-zaken.json');
-const settings = require('../settings');
+import BB_SEARCH_DOCUMENTS from '../fixtures/powerbrowser-bb-attachments.json' with { type: 'json' };
+import BB_PERSONEN_ZAKEN from '../fixtures/powerbrowser-bb-personen-zaken.json' with { type: 'json' };
+import BB_SEARCH_PERSON from '../fixtures/powerbrowser-bb-search-person.json' with { type: 'json' };
+import BB_LINK_ZAAK_ADRES from '../fixtures/powerbrowser-bb-zaak-adres.json' with { type: 'json' };
+import BB_ZAAK_STATUS from '../fixtures/powerbrowser-bb-zaak-status.json' with { type: 'json' };
+import BB_ZAKEN from '../fixtures/powerbrowser-bb-zaken.json' with { type: 'json' };
+import { MOCK_BASE_PATH, MOCK_DOCUMENT_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'post-powerbrowser-token',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Token`,
+    url: `${MOCK_BASE_PATH}/powerbrowser/Token`,
     method: 'POST',
     variants: [
       {
@@ -24,7 +24,7 @@ module.exports = [
   },
   {
     id: 'post-powerbrowser-search-requests',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/SearchRequest`,
+    url: `${MOCK_BASE_PATH}/powerbrowser/SearchRequest`,
     method: 'POST',
     variants: [
       {
@@ -44,7 +44,7 @@ module.exports = [
   },
   {
     id: 'post-powerbrowser-zaak-status',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Report/RunSavedReport`,
+    url: `${MOCK_BASE_PATH}/powerbrowser/Report/RunSavedReport`,
     method: 'POST',
     variants: [
       {
@@ -59,7 +59,7 @@ module.exports = [
   },
   {
     id: 'get-powerbrowser-zaken',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/record/GFO_ZAKEN/:zaakIds`,
+    url: `${MOCK_BASE_PATH}/powerbrowser/record/GFO_ZAKEN/:zaakIds`,
     method: 'GET',
     variants: [
       {
@@ -74,7 +74,7 @@ module.exports = [
   },
   {
     id: 'post-powerbrowser-personen-zaken',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/Table`,
+    url: `${MOCK_BASE_PATH}/powerbrowser/Link/:type/GFO_ZAKEN/Table`,
     method: 'POST',
     variants: [
       {
@@ -89,7 +89,7 @@ module.exports = [
   },
   {
     id: 'get-powerbrowser-bb-zaak-adres',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table`,
+    url: `${MOCK_BASE_PATH}/powerbrowser/Link/GFO_ZAKEN/ADRESSEN/Table`,
     method: 'POST',
     variants: [
       {
@@ -104,7 +104,7 @@ module.exports = [
   },
   {
     id: 'get-powerbrowser-bb-zaak-attachment-download',
-    url: `${settings.MOCK_BASE_PATH}/powerbrowser/Dms/:id/Pdf`,
+    url: `${MOCK_BASE_PATH}/powerbrowser/Dms/:id/Pdf`,
     method: 'GET',
     variants: [
       {
@@ -112,7 +112,7 @@ module.exports = [
         type: 'file',
         options: {
           status: 200,
-          path: settings.MOCK_DOCUMENT_PATH,
+          path: MOCK_DOCUMENT_PATH,
         },
       },
     ],

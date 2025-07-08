@@ -1,27 +1,28 @@
-const ADDRESS_BOOKS = require('../fixtures/decos-vergunningen-addressbook-response.json');
-const DOCUMENTS_LIST = require('../fixtures/decos-vergunningen-documents-list-response.json');
-const TERMIJNENS = require('../fixtures/decos-vergunningen-termijnens-response.json');
-const VARENS = require('../fixtures/decos-vergunningen-varens-response.json');
-const WORKFLOW_INSTANCES = require('../fixtures/decos-vergunningen-workflowinstances-response.json');
-const WORKFLOWS = require('../fixtures/decos-vergunningen-workflows-response.json');
-const ZAKEN = require('../fixtures/decos-vergunningen-zaken-response.json');
-const settings = require('../settings.js');
+import ADDRESS_BOOKS from '../fixtures/decos-vergunningen-addressbook-response.json' with { type: 'json' };
+import DOCUMENTS_LIST from '../fixtures/decos-vergunningen-documents-list-response.json' with { type: 'json' };
+import TERMIJNENS from '../fixtures/decos-vergunningen-termijnens-response.json' with { type: 'json' };
+import VAREN_RESPONSE from '../fixtures/decos-vergunningen-varens-response.json' with { type: 'json' };
+import WORKFLOW_INSTANCES from '../fixtures/decos-vergunningen-workflowinstances-response.json' with { type: 'json' };
+import WORKFLOWS from '../fixtures/decos-vergunningen-workflows-response.json' with { type: 'json' };
+import ZAKEN from '../fixtures/decos-vergunningen-zaken-response.json' with { type: 'json' };
+import { MOCK_BASE_PATH, MOCK_DOCUMENT_PATH } from '../settings.js';
 
 const zakenKeysStatusInBehandeling = ZAKEN.content
   .filter((zaak) => zaak.fields.title === 'In behandeling')
   .map((zaak) => zaak.key);
 
 const getVarensBelongingToZaak = (zaak) =>
-  VARENS.content?.find((v) => v.fields.mark === zaak?.fields?.varens) || null;
+  VAREN_RESPONSE.content?.find((v) => v.fields.mark === zaak?.fields?.varens) ||
+  null;
 
 function getZaakByKey(key) {
   return ZAKEN.content.find((zaak) => zaak.key === key);
 }
 
-module.exports = [
+export default [
   {
     id: 'post-decos-address-books',
-    url: `${settings.MOCK_BASE_PATH}/decos/search/books`,
+    url: `${MOCK_BASE_PATH}/decos/search/books`,
     method: 'POST',
     variants: [
       {
@@ -36,7 +37,7 @@ module.exports = [
   },
   {
     id: 'get-decos-zaak-detail',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key`,
     method: 'GET',
     variants: [
       {
@@ -55,7 +56,7 @@ module.exports = [
   },
   {
     id: 'get-decos-zaken',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/folders`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/folders`,
     method: 'GET',
     variants: [
       {
@@ -70,7 +71,7 @@ module.exports = [
   },
   {
     id: 'get-decos-zaak-documents',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/documents`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/documents`,
     method: 'GET',
     variants: [
       {
@@ -85,7 +86,7 @@ module.exports = [
   },
   {
     id: 'get-decos-zaak-workflows',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/workflows`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/workflows`,
     method: 'GET',
     variants: [
       {
@@ -105,7 +106,7 @@ module.exports = [
   },
   {
     id: 'get-decos-zaak-workflowdetails',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/workflowlinkinstances`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/workflowlinkinstances`,
     method: 'GET',
     variants: [
       {
@@ -140,7 +141,7 @@ module.exports = [
   },
   {
     id: 'get-decos-zaak-termijnens',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/termijnens`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/termijnens`,
     method: 'GET',
     variants: [
       {
@@ -160,7 +161,7 @@ module.exports = [
   },
   {
     id: 'get-decos-zaak-varens',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/varens`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/varens`,
     method: 'GET',
     variants: [
       {
@@ -181,7 +182,7 @@ module.exports = [
   },
   {
     id: 'get-decos-document-blob',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/blob`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/blob`,
     method: 'GET',
     variants: [
       {
@@ -204,7 +205,7 @@ module.exports = [
   },
   {
     id: 'get-decos-document-download',
-    url: `${settings.MOCK_BASE_PATH}/decos/items/:key/content`,
+    url: `${MOCK_BASE_PATH}/decos/items/:key/content`,
     method: 'GET',
     variants: [
       {
@@ -212,7 +213,7 @@ module.exports = [
         type: 'file',
         options: {
           status: 200,
-          path: settings.MOCK_DOCUMENT_PATH,
+          path: MOCK_DOCUMENT_PATH,
         },
       },
     ],

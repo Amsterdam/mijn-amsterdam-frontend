@@ -1,11 +1,11 @@
-const settings = require('../settings');
-const BSN_RESPONSE = require('../fixtures/registraties-toeristische-verhuur-bsn.json');
-const NORMAL_RESPONSE = require('../fixtures/registraties-toeristische-verhuur.json');
+import BSN_RESPONSE from '../fixtures/registraties-toeristische-verhuur-bsn.json' with { type: 'json' };
+import NORMAL_RESPONSE from '../fixtures/registraties-toeristische-verhuur.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'post-toeristische-verhuur-with-bsn',
-    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/bsn`,
+    url: `${MOCK_BASE_PATH}/vakantieverhuur/bsn`,
     method: 'POST',
     variants: [
       {
@@ -20,7 +20,7 @@ module.exports = [
   },
   {
     id: 'get-toeristische-verhuur-by-number',
-    url: `${settings.MOCK_BASE_PATH}/vakantieverhuur/:number`,
+    url: `${MOCK_BASE_PATH}/vakantieverhuur/:number`,
     method: 'GET',
     variants: [
       {

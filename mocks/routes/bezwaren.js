@@ -1,12 +1,12 @@
-const BEZWAREN_DOCUMENTEN_RESPONSE = require('../fixtures/bezwaren-documents.json');
-const BEZWAREN_STATUS_RESPONSE = require('../fixtures/bezwaren-status.json');
-const BEZWAREN_LIST_RESPONSE = require('../fixtures/bezwaren.json');
-const settings = require('../settings.js');
+import BEZWAREN_DOCUMENTEN_RESPONSE from '../fixtures/bezwaren-documents.json' with { type: 'json' };
+import BEZWAREN_STATUS_RESPONSE from '../fixtures/bezwaren-status.json' with { type: 'json' };
+import BEZWAREN_LIST_RESPONSE from '../fixtures/bezwaren.json' with { type: 'json' };
+import { MOCK_BASE_PATH, MOCK_DOCUMENT_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'post-bezwaren-list',
-    url: `${settings.MOCK_BASE_PATH}/bezwaren/zgw/v1/zaken/_zoek`,
+    url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/zaken/_zoek`,
     method: 'POST',
     variants: [
       {
@@ -34,7 +34,7 @@ module.exports = [
   },
   {
     id: 'get-bezwaren-documenten',
-    url: `${settings.MOCK_BASE_PATH}/bezwaren/zgw/v1/enkelvoudiginformatieobjecten`,
+    url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/enkelvoudiginformatieobjecten`,
     method: 'GET',
     variants: [
       {
@@ -49,7 +49,7 @@ module.exports = [
   },
   {
     id: 'get-bezwaren-download-document',
-    url: `${settings.MOCK_BASE_PATH}/bezwaren/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
+    url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/enkelvoudiginformatieobjecten/:id/download`,
     method: 'GET',
     variants: [
       {
@@ -57,14 +57,14 @@ module.exports = [
         type: 'file',
         options: {
           status: 200,
-          path: settings.MOCK_DOCUMENT_PATH,
+          path: MOCK_DOCUMENT_PATH,
         },
       },
     ],
   },
   {
     id: 'get-bezwaren-status',
-    url: `${settings.MOCK_BASE_PATH}/bezwaren/zgw/v1/statussen`,
+    url: `${MOCK_BASE_PATH}/bezwaren/zgw/v1/statussen`,
     method: 'GET',
     variants: [
       {

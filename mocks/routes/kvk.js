@@ -1,11 +1,11 @@
-const KVK_PRIVATE_RESPONSE = require('../fixtures/kvk-handelsregister.json');
-const KVK_COMMERCIAL_RESPONSE = require('../fixtures/kvk-handelsregister2.json');
-const settings = require('../settings.js');
+import KVK_PRIVATE_RESPONSE from '../fixtures/kvk-handelsregister.json' with { type: 'json' };
+import KVK_COMMERCIAL_RESPONSE from '../fixtures/kvk-handelsregister2.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'get-kvk',
-    url: `${settings.MOCK_BASE_PATH}/mks-koppel-api/brp/hr`,
+    url: `${MOCK_BASE_PATH}/mks-koppel-api/brp/hr`,
     method: 'GET',
     variants: [
       {

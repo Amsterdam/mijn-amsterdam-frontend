@@ -1,10 +1,10 @@
-const KREFIA_RESPONSE = require('../fixtures/krefia.json');
-const settings = require('../settings');
+import KREFIA_RESPONSE from '../fixtures/krefia.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
-module.exports = [
+export default [
   {
     id: 'get-krefia',
-    url: `${settings.MOCK_BASE_PATH}/krefia-koppel-api/krefia/all`,
+    url: `${MOCK_BASE_PATH}/krefia-koppel-api/krefia/all`,
     method: 'GET',
     variants: [
       {

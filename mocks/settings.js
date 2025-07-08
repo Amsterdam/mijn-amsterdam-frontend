@@ -1,19 +1,23 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const dotenv = require('dotenv');
-const dotenvExpand = require('dotenv-expand');
+import fs from 'node:fs';
+import path from 'node:path';
+
+import dotenv from 'dotenv';
+import dotenvExpand from 'dotenv-expand';
 
 // Mocks server will do some path magic and will prepend process.pwd() to the following.
-const MOCK_DOCUMENT_PATH = 'mocks/fixtures/documents/document.pdf';
+export const MOCK_DOCUMENT_PATH = 'mocks/fixtures/documents/document.pdf';
 
-const MOCK_DOCUMENT_B64 = fs.readFileSync(path.resolve(MOCK_DOCUMENT_PATH), {
-  encoding: 'base64',
-});
+export const MOCK_DOCUMENT_B64 = fs.readFileSync(
+  path.resolve(MOCK_DOCUMENT_PATH),
+  {
+    encoding: 'base64',
+  }
+);
 
 const ENV_CONFIG = loadEnv();
-const MOCK_BASE_PATH = getMockBasePath(ENV_CONFIG);
-const MOCK_ORIGIN = getMockOrigin(ENV_CONFIG);
-const MOCK_API_BASE_URL = MOCK_ORIGIN + MOCK_BASE_PATH;
+export const MOCK_BASE_PATH = getMockBasePath(ENV_CONFIG);
+export const MOCK_ORIGIN = getMockOrigin(ENV_CONFIG);
+export const MOCK_API_BASE_URL = MOCK_ORIGIN + MOCK_BASE_PATH;
 
 function loadEnv() {
   const ENV_FILE = '.env.local';
@@ -59,11 +63,3 @@ function getMockOrigin(env_config) {
 
   return origin;
 }
-
-module.exports = {
-  MOCK_DOCUMENT_PATH,
-  MOCK_DOCUMENT_B64,
-  MOCK_BASE_PATH,
-  MOCK_ORIGIN,
-  MOCK_API_BASE_URL,
-};

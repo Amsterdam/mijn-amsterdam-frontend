@@ -1,10 +1,10 @@
-const settings = require('../settings');
-const CLEOPATRA_RESPONSE = require('../fixtures/cleopatra.json');
+import { MOCK_BASE_PATH } from '../settings.js';
+import CLEOPATRA_RESPONSE from '../fixtures/cleopatra.json' with { type: 'json' };
 
-module.exports = [
+export default [
   {
     id: 'post-cleopatra',
-    url: `${settings.MOCK_BASE_PATH}/milieuzone`,
+    url: `${MOCK_BASE_PATH}/milieuzone`,
     method: 'POST',
     variants: [
       {

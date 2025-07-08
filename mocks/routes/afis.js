@@ -1,14 +1,16 @@
-const httpConstants = require('http2').constants;
+import { constants as httpConstants } from 'node:http2';
 
-const settings = require('../settings');
+import AFIS_ARCDOC_ID from '../fixtures/afis/arc-doc-id.json' with { type: 'json' };
+import AFIS_DOCUMENT from '../fixtures/afis/document.json' with { type: 'json' };
+import { MOCK_BASE_PATH } from '../settings.js';
 
 const BASE = '/afis';
 const REST_BASE = `${BASE}/RESTAdapter`;
 
-module.exports = [
+export default [
   {
     id: 'post-afis-auth-token',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/OAuthServer`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/OAuthServer`,
     method: 'POST',
     variants: [
       {
@@ -27,7 +29,7 @@ module.exports = [
   },
   {
     id: 'post-afis-businesspartner-bsn',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/businesspartner/BSN`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/businesspartner/BSN`,
     method: 'POST',
     variants: [
       {
@@ -48,7 +50,7 @@ module.exports = [
   },
   {
     id: 'post-afis-businesspartner-kvk',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/businesspartner/KVK`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/businesspartner/KVK`,
     method: 'POST',
     variants: [
       {
@@ -70,7 +72,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-details',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartner`,
     method: 'GET',
     variants: [
       {
@@ -99,7 +101,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-address',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_BusinessPartnerAddress`,
     method: 'GET',
     variants: [
       {
@@ -136,7 +138,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-phonenumber',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressPhoneNumber`,
     method: 'GET',
     variants: [
       {
@@ -164,7 +166,7 @@ module.exports = [
   },
   {
     id: 'get-afis-businesspartner-emailaddress',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/API/ZAPI_BUSINESS_PARTNER_DET_SRV/A_AddressEmailAddress`,
     method: 'GET',
     variants: [
       {
@@ -192,14 +194,14 @@ module.exports = [
   },
   {
     id: 'get-afis-facturen',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_OPERACCTGDOCITEM`,
     method: 'GET',
     variants: [
       {
         id: 'standard',
         type: 'middleware',
         options: {
-          middleware: (req, res) => {
+          middleware: async (req, res) => {
             const stateFilters = {
               openstaande: 'IsCleared eq false',
               afgehandelde: `DunningLevel ne '3' or ReverseDocument ne ''`,
@@ -218,9 +220,11 @@ module.exports = [
 
             // DO NOT adjust this mock data (tests depend on it).
             // If needed copy, mutate and let it point to the newly made copy.
-            const facturenData = require(
-              `../fixtures/afis/${stateName}-facturen.json`
-            );
+            const facturenData = (
+              await import(`../fixtures/afis/${stateName}-facturen.json`, {
+                with: { type: 'json' },
+              })
+            ).default;
 
             if (req.query?.$top) {
               return res.send({
@@ -242,7 +246,7 @@ module.exports = [
   },
   {
     id: 'post-afis-factuur-download',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/getDebtorInvoice/API_CV_ATTACHMENT_SRV/`,
     method: 'POST',
     variants: [
       {
@@ -250,14 +254,14 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: require('../fixtures/afis/document.json'),
+          body: AFIS_DOCUMENT,
         },
       },
     ],
   },
   {
     id: 'get-afis-factuur-document-id',
-    url: `${settings.MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
+    url: `${MOCK_BASE_PATH}${REST_BASE}/API/ZFI_OPERACCTGDOCITEM_CDS/ZFI_CDS_TOA02`,
     method: 'GET',
     variants: [
       {
@@ -265,14 +269,14 @@ module.exports = [
         type: 'json',
         options: {
           status: 200,
-          body: require('../fixtures/afis/arc-doc-id.json'),
+          body: AFIS_ARCDOC_ID,
         },
       },
     ],
   },
   {
     id: 'get-afis-paylink',
-    url: `${settings.MOCK_BASE_PATH}/afis/paylink`,
+    url: `${MOCK_BASE_PATH}/afis/paylink`,
     method: 'GET',
     variants: [
       {
