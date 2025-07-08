@@ -328,7 +328,7 @@ export type AfisEMandateUpdatePayload = Partial<AfisEMandateSource>;
 export type AfisEMandateFrontend = {
   id: string;
   acceptant: string;
-  acceptantIBAN?: string;
+  acceptantIBAN: string;
   acceptantDescription?: string;
   status: '1' | '0';
   displayStatus: string;
