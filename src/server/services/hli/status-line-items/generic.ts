@@ -4,21 +4,6 @@ import {
   ZorgnedStatusLineItemTransformerConfig,
 } from '../../zorgned/zorgned-types';
 
-function getNamenBetrokkenen(
-  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
-) {
-  const names = regeling.betrokkenPersonen
-    .map((person) => person.name)
-    .filter(Boolean);
-
-  if (names.length <= 1) {
-    return names.join('');
-  }
-
-  const lastName = names.pop();
-  return `${names.join(', ')} en ${lastName}`;
-}
-
 export function getBetrokkenKinderenDescription(
   regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
 ): string | null {
