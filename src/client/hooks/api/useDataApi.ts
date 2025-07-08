@@ -259,6 +259,7 @@ export function useDataApiV2<T extends any>(
     revalidateOnFocus: false, // Disable revalidation on focus
     revalidateOnReconnect: false, // Disable revalidation on reconnect
     keepPreviousData: true, // Keep previous data while fetching new data
+    shouldRetryOnError: false, // Disable retrying on error
     onSuccess: () => {
       // Sets shouldFetch to false after a successful fetch
       // This prevents immediate re-fetching if the url changes in the meantime.
@@ -267,9 +268,6 @@ export function useDataApiV2<T extends any>(
       }
     },
     onError: (error) => {
-      if (optionsWithDefaults.postpone) {
-        setShouldFetch(false);
-      }
       captureException(error, {
         properties: {
           url,
@@ -284,7 +282,7 @@ export function useDataApiV2<T extends any>(
 
   return {
     data: swr.data ?? null,
-    isLoading: swr.isLoading || shouldFetchImmediately,
+    isLoading: swr.isLoading || shouldFetchImmediately || swr.isValidating,
     isError: !!swr.error,
     mutate: swr.mutate,
     fetch: () => {
