@@ -93,8 +93,8 @@ export function HLIThema() {
   } = useHliThemaData();
   useHTMLDocumentTitle(routeConfig.themaPage);
 
-  const hasLopendeAanvragen = regelingen.some(
-    (regeling) => regeling.displayStatus === 'In behandeling'
+  const hasAanvragen = regelingen.some(
+    tableConfig[listPageParamKind.lopend].filter
   );
 
   const pageContentTop = (
@@ -109,7 +109,7 @@ export function HLIThema() {
   const regelingenTables = featureToggle.hliThemaRegelingenActive
     ? entries(tableConfig)
         .filter(([kind]) => {
-          return kind === listPageParamKind.lopend ? hasLopendeAanvragen : true;
+          return kind === listPageParamKind.lopend ? hasAanvragen : true;
         })
         .map(
           ([

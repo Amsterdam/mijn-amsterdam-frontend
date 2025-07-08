@@ -106,7 +106,7 @@ export const tableConfig = {
   [listPageParamKind.lopend]: {
     title: listPageTitle[listPageParamKind.lopend],
     filter: (regeling: HLIRegelingFrontend) =>
-      regeling.displayStatus === 'In behandeling',
+      regeling.displayStatus.startsWith('In behandeling'),
     sort: dateSort('dateDecision', 'desc'),
     displayProps: displayPropsHuidigeRegelingen,
     maxItems: MAX_TABLE_ROWS_ON_THEMA_PAGINA,
