@@ -1,27 +1,177 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { useNavigate } from 'react-router';
 import { useThrottledCallback } from 'use-debounce';
 
-import { routeConfig, type WithActionButtons } from './Afis-thema-config';
+import { routeConfig } from './Afis-thema-config';
+import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
 import { DateAdjust } from './AfisEmandateDateAdjust';
-import { useAfisEMandatesData } from './useAfisThemaData.hook';
-import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
+import {
+  optimisticEmandatesUpdate,
+  useAfisEMandatesData,
+  useAfisEmandateUpdate,
+  useAfisThemaData,
+} from './useAfisThemaData.hook';
+import type {
+  AfisEMandateFrontend,
+  AfisEMandateSignRequestResponse,
+  AfisEMandateStatusChangeResponse,
+} from '../../../../server/services/afis/afis-types';
+import { entries } from '../../../../universal/helpers/utils';
 import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
-import { ONE_SECOND_MS } from '../../../hooks/api/useSessionApi';
+import { useDataApiV2, sendGetRequest } from '../../../hooks/api/useDataApi';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
+function useEmandateApis(eMandate: AfisEMandateFrontend) {
+  const { mutate } = useAfisEMandatesData();
+
+  const redirectUrlApi = useDataApiV2<AfisEMandateSignRequestResponse>(
+    eMandate.signRequestUrl,
+    {
+      postpone: true,
+      fetcher: (url: string) => {
+        return sendGetRequest<AfisEMandateSignRequestResponse>(url).then(
+          (content) => {
+            window.location.href = content.redirectUrl;
+            return content;
+          }
+        );
+      },
+    }
+  );
+  const statusChangeApi = useDataApiV2<AfisEMandateStatusChangeResponse>(
+    eMandate.statusChangeUrl,
+    {
+      postpone: true,
+      fetcher: (url) => {
+        return sendGetRequest<AfisEMandateStatusChangeResponse>(url).then(
+          (eMandateUpdatePayload) => {
+            if (eMandate && eMandateUpdatePayload) {
+              mutate(
+                optimisticEmandatesUpdate(eMandate, eMandateUpdatePayload),
+                {
+                  revalidate: false,
+                }
+              );
+            }
+            return eMandateUpdatePayload;
+          }
+        );
+      },
+    }
+  );
+
+  const { businessPartnerIdEncrypted } = useAfisThemaData();
+
+  const eMandateUpdateApi = useAfisEmandateUpdate(
+    businessPartnerIdEncrypted,
+    eMandate
+  );
+
+  type ApiName = 'redirectUrlApi' | 'statusChangeApi' | 'updateApi';
+
+  const [showError, setShowError] = useState(false);
+  const [lastActiveApi, setLastActiveApi] = useState<ApiName | null>(null);
+
+  useEffect(() => {
+    entries({
+      redirectUrlApi: redirectUrlApi.isLoading,
+      statusChangeApi: statusChangeApi.isLoading,
+      updateApi: eMandateUpdateApi.isMutating,
+    }).forEach(([apiName, isLoading]) => {
+      if (isLoading) {
+        setLastActiveApi(apiName);
+      }
+    });
+  }, [
+    redirectUrlApi.isLoading,
+    statusChangeApi.isLoading,
+    eMandateUpdateApi.isMutating,
+  ]);
+
+  const isErrorVisible =
+    showError &&
+    !redirectUrlApi.isLoading &&
+    !statusChangeApi.isLoading &&
+    !eMandateUpdateApi.isMutating &&
+    (redirectUrlApi.isError ||
+      statusChangeApi.isError ||
+      !!eMandateUpdateApi.error);
+
+  useEffect(() => {
+    entries({
+      redirectUrlApi: redirectUrlApi.isError,
+      statusChangeApi: statusChangeApi.isError,
+      updateApi: !!eMandateUpdateApi.error,
+    }).forEach(([apiName, isError]) => {
+      if (apiName === lastActiveApi && isError) {
+        setShowError(true);
+      }
+    });
+  }, [
+    redirectUrlApi.isError,
+    statusChangeApi.isError,
+    !!eMandateUpdateApi.error,
+    lastActiveApi,
+  ]);
+
+  return {
+    redirectUrlApi,
+    statusChangeApi,
+    eMandateUpdateApi,
+    isErrorVisible,
+    lastActiveApi,
+    hideError: () => {
+      setShowError(false);
+    },
+  };
+}
+
 type EMandateProps = {
-  eMandate: WithActionButtons<AfisEMandateFrontend>;
+  eMandate: AfisEMandateFrontend;
   isPendingActivation: boolean;
 };
 
 function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
+  const {
+    redirectUrlApi,
+    statusChangeApi,
+    eMandateUpdateApi,
+    isErrorVisible,
+    hideError,
+    lastActiveApi,
+  } = useEmandateApis(eMandate);
+
   return (
     <PageContentCell>
+      {isErrorVisible && (
+        <Alert
+          heading="Foutmelding"
+          headingLevel={4}
+          severity="error"
+          closeable
+          onClose={hideError}
+          className="ams-mb-m"
+        >
+          <Paragraph>
+            {lastActiveApi === 'redirectUrlApi' && redirectUrlApi.isError && (
+              <>
+                Er is iets misgegaan bij het ophalen van de link naar de
+                handtekening.
+              </>
+            )}
+            {lastActiveApi === 'statusChangeApi' && statusChangeApi.isError && (
+              <>Er is iets misgegaan bij het stopzetten.</>
+            )}
+            {lastActiveApi === 'updateApi' && !!eMandateUpdateApi.error && (
+              <>Er is iets misgegaan bij het aanpassen van einddatum.</>
+            )}
+          </Paragraph>
+        </Alert>
+      )}
       <Datalist
         rows={[
           {
@@ -55,7 +205,12 @@ function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
               {
                 label: 'Einddatum',
                 isVisible: eMandate.status === '1',
-                content: <DateAdjust eMandate={eMandate} />,
+                content: (
+                  <DateAdjust
+                    eMandateUpdateApi={eMandateUpdateApi}
+                    eMandate={eMandate}
+                  />
+                ),
               },
             ],
           },
@@ -84,7 +239,11 @@ function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
           </Paragraph>
         </Alert>
       ) : (
-        <Paragraph>{eMandate.action}</Paragraph>
+        <AfisEMandateActionUrls
+          redirectUrlApi={redirectUrlApi}
+          statusChangeApi={statusChangeApi}
+          eMandate={eMandate}
+        />
       )}
     </PageContentCell>
   );
@@ -125,7 +284,7 @@ function EmandatePoller({
   return null;
 }
 
-const POLLING_INTERVAL_MS = 4 * ONE_SECOND_MS;
+const POLLING_INTERVAL_MS = 4000;
 
 export function AfisEMandateDetail() {
   useHTMLDocumentTitle(routeConfig.detailPageEMandate);

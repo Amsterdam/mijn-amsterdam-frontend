@@ -9,14 +9,11 @@ import {
 import { addDays, addYears } from 'date-fns';
 
 import { EMANDATE_ENDDATE_INDICATOR } from './Afis-thema-config';
-import {
-  useAfisThemaData,
-  useAfisEmandateUpdate,
-} from './useAfisThemaData.hook';
+import { useAfisEmandateUpdate } from './useAfisThemaData.hook';
 import type { AfisEMandateFrontend } from '../../../../server/services/afis/afis-types';
-import LoadingContent from '../../../components/LoadingContent/LoadingContent';
 import { MaRouterLink } from '../../../components/MaLink/MaLink';
 import { Modal } from '../../../components/Modal/Modal';
+import { Spinner } from '../../../components/Spinner/Spinner';
 
 type DateAdjustModalProps = {
   eMandate: AfisEMandateFrontend;
@@ -83,20 +80,19 @@ function DateAdjustModal({
   );
 }
 
-export function DateAdjust({ eMandate }: { eMandate: AfisEMandateFrontend }) {
-  const { businessPartnerIdEncrypted } = useAfisThemaData();
+export function DateAdjust({
+  eMandate,
+  eMandateUpdateApi,
+}: {
+  eMandate: AfisEMandateFrontend;
+  eMandateUpdateApi: ReturnType<typeof useAfisEmandateUpdate>;
+}) {
   const [isDateAdjustModalActive, setDateAdjustModal] = useState(false);
-  const { isMutating, update, error } = useAfisEmandateUpdate(
-    businessPartnerIdEncrypted,
-    eMandate
-  );
-
-  console.log('error', error);
 
   return (
     <div>
-      {isMutating ? (
-        <LoadingContent inline barConfig={[['140px', '2rem', '0']]} />
+      {eMandateUpdateApi.isMutating ? (
+        <Spinner />
       ) : (
         eMandate.dateValidToFormatted
       )}
@@ -108,9 +104,8 @@ export function DateAdjust({ eMandate }: { eMandate: AfisEMandateFrontend }) {
           setDateAdjustModal(true);
         }}
       >
-        einddatum aanpassen
+        datum aanpassen
       </MaRouterLink>
-      {error && <Paragraph size="small">{error.message}</Paragraph>}
       <DateAdjustModal
         eMandate={eMandate}
         isDateAdjustModalActive={isDateAdjustModalActive}
@@ -119,7 +114,7 @@ export function DateAdjust({ eMandate }: { eMandate: AfisEMandateFrontend }) {
           event.preventDefault();
           const formdata = new FormData(event.currentTarget);
           setDateAdjustModal(false);
-          update(formdata.get('endDate') as string);
+          eMandateUpdateApi.update(formdata.get('endDate') as string);
         }}
       />
     </div>
