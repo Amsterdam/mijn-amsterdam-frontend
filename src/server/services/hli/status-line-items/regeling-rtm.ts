@@ -1,4 +1,9 @@
-import { BESLUIT, EINDE_RECHT, getBesluitDescription } from './generic';
+import {
+  BESLUIT,
+  EINDE_RECHT,
+  getBesluitDescription,
+  isAanvrager,
+} from './generic';
 import {
   ZorgnedAanvraagWithRelatedPersonsTransformed,
   ZorgnedStatusLineItemTransformerConfig,
@@ -165,7 +170,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         return (
           isRTMDeel2(regeling) &&
           !!regeling.datumInBehandeling &&
-          regeling.resultaat === 'toegewezen'
+          regeling.resultaat === 'toegewezen' &&
+          isAanvrager(regeling)
         );
       },
       description(regeling) {
@@ -186,7 +192,8 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
         return (
           isRTMDeel2(regeling) &&
           regeling.resultaat === 'toegewezen' &&
-          regeling.isActueel === false
+          regeling.isActueel === false &&
+          !isAanvrager(regeling)
         );
       },
       description(regeling, today, allAanvragen) {
@@ -195,15 +202,12 @@ export const RTM: ZorgnedStatusLineItemTransformerConfig<ZorgnedHLIRegeling>[] =
             ? EINDE_RECHT.description(regeling, today, allAanvragen)
             : EINDE_RECHT.description || '';
         const hasBetrokkenen = regeling.betrokkenen.length > 1;
-        const isAanvrager = regeling.betrokkenPersonen.some(
-          (betrokkene) =>
-            betrokkene.isAanvrager && betrokkene.bsn === regeling.bsnAanvrager
-        );
+        const isAanvrager_ = isAanvrager(regeling);
         return (
           baseDescription +
           (hasBetrokkenen
             ? `<p>
-            ${isAanvrager ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
+            ${isAanvrager_ ? 'Wordt uw kind 18? Dan moet uw kind deze regeling voor zichzelf aanvragen.' : 'Bent u net of binnenkort 18 jaar oud? Dan moet u deze regeling voor uzelf aanvragen.'} <a href="${INFO_LINK}">Lees meer over de voorwaarden</a>.
           </p>
           `
             : '')

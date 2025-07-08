@@ -102,6 +102,16 @@ export const EINDE_RECHT: ZorgnedStatusLineItemTransformerConfig<ZorgnedAanvraag
     `,
   };
 
+export function isAanvrager(
+  regeling: ZorgnedAanvraagWithRelatedPersonsTransformed
+): boolean {
+  const isAanvrager = regeling.betrokkenPersonen.some(
+    (betrokkene) =>
+      betrokkene.isAanvrager && betrokkene.bsn === regeling.bsnAanvrager
+  );
+  return isAanvrager;
+}
+
 export const forTesting = {
   getEindeRechtDescription,
 };
