@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { Alert, Paragraph } from '@amsterdam/design-system-react';
 import { useNavigate } from 'react-router';
-import { useThrottledCallback } from 'use-debounce';
 
 import { routeConfig } from './Afis-thema-config';
 import { AfisEMandateActionUrls } from './AfisEmandateActionButtons';
@@ -23,6 +22,8 @@ import { Datalist } from '../../../components/Datalist/Datalist';
 import { PageContentCell } from '../../../components/Page/Page';
 import ThemaDetailPagina from '../../../components/Thema/ThemaDetailPagina';
 import { useDataApiV2, sendGetRequest } from '../../../hooks/api/useDataApi';
+import { useSessionStorage } from '../../../hooks/storage.hook';
+import { useInterval } from '../../../hooks/timer.hook';
 import { useHTMLDocumentTitle } from '../../../hooks/useHTMLDocumentTitle';
 
 function useEmandateApis(eMandate: AfisEMandateFrontend) {
@@ -249,39 +250,32 @@ function EMandate({ eMandate, isPendingActivation }: EMandateProps) {
   );
 }
 
+function EmandateFetchInterval({ fetch }: { fetch: () => void }) {
+  useInterval(fetch, POLLING_INTERVAL_MS);
+  return null;
+}
+
 function EmandatePoller({
-  status,
-  isPendingActivation,
   fetch,
+  isPendingActivation,
 }: {
-  status: AfisEMandateFrontend['status'];
-  isPendingActivation: boolean;
   fetch: () => void;
+  isPendingActivation: boolean;
 }) {
-  const isPendingActivation_ = isPendingActivation && status === '0';
-
-  const doPolling = useThrottledCallback(fetch, POLLING_INTERVAL_MS, {
-    trailing: true,
-  });
-
-  if (isPendingActivation_) {
-    doPolling();
-  }
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isPendingActivation_) {
-      doPolling.cancel();
-      navigate(window.location.pathname, {
-        replace: true,
-      });
+    return () => {
+      if (isPendingActivation) {
+        // Removes the query argument that initiated the polling
+        navigate(window.location.pathname, {
+          replace: true,
+        });
+      }
+    };
+  }, [isPendingActivation]);
 
-      return;
-    }
-  }, [isPendingActivation_]);
-
-  return null;
+  return isPendingActivation ? <EmandateFetchInterval fetch={fetch} /> : null;
 }
 
 const POLLING_INTERVAL_MS = 4000;
@@ -299,7 +293,38 @@ export function AfisEMandateDetail() {
   } = useAfisEMandatesData();
 
   const queryParams = new URLSearchParams(window.location.search);
-  const isPendingActivation = !!queryParams.get('iban');
+  const iban = queryParams.get('iban');
+
+  const [ibansPendingActivation, setIsPendingActivation] = useSessionStorage(
+    'afis-emandate-pending-activation',
+    ''
+  );
+
+  useEffect(() => {
+    let updatedIbans: string = ibansPendingActivation || '';
+    if (eMandate?.status === '0' && iban && !updatedIbans.includes(iban)) {
+      updatedIbans = [...updatedIbans.split(','), iban]
+        .filter(Boolean)
+        .join(',');
+    }
+    if (
+      eMandate?.status === '1' &&
+      eMandate?.acceptantIBAN &&
+      updatedIbans.includes(eMandate?.acceptantIBAN)
+    ) {
+      updatedIbans = updatedIbans
+        .split(',')
+        .filter((i) => i !== eMandate.acceptantIBAN)
+        .join(',');
+    }
+    if (ibansPendingActivation !== updatedIbans) {
+      setIsPendingActivation(updatedIbans);
+    }
+  }, [iban, eMandate?.status, eMandate?.acceptantIBAN]);
+
+  const isPendingActivation = ibansPendingActivation?.includes(
+    eMandate?.acceptantIBAN
+  );
 
   return (
     <ThemaDetailPagina
@@ -311,9 +336,8 @@ export function AfisEMandateDetail() {
         !!eMandate && (
           <>
             <EmandatePoller
-              status={eMandate.status}
-              isPendingActivation={isPendingActivation}
               fetch={refetchEMandates}
+              isPendingActivation={isPendingActivation}
             />
             <EMandate
               isPendingActivation={isPendingActivation}
